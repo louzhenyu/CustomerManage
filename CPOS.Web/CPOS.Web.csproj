@@ -44,10 +44,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Const, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Infrastructure\Code\Const\bin\Debug\Const.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Infrastructure\Code\ReferenceDll\log4net.dll</HintPath>
@@ -4376,6 +4372,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\Code\Const\Const.csproj">
+      <Project>{bb4c49e2-bd7c-4556-91c4-d3575433a8db}</Project>
+      <Name>Const</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
+      <Project>{1dfd5c01-71c0-41d9-82e4-caba22331835}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
       <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
       <Name>CPOS.BS.BLL</Name>

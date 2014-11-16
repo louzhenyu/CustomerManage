@@ -83,6 +83,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
+      <Project>{1dfd5c01-71c0-41d9-82e4-caba22331835}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
       <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
       <Name>CPOS.BS.BLL</Name>

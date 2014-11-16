@@ -7946,6 +7946,10 @@
     <Folder Include="Module\Withdraw\Handler\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
+      <Project>{1dfd5c01-71c0-41d9-82e4-caba22331835}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
       <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
       <Name>CPOS.BS.BLL</Name>
@@ -7961,10 +7965,6 @@
     <ProjectReference Include="..\CPOS.Common\CPOS.Common.csproj">
       <Project>{4E164CF5-3114-4C70-874F-1353FB6A6215}</Project>
       <Name>CPOS.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
-      <Project>{1DFD5C01-71C0-41D9-82E4-CABA22331835}</Project>
-      <Name>Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.DTO\CPOS.DTO.csproj">
       <Project>{E90B49C0-4C8E-42EC-88EF-DACCFD56F2B5}</Project>

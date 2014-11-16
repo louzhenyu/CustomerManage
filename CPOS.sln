@@ -44,11 +44,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestCPOS.TestBS.TestWeb", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CPOS.BS.MailSendService", "CPOS.BS.MailSendService\CPOS.BS.MailSendService.csproj", "{DBFE8DD9-9922-4123-ACC4-B249050CB1CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Const", "..\Infrastructure\Code\Const\Const.csproj", "{BB4C49E2-BD7C-4556-91C4-D3575433A8DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Const", "..\..\Infrastructure\Code\Const\Const.csproj", "{BB4C49E2-BD7C-4556-91C4-D3575433A8DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "..\Infrastructure\Code\Utility\Utility.csproj", "{1DFD5C01-71C0-41D9-82E4-CABA22331835}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility", "..\..\Infrastructure\Code\Utility\Utility.csproj", "{1DFD5C01-71C0-41D9-82E4-CABA22331835}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility.Message", "..\Infrastructure\Code\Utility.Message\Utility.Message.csproj", "{365C2765-3BC4-462D-96C3-6C175E0CCB16}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utility.Message", "..\..\Infrastructure\Code\Utility.Message\Utility.Message.csproj", "{365C2765-3BC4-462D-96C3-6C175E0CCB16}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
