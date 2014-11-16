@@ -1,0 +1,40 @@
+@charset "utf-8";
+/*1*/
+.qrCodePage{padding:15px 20px;}
+.qrCodePage .goShop,.qrCodePage .alert,.qrCodePage .infoFeed{padding:20px 0;border:1px solid #ccc;}
+.qrCodePage .goShop p{text-align:center;font-size:19px;color:#734201;}
+.qrCodePage .goShop i{margin:0 5px;color:#ef3434;}
+.qrCodePage .goShopBtn{display:block;width:60%;line-height:40px;margin:20px auto;text-align:center;font-size:16px;background-image:-webkit-gradient(linear, left top, left bottom, from(#ffba00), to(#ff8800));background:-moz-linear-gradient(top, #ffba00,#ff8800);color:#fff; }
+.qrCodePage .shopInfo{margin:20px 0;padding:15px 10px;border:1px solid #ccc;}
+.shopInfo h2{font-size:18px;color:#ababab;}
+.shopInfo .wrapPic{position:relative;margin:10px auto;width:150px;}
+.shopInfo img{display:block;width:150px;height:auto;}
+.shopInfo .mask{position:absolute;bottom:85px;right:-55px;width:40px;height:40px;background:url(/HtmlApps/images/special/LJ/face.png) no-repeat 0 0 ;background-size:100%;}
+.shopInfo p{color:#ababab;font-size:16px; text-align:left;}
+.shopInfo .tit{color:#734201;}
+/*2*/
+.guidePage{padding:20px;}
+/*3*/
+.qrCodePage input{border:none;}
+.qrCodePage .goShop .fontSize{font-size:16px;}
+.qrCodePage .commonBtn{display:block;width:40%;line-height:40px;margin:20px auto;text-align:center;font-size:16px;background-image:-webkit-gradient(linear, left top, left bottom, from(#ff4e4f), to(#f52f40));color:#fff; }
+.qrCodePage .submitBtn{width:100%;}
+.qrCodePage .alert{margin-top:20px;text-align:center;}
+.qrCodePage .alert .pic{display:block;width:150px;height:auto;margin:10px auto;}
+.qrCodePage .alert p{margin-top:5px;font-size:16px;font-weight:bold;color:#ef3434;}
+
+
+.qrCodePage .alert .wrapPic{position:relative;margin:10px auto;width:150px;}
+.qrCodePage .alert .wrapPic img{display:block;width:150px;height:auto;}
+.qrCodePage .alert .wrapPic .mask{position:absolute;bottom:15px;right:-55px;width:40px;height:40px;background:url(/HtmlApps/images/special/LJ/wan.png) no-repeat 0 0 ;background-size:100%;}
+
+
+.qrCodePage .infoFeed{margin-top:20px;}
+.qrCodePage .infoFeed .must{position:relative;}
+.qrCodePage .infoFeed .must b{position:absolute;left:-10px;top:7px;width:8px;height:10px;background:url(/HtmlApps/images/special/LJ/must.png) no-repeat 0px 0px;background-size:100%;}
+.qrCodePage .infoFeed h2{text-align:center;color:#111;font-size:16px;margin-bottom:20px;}
+.qrCodePage .infoFeed p{height:40px;margin:0 0 20px 30px;border-bottom:1px solid #ccc;}
+.qrCodePage .infoFeed p em{color:#111;font-size:16px;margin-right:10px;}
+/*4*/
+.qrCodePage .alert .pText{margin-top:10px;font-size:16px;font-weight:bold;color:#8f7552;}
+

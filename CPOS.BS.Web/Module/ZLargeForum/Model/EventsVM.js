@@ -1,0 +1,41 @@
+﻿function InitVE() {
+    Ext.define("EventsViewEntity", {
+        extend: "Ext.data.Model",
+        fields: [
+            { name: 'ForumId', type: 'string' },
+            { name: 'Title', type: 'string' },
+            { name: 'ForumTypeId', type: 'string' },
+            { name: 'City', type: 'string' },
+            { name: 'Desc', type: 'string' },
+            { name: 'Organizer', type: 'string' },
+            { name: 'Schedule', type: 'string' },
+            { name: 'Speakers', type: 'string' },
+            { name: 'Food', type: 'string' },
+            { name: 'BeginTime', type: 'string' },
+            { name: 'EndTime', type: 'string' },
+            { name: 'CreateTime', type: 'string' },
+            { name: 'CreateBy', type: 'string' },
+            { name: 'LastUpdateBy', type: 'string' },
+            { name: 'LastUpdateTime', type: 'string' },
+            { name: 'IsDelete', type: 'string' },
+            { name: 'Email', type: 'string' },
+            { name: 'EmailTitle', type: 'string' },
+            { name: 'Sponsor', type: 'string' },
+            { name: 'Roundtable', type: 'string' },
+            { name: 'PreviousForum', type: 'string' },
+            { name: 'ContactUs', type: 'string' },
+            { name: 'IsDesc', type: 'string' },
+            { name: 'IsOrganizer', type: 'string' },
+            { name: 'IsSchedule', type: 'string' },
+            { name: 'IsSpeakers', type: 'string' },
+            { name: 'IsRoundtable', type: 'string' },
+            { name: 'IsSponsor', type: 'string' },
+            { name: 'IsFood', type: 'string' },
+            { name: 'IsPreviousForum', type: 'string' },
+            { name: 'IsContactUs', type: 'string' },
+            { name: 'IsSignUp', type: 'string' },
+            { name: 'DisplayIndex', type: 'string' },
+            { name: 'CourseName', type: 'string' }
+        ]
+    });
+}

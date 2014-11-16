@@ -1,0 +1,66 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>会员中心</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+</head>
+
+<body>
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <div class="aboutVipDiv" id="vipCenter" > </div>
+  </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="MenuBox" id="MenuBox" rel="4"> </div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'Vip.getVipDetail()';
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);</script>
+
+<script id="getVipDetail" type="text/template"> 
+  <div class="vipInfo">
+    <div class="vipInfoBg"><img style="width:100%; min-height:150px; min-width:100%;" src="images/vipbg.png"></div>
+    <div class="vipInfoCon">
+      <div class="vipheadwrap">
+        <div class="viphead"><img width="100" height="100" style="margin: -10px 0 0 -12px;" src="images/default.png"></div>
+      </div>
+      <div class="vipheaderConnext">
+        <div class="vipheaderConnextTop"><span style="font-size:16px;"><%=vipName %></span> &nbsp;<img src="images/tran1.png" class="VipIcn isVipIcn" /><br />会员号：<%=vipCode %></div>
+        <div class="vipheaderConnextBottom">
+          <ul>
+            <li><span class="vipheaderConnextBottomNum"><%=itemKeepCount %></span>收藏</li>
+            <li onclick="LinkAddCustomerId('vipIntegral.html')"><span class="vipheaderConnextBottomNum"><%= parseInt(integration) %></span>积分</li>
+            <li><span class="vipheaderConnextBottomNum"><%=couponCount %></span>优惠券</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="vipInfoBottom"></div>
+  </div>
+  <div class="vipActionList">
+    <ul>
+      <li><a href="vipCart.html"><span class="VipIcn VipIcn1"></span>
+		 <% if(shoppingCartCount!="0"){ %>
+			<span class="tipNum"><%=shoppingCartCount %></span>
+			<% } %>
+		购物车<em class="jtpi VipIcn"></em></a></li>
+      <li style="border-bottom:none;"><a href="vipHistory.html"><span class="VipIcn VipIcn2"></span>浏览历史<em class="jtpi VipIcn"></em></a></li>
+    </ul>
+  </div>
+ 
+</script> 
+</body>
+</html>

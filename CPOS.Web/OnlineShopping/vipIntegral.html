@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+</head>
+
+<body style="background:#e5e5e5;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span class="Comeback" onClick="LinkAddCustomerId('vipCenter.html')"></span><span id="Btoo">我的积分</span></div>
+    </nav>
+    <div class="aboutVipDiv" id="vipIntegralDiv" >
+      <div class="VipIntegralBox" style="width:92%; height:5px; margin-top:30px;"></div>
+      <div class="VipIntegralBox" style="width:94%; height:5px; margin-top:-2px;"></div>
+      <div class="VipIntegralBox">
+        <div class="VipIntegralDiv" id="vipCenter"> </div>
+        <div class="VipIntegralCdf">
+          <h3>您当前积分可兑换的商品</h3>
+          <div class="VipIntegralXGlist" style="padding-bottom:20px;" id="VipIntegralXGlist" page="1">
+            <div class="WelfareConnextBox">
+              <ul id="waterwall1">
+              </ul>
+            </div>
+            <div class="WelfareConnextBox">
+              <ul id="waterwall2">
+              </ul>
+            </div>
+            <span class="blank1"></span> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="0" id="backPrevPosition" />
+<script id="ppList" type="text/x-jsmart-tmpl">
+	{section name=i loop=$itemList}
+	<a href="welfareDetail.html?itemId={$itemList[i].itemId}">
+	<li>
+	  <div class="WelfareConnextBoxLi"><img width="100%" src="{$itemList[i].imageUrl}"> </div>
+	  <div class="WelfareConnextBoxLiTxt">
+		<h2>{$itemList[i].itemName|truncate:18:"..."}</h2>
+		<h3>原价：{$itemList[i].price}<span class="CentertextLine"></span></h3>
+		<div class="WelfareRmb">换购价：{$itemList[i].integralExchange}积分</div>
+	  </div>
+	</li>
+	</a>
+	{/section}
+</script> 
+<script id="getVipDetail" type="text/x-jsmart-tmpl">
+<h2><span style="font-size:18px;">{$vipName}</span> &nbsp; 会员卡号：{$vipCode}</h2>
+<p style="padding-top:20px; line-height:22px;">您当前积分:   {$validIntegral}<br> 已使用积分:   {$outIntegral}</p>
+  <a href="vipIntegralDetail.html" class="Chakan">查看积分详情</a>
+</script> 
+<script type="text/javascript">
+var loadMore = ['VipIntegralXGlist','Vip.IntegralList()'];
+var Von = 'Vip.getVipDetail(); Vip.IntegralList("1")';
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);</script>
+</body>
+</html>

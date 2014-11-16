@@ -1,0 +1,3 @@
+F:\Trade\CustomerManage\CPOS.BS.MailSendService\obj\x86\Debug\CPOS.BS.MailSendService.csprojResolveAssemblyReference.cache
+F:\Trade\CustomerManage\CPOS.BS.MailSendService\obj\x86\Debug\CPOS.BS.MailSendService.ProjectInstaller.resources
+F:\Trade\CustomerManage\CPOS.BS.MailSendService\obj\x86\Debug\CPOS.BS.MailSendService.csproj.GenerateResource.Cache

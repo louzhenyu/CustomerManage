@@ -1,0 +1,112 @@
+﻿@charset "utf-8";
+/*首页*/
+html,body,body>section{height:100%;min-height:100%;}
+body>section{max-width:640px;margin:0 auto;}
+body{background:#eee;}
+
+/*楼房列表*/
+.housesList{max-width:608px;margin:0 auto;padding:8px;}
+.housesList .item{position:relative;margin:0 auto 8px;border:1px solid #ddd;box-shadow:0 1px 2px rgba(187,187,187,0.3);}
+.housesList .picBox,.housesDetail .picBox{width:100%;}
+.housesList .infoBox,.housesDetail .infoBox{height:58px;line-height:21px;padding:10px 9px;font-size:12px;color:#999;background:#fff;}
+.housesList .infoBox strong,.housesDetail .infoBox strong{font-weight:normal;color:#f60;}
+.housesList .name,.housesDetail .name{float:left;max-width:153px;height:21px;font-size:16px;font-weight:bold;color:#333;}
+.housesList .dist,.housesDetail .dist{float:left;padding-left:18px;background:url(../../../images/special/worldunion/location.png) no-repeat 3px center;background-size:12px 18px;color:#555;}
+.housesList .reserve,.housesDetail .reserve{float:right;font-size:13px;color:#333;}
+.housesList .price,.housesDetail .price{float:left;font-size:13px;}
+.housesList .time,.housesDetail .time{float:right;}
+.housesList .nowReserveBtn{width:33%;height:34px;position:absolute;bottom:70px;left:0px;text-align:center;font:bold 14px/34px "微软雅黑";letter-spacing:1px;border-radius:0 7px 7px 0;background:#ff6a04;color:#fff;}
+
+.housesList .noData img{display:block;width:62.5%;margin:50px auto 106px;}
+.noData .seeHousesBtn{display:block;width:65.8%;margin:0 auto;background:#18a1fd;color:#fff;}
+/*楼房详情*/
+.housesDetail .infoBox{height:65px;padding:13px;}
+
+.subscribeAmount,.earningsAmount{height:110px;padding:18px;background:#eceeef;}
+.earningsAmount{background:#fff;}
+.subscribeAmount h2,.earningsAmount h2{font-size:15px;color:#333;font-weight:bold;}
+.subscribeAmount span,.earningsAmount span{font-size:43px;font-weight:bold;color:#fd6138;}
+
+
+.housesDetail .btnWrap{display:-webkit-box;display:-moz-box;width:100%;padding:10px 25px;background:#fff;}
+.housesDetail .btnWrap a{display:block;-webkit-box-flex:1;-moz-box-flex:1;height:42px;line-height:42px;border-radius:7px;font-size:15px;font-weight:bold;text-align:center;background-image:-webkit-gradient(linear, left top, left bottom, from(#fa6a46), color-stop(0.5, #ed402e), to(#ec0d1a));background-image:linear-gradient(to bottom,#fa6a46,#ed402e,#ec0d1a);color:#fff;}
+.housesDetail .btnWrap a.disabled{background-image:-webkit-gradient(linear, left top, left bottom, from(#ddd), color-stop(0.5, #999), to(#666));background-image:linear-gradient(to bottom,#ddd,#999,#666);}
+.housesDetail .redeemBtn{}
+.housesDetail .buyBtn{margin-left:15px;}
+
+.housesDetail .noteWrap{background:#FFFFFF;padding:0 18px;min-height: 30px;}
+
+/*提示页面*/
+.hintPage{text-align:center;}
+.hintPage .exp{width:58%;margin:0 auto 33px;text-align:left;font-size:15px;font-weight:bold;color:#fff;}
+.hintPage .exp p{padding-bottom:5px;}
+.hintPage .causeText{padding-left:30px;min-height:81px;}
+.hintPage .mb-33{margin-bottom:33px;}
+.hintPage .btnWrap{width:100%;padding:0 25px;text-align:center;}
+.successBg{height:100%;background:url(../../../images/special/worldunion/successBg.jpg) no-repeat 0 0;background-size:100%;overflow:auto;}
+.failureBg{height:100%;background:url(../../../images/special/worldunion/failureBg.jpg) no-repeat 0 0;background-size:100%;overflow:auto;}
+.hintTit{margin:58px 0 20px 0;;font-size:22px;color:#fc3;font-family:"微软雅黑";}
+.hintTit span{font-size:31px;}
+
+.commonBtn{display:inline-block;height:46px;width:56%;text-align:center;letter-spacing:1px;font:bold 18px/46px "微软雅黑";border-radius:5px;box-shadow:0 0 3px rgba(0,0,0,0.03);background:#fed761;color:#069;}
+.reserveBtn{width:75%;margin:0 auto;}
+.successBtnWrap .commonBtn{width:46%;font-size:15px;background:#fff;color:#008bc4;}
+.successBtnWrap .commonBtn:nth-child(2){margin-left:5%;}
+
+
+/*注册-页面*/
+.registerBg{min-height:100%;background:url(../../../images/special/worldunion/registerBg.jpg) no-repeat 0 0;background-size:100%;overflow:auto;}
+
+.registerBg .formBox{padding:45px 35px 0px;}
+.registerBg .tit{font-size:15px;font-weight:bold;color:#fff;}
+.registerBg .inputBox{width:100%;display:-webkit-box;display:-moz-box;margin:11px 0 15px 0;}
+.registerBg .inputBox input{display:block;height:40px;-webkit-box-flex:1;-moz-box-flex:1;border:none;border-radius:4px;background:#fff;}
+.registerBg .vcodeBtn{display:block;width:36%;height:40px;line-height:40px;margin-left:10px;font-size:14px;}
+.registerBg .registerBtn{display:block;width:80%;margin:70px auto 0;letter-spacing:10px;text-indent:10px;background:#18a1fd;color:#fff;}
+
+
+/*收益的详情*/
+.earningDetail .yesterday{height:190px;padding:10px 15px;font-size:12px;background-image:-webkit-gradient(linear, left top, left bottom, from(#fb6c47), color-stop(0.45, #ee432f), to(#ec0c1a));background-image:linear-gradient(to bottom,#fb6c47,#ee432f,#ec0c1a);color:#fff;}
+.earningDetail .yesterday em{width:18px;height:20px;line-height:20px;background:url(../../../images/special/worldunion/commonIcon.png) no-repeat;background-size:20px 75px;}
+.earningDetail .yesterday .date{float:left;line-height:26px;text-align:center;background-position:0px 2px;}
+.earningDetail .yesterday .text{height:22px;line-height:22px;margin-left:5px;}
+.earningDetail .yesterday .help{float:right;width:25px;background-position:5px -41px;}
+.earningDetail .yesterday .num{height:115px;clear:both;padding-top:25px;text-align:center;font-size:60px;}
+
+.earningDetail .totalProperty{height:130px;padding:30px 20px;background:#fff;}
+.earningDetail .totalProperty h2{font-size:15px;font-weight:bold;color:#000;}
+.earningDetail .totalProperty span{font-size:43px;font-weight:bold;color:#fd6138;}
+
+.earningDetail .earningWrap{padding-bottom:10px;background:#eceeef;}
+.earningDetail .myEarning{border-right:1px solid #e5e6e8;}
+.earningDetail .myEarning,.earningDetail .annualEarning{float:left;width:50%;height:51px;padding:0 20px;margin-top:22px;}
+.earningDetail .myEarning h2,.earningDetail .annualEarning h2{line-height:15px;padding-bottom:7px;font-size:15px;color:#999;}
+.earningDetail .myEarning span,.earningDetail .annualEarning span{line-height:30px;font-size:20px;color:#666;}
+
+.earningDetail .itemBox{background:#fff;}
+.earningDetail .itemBox .title{height:45px;line-height:56px;padding-left:24px;font-size:12px;font-weight:bold;border-bottom:1px solid #ccc;color:#666;}
+.earningDetail .itemBox .list{display:-webkit-box;display:-moz-box;height:78px;margin-left:17px;border-bottom:1px solid #ccc;}
+.earningDetail .itemBox .list:nth-last-child(1){border-bottom:none;}
+
+.earningDetail .itemBox .titIcon{display:block;width:21px;margin-right:25px;background:url(../../../images/special/worldunion/titIcon.png) no-repeat left center;background-size:21px 18px;}
+.earningDetail .itemBox .list>div{-webkit-box-flex:1;-moz-box-flex:1;}
+.earningDetail .itemBox .name{display:block;margin-top:15px;font-size:14px;font-weight:bold;color:#999;}
+.earningDetail .itemBox .num{display:block;font-size:25px;color:#666;}
+
+
+.earningHint{width:228px;height:176px;position:fixed;top:50%;left:50%;margin:-88px 0 0 -114px;border-radius:7px;background:rgba(255,255,255,0.8);}
+.earningHint .line{height:8px;border-radius:7px 7px 0 0;background:#f06408;}
+.earningHint .text{width:45%;margin:40px auto 20px;letter-spacing:2px;text-align:center;font:bold 15px/1.5em "微软雅黑";}
+.earningHint .seeHousesBtn{display:block;width:157px;hegiht:45px;margin:0 auto;font:bold 15px/45px "微软雅黑";background:#ff6a04;color:#fff;}
+
+.earningDetail .seefloor{height:44px;padding:10px;background: #fff;}
+.earningDetail .seefloor .icon{float: right;width: 74px;height: 22px;background: url(../../../images/special/worldunion/seefloor.png) no-repeat left center;background-size:74px 22px;}
+.earningDetail .earningTip .carIcon{float:left;width:23px;height: 37px;background: url(../../../images/special/worldunion/car001.png) no-repeat left center;background-size:23px 37px;}
+.earningDetail .showText{height:35px;padding:5px 60px 0;line-height:16px;text-align:center;letter-spacing:1px;font-size:12px;overflow:hidden;}
+
+.indexTopWrap{position:relative;}
+.ydBtn{position:absolute;display:block;width:112px;height:30px;background:url(../../../images/special/worldunion/ydBtn.png) no-repeat 0 0;background-size:100%;}
+.indexTopWrap .ydBtn{top:50%;left:50%;margin:-15px 0 0 -56px;}
+
+.listDetails{position:relative;}
+.listDetails .ydBtn{position:fixed;top:130px;left:-6px;}

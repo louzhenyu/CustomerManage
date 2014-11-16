@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>店铺首页</title>
+<link href="css/global.css" rel="stylesheet" />
+<style>
+
+
+/*common*/
+html,body{height:100%;min-height:100%;}
+body{font:12px/1.5em "SimHei";background:#fff;color:#666666;}
+/*阿拉丁店铺*/
+
+.aladingShopArea{max-width:640px;margin:0 auto;padding:15px 0;background-color:#f7f7f7;}
+.aladingShopArea .moduleList{}
+.aladingShopArea .moduleItem{background-color:#ffffff;margin-bottom: 15px;border-top: 1px solid #D7D7D7;border-bottom: 1px solid #D7D7D7;}
+.aladingShopArea .moduleItem .header{line-height: 20px;padding:10px;font-size:16px;}
+.aladingShopArea .moduleItem li{float:left;width:45.3125%;height:220px;margin-left:10px;margin-bottom:10px;cursor:pointer;border:1px solid #eee;background-color: #ffffff;}
+.aladingShopArea .moduleItem .picWrap{height:145px;border-bottom:1px solid #eee;}
+.aladingShopArea .moduleItem img{width:100%;height:100%;}
+.aladingShopArea .intro{font-size:12px;height:32px;line-height:16px;padding:0 8px;margin:7px 0;overflow:hidden;}
+.aladingShopArea .price{padding:0 8px;margin:7px 0 10px 0;overflow:hidden;}
+.aladingShopArea .currentPrice{font-weight:bold;color:#ff5d13;font-family: arial;font-size:14px;}
+.aladingShopArea .originalPrice{display:inline-block;color:#999999;-webkit-transform:scale(0.75);position:relative;left:-3px;font-family: arial;font-size:12px;}
+
+/*兼容*/
+@media only screen and (min-width:640px){
+body{font:24px/1.5em "SimHei";background:#fff;color:#666666;}
+.aladingShopArea .moduleItem .header{line-height: 30px;}
+.aladingShopArea .moduleItem li{height:410px;margin-bottom:30px;}
+.aladingShopArea .moduleItem .picWrap{height:290px;border:1px solid #eee;}
+.aladingShopArea .intro{max-height:82px;padding:6px 40px 4px 0;}
+.aladingShopArea .originalPrice{-webkit-transform:scale(1);left:0px;font-size:18px;}
+}
+
+.dianpu-cover{min-height: 110px;}
+.dianpu-top { border-bottom:1px solid #D7D7D7; background-color:#F9F9F9;}
+.dianpu-top dl { padding:15px 0 10px 30%; display:-webkit-box; display:box; position:relative;}
+.dianpu-top dt { width:25%; min-height:76px; border-radius:5px; position:absolute; top:-30px; left:10px;}
+.dianpu-top dt img { width:100%; border-radius:5px;}
+.dianpu-top dd {-webkit-box-flex:1; box-flex:1; text-align:center; position:relative;}
+.dianpu-top dd:after {content:''; width:2px; height:30px; border-right:1px solid #ccc; position:absolute; right:0; top:10px; display:block;}
+.dianpu-top dd a ,.dianpu-top dd span { color:#999; font-size:12px;}
+.dianpu-top dd b,.dianpu-top dd i { display:block; height:33px;font-family: arial;}
+.dianpu-top dd b { color:#666; font-size:22px;}
+.dianpu-top dd i { background:url(images/sprites.png) no-repeat 0 0; background-size:25px auto; width:26px; margin:0 auto;}
+.dianpu-top dd i.on { background:url(images/spritesColor.png) no-repeat 0 0; background-size:25px auto; }
+.dianpu-top dd.shareContianer i { background-position:4px 0;}
+.dianpu-top dd.favoriteContianer i { background-position:0 -50px;}
+
+
+
+</style>
+</head>
+
+<body>
+<section id="section" data-js="/HtmlApps/other/store/js/index">
+<div id="storeInfo" class="dianpu-top">
+    <!-- <div class="dianpu-cover"> <img src="images/dianpu-cover.jpg"> </div>
+    <dl>
+        <dt><img src="images/dianpu-logo.jpg"></dt>
+        <dd><a href="javascript:;"> <b>998</b>全部宝贝 </a></dd>
+        <dd><a href="javascript:;"> <b>98</b>所有门店 </a></dd>
+        <dd><a href="javascript:;"> <i></i>分享 </a></dd>
+        <dd><a href="javascript:;"> <i></i>收藏店铺 </a></dd>
+    </dl> -->
+</div>
+<div id="moduleList" class="aladingShopArea">
+	
+</div>
+</section>
+<script type="text/html" id="tplStoreInfo">
+    <div class="dianpu-cover"> <img src="<%=StoreTopBackGroundUrl%>"> </div>
+    <dl>
+        <dt><img src="<%=StoreLogoUrl%>"></dt>
+        <dd><a href="<%=CountUrl%>"> <b><%=CountItem%></b>全部宝贝</a></dd>
+        <dd><a href="javascript:;"> <b><%=NewCountItem%></b>门店</a></dd>
+        <!--<dd class="shareContainer"><span class="shareBtn" > <i></i>分享</span></dd>-->
+        <dd class="favoriteContianer"><span id="favoriteBtn" class="favoriteBtn"> <i></i>收藏</span></dd>
+    </dl>
+</script>
+<script type="text/html" id="tplListItem">
+	<%for(var i=0,idata;i<list.length;i++){idata=list[i];%>
+	<div class="moduleItem">
+        <div class="header">
+            <%=idata.ModuleName%>
+        </div>
+        <ul class="clearfix">
+            <%for(var j=0,edata;j<idata.GoodListInfo.length;j++){edata=idata.GoodListInfo[j];%>
+            <li>
+                <a href="<%=edata.ItemDetailUrl%>">
+                <p class="picWrap"><img src="<%=edata.ItemUrl%>" alt=""></p>
+                <p class="intro"><%=edata.ItemDescription%></p>
+                <p class="price">
+                    <span class="currentPrice">￥<%=edata.SalesPrice%></span>
+                    <del class="originalPrice"><%=edata.CostPrice<=edata.SalesPrice?'':('￥'+edata.CostPrice)%></del>
+                </p>
+                </a>
+            </li>
+            <%}%>
+        </ul>
+    </div>
+	<%}%>
+</script>
+<script type="text/javascript" src="/HtmlApps/other/static/js/lib/require.js" defer async data-main="/HtmlApps/other/static/js/main.js"></script>
+</body>
+</html>

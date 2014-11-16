@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<title>付款成功</title>
+<link href="css/c.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript">
+function getParam(para) {
+    //获得html上的参数
+    querystr = window.location.href.split("?");
+	var iparam = "",
+    tmp_arr = [];
+    if (querystr[1]) {
+        var GET1s = querystr[1].split("&");
+		for (i = 0; i < GET1s.length; i++) {
+            tmp_arr = GET1s[i].split("=");
+			if (para == tmp_arr[0]) {
+                iparam = tmp_arr[1];
+            }
+        }
+
+    }
+    return iparam;
+}
+
+ var Base = {
+    //公共类的获得
+    openId: function() {
+	
+	
+        var opid = getParam("openId");
+        return opid;
+        // return 'o8Y7Ejv3jR5fEkneCNu6N1_TIYIM';
+    },
+    userId: function() {
+		
+        var userId = getParam("userId");
+        return userId;
+        //   return 'f7a5863a51334f1e8bd46ea3f0e3278f';
+    },
+    customerId: function() {
+        var customerId = getParam("customerId");
+        return customerId;
+        //   return 'f7a5863a51334f1e8bd46ea3f0e3278f';
+    },
+    locale: function() {
+        return 'zh';
+    },
+    All: function() {
+
+        return {
+            "locale": this.locale(),
+            "userId": this.userId(),
+            "openId": this.openId(),
+            "customerId": this.customerId()
+        }
+    }
+}
+function SureOrder() {
+
+    var jsonarr = {
+        'action': "setGOrderUpdateStatus",
+        ReqContent: JSON.stringify({
+            "common": Base.All(),
+            "special": {
+
+                'orderId': getParam("orderId")
+            }
+        })
+    };
+    $.ajax({
+        type: 'get',
+        url: '../../../OnlineShopping/data/Data.aspx',
+        data: jsonarr,
+        timeout: 90000,
+        cache: false,
+        beforeSend: function () {
+            Win.Loading();
+        },
+        dataType: 'json',
+        success: function (o) {
+
+            Win.Loading("CLOSE");
+
+            if (o.code == 200) {
+
+                alert(o.description);
+                $("#s1").hide();
+                $("#s2").show();
+
+            } else {
+                alert(o.description);
+
+            }
+
+        }
+    });
+}
+ function GetOrderStats() {
+      
+        var jsonarr = {
+            'action': "getGOrderInfo",
+            ReqContent: JSON.stringify({
+                "common": Base.All(),
+                "special": {
+                    
+					'orderId':getParam("orderId")
+                }
+            })
+        };
+        $.ajax({
+            type: 'get',
+            url: '../../../OnlineShopping/data/Data.aspx',
+            data: jsonarr,
+            timeout: 90000,
+            cache: false,
+            beforeSend: function () {
+                Win.Loading();
+            },
+            dataType: 'json',
+            success: function (o) {
+
+                Win.Loading("CLOSE");
+
+                if (o.code == 200) {
+
+                    if (o.content.status == "4") {
+                        $("#s1").hide();
+                        $("#s2").show();
+
+                    } else {
+                        $("#s1").show();
+                        $("#s2").hide();
+                    }
+
+                } else {
+                    alert(o.description);
+
+                }
+
+            }
+        });
+    }
+
+var Win = {
+    Loading: function(type, id) {
+        
+        if (type == "CLOSE" && id) {
+            $(id).find(".cLoading").remove();
+            return;
+        }
+        if (id) {
+            $(id).find(".cLoading").remove();
+            $(id).append('<div align=center style="padding:14px;" class="cLoading"><img width="30" height="30" src="images/382.gif"></div>');
+            return;
+        }
+        $("#BottomMenu").hide();
+
+        if (type == "CLOSE") {
+            $(".loading").hide();
+
+            return false;
+        }
+        var getWindowsWidth = $(window).width(),
+        getWindowsHeight = $(window).height(),
+        dst = $(document).scrollTop();
+        $(".loading").css({
+            left: (getWindowsWidth - $(".loading").width()) / 2,
+            top: ((getWindowsHeight - $(".loading").height()) / 2) + dst
+        });
+        $(".loading").show();
+    },
+    W: function() {
+        return $("#PcBox").width();
+    },
+    H: function() {
+        return $("#PcBox").height();
+    }
+}
+
+</script>
+</head>
+
+<body>
+支付成功！
+</body>
+</html>

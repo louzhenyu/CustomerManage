@@ -1,0 +1,72 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">门店查询</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body  >
+<div style="width: 320px; margin-left: auto; margin-right: auto; overflow: hidden; display:none;" id="PcBox" class="PcBox">
+  <div class="DetailBigBox" id="DetailBigBox">
+  
+    
+  </div>
+  <div class="MenuBox" id="MenuBox"> </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<!--  <div class="DetailmdkZBtn" style="left:10px; top:40px;">
+        <Div style="font-size:22px; color:#fff; text-align:left; padding-bottom:15px; line-height:30px;">本月最优门店<br>
+          静安三店</Div>
+       </div>-->
+<script type="text/javascript">
+var loadMore = '';
+var Von = ' Vip.ShopList("1");abc();'; //  
+
+function abc(){
+	$("#PcBox").show();
+	
+}
+</script>
+<script id="shopList" type="text/template">
+<% if(isfirst =="1"){%>
+  <div class="DetailImg" id="wrapper">
+      <div class="DetailImgIeo" id="scroller">
+        <ul>
+			<% _.each(imageList,function(item){ %>
+     	 <li style="width:<%= w %>px"><img style="height:220px;" src="<%= item.imageURL%>"></li>
+    	  <% })%>
+        </ul>
+      </div>
+      <div class="KzDGrayTOP"></div>
+      <div class="KzDGray"></div>
+      <dl id="indicator">
+	  	  <% _.each(imageList,function(item,key){ %>
+   			 <dd <% if(key==0){%>class="active" <%}%>><%= key+1 %></dd>
+		<% })%>
+      </dl>
+    </div>
+<%}%>
+	<% _.each(storeList,function(sitem){ %>
+   <div class="DetailSmallBox" style="border-bottom:1px solid #C9CDCF; box-shadow:0 0 2px #ccc; ">
+     <div class="DetailSmallBoxYW" style="position:relative">
+	 <% if(sitem.lng!="" && sitem.lat!="" ){ %>
+     <div class="DetailmdkZBtn" style="width:100px; top:10px; right:-2px;"><a href="googlemap.html?lng=<%=sitem.lng%>&lat=<%=sitem.lat%>"  class="DetailActionBtn">查看地图</a></div>
+	 <%}%>
+        <h1 style="margin-right:100px; padding-top:5px;"><%= sitem.storeName%></h1>
+        <div class="EPSdg" style="padding:5px 0;">电话：<a href="tel:<%= sitem.tel%>"><%= sitem.tel%></a><br>
+          地址：<%= sitem.address%></div>
+      </div>
+    </div>
+    <% })%>
+</script>
+</body>
+</html>

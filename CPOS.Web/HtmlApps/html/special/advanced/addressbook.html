@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="AddressBook">通讯录</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body class="addressBookPage" >
+    <div id="masklayer" style="background-color:#FFF;" class="pageloading" > <i></i>
+    </div>
+<section>
+    <div class="letterMenu" style="display:none">
+        <span>a</span>
+        <span>b</span>
+        <span>c</span>
+        <span>d</span>
+        <span>e</span>
+        <span>f</span>
+        <span>g</span>
+        <span>h</span>
+        <span>i</span>
+        <span>j</span>
+        <span>k</span>
+        <span>l</span>
+        <span>m</span>
+        <span>n</span>
+        <span>o</span>
+        <span>p</span>
+        <span>q</span>
+        <span>r</span>
+        <span>s</span>
+        <span>t</span>
+        <span>u</span>
+        <span>v</span>
+        <span>w</span>
+        <span>x</span>
+        <span>y</span>
+        <span>z</span>
+        <span>#</span>
+    </div>
+    
+ <div class="commonSearchBox">
+      <div class="searchBox">
+
+        <p class="inputBox">
+          <input type="text" placeholder="搜索" id="txtSearch"></p>
+        <span class="serchBtn" ></span>
+      </div>
+    </div>
+    
+    <div class="conditionSearch">
+        <div class="commonBox">
+
+            <a href="javascript:Jit.AM.toPage('MyClass')">
+            <div class="item" >
+                <img class="headPic fn" src="../../../images/special/advanced/pic.png" />
+                <div class="info">
+                    <span class="tit">我的班级</span>
+                </div>
+            </div></a>
+            <div class="item">
+                <img class="headPic fn" src="../../../images/special/advanced/pic1.png" />
+                <div class="info">
+                    <span class="tit">我的地区校友会</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="stance"></div>
+    <div>
+   <!--      <div class="letterBar">A</div> -->
+        <div class="commonBox" id="dataList">
+          
+
+        </div>
+              <div class="clearfootfix" id="nextPosition" ></div>
+   
+        
+    </div>
+</section>
+</body>
+</html>
+<script type="text/html" id="tpDataList" > 
+
+    <%for (var i = 0; i < datas.length; i++) {
+    var dataInfo=datas[i];
+    %>
+        <a href="javascript:Jit.AM.toPage('UserInfo','toUserId=<%=dataInfo.VIPID %>')">
+    <div class="item"><div>
+        <img class="headPic" src="<%=dataInfo.HeadImgUrl||'../../../images/special/advanced/defaulthead.png' %>" /></div>
+        <div class="info">
+          <span class="tit"><%=dataInfo.VipName %> | <%=dataInfo.CourseInfoName%> </span>
+     
+          <span class="text"><%=dataInfo.Col11 %>&nbsp; </span>
+        </div>
+      </div>
+  </a>
+<%
+  };
+%>
+
+</script>

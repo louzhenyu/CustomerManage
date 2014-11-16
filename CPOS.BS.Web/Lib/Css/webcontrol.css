@@ -1,0 +1,34 @@
+﻿/*页面样式*/
+.view_Search{min-height:24px; line-height:24px;  }
+.view_Button{line-height:25px; margin:10px 10px 10px 0px;*margin-left:0px;_margin-left:0px;}
+
+/*控件默认样式(已取消)*/
+.jitbutton{ margin-left:6px;*margin-left:10px;_margin-left:10px;}
+/*所有Form Panel的样式,增加背景*/
+.x-column-inner{ 
+	border:0px
+    /*background:#F1F2F5*/
+	}
+	/*展开&收起控件的样式*/
+        .arrowdown
+        {
+              background: url(/Lib/Image/button/opensmall.png) no-repeat  !important;   
+               
+        }
+        .arrowup
+
+        {
+             background: url(/Lib/Image/button/closesmall.png) no-repeat  !important;                
+               
+        }   
+       /*点选控件的样式*/
+	   .selecthighlight
+        {
+              background: url(/Lib/Image/button/select.png)  no-repeat !important;            
+               
+        }   
+        .selecthighlight button:active
+        {
+              background: url(/Lib/Image/button/selecthighlight.png)  no-repeat !important;          
+               
+        }     

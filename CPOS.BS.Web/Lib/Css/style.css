@@ -1,0 +1,188 @@
+﻿/*产品的页面样式的样式表*/
+@charset "utf-8";
+/****************************顶部区域开始****************************/
+/*定义页面顶部区域的背景色和高度*/
+.header{
+	height:61px;
+	background:url(/Lib/Image/header.gif) repeat;
+}
+/*右侧系统操作按钮*/
+.nav a{
+	margin-top:12px;
+	width:50px;
+	height:38px;
+	overflow:hidden;
+	background:url(/Lib/Image/title.png) no-repeat;
+	text-indent:-9999999em;
+}
+/*右侧系统操作按钮的鼠标悬停样式*/
+.nav a:hover{
+	opacity:0.5;
+	filter:alpha(opacity:50);
+}
+/*右侧系统操作按钮的背景图片*/
+a.nava1{
+	background-position:0 0;
+}
+a.nava2{
+	background-position:-76px 0;
+}
+a.nava3{
+	background-position:-153px 0;
+}
+a.nava4{
+	background-position:-229px 0;
+}
+/****************************顶部区域结束****************************/
+
+/****************************内容区域开始****************************/
+/*边框的左右边样式*/
+.wrap{
+	border-right:1px solid #C5C7CB;
+   border-left:1px solid #C5C7CB;
+	
+}
+/*内容页的样式*/
+.aside, .section{
+	min-height:700px;
+	height:auto;
+	_height:700px; /*兼容性*/
+}
+
+/*内容页区域*/
+.section{
+	border:1px solid #C5C7CB;
+}
+/*查询区域边框*/
+.art-tit{
+    margin-bottom:10px;
+	background:#F1F2F5;
+	border:1px solid #C2C3C8;
+}
+
+/*按钮样式-已经取消*/
+.art-titbutton    
+{  
+    margin-bottom:-1px;
+	min-height:46px;
+	background:#F1F2F5;
+	border:1px solid #C2C3C8;	
+
+}
+.ti{
+	text-indent:20px;
+}
+span.tzp{
+	padding:1px 3px 4px;
+	width:46px;
+	height:20px;
+	overflow:hidden;
+	line-height:20px;
+	background:url(/Lib/image/page.gif) no-repeat;
+}
+input.tzip{
+	width:22px;
+	height:20px;
+	background:none;
+	border:0;
+	vertical-align:middle;
+	line-height:20px\0;
+}
+a.tza{
+	width:20px;
+	height:20px;
+}
+/****************************内容区域结束****************************/
+
+/****************************菜单区域开始****************************/
+/*左边菜单的样式*/
+.aside{
+	margin-top:-14px;
+	*margin-top:0px; /*兼容性*/
+	width:210px;
+	background:#EFEFEF url(/Lib/Image/shadow1.gif) repeat-x;
+}
+.aside ul{
+	padding-top:10px;
+	border-bottom:1px solid #E1E1E1;
+}
+.aside li{
+	_width:100%;
+	_overflow:hidden;
+	background:url(/Lib/Image/title.png) -289px 0 no-repeat;
+	_background:url(/Lib/image/title.gif) -289px 0 no-repeat;
+	font:14px/46px 'Simsun';
+}
+.aside li:hover, .aside li.current{
+	background-position:-289px -48px;
+	_background:url(/framework/image/ie6-1.gif) no-repeat;
+	font-weight:bold;
+}
+.aside a{
+	display:block;
+	padding-left:73px;
+	background:url(/Lib/image/title.png) 0 0 no-repeat;
+}
+.aside a:hover, .aside a.aCurrent{
+	background-image:url(/Lib/image/title2.png);
+}
+.aside a.asideA1{
+	background-position:34px -42px;
+}
+.aside a.asideA2{
+	background-position:33px -90px;
+}
+.aside a.asideA3{
+	background-position:33px -139px;
+}
+.aside a.asideA4{
+	background-position:36px -171px;
+}
+.aside a.asideA5{
+	background-position:34px -218px;
+}
+.aside a.asideA6{
+	background-position:34px -266px;
+}
+.aside a.asideA7{
+	background-position:33px -314px;
+}
+.aside a.asideA8{
+	background-position:34px -362px;
+}
+.aside a.asideA9{
+	background-position:33px -410px;
+}
+.aside a.asideA10{
+	background-position:34px -458px;
+}
+.aside a.asideA11{
+	background-position:33px -506px;
+}
+/*菜单项内容的样式*/
+.menu{
+	display:none;
+	background:#F6F6F6;
+	border-top:1px solid #B7B7B7;
+	font:12px/28px 'Simsun';
+}
+.menu a{
+	background:none ;
+	/* border-top:1px solid #F6F6F6;*/
+	color:#646464;
+}
+.menu a:hover{
+	background:#bef3fc;
+	border-color:#83CDEE;
+	border-right:4px solid #f6cc9c;
+	font-weight:bold;
+	color:#646464;
+}
+.menu a.aCtn{
+	background:#66C3EC;
+	border-color:#83CDEE;
+	border-right:4px solid #F7881B;
+	font-weight:bold;
+	color:#FFF;
+}
+/****************************菜单区域开始****************************/

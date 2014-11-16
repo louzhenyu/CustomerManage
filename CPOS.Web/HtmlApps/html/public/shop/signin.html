@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title name="SignIn">现场签到</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+</head>
+
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<div class="signin">
+    <div class="signin-t ac"> 感谢您的莅临! </div>
+    <div class="signin-m">
+        <dl>
+            <dt>签到码：</dt>
+            <dd> <i></i>
+                <input type="text" placeholder="请输入签到码" id="txtSignCode" maxlength="24" >
+                <p>请填写您的签到码完成签到吧！</p>
+            </dd>
+        </dl>
+        <dl>
+            <dt>手机号：</dt>
+            <dd> <i></i>
+                <input type="text" placeholder="请输入手机号码" id="txtMobile" maxlength="24">
+                <p>没签到码？试试用手机号签到吧！</p>
+            </dd>
+        </dl>
+    </div>
+    <div class="signin-b">
+        <p>注：签到码或手机号只需要填写一个即可完成签到！</p>
+        <div class="bot-bot"> <a href="javascript:;" id="btSignIn" class="btn-red"><i></i> 签 到</a> </div>
+    </div>
+</div>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</body>
+</html>

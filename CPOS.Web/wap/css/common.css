@@ -1,0 +1,89 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img { border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 14px; font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #4d4d4d; resize: none; outline: none; }
+body { background-color:#EFEFEF; }
+h1, h2, h3, h4, h5, h6 { font-size: 16px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+a { text-decoration: none; color: #377CA2; }
+a:hover { text-decoration: underline; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 16px; margin: 0; padding: 0; }
+textarea, input[type="text"],input[type="password"],input[type="button"],input[type="submit"]{ resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1 }
+.frdisplay{ float:right; display:block;}
+
+
+.WAppMenu{ clear:both; height:42px; display:block;   background: -webkit-gradient(linear, left top, left bottom, from(#E7E7E7), to(#CBCBCB)); box-shadow:0 0 8px #333333; position:fixed; left:0; top:0; width:100%; z-index:9}
+.WAppMenu li{ float:left; width:33%; text-align:center; color:#6D6D6D; font-size:20px; font-weight:bold; text-shadow:0 0 3px #fafafa; cursor:pointer;}
+.WAppMenu li.WAppMenuActive{ background: -webkit-gradient(linear, left top, left bottom, from(#F1F1F1), to(#E2E2E2)); color:#E04646;}
+.WAppMenu li .WAppMenuLi{ border-left:1px solid #D9D9D9;  border-right:1px solid #fff; line-height:42px;}
+.inputAndSelect{ width:80%; margin-left:auto; margin-right:auto; margin-top:20px; line-height:28px;}
+.AlumniInputstyle{  border: 1px solid #b2bac0; border-radius: 4px; height: 40px; padding-left: 2%;  background: -webkit-gradient(linear, left top, left bottom, from(#d7d7d7), to(#ffffff), color-stop(0.1, #ffffff)); color: #9c9b9b; text-shadow: 0 0 1px #fff; width:98%; font-size:18px;}
+.blank1{ height:1px; overflow:hidden; display:block; clear:both;}
+
+.blank1{ height:1px; overflow:hidden; display:block; clear:both;}
+.inputsubmitStyle{ border-radius: 4px; height: 40px; text-align:center; cursor:pointer; font-size: 24px; background: #a91315; color: #fff; text-shadow: 0 0 1px #fff; width:100%; font-size:18px;}
+
+.labelSelect { position: relative; font-family: Helvetica, arial; width:100%; }
+.labelSelect:after { position: absolute; top: -17px; right: 8px; display: inline-block; content: " ▼"; color: #9c9b9b; font-size: 18px; text-align: center; width: 30px; height: 43px; line-height: 43px;  pointer-events: none; text-shadow: 0 0 2px #fff; }
+.labelSelect select { font-size: 18px; color: #9c9b9b; width: 100%; padding-left:2%; line-height: 40px; border-radius: 4px; height: 40px; -webkit-appearance: none; border: 1px solid #c1c6cc; background: -webkit-gradient(linear, left top, left bottom, from(#d7d7d7), to(#f9f9f9), color-stop(0.1, #f9f9f9));color: #9C9B9B; text-shadow: 0 0 1px #fff; }
+.imgDiv{ width:74px; height:74px; background-color:#fff; border:1px solid #E0E0E0; box-shadow:0 0 5px #EAEAEA; position:absolute; left:12px; }
+.WAppPerson{ position:relative; clear:both; display:block; border-bottom:1px solid #D9D9D9; overflow:hidden; padding:8px 0; min-height:94px; cursor:pointer}
+.imgDiv img{ padding:7px;}
+.WAppPersonRight{ margin-left:100px; margin-right:12px; text-align:left; text-shadow:0 0 2px #fff;}
+.AII{  overflow:hidden; line-height:25px; font-size:14px; color:#93939C;}
+.WAppPersonRight h3{ font-size:16px; line-height:30px; color:#000000;}
+.AIIspp{ line-height:24px; font-size:12px;}
+.AIIspp i{ font-style:normal; width:30%; float:left; display:block; height:24px;}
+.SearchTitle{ text-shadow:0 0 2px #fff; font-size:20px; clear:both; padding:12px; }
+.WAppSection{ margin-top:50px; padding-bottom:20px;}
+
+.WAppBannerTitle{  position:absolute; bottom:0; right:0; width:120px; }
+
+.WAppBannerTit{ font-size:16px;  font-weight:bold; text-align:right; padding-right:12px;  position:absolute; bottom:20px; right:0;  color:#fff; line-height:36px;}
+
+.btnStylecc{ padding:0 30px;  margin-top:4px;  border:1px
+ solid #f96969; border-radius:5px;   background: -webkit-gradient(linear, left top, left bottom, from(#e04646), to(#e04646), color-stop(0.5, #e04646)); color:#fff; font-size:18px; cursor:pointer; box-shadow:0 0 5px #CCC;text-shadow:0 0 2px #999; height:38px; clear:both; }
+.btnStyleccgray{padding:0 30px; line-height:38px; margin-top:4px;  border:1px
+ solid #ccc; border-radius:5px;   background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#999), color-stop(0.5, #666)); color:#fff; font-size:18px; cursor:pointer; box-shadow:0 0 5px #CCC;  text-shadow:0 0 2px #999;  height:38px; clear:both;}
+ .DetailAll{ width:94%; margin-left:auto; margin-right:auto; padding-bottom:20px;}
+ .DetailAll h2{ border:1px solid #fff; background: -webkit-gradient(linear, left top, left bottom, from(#cbcaca), to(#e1e0e0), color-stop(0.1, #dbdada)); padding:12px; border-radius:5px; line-height:24px; margin-top:9px; box-shadow:0 0 2px #dbdada}
+ .DetailLi{ margin-top:8px;}
+ .DetailLi h3{ background:url(../images/slbg.gif) repeat-x 0 center; height:32px; line-height:32px; color:#333; }
+  .DetailLi h3 span{text-shadow:0 0 2px #fff; background-color:#efefee; padding-right:20px}
+  .DetailLi p{ font-size:14px; color:#666; }
+ .loading{ width:40px; height:40px; position:absolute; left:0; top:0; z-index:999}
+ .EventDetail{ }
+ .TipJp{ background-color:#fdfdc8; border:1px solid #c9c99a; line-height:20px; font-size:14px; padding:2%; position:fixed; bottom:0; left:0; width:96%; }
+ 
+ .AlumniConnext1{ width:94%; margin-left:auto; margin-right:auto; background-color:#f7f7f7; box-shadow:0 0 5px #5f0404; margin-top:30px; padding-bottom:20px;  position:absolute; z-index:11; left:3%; top:20px}
+.AlumniConnext1Title{ height:46px; border-bottom:1px solid #bbbbbb; background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dadada),  color-stop(0.5, #ececec)); box-shadow:0 0 2px #bbb; text-align:center; font-size:22px; color:#4e4e4e; line-height:46px; position:relative}
+
+a.AlumniBack{ background-position:-45px 5px; width:45px; height:36px; position:absolute; left:8px; top:5px; display:block;}
+.icnbg{ background-image:url(../images/icn_skin.png); background-repeat:no-repeat; vertical-align:top; }
+
+.AppBaoMing{ position:absolute;}
+.AppBgGray{ position:absolute; left:0; top:0; z-index:10; background-color:#333; opacity:0.5;}
+.xingred{ color:#C00; font-size:16px;}
+
+.YaoJiangWarp{ width:94%; margin-left:auto; margin-right:auto;}
+.prizeIcn{ background:#373d42 url(../images/prizebg.gif) repeat left top; height:210px; border-radius:4px;}
+.prizeMenu{ overflow:hidden; zoom:1; clear:both; border-bottom:1px solid #dcdbdb; margin-top:6px;}
+.prizeMenuLi{ height:36px;  text-align:center; font-size:18px; float:left; width:33%; font-weight:bold;}
+.prizeMenuLi a,.prizeMenuLi a:hover{ color:#6d6d6d; display:block; text-align:center; text-decoration:none;line-height:36px;}
+.prizeMenuLi a.cHover,.prizeMenuLi a.cHover:hover{ color:#111111; display:block; text-align:center; text-decoration:none;line-height:36px;}
+.prizeJPa{ background-color:#fff; border:1px solid #E0E0E0; box-shadow:0 0 5px #EAEAEA; position:absolute; left:12px; max-height:104px; overflow:hidden;}
+.prizeJPa img{ padding:7px; display:block;}
+.WAppPersonJp{ position:relative; clear:both; display:block; border-top:1px solid #fff;  border-bottom:1px solid #D9D9D9; overflow:hidden; padding:12px 0 8px 0; min-height:104px; cursor:pointer}
+
+.InputButtonYJ{padding:0 14px; line-height:28px; margin-top:4px;  border:1px
+ solid #184b01; border-radius:5px;   background: -webkit-gradient(linear, left top, left bottom, from(#469f1e), to(#257302), color-stop(0.5, #257302)); color:#fff; font-size:18px; cursor:pointer;  margin-right:6%; text-shadow:0 0 2px #999; height:36px; }
+
+.VoteIcnDiv{width:180px; margin-left:auto; margin-right:auto; padding-top:10px;}
+.VoteTxtDiv{font-size:22px; text-align:right; margin-top:-30px; margin-right:4%; color:#fff;}
+.discussDiv{padding:13px 0; border-bottom:1px solid #D9D9D9; height:40px; position:relative;}
+input.DisCussBtn{margin:0; width:90px; position:absolute; right:0; top:13px; height:42px;}
+.grayDate{ font-size:12px; color:gray;}
+.GotoBind{ text-align:center; padding-top:20px; font-size:16px;}

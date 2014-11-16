@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<title>登录/注册</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body>
+<div class="PcBox indexbox" id="PcBox" style="height:500px; display:none;">
+  <div><img src="images/tran1.png" width="100%" id="loginImage" /></div>
+  <div class="loginbox" style="position:absolute; left:0; top:0; width:100%; border-top:none;">
+    <div style="width:80%; position:relative; margin-left:auto; margin-right:auto;    border-top: 2px solid #47C1A8;">
+      <div class="loginbgaphla"></div>
+      <div class="loginbga">
+        <div class="loginboxMenu"><span class="Login_id2" id="Login_id2" onClick="abas(2)">注册</span> | <span class="Login_id1" id="Login_id1"  onClick="abas(1)">登录</span></div>
+        <div class="loginboxBox" id="cigg_1">
+          <div class="loginboxInput">
+            <input type="text" placeholder="手机号" class="inputAndSelect" id="username" value="" />
+          </div>
+          <div class="loginboxInput">
+            <input type="password" placeholder="密码" class="inputAndSelect" id="pwd" value="" />
+          </div>
+          <div class="loginboxInput" style="margin-top:35px;">
+            <input type="button" onClick="AppSet.LoginSubmit()"  value="登录" class="btnStylecc" />
+          </div>
+        </div>
+        <div class="loginboxBox" style="display:none;" id="cigg_2">
+          <div class="loginboxInput">
+            <input type="text" placeholder="手机号" class="inputAndSelect" id="username1" value="" />
+          </div>
+          <div class="loginboxInput">
+            <input type="password" placeholder="密码" class="inputAndSelect" id="pwd1"  value="" />
+          </div>
+          <div class="loginboxInput" style="margin-top:35px;">
+            <input type="submit"  value="注册" class="btnStylecc" onClick="AppSet.RegSubmit()" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="MenuBox" id="MenuBox"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'indexAbs()';
+function indexAbs(){
+		if(G("islogin") == "1"){
+			LinkAddCustomerId("vipcenter.html");
+			return false; 	
+		}
+	if($(window).height() > 500){
+	 $("#PcBox,#loginImage").css("height",$(window).height())	
+	}
+
+	$("#loginImage").attr("src", G("skin.loginImage"));
+	
+	$("#PcBox").show();
+	if(getParam("type") == "reg"){
+		abas(2);
+	}
+}
+function abas(index){
+	$("#cigg_"+index).show();
+	$("#Login_id"+index).addClass("Login_id1").removeClass("Login_id2");
+	for(var i=1; i<=2; i++){
+		if(i!=index){
+			$("#cigg_"+i).hide();
+			$("#Login_id"+i).addClass("Login_id2").removeClass("Login_id1");	
+		}	
+	}	
+}
+</script>
+</body>
+</html>

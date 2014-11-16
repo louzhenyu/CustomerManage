@@ -1,0 +1,24 @@
+@charset "utf-8";
+/* CSS Document */
+body,html,section,article,div,h2,p,img{margin:0px;padding:0px;}
+body{background:#e1e5e7;}
+.baner_box{width:100%; height:auto;display:block;border-bottom:1px solid #bbbbbb;}
+.baner_box img{width:100%;height:100%;display:block;}
+.main_pad{padding:0px 1.779935275089%;}
+.warpbox{background:#f6f6f6;}
+.box_a,.box_b{border:1px solid #ced2d4;border-bottom:none;border-top:1px solid #e2e2e2;text-align:center; font-family:"微软雅黑";}
+.box_b{background:#fff;padding:0 4.0297902097%; text-align:left;}
+.waring_icon img{display:inline-block;width:30px;height:30px;margin-top:25px;}
+.title_text{color:#d84141;font-size:225%;}
+.find_text{color:#997c56;font-size:150%;}
+.find_text span{color:#d84141;}
+.cj_btn{text-decoration:none;color:#997c56;font-size:150%;display:block;}
+.mt40{margin-top:40px;}
+.mt45{margin-top:45px;}
+.mt20{margin-top:20px;}
+.mt15{margin-top:15px;}
+.pading_b40{padding-bottom:40px;}
+.mb30{margin-bottom:30px;}
+.text_center{ text-align: center;display:block;}
+.hqgzh{color:#353739;font-size:187.5%;}
+

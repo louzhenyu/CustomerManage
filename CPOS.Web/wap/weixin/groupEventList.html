@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/commonnew.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">中欧校友汇APP</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body id="DLoading">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="TopMenu"><span class="frdisplay">中欧校友汇APP</span><span id="GroupTypeId">协会近期活动</span></div>
+  <div style="min-height:400px;">
+    <div id="CommonList" style="padding-bottom:20px;">
+   
+    </div>
+  </div>
+  <input type="hidden" value="1" id="GroupHiddenIsNext" isLoading="1"  />
+  <div class="AppBgGray" id="AppBgGray"></div>
+  <div class="AlumniConnext1" id="AlumniConnext1" style="display:none;"> </div>
+  <div class="TopMenu" id="BottomMenu"><span class="frdisplay" style=" width:60px; text-align:right; cursor:pointer; display:none;" id="TopFun">Top</span><span>中欧校友汇APP</span></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="" id="EventAction"  />
+<input type="hidden" value="" id="IsReferLoad"  />
+<input type="hidden" value="1" id="IsMenuClick"  />
+<script type="text/javascript" src="js/jquery1.6.js"></script> 
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/htmlTemplatesnew.js?v=0710"></script> 
+<script type="text/javascript" src="js/commonnew.js?v=0710"></script>
+<script type="text/javascript">
+$(function(){
+Group.getComingEventsForGroup();	
+})
+</script>
+</body>
+</html>

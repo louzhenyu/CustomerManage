@@ -1,0 +1,62 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="Record"></title>
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+    <style type="text/css">
+        
+		html,body,body>section{height:100%;min-height:100%;}
+		body>section{max-width:640px;margin:0 auto;}
+		body.recordPage{max-width:640px; margin:0 auto;font:15px/1.2em "Microsoft YaHei";background:#f5f5f5;color:#4d463e;}
+		
+		.tjylBg{position:absolute;top:0px;left:0px;width:100%;height:100%;min-height:504px;padding-left:11.25%;overflow:auto;}/*background:url(../../../images/special/LJ/tjylBg.jpg) no-repeat 0 0;background-size:100%;*/
+		.tjylBg .tit{line-height:1.2em;font-size:18px;font-weight:bold;color:#f60;}
+		.tjylBg .tit.one{margin-top:23.9%;}
+		.tjylBg .info{width:68%;min-height:50.6%;margin:11.1% 0 0 3.2%;overflow:auto;}
+		.tjylBg .info p{height:18px;margin:7px 0 0 10px;}
+		.tjylBg .info span{display:inline-block;width:50%;font-size:12px;color:#666;}
+		.tjylBg .info .name{float:left;}
+		.memberBtn{display:block;width:50%;height:42px;line-height:42px;margin-top:30px;text-align:center;font-size:15px;font-weight:bold;border-radius:5px;background:#f60;color:#fff;}
+		
+		@media only screen and (min-width:640px){
+		.tjylBg .tit.one{margin-top:190px;}
+		.tjylBg .info{margin:50px 0 0 16px;}
+		.memberBtn{margin-top:60px;}
+		}
+    </style>
+</head>
+<body class="recordPage">
+
+<section>
+	<img src="../../../images/special/LJ/tjylBg.jpg" alt="" />
+	<div class="tjylBg">
+    	<p class="tit one">您已成功推荐<span id="recommendNum">0</span>人，</p>
+        <p class="tit">赢得积分<span id="parValue">0</span>分</p>
+        <div class="info" id="infoList">
+            <!--<p>
+            	<span class="name">王微微</span>
+                <span class="time">2014-05-18</span>
+            </p>-->
+        </div>
+        <a class="memberBtn" href="">会员专享攻略</a>
+    </div>
+    
+</section>
+
+
+
+
+
+
+
+</body>
+<script id="Tpl_ranking_list" type="text/template">
+	<p>
+		<span class="name">{{vipName}}</span>
+		<span class="time">{{recommendDate}}</span>
+	</p>
+</script>
+</html>

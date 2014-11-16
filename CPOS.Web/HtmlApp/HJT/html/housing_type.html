@@ -1,0 +1,90 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="HousingType"></title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="clearfix">
+                <li><a href="javascript:;" onclick="javascript:Jit.AM.pageBack();">返回</a></li>
+                <li><a href="javascript:;">账户</a></li>
+                <li><a href="javascript:;">用户</a></li>
+                <li><a href="javascript:Jit.AM.toPage('Reserve');">首页</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="wrap">
+        <div class="mod type_info">
+            <dl>                
+                <dt>
+                    <a href="javascript:JitPage.urlGoTo();" jitval="storename">格林豪泰酒店延平店</a>
+                    <span jitval="hotelType">经济型</span>
+                </dt>
+                <dd>
+                    <div class="infoBox">
+                        <p>
+                            <span>
+                                <b>95%</b>推荐
+                            </span>
+                            <!--<span><b>124</b>条点评</span>-->
+                        </p>
+                        <p>
+                            <i class="icon_wifi"></i>
+                            <i class="icon_dinner"></i>
+                            <a href="javascript:JitPage.urlGoTo();">
+                                <em>详情&gt;</em>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="imgBox">
+                    <!--onclick="javascript:Jit.AM.toPage('HouseDetail','&itemId={{itemId}}');"-->
+                        <a  style="cursor:pointer">
+                            <img src="../images/pic_01.jpg" alt="" />
+                            <p jitval="imgList"></p>
+                        </a>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <div class="mod type_ads">
+            <a href="javascript:Jit.AM.toPage('Map','&itemId={{itemId}}');">
+                <h4 jitval="addr"></h4>
+                <div class="ads" jitval="size">
+                    <i></i>距您0.2公里
+                </div>
+            </a>
+        </div>
+        <div class="mod type_list">
+            <div class="type_list_top">
+                <span jitval="InDate"><b>入住：</b></span>
+                <span jitval="OutDate"><b>离店：</b></span>
+                <span jitval="Date"><b></b></span></div>
+            <ul tplpanel="house_list">
+            </ul>
+        </div>
+    </section>
+</body>
+<script id="Tpl_house_list" type="text/template">
+    <li>
+        <a href="javascript:;" onclick="javascript:JitPage.toHouseDetail('{{itemId}}');">
+            <div class="imgBox">
+                <img src="{{imageUrl}}">
+            </div>
+            <div class="infoBox">
+                <span><b>￥{{salesPrice}}</b><em>预订</em></span>
+                <hgroup>
+                    <h2>{{itemName}}</h2>
+                    <p>双早  大床  无线</p>
+                </hgroup>
+            </div>
+        </a>
+    </li>
+</script>
+</html>

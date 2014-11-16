@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="format-detection" content="telephone=no" />
+<title>泸州老窖</title>
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/htmlTemplates.js"></script>
+<script type="text/javascript" src="js/iscroll.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+
+<body>
+<div class="LZMenuWapper">
+<div class="LZMenu">
+  <div class="LZMenuInner" style="padding-left:30px;"> <span class="frdisplay"></span> <a href="javascript:void(0)" class="BackPre" id="BackPrev" onClick="LZEvent.BackPre()"><span class="incSkin EventIcn0" id="BackPrev"></span></a>泸州老窖 </div>
+</div>
+</div>
+<div id="LZEventBase">
+<div id="WineListId" style="padding-bottom:20px;">
+
+</div>
+</div>
+<div class="AppLayer" id="AppLayer" style="display:none;"></div>
+<div style="position: absolute; left: 0; top: 0; display:none;  z-index:10000" class="loading"><img width="40" height="40" src="images/382.gif"></div>
+<input type="hidden" id="backPrevPosition" value="1">
+<script type="text/javascript">
+$(function(){
+LZEvent.getSkus();	
+})
+</script>
+</body>
+</html>

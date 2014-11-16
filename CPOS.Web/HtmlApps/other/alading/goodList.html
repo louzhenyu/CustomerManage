@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>商品列表</title>
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+/*common*/
+html,body{height:100%;min-height:100%;}
+.aladingShopArea{min-height:100%;max-width:640px;margin:0 auto;background-color:#f7f7f7;}
+body{font:12px/1.5em "SimHei";background:#fff;color:#666666;}
+/*阿拉丁店铺*/
+.aladingShopArea .shopList{padding:10px 0;}
+.aladingShopArea .shopList li{float:left;width:45.3125%;height:220px;margin-left:10px;margin-bottom:10px;cursor:pointer;border:1px solid #eee;background-color: #ffffff;}
+.aladingShopArea .shopList .picWrap{height:145px;border-bottom:1px solid #eee;}
+.aladingShopArea .shopList img{width:100%;height:100%;}
+.aladingShopArea .intro{font-size:12px;height:32px;line-height:16px;padding:0 8px;margin:7px 0;overflow:hidden;}
+.aladingShopArea .price{padding:0 8px;margin:7px 0 10px 0;overflow:hidden;}
+.aladingShopArea .currentPrice{font-weight:bold;color:#ff5d13;font-family: arial;font-size:14px;}
+.aladingShopArea .originalPrice{display:inline-block;color:#999999;font-family: arial;font-size:12px;-webkit-transform:scale(0.75);position:relative;left:-3px;}
+
+/*兼容*/
+@media only screen and (min-width:640px){
+body{font:24px/1.5em "SimHei";background:#fff;color:#666666;}
+.aladingShopArea .shopList li{height:410px;margin-bottom:30px;}
+.aladingShopArea .shopList .picWrap{height:290px;border:1px solid #eee;}
+.aladingShopArea .intro{max-height:82px;padding:6px 40px 4px 0;}
+.aladingShopArea .originalPrice{-webkit-transform:scale(1);left:0px;font-size:18px;}
+}
+</style>
+</head>
+
+<body>
+	<section id="section" data-js="/HtmlApps/other/alading/js/goodList"></section>
+<div class="aladingShopArea">
+	<div class="shopList">
+    	<ul id="goodList" class="clearfix">
+        	<!-- <li>
+            	<img src="images/pic.jpg" alt="" />
+                <p class="intro">艾路丝婷2014新款夏装韩版时尚女装</p>
+                <p>
+                	<span class="currentPrice">￥98.00</span>
+                    <del class="originalPrice">￥198.00</del>
+                </p>
+            </li>
+            
+            <li>
+            	<img src="images/pic2.jpg" alt="" />
+                <p class="intro">艾路丝婷2014新款夏装韩版时尚女装</p>
+                <p>
+                	<span class="currentPrice">￥298.00</span>
+                    <del class="originalPrice">￥398.00</del>
+                </p>
+            </li>
+            
+            <li>
+            	<img src="images/pic2.jpg" alt="" />
+                <p class="intro">艾路丝婷2014新款夏装韩版时尚女装</p>
+                <p>
+                	<span class="currentPrice">￥298.00</span>
+                    <del class="originalPrice">￥398.00</del>
+                </p>
+            </li> -->
+        </ul>
+    </div>
+</div>
+	<script type="text/html" id="tplListItem">
+		<%for(var i=0,idata;i<list.length;i++){idata=list[i];%>
+			<li>
+				<a href="<%=idata.TargetUrl%>">
+            	<p class="picWrap"><img src="<%=idata.ImageUrl%>" alt="" /></p>
+                <p class="intro"><%=idata.Name%></p>
+                <p class="price">
+                	<span class="currentPrice">￥<%=idata.PreferentialPrice%></span>
+                    <%if(idata.PreferentialPrice<idata.MarketPrice){%><del class="originalPrice">￥<%=idata.MarketPrice%></del>
+                    <%}%>
+                </p>
+                </a>
+            </li>
+		<%}%>
+	</script>
+    <script type="text/javascript" src="/HtmlApps/other/static/js/lib/require.js" defer async data-main="/HtmlApps/other/static/js/main.js"></script>
+</body>
+</html>

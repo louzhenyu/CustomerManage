@@ -1,0 +1,179 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img { border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 14px; font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #4d4d4d; resize: none; outline: none; }
+body { background:#f2f2f2 url(../images/eventbg.jpg) repeat left top;}
+h1, h2, h3, h4, h5, h6 { font-size: 16px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 16px; margin: 0; padding: 0; }
+textarea, input[type="text"],input[type="password"],input[type="button"],input[type="submit"]{ resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1 }
+.frdisplay{ float:right; display:block;}
+a,a:hover{ text-decoration:none; color:#006599;}
+#EventListOPen{ position:relative;}
+
+.WAppMenu{ clear:both; height:42px; display:block;   z-index:9; position:absolute; left:0; top:-42px; width:100%;}
+.WAppMenu li{ float:left; width:32%; text-align:center; color:#404853; font-size:16px; font-weight:bold;  cursor:pointer; background-color:#c1cfd9; border-top-left-radius:5px; border-top-right-radius:5px; display:block; _display:inline;  position:relative;}
+.WAppMenu li.WAppMenuActive{  color:#5D7281; background-color:#fff;  }
+.WAppMenu li.WAppMenuActive .WAppMenuLi{ position:relative; top:-6px; height:48px; width:100%; left:0; border-top-left-radius:5px; border-top-right-radius:5px; background-color:#fff; box-shadow:0 4px 5px #c3c2c2; line-height:52px; overflow:hidden; }
+.WAppMenu li .WAppMenuLi{  line-height:42px;}
+.inputAndSelect{ width:80%; margin-left:auto; margin-right:auto; margin-top:20px; line-height:28px;}
+.AlumniInputstyle{  border: 1px solid #b2bac0; border-radius: 4px; height: 40px; padding-left: 2%;  background: -webkit-gradient(linear, left top, left bottom, from(#d7d7d7), to(#ffffff), color-stop(0.1, #ffffff)); color: #9c9b9b; text-shadow: 0 0 1px #fff; width:98%; font-size:18px;}
+
+.blank1{ height:1px; overflow:hidden; display:block; clear:both;}
+.inputsubmitStyle{ color:#fff; font-size:16px; cursor:pointer;  height:44px; clear:both; border-radius:5px; width:100%; border:1px solid #911f1f; background: -moz-linear-gradient(top,  #c82f2f 0%, #b51c1c 50%, #a91111 100%);   background: -webkit-gradient(linear, left top, left bottom, from(#c82f2f),to(#a91111), color-stop(0.5,#b51c1c)); }
+
+.labelSelect { position: relative; font-family: Helvetica, arial; width:100%; }
+.labelSelect:after { position: absolute; top: -17px; right: 8px; display: inline-block; content: " ▼"; color: #9c9b9b; font-size: 18px; text-align: center; width: 30px; height: 43px; line-height: 43px;  pointer-events: none; text-shadow: 0 0 2px #fff; }
+.labelSelect select { font-size: 18px; color: #9c9b9b; width: 100%; padding-left:2%; line-height: 40px; border-radius: 4px; height: 40px; -webkit-appearance: none; border: 1px solid #c1c6cc; background: -webkit-gradient(linear, left top, left bottom, from(#d7d7d7), to(#fff), color-stop(0.1, #fff));color: #9C9B9B; text-shadow: 0 0 1px #fff; }
+.imgDiv{ width:74px; height:74px; background-color:#fff; border:1px solid #E0E0E0; box-shadow:0 0 5px #EAEAEA; position:absolute; left:12px; }
+.WAppPerson{ position:relative; clear:both; display:block; border-bottom:1px solid #D9D9D9; overflow:hidden; padding:8px 0; min-height:94px; }
+
+.WAppPersonRight{ margin-left:100px; margin-right:12px; text-align:left; text-shadow:0 0 2px #fff;}
+.AII{  overflow:hidden; line-height:25px; font-size:14px; color:#93939C;}
+.WAppPersonRight h3{ font-size:16px; line-height:30px; color:#000000;}
+.AIIspp{ line-height:24px; font-size:12px;}
+.AIIspp i{ font-style:normal; width:30%; float:left; display:block; height:24px;}
+.SearchTitle{ text-shadow:0 0 2px #fff; font-size:20px; clear:both; padding:12px; }
+.WAppSection{ margin-top:50px; padding-bottom:20px;}
+
+.WAppBannerTitle{  position:absolute; bottom:0; right:0; width:120px; }
+
+.WAppBannerTit{ font-size:14px;  font-weight:bold;  color:#000; line-height:36px; color:#b1bbc2;}
+.Muri{ width:40%; float:left; display:block;}
+.btnStylecc{    color:#fff; font-size:16px; cursor:pointer;  height:44px; clear:both; border-radius:5px; width:100%; border:1px solid #911f1f; background:#c82f2f; background: -moz-linear-gradient(top,  #c82f2f 0%, #b51c1c 50%, #a91111 100%);   background: -webkit-gradient(linear, left top, left bottom, from(#c82f2f),to(#a91111), color-stop(0.5,#b51c1c)); }
+.btnStyleccgray{   color:#fff; font-size:16px; cursor:pointer;  height:44px; clear:both; border-radius:5px; width:100%; border:1px solid #212325; background:#484d51; background: -moz-linear-gradient(top,  #545b5f 0%, #484d51 50%, #3d4245 100%);   background: -webkit-gradient(linear, left top, left bottom, from(#545b5f),to(#3d4245), color-stop(0.5,#484d51));}
+
+ .DetailAll{background-color:#fff; width:88%; margin-left:auto; margin-right:auto; border:1px solid #abacac; position:relative; z-index:4; top:-10px; padding:3% 12px; box-shadow:0 0 2px #CCC; border-radius:5px; }
+ .DetailAll2{background-color:#fff; width:88%; margin-left:auto; margin-right:auto; border:1px solid #abacac; position:relative; z-index:4; top:-10px; padding:3% 12px; box-shadow:0 0 2px #CCC; cursor:pointer;}
+ 
+ 
+ .DetailLi{ clear:both; margin-top:5px; padding-bottom:12px; border-bottom:1px dashed #d7d7d7; padding-left:30px; position:relative;}
+ .DetailLi h3{ height:32px; line-height:32px; font-size:14px; font-weight:bold; color:#006599; }
+  .DetailLi img{ max-width:240px;}
+  .DetailLi p{ font-size:14px; color:#333333; line-height:22px;}
+ .EventIcn{ background-image:url(../images/eventicn.png); background-repeat:no-repeat;}
+ .eicn3{ background-position:-2px -133px; width:22px; height:22px; position:absolute; left:3px; top:6px; display:block; }
+ .eicn1{ background-position:-1px -3px; width:22px; height:22px; position:absolute; left:3px; top:6px; display:block; }
+  .eicn2{ background-position:-2px -68px; width:22px; height:22px; position:absolute; left:3px; top:6px; display:block; }
+  .eicn4{ background-position:-2px -196px; width:22px; height:22px; position:absolute; left:3px; top:6px; display:block; }
+   .eicn5{ background-position:-2px -262px; width:22px; height:22px; position:absolute; left:3px; top:6px; display:block; }
+    .eicn6{ background-position:-2px -325px; width:22px; height:22px; position:absolute; left:3px; top:6px; display:block; }
+	.eicn7{ background-position:-2px -374px; width:22px; height:22px; position:absolute; left:3px; top:6px; display:block; }
+	
+ .loading{ width:40px; height:40px; position:absolute; left:0; top:0; z-index:999}
+
+.DetailBox{ width:94%; margin-left:auto; margin-right:auto; margin-top:5px;}
+ 
+ .AlumniConnext1{ width:94%; margin-left:auto; margin-right:auto; background-color:#f7f7f7; box-shadow:0 0 5px #5D7281; margin-top:30px; padding-bottom:20px;  position:absolute; z-index:111; left:3%; top:20px}
+.AlumniConnext1Title{ height:46px; border-bottom:1px solid #bbbbbb; background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dadada),  color-stop(0.5, #ececec)); box-shadow:0 0 2px #bbb; text-align:center; font-size:22px; color:#4e4e4e; line-height:46px; position:relative; }
+
+a.AlumniBack{ background-position:-45px 5px; width:45px; height:36px; position:absolute; left:8px; top:5px; display:block;}
+.icnbg{ background-image:url(../images/icn_skin.png); background-repeat:no-repeat; vertical-align:top; }
+
+.AppBaoMing{ position:absolute;}
+.AppBgGray,.ifram,.masksBox{ position:absolute; left:0; top:0; z-index:10; background-color:#333; filter:alpha(opacity=30); opacity:0.3;}
+.xingred{ color:#C00; font-size:16px;}
+
+/*.YaoJiangWarp{ width:94%; margin-left:auto; margin-right:auto;}*/
+.prizeIcn{ background:#373d42 url(../images/prizebg.gif) repeat left top; height:210px; border-radius:4px;}
+.prizeMenu{ overflow:hidden; zoom:1; clear:both; border-bottom:1px solid #dcdbdb; margin-top:6px;}
+.prizeMenuLi{ height:36px;  text-align:center; font-size:18px; float:left; width:33%; font-weight:bold;}
+.prizeMenuLi a,.prizeMenuLi a:hover{ color:#6d6d6d; display:block; text-align:center; text-decoration:none;line-height:36px;}
+.prizeMenuLi a.cHover,.prizeMenuLi a.cHover:hover{ color:#111111; display:block; text-align:center; text-decoration:none;line-height:36px;}
+.prizeJPa{ background-color:#fff; border:1px solid #E0E0E0; box-shadow:0 0 5px #EAEAEA; position:absolute; left:12px; max-height:104px; overflow:hidden;}
+.prizeJPa img{ padding:7px; display:block;}
+.WAppPersonJp{ position:relative; clear:both; display:block; border-top:1px solid #fff;  border-bottom:1px solid #D9D9D9; overflow:hidden; padding:12px 0 8px 0; min-height:104px; cursor:pointer}
+
+.InputButtonYJ{padding:0 14px; line-height:28px; margin-top:4px;  border:1px
+ solid #184b01; border-radius:5px;   background: #5D7281; color:#fff; font-size:18px; cursor:pointer;  margin-right:6%; text-shadow:0 0 2px #999; height:36px; }
+
+.VoteIcnDiv{width:180px; margin-left:auto; margin-right:auto; padding-top:10px;}
+.VoteTxtDiv{font-size:22px; text-align:right; margin-top:-30px; width:90%; margin-left:auto; margin-right:auto; color:#fff;}
+.discussDiv{padding:13px 0; border-bottom:1px solid #D9D9D9; height:40px; position:relative;}
+input.DisCussBtn{margin:0; width:90px; position:absolute; right:0; top:13px; height:42px;}
+.grayDate{ font-size:12px; color:gray;}
+.GotoBind{ text-align:center; padding-top:20px; font-size:16px;}
+
+input.btnStylePosition{ position:fixed; right:0; top:48px;}
+.AppBanner{ height:170px; z-index:5;}
+
+.WAppBannerTitbg{ background-color:#000; opacity:0.8; padding-right:10px; width:110px;}
+/*20130704 */
+.TopMenu{ height:44px; background-color:#006599; line-height:44px; font-size:16px; color:#fff; padding:0 3%;  min-width:240px; position:relative;}
+.WAppConBase{padding-bottom:15px;}
+.BackgroundTy{ background-color:#fff; position:absolute; z-index:9; width:100%; top:0; left:0; height:8px; overflow:hidden}
+.Jintou{ background:url(../images/jtou.png) no-repeat left top; width:12px; height:10px; position:absolute; top:-9px; left:48%;}
+.WAppLy{ width:60%; float:left; line-height:38px;}
+.fontPco{ font-size:18px; color:#fb5240;}
+
+.PcBox{ position:relative}
+
+.WAppGounp{ padding:15px 0; min-height:78px; height:auto !important;  height:74px; border-top:1px solid #fff; border-bottom:1px solid #9c9b9b; background:url(../images/grouplbg.jpg) repeat left top; cursor:pointer; position:relative;/* opacity:0;filter:alpha(opacity=0);*/}
+.WAppGounp .imgDiv{ border:none; background:0; box-shadow: 0 0 0 ;}
+.WAppGounp .WAppPersonRight h3{ font-size:18px;}
+.WAppGounp .WAppPersonRight{ margin-right:30px;}
+.WAppGounp .AII{ margin-top:10px;}
+.groupTxtStyle{ color:#ac0f12; font-weight:bold;}
+.ImageInnerDiv{width:64px; margin:5px; overflow:hidden; height:64px;}
+.GroupJtou{ position:absolute; width:18px; height:22px; background:url(../images/gr.png?v1) no-repeat left top; display:block; right:10px; top:40px;}
+#CommonList .WAppGounpActive{ background:url(../images/grouplbggray.jpg)repeat left top;}
+.GroupPersonO{ width:75px; height:95px; overflow:hidden; float:left; margin:7px 9px 0 9px; display:block; _display:inline
+; margin-top:10px; position:relative; overflow:hidden;}
+.PersonHead{ width:75px; overflow:hidden;}
+.GroupPersonName{ text-align:center; height:20px; line-height:20px;  font-size:12px; clear:both;}
+.GroupPersonO p{ font-size:12px; line-height:20px;}
+.GroupPersonOInner{ height:75px; overflow:hidden; width:75px; border-radius:5px;}
+.cLoading{ clear:both; padding:10px;}
+.SubmitSearch{ width:34px; height:34px; background:#5D7281 url(../images/searchicn.png) no-repeat 5px 5px; border-radius:5px; cursor:pointer; position:absolute; right:10px; top:10px;}
+.SearchGroupClass{ width:90%; margin-left:5%; height:34px; border-radius:15px; padding-left:5%; line-height:34px; color:#999;}
+.TopSearchGroup{ clear:both; padding:10px 0; position:relative; height:40px; background:url(../images/grouplbggray.jpg)repeat left top;}
+a.btnStylecc{ display:block; text-align:center; line-height:44px; }
+.OOEventList{ background-color:#fff; border:1px solid #c9cac5; box-shadow:0 0 5px #c9cac5; border-radius:8px; padding:15px 15px; width:90%; margin-left:auto; margin-right:auto; margin-top:20px;}
+.OOEventListImg{ height:120px; overflow:hidden;}
+.OOEventListImg img{ width:100%;}
+.OOEventList h3{ font-size:16px; color:#151515; line-height:24px;}
+.OOEventList .Sode{ font-size:14px; color:#8c8c8c; line-height:22px; padding-bottom:10px;}
+.OOEventListDetail{ font-size:12px; color:#8c8c8c; line-height:20px; padding-top:10px;}
+a.backGroupDetail,a.backGroupDetail:hover{ height:40px; display:block; color:#fff; text-decoration:none;}
+.ComApplyPerson{ clear:both; zoom:1; overflow:hidden; min-height:400px;}
+
+.ApplyEventParent{ clear:both; overflow:hidden; }
+.ApplyEventParent h4{ height:42px;  border-bottom:1px solid #ABACAC; line-height:44px; font-size:16px; padding-left:5%; }
+.ApplyEventParent .PaidPei{ padding-left:5%; background-color:#f4f4f4;  padding-bottom:20px;}
+.ApplyEventParent .PaidPei1{ padding-left:5%; background-color:#f4f4f4;  border-bottom-left-radius:5px; border-bottom-right-radius:5px;  padding-bottom:20px;}
+.PaidPei h5{ height:42px; line-height:42px; clear:both;}
+.EventPersonAll{ overflow:hidden;}
+.EventPerson{ width:75px; height:95px; overflow:hidden; float:left; margin:7px 9px 0 9px; display:block; _display:inline
+; margin-top:10px; position:relative; overflow:hidden;}
+.EventPersonHead{ width:75px; overflow:hidden;}
+.EventPersonName{ text-align:center; height:20px; line-height:20px;  font-size:12px; clear:both;}
+.EventPerson p{ font-size:12px; line-height:20px;}
+.EventPersonInner{ height:75px; overflow:hidden; width:75px; border-radius:5px;}
+.DetailEventAll{ clear:both; width:94%; margin-left:auto; margin-right:auto; background-color:#fff; border-radius:5px; border:1px solid #ABACAC;}
+.Pnum{ font-size:18px; color:#006599; font-weight:bold}
+.CheckMore{ font-size:14px; margin-right:30px; padding:10px;}
+.CheckMore a{ margin:0 15px;}
+.EventJt{ width:20px; height:12px; background:url(../images/eventjt.png) no-repeat left top; position:absolute; right:5px; top:10px; display:block; }
+.EventJtEI{width:12px; height:20px; background:url(../images/eventjt1.png) no-repeat left top; position:absolute; right:5px; top:7px; display:block;}
+.EventJtUp{ width:20px; height:12px; background:url(../images/eventjtup.png) no-repeat left top; position:absolute; right:5px; top:10px; display:block; cursor:pointer }
+.PrizeInfoDiv{ background-color:#252a2e; padding-bottom:180px;}
+.PrizeInfoDivInner{ width:90%; margin-left:auto; margin-right:auto; background-color:#fff; padding-bottom:20px; min-height:300px; border-radius:5px; position:relative; box-shadow:0 0 5px #1c2023; top:160px;}
+.PrizeInfoInnerTop{ width:266px; height:162px; overflow:hidden; background:url(../images/ggcard.png) no-repeat left top; position:relative; top:-122px; margin-left:auto; margin-right:auto;}
+.PrizeInfoInnerBottom{ margin-top:-90px; width:90%; margin-left:auto; margin-right:auto}
+.PrizeInfoInnerBottom dl{ clear:both; overflow:hidden; zoom:1;}
+.PrizeInfoInnerBottom dt.s1{ background:url(../images/xx1.jpg) no-repeat left top; width:246px; height:32px;  margin-bottom:10px;}
+.PrizeInfoInnerBottom dt.s2{ background:url(../images/xx2.jpg) no-repeat left top; width:246px; height:32px;  margin-top:25px;  margin-bottom:10px;}
+
+.PrizeInfoInnerBottom dd{ line-height:22px; margin-top:5px; padding-left:20px; font-size:14px;}
+.Comeback{ position:absolute; width:24px; height:29px; background:url(../images/back.png) no-repeat left top; display:block; left:3%; top:6px; cursor:pointer;}
+#Btoo{ margin-left:30px;}
+.prizeTxt{ position:absolute; text-align:center; width:70px; height:30px; right:10px; bottom:12px; line-height:30px; z-index:101; display:block; }
+.masksBox{ width:100%;}
+.poupId{ position:absolute; background-color:#fff; border-radius:5px; z-index:999; border:1px solid #b8b7b7; border-top:10px solid #000;}
+.pupdiv{ padding:10px; line-height:22px;}
+.ccTitle{ font-size:16px; text-align:center; line-height:24px; padding:5px 0; border-bottom:1px solid #e2e2e2}
+.ccTxt{ text-align:center; font-size:18px; line-height:24px; padding:25px 0;}
+.ccBtnClose{ padding-top:10px;}

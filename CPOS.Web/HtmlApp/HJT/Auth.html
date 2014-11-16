@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>正在跳转中...</title>
+	
+</head>
+
+<body style="background-color:#ECECEC;">
+
+<div class="loading" style="width:100%;text-align:center;">
+	<img src="images/loading.gif" width="40" height="40"/>
+</div>
+<script type="text/javascript" src="lib/zepto.min.js"></script>
+<script type="text/javascript">
+	
+	function loadScript(url,callback){
+	
+		var _script = document.createElement('script');
+		
+		var _Head = document.getElementsByTagName("HEAD").item(0);
+		
+		_Head.appendChild(_script);
+		
+		_script.src = url;
+		
+		if(typeof callback == 'function'){
+		
+			_script.onload = callback;
+		}
+	}
+	
+	loadScript('lib/jit-lib.js?version='+((new Date()).getTime()),function(){
+		
+		var version = Jit.version('./version.js'),
+			getUrlParam = Jit.AM.getUrlParam;
+		
+		var cfg = Jit.AM.getAppConfig();
+		
+		if(!Jit.AM.getAppPageConfig() || cfg['APP_NEEDRELOAD'] == 'YES'){
+		
+			var rst = $.ajax({
+				url: "./config.js",
+				async:false,
+				cache:false
+			});
+			
+			var vcfg = Jit.strToJson(rst.responseText);
+			
+			Jit.AM.setAppPageConfig(vcfg);
+		}
+		
+		var urlpstr = location.href.split('?')[1],urlparams = {};
+		
+		if(urlpstr){
+		
+			urlpstr = urlpstr.split('&');
+			
+			if(urlpstr.length>0){
+				
+				for(var i=0;i<urlpstr.length;i++){
+					
+					var paramitem = urlpstr[i].split('=');
+					
+					urlparams[paramitem[0]] = paramitem[1];
+				}
+			}
+		}
+		
+		
+		var pageName = decodeURIComponent(getUrlParam("pageName"));
+		
+		var pagePools = Jit.AM.getAppPageConfig(),
+			backUrl = 'html/'+pagePools[pageName]['path'];
+		
+		/*
+			1、必须先加载版本信息 才能清除对应的应用 历史导航记录缓存
+			2、通过Auth.html进入的页面默认是进入的第一个页面，由此定位导航的路径
+		*/
+		Jit.AM.pageHistoryClear();
+		
+		setTimeout(function(){
+			
+			/*	RootPage实际上是不存在的一个页面，因为历史导航中如果只剩一条导航记录时是不能再返回到上一个页面，
+				所以Push进一个不存在的RootPage
+			*/
+			Jit.AM.pageHistoryPush(pageName);
+			
+			backUrl = backUrl + '?ver=' + version;
+			
+			if(urlparams.pageName){
+				
+				delete urlparams.pageName;
+			}
+			
+			for(var key in urlparams){
+				
+				backUrl += '&'+key+'='+urlparams[key];
+			}
+			/*
+			backUrl = backUrl + '?ver=' + version
+					+ "&openId=" + getUrlParam("openId")
+					+ "&userId=" + getUrlParam("userId")
+					+ "&customerId=" + getUrlParam("customerId");
+			*/		
+			location.href = backUrl;
+			
+		},30);
+	})
+	
+	
+
+</script>
+
+</body>
+</html>

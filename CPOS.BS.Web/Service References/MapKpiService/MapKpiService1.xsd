@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/JIT.MapAnalysis.DataService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/JIT.MapAnalysis.DataService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfKpiCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KpiCategory" nillable="true" type="tns:KpiCategory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKpiCategory" nillable="true" type="tns:ArrayOfKpiCategory" />
+  <xs:complexType name="KpiCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CategoryID" type="xs:int" />
+      <xs:element minOccurs="0" name="CategoryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsDefault" type="xs:int" />
+      <xs:element minOccurs="0" name="KPIs" nillable="true" type="tns:ArrayOfKPI" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KpiCategory" nillable="true" type="tns:KpiCategory" />
+  <xs:complexType name="ArrayOfKPI">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="KPI" nillable="true" type="tns:KPI" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfKPI" nillable="true" type="tns:ArrayOfKPI" />
+  <xs:complexType name="KPI">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CategoryID" type="xs:int" />
+      <xs:element minOccurs="0" name="ClientID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsSupportSKUFilter" type="xs:int" />
+      <xs:element minOccurs="0" name="IsSupportStoreFilter" type="xs:int" />
+      <xs:element minOccurs="0" name="IsSupportTimeFilter" type="xs:int" />
+      <xs:element minOccurs="0" name="KPIID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="KPILegendText" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="KPIText" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PointThresholdType" type="xs:int" />
+      <xs:element minOccurs="0" name="StyleCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StyleSubCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SupportedLevel" type="xs:int" />
+      <xs:element minOccurs="0" name="ThresholdType" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="KPI" nillable="true" type="tns:KPI" />
+</xs:schema>

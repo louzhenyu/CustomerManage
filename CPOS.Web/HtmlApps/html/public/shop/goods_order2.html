@@ -1,0 +1,341 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title name="GoodsOrder"></title>
+  <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</head>
+
+<body>
+  <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+  <section class="goods_wrap" style="color:#323232" >
+      <nav id="topNav">
+        <ul>
+          <li><a href="javascript:Jit.AM.pageBack();"></a></li>
+          <li><a href="javascript:Jit.AM.toPage('MyOrder');"></a></li>
+          <li><a href="javascript:Jit.AM.toPage('GoodsCart');"><span id="menuCartCount"></span> </a></li>
+          <li> <a href="javascript:Jit.AM.toPage('IndexShop');"></a></li>
+        </ul>
+    </nav>
+    <div class="order_list">
+      <h3>配送方式</h3>
+      <div class="order_mod delivery_mode">
+
+        <div class="clearfix" name="select_address" style="display:none;">
+          <div class="select_address" psfs="fs1"> <i name="radio_address" id="radio" value="radioA"></i> <b>送货到家：</b>
+          </div>
+          <div class="addressInfo deliveryHome">
+            <p class="linkman">
+              <label>联系人：</label>
+              <span id="linkMan"></span>
+            </p>
+
+            <p>
+              <label>电话：</label>
+              <span id="linkTel"></span>
+            </p>
+
+            <p class="linkAddress clearfix">
+              <label>送货地址：</label>
+              <span id=""></span>
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="clearfix" style="border-top:1px solid #ccc;display: none;" name="select_address">
+          <div class="select_address" psfs="fs2"> <i name="radio_address" id="radio" value="radioB"></i> <b>到店提货：</b>
+          </div>
+          <div class="addressInfo">
+            <p>
+        	  	<label>提 货 人 ：</label> 
+        	  	<input id="shopMan" type="text"  style="width:140px;" placeholder="请输入提货人" />
+            </p>
+            <p>
+            	 <label>联系电话：</label> 
+           		<input id="shopTel" type="tel"  style="width:140px;" placeholder="请输入提货人手机号" />
+            </p>
+            <p>
+          		<label>提货日期：</label>
+            	<!--input id="selectDate" type="text"  style="width:140px;" placeholder="请选择日期" /-->
+              <select id="selectDate" style="width:140px;"></select>
+            </p>
+            <p>
+            	
+              	<label>提货时间：</label>
+              <select id="selectTime" style="width:140px;"></select>
+            </p>
+            <p>
+            	 <label>提货门店：</label>
+           		<span id="shopTitle"></span>
+            </p>
+            <p style="display: none;">
+            	<label>门店地址：</label>
+            	<span id="shopAddress"></span>
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!--     <div class="go_gox go_delivery">
+      <dl>
+        <dt>
+          <a>送货上门:</a>
+        </dt>
+        <dd>联系人：张三</dd>
+        <dd>电话：13888888888</dd>
+        <dd>送货地址：上海延平路121号三合大厦15F</dd>
+      </dl>
+
+    </div>
+    -->
+
+
+	<div class="express mb-10" data-express="hide">
+      <a> <em>快递</em>
+        <b>0元</b>
+        <span class="od_space"></span>
+      </a>
+    </div>
+
+
+    <div  class="express mb-10" data-invoice="hide">
+      <a> <em>发票抬头：</em>
+        <em><input /></em> 
+        <span class="od_space"></span>
+      </a>
+    </div>
+
+
+    <h3 style="margin-top:20px;">商品详情</h3>
+    <div class="go_goods_list">
+      <ul id="goods_list">
+        <!--li class="clearfix">
+        <div class="imgBox">
+          <img src="../images/pic_02.jpg" width="70" height="95"></div>
+        <div class="infoBox">
+          <h3>泸州老窖特曲三年陈酿60度高级定制级新春贺岁酒</h3>
+          <div class="gray">灰色 XL</div>
+          <b>￥188.00</b>
+          <a href="#" class="btn_remove"></a>
+        </div>
+      </li-->
+    </ul>
+    <dl class="order_total clearfix">
+      <dd>
+        合 计：
+        <b id="totalprice">&nbsp;</b>
+      </dd>
+      <dd>
+        数 量：
+        <b id="totalqty">&nbsp;</b>
+      </dd>
+    </dl>
+  </div>
+  
+  <!-- 使用优惠劵 -->
+  <div class="commonUseArea">
+  	<div class="titWrap">
+    	<span class="checkBox"></span>
+        <span class="tit">使用优惠劵</span>
+    </div>
+    <div class="optionBox">
+    	<span>请选择优惠劵</span>
+        <span class="pointer"></span>
+    </div>
+  </div>
+  
+  
+  <!-- 使用积分 -->
+  <div class="commonUseArea">
+  	<div class="titWrap">
+    	<span class="checkBox"></span>
+        <span class="tit">使用积分</span>
+    </div>
+    <div class="optionBox">
+    	<span>使用积分500，可抵用5元</span>
+    </div>
+  </div>
+  
+  <!-- 使用账户余额 -->
+  <div class="commonUseArea">
+  	<div class="titWrap on">
+    	<span class="checkBox"></span>
+        <span class="tit">使用账户余额100元</span>
+    </div>
+  </div>
+  
+  <!-- 实际支付金额320.00元 -->
+  <div class="actualPayAmount">实际支付金额320.00元</div>
+  
+
+  <!--h3>选择支付方式</h3>
+<div class="order_mod delivery_mode order_pay">
+  <dl class="clearfix hide">
+    <dt>
+      <input id="ck0" type="checkbox" onclick="JitPage.checkPayType(this);" class="ckpay" checked="checked" value="0"></dt>
+    <dd>
+      <span>
+        <img src="../images/psfs_hdfk.jpg"></span>
+      <p>
+        <label for="ck0">
+          <b>货到付款</b>
+        </label>
+      </p>
+    </dd>
+  </dl>
+  <dl class="clearfix">
+    <dt>
+      <input id="ck1" type="checkbox" onclick="JitPage.checkPayType(this)" class="ckpay" value="1"></dt>
+    <dd>
+      <span></span>
+      <p>
+        <label for="ck1">
+          <b>支付宝网页支付：</b>
+          推荐有支付宝账户的用户使用
+        </label>
+      </p>
+    </dd>
+  </dl>
+  <dl class="clearfix">
+    <dt>
+      <input id="ck3" type="checkbox" onclick="JitPage.checkPayType(this)" class="ckpay" value="3"></dt>
+    <dd>
+      <span></span>
+      <p>
+        <label for="ck3">
+          <b>银联网页支付：</b>
+          推荐有网上银行账户的用户使用
+        </label>
+      </p>
+    </dd>
+  </dl>
+  <dl class="clearfix">
+    <dt>
+      <input id="ck2" type="checkbox" onclick="JitPage.checkPayType(this)" class="ckpay" value="2"></dt>
+    <dd>
+      <span></span>
+      <p>
+        <label for="ck2">
+          <b>银联语音支付：</b>
+          推荐有网上银行账户的用户使用
+        </label>
+        <br />
+        <label>电话</label>
+        <input id="phonenum" type="text" />
+      </p>
+    </dd>
+  </dl-->
+</div>
+</div>
+<div class="order_submit clearfix">
+<a href="javascript:JitPage.submitOrder();">提交订单</a>
+<!-- 应付金额：
+<b id="payprice"></b> -->
+</div>
+</section>
+
+<div class="ui-mask"></div>
+<!-- 优惠劵-弹层 -->
+<div class="commonPopup">
+	<div class="titWrap">
+    	<span class="tit">使用优惠券</span>
+        <span class="okBtn">确定</span>
+    </div>
+    <div class="contentWrap">
+    	<div class="item">
+        	<em class="radioBox"></em>
+            <div class="info">
+            	<p class="exp">全场商品满100送10元</p>
+                <p class="time">有效期至2014-09-10</p>
+            </div>
+        </div>
+        <div class="item on">
+        	<em class="radioBox"></em>
+            <div class="info">
+            	<p class="exp">全场商品满100送10元</p>
+                <p class="time">有效期至2014-09-10</p>
+            </div>
+        </div>
+        <div class="item">
+        	<em class="radioBox"></em>
+            <div class="info">
+            	<p class="exp">全场商品满100送10元</p>
+                <p class="time">有效期至2014-09-10</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 提示-弹层 -->
+<div class="commonPopup">
+	<div class="titWrap">
+    	<span class="tit">提示</span>
+    </div>
+    <div class="contentWrap">
+    	<p>您还未领取会员卡，</p>
+        <p>请先到会员中心领取会员卡。</p>
+    </div>
+    <div class="btnWrap">
+    	<span class="btn">取消</span>
+        <span class="btn">去会员中心</span>
+    </div>
+</div>
+
+<!-- 请输入支付密码-弹层 -->
+<div class="commonPopup">
+	<div class="titWrap">
+    	<span class="tit">请输入支付密码</span>
+    </div>
+    <div class="contentWrap">
+    	<p><input type="password" placeholder="支付密码"/></p>
+    </div>
+    <div class="btnWrap">
+    	<span class="btn">确认</span>
+        <span class="btn">忘记密码</span>
+    </div>
+</div>
+
+
+<!-- 请输入支付密码-弹层 -->
+<div class="commonPopup">
+	<div class="titWrap">
+    	<span class="tit">请设置支付密码</span>
+    </div>
+    <div class="contentWrap formBox">
+    	<p><input type="tel" placeholder="手机"/></p>
+        <p class="vCardBox"><input type="text" placeholder="验证码"/><span class="vCardBtn">获取验证码</span></p>
+        <p><input type="password" placeholder="密码"/></p>
+        <p><input type="password" placeholder="确认密码"/></p>
+    </div>
+    <div class="btnWrap">
+    	<span class="btn">确认</span>
+        <span class="btn">取消</span>
+    </div>
+</div>
+
+
+
+
+</body>
+
+<script id="Tpl_goods_info" type="text/template">
+  <li class="clearfix">
+    <div class="imgBox"><img src="{{image120}}" width="70" height="95"></div>
+    <div class="infoBox">
+    <p>{{itemName}}</p>
+    <div class="gray">{{GG}}</div>
+        <div class="gray">数量 {{qty}}</div>
+      <b>￥{{salesPrice}}</b> <a href="#" style="display:none" class="btn_remove"></a> 
+    </div>
+  </li>
+</script>
+
+</html>

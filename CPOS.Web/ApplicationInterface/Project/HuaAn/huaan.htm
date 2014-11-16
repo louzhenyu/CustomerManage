@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../../../Javascript/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            //绑定事件
+            $("#btnTest").click(fnTestClick);
+        });
+        //验证注册 VerifIsRegister
+        //var req = "{\"VIPID\":\"9CA371688770476D892E22A719054D6F\",\"CustomerID\":\"2aa965e35e14485e9eb000be599f8355\"}";
+
+        //我的收益 GetHouseProfitList
+        var req = "{\"UserID\":\"a4c1b806a47446e28ded856d325f9644\",\"CustomerID\":\"2aa965e35e14485e9eb000be599f8355\"}";
+
+        //房产列表
+     // var req = "{\"CustomerID\":\"2aa965e35e14485e9eb000be599f8355\",\"Parameters\":{ \"pageIndex\":\"1\",\"pageSize\":\"4\"}}";
+        //我的房产
+        //var req = "{\"userID\":\"9502c38967574538a610b68923aa1a07\",\"CustomerID\":\"2aa965e35e14485e9eb000be599f8355\",\"Parameters\":{ \"pageIndex\":\"1\",\"pageSize\":\"4\"}}";
+
+        //房产详细
+        //  var req = "{\"userID\":\"9502c38967574538a610b68923aa1a07\",\"CustomerID\":\"2aa965e35e14485e9eb000be599f8355\",\"Parameters\":{ \"DetailID\":\"105A1462-48F8-496B-860E-1B514CF36870\",\"ThirdOrderNo\":\"08889230000003274\",\"PrePaymentID\":\"85af3316-fab4-4584-a14a-16f057507ef6\",\"ToPageUrl\":\"http://baidu.com\"}}";
+
+        //var req = "{\"CustomerID\":\"2aa965e35e14485e9eb000be599f8355\",\"Parameters\":{ \"Mobile\":\"15821529639\"}}";
+        function fnTestClick() {
+            //立即支付 PaySchedule
+          //  var req = "{\"UserID\":\"05245bea51b14aefae6a3cb6d5531632\",\"CustomerID\":\"2aa965e35e14485e9eb000be599f8355\",\"Parameters\":{\"HouseDetailID\":\"1315d36e-a3c4-406f-bc20-cd17358d5954\",\'PrePaymentID\':\'E5506504-D711-44D3-BAAD-FD29314D2493\',\"DetailID\":\"D35BBC34-C2D2-4D6B-963C-8642542157FE\",\"ThirdOrderNo\":\"08889230000003274\", \"pageIndex\":\"1\",\"pageSize\":\"4\"}}";
+            $.ajax({
+                url: "/ApplicationInterface/Project/HuaAn/HuaAnHandler.ashx?action=GetHouseProfitList&type=Project",
+                data: {
+                    "req": req
+                },
+                type: "Get",
+                success: function (data) {
+                    if (data && data.resultCode != 200) {
+
+                        alert(data);
+                    }
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+    <input type="button" value="测试" id="btnTest" />
+    <form action="/ApplicationInterface/Project/HuaAn/HuaAnCallbackHandler.ashx" method="post">
+
+        <input type="submit" value="测试" />
+    </form>
+    <a href="/ApplicationInterface/Project/HuaAn/HuaAnCallbackHandler.ashx">HttpHandler Test</a>
+
+
+</body>
+</html>

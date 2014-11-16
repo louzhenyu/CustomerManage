@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<title>中秋随手拍“爱秀达人”获奖作品</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+</head>
+
+<body >
+<div class="PcBox" id="PcBox">
+	<div id="DaRenPhotoDetail" style=" display:none;" page="1">
+  
+  </div>
+  
+  <div class="AppBgGray" id="AppBgGray"></div>
+<div id="EventApply" class="AlumniConnext1" style="display:none;">
+ 	<div class="inputAndSelect" style="line-height:20px;">请输入您的昵称和真实的手机号码，我们会为您的个人信息保密，以便获奖时与您取得联系。</div>
+    <div id="ApplyBmID"><div class="inputAndSelect">昵称<span class="xingred">*</span><br><input type="text" class="AlumniInputstyle" id="username" value=""></div><div class="inputAndSelect">手机号码<span class="xingred">*</span><br><input type="text" class="AlumniInputstyle" id="phone" value=""></div><div class="inputAndSelect" style="line-height:46px;"><input type="button" onclick="AppSet.LoginSubmit()" value="确定" class="inputsubmitStyle "></div></div>
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="" id="actionType" />
+<script type="text/javascript" src="js/jquery1.6.js"></script> 
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/tpl.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	DaRen.getEventsEntriesCommentList();	
+})
+</script>
+</body>
+</html>

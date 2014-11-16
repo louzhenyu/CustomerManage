@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+
+
+  <EMBAAuthCodeEmail>
+    <MailSendFrom>mailcenter@jitmarketing.cn</MailSendFrom>
+    <MailUserName>mailcenter@jitmarketing.cn</MailUserName>
+    <MailUserPassword>jit15d!</MailUserPassword>
+    <SMTPServer>smtp.exmail.qq.com</SMTPServer>
+    <MailTitle>验证码通知</MailTitle>
+    <EMBAAuthCodeMailTemplate>您的验证码是：{0}（30分钟内有效）。请不要把验证码泄露给其他人。【{1}】</EMBAAuthCodeMailTemplate>
+  </EMBAAuthCodeEmail>
+
+
+  <AssociationMail des="协会宝发送邮件配置信息">
+    <MailSendFrom>mailcenter@jitmarketing.cn</MailSendFrom>
+    <MailUserName>mailcenter@jitmarketing.cn</MailUserName>
+    <MailUserPassword>jit15d!</MailUserPassword>
+    <SMTPServer>smtp.exmail.qq.com</SMTPServer>
+    <MailTo></MailTo>
+    <MailContent>您的信息已提交审核</MailContent>
+  </AssociationMail>
+  <BlossomMail des="花间堂发送邮件配置信息">
+    <MailSendFrom>mailcenter@jitmarketing.cn</MailSendFrom>
+    <MailUserName>mailcenter@jitmarketing.cn</MailUserName>
+    <MailUserPassword>jit15d!</MailUserPassword>
+    <SMTPServer>smtp.exmail.qq.com</SMTPServer>
+    <MailTo>appleji@blossomhillinn.com,starliang@blossomhillinn.com,reservation@blossomhillinn.com,hengtao.mu@jitmarketing.cn,haidong.wang@jitmarketing.cn</MailTo>
+    <MailTitle>花间堂公众号--下单通知</MailTitle>
+    <MailBody>
+      <![CDATA[
+      <!DOCTYPE HTML>
+      <html>
+      <head>
+          <title></title>
+          <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+          <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+      </head>
+      <body>
+          <div style="background: #fff; padding-bottom: 20px; zoom: 1; position: relative;
+              z-index: 1;" class="qm_bigsize qm_converstaion_body body qmbox">
+              <table border="0" cellspacing="0" cellpadding="1" style="width: 600px; border: 1px solid #319400;background: url(http://115.29.186.161:9004/HtmlApps/images/special/bollssom/bg2.png) repeat-y 0 0;background-size: 522px 400px; height: auto;">
+                  <tbody>
+                      <tr>
+                          <td bgcolor="#319400" style="padding-left: 20px; color: #ffffff; font-weight: bold;
+                              font-size: 40px;" height="60">
+                              花间堂公众号--下单通知
+                          </td>
+                      </tr>
+                      <tr>
+                          <td style="padding: 20px;">
+                              <table border="0">
+                                  <tbody>
+                                      <tr>
+                                          <td>
+                                              <p style="font-weight: bold; font-size: 22px; margin: 10px; padding: 0;">
+                                                  尊敬的管理员您好，很高兴的通知您，客户：#UserName#已下单！
+                                              </p>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td colspan="2">
+                              <table border="0" cellspacing="0" cellpadding="1">
+                                  <tbody>
+                                      <tr>
+                                          <td bgcolor="#319400" width="15" style="padding: 0;">
+                                          </td>
+                                          <td style="color: #319400; padding: 10px; font-weight: bold; font-size: 20px;">
+                                              订单详情
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td style="font-size: 16px; padding-left: 30px; padding-top: 10px;
+                              padding-bottom: 15px;">
+                              <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                                  <tbody>
+                                      <tr>
+                                          <td width="100" height="30" align="left" valign="top">
+                                              客户名称：
+                                          </td>
+                                          <td height="30" align="left" valign="top">
+                                              <span style="border-bottom: 1px dashed #ccc;">#UserName#</span>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td width="100" height="30" align="left" valign="top">
+                                              手机：
+                                          </td>
+                                          <td height="30" align="left" valign="top">
+                                              <span style="border-bottom: 1px dashed #ccc;">#Mobile#</span>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td width="100" height="30" align="left" valign="top">
+                                              酒店：
+                                          </td>
+                                          <td height="30" align="left" valign="top">
+                                              <span style="border-bottom: 1px dashed #ccc;">#StoreName#</span>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td width="100" height="30" align="left" valign="top">
+                                              房间：
+                                          </td>
+                                          <td align="left" valign="top">
+                                              <span style="border-bottom: 1px dashed #ccc;">#RoomName#</span>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td width="100" height="30" align="left" valign="top">
+                                              订单编号：
+                                          </td>
+                                          <td align="left" valign="top">
+                                              <span style="border-bottom: 1px dashed #ccc;">#OrderNo#</span>
+                                          </td>
+                                      </tr>
+                                      <tr>
+                                          <td width="100" height="30" align="left" valign="top">
+                                              住宿日期：
+                                          </td>
+                                          <td align="left" valign="top">
+                                              <span style="border-bottom: 1px dashed #ccc;">#In-Out-Date#</span>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </body>
+      </html>
+      ]]>
+    </MailBody>
+    <MailCancelTitle>花间堂公众号--取消订单通知</MailCancelTitle>
+    <MailCancelBody>
+      <![CDATA[
+      <!DOCTYPE HTML>
+          <html>
+          <head>
+              <title></title>
+              <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+              <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+          </head>
+          <body>
+              <div style="background: #fff; padding-bottom: 20px; zoom: 1; position: relative;
+                  z-index: 1;" class="qm_bigsize qm_converstaion_body body qmbox">
+                  <table border="0" cellspacing="0" cellpadding="1" style="width: 600px; border: 1px solid #753448;background: url(http://115.29.186.161:9004/HtmlApps/images/special/bollssom/bg2.png) repeat-y 0 0;background-size: 522px 400px; height: auto;">
+                      <tbody>
+                          <tr>
+                              <td bgcolor="#753448" style="padding-left: 20px; color: #ffffff; font-weight: bold;
+                                  font-size: 40px;" height="60">
+                                  花间堂公众号--取消订单通知
+                              </td>
+                          </tr>
+                          <tr>
+                              <td style="padding: 20px;">
+                                  <table border="0">
+                                      <tbody>
+                                          <tr>
+                                              <td>
+                                                  <p style="font-weight: bold; font-size: 22px; margin: 10px; padding: 0;">
+                                                      尊敬的管理员您好，客户：#UserName#已经取消订单！
+                                                  </p>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td colspan="2">
+                                  <table border="0" cellspacing="0" cellpadding="1">
+                                      <tbody>
+                                          <tr>
+                                              <td bgcolor="#753448" width="15" style="padding: 0;">
+                                              </td>
+                                              <td style="color: #753448; padding: 10px; font-weight: bold; font-size: 20px;">
+                                                  订单详情
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td style="font-size: 16px; padding-left: 30px; padding-top: 10px;
+                                  padding-bottom: 15px;">
+                                  <table width="90%" border="0" cellspacing="0" cellpadding="0">
+                                      <tbody>
+                                          <tr>
+                                              <td width="100" height="30" align="left" valign="top">
+                                                  客户名称：
+                                              </td>
+                                              <td height="30" align="left" valign="top">
+                                                  <span style="border-bottom: 1px dashed #ccc;">#UserName#</span>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td width="100" height="30" align="left" valign="top">
+                                                  手机：
+                                              </td>
+                                              <td height="30" align="left" valign="top">
+                                                  <span style="border-bottom: 1px dashed #ccc;">#Mobile#</span>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td width="100" height="30" align="left" valign="top">
+                                                  酒店：
+                                              </td>
+                                              <td height="30" align="left" valign="top">
+                                                  <span style="border-bottom: 1px dashed #ccc;">#StoreName#</span>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td width="100" height="30" align="left" valign="top">
+                                                  房间：
+                                              </td>
+                                              <td align="left" valign="top">
+                                                  <span style="border-bottom: 1px dashed #ccc;">#RoomName#</span>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td width="100" height="30" align="left" valign="top">
+                                                  订单编号：
+                                              </td>
+                                              <td align="left" valign="top">
+                                                  <span style="border-bottom: 1px dashed #ccc;">#OrderNo#</span>
+                                              </td>
+                                          </tr>
+                                          <tr>
+                                              <td width="100" height="30" align="left" valign="top">
+                                                  住宿日期：
+                                              </td>
+                                              <td align="left" valign="top">
+                                                  <span style="border-bottom: 1px dashed #ccc;">#In-Out-Date#</span>
+                                              </td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </body>
+          </html>
+      ]]>
+    </MailCancelBody>
+  </BlossomMail>
+  <AsusMail DES="华硕发送邮件配置信息">
+    <MailSendFrom>mailcenter@acmlife.org</MailSendFrom>
+    <MailUserName>mailcenter@acmlife.org</MailUserName>
+    <MailUserPassword>asus+123456</MailUserPassword>
+    <SMTPServer>smtp.exmail.qq.com</SMTPServer>
+    <MailTitle>校园产品专家密码找回</MailTitle>
+    <MailTo></MailTo>
+  </AsusMail>
+  <XieHuiBaoMail>
+    <MailTo></MailTo>
+    <XieHuiBaoMailTemplate>
+      <![CDATA[
+      <!DOCTYPE HTML>
+          <html>
+          <head>
+          <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+          <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
+          <title>EMBA联盟公众号-有新会员注册了</title>
+          <style type='text/css'>
+          @charset 'utf-8';
+          @charset 'utf-8';
+          /*------------------ HTML5 Reset ------------------*/
+          html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,address,cite,code,del,em,img,strong,sub,sup,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline}}
+          article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{{display:block}}
+          img,object,embed{{max-width:100%}}
+          mark{{background-color:#ff9;color:#000;font-style:normal;font-weight:400}}
+          del{{text-decoration:line-through}}
+          caption,cite,em,i,th,b,strong{{font-style:normal;font-weight:400}}
+          select,input,button,textarea{{font-size:100%;font-style:normal;font-weight:400;vertical-align:middle}}
+          table{{border-collapse:collapse;border-spacing:0}}fieldset,img{{border:0}}legend{{color:#000}}sup{{vertical-align:text-top}}sub{{vertical-align:text-bottom}}iframe{{display:block}}li{{list-style:none}}img{{vertical-align:middle}}a img{{vertical-align:top}}textarea{{resize:none}}
+          div,th,td{{word-wrap:break-word;word-break:break-all}}
+          body,button,input,select,textarea{{font:14px/1.5 Arial,Helvetica,sans-serif}}
+          body{{text-align:left;color:#333;background:#fff}}
+          input[type='radio']{{vertical-align:middle}}
+          input[type='checkbox']{{vertical-align:middle}}
+          label,input[type='button'],input[type='submit'],button,.button{{cursor:pointer;border:none;outline:none;padding:0;margin:0;-webkit-appearance:button}}
+          /*input[type='text'],textarea{{background:#fff;color:#aaa;border:1px solid #ddd;
+          -webkit-transition:border linear 0.2s,box-shadow linear 0.2s;
+          transition:border linear 0.2s,box-shadow linear 0.2s;
+          -webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+          box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+          -webkit-border-radius:3px;
+          border-radius:3px}}
+          input[type='text']:focus,textarea:focus{{border-color:#52a8ec;outline:0;color:#333;
+          -webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+          box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);}}*/
+          /*通用样式*/
+          a{{color:#333;text-decoration:none}}
+          a:hover{{color:#none;}}
+          :focus{{outline:none}}
+          .al{{text-align:left}}.ac{{text-align:center}}.ar{{text-align:right}}
+          .fl{{float:left}}.fr{{float:right}}.ti{{text-indent:-9999px;overflow:hidden}}
+          .hide{{display:none}}
+          /*通用字体和颜色*/
+          h1{{font-size:18px;font-weight:400}}h2,h3{{font-size:16px;font-weight:400}}h4,h5,h6{{font-size:14px;font-weight:400}}
+          .f14{{font-size:14px}}.f16{{font-size:16px}}
+          .white{{color:#fff}}
+          .black{{color:#000}}
+          .red{{color:#ff6b50}}
+          .pink{{color:#fa719f}}
+          .blue{{color:#047fe5}}
+          .yellow{{color:#ffa453}}
+          .orange{{color:#FF7800}}
+          .gray{{color:#aaa}}
+          /*清除浮动*/
+          .clear{{display:block;clear:both;overflow:hidden;height:0;line-height:0;font-size:0}}
+          .clearfix:after{{content:' ';visibility:hidden;display:block;clear:both;height:0;font-size:0}}
+          .clearfix{{*zoom:1}}
+          /*补丁*/
+          .blank5{{height:5px;font-size:0;clear:both;visibility:hidden}}
+          .blank10{{height:10px;font-size:0;clear:both;visibility:hidden}}
+          .blank15{{height:15px;clear:both;visibility:hidden}}
+          .blank20{{height:20px;clear:both;visibility:hidden}}
+          .blank25{{height:25px;clear:both;visibility:hidden}}
+          .blank30{{height:30px;clear:both;visibility:hidden}}
+          .blank40{{height:40px;clear:both;visibility:hidden}}
+          .mt-5{{margin-top:5px}}.mt-10{{margin-top:10px}}.mt-15{{margin-top:15px}}.mt-20{{margin-top:20px}}
+          .mr-5{{margin-right:5px;display:inline}}.mr-10{{margin-right:10px;display:inline}}.mr-15{{margin-right:15px;display:inline}}.mr-20{{margin-right:20px;display:inline}}
+          .mb-5{{margin-bottom:5px}}.mb-10{{margin-bottom:10px}}.mb-15{{margin-bottom:15px}}.mb-20{{margin-bottom:20px}}
+          .ml-5{{margin-left:5px;display:inline}}.ml-10{{margin-left:10px;display:inline}}.ml-15{{margin-left:15px;display:inline}}.ml-20{{margin-left:20px;display:inline}}
+          .br-2{{-webkit-border-radius:2px;border-radius:2px}}
+          .br-5{{-webkit-border-radius:5px;border-radius:5px}}
+          /*public*/
+          * {{-webkit-box-sizing:border-box;box-sizing:border-box}}
+          .dis_box {{display:-webkit-box;display:-ms-flexbox}}
+          .box_flex1 {{-webkit-box-flex:1;flex:1;}}
+          .box_justify {{-webkit-box-pack:justify;box-pack:justify}}
+          .box_center {{-webkit-box-pack:center;box-pack:center}}
+          .box_a_center {{-webkit-box-align:center;box-align:center}}
+          body{{font:12px/1.2em '宋体';background:#ebebf2;color:#383838;}}
+          .page-720{{width:720px;min-height:500px;margin:0 auto;}}
+          .page-900{{width:900px;min-height:500px;margin:0 auto;}}
+          .header{{height:50px;background:#4d7dad;margin-bottom:44px;}}
+          .header .logo{{float:left;width:65px;height:65px;margin:0;/*text-indent:-9999em;background:url(http://o2oapi.aladingyidong.com/images/logo/logo.png) no-repeat 0 0;*/}}
+          .header .tit{{float:left;line-height:32px;padding-bottom:20px;padding-left:10px;font-size:18px;border-left:3px solid #ebebf2;color:#ebebf2;}}
+          .header table{{width: 100%}}
+          .content{{padding:40px 15px;}}
+          .hint{{padding:15px 20px;border-bottom:1px solid #4d7dad;}}
+          .info{{padding:15px 0;}}
+          .info span{{float:left;width:37%;line-height:16px;text-align:center;color:#000;}}
+          .info span i{{color:#f00;}}
+          .info .wTag{{width:25%;border-left:1px solid #4d7dad;border-right:1px solid #4d7dad;}}
+          /*table*/
+          .tabStyle{{height:320px;min-height:320px;border:1px solid #4d7dad;background:#fff;}}
+          table{{border-collapse:collapse;margin:0 auto;width:100%;text-align:center;}}
+          tr{{border-bottom:1px solid #4d7dad;}}
+          th{{line-height:42px;background:#4d7dad;color:#fff;}}
+          td{{line-height:55px;}}
+          table a{{text-decoration:underline;color:#4d7dad;}}
+          .copyright{{text-align:center;margin-top:40px;color:#5c5c5c;}}
+          /*detail*/
+          .wrapArea{{width:375px;margin:20px auto;padding:0 15px;border:1px solid #4d7dad;background:#fff;color:#383838;}}
+          .wrapArea p{{margin:15px 0;line-height: 16px;}}
+          .wrapArea em{{display:inline-block;width:65px;margin-right:15px;text-align:right;font-weight:bold;}}
+          .wrapArea .tit{{font-weight:bold;}}
+          </style>
+          </head>
+          <body>
+            <div class='page-900'>
+              <div class='header reheader'>
+                <table>
+                      <tr>
+                          <td style='width:65px;'><h1 class='logo'><img src='http://o2oapi.aladingyidong.com/images/logo/logo.png' alt='联盟注册' /></h1></td>
+                          <td ><h2 class='tit'>会员注册通知</h2></td>
+                      </tr>
+                  </table>
+              </div>
+              <div class='retitle'>亲爱的童鞋，欢迎加入商学院EMBA联盟大家庭！</div>
+              <div class='reline'></div>
+              <div class='recontent'>
+                <p style='margin-top:20px'>商学院EMBA联盟宗旨：</p>
+                <p>（1）遵守“平等、互助、开放、共建、共享、共赢”原则；</p>
+                <p>
+                  （2）实现跨界与整合：跨行业、跨学校、跨地域；整合中外主流商学院，及海外商学院的中国学员内外智慧，实践中研讨，成为中国商界的主流联盟，并成为中国传统企业转型升级的策源地，为传统企  业转型升级提供方法论、人才库、技术包和资金池。
+                </p>
+                <p>（3）远景：中国最知名最大的商学院EMBA同学会联盟，成为中国企业界EMBA联盟的领先品牌。</p>
+
+                <p style='margin-top:20px'>商学院EMBA联盟打造如下四大平台：</p>
+                <p>（1）学习平台：为促进本联盟EMBA同学之间的学习提供服务。</p>
+                <p>（2）合作交流平台：为本联盟EMBA同学提供各种形式的合作交流服务。</p>
+                <p>
+                  （3）活动组织及发布平台：组织本联盟EMBA同学之间的各种体育运动、户外运动、文艺比赛等各位文体活动，并发布与EMBA有关的各类运动及活动信息。
+                </p>
+                <p>（4）公益慈善平台：为本联盟EMBA同学或所在企业进行的公益慈善提供服务和指导</p>
+
+                <p style='margin-top:20px' >商学院EMBA联盟官方网站是:<a href='http://WWW.EMBA-Union.com'>WWW.EMBA-Union.com</a>；</p>
+                <p>官方微信:EMBA联盟（微信号：Emba-union）；</p>
+                <p>官方微博：商学院EMBA联盟（<a href='http://weibo.com/embaorg'>http://weibo.com/embaorg</a>）;</p>
+                <p style='margin-bottom:20px'>官方APP：商学院EMBA联盟。</p>
+
+              </div>
+              <div class='reline'></div>
+              <div class='refoot'style='padding-top: 200px;color:#a0a0a0'>技术提供：协会宝--专注于协会/商会、俱乐部的微信和APP会员平台，技术支持请联系我们</div>
+            </div>
+          </body>
+          </html>
+      ]]>
+    </XieHuiBaoMailTemplate>
+  </XieHuiBaoMail>
+  <EMBAEmail>
+    <MailSendFrom>mailcenter@jitmarketing.cn</MailSendFrom>
+    <MailUserName>mailcenter@jitmarketing.cn</MailUserName>
+    <MailUserPassword>jit15d!</MailUserPassword>
+    <SMTPServer>smtp.exmail.qq.com</SMTPServer>
+    <MailTitle>会员注册通知</MailTitle>
+    <EMBAMailTemplate>
+      <![CDATA[
+      <!DOCTYPE HTML>
+          <html>
+          <head>
+          <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+          <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
+          <title>EMBA联盟后台</title>
+          <style type='text/css'>
+          @charset 'utf-8';
+          @charset 'utf-8';
+          /*------------------ HTML5 Reset ------------------*/
+          html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,address,cite,code,del,em,img,strong,sub,sup,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline}}
+          article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{{display:block}}
+          img,object,embed{{max-width:100%}}
+          mark{{background-color:#ff9;color:#000;font-style:normal;font-weight:400}}
+          del{{text-decoration:line-through}}
+          caption,cite,em,i,th,b,strong{{font-style:normal;font-weight:400}}
+          select,input,button,textarea{{font-size:100%;font-style:normal;font-weight:400;vertical-align:middle}}
+          table{{border-collapse:collapse;border-spacing:0}}fieldset,img{{border:0}}legend{{color:#000}}sup{{vertical-align:text-top}}sub{{vertical-align:text-bottom}}iframe{{display:block}}li{{list-style:none}}img{{vertical-align:middle}}a img{{vertical-align:top}}textarea{{resize:none}}
+          div,th,td{{word-wrap:break-word;word-break:break-all}}
+          body,button,input,select,textarea{{font:14px/1.5 Arial,Helvetica,sans-serif}}
+          body{{text-align:left;color:#333;background:#fff}}
+          input[type='radio']{{vertical-align:middle}}
+          input[type='checkbox']{{vertical-align:middle}}
+          label,input[type='button'],input[type='submit'],button,.button{{cursor:pointer;border:none;outline:none;padding:0;margin:0;-webkit-appearance:button}}
+          /*input[type='text'],textarea{{background:#fff;color:#aaa;border:1px solid #ddd;
+          -webkit-transition:border linear 0.2s,box-shadow linear 0.2s;
+          transition:border linear 0.2s,box-shadow linear 0.2s;
+          -webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+          box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+          -webkit-border-radius:3px;
+          border-radius:3px}}
+          input[type='text']:focus,textarea:focus{{border-color:#52a8ec;outline:0;color:#333;
+          -webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+          box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);}}*/
+          /*通用样式*/
+          a{{color:#333;text-decoration:none}}
+          a:hover{{color:#none;}}
+          :focus{{outline:none}}
+          .al{{text-align:left}}.ac{{text-align:center}}.ar{{text-align:right}}
+          .fl{{float:left}}.fr{{float:right}}.ti{{text-indent:-9999px;overflow:hidden}}
+          .hide{{display:none}}
+          /*通用字体和颜色*/
+          h1{{font-size:18px;font-weight:400}}h2,h3{{font-size:16px;font-weight:400}}h4,h5,h6{{font-size:14px;font-weight:400}}
+          .f14{{font-size:14px}}.f16{{font-size:16px}}
+          .white{{color:#fff}}
+          .black{{color:#000}}
+          .red{{color:#ff6b50}}
+          .pink{{color:#fa719f}}
+          .blue{{color:#047fe5}}
+          .yellow{{color:#ffa453}}
+          .orange{{color:#FF7800}}
+          .gray{{color:#aaa}}
+          /*清除浮动*/
+          .clear{{display:block;clear:both;overflow:hidden;height:0;line-height:0;font-size:0}}
+          .clearfix:after{{content:' ';visibility:hidden;display:block;clear:both;height:0;font-size:0}}
+          .clearfix{{*zoom:1}}
+          /*补丁*/
+          .blank5{{height:5px;font-size:0;clear:both;visibility:hidden}}
+          .blank10{{height:10px;font-size:0;clear:both;visibility:hidden}}
+          .blank15{{height:15px;clear:both;visibility:hidden}}
+          .blank20{{height:20px;clear:both;visibility:hidden}}
+          .blank25{{height:25px;clear:both;visibility:hidden}}
+          .blank30{{height:30px;clear:both;visibility:hidden}}
+          .blank40{{height:40px;clear:both;visibility:hidden}}
+          .mt-5{{margin-top:5px}}.mt-10{{margin-top:10px}}.mt-15{{margin-top:15px}}.mt-20{{margin-top:20px}}
+          .mr-5{{margin-right:5px;display:inline}}.mr-10{{margin-right:10px;display:inline}}.mr-15{{margin-right:15px;display:inline}}.mr-20{{margin-right:20px;display:inline}}
+          .mb-5{{margin-bottom:5px}}.mb-10{{margin-bottom:10px}}.mb-15{{margin-bottom:15px}}.mb-20{{margin-bottom:20px}}
+          .ml-5{{margin-left:5px;display:inline}}.ml-10{{margin-left:10px;display:inline}}.ml-15{{margin-left:15px;display:inline}}.ml-20{{margin-left:20px;display:inline}}
+          .br-2{{-webkit-border-radius:2px;border-radius:2px}}
+          .br-5{{-webkit-border-radius:5px;border-radius:5px}}
+          /*public*/
+          * {{-webkit-box-sizing:border-box;box-sizing:border-box}}
+          .dis_box {{display:-webkit-box;display:-ms-flexbox}}
+          .box_flex1 {{-webkit-box-flex:1;flex:1;}}
+          .box_justify {{-webkit-box-pack:justify;box-pack:justify}}
+          .box_center {{-webkit-box-pack:center;box-pack:center}}
+          .box_a_center {{-webkit-box-align:center;box-align:center}}
+          body{{font:12px/1.2em '宋体';background:#ebebf2;color:#383838;}}
+          .page-720{{width:720px;min-height:500px;margin:0 auto;}}
+          .page-900{{width:900px;min-height:500px;margin:0 auto;}}
+          .header{{height:50px;background:#4d7dad;margin-bottom:44px;}}
+          .header .logo{{float:left;width:65px;height:65px;margin:0;/*text-indent:-9999em;background:url(http://o2oapi.aladingyidong.com/images/logo/logo.png) no-repeat 0 0;*/}}
+          .header .tit{{float:left;line-height:32px;padding-bottom:20px;padding-left:10px;font-size:18px;border-left:3px solid #ebebf2;color:#ebebf2;}}
+          .header table{{width: 100%}}
+          .content{{padding:40px 15px;}}
+          .hint{{padding:15px 20px;border-bottom:1px solid #4d7dad;}}
+          .info{{padding:15px 0;}}
+          .info span{{float:left;width:37%;line-height:16px;text-align:center;color:#000;}}
+          .info span i{{color:#f00;}}
+          .info .wTag{{width:25%;border-left:1px solid #4d7dad;border-right:1px solid #4d7dad;}}
+          /*table*/
+          .tabStyle{{height:320px;min-height:320px;border:1px solid #4d7dad;background:#fff;}}
+          table{{border-collapse:collapse;margin:0 auto;width:100%;text-align:center;}}
+          tr{{border-bottom:1px solid #4d7dad;}}
+          th{{line-height:42px;background:#4d7dad;color:#fff;}}
+          td{{line-height:55px;}}
+          table a{{text-decoration:underline;color:#4d7dad;}}
+          .copyright{{text-align:center;margin-top:40px;color:#5c5c5c;}}
+          /*detail*/
+          .wrapArea{{width:375px;margin:20px auto;padding:0 15px;border:1px solid #4d7dad;background:#fff;color:#383838;}}
+          .wrapArea p{{margin:15px 0;line-height: 16px;}}
+          .wrapArea em{{display:inline-block;width:65px;margin-right:15px;text-align:right;font-weight:bold;}}
+          .wrapArea .tit{{font-weight:bold;}}
+          </style>
+          </head>
+          <body>
+            <div class='page-900'>
+              <div class='header reheader'>
+                <table>
+                      <tr>
+                          <td style='width:65px;'><h1 class='logo'><img src='http://o2oapi.aladingyidong.com/images/logo/logo.png' alt='联盟注册' /></h1></td>
+                          <td ><h2 class='tit'>会员注册通知</h2></td>
+                      </tr>
+                  </table>
+              </div>
+              <div class='retitle'>亲爱的童鞋，欢迎加入商学院EMBA联盟大家庭！</div>
+              <div class='reline'></div>
+              <div class='recontent'>
+                <p style='margin-top:20px'>商学院EMBA联盟宗旨：</p>
+                <p>（1）遵守“平等、互助、开放、共建、共享、共赢”原则；</p>
+                <p>
+                  （2）实现跨界与整合：跨行业、跨学校、跨地域；整合中外主流商学院，及海外商学院的中国学员内外智慧，实践中研讨，成为中国商界的主流联盟，并成为中国传统企业转型升级的策源地，为传统企  业转型升级提供方法论、人才库、技术包和资金池。
+                </p>
+                <p>（3）远景：中国最知名最大的商学院EMBA同学会联盟，成为中国企业界EMBA联盟的领先品牌。</p>
+
+                <p style='margin-top:20px'>商学院EMBA联盟打造如下四大平台：</p>
+                <p>（1）学习平台：为促进本联盟EMBA同学之间的学习提供服务。</p>
+                <p>（2）合作交流平台：为本联盟EMBA同学提供各种形式的合作交流服务。</p>
+                <p>
+                  （3）活动组织及发布平台：组织本联盟EMBA同学之间的各种体育运动、户外运动、文艺比赛等各位文体活动，并发布与EMBA有关的各类运动及活动信息。
+                </p>
+                <p>（4）公益慈善平台：为本联盟EMBA同学或所在企业进行的公益慈善提供服务和指导</p>
+
+                <p style='margin-top:20px' >商学院EMBA联盟官方网站是:<a href='http://WWW.EMBA-Union.com'>WWW.EMBA-Union.com</a>；</p>
+                <p>官方微信:EMBA联盟（微信号：Emba-union）；</p>
+                <p>官方微博：商学院EMBA联盟（<a href='http://weibo.com/embaorg'>http://weibo.com/embaorg</a>）;</p>
+                <p style='margin-bottom:20px'>官方APP：商学院EMBA联盟。</p>
+
+              </div>
+              <div class='reline'></div>
+              <div class='refoot'style='padding-top: 200px;color:#a0a0a0'>技术提供：协会宝--专注于协会/商会、俱乐部的微信和APP会员平台，技术支持请联系我们</div>
+            </div>
+          </body>
+          </html>
+      ]]>
+    </EMBAMailTemplate>
+  </EMBAEmail>
+
+  <EMBABackgroundEmail des="EMBA后台发送邮件配置信息">
+    <MailSendFrom>mailcenter@jitmarketing.cn</MailSendFrom>
+    <MailUserName>mailcenter@jitmarketing.cn</MailUserName>
+    <MailUserPassword>jit15d!</MailUserPassword>
+    <SMTPServer>smtp.exmail.qq.com</SMTPServer>
+    <MailTo>wangzihe@emba-union.com</MailTo>
+    <MailTitle></MailTitle>
+    <MailContent>
+      有新会员注册了，快去看看吧!
+    </MailContent>
+  </EMBABackgroundEmail>
+  <XWTMail>
+    <MailTo></MailTo>
+    <XWTMailTemplate>
+      <![CDATA[<!DOCTYPE HTML>
+          <html>
+          <head>
+          <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+          <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
+          <title>精英小舞台</title>
+          <style type='text/css'>
+          @charset 'utf-8';
+          @charset 'utf-8';
+          /*------------------ HTML5 Reset ------------------*/
+          html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,address,cite,code,del,em,img,strong,sub,sup,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline}}
+          article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{{display:block}}
+          img,object,embed{{max-width:100%}}
+          mark{{background-color:#ff9;color:#000;font-style:normal;font-weight:400}}
+          del{{text-decoration:line-through}}
+          caption,cite,em,i,th,b,strong{{font-style:normal;font-weight:400}}
+          select,input,button,textarea{{font-size:100%;font-style:normal;font-weight:400;vertical-align:middle}}
+          table{{border-collapse:collapse;border-spacing:0}}fieldset,img{{border:0}}legend{{color:#000}}sup{{vertical-align:text-top}}sub{{vertical-align:text-bottom}}iframe{{display:block}}li{{list-style:none}}img{{vertical-align:middle}}a img{{vertical-align:top}}textarea{{resize:none}}
+          div,th,td{{word-wrap:break-word;word-break:break-all}}
+          body,button,input,select,textarea{{font:14px/1.5 Arial,Helvetica,sans-serif}}
+          body{{text-align:left;color:#333;background:#fff}}
+          input[type='radio']{{vertical-align:middle}}
+          input[type='checkbox']{{vertical-align:middle}}
+          label,input[type='button'],input[type='submit'],button,.button{{cursor:pointer;border:none;outline:none;padding:0;margin:0;-webkit-appearance:button}}
+          /*input[type='text'],textarea{{background:#fff;color:#aaa;border:1px solid #ddd;
+          -webkit-transition:border linear 0.2s,box-shadow linear 0.2s;
+          transition:border linear 0.2s,box-shadow linear 0.2s;
+          -webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+          box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+          -webkit-border-radius:3px;
+          border-radius:3px}}
+          input[type='text']:focus,textarea:focus{{border-color:#52a8ec;outline:0;color:#333;
+          -webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+          box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);}}*/
+          /*通用样式*/
+          a{{color:#333;text-decoration:none}}
+          a:hover{{color:#none;}}
+          :focus{{outline:none}}
+          .al{{text-align:left}}.ac{{text-align:center}}.ar{{text-align:right}}
+          .fl{{float:left}}.fr{{float:right}}.ti{{text-indent:-9999px;overflow:hidden}}
+          .hide{{display:none}}
+          /*通用字体和颜色*/
+          h1{{font-size:18px;font-weight:400}}h2,h3{{font-size:16px;font-weight:400}}h4,h5,h6{{font-size:14px;font-weight:400}}
+          .f14{{font-size:14px}}.f16{{font-size:16px}}
+          .white{{color:#fff}}
+          .black{{color:#000}}
+          .red{{color:#ff6b50}}
+          .pink{{color:#fa719f}}
+          .blue{{color:#047fe5}}
+          .yellow{{color:#ffa453}}
+          .orange{{color:#FF7800}}
+          .gray{{color:#aaa}}
+          /*清除浮动*/
+          .clear{{display:block;clear:both;overflow:hidden;height:0;line-height:0;font-size:0}}
+          .clearfix:after{{content:' ';visibility:hidden;display:block;clear:both;height:0;font-size:0}}
+          .clearfix{{*zoom:1}}
+          /*补丁*/
+          .blank5{{height:5px;font-size:0;clear:both;visibility:hidden}}
+          .blank10{{height:10px;font-size:0;clear:both;visibility:hidden}}
+          .blank15{{height:15px;clear:both;visibility:hidden}}
+          .blank20{{height:20px;clear:both;visibility:hidden}}
+          .blank25{{height:25px;clear:both;visibility:hidden}}
+          .blank30{{height:30px;clear:both;visibility:hidden}}
+          .blank40{{height:40px;clear:both;visibility:hidden}}
+          .mt-5{{margin-top:5px}}.mt-10{{margin-top:10px}}.mt-15{{margin-top:15px}}.mt-20{{margin-top:20px}}
+          .mr-5{{margin-right:5px;display:inline}}.mr-10{{margin-right:10px;display:inline}}.mr-15{{margin-right:15px;display:inline}}.mr-20{{margin-right:20px;display:inline}}
+          .mb-5{{margin-bottom:5px}}.mb-10{{margin-bottom:10px}}.mb-15{{margin-bottom:15px}}.mb-20{{margin-bottom:20px}}
+          .ml-5{{margin-left:5px;display:inline}}.ml-10{{margin-left:10px;display:inline}}.ml-15{{margin-left:15px;display:inline}}.ml-20{{margin-left:20px;display:inline}}
+          .br-2{{-webkit-border-radius:2px;border-radius:2px}}
+          .br-5{{-webkit-border-radius:5px;border-radius:5px}}
+          /*public*/
+          * {{-webkit-box-sizing:border-box;box-sizing:border-box}}
+          .dis_box {{display:-webkit-box;display:-ms-flexbox}}
+          .box_flex1 {{-webkit-box-flex:1;flex:1;}}
+          .box_justify {{-webkit-box-pack:justify;box-pack:justify}}
+          .box_center {{-webkit-box-pack:center;box-pack:center}}
+          .box_a_center {{-webkit-box-align:center;box-align:center}}
+          body{{font:12px/1.2em '宋体';background:#ebebf2;color:#383838;}}
+          .page-720{{width:720px;min-height:500px;margin:0 auto;}}
+          .page-900{{width:900px;min-height:500px;margin:0 auto;}}
+          .header{{height:50px;background:#4d7dad;margin-bottom:44px;}}
+          .header .logo{{float:left;width:65px;height:65px;margin:0;/*text-indent:-9999em;background:url(http://o2oapi.aladingyidong.com/images/logo/logo.png) no-repeat 0 0;*/}}
+          .header .tit{{float:left;line-height:32px;padding-bottom:20px;padding-left:10px;font-size:18px;border-left:3px solid #ebebf2;color:#ebebf2;}}
+          .header table{{width: 100%}}
+          .content{{padding:40px 15px;}}
+          .hint{{padding:15px 20px;border-bottom:1px solid #4d7dad;}}
+          .info{{padding:15px 0;}}
+          .info span{{float:left;width:37%;line-height:16px;text-align:center;color:#000;}}
+          .info span i{{color:#f00;}}
+          .info .wTag{{width:25%;border-left:1px solid #4d7dad;border-right:1px solid #4d7dad;}}
+          /*table*/
+          .tabStyle{{height:320px;min-height:320px;border:1px solid #4d7dad;background:#fff;}}
+          table{{border-collapse:collapse;margin:0 auto;width:100%;text-align:center;}}
+          tr{{border-bottom:1px solid #4d7dad;}}
+          th{{line-height:42px;background:#4d7dad;color:#fff;}}
+          td{{line-height:55px;}}
+          table a{{text-decoration:underline;color:#4d7dad;}}
+          .copyright{{text-align:center;margin-top:40px;color:#5c5c5c;}}
+          /*detail*/
+          .wrapArea{{width:375px;margin:20px auto;padding:0 15px;border:1px solid #4d7dad;background:#fff;color:#383838;}}
+          .wrapArea p{{margin:15px 0;line-height: 16px;}}
+          .wrapArea em{{display:inline-block;width:65px;margin-right:15px;text-align:right;font-weight:bold;}}
+          .wrapArea .tit{{font-weight:bold;}}
+          </style>
+          </head>
+          <body>
+            <div class='page-900'>
+    
+              <div class='retitle'>亲爱的各位小朋友及家长，欢迎加入精英小舞台的大家庭！</div>
+              <div class='reline'></div>
+              <div><p align="center" style="margin:0cm;margin-bottom:.0001pt;text-align:center;padding-top: 20px;
+          line-height:24.0pt;vertical-align:baseline"><strong>
+          <span style="font-size:16.0pt;padding-top:20px;font-family:宋体;color:#E36C09;">校长寄语</span></strong><span lang="EN-US" style="color:#3E3E3E"><o:p></o:p></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span lang="EN-US" style="color:#3E3E3E"><o:p>&nbsp;</o:p></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span style="color:#3E3E3E">“我知道我不仅喜欢和孩子们一起工作，而且我更想去改变孩子们的未来。”<span lang="EN-US"><o:p></o:p></span></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span lang="EN-US" style="color:#3E3E3E"><o:p>&nbsp;</o:p></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span style="color:#3E3E3E">“我们将精英小舞台带到中国，希望培养更具国际竞争力的中国儿童！”<span lang="EN-US"><o:p></o:p></span></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span lang="EN-US" style="color:#3E3E3E"><o:p>&nbsp;</o:p></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span style="color:#3E3E3E">小舞台漂洋过海来到中国，经过五年的教学沉淀，在我的心中已经开花结果，这所学校，承载了太多我关于素质教育的梦想：<span lang="EN-US"><o:p></o:p></span></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span lang="EN-US" style="color:#3E3E3E"><o:p>&nbsp;</o:p></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span style="color:#3E3E3E">当我在美国看到美国校长亲自站在门口亲切地拥抱欢迎每一孩子，蹲下来与他们目光齐平的说话，祝福他们在这里开始开心快乐的一天，我的心被这简单的下蹲动作征服了！从此以后，每一天，每一个中国精英小舞台教学中心的院长，都会亲自站在门口迎接每个孩子的到来，蹲下来一一拥抱他们，从他们进门的第一刻起，就开始受到真正意义上的个体尊重。<span lang="EN-US"><o:p></o:p></span></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span lang="EN-US" style="color:#3E3E3E"><o:p>&nbsp;</o:p></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span style="color:#3E3E3E">当年我在厦门大学建南大礼堂参加<span lang="EN-US">MBA</span>毕业大典，接受校长拨穗并亲自颁发毕业证书，当几千名学生一起齐刷刷向家长鞠躬，感谢他们的养育之恩；向老师鞠躬，感谢他们的谆谆教诲的时候，我的心灵，经历了一场神圣的洗礼。我将这种神圣带到精英小舞台，每个学期，每一个中心的院长，都会亲自给每个孩子颁发系着红绸带的毕业证书，在孩子们双手接过证书鞠躬的刹那，蜕变、成长、感恩浓缩在这传统但不可或缺的仪式中。<span lang="EN-US"><o:p></o:p></span></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span lang="EN-US" style="color:#3E3E3E"><o:p>&nbsp;</o:p></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span style="color:#3E3E3E">我按我的梦想建构精英小舞台，每次毕业，孩子们都要踏上为他们特别准备的“奥斯卡”红地毯，在家长们列队两旁的鼓掌声中走过毕业之门。我相信这样的仪式和尊重，会在他们幼小的心灵里埋下种子，有一天开花结果。<span lang="EN-US"><o:p></o:p></span></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span lang="EN-US" style="color:#3E3E3E"><o:p>&nbsp;</o:p></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span style="color:#3E3E3E">我非常高兴每一天，中国小舞台的孩子可以与全球无数孩子同步，在<span lang="EN-US">KIDSTAGE</span>快乐享受精英教学。自信心、专注力、想象力、耐挫力、待人礼仪、公众表达、沟通能力、团队协作、解决问题的能力等九大综合素质能够像基因一样被从小植入，代代相传。<span lang="EN-US"><o:p></o:p></span></span></p><p style="margin:0cm;margin-bottom:.0001pt;line-height:24.0pt;vertical-align:
+          baseline;min-height: 1.5em;word-wrap: normal;white-space:pre-wrap"><span lang="EN-US" style="color:#3E3E3E"><o:p>&nbsp;</o:p></span></p><p align="right" style="margin:0cm;margin-bottom:.0001pt;text-align:right;
+          line-height:24.0pt;vertical-align:baseline;min-height: 1.5em;word-wrap: normal;
+          white-space:pre-wrap">
+          <span lang="EN-US" style="color:#3E3E3E">Jennifer.C<o:p></o:p></span></p><p align="right" style="margin:0cm;margin-bottom:.0001pt;text-align:right;
+          line-height:24.0pt;vertical-align:baseline;min-height: 1.5em;word-wrap: normal;
+          white-space:pre-wrap"></p></div>
+              <div class='reline'></div>
+              <div class='refoot'style='display:none;padding-top: 200px;color:#a0a0a0'>技术提供：协会宝--专注于协会/商会、俱乐部的微信和APP会员平台，技术支持请联系我们</div>
+            </div>
+          </body>
+          </html>]]>
+    </XWTMailTemplate>
+  </XWTMail>
+</Root>

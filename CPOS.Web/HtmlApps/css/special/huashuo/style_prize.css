@@ -1,0 +1,156 @@
+@charset "utf-8";
+body {
+    background: none repeat scroll 0 0 #fff;
+}
+.mb44
+{
+ margin-bottom:44px;
+}
+.prize_area
+{
+ /*background-color: #252A2E;*/
+ width:320px;
+ margin:0 auto;
+ background:#fff url("../../../images/special/hs/prize/bg.png") no-repeat top center;
+}
+.prize_list
+{
+   background-color: #FFFFFF;
+   margin:0 auto;
+   min-height: 300px;
+   padding-bottom: 20px;
+   position: relative;
+   top: 250px;
+}
+.prize_inner
+{
+   background: url("../../../images/special/hs/prize/ggcard.png") no-repeat scroll left top rgba(0, 0, 0, 0);
+   height: 162px;
+   left: 50%;
+   margin-left: -133px;
+   overflow: hidden;
+   position: absolute;
+   top: -235px;
+   width: 266px;
+}
+.prizeTxt {
+    bottom: 12px;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    width: 70px;
+    z-index: 101;
+}
+.prizeTxt {
+    bottom: 12px;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    width: 70px;
+    z-index: 101;
+}
+.prizeTxt {
+    line-height: 30px;
+    text-align: center;
+}
+
+
+.bot_nav {   background: none repeat scroll 0 0 #000000;
+    bottom: 0;
+    height: 44px;
+    left: 0;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 102; 
+}
+.bot_nav dt { float:left;}
+.bot_nav dd { float:right; margin:0 10px;}
+.bot_nav dt a, .bot_nav dd a {
+	background-size: 120% auto;
+	display: block;
+	height: 30px;
+	overflow: hidden;
+	text-indent: -9999px;
+	width: 30px;
+}
+.bot_nav dd:nth-child(2) a {
+	background-position: 0 -186px;
+}
+.bot_nav dd:nth-child(3) a {
+	background-position: 0 -139px;
+}
+
+.bot_nav dd:nth-child(4) a {
+	background-position: 0 -46px;
+}
+
+
+.goods_head
+{
+   height:20px;
+   line-height:20px;
+   color:#ff4545;
+   margin:10px;
+}
+.goods_list{
+	background:none;
+	text-align:left;
+}
+.goods_list dl
+{
+ height: 80px;
+ margin:0 10px 30px;
+ width: 90%;
+}
+.goods_list dl dt
+{
+    float: left;
+    height: 80px;
+    margin:0 12px 0 48px;
+    width: 65px;
+	position:relative;
+}
+.goods_list dl dt em{
+	position:absolute;
+	bottom:0px;
+	left:-40px;
+	width:146px;
+	height:34px;
+	line-height:43px;
+	text-align:center;
+	color:#fff;
+	background:url("../../../images/special/hs/prize/icon.png") no-repeat 0 0;
+}
+.goods_list dl dt img
+{
+  width:65px;
+  height:65px;
+  
+}
+
+.goods_list dl dd
+{
+   float:left;
+   width:122px;
+   margin:30px 0 0 40px;
+   text-align: center;
+}
+.goods_list dl dd span
+{
+   color:#000;  
+   font-size:14px; 
+   
+}
+
+/*��������ʽ*/
+.popup {background:#333; padding:10px; width:90%; margin:0 auto;}
+.popup p.ac { padding:10px 0;}
+.popup_btn {display:-webkit-box;-webkit-box-flex:1;-webkit-box-pack:center;}
+.popup_btn a { display:block; height:40px; line-height:40px; width:48%; text-align:center; background:#3C3C3C; border:1px solid #000; color:#fff; -webkit-border-radius:5px;-o-border-radius:5px;border-radius:5px; font-size:14px; margin:0 5px;-webkit-box-shadow:inset 0 1px 3px rgba(255,255,255, 0.3);}

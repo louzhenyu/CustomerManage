@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>优惠券</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link  href="css/jquery.mobile-1.0.min.css" rel="Stylesheet" type="text/css" />
+<!--<script src="js/jquery-1.6.2.min.js" type="text/javascript"></script>
+<script src="js/jquery.mobile-1.0.min.js" type="text/javascript"></script>-->
+<script src="js/base.js" type="text/javascript"></script>
+<style>
+body{ background:#fff;}
+.ui-body-c{ background:#fff;}
+.ui-grid-c { width:94%; margin:0 auto; text-align:center; color:#666; border-bottom:1px dashed #999; font-family: '微软雅黑'; padding-top:5px}
+.ui-grid-c .ui-block-a{ width:8%; text-align:left; vertical-align:middle; padding-top:13px;font-size:20px;}
+.ui-grid-c .ui-block-b{ width:40%; text-align:left; font-size:20px;}
+.ui-grid-c .ui-block-c{ width:26%; text-align:center;font-size:20px; }
+.ui-grid-c .ui-block-d{ width:26%; text-align:right;font-size:20px; }
+.ui-grid-c h2 { color:#333; font-size:.9em; font-family: '微软雅黑'; font-weight:normal;}
+.ui-grid-c h3 { color:#333; font-size:.9em; font-family: '微软雅黑'; font-weight:normal;}
+.ui-grid-c span {font-size:.6em; font-family: '微软雅黑'; margin-top:5px; padding-left:8%; width:92%; float:left; text-align:left;}
+
+.ui-grid-a .ui-block-a{ width:100%; margin:0 auto; text-align:center;}
+.ui-grid-a .ui-block-a .btn { width:94%; height:2em; margin:0 auto; text-align:center; line-height:2em; background:#cc0000; margin-top:2em; cursor:pointer;}
+.ui-grid-a .ui-block-a .btn a{ text-decoration:none; font-family: '微软雅黑'; color:#fff; font-size:1em; font-weight:normal;}
+.ui-bar-a { background:#fff;border:0 none;}
+.close{
+width:20px; height:20px; border-radius:15px;-moz-border-radius: 15px;-webkit-border-radius: 15px;background-color:#000; 
+display:block; overflow:hidden; clear:both; font-family:Arial, Helvetica, sans-serif; text-align:center; font-size:.5em;
+line-height:20px; float:right; margin-right:10px; margin-top:10px; cursor:pointer;
+}
+
+.ui-checkbox input {
+position: absolute;
+left:0;
+top:0;
+width: 20px;
+height: 20px;
+margin: 0;
+outline: 0!important;
+z-index: 1;
+border:0px solid #ccc;
+border-radius:5px;
+}
+
+</style>
+</head>
+<script type="text/javascript">
+    var loadMore = '';
+    var Von = 'Coupon.getCouponList()';
+</script>
+<script id="showCouponList" type="text/template">
+<% _.each(couponList,function(item, index){%>
+   <div class="ui-grid-c">
+   	<div class="ui-block-a">
+		<%if (getParam("orderId")){%>
+			<input type="checkbox" name="chkCoupon" id="chk<%=index%>" <% if(item.isChecked == "1"){%>checked<%}%> value="<%=item.couponId%>" onclick="Coupon.clickCoupon('chk<%=index%>')" />
+		<%} %>
+    </div>
+    <div class="ui-block-b">
+      <h3><%=item.couponType%></h3>
+    </div>
+    <div class="ui-block-c">
+      <h2 style="color:#cc0000;"><%=item.parValue %>元</h2>
+    </div>
+    <div class="ui-block-d">
+      <h3 style="font-size:.6em; color:#666;"><%=item.couponSource %></h2>
+    </div>
+    <span>每满<%=item.conditionValue %>元可使用一张</span>
+  </div>
+<% })%>
+</script>
+<body>
+<div class="loading" style="position:absolute;"><img src="images/382.gif" width="40" height="40" /></div>
+<div data-role="page">
+<!--  <div data-role="header">
+    <h1>头部栏标题</h1>
+  </div>
+-->
+<!--<div data-role="header">
+<div class="close">X</div>
+</div>-->
+  <div class="ui-grid-c" style="height:32px">
+    <div class="ui-block-a">
+      <h2></h2>
+    </div>
+    <div class="ui-block-b">
+      <h2>类型</h2>
+    </div>
+    <div class="ui-block-c">
+      <h2>面值</h2>
+    </div>
+    <div class="ui-block-d">
+      <h2>获取方式</h2>
+    </div>
+  </div>
+  <div id="couponList"></div>
+  <!--<div class="ui-grid-a">
+	  <div class="ui-block-a">
+       <div class="btn"><a onclick="history.back()">返 回</a></div>
+
+	  </div> 
+	</div>  -->
+</div>
+    <div class="MenuBox" id="MenuBox" rel="2"> </div>
+</body>
+</html>

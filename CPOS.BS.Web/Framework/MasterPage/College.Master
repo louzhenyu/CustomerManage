@@ -1,0 +1,61 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="College.master.cs" Inherits="JIT.CPOS.BS.Web.Framework.MasterPage.College" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+    <link href="/module/styles/css/reset-pc.css" rel="stylesheet">
+    <link href="/module/styles/css/common-layout.css" rel="stylesheet">
+    <link href="/module/styles/css/college/skin01.css" rel="stylesheet">
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <div class="allPage">
+        <!-- 公共的头部，导航，logo，信息 -->
+		<div class="commonHeader">
+            <!--
+			<div class="handleWrap">
+				<div class="qrBox">
+					<div class="qrBox-tip"><img src="/module/styles/images/qrImg.png" /></div>
+				</div>
+				<div class="setBox">
+					<div class="setBox-tip">
+						<a href="###">个人信息</a>
+						<a href="###">系统通知(1)</a>
+						<span class="commonBtn safetyOutBtn">安全退出</span>
+					</div>
+				</div>
+			</div>
+            -->
+			<div class="logoWrap">
+				<div class="arr"></div>
+				<h1 class="logo" title="阿拉丁">阿拉丁</h1>
+			</div>
+			<div class="commonNav">
+				<ul class="clearfix">
+					<li class="nav001 on">
+						<a href="###">微商学院</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+        <!-- 中间区域-->
+        <div class="centreArea">
+            <!-- 公共的菜单部分-->
+            <div class="commonMenu">
+                <ul>
+                    <!--<li class="menu001"><a href="###">微官网</a></li>-->
+                    <li class="menu002" id="li_news" runat="server"><a href="/Module/College/News/NewsList.aspx">微资讯</a></li>
+                    <li class="menu003" id="li_micro" runat="server"><a href="/Module/College/Micro/NumberList.aspx">微期刊</a></li>
+                    <li class="menu004" id="li_act" runat="server" visible="false"><a href="/Module/ActivityManage/ActivityList.aspx">活动管理</a></li>
+                </ul>
+            </div>
+            <!-- 内容区域 -->
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+    <script type="text/javascript" src="/Module/static/js/lib/require.js" defer async="true" data-main="/Module/College/CommRes/js/mainNew.js"></script>
+</body>
+</html>

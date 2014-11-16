@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>中奖名单</title>
+<style type="text/css">
+/*------------------ HTML5 Reset ------------------*/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,address,cite,code,del,em,img,strong,sub,sup,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+img,object,embed{max-width:100%}
+mark{background-color:#ff9;color:#000;font-style:normal;font-weight:700}
+del{text-decoration:line-through}
+caption,cite,em,i,th{font-style:normal;font-weight:400}b,strong{font-style:normal;font-weight:700}
+select,input,button,textarea{font-size:100%;font-style:normal;font-weight:400;vertical-align:middle}
+table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}legend{color:#000}sup{vertical-align:text-top}sub{vertical-align:text-bottom}iframe{display:block}li{list-style:none}img{vertical-align:middle}a img{vertical-align:top}textarea{resize:none}
+div,th,td{word-wrap:break-word;word-break:break-all}
+body,button,input,select,textarea{font:12px/1.5 Arial,Helvetica,sans-serif}
+body{text-align:left;color:#333;}
+input[type="radio"]{vertical-align:middle}
+input[type="checkbox"]{vertical-align:middle}
+label,input[type=button],input[type=submit],button,.button{cursor:pointer;border:none;outline:none;padding:0;margin:0;}
+body{text-align:left;color:#666}
+.textfield,textarea{background:#fff;color:#aaa;border:1px solid #ddd;
+-webkit-transition:border linear 0.2s,box-shadow linear 0.2s;
+-o-transition:border linear 0.2s,box-shadow linear 0.2s;
+transition:border linear 0.2s,box-shadow linear 0.2s;
+-webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+-o-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+box-shadow:inset 0 1px 3px rgba(0,0,0,0.1);
+-webkit-border-radius:3px;
+-o-border-radius:3px;
+border-radius:3px}
+.textfield:focus,textarea:focus{border-color:#52a8ec;outline:0;color:#333;
+-webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+-o-box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
+box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);}
+/*通用样式*/
+a{color:#333;text-decoration:none}
+a:focus{color:#333}
+:focus{outline:none}
+.al{text-align:left}.ac{text-align:center}.ar{text-align:right}
+.fl{float:left}.fr{float:right}.ti{text-indent:-9999px;overflow:hidden}
+.hide{display:none}
+/*通用字体和颜色*/
+h1{font-size:16px}h2,h3{font-size:14px}h4,h5,h6{font-size:12px}
+.f14{font-size:14px}.f16{font-size:16px}
+.white{color:#fff}
+.black{color:#000}
+.red{color:#FF75A2}
+.pink{color:#fa719f}
+.blue{color:#01a4bc}
+.yellow{color:#ffa453}
+.orange{color:#ff5a00}
+.gray{color:#aaa}
+/*清除浮动*/
+.clear{display:block;clear:both;overflow:hidden;height:0;line-height:0;font-size:0}
+.clearfix:after{content:" ";visibility:hidden;display:block;clear:both;height:0;font-size:0}
+.clearfix{*zoom:1}
+/*补丁*/
+.blank5{height:5px;font-size:0;clear:both;visibility:hidden}
+.blank10{height:10px;font-size:0;clear:both;visibility:hidden}
+.blank15{height:15px;clear:both;visibility:hidden}
+.blank20{height:20px;clear:both;visibility:hidden}
+.blank25{height:25px;clear:both;visibility:hidden}
+.blank30{height:30px;clear:both;visibility:hidden}
+.blank40{height:40px;clear:both;visibility:hidden}
+.mt-5{margin-top:5px}.mt-10{margin-top:10px}.mt-15{margin-top:15px}.mt-20{margin-top:20px}
+.mr-5{margin-right:5px;display:inline}.mr-10{margin-right:10px;display:inline}.mr-15{margin-right:15px;display:inline}.mr-20{margin-right:20px;display:inline}
+.mb-5{margin-bottom:5px}.mb-10{margin-bottom:10px}.mb-15{margin-bottom:15px}.mb-20{margin-bottom:20px}
+.ml-5{margin-left:5px;display:inline}.ml-10{margin-left:10px;display:inline}.ml-15{margin-left:15px;display:inline}.ml-20{margin-left:20px;display:inline}
+.br-2{-webkit-border-radius:2px;-o-border-radius:2px;border-radius:2px}
+.br-5{-webkit-border-radius:5px;-o-border-radius:5px;border-radius:5px}
+
+body { background:#dde2e4;}
+.win_list { width:290px; margin:0 auto; padding:5px 0; background:#fff;-webkit-box-shadow:0 1px 2px rgba(0,0,0,.3);box-shadow:0 1px 2px rgba(0,0,0,.3);}
+.win_list h2 { background:url(images/win_title_bg.png) no-repeat 0 0; background-size:100% 100%; height:36px; line-height:36px; font-size:16px; color:#0d3e82; padding-left:35px; margin-bottom:10px;}
+.win_list ul { padding:0 30px;}
+.win_list li { height:35px; line-height:35px; color:#6699cc; list-style:none;}
+.win_list li b { color:#0d3e82; font-size:14px;}
+</style>
+</head>
+
+<body>
+	<section class="win_list br-5" id="WinList">
+<!--     	<h2>中奖名单</h2>
+        <ul>
+       	<li><b>姜杰</b>： MAC PRO一台</li>
+        	<li><b>姜杰</b>： MAC PRO一台</li>
+        	<li><b>姜杰</b>： MAC PRO一台</li>
+        	<li><b>姜杰</b>： MAC PRO一台</li>
+        	<li><b>姜杰</b>： MAC PRO一台</li>
+        	<li><b>姜杰</b>： MAC PRO一台</li>
+        	<li><b>姜杰</b>： MAC PRO一台</li>
+        	<li><b>姜杰</b>： MAC PRO一台</li>
+      </ul>-->  
+    </section>
+</body>
+</html>
+
+
+<!--http://o2oapi.aladingyidong.com/OnlineShopping/data/data.aspx?action=getEventWinnerList&ReqContent=%7B%22common%22%3A%7B%22customerId%22%3A%22f6a7da3d28f74f2abedfc3ea0cf65c01%22%2C%22openId%22%3A%22o8Y7Ejv3jR5fEkneCNu6N1_TIYIM%22%2C%22userId%22%3A%22ce71ff3d98fd470f875057cb597cddd8%22%7D%2C%22special%22%3A%7B%22eventId%22%3A%22793150439CF94190A70CF2EC229A951D%2527%22%7D%7D&plat=pc&_=1386731785584
+-->
+
+<script src="js/jquery.js"></script>
+<script type="text/javascript">
+var ggj = {
+		getEventWinnerList:function(lotteryCount){
+			var jsonarr = {'action':"getEventWinnerList",ReqContent:JSON.stringify({"common":{customerId:getParam("customerId"),openId:getParam("openId"),userId:getParam("userId")},"special":{"Longitude":"0.0","Latitude":"0.0",eventId:getParam("eventId")}})};
+	
+			$.ajax({
+				type:'get',
+				url:'/OnlineShopping/data/data.aspx',
+				data:jsonarr,
+				timeout:90000,
+				cache:false,
+				beforeSend:function(){
+							Win.Loading();
+				},
+				dataType : 'json',
+				success:function(o){
+					Win.Loading("CLOSE");
+					if(o.code == 200){
+							var htmldata = _.template($("#winnerSx").html(), o.content);	
+							$("#WinList").html(htmldata);
+						}else{
+							alert(o.description);
+						}
+				}
+			 });
+		}
+}
+</script>
+<script type="text/template" id="winnerSx">
+	<% _.each(winnerList,function(item,key){%>
+		<% if(key == 0){%>
+		<h2>中奖名单</h2>
+		<ul>
+	<% }%>
+			<li><b><%=item.vipName%></b>：<%=item.winningDesc%></li>
+			<% if(key == 0){%>
+		</ul>
+	<% }%>
+	<%})%>
+</script>

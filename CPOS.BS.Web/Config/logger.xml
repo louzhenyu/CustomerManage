@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <configSections>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler, log4net" />
+  </configSections>
+  <log4net>
+    <!--缺省日志记录器的3个Appender-->
+    <appender name="RollingFileAppender_DefaultLogger.Debug" type="log4net.Appender.RollingFileAppender">
+      <file value="logs\" />
+      <param name="RollingStyle" value="Date" />
+      <datePattern value="yyyy-MM-dd&quot;Debug.log&quot;" />
+      <staticLogFileName value="false" />
+      <appendToFile value="true" />
+      <rollingStyle value="Date" />
+      <maxSizeRollBackups value="30" />
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="&lt;Log>%newline&lt;Date>%date{yyyy-MM-dd HH:mm:ss fff}&lt;/Date>%newline&lt;Client_ID>%property{ClientID}&lt;/Client_ID>%newline&lt;User_ID>%property{UserID}&lt;/User_ID>%newline&lt;Location>%property{Location}&lt;/Location>%newline%message%newline&lt;/Log>%newline%newline" />
+      </layout>
+    </appender>
+    <appender name="RollingFileAppender_DefaultLogger.Database" type="log4net.Appender.RollingFileAppender">
+      <file value="logs\" />
+      <param name="RollingStyle" value="Date" />
+      <datePattern value="yyyy-MM-dd&quot;Database.log&quot;" />
+      <staticLogFileName value="false" />
+      <appendToFile value="true" />
+      <rollingStyle value="Date" />
+      <maxSizeRollBackups value="30" />
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="&lt;Log>%newline&lt;Date>%date{yyyy-MM-dd HH:mm:ss fff}&lt;/Date>%newline&lt;Client_ID>%property{ClientID}&lt;/Client_ID>%newline&lt;User_ID>%property{UserID}&lt;/User_ID>%newline&lt;Location>%property{Location}&lt;/Location>%newline%message%newline&lt;/Log>%newline%newline" />
+      </layout>
+    </appender>
+    <appender name="RollingFileAppender_DefaultLogger.Exception" type="log4net.Appender.RollingFileAppender">
+      <file value="logs\" />
+      <param name="RollingStyle" value="Date" />
+      <datePattern value="yyyy-MM-dd&quot;Exception.log&quot;" />
+      <staticLogFileName value="false" />
+      <appendToFile value="true" />
+      <rollingStyle value="Date" />
+      <maxSizeRollBackups value="30" />
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="&lt;Log>%newline&lt;Date>%date{yyyy-MM-dd HH:mm:ss fff}&lt;/Date>%newline&lt;Client_ID>%property{ClientID}&lt;/Client_ID>%newline&lt;User_ID>%property{UserID}&lt;/User_ID>%newline&lt;Location>%property{Location}&lt;/Location>%newline%message%newline&lt;/Log>%newline%newline" />
+      </layout>
+    </appender>
+    <!--邮件Appender-->
+    <appender name="SmtpAppender" type="log4net.Appender.SmtpAppender">
+      <to value="jack.chen@jitmarketing.cn" />
+      <from value="Support@jitmarketing.cn" />
+      <authentication value="Basic"/>
+      <username value="Support@jitmarketing.cn" />
+      <password value="jit0sup" />
+      <subject value="test mail" />
+      <smtpHost value="smtp.exmail.qq.com" />
+      <bufferSize value="1" />
+      <lossy value="true" />
+      <!--<layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="&lt;Log>%newline&lt;Date>%date{yyyy-MM-dd HH:mm:ss fff}&lt;/Date>%newline&lt;Client_ID>%property{ClientID}&lt;/Client_ID>%newline&lt;User_ID>%property{UserID}&lt;/User_ID>%newline&lt;Developer>%property{Developer}&lt;/Developer>%newline&lt;Layer>%property{Layer}&lt;/Layer>%newline&lt;Module>%property{Module}&lt;/Module>%newline&lt;Location>%property{Location}&lt;/Location>%newline%message%newline&lt;/Log>%newline%newline" />
+      </layout>-->
+    </appender>
+    <!--自定义的日志消息可视化呈现-->
+    <renderer renderingClass="JIT.Utility.Log.DatabaseLogInfoRenderer,Utility" renderedClass="JIT.Utility.Log.DatabaseLogInfo,Utility" />
+    <renderer renderingClass="JIT.Utility.Log.DebugLogInfoRenderer,Utility" renderedClass="JIT.Utility.Log.DebugLogInfo,Utility" />
+    <renderer renderingClass="JIT.Utility.Log.ExceptionLogInfoRenderer,Utility" renderedClass="JIT.Utility.Log.ExceptionLogInfo,Utility" />
+    <!--日志记录器的根-->
+    <root>
+      <level value="ALL" />
+    </root>
+    <!--默认日志记录器-->
+    <logger name="DefaultLogger.Debug">
+      <level value="ALL" />
+      <appender-ref ref="RollingFileAppender_DefaultLogger.Debug"/>
+    </logger>
+    <logger name="DefaultLogger.Database">
+      <level value="ALL" />
+      <appender-ref ref="RollingFileAppender_DefaultLogger.Database"/>
+    </logger>
+    <logger name="DefaultLogger.Exception">
+      <level value="ALL" />
+      <appender-ref ref="RollingFileAppender_DefaultLogger.Exception"/>
+      <appender-ref ref="SmtpAppender"/>
+    </logger>
+  </log4net>
+</configuration>

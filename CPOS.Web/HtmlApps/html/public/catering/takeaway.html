@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="CateTakeaway">外送信息</title>
+		<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+	</head>
+
+	<body  style="background:#eee;">
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<section class="outsideInfoArea">
+			<div class="outsideInfo">
+				<div id="storeArea" class="storeArea" style="display: none;">
+					<p>
+						<select id="storeSelect">
+							<option value="">请选择订座门店</option>
+						</select>
+					</p>
+				</div>
+				<div class="userInfo">
+					<p  id="toSelectAddress">
+						<em class="tit">送货地址</em><label><span type="text" id="txtAddress" > </span> </label>
+					</p>
+
+					<p class="flex">
+						<em class="tit">用户名</em>
+						<label>
+							<input type="text" id="txtUserName" placeholder="请输入用户名">
+						</label>
+					</p>
+					<p class="flex">
+						<em class="tit">手机号</em>
+						<label>
+							<input type="tel" id="txtTel" placeholder="请输入手机号码" >
+						</label>
+					</p>
+
+				</div>
+
+				<div class="remark" >
+					<p class="tit">
+						备注
+					<textarea class="textArea" id="txtExplain" placeholder="输入备注信息" ></textarea>
+					</p>
+				</div>
+
+			</div>
+
+		</section>
+		<div class="noteInfo">
+			<dl>
+				<dt>外卖说明：</dt>
+				<dd>送餐范围：<b>2.5KM</b>,超出范围后，无法提供外卖服务</dd>
+				<dd>外卖时间：<b>10:00-22:00</b></dd>
+			</dl>
+		</div>
+		<div class="orderBottomWrap">
+			<p class="wrapBtn">
+				<a href="javascript:;" id="btSubmit" >确定</a>
+			</p>
+		</div>
+
+	</body>
+</html>

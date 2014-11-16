@@ -1,0 +1,92 @@
+@charset "utf-8";
+/*common*/
+html,body{height:100%;}
+body{background:#ebebeb;}
+.commonBtn{display:block;width:300px;height:44px;margin:0 auto;background:url(../../../images/public/huashuo_default/btn.png) no-repeat 0 0;background-size:100%;}
+
+.commonNav{display:-webkit-box;line-height:45px;padding:0 10px;background:#c0101a;}
+.commonNav .goBack{display:block;width:10px;height:15px;margin-top:12px;background:url(../../../images/public/huashuo_default/goBack2.png) no-repeat 0 0;background-size:100%;}
+.commonNav .title{-webkit-box-flex:1;text-align:center;font-size:18px;letter-spacing:1px;color:#fff;}
+
+/*公共添加按钮*/
+.commonAddBtn{position:fixed;bottom:20px;right:20px;width:32px;height:32px;background:url(../../../images/public/huashuo_default/addBtn.png) no-repeat 0 0;background-size:100%;}
+/*登录*/
+.registerArea{padding:15px 10px;margin:28px auto 50px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#fff;}
+.registerArea p{display:-webkit-box;}
+.registerArea p:nth-child(1){margin-bottom:10px;}
+.registerArea .tit{display:block;line-height:32px;font-size:16px;color:#363636;}
+.registerArea label{display:block;-webkit-box-flex:1;padding:5px 0;}
+.registerArea .name{border-bottom:1px solid #ccc;}
+.registerArea label input{width:100%;border:none;}
+
+
+/*公共导航*/
+.commonNav{ height:45px;padding:0 10px;background:#c0101a;}
+.commonNav ul {width:100%; height:45px; display:-webkit-box;}
+.commonNav ul li {padding:10px 0;-webkit-box-flex:1;-webkit-box-pack:center;}
+.commonNav ul li:nth-child(1){text-align:left;}
+.commonNav ul li:nth-child(2){text-align:center;}
+.commonNav ul li:nth-child(3){text-align:right;}
+.commonNav ul li a{ display:inline-block; width:25px; height:25px;overflow:hidden;margin:0 auto;}
+.commonNav ul li:nth-child(1) a{ background:url(../../../images/public/huashuo_default/goBack.png) no-repeat 0 0;background-size:100%;}
+.commonNav ul li:nth-child(2) a{ background:url(../../../images/public/huashuo_default/user.png) no-repeat 0 0;background-size:100%;}
+.commonNav ul li:nth-child(3) a{ background:url(../../../images/public/huashuo_default/order.png) no-repeat 0 0;background-size:100%;}
+.commonNav ul li.on:nth-child(2) a{ background:url(../../../images/public/huashuo_default/user2.png) no-repeat 0 0;background-size:100%;}
+.commonNav ul li.on:nth-child(3) a{ background:url(../../../images/public/huashuo_default/order2.png) no-repeat 0 0;background-size:100%;}
+
+
+/*公共的订单列表*/
+.orderBox{margin-bottom:10px;padding:0 10px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#fff;}
+.orderBox p{display:-webkit-box;line-height:38px;padding-left:5px;border-bottom:1px solid #ccc;color:#666;}
+.orderBox p:nth-last-child(1){border-bottom:none;}
+.orderBox p span{display:block;}
+.orderBox .tit{font-size:18px;}
+.orderBox .name{margin-right:30px;}
+.orderBox .flex{-webkit-box-flex:1;}
+.orderBox .end{color:#cc0033;} 
+
+/*搜索*/
+.searchWrap{display:-webkit-box;padding:10px;}
+.searchWrap .searchBox{-webkit-box-flex:1;display:-webkit-box;margin-left:5px;}
+.searchWrap .searchInput{display:block;-webkit-box-flex:1;height:30px;margin:0;padding-left:10px;border:1px solid #ddd;border-top-left-radius:5px;border-bottom-left-radius:5px;border-top-right-radius:0px;border-bottom-right-radius:0px;}
+.searchWrap .searchBtn{display:block;width:70px;line-height:30px;text-align:center;border-top-right-radius:5px;border-bottom-right-radius:5px;background:#c0101a;color:#fff;}
+
+
+/*订单提交*/
+.orderSubmitBtn{margin:10px auto 20px;background:url(../../../images/public/huashuo_default/submitBtn.png) no-repeat 0 0;background-size:100%;}
+
+.selectPhoto,.fillInfo{padding:10px;}
+.selectPhoto .title,.fillInfo .title{font-size:20px;}
+.selectPhoto .uploadWrap{display:-webkit-box;margin:10px 0 20px 0;}
+.selectPhoto .uploadWrap span{display:block;line-height:30px;padding:0 10px;border-radius:8px;background:#999;color:#fff;}
+.selectPhoto .uploadWrap input{display:block;-webkit-box-flex:1;height:30px;margin:2px 5px;padding-left:5px;border:1px solid #666;}
+
+.selectPhoto .photoBox{margin:0 15px 5px;border-bottom:1px solid #999;}
+.selectPhoto .photoBox p{position:relative;float:left;width:70px;height:70px;line-height:68px;margin:0 20px 20px 0;border:1px solid #ccc;text-align:center;background:#fff;}
+/*.selectPhoto .photoBox p:nth-child(3n+0){margin:0 0px 20px 0;}*/
+.selectPhoto .photoBox img{width:66px;height:45px;}
+.selectPhoto .photoBox .add{position:relative;font-size:60px;color:#ccc;}
+.selectPhoto .photoBox .close{position:absolute;top:-8px;right:-8px;width:15px;height:15px;background:url(../../../images/public/huashuo_default/close.png) no-repeat 0 0;background-size:100%;}
+.picFileBtn{width:70px;height:70px;position:absolute;top:0;left:0;opacity:0;}
+
+/*填写信息*/
+.fillInfo{}
+.fillInfo p{display:-webkit-box;margin-top:10px;}
+.fillInfo em{display:block;width:98px;line-height:35px;margin-right:10px;text-align:right;font-size:15px;}
+.fillInfo label{position:relative;display:block;-webkit-box-flex:1;border:1px solid #999;border-radius:5px;background:#fff;}
+.fillInfo input,.fillInfo select{width:100%;height:35px;padding-left:5px;border:none;border-radius:5px;}
+.fillInfo .point{position:absolute;top:0px;right:0px;width:42px;height:35px;border-top-right-radius:4px;border-bottom-right-radius:4px;background:#ccc url(../../../images/public/huashuo_default/selectPoint.png) no-repeat center center;background-size:40%;}
+
+
+/*添加新会员，二维码*/
+.autoAddUserBtn{margin:10px auto 20px;background:url(../../../images/public/huashuo_default/autoAddUserBtn.png) no-repeat 0 0;background-size:100%;}
+.qrCodeWrap{padding:10px;}
+.qrCodeWrap .title{font-size:14px;color:#333;}
+.qrCodeWrap .title:nth-last-child(1){text-align:center;}
+.qrCodeWrap img{width:151px;height:151px;display:block;margin:20px auto 40px;border:1px solid #ccc;}
+
+/*提示注册页面*/
+.noRegisterArea{padding:10px;}
+.noRegisterArea img{width:100px;height:100px;display:block;margin:58px auto 50px;}
+.noRegisterArea .tip{line-height:40px;font-size:18px;text-align:center; font-family:"Microsoft Yahei";color:#333;}
+.noRegisterArea .tip a{text-decoration:underline;color:#0033cc;}

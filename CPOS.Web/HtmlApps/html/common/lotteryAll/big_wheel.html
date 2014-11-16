@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html >
+<html>
+	<head>
+
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title name="BigWheel"></title>
+		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+			}
+			.wrapper {
+				position: relative;
+				margin: 0 auto;
+				max-width: 640px;
+				min-height: 100%;
+			}
+			.img{
+				display:block;
+				margin:0 auto;
+			}
+			.awardBtnWrap{position:fixed;bottom:10px;left:0px;width:100%;height:45px;background:#fff;}
+			.awardBtnWrap span{width:43%;height:42px;line-height:42px;text-align:center;font-size:15px;font-weight:bold;border-radius:5px;background:#f60;color:#fff;cursor:pointer;}
+			.awardBtnWrap .prizeBtn{float:left;margin:0 2% 0 5%;}
+			.awardBtnWrap .rewardBtn{float:right;margin:0 5% 0 2%;}
+			
+			/*下拉动画*/
+        @-webkit-keyframes pullDown {  
+        0% { top:-130px;}
+        40%{ top:130px;}
+        100% { top:0;}
+        }
+        .pullDownState{-webkit-animation:pullDown 0.5s ease-in-out 1;}/*infinite*/
+
+        @-webkit-keyframes pullUp {  
+        0% {top:150px;}
+        100% {top:-130px;}
+        }
+
+        .pullUpState{-webkit-animation:pullUp 0.5s ease-in-out 1;}/*infinite*/
+		</style>
+	</head>
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<img src="/HtmlApps/images/common/share.png" id="shareImg" style="display: none;height: 130px;position:fixed;right: 25px;top: 0;width: 160px;z-index: 100;" class="pullDownState">
+		<section class="sharePanel wrapper"  style="display: none;">
+			<div id="shareWrapper">
+			</div>
+			<div class="awardBtnWrap">
+			    <span id="btn_join" class="prizeBtn">马上参与</span>
+			    <span id="btn_check" class="rewardBtn">我的推荐奖励</span>
+			</div>
+		</section>
+
+		<section class="lottery_area" style="display: none;">
+			<div class="rotate_box" >
+
+				<img id="prizeImage" src=""  class="rotate_img">
+				<div class="rotate_start"></div>
+			</div>
+
+			<div class="l_area">
+
+				<div class="l_tip" >
+					您目前有<span  id="lotteryCount">0</span>次抽奖机会
+				</div>
+				<div class="l_explain" id="lotteryExplain"></div>
+
+				
+			</div>
+			<div class="goods_list">
+				<div id="goodsList">
+					
+				</div>
+
+			</div>
+
+		</section>
+		
+		<!--信封-填写基本信息的层-->
+	    <section  class="container" id="contact"  blockPage="true" style="display:none;">
+	        
+	        <div class="titWrap">
+	             <a id="close" href="javascript:;" class="closeBtn"></a>
+	             <h2 class="tit">请基本填写信息</h2>
+	        </div>
+	
+	        <div class="userinfo">
+	            <em>手机号</em>
+	            <input type="tel" class="focus_in"  id="phone">
+	            <span class="commonBtnStyle yzmBtn" id="btnGetCode">发送验证码</span>
+	        </div>
+	        <div class="userinfo">
+	            <em>验证码</em>
+	            <input type="text" class="focus_in" id="authCode">
+	        </div>
+	        <span class="commonBtnStyle confirmBtn" id="submit">确定</span>
+	    </section>
+	
+	    <!--填写注册表单-->
+	    <div id="registerFormArea" class="registerFormArea" blockPage="true" style="display:none;">
+	        <span id="closeBtn" class="closeBtn"></span>
+	        <h2 class="tit">填写注册表单</h2>
+	        <div id="registerForm" class="formBox">
+	            <p>
+	                <em>姓名</em>
+	                <lable>
+	                    <input type="text" />
+	                </lable>
+	            </p>
+	        </div>
+	        <p>
+	            <a href="javascript:JitPage.saveVipInfo();" class="submitBtn">提交</a>
+	        </p>
+	    </div>
+	    <script id="tpl_block_item" type="text/html">
+	        <p>
+	        <em><%=ControlInfo.ColumnDesc%></em>
+	        <lable>
+	        <%if(ControlInfo.ControlType==1){%>
+	            <input type="text" data-type="<%=ControlInfo.ControlType%>" data-text="<%=ControlInfo.ColumnDesc%>"  name="vipinfo" wid="<%=ID%>"/>
+	        <%}else if(ControlInfo.ControlType==6){%>
+	            <select name="vipinfo" wid="<%=ID%>">
+	        <%for(var i=0;i<ControlInfo.OptionValues.length;i++){ var val=ControlInfo.OptionValues[i];%>
+	        <option value="<%=val.Key%>"><%=val.Value%></option>
+	        <%}%>
+	        </select>
+	        <%}else if(ControlInfo.ControlType==4){%>
+	            <input type="text" data-type="<%=ControlInfo.ControlType%>" data-text="<%=ControlInfo.ColumnDesc%>" name="vipinfo" wid="<%=ID%>" id="txtDate" class="date" placeholder="选择日期"  />
+	        <%}%>
+	        </lable>
+	        </p>
+	    </script>
+	    
+	    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+		<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+		<script type="text/templete" id="tpl_PrizeItem">
+		    <dl>
+		        <dt><img src="{{ImageUrl}}"><em></em></dt>
+		        <dd><p><span>{{PrizeName}}</span></p><p></p> &nbsp;<p></p></dd>
+		    </dl>
+		</script>
+
+
+	</body>
+</html>

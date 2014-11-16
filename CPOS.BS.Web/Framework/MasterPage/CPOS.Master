@@ -1,0 +1,289 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CPOS.Master.cs"
+    Inherits="JIT.CPOS.BS.Web.Framework.MasterPage.CPOS" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+
+    <script type="text/javascript" language="javascript">
+        var __button = eval("");
+        function __getHidden(__code) {
+            if (__button == undefined) return;
+            var res = true;
+            for (var i = 0; i < __button.length; i++) {
+                if (__button[i].ButtonCode == __code) {
+                    res = false;
+                }
+            }
+            return res;
+        };
+        function __getText(__code) {
+            var res = '';
+            for (var i = 0; i < __button.length; i++) {
+                if (__button[i].ButtonCode == __code) {
+                    res = __button[i].ButtonText;
+                }
+            }
+            return res;
+        };
+        __mid = "903407F66A2746D689305C7730FA64B5";
+</script>
+
+   <link href="<%=StaticUrl+"/module/styles/css/reset-pc.css?v=0.4"%>"  rel="stylesheet" />
+    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.4"%>"  rel="stylesheet" />
+    <link href="<%=StaticUrl+"/module/styles/css/alading/skin02.css?v=0.4"%>" rel="stylesheet" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="<%=StaticUrl+"/framework/css/reset.css"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/framework/css/style.css"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/framework/css/webcontrol.css"%>" rel="stylesheet" type="text/css" />
+    <!-- javaScript -->
+    <%--<script type="text/javascript" src="/framework/javascript/Other/jquery-1.4.2.min.js"></script>--%>
+       <script type="text/javascript" src="<%=StaticUrl+"/Module/AppConfig/lib/jquery-1.8.3.min.js" %>"></script>
+    <%--<script type="text/javascript" src="/framework/javascript/Other/menu.js"></script>--%>
+    <!--[if IE 6]>
+<script type="text/javascript" src="js/png.js"></script>
+<script type="text/javascript">
+	DD_belatedPNG.fix("*");
+</script>
+<![endif]-->
+
+    <link href="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/Resources/css/ext-all-gray.css"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/Lib/Css/jit-all.css"%>" rel="stylesheet" type="text/css" />
+    <script src="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/ext-all.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/locale/ext-lang-zh_CN.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Lib/Javascript/Jit/jit-all-dev.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Framework/Javascript/Utility/CommonMethod.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Framework/Javascript/Utility/CommonValidate.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Framework/Javascript/Utility/JITPage.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Framework/javascript/Biz/Button.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Framework/javascript/Biz/Unit.js"%>" type="text/javascript"></script>
+
+    <%--
+    <script src="/Framework/javascript/Biz/SupplierUnit.js" type="text/javascript"></script>
+    <script src="/Framework/javascript/Biz/OrderStatus.js" type="text/javascript"></script>
+    <script src="/Framework/javascript/Biz/UnitSelectTree.js" type="text/javascript"></script>
+    --%>
+
+    <script src="<%=StaticUrl+"/Framework/javascript/Biz/Window.js"%>" type="text/javascript"></script>
+    <link href="<%=StaticUrl+"/Framework/Css/cpos.css"%>" rel="stylesheet" type="text/css" />
+    <script src="<%=StaticUrl+"/Framework/javascript/Other/cpos.js"%>" type="text/javascript"></script>
+
+
+
+
+
+
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+
+</head>
+<body>
+    <form id="form1" runat="server">
+        <div class="allPage">
+            <!-- 公共的头部，导航，logo，信息 -->
+            <div class="commonHeader">
+                <div class="handleWrap">
+
+                    <%
+                        bool haslink = false;
+                        var level1 = from c in MenuList where c.Parent_Menu_Id == "--" select c;  //在这里取父节点为空的
+                        foreach (var n in level1)
+                        {
+                            var level2 = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
+                            foreach (var m in level2)
+                            {
+                                if (m.Url_Path.IndexOf("Module/Order/InoutOrders/PosOrder3") >= 0 & !haslink)
+                                {
+                                    haslink = true;
+                                    var urlPath = m.Url_Path;
+                                    var result = false;
+                                    result = (urlPath.IndexOf("?") >= 0);
+                                    Response.Write(string.Format("<a href=\"{0}&statusType=100\" class=\"fl mr25 unAuditCout\">未审核订单(<span id=\"unAuditCoutID\" ></span>)</a>",
+                                        (result ? (m.Url_Path + "&mid=" + m.Menu_Id) : (m.Url_Path + "?mid=" + m.Menu_Id))));
+                                }
+                            }
+                        }            
+                    %>
+                    <div class="qrBox">
+                        <div class="qrBox-tip">
+                            <img src="/module/styles/images/qrImg.jpg" />
+                        </div>
+                    </div>
+                    <div class="setBox">
+                        <div class="setBox-tip" style="border-bottom:2px solid #ccc;height:86px;border-radius:5px;">
+
+                           <%-- <a href="###">个人信息</a>
+                            <a href="###">系统通知(1)</a>--%>
+                            <%--    <a href="#" class="fl mr25 nava3" onclick="fnChangePwd()">修改密码</a>--%>
+                            <span class="commonBtn safetyOutBtn"><a href="/default.aspx?method=LogOut">安全退出</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <a href="/Default.aspx">
+                    <div class="logoWrap">
+                        <div class="arr"></div>
+                        <h1 class="logo" title="阿拉丁">阿拉丁</h1>
+                    </div>
+                </a>
+                <div class="commonNav">
+                    <ul class="clearfix">
+                        <%var level1Menu = from c in MenuList where c.Parent_Menu_Id == "--" select c;  //在这里取父节点为空的
+                          int i = 0;
+                          foreach (var n in level1Menu)
+                          {
+                              i++;
+                              //默认点击时，跳到第一个子节点的Url_Path
+                              var SubMenuList = n.SubMenuList;
+                              // var SubMenuList = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
+                              //  SubMenuList.Count();
+                              string urlPath = "";
+                              string childMenuID = "";
+
+                              if (SubMenuList != null && SubMenuList.Count() != 0)
+                              {
+                                  urlPath = SubMenuList[0].Url_Path;
+                                  childMenuID = SubMenuList[0].Menu_Id;
+                              }
+
+                              Response.Write(string.Format("<li class=\"{3}\"><a href=\"#\"  id=\"{0}\" class=\"{1}\" title=\"{2}\" onclick='PMenuClick(\"{4}\",\"{5}\",\"{6}\")'>{2}</a>",
+                                  n.Menu_Id, n.Icon_Path, n.Menu_Name, "nav" + (i.ToString().PadLeft(3, '0')), urlPath, childMenuID, n.Menu_Id));
+
+                              Response.Write("</li>");
+                          }
+                        %>
+                        <%--	<li class="nav001">
+						<a href="###">微信管理</a>
+					</li>
+					<li class="nav002 on">
+						<a href="###">活动管理</a>
+					</li>
+					<li class="nav003">
+						<a href="###">商品管理</a>
+					</li>
+					<li class="nav004">
+						<a href="###">门店管理</a>
+					</li>
+					<li class="nav005">
+						<a href="###">订单管理</a>
+					</li>
+					<li class="nav005">
+						<a href="###">基础管理</a>
+					</li>--%>
+                    <li class="nav008">
+                        <a href="http://alddoc.aladingyidong.com/" target="_blank" id="" class="" title="帮助手册">帮助手册</a>
+                    </li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <!-- 中间区域-->
+            <div class="centreArea">
+                <!-- 公共的菜单部分-->
+                <div class="commonMenu" id="leftMenu">
+                    <ul>
+                        <%
+                            //   var level2Menu = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
+                            var level2Menu = from c in MenuList where c.Parent_Menu_Id == PMenuID select c; ;//要从后台取出当前的PMenuID
+                            int j = 0;
+                            foreach (var m in level2Menu)
+                            {
+                                j++;
+                                var urlPath = m.Url_Path;
+                                var result = false;
+                                result = (urlPath.IndexOf("?") >= 0);
+                                Response.Write(string.Format("<li class=\"{3} \"><a style='text-align:left;'  id=\"{0}\" href=\"{1}\" title=\"{2}\">{2}</a></dt>",
+                                    m.Menu_Id, (result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID)), m.Menu_Name
+                                    , "menu" + (j.ToString().PadLeft(3, '0'))));
+
+                            }
+                        %>
+                        <%--<li class="menu001">
+						<a href="###">活动管理</a>
+					</li>
+					<li class="menu002 on">
+						<a href="###">会员等级</a>
+					</li>
+					<li class="menu003">
+						<a href="###">积分规则</a>
+					</li>
+					<li class="menu004">
+						<a href="###">会员转换</a>
+					</li>
+					<li class="menu005">
+						<a href="###">会员标签</a>
+					</li>
+					<li class="menu006">
+						<a href="###">会员奖励</a>
+					</li>
+					<li class="menu007">
+						<a href="###">导购员奖励</a>
+					</li>
+					<li class="menu008">
+						<a href="###">门店奖励</a>
+					</li>--%>
+                    </ul>
+                </div>
+                <!-- 内容区域 -->
+                <div class="contentArea" style="padding: 20px;" id="contentArea">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+        </div>
+        <img src="" id="imgKeep" style="width: 0px; height: 0px;" />
+
+        <script language="javascript" type="text/javascript">
+            function keepSession() {
+                document.getElementById("imgKeep").src = "/default.aspx?r=" + Math.random();
+                setTimeout(function () {
+                    keepSession();
+                }, 60000);
+            }
+            setTimeout(function () {
+                keepSession();
+            }, 60000);
+
+        </script>
+
+        <script type="text/javascript">
+            //主菜单点击
+            function PMenuClick(urlPath, childMenuID, parentMenu_Id) {
+
+                var result = urlPath.indexOf("?");
+                var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID + "&PMenuID=" + parentMenu_Id) : (urlPath + "?mid=" + childMenuID + "&PMenuID=" + parentMenu_Id);
+                location = newUrl;
+            }
+            $(function () {
+                var mid = JITMethod.getUrlParam("mid");
+                //判断对于没有传PMenuID的情况根据mid去找相应的实体，然后查找出来
+                var PMenuID = "<%=PMenuID %>";//JITMethod.getUrlParam("PMenuID");
+
+                if (PMenuID == undefined || PMenuID == "") {
+
+                    $("#leftMenu").css("width", 0);
+                    $("#contentArea").css("margin-left", 0);;
+                    return;
+                }
+
+                $("#" + mid).parent().addClass("on");
+                $("#" + PMenuID).parent().addClass("on");
+                //$("#" + mid).parent().parent().show().siblings('.menu').show();
+                //$("#" + mid).parent().parent().parent().addClass("current");
+                //$("#" + mid).parent().parent().parent().find("a:eq(0)").addClass("aCurrent");
+
+            });
+            //给嵌套页面添加mid
+            function AddMid(urlPath) {
+                var childMenuID = JITMethod.getUrlParam("mid");
+                var parentMenu_Id = JITMethod.getUrlParam("PMenuID");
+                var result = urlPath.indexOf("?");
+                var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID + "&PMenuID=" + parentMenu_Id) : (urlPath + "?mid=" + childMenuID + "&PMenuID=" + parentMenu_Id);
+                location = newUrl;
+
+            }
+
+        </script>
+    </form>
+</body>
+</html>

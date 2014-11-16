@@ -1,0 +1,56 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="StoreList">花间堂</title>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <header>
+        <nav>
+            <dl id="tool_bar" class="tool_bar clearfix">
+                <dd>
+                    <a href="javascript:Jit.AM.toPage('Reserve');"></a>
+                </dd>
+                <dd>
+                    <a href="javascript:Jit.AM.toPage('OrderList');"></a>
+                </dd>
+                <dd style="display:none">
+                    
+                </dd>
+                <dd>
+                    <a href="javascript:Jit.AM.toPage('Reserve');"></a>
+                </dd>
+            </dl>
+        </nav>
+    </header>
+    <section class="store_list" style="padding-top:50px">
+        <ul tplpanel="store_html_list">
+        </ul>
+    </section>
+</body>
+</html>
+<script id="store_list_temp" type="text/template">
+    <li> 
+        <a href="javascript:JitPage.fnExChange('{{StoreID}}');">
+            <div class="imgBox"><img src="{{ImageUrl}}" width='170' height='110' ></div>
+            <div class="infoBox"><span style="margin-top:20px;"><b>{{MinPrice}}</b>起</span>
+                <hgroup>
+                    <h2>{{StoreName}}</h2>
+                    <p>{{unitTypeContent}}</p>
+                </hgroup>
+                <div class="ads"><i></i>{{Address}}<br />{{Distance}}</div>
+            </div>
+            <div style="position: absolute;margin-top: -10px;right:0px;width:40px;height:40px">
+                <div>
+                    {{{IsFull}}}
+                </div>
+            </div>
+        </a>
+    </li>
+</script>

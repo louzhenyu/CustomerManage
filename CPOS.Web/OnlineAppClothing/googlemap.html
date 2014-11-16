@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">门店</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+
+<style type="text/css">
+*{ margin:0; padding:0; list-style:none;}
+</style>
+  <script src="http://webapi.amap.com/maps?v=1.2&key=f2c5557134571cae921bfecb2d5b3a93" type="text/javascript"></script>   
+    <script type="text/javascript">
+var GET = [];
+	function getParam1(){ 
+	    var QueString ='';
+		querystr = window.location.href.split("?")
+		if(querystr[1]){
+				var GETs = querystr[1].split("&")
+				for(i=0;i<GETs.length;i++){
+					tmp_arr = GETs[i].split("=")
+					key=tmp_arr[0]
+					GET[key] = tmp_arr[1]
+				}
+				QueString = QueString.substring(0,QueString.length-1);
+		}
+	
+		return querystr[1];
+	}
+getParam1();
+
+
+
+    </script>
+    <script type="text/javascript">  
+function initialize(){
+	var getheight = document.documentElement.clientHeight;
+	document.getElementById("container").style.height =getheight+"px";
+  var position=new AMap.LngLat(GET["lng"],GET["lat"]);//创建中心点坐标  
+  var mapObj=new AMap.Map("container",{center:position,  level:15});//创建地图实例  
+  var marker = new AMap.Marker({ //自定义构造AMap.Marker对象                  
+  map:mapObj,                  
+  position: new AMap.LngLat(GET["lng"],GET["lat"]),                                  
+  icon: "http://webapi.amap.com/images/0.png",
+                   
+});
+}  
+</script> 
+  </head>
+  <body onLoad="initialize()">
+    <div id="container" style=" width:100%; height:180px;"></div>
+    <div class="MenuBox" id="MenuBox" style="z-index:9999"> </div>
+  </body>
+   <script type="text/javascript">
+   var loadMore = '';
+	var Von = ''; 
+   </script>
+</html>
+

@@ -1,0 +1,453 @@
+﻿        BODY
+        {
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            background-color: #AFCAE5;
+            margin: 0px;
+            padding: 0px;
+            padding-bottom: 20px;
+        }
+        td
+        {
+            font-size: 18px;
+        }
+        .info_fontsize
+        {
+            font-size: 16px;
+        }
+        .redText
+        {
+            color: #cc0000;
+        }
+        .greenText
+        {
+            color: #669900;
+        }
+        .GrayBackColor
+        {
+            background-color: Gray;
+        }
+        .blueText
+        {
+            color: #1605F9;
+        }
+        .inputDate
+        {
+            width: 90px;
+            -wap-input-format: "8N";
+        }
+        .inputScore
+        {
+            -wap-input-format: "2N";
+        }
+        .inputNumber
+        {
+            -wap-input-format: "*N";
+        }
+        .inputField
+        {
+            width: 100px;
+            margin-bottom: -5px;
+        }
+        .PGselectType
+        {
+            width: 100px;
+        }
+        .selectType
+        {
+            width: 50px;
+        }
+        .button
+        {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+        .buttonSelected
+        {
+            border: 1px solid #333333;
+            background-color: #FFFF00;
+        }
+        a
+        {
+        }
+        a:link, a:visited, a:active, a:hover
+        {
+            font-size: 23px;
+            color: #3d5d6a;
+            padding-left: 5px;
+        }
+        a.green:link, a.green:visited, a.green:active, a.green:hover
+        {
+            font-size: 23px;
+            color: #3d5d6a;
+        }
+        .link
+        {
+            display: block;
+        }
+        .reportTable
+        {
+            border: 1px solid #333333;
+            width: 100%;
+        }
+        .reportTable td
+        {
+            padding: 2px;
+            white-space: nowrap;
+            border-bottom: 1px solid #333333;
+            border-right: 1px solid #333333;
+        }
+        .reportTable .Header
+        {
+            text-align: center;
+            background-color: #dddddd;
+        }
+        .reportTable .AlternatingRow
+        {
+            background-color: #f7f7f7;
+        }
+        .reportTable .Footer
+        {
+            background-color: #dddddd;
+        }
+        .table_list
+        {
+            clear: both;
+            text-align: left;
+            background-color: #fff;
+        }
+        .table_list table
+        {
+            width: 100%;
+            border: 0px;
+        }
+        .table_list td
+        {
+            border: 0px;
+        }
+        .table_list td input
+        {
+            width: 200px;
+            height: 30px;
+            line-height: 20px;
+            margin-bottom: 10px;
+        }
+        .table_list td select
+        {
+            width: 200px;
+            height: 100%;
+            height: 30px;
+            line-height: 30px;
+        }
+        .Odd_TR
+        {
+            height: 70px;
+            background-color: #fff;
+        }
+        .Odd_TR td
+        {
+            border-bottom: solid 1px #cacaca;
+        }
+        .Even_TR
+        {
+            height: 70px;
+            background-color: #fff;
+        }
+        .Even_TR td
+        {
+            border-bottom: solid 1px #cacaca;
+        }
+        .NoBorder_Odd_TR
+        {
+            height: 70px;
+            background-color: #fff;
+        }
+        .NoBorder_Even_TR
+        {
+            height: 70px;
+            background-color: #fff;
+        }
+        
+        .Edit_Odd_TR
+        {
+            height: 35px;
+            background-color: #fff;
+        }
+        .Edit_Odd_TR td
+        {
+            border-bottom: solid 1px #cacaca;
+        }
+        .Edit_Even_TR
+        {
+            height: 35px;
+            background-color: #fff;
+        }
+        .Edit_Even_TR td
+        {
+            border-bottom: solid 1px #cacaca;
+        }
+        
+        .NoBorder_Edit_Odd_TR
+        {
+            height: 35px;
+            background-color: #fff;
+        }
+        .NoBorder_Edit_Even_TR
+        {
+            height: 35px;
+            background-color: #fff;
+        }
+        
+        .tr_table
+        {
+            height: 25px;
+        }
+        .tr_middle_table
+        {
+            width: 100%;
+            height: 20px;
+        }
+        .tr_middle_table td
+        {
+            border: 0px;
+        }
+        .nav
+        {
+            height: 35px;
+        }
+        .color_td
+        {
+            border: 0px;
+        }
+        .color_td table
+        {
+            border: 0px;
+        }
+        .color_td table td
+        {
+            border: 0px;
+        }
+        .color_red_table
+        {
+            width: 25px;
+            height: 25px; /*background-image:url(../Images/red_bg.jpg);
+    background-repeat:no-repeat;*/
+            background-color: #f2757e;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 17px;
+        }
+        .color_green_table
+        {
+            width: 25px;
+            height: 25px; /*background-image:url(../Images/green_bg.jpg);
+    background-repeat:no-repeat;*/
+            background-color: #b0d88c;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 17px;
+        }
+        .color_orange_table
+        {
+            width: 25px;
+            height: 25px; /*background-image:url(../Images/orange_bg.jpg);
+    background-repeat:no-repeat;*/
+            background-color: #fce4c7;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 17px;
+        }
+        
+        .main_menu
+        {
+        }
+        .main_menu tr
+        {
+        }
+        .activity_title
+        {
+            text-align: right;
+            width: 120px;
+        }
+        .table_no_border
+        {
+            border: 0px;
+        }
+        .table_no_border td
+        {
+            border: 0px;
+        }
+        .news_message
+        {
+            text-align: left;
+            font-size: 16px;
+            line-height: 20px;
+            font-family: "宋体";
+            color: #c19245;
+        }
+        .news_message td
+        {
+            text-align: left;
+            font-size: 16px;
+            line-height: 20px;
+            font-family: "宋体";
+            color: #c19245;
+        }
+        .news_message td img
+        {
+            width: 100%;
+        }
+        .a_text
+        {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .menu_nav
+        {
+            width: 100%;
+        }
+        .menu_nav tr
+        {
+            background-image: url(../Images/menu_bg.jpg);
+            height: 60px;
+        }
+        
+        .login_table
+        {
+            padding-top: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 50px;
+            background-color: #fff;
+            width: 100%;
+        }
+        .login_table tr
+        {
+            height: 45px;
+        }
+        .login_table input
+        {
+            height: 35px;
+            line-height: 25px;
+        }
+        .login_table select
+        {
+            height: 35px;
+            width: 200px;
+            line-height: 25px;
+        }
+        .login_table input
+        {
+            height: 35px;
+            width: 200px;
+            line-height: 25px;
+        }
+        .login_title
+        {
+            background-color: #AFCAE5;
+            height: 50px;
+        }
+        .login_title td
+        {
+            font-size: 25px;
+        }
+        .login_bottom
+        {
+            float: left;
+            width: 100%;
+            text-align: center;
+            background-color: #AFCAE5;
+            height: 60px;
+            padding-top: 20px;
+            font-size: 15px;
+        }
+        .login_bottom td
+        {
+            color: #666;
+            font-size: 15px;
+        }
+        
+        .menu
+        {
+            height: 60px;
+            font-size: 20px;
+            background-color: #AFCAE5;
+            width: 100%;
+            border-top: solid 1px #333;
+            border-bottom: solid 1px #333;
+            text-align: left;
+            float: left;
+            clear: both;
+        }
+        .menu span
+        {
+            padding: 0px;
+            text-align: left;
+            list-style-type: none;
+            float: left;
+            line-height: 70px;
+            padding-left: 5px;
+            font-size: 24px;
+        }
+        .menu span a
+        {
+            text-decoration: underline;
+        }
+        .menu_current
+        {
+            height: 40px;
+            background-color: #508ec4;
+            float: left;
+            clear: both;
+            color: #fff;
+            border-bottom: solid 1px #333;
+            width: 100%;
+            line-height: 40px;
+        }
+        .menu_current span
+        {
+            line-height: 40px;
+            padding-left: 10px;
+        }
+        .attendance_button
+        {
+            width: 200px;
+        }
+        .salary_button
+        {
+            width: 100px;
+        }
+        .no_data
+        {
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 10px;
+            color: Red;
+            font-size: 16px;
+        }
+        .input_radio
+        {
+            width: 30px;
+            height: 30px;
+        }
+        .search_table
+        {
+            clear: both;
+            text-align: left;
+            background-color: #fff;
+            border-bottom: solid 1px #000;
+            padding-bottom: 10px;
+            padding-top: 5px;
+        }
+        .search_input
+        {
+            width: 160px;
+        }
+        .search_button
+        {
+            width: 80px;
+        }

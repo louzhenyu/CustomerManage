@@ -1,0 +1,298 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+    AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<meta charset="UTF-8" />
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link href="css/reset-pc.css" rel="stylesheet" type="text/css" />
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
+        <link href="../static/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
+        <link href="../static/css/artDialog.css" rel="stylesheet" type="text/css" />
+        <link href="../static/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css" />
+        <style>
+            .commonTitle{height:16px;line-height:16px;margin:15px 0 5px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;}
+        </style>
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+<div class="allPage" id="section" data-js="js/queryList">
+    <!-- 内容区域 -->
+    <div class="contentArea">
+        <!--个别信息查询-->
+        <div class="queryTermArea" id="simpleQuery" >
+            <h2 class="commonTitle">会员查询</h2>
+            <div class="item">
+                <div class="moreQueryWrap">
+                	<a href="javascript:;" class="commonBtn queryBtn">查询</a>
+                    <a href="javascript:;" class="more">更多查询条件</a>
+                </div>
+            </div>
+        </div>
+        
+        <!--全部信息查询-->
+        <div class="allQueryTermArea" id="allQuery" style="display:none;">
+        	<a href="javascript:;" class="drawBtn slideUp">收起</a>
+        	
+        </div>
+        
+        <!--设置菜单-->
+        <!--
+        <div class="subMenu" style="display:none">
+            <ul class="clearfix">
+                <li class="modify">修改活动</li>
+                <li class="apply on">报名管理</li>
+                <li class="sign">签到管理</li>
+            </ul>
+        </div>
+        -->
+        
+        
+        <!--表格操作按钮-->
+        <div class="tableHandleBox">
+            <span class="commonBtn">添加新会员</span>
+            <span class="commonBtn">全部导出</span>
+            <span class="commonBtn">删除</span>
+        </div>    
+        <div class="tableWrap">
+            <div class="tablehandle">
+                <div class="selectBox">
+                    <span class="text">按最近时间升序</span>
+                    <div class="selectList">
+                        <p>按最近时间降序</p>
+                        <p>按最近时间升序</p>
+                    </div>
+                </div>
+                <h3 class="count">共查询到<span>65</span>条符合条件的结果项目</h3>  
+                
+                <div class="selectBox fl">
+                    <span class="text">操作</span>
+                    <div class="selectList">
+                        <p>操作1</p>
+                        <p>操作2</p>
+                    </div>
+                </div>
+                
+                <div class="selectBox filterIcon fl">
+                    <span class="text">筛选</span>
+                    <div class="selectList">
+                        <p>筛选1</p>
+                        <p>筛选2</p>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- 未确认名单表格 -->
+            <table class="dataTable" style="display:none;">
+                <thead>
+                    <tr class="title">
+                        <th>姓名</th>
+                        <th>手机号码</th>
+                        <th>公司</th>
+                        <th>职位</th>
+                        <th>缴费信息</th>
+                        <th>参加人数</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>王萌萌</td>
+                        <td class="fontF">13927845509</td>
+                        <td>上海杰亦特信息技术有限公司</td>
+                        <td>经理</td>
+                        <td class="fontC">未缴纳</td>
+                        <td class="fontF">3</td>
+                        <td><span class="joinBtn">确定参加</span></td>
+                    </tr>
+                    <tr>
+                        <td>王萌萌</td>
+                        <td class="fontF">13927845509</td>
+                        <td>上海杰亦特信息技术有限公司</td>
+                        <td>经理</td>
+                        <td>已缴纳</td>
+                        <td class="fontF">3</td>
+                        <td><span class="joinBtn">确定参加</span></td>
+                    </tr>
+                    <tr>
+                        <td>王萌萌</td>
+                        <td class="fontF">13927845509</td>
+                        <td>上海杰亦特信息技术有限公司</td>
+                        <td>经理</td>
+                        <td>已缴纳</td>
+                        <td class="fontF">3</td>
+                        <td><span class="joinBtn">确定参加</span></td>
+                    </tr>
+                    <tr>
+                        <td>王萌萌</td>
+                        <td class="fontF">13927845509</td>
+                        <td>上海杰亦特信息技术有限公司</td>
+                        <td>经理</td>
+                        <td>已缴纳</td>
+                        <td class="fontF">3</td>
+                        <td><span class="joinBtn">确定参加</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- 已确认名单表格 -->
+            <table class="dataTable" style="display:inline-table;">
+                <thead  id="thead">
+                    <!--
+                    <tr class="title">
+                        <th class="selectListBox">选择<div class="minSelectBox"><em class="minArr"></em><p>全选本页</p><p>全选所有页</p><p>取消选择</p></div></th>
+                        <th>操作</th>
+                        <th>会员编号</th>
+                        <th>姓名</th>
+                        <th>微信昵称</th>
+                        <th>会籍店</th>
+                        <th>状态</th>
+                        <th>等级</th>
+                        <th>积分</th>
+                        <th>手机号</th>
+                    </tr>-->
+                </thead>
+                <tbody id="content">
+                    <!--
+                    <tr>
+                        <td class="checkBox on"><em></em></td>
+                        <td class="seeIcon"></td>
+                        <td class="fontC">HYVIP00001</td>
+                        <td>王晓刚</td>
+                        <td>大黄蜂</td>
+                        <td>静安店</td>
+                        <td>正常</td>
+                        <td>高级</td>
+                        <td class="fontF">998</td>
+                        <td class="fontF">138****7765</td>
+                    </tr>-->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--查询动态form配置模板-->
+<script id="tpl_dyniform" type="text/html">
+        <#var subRoot=Data.Root.SubRoot;subRoot=subRoot?subRoot:[];#>
+        <#for(var i=0,length=subRoot.length;i<length;i++){ var item=subRoot[i];#>
+            <#if(item.ConditionOrder>=20){#>
+                <#if(item.DisplayType==1||item.DisplayType==7||item.DisplayType==2){#>
+                    <div class="commonSelectWrap">
+                        <em class="tit"><#=item.ColumnDesc#>：</em>
+                        <label class="searchInput"><input data-formInfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo" type="text" value=""></label>
+                    </div>
+                <#}#>
+                <#if(item.DisplayType==5){#>
+                    <div class="commonSelectWrap">
+                        <em class="tit"><#=item.ColumnDesc#>：</em>
+                        <div class="selectBox">
+                            <span class="text">全部</span>
+                            <div class="selectList">
+                                <#for(var j=0;j<item.Fn.length;j++){var sel=item.Fn[j];#>
+                                    <p data-optionid="<#=sel.OptionID#>"><#=sel.OptionValue#></p>
+                                <#}#>    
+                            </div>
+                        </div>
+                    </div>
+                <#}#>
+                <#if(item.DisplayType==6){#>
+                    <div class="commonSelectWrap">
+                        <em class="tit"><#=item.ColumnDesc#>：</em>
+                        <label class="searchInput"><input class="datepicker" data-formInfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo" type="text" value=""></label>
+                    </div>
+                <#}#>
+            <#}#>
+        <#}#>
+    <div class="fromWrap">
+        <div class="item labelWrap">
+            <div class="commonSelectWrap">
+                <em class="tit">会员标签：</em>
+                <div class="pointerArea">
+                    <img src="images/leftBracket.png">
+                    <span class="minF">包含</span>
+                    <span class="pointerIcon">高价值</span>
+                    <span class="digF">或</span>
+                    <span class="minF">不包含</span>
+                    <span class="pointerIcon">中价值</span>
+                    <span class="digF">且</span>
+                    <span class="pointerIcon weird">活跃会员中价值高价值</span>
+                    <a href="javascript:;" class="commonBtn modifyBtn">修改</a>
+                    <a href="javascript:;" class="commonBtn recentBtn">近期使用</a>
+                    <img src="images/rightBracket.png">
+                </div>
+            </div>
+        </div>
+                
+        <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+    </div>
+</script>
+<!--表示的是基础查询条件-->
+<!--DisplayType   1  7  2表示文本-->
+<!--DisplayType   5表示下拉-->
+<!--DisplayType   6表示生日-->
+<!--DisplayType   205表示tree-->
+<script id="tpl_simpleDyniform" type="text/html">
+    <# var subRoot=Data.Root.SubRoot;subRoot=subRoot?subRoot:[];#>
+    <# for(var i=0,length=subRoot.length;i<length;i++){ var item=subRoot[i];#>
+        <#if(item.ConditionOrder<20){#>
+            <#if(item.DisplayType==1||item.DisplayType==7||item.DisplayType==2){#>
+                <div class="commonSelectWrap">
+                    <em class="tit"><#=item.ColumnDesc#>：</em>
+                    <label class="searchInput"><input data-forminfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo"  type="text" value=""></label>
+                </div>
+            <#}#>
+            <#if(item.DisplayType==5){#>
+                <div class="commonSelectWrap">
+                    <em class="tit"><#=item.ColumnDesc#>：</em>
+                    <div class="selectBox" >
+                        <span class="text" name="vipinfo" data-forminfo="<#=JSON.stringify(item)#>" data-optionid="">全部</span>
+                        <div class="selectList">
+                            <#for(var j=0;j<item.Fn.length;j++){var sel=item.Fn[j];#>
+                                <p data-optionid="<#=sel.OptionID#>"><#=sel.OptionValue#></p>
+                            <#}#>    
+                        </div>
+                    </div>
+                </div>
+            <#}#>
+            <#if(item.DisplayType==6){#>
+                <div class="commonSelectWrap">
+                    <em class="tit"><#=item.ColumnDesc#>：</em>
+                    <label class="searchInput"><input class="datepicker" data-forminfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo" type="text" value=""></label>
+                </div>
+            <#}#>
+        <#}#>
+    <#}#>
+</script>
+<!--头部名称-->
+<script id="tpl_thead" type="text/html">
+    <tr class="title">
+        <th class="selectListBox">选择<div class="minSelectBox"><em class="minArr"></em><p>全选本页</p><p>全选所有页</p><p>取消选择</p></div></th>
+        <th>操作</th>
+        <th>会员编号</th>
+        <th>姓名</th>
+        <th>微信昵称</th>
+        <th>会籍店</th>
+        <th>状态</th>
+        <th>等级</th>
+        <th>积分</th>
+        <th>手机号</th>
+    </tr>
+</script>
+<!--查询的内容-->
+<script id="tpl_content" type="text/html">
+    <tr>
+        <td class="checkBox on"><em></em></td>
+        <td class="seeIcon"></td>
+        <td class="fontC">HYVIP00001</td>
+        <td>王晓刚</td>
+        <td>大黄蜂</td>
+        <td>静安店</td>
+        <td>正常</td>
+        <td>高级</td>
+        <td class="fontF">998</td>
+        <td class="fontF">138****7765</td>
+    </tr>
+</script>
+<script type="text/javascript" src="/Module/static/js/lib/require.min.js" defer async="true" data-main="js/main.js"></script>
+</asp:Content>

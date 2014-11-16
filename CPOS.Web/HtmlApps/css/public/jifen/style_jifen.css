@@ -1,0 +1,99 @@
+﻿@charset "utf-8";
+.search_bar a i,.search_bar input[type="button"],.btn_remove {
+    background:url(../../../images/common/sprites.png) no-repeat 0 0;
+}
+/*新导航样式*/
+#topNav {background-color: #EBEAEA; border-bottom: 1px solid #CDCDCD; height:42px; position: fixed; top: 0; width: 100%; z-index: 9;}
+#topNav ul {width:100%; height:42px; display:-webkit-box;}
+#topNav ul li {-webkit-box-flex:1;-webkit-box-pack:center; border-left:1px solid #C5C5C5;text-align:center;}
+#topNav ul li:first-child { border:none;}
+#topNav ul li a { display:inline-block; width:35px; height:28px;margin:5px auto 0; background:url(../../../images/common/navmenu.png) no-repeat 0 0; background-size: 100% auto;}
+#topNav ul li:nth-child(1) a {background-position: 6px 1px;}
+#topNav ul li:nth-child(2) a {background-position: 8px -28px;}
+#topNav ul li:nth-child(3) a {background-position: 3px -62px;position: relative;text-indent: 0;}
+#topNav ul li:nth-child(4) a {background-position: 6px -92px;}
+#topNav ul li:nth-child(3) a span {background-color: #FF3344;border-radius: 50%;color: #FFFFFF;font-size: 0.7rem;height: 15px;
+line-height: 15px;position: absolute;right: -11px;text-align: center;top: 0;width: 15px;display: none;}
+/*end*/
+
+
+.pro_list { padding:0 10px;}
+.pro_list li { padding:10px 0; border:1px solid #cccccc;  background-color: white; margin-bottom: 10px;  }
+.pro_list li a { display:-webkit-box;}
+.pro_list li .imgBox { width:35%; margin:0px 10px;}
+.pro_list li .imgBox img { border:1px solid #ccc; width:100%;}
+.pro_list li .infoBox { width:60%;padding-right: 10px;}
+.pro_list li .infoBox h3 { margin-bottom:5px;}
+.pro_list li .infoBox p:nth-child(2) { color:#999;}
+.pro_list li .infoBox p:last-child { color:#ff3344;}
+.pro_list .last { line-height:30px; margin-top:20px;}
+.pro_list .last span { float:right; width:60px; height:30px; line-height:30px; text-align:center; color:#fff;background-image:-webkit-gradient(linear, left top, left bottom, from(#ff4e4f), to(#f52f40));}
+
+.jifen_cur,.pro_list{
+
+ background-color: #eaeaea;
+}
+
+
+.coupon_list { padding:10px; }
+.coupon_wrap { background:#fff; border:1px solid #C9CDCE; padding:15px 10px; text-align:left;}
+.coupon_wrap th,.coupon_wrap td { padding:15px 5px; border-bottom:1px dashed #ccc;}
+.coupon_wrap td span { font-size:12px; color:#666;}
+.coupon_wrap td b { color:#cc0000;}
+
+.jifen_cur,.jifen_detail {  padding:10px;}
+.jifen_cur p {  background:#fff; padding:15px;}
+.jifen_cur p a { float:right; color:#ff3344;  position: relative; overflow:hidden; min-height: 1em; }
+.jifen_cur p a i{
+display: inline-block;
+color: #ff3344;
+width: 10px;
+height: 10px;
+border-right: 1px solid #534949;
+border-bottom: 1px solid #534949;
+-webkit-transform: rotate(-45deg);
+transform: rotate(-45deg);
+margin: 0 5px;
+
+}
+.jifen_cur p b { color:#ff3344;}
+
+
+.jifen_detail table { border:1px solid #8E8E8E; margin:10px 0;}
+.jifen_detail table th { height:30px; text-align:center; line-height:30px; background:#CC0001; color:#fff; border-right:1px solid #BFBFBF;}
+.jifen_detail table td { padding:15px 10px; background:#fff; border-right:1px solid #BFBFBF;}
+.jifen_detail table td:nth-child(even) { color:#CC0001; text-align:right;}
+.jifen_detail p.ar a { color:#CC0001; text-decoration:underline;}
+.jifen_rule { border-top:1px solid #575757; padding-top:20px; margin-top:20px; color:#6c6c6c;}
+.jifen_rule p { margin-top:10px;}
+
+.popup { width:90%; margin:0 auto; position:absolute; z-index:999;}
+.popup a.btn_close { display:block; width:20px; height:20px;-webkit-border-radius:50%;border-radius:50%; line-height:20px; text-align:center; color:#F4F4F4; font-size:18px; position:absolute; top:-5px; right:-5px; z-index:1000; background:#333;}
+.popup th { background:#333; padding:20px 10px; border-bottom:1px solid #ABABAB; color:#999;}
+.popup td { background:#F4F4F4;padding:20px 10px; border-bottom:1px dashed #ccc;}
+.popup td span { font-size:12px;}
+.popup td b { color:#CC0001;}
+
+
+
+
+
+
+ /*临时公用的的shop的样式文件里面*/
+    .go_box{
+ border: 1px solid #cccccc;
+ background-color: white;
+
+
+}
+    .go_box_title{
+ border-bottom: 1px solid #cccccc;
+font-size: 1.2em;
+padding: 10px;
+color: #999999;
+
+    }
+    /*end*/
+
+
+    

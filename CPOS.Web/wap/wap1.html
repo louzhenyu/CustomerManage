@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<title>wap1</title>
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+</head>
+
+<body>
+<section class="WAppSection"  id="search_1">
+  <div class="inputAndSelect">
+    <input type="text" class="AlumniInputstyle" onfocus="FocusFun(this,'输入姓名',1)" onBlur="FocusFun(this,'输入姓名',0)" value="输入姓名" id="username1" />
+  </div>
+  
+  <div class="inputAndSelect">
+    <input type="text" class="AlumniInputstyle" value="输入城市"  onfocus="FocusFun(this,'输入城市',1)" onBlur="FocusFun(this,'输入城市',0)" id="city1">
+  </div>
+  <div class="inputAndSelect">
+    <input type="text" class="AlumniInputstyle" value="何处购买本商品"  onfocus="FocusFun(this,'何处购买本商品',1)" onBlur="FocusFun(this,'何处购买本商品',0)" id="WhereSend" />
+  </div>
+  <div  class="inputAndSelect">
+    <input type="button" value="提交" class="inputsubmitStyle" onClick="SubmitApp()" />
+  </div>
+</section>
+<script type="text/javascript" src="js/common.js?v=2013052913"></script> 
+<script type="text/javascript">
+function SubmitApp(){
+	var  getUsername = $.trim($("#username1").val()), getCity =  $.trim($("#city1").val()), getWhereSend =  $.trim($("#WhereSend").val());
+		
+	if(getUsername == "" ||  getUsername=="输入姓名"){
+		alert("姓名不能为空！");
+		return ;
+		}
+	if(getCity == "" ||  getCity=="输入城市"){
+		alert("城市不能为空！");
+		return ;
+		}
+	if(getWhereSend == "" ||  getCity=="何处购买本商品"){
+		alert("何处购买本商品不能为空！");
+		return ;
+	}
+
+	$.ajax({
+				type:'get',
+				url:"/wap/wapData.aspx?action=SetCheckReal&openID="+GETc["weixinUserId"],
+				//url:"test.php?openID="+GETc["weixinUserId"],
+				data:{},
+				timeout:90000,
+				cache:false,
+				beforeSend:function(){
+					Win.Loading();	
+				},
+				dataType : 'json',
+				success:function(o){
+					alert("提交成功！");
+				}
+	})
+}
+
+var GETc = [];
+function getParam(){ 
+	//获得html上的参数
+		var tmp_arr = [];
+		var querystr = window.location.href.split("?")
+		if(querystr[1]){
+				var GETs = querystr[1].split("&")
+				for(i=0;i<GETs.length;i++){
+					tmp_arr = GETs[i].split("=")
+					key=tmp_arr[0]
+					GETc[key] = tmp_arr[1]
+				}
+				
+		}
+}
+getParam();
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title name="AppDownload"></title>
+<style type="text/css">
+html,body{background:#eee;}
+.searchWrap{display:-webkit-box;padding:10px;}
+.searchWrap .logo{display:block;width:48px;height:25px;margin-top:2px;background:url(../../../images/public/appdownload_default/logo.png) no-repeat 0 0;background-size:100%;}
+.searchWrap .searchBox{-webkit-box-flex:1;display:-webkit-box;margin-left:5px;}
+.searchWrap .searchInput{display:block;-webkit-box-flex:1;height:30px;margin:0;padding-left:10px;border:1px solid #ddd;border-top-left-radius:5px;border-bottom-left-radius:5px;border-top-right-radius:0px;border-bottom-right-radius:0px;}
+.searchWrap .searchBtn{display:block;width:40px;height:30px;border-top-right-radius:5px;border-bottom-right-radius:5px;background:#1987dc url(../../../images/public/appdownload_default/searchBtn.png) no-repeat center center;background-size:21px;}
+
+.searchList li{display:-webkit-box;margin-bottom:15px;padding:10px 15px;background:#fff;border-top:1px solid #d3d3d3;border-bottom:1px solid #d3d3d3;}
+.searchList li:nth-child(1){-webkit-box-shadow:inset 0px 1px 5px #dedede;}
+.searchList .pic{width:60px;height:60px;border-radius:5px;border:1px solid #ccc;}
+.searchList .pic img{width:58px;height:58px;border-radius:5px;}
+.searchList .info{-webkit-box-flex:1;margin-left:10px;}
+.searchList .tit{font-size:15px;line-height:30px;}
+.searchList .info a{float:left;width:100px;height:30px;border-radius:5px;}
+/*.searchList .iphoneBtn{margin-right:10px;background:url(../../../images/public/appdownload_default/iphoneBtn.png) no-repeat 0 0;}
+.searchList .androidBtn{background:url(../../../images/public/appdownload_default/androidBtn.png) no-repeat 0 0;}
+*/
+.iphoneBtn{margin-right:10px;-webkit-box-shadow:-1px 1px 1px #def0fe;background-image:-webkit-gradient(linear, left top, left bottom, from(#5ab5fa), to(#0d76c6));}
+.androidBtn{-webkit-box-shadow:-1px 1px 1px #def0fe;background-image:-webkit-gradient(linear, left top, left bottom, from(#81be23), to(#62a002));}
+.iphoneBtn:hover{background-image:-webkit-gradient(linear, left top, left bottom, from(#0d76c6), to(#5ab5fa));}
+.androidBtn:hover{background-image:-webkit-gradient(linear, left top, left bottom, from(#62a002), to(#81be23));}
+
+.searchList .iphoneBtn span{background:url(../../../images/public/appdownload_default/iphoneBtn.png) no-repeat center center;}
+.searchList .androidBtn span{background:url(../../../images/public/appdownload_default/androidBtn.png) no-repeat center center;}
+.searchList a.iphoneBtn span,.searchList a.androidBtn span{display:block;width:100px;height:30px;background-size:80%;}
+
+
+</style>
+</head>
+	<body >
+		<section>
+			<div class="searchWrap">
+				<em class="logo"></em>
+				<p class="searchBox">
+					<input type="text" id="searchText" class="searchInput" placeholder="搜索">
+					<a href="javascript:;" id="search" class="searchBtn"></a>
+				</p>
+			</div>
+
+			<div class="searchList">
+				<ul id="list">
+					
+				</ul>
+				<p id="noresult" style="display: none;text-align: center;line-height: 200px;">暂无数据</p>
+			</div>
+
+		</section>
+
+	</body>
+	<script id="listTpl" type="text/template">
+		<%for(var i=0;i<AppList.length;i++){var item=AppList[i];%>
+			<li>
+				<p class="pic"><img src="<%=item.LogoUrl%>" alt=""/></p>
+				<figure class="info">
+					<p class="tit">
+						<%=item.ClientName%>
+					</p>
+					<p>
+						<a href="javascript:;" data-downurl="<%=item.IOSUrl%>" class="iphoneBtn"><span></span></a>
+						<a href="javascript:;" data-downurl="<%=item.AndroidUrl%>" class="androidBtn"><span></span></a>
+					</p>
+				</figure>
+			</li>
+		<%}%>
+	</script>
+</html>
+<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>

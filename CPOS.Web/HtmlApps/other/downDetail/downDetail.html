@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>下载</title>
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+html,body{background:#fff;}
+.detailDownArea .headWrap{display:-webkit-box;padding:10px 15px;}
+.detailDownArea .pic{width:80px;height:80px;border-radius:5px;border:1px solid #ccc;}
+.detailDownArea .pic img{width:78px;height:78px;border-radius:5px;}
+.detailDownArea .downWrap{display:-webkit-box;padding:10px 0;border-bottom:1px solid #ccc;}
+.detailDownArea .downWrap p{-webkit-box-flex:1;text-align:center;}
+.detailDownArea .tit{-webkit-box-flex:1;font-size:15px;height:80px;line-height:27px;padding-left:10px;font-weight:bold;overflow:hidden;}
+.detailDownArea .downWrap a{display:inline-block;width:100px;height:30px;border-radius:5px;}
+/*.searchList .iphoneBtn{margin-right:10px;background:url(css/images/iphoneBtn.png) no-repeat 0 0;}
+.searchList .androidBtn{background:url(css/images/androidBtn.png) no-repeat 0 0;}
+*/
+.iphoneBtn{margin-right:10px;-webkit-box-shadow:-1px 1px 1px #def0fe;background-image:-webkit-gradient(linear, left top, left bottom, from(#5ab5fa), to(#0d76c6));}
+.androidBtn{-webkit-box-shadow:-1px 1px 1px #def0fe;background-image:-webkit-gradient(linear, left top, left bottom, from(#81be23), to(#62a002));}
+.iphoneBtn:hover{background-image:-webkit-gradient(linear, left top, left bottom, from(#0d76c6), to(#5ab5fa));}
+.androidBtn:hover{background-image:-webkit-gradient(linear, left top, left bottom, from(#62a002), to(#81be23));}
+
+.detailDownArea .iphoneBtn span{background:url(css/images/iphoneBtn.png) no-repeat center center;}
+.detailDownArea .androidBtn span{background:url(css/images/androidBtn.png) no-repeat center center;}
+.detailDownArea a.iphoneBtn span,.detailDownArea a.androidBtn span{display:block;width:100px;height:30px;background-size:80%;}
+
+.detailDownArea .contentWrap{padding:15px 10px;}
+.detailDownArea .contentWrap p{text-indent:2em;margin-top:10px;}
+.detailDownArea .contentWrap h2{font-size:18px;font-weight:bold;color:#333;}
+
+/*动画*/
+#share-mask{display:none;position:fixed;top:0;left:0;bottom:0;right:0;background:rgba(0,0,0,0.7);z-index:9998;}
+#share-mask-img{display:none;position:fixed;top:0;right:25px;width:160px;height:130px;z-index:9999;}
+@-webkit-keyframes pullDown {0% { top:-130px;}30%{ top:90px;}50%{ top:-130px;}100% { top:0;}}
+.pullDownState{-webkit-animation:pullDown 0.7s ease-in-out 1;}/*infinite*/
+
+@-webkit-keyframes pullUp {0% { top:0px;}30%{ top:-130px;}50%{ top:90px;}100% {top:-130px;}}
+.pullUpState{-webkit-animation:pullUp 0.7s ease-in-out 1;}/*infinite*/
+
+
+</style>
+
+<script type="text/javascript" src="./script/zepto.min.js" ></script>
+<script type="text/javascript" src="./script/base.js" ></script>
+</head>
+
+<body onLoad="page.init()">
+<section>
+    <div class="detailDownArea">
+        <div class="headWrap">
+            <p class="pic"><img id="img_ico" src="" alt=""/></p>
+            <p class="tit"></p>
+        </div>
+        <div class="downWrap">
+            <p><a id="btn_ios" href="javascript:;" data-downurl="" class="iphoneBtn"><span></span></a></p>
+            <p><a id="btn_and" href="javascript:;" data-downurl="<%=item.AndroidUrl%>" class="androidBtn"><span></span></a></p>
+        </div>
+        <div class="contentWrap">
+        	<h2>简介：</h2>
+        	<p id="des">
+			</p>
+        </div>
+    </div>
+    
+</section>
+<div id="share-mask"></div>
+<img id="share-mask-img" src="css/images/share.png">
+</body>
+</html>

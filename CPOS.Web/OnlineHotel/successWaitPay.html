@@ -1,0 +1,45 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle"></title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+</head>
+
+<body  >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="DetailBigBox" id="DetailBigBox"></div>
+  <div class="MenuBox" id="MenuBox" rel="1"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'Vip.ShareDetail()'; // GetData.setBrowseHistory() 
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);</script> 
+<script id="ShareDetail" type="text/template"> 
+<div class="DetailSmallBox">
+	<img src="images/imageshua.jpg" width="100%">
+  <div class="DetailSmallBoxYW">
+  
+
+  	<h1 style="color:#47c1a8"><span style="color:#ff6b50"> 	<%=storeName%>  04桌</span></h1>
+    <h2 style="color:#47c1a8">
+我们已接收到<span style="color:#ff6b50"> 您的买单请求</span，稍后服务人员会来为您服务，感谢您的消费。</h2>
+    
+  </div>
+<div class="vipCartBoxBottom"></div>
+</div>
+
+</script>
+
+</body>
+</html>

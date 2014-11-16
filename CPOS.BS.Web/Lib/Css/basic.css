@@ -1,0 +1,299 @@
+﻿/*基础样式表*/
+@charset "utf-8";
+/*重置元素的内外边距*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a,
+abbr, acronym, address, big, cite, code, del,
+dfn, em, img, ins, kbd, q, s, samp, small,
+strike, strong, sub, sup, tt, var, b, u, i,
+center, dl, dt, dd, ol, ul, li, fieldset,
+form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td, article, aside,
+canvas, details, embed, figure, figcaption,
+footer, header, hgroup, menu, nav, output,
+ruby, section, summary, time, mark, audio,
+video{
+	margin:0;
+	padding:0;
+}
+/*强制元素显示*/
+article, aside, details, figcaption,
+figure, footer, header, hgroup, menu,
+nav, section{
+	display:block;
+}
+/*定义基本HTML元素的样式*/
+html{
+	background:#FFF;
+	color:#323232;
+}
+body{
+	font:12px/180% 'Arial', 'Simsun';
+	_behavior:url(/Lib/Css/css_hover.htc); /*强制兼容IE6的样式*/
+}
+ol, ul, li{
+	list-style:none;
+}
+table{
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset, img{
+	border:0;
+}
+a{
+	color:#323232;
+}
+input, button,
+textarea, select{
+	outline:none;
+}
+del, ins, a{
+	text-decoration:none;
+}
+sup{
+	vertical-align:baseline;
+}
+sub{
+	vertical-align:baseline;
+}
+blockquote, q{
+	quotes:none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after{
+	content:'';
+	content:none;
+}
+/* 定义CSS工具样式类 */
+.cb{
+	clear:both;
+}
+.cl{
+	clear:left;
+}
+.cr{
+	clear:right;
+}
+.fl{
+	display:inline;
+	float:left;
+}
+.fr{
+	display:inline;
+	float:right;
+}
+.tl{
+	text-align:left;
+}
+.tc{
+	text-align:center;
+}
+.tr{
+	text-align:right;
+}
+.pr{
+	position:relative;
+}
+.pa{
+	position:absolute;
+}
+.none{
+	display:none;
+}
+
+.m10{
+	margin:10px;
+}
+.m15{
+	margin:15px;
+}
+.m30{
+	margin:30px;
+}
+.mt5{
+	margin-top:5px;
+}
+
+.mt10{
+	margin-top:10px;
+}
+.mt15{
+	margin-top:15px;
+}
+.mt20{
+	margin-top:20px;
+}
+.mt25{
+	margin-top:25px;
+}
+.mt30{
+	margin-top:30px;
+}
+.mt50{
+	margin-top:50px;
+}
+.mt100{
+	margin-top:100px;
+}
+
+.mb10{
+	margin-bottom:10px;
+}
+.mb15{
+	margin-bottom:15px;
+}
+.mb20{
+	margin-bottom:20px;
+}
+.mb30{
+	margin-bottom:30px;
+}
+.mb50{
+	margin-bottom:50px;
+}
+.mb100{
+	margin-bottom:100px;
+}
+
+.ml5{
+	margin-left:5px;
+}
+.ml10{
+	margin-left:10px;
+}
+.ml15{
+	margin-left:15px;
+}
+.ml20{
+	margin-left:20px;
+}
+.ml30{
+	margin-left:30px;
+}
+.ml50{
+	margin-left:50px;
+}
+.ml100{
+	margin-left:100px;
+}
+
+.mr5{
+	margin-right:5px;
+}
+.mr10{
+	margin-right:10px;
+}
+.mr15{
+	margin-right:15px;
+}
+.mr20{
+	margin-right:20px;
+}
+.mr25{
+	margin-right:25px;
+}
+.mr30{
+	margin-right:30px;
+}
+.mr50{
+	margin-right:50px;
+}
+.mr100{
+	margin-right:100px;
+}
+
+.p10{
+	padding:10px;
+}
+.p15{
+	padding:15px;
+}
+.p30{
+	padding:30px;
+}
+
+.pt5{
+	padding-top:5px;
+}
+.pt10{
+	padding-top:10px;
+}
+.pt15{
+	padding-top:15px;
+}
+.pt20{
+	padding-top:20px;
+}
+.pt30{
+	padding-top:30px;
+}
+.pt50{
+	padding-top:50px;
+}
+
+.pb5{
+	padding-bottom:5px;
+}
+.pb10{
+	padding-bottom:10px;
+}
+.pb15{
+	padding-bottom:15px;
+}
+.pb20{
+	padding-bottom:20px;
+}
+.pb30{
+	padding-bottom:30px;
+}
+.pb50{
+	padding-bottom:50px;
+}
+.pb100{
+	padding-bottom:100px;
+}
+
+.pl5{
+	padding-left:5px;
+}
+.pl10{
+	padding-left:10px;
+}
+.pl15{
+	padding-left:15px;
+}
+.pl20{
+	padding-left:20px;
+}
+.pl30{
+	padding-left:30px;
+}
+.pl50{
+	padding-left:50px;
+}
+.pl100{
+	padding-left:100px;
+}
+
+.pr5{
+	padding-right:5px;
+}
+.pr10{
+	padding-right:10px;
+}
+.pr15{
+	padding-right:15px;
+}
+.pr20{
+	padding-right:20px;
+}
+.pr30{
+	padding-right:30px;
+}
+.pr50{
+	padding-right:50px;
+}
+.pr100{
+	padding-right:100px;
+}

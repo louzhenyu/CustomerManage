@@ -1,0 +1,68 @@
+.aboutVipDiv{   margin-top: 46px;padding-bottom: 20px; clear:both; overflow:hidden;}
+
+.VipSet{ width:32px; height:32px; position:absolute; right:10px; top:7px; cursor:pointer}
+.vipInfo{ height:150px;  position:relative;}
+.vipInfoBg{ position:absolute; left:0; top:0; width:100%; height:150px; overflow:hidden; z-index:0;}
+.vipInfoCon{ position:absolute; left:0; top:0; width:100%; height:150px; overflow:hidden; z-index:1;}
+.vipInfoBottom{ width:100%; height:6px; background:url(../images/vipcenterjjs.png) repeat-x left top; position:absolute; left:0; bottom:-1px; z-index:2;}
+.viphead{ overflow:hidden; width:74px; height:74px;  border-radius:37px; }
+.vipheadwrap{background-color:#fff; width:78px; height:78px; border-radius:42px; padding-top:4px; padding-left:4px; box-shadow:0 0 5px #838685; left:20px; position:absolute;  top:45px;}
+.vipheaderConnext{ margin-top:40px; margin-left:115px; color:#fff;}
+.vipheaderConnextTop{ font-weight:bold; margin-left:4px; }
+.vipheaderConnextBottom{ clear:both; overflow:hidden; padding-top:10px; margin-left:-10px;}
+.vipheaderConnextBottom li{ width:30%; float:left; height:55px; text-align:center; overflow:hidden; font-weight:bold; cursor:pointer}
+.vipheaderConnextBottomNum{ font-size:18px; color:#fff; display:block; text-align:center; }
+.VipIcn{ background-image:url(../images/vipSkin.png); background-repeat:no-repeat;}
+
+.isVipIcn{ width:28px; height:19px; background-position:0 0; vertical-align:middle; line-height:19px;}
+.vipActionList{ width:94%; margin-left:auto; margin-right:auto; margin-top:15px; border:1px solid #bbbbbb; background-color:#fff; box-shadow:0 0 3px #bbbbbb; border-radius:5px; overflow:hidden;}
+.vipActionList li{ height:50px; clear:both; display:block; position:relative; border-bottom:1px solid #bbbbbb; line-height:50px; cursor:pointer}
+.vipActionList li a,.vipActionList li a:hover{ display:block;  padding-left:45px; height:50px; color:#666666 }
+.VipIcn1{ width:28px; height:19px; background-position:-172px 0; position:absolute; display:block; left:5px; top:15px;}
+.VipIcn2{ width:28px; height:19px; background-position:-172px -25px; position:absolute; display:block; left:5px; top:15px;}
+.VipIcn3{ width:22px; height:22px; background-position:-178px -54px; position:absolute; display:block; left:10px; top:15px;}
+.VipIcn4{ width:22px; height:22px; background-position:-178px -88px; position:absolute; display:block; left:10px; top:15px;}
+.VipIcn5{ width:22px; height:22px; background-position:-178px -146px; position:absolute; display:block; left:10px; top:15px;}
+.VipIcn6{ width:22px; height:22px; background-position:-178px -203px; position:absolute; display:block; left:10px; top:15px;}
+.jtpi{ position:absolute; right:10px; top:18px; background-position:-37px 0; width:10px; height:15px; display:block; }
+.tipNum{position:absolute; right:40px; top:11px; width:20px; height:20px; font-size:12px; color:#fff; background-color:#cc0000; border-radius:10px; line-height:20px; text-align:center; font-weight:bold;}
+
+.VipIntegralBox{ border:1px solid #bababa; clear:both; background-color:#fff; width:96%; margin-left:auto; margin-right:auto;   box-shadow:0 0 1px #999; margin-top:-2px;}
+
+.VipIntegralDiv{ background-color:#fcf1b9; border:1px solid #ffb76d; border-radius:5px; box-shadow:0 0 4px #999; padding:4%; width:84%; margin-top:-28px; margin-left:auto; margin-right:auto; color:#904c48; position:relative;}
+a.Chakan,a.Chakan:hover{ width:105px; line-height:36px;  border:1px solid #ec8f2f; background-color:#ffc37a; background: -moz-linear-gradient(top,  #ffc37a 0%,  #f1831d 100%);   background: -webkit-gradient(linear, left top, left bottom, from(#ffc37a),to(#f1831d)); color:#9f5037; display:block; position:absolute; right:4%; bottom:10px; border-radius:5px; text-align:center }
+.VipIntegralXGlist .WelfareRmb{ font-size:14px;}
+.VipIntegralXGlist .WelfareConnextBoxLiTxt h2{ font-size:14px;}
+
+.vipIntegralDetailDiv{ margin-top:20px; background-color:#ffffff; border:1px solid #c9c9c9; border-radius:4px;}
+.vipIntegralDetailDiv li{ padding:8px 12px; border-bottom:1px solid #dcdcdc;}
+.vipIntegralLi{ line-height:24px; font-size:16px; clear:both; overflow:hidden;}
+.zjd{ float:right; color:#ec0d11;}
+.zjj{ float:right; color:#4b8e37;}
+.vipIntegralLiTime{ line-height:24px; text-align:right}
+.VipIntegralCdf{ clear:both; margin-top:10px; width:96%; margin-left:auto; margin-right:auto;}
+.vipCartBox{ clear:both; margin-top:25px; box-shadow:0 -2px 3px #c3c3c3; border:1px solid #b7b7b7; width:96%; margin-left:auto; margin-right:auto; background-color:#fff; position:relative; }
+.vipCartBoxBottom{height:6px; background:url(../images/cartboxbg.png) repeat-x left top; position:absolute;  z-index:2; bottom:-1px; left:-1px; width:101%; border-bottom:0;}
+.vipCartBoxTop{ clear:both; height:56px; padding:5px 3% ; position:relative; border-bottom:1px dashed #cccccc;}
+.checkBoxFalse{ width:26px; height:26px; background-position:0 -23px; display:block; position:absolute; left:3%; top:20px; cursor:pointer;}
+.EditAll{ width:42px; height:42px; background-position:-2px -90px; position:absolute; right:3%; top:10px; cursor:pointer}
+.vipCart{ clear:both; width:96%; margin-left:auto; margin-right:auto;}
+.vipCartLi{ border-bottom:1px dashed #cccccc; padding-top:15px; padding-bottom:10px; clear:both; min-height:70px; }
+.checkBoxTrue{width:26px; height:26px; background-position:-2px -58px; display:block; position:absolute; left:3%; top:20px; cursor:pointer;}
+.vipCartLi ul{ position:relative; min-height:50px;}
+.vipCartLi li{  display:block; }
+.cartTD1{ width:34px; min-height:70px; position:absolute; left:5px; top:0;}
+.cartTD2{ width:60px; position:absolute; left:40px; top:0;}
+.cartTD3{ margin:0 65px 0 110px;}
+.cartTD4{ width:60px; position:absolute; right:0px; top:0; text-align:right;}
+.cartTD5{ width:100px; position:absolute; right:0px; top:0; text-align:right;}
+.cartTD2 img{ width:100%; max-width:100%; max-height:70px;}
+.guigeCC{ display:block; color:#999999; padding-top:10px;}
+.vipCartBoxBtm{ height:35px; line-height:35px; padding-top:20px;  width:96%; margin-left:auto; margin-right:auto; padding-bottom:20px;}
+.vipCartBoxccTop{height:6px; background:url(../images/cartboxbgdown.png) repeat-x left top; position:absolute;  z-index:2; top:-1px; left:-1px; width:101%; border-bottom:0;}
+a.jieSuanBtn,a.jieSuanBtn:hover{ display:block; float:right;background:#53595d; background: -moz-linear-gradient(top,  #ef4747 0%, #dd1111 50%, #ca0606 100%);   background: -webkit-gradient(linear, left top, left bottom, from(#ef4747),to(#dd1111), color-stop(0.5,#ca0606)); color:#fff; text-align:center; width:65px; line-height:30px; height:30px; overflow:hidden; border-radius:5px; border:1px solid #911f1f; font-size:14px; font-weight:bold;}
+a.cancelBtn,a.cancelBtn:hover{ display:block; float:right;background:#53595d; background: -moz-linear-gradient(top,  #5d5d5d 0%, #3d3d3d 100%);   background: -webkit-gradient(linear, left top, left bottom, from(#5d5d5d),to(#3d3d3d)); color:#fff; text-align:center; width:65px; line-height:30px; height:30px; overflow:hidden; border-radius:5px; border:1px solid #333333; font-size:14px; font-weight:bold;}
+a.PayBtn,a.PayBtn:hover{ display:block; float:right;background:#53595d; background: -moz-linear-gradient(top,  #ef4747 0%, #dd1111 50%, #ca0606 100%);   background: -webkit-gradient(linear, left top, left bottom, from(#ef4747),to(#dd1111), color-stop(0.5,#ca0606)); color:#fff; text-align:center; width:65px; line-height:30px; height:30px; overflow:hidden; border-radius:5px; border:1px solid #911f1f; font-size:14px; font-weight:bold;}
+.vipTime{ height:22px; line-height:22px; background-color:#7f7f7f; color:#fff; margin-left:auto; margin-right:auto; width:160px; text-align:center; border-radius:14px; display:block;}
+.VipDivasd{margin-top:20px;}
+.vipHostdate{ color:#999; text-align:right}

@@ -1,0 +1,175 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<title>GetOpenID</title>
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+</head>
+
+<body>
+<div class="loading" style="position:absolute; width:140px; height:80px; left:-40px; top:-80px; text-align:center"><img src="images/382.gif" width="40" height="40" /><br />
+  <br />
+  <span class="SigininAppLoading">数据正在装载中...</span> </div>
+<div class="AlumniConnext1" id="AlumniConnext2" style="display:none; margin-top:15px;" >
+  <div class="AlumniConnext1Title">绑定中欧校友账号</div>
+  <span style=" height:20px;" class="blank1"></span>
+  <div id="AlumniConnextDD" style="display:none;">
+    <div style="width:82%; margin-left:auto; margin-right:auto; line-height:28px;">
+      <p style="padding-top:10px; padding-bottom:10px; font-size:16px;">绑定后，您可以查询中欧校友库、活动快速报名与现场参与。<br><span style="font-size:13px; color:#999;">注：为了您的账号安全，不要转发此页面</span></p>
+    </div>
+    <div class="inputAndSelect" style="position:relative;">
+      <div style=" border: 1px solid #B2BAC0; border-radius: 4px 4px 4px 4px; background-color:#fff; padding-right:108px; ">
+        <input type="text" value="中欧校友账号" onblur="FocusFun(this,'中欧校友账号',0)" onfocus="FocusFun(this,'中欧校友账号',1)" class="AlumniInputstyle" id="username" style="border:none; background-color:none; padding-right:1%; width:97%;">
+        <div style=" background-color:#f3f5f5; height:40px; position:absolute; right:1px; top:1px; line-height:40px; width:100px; padding-left:8px; border-radius:3px">@CEIBS.EDU</div>
+      </div>
+    </div>
+    <div class="inputAndSelect">
+      <input type="text" onblur="FocusFun(this,'中欧校友密码',0,1)" onfocus="FocusFun(this,'中欧校友密码',1,1)" value="中欧校友密码" class="AlumniInputstyle" id="pwd">
+    </div>
+    <div style="line-height:46px;" class="inputAndSelect"><span style="float:right;font-size:16px;"></span>
+      <input type="button" class="inputsubmitStyle " value="绑定" onClick="AppSet.LoginSubmit()" />
+    </div>
+  </div>
+  <div id="AlumniConnextDD2" style="display:none;">
+    <div style="width:82%; margin-left:auto; margin-right:auto; line-height:28px;">
+      <p style="padding-top:10px; padding-bottom:10px; font-size:16px;">该微信已绑定到用户:<br>
+        <span id="BindUsername"></span></p>
+    </div>
+    <div style="line-height:46px;" class="inputAndSelect">
+      <input type="button"  class="inputsubmitStyle " value="重新绑定" onClick="document.getElementById('AlumniConnextDD2').style.display='none';document.getElementById('AlumniConnextDD').style.display='block'" />
+    </div>
+  </div>
+</div>
+<input type="hidden" value="" id="BDOpenId" />
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/common.js"></script> 
+<script type="text/javascript">
+	var GET = new Array();
+$(function(){
+	Win.Loading();
+	var localLink ='';
+	function getParam1(){ 
+	    var QueString ='';
+		querystr = window.location.href.split("?")
+		if(querystr[1]){
+				var GETs = querystr[1].split("&")
+				for(i=0;i<GETs.length;i++){
+					tmp_arr = GETs[i].split("=")
+					key=tmp_arr[0]
+					GET[key] = tmp_arr[1]
+					if(tmp_arr[0]!="openId" && tmp_arr[0] !="page"){
+					
+							QueString += tmp_arr[0]+"="+tmp_arr[1]+"&"
+						}
+				}
+				QueString = QueString.substring(0,QueString.length-1);
+		}
+		if(GET["page"]=="Bind"){
+				localStorage.openId = GET["openId"];
+				localLink =  'Siginin.html?page=BindPage&deBug='+(GET["deBug"]?GET["deBug"]:"0");
+				location.href = localLink;
+			}else{
+				if(GET["page"] =="BindPage"){
+						$("#AlumniConnext2").show();	
+						Event.CheckHasBind(localStorage.openId,'',"1");	
+					}else if (GET["page"] =="ShopDetail"){
+						localStorage.openId = GET["openId"];
+			 			localLink =  'ShopDetail.html?'+QueString; 
+						location.href = localLink;
+					}else{
+						
+						 localLink =  'base.html?'+QueString+'#'+GET["page"]; 
+					}
+			}
+		return querystr[1];
+	}
+	getParam1();
+	if(GET["page"] == "BindPage"){
+			return false;
+		}
+	if(GET["page"] == "Bind"){
+		return false;
+	}
+	
+	if(window.localStorage){
+					if(localStorage.userId &&  localStorage.userId != ""){
+						
+						//如果userid 存在 open id不存在的话需要绑定
+							if(!localStorage.openId && localStorage.openId ==""){
+								if(GET["openId"] && GET["openId"]!=""){
+									Event.CheckHasBind(GET["openId"], localLink);	
+								}
+							}else{
+									location.href = localLink;
+								}
+					}else{		
+						if(GET["openId"] && GET["openId"]!=""){
+									localStorage.openId = 	GET["openId"];
+								}
+								location.href = localLink;
+						}
+		
+		
+		//	if(localStorage.openId && localStorage.openId !=""){
+//					
+//					if(localStorage.userId &&  localStorage.userId != ""){
+//						location.href = localLink;
+//						
+//						}
+//						//else{
+//							Event.CheckHasBind(localStorage.openId, localLink);	
+//					
+//						//	}
+//				}else{
+//					if(GET["openId"] && GET["openId"]!=""){
+//							localStorage.openId = GET["openId"];
+//							if(!localStorage.userId && localStorage.userId=="" ){
+//					//
+//								Event.CheckHasBind(GET["openId"], localLink);
+//							}else{
+//							
+//							location.href = localLink;
+//							}
+//					}else{
+//						location.href = localLink;	
+//					}
+//				}
+//			
+			
+			
+			//if(!localStorage.openId   && !localStorage.userId){
+				//	 AppSet.Login();
+				//	 return; 
+					
+			//	}
+			//if(GET["openId"] && GET["openId"]!="" && !localStorage.userId){
+				//	 AppSet.Login();
+				//	 return; 
+			//	}
+				//if(localStorage.userId && !GET["openId"]){
+				
+				//	location.href = localLink;
+					//return; 
+				//}
+			
+		//	if(localStorage.openId && localStorage.openId!=""  && GET["openId"] && GET["openId"]!=""){
+					//if(localStorage.openId != GET["openId"]){
+					//		Event.CheckHasBind(GET["openId"], localLink);
+						//}else{	
+				//			location.href = localLink;
+						//}
+			///	}else{
+			//		Event.CheckHasBind('',localLink);	
+				//}
+		//}else{
+			
+			//Event.CheckHasBind((GET["openId"] ? GET["openId"] :""),localLink);	
+		}
+	})
+
+
+</script>
+</body>
+</html>

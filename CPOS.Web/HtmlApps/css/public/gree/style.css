@@ -1,0 +1,159 @@
+﻿/*common*/
+html,body{height:100%;min-height:100%;}
+body{font:12px/1.5em "Microsoft YaHei";background:#fff;color:#666;}
+body>section{height:100%;min-height:100%;max-width:640px;margin:0 auto;}
+
+/*预约安装*/
+.appointmentInstall .selectArea{padding:18px 12px 33px;background:#f5f5f5;font-size:15px;color:#fe7c23;}
+.appointmentInstall .selectArea .box{height:48px;line-height:48px;padding:0 10px;margin-bottom:10px;border:1px solid #e2e2e2;border-radius:4px;background:#fff;}
+.appointmentInstall .selectArea .date input,.appointmentInstall .selectArea .time input{
+	margin-top: -98px;
+	margin-left: 32px;
+	line-height: 46px;
+	height: 46px;
+	width: 93%;
+	display: inline-block;
+}
+.appointmentInstall .selectArea em{float:left;width:25px;height:100%;background:url(../../../images/public/gree_default/icon01.png) no-repeat;background-size:25px 200px;}
+.appointmentInstall .box input{display:block;width:100%;margin-top:13px;font-size:15px;border:none;color:#ccc;}
+.appointmentInstall .orderNum{margin-right:110px;}
+.appointmentInstall .orderNum em{background-position:0px -111px;}
+.appointmentInstall .date em{background-position:0px 15px;}
+.appointmentInstall .time em{background-position:0px -25px;}
+.appointmentInstall .sex em{background-position:0px -158px;}
+.appointmentInstall .location em{background-position:0px -63px;}
+.appointmentInstall .selectArea p{margin-left:36px;}
+.appointmentInstall .selectArea .arr{float:right;width:25px;height:100%;background:url(../../../images/public/gree_default/arr.png) no-repeat right center;background-size:8px 15px;}
+
+.appointmentInstall .mapArea{margin-top:20px;border:1px solid #ccc;}
+.appointmentInstall .mapArea img{width:100%;}
+
+.appointmentInstall .messageArea{padding:23px 10px 15px;border-top:1px solid #ccc;background:#ebeced;}
+.appointmentInstall .messagebox{height:39px;width:100%;margin-bottom:12px;padding:0 10px;border:1px solid #e2e2e2;border-radius:4px;background:#fff;}
+.appointmentBtn,.addBtn{display:block;height:45px;line-height:45px;margin:0 auto;text-align:center;letter-spacing:1px;font-size:16px;border-radius:5px;background:#39b44a;color:#fffcfc;}
+
+.appointmentInstall .sex p{margin-right:102px;}
+.appointmentInstall .cfmBtn{float:right;width:100px;height:48px;line-height:48px;text-align:center;font-size:16px;border-radius:4px;background:#39b44a;color:#fffcfc;}
+.appointmentInstall .selSexBox{float:right;width:98px;height:32px;line-height:30px;margin-top:8px;text-align:center;font-size:14px;border:1px solid #fe7c23;border-radius:20px;color:#fe7c23;}
+.appointmentInstall .selSexBox span{float:left;width:50%;height:30px;}
+.appointmentInstall .selSexBox span.on{background:#fe7c23;color:#fefefe;}
+.appointmentInstall .selSexBox .man{border-radius:20px 0 0 20px;}
+.appointmentInstall .selSexBox .woman{border-radius:0 20px 20px 0;}
+/*选择空调*/
+.selectAir{padding:12px;background:#f5f5f5;}
+.selectAir .title{font-size:15px;color:#5f646e;}
+.airList{padding-top:10px;}
+.airList .item{position:relative;margin:0 0 10px 6px;border:1px solid #e2e2e2;border-radius:5px;background:#fff;}
+.airList .item .selBox{display:block;height:24px;margin-left:45px;font-size:13px;color:#5f646e;}
+.airList .item select{width:100%;background:none;border:none;background:url(../../../images/public/gree_default/selectArr.png) no-repeat right center;background-size:7px 4px;}
+.airList .airIcon{height:62px;padding:16px 26px;border-bottom:1px solid #e2e2e2;}
+.airList .roomIcon{height:62px;padding:19px 26px;}
+.airList .item em{float:left;width:45px;height:100%;background:url(../../../images/public/gree_default/icon02.png) no-repeat;background-size:35px 225px;}
+.airList .airIcon em{background-position:0px 0px;}
+.airList .roomIcon em{background-position:0px -58px;}
+.airList .airIcon p{height:36px;overflow:hidden;}
+.airList .roomIcon p{height:24px;line-height:24px;}
+
+.airList .checkBox{position:absolute;top:44px;left:-12px;display:block;width:27px;height:30px;background:url(../../../images/public/gree_default/check02.jpg) no-repeat 0 0;background-size:100%;}
+.airList .checkBox.on{background:url(../../../images/public/gree_default/check01.jpg) no-repeat 0 0;background-size:100%;}
+.selectAir .addBtn{background:#ffac1e;}
+
+/*正在预约*/
+.isAppointment{padding:45px 12px;background:#f0f0f1;}
+.isAppointment .titWrap{height:52px;line-height:52px;margin-left:9.3%;}
+.isAppointment .titWrap em{float:left;width:52px;height:52px;background:url(../../../images/public/gree_default/titRound.png) no-repeat 0 0;background-size:100%;}
+.isAppointment .titWrap span{float:left;margin-left:12px;letter-spacing:2px;font-size:30px;color:#fe7c23;}
+
+.isAppointment .round{position:relative;width:160px;height:160px;margin:24px auto 16px;padding-top:42px;background:url(../../../images/public/gree_default/round01.png) no-repeat 0 0;background-size:100%;}
+
+.isAppointment .cancelBtn,.isAppointment .sifuBtn{display:block;height:45px;line-height:45px;margin:0 auto;text-align:center;letter-spacing:1px;font-size:16px;border-radius:5px;background:#a1a5ad;color:#fffcfc;}
+
+.isAppointment .dot{position:absolute;top:95px;left:-2px;display:block;width:41px;height:41px;text-align:center;line-height:41px;font-size:12px;border-radius:20px;background:#fff;color:#fe7c23;}
+.isAppointment .info p{font-size:15px;text-align:center;color:#a1a5ad;}
+.isAppointment .info .num{font:bold 28px/32px "Arial";color:#fe7c23;}
+
+.isAppointment.completeStatus .round{background:url(../../../images/public/gree_default/round02.png) no-repeat 0 0;background-size:100%;}
+.isAppointment .sifuBtn{display:none;background:#ffac1e}
+.isAppointment.completeStatus .sifuBtn{display:block;}
+.isAppointment.completeStatus .cancelBtn{display:none;}
+/*选择师傅*/
+.selectSifu{background:#f0f0f1;font-size:14px;color:#666;}
+
+.sifuList{}
+.sifuList .item{padding:15px 0 0 15px;margin-bottom:7px;border-top:1px solid #d9dadd;border-bottom:1px solid #d9dadd;background:#fff;}
+.sifuList .picWrap{float:left;width:70px;height:70px;}
+.sifuList .infoBox{margin-left:80px;}
+.sifuList .infoBox > div{height:37px;}
+.sifuList .item .infoBox > div:nth-of-type(1){border-bottom:1px solid #e6e8ec;}
+.sifuList .infoBox p{float:left;height:28px;line-height:28px;margin-top:5px;}
+.sifuList .infoBox em{float:left;width:21px;height:100%;background:url(../../../images/public/gree_default/icon04.png) no-repeat;background-size:25px 225px;}
+.sifuList .name em{background-position:0px 7px;}
+.sifuList .tel em{background-position:0px -44px;}
+.sifuList .count em{background-position:0px -98px;}
+.sifuList .praise em{background-position:0px -154px;}
+.sifuList .name{width:33%;}
+.sifuList .count{width:55%;}
+.sifuList .tel,.sifuList .praise{padding-left:15px;border-left:1px solid #e6e8ec;}
+.sifuList .count i{margin-left:10px;}
+.sifuList .praise i{margin-left:6px;color:#fe7c23;}
+
+.sifuList .btnWrap{margin-top:2px;padding:7px 15px 7px 80px;border-top:1px solid #e6e8ec;}
+.sifuList .btnWrap a{height:35px;line-height:35px;font-size:16px;text-align:center;border-radius:4px;background:#39b44a;color:#fffdfd;}
+.sifuList .btnWrap .telBtn{float:left;width:82px;background:#39b44a url(../../../images/public/gree_default/icon04.png) no-repeat 30px -194px;background-size:25px 225px;}
+.sifuList .btnWrap .taBtn{float:right;width:117px;}
+/*发表评论*/
+.evaluatePage .evaluatePage {background: #f6f6f6;}
+.evaluatePage .topInfo {height: 92px;padding: 11px 19px;background: #505254;}
+.evaluatePage .topInfo img {float: left;width: 70px;height: 70px;}
+.evaluatePage .topInfo .showStar {margin-left: 85px;}
+.evaluatePage .name {display: block;margin: 10px 0;font-size: 14px;color: #fff;}
+.evaluatePage .minStar {color: #cdcdcd;}
+.evaluatePage .minStar p {float: left;width: 65px;height: 10px;margin: 2px 5px 0 0;background: url(../../../images/public/gree_default/minStar.png) repeat-x 0 0;background-size: 13px 10px;}
+.evaluatePage .minStar p span {display: block;width: 50%;height: 10px;background: url(../../../images/public/gree_default/onminStar.png) repeat-x 0 0;background-size: 13px 10px;}
+
+.evaluatePage .playGrade{width:320px;margin:0 auto;padding:40px 10px;}
+.evaluatePage .line {height: 1px;margin: 0 20px;background: #999;}
+.evaluatePage .playGrade .title {position: relative;top: -11px;width: 206px;margin: 0 auto;padding: 0 5px;text-align: center;font-size: 15px;background: #f6f6f6;}
+.evaluatePage .playGrade .tit {width: 95px;height: 25px;line-height: 25px;float: left;text-align: right;font-size: 15px;color: #999;}
+.evaluatePage .playGrade .maxStar {margin-left: 112px;}
+.evaluatePage .playGrade .maxStar span {float: left;width: 36px;height: 25px;background: url(../../../images/public/gree_default/star.png) no-repeat center center;background-size: 36px 25px;}
+.evaluatePage .playGrade .maxStar .on {background: url(../../../images/public/gree_default/onStar.png) no-repeat center center;background-size: 36px 25px;}
+.evaluatePage .playGrade .starBox {padding: 12px 0;}
+.evaluatePage .btnArea {position: fixed;left: 0;bottom: 0px;width: 100%;height: 50px;border-top: 1px solid #ccc;background: #fff;}
+.evaluatePage .commentBtn {display: block;width: 126px;height: 31px;line-height: 31px;margin: 9px auto;font-size: 15px;text-align: center;border: 1px solid #999;border-radius: 18px;color: #666;}
+/*评价成功*/
+.evaluateSucceed{padding:55px 0 10px;}
+.evaluateSucceed .textInfo{width:210px;line-height:22px;margin:0 auto;letter-spacing:1px;font-size:15px;color:#a1a5ad;}
+.evaluateSucceed .textInfo span{color:#f70;}
+.evaluateSucceed .textInfo .num{font-size:24px;}
+.evaluateSucceed .tipIcon{width:137px;height:111px;margin:30px auto 0;background:url(../../../images/public/gree_default/laughIcon.png) no-repeat 0 0;background-size:137px 111px;}
+/*师傅任务*/
+.sifuTask{background:#f6f6f6;padding-bottom:50px;}
+.sifuTask .topInfo{height:92px;padding:11px 19px;background:#505254;}
+.sifuTask .topInfo img{float:left;width:70px;height:70px;}
+.sifuTask .topInfo .showStar{margin-left:85px;}
+.sifuTask .name{display:block;margin:10px 0;font-size:14px;color:#fff;}
+.sifuTask .minStar{color:#cdcdcd;}
+.sifuTask .minStar p{float:left;width:65px;height:10px;margin:2px 5px 0 0;background:url(../../../images/public/gree_default/minStar.png) repeat-x 0 0;background-size:13px 10px;}
+.sifuTask .minStar p span{display:block;width:50%;height:10px;background:url(../../../images/public/gree_default/onminStar.png) repeat-x 0 0;background-size:13px 10px;}
+
+.sifuTask .infoWrap{margin-top:9px;padding-left:17px;border-top:1px solid #e2e2e2;border-bottom:1px solid #e2e2e2;background:#fff;}
+.sifuTask .infoWrap .textBox{float:right;margin-right:10px;font-size:13px;}
+.sifuTask .infoWrap .textBox span{margin:0 2px;font-weight:bold;font-size:18px;color:#39b44a;}
+.sifuTask .infoWrap > div{height:45px;line-height:45px;border-bottom:1px solid #e6e8ec;font-size:14px;color:#666;}
+.sifuTask .infoWrap .praiseIcon{border-bottom:none;}
+.sifuTask .infoWrap .title{float:left;font-size:14px;font-weight:bold;color:#333;}
+
+.sifuTask .infoWrap em{float:left;width:25px;height:100%;background:url(../../../images/public/gree_default/icon04.png) no-repeat;background-size:25px 225px;}
+.sifuTask .infoWrap .telIcon em{background-position:0px -36px;}
+.sifuTask .infoWrap .taskIcon em{background-position:0px -90px;}
+.sifuTask .infoWrap .praiseIcon em{background-position:0px -146px;}
+
+.sifuTask .infoWrap .taskIcon span,.infoWrap .praiseIcon span{margin-left:3px;}
+.sifuTask .infoWrap .praiseIcon span{color:#fe7c23;}
+
+
+.sifuTask .btnArea{position:fixed;left:0;bottom:0px;width:100%;height:50px;text-align:center;border-top:1px solid #ccc;background:#fff;}
+.sifuTask .btnArea a{display:inline-block;width:100px;height:31px;line-height:31px;margin:9px auto;font-size:15px;text-align:center;border:1px solid #999;border-radius:18px;color:#666;}
+.sifuTask .btnArea .linkBtn{text-indent:25px;background:url(../../../images/public/gree_default/telIcon02.png) no-repeat 13px center;background-size:22px 21px;}
+.sifuTask .btnArea .atBtn{margin-left:7px;border:none;background:#39b44a;color:#fff;}

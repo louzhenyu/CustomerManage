@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="CateOrder"></title><style type="text/css">
+		/*Media Query*/
+		@media screen and (max-height:360px) {
+		.footer{display:none;}
+		}
+		</style>
+	</head>
+
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<section id="section" class="orderListArea">
+			<div class="selectInfo">
+				<p class="number" style="display: none;">
+					<select id="pplSelect">
+						<option value="0">请选择就餐人数</option>
+					</select>
+				</p>
+				<p>
+					<input id="remark" type="text" placeholder="请输入特殊要求" class="ask">
+				</p>
+				<p>
+					联系电话：021-5262626
+				</p>
+			</div>
+
+			<div class="commonGreensList">
+				<p class="clearfix">
+					<a href="javascript:;" class="addGreensBtn addGoods">+ 加菜</a>
+				</p>
+				<ul id="itemList">
+					<li class="on">
+						<img class="pic" src="../../../images/public/catering_default/pic.png" alt=""/>
+						<figure class="info">
+							<h2 class="tit t-overflow">三文鱼刺身</h2>
+							<span class="price">￥50</span>
+						</figure>
+						<div class="handle">
+							<span class="sub">－</span>
+							<span class="num">1</span>
+							<span class="add">＋</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+		</section>
+
+		<footer id="footer" class="footer">
+			<div class="orderBottomWrap">
+				<p id="totalCount" class="total">
+					共计<em>0</em>个菜，￥<em>0</em>
+				</p>
+				<p class="wrapBtn">
+					<a class="cateInner cateType" href="javascript:;" style="display: none;">堂吃</a>
+					<a class="cateOuter cateType" href="javascript:;" style="display: none;">外送</a>
+				</p>
+			</div>
+		</footer>
+		<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+		<script id="itemListTemp" type="text/html">
+			<%for(var i=0;i<list.length;i++){var idata=list[i];%>
+			<li data-id="<%=idata.skuId%>" class="<%if(idata.count!=0){%>on <%}%>">
+			<img class="pic" src="<%=idata.imageUrl%>" alt=""/>
+			<figure class="info">
+			<h2 class="tit t-overflow"><%=idata.itemName%></h2>
+			<span class="price">￥<%=idata.price%></span>
+			</figure>
+			<div class="handle">
+			<span class="sub" data-id="<%=idata.skuId%>" data-typeid="<%=idata.typeId%>">－</span>
+			<span class="num"><%=idata.count%></span>
+			<span class="add" data-id="<%=idata.skuId%>" data-typeid="<%=idata.typeId%>">＋</span>
+			</div>
+			</li>
+			<%}%>
+		</script>
+	</body>
+</html>

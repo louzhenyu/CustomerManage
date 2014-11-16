@@ -1,0 +1,151 @@
+/*common*/
+body{font:12px/1.5em "Microsoft YaHei","黑体";background:#fff;color:#4d4d4d;}
+input{border:1px solid #ccc;border-radius:2px;width:120px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"Microsoft YaHei","黑体";color:#a5a5a5;}
+.ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
+.commonTopTitle{height:45px;line-height:45px;background:#fe7c23;}
+.commonTopTitle .createFormBtn{float:right;display:inline-block;width:116px;height:28px;margin:8px 32px 0 0 ;background:url(../images/createFormBtn.png) no-repeat 0px 0px;}
+.commonBtn{display:block;width:142px;height:42px;line-height:42px;text-align:center;font-size:18px;border-radius:5px;background:#fe7c24;color:#fff;}
+
+/*公共弹层*/
+.ui-dialog{position:fixed;top:50%;left:50%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
+.ui-dialog-tit{position:relative;padding-left:25px;height:55px;background:#f3f3f6;border-radius:6px 6px 0 0;color:#66666d;}
+.ui-dialog-tit h2,.ui-dialog-tit h3{font:bold 16px/55px "黑体";}
+.ui-dialog-close{position:absolute;top:12px;right:12px;width:30px;height:30px;background:url(../images/hintClose.png) no-repeat center center;}
+.ui-dialog .btnWrap{padding:35px 0;text-align:center;}
+.ui-dialog .btnWrap a{display:inline-block;}
+.ui-dialog .titName{position:absolute;top:0;left:50%;margin-left:-225px;width:450px;line-height:55px;text-align:center;color:#333;}
+.ui-dialog .cancelBtn{margin-left:35px;background:#949ca7;}
+/*弹层-添加新表单*/
+.ui-dialog.ui-dialog-addForm{width:700px;height:420px;margin:-210px 0 0 -350px;}
+.ui-dialog .createForm-box{padding:93px 0 55px 68px;}
+.ui-dialog .createForm-box .name{float:left;font:bold 16px/45px "黑体";color:#999;}
+.ui-dialog .createForm-box .infoBox{width:410px;height:45px;margin-left:10px;border:1px solid #ccc;border-radius:6px;}
+.ui-dialog-addForm .cancelBtn{background:#fff;border:1px solid #fe7c23;color:#fe7c23;}
+
+/***会员动态属性***/
+.commonTopTitle li{float:left;width:160px;font-size:14px;font-family:"黑体";text-align:center;}
+.commonTopTitle li a{display:block;height:36px;line-height:28px;margin-top:9px;border-left:1px solid #fff;border-right:1px solid #fff;color:#fff;}
+.commonTopTitle li:fist-child a{border-left:none;}
+.commonTopTitle li:last-child a{border-right:none;}
+.commonTopTitle li.on+li a{border-left:none;}
+.commonTopTitle li.on{background:#fff;}
+.commonTopTitle li.on a{background:#fff;color:#fe7c23;}
+
+/***表单列表***/
+.formList{min-height:500px;margin:0 15px;padding:17px 0;border:1px solid #d9d9d9;border-top:none;box-shadow:0 0 3px rgba(217,217,217,0.8);background:#f8f8f8;}
+.formList li{border-left:4px solid #f8f8f8;padding-left:30px;cursor:pointer;}
+.formList li:hover,.formList li.on{border-left:4px solid #fe7c23;background:#fff1d8;}
+.formList-item{height:106px;border-bottom:1px solid #e0dbd1;}
+.formList li:nth-of-type(1) .formList-item{border-top:1px solid #e0dbd1;}
+.formList-item{padding:0 32px;font-size:16px;color:#666;}
+.formList-item .markBox{float:left;width:42px;height:32px;margin-top:26px;}
+.formList-item .markBox img{width:42px;height:32px;}
+.formList-item .infoBox{margin-left:84px;padding-top:34px;}
+.formList-item .delListBtn{display:none;float:right;width:100px;height:28px;margin-top:36px;background:url(../images/delListBtn.png) no-repeat 0 0;}
+.formList li:hover .delListBtn,.formList li.on .delListBtn{display:block;}
+.formList-item .tit{margin-bottom:6px;font-size:17px;font-weight:bold;font-family:"黑体";color:#333;}
+.formList-item .createTime{height:28px;line-height:28px;padding-left:23px;font-size:14px;background:url(../images/timeIcon.png) no-repeat left 7px;color:#999;}
+
+
+/***表单详情***/
+/*修改原来信息*/
+.formOriginalInfo{height:133px;*height:87px;padding:46px 32px 0 42px;font-size:16px;background:#f8f8f8;color:#666;}
+.formOriginalInfo .picWrap{float:left;width:42px;height:32px;}
+.formOriginalInfo .picWrap img{width:42px;height:32px;}
+.formOriginalInfo .inputBox{float:left;height:30px;margin:2px 26px 0;}
+.formOriginalInfo .inputBox span{display:block;height:30px;min-width: 100px;max-width:248px;font:bold 16px/30px "黑体";color:#333;}
+.formOriginalInfo .inputBox input{display:none;width:248px;height:30px;font-size:16px;font-weight:bold;font-family:"黑体";border:1px solid #ccc;border-radius:4px;background:#fff;color:#333;}
+.formOriginalInfo .modifyBtn{float:left;width:74px;height:28px;margin-top:2px;background:url(../images/modifyBtn.png) no-repeat 0 0;}
+.formOriginalInfo .backBtn{float:right;width:74px;height:28px;margin-top:2px;border:1px solid #fe7c23;color:#fe7c23 ;font-weight: bold;text-align: center;line-height: 28px;cursor:pointer;}
+.formOriginalInfo .clickMore{width:130px;margin:28px auto 0;font-size:14px;background:url(../images/moreIcon.png) no-repeat right center;color:#ccc;cursor:pointer;}
+.formOriginalInfo .btnWrap{display:none;float:left;height:30px;margin-top:2px;}
+.formOriginalInfo .btnWrap span{float:left;width:58px;height:30px;line-height:30px;margin-right:10px;text-align:center;border-radius:4px;font-size:15px;background:#fe7c23;color:#fff;cursor:pointer;}
+.formOriginalInfo.on .btnWrap{display:block;}
+.formOriginalInfo.on .modifyBtn,.formOriginalInfo.on .inputBox span{display:none;}
+.formOriginalInfo.on .inputBox input{display:block;}
+
+/*表单详情菜单*/
+.formDetailsArea{margin-left:15px;}
+.formDetailsNav{height:62px;margin-top:20px;padding-left:85px;background:#e9e9e9;}
+.formDetailsNav li{float:left;width:92px;height:62px;margin-right:17px;cursor:pointer;}
+.formDetailsNav .formModule{background:url(../images/formModuleIcon.png) no-repeat center center;}
+.formDetailsNav .applyTo{background:url(../images/applyToIcon.png) no-repeat center center;}
+.formDetailsNav .formModule.on{background:#fe7c23 url(../images/on-formModuleIcon.png) no-repeat center center;}
+.formDetailsNav .applyTo.on{background:#fe7c23 url(../images/on-applyToIcon.png) no-repeat center center;}
+/*会员中心表单属性配置*/
+.formDetailsArea{margin-left:15px;}
+.formDetailsNav2{height:62px;margin-top:20px;padding-left:85px;background:#e9e9e9;}
+.formDetailsNav2 li{float:left;width:92px;height:62px;margin-right:17px;cursor:pointer;}
+.formDetailsNav2 .normalSearch{background:url(../images/001.png) no-repeat center center;}
+.formDetailsNav2 .unusualSearch{background:url(../images/002.png) no-repeat center center;}
+.formDetailsNav2 .newEdit{background:url(../images/003.png) no-repeat center center;}
+.formDetailsNav2 .listShow{background:url(../images/004.png) no-repeat center center;}
+.formDetailsNav2 .on{background-color: #fff;}
+
+/*应用于层*/
+.applyToHandle{width:230px;margin:40px auto 0;}
+.applyToHandle .tit{float:left;font:bold 13px/26px "黑体";color:#999;}
+.applyToHandle .checkBoxArea{float:left;margin:0 0 35px 12px;}
+.applyToHandle .checkBoxArea>p{height:26px;margin-bottom:15px;font:bold 13px/26px "黑体";color:#999;cursor:pointer;}
+.applyToHandle .checkBoxArea em{float:left;width:26px;height:26px;margin-right:12px;background:url(../images/checkBox001.png) no-repeat center center;}
+.applyToHandle .checkBoxArea .on em{background:url(../images/checkBox002.png) no-repeat center center;}
+.applyToHandle .commonBtn{clear:both;margin:0 auto;}
+
+/*表单组件层*/
+.formModuleHandle{padding:27px;background:#f8f8f8;}
+.formModuleHandle .handleWrap{position:relative;overflow:hidden;width:932px;border:1px solid #ccc;border-radius:5px;background:#fff;font:15px/40px "黑体";color:#666;}
+
+/*表单显示区域*/
+.formShowArea{float:left;width:490px;*width:462px;min-height:600px;padding:10px 10px 20px 18px;}
+.vertical-line{height:9999px;width: 0;border-right: 1px solid #ccc;}
+.formShowArea-item{padding:16px 0px 16px 8px;border:1px dashed #fff;}
+.formShowArea-item .closeBtn{display:none;float:right;position:relative;top:-25px;right:-8px;width:20px;height:20px;background:url(../images/moduleIcon.png) no-repeat 0px -797px;cursor:pointer;}
+.formShowArea-item:hover{border:1px dashed #b5b5b5;border-radius:7px;background:#f6f7f8;}
+.formShowArea-item:hover .closeBtn{display:block;}
+.formShowArea-item .tit{float:left;width:80px;line-height:40px;font-weight:bold;}
+.formShowArea-item .inputArea{width:348px;height:40px;margin-left:80px;border:1px solid #ccc;border-radius:5px;background:#fff;}
+.formShowArea-item .inputArea label{float:left;width:278px;height:100%;}
+.formShowArea-item .inputArea input{display:block;width:278px;height:38px;*height:36px;text-indent:10px;border:none;border-radius:5px;color:#666;}
+.formShowArea-item .selectBox{height:28px;margin-left:278px;margin-top:9px;font-size:14px;cursor:pointer;}
+.formShowArea-item .selectBox:hover{position:relative;}
+.formShowArea-item .selectBox .text{display:block;height:22px;line-height:24px;padding-left:9px;border-left:1px solid #ccc;background:url(../images/moreIcon.png) no-repeat 48px center;}
+.formShowArea-item .dropList{display:none;position:absolute;top:25px;left:0px;width:69px;border:1px solid #999;border-radius:0 0 5px 5px;background:#fff;z-index:990;}
+.formShowArea-item .dropList span{display:block;height:30px;line-height:30px;text-align:center;}
+.formShowArea-item .dropList span:nth-of-type(2){border-radius:0 0 5px 5px;}
+.formShowArea-item .dropList span:hover{background:#f6f7f8;}
+.formShowArea-item .selectBox:hover .dropList{display:block;}
+.formModuleHandle .saveFormBtn{float:right;margin:22px 40px 0 0;font-size:16px;}
+
+/*选择组件区域*/
+.moduleArea{margin-left:490px;padding:10px 25px;width:440px;*width:390px;overflow:hidden;}
+.moduleArea .tit{margin-bottom:11px;font-size:18px;color:#333;}
+.moduleArea ul{width:105%;}
+.moduleArea li{position:relative;float:left;width:186px;height:46px;line-height:46px;margin:0 18px 18px 0;*margin:0 9px 18px 0;text-indent:10px;border:1px dashed #b5b5b5;border-radius:5px;background:#f6f7f8;cursor:pointer;}
+.moduleArea li.exist{cursor:default; background: #c7c7c7;}
+.moduleArea li i{float:right;width:48px;height:100%;background:url(../images/moduleIcon.png) no-repeat;}
+.moduleArea .iconName{background-position:0px 14px;}
+.moduleArea .iconNumber{background:url(../images/number.png) no-repeat;margin-top: 13px;}
+.moduleArea .iconMenu{background-position:0px -364px;}
+.moduleArea .iconSex01{background-position:0px -80px;}
+.moduleArea .iconDate{background-position:5px -462px;}
+.moduleArea .iconSex02{background-position:0px -172px;}
+.moduleArea .iconEmail{background-position:5px -559px;}
+.moduleArea .iconMobile{background-position:5px -264px;}
+.moduleArea .iconOther{background-position:5px -672px;}
+.moduleArea .option,.moduleArea .unoption{display:none;position:absolute;top:-13px;left:39px;width:162px;height:32px;}
+.moduleArea .option{background:url(../images/tipIcon01.png) no-repeat 0 0;}
+.moduleArea .unoption{left:67px;background:url(../images/tipIcon02.png) no-repeat 0 0;}
+.moduleArea li:hover{background:#c7c7c7;}
+.moduleArea li:hover .option{display:block;}
+/*.moduleArea li.exist:hover{background:#fbfcfc;}*/
+.moduleArea li.exist:hover .option{display:none;}
+.moduleArea li.exist:hover .unoption{display:block;}
+
+
+.header{width:auto !important;}
+.wrap{width:auto !important;}
+.formShowArea-item .tit{height:40px;width:146px;}
+.formShowArea-item .inputArea{width:286px;margin-left:146px}
+.formShowArea-item .inputArea label{width:212px;}
+.formShowArea-item .inputArea input{width:212px;}
+.formShowArea-item .selectBox{margin-left:212px;}

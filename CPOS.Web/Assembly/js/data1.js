@@ -1,0 +1,13 @@
+[{
+"content":
+{
+	"isLottery":"0",
+	"isWinning":null,
+	"validTime":null,
+	"winningDesc":null,
+	"lotteryDesc":"活动已经结束",
+	"lotteryCount":null,
+	"lotteryNumber":null,"prizeList":[],"winnerList":null
+	},
+"code":"200","description":"操作成功","exception":null,"data":null
+}]

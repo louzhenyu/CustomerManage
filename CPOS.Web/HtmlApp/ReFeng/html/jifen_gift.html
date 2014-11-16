@@ -1,0 +1,37 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title name="JiFenGift"></title>
+    <link href="../css/global.css" rel="stylesheet" />
+    <link href="../css/style_jifen.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+    <section class="goods_wrap">
+        <dl class="tool_bar clearfix">
+            <dt><a href="javascript:Jit.AM.pageBack();">返回</a></dt>
+        </dl>
+    </section>
+    <section class="jifen_cur" style="padding-top: 50px;">
+        <p>
+            <a href="javascript:;" onclick="javascript:Jit.AM.toPage('JiFenDetail');">积分明细</a>您当前的积分：<b jitval="count"></b>
+        </p>
+    </section>
+    <section class="pro_list">
+        <ul tplpanel="pro_list"></ul>
+    </section>
+</body>
+<script id="Tpl_pro_list" type="text/template">
+<li>
+    <a href="javascript:;">
+        <div class="imgBox"><img src="{{imageUrl}}" title="{{itemName}}"></div>
+        <div class="infoBox">
+            <h3>{{itemName}}</h3>
+            <p class="last"><span onclick="javascript:Jit.AM.toPage('GoodsJiFenDetail','&goodsId={{itemId}}');">兑换</span>积分：{{integralExchange}}</p>
+        </div>
+    </a>
+</li>
+</script>
+</html>

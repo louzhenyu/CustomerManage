@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<title></title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body>
+<div class="PadMenu">
+  <ul>
+    <li class="skin pm1Hover" onClick="tab(1,4)" >收藏</li>
+    <li class="skin pm2">浏览历史</li>
+    <li class="skin pm3" onClick="tab(3,4)">购物车</li>
+    <li class="skin pm4">订单</li>
+  </ul>
+</div>
+<div class="Common">
+  <div class="CommonInfo">
+    <table width="100%" border="0">
+      <tr>
+        <td height="44" width="60" align="center" valign="middle" id="head">&nbsp;</td>
+        <td  valign="middle"><span id="vipName"></span></td>
+        <td  valign="middle">积分: <span class="f1" id="Jfen">0</span></td>
+        <td  valign="middle">优惠券: <span class="f1" id="UHj">0</span></td>
+      </tr>
+    </table>
+  </div>
+  <div id="commonDiv">
+   
+  </div>
+
+</div>
+<div style="width:100%; height:100%; background:#000; opacity:0.5; position:absolute; z-index:99; left:0; top:0;" id="opad"></div>
+<div style="top:160px; left:35%;position:absolute; z-index:100; " id="TImage"></div>
+<div class="loading" style="position:absolute; display:none; z-index:101"><img src="images/382.gif" width="40" height="40" /></div>
+<div style="width:300px; background-color:#FFF; opacity:0.8; color:red; position:absolute; left:30%; height:60px; top:0; z-index:999; border:1px solid #666; border-radius:5px; display:none; text-align:center; line-height:60px; font-size:14px;" id="TipDiv"></div>
+<script type="text/javascript">
+var Von = 'getDimensionalCode();',  loadMore= '';
+var openId ="", userId ="", paraTmp="";
+function tab(curnum,total){
+	
+	for(var i = 1; i<=total; i++){
+		$(".pm"+i+"Hover").removeClass("pm"+i+"Hover").addClass("pm"+i);
+	
+	}
+	
+	$(".pm"+curnum).removeClass("pm"+curnum).addClass("pm"+curnum+"Hover");	
+		if(curnum == "1"){
+			getPoll();	
+		}
+		if(curnum == "3"){
+			Vip.getShoppingCart("1");	
+	}
+}
+</script>
+<script type="text/template" id="getKeepBoxId">
+	 <div class="CommonInfoDiv">
+    <div class="CommonInfoDivLeft">
+      <div class="CommonInfoDivLeftH1 skin"></div>
+      <div class="Btnqx skin" onclick="Vip.ShopEditCheck(this,'all')"></div>
+      <div class="BtnBj skin"></div>
+    </div>
+    <div class="CommonInfoDivBtm">
+      <div class="CommonInfoDivBtmSS" style="line-height:28px; margin-top:15px; margin-left:20px;">商品件数：<span style="font-size:20px;"><span class="JianShu"></span>件</span></div>
+      <div class="Btngwc skin" onclick="Vip.setShoppingCartList()"></div>
+    </div>
+  </div>
+	  <div class="Siddd"></div>
+  <div class="CardList">
+    <table width="100%" border="0" id="ItemKeep">
+    </table>
+  </div>
+</script>
+<script type="text/template" id="getKeepBoxId">
+	 <div class="CommonInfoDiv">
+    <div class="CommonInfoDivLeft">
+      <div class="CommonInfoDivLeftH1 skin"></div>
+      <div class="Btnqx skin" onclick="Vip.ShopEditCheck(this,'all')"></div>
+      <div class="BtnBj skin"></div>
+    </div>
+    <div class="CommonInfoDivBtm">
+      <div class="CommonInfoDivBtmSS" style="line-height:28px; margin-top:15px; margin-left:20px;">商品件数：<span style="font-size:20px;"><span class="JianShu"></span>件</span></div>
+      <div class="Btngwc skin" onclick="Vip.setShoppingCartList()"></div>
+    </div>
+  </div>
+	  <div class="Siddd"></div>
+  <div class="CardList">
+    <table width="100%" border="0" id="VipCart">
+    </table>
+  </div>
+</script>
+<script type="text/template" id="getItemKeep">
+<% if(isfirst == "1"){%>
+	  <tr class="BoxTd">
+        <td width="60" height="42"><span class="skin checkBoxFalse" onclick="Vip.ShopEditCheck(this,'all')"></span></td>
+        <td width="40%">商品名称</td>
+        <td  width="20%">单价（元）</td>
+        <td  width="100" align="center">数量</td>
+        <td align="center">商品总价（元）</td>
+      </tr>
+	<%}%>
+	<% if(odata == "1"){%>
+	<%_.each(itemList,function(item){%>
+      <tr class="BoxTdss">
+        <td><span class="skin checkBoxFalse Odh" onclick="Vip.ShopEditCheck(this,'')" skuId="<%=item.skuId %>" itemId="<%=item.itemId %>"></span></td>
+        <td><div class="ODoasd">
+            <Div style=" position:absolute; left:0px; top:15px;"><img src="<%=item.imageUrl%>" width="100" style="height:80px;" /></Div>
+            <div class="Stitle"><strong><%=item.itemName %></strong>
+              <div style="padding-top:20px; font-size:12px; color:#E93C8C">收藏日期：<%=item.selDate %></div>
+            </div>
+          </div></td>
+        <td>￥<span id="danjia_<%=item.itemId %>"><%=item.salesPrice %></span></td>
+        <td><div style="width:100px;height:28px; overflow:hidden;"><span class="shuDown Detailicn" onclick="WelfareAction.Down('<%=item.itemId %>')"></span><span class="ddNumcc" id="qty_<%=item.itemId %>">1</span><span class="shuUp Detailicn" onclick="WelfareAction.Up('<%=item.itemId %>')"></span></div></td>
+        <td align="center"><span style="color:#fb9384" >￥<span id="danp_<%=item.itemId %>"><%=item.salesPrice %></span></span></span></td>
+      </tr>
+	<%})%>
+	<%}else{%>
+	<tr class="BoxTdss">
+    	<td colspan="5" align="center" height="80" valign="middle">没有收藏的数据</td>
+	  </tr>
+	<%}%>
+</script>
+<script type="text/template" id="getShoppingCartTemp">
+	 <div class="CommonInfoDiv">
+    <div class="CommonInfoDivLeft">
+      <div class="CommonInfoDivLeftH3 skin"></div>
+      <div class="Btnqx skin" onclick="Vip.ShopEditCheck(this,'all')"></div>
+      <div class="BtnBj skin"></div>
+    </div>
+    <div class="CommonInfoDivBtm">
+      <div class="CommonInfoDivBtmSS" style="line-height:28px; margin-top:15px; margin-left:20px;">商品件数：<span style="font-size:20px;"><span class="JianShu"></span>件</span></div>
+      <div class="Btnjdd skin" onclick="Vip.setShoppingCartList()"></div>
+    </div>
+  </div>
+	  <div class="Siddd"></div>
+  <div class="CardList">
+    <table width="100%" border="0" id="VipCart">
+    </table>
+  </div>
+</script>
+<script type="text/template" id="getShoppingCartList">
+<% if(isfirst == "1"){%>
+	  <tr class="BoxTd">
+        <td width="60" height="42"><span class="skin checkBoxTrue" onclick="Vip.ShopEditCheck(this,'all')"></span></td>
+        <td width="40%">商品名称</td>
+        <td  width="20%">单价（元）</td>
+        <td  width="100" align="center">数量</td>
+        <td align="center">商品总价（元）</td>
+      </tr>
+	<%}%>
+	<% if(odata == "1"){%>
+	<%_.each(itemList,function(item){%>
+      <tr class="BoxTdss">
+        <td><span class="skin checkBoxTrue Odh" onclick="Vip.ShopEditCheck(this,'')" skuId="<%=item.skuId %>" itemId="<%=item.itemId %>"></span></td>
+        <td><div class="ODoasd">
+            <Div style=" position:absolute; left:0px; top:15px;"><img src="<%=item.imageUrl%>" width="100" style="height:80px;" /></Div>
+            <div class="Stitle"><strong><%=item.itemName %></strong>
+              <div style="padding-top:20px; font-size:12px; color:#E93C8C"><%=item.itemCategoryName %></div>
+            </div>
+          </div></td>
+        <td>￥<span id="danjia_<%=item.itemId %>"><%=item.salesPrice %></span></td>
+        <td><div style="width:100px;height:28px; overflow:hidden;"><span class="shuDown Detailicn" onclick="WelfareAction.Down('<%=item.itemId %>')"></span><span class="ddNumcc" id="qty_<%=item.itemId %>"><%=item.qty%></span><span class="shuUp Detailicn" onclick="WelfareAction.Up('<%=item.itemId %>')"></span></div></td>
+        <td align="center"><span style="color:#fb9384" >￥<span id="danp_<%=item.itemId %>"><%=item.salesPrice*item.qty %></span></span></span></td>
+      </tr>
+	<%})%>
+	<%}else{%>
+	<tr class="BoxTdss">
+    	<td colspan="5" align="center" height="80" valign="middle">购物车没有数据</td>
+	  </tr>
+	<%}%>
+</script>
+</body>
+</html>

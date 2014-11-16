@@ -1,0 +1,215 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="ActivityGoodsList"></title>
+    <!--link href="../../../css/base/global.css" rel="stylesheet">
+    <link href="../../../css/public/shop/style.css" rel="stylesheet" type="text/css" /-->
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+    <style>
+        /*common*/
+        html,body,body>section{height:100%;min-height:100%;}
+        body>section{max-width:640px;margin:0 auto;}
+        body{font:15px/1.5em "Microsoft YaHei";background:#fff;color:#4d463e;}
+        /*抢购中*/
+        .commonSnappedBar{height:31px;padding:0px 15px 0 10px;font:12px/30px "黑体";border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#ebebeb;color:#fe7c23;}
+        .commonSnappedBar .tit{float:left;font-size:13px;font-weight:bold;}
+        .commonSnappedBar .countDownBox{float:right;}
+        .commonSnappedBar .text{float:left;font-size:12px;font-weight:bold;}
+        .commonSnappedBar .timeBox{float:left;margin:8px 0 0 4px;}
+        .commonSnappedBar .timeBox>*{float:left;height:14px;margin-left:1px;text-align:center;font:12px/14px "Arial";color:#fff;}
+        .commonSnappedBar .timeBox em{width:10px;border-radius:2px;background:#4f4242;}
+        .commonSnappedBar .timeBox span{width:7px;color:#4f4242;}
+
+        .snappedList-item{position:relative;height:141px;padding:0 15px 0 12px;border-bottom:1px solid #ccc;color:#999;display:-webkit-box;}
+        .snappedList-item .picWrap{width:108px;height:108px;margin-top:16px;border:1px solid #e0e0e0;}
+        .snappedList-item .picWrap,.snappedList-item .picWrap img{display:block;width:107px;height:107px;}
+        .snappedList-item .infoBox{position:relative;-webkit-box-flex:1;margin:16px 0 0 12px;}
+        .snappedList-item .title{height:34px;font:15px/17px "黑体";overflow:hidden;color:#333;}
+        .snappedList-item .priceBox{margin-top:4px;}
+        .snappedList-item .priceBox>*{float:left;}
+        .snappedList-item .discount{width:25px;margin-top:4px;height:15px;font:12px/15px "Arial";text-align:center;background:#ff3200;color:#fff;}
+        /*-webkit-transform:scale(0.5);position:relative;left:-10px;*/
+        .snappedList-item .curPrice{margin:0 8px 0 1px;font-size:15px;font-weight:bold;font-family:"黑体";color:#ff3200;}
+        .snappedList-item .curPrice span{font-size:22px;font-family:"Arial";}
+        .snappedList-item .oriPrice{margin-top:3px;font-size:12px;font-weight:bold;font-family:"黑体";}
+        .snappedList-item .oriPrice span{font-family:"Arial";}
+        .snappedList-item .buyCount{display:none;margin:4px 0 8px 0;font:13px/1.2em "Arial";color:#666;}
+        .percent{position:relative;width:84px;height:17px;font:12px/17px "黑体";text-align:center;border:1px solid #fe7c23;color:#fe7c23;}
+        .snappedList-item .percent{display:none;}
+        .snappedList-item .percent span{position:absolute;top:0;left:0;height:100%;background:#fe7c23;opacity:0.45;}
+        .snappedList-item .robTip{display:none;position:absolute;top:0px;left:0px;width:58px;height:58px;background:url(/HtmlApps/images/public/shop_default/robTip.png) no-repeat 0 0;background-size:100%;}
+        .snappedList-item .more{position:absolute;top:88px;left:0px;width:115px;font:15px/1.5em "黑体";background:url(/HtmlApps/images/public/shop_default/arr.png) no-repeat 100px center;background-size:8px 15px;color:#fe7c23;}
+        /*即将推出*/
+        .snappedList.on .buyCount{display:block;}
+        .snappedList.on .percent{display:block;}
+        .snappedList.on .more{display:none;}
+        /*抢光了*/
+        .snappedList .snappedList-item.on .robTip{display:block;}
+        .snappedList-item.on .title{color:#999;}
+        .snappedList-item.on .discount{background:#999;}
+        .snappedList-item.on .percent{display:none;}
+        .snappedList-item.on .curPrice{color:#fe7c23;}
+    </style>
+</head>
+
+<body>
+<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+    <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+</div>
+<section class="goods_wrap group_goods_area">
+    <div id="activityList" class="snappedArea" >
+        <!--&lt;!&ndash; 抢购中 &ndash;&gt;-->
+        <!--<div class="commonSnappedBar">-->
+            <!--<h2 class="tit">抢购中</h2>-->
+
+            <!--<div class="countDownBox">-->
+                <!--<h2 class="text">距离本场结束</h2>-->
+
+                <!--<p class="timeBox">-->
+                    <!--<em>0</em>-->
+                    <!--<em>0</em>-->
+                    <!--<span>:</span>-->
+                    <!--<em>3</em>-->
+                    <!--<em>2</em>-->
+                    <!--<span>:</span>-->
+                    <!--<em>1</em>-->
+                    <!--<em>7</em>-->
+                <!--</p>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--<div class="snappedList on">-->
+            <!--<div class="snappedList-item on">-->
+                <!--<p class="picWrap"><img src="images/pic.png"/></p>-->
+
+                <!--<div class="infoBox">-->
+                    <!--<h3 class="title">小红帽生态茶叶健康人生喝好茶</h3>-->
+
+                    <!--<div class="priceBox clearfix">-->
+                        <!--<em class="discount">5折</em>-->
+
+                        <!--<p class="curPrice">￥<span>70</span></p>-->
+                        <!--<del class="oriPrice">￥<span>150</span></del>-->
+                    <!--</div>-->
+                    <!--<p class="buyCount">已有658人购买</p>-->
+
+                    <!--<p class="percent"><span style="width:80%"></span>现已抢购80%</p>-->
+
+                    <!--<p class="more">查看更多宝贝</p>-->
+                <!--</div>-->
+                <!--<p class="robTip"></p>-->
+            <!--</div>-->
+            <!--<div class="snappedList-item">-->
+                <!--<p class="picWrap"><img src="images/pic2.png"/></p>-->
+
+                <!--<div class="infoBox">-->
+                    <!--<h3 class="title">七匹狼男士短袖衬衣</h3>-->
+
+                    <!--<div class="priceBox clearfix">-->
+                        <!--<em class="discount">5折</em>-->
+
+                        <!--<p class="curPrice">￥<span>70</span></p>-->
+                        <!--<del class="oriPrice">￥<span>150</span></del>-->
+                    <!--</div>-->
+                    <!--<p class="buyCount">已有658人购买</p>-->
+
+                    <!--<p class="percent"><span style="width:70%"></span>现已抢购70%</p>-->
+
+                    <!--<p class="more">查看更多宝贝</p>-->
+                <!--</div>-->
+                <!--<p class="robTip"></p>-->
+            <!--</div>-->
+        <!--</div>-->
+
+        <!--&lt;!&ndash; 即将推出 &ndash;&gt;-->
+        <!--<div class="commonSnappedBar">-->
+            <!--<h2 class="tit">即将推出</h2>-->
+
+            <!--<div class="countDownBox">-->
+                <!--<h2 class="text">距离开始时间</h2>-->
+
+                <!--<p class="timeBox">-->
+                    <!--<em>0</em>-->
+                    <!--<em>0</em>-->
+                    <!--<span>:</span>-->
+                    <!--<em>3</em>-->
+                    <!--<em>2</em>-->
+                    <!--<span>:</span>-->
+                    <!--<em>1</em>-->
+                    <!--<em>7</em>-->
+                <!--</p>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="snappedList">-->
+            <!--<div class="snappedList-item">-->
+                <!--<p class="picWrap"><img src="images/pic.png"/></p>-->
+
+                <!--<div class="infoBox">-->
+                    <!--<h3 class="title">小红帽生态茶叶健康人生喝好茶</h3>-->
+
+                    <!--<div class="priceBox clearfix">-->
+                        <!--<em class="discount">5折</em>-->
+
+                        <!--<p class="curPrice">￥<span>70</span></p>-->
+                        <!--<del class="oriPrice">￥<span>150</span></del>-->
+                    <!--</div>-->
+                    <!--<p class="buyCount">已有658人购买</p>-->
+
+                    <!--<p class="percent"><span style="width:80%"></span>现已抢购80%</p>-->
+
+                    <!--<p class="more">查看更多宝贝</p>-->
+                <!--</div>-->
+                <!--<p class="robTip"></p>-->
+            <!--</div>-->
+        <!--</div>-->
+    </div>
+</section>
+<div id="share-mask"></div>
+<script id="goodsListTemp" type="text/html">
+    <% for(var e=0,edata;e<list.length;e++){edata = list[e]; %>
+        <div class="commonSnappedBar">
+                <h2 class="tit"><%=edata.EventStatusDesc%></h2>
+                <div class="countDownBox">
+                <h2 class="text">距离本场结束</h2>
+
+                <p class="timeBox" time-date="<%=edata.DeadlineSecond%>">
+                    <em tn="time-h-max">-</em><em tn="time-h-min">-</em>
+                    <span>:</span>
+                    <em tn="time-m-max">-</em><em tn="time-m-min">-</em>
+                    <span>:</span>
+                    <em tn="time-s-max">-</em><em tn="time-s-min">-</em>
+                </p>
+            </div>
+        </div>
+
+        <div class="snappedList on">
+            <%for(var i=0,idata;i<edata.PanicbuyingItemList.length;i++){idata=edata.PanicbuyingItemList[i];%>
+                <div class="snappedList-item  <%if(idata.OverQty==0){%> on <%}%>" data-itemid="<%=idata.ItemId%>" data-eventid="<%=idata.EventId%>" >
+                    <p class="picWrap"><img src="<%=idata.ImageUrl%>"/></p>
+                    <div class="infoBox">
+                        <h3 class="title"><%=idata.ItemName%></h3>
+                        <div class="priceBox clearfix">
+                            <%if(idata.DiscountRate/10<10){%>
+                            <em class="discount"><%=idata.DiscountRate/10%>折</em>
+                            <%}%>
+                            <p class="curPrice">￥<span><%=idata.SalesPrice%></span></p>
+                            <del class="oriPrice">￥<span><%=idata.Price%></span></del>
+                        </div>
+                        <p class="buyCount">已有<%=idata.SalesCount%>人购买</p>
+                        <%if(idata.Qty!=0&&(idata.Qty-idata.RemainingQty)/idata.Qty>0.00001){ %>
+                        <p class="percent"><span style="width:<%=(idata.Qty-idata.RemainingQty)/idata.Qty%>%"></span>现已抢购<%=(idata.Qty-idata.RemainingQty)*100/idata.Qty%>%</p>
+                        <%}%>
+
+
+                    </div>
+                    <p class="robTip"></p>
+                </div>
+            <%}%>
+        </div>
+    <%}%>
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+@charset "utf-8";
+html,body{height:100%;}
+.indexPage{background:#f6f6f6;}
+.indexPage .content{max-width:320px;margin:0 auto;padding:0 8px 8px;}
+
+/*commonSearch*/
+.commonSearchArea{height:44px;padding:5px 10px;background:#fe7c23;color:#fff;}
+.commonSearchArea .allClassify{float:right;width:25px;height:32px;line-height:16px;font-size:12px;overflow:hidden;color:#fff;}
+.commonSearchBox{height:32px;line-height:32px;border-radius:5px;background:#e75810;}
+.commonSearchBox .searchBtn{float:right;width:40px;height:100%;background:url(/HtmlApps/images/public/index_shop/searchIcon.png) no-repeat center center;background-size:16px 16px;}
+.commonSearchBox .searchBtn input{width: 100%;height:100%;opacity: 0;}
+.commonSearchBox .searchInput{height:32px;margin-right:40px;}
+.commonSearchBox .searchInput input{position:relative;top:-1px;display:inline-block;width:100%;height:22px;line-height:22px;text-indent:5px;background:none;border:none;border-right:1px solid #fff;color:#fff;}
+.commonSearchBox .searchInput input::-webkit-input-placeholder { color:#FFF;}
+
+/*commonBanner*/
+.commonBanner{position:relative;overflow:hidden;height:150px;margin-bottom:10px;border:1px solid #d7d6d2;box-shadow:0px 0px 3px rgba(0,0,0,0.1);}
+
+
+.commonBanner .picList{width:1000%;height:150px;position:absolute;top:0px;left:0px;}
+.commonBanner .picList li{float:left;width:300px;height:150px;text-align: center;}
+.commonBanner .asideShow{width:100%;position:absolute;bottom:0;text-align:center;}
+.commonBanner .dot{display:inline-block;}
+.commonBanner .dot em{float:left;width:10px;height:10px;margin-left:5px;border-radius:15px;background:rgba(153,153,153,0.8);}
+.commonBanner .dot .on{background:rgba(255,255,255,0.7);}
+
+/*图文导航列表border-bottom:1px solid #d4d4d4;*/
+.navPicArea{background:#fff;margin:-10px 0 10px;}
+.navPicArea a{float:left;width:25%;height:72px;}
+.navPicArea a img{display:block;width:100%;height:100%;}
+
+/*noticeList*/
+.noticeList{min-height:165px;margin-bottom:10px;text-align:center;font-size:12px;}
+.noticeList .noticeArea{width:32%;float:left;border:1px solid #e0e0e0;-webkit-box-sizing:border-box;}
+.noticeList .noticeArea.mlmr{margin:0 2%;}
+.noticeList .box{padding:8px 8px 3px;border-bottom:1px solid #e0e0e0;background:#fff;color:#333;}
+.noticeList .box img{width:auto;height:68px;}
+.noticeList .box .tint{color:#f33;}
+.noticeList h2.title{margin-bottom:5px;padding-bottom:5px;border-bottom:1px solid #e0e0e0;text-indent:18px;font-size:12px;font-weight:bold;background-size:15px 15px;}
+.noticeList .clock{background:url(/HtmlApps/images/public/index_shop/clock.png) no-repeat 1px 1px;}
+.noticeList .group{background:url(/HtmlApps/images/public/index_shop/group.png) no-repeat 1px 1px;}
+.noticeList .graph{background:url(/HtmlApps/images/public/index_shop/graph.png) no-repeat 1px 1px;}
+
+.noticeList .info{padding:3px 0 5px;color:#888;}
+.noticeList .info p{height:15px;}
+.noticeList .info p:nth-child(1){margin-bottom:2px;overflow: hidden;}
+.noticeList .info del,.noticeList .info .tint{color:#333;}
+.noticeList .info .time span{display:inline-block;width:8px;height:16px;font-weight:bold;background:#000;color:#fff;}
+.noticeList .info .time em{display:inline-block;width:9px;line-height:16px;margin-right:1px;}
+.noticeList .info .time span:nth-child(odd),.noticeList .info .minute{margin-right:1px;}
+
+/*图文列表*/
+.commonIndexArea{position:relative;height:150px;margin-bottom:10px;background:#fff;border:1px solid #d7d6d2;border-radius:5px;color:#666; box-shadow:0px 0px 3px rgba(0,0,0,0.1);overflow:hidden;}
+.commonIndexArea .icon{position:absolute;top:-3px;left:-3px;width:29px;height:29px;background:url(images/sm.png) no-repeat 0 0;background-size:100%;}
+.commonIndexArea .allbox{width:100%;}
+.commonIndexArea .allbox a{display:block;height:100%;width:100%;text-align:center;overflow:hidden;}
+.commonIndexArea .allbox img{max-width:100%;max-height:100%;margin:0 auto;}
+.commonIndexArea .leftbox{border-right:1px solid #d7d6d2;}
+.commonIndexArea .leftbox,.commonIndexArea .rightbox{float:left;width:50%;height:100%;}
+.commonIndexArea .rightbox a:nth-child(1){border-bottom:1px solid #d7d6d2;}
+.commonIndexArea .leftbox img{width:100%;height:100%;}
+.commonIndexArea .rightbox a{display:block;height:50%;}
+.commonIndexArea .rightbox img{width:100%;height:100%;}
+

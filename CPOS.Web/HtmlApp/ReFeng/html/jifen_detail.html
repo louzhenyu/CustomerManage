@@ -1,0 +1,65 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="JiFenDetail"></title>
+    <link href="../css/global.css" rel="stylesheet">
+    <link href="../css/style_jifen.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+    <section class="goods_wrap">
+        <dl class="tool_bar clearfix">
+            <dt><a href="javascript:Jit.AM.pageBack();">返回</a></dt>
+        </dl>
+    </section>
+    <section class="jifen_detail" style="padding-top: 50px">
+        <h3 style="color:black; font-size:15px;">
+            您的积分明细：
+        </h3>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th scope="col">
+                    日期
+                </th>
+                <th scope="col">
+                    获得方式
+                </th>
+                <th scope="col">
+                    获得积分
+                </th>
+            </tr>
+            <tbody tplpanel="jifen_list"></tbody>
+        </table>
+        <p class="ar">
+            <a href="javascript:;" onclick="javascript:JitPage.openWindow();">我的兑换记录</a>
+        </p>
+        <div class="jifen_rule" style="display:none">
+            <h3 style="color:black; font-size:15px;">
+                获得积分规则：
+            </h3>
+            <div tplpanel="rule_list"></div>
+        </div>
+    </section>
+</body>
+<script id="Tpl_rule_list" type="text/template">
+    <p>
+        {{IntegralSourceName}}：{{Integral}}分
+    </p>
+</script>
+<script id="Tpl_jifen_list" type="text/template">
+    <tr>
+        <td align="right">
+            {{createTime}}
+        </td>
+        <td align="left">
+            {{VipIntegralSourceName}}
+        </td>
+        <td align="right">
+            {{Integral}}分
+        </td>
+    </tr>
+</script>
+</html>

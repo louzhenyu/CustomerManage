@@ -1,0 +1,293 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="GoodsOrder"></title>
+		<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+	</head>
+
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<section class="goods_wrap" style="color:#323232" >
+			<nav id="topNav">
+				<ul>
+					<li>
+						<a href="javascript:Jit.AM.pageBack();"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('MyOrder');"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('GoodsCart');"><span id="menuCartCount"></span> </a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('IndexShop');"></a>
+					</li>
+				</ul>
+			</nav>
+			<div class="order_list">
+				<h3>配送方式</h3>
+				<div class="order_mod delivery_mode">
+
+					<div class="clearfix" name="select_address" style="display:none;">
+						<div class="select_address" psfs="fs1">
+							<i name="radio_address" id="radio" value="radioA"></i><b id="fs1Label">送货到家：</b>
+						</div>
+						<div id="addressInfo" class="addressInfo deliveryHome">
+							<p class="linkman">
+								<label>联系人：</label>
+								<span id="linkMan"></span>
+							</p>
+
+							<p>
+								<label>电话：</label>
+								<span id="linkTel"></span>
+							</p>
+
+							<p class="linkAddress clearfix">
+								<label>送货地址：</label>
+								<span id="linkAddress"></span>
+							</p>
+
+						</div>
+
+					</div>
+
+					<div class="clearfix" style="border-top:1px solid #ccc;display: none;" name="select_address">
+						<div class="select_address" psfs="fs2">
+							<i name="radio_address" id="radio" value="radioB"></i><b id="fs2Label">到店提货：</b>
+						</div>
+						<div class="addressInfo">
+							<p>
+								<label>提 货 人 </label>：
+								<input id="shopMan" type="text"  style="width:140px;" placeholder="请输入提货人" />
+							</p>
+							<p>
+								<label>联系电话</label>：
+								<input id="shopTel" type="tel"  style="width:140px;" placeholder="请输入提货人手机号" />
+							</p>
+							<p>
+								<label>提货日期</label>：
+								<!--input id="selectDate" type="text"  style="width:140px;" placeholder="请选择日期" /-->
+								<select id="selectDate" style="width:140px;"></select>
+							</p>
+							<p>
+
+								<label>提货时间</label>：
+								<select id="selectTime" style="width:140px;"></select>
+							</p>
+							<p>
+								<label>提货门店</label>：
+								<span id="shopTitle"></span>
+							</p>
+							<p style="display: none;">
+								<label>门店地址</label>：
+								<span id="shopAddress"></span>
+							</p>
+						</div>
+
+					</div>
+
+				</div>
+
+				<!--     <div class="go_gox go_delivery">
+				<dl>
+				<dt>
+				<a>送货上门:</a>
+				</dt>
+				<dd>联系人：张三</dd>
+				<dd>电话：13888888888</dd>
+				<dd>送货地址：上海延平路121号三合大厦15F</dd>
+				</dl>
+
+				</div>
+				-->
+
+				<div class="express mb-10" data-express="hide">
+					<a style="background:#fff;"> <em>配送费</em> <b>0元</b> </a>
+				</div>
+				<p id="devilyRemark" style="margin: 10px 0 10px 0;color: red;display:none;"></p> <!--运费描述-->
+				<div  class="express mb-10" data-invoice="hide">
+					<a> <em>发票抬头：</em> <em>
+					<input />
+					</em> </a>
+				</div>
+
+                <div  class="express mb-10">
+                    <a><em style="width:100%;"><input id="remark" placeholder="请输入备注信息" /></em> </a>
+                </div>
+
+				<h3 style="margin-top:20px;">商品详情</h3>
+				<div class="go_goods_list">
+					<ul id="goods_list">
+						<!--li class="clearfix">
+						<div class="imgBox">
+						<img src="../images/pic_02.jpg" width="70" height="95"></div>
+						<div class="infoBox">
+						<h3>泸州老窖特曲三年陈酿60度高级定制级新春贺岁酒</h3>
+						<div class="gray">灰色 XL</div>
+						<b>￥188.00</b>
+						<a href="#" class="btn_remove"></a>
+						</div>
+						</li-->
+					</ul>
+					<dl class="order_total clearfix">
+						<dd>
+							合 计：
+							<b id="totalprice">&nbsp;</b>
+						</dd>
+						<dd>
+							数 量：
+							<b id="totalqty">&nbsp;</b>
+						</dd>
+					</dl>
+				</div>
+
+				<!-- 使用优惠劵 -->
+				<div class="commonUseArea" id="coupon">
+					<div class="titWrap">
+						<span class="checkBox"></span>
+						<span class="tit">使用优惠劵</span>
+					</div>
+					<div class="optionBox">
+						<span>请选择优惠劵</span>
+						<span class="pointer"></span>
+					</div>
+				</div>
+
+				<!-- 使用积分 -->
+				<div class="commonUseArea" id="score">
+					<div class="titWrap">
+						<span class="checkBox"></span>
+						<span class="tit">使用积分</span>
+					</div>
+					<div class="optionBox">
+						<span>请选择积分</span>
+					</div>
+				</div>
+
+				<!-- 使用账户余额 -->
+				<div class="commonUseArea" id="balance">
+					<div class="titWrap">
+						<span class="checkBox"></span>
+						<span class="tit">使用账户余额100元</span>
+					</div>
+				</div>
+
+				<!-- 实际支付金额320.00元 -->
+				<div class="actualPayAmount" id="money">
+					实际支付金额0.00元
+				</div>
+			</div>
+			<div class="order_submit clearfix">
+				<a href="javascript:JitPage.submitOrder();">提交订单</a>
+				<!-- 应付金额：
+				<b id="payprice"></b> -->
+			</div>
+		</section>
+
+		<div class="ui-mask" id="mask" style="display:none;"></div>
+		<!-- 优惠劵-弹层 -->
+		<div class="commonPopup" id="showCoupon">
+			<div class="titWrap">
+				<span class="tit">使用优惠券</span>
+				<span class="okBtn">确定</span>
+			</div>
+			<div class="contentWrap">
+				<span style="margin:0 auto;">数据加载中...</span>
+			</div>
+		</div>
+
+		<!-- 提示-弹层 -->
+		<div class="commonPopup" id="showVip">
+			<div class="titWrap">
+				<span class="tit">提示</span>
+			</div>
+			<div class="contentWrap">
+				<p>
+					您还未领取会员卡，
+				</p>
+				<p>
+					请先到会员中心领取会员卡。
+				</p>
+			</div>
+			<div class="btnWrap">
+				<span class="btn cancel">取消</span>
+				<a href="javascript:Jit.AM.toPage('GetVipCard')"><span class="btn">去会员中心</span></a>
+			</div>
+		</div>
+
+		<!-- 请输入支付密码-弹层 -->
+		<div class="commonPopup" id="showPay" style="display:none;">
+			<div class="titWrap">
+				<span class="tit">请输入支付密码</span>
+			</div>
+			<div class="contentWrap">
+				<p>
+					<input type="password" placeholder="支付密码"/>
+				</p>
+			</div>
+			<div class="btnWrap">
+				<span class="btn surePay">确认</span>
+				<span class="btn forget">忘记密码</span>
+			</div>
+		</div>
+
+		<!-- 请输入支付密码-弹层 -->
+		<div class="commonPopup" id="showSetPass" style="display:none;">
+			<div class="titWrap">
+				<span class="tit">请设置支付密码</span>
+			</div>
+			<div class="contentWrap formBox">
+				<p>
+					<span style="float: left;margin-bottom: 5px;margin-top: -9px;color: red;">为了保护您的账户金额，初次使用请先设置支付密码</span>
+				</p>
+				<p>
+					<input type="tel" id="phone" placeholder="手机"/>
+				</p>
+				<p class="vCardBox">
+					<input id="code" type="text" placeholder="验证码"/>
+					<span id="getCode" class="vCardBtn">获取验证码</span>
+				</p>
+				<p>
+					<input type="password" id="pass" placeholder="密码"/>
+				</p>
+				<p>
+					<input type="password" id="passAgain" placeholder="确认密码"/>
+				</p>
+			</div>
+			<div class="btnWrap">
+				<span class="btn" id="sureSet">确认</span>
+				<span class="btn" id="cancel">取消</span>
+			</div>
+		</div>
+
+	</body>
+
+	<script id="Tpl_goods_info" type="text/template">
+		<li class="clearfix">
+		<div class="imgBox"><img src="{{image120}}" width="70" height="95"></div>
+		<div class="infoBox">
+		<p>{{ItemName}}</p>
+		<div class="gray">{{{GG}}}</div>
+		<div class="gray">数量 {{Qty}}</div>
+		<b>￥{{SalesPrice}}</b> <a href="#" style="display:none" class="btn_remove"></a>
+		</div>
+		</li>
+	</script>
+	<!--优惠券模板-->
+	<script id="Tpl_couponList" type="text/template">
+		<div class="item {{FlagClass}}" data-id="{{CouponId}}" data-desc="{{CouponDesc}}" data-ammount="{{CouponAmount}}" data-canUse="{{EnableFlag}}">
+		<em class="radioBox"></em>
+		<div class="info">
+		<p class="exp">{{CouponDesc}}</p>
+		<p class="time">{{ValidDateDesc}}</p>
+		</div>
+		</div>
+	</script>
+
+</html>

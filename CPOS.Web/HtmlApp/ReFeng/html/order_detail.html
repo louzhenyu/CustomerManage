@@ -1,0 +1,155 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="OrderDetail"></title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style_orderdetail.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch.js"></script>
+</head>
+<body>
+    <section class="goods_wrap">
+        <dl class="tool_bar clearfix">
+            <dt><a href="javascript:Jit.AM.pageBack();">返回</a></dt>
+            <dd><a href="javascript:Jit.AM.toPage('GoodsList');">列表</a></dd>
+            <dd><a href="javascript:Jit.AM.toPage('GoodsCart');">购物车</a></dd>
+            <dd><a href="javascript:Jit.AM.toPage('MyOrder');">首页</a></dd>
+        </dl>
+        <div class="myorder">
+            <div class="order_mod order_step" style="display:none">
+                <h2 class="tit">
+                    <span class="fr">金额：<b>￥268.00</b></span>订单号：15423355
+                </h2>
+                <ol class="clearfix">
+                    <li><i></i>已审核</li>
+                    <li><i></i>拣货中</li>
+                    <li><i></i>已打包</li>
+                    <li><i></i>已发货</li>
+                    <li><i></i>已签收</li>
+                </ol>
+                <a href="#" class="btn_cancelOrder br-5">取消订单</a>
+            </div>
+            <div class="order_mod cart_list">
+                <h2 class="tit">
+                    商品信息
+                </h2>
+                <ul id="order_list">
+                    <!--<li class="clearfix">
+                        <div class="imgBox">
+                            <img src="images/pic_02.jpg" width="70" height="95"></div>
+                        <div class="infoBox">
+                            <h3>
+                                泸州老窖特曲三年陈酿60度高级定制级新春贺岁酒</h3>
+                            <p class="gray">
+                                灰色 XL<br>
+                                数量 1</p>
+                            <p>
+                                <b>￥188.00</b>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="imgBox">
+                            <img src="images/pic_02.jpg" width="70" height="95"></div>
+                        <div class="infoBox">
+                            <h3>
+                                泸州老窖特曲三年陈酿60度高级定制级新春贺岁酒</h3>
+                            <p class="gray">
+                                灰色 XL<br>
+                                数量 1</p>
+                            <p>
+                                <b>￥188.00</b>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="clearfix">
+                        <div class="imgBox">
+                            <img src="images/pic_02.jpg" width="70" height="95"></div>
+                        <div class="infoBox">
+                            <h3>
+                                泸州老窖特曲三年陈酿60度高级定制级新春贺岁酒</h3>
+                            <p class="gray">
+                                灰色 XL<br>
+                                数量 1</p>
+                            <p>
+                                <b>￥188.00</b>
+                            </p>
+                        </div>
+                    </li>-->
+                </ul>
+                <dl class="order_total clearfix">
+                    <dd>合 计：<b id="totalprice"></b> </dd>
+                    <dd>数 量：<b id="totalqty"></b></dd>
+                </dl>
+            </div>
+            <div class="order_mod info_rece">
+                <h2 class="tit">
+                    收货信息
+                </h2>
+                <p>
+                    收货人：<span id="linkMan"></span>
+                </p>
+                <p>
+                    手机：<span id="linkTel"></span>
+                </p>
+                <p>
+                    收货地址：<span id="addr"></span>
+                </p>
+                <p>
+                    送货时间：<span id="date"></span>
+                </p>
+            </div>
+            <div class="order_mod info_rece">
+                <h2 class="tit">
+                    订单金额
+                </h2>
+                <p>
+                    订单总数量：
+                    <span id="ordersCount"></span>
+                </p>
+                <p>
+                    商品总金额：
+                    <span id="goodsAmount"></span>
+                </p>
+                <p>
+                    配送费：
+                    <span>￥0.00</span>
+                </p>
+                <p>
+                    活动优惠：
+                    <span>￥268.00</span>
+                </p>
+                <p>
+                    代金券优惠：
+                    <span>￥0.00</span>
+                </p>
+                <p>
+                    订单应付金额：
+                    <span id="ordersAmount"></span>
+                </p>
+            </div>
+        </div>
+    </section>
+    <div class="order_confirm" style="display:none">
+        <a href="#">立即支付</a>
+    </div>
+</body>
+<script id="Tpl_order_info" type="text/template">
+	<li class="clearfix">
+		<div class="imgBox">
+            <img src="{{imageList.0.imageUrl}}" width="70" height="95">
+        </div>
+		<div class="infoBox">
+		    <h3>{{itemName}}</h3>
+		    <div class="gray">
+                {{GG}}<br/>
+                数量 {{qty}}
+            </div>
+            <p>
+                <b>￥{{stdPrice}}</b>
+            </p>            
+		</div>
+	</li>
+</script>
+</html>

@@ -1,0 +1,105 @@
+@charset "utf-8";
+
+/*common*/
+html,body,body>section{height:100%;min-height:100%;}
+body>section{max-width:640px;margin:0 auto;}
+body{font:15px/1.2em "SimHei";background:#e2e3e6;color:#4d463e;}
+select,input{border:none;}
+input{text-indent:5px;}
+.commonBtn{display:inline-block;height:42px;line-height:42px;text-align:center;font-size:15px;border-radius:5px;box-shadow:0 0 3px rgba(0,0,0,0.03);}
+
+/*修改后的近期活动*/
+.recentActivityPage{background:#fff;}
+.recentActivity{padding:0 10px;font:12px/1.4em "SimHei";}
+.recentActivity li{height:91px;padding:10px 0;border-bottom:1px solid #e2e2e2;}
+.recentActivity li img{float:left;display:block;width:100px;height:70px;}
+.recentActivity .info{margin-left:110px;}
+.recentActivity .exp{height:32px;margin-top:2px;font-size:13px;overflow:hidden;}
+
+.recentActivity .disWrap{height:25px;line-height:26px;margin-top:13px;}
+.recentActivity .disWrap span{background:url(../../../images/special/europe/mba/icon005.png) no-repeat;background-size:25px 75px;color:#939393;}
+.recentActivity span.location{float:left;margin-left:4px;text-indent:21px;background-position:0px 4px;}
+.recentActivity span.date{float:right;margin-right:9px;line-height:29px;text-indent:23px;background-position:1px -40px;}
+
+/*修改后的联系我们*/
+.contactUsPage{background:#f8f8f8;}
+.contactUsArea{padding-bottom:10px;}
+.contactUsArea .contactShow{height:195px;padding:15px 18px 10px;}
+.contactUsArea .mainTitle{margin-bottom:13px;text-align:center;font-size:15px;color:#b31d22;}
+.contactUsArea .title{width:58px;height:23px;margin-bottom:16px;text-align:center;font:13px/23px "SimHei";background:url(../../../images/special/europe/mba/titleBg.png) no-repeat 0 0;background-size:58px 23px;color:#e2e3e6;}
+.contactUsArea .numBox{display:-webkit-box;display:-moz-box;margin-bottom:15px;font:13px/1.8em "SimHei";color:#000;}
+.contactUsArea .numBox>*{display:block;}
+.contactUsArea .tit{width:58px;text-align:right;}
+.contactUsArea .mark{width:30px;background:url(../../../images/special/europe/mba/icon006.png) no-repeat;background-size:20px 160px;}
+.contactUsArea .mark.telIcon{background-position:12px -45px;}
+.contactUsArea .mark.emailIcon{background-position:8px -85px;}
+.contactUsArea .info{-webkit-box-flex:1;-moz-box-flex:1;}
+.contactUsArea .telCor{color:#098fcd;}
+.fillContact{background:#fff;border-bottom:1px solid #d5d5d5;}
+.fillContact li{height:51px;}
+.fillContact li:nth-last-of-type(1) p{border-bottom:none;}
+.fillContact em{float:left;width:25px;height:50px;margin-left:18px;background:url(../../../images/special/europe/mba/icon006.png) no-repeat;background-size:25px 200px;}
+.fillContact p{height:50px;line-height:50px;margin-left:56px;border-bottom:1px solid #d5d5d5;}
+.fillContact input{width:100%;background:none;font-size:12px;font-family:"SimHei";color:#ccc;}
+.fillContact .name{background-position:0px 16px;}
+.fillContact .tel{background-position:0px -39px;}
+.fillContact .email{background-position:0px -95px;}
+.fillContact .term{background-position:0px -151px;}
+
+.contactUsArea .submitBtn{display:block;height:40px;line-height:40px;margin:27px 6.25% 0;letter-spacing:1px;text-align:center;border-radius:5px;background:#dd3939;color:#f8f8f8;}
+
+
+
+/*首页*/
+.indexPage{height:auto;background:#003963;}
+.contentBox{position:relative;top:-50px;min-height:145px;padding:10px 0;font-size:12px;letter-spacing:1px;background:url(../../../images/special/europe/mba/opacityBg.png) no-repeat 0 0;background-size:100%;color:#fff;}
+.contentBox .title{margin-bottom:16px;text-align:center;font-size:15px;font-weight:bold;}
+.contentBox p{width:320px;margin:0 auto;padding:0 5%;}
+.indexNav{height:151px;margin-top:15px;padding:0 9px;position:relative;top:23px;}
+.indexNav > div{float:left;width:33.33%;height:100%;}
+.indexNav .telIcon{background:url(../../../images/special/europe/mba/telIcon.png) no-repeat center center;background-size:88px 151px;}
+.indexNav a{display:block;width:100%;height:50%;} 
+.indexNav .telIcon a{height:100%;}
+.indexNav .introIcon{background:url(../../../images/special/europe/mba/introIcon.png) no-repeat center center;background-size:97px 66px;}
+.indexNav .activityIcon{background:url(../../../images/special/europe/mba/activityIcon.png) no-repeat center center;background-size:61px 55px;}
+.indexNav .remarkIcon{background:url(../../../images/special/europe/mba/remarkIcon.png) no-repeat center center;background-size:89px 66px;}
+.indexNav .storyIcon{background:url(../../../images/special/europe/mba/storyIcon.png) no-repeat center center;background-size:62px 61px;}
+@media only screen and (min-width:600px){
+.contentBox .title{margin-bottom:46px;}
+}
+
+
+
+/*课程简介*/
+.courseIntroPage{height:auto;padding:12px 0;background:#f8f8f8;}
+.courseIntroPage .essay{padding:14px;letter-spacing:1px;font-size:12px;color:#505050;}
+.courseIntroPage .tit{padding-top:14px;text-align:center;font-size:15px;font-weight:bold;color:#b31d22;}
+.essayList{font-size:12px;line-height:20px;padding-bottom:14px;}
+.essayList em{float:left;width:6px;height:6px;margin:6px 13px 0 15px;border-radius:10px;background:#dd3939;}
+
+
+/*校友故事*/
+.recentActivity .info{color:#2b2b2b;}
+.recentActivity .ident{padding-top:3px;font-size:12px;color:#9d9d9d;}
+.recentActivity .name{display:block;padding-top:2px;font-size:12px;font-weight:bold;}
+
+/*校友故事*/
+.eliteAlumnusPage{background:#f0f0f0;}
+.eliteAlumnusArea{padding:20px 0 12px;color:#000;}
+.alumnusPicList{position:relative;padding:0 12px;}
+.alumnusPicList li{position:relative;float:left;width:24%;}
+.alumnusPicList li em{display:none;width:14px;height:6px;position:absolute;bottom:-9px;left:50%;margin-left:-5px;background:url(../../../images/special/europe/mba/arr02.png) no-repeat 0 0;background-size:14px 6px;}
+.alumnusPicList li.on em{display:block;}
+.alumnusPicList li img{display:block;width:51px;height:51px;margin:9px auto 0;}
+.alumnusPicList li.on img{width:68px;height:68px;margin-top:0px;border:3px solid #fff;border-radius:36px;}
+.alumnusPicList .arr{position:absolute;top:0px;right:10px;width:15px;height:68px;background:url(../../../images/special/europe/mba/arr01.png) no-repeat center center;background-size:9px 16px;animation:mymove 500ms infinite;-webkit-animation:mymove 500ms infinite;}
+@keyframes mymove{from {right:10px;}to{right:7px;}}
+@-webkit-keyframes mymove{from {right:10px;}to{right:7px;}}
+.detailInfo{min-height:100px;margin:8px 20px 10px;padding:2px 2px 15px 2px;border-radius:3px;background:#fbfbfb;}
+.detailInfo img{display:block;margin:0 auto;border-radius:2px;}
+.detailInfo p{padding:10px;font:12px/1.5em "SimHei";}
+.detailInfo .name{font-size:15px;font-weight:bold;}
+.explainText{padding:10px;}
+.explainText em{display:block;width:20px;height:16px;background:url(../../../images/special/europe/mba/quotes.png) no-repeat 0 0;background-size:20px 16px;}
+.explainText .right{float:right;transform:rotate(180deg);-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);position:relative;top:-12px;}
+.explainText .moreText{padding-right:20px;font-size:12px;background:url(../../../images/special/europe/mba/moreIcon.jpg) no-repeat right center;background-size:19px 12px; color:#1482c7;}

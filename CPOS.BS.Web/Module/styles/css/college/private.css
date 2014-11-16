@@ -1,0 +1,123 @@
+/***内容的菜单菜单***/
+.subMenu .nav01{background:url(../../images/college/nav01.png) no-repeat center 4px;}
+.subMenu .nav02{background:url(../../images/college/nav02.png) no-repeat center 4px;}
+.subMenu .nav03{background:url(../../images/college/nav03.png) no-repeat center 4px;}
+.subMenu .nav04{background:url(../../images/college/nav04.png) no-repeat center 10px;}
+.subMenu .nav05{background:url(../../images/college/nav05.png) no-repeat center 8px;}
+.subMenu .nav06{background:url(../../images/college/nav06.png) no-repeat center 4px;}
+.subMenu .nav07{background:url(../../images/college/nav07.png) no-repeat center 9px;}
+.subMenu .nav08{background:url(../../images/college/nav08.png) no-repeat center 4px;}
+/*添加资讯*/
+.addInfoArea{margin-left:10px;}
+.addInfoArea .item-line{height:28px;margin-bottom:19px;}
+.addInfoArea .item-line .commonSelectWrap .tit{width:100px;text-align:right;}
+.addInfoArea .item-line .commonSelectWrap{height:auto;}
+.addInfoArea .authorInput{margin-left:40px;}
+.addInfoArea .classInput .selectBox,.authorInput .searchInput{width:102px;}
+.addInfoArea .item-line .w-596{width:596px;}
+.addInfoArea .item-line.desc{height:50px;}
+.addInfoArea .item-line.theme{height:136px;}
+.addInfoArea .item-line.theme .textarea{height:136px;}
+.addInfoArea .item-line.richtext {height:310px;}/*add by yehua*/
+.addInfoArea .item-line.richtext .textarea {border:none;}/*add by yehua*/
+.addInfoArea .textarea{display: block;float: left;margin-left: 10px;height:50px;font-family: Arial;border: 1px solid #ccc;border-radius: 2px;background: #fff;}
+.addInfoArea .textarea textarea{width:95%;height:80%;}
+.addInfoArea .item-line.thumb{height:135px;}
+.addInfoArea .thumbBox{float:left;margin-left:10px;}
+.addInfoArea .uploadBtn{width:75px;height:75px;background:#eee url(../../images/downIcon.png) no-repeat center center;cursor:pointer;}
+.addInfoArea .relateWrap{height:28px;margin-top:25px;}
+.addInfoArea .relateWrap .classInput{margin-left:44px;}
+.addInfoArea .radioBox{float:left;height:28px;font-size:14px;cursor:pointer;}
+.addInfoArea .radioBox em{float:left;width:21px;height:21px;margin-top:2px;background:url(../../images/radio1.png) no-repeat center center;}
+.addInfoArea .radioBox span{display:block;margin-left:23px;line-height:28px;}
+.addInfoArea .item-line .selectDateBox{margin-left:-10px;}
+.selectDateBox input{width:70px;line-height:26px\9;text-indent:0px;}
+.addInfoArea .btnWrap{margin-top:50px;text-align:center;}
+.addInfoArea .btnWrap .commonBtn{display:inline-block;width:80px;height:26px;line-height:26px;}
+.addInfoArea .cancelBtn{margin:0 20px 0 62px;}
+
+
+/***弹层，添加分类***/
+.jui-dialog-addClass{width:400px;height:270px;margin:-135px 0 0 -200px;}
+.jui-dialog-addClass .addClassContent{padding:28px 0;}
+.jui-dialog-addClass .commonSelectWrap{float:none;width:250px;margin:0 auto 28px;}
+.jui-dialog-addClass .commonSelectWrap .tit{width:70px;text-align:right;color:#333;}
+.jui-dialog-addClass .commonSelectWrap .selectBox,.jui-dialog-addClass .commonSelectWrap .searchInput{width:120px;border:1px solid #dedede;}
+.jui-dialog-addClass .commonSelectWrap .selectBox{background: #fff url(../../images/college/bg01/selectIcon02.png) no-repeat 103px center;}
+.jui-dialog-addClass .btnWrap .commonBtn{width:80px;height:27px;line-height:27px;margin-top:16px;}
+.jui-dialog-addClass .cancelBtn{margin-left:60px;}
+
+
+/***微期刊-信息表格***/
+.moreQueryWrap{position:static;margin-top:-5px;}
+.queryTermArea .issuesBox{margin-right:5px;}
+.dataTable.journalTable{line-height:normal;font-family:"Microsoft YaHei";color:#3b3b3b;}
+.dataTable.journalTable .title{line-height:39px;}
+
+
+
+/***弹出，创建版块，创建期刊***/
+.jui-dialog-createsPlate{width:810px;height:468px;top:50px;margin-left:-405px;}
+.jui-dialog-createsPlate .createsPlateContent{padding:30px 35px;}
+.jui-dialog-createsPlate .commonSelectWrap{float:none;margin-bottom:28px;}
+.jui-dialog-createsPlate .commonSelectWrap .tit{width:75px;text-align:right;}
+.jui-dialog-createsPlate .thumbBox{float:left;margin-left:10px;}
+.jui-dialog-createsPlate .uploadBtn{width:75px;height:75px;background:#eee url(../../images/downIcon.png) no-repeat center center;cursor:pointer;}
+.jui-dialog-createsPlate .selectBox{width:120px;border:1px solid #dedede;background:#fff url(../../images/college/bg01/selectIcon02.png) no-repeat 100px center;}
+.jui-dialog-createsPlate .searchInput{width:120px;border:1px solid #dedede;}
+.jui-dialog-createsPlate .searchInput.w-523{width:523px;}
+.jui-dialog-createsPlate .commonSelectWrap.thumb{height:75px;}
+.jui-dialog-createsPlate .selectDateBox,.jui-dialog-createsPlate .selectDateBox .tit{margin-left:0;}
+.jui-dialog-createsPlate .btnWrap .commonBtn{width:80px;height:27px;line-height:27px;margin-top:50px;}
+.jui-dialog-createsPlate .cancelBtn{margin-left:60px;}
+
+/***创建期刊 ,修改刊号***/
+.dataTable .selectListBox span{font-size:12px;}
+/*
+.contentArea .commonTitle{margin:0 0 20px 20px;}
+*/
+.topIssuesInfo{height:75px;padding:17px 42px 18px;font-size:12px;font-family:"Microsoft YaHei";background:#f5f5f5;color:#333;}
+.topIssuesInfo .picWrap{float:left;width:75px;height:75px;}
+.topIssuesInfo .picWrap img{display:block;width:100%;height:100%;}
+.topIssuesInfo .infoWrap{margin-left:95px;line-height:24px;}
+.topIssuesInfo .infoWrap p{text-indent:3px;}
+.topIssuesInfo .num{font-weight:bold;font-size:24px;margin:1px 0 6px 0;}
+.topIssuesInfo .caption{color:#242424;}
+.topIssuesInfo .operateWrap{float:right;}
+.topIssuesInfo .getBack{height:25px;padding-right:28px;line-height:25px;margin-bottom:18px;text-align:right;font-size:14px;cursor:pointer;}
+.topIssuesInfo .commonBtn{width:86px;height:28px;line-height:28px;}
+.subMenu-content .btnWrap{text-align:center;}
+.subMenu-content .btnWrap .commonBtn{display:inline-block;width:80px;height:27px;line-height:27px;margin-top:50px;}
+.subMenu-content .btnWrap .cancelBtn{margin-left:60px;}
+
+
+/***修改刊号2***/
+.modifyIssuesTable{padding:20px;border:1px solid #ececec;border-radius:3px;}
+.modifyIssuesTable .dataTable input{width:78px;height:18px;padding:0;}
+
+/***弹出-选择资讯***/
+.jui-dialog-selectPlatts{top:30px;margin-left:-405px;width:810px;min-height:550px;}
+.jui-dialog-selectPlatts .keyInput{width:137px;margin-left:0px;}
+.jui-dialog-selectPlatts .moreQueryWrap{margin-top:0px;}
+.jui-dialog-selectPlatts-content{padding:20px;}
+.jui-dialog-selectPlatts .commonSelectWrap{margin-right:15px;}
+.jui-dialog-selectPlatts .selectDateBox{margin-left:0px;}
+.jui-dialog-selectPlatts .commonSelectWrap .tit{line-height:28px;}
+.jui-dialog-selectPlatts .queryTermArea{margin-bottom:10px;padding:16px 27px;}
+.jui-dialog-selectPlatts .tableTopline{min-height:280px;max-height:442px;border-top:1px solid #d8d8d8;overflow-y:auto;}
+.jui-dialog-selectPlatts .dataTable tr{text-align:left;}
+.jui-dialog-selectPlatts .dataTable th{text-indent:10px;}
+.jui-dialog-selectPlatts .btnWrap .commonBtn{width:80px;margin-top:20px;height:27px;line-height:27px;}
+.jui-dialog-selectPlatts .cancelBtn{margin-left:60px;}
+
+/*分页样式*/
+#kkpager{clear:both;height:30px;line-height:30px;margin-top:20px;color:#999;font-size:14px;}
+#kkpager a{font-size:12px;border:1px solid #DFDFDF;background-color:#FFF;color:#9d9d9d;text-decoration:none;margin:10px 3px;padding:4px 8px;}
+#kkpager span{font-size:14px;}
+#kkpager span.disabled{font-size:12px;border:1px solid #DFDFDF;background-color:#FFF;color:#DFDFDF;margin:10px 3px;padding:4px 8px;}
+#kkpager span.curr{font-size:12px;border:1px solid #007AFF;background-color:#007AFF;color:#FFF;margin:10px 3px;padding:4px 8px;}
+#kkpager a:hover{background-color:#EFEFEF;border:1px solid #007AFF;}
+#kkpager span.normalsize{font-size:12px;}
+#kkpager_gopage_wrap{display:inline-block;width:44px;height:18px;border:1px solid #DFDFDF;position:relative;left:0;top:5px;margin:0 1px;padding:0;}
+#kkpager_btn_go{width:44px;height:20px;line-height:20px;font-family:arial,宋体,sans-serif;text-align:center;border:0;background-color:#0063DC;color:#FFF;position:absolute;left:0;top:-1px;display:none;padding:0;}
+#kkpager_btn_go_input{width:30px;height:16px;text-align:center;border:0;position:absolute;left:0;top:0;outline:none;}

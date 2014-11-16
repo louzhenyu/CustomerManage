@@ -1,0 +1,53 @@
+@charset "utf-8";
+html,body,body>section{height:100%;}
+body{background:#ebebeb;}
+/*个人*/
+.perIntegralArea{padding:10px;background:url(../../../images/common/vipCard/jfIcon.png) no-repeat 79% 73%;background-size:89px 110px;}
+
+
+/*账户积分*/
+.accountBalanceArea{padding:10px;background:url(../../../images/common/vipCard/moneyIcon.png) no-repeat 50% 55%;background-size:119px 120px;}
+
+/*信息中心*/
+.messageCenterArea{}
+.messageCenterArea .listBox{position:relative;min-height:51px;padding:10px 11px;border-bottom:1px solid #ccc;font:12px/1.6em "Microsoft YaHei";background:#fff;color:#333;}
+.messageCenterArea .listBox p{padding-right:40px;}
+.messageCenterArea .time{position:absolute;bottom:7px;right:13px;color:#b3b2b2;}
+.messageCenterArea .tipNoMore{margin-top:25px;text-align:center;}
+.messageCenterArea .tipNoMore img{width:58px;height:64px;}
+.messageCenterArea .tipNoMore span{font-size:12px;color:#bcbcbc;}
+
+/*优惠劵*/
+.couponCodeArea{}
+.couponNav{height:47px;border:1px solid #d0d0d0;display:-webkit-box;display:-moz-box;width:100%;}
+.couponNav a{display:block;text-align:center;font:15px/25px "Microsoft YaHei";-webkit-box-flex:1;-moz-box-flex:1;color:#5a5a5a}
+.couponNav a span{display:block;height:25px;line-height:25px;margin-top:10px;border-right:2px solid #a8a8a8;}
+.couponNav a:nth-last-child(1) span{border-right:none;}
+.couponNav a.on{border-bottom:2px solid #f67434;}
+
+.couponList .couponBox{padding:10px;border-bottom:1px solid #cdcdcd;font-size:12px;color:#919191;}
+.couponList .couponWrap{height:102px;background:url(../../../images/common/vipCard/boxBg.png) no-repeat center center;background-size:cover;}
+.couponList .leftWrap{position:relative;float:left;width:75%;height:100%;padding:18px 0 0 24px;}
+.couponList .price{float:right;width:25%;height:100%;text-align:center;line-height:102px;color:#f67434;}
+.couponList .price .num{font-size:20px;}
+
+.couponList .leftWrap .tit{font-weight:bold;color:#22282b;}
+.couponList .leftWrap .exp{margin-top:3px;}
+.couponList .deadline{position:absolute;bottom:1px;left:22px;right:5px;}
+.couponList .deadline span{-webkit-transform:scale(0.9);color:#f67434}
+.couponList .deadline span:nth-child(1){float:left;}
+.couponList .deadline span:nth-child(2){float:right;}
+
+.couponBox.on .deadline span,.couponBox.on .price{color:#919191;}
+/*公共*/
+.commonListBox{margin-bottom:10px;border:1px solid #ccc;border-radius:5px;background:#fff;color:#333;font:bold 13px/45px "Microsoft YaHei";}
+.commonListBox>p{height:45px;padding:0 12px;border-bottom:1px solid #ccc;display:-webkit-box;display:-moz-box;width:100%;}
+.commonListBox>p:nth-last-child(1){border-bottom:none;}
+.commonListBox>p>span{display:block;}
+.commonListBox .tit{-webkit-box-flex:1;-moz-box-flex:1;}
+.commonListBox .tColor{color:#f60;}
+.commonListBox .pointer{width:8px;margin-left:10px;background:url(../../../images/common/vipCard/jfPointer.png) no-repeat 0 center;background-size:8px 15px;}
+
+
+.commonBtn{display:block;height:45px;border-radius:5px;text-align:center;font:bold 15px/45px "Microsoft YaHei";-webkit-box-shadow:0px 0px 1px #ccc;letter-spacing:1px;background:#f60;color:#ebebeb;}
+

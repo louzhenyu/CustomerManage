@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link href="/framework/css/reset.css" rel="stylesheet" type="text/css" />
+<link href="/framework/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/framework/css/webcontrol.css" rel="stylesheet" type="text/css" />
+<!-- javaScript -->
+<script type="text/javascript" src="/framework/javascript/Other/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="/framework/javascript/Other/menu.js"></script>
+<link href="/Lib/Javascript/Ext4.1.0/Resources/css/ext-all-gray.css" rel="stylesheet" type="text/css" />
+<link href="/Lib/Css/jit-all.css" rel="stylesheet" type="text/css" />
+<script src="/Lib/Javascript/Ext4.1.0/ext-all.js" type="text/javascript"></script>
+<script src="/Lib/Javascript/Jit/jit-all-dev.js" type="text/javascript"></script>
+    <title></title>
+    <script language="javascript">
+        /*global Ext:false */
+        Ext.onReady(function () {
+            Ext.create('Ext.form.Panel', {
+                bodyPadding: 10,
+                width: 500,
+                title: 'Pizza Order',
+                items: [{
+                    xtype: 'fieldcontainer',
+                    fieldLabel: 'Toppings',
+                    defaultType: 'checkboxfield',
+                    items: [{
+                        boxLabel: 'Anchovies',
+                        name: 'topping',
+                        inputValue: '1',
+                        id: 'checkbox1'
+                    }, {
+                        boxLabel: 'Artichoke Hearts',
+                        name: 'topping',
+                        inputValue: '2',
+                        checked: true,
+                        id: 'checkbox2'
+                    }, {
+                        boxLabel: 'Bacon',
+                        name: 'topping',
+                        inputValue: '3',
+                        id: 'checkbox3'
+                    }]
+                }]
+                
+//                ,
+//                bbar: [{
+//                    text: 'Select Bacon',
+//                    handler: function () {
+//                        Ext.getCmp('checkbox3').setValue(true);
+//                    }
+//                }
+                //, '-'
+//                ,
+//        {
+//            text: 'Select All',
+//            handler: function () {
+//                Ext.getCmp('checkbox1').setValue(true);
+//                Ext.getCmp('checkbox2').setValue(true);
+//                Ext.getCmp('checkbox3').setValue(true);
+//            }
+//        }
+        
+//        , {
+//            text: 'Deselect All',
+//            handler: function () {
+//                Ext.getCmp('checkbox1').setValue(false);
+//                Ext.getCmp('checkbox2').setValue(false);
+//                Ext.getCmp('checkbox3').setValue(false);
+//            }
+        //        }]
+        
+        ,
+                renderTo: Ext.getBody()
+            });
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

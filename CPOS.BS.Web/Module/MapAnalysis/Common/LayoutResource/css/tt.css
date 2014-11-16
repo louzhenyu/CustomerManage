@@ -1,0 +1,887 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, ul, li, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    /* vertical-align: baseline;*/
+    outline: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+}
+
+ul, li {
+    list-style: none;
+}
+
+html {
+    height: 101%;
+}
+
+body {
+    font-family: "微软雅黑" "宋体";
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none
+}
+
+img {
+    outline: none;
+    border: 0px
+}
+
+.fhs_16 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.fhs_18 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.splitLine_1 {
+    border-bottom: 1px dashed #ccc;
+    clear: both;
+    height: 4px;
+    margin: 0 10px;
+
+}
+
+.clearFix_12 {
+    width: 100%;
+    clear: both;
+    height: 12px;
+}
+
+.cloud_contain {
+    width: 1131px;
+    *width:1127px !important;/*ie7*/
+    position: relative;
+    border: 1px solid #ccc;
+    margin-left:3px;
+    border-right:0px;
+
+}
+
+.cloud_toolbar {
+    height: 45px;
+    position: relative;
+    background-color: #e8e8e8;
+    border-bottom: 1px solid #ccc;
+
+}
+
+#toolbar_items {
+    position: absolute;
+    right: 35px;
+    z-index:1;
+}
+
+#toolbar_items li.level1 a.navItems0,
+#toolbar_items li.level1 a.navItems1,
+#toolbar_items li.level1 a.navItems2,
+#toolbar_items li.level1 a.navItems3,
+#toolbar_items li.level1 a.navItems4,
+#toolbar_items li.level1 a.navItems5,
+#toolbar_items li.level1 a.navItems6 {
+    display: block;
+    height: 44px;
+    line-height: 44px;    
+    /*width:56px;*/
+    padding: 0 1em 0 2em;
+    text-align: center;
+    background: url("../images/clound_icon_line.gif") no-repeat 0 12px;
+}
+.level1-ul
+{  
+    margin-top:5px;
+    padding-top:5px;
+    background-color:White;
+}
+#toolbar_items li.level1 a.navSelected {
+    background: url("../images/clound_icon_line1.gif") no-repeat;
+    /* background-position: 0 12px;*/
+}
+
+#toolbar_items li.level1 a.current0,
+#toolbar_items li.level1 a.navItems0 {
+    background-position: 0 12px;
+}
+
+#toolbar_items li.level1 a.current1, #toolbar_items li.level1 a.navItems1 {
+    background-position: 0 -28px;
+}
+
+#toolbar_items li.level1 a.current2, #toolbar_items li.level1 a.navItems2 {
+    background-position: 0 -68px;
+}
+
+#toolbar_items li.level1 a.current3, #toolbar_items li.level1 a.navItems3 {
+    background-position: 0 -113px;
+}
+
+#toolbar_items li.level1 a.current4, #toolbar_items li.level1 a.navItems4 {
+    background-position: 0 -157px;
+}
+
+#toolbar_items li.level1 a.current5, #toolbar_items li.level1 a.navItems5 {
+    background-position: 0 -206px;
+}
+
+.winCaption {
+    height: 43px;
+    background-color: #404853;
+    position: relative;
+}
+
+.winContent {
+    width: 96%;
+    /* border: 1px solid #ccc;*/
+    margin: 0 auto;
+}
+
+.winContent b.h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+span.winCaption_icon {
+    display: block;
+    position: absolute;
+    width: 72px;
+    height: 22px;
+    background: url("../images/clound_pop_title.gif") no-repeat;
+    top: 30%;
+    left: 2%
+}
+
+span.winCaption_iconStyle {
+    display: block;
+    position: absolute;
+    width: 102px;
+    height: 22px;
+    background: url("../images/clound_pop_title1.gif") no-repeat;
+    top: 30%;
+    left: 2%
+}
+
+
+a.winCaption_btnClose, a.btnCloseWin {
+    width: 26px;
+    height: 26px;
+    display: block;
+    text-indent: -999em;
+    background: url("../images/clound_pop_title.gif") no-repeat 0 -6px;
+    position: absolute;
+    right: 2%;
+    top: 23%
+}
+
+/** 导出图标*/
+span.tExport {
+    background-position: 0 -74px;
+}
+
+/*导出层内容*/
+.contShare b {
+    height: 46px;
+    line-height: 46px;
+    overflow: hidden;
+}
+
+.contShare ul, .contFilter {
+    border: 1px solid #cbcbcb;
+    background-color: #f7f7f7;
+    /*padding: 10px;*/
+}
+
+.contFilter ul 
+{  
+    padding: 5px 5px 0 5px;
+}
+
+.contShare ul li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.contShare ul.ul_exType li {
+    font-size: 16px;
+}
+
+.winContent .linkButton {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.winContent .linkButton .btn_bottom, .winContent .btnNext {
+    width: 154px;
+    height: 34px;
+    display: inline-block;
+    font: left;
+    line-height: 34px;
+    text-align: center;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.winContent .linkButton  .ok, .winContent .btnNext {
+    background-color: #2e568d;
+    border: 1px solid #6683ab;
+}
+
+.winContent .linkButton  .cancel, .ResetBtn {
+    background-color: #9c9c9c;
+    border: 1px solid #cbcbcb;
+}
+
+.cloud_toolbar .nav_filter {
+    background-position: 0 -40px;
+}
+
+.cloud_toolbar .nav_export {
+    background-position: 0 -82px;
+}
+
+.cloud_toolbar .nav_import {
+    background-position: 0 -125px;
+}
+
+.cloud_toolbar .nav_analysis {
+    background-position: 0 -173px;
+}
+
+.cloud_toolbar .nav_setting {
+    background-position: 0 -219px;
+}
+
+a.cloud_btn_fullScreen {
+    position: absolute;
+
+    right: 2%;
+    display: block;
+    height: 44px;
+    line-height: 44px;
+    padding: 0 1em 0 2em;
+    background: url("../images/clound_icon_line.gif") no-repeat 0 -254px;
+
+}
+
+.cloud_map 
+{
+    width: 1131px;
+    *width:1127px !important;/*ie7*/
+    height: 650px;
+}
+
+.contShare li.process {
+    position: relative;
+    height: 90px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+li.process .step_num span, li.process .step_txt span {
+    position: absolute;
+    display: block;
+
+    font-weight: bold;
+}
+
+li.process .step_txt span {
+    top: 60%
+}
+
+.step_txt span.st1 {
+    left: -12px;
+}
+
+li.process .step_pic span {
+    position: absolute;
+    display: block;
+    height: 26px;
+    width: 26px;
+    background: url("../images/clound_icon_steps.gif") no-repeat;
+    top: 30px;
+}
+
+.step_num span {
+    width: 24px;
+    text-align: center;
+    font-size: 18px;
+
+}
+
+.step_txt span {
+    bottom: 16px;
+
+    font-size: 15px;
+}
+
+li.process span.process_line {
+    display: block;
+    /*width: 372px;*/
+    width: 99%;
+    height: 5px;
+    position: absolute;
+    top: 40px;
+    left: 3px;
+    background-color: #2e568d;
+    overflow: hidden;
+
+}
+
+.step_num .sn1 {
+
+}
+
+.step_num .sn2, .step_pic .sp2 {
+    left: 50%
+}
+
+.step_txt span.st2 {
+    left: 45%
+}
+
+.step_num .sn3, .step_txt .st3, .step_pic .sp3 {
+    right: -3px
+}
+
+li.process .step_pic .sp_current {
+    background-position: 0 -51px;
+}
+
+li.process .step_pic .sp_complete {
+    background-position: 0 -99px;
+}
+
+li.download, li.next, li.select {
+    border-top: 1px dashed #ccc;
+    margin: 0 10px;
+}
+
+li.download, li.next {
+    margin: 0 10px;
+}
+
+.font_size_16 {
+    font-size: 16px;
+}
+
+li.download .aDown {
+    font-size: 15px;
+    /* margin-left: 6px;*/
+    line-height: 24px;
+}
+
+li.next {
+    height: 60px;
+}
+
+li.next span.desc {
+    width: 250px;
+    float: left;
+    display: block;
+}
+
+li.next .btnNext {
+    float: right;
+    display: block;
+    color: #ffffff;
+
+}
+
+span.tImport {
+    background-position: 0 -136px;
+}
+
+li.select a.btnSelect {
+    width: 274px;
+    height: 40px;
+    background-color: #2e568d;
+    border: 1px solid #6683ab;
+    display: block;
+    line-height: 40px;
+    text-align: center;
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0 auto;
+}
+
+li.txtFormat, li.txtGdp {
+    border-top: 1px dashed #ccc;
+    padding-top: 16px;
+    margin: 0 10px;
+}
+
+li.txtSuccess h2 {
+    font-size: 24px;
+    text-align: center;
+    color: #535353;
+}
+
+ul.winTabs {
+    display: block;
+    height: 44px;
+}
+
+ul.winTabs li {
+    width: 164px;
+    height: 46px;
+    border-bottom: 2px solid #e9e9e9;
+    float: left;
+    display: inline-block;
+    text-align: center;
+    line-height: 46px;
+    background: url("../images/clound_icon_filter.gif") no-repeat;
+    border-left: 1px solid #c3c3c3;
+}
+
+ul.winTabs li a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+ul.winTabs li.time {
+    background-position: 36px 5px;
+    border-left: none;
+}
+
+ul.winTabs li.customer {
+    background-position: -120px 5px;
+}
+
+ul.winTabs li.product {
+    background-position: -290px 8px;
+}
+
+.contFilter ul li {
+    /* height: 35px;*/
+    font-size: 16px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+li.selDatetime {
+    /*border-bottom: 1px dashed #ccc;*/
+}
+
+.contFilter {
+    margin-top: 10px;
+}
+
+ul.winTabs  li.selected0 {
+    background-position: 36px -42px;
+    border-bottom: 2px solid #607da6;
+}
+
+ul.winTabs  li.selected1 {
+    background-position: -290px -42px;
+    border-bottom: 2px solid #607da6;
+}
+
+ul.winTabs  li.selected2 {
+    background-position: -120px -42px;
+    border-bottom: 2px solid #607da6;
+}
+
+span.tFilter {
+    background-position: 0 -198px;
+}
+
+.txtCenter {
+    text-align: center;
+}
+
+.contFilter ul.terminal {
+    /*border-bottom: 1px dashed #ccc;*/
+    padding-bottom: 1.5em;   
+}
+
+.contFilter ul.terminal li {
+    display: inline-block;
+    float: left;
+    width: 33.33%;
+    height: 206px;
+   *height:190px  !important;
+}
+
+ul.terminal li div.seekCondition {
+    width: 136px;
+    margin: 0 auto;
+}
+
+div.seekCondition .input {
+    height: 28px;
+    border: 1px solid #ccc;
+    position: relative;
+    background-color: #ffffff; 
+}
+
+div.input input {
+    width: 80%;
+    *width;100px !important;
+    outline: none;    
+    border: none;
+    margin: 0 auto;
+    padding-left: .5em;
+    font-family: "微软雅黑";
+    font-size: 15px;
+      color: #666;
+}
+
+div.input label {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    font-size: 14px;
+}
+
+div.input a.iconSearcher {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    width: 18px;
+    height: 18px;
+    background: url("../images/clound_searcher.gif") no-repeat 0 0;
+    text-indent: -999em;
+}
+
+div.seekCondition .check {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    padding-top: 10px;
+    *margin-top: 5px !important;
+    *padding-top: 0px !important;
+    height: 156px;
+    *height: 148px !important;
+    overflow: auto;
+
+}
+.pText 
+{
+     font-size:12px;
+     line-height:16px;
+ }
+    
+.pTextSelected 
+{
+    font-size:12px;
+    line-height:16px;
+    color:White;
+    background-color: #1b4886
+}
+    .pText input{ margin-right:3px;  vertical-align:middle;}
+div.seekCondition .check .selected {
+    background-color: #1b4886
+}
+
+div.seekCondition .check p {
+    height: 28px;
+    line-height: 28px;
+    margin-bottom: 8px;
+    padding-left: 10px;
+
+}
+
+.contShare b.h3 .tDate {
+    float: right;
+    overflow: hidden;
+    display: inline-block;
+    zoom: 1;
+    height: auto;
+
+}
+
+.terminal_chart {
+    height: 160px;
+
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+    clear: both;
+    position: relative;
+
+}
+
+.terminal_chart label {
+    position: absolute;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.terminal_chart label.daySale {
+    left: 3%;
+    top: 5%
+}
+
+.terminal_chart label.saleRank {
+    left: 46%;
+    top: 5%
+}
+
+.terminal_chart .annular {
+    position: absolute;
+}
+
+.terminal_chart ul.markup {
+    position: absolute;
+    top: 18%;
+    right: 15%;
+    border: none;
+    background: none;
+}
+
+.terminal_chart ul.markup li {
+    line-height: 12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.terminal_chart ul.markup li span {
+    display: block;
+    width: 12px;
+    height: 12px;
+    float: left;
+    margin-right: .5em;
+}
+
+ul.markup li span.mc_1 {
+    background-color: blue;
+}
+
+ul.markup li span.mc_2 {
+    background-color: black;
+}
+
+ul.markup li span.mc_3 {
+    background-color: gray;
+}
+
+ul.markup li span.mc_4 {
+    background-color: #cbcbcb;
+}
+
+.terminal_chart h1 {
+    position: absolute;
+    font-size: 30px;
+    font-weight: bold;
+    top: 35%;
+    left: 5%;
+    color: #ffa406;
+}
+
+.terminal_chart .annular {
+    position: absolute;
+    left: 46%;
+    top: 22%;
+    width: 120px;
+    height: 110px;
+    background: url("../images/chart_cycle.gif") no-repeat;
+}
+
+.terminal_sheet {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    margin-top: 1em;
+}
+
+.terminal_sheet {
+    border-collapse: collapse
+}
+
+.terminal_sheet td {
+    padding: 8px 12px;
+}
+
+.terminal_sheet thead {
+    background-color: #e2e2e2;
+    font-weight: bold;
+
+}
+
+.terminal_sheet tbody {
+    background-color: #f7f7f7;
+
+}
+
+.terminal_sheet tbody tr {
+    border-bottom: 1px dashed #ccc;
+
+}
+
+.terminal_sheet tbody tr:hover {
+    background-color: #ffe56c;
+    cursor: pointer;
+}
+
+span.tTerminal {
+    background-position: 0 -263px;
+}
+
+ul.ul_exType {
+    padding-left: .6em;
+}
+
+/*--//Begin: 中欧移动商城 date:2013-06-13*/
+.winBoxer {
+
+}
+
+.tip_leftArrow {
+    width: 43px;
+    height: 42px;
+    position: absolute;
+    left: -40px;
+    top: 23%;
+    background: url("../images/win_left_arrow.png") no-repeat;
+
+}
+
+.winCaption .tShop {
+    background-position: 0 -330px;
+}
+
+.mobile_shop, .mobile_shop_non {
+    height: 270px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+    clear: both;
+    position: relative;
+}
+
+.mobile_shop .view, .mobile_shop_non .view {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 178px;
+    height: 238px;
+    border: 0px;
+
+}
+
+.mobile_shop_non .view {
+    border: 1px dashed #cccccc;
+}
+
+.mobile_shop .desc, .mobile_shop_non .desc {
+    width: 246px;
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    border: none;
+}
+
+.mobile_shop .desc li, .mobile_shop_non .desc li {
+    font-size: 16px;
+    line-height: 16px;
+}
+
+.mobile_shop .desc li label, .mobile_shop_non .desc li label {
+    padding-right: 1.3em;
+}
+
+.mobile_shop_non div{
+  width: 150px;
+    height: 170px;
+    position: absolute;
+    top: 35px;
+    left: 25px
+}
+
+.addView  
+{
+    width: 150px;
+    height: 170px;
+    position: absolute;
+    top: 35px;
+    left: 25px;  
+    
+ }
+
+.mobile_shop_non div.addView a {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    color: #717171;
+    padding-top:150px;
+    padding-left:20px;
+    *padding-top:120px;
+}
+
+.mobile_shop_non div.addView a span.hLine, .mobile_shop_non div.addView a span.vLine {
+    background-color: #aeaeae;
+    position: absolute;
+    display: block;
+}
+
+.mobile_shop_non div.addView a span.vLine {
+    width: 14px;
+    height: 66px;
+    left: 47%;
+    top:20px;
+    *left:40%;
+}
+
+.mobile_shop_non div.addView a span.hLine {
+    width: 66px;
+    height: 14px;
+    top: 46px;
+    left: 29%;
+    *left:23%;
+}
+
+.mobile_shop_non div.addView a h2 {
+    position: absolute;
+    bottom: 0;
+    font-size: 18px;
+    font-weight: bold;
+
+}
+
+.winWraper {
+    position: absolute;
+    background-color: #ffffff;
+    border: 1px solid #c4c4c4;
+    -webkit-box-shadow: #bcbcbc 0px 0px 10px;
+    -moz-box-shadow: #bcbcbc 0px 0px 10px;
+    box-shadow: #bcbcbc 0px 0px 10px;
+    /*filter: progid:DXImageTransform.Microsoft.Shadow(color='#bcbcbc', Direction=135, Strength=6, OffX=0, OffY=0)*/; /*for ie6,7,8*/
+    zoom: 1;
+
+}
+
+.contShare b.h3 .tH3 {
+    display: block;
+    float: left;
+}
+
+
+
+.tablestyle
+{
+    width:450px; height:380px;
+    height:22px;
+    line-height:22px;
+   margin:5px 5px;
+    }
+    
+.tablestyle
+{
+     text-align:center;
+     vertical-align:middle;
+    }
+    .tablestyle tr td{ border:1px solid #ccc}

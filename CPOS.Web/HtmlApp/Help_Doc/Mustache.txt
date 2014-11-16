@@ -1,0 +1,229 @@
+http://blog.csdn.net/p569354158/article/details/8085595
+
+
+
+看了Mustache的github，学学此中的语法，做个笔记
+
+1.简单的变量调换：{{name}}
+
+
+1 var data = { "name": "Willy" };
+
+2 Mustache.render（"{{name}} is awesome."，data）;
+
+
+返回成果 Willy is awesome.
+
+2.若是变量含有html的代码的，例如：<br>、<tr>等等而不想转义可以在用{{&name}}
+
+
+1 var data = {
+
+2             "name" : "<br>Willy<br>"
+
+3         };
+
+4         var output = Mustache.render（"{{&name}} is awesome."， data）;
+
+5         console.log（output）;
+
+
+成果：<br>Willy<br> is awesome.
+
+去掉"&"的成果是转义为：&lt;br&gt;Willy&lt;br&gt; is awesome.（默认将"<"和">"转义）
+
+3.若是是对象，还能申明其属性
+
+
+ 1 var data = {
+
+ 2             "name" : {
+
+ 3                 "first" : "Chen"，
+
+ 4                 "last" : "Jackson"
+
+ 5             }，
+
+ 6             "age" : 18
+
+ 7         };
+
+ 8         var output = Mustache.render（
+
+ 9                 "name:{{name.first}} {{name.last}}，age:{{age}}"， data）;
+
+10         console.log（output）;
+
+
+成果：name:Chen Jackson，age:18
+
+4.{{＃param}}这个标签很强大，有if断定、forEach的功能。
+
+ 
+
+
+1 var data = {
+
+2                 "nothin":true
+
+3             };
+
+4             var output = Mustache.render（
+
+5                     "Shown.{{＃nothin}}Never shown!{{/nothin}}"， data）;
+
+6             console.log（output）;
+
+
+若是nothin是空或者null，或者是false都邑输出Shown.相反则是Shown.Never shown!。
+
+5.迭代
+
+
+ 1 var data = {
+
+ 2             "stooges" : [ {
+
+ 3                 "name" : "Moe"
+
+ 4             }， {
+
+ 5                 "name" : "Larry"
+
+ 6             }， {
+
+ 7                 "name" : "Curly"
+
+ 8             } ]
+
+ 9         };
+
+10         var output = Mustache.render（"{{＃stooges}}<b>{{name}}</b>{{/stooges}}"，
+
+11                 data）;
+
+12         console.log（output）;
+
+
+输出：<b>Moe</b>
+
+        <b>Larry</b>
+
+        <b>Curly</b>
+
+6.若是迭代的是数组，还可以用{{.}}来调换每个元素
+
+
+1 var data = {
+
+2             "musketeers" : [ "Athos"， "Aramis"， "Porthos"， "D""Artagnan" ]
+
+3         };
+
+4         var output = Mustache.render（"{{＃musketeers}}* {{&.}}{{/musketeers}}"，
+
+5                 data）;
+
+6         console.log（output）;
+
+
+输出：* Athos
+
+        * Aramis
+
+        * Porthos
+
+        * D""Artagnan
+
+7.迭代输出的还可所以一个function返回的成果，function可以读取当前变量的高低文来获取其他属性履行其他操纵
+
+
+ 1 var data = {
+
+ 2             "beatles" : [ {
+
+ 3                 "firstName" : "John"，
+
+ 4                 "lastName" : "Lennon"
+
+ 5             }， {
+
+ 6                 "firstName" : "Paul"，
+
+ 7                 "lastName" : "McCartney"
+
+ 8             }， {
+
+ 9                 "firstName" : "George"，
+
+10                 "lastName" : "Harrison"
+
+11             }， {
+
+12                 "firstName" : "Ringo"，
+
+13                 "lastName" : "Starr"
+
+14             } ]，
+
+15             "name" : function（） {
+
+16                 return this.firstName + " " + this.lastName;
+
+17             }
+
+18         };
+
+19         var output = Mustache
+
+20                 .render（"{{＃beatles}} *{{name}}{{/beatles}}"， data）;
+
+21         console.log（output）;
+
+
+输出： *John Lennon
+
+         *Paul McCartney
+
+         *George Harrison
+
+         *Ringo Starr
+
+8：办法里面可以再履行变量中的表达式
+
+
+ 1 var data = {
+
+ 2             "name" : "{{age}}" + "Tater"，
+
+ 3             "bold" : function（） {
+
+ 4                 return function（text， render） {
+
+ 5                     console.log（text）;
+
+ 6                     return "<b>" + render（text） + "</b>";
+
+ 7                 };
+
+ 8             }，
+
+ 9             "age" : 18
+
+10         };
+
+11         var output = Mustache.render（"{{＃bold}}Hi {{name}}.{{/bold}}"， data）;
+
+12         console.log（output）;
+
+
+输出成果：
+
+Hi {{age}}Tater.
+
+<b>Hi 18Tater.</b>
+
+9.{{^}}与{{＃}}相反，若是变量是null、undefined、 false、和空数组讲输出成果
+
+10.{{!  }}注释

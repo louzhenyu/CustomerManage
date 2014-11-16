@@ -1,0 +1,52 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="Coupon"></title>
+    <link href="../css/global.css" rel="stylesheet">
+    <link href="../css/style_list.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+    <section class="goods_wrap">
+        <dl class="tool_bar clearfix">
+            <dt><a href="javascript:Jit.AM.pageBack();">返回</a></dt>
+        </dl>
+    </section>
+    <section class="coupon_list">
+        <div class="coupon_wrap">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th scope="col">
+                        类型
+                    </th>
+                    <th scope="col">
+                        面值
+                    </th>
+                    <th scope="col">
+                        获取方式
+                    </th>
+                </tr>
+                <tbody tplpanel="coupon_list">
+                </tbody>
+            </table>
+        </div>
+    </section>
+</body>
+<script id="Tpl_coupon_list" type="text/template">
+<tr>
+    <td>
+        {{couponType}}<br>
+        <span>{{conditionValue}}</span>
+    </td>
+    <td>
+        <b>￥{{parValue}}</b>
+    </td>
+    <td>
+        <span>{{couponSource}}</span>
+    </td>
+</tr>
+</script>
+</html>

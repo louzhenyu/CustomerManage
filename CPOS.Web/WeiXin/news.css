@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img { border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 12px; font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #4d4d4d; resize: none; outline: none; }
+body { background-color:#f7f7f7; }
+h1, h2, h3, h4, h5, h6 { font-size: 16px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+a { text-decoration: none; color: #377CA2; }
+a:hover { text-decoration: underline; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 16px; margin: 0; padding: 0; }
+textarea, input { resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1 }
+.AppMenu{ height:50px; border-bottom:1px solid #bbbbbb; background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dadada),  color-stop(0.5, #ececec)); box-shadow:0 0 2px #bbb;}
+.AppMenu li{ width:25%; float:left;}
+.AppMenu a{ display:block; height:50px; line-height:50px; font-size:18px; text-align:center; text-decoration:none; color:#4e4e4e;}
+.icnbg{ background-image:url(../image/icn_skin.png); background-repeat:no-repeat; vertical-align:top; }
+.icn1{ width:16px; height:16px; background-position:0px -3px; margin-right:5px; margin-top:16px;}
+.icn1_white{ width:16px; height:16px; background-position:0px -29px; margin-right:5px; margin-top:17px;}
+.icn2{ width:16px; height:16px; background-position:0px -63px; margin-right:1px; margin-top:17px;}
+.icn2_white{ width:16px; height:16px; background-position:0 -91px; margin-right:1px; margin-top:17px;}
+.icn3{ width:16px; height:16px; background-position:0 -117px; margin-right:2px; margin-top:17px;}
+.icn3_white{ width:16px; height:16px; background-position:0 -140px; margin-right:2px; margin-top:17px;}
+.icn4{ width:16px; height:16px; background-position:0 -166px; margin-right:2px; margin-top:17px;}
+.icn4_white{ width:16px; height:16px; background-position:0 -190px; margin-right:2px; margin-top:17px;}
+.AppMenu a.Menu_Active,.AppMenu a.Menu_Active:hover{ background-color:#8b0e10; color:#fff;}
+
+.inputAndSelect{ width:80%; margin-left:auto; margin-right:auto; margin-top:20px;}
+.AlumniInputstyle{  border: 1px solid #b2bac0; border-radius: 4px; height: 40px; padding-left: 2%;  background: -webkit-gradient(linear, left top, left bottom, from(#d7d7d7), to(#f9f9f9), color-stop(0.1, #f9f9f9)); color: #9c9b9b; text-shadow: 0 0 1px #fff; width:98%; font-size:18px;}
+.blank1{ height:1px; overflow:hidden; display:block; clear:both;}
+.inputsubmitStyle{ border-radius: 4px; height: 40px; text-align:center; cursor:pointer; font-size: 24px; background: #a91315; color: #fff; text-shadow: 0 0 1px #fff; width:100%; font-size:18px;}
+
+.labelSelect { position: relative; font-family: Helvetica, arial; width:100%; }
+.labelSelect:after { position: absolute; top: -17px; right: 8px; display: inline-block; content: " ▼"; color: #9c9b9b; font-size: 18px; text-align: center; width: 30px; height: 43px; line-height: 43px;  pointer-events: none; text-shadow: 0 0 2px #fff; }
+.labelSelect select { font-size: 18px; color: #9c9b9b; width: 100%; padding-left:2%; line-height: 40px; border-radius: 4px; height: 40px; -webkit-appearance: none; border: 1px solid #c1c6cc; background: -webkit-gradient(linear, left top, left bottom, from(#d7d7d7), to(#f9f9f9), color-stop(0.1, #f9f9f9));color: #9C9B9B; text-shadow: 0 0 1px #fff; }
+.AlumniConnext1{ width:94%; margin-left:auto; margin-right:auto; background-color:#f7f7f7; box-shadow:0 0 5px #5f0404;}
+.AlumniConnext2{ width:94%; margin-left:auto; margin-right:auto; background-color:#f7f7f7; box-shadow:0 0 0px #5f0404;}
+.AlumniConnext1Title{ height:46px; border-bottom:1px solid #bbbbbb; background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dadada),  color-stop(0.5, #ececec)); box-shadow:0 0 2px #bbb; text-align:center; font-size:22px; color:#4e4e4e; line-height:46px; position:relative}
+
+a.AlumniBack{ background-position:-45px 5px; width:45px; height:36px; position:absolute; left:8px; top:5px; display:block;}
+.twoCode{ position:absolute; width:65px; height:65px; right:4px; top:-55px;}
+
+

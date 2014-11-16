@@ -1,0 +1,159 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">提交订单</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body style="background:url(images/orderbg.gif) repeat left top;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span class="Comeback" id="BackPrev"  onClick="WelfareAction.BackPre()" ></span><span id="Btoo">提交订单</span></div>
+    </nav>
+    <div class="ProvideCom" id="getDDc" style="display:none;">
+      <h3 id="getDDcTitle"></h3>
+      <div class="ProvideComBox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+          <li style=" padding:10px 0"><span class="HasSelectBtn Detailicn"></span>
+            <div class="SorderDiv">
+              <div class="SorderDivInner">
+                <div class="SorderDivLeft">单价：</div>
+                <div class="SorderDivRight">￥<span id="danjiadiv"></span></div>
+              </div>
+              <div class="SorderDivInner">
+                <div class="SorderDivLeft">数量：</div>
+                <div class="SorderDivRight" style=" height:35px;">
+                  <div style="width:100px;height:28px; padding-top:5px; float:right; overflow:hidden;"><span class="shuDown Detailicn" onClick="WelfareAction.Down()"></span><span class="ddNumcc" id="qty">1</span><span class="shuUp Detailicn" onClick="WelfareAction.Up()"></span></div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li style=" padding:10px 0">
+            <div class="SorderDiv">
+              <div class="SorderDivInner">
+                <div class="SorderDivLeft">总价：</div>
+                <div class="SorderDivRight" style="color:#ac0f12; font-size:22px;">￥<span id="zongjiadiv">150.00</span></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="ProvideCom" style="margin-top:0; display:none;">
+      <h3>配送方式</h3>
+      <div class="ProvideComBox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+          <li style=" padding:10px 0; border:none; padding-bottom:0;"><span class="HasSelectYY Detailicn" onClick="WelfareAction.CDDown(1)" id="SH_1"></span>
+            <div class="SorderDiv" id="SHSm">
+              <div class="SorderDivInner">
+                <div class="SorderDivLeft">送货上门：</div>
+                <div class="SorderDivRight"></div>
+              </div>
+            </div>
+          </li>
+          <li style=" padding-top:0; padding-left:10px; border:none;"  class="Tetdd" id="Tetdd_1">
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText" style="font-size: 16px;">送货地址：</div>
+              <div class="ProvideTextInput">
+                <textarea id="preferentialDesc"></textarea>
+              </div>
+            </div>
+          </li>
+          <Span class="blank1" style=" background-color:#CDCDCD; height:1px; margin-top:8px;"></Span>
+          <li style=" padding:10px 0; border:none;"><span class="HasSelectNo Detailicn " onClick="WelfareAction.CDDown(2)" id="SH_2"></span>
+            <div class="SorderDiv">
+              <div class="SorderDivInner">
+                <div class="SorderDivLeft">到店提货：</div>
+                <div class="SorderDivRight"></div>
+              </div>
+            </div>
+          </li>
+          <li style=" padding-top:0; padding-left:10px; display:none;"  class="Tetdd" id="Tetdd_2">
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText" style="font-size: 16px;">选择门店：</div>
+              <Div id="AppShopList" page="1"> </Div>
+            </div>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText" style="font-size: 16px;">选择时间：</div>
+              <div class="ProvideTextInput" style="height:36px;">
+                <select id="deliveryTime" style="width:100%; height:34px; border:0; line-height:34px; background-color:Transparent;">
+                  <option value="">请选择</option>
+                  <option value="上午(8:00-11:00)">上午(8:00-11:00)</option>
+                  <option value="中午(11:00-13:00)">中午(11:00-13:00)</option>
+                  <option value="下午(13:00-17:00)">下午(13:00-17:00)</option>
+                  <option value="晚上(17:00-20:00)">晚上(17:00-20:00)</option>
+                </select>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="ProvideCom" style="margin-top:0; display:none;">
+      <h3>收货人</h3>
+      <div class="ProvideComBox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">姓名：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="vipName" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">手机号码：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="phone" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">邮箱：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="email" >
+              </div>
+            </div>
+          </li>
+          <li style="border:none;"  class="Tetdd">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">备注：</div>
+              <div class="ProvideTextInput">
+                <textarea id="remark"></textarea>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div style="padding-top:20px;">
+        <input type="button" class="btnStylecc" onClick="Welfare.setOrderInfo()" value="提交" />
+      </div>
+    </div>
+  </div>
+  <div class="AppBgGray" id="searchBgGray" style="display:none" onClick="WelfareAction.CloseSearch()"></div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="welfareDetail" id="backPrevPosition" />
+<input type="hidden" value="" id="skuId" />
+<input type="hidden" value="" id="stdPrice" />
+<input type="hidden" value="1" id="deliveryId" />
+<script type="text/javascript">
+var loadMore = '';
+var Von = '	Welfare.getItemDetail("1");	Welfare.getVipDetail();';
+</script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>浏览记录</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+
+</head>
+
+<body>
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="aboutVipDiv">
+    <div class="vipCartBox" style="border-bottom:0; box-shadow:2px 0 3px #c3c3c3; margin-bottom:50px;">
+      <div class="vipCartBoxccTop"></div>
+      <span class="blank1" style="height:20px;"></span>
+      <div class="vipCart" id="vipGetBrowseHistory"> </div>
+      <div class="vipCartBoxBottom"></div>
+    </div>
+  </div>
+  <div class="MenuBox" id="MenuBox" rel="4"> </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = ['vipGetBrowseHistory','Vip.getBrowseHistory()'];
+var Von = 'Vip.getBrowseHistory("1")';
+</script> 
+<script id="getBrowseHistory" type="text/template">
+<% _.each(itemList,function(item){ %>
+<a href="detail.html?itemId=<%= item.itemId %>">
+<div class="vipCartLi">
+        <ul>
+              <li class="cartTD2" style="left:5px;"><img src="<%= item.imageUrl %>">
+              </li>
+              <li class="cartTD3" style="margin-left:75px">
+                <div class="cartTD3Div"><%= item.itemName %></div>
+              </li>
+              <li class="cartTD4"><span ></span><br>
+                <span style="font-size:16px; color:red">￥<%= item.salesPrice %></span></li>
+            </ul>
+       <div class="vipHostdate"><%= item.selDate %></div>
+</div>
+</a>
+<% });%>
+</script>
+</body>
+</html>

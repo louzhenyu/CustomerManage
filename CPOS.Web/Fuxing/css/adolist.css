@@ -1,0 +1,35 @@
+﻿.main {
+    font-family: '宋体';
+    height: 100%;
+    width: 100%;
+}
+.present_list dl {
+    border-bottom: 1px solid #C5C5C5;
+    font-size: 1em;
+    height: 90px;
+    width: 100%;
+    cursor:pointer;
+}
+.present_list dl dt {
+    float: left;
+    padding: 10px;
+    width: 160px;
+}
+.present_list dl dd {
+    float: left;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    width:50%;
+
+}
+.present_list dl dd p:nth-child(1) {
+    color: #000000;
+    font-weight: bold;
+    height: 35px;
+    overflow: hidden;
+}
+.present_list dl dd p:nth-child(2), .present_list dl dd p:nth-child(3) {
+    color: #909090;
+}
+

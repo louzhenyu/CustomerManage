@@ -1,0 +1,167 @@
+﻿/*common*/
+html,body{height:100%;min-height:100%;}
+body{font:12px/1.5em "Microsoft YaHei";background:#fff;color:#666;}
+body>section{height:100%;min-height:100%;max-width:640px;margin:0 auto;}
+input,select{border:none;background:none;}
+/*服务明细*/
+.winningInfo{height:120px;padding:22px 0 15px 0;font-size:15px;border-bottom:1px solid #ccc;color:#a1a5ad;background-image:-webkit-gradient(linear, left top, left bottom, from(#e3e5e6), to(#f3f3f3));background:-moz-linear-gradient(top, #e3e5e6,#f3f3f3);}
+.winningInfo h2{height:32px;line-height:32px;margin-bottom:10px;font-weight:normal;text-align:center;font-size:28px;color:#fe7c23;}
+.winningInfo p{width:165px;margin:0 auto;text-align:left;}
+
+.infoArea{margin-top:10px;border:1px solid #e2e2e2;border-radius:5px;background:#fff;}
+.infoArea p{margin-left:45px;font-size:13px;color:#5f646e;}
+.infoArea .ads{height:46px;padding:6px 26px;border-bottom:1px solid #e2e2e2;}
+.infoArea .repairNum{height:37px;padding:7px 26px;}
+.infoArea em{float:left;width:45px;height:100%;background:url(../images/icon02.png) no-repeat;background-size:35px 225px;}
+.infoArea .ads em{background-position:0px -116px;}
+.infoArea .repairNum em{background-position:0px -190px;}
+.infoArea .ads p{height:36px;overflow:hidden;}
+.infoArea .repairNum p{height:24px;line-height:24px;color:#fe7c23;}
+
+.serviceDetails{padding:12px;background:#f0f0f1;}
+.serviceDetails .title{font-size:15px;color:#5f646e;}
+.airList{padding-top:10px;}
+.airList .item{position:relative;margin:0 0 10px 6px;border:1px solid #e2e2e2;border-radius:5px;background:#fff;}
+.airList .item p{margin-left:45px;font-size:13px;color:#5f646e;}
+.airList .airIcon{height:62px;padding:16px 26px;border-bottom:1px solid #e2e2e2;}
+.airList .roomIcon{height:62px;padding:19px 26px;}
+.airList .item em{float:left;width:45px;height:100%;background:url(../images/icon02.png) no-repeat;background-size:35px 225px;}
+.airList .airIcon em{background-position:0px 0px;}
+.airList .roomIcon em{background-position:0px -58px;}
+.airList .airIcon p{height:36px;overflow:hidden;}
+.airList .roomIcon p{height:24px;line-height:24px;}
+
+.airList .checkBox{position:absolute;top:44px;left:-12px;display:block;width:27px;height:30px;line-height:30px;text-indent:7px;font-size:15px;color:#fff;background:url(../images/check03.jpg) no-repeat 0 0;background-size:100%;}
+.serviceDetails .price{display:block;float:right;margin-top:3px;font-size:18px;color:#fe7c23;}
+
+.receiptBtn{display:block;height:45px;line-height:45px;margin:0 auto;text-align:center;letter-spacing:2px;font-size:16px;border-radius:5px;background:#ffac1e;color:#fffcfc;}
+
+
+
+/*安装接单*/
+.orderReceiving{min-height:100%;font-size:13px;background:#f0f0f1;color:#5f646e;}
+.orderReceiving .item{margin-bottom:12px;padding-left:18px;box-shadow:0px 1px 3px #d9dadd,0px -1px 3px #d9dadd;background:#fff;}
+.orderReceiving .item > div{border-bottom:1px solid #e6e8ec;}
+.orderReceiving .item > div:nth-last-of-type(1){border-bottom:none;}
+.orderReceiving .ads{height:49px;line-height:49px;}
+.orderReceiving .show{height:44px;line-height:44px;}
+.orderReceiving .item em{float:left;width:45px;height:100%;background:url(../images/icon03.png) no-repeat;background-size:35px 325px;}
+.orderReceiving .item p{margin-left:45px;}
+.orderReceiving .service,.orderReceiving .air{float:left;width:50%;height:28px;line-height:28px;margin-top:8px;}
+.orderReceiving .service{border-right:1px solid #e6e8ec;}
+.orderReceiving .air{padding-left:19px;}
+.orderReceiving .ads em{background-position:0px 13px;}
+.orderReceiving .service em{background-position:0px -52px;}
+.orderReceiving .air em{background-position:0px -103px;}
+.orderReceiving .btnWrap{height:49px;}
+.orderReceiving .btnWrap a{height:35px;line-height:35px;margin-top:7px;border-radius:5px;}
+.orderReceiving .btnWrap em{float:left;width:30px;height:100%;background-image:url(../images/icon03.png); background-repeat:no-repeat;background-size:35px 325px;}
+.orderReceiving .btnWrap .map{float:left;width:100px;border:1px solid #c0c1c5;color:#5f646e;background-image:-webkit-gradient(linear, left top, left bottom, from(#f7f8fa), to(#e8eaed));background:-moz-linear-gradient(top, #f7f8fa,#e8eaed);}
+.orderReceiving .btnWrap .dis{float:right;width:166px;margin-right:12px;background-color:#39b44a;color:#fffdfd;}
+
+.orderReceiving .btnWrap .map em{margin-right:10px;background-position:10px -154px;}
+.orderReceiving .btnWrap .dis em{margin-right:6px;width:40px;background-position:10px -209px;}
+.orderReceiving .btnWrap strong{margin-left:10px;font-weight:normal;font-size:17px;}
+
+.filterTerm{height:48px;padding:9px 13px 0;}
+.filterTerm > div{height:30px;border:1px solid #fe7c23;border-radius:5px;background:#fff;}
+.filterTerm .selectDis{float:left;width:122px;}
+.filterTerm .selectDay{float:right;width:99px;}
+.filterTerm select{height:30px;border:none;background:none;text-indent:10px;font-size:13px;color:#fe7c23;}
+.filterTerm .mBtn{float:right;width:28px;height:100%;border-left:1px solid #fe7c23;background:url(../images/icon03.png) no-repeat 4px -267px;background-size:35px 325px;}
+.filterTerm .selectDis select{width:87px;background:url(../images/icon03.png) no-repeat 70px -307px;background-size:35px 325px;}
+.filterTerm .selectDay select{width:100%;background:url(../images/icon03.png) no-repeat 65px -307px;background-size:35px 325px;}
+
+/*安装详情*/
+.installDetails{min-height:100%;padding:15px 13px;background:#f5f5f5;}
+.installDetails .comBox{margin-bottom:12px;padding:0 16px 0 6px;border:1px solid #e2e2e2;border-radius:5px;background:#fff;}
+.installDetails .comBox .text,.installDetails .comBox input,.installDetails .comBox select{width:100%;height:48px;font-size:15px;color:#a1a5ad;}
+.installDetails .comBox .text{display: inline-block;line-height: 48px;}
+.installDetails .comBox input{text-indent:4px;}
+.installDetails .comBox select{background:url(../images/selectArr.png) no-repeat right center;background-size:7px 4px;}
+.accessoryArea{margin-bottom:21px;font-size:15px;border:1px solid #e2e2e2;border-radius:5px;background:#fff;}
+.accessoryArea>div{height:48px;line-height:48px;padding:0 16px 0 10px;border-bottom:1px solid #d9dce2;}
+.accessoryArea>div:nth-last-of-type(1){border-bottom:none;}
+.accessoryArea input{width:48px;height:27px;margin-right:6px;border:1px solid #e2e2e2;border-radius:4px;text-align:center;color:#a1a5ad;}
+.accessoryArea>div p{margin-left:85px;}
+.accessoryArea .title{c:#5f646e;}
+.accessoryArea em{float:left;width:85px;color:#a1a5ad;}
+.accessoryArea .price{float:right;}
+
+.installDetails .scanBtn,.installDetails .receiptBtn{display:block;height:45px;line-height:45px;margin:0 auto;text-align:center;letter-spacing:2px;font-size:16px;border-radius:5px;background:#39b44a;color:#fffcfc;}
+
+.installDetails .receiptBtn{margin-top:60px;background:#ffac1e;}
+
+/*弹层-查看任务*/
+.viewTaskMask{display:block;background:#5f646e;}
+.viewTask{position:absolute;width:296px;top:16px;left:50%;bottom:16px;margin-left:-148px;z-index:1000;}
+.viewTask .topBg{width:100%;height:8px;background:url(../images/topBg.png) no-repeat 0 0;background-size:296px 8px;}
+.viewTask .bottomBg{width:100%;height:8px;background:url(../images/bottomBg.png) no-repeat 0 0;background-size:296px 8px;}
+
+.viewTask .locationIcon{float:right;width:27px;height:46px;background:url(../images/locationIcon.png) no-repeat 0 0;background-size:100%;}
+.viewTask .addr{height:46px;margin-right:61px;font-size:13px;color:#5f646e;}
+.viewTask .topContent{background:url(../images/contentBg01.png) repeat-y 0 0;background-size:296px 1px;}
+.viewTask .topWrap{margin:0 6px 0 1px;padding:12px 11px 13px 17px;border-bottom:1px solid #ccc;}
+.viewTask .airType{margin-top:20px;line-height:20px;font-size:12px;text-align:center;color:#a1a5ad;}
+
+.viewTask .bottomContent,.viewTask .btnWrap{padding:0 6px 0 1px;background:url(../images/contentBg02.png) repeat-y 0 0;background-size:296px 1px;}
+.viewTask .bottomContent>p {margin-left:19px;height:46px;line-height:46px;border-bottom:1px solid #ccc;}
+.viewTask .bottomContent .tit{float:left;font-size:13px;}
+.viewTask .bottomContent .show{float:right;margin-right:11px;font-size:15px;color:#a1a5ad;}
+
+.viewTask .btnWrap{padding:20px 15px 30px 14px;}
+.viewTask .btnWrap a{width:128px;height:48px;line-height:48px;text-align:center;font-size:16px;border-radius:4px;color:#fffcfc}
+.viewTask .telBtn{float:left;text-indent:18px;letter-spacing:1px;background:#3abaff url(../images/telIcon.png) no-repeat 20px center;background-size:22px 21px;}
+.viewTask .joinBtn{float:right;text-indent:4px;letter-spacing:4px;background:#39b44a;}
+
+.viewTask .closeBtn{position:absolute;top:-8px;right:-8px;width:25px;height:25px;border-radius:15px;background:#ccc url(../images/closeBtn.png) no-repeat center center;background-size:12px 12px;}
+.viewTask .airType p{width:200px;margin:0 auto;text-align:left;}
+
+/*收到评价-差评图标cryIocn*/
+.receiveComment{padding:35px 15px;text-align:center;font-size:15px;letter-spacing:2px;background:#f0f0f1;color:#999;}
+.receiveComment .starBox{display:inline-block;text-align:center;}
+.receiveComment .starBox .tit{float:left;width:45px;height:25px;line-height:27px;}
+.receiveComment .maxStar{width:180px;height:25px;margin-left:45px;background:url(../images/star.png) repeat-x 0 0;background-size:36px 25px;}
+.receiveComment .maxStar span{display:block;width:20%;height:25px;background:url(../images/onStar.png) repeat-x 0 0;background-size:36px 25px;}
+.receiveComment .textBox{padding:24px 0;}
+.receiveComment .count{font-size:24px;color:#f70;}
+.receiveComment .smileIcon{margin:55px auto 0;width:124px;height:111px;background:url(../images/laughIcon.png) repeat-x 0 0;background-size:100%;}
+.receiveComment.cryComment .smileIcon{width:119px;height:103px;background:url(../images/cryIcon.png) repeat-x 0 0;background-size:100%;}
+
+
+
+/*当天服务明细*/
+.todayServiceDetails{background:#f0f0f1;}
+.todayServiceDetails .receiptBtn{margin-top:25px;}
+.serviceDetails .infoArea .sifiName{height:37px;padding:7px 26px;}
+.serviceDetails .sifiName em{background:url(../images/sifuName.png) no-repeat 0 center;background-size:19px 19px;}
+.serviceDetails .sifiName p{line-height:23px;}
+.serviceDetails .infoArea{margin:10px 0 0 6px;}
+.serviceDetails .title{padding-left:5px;}
+
+
+/*今日任务*/
+.todayTask{background:#f7f7f7;}
+.todayTask .showInfo{height:40px;line-height:40px;padding:0 6px;letter-spacing:1px;font-size:13px;background:#fff;color:#5f646e;}
+.todayTask .showInfo span{font-size:18px;color:#ec5f0d;}
+.todayTaskList{position:relative;padding:11px 8px 11px 40px;font-size:13px;}
+.todayTaskList .leftLine{position:absolute;top:73px;bottom:73px;left:20px;width:1px;background:#cdd0d6;}
+.todayTaskList .item{position:relative;height:140px;padding:0 10px;border:1px solid #d9dadd;border-radius:5px;box-shadow:0 0 3px rgba(0,0,0,0.1);}
+.todayTaskList .item{margin-bottom:12px;}
+.todayTaskList .item > div{height:46px;border-bottom:1px solid #e6e8ec;}
+.todayTaskList .item p{float:left;height:29px;line-height:29px;margin:8px auto;}
+.todayTaskList .userIcon,.todayTaskList .serveIcon{width:40%;border-right:1px solid #e6e8ec;}
+.todayTaskList .telIcon,.todayTaskList .airIcon{width:60%;padding-left:10px;}
+.todayTaskList .item em{float:left;width:30px;height:100%;background:url(../images/icon03.png) no-repeat;background-size:35px 325px;}
+.todayTaskList .item p span{display:block;margin-left:30px;}
+.todayTaskList .item .telIcon span{margin-left:0;}
+/*.todayTaskList .telIcon a{position:absolute;top:0px;right:0px;display:block;width:45px;height:45px;border-top-right-radius:5px;background:#39b44a url(../images/telIcon.png) no-repeat center center;background-size:22px 21px;}*/
+.todayTaskList .userIcon em{background:url(../images/userIcon.png) no-repeat 0px center;background-size:18px 22px;}
+.todayTaskList .serveIcon em{background-position:0px -49px;}
+.todayTaskList .airIcon em{width:35px;margin-right:6px;background-position:0px -102px;}
+.todayTaskList .item .addsIcon{border-bottom:none;}
+.todayTaskList .addsIcon em{background-position:0px 7px;}
+.todayTaskList .addsIcon span{display:block;height:36px;margin:5px 8px 0 30px;padding-right:5px;overflow:hidden;}
+.todayTaskList .item .markBox{position:absolute;top:58px;left:-37px;width:35px;height:auto;border:none;}
+.todayTaskList .markBox span{display:block;height:14px;line-height:14px;margin:0 auto;text-align:center;font-size:12px;background:#f7f7f7;color:#fe7c23;}
+.todayTaskList .markBox .num{width:25px;height:24px;line-height:24px;text-indent:-4px;font-size:15px;background:#f7f7f7 url(../images/timeDot.png) no-repeat 0 center;background-size:100%;color:#fff;}

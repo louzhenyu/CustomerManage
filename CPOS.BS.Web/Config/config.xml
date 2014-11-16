@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+  <WeChat des="微信相关">
+    <TopMenuMaxLength des="顶级菜单最多个数">3</TopMenuMaxLength>
+    <SecondMenuMaxLength des="二级菜单最多个数">5</SecondMenuMaxLength>
+  </WeChat>
+  <AssociationMail des="联盟发送邮件配置信息">
+    <MailSendFrom>mailcenter@jitmarketing.cn</MailSendFrom>
+    <MailUserName>mailcenter@jitmarketing.cn</MailUserName>
+    <MailUserPassword>jit15d!</MailUserPassword>
+    <SMTPServer>smtp.exmail.qq.com</SMTPServer>
+    <MAILCOENT>http://112.124.68.147:9004/HtmlApps/auth.html?pageName=NewAddUserInfo</MAILCOENT>
+    <MailTitle>会员注册通知</MailTitle>
+    <MailTo></MailTo>
+  </AssociationMail>
+  <TestMail des="测试发送邮件配置信息">
+    <MailSendFrom>mailcenter@jitmarketing.cn</MailSendFrom>
+    <MailUserName>mailcenter@jitmarketing.cn</MailUserName>
+    <MailUserPassword>jit15d!</MailUserPassword>
+    <SMTPServer>smtp.exmail.qq.com</SMTPServer>
+    <MailContent>这是一封测试邮件</MailContent>
+    <MailTitle>邮件测试</MailTitle>
+    <MailTo></MailTo>
+  </TestMail>
+  <PublicMail des="公共发送邮件配置信息">
+    <MailSendFrom>mailcenter@jitmarketing.cn</MailSendFrom>
+    <MailUserName>mailcenter@jitmarketing.cn</MailUserName>
+    <MailUserPassword>jit15d!</MailUserPassword>
+    <SMTPServer>smtp.exmail.qq.com</SMTPServer>
+    <MailContent>这是一封测试邮件</MailContent>
+    <MailTitle>邮件测试</MailTitle>
+    <MailTo></MailTo>
+  </PublicMail>
+</Root>

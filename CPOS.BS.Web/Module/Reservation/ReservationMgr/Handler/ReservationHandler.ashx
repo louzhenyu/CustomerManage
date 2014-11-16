@@ -1,0 +1,1 @@
+<%@ WebHandler Language="C#" CodeBehind="ReservationHandler.ashx.cs" Class="JIT.CPOS.BS.Web.Module.Reservation.Handler.Handler" %>

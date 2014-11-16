@@ -1,0 +1,165 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="format-detection" content="telephone=yes"/>
+<link href="css/welfaceV1.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">中欧国际工商学院</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body   style="background:url(images/orderbg.gif) repeat left top;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span onclick="history.back()" class="Comeback"></span><span id="Btoo"></span></div>
+    </nav>
+    <div class="BBSDetailTitle" style="padding-top:65px;" id="title"></div>
+    <div class="newsList" id="bbsDetail" style="margin-top:0; display:none;">
+      
+    </div>
+  </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="consultList" id="backPrevPosition" />
+<script type="text/javascript">
+var loadMore = ''; var Von = 'Consult.Detail();abc()';</script> 
+<script type="text/javascript" src="js/base.js"></script> 
+<script type="text/javascript">
+	var emailId = "";
+	var courseId = "";
+	function abc(){
+		$(".DetailBBSdd").live("click",function(){
+			if($(this).siblings(".BBSoo").length > 0){
+				if($(this).siblings(".BBSoo").css("display")=="none"){
+					$(this).siblings(".BBSoo").slideDown(500);	
+					$(this).find(".Jrddhover").removeClass("Jrddhover").addClass("Jrdd");
+				}else{
+					$(this).siblings(".BBSoo").slideUp(500);	
+					$(this).find(".Jrdd").removeClass("Jrdd").addClass("Jrddhover");
+					}
+			}else{
+                var linkSo = "cusrseOnline2013.html?courseId=" + getParam("courseId") + "&ctype=2&emailId=" + emailId + "&forumTypeId=" + getParam("forumTypeId");
+				LinkAddCustomerId(linkSo)
+			
+			}
+		});
+	}
+</script>
+<script type="text/templete" id="consultScript">
+	<span style="height:10px; overflow:hidden; display:block; clear:both;"></span>
+	<% if(isSignUp=="1"){%>
+	<div class="DetailSmallBox newsDetailBox">
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn6 icnSkin1"></span>
+          <h1 style="color:#ac0f12">报名参加</h1>
+          <span  class="Jrddhoverccc icnSkin1"></span></div>
+      </div>
+	  <%}%>
+	  <% if(isDesc=="1"){%>
+      <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn1 icnSkin1"></span>
+          <h1>简介</h1>
+          <span  class="Jrdd icnSkin1"></span></div>
+        <div class="BBSoo" id="desc"><%=desc%></div>
+      </div>
+	   <%}%>
+	   	  <% if(isOrganizer=="1"){%>
+      <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn2 icnSkin1"></span>
+          <h1>组织者</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo" id="organizer">
+          <%=organizer%>
+        </div>
+      </div>
+	  <%}%>
+	    <% if(isSchedule=="1"){%>
+      <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn3 icnSkin1"></span>
+          <h1>日程安排</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo" id="schedule">
+           <%=schedule%>
+        </div>
+      </div>
+	  	  <%}%>
+		   <% if(isRegister=="1"){%>
+	 <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn3 icnSkin1"></span>
+          <h1>注册参加</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo" >
+           <%=register%>
+        </div>
+      </div>
+	   	 <%}%>
+		    <% if(isFood=="1"){%>
+	   <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn3 icnSkin1"></span>
+          <h1>地点描述</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo" >
+           <%=food%>
+        </div>
+      </div>
+	  	 <%}%>
+		     <% if(isSpeakers=="1"){%>
+      <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn7 icnSkin1"></span>
+          <h1>演讲嘉宾</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo">
+            <%=speakers%>
+        </div>
+      </div>
+	  	 <%}%>
+		   <% if(isSponsor=="1"){%>
+	   <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn7 icnSkin1"></span>
+          <h1>赞助</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo">
+            <%=sponsor%>
+        </div>
+      </div>
+	   <%}%>
+	    <% if(isRoundtable=="1"){%>
+	  <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn7 icnSkin1"></span>
+          <h1>圆桌会议
+</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo">
+            <%=roundtable%>
+        </div>
+      </div>
+	   <%}%>
+	   <% if(isPreviousForum=="1"){%>
+	   <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn7 icnSkin1"></span>
+          <h1>往届论坛</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo">
+            <%=previousForum%>
+        </div>
+      </div>
+	    <%}%>
+	 <% if(isContactUs=="1"){%>
+	<div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn7 icnSkin1"></span>
+          <h1>联系我们</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo">
+            <%=contactUs%>
+        </div>
+      </div>
+	  <%}%>
+</script>
+</body>
+</html>

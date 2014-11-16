@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title name="ALD_Join_Operator">运营商加盟</title>
+<link href="../../../css/base/global.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<div class="operators-info">
+  <dl class="dl01">
+    <dt>运营商</dt>
+    <dd>成为阿拉丁的区域运营商，拥有阿拉丁区域10年的品牌授权。</dd>
+    <dd>负责辖区内阿拉丁业务拓展、管理、运营，打造 阿拉丁区域生活社区。</dd>
+    <dd>分享阿拉丁区域拓展收益和区域平台运营收益，获得资金升值机会。</dd>
+    <dd>分享阿拉丁未来上市整合收益。</dd>
+  </dl>
+  <dl class="dl02">
+  	<dt>阿拉丁区域运营商</dt>
+    <dd><img src="/HtmlApps/images/special/aladdin/pic-o.jpg"></dd>
+  </dl>
+  <dl class="dl03">
+  	<dt>现在加盟</dt>
+    <dd>
+    	  <a onclick="JitPage.join(1)">省级运营商</a>
+        <a onclick="JitPage.join(2)">市级运营商</a>
+        <a onclick="JitPage.join(3)">县级运营商</a>
+    </dd>
+  </dl>
+</div>
+
+    <div class="mask hide"></div>
+    <div class="join-popup hide">
+        <div class="popup-t">
+            我要加盟
+        </div>
+        <div class="popup-m">
+            <dl>
+                <dt>联系人姓名</dt>
+                <dd><input type="text" id="name"></dd>
+            </dl>
+            <dl>
+                <dt>公司名称</dt>
+                <dd><input type="text" id="company"></dd>
+            </dl>
+            <dl>
+                <dt>职务</dt>
+                <dd><input type="text" id="duty"></dd>
+            </dl>
+            <dl>
+                <dt>手机号码</dt>
+                <dd><input type="text" id="phone"></dd>
+            </dl>
+            <dl>
+                <dt>所属行业</dt>
+                <dd><input type="text" id="industry"></dd>
+            </dl>
+            <dl>
+                <dt>加盟类别</dt>
+                <dd><input type="text" id="jointype"></dd>
+            </dl>
+            <dl>
+                <dt>&nbsp;</dt>
+                <dd><input type="checkbox" checked> 同意签约相关的法律条款</dd>
+            </dl>
+            <p>
+                <input type="button" value="提 交" id="btn_submit" onclick="JitPage.submit()">
+            </p>
+        </div>
+    </div>
+
+
+<script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</body>
+</html>

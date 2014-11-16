@@ -1,0 +1,103 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title name="Pay">缴费</title>
+  <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+
+<body>
+  <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+
+  <section class="aboutPage mb50"  style="margin-bottom:100px; padding:10px;">
+
+    <div class="commonNav">
+      <a href="javascript:Jit.AM.pageBack()"> <em class="icon"></em>
+      </a>
+      <a href="javascript:Jit.AM.toPage('Home')"> <em class="icon"></em>
+      </a>
+      <a href="javascript:;">
+        <em class="icon"></em>
+      </a>
+    </div>
+
+   <div class="op_area" >
+      <div>请选择支付方式</div>
+      <div class="go_box">
+        <div class="go_gox_body op_pay_list">
+          <table class="items">
+            <tr>
+              <td><i val="1"></i>
+
+              </td>
+              <td>
+               
+                <i  class="zhifubao"></i>
+
+                </td>
+              <td>
+                <p>支付宝网页支付：</p>
+                <p>推荐有支付宝账户的用户使用</p>
+              </td>
+            </tr>
+
+          </table>
+          <table class="items">
+            <tr>
+              <td> <i val="3"></i>
+                &nbsp;
+              </td>
+              <td>
+               <i class="yinlianweb"></i>  </td>
+              <td>
+                <p>银联网页支付：</p>
+                <p>支持银行卡支付，需开通网银</p>
+              </td>
+            </tr>
+
+          </table>
+                <table class="items">
+            <tr>
+              <td> <i val="2"></i>
+                &nbsp;
+              </td>
+              <td>
+                <i class="yinlianyuyin"></i></td>
+              <td>
+                <p>银联语音支付：</p>
+                <p>推荐有网上银行账户的用户使用</p>
+                <div id="phoneArea" style="display:none"  >
+                <p style="color:red;" >手机号码：</p>
+                <p> <input type="text" id="phonenum"  placeholder="请输入手机号码" />    </p>
+                </div>
+              </td>
+            </tr>
+
+          </table>
+        </div>
+      </div>
+      <div class="go_box ops_area">
+        <div>
+          <p>应付金额</p>
+          <p>
+            总价：
+            <span id="orderTotal">￥0.00</span>
+          </p>
+        </div>
+        <div>
+          <a  id="submitPay">确认付款</a>
+        </div>
+
+      </div>
+
+
+
+
+   
+  </section>
+
+</body>
+</html>

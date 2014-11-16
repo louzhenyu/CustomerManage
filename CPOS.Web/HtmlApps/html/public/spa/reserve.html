@@ -1,0 +1,102 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="Reserve">我的预约</title>
+	</head>
+
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<header>
+			<nav>
+				<ul>
+					<li>
+						<a href="javascript:Jit.AM.pageBack();"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('OrderList');"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('Reserve');"></a>
+					</li>
+				</ul>
+			</nav>
+
+		</header>
+		
+		<section>
+			<div class="commonBanner">
+				<img src="../../../images/public/spa_default/banner.jpg" alt="">
+			</div>
+
+			<div class="selectContent">
+				<p class="intro">
+					公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介
+				</p>
+				<div class="commonSelectBox">
+					<select  id="selCity"  onchange="JitPage.fnSelChange()">
+						<option value="请选城市">请选城市</option>
+					</select>
+					<em class="point"></em>
+				</div>
+
+				<div class="commonSelectBox">
+					<select id="selStore" onchange="JitPage.fnSelStoreChange()">
+						<option selected="" value="请选门店">请选门店</option>
+					</select>
+					<em class="point"></em>
+				</div>
+
+				<div class="commonSelectBox">
+					<select onclick="Jit.AM.toPage('ChooseDate');" id="selDate" class="fontColor" >
+	                    <option value='--请选择--'>请选日期</option>
+	                </select>
+					<em class="point"></em>
+				</div>
+
+				<div class="commonSelectBox">
+					<select id="selTime" class="fontColor" >
+	                    <option value='--请选择--'>请选时间</option>
+	                    <option value='10:00-10:30'>10:00-10:30</option>
+	                    <option value='10:30-11:00'>10:30-11:00</option>
+	                    <option value='11:00-11:30'>11:00-11:30</option>
+	                    <option value='11:30-12:00'>11:30-12:00</option>
+	                    <option value='12:00-12:30'>12:00-12:30</option>
+	                    <option value='12:30-13:00'>12:30-13:00</option>
+	                    <option value='13:00-13:30'>13:00-13:30</option>
+	                    <option value='13:30-14:00'>13:30-14:00</option>
+	                    <option value='14:00-14:30'>14:00-14:30</option>
+	                    <option value='14:30-15:00'>14:30-15:00</option>
+	                    <option value='15:00-15:30'>15:00-15:30</option>
+	                    <option value='15:30-16:00'>15:30-16:00</option>
+	                    <option value='16:00-16:30'>16:00-16:30</option>
+	                    <option value='16:30-17:00'>16:30-17:00</option>
+	                    <option value='17:00-17:30'>17:00-17:30</option>
+	                    <option value='17:30-18:00'>17:30-18:00</option>
+	                    <option value='18:00-18:30'>18:00-18:30</option>
+	                    <option value='18:30-19:00'>18:30-19:00</option>
+	                    <option value='19:00-19:30'>19:00-19:30</option>
+	                    <option value='19:30-20:00'>19:30-20:00</option>
+	                    <option value='20:00-20:30'>20:00-20:30</option>
+	                    <option value='20:30-21:00'>20:30-21:00</option>
+	                    <option value='21:00-21:30'>21:00-21:30</option>
+	                    <option value='21:30-22:00'>21:30-22:00</option>
+	                </select>
+					<em class="point"></em>
+				</div>
+
+				<a href="javascript:JitPage.fnSubmit();" class="commonBtn">下一步</a>
+
+				<a href="tel:4006230770" class="contactUs">联系客服</a>
+
+			</div>
+
+		</section>
+	<input type="hidden" id="txtTime" />
+	</body>
+</html>
+<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>

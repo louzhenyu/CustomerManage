@@ -1,0 +1,314 @@
+/* --------------------------- CSS Reset ----------------------------*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+	margin: 0 auto;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	font-family: "黑体";
+	vertical-align: baseline;
+	border:0 none;
+}
+:focus {
+	outline: 0;
+}
+div {
+	margin: 0;
+	padding: 0;
+}
+a, a:link, a:visited, a:hover, a:active {
+	text-decoration:none;
+	border:0 none;
+}
+table {
+	border-collapse: separate;
+	border-spacing: 0;
+}
+th, td {
+	text-align: left;
+	font-weight: normal;
+}
+img, iframe {
+	border: none;
+	text-decoration:none;
+}
+ol, ul {
+	list-style: none;
+}
+input, textarea, select, button {
+	font-size: 100%;
+	font-family: inherit;
+}
+select {
+	margin: inherit;
+}
+hr {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	height: 1px;
+	clear: both;
+	width: auto;
+}
+html, body {
+	background: #dde2e3;
+	width: 100% !important;
+}
+
+/* --------------------------- Add common styles ----------------------------*/
+
+h1 {
+	font-weight: bold;
+}
+h2 {
+	font-weight: bold;
+}
+h3 {
+	font-weight: bold;
+}
+h4 {
+	font-size: 10px;
+	font-weight: bold;
+}
+h5 {
+	font-size: 9px;
+	font-weight: bold;
+}
+h6 {
+	font-size: 8px;
+	font-weight: bold;
+}
+a, a:visited, a:hover, a:link {
+	text-decoration: none;
+	color: #c55;
+}
+a.underline {
+	text-decoration: underline;
+}
+div.center {
+	text-align: center;
+	margin-top: 14px;
+}
+div.center a {
+	text-decoration: none;
+}
+hr {
+	-moz-box-shadow: 0px 1px 0px #fff;
+	-webkit-box-shadow: 0px 1px 0px #fff;
+	box-shadow: 0px 1px 0px #fff;
+}
+p {
+	font-size: 11px;
+	line-height: 20px;
+	margin: 8px 0 16px 0;
+}
+.container {
+	padding: 6px 10px;
+	padding-bottom: 12px;
+}
+img.fullwidth {
+	width: 100%;
+}
+
+.clear {
+	/* This class clears the floated elements */
+	clear:both;
+}
+
+/* --------------------------- Page structure ----------------------------*/
+
+body {
+	font-size:12px;
+	-webkit-user-select:none;
+	-webkit-text-size-adjust:none;
+	font-family:helvetica;
+	-webkit-overflow-scrolling: touch;/*网页滚动时的滑动效果*/
+	width:100%;
+}
+#page {
+}
+#main {
+}
+/* --------------------------- Header ----------------------------*/
+
+
+
+
+
+
+
+.dibu {
+    width: 90%;
+    margin: 0 auto;
+	-webkit-box-shadow: inset 0px 0px 1px rgba(228,236,242,.08);
+	-moz-box-shadow: inset 0px 0px 1px rgba(228,236,242,.08);
+	box-shadow: inset 0px 0px 1px rgba(228,236,242,.08);
+	-webkit-box-shadow: 0px 0px 3px rgba(0,0,0,.25);
+	-moz-box-shadow: 0px 0px 3px rgba(0,0,0,.25);
+	box-shadow: 0px 0px 3px rgba(0,0,0,.25);
+	border-radius: .3em;
+	-moz-border-radius: .3em;
+	-webkit-border-radius: .3em;
+	border:1px solid rgba(164,167,168,.8);
+	overflow:hidden;
+	background:#fff;
+}
+
+.pic1 {
+    background: url(../img/icon_award.jpg) no-repeat 10px bottom;
+    width: 90%;
+    height: 55px;
+	line-height:55px;
+	padding-left:5%;
+	padding-top:2em;
+	position:relative;
+}
+
+.pic1 span {
+	position:absolute;
+    font-size: 2em;
+    font-family: '微软雅黑';
+    color: #fff;
+    line-height: 55px;
+	height:55px;
+	padding-left:4%;
+    left: 22%;
+	width:74%;
+	background:#bd0e0e;
+	/* Firefox 3.6+ */
+background: -moz-linear-gradient(left, #bd0e0e, #fff); 
+/* Safari 4-5, Chrome 1-9 */ 
+/* -webkit-gradient(,  [, ]?,  [, ]? [, ]*) */
+background: -webkit-gradient(linear,left,from(#bd0e0e),to(#fff));
+/* Safari 5.1+, Chrome 10+ */
+background: -webkit-linear-gradient(left, #bd0e0e, #fff);
+/* Opera 11.10+ */
+background: -o-linear-gradient(left, #bd0e0e, #fff);
+
+}
+
+.jiang {
+	width:90%;
+	margin:0 auto;
+}
+
+.jiang li {
+    float: left;
+    width: 100%;
+    margin-top: 25px;
+	border-bottom:1px dashed #ccc;
+}
+
+.jiang li img {
+    float: left;
+    width: 90px;
+    height: 96px;
+}
+
+.jiang li h3 {
+    float: left;
+    width: 60%;
+    font-size: 16px;
+    color: #707070;
+	padding-left:5%;
+}
+
+.jiang li h3 b {
+    font-size: 16px;
+    color: #004f99;
+}
+
+.jiang li p {
+    float: left;
+    font-size: 14px;
+    color: #333333;
+    height: 79px;
+    padding-top: 10px;
+	padding-left:5%;
+	width: 60%;
+}
+
+
+.prizename {
+	float: left;
+	font-weight:bold;
+	font-size:16px;
+	padding:10px 0;
+	width:100%;
+	}
+
+.tanchu {
+    width: 90%;
+    height: 300px;
+    margin: 0 auto;
+    position: absolute;
+    z-index: 999;
+	border-radius: .5em;
+	-moz-border-radius: .5em;
+	-webkit-border-radius: .5em;
+	background:#fff;
+
+}
+
+.tanchu h3 {
+    width: 98%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+    height: 3em;
+    line-height: 3em;
+    border-bottom: 1px solid #ccc;
+}
+
+.tanchu p {
+    font-size: 14px;
+    color: #333333;
+    margin-top: 57px;
+    width: 98%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+}
+
+.anniu {
+    text-align: center;
+    padding-top: 35px;
+	width:90%;
+	margin:0 auto;
+}
+
+.anniu a {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+	color:#fff;
+	font-weight:bold;
+	background: #0052b8;
+	display:block;
+	font-size:1.6em;
+}
+
+@media only screen and (device-width : 800px) {
+.header img {
+	margin: 60px auto 0;
+	width:480px;
+	height:480px;
+}
+}
+
+/* iPhone 5 640x1136 px----------- */
+@media screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) {
+#p_start {
+
+	background:url(../img/circle-small@2x.png) no-repeat;
+	width:72px;
+	height:86px;
+}
+
+}
+

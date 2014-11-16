@@ -1,0 +1,57 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title name="Activity">近期活动</title>
+  <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+
+<body style="background-color:white; padding-bottom:3em;">
+  <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+
+  <section   class="mb50"  >
+    <div class="commonNav">
+      <a href="javascript:Jit.AM.pageBack()"> <em class="icon"></em>
+      </a>
+      <a href="javascript:Jit.AM.toPage('Home')"> <em class="icon"></em>
+      </a>
+      <a href="javascript:;">
+        <em class="icon"></em>
+      </a>
+    </div>
+    <div class="acthandle" style="display:none">
+      <div>发布活动</div>
+      <div>活动日历</div>
+    </div>
+    <div id="actAdList">
+
+      <div class="commonBanner">
+        <ul class="picList"></ul>
+
+      </div>
+      <div class="asideShow asideBottom">
+        <p class="title" id="scrollTitle"></p>
+        <p class="dot"></p>
+      </div>
+    </div>
+
+<!--     <div class="actListTab" id="actListTab">
+      <div class="iscrooactListTab" >
+        <ul>
+          <li>校友</li>
+          <li>大型论坛</li>
+          <li>招生</li>
+          <li>我的活动</li>
+        </ul>
+      </div>
+    </div> -->
+
+    <div class="actlist" id="actList"></div>
+
+  </section>
+
+</body>
+</html>

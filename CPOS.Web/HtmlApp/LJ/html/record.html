@@ -1,0 +1,57 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+    <title name="Record"></title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+    <style type="text/css">
+        body
+        {
+            background: #e1e5e7;
+        }
+    </style>
+</head>
+<body>
+    <section class="screen_wrap">
+  <!--div class="top"> <img src="../images/pic_top.jpg"> </div-->
+  <div class="title">推荐战绩</div>
+  <div class="table">
+    <h3>您已经获得推荐积分<b><span id="parValue"></span></b>。</h3>
+    <h4>您近期成功推荐的好友：</h4>
+    <div class="table_record">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr id="list">
+          <th scope="col">姓名</th>
+          <th scope="col">日期</th>
+        </tr>
+        <!--tr>
+          <td>王小蒋</td>
+          <td>2014-1-8</td>
+        </tr>
+        <tr>
+          <td>王小蒋</td>
+          <td>2014-1-8</td>
+        </tr>
+        <tr>
+          <td>王小蒋</td>
+          <td>2014-1-8</td>
+        </tr>
+        <tr>
+          <td>王小蒋</td>
+          <td>2014-1-8</td>
+        </tr-->
+      </table>
+    </div>
+  </div>
+</section>
+</body>
+<script id="Tpl_ranking_list" type="text/template">
+	<tr>
+        <td>{{vipName}}</td>
+        <td>{{recommendDate}}</td>
+    </tr>
+</script>
+</html>

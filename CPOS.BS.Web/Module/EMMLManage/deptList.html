@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link href="css/reset-pc.css" rel="stylesheet"/>
+    <link href="css/style.css" rel="stylesheet"/>
+    <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
+    <link href="../static/css/artDialog.css" rel="stylesheet" type="text/css" />
+</head>
+<body cache>
+    <section id="section" data-js="js/deptList">
+        <div>
+            <table id="sureTable" class="dataTable" >
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="height: 150px; text-align: center; vertical-align: middle;" colspan="9" align="center"><span>
+                            <!--<img src="../static/images/loading.gif">--></span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </section>
+    <script id="sureTheadTemp" type="text/html">
+    <th class="checkBox"><em></em></th>
+    <#for(var i in obj){#>
+        <th><#=obj[i]#></th>
+    <#}#>
+</script>
+    <script id="sureTbodyTemp" type="text/html">
+    <#for(var i=0,idata;i<list.finalList.length;i++){ idata=list.finalList[i]; #>
+    <tr>
+        <td class="checkBox" data-id="<#=list.otherItems[i].UnitCode #>"><em></em></td>
+        <#for(var e in idata){#>
+            <# var result=0;
+            if(e=="SendStatus"){
+                if(idata[e]==0){
+                    result="未发送";
+                }else{
+                    result="已发送";
+                }
+            
+         }
+         if(e=="IsPay"){
+            if(idata[e]==0){
+                result="未支付";
+            }else{
+                result="已支付";
+            }
+         }
+        
+        #>
+        <td>
+            <# if(e=="UnitName"){#>
+                <input type="text" class="group" data-id="<#=list.otherItems[i].UnitCode #>" value="<#=idata[e]#>">
+             <#}else{#>
+                <#=result?result:idata[e]#>
+            <#}#>
+       </td>
+        <#}#>
+    </tr>
+    <#} #>
+</script>
+    <script type="text/javascript" src="/Module/static/js/lib/require.min.js" defer async="true" data-main="/Module/EMMLManage/js/main.js"></script>
+</body>
+</html>

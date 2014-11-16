@@ -1,0 +1,64 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>我的购物车</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+
+</head>
+
+<body>
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="aboutVipDiv" style="display:none;" id="aboutVipDiv">
+    <div class="vipCartBox" style="border-bottom:0; ">
+      <div class="vipCart" id="VipCart" style="min-height:200px;"> </div>
+      <div class="vipCartBoxBottom"></div>
+    </div>
+    <div style="width:94%; margin-left:auto; margin-right:auto; margin-top:15px; padding-bottom:50px;" id="LoginTip"></div>
+  </div>
+  <div class="MenuBox" id="MenuBox" rel="2"> </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var Von = 'Vip.getShoppingCart("1");';
+var loadMore = '';
+</script> 
+<script id="getShoppingCart" type="text/template">
+	 <div class="vipCartBoxTop"><span class="checkBoxTrue VipIcn" id="checkBoxALLcc" onclick="Vip.ShopEditCheck(this,'all')" style="left:6px;"></span><span class="EditAll" onclick="Vip.ShopEditPP(this)" rel="0"><img src="images/bj.png" width="72" /></span></div>
+
+<% _.each(itemList,function(item){%>
+ <div class="vipCartLi" skuId="<%=item.skuId %>" itemId="<%=item.itemId %>" id="CartLi_<%=item.skuId %>" >
+            <ul>
+              <li class="cartTD1"><span class="checkBoxTrue VipIcn" onclick="Vip.ShopEditCheck(this,'')"></span></li>
+              <li class="cartTD2"><img src="<%=item.imageUrl %>"></li>
+              <li class="cartTD3" >
+                <div class="cartTD3Div"><%=item.itemName %><span class="guigeCC"><%=item.itemCategoryName %></span></div>
+              </li>
+              <li class="cartTD4">￥<span id="danjia_<%=item.itemId %>"><%=item.salesPrice %></span><br>
+                x<span id="shuliang_<%=item.itemId %>"><%=item.qty %></span></li>
+              <li class="cartTD5"  style=" display:none;">
+                <div style="width:100px;height:28px; float:right; overflow:hidden;"><span onclick="WelfareAction.Down('<%=item.itemId %>')" class="shuDown Detailicn"></span><span id="qty_<%=item.itemId %>" class="ddNumcc"><%=item.qty %></span><span onclick="WelfareAction.Up('<%=item.itemId %>')" class="shuUp Detailicn"></span></div>
+				<input type="hidden" value="<%= item.salesPrice * item.qty  %>" id="danp_<%=item.itemId %>"  />
+                <div style="clear:both; width:68px; height:34px; background-position:0 -136px; float:right; clear:both; margin-top:10px; cursor:pointer;" c onclick="Vip.DelSKuId('<%=item.skuId %>')"><img src="images/del.png" width="62" /></div>
+              </li>
+            </ul>
+          </div>
+<% })%>
+<div class="vipCartBoxBtm"><a href="javascript:void(0)" onclick="GetData.setOrderInfoCard()" class="jieSuanBtn">确认下单</a><a href="list.html" class="jieSuanBtn" style="margin-right:10px; background:#ff9999;">继续购物</a>合计： <strong style="color:#e93c8c">￥<span id="totalAmount"><%=totalAmount %></span></strong></div>
+</script>
+<script id="Noto" type="text/template">
+	<div style=" padding-top:50px; text-align:center"><img src="images/gouwuche.png" width="80" /></div>
+<div style=" padding-top:20px; text-align:center">您购物车还没有任何商品哦</div>
+<div style=" padding-top:20px; text-align:center"><a href="list.html"><img src="images/gg.png"  width="100"></a></div>
+</script>
+</body>
+</html>

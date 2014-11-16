@@ -1,0 +1,128 @@
+@charset "utf-8";
+/*common*/
+html,body,body>section{height:100%;min-height:100%;}
+body>section{max-width:640px;margin:0 auto;}
+body{font:15px/1.2em "Microsoft YaHei";background:#fff;color:#4d463e;}
+select,input{border:none;}
+input{text-indent:5px;}
+/*长江商学院EMBA*/
+.indexAreaTop{height:50%;background:url(../../../images/special/cjemba/index01.jpg) no-repeat bottom center;background-size:100%;}
+/*.indexAreaCenter{position:relative;height:29.5%;background:url(../../../images/special/cjemba/index02.jpg) no-repeat center center;background-size:100%;}*/
+.indexAreaBottom{height:50%;background:url(../../../images/special/cjemba/index03.jpg) no-repeat top center;background-size:100%;}
+/*.indexAreaCenter p{position:absolute;font:bold 12px/1.3em "Microsoft YaHei";}
+.indexAreaCenter .text1{top:17.1%;left:13.35%;}
+.indexAreaCenter .text2{top:33.23%;font-size:13px;left:44.84%;}
+.indexAreaCenter .text3{top:52.13%;font-size:16px;left:6.41%;}
+.indexAreaCenter .text4{top:78.65%;font-size:13px;left:30%;}*/
+
+/*招生信息25%; 29.46%;45.54%; */
+.admissionsTop{height:21%;background:url(../../../images/special/cjemba/admissions01.jpg) no-repeat bottom center;background-size:100%;}
+.admissionsCenter{height:42%;background:url(../../../images/special/cjemba/admissions02.jpg) no-repeat top center;background-size:100% 100%;}
+.admissionsBottom{height:37%;background:url(../../../images/special/cjemba/admissions03.jpg) no-repeat top center;background-size:100%;}
+
+.admissionsCenter{position:relative;}
+.admissionsCenter .textInfo{padding:5% 16px 2%;position:absolute;top:0;width:100%;}
+.admissionsCenter .textInfo .tel-icon{display:inline-block;background: url(../../../images/special/cjemba/finger.png) no-repeat;background-size:100% 100%;width:19px;height:24px;position: relative;top:3px;vertical-align: middle;}
+.admissionsCenter .textInfo .title{height:30px;line-height:38px;text-indent:43px;font-size:15px;font-weight:bold;background:url(../../../images/special/cjemba/titleIcon.png) no-repeat 0 center;background-size:38px 30px;color:#1f415d;}
+.admissionsCenter .textWrap{padding-left:40px;font-size:12px;color:#1f415d;}
+.admissionsCenter .textWrap h2{margin:1% 0;font-size:15px;color:#0477ae;}
+.admissionsCenter .textWrap p{overflow: hidden}
+.admissionsCenter .textWrap .dot{float:left;width:14px;line-height:18px;font-size:30px;color:#343434;}
+.admissionsCenter .textWrap .ads{margin-left:14px;display:block;margin-bottom:2%;}
+.admissionsCenter .textWrap .course-ask .self-event{font-size:16px;color:#008cd1}
+.admissionsCenter .onlineApplyBtn{display:block;width:132px;height:28px;margin:3% auto 0;background:url(../../../images/special/cjemba/onlineApply.png) no-repeat 0 0;background-size:132px 28px;}
+
+
+/*独特优势*/
+.advantageTop{position:relative;height:19.04%;padding-left:13px;background:url(../../../images/special/cjemba/advantage01.jpg) no-repeat bottom center;background-size:100%;}
+.advantageCenter{position:relative;height:41.48%;background:url(../../../images/special/cjemba/advantage02.jpg) no-repeat top center;background-size:100% 100%;}
+.advantageTop .title{position:absolute;bottom:13px;font-size:13px;font-weight:bold;color:#fff;}
+.advantageTop .title span{padding-right:1px;font-size:16px;}
+.advantageBanner{width:100%;height:39.48%;background:#0079a6;position: relative}
+.advantageBanner ul{width:1000%;}
+.advantageBanner li{width:100%;float:left;}
+.advantageBanner li img{display:block;width:100%;}
+.advantageCenter .bannerDot{position:relative;height:60px;line-height:60px;text-align:center;border-bottom:1px solid rgba(255,255,255,0.5);}
+.advantageCenter .bannerDot .dotWrap{display:inline-block;}
+.advantageCenter .bannerDot em{float:left;width:10px;height:10px;margin:0 5px;border-radius:5px;background:rgba(255,255,255,0.2);}
+.advantageCenter .bannerDot em.on{background:#fff;}
+.advantageCenter .exp{padding:19px 12px 0;font:bold 12px/1.5em "Microsoft YaHei";color:#ededed;}
+.commonApplyBtn{position:absolute;top:16px;display:block;width:36px;height:28px;background:url(../../../images/special/cjemba/signupBtn.png) no-repeat 0 0;background-size:36px 28px;}
+
+
+/*精英校友*/
+.alumnusTop{position:relative;height:26.38%;background:url(../../../images/special/cjemba/alumnus01.jpg) no-repeat bottom center;background-size:100%;}
+.alumnusCenter{position:relative;height:35.21%;background:url(../../../images/special/cjemba/alumnus02.jpg) no-repeat top center;background-size:100% 100%;}
+.alumnusBottom{height:38.41%;background:url(../../../images/special/cjemba/alumnus03.jpg) no-repeat top center;background-size:100% 100%;}
+.alumnusCenter .commonApplyBtn{top:145px;}
+.alumnusTop .bigText{position:absolute;top:auto;bottom:2px;width:100%;height:92px;line-height:92px;text-align:center;font-family:"Arial";font-size:80px;color:rgba(255,255,255,0.3);}
+
+/*近期活动*/
+.activityTop{height:32%;background:url(../../../images/special/cjemba/activity01.jpg) no-repeat bottom center;background-size:100%;}
+.activityCenter{height:32.5%;background:url(../../../images/special/cjemba/activity02.jpg) no-repeat top center;background-size:100% 100%;}
+.activityBottom{height:35.5%;background:url(../../../images/special/cjemba/activity03.jpg) no-repeat top center;background-size:100%;}
+.activityCenter{overflow:hidden;position: relative}
+.activityCenter .list{width:300%;height:120px;}
+.activityCenter a{float:left;width:79px;height:79px;margin:0 4px 0;}
+.activityCenter a.on{width:120px;height:120px;margin:0 13px;}
+.activityCenter a img{width:100%;height:100%;}
+
+
+/*学术与研究立校*/
+.studyTop{position:relative;height:26.19%;background:url(../../../images/special/cjemba/study01.jpg) no-repeat bottom center;background-size:100%;}
+.studyCenter{position:relative;height:46.62%;background:url(../../../images/special/cjemba/study02.jpg) no-repeat top center;background-size:100% 100%;}
+.studyBottom{height:27.19%;background:url(../../../images/special/cjemba/study03.jpg) no-repeat top center;background-size:100%;}
+.studyTop .num40{position:absolute;top:auto;bottom:1px;left:9.843%;width:64px;height:39px;background:url(../../../images/special/cjemba/40.png) no-repeat 0 0;background-size:40px 19.5px;}
+.studyTop .mao{position:absolute;top:-17px;left:6px;width:30px;height:16px;background:url(../../../images/special/cjemba/mao.png) no-repeat 0 0;background-size:30px 16px;}
+.studyCenter .num06{position:absolute;top:auto;bottom:1px;left:59.8%;width:37px;height:56px;background:url(../../../images/special/cjemba/6.png) no-repeat 0 0;background-size:18px 28px;}
+.studyCenter .commonApplyBtn{top:42%;}/*top:101px;*/
+
+/*卓越社会影响力*/
+.influenceTop{position:relative;height:34.02%;background:url(../../../images/special/cjemba/influence01.jpg) no-repeat bottom center;background-size:100%;}
+.influenceCenter{position:relative;height:28.67%;background:url(../../../images/special/cjemba/influence02.jpg) no-repeat top center;background-size:100%;}
+.influenceBottom{position:relative;height:37.31%;background:url(../../../images/special/cjemba/influence03.jpg) no-repeat top center;background-size:100%;}
+.influenceTop .num20{position:absolute;top:auto;bottom:93px;left:22%;width:59px;height:23px;background:url(../../../images/special/cjemba/20.png) no-repeat 0 0;background-size:30px 11px;}
+.influenceCenter .num111{position:absolute;top:auto;bottom:18px;left:3.4375%;width:66px;height:23px;background:url(../../../images/special/cjemba/111.png) no-repeat 0 0;background-size:33px 11px;}
+.influenceBottom .num136{position:absolute;top:110px;left:57.79%;width:66px;height:21px;background:url(../../../images/special/cjemba/136.png) no-repeat 0 0;background-size:33px 10px;}
+.influenceTop .commonApplyBtn{top:auto;bottom:8px;}
+
+
+.bx-wrapper{text-align: center}
+.bx-controls{position: absolute;bottom:-35px;z-index: 999;left:50%;margin-left:-60px;}
+.bx-pager-item{display:inline-block;}
+.bx-pager-item a{display:block;width:10px;height:10px;margin:0 5px;border-radius:5px;background:rgba(255,255,255,0.2);font-size:0;line-height:0;}
+.bx-pager-item a.active{background:#fff;}
+#alumnusPicList .bx-wrapper{max-width:100% !important;}
+
+.activityList{position: relative}
+
+.dbarrow{
+    position: fixed;
+    left:50%;
+    z-index: 999;
+    display:none;
+    width:38px;
+    height:35px;
+    background:url("../../../images/special/cjemba/arrow.png") no-repeat;
+    background-size: 100% 100%;
+    margin-left:-19px;
+}
+#top_arrow{
+    top:10px;
+    -webkit-animation:topArrow 0.3s linear 0 infinite alternate;
+    -webkit-transform:rotate(180deg);
+}
+#bottom_arrow{
+    bottom:10px;
+    -webkit-animation:bottomArrow 0.3s linear 0 infinite alternate;
+}
+@-webkit-keyframes topArrow
+{
+    0% {top:10px;}
+    100% {top:5px;}
+}
+@-webkit-keyframes bottomArrow
+{
+    0% {bottom:10px;}
+    100% {bottom:5px;}
+}

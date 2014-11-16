@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <script type="text/javascript">
+  (function(){  
+    var onBridgeReady =  function () {  
+   // 隐藏右上角的选项菜单入口;  
+    WeixinJSBridge.call('hideOptionMenu');
+    // 隐藏底部菜单;  
+    WeixinJSBridge.call('hideToolbar');
+    };  
+     if(document.addEventListener){  
+              document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);  
+            } else if(document.attachEvent){  
+              document.attachEvent('WeixinJSBridgeReady'   , onBridgeReady);  
+              document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);  
+            }  
+    })();  
+</script>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+  <title name="Theme">新春特惠</title>
+  <link href="../css/global.css" rel="stylesheet" type="text/css" />
+  <link href="../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body class="bw" style="background-color: #EFEFEF;" >
+
+  <div class="fxloading">
+    <img width="40" height="40" src="../images/loading.gif"></div>
+  <section class="theme_area" id="detailArea"></section>
+  <div class="bgshade" style="display:none;"></div>
+  <div class="submit_area" style="display:none;">
+    <div class="thclose" name='has'></div>
+    <div class="sub" name='has'>
+
+      <a  href="javascript:;">确定</a>
+      <a  href="javascript:;">取消</a>
+    </div>
+
+  </div>
+
+  <div class="myjoin">我要参加</div>
+  <dl class="bot_nav">
+    <dt>
+      <a href="javascript:history.go(-1)">返回</a>
+    </dt>
+    <dd>
+      <a href="javascript:window.location.reload()">刷新</a>
+    </dd>
+    <dd>
+      <a href="javascript:Jit.AM.toPage('MyDetail')">个人中心</a>
+    </dd>
+
+    <dd>
+      <a href="javascript:Jit.AM.toPage('HomePage')">首页</a>
+    </dd>
+  </dl>
+</body>
+</html>

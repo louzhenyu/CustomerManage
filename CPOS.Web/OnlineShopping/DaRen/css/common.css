@@ -1,0 +1,68 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img,div{ border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 14px; font-family: STHeiti,"微软雅黑",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #333333; resize: none; outline: none; }
+body { background:#e9e7df;}
+h1, h2, h3, h4, h5, h6 { font-size: 16px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 16px; margin: 0; padding: 0; }
+textarea, input[type="text"],input[type="password"],input[type="button"],input[type="submit"]{ resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1 }
+.frdisplay{ float:right; display:block;}
+a,a:hover{ text-decoration:none; color:#565656;}
+.PcBox{ position:relative; margin-left:auto; margin-right:auto; overflow:hidden; padding-bottom:20px;}
+.blank1{ height:1px; overflow:hidden; display:block; clear:both;}
+
+.DaRenTT{ background:#fff; padding:15px 5%; font-size:16px; font-weight:bold; line-height:28px; box-shadow:0 0 8px #999;}
+.DaRenImgDiv{ clear:both; overflow:hidden; padding-bottom:20px;}
+.DaRenImgDivBox{ float:left; width:41%; display:block; box-shadow:0 0 5px #999; margin:15px 2% 0 3%; _display:inline; border-radius:3px; background-color:#fff;  padding:2%;}
+.DaRenImgDivBoxInner{ overflow:hidden; height:120px; position:relative;}
+.icnSkin{ background-image:url(../images/icnSkin.png); background-repeat:no-repeat;}
+.DesIndex{ position:absolute; left:0; top:0; width:26px; padding-right:6px; height:32px; background-position:0 -2px; display:block; font-size:16px; text-align:center; color:#000; z-index:1;}
+.BrOpacity{ height:24px; background-color:#000; opacity:0.5; position:absolute; width:100%; bottom:0; left:0; z-index:1;}
+.BrTxt{height:24px; position:absolute; width:100%; bottom:0; left:0; z-index:2; color:#fff; text-align:left; font-size:12px; line-height:24px;}
+.bricn1{ width:20px; height:24px; background-position:0 -45px; display:block; float:left; padding-left:24px; margin-left:36px;}
+.bricn2{ width:20px; height:24px; background-position:0 -74px; display:block; float:left; padding-left:24px; }
+.prevPhotoDetail{  width:20%; position:absolute; left:0; top:0; height:200px; cursor:pointer }
+.nextPhotoDetail{width:20%; position:absolute; right:0; top:0; height:200px; cursor:pointer}
+.prevD{ width:27px; height:36px; background-position:-69px -84px; display:block; }
+.NextD{ width:27px; height:36px; background-position:-69px -40px; display:block; }
+.photoActionDiv{padding:15px 5%; clear:both; zoom:1}
+.PhotoCommentTextarea{ border:1px solid #CCC; box-shadow:0 0 2px #CCC; background-color:#fff; padding:5px;}
+.PhotoCommentTextareaStyle{ background-color:none; width:100%;}
+.PhotoCommentBtndiv{ margin-top:10px; clear:both; position:relative; overflow:hidden; position:relative; height:40px;}
+.PhotoCommentBtndivc{ float:right; }
+.PhotoCommentBtndivInput{ width:75px; height:32px; background-color:0; background-position:-25px -218px; display:block; cursor:pointer}
+.PhotoCommentList{ padding-top:12px; clear:both;}
+.PhotoCommentLi{ clear:both; line-height:20px; padding:5px 0; border-bottom:1px dotted #CCC;} 
+.PhotoCommentLiP{ text-align:right; color:#999 }
+.PhotoCommentZan{ position:absolute; right:94px; top:1px; background-position:-66px 0; height:34px; line-height:34px; font-size:16px; font-weight:bold; padding-left:40px; cursor:pointer}
+.WinnerTitle{ background:url(../images/textSkin.png) no-repeat left top; height:41px; overflow:hidden;}
+.WinnerBox{ background:url(../images/winnerbg.png) repeat left top; border:2px solid #aa0808; border-radius:7px; margin-top:10px; padding:3%; width:90%; margin-left:auto; margin-right:auto; font-size:14px; line-height:30px; position:relative; box-shadow:0 0 3px #CCC;}
+.WinnerBoxTix{ overflow:hidden; }
+.WinnerBoxcdl{  background:url(../images/textSkin.png) no-repeat left -42px; height:27px; overflow:hidden;}
+.WinnerBoxcdl2{  background:url(../images/textSkin.png) no-repeat left -72px; height:31px; overflow:hidden;}
+.odpe{ clear:both; padding-top:5px; padding-left:10px; overflow:hidden;}
+.odpe li{ height:24px; line-height:24px; width:50%; float:left; }
+.moreComment{ text-align:center; padding:10px; cursor:pointer}
+.AppBgGray,.ifram,.masksBox{ position:absolute; left:0; top:0; z-index:99; background-color:#333; filter:alpha(opacity=30); opacity:0.3;}
+.AlumniConnext1 {
+    background-color: #F7F7F7;
+    box-shadow: 0 0 5px #5D7281;
+    left: 3%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    padding-bottom: 20px;
+    position: absolute;
+    top: 20px;
+    width: 94%;
+    z-index: 111;
+}
+.AlumniInputstyle{  border: 1px solid #b2bac0; border-radius: 4px; height: 40px; padding-left: 2%;  background: -webkit-gradient(linear, left top, left bottom, from(#d7d7d7), to(#ffffff), color-stop(0.1, #ffffff)); color: #9c9b9b; text-shadow: 0 0 1px #fff; width:98%; font-size:18px;}
+.inputAndSelect{ width:80%; margin-left:auto; margin-right:auto; margin-top:20px; line-height:28px;}
+.inputsubmitStyle{ color:#fff; font-size:16px; cursor:pointer;  height:44px; clear:both; border-radius:5px; width:100%; border:1px solid #911f1f; background: -moz-linear-gradient(top,  #c82f2f 0%, #b51c1c 50%, #a91111 100%);   background: -webkit-gradient(linear, left top, left bottom, from(#c82f2f),to(#a91111), color-stop(0.5,#b51c1c)); }
+.AlumniConnext1Title{ height:46px; border-bottom:1px solid #bbbbbb; background: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#dadada),  color-stop(0.5, #ececec)); box-shadow:0 0 2px #bbb; text-align:center; font-size:22px; color:#4e4e4e; line-height:46px; position:relative; }
+#NoCommentId{ text-align:center; padding:10px;}

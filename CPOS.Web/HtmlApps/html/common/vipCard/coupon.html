@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="CouponList">优惠卷列表</title>
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body>
+<div class="wx_loading" id="masklayer" style="background-color:#FFF;" style="background-color:#FFF;">
+    <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+</div>
+<section class="couponCodeArea">
+    <div>
+        <div class="couponNav" style="display: none;"></div>
+        <div class="couponList" id="couponList"></div>
+    </div>
+</section>
+</body>
+
+</html>
+
+<script type="text/html" id="couponTabList">
+    <% for (var i = 0; i < datas.length; i++) {
+    var dataInfo=datas[i];%>
+    <a href="javascript:;" class="<%=i==0?'on':''; %>" data-val="<%=dataInfo.CouponTypeID%>" ><span><%=dataInfo.CouponTypeName %></span></a>
+    <% };%></script>
+
+<script type="text/html"  id="tpCouponList" >
+    <% for (var i = 0; i < datas.length; i++) {
+    var dataInfo=datas[i];%>
+    <a href="javascript:Jit.AM.toPage('CouponDetail','couponId=<%=dataInfo.CouponID %>')">
+        <div class="couponBox"  >
+            <div class="couponWrap">
+                <div class="leftWrap">
+                    <p class="name"><%=dataInfo.CouponName %></p>
+                    <p class="exp"><%=dataInfo.CouponDesc %></p>
+                    <p class="deadline">有效期：<%=dataInfo.iseffective==1?'永久':dataInfo.EndDate %></p>
+                </div>
+                <p class="give">出示</p>
+                <p class="givetip"><%=dataInfo.Status==1||dataInfo.isexpired==1?"已使用":"未使用" %></p>
+            </div>
+        </div>
+    </a>
+    <% };  %></script>

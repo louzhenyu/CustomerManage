@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+</head>
+<body>
+<script type="text/javascript">
+    window.addEventListener('load', function () {
+        var script = document.createElement('script');
+        script.addEventListener('load', function (event) {
+            alert('script loaded');
+        },false);
+        script.src='js/special/cjemba/home.js';
+        document.head.appendChild(script);
+    },false);
+</script>
+</body>
+</html>

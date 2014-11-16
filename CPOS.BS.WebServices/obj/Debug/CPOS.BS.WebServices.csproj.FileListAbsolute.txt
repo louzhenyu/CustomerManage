@@ -1,0 +1,6 @@
+F:\Trade\CustomerManage\CPOS.BS.WebServices\bin\Debug\CPOS.BS.WebServices.dll.config
+F:\Trade\CustomerManage\CPOS.BS.WebServices\bin\Debug\CPOS.BS.WebServices.dll
+F:\Trade\CustomerManage\CPOS.BS.WebServices\bin\Debug\CPOS.BS.WebServices.pdb
+F:\Trade\CustomerManage\CPOS.BS.WebServices\obj\Debug\CPOS.BS.WebServices.csprojResolveAssemblyReference.cache
+F:\Trade\CustomerManage\CPOS.BS.WebServices\obj\Debug\CPOS.BS.WebServices.dll
+F:\Trade\CustomerManage\CPOS.BS.WebServices\obj\Debug\CPOS.BS.WebServices.pdb

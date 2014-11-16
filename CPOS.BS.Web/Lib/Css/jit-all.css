@@ -1,0 +1,71 @@
+﻿body
+{
+color:#333333; font-size:12px;font-family:宋体;
+}
+.CheckBox{color:#333333; font-size:12px;font-family:宋体;  line-height:22px;}
+
+.TextArea{ color:#333333;  font-size:12px; line-height:22px}
+.TextArea textarea{border:1px #ABADB3 solid; color:#333333; font-size:12px;font-family:宋体; padding:5px; line-height:18px;}
+
+/*下拉框 - 实现勾选功能所需的样式*/
+.x-combo-checker 
+{ 
+background-position: 50% -2px; 
+margin-left: 1px; 
+background-color: transparent; 
+background-image: url("/Lib/Javascript/Ext4.1.0/resources/themes/images/default/grid/unchecked.gif"); 
+background-position: -1px -1px; 
+background-repeat: no-repeat; 
+height: 14px; 
+width: 14px; 
+display: inline-block; 
+} 
+.x-boundlist-selected .x-combo-checker 
+{ 
+background-image: url("/Lib/Javascript/Ext4.1.0/resources/themes/images/default/grid/checked.gif"); 
+}
+
+.buttonselect
+{
+background: url(/Lib/Image/button/select.png)   !important;  
+}
+.buttonselect button:active
+{
+background: url(/Lib/Image/button/selecthighlight.png)   !important;  
+}
+.buttonhighlight
+{
+    background: url(/Lib/Image/button/button.png)   !important;  
+} 
+.buttonhighlight button:active
+{
+    background: url(/Lib/Image/button/buttonhighlight.png)   !important;  
+} 
+.buttoncurrent
+{
+    background: url(/Lib/Image/button/buttoncurrent.png)  !important; 
+}  
+.buttoncurrent button:active
+{
+    background: url(/Lib/Image/button/buttoncurrenthighlight.png) no-repeat   !important; 
+}
+.buttondisabled
+{
+    background: url(/Lib/Image/button/buttoncurrent.png) no-repeat   !important; 
+}      
+.buttonopensmall
+{
+    background: url(/Lib/Image/button/opensmall.png) no-repeat  !important;    
+} 
+.buttonclosesmall
+{
+    background: url(/Lib/Image/button/closesmall.png) no-repeat  !important;      
+} 
+.buttonopenbig
+{
+    background: url(/Lib/Image/button/openbig.png) no-repeat  !important; 
+} 
+.buttonclosebig
+{
+    background: url(/Lib/Image/button/closebig.png) no-repeat    !important;
+} 

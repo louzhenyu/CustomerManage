@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<title>App Detail</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.WeiXinDetail{ width:92%; margin-left:auto; margin-right:auto; text-align:left; padding-bottom:90px;}
+.DetailListBox{ background-color:#f5f4f4; border:1px solid #cfc9c9; border-radius:5px; margin-top:20px; }
+.DetailListBoxTitle{ color:#4d4d4d; font-size:16px; border-bottom:1px solid #cfc9c9; padding:6px 10px;line-height:34px;  font-weight:bold;}
+.DetailListBoxTxt{color:#898484; font-size:14px;  line-height:30px; padding:6px 10px; }
+.WeiXinDetail h2{ padding:5px 0; line-height:32px; font-size:20px; font-weight:bold}
+.AdDiv{ height:52px; background-color:#f1f1f1; position:fixed; left:0; bottom:0; line-height:52px;  width:92%; padding-left:4%;padding-right:4%; border-top:1px dotted #cfc9c9;}
+.zhifuBtn{ border: 1px solid #c23700; border-radius: 4px; height: 40px;  background: -webkit-gradient(linear, left top, left bottom, from(#ffab3d), to(#f06000), color-stop(0.5, #f77600)); color: #fff; text-shadow: 0 0 1px #fff; width:120px; font-size:18px; float:right; margin-top:6px; text-align:center;}
+</style>
+</head>
+
+<body>
+
+<div style="display:none;" id="shopDetail">
+<section style="text-align:center; overflow:hidden; position:relative;" class="AppBanner"><img width="100%" src=""  id="WeiXinDetailImage"></section>
+<div class="WeiXinDetail">
+	<h2 id="WeiXinDetailH2"></h2>
+    <p><span style="margin-right:40px; text-decoration:line-through;">原价:<span id="price"></span></span>现价：<span class="priceNow"></span></p>
+    <div class="DetailListBox">
+    	<div class="DetailListBoxTitle">地址：</div>
+        <div class="DetailListBoxTxt" id="padress">
+        
+        </div>
+    </div>
+    <div class="DetailListBox">
+    	<div class="DetailListBoxTitle">电话：</div>
+        <div class="DetailListBoxTxt" id="pphone">
+
+        </div>
+    </div>
+    
+    <div class="DetailListBox">
+    	<div class="DetailListBoxTitle">门店简介：</div>
+        <div class="DetailListBoxTxt" id="pdescription">
+         
+        </div>
+    </div>
+</div>
+<div class="AdDiv">
+	<span style="font-size:16px; color:#f97c00; "><input type="button" value="支付" class="zhifuBtn" onclick="GoTopay()"  /><strong style="font-size:18px;" >现价：<span class="priceNow"></span></strong></span>
+</div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript" src="js/jquery1.6.js"></script> 
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/htmlTemplates.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	ShopDetailAjax();	
+})
+</script>
+</body>
+</html>

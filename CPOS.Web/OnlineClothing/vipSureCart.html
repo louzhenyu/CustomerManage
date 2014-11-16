@@ -1,0 +1,303 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>确认订单</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body>
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="aboutVipDiv" id="vipSureCart" style="display:none;">
+    <div class="vipCartBox" style="border-bottom:0; ">
+      <div class="vipCart" id="VipCart"> </div>
+      <div class="vipCartBoxBottom"></div>
+    </div>
+    <div style=" margin-top:10px;">
+      <h3 style="width:96%; margin-left:auto; margin-right:auto; line-height:36px;">使用优惠券</h3>
+      <div id="divCoupon">
+        
+      </div>
+    </div>
+
+    <div style=" margin-top:10px;">
+      <h3 style="width:96%; margin-left:auto; margin-right:auto; line-height:36px;">配送方式</h3>
+      <div id="PeiSong"></div>
+    </div>
+
+    <div style=" margin-top:10px;">
+      <h3 style="width:96%; margin-left:auto; margin-right:auto; line-height:36px;">收货人</h3>
+      <div class="vipCartBox" style=" margin-top:0;" >
+        <div  class="ProvideComBox"  style=" margin-top:0;" >
+          <ul>
+            <li>
+              <div class="ProvideDiv"><span class="Xing">*</span>
+                <div class="ProvideText">姓名</div>
+                <div class="ProvideTextInput">
+                  <input type="text" id="vipName" class="inputs">
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="ProvideDiv"><span class="Xing">*</span>
+                <div class="ProvideText">手机</div>
+                <div class="ProvideTextInput">
+                  <input type="text" id="phone" class="inputs">
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="ProvideDiv"><span class="Xing"></span>
+                <div class="ProvideText">邮箱</div>
+                <div class="ProvideTextInput">
+                  <input type="text" id="email" class="inputs">
+                </div>
+              </div>
+            </li>
+            <li class="Tetdd" style="border:none;">
+              <div class="ProvideDiv"><span class="Xing"></span>
+                <div class="ProvideText">备注</div>
+                <div class="ProvideTextInput">
+                  <textarea id="remark"></textarea>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div style="padding-top:20px; width:90%; margin-left:auto; margin-right:auto; padding-bottom:20px;">
+            <input type="button" value="提交" onclick="Vip.setUpdateOrderDelivery()" class="btnStylecc">
+          </div>
+        </div>
+        <div class="vipCartBoxBottom"></div>
+      </div>
+    </div>
+    <div style="width:94%; margin-left:auto; margin-right:auto; padding-bottom:50px;" id="LoginTip"></div>
+  </div>
+  <div class="MenuBox" id="MenuBox" rel="2"> </div>
+ 
+</div>
+<input type="hidden" value="1" id="deliveryId" />
+<input type="hidden" value="1" id="couponTypeId" />
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+
+
+<div id="couponPopup" style="display: none;">
+	<div class="appOpacity" style="display:none;" id="appOpacity"></div>
+	<div class="appDetailBox">
+		<div class="CloseApp" onclick="Coupon.ClosePopup()"><img src="images/close.png" width="30" /></div>
+		<div class="ui-grid-c">
+			<div class="ui-block-a">
+				<h2></h2>
+			</div>
+			<div class="ui-block-b">
+				<h2>类型</h2>
+			</div>
+			<div class="ui-block-c">
+				<h2>面值</h2>
+			</div>
+			<div class="ui-block-d">
+				<h2>获取方式</h2>
+			</div>
+		</div>
+		<div id="couponList"></div>
+<!--		<div class="ui-grid-a" style="clear: both;"> 
+			<div class="ui-block-a">
+				<div class="btn"><a href="#">确 定</a></div>
+			</div> 
+		</div> -->
+	</div>
+</div>
+
+<script type="text/javascript">
+    var Von = 'Vip.getOrderDetail(); GetData.getVipDetail(); GetData.getDeliveryList();';
+    var loadMore = '';
+
+</script> 
+<script id="getShoppingCart" type="text/template">
+
+<% _.each(orderDetailList,function(item){%>
+ <div class="vipCartLi" skuId="<%=item.skuId %>" itemId="<%=item.itemId %>" id="CartLi_<%=item.skuId %>" >
+            <ul>
+            
+              <li class="cartTD2" style="left:10px;"><% if(item.imageList.length > 0 ){%><img src="<%=item.imageList[0].imageUrl %>" /><%}%></li>
+              <li class="cartTD3" style="margin-left:80px;">
+                <div class="cartTD3Div"><%=item.itemName %><span class="guigeCC"><%=item.itemCategoryName %></span></div>
+              </li>
+              <li class="cartTD4">￥<span id="danjia_<%=item.itemId %>"><%=item.salesPrice %></span><br>
+                x<span id="shuliang_<%=item.itemId %>"><%=item.qty %></span></li>
+             
+            </ul>
+          </div>
+<% })%>
+<div class="vipCartBoxBtm">合计： <strong style="color:#cc0000">￥<span id="totalAmount"><%=totalAmount %></span></strong></div>
+
+</script> 
+<script id="shopList" type="text/template">
+<% if(storeList.length > 0 ){%>
+<% _.each(storeList,function(item){%>
+<div id="StoreListc_<%=item.storeId%>" storeId="<%=item.storeId%>" onclick="WelfareAction.CDDownPP('<%=item.storeId%>')" style=" padding-top:0; border:none; padding-bottom:10px; position:relative;"><span class="Detailicn HasSelectNo"></span>
+  <div class="SorderDiv">
+    <div class="SorderDivInnercc">
+      <div class="SorderDivInnerccPP1"><%=item.storeName%></div>
+      <div class="SorderDivInnerccPP2"><%=item.address%></div>
+    </div>
+  </div>
+</div>
+<%})}%>
+</script>
+<script id="getDeliveryListId" type="text/template">
+
+
+<div class="vipCartBox" style="margin-top:0; padding-bottom:10px;">
+        <div style=" margin-top:0;" class="ProvideComBox">
+          <ul>
+		  <% _.each(deliveryList,function(item){%>
+		  	<% if(item.deliveryId == "1"){%>
+            <li style=" padding:10px 0; border:none; padding-bottom:0;">
+                <span id="SH_1" onclick="WelfareAction.CDDown(1)" class="HasSelectYY Detailicn"></span>
+              <div id="SHSm" class="SorderDiv">
+                <div class="SorderDivInner">
+                  <div class="SorderDivLeft"><%=item.deliveryName%>：</div>
+                  <div class="SorderDivRight"></div>
+                </div>
+              </div>
+            </li>
+            <li id="Tetdd_1" class="Tetdd" style=" padding-top:0; padding-left:10px; border:none;">
+              <div class="ProvideDiv"><span class="Xing">*</span>
+                <div style="font-size: 16px;" class="ProvideText">送货地址：</div>
+                <div class="ProvideTextInput">
+                  <textarea id="preferentialDesc"></textarea>
+                </div>
+              </div>
+            </li>
+            <span style=" background-color:#CDCDCD; height:1px; margin-top:8px;" class="blank1"></span>
+			 <%}%>
+			<%})%>
+			<% _.each(deliveryList,function(item){%>
+		  	<% if(item.deliveryId == "2"){%>
+            <li style=" padding:10px 0; border:none;"><span id="SH_2" onclick="WelfareAction.CDDown(2)" class="HasSelectNo Detailicn "></span>
+              <div class="SorderDiv">
+                <div class="SorderDivInner">
+                  <div class="SorderDivLeft"><%=item.deliveryName%>：</div>
+                  <div class="SorderDivRight"></div>
+                </div>
+              </div>
+            </li>
+            <li id="Tetdd_2" class="Tetdd" style=" padding-top:0;border:none;  padding-left:10px; display:none;">
+              <div class="ProvideDiv"><span class="Xing">*</span>
+                <div style="font-size: 16px;" class="ProvideText">选择门店：</div>
+                <div page="1" id="AppShopList"> </div>
+              </div>
+              <div class="ProvideDiv"><span class="Xing">*</span>
+                <div style="font-size: 16px;" class="ProvideText">选择时间：</div>
+                <div style="height:36px;" class="ProvideTextInput">
+                  <select style="width:100%; height:34px; border:0; line-height:34px; background-color:Transparent;" id="deliveryTime">
+                    <option value="">请选择</option>
+                    <option value="上午(8:00-11:00)">上午(8:00-11:00)</option>
+                    <option value="中午(11:00-13:00)">中午(11:00-13:00)</option>
+                    <option value="下午(13:00-17:00)">下午(13:00-17:00)</option>
+                    <option value="晚上(17:00-20:00)">晚上(17:00-20:00)</option>
+                  </select>
+                </div>
+              </div>
+            </li>
+			 <%}%>
+			<%})%>
+          </ul>
+        </div>
+        <div class="vipCartBoxBottom"></div>
+      </div>
+      
+</script>
+
+<script id="getCouponList" type="text/template">
+
+<div class="vipCartBox" style="margin-top:0; padding-bottom:10px;">
+    <div style=" margin-top:0;" class="ProvideComBox">
+        <ul>
+            
+            <li  style=" padding:10px 0; border:none; padding-bottom:0;">
+                <span id="CO_1" onclick="WelfareAction.CDDownCoupon(1)" class="HasSelectYY Detailicn"></span>
+                <div id="SHSm1" class="SorderDiv">
+                    <div class="SorderDivInner">
+                        <div class="SorderDivLeft">使用优惠券</div>
+                        <div class="SorderDivRight">
+                            <span class="arrow-down"></span>
+                            <a style="color:#cc0000" onclick="Coupon.getCouponList()" href="javascript:void(0)">查看</a>
+                        </div>
+                       
+                    </div>
+                    
+                </div>
+            </li>
+             <li id="TetCO_1" class="Tetdd" style=" padding-top:0; padding-left:10px; border:none;">
+              <div class="ProvideDiv">
+                <div style="font-size: 16px;color:red; height:15px;" class="ProvideText">
+                   <label id="LbCouponPrompt"> 
+                    <%if( count > 0) { %>
+                    使用抵用券<%=count %>张价值<%=amount %>元
+                    <%} %>
+                    </label>
+                
+                </div>
+              
+              </div>
+            </li>
+            <span style=" background-color:#CDCDCD; height:1px; margin-top:8px;" class="blank1"></span>
+			 		  	
+            <li style=" padding:10px 0; border:none;">
+                <span id="CO_2" onclick="WelfareAction.CDDownCoupon(2)" class="HasSelectNo Detailicn "></span>
+              <div class="SorderDiv">
+                <div class="SorderDivInner">
+                  <div class="SorderDivLeft">不使用优惠券</div>
+                  <div class="SorderDivRight"></div>
+                </div>
+              </div>
+            </li>
+
+            <li id="TetCO_2" class="Tetdd" style=" padding-top:0; padding-left:10px; border:none;">
+               <div class="ProvideDiv"></div>  
+            </li>
+            
+			
+          </ul>
+        </div>
+        <div class="vipCartBoxBottom"></div>
+      </div>
+      <div style="width:96%; margin-left:auto; font-size:15px; margin-right:auto; line-height:30px; color:#cc0000; text-align:right;">
+      待支付金额 <b style="font-size:18px; font-weight:normal;">
+      <lable id="actualAmount" ></lable> 元
+      <input type="hidden" value="" id="couponAmount" />
+      </div>
+</script><!--<span class="checkBoxTrue VipIcn" onclick=""></span>
+			-->
+<script id="showCouponList" type="text/template">
+<% _.each(couponList,function(item, index){%>
+   <div class="ui-grid-c">
+   	<div class="ui-block-a" style="height: 40px;">
+		<%if (getParam("orderId")){%>
+			<input type="checkbox" name="chkCoupon" id="chk<%=index%>" <% if(item.isChecked == "1"){%>checked<%}%> value="<%=item.couponId%>" onclick="Coupon.clickCoupon('chk<%=index%>')" />
+		<%}%>
+    </div>
+    <div class="ui-block-b">
+      <h3><%=item.couponType%></h3>
+    </div>
+    <div class="ui-block-c">
+      <h2 style="color:#cc0000;"><%=item.parValue %></h2>
+    </div>
+    <div class="ui-block-d">
+      <h3 style="font-size:.6em; color:#666;"><%=item.couponSource %></h2>
+    </div>
+    <p>每满<%=item.conditionValue %>元可使用一张</p>
+  </div>
+<% })%>
+</script>
+</body>
+</html>

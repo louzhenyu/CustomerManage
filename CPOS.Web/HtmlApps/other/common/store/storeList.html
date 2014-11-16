@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="x-rim-auto-match" content="none">
+		<title>门店列表</title>
+		<link rel="stylesheet" type="text/css" href="../../static/css/global.css">
+		<link href="css/store.css" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body class="webkitbox"  id="section" data-js="../../common/store/js/storeList">
+		<header>
+			<img id="commonTopBg" class="commonTopBg" src="/HtmlApps/images/common/store/topBg.jpg" alt=""/>
+			<div id="storeFilter" class="storeSearch">
+				<div class="selectWrap">
+					<select id="citySelect"></select>
+				</div>
+				<div class="searchWrap">
+					<input id="nameLike" type="text" class="searchInput" placeholder="搜索身边的分店" />
+					<span class="searchIcon"> </span>
+					<span id="searchBtn" class="searchBtn">搜索</span>
+
+				</div>
+			</div>
+		</header>
+		<section id="section" class="storeListArea">
+			<div id="scrollContainer" style="width:100%;overflow: hidden;">
+				<div style="min-height:100%;">
+					<div id="pullDown">
+						<span class="pullDownIcon"></span><span class="pullDownLabel"></span>
+					</div>
+
+					<div class="storeList">
+						<ul id="storeList">
+
+						</ul>
+					</div>
+
+					<div id="pullUp" style="text-align: center;">
+						<span class="pullUpIcon"></span><span class="pullUpLabel"></span>
+					</div>
+				</div>
+			</div>
+
+		</section>
+		<script type="text/javascript" src="../../static/js/lib/require.js" defer async data-main="../../static/js/main.js"></script>
+		<script id="tplListItem" type="text/html">
+			<%for(var i=0;i<list.length;i++){var idata= list[i];%>
+			<li class="storeItem" data-storeid="<%=idata.StoreID%>">
+			<a href="storeDetail.html?storeId=<%=idata.StoreID%>&customerId=<%=customerId%>">
+			<div class="pic">
+			<img src="<%if(idata.ImageList[0]){%><%=idata.ImageList[0].ImageUrl%><%}%>" alt=""/>
+			</div>
+			<div class="adsInfo">
+			<span class="storeName"><%=idata.StoreName%></span>
+			<span class="ads t-overflow"><%=idata.Address%></span>
+			</div>
+			<span class="distance"><%if(idata.Distance){%><%=idata.DistanceDesc%><%}%></span>
+			</a>
+			</li>
+			<%}%>
+		</script>
+	</body>
+</html>

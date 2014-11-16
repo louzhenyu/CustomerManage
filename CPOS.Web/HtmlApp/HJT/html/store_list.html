@@ -1,0 +1,55 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="StoreList" >花间堂</title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+    <header>
+  <nav>
+    <ul class="clearfix">
+      <li><a href="javascript:Jit.AM.pageBack()">返回</a></li>
+      <li><a href="#">账户</a></li>
+      <li><a href="#">用户</a></li>
+      <li><a href="javascript:Jit.AM.toPage('Reserve');">首页</a></li>
+    </ul>
+  </nav>
+</header>
+    <div class="search_box" style="display:none" >
+        <dl>
+            <dt>
+                <input type="text" placeholder="搜索店名、地点">
+            </dt>
+            <dd>
+                <input type="button" value="筛选">
+            </dd>
+            <dd>
+                <input type="button" value="定位">
+            </dd>
+        </dl>
+    </div>
+    <section class="store_list">
+  <ul tplpanel="store_html_list">
+  </ul>
+</section>
+</body>
+</html>
+<script id="store_list_temp" type="text/template">
+ <li> 
+ <a href="javascript:JitPage.fnExChange('{{storeId}}');">
+      <div class="imgBox"><img src="{{imageURL}}" width='170' height='110' ></div>
+      <div class="infoBox"> <span><b>{{minPrice}}</b>起</span>
+        <hgroup>
+          <h2>{{storeName}}</h2>
+          <p>{{unitTypeContent}}</p>
+        </hgroup>
+        <div class="ads"><i></i>{{address}}</div>
+      </div>
+</a> 
+</li>
+</script>

@@ -1,0 +1,188 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=no">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>签到管理</title>
+<link href="css/reset-pc.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="allPage" id="section" data-js="js/signManage">
+	<!-- 公共的头部，导航，logo，信息 -->
+    <div class="commonHeader">
+    	<div class="infoBox">
+        	<p class="picWrap"><img src="images/infoIcon.png" alt="" /></p>
+            <p class="name">王孟孟</p>
+        </div>
+    	<div class="logoWrap">
+        	<div class="arr"></div>
+        	<h1 class="logo" title="阿拉丁">阿拉丁</h1>
+        </div>
+        <div class="commonNav">
+        	<ul class="clearfix">
+                <!--
+            	<li class="wechat">
+                	<a href="###">微信管理</a>
+                </li>
+                -->
+                <li class="action on">
+                	<a href="###">活动管理</a>
+                </li>
+                <!--
+                <li class="shop">
+                	<a href="###">商品管理</a>
+                </li>
+                <li class="store">
+                	<a href="###">门店管理</a>
+                </li>
+                <li class="order">
+                	<a href="###">订单管理</a>
+                </li>
+                <li class="basic">
+                	<a href="###">基础管理</a>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+    <!-- 中间区域-->
+    <div class="centreArea">
+    	<!-- 公共的菜单部分-->
+        <div class="commonMenu">
+        	<ul>
+            	<li class="activity on">
+                	<a href="###">活动管理</a>
+                    <div class="menuBg"></div>
+                </li>
+        <li class="activity">
+                	<a href="###">缴费管理</a>
+                    <div class="menuBg"></div>
+                </li>
+        <li class="activity">
+                	<a href="###">抽奖管理</a>
+                    <div class="menuBg"></div>
+                </li>
+        <li class="activity">
+                	<a href="###">活动管理</a>
+                    <div class="menuBg"></div>
+                </li>
+                <li class="grade">
+                	<a href="###">通知管理</a>
+                    <div class="menuBg"></div>
+                </li>
+                <!--
+                <li class="rule">
+                	<a href="###">积分规则</a>
+                    <div class="menuBg"></div>
+                </li>
+                <li class="change">
+                	<a href="###">会员转换</a>
+                    <div class="menuBg"></div>
+                </li>
+                <li class="sign">
+                	<a href="###">会员标签</a>
+                    <div class="menuBg"></div>
+                </li>
+                <li class="reward">
+                	<a href="###">会员奖励</a>
+                    <div class="menuBg"></div>
+                </li>
+                <li class="reward2">
+                	<a href="###">导购员奖励</a>
+                    <div class="menuBg"></div>
+                </li>
+                <li class="reward3">
+                	<a href="###">门店奖励</a>
+                    <div class="menuBg"></div>
+                </li>-->
+            </ul>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="contentArea">
+        	<!--原来信息-->
+            <div class="activityInfo-item">
+                <div class="markBox">
+                	<p class="month">JUN</p>
+                    <p class="day">13</p>
+                </div>
+                <div class="infoBox">
+                	<div class="titWrap t-overflow">
+                    	<h3 class="tit">《系统思维训练》</h3>
+                        <span class="shelf">进行中</span>
+                    </div>
+                    <div class="other">
+                    	<p class="exp">主办方：逸马国际顾问集团
+</p>
+                    	<p class="timeSlot">2014-08-04  09:00</p>
+                        <span class="read">已读<strong>90</strong></span>
+                        <span class="enroll">报名<strong>80</strong></span>
+                    </div>
+                </div>
+                <p class="clickMore">点击查看更多活动</p>
+            </div>
+            <!--设置菜单-->
+            <div class="subMenu">
+                <ul class="clearfix">
+                    <li class="modify"data-href="">修改活动</li>
+                    <li class="apply" data-href="signup.html">报名管理</li>
+                    <li class="sign on" data-href="signManage.html">签到管理</li>
+                </ul>
+            </div>
+            
+            
+            <!--菜单选中的内容 签到管理-->
+            <div class="subMenuContentArea">
+            	<span class="commonBtn">微信签到</span>
+            	<p class="signCount">已签到<strong id="signCount">0</strong>人</p>
+                <div class="tableWrap">
+                	<div class="tablehandle">
+                    	<div class="selectBox">
+                        	<span class="text">按最近时间升序</span>
+                            <div class="selectList">
+                            	<p>按最近时间降序</p>
+                                <p>按最近时间升序</p>
+                            </div>
+                        </div>
+                        <h3 class="count">显示<span id="countNum">0</span>条数据</h3>
+                        <a href="javascript:;" class="exportBtn"></a>
+                    </div>
+                    
+                    <!-- 签到管理 -->
+                    <table class="dataTable" style="display:inline-table;">
+                    	<thead>
+                        	<tr class="title">
+                            	<th>姓名</th>
+                                <th>手机号码</th>
+                                <th>签到时间</th>
+                            </tr>
+                        </thead>
+                        <tbody id="content">
+                        	
+
+                            <tr >
+                                <td style="height: 150px;text-align: center;vertical-align: middle;" colspan="3" align="center"> <span><img src="../static/images/loading.gif"></span></td>
+                            </tr>                        </tbody>
+                    </table>
+                    <div id="kkpager" style="text-align:center;"></div>
+                </div>
+            </div>
+        
+        
+        </div>
+    </div>
+</div>
+<script id="tpl_content" type="text/html">
+     <#for(var i=0;i<list.length;i++){ var item=list[i];var createTime=(item.CreateTime!=null)?item.CreateTime.replace("T"," "):"";#>
+        <tr>
+            <td><#=item.UserName#></td>
+            <td class="fontF"><#=item.Mobile#></td>
+            <td class="fontF"><#=createTime.substring(0,createTime.lastIndexOf("."))#></td>
+        </tr>
+    <#}#>
+</script>
+</body>
+<script type="text/javascript" src="/Module/static/js/lib/require.min.js" defer async="true" data-main="/Module/ActivityManage/js/main.js"></script>
+</html>

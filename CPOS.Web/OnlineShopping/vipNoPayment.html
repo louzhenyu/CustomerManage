@@ -1,0 +1,65 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="background:#e5e5e5;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span class="Comeback" onClick="LinkAddCustomerId('vipCenter.html')"></span><span id="Btoo">待付款订单</span></div>
+    </nav>
+    <div class="aboutVipDiv" id="OrderXX" status="1"> </div>
+  </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = ['OrderXX','Vip.getOrderList("","1")'];
+var Von = 'Vip.getOrderList("1","1"); ';
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);</script> 
+<script id="getOrderList" type="text/x-jsmart-tmpl">
+{section name=i loop=$orderList}
+<div  class="VipDivasd"> <span class="vipTime">{$orderList[i].createTime}
+</span>
+        <div class="vipCartBox" style="border-bottom:0; margin-top:15px;" id="OrderID_{$orderList[i].orderId}">
+          <div class="vipCart">
+		  	{assign var="ODetailList" value=$orderList[i].orderDetailList}
+           	{section name=j loop=$ODetailList}
+			<a href="orderDetail.html?itemId={$ODetailList[j].itemId}&skuId={$ODetailList[j].skuId}&orderId={$orderList[i].orderId}">
+            <div class="vipCartLi">
+              <ul>
+                <li class="cartTD2"  style="left:5px;"><img src="{$ODetailList[j].imageList[0].imageUrl}">
+    
+                </li>
+                <li class="cartTD3" style="margin-left:75px">
+                  <div class="cartTD3Div">{$ODetailList[j].itemName|truncate:40:"..."}
+<span class="guigeCC">规格：{$ODetailList[j].GG}</span></div>
+                </li>
+                <li class="cartTD4"><span >￥{$ODetailList[j].salesPrice}</span><br>
+                  x{$ODetailList[j].qty}<br>
+                  <br>
+                  <span >{$orderList[i].deliveryName}</span> </li>
+              </ul>
+            </div>
+			</a>
+			{/section}
+          </div>
+          <div class="vipCartBoxBtm"><a href="sureOrder.html?orderId={$orderList[i].orderId}" class="PayBtn" style="margin-left:10px;">结算</a><a href="javascript:void(0)" onclick="Vip.DelOrder('{$orderList[i].orderId}')" class="cancelBtn">删除</a>合计： <strong style="color:#cc0000">￥{$orderList[i].totalAmount}</strong></div>
+          <div class="vipCartBoxBottom"></div>
+        </div>
+      </div>
+{/section}
+</script>
+</body>
+</html>

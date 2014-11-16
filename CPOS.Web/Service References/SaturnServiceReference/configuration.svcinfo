@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<configurationSnapshot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:schemas-microsoft-com:xml-wcfconfigurationsnapshot">
+  <behaviors />
+  <bindings>
+    <binding digest="System.ServiceModel.Configuration.BasicHttpBindingElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data name=&quot;SaturnServiceSoap&quot; /&gt;" bindingType="basicHttpBinding" name="SaturnServiceSoap" />
+  </bindings>
+  <endpoints>
+    <endpoint normalizedDigest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://61.50.149.75:84/SaturnService.asmx&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;SaturnServiceSoap&quot; contract=&quot;SaturnServiceReference.SaturnServiceSoap&quot; name=&quot;SaturnServiceSoap&quot; /&gt;" digest="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-16&quot;?&gt;&lt;Data address=&quot;http://61.50.149.75:84/SaturnService.asmx&quot; binding=&quot;basicHttpBinding&quot; bindingConfiguration=&quot;SaturnServiceSoap&quot; contract=&quot;SaturnServiceReference.SaturnServiceSoap&quot; name=&quot;SaturnServiceSoap&quot; /&gt;" contractName="SaturnServiceReference.SaturnServiceSoap" name="SaturnServiceSoap" />
+  </endpoints>
+</configurationSnapshot>

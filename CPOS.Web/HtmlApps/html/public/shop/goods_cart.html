@@ -1,0 +1,98 @@
+﻿<!DOCTYPE HTML>
+<html class="bg-goodsCart">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="GoodsCart"></title>
+		<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+	</head>
+
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+			<div class="wx_loading_inner">
+				<i class="wx_loading_icon"></i>正在加载...
+			</div>
+		</div>
+		<section id="section" class="goods_wrap">
+			<nav id="topNav">
+				<ul>
+					<li>
+						<a href="javascript:Jit.AM.pageBack();"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('MyOrder');"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('GoodsCart');"><span id="menuCartCount"></span> </a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('IndexShop');"></a>
+					</li>
+				</ul>
+			</nav>
+			<div class="cart_list clearfix">
+				<ul id="goods_list">
+					<!--li class="clearfix">
+					<div class="imgBox"><img src="../images/shop/pic_02.jpg" width="70" height="95"></div>
+					<div class="infoBox">
+					<h3>泸州老窖特曲三年陈酿60度高级定制级新春贺岁酒</h3>
+					<b>￥188.00</b>
+					<p><a href="#" class="btn_remove"></a>
+					<input type="button" value="-"><input type="text" placeholder="2"><input type="button" value="+">
+					</p>
+					</div>
+					</li-->
+				</ul>
+				<dl class="order_total clearfix">
+					<dt>
+						<a href="javascript:JitPage.submitOrder()">去结算</a>
+					</dt>
+					<dd class="clearfix">
+						<!-- <span class="selectAll allselect_btn"></span><span>全选</span> -->
+						<div class="select_cart_btn clearfix">
+							<div class="btn_contianer jsSelectAll on">
+								<div class="btn"></div>
+								全选
+							</div>
+						</div>
+					</dd>
+					<dd class="clearfix">
+						<div style="padding:10px">
+							总 价：<b id="totalprice"></b>
+
+						</div>
+					</dd>
+				</dl>
+			</div>
+			<a class="continueShop_btn" href="javascript:Jit.AM.toPage('IndexShop')">继续购物</a>
+			<!--<div class="btn_coupon"> <a><em>优惠券抵用</em><b>0元</b><span>﹥</span> </a> </div>-->
+			<div class="select_pay clearfix" style="display:none;">
+				<span class="online">在线支付</span>
+				<span class="arrival">货到付款</span>
+			</div>
+			<div class="order_submit clearfix"  style="display:none;">
+				<a href="javascript:JitPage.submitOrder()">提交订单</a> 应付金额： <b id="payprice"></b>
+			</div>
+		</section>
+	</body>
+	<script id="Tpl_goods_item" type="text/template">
+		<li class="clearfix">
+		<div class="select_cart_btn clearfix">
+		<div class="btn_contianer jsSelectBtn on" data-skuId="{{skuId}}">
+		<div class="btn"></div>
+		</div>
+		</div>
+		<div class="imgBox"><img src="{{imageUrl}}" width="70" height="95"></div>
+		<div class="infoBox">
+		<h3>{{itemName}}</h3>
+		<b>￥{{salesPrice}}</b>
+		<p>
+		<a href="javascript:JitPage.removeGoods('{{skuId}}')" class="btn_remove"></a>
+		<span class="text">数量</span>
+		<input class="subBtn"  data-skuid="{{skuId}}" type="button" value="-"><input class="countMonitor" type="text" value="{{qty}}" readonly="true" ><input class="addBtn" data-skuid="{{skuId}}" type="button" value="+">
+		</p>
+		</div>
+		</li>
+	</script>
+</html>

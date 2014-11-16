@@ -1,0 +1,175 @@
+@charset "utf-8";
+
+/*common*/
+html,body,.allPage{height:100%;min-height:100%;}
+.allPage{max-width:640px;margin:0 auto;}
+body{font:15px/1.2em "宋体","Microsoft YaHei";background:#f5f5f5;color:#4d463e;}
+select,input{border:none;}
+input{text-indent:5px;}
+.commonBtn{display:inline-block;height:42px;line-height:42px;text-align:center;font-size:15px;border-radius:5px;box-shadow:0 0 3px rgba(0,0,0,0.03);}
+
+
+/*index-首页*/
+.commonBg{position:relative;min-height:100%;background:#8e97d9 url(../../../images/special/linkin/bg.jpg) no-repeat 0 0;background-size:100%;overflow:hidden;}
+
+.commonBg>a{display:block;position:absolute;top:37%;left:40%;z-index:90;transition:all 1s ease-in-out;-webkit-transition:all 1s ease-in-out;-moz-transition:all 1s ease-in-out;}
+
+.commonBg .index-pp{width:24.7%;}
+.commonBg .index-b2b{width:22.2%;}
+.commonBg .index-xs{width:20.7%;}
+.commonBg .index-sc{width:19.1%;}
+.commonBg .index-kh{width:19.1%;}
+.commonBg .index-o2o{width:20.7%;}
+
+.commonBg.on .index-pp{top:8.42%;left:28.12%;}
+.commonBg.on .index-b2b{top:24.08%;left:66.87%;}
+.commonBg.on .index-xs{top:27.45%;left:4.7%;}
+.commonBg.on .index-sc{top:48.56%;left:76.56%;}
+.commonBg.on .index-kh{top:59.76%;left:16.4%;}
+.commonBg.on .index-o2o{top:68.08%;left:54.06%;}
+.commonBg .index-logo{display:block;width:44%;top:31.11%;left:28.1%;z-index:99;}
+
+.index-logo .text{display:block;position:absolute;bottom:12px;width:100%;padding-bottom:9px;text-align:center;font-size:12px;background-size:12px 5px;color:#595757;}
+.index-logo-icon{display:block;position:absolute;top:26%;left:13%;width:73%;}
+
+@keyframes logoRotate{
+0%{transform:rotate(0deg);}
+50%{transform:rotate(180deg);}
+100%{transform:rotate(360deg);}
+}
+@-moz-keyframes logoRotate{
+0%{-moz-transform:rotate(0deg);}
+50%{-moz-transform:rotate(180deg);}
+100%{-moz-transform:rotate(360deg);}
+}
+@-webkit-keyframes logoRotate{
+0%{-webkit-transform:rotate(0deg);}
+50%{-webkit-transform:rotate(180deg);}
+100%{-webkit-transform:rotate(360deg);}
+}
+.commonBg .index-logo.onRotate .index-logo-bg{display:block;animation:logoRotate 2s linear infinite;-moz-animation:logoRotate 2s linear infinite;-webkit-animation:logoRotate 2s linear infinite;} 
+
+
+.indexFooter{position:absolute;bottom:15px;width:100%;}
+.indexFooter a{float:left;width:50%;height:19px;}
+.indexFooter .downApp{background:url(../../../images/special/linkin/icon-down.png) no-repeat center center;background-size:77px 16px;border-right:1px solid #fff;}
+.indexFooter .weixin{background:url(../../../images/special/linkin/icon-weixin.png) no-repeat center center;background-size:89px 16px;}
+
+.loadingDot,.loading-logo{position:absolute;top:25%;left:50%;width:162px;height:162px;margin-left:-81px;}
+.loading-logo{z-index:0;}/*width:51%;margin:40% auto 8px;*/
+.loadingDot{top:24.55%;left:49%;width:168px;height:168px;margin-left:-80px;}
+.loading-text,.loading-progress{position:absolute;top:57%;width:100%;padding:2px 0;text-align:center;text-transform:uppercase;font-size:15px;font-family:"Century Gothic";color:#fff;}
+
+
+/*loading动画*/
+/*
+@keyframes loadingDot
+{
+0% {transform:rotate(0deg);}
+100% {transform:rotate(360deg);}
+}
+@-moz-keyframes loadingDot
+{
+0% {-moz-transform:rotate(0deg);}
+100% {-moz-transform:rotate(360deg);}
+}
+@-webkit-keyframes loadingDot
+{
+0% {-webkit-transform:rotate(0deg);}
+100% {-webkit-transform:rotate(360deg);}
+}
+.loading-logo{
+animation: loadingDot 4s linear infinite;
+-moz-animation: loadingDot 4s linear infinite;
+-webkit-animation: loadingDot 4s linear infinite;
+}
+*/
+
+
+/*图片轮播*/
+.picWrapList {width:300%;}
+.picWrapList li{float:left;}
+
+
+/*产品视频*/
+.top-logo img{display:block;width:35.3%;margin:22px auto;}
+.headBar{position:relative;}
+.headBar span{letter-spacing:1px;font-size:15px;color:#010101;cursor:pointer;}
+.headBar .goBack{position:absolute;left:13px;top:7px;padding-left:15px;background:url(../../../images/special/linkin/pointer2.png) no-repeat left center;background-size:7px 13px;}
+.headBar .tit{position:absolute;top:0;right:12px;bottom:0px;line-height:45px;}
+/*background:url(../../../images/special/linkin/pointer.png) no-repeat right center;background-size:12px 7px;*/
+.headBar .tit.on{background:rgba(0,0,0,0.3);}
+.headBar .tit.on span{color:#fff;}
+.headBar .tit.on .menuList{display:block;}
+.headBar .menuList{display:none;position:absolute;top:39px;left:0px;width:100%;background:rgba(0,0,0,0.3);z-index:999;}
+.headBar .menuList a{display:block;height:30px;line-height:30px;text-align:center;font-size:12px;color:#fff;}
+
+.sloganBox{position:relative;padding:14px 10px 12px;font-weight:bold;text-align:center;background:rgba(255,255,255,0.5);}
+.sloganBox .lineBg{position:absolute;top:0;left:0;width:100%;height:2px;}
+.sloganBox h2{font-size:21px;font-weight:bold;color:#413599;}
+.sloganBox p{font-size:12px;color:#231815;}
+.sloganBox .mtmb{margin:6px 0 2px 0;}
+.picWrap{position:relative;}
+.picWrap .status{position:absolute;top:50%;left:50%;width:66px;height:66px;margin:-33px 0 0 -33px;background:url(../../../images/special/linkin/playBtn.png) no-repeat 0 0;background-size:66px;cursor:pointer;}
+.picWrap .textBox{position:absolute;bottom:-1px;left:0;width:100%;padding:3px 0;background:rgba(255,255,255,0.5);color:#000;}
+.picWrap .textBox p{height:28px;line-height:28px;font-size:12px;overflow:hidden;}
+.picWrap .textClose{float:left;width:20px;height:28px;margin:0 10px;background:url(../../../images/special/linkin/closeBtn.png) no-repeat center center;background-size:14px 14px;cursor:pointer;}
+
+/*播放器*/
+.playerBox{height:20px;padding:10px 40px;background:#e4e2f4;}
+.progressBar{position:relative;top:14px;width:100%;height:3px;background:#595757;cursor:pointer;}
+.progressBar .percent{position:absolute;top:0;left:0;width:36%;height:3px;background:#df007f;}
+.progressBar .dot{position:absolute;top:-6px;right:-9px;width:15px;height:15px;background:url(../../../images/special/linkin/dot.png) no-repeat 0 0;background-size:15px 15px;}
+.progressBar .startTime,.progressBar .endTime{position:absolute;top:4px;font-size:12px;font-family:"Arial";color:#000;}
+.progressBar .startTime{left:0px;}
+.progressBar .endTime{right:0px;}
+.playerBox .status{float:left;width:25px;height:25px;margin-left:-33px;background:url(../../../images/special/linkin/play.png) no-repeat 0 0;background-size:25px 25px;cursor:pointer;}
+.playerBox .sound{float:right;width:25px;height:25px;margin-right:-33px;background:url(../../../images/special/linkin/sound.png) no-repeat 0 0;background-size:25px 25px;cursor:pointer;}
+
+.listBox,.listBox .item,.essayBox{position:relative;}
+.listBox .expBox{position:absolute;top:0px;bottom:-1px;left:0px;width:30%;padding:3px;text-align:right;font-size:12px;background:rgba(255,255,255,0.7);color:#000;}
+.listBox .item.bg .expBox{background:rgba(0,0,0,0.7);color:#fff;}
+.listBox .expBox p{width:100%;height:33.33%;line-height:1.5em;overflow:hidden;}
+.foldIcon{height:25px;background:#858cd2 url(../../../images/special/linkin/upDown.png) no-repeat center center;background-size:12px 6px;cursor:pointer;}
+
+.essayBox{min-height:100px;font-size:12px;line-height:1.5em;background:#fff;color:#000;}
+/*padding:15px 15px 1px 38px;*/
+.essayBox>p{margin-bottom:15px;}
+
+.videoListBox{background:#e4e2f4;}
+.videoListBox.on{height:auto;}
+.videoListBox .item{float:left;width:32%;margin:0 0 15px 1%;padding:3px;background:#fff;}
+.videoListBox .item img{width:100%;height:64px;}
+.videoListBox .itemActive{outline:3px solid rgb(172, 172, 139);-webkit-box-shadow:2px 3px 3px yellow;}
+.videoListBox .tit{margin-top:5px;font-size:12px;text-align:center;color:#231815;}
+
+
+
+@media only screen and (min-width:640px){	
+/*index*/
+.indexPage .commonBg{min-height:1140px;}
+.indexFooter{bottom:30px;}
+.indexFooter a{float:left;width:50%;height:38px;}
+.indexFooter .downApp{background-size:153px 32px;}
+.indexFooter .weixin{background-size:178px 32px;}
+.index-logo .text{bottom:20px;padding-bottom:20px;font-size:20px;background-size:23px 10px;}
+
+/*.loading-logo{margin:20% auto 8px;}*/
+.loading-text,.loading-progress{padding:8px 0;font-size:28px;}
+
+/*产品视频*/
+.headBar span{line-height:28px;font-size:28px;}
+.headBar .goBack{left:25px;top:14px;padding-left:22px;background:url(../../../images/special/linkin/pointer2.png) no-repeat left center;background-size:14px 24px;}
+.headBar .tit{/*background:url(../../../images/special/linkin/pointer.png) no-repeat right bottom;background-size:24px 14px;*/}
+
+.videoListBox{height:185px;}
+
+.listBox .expBox p{line-height:42px;}
+.foldIcon{height:36px;background-size:23px 12px;}
+.essayBox{font-size:20px;}
+
+.headBar .tit{right:30px;}
+.headBar .menuList{top:78px;}
+.headBar .first{height:85px;line-height:100px;}
+}
+

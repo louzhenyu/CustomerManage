@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="format-detection" content="telephone=yes"/>
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<link href="css/welfaceV1.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">中欧国际工商学院</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body   style="background:url(images/orderbg.gif) repeat left top;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span onclick="history.back()" class="Comeback"></span><span id="Btoo">行业论坛</span></div>
+    </nav>
+    <div class="BBSDetailTitle" style="padding-top:65px;" id="title"></div>
+    <div class="newsList" id="bbsDetail" style="margin-top:0; display:none;">
+     
+    </div>
+  </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="bbsList" id="backPrevPosition" />
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'BBS.Detail();abc()';</script>
+<script type="text/javascript" src="js/base.js"></script> 
+<script type="text/javascript">
+var emailId = "";
+function abc(){
+	$(".DetailBBSdd").live("click",function(){
+		if($(this).siblings(".BBSoo").length > 0){
+			if($(this).siblings(".BBSoo").css("display")=="none"){
+				$(this).siblings(".BBSoo").slideDown(500);	
+				$(this).find(".Jrddhover").removeClass("Jrddhover").addClass("Jrdd");
+			}else{
+				$(this).siblings(".BBSoo").slideUp(500);	
+				$(this).find(".Jrdd").removeClass("Jrdd").addClass("Jrddhover");
+				}
+		}else{
+			var linkSo = "courseOnline.html?courseId="+getParam("forumId")+"&emailId="+emailId+"&ctype=1";
+			LinkAddCustomerId(linkSo)
+		//	location.href = "courseOnline.html?courseId="+getParam("forumId")+"&ctype=1";	
+		}//
+	});
+
+}
+</script>
+<script type="text/templete" id="bbsScript">
+ <div class="DetailSmallBox newsDetailBox" style="margin-top:10px;">
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn1 icnSkin1"></span>
+          <h1>简介</h1>
+          <span  class="Jrdd icnSkin1"></span></div>
+        <div class="BBSoo" id="desc">
+         	     <%=desc%>
+        </div>
+      </div>
+      <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn2 icnSkin1"></span>
+          <h1>组织者</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo" style=" display:none;" id="organizer">
+          <%=organizer%>
+        </div>
+      </div>
+      <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn3 icnSkin1"></span>
+          <h1>日程安排</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo" style=" display:none;" id="schedule">
+       <%=schedule%>
+        </div>
+      </div>
+      <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn4 icnSkin1"></span>
+          <h1>注册参加</h1>
+          <span  class="Jrddhoverccc icnSkin1"></span></div>
+      </div>
+      <div class="DetailSmallBox newsDetailBox" >
+        <div class="DetailSmallBoxYW DetailBBSdd"><span class="spanIcn5 icnSkin1"></span>
+          <h1>场地膳食</h1>
+          <span  class="Jrddhover icnSkin1"></span></div>
+        <div class="BBSoo" style=" display:none;" id="food">
+         <%=food%>
+        </div>
+      </div>
+</script>
+</body>
+</html>

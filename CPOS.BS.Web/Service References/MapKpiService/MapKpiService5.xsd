@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/JIT.MapAnalysis.DataService.Contracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/JIT.MapAnalysis.DataService.Contracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Threshold">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="defaultcolor" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="defaultimage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="defaultsize" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="defaulttext" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="level" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="threshold" nillable="true" type="tns:ArrayOfThresholdItem" />
+      <xs:element minOccurs="0" name="type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Threshold" nillable="true" type="tns:Threshold" />
+  <xs:complexType name="ArrayOfThresholdItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ThresholdItem" nillable="true" type="tns:ThresholdItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfThresholdItem" nillable="true" type="tns:ArrayOfThresholdItem" />
+  <xs:complexType name="ThresholdItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="color" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="end" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="endlabel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="image" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="size" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="start" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="startlabel" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="text" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="textlabel" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ThresholdItem" nillable="true" type="tns:ThresholdItem" />
+</xs:schema>

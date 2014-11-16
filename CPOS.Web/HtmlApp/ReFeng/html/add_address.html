@@ -1,0 +1,55 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+	<title name="AddAddress"></title>
+	<link href="../css/global.css?ver=2" rel="stylesheet" type="text/css" />
+	<link href="../css/style.css?ver=2" rel="stylesheet" type="text/css" />
+		
+	<script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch.js?ver=2"></script>
+</head>
+
+<body>
+<section class="goods_wrap">
+  <dl class="tool_bar clearfix">
+	<dt><a href="javascript:Jit.AM.pageBack();">返回</a><!--<span id="pagetitle"></span>--></dt>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsList');">列表</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsCart');">购物车</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('MyOrder');">首页</a></dd>
+  </dl>
+  <div class="order_list">
+    <h3 id="pagetitle">添加收货地址</h3>
+    <div class="order_mod select_store">
+      <dl class="clearfix">
+        <dt>姓名</dt>
+        <dd><input type="text" id="username">
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>手机</dt>
+        <dd><input type="text" id="phone">
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>省份</dt>
+        <dd><select id="province" onchange="JitPage.fnSelChange()" ><option value=''>--请选择--</option></select>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>城市</dt>
+        <dd>
+        <select id="city"><option value=''>--请选择--</option></select>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>详细地址</dt>
+        <dd><input type="text" id="address">
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="order_confirm"> <a href="javascript:JitPage.saveAddress()">确 定</a></div>
+</section>
+</body>
+</html>

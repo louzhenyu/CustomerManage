@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
+    <!-- 
+    Smart developers always View Source. 
+    
+    This application was built using Adobe Flex, an open source framework
+    for building rich Internet applications that get delivered via the
+    Flash Player or to desktops via Adobe AIR. 
+    
+    Learn more about Flex at http://flex.org 
+    // -->
+    <head>
+        <title></title>
+        <meta name="google" value="notranslate" />         
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css" media="screen"> 
+            html, body  { height:100%; }
+            body { margin:0; padding:0; overflow:auto; text-align:center; 
+                   background-color: #ffffff; }   
+            object:focus { outline:none; }
+            #flashContent { display:none; }
+        </style>
+        
+        <!-- BEGIN Browser History required section -->
+        <link rel="stylesheet" type="text/css" href="history/history.css" />
+        <script type="text/javascript" src="history/history.js"></script>
+        <!-- END Browser History required section -->  
+            
+        <script type="text/javascript" src="swfobject.js"></script>
+        <script type="text/javascript">
+            // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+            var swfVersionStr = "11.1.0";
+            // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+            var xiSwfUrlStr = "playerProductInstall.swf";
+            var flashvars = {};
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "#ffffff";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            params.wmode = "opaque"; // 注意这里，这里是关键部分
+            
+            var attributes = {};
+            attributes.id = "index";
+            attributes.name = "index";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "index.swf", "flashContent", 
+                "100%", "100%", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+            // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
+            swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+        </script>
+        <!--my js-->
+         <script type="text/javascript">
+		 
+            function _map_ExportMap()
+           {
+   				var str=index._map_ExportMap();
+   			alert(str.length);
+           }
+           
+      
+        
+        	 function _map_Scale()
+      		 {
+       		     index._map_SetMapScale(10)
+      		 }
+     		 function _map_XYChange()
+     		 { 
+     		    var p=index._map_XYChange(120,31,1);
+     		    alert(p);
+     		 }
+     		 
+     		function _map_AddStores()
+		  	{ 
+		  	
+		       var lng=110;var lat=25;	
+		     
+		      var ou="";
+		  var i=new Number(0);
+	
+		  for(i=0;i<200;i++)
+		  {
+    
+		  ou+=pp(i,
+		  parseFloat(lng)+parseFloat(i/1000)*Math.random(),
+		  parseFloat(lat)+parseFloat(i/1000)*Math.random())+",";
+		   
+		  }
+		  
+		 // var px = '[' + ou.substring(0,ou.length-1) + ']';
+		
+		     var px='[{"StoreID":"1","LabelID":"1","Menu":"0","LabelContent":"123232323","Lng":"121.5209","Lat":"31.2103","Icon":"g.png","IsAssigned":"false","IsEdit":"true","Tips":"这是一个测试点位1","PopInfoWidth":"200","PopInfoHeight":"","PopInfo":[{"type":"1","title":"客户名称","value":"坂田医院"},{"type":"2","title":"图片","value":"http://www.mobanwang.com/icon/UploadFiles_8971/200806/20080602162129496.png"},{"type":"3","title":"按钮1","value":"test1"}]},{"StoreID":"2","LabelID":"2","LabelContent":"12","Menu":"2","Lng":"121.4309","Lat":"31.231","Icon":"o.png","IsAssigned":"true","IsEdit":"false","Tips":"这是一个测试点位2","PopInfoWidth":"200","PopInfo":[{"type":"1","tilte":"客户名称","value":"坂田医院"}]},{"StoreID":"3","LabelID":"3","LabelContent":"others","Lng":"121.4330","Lat":"31.3","Icon":"o.png","IsAssigned":"true","IsEdit":"false","Tips":"这是一个测试点位2","PopInfo":[{"type":"1","tilte":"客户名称","value":"坂田医院"}]},{"StoreID":"5","LabelID":"5","Lng":"121.4","Lat":"31.2","Icon":"o.png","IsAssigned":"true","IsEdit":"false","Tips":"frametest","PopInfoWidth":"200","PopInfoHeight":"200","PopInfo":[{"type":"4","tilte":"frame","value":"http://www.baidu.com"}]},{"StoreID":"4","LabelID":"4","Lng":"121.3","Lat":"31.2","Icon":"o.png","IsAssigned":"true","IsEdit":"false","Tips":"frametest","PopInfoWidth":"200","PopInfoHeight":"200","PopInfo":[{"type":"4","tilte":"frame","value":"http://www.baidu.com"}]}]';
+		 
+		    index._map_AddStores(px,false);
+		   
+		 //  index._map_MoveToStores();
+		  }
+		    function pp(id,lng,lat)
+		  {
+		     return '{"StoreID": "' + id+ '", "LabelID": "' + id+ '", "LabelContent": "' + id+ '", "Lng": "' + lng+ '", "Lat": "' +lat + '", "Icon": "o.png"}';
+		  }
+		   function _map_RemoveStores()
+		   {
+		     	var p='[{"StoreID":"10"},{"StoreID":"2"}]';
+		      index._map_RemoveStores(p); 
+		   }
+		 function _map_Extent_Change(obj)
+		 {
+		
+		 }
+		 function _map_Graphic_MoveEdit(obj)
+		 {
+		 alert(obj.StoreID);
+		 }
+		 function _map_Graphic_OnDoubleClick()
+		 {alert("db");}
+		 
+		 function _map_ShowStoresCluster()
+		 {
+		  index._map_ShowStoresCluster(true,200);
+		 }
+		  function _map_ShowStoresCluster2()
+		 {
+		   index._map_ShowStoresCluster(false,50);
+		 }
+		function _map_Extent_Select(a)
+		{alert(a.length);}
+		
+		  function _map_CreateLine2()
+           {
+              var p='[{"StoreID":"1"},{"StoreID":"2"},{"StoreID":"3"},{"StoreID":"4"},{"StoreID":"5"}]';
+             index._map_CreateLine("lineid1",p,"line",true,true,"center","3");
+           } 
+          function _map_CreateLine_2point()
+          {
+               var p='[{"StoreID":"2"},{"StoreID":"1"},{"StoreID":"3"},{"StoreID":"5"},{"StoreID":"4"}]';
+             index._map_CreateLine("lineid1",p,"drivingway",true,true,"none","3");
+          }
+          function _map_ClearLines()
+          {
+        
+          index._map_ClearLines('');
+          }
+           function mymenu(id)
+           {
+       		 var menuItem=new Object()
+		
+			menuItem.label = "选择";  
+			menuItem.action =id;  
+			
+			
+             var arrayObj = new Array();
+             arrayObj.push(menuItem);
+             return arrayObj;
+           }
+           
+           function _map_QueryLine()
+           {
+             index._map_QueryLine(121.5209,31.2103,121.5201,31.29);
+           }
+          function _map_CreateLine_Points(len,index,error)
+          {
+          alert(len);alert(index);lert(error);
+          }
+         function _map_Graphic_OnClick(ob)
+          {alert(ob.StoreID);}
+          
+         function _map_GetMapPoint()
+         {
+         var p=index._map_GetMapPoint();
+         alert(p);
+         }
+      </script>
+      
+     
+    </head>
+    <body >
+    
+      <!--项目js-->
+      <div>
+     
+      <input type='button' value='比例尺' onclick='_map_Scale()'/>
+      <input type='button' value='导出' onclick='_map_ExportMap()'/>
+      <input type='button' value='坐标变换' onclick='_map_XYChange()'/>
+   
+      <input type='button' value='隐藏弹出框' onclick='index._map_HidePopUp();'/>
+      <input type='button' value='定位' onclick='index._map_MoveToStore(10)'/>
+      <input type='button' value='等级定位' onclick='index._map_MoveToStoreByScale(10,12)'/>
+      <input type='button' value='定位所有' onclick='index._map_MoveToStores()'/>
+      <input type='button' value='获取点数' onclick='_map_GetMapPoint()'/>
+      <input type='button' value='清除所有点' onclick='index._map_RemoveStores("")'/>
+      <input type='button' value='清除指定点' onclick='_map_RemoveStores()'/>
+      <input type='button' value='聚合' onclick='_map_ShowStoresCluster()'/>
+       <input type='button' value='取消聚合' onclick='_map_ShowStoresCluster2()'/>
+       
+     </div> 
+      <div>
+         <input type='button' value='加点' onclick='_map_AddStores()'/>
+          <input type='button' value='建立直线' onclick='_map_CreateLine2()'/>
+         <input type='button' value='每2点动态请求' onclick='_map_CreateLine_2point()'/>
+         <input type='button' value='清除线' onclick='_map_ClearLines()'/>
+          <input type='button' value='查距离' onclick='_map_QueryLine()'/>
+       </div> 
+        <div id="flashContent">
+            <p>
+                To view this page ensure that Adobe Flash Player version 
+                11.1.0 or greater is installed. 
+            </p>
+            <script type="text/javascript"> 
+                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://"); 
+                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
+                                + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
+            </script> 
+        </div>
+        
+        <noscript>
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="index">
+                <param name="movie" value="index.swf" />
+                <param name="quality" value="high" />
+                <param name="bgcolor" value="#ffffff" />
+                <param name="allowScriptAccess" value="sameDomain" />
+                <param name="allowFullScreen" value="true" />
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="index.swf" width="100%" height="100%">
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <param name="allowScriptAccess" value="sameDomain" />
+                    <param name="allowFullScreen" value="true" />
+                <!--<![endif]-->
+                <!--[if gte IE 6]>-->
+                    <p> 
+                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+                        11.1.0 or greater is not installed.
+                    </p>
+                <!--<![endif]-->
+                    <a href="http://www.adobe.com/go/getflashplayer">
+                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+                    </a>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+        </noscript>     
+   </body>
+</html>

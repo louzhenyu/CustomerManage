@@ -1,0 +1,102 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <script type="text/javascript">
+  (function(){  
+    var onBridgeReady =  function () {  
+   // 隐藏右上角的选项菜单入口;  
+    WeixinJSBridge.call('hideOptionMenu');
+    // 隐藏底部菜单;  
+    WeixinJSBridge.call('hideToolbar');
+    };  
+     if(document.addEventListener){  
+              document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);  
+            } else if(document.attachEvent){  
+              document.attachEvent('WeixinJSBridgeReady'   , onBridgeReady);  
+              document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);  
+            }  
+    })();  
+</script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+    <title name="UserInfo">嘉宾信息</title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+<div class="fxloading"><img width="40" height="40" src="../images/loading.gif"></div>
+    <section class="screen_wrap mb44">
+  <div class="cover ac">
+    <dl>
+      <dt><img src="." width="80" height="80" id="userhead" ></dt>
+      <dd><a href="javascript:;" class="btn_say" id="sayUser">问候一声</a></dd>
+    </dl>
+  </div>
+  <div class="info">
+    <dl>
+      <dt></dt>
+      <dd> <span>姓名/Name</span>
+        <p id="username"></p>
+      </dd>
+    </dl>
+    <dl>
+      <dt></dt>
+      <dd> <span>手机号码/Phone Number</span>
+        <p id="phone"></p>
+      </dd>
+    </dl>
+            <dl>
+      <dt></dt>
+      <dd> <span>公司/Company</span>
+                  <p id="company"></p>
+      </dd>
+    </dl>
+    <dl>
+      <dt></dt>
+      <dd> <span>职位/Position</span>
+        <p id="position"></p>
+      </dd>
+    </dl>
+    <dl>
+      <dt></dt>
+      <dd> <span>邮箱/E-mail</span>
+        <p id="email"></p>
+      </dd>
+    </dl>
+        <dl>
+      <dt></dt>
+      <dd> <span>&nbsp;</span>
+        <div>
+          <img src="." id="dcodeimageurl"/>
+        </div>
+
+
+      </dd>
+    </dl>
+  </div>
+</section>
+    <dl class="bot_nav ">
+        <dt><a href="javascript:Jit.AM.pageBack()">返回</a></dt>
+        <dd>
+            <a href="javascript:window.location.reload()">刷新</a></dd>
+        <dd>
+            <a href="javascript:Jit.AM.toPage('MyDetail')">个人中心</a></dd>
+
+        <dd>
+            <a href="javascript:Jit.AM.toPage('HomePage')">首页</a></dd>
+    </dl>
+    <div class="popshade">
+    </div>
+    <div class="popup">
+        <div class="popup_t ac">
+            与<span id="sayname"></span>对话</div>
+        <div class="popup_m">
+            <textarea id="sendContent" name="textarea" placeholder="请输入您的对话内容"></textarea>
+            <p>
+                <a href="javascript:;" id="cancelPop">取消</a> <a href="javascript:;" id="sendSay">发送</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+	<title name="GoodsJiFenDetail"></title>
+	<link href="../css/global.css" rel="stylesheet" type="text/css" />
+	<link href="../css/style.css?ver=2" rel="stylesheet" type="text/css" />
+		
+	<script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch.js?ver=2"></script>
+</head>
+
+<body>
+<section class="goods_wrap">
+  <dl class="tool_bar clearfix">
+    <dt><a href="javascript:Jit.AM.pageBack();">返回</a></dt>
+  </dl>
+  <div class="goods_detail">
+    <div class="goods_img ac"><img jitval="itemImage" src="" height="160"></div>
+    <div class="goods_txt">
+      <h2 jitval="itemName"></h2>
+      <p><b jitval="itemPrice">商品积分值：￥</b><span style="display:none">市场零售价：<del jitval="oldPrice">￥</del></span></p>
+    </div>
+    <div class="goods_parameter">
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="1"></dd>
+		</dl>
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="2"></dd>
+		</dl>
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="3"></dd>
+		</dl>
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="4"></dd>
+		</dl>
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="5"></dd>
+		</dl>
+      <dl class="goods_num">
+        <dt>数量：</dt>
+        <dd>
+          <input type="button" id="btn_delNum" value="-"><input id="goods_number" type="text" readonly="true" value="1"><input id="btn_addNum" type="button" value="+">
+        </dd>
+      </dl>
+	  <dl class="propitem">
+        <dt>需要积分：<label id="totaljf"></label></dt>
+      </dl>
+	  <dl class="propitem">
+        <dt>我的积分：<label id="myjf"></label></dt>
+      </dl>
+		<div class="order_list">
+			<h3>配送方式</h3>
+			<div class="order_mod delivery_mode">
+				<dl class="clearfix" name="select_address" psfs="fs1">
+					<dt>
+						
+					</dt>
+					<dd><b>送货上门：</b> <b>送货地址：</b>
+					  <p id="addressdetail"></p>
+					</dd>
+				</dl>
+				<dl class="clearfix" style="display:none" name="select_address" psfs="fs2">
+					<dt>
+					  <input type="radio" name="radio_address" id="radio" value="radioB">
+					</dt>
+					<dd>
+						<b>到店提货：</b>
+						<p></p>
+					</dd>
+				</dl>
+			</div>
+		</div>
+    <div class="goods_btn" style="margin-top:8px"> 
+		<a id="btn_get" class="btn_cart br-5">立即兑换</a> 
+	</div>
+    <div class="goods_desc" style="display:none">
+      <h3><span>商品详情</span></h3>
+      <p id="description"></p>
+      <div class="btn_unfold"><a>ˇ</a></div> 
+	</div>
+  </div>
+</section>
+</body>
+
+</html>

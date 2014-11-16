@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0464ffba-3829-4295-b852-9ec7340a7368" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://www.jitmarketing.cn:7084/MSTRIntegrationService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MSTRIntegrationService.xsd" MetadataType="Schema" ID="39995c7c-7bf3-4f16-a31e-9337a0dae59e" SourceId="1" SourceUrl="http://www.jitmarketing.cn:7084/MSTRIntegrationService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MSTRIntegrationService1.xsd" MetadataType="Schema" ID="7bfc9ab5-a3be-41f6-b2d6-b24a7e9d5b5e" SourceId="1" SourceUrl="http://www.jitmarketing.cn:7084/MSTRIntegrationService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MSTRIntegrationService2.xsd" MetadataType="Schema" ID="1ab4e306-fc8e-4b9c-9ab9-a4479b12d532" SourceId="1" SourceUrl="http://www.jitmarketing.cn:7084/MSTRIntegrationService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MSTRIntegrationService.disco" MetadataType="Disco" ID="ae55fe0c-318a-4143-a262-a7800fb73a0e" SourceId="1" SourceUrl="http://www.jitmarketing.cn:7084/MSTRIntegrationService.svc?disco" />
+    <MetadataFile FileName="MSTRIntegrationService.wsdl" MetadataType="Wsdl" ID="9d3e42ec-e504-4711-82fe-04166ab62660" SourceId="1" SourceUrl="http://www.jitmarketing.cn:7084/MSTRIntegrationService.svc?wsdl" />
+    <MetadataFile FileName="MSTRIntegrationService3.xsd" MetadataType="Schema" ID="c1c9acf1-ff84-4731-86d4-d190d1ecd22d" SourceId="1" SourceUrl="http://www.jitmarketing.cn:7084/MSTRIntegrationService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>发福利啦</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<link type="text/css" href="css/bootstrap.min.css" />
+<link  rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript" src="js/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+<script type="text/javascript" src="../HtmlApp/LJ/lib/jit-lib.js"></script>
+
+<script type="text/javascript">
+
+    var loadMore = '';
+	
+    var Von = 'fnSetCookie()';
+
+    function fnSetCookie() {
+	
+		var ropenid = localStorage.getItem('recommenderOpenId');
+		
+		if(!ropenid){
+			
+			WeiXin.SetCookie("recommenderOpenId", getParam("openId"));
+        
+			localStorage.setItem('recommenderOpenId',getParam("openId"));
+		}
+    }
+</script>
+</head>
+<body>
+
+<article class="row-fluid">
+	<!--section  class="baner_box"><img src="images/baner_02.jpg" alt="泸州老窖" /></section-->
+    <section class="main_pad">
+        <section class="warpbox">
+             <div class="box_a">
+               <h2 class="titimgbox"><img src="images/lh_img_03.jpg" />发福利啦</h2>
+                <p class="find_text  pb20 line_30">只需微信关注泸州老窖VIP俱乐部，并参与关注有礼，将有机会赢得积分，更多大礼等着您，<span>马上行动吧</span></p>              
+            </div>
+            <div class="box_b find_gzh">
+                <h2 class="mt25">如何领取福利？</h2>
+               <p class="mt30"><img src="images/number_06.png" />点击右上角<img src="images/wait_03.png" class="ml5" />,选择<span>查看公众号，</span>关注“<span>泸州老窖VIP俱乐部</span>”公众号</p>
+                <div class="baner_box mt30"><img src="images/pic02_10.jpg" alt="如何关注公众号" /></div>
+                <p class="mt40"><img src="images/number_02_11.png" />进入公众号欢迎消息，<span>关注有礼</span>，参与<span>刮刮卡</span>，领取新人奖励。</p>
+<div class="baner_box mt30"><img src="images/pic03_19.jpg" alt="如何关注公众号" /></div>
+           </div>
+        </section>
+    </section>
+</article>
+</body>
+</html>

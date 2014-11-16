@@ -1,0 +1,185 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>正在跳转中...</title>
+	
+</head>
+
+<body>
+
+	<div id="masklayer" style="position:absolute;top:0;left:0;width:100%;height:100%;background:#ECECEC;">
+		<img src="./images/common/loading.gif" style="position:absolute;top:50%;left:50%;margin:-33px 0 0 -33px;"/>
+	</div>
+<script type="text/javascript" src="lib/zepto.min.js"></script>
+<script type="text/javascript">
+	
+	(function(){
+	
+		
+
+		function getUrlParam(key) {
+			
+			var value = "",itemarr = [],
+				urlstr = window.location.href.split("?");
+
+			if (urlstr[1]) {
+			
+				var item = urlstr[1].split("&");
+				
+				for (i = 0; i < item.length; i++) {
+				
+					itemarr = item[i].split("=");
+					
+					if (key == itemarr[0]) {
+					
+						value = itemarr[1];
+					}
+				}
+			}
+			
+			return value;
+		}
+		
+		var isGloble = getUrlParam('isGloble'),
+			CID = (isGloble?'_globle':getUrlParam('customerId'));
+		//请求version.js文件
+		var cfg = eval( '(' + ($.ajax({
+			url: 'version/' + CID + '.js',
+			async:false,
+			cache:false,
+			dataType:'Json'
+		})).responseText + ')' );
+		
+		var newVersion = (cfg.APP_CACHE?cfg.APP_VERSION:((new Date()).getTime()));
+		//加载js-lib文件
+		var _file,_needReLoad = false;
+			_Head = document.getElementsByTagName("HEAD").item(0);
+			
+		_file = document.createElement('script');
+
+		_file.setAttribute('type','text/javascript');
+		
+		_Head.appendChild(_file);
+		
+		_file.src = './lib/jit-lib.js?version='
+				  + newVersion;
+		
+		_file.onload = function(){
+			
+			var oldcfg = Jit.AM.getAppVersion();
+			//判断是否需要重新加载js文件
+			if((oldcfg && oldcfg.APP_VERSION != cfg.APP_VERSION) || cfg.APP_CACHE === false){
+				
+				_needReLoad = true;
+			}
+			
+			Jit.AM.setAppVersion(cfg);
+			
+			if(isGloble){
+				
+				Jit.AM.setAppParam('isGloble','true');
+				
+			}else{
+				
+				Jit.AM.setAppParam('isGloble','false');
+			}
+			
+			
+			main();
+		};
+		
+		function main(){
+			//手机端判断
+			if(Jit.deviceType() == 'mobile'){
+			
+				if(!Jit.AM.getAppSession('FirstAuth','')){
+			
+					Jit.AM.setAppSession('FirstAuth','','true');
+					
+				}else{
+					
+					$('title').html('');
+					
+					$('#masklayer').css({
+						'line-height':'120px',
+						'font-size:':'20px'
+					}).html('请点击返回离开当前页面！');
+					
+					return;
+				}
+				
+			}
+			
+			Jit.AM.checkAppPageConfig(_needReLoad);
+		
+			var urlpstr = location.href.split('?')[1],urlparams = {};
+			
+			if(urlpstr){
+			
+				urlpstr = urlpstr.split('&');
+				
+				if(urlpstr.length>0){
+					
+					for(var i=0;i<urlpstr.length;i++){
+						
+						var paramitem = urlpstr[i].split('=');
+						
+						urlparams[paramitem[0]] = paramitem[1];
+					}
+				}
+			}
+			
+			var pageName = decodeURIComponent(Jit.AM.getUrlParam("pageName"));
+			
+			var pagecfg = Jit.AM.getAppPageConfig(),
+				backUrl = pagecfg[pageName]['path'];
+			
+			var backUrl = 'html/' + backUrl.replace(/%(\S*)%/,function(str){
+
+				return pagecfg['Config']['Shorthand'][str.substring(1,str.length-1)];
+			});
+			
+			/*
+				1、必须先加载版本信息 才能清除对应的应用 历史导航记录缓存
+				2、通过Auth.html进入的页面默认是进入的第一个页面，由此定位导航的路径
+			*/
+			Jit.AM.pageHistoryClear();
+			
+			setTimeout(function(){
+				
+				/*	RootPage实际上是不存在的一个页面，因为历史导航中如果只剩一条导航记录时是不能再返回到上一个页面，
+					所以Push进一个不存在的RootPage
+				*/
+				
+				var urlparamstr = '?rootPage=true';
+				
+				if(urlparams.pageName){
+					
+					delete urlparams.pageName;
+				}
+				
+				for(var key in urlparams){
+					
+					urlparamstr += '&'+key+'='+urlparams[key];
+				}
+				
+				Jit.AM.pageHistoryPush(pageName,urlparamstr);
+				
+				backUrl = backUrl + urlparamstr;
+				
+				location.href = backUrl+'&ver='+(new Date()).getTime();
+				
+			},30);
+		}
+		
+		
+	})();
+	
+</script>
+
+</body>
+</html>

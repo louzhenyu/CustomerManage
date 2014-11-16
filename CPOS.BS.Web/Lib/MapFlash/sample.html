@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0014)about:internet -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
+    <!-- 
+    Smart developers always View Source. 
+    
+    This application was built using Adobe Flex, an open source framework
+    for building rich Internet applications that get delivered via the
+    Flash Player or to desktops via Adobe AIR. 
+    
+    Learn more about Flex at http://flex.org 
+    // -->
+    <head>
+        <title></title>
+        <meta name="google" value="notranslate" />         
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- Include CSS to eliminate any default margins/padding and set the height of the html element and 
+             the body element to 100%, because Firefox, or any Gecko based browser, interprets percentage as 
+             the percentage of the height of its parent container, which has to be set explicitly.  Fix for
+             Firefox 3.6 focus border issues.  Initially, don't display flashContent div so it won't show 
+             if JavaScript disabled.
+        -->
+        <style type="text/css" media="screen"> 
+            html, body  { height:100%; }
+            body { margin:0; padding:0; overflow:auto; text-align:center; 
+                   background-color: #ffffff; }   
+            object:focus { outline:none; }
+            #flashContent { display:none; }
+        </style>
+        
+        <!-- Enable Browser History by replacing useBrowserHistory tokens with two hyphens -->
+        <!-- BEGIN Browser History required section >
+        <link rel="stylesheet" type="text/css" href="history/history.css" />
+        <script type="text/javascript" src="history/history.js"></script>
+        <! END Browser History required section -->  
+            
+        <script type="text/javascript" src="swfobject.js"></script>
+        <script type="text/javascript">
+            // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+            var swfVersionStr = "11.1.0";
+            // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+            var xiSwfUrlStr = "playerProductInstall.swf";
+            var flashvars = {};
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "#ffffff";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            var attributes = {};
+            attributes.id = "index";
+            attributes.name = "index";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "index.swf", "flashContent", 
+                "100%", "100%", 
+                swfVersionStr, xiSwfUrlStr, 
+                flashvars, params, attributes);
+            // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
+            swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+        </script>
+        <!--tms js-->
+         <script type="text/javascript">
+		  function _map_AddStores()
+		  { 
+		  var lng=121;var lat=31;
+		  var ou="";
+		  var i=new Number(0);
+		
+		  for(i=0;i<1000;i++)
+		  {
+    
+		  ou+=pp(i,
+		  parseFloat(lng)+parseFloat(i/10000)*Math.random(),
+		  parseFloat(lat)+parseFloat(i/10000)*Math.random())+",";
+		   
+		  }
+		  //  var px = '[' + ou.substring(0,ou.length-1) + ']';
+		
+		  var px='[{"StoreID":"1","LabelID":"1","LabelContent":"1","Lng":"121.5309","Lat":"31.2303","Icon":"o.png","IsAssigned":"false","IsEdit":"true","Tips":"这是一个测试终端1","PopInfoWidth":"200","PopInfoHeight":"","PopInfo":[{"type":"1","title":"客户名称","value":"坂田医院"},{"type":"2","title":"图片","value":"http://www.mobanwang.com/icon/UploadFiles_8971/200806/20080602162129496.png"},{"type":"3","title":"按钮1","value":"test1"}]},{"StoreID":"2","LabelID":"2","Lng":"121.4309","Lat":"31.231","Icon":"os.png","IsAssigned":"true","IsEdit":"true","Tips":"这是一个测试终端2","PopInfoWidth":"200","PopInfo":[{"type":"1","tilte":"客户名称","value":"坂田医院"}]},{"StoreID":"3","LabelID":"3","Lng":"121.4330","Lat":"31.3","Icon":"g.png","IsAssigned":"true","IsEdit":"true","Tips":"这是一个测试终端2","PopInfo":[{"type":"1","tilte":"客户名称","value":"坂田医院"}]},{"StoreID":"4","LabelID":"4","Lng":"121","Lat":"31","Icon":"bs.png","IsAssigned":"true","IsEdit":"true","Tips":"frametest","PopInfoWidth":"500","PopInfoHeight":"400","PopInfo":[{"type":"4","tilte":"frame","value":"http://www.baidu.com"}]}]';
+		    index._map_AddStores(px,false);
+		   index._map_MoveToStores();
+		  }
+		   function _map_UpdateStores()
+		  {  
+		   var px='[{"StoreID":"1","LabelID":"1","Lng":"120","Lat":"31","IconUrl":"2/1.gif","IsAssigned":"false","Tips":"这是一个测试终端1","PopInfoWidth":"200","PopInfoHeight":"","PopInfo":[{"type":"1","title":"客户名称","value":"坂田医院2"}]}]';
+				index._map_UpdateStores(px);
+		  }
+		  function pp(id,lng,lat)
+		  {
+		     return '{"StoreID": "' + id+ '", "LabelID": "' + id+ '", "Lng": "' + lng+ '", "Lat": "' +lat + '", "Icon": "gs.png"}';
+		  }
+        
+		   function _map_RemoveStores()
+		   {
+		     	var p='[{"StoreID":"2"},{"StoreID":"1"},{"StoreID":"3"}]';
+		      index._map_RemoveStores(p); 
+		   }
+		  
+			 function _map_MoveToStore()
+		   {	
+		       index._map_MoveToStore('2'); 
+			}
+           function _map_CreateLine1()
+           {
+              var p='[{"StoreID":"1"},{"StoreID":"2"},{"StoreID":"3"},{"StoreID":"4"}]';
+             index._map_CreateLine("lineid1",p,"waypoints",false,"none","1");
+           } 
+            function _map_CreateLine11()
+           {
+              var p='[{"StoreID":"1"},{"StoreID":"2"},{"StoreID":"3"},{"StoreID":"4"}]';
+             index._map_CreateLine("lineid2",p,"walkingpoints",true,"none","3");
+           } 
+           function _map_CreateLine2()
+           {
+              var p='[{"StoreID":"1"},{"StoreID":"2"},{"StoreID":"3"}]';
+             index._map_CreateLine("lineid1",p,"line",true,"center","3");
+           } 
+		   function _map_ClearLines()
+           {
+             var p='[{"LineID":"lineid1"}]';
+            index._map_ClearLines("");
+           } 
+		   function _map_Clear()
+           {index._map_Extent_Clear();
+           }
+		 
+           
+           function _map_InitMap()
+           {index._map_ShowStoresCluster(true,500);}
+          
+           function _map_Graphic_OnDoubleClick(ob)
+            {alert("双击")}
+            function _map_Graphic_OnClick(ob)
+           {}
+            function _map_Graphic_MoveEdit(ob)
+           {_map_CreateLine11();}
+          function _map_Graphic_OnRightClick(object,type)
+          {alert("右键选择")}
+           function _map_Extent_Select(a)
+           {
+            alert("多边形选择")
+           }
+           
+            function _map_ExportMap(b)
+           {
+   				alert(b.length)
+           }
+           
+       
+          function _map_CreateLine_Len(b)
+            {
+           alert(b)
+ 
+           }
+           function _map_Extent_Change(b)
+           {}
+            function _map_MoveToStores()
+            {
+             index._map_MoveToStores();
+             }
+           function  _map_query()
+           { index._map_QueryLine("121.5","31.5","121.8","31.8","line");
+           index._map_QueryLine("121.5","31.5","121.8","31.8","driving");}
+      	 function _map_QueryLine_Len(len)
+       	{alert(len);}
+       	
+       	function _map_CreateLine_WayPoints(outlen,outindex)
+       	{
+       	alert(outlen);
+       	alert(outindex);
+       	}
+       	function _map_GetBusyState()
+       	{var p=index._map_GetBusyState();alert(p);}
+         </script>
+         
+        
+    </head>
+    <body >
+    
+      <!--项目js-->
+      <div>
+      <input type='button' value='加点' onclick='_map_AddStores()'/>
+     <input type='button' value='更新' onclick='_map_UpdateStores()'/>
+      <input type='button' value='清点' onclick='_map_RemoveStores()'/>
+      <input type='button' value='移动到点' onclick='_map_MoveToStore()'/>
+        <input type='button' value='点图层居中' onclick='_map_MoveToStores()'/>
+	 <input type='button' value='建立真实行车线' onclick='_map_CreateLine1()'/>
+	  <input type='button' value='建立真实走路线' onclick='_map_CreateLine11()'/>
+	 <input type='button' value='建立直线' onclick='_map_CreateLine2()'/>
+	 <input type='button' value='清线' onclick='_map_ClearLines()'/>
+	  <input type='button' value='清多边形' onclick='_map_Clear()'/>
+	   <input type='button' value='查距离' onclick='_map_query()'/>
+	      <input type='button' value='busy' onclick='_map_GetBusyState()'/>
+     </div> 
+     
+        <div id="flashContent">
+            <p>
+                To view this page ensure that Adobe Flash Player version 
+                11.1.0 or greater is installed. 
+            </p>
+            <script type="text/javascript"> 
+                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://"); 
+                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
+                                + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
+            </script> 
+        </div>
+        
+        <noscript>
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="index">
+                <param name="movie" value="index.swf" />
+                <param name="quality" value="high" />
+                <param name="bgcolor" value="#ffffff" />
+                <param name="allowScriptAccess" value="sameDomain" />
+                <param name="allowFullScreen" value="true" />
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="index.swf" width="100%" height="100%">
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <param name="allowScriptAccess" value="sameDomain" />
+                    <param name="allowFullScreen" value="true" />
+                <!--<![endif]-->
+                <!--[if gte IE 6]>-->
+                    <p> 
+                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+                        11.1.0 or greater is not installed.
+                    </p>
+                <!--<![endif]-->
+                    <a href="http://www.adobe.com/go/getflashplayer">
+                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+                    </a>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+        </noscript>     
+   </body>
+</html>

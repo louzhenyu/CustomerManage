@@ -1,0 +1,100 @@
+@charset "utf-8";
+/*清除浮动*/
+.clear{display:block;clear:both;overflow:hidden;height:0;line-height:0;font-size:0}
+.clearfix:after{content:" ";visibility:hidden;display:block;clear:both;height:0;font-size:0}
+.clearfix{*zoom:1}
+
+table{border-collapse:collapse;border-spacing:0}
+ul { padding:0; margin:0;}
+li{list-style:none}
+dl,dd { padding:0; margin:0;}
+.hide { display:none;}
+
+.mana-card-m table i,.mana-card-m table td.last .set-layer dd span { background:url(../images/icon.png) no-repeat 0 0;}
+
+/*制新卡*/
+.create-card { padding:40px 0 0 180px;}
+.create-card dl { margin-bottom:15px;}
+.create-card dt { float:left; width:85px; color:#000; line-height:36px; font-size:14px;}
+.create-card dd { float:left; margin:0 20px 0 0;}
+.create-card dd .inpTxt { width:170px;}
+.create-card dd a { display:block; background:#F4F4F4; border:1px solid #ccc; width:70px; height:34px; line-height:34px; text-align:center; color:#000;border-radius: 5px; text-decoration:none;}
+.create-card dd .inpBtn { background-color:#39B44A; border:none; color:#fff;}
+
+.create-card dd .commonSelBox { width:170px; background-position:150px center;}
+.create-card dd .commonSelBox .selPulldown { width:170px;}
+
+/*弹出层*/
+.popup {position:fixed;z-index:9999;left: 36%;top: 35%;width:390px; background:#fff; border-radius:5px;padding:0px;}
+
+.popup-t { height:45px; line-height:45px; padding-left:20px; color:#fff; font-size:16px; background-color:#5FAFE4;
+	-webkit-border-top-left-radius:5px;
+	-webkit-border-top-right-radius:5px;
+	-moz-border-radius:5px 5px 0 0;
+	-ms-border-radius:5px 5px 0 0;
+	border-radius:5px 5px 0 0;}
+.popup-m { padding:15px; font-size:14px;}
+.popup-b { padding:15px 0; text-align:center;}
+.popup-b a { display:inline-block; *display:inline; *zoom:1; height:40px; line-height:40px; width:125px; text-align:center; color:#000; background:#F8F8F8; border:1px solid #D1D1D1;border-radius:5px; text-decoration:none; margin:0 5px;}
+.popup-b a:hover { background-color:#5FAFE4; color:#fff;}
+.popup-mes { text-align:center; padding:40px 0;}
+
+/*卡管理*/
+.mana-card-m table { border:1px solid #ccc;}
+.mana-card-m table th { background-color:#F4F4F4;width:25px; height:22px;}
+.mana-card-m table th { width:25px; height:22px;}
+.mana-card-m table input { width:auto;}
+.mana-card-m table th,.mana-card-m table td { border:1px solid #E6E4E5; padding:10px;text-align:center!important;}
+.mana-card-m table i { display:block; width:25px!important; height:22px!important; background-position:1px 1px;}
+.mana-card-m table i.on { background-position:0 -40px;}
+.mana-card-m table td.last { position:relative;}
+.mana-card-m table td.last a { color:#5fafe4; text-decoration:none;}
+.mana-card-m table td.last .set-layer { display:none; width:130px; position:absolute; top:-142px; background:#5FAFE4;border-radius:5px; color:#fff; text-align:center;}
+.mana-card-m table td.last .set-layer dt { height:35px; line-height:35px; border-bottom:1px solid #fff; font-size:16px;}
+.mana-card-m table td.last .set-layer dd { height:35px; line-height:35px; font-size:14px;}
+.mana-card-m table td.last .set-layer dd span { display:inline-block; *display:inline; *zoom:1; width:27px; height:23px; background-position:0 -80px; vertical-align:-5px; margin-right:5px;}
+.mana-card-m table td.last .set-layer dd span.on { background-position:0 -123px;}
+.mana-card-m table td.last .set-layer b {width:0;height:0;font-size:0;border-top:8px solid #5FAFE4;border-left:8px solid #fff;border-right:8px solid #fff; display:block; position:absolute; left:61px; bottom:-8px;}
+
+.mana-card-t { padding:15px 0;}
+.mana-card-t li { float:left; margin:0 15px 15px 0; _display:inline;}
+.mana-card-t li input { height:31px;}
+.mana-card-t li .btn-daochu { background:#39B44A; text-align:center; color:#fff;border-radius:5px; display:block; text-decoration:none; height:33px; line-height:33px; padding:0 20px; width:auto;}
+
+/*充值*/
+.recharge-list { padding:60px 0 0 140px;}
+.recharge-list dl { margin-bottom:35px; font-size:16px;}
+.recharge-list dt { margin-bottom:20px;}
+.recharge-list dt span { color:#5fafe4; padding-right:5px;}
+.recharge-list dt span i { display:inline-block; *display:inline; *zoom:1; width:20px; height:20px; line-height:20px; text-align:center; font-size:12px; font-style:normal; background:#5EAFE4; color:#fff;border-radius:50%; margin-left:3px;}
+.recharge-list dd { padding-left:70px; margin:0 0 10px 0;}
+.recharge-list dd .iptTxt { width:190px;}
+.recharge-list dd p { line-height:150%;}
+
+.btn-green { padding:0 20px; width:auto; height:37px; background:#39B44A; color:#fff; border-radius:5px; border:none;}
+a.btn-green { display:inline-block; *display:inline; *zoom:1; text-decoration:none; text-align:center; line-height:37px;}
+
+/*弹出层*/
+.popup02 { background:#fff; border-radius:5px; padding:20px;}
+
+.popup02-t { margin-bottom:20px; position:relative;}
+.popup02-t .iptTxt { width:190px;}
+.popup02-t .btn-green { margin-left:10px;}
+.popup02-t .btn-close { display:block; width:26px; height:26px; line-height:26px; text-align:center; border-radius:50%; background:#3AB34A; color:#fff; position:absolute; top:0; right:0; text-decoration:none; font-size:18px;}
+
+/*手机号码修改*/
+.tel-form li { margin-bottom:20px; position:relative;}
+.tel-form li .iptTxt { width:265px;border-radius:5px;}
+.tel-form li .ipt-btn { width:70px; height:30px; border:1px solid #5FAFE4; background:#F8F8F8;border-radius:5px; color:#5FAFE4; position:absolute; top:4px; right:10px;}
+
+/*批量更新卡*/
+.change-card { padding:0 0 40px 40px;}
+.change-card dl { margin-bottom:15px;}
+.change-card dt { float:left; width:130px; line-height:33px;}
+.change-card dd { float:left;}
+
+/*消费*/
+.btn-pay { display:block; background:#46B031; color:#fff; width:55px; height:25px; line-height:25px; text-align:center; text-decoration:none;}
+.btn-pay:hover { background:#5FAFE4;}
+.num-card { height:29px; padding:2px 4px; border:1px solid #ccc; border-radius: 2px; color:#a5a5a5;}
+.mana-card-t li .num-card input { height:25px; width:40px; border:0;}

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title name="CateList"></title>
+</head>
+
+<body class="cateringPage">
+	
+  <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<section id="section" class="cateringArea page-max-640">
+	<div id="typeWrapper" class="commonMenu">
+    	<ul id="typeList">
+        	<!-- <li class="type on"><a href="javascript:;">东瀛刺身</a><em>12</em></li>
+            <li><a href="javascript:;">软饮料</a><em></em></li> -->
+        </ul>
+    </div>
+    
+    <div id="itemWrapper" class="commonGreensList">
+    	<ul id="itemList">
+        	<!-- <li data-num="0" class="on">
+            	<img class="pic" src="../../../images/public/catering_default/pic.png" alt=""/>
+                <figure class="info">
+                	<h2 class="tit t-overflow">三文鱼刺身</h2>
+                    <span class="price">￥50</span>
+                </figure>
+                <div class="handle">
+                	<span class="sub">－</span>
+                    <span class="num">1</span>
+                    <span class="add">＋</span>
+                </div>
+            </li> -->
+            
+        </ul>
+    </div>
+ 
+</section>
+
+<footer id="footer" class="footer">
+	<div class="commonNav">
+    	<div class="navWrap">
+            <a href="javascript::" class="dishes"></a>
+            <a href="javascript:;" class="rowNumber"></a>
+            <a href="javascript:;" class="book"></a>
+            <a href="javascript:;" class="myOrder"></a>
+        </div>
+        <a id="totalCount" href="javascript:;" class="shopCart"><em>0</em></a>
+    </div>
+</footer>
+<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+<script id="typeListTemp" type="text/html">
+	<%for(var i=0;i<list.length;i++){var idata=list[i];%>
+		<li data-id="<%=idata.itemTypeId %>" data-code="<%=idata.itemTypeCode %>" class="type type<%=idata.itemTypeId %> <%if(idata.count!=0){%>on<%}%>"><a href="javascript:;"> <%=idata.itemTypeName %> </a><em><%=idata.count%></em></li>
+	<%}%>
+</script>
+<script id="itemListTemp" type="text/html">
+	
+	<%for(var i=0;i<list.length;i++){var idata=list[i];%>
+	<li data-id="<%=idata.skuId%>" class="<%if(idata.count!=0){%>on <%}%>">
+    	<img class="pic" src="<%=idata.imageUrl%>" alt=""/>
+        <figure class="info">
+        	<h2 class="tit t-overflow"><%=idata.itemName%></h2>
+            <span class="price">￥<%=idata.price%></span>
+        </figure>
+        <div class="handle">
+        	<span class="sub" data-id="<%=idata.skuId%>" data-typeid="<%=idata.typeId%>">－</span>
+            <span class="num"><%=idata.count%></span>
+            <span class="add" data-id="<%=idata.skuId%>" data-typeid="<%=idata.typeId%>">＋</span>
+        </div>
+    </li>
+    <%}%>
+</script>
+</body>
+</html>

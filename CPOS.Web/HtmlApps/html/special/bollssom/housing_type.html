@@ -1,0 +1,82 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="H_HousingType"></title>
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</head>
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <header id="tool_bar" class="commonHeader">
+        <div class="commonNav houseListNav">
+            <ul>
+                <li class="getBack"><a href="javascript:JitPage.urlGoToStore('H_StoreList');"></a></li>
+                <li class="user"><a href="javascript:Jit.AM.toPage('H_Reserve');"></a></li>
+                <li class="home"><a href="javascript:Jit.AM.toPage('H_OrderList');"></a></li>
+            </ul>
+        </div>
+    </header>
+    <section>
+        <div class="houseListArea">
+            <div class="commonBanner">
+            	<div class="asideShow">
+                    <p class="describe" >
+                        丽江华间堂 植梦苑
+                    </p>
+                    <p class="dot clearfix" id="goodsImgBar">
+                    </p>
+                </div>
+                <div id="goodsScroll">
+                    <ul class="picList clearfix"  id="goodsImgs">
+                    </ul>
+                </div>
+            </div>
+            <div class="chooseDateArea">
+                <div class="dateWrap" onclick="Jit.AM.toPage('H_ChooseDate')">
+                    <span jitval="InDate"><b>入住:</b></span>
+                    <span jitval="OutDate"><b>离店:</b></span>
+                    <span jitval="Date"><b></b></span>
+                </div>
+            </div>
+            <div class="houseList">
+                <ul tplpanel="house_list">
+                </ul>
+            </div>
+        </div>
+    </section>
+    <footer class="commonFooter">
+    	<div class="footerWrap specialFooter">
+        	<p class="locationBtn">
+            	<a id="mapUrl" jitval="addr">
+                </a>
+            </p>
+        	<p class="telBtn"><a href="tel:4000-767-123">4000-767-123</a></p>
+        </div>
+    </footer>
+</body>
+<script id="Tpl_house_list" type="text/template">
+    <li>
+        <a href="javascript:;" onclick="{{ItemID}}">
+            <div class="imgBox">
+                <img src="{{ImageURL}}">
+            </div>
+            <div class="infoBox">
+				<span class="name t-overflow">{{ItemName}}</span>
+                <span class="price">{{VipLevelName}}价{{SalesPrice}}元/晚</span>
+				<span class="bazaarPrice">市场价{{Price}}元/晚</span>
+            </div>
+			<span class="book">预订</span>
+            <div class="mark">
+                <div>
+					<img src="../../../images/public/hotel_default/full_room.png" style="text-align: right;">
+                </div>
+            </div>
+        </a>
+    </li>
+</script>
+</html>

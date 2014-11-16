@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{76DDB2F1-5B99-4143-BCDD-AF592C4FD539}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JIT.CPOS.TestCPOS.TestWeb</RootNamespace>
+    <AssemblyName>TestCPOS.TestWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\..\ReferenceDll\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\AppConfig\HomePageConfig\TestAppConfigAH.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\AppVersion\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\HtmlApps\Config\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\Event\EventPrizes\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\Knowledge\Knowledge\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\Knowledge\Tag\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\Knowledge\Type\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\Order\Delivery\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\Order\Order\TestCreateWXNativePayUrlAH.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\Order\Order\TestOrderPayAH.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\Sys\InterfaceLog\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\UnitAndItem\Area\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\UnitAndItem\Unit\TestSearchStoreListAH.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\VIP\Attribute\TestAttributeList.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\VIP\LoginOut\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\VIP\Login\TestGetAuthCodeAH.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\VIP\Login\TestMemberLogin.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\VIP\MoblieModule\MobileModuleTest.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\VIP\Order\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\VIP\Register\TestAPI.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TestClass\ApplicationInterface\Module\WX\SysPage\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Project\LZLJ\Activity\Activity\TestActivity.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Project\YiMa\Order\Order\TestOrderPayAH.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Util\ExtensionMethods\TestStringExtensionMethods.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Vip\VipTest.cs" />
+    <Compile Include="TestMaterial\APIClientProxy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CPOS.DTO\CPOS.DTO.csproj">
+      <Project>{E90B49C0-4C8E-42EC-88EF-DACCFD56F2B5}</Project>
+      <Name>CPOS.DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CPOS.Web\CPOS.Web.csproj">
+      <Project>{F86DB71F-262E-466D-9701-07BC84ACDF88}</Project>
+      <Name>CPOS.Web</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Release\" />
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="TestClass\ApplicationInterface\Module\Order\UnitAndItem\Area\" />
+    <Folder Include="TestClass\ApplicationInterface\Module\Order\UnitAndItem\Unit\" />
+    <Folder Include="TestClass\ApplicationInterface\Product\Eclub\Module\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\ResolveAssemblyReference.cache" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\TestCPOS.TestWeb.dll" />
+    <Content Include="bin\Debug\TestCPOS.TestWeb.pdb" />
+    <Content Include="obj\Debug\TestCPOS.TestWeb.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\Debug\TestCPOS.TestWeb.dll" />
+    <Content Include="obj\Debug\TestCPOS.TestWeb.pdb" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

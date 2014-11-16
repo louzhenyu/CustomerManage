@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<title>我要洗衣</title>
+<link href="css/c.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript">
+function getParam(para) {
+    //获得html上的参数
+    querystr = window.location.href.split("?");
+	var iparam = "",
+    tmp_arr = [];
+    if (querystr[1]) {
+        var GET1s = querystr[1].split("&");
+		for (i = 0; i < GET1s.length; i++) {
+            tmp_arr = GET1s[i].split("=");
+			if (para == tmp_arr[0]) {
+                iparam = tmp_arr[1];
+            }
+        }
+
+    }
+    return iparam;
+}
+$(function(){
+	$("#address").val(decodeURIComponent(getParam("address")));	
+})
+ var Base = {
+    //公共类的获得
+    openId: function() {
+	
+	
+        var opid = getParam("openId");
+        return opid;
+        // return 'o8Y7Ejv3jR5fEkneCNu6N1_TIYIM';
+    },
+    userId: function() {
+		
+        var userId = getParam("userId");
+        return userId;
+        //   return 'f7a5863a51334f1e8bd46ea3f0e3278f';
+    },
+    customerId: function() {
+        var customerId = getParam("customerId");
+        return customerId;
+        //   return 'f7a5863a51334f1e8bd46ea3f0e3278f';
+    },
+    locale: function() {
+        return 'zh';
+    },
+    All: function() {
+
+        return {
+            "locale": this.locale(),
+            "userId": this.userId(),
+            "openId": this.openId(),
+            "customerId": this.customerId()
+        }
+    }
+}
+ function DingDan() {
+        var address = $.trim($("#address").val()),
+			Cnumber = $.trim($("#Cnumber").val()),
+       		 phone = $.trim($("#phone").val());
+		if(address=="" ){
+				alert("请输入地址");
+					return false; 	
+				}
+		if(Cnumber=="" ){
+				alert("请输入数量");
+					return false; 	
+				}
+		if(phone=="" ){
+				alert("请输入手机号码");
+					return false; 	
+				}
+        var jsonarr = {
+            'action': "setGOrderInfo",
+            ReqContent: JSON.stringify({
+                "common": Base.All(),
+                "special": {
+                    'phone': phone,
+                    'qty': Cnumber,
+					'address': address,
+					'lng': getParam("lng"),
+					'lat':getParam("lat")
+                }
+            })
+        };
+        $.ajax({
+            type: 'post',
+            url: '../../../OnlineShopping/data/Data.aspx',
+            data: jsonarr,
+            timeout: 90000,
+            cache: false,
+            beforeSend: function() {
+                Win.Loading();
+            },
+            dataType: 'json',
+            success: function(o) {
+
+                Win.Loading("CLOSE");
+
+                if (o.code == 200) {
+
+                    alert("订单已接收，会有工作人员联系您。荣昌洗衣服务，竭诚为您服务。");
+                 
+                } else {
+                    alert(o.description);
+                  
+                }
+				  
+            }
+        });
+    }
+
+var Win = {
+    Loading: function(type, id) {
+        
+        if (type == "CLOSE" && id) {
+            $(id).find(".cLoading").remove();
+            return;
+        }
+        if (id) {
+            $(id).find(".cLoading").remove();
+            $(id).append('<div align=center style="padding:14px;" class="cLoading"><img width="30" height="30" src="images/382.gif"></div>');
+            return;
+        }
+        $("#BottomMenu").hide();
+
+        if (type == "CLOSE") {
+            $(".loading").hide();
+
+            return false;
+        }
+        var getWindowsWidth = $(window).width(),
+        getWindowsHeight = $(window).height(),
+        dst = $(document).scrollTop();
+        $(".loading").css({
+            left: (getWindowsWidth - $(".loading").width()) / 2,
+            top: ((getWindowsHeight - $(".loading").height()) / 2) + dst
+        });
+        $(".loading").show();
+    },
+    W: function() {
+        return $("#PcBox").width();
+    },
+    H: function() {
+        return $("#PcBox").height();
+    }
+}
+
+</script>
+</head>
+
+<body>
+<div style="height:40px; line-height:40px; background-color:#daf2fc; border-bottom:1px solid #7da6b6; font-size:16px; color:#000; padding-left:5%;">所在城市：上海</div>
+<div style="border:1px solid #cccccc;  min-height:40px; line-height:40px; padding:5px; width:90%; margin-left:auto; margin-right:auto; margin-top:30px; position:relative;">
+  <div style="position:absolute; left:5px; top:5px; width:100px; text-align:center;height:40px; line-height:40px;">取衣地址：</div>
+  <div style=" margin-left:110px; text-align:center; line-height:30px; padding-top:10px;">
+    <textarea  id="address" style="border:0; line-height:30px; height:60px; width:100%; background:none; font-size:16px;"></textarea>
+  </div>
+</div>
+<div style="border:1px solid #cccccc; height:40px; line-height:40px; padding:5px; width:90%; margin-left:auto; margin-right:auto; margin-top:15px; position:relative;">
+  <div style="position:absolute; left:5px; top:5px; width:100px; text-align:center; height:40px; line-height:40px;">联系手机：</div>
+  <div style=" margin-left:110px; text-align:center; height:40px; line-height:40px;">
+    <input type="text" id="phone" style="border:0; line-height:40px; height:40px; width:100%; background:none; font-size:16px;" />
+  </div>
+</div>
+<div style="border:1px solid #cccccc; height:40px; line-height:40px; padding:5px; width:90%; margin-left:auto; margin-right:auto; margin-top:15px; position:relative;">
+  <div style="position:absolute; left:5px; top:5px; width:100px; text-align:center; height:40px; line-height:40px;">衣物数量：</div>
+  <div style=" margin-left:110px; text-align:center; height:40px; line-height:40px;">
+    <input type="number" id="Cnumber" style="border:0; line-height:40px; height:40px; width:100%; background:none; font-size:16px;" />
+  </div>
+  	 <div style="position:absolute; right:10px; top:5px; width:30px; text-align:center; height:40px; line-height:40px;">件</div>
+</div>
+<div onClick="DingDan()" style=" background-color:#38b7ea; height:40px; line-height:40px; padding:5px;  margin-left:auto; margin-right:auto; margin-top:30px; position:relative; color:#fff; text-align:center; font-size:16px; font-weight:bold; cursor:pointer; text-shadow:0 0 1px #fff; vertical-align:middle; "><img src="images/yif.png" width="30" style="vertical-align:middle; margin-right:10px;" />我要洗衣 </div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+</body>
+</html>

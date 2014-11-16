@@ -1,0 +1,72 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+    <title name="Ranking"></title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+    <style type="text/css">
+        body
+        {
+            background: #e1e5e7;
+        }
+    </style>
+</head>
+<body>
+    <section class="screen_wrap">
+  <!--div class="top"> <img src="../images/pic_top.jpg"> </div-->
+  <div class="title">推荐排行榜</div>
+  <div class="table">
+    <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr id="list">
+        <th scope="col">排名</th>
+        <th scope="col">昵称</th>
+        <th scope="col">推荐成功人数</th>
+        <th scope="col">获得积分</th>
+      </tr>
+       
+      <!--tr>
+        <td>1</td>
+        <td>王小蒋</td>
+        <td>8998</td>
+        <td>1000元</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>王小蒋</td>
+        <td>8998</td>
+        <td>1000元</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>王小蒋</td>
+        <td>8998</td>
+        <td>1000元</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>王小蒋</td>
+        <td>8998</td>
+        <td>1000元</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>王小蒋</td>
+        <td>8998</td>
+        <td>1000元</td>
+      </tr-->
+    </table>
+  </div>
+</section>
+</body>
+<script id="Tpl_ranking_list" type="text/template">
+	<tr>
+        <td>{{displayIndex}}</td>
+        <td>{{vipName}}</td>
+        <td>{{recommendCount}}</td>
+        <td>{{integral}}</td>
+    </tr>
+</script>
+</html>

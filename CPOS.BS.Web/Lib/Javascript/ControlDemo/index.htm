@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Jit Ext控件示例</title>
+    <!--示例的样式-->
+    <style type="text/css">
+        .left
+        {
+        	border-style:solid;
+        	border-width:1px;
+        	float:left;
+        	width:200px;
+        	height:600px;
+        }
+        .right
+        {
+        	border-style:solid;
+        	border-width:1px;
+        	float:left;
+        	width:1000px;
+        	height:600px;
+        	margin-left:1px;
+        }
+    </style>
+</head>
+<body>
+    <div id="left" class="left">
+        <div style="margin:10px">JIT Web标准控件</div>
+        <ul>
+            <li><a href="javascript:showSample('text.htm');">01.文本框</a></li>
+            <li><a href="javascript:showSample('Number.htm');">02.数值输入框</a></li>
+            <li><a href="javascript:showSample('combobox.htm');">03.下拉框</a></li>
+            <li><a href="javascript:showSample('button.htm');">04.按钮</a></li>
+            <li><a href="javascript:showSample('radio.htm');">05.单选按钮</a></li>
+            <li><a href="javascript:showSample('checkbox.htm');">06.复选框</a></li>
+            <li><a href="javascript:showSample('textarea.htm');">07.多行文本框</a></li>
+            <li><a href="javascript:showSample('date.htm');">08.日期选择框</a></li>
+            <li><a href="javascript:showSample('month.htm');">09.月份选择框</a></li>
+            <li><a href="javascript:showSample('time.htm');">10.时间选择框</a></li>
+            <li><a href="javascript:showSample('grid_column.htm');">11.表格列</a></li>
+            <li><a href="javascript:showSample('window.htm');">12.弹出窗体</a></li>
+            <li><a href="javascript:showSample('mapwindow.htm');">13.地图窗口</a></li>
+            <li><a href="javascript:showSample('combotree.htm');">14.下拉树</a></li>
+            <li><a href="javascript:showSample('checkboxmodel.htm');">15.复选框列</a></li>
+            <li><a href="javascript:showSample('selecttextbox.htm');">16.点选控件</a></li>
+            <li><a href="javascript:showSample('collapsebutton.htm');">17.可收缩按钮</a></li>
+        </ul>
+    </div>
+    <div id="right" class="right">
+        <iframe id="frmContainer" width="100%" height="100%" src="text.htm"></iframe>
+    </div>
+    <script type="text/javascript" language="javascript">
+        function showSample(src) {
+            var container = document.getElementById('frmContainer');
+            container.src = src;
+        }
+    </script>
+</body>
+</html>

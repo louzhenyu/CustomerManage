@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>表格列</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <!--  引入Ext JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Ext4.1.0/ext-all.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Lib/Javascript/Ext4.1.0/Resources/CSS/ext-all.css" />
+    <!--引入Jit的JS类库-->
+    
+    <script type="text/javascript" src="/Lib/Javascript/Jit/jit-all-dev.js"></script> 
+    <link rel="stylesheet" type="text/css" href="/Lib/Css/jit-all.css" />
+    <!--示例的样式-->
+    <style type="text/css">
+        dt
+        {
+           color:#333333; 
+           font-size:18px;
+           font-family:宋体;
+           font-weight:bolder;
+           margin:10px;
+        }
+        .sample
+        {
+        	border-style:dashed;
+        	border-width:1px;
+        	margin:20px;
+        	padding:20px;
+        	width:800px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>表格列</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder1"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>                   
+              Ext.onReady(function () {
+            //组织测试数据
+            var datas = new Array();
+            datas.push({
+                'name': '陆荣平'
+                , 'age': 28
+                , 'sex': true
+                , 'salary': 15000.1211
+                , 'birthday': '1985-01-16'
+                , 'worktime': '2013-01-16 09:30:25'
+                , 'Quittingtime': '2013-01-16 17:30:25'
+                , 'lastdate': '2013-01-16 17:30:25'
+                , 'worktime1': 1200
+                , 'map': "118,39'
+                , 'photo': '[{ "Date": "2013-04-26 14:18:36", "Direction": 1,"ClientUserID":12, "FileName": "8750_20130607174305022.jpg"}]'
+            });
+            datas.push({
+                'name': '王庆'
+                , 'age': 30
+                , 'sex': false
+                , 'salary': 10000
+                , 'birthday': '1980-01-16'
+                , 'worktime': '2012-01-16 09:30:25'
+                , 'Quittingtime': '2012-10-16 17:30:25'
+                , 'lastdate': '2013-01-16 17:30:25'
+                , 'worktime1': 100
+                , 'map': '116,39'    
+                , 'photo': '[{ "Date": "2013-04-26 14:18:36", "Direction": 1,"ClientUserID":12, "FileName": "8750_20130607174305022.jpg"}]'       
+            });
+            //创建Store
+            var store = Ext.create('Ext.data.Store', {
+                fields: [
+                    { name: 'name', type: 'string' },
+                    { name: 'age', type: 'int' },
+                    { name: 'sex', type: 'bool' },
+                    { name: 'salary', type: 'float' },
+                    { name: 'birthday', type: 'datetime' },
+                    { name: 'worktime', type: 'datetime' },
+                    { name: 'Quittingtime', type: 'datetime' },
+                    { name: 'lastdate', type: 'datetime' },
+                    { name: 'worktime1', type: 'int' },
+                    { name: 'map', type: 'string' }
+
+                ],
+                data: datas
+            });
+            //定义表格列
+            var columns = [
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'String',
+                    text: '姓名',
+                    width: 75,
+                    dataIndex: 'name'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Int',
+                    text: '年龄',
+                    width: 75,
+                    dataIndex: 'age'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Coordinate',
+                    text: '地图',
+                    width: 100,
+                    dataIndex: 'map'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Boolean',
+                    text: '性别',
+                    yesText: '男',
+                    noText: '女',
+                    width: 75,
+                    dataIndex: 'sex'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    text: '月薪',
+                    jitDataType: 'Decimal',
+                    width: 75,
+                    dataIndex: 'salary'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Date',
+                    text: '出生日期',
+                    width: 85,
+                    dataIndex: 'birthday'
+                },
+                { 
+                    xtype: 'jitcolumn',
+                    jitDataType: 'DateTime',
+                    text: '上班时间',
+                    width: 150,
+                    dataIndex: 'worktime'
+                }, 
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'monthdayhourminute',
+                    text: '月日时分',
+                    width: 150,
+                    dataIndex: 'worktime'
+                },
+
+                { 
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Time',
+                    text: '最后更新时间',
+                    width: 85,
+                    dataIndex: 'Quittingtime'
+                }
+                ,
+                { 
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Timespan',
+                    text: '工作时间',
+                    width: 100,
+                    dataIndex: 'worktime1'
+                }
+                ,
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'photo',
+                    text: '照片',
+                    width: 100,
+                    dataIndex: 'photo'
+                }  
+            ];
+            //创建表格
+            var ctl_grid = Ext.create('Ext.grid.Panel', {
+                store: store
+                , columns: columns
+                , height: 350
+                , width: 600
+                , title: '人员信息'
+                , renderTo: 'dvPlaceholder1'
+            });
+        });
+                </pre>
+            </dd>
+        </dl>
+    </div>
+
+    <script language="javascript" type="text/javascript">
+        var __clientid = 12;
+        var __clientuserid = 12;     
+
+      
+       
+        Ext.onReady(function () {
+            //组织测试数据
+            var datas = new Array();
+            datas.push({
+                'name': '陆荣平'
+                , 'age': 28
+                , 'sex': true
+                , 'salary': 15000.1211
+                , 'birthday': '1985-01-16'
+                , 'worktime': '2013-01-16 09:30:25'
+                , 'Quittingtime': '2013-01-16 17:30:25'
+                , 'lastdate': '2013-01-16 17:30:25'
+                , 'worktime1': 1200
+                , 'map': '118,39'
+                , 'photo': '[{ "Date": "2013-04-26 14:18:36", "Direction": 1,"ClientUserID":12, "FileName": "8750_20130607174305022.jpg"}]'
+            });
+            datas.push({
+                'name': '王庆'
+                , 'age': 30110000
+                , 'sex': false
+                , 'salary': 10000
+                , 'birthday': '1980-01-16'
+                , 'worktime': '2012-01-16 09:30:25'
+                , 'Quittingtime': '2012-10-16 17:30:25'
+                , 'lastdate': '2013-01-16 17:30:25'
+                , 'worktime1': 100
+                , 'map': '116,39'
+                , 'photo': '[{ "Date": "2013-04-26 14:18:36", "Direction": 1,"ClientUserID":12, "FileName": "8750_20130607174305022.jpg"}]'
+            });
+            datas.push({
+                'name': '王庆'
+                , 'age': 300
+                , 'sex': false
+                , 'salary': 100.123123
+                , 'birthday': '1980-01-16'
+                , 'worktime': '2012-01-16 09:30:25'
+                , 'Quittingtime': '2012-10-16 17:30:25'
+                , 'lastdate': '2013-01-16 17:30:25'
+                , 'worktime1': 100
+                , 'map': ''
+                , 'photo': ''
+            });
+            //创建Store
+            var store = Ext.create('Ext.data.Store', {
+                fields: [
+                    { name: 'name', type: 'string' },
+                    { name: 'age', type: 'int' },
+                    { name: 'sex', type: 'bool' },
+                    { name: 'salary', type: 'float' },
+                    { name: 'birthday', type: 'datetime' },
+                    { name: 'worktime', type: 'datetime' },
+                    { name: 'Quittingtime', type: 'datetime' },
+                    { name: 'lastdate', type: 'datetime' },
+                    { name: 'worktime1', type: 'int' },
+                    { name: 'map', type: 'string' },
+                    { name: 'photo', type: 'string' }
+                ],
+                data: datas
+            });
+            //定义表格列
+            var columns = [
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'String',
+                    text: '姓名',
+                    width: 75,
+                    dataIndex: 'name'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Int',
+                    text: '年龄',
+                    width: 75,
+                    dataIndex: 'age'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Coordinate',
+                    text: '地图',
+                    width: 100,
+                    dataIndex: 'map'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Boolean',
+                    text: '性别',
+                    yesText: '男',
+                    noText: '女',
+                    width: 75,
+                    dataIndex: 'sex'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    text: '月薪',
+                    jitDataType: 'Decimal',
+                    width: 75,
+                    dataIndex: 'salary'
+                },
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Date',
+                    text: '出生日期',
+                    width: 85,
+                    dataIndex: 'birthday'
+                },
+                { 
+                    xtype: 'jitcolumn',
+                    jitDataType: 'DateTime',
+                    text: '上班时间',
+                    width: 150,
+                    dataIndex: 'worktime'
+                },                
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'monthdayhourminute',
+                    text: '月日时分',
+                    width: 150,
+                    dataIndex: 'worktime'
+                },
+                { 
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Time',
+                    text: '最后更新时间',
+                    width: 85,
+                    dataIndex: 'Quittingtime'
+                }
+                ,
+                { 
+                    xtype: 'jitcolumn',
+                    jitDataType: 'Timespan',
+                    text: '工作时间',
+                    width: 100,
+                    dataIndex: 'worktime1'
+                }
+                  ,
+                {
+                    xtype: 'jitcolumn',
+                    jitDataType: 'photo',
+                    text: '照片',
+                    width: 100,
+                    dataIndex: 'photo'
+                }             
+            ];
+            //创建表格
+            var ctl_grid = Ext.create('Ext.grid.Panel', {
+                store: store
+                , columns: columns
+                , height: 350
+                , width: 600
+                , title: '人员信息'
+                , renderTo: 'dvPlaceholder1'
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">会员秀</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<bod>
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;"> 
+  <!--  <div class="ListLocation" id="ListLocation" style="display:none;"><span class="frdisplay" id="tableNum"></span><span id="storeNanme"></span></div>-->
+  <div style="position:relative; padding-bottom:50px;" id="AppCom">
+    <div class="WelfareConnext" id="WelfareConnext" page="1" isnext="1" isloading="0">
+      <div style="text-align:center; padding-top:20px; display:none;" id="WelfareNoConnext">该类别暂无内容</div>
+      <div class="WelfareConnextBox">
+        <ul id="waterwall1">
+        </ul>
+      </div>
+      <div class="WelfareConnextBox">
+        <ul id="waterwall2">
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--  <div class="TgongFuli" onClick="WelfareAction.Search()">热门</div>--> 
+  <a href="myShow.html">
+  <div class="CartincDiv">
+    <div style="position:relative; padding-left:44px;">
+      <div class="Cartinc"><img src="images/nt7.png" /></div>
+      我要秀</div>
+  </div>
+  </a>
+  <div class="MenuBox" id="MenuBox" rel="2"> </div>
+</div>
+<div class="TgongFuli"  style="bottom:100px;" onClick="Xxi('1')">最热</div>
+<div class="TgongFuli" onClick="Xxi('0')">我的</div>
+<div class="AppBgGray" id="AppBgGray"></div>
+<input type="hidden" id="isMe" value="0" />
+<input type="hidden" id="isTop" value="1" />
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = ['WelfareConnext','GetData.getVipShowList()'];
+var Von = 'GetData.getVipShowList("1")';//.getStoreDetail()
+function Xxi(lbie){
+	if(lbie == "1"){
+		$("#isMe").val("0");
+		$("#isTop").val("1");
+	}else{
+	$("#isMe").val("1");
+		$("#isTop").val("0");
+	}
+	GetData.getVipShowList("1")	
+}
+</script> 
+ 
+<script id="applist" type="text/template"> 
+<% _.each(vipShowList,function(item){ %>
+	  <a href="vipShowdetail.html?vipShowId=<%=item.vipShowId%>">
+	<li style="margin-top:8px;">
+	  <div class="WelfareConnextBoxLi"><img width="100%" src="<%if(item.imageList.length > 0){%><%= item.imageList[0].imageURL %><%}%>"><%if (item.isPraise=="0"){%><span onclick="Vip.Good(this,event,'<%=item.vipShowId%>')" isselect="0" class="rightpp"><img src="images/zangray.png"></span><%}else{%>
+	  <span  isselect="1" class="rightpp"><img src="images/zan.png"></span>
+	  <%}%></div>
+	  <div class="WelfareConnextBoxLiTxt">
+		<h2 style="line-height:18px;"><%= _.escape(item.experience) %></h2>
+		<h3><%=item.hairStylistName%><br />
+		  <div style="height:20px; overflow:hidden"><span style="color:#7C7C7C"><span id="zan_<%=item.vipShowId%>"><%=item.praiseCount%></span>人赞过</span><span class="gray frdisplay" style="font-size:11px;"><%=item.createTime%></span></div></h3>
+		
+	  </div>
+	</li>
+	</a>
+ <%});%>
+ 
+</script>
+</body>
+</html>

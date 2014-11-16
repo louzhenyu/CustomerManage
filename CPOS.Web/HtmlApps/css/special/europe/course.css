@@ -1,0 +1,715 @@
+﻿
+html, body, body > section {
+    height: 100%;
+}
+
+/*emba课程详情转移到中欧*/
+.course_commonBtn{display:inline-block;height:42px;line-height:42px;text-align:center;font-size:15px;border-radius:5px;box-shadow:0 0 3px rgba(0,0,0,0.03);}
+
+
+/*index-首页*/
+.c_indexBg{position:relative;min-height:100%;background:url(../../../images/special/embaunion/c_index_bg.jpg) no-repeat 0 0;background-size:100%;overflow:auto;}
+
+.indexIntro{color:#fff;height:230px;}
+.indexIntro .title{float:left;width:15.625%;height:100%;padding:23px 0 0 6%;font-size:18px;word-wrap:break-word;letter-spacing:30px;background:#9a866a;}
+.indexIntro .essay{height:100%;margin-left:15.625%;padding:20px 5px 20px 15px; font: 1em/22px "SimHei";background:rgba(183,160,128,0.7);}
+
+.c_indexNav{position:absolute;left:5px;bottom:55px;right:5px;overflow:hidden;}
+.c_indexNav a{float:left;width:20%;height:55px;}
+.c_indexNav span{display:block;width:54px;height:54px;margin:0 auto;background:url(../../../images/special/embaunion/c_index_nav.png) no-repeat;background-size:54px 350px;}
+.c_indexNav .course span{background-position:0px 0px;}
+.c_indexNav .alumnus span{background-position:0px -70px;}
+.c_indexNav .apply span{background-position:0px -140px;}
+.c_indexNav .activity span{background-position:0px -210px;}
+.c_indexNav .contactus span{background-position:0px -280px;}
+
+
+/*近期活动*/
+.recentActivity{padding:13px 10px 0;}
+.recentActivity ul{display:inline-block;}
+.recentActivity li{position:relative;margin-bottom:11px;}
+.recentActivity li img{width:100%;border-radius:3px 3px 0 0;}
+.recentActivity .info{position:absolute;bottom:0px;left:0px;right:0px;width:100%;background:rgba(0,0,0,0.6);}
+.recentActivity .info p{    border-bottom: 1px solid #fff;
+    color: #fff;
+    font: 14px/26px "STHeiti";
+    height: 26px;
+    overflow: hidden;
+    padding-left: 7px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;}
+.recentActivity .info span{float:left;width:50%;text-indent:30px;height:30px;font:1em/30px "STHeiti";background:url(../../../images/special/embaunion/ce_icon003.png) no-repeat;background-size:25px 250px;color:#c9c9c9;}
+.recentActivity span.date{background-position:7px 6px;}
+.recentActivity span.location{background-position:12px -26px;}
+/*联系我们*/
+.contactUsPage,.courseSetPage,.applyGuidePage{background:#f8f8f8;}
+.contactUsArea{padding:23px 18px 10px;}
+.contactUsArea .title{width:58px;height:23px;margin-bottom:16px;text-align:center;font:13px/23px "Microsoft YaHei";background:url(../../../images/special/embaunion/c_titleBg.png) no-repeat 0 0;background-size:58px 23px;color:#e2e3e6;}
+.contactUsArea .numBox{display:-webkit-box;display:-moz-box;margin-bottom:8px;font:13px/1.8em "Microsoft YaHei";color:#000;}
+.contactUsArea .numBox>*{display:block;}
+.contactUsArea .tit{width:58px;text-align:right;}
+.contactUsArea .mark{width:30px;}
+.contactUsArea .mark.telIcon{background:url(../../../images/special/embaunion/c_tel.png) no-repeat center center;background-size:24px 24px;}
+.contactUsArea .mark.emailIcon{background:url(../../../images/special/embaunion/c_email.png) no-repeat center center;background-size:23px 15px;}
+.contactUsArea .info{-webkit-box-flex:1;-moz-box-flex:1;}
+.contactUsArea .info a{display: block;}
+/*课程设置*/
+.courseSetArea{padding:25px 0;}
+.courseSetArea .studyPic{margin:20px 0 10px 0;}
+.courseSetArea p,.courseSetArea .titIcon{margin:0 18px 25px;font:1em/1.6em "Microsoft YaHei";color:#404040;}
+.courseSetArea .timeIcon, .courseSetArea .siteIcon, .courseSetArea .titIcon, .courseSetArea .dotIcon{
+text-indent:28px;
+position: relative;
+}
+.courseSetArea .timeIcon:after,
+.courseSetArea .siteIcon:after,
+.courseSetArea .titIcon:after,
+.courseSetArea .dotIcon:after{
+background:url(../../../images/special/embaunion/c_icon003.png) no-repeat;
+background-size: 100%;
+    content: "";
+    display: block;
+    height: 28px;
+    left: 0;
+    margin-bottom: 0;
+    position: absolute;
+    top: 0;
+    width: 28px;
+}
+
+.courseSetArea .timeIcon:after{  background-position: 0 4px;}
+.courseSetArea .siteIcon:after{   background-position:0 -196px;}
+.courseSetArea .titIcon:after{text-indent:34px;
+    font-size:15px;font-weight:bold;background-position:0px -140px;
+}
+.courseSetArea .dotIcon:after{
+  background-position: 10px -246px;
+    text-indent: 10px;}
+
+
+/*精英校友*/
+.eliteAlumnusPage{background:#f0f0f0;}
+.eliteAlumnusArea{padding:15px 0;color:#000;}
+.eliteAlumnusArea .title{text-align:center;font:bold 15px/1.5em "Microsoft YaHei";}
+.alumnusPicList{position:relative;margin:0 1em;height: 80px }
+.alumnusPicList li{position:relative;float:left;width:72px;}
+.alumnusPicList li em{display:none;width:14px;height:6px;position:absolute;bottom:-12px;left:50%;margin-left:-5px;background:url(../../../images/special/embaunion/c_arr02.png) no-repeat 0 0;background-size:14px 6px;}
+.alumnusPicList li.on em{display:block;}
+.alumnusPicList li img{display:block;width:51px;height:51px;margin:9px auto 0;border-radius: 36px;}
+.alumnusPicList li.on img{width:68px;height:68px;margin-top:0px;border:3px solid #fff;border-radius:36px;}
+.alumnusPicList .arr{position:absolute;top:0px;right:0px;width:12px;height:68px;background:url(../../../images/special/embaunion/c_arr01.png) no-repeat center center;background-size:9px 16px;}
+.alumnuslist{}
+.detailInfo{ display: none; min-height:100px;margin:0px 20px;padding:2px 2px 30px 2px;border-radius:3px;background:#fff;}
+.detailInfo img{display:block;margin:0 auto;border-radius:2px;}
+.detailInfo p{padding:2px;font:1em/1.5em "Microsoft YaHei";}
+.detailInfo .name{font-size:15px;font-weight:bold;}
+.explainText{padding:10px;}
+.explainText em{display:block;width:20px;height:16px;background:url(../../../images/special/embaunion/c_quotes.png) no-repeat 0 0;background-size:20px 16px;}
+.explainText .right{float:right;transform:rotate(180deg);-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);}
+
+/*申请指南*/
+.applyGuideArea{padding-bottom:30px;}
+
+
+
+/*end*/
+
+
+
+/*FMBA课程*/
+
+
+/*fmba首页*/
+
+.fmbacoursearea{
+ min-height: 100%;
+position: relative;
+}
+.fmbacoursearea .bg{
+ height: 100%;
+ width: 100%;
+
+
+}
+.fcbox{
+  bottom: 2%;
+    margin: 0 2%;
+    position: absolute;
+    width: 96%;
+
+}
+.fcbox .fcmenu{
+ margin-top: 15px;
+
+}
+.fcbox .fcTitle {
+ text-align: center;
+height: 40px;
+}
+.fcbox .fcTitle a{
+
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    color: white;
+    font-size: 1em;
+    padding: 5px 15px;
+
+}
+
+.fcbox  .fcExplain{
+background-color: rgba(0, 0, 0, 0.5);
+border-radius: 1px;
+color: white;
+padding: 4px;
+font-size: 0.9em;
+line-height: 22px;
+}
+.fcbox .fcmenu .fcmenurow{
+ height: 85px;
+ position: relative;
+}
+.fcmenu .fcmenurow a{
+ height: 80px;
+width: 49%;
+ background-image: url('../../../images/special/europe/fmbabg01.png');
+ border-radius: 4px;
+ position: absolute;
+
+}
+
+.fcmenu .fcmenurow .fcmenuleft{
+ left: 0px;
+ top: 0px;
+}
+
+.fcmenu .fcmenurow .fcmenuright{
+ right: 0px;
+ top: 0px;
+}
+
+
+
+.fcmenu .fcmenurow a i,.fcmenu .fcmiddle .lianxi{
+ width: 70px;
+ height: 64px;
+background-repeat: no-repeat;
+ position: absolute;
+     color: white;
+     vertical-align: middle;
+    padding-top: 40px;
+background-position: 8px 0px;
+}
+.fcmenu .fcmenurow .zhaosheng{
+ left: 20%;
+    top: 10%;
+background-image: url('../../../images/special/europe/zhaosheng01.png');
+}
+
+.fcmenu .fcmenurow .jinqi {
+     background-image: url('../../../images/special/europe/jinqi01.png');
+    right: 10%;
+    top: 10%;
+}
+.fcmenu .fcmenurow .shenqing {
+        background-image: url('../../../images/special/europe/shenqing01.png');
+
+    left: 20%;
+    top: 10%;
+}
+.fcmenu .fcmenurow .tongchuang {
+    background-image: url('../../../images/special/europe/tongchuang01.png');
+
+    right: 10%;
+    top: 10%;
+}
+.fcmenu .fcmenucenter{
+     background-image: url('../../../images/special/europe/fmbabg02.png');
+position: absolute;
+left: 34%;
+top: 68%;
+z-index: 101;
+width: 100px;
+padding: 5px;
+border-radius: 4px;
+height: 90px;
+}
+.fcmenu .fcmiddle{
+width: 90px;
+background-image: url('../../../images/special/europe/fmbabg01.png');
+border-radius: 4px;
+position: absolute;
+height: 80px;
+}
+.fcmenu .fcmiddle .lianxi{
+    background-image: url('../../../images/special/europe/lianxi01.png');
+   right: 6%;
+    top: 10%;
+
+}
+
+
+/*招生公告*/
+
+.affichearea,.affichebody{
+background-color: #f8f8f8;
+color: #404040;
+}
+.affichearea .title{
+ height: 40px;
+ line-height: 40px;
+ font-size: 1rem;
+ position: relative;
+ margin-left: 20px;
+ border-bottom:1px solid #cdcdcd; 
+    padding-left: 34px;
+}
+.affichearea .title:after{
+width: 10px;
+height: 100%;
+background-color: #dd3c3c;
+position: absolute;
+left: -20px;
+top: 0px;
+content: '';
+display: block;
+
+}
+.affichearea .item{
+min-height: 40px;
+line-height: 24px;
+padding-left: 50px;
+position: relative;
+padding-right: 10px;
+margin-bottom:5px; 
+}
+.affichearea .item:after{
+ background-image: url('../../../images/special/europe/fmbaiocs01.png');
+ width: 36px;
+ height: 28px;
+position: absolute;
+  left: 20px;
+top: 0px;
+content: '';
+display: block;
+background-size: 100%;
+}
+/*.affichearea .shijian:after {
+    background-position: 0 0;
+}*/
+.affichearea .didian:after {
+    background-position: 0 -26px;
+}
+.affichearea .yuyan:after {
+    background-position: 0 -56px;
+    left: 18px;
+}
+.affichearea .renshu:after {
+    background-position: 0 -86px;
+    left: 16px;
+}
+.affichearea .jiezhi:after {
+    background-position: 0 -120px;
+    left: 16px;
+}
+.affichearea .fangshi:after {
+    background-position: 0 90px;
+    left: 16px;
+}
+.affichearea .shijian{
+ margin-top: 20px;
+
+}
+.mysignup{
+    height: 60px;
+    margin: 20px 0;
+    text-align: center;
+}
+.mysignup a{
+ background-color: #dd3939;
+border-radius: 4px;
+color: white;
+display: inline-block;
+font-size: 1.2em;
+height: 3em;
+letter-spacing: 6px;
+line-height: 3em;
+width: 80%;
+}
+
+/*申请指南*/
+.contactlist{
+ margin-bottom: 30px;
+}
+.contactlist>div{
+width: 90%;
+height: 30px;
+line-height: 30px;
+position: relative;
+margin-bottom: 5px;
+padding-left: 35px;
+}
+.contactlist>div:before{
+
+background-size: 100%;
+background-image: url('../../../images/special/europe/fmbaiocs03.png');
+width: 30px;
+  height: 25px;
+position: absolute;
+right: -20px;
+top: 0px;
+content: '';
+display: block;
+}
+/*.contactlist .tel:before{
+background-position: 0px 0px;
+}*/
+.contactlist .mail:before{
+background-position: 0px -22px;
+}
+.contactlist .web:before{
+background-position: 0px -56px;
+
+}
+.contactlist .ct_title{
+ font-size: 1.1em;
+ font-weight: bold;
+ color: #333333;
+  padding-left: 0;
+
+}
+.contactlist>div.ct_title:before{
+    display: none;
+}
+
+.contactlist div a{
+ color: #098fcd;
+
+
+}
+
+
+/*同窗校友*/
+.eliteexplain{
+ width: 90%;
+ margin: 15px auto;
+}
+.fmbalist .explainText{
+    position: relative;
+
+}
+.fmbalist .hauto{
+ height: auto;
+
+}
+.fmbaexplain{
+    height: 172px;
+    overflow: hidden;
+
+}
+.fmbalookmore{
+ bottom: 12px;
+    color: #00b2d8;
+    display: block;
+    position: absolute;
+ left: 0px;
+    text-align: left;
+    width: 100%;
+    z-index: 100;
+}
+.fmbalist .lkmore{
+ height: 40px;
+position: relative;
+}
+/*end*/
+
+
+/*班级列表*/
+
+.classlistbody,.classdetailbody{
+ background-color: #f2f2f2;
+color: #333333;
+}
+
+.classdetailbody{
+color: #666666;
+}
+.classlistbody h3{
+ font-weight: bold;
+ padding: 4px;
+
+}
+.classhead{
+  background-color: #e3e3e3;
+    border-bottom: 1px solid #cbcbcb;
+    min-height: 100px;
+    padding: 20px;
+    width: 100%;
+
+}
+.classhead .c_left{
+width: 50%;
+float: left;
+
+}
+.classbox{
+    background-color: white;
+    background-image: url("../../../images/special/europe/classdown.jpg");
+    background-position: 100px center;
+    background-repeat: no-repeat;
+    background-size: 30px auto;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    font-size: 16px;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    text-align: center;
+    width: 138px;
+}
+.classbox .classtitle{
+width: 100px;
+overflow: hidden;
+height: 38px;
+
+}
+.classoption {
+    background-color: white;
+    border: 1px solid #159cf5;
+    font-size: 16px;
+    left: 0;
+    position: absolute;
+    top: 50px;
+    width: 138px;
+    z-index: 4;
+    display: none;
+}
+.classoption>div{
+max-height: 300px; 
+overflow: hidden;
+
+
+}
+
+.classoption:before{
+    border-bottom: 10px solid #159cf5;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    content: "";
+    display: block;
+    height: 0;
+    left: 58px;
+    position: absolute;
+    top: -10px;
+    width: 0;
+}
+
+
+.classoption a {
+background-color: white;
+    display: block;
+}
+.classoption a.on{
+    background-color: #159cf5;
+    color: white;
+
+}
+
+.classitems{
+ padding: 20px;
+}
+
+.classitems .item{
+float:left;
+width:50%;
+  height: 124px;
+
+}
+.classitems .item h3{
+
+    font-weight: normal;
+}
+
+
+.classitems .item .itembox{
+   background-color: white;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    font-size: 16px;
+    padding: 0 10px;
+    text-align: center;
+    width: 138px;
+}
+.classitems .item .itembox h3{
+   border-bottom: 1px solid #ccc;
+    padding: 10px;
+      margin-bottom: 10px;
+        overflow: hidden;
+        width: 100%;
+        height: 36px;
+
+}
+.itembox  .itemintro{
+height: 60px;
+color: #808080;
+
+}
+
+.itemintro .img,.itemintro  .handle
+{
+float: left;
+height: 50px;
+
+}
+.itemintro .img{
+
+ width: 50px;
+
+}
+
+.itemintro .handle{
+    font-size: 12px;
+    margin-top: 8px;
+    padding-left: 2px;
+    text-align: left;
+    width: 66px;
+}
+.itemintro .handle span{
+color: #159cf6;
+font-size: 16px;
+font-weight: bold;
+
+
+}
+/*end*/
+
+
+/*班级详情*/
+.classdetailbody{}
+
+.classdetailhead{
+ background-color: white;
+border-top: 1px solid #cccccc;
+border-bottom: 1px solid #cccccc;
+padding: 20px;
+}
+.classdetailhead .cdlitem{
+height: 40px;
+line-height: 40px;
+position: relative;
+
+}
+.classdetailhead .cdlitem:nth-child(1):before{
+   background-image: url("../../../images/special/europe/classioc.jpg");
+    background-repeat: no-repeat;
+    background-size: 20px 24px;
+    content: "";
+    display: block;
+    height: 24px;
+    left: 0;
+    position: absolute;
+    top: 10px;
+    width: 24px;
+}
+.classdetailhead .cdlitem:nth-child(2):before{
+
+  background-image: url("../../../images/special/europe/classcard01.jpg");
+    background-repeat: no-repeat;
+    background-size: 24px 20px;
+    content: "";
+    display: block;
+    height: 24px;
+    left: 0;
+    position: absolute;
+    top: 10px;
+    width: 24px;
+
+}
+.classdetailbody .explain,.classdetailbody .uparea{
+ padding: 20px;
+
+}
+
+
+.uparea .upimage a{
+  display: inline-block;
+    height: 60px;
+    position: relative;
+    text-align: center;
+    width: 230px;
+}
+.uparea .upimage  img{
+ width: 230px;
+text-align: center;
+
+
+}
+.classdetailbody .uparea {
+ margin-bottom: 50px;
+border-bottom: 1px solid #cccccc;
+border-top: 1px solid #cccccc;
+background-color: white;
+}
+
+.classdetailbody .uparea > div{
+ text-align: center;
+margin-bottom: 15px;
+}
+.classdetailbody .explain{
+color:  #999999;
+    line-height: 22px;
+}
+
+
+
+ .cdlitem .cdlleft{
+float: left;
+width: 170px;
+   width: 120px;
+      text-align: right;
+}
+
+ .cdlitem .cdlright{
+float: left;
+width: 50%;
+color:#999999;
+ }
+
+.upimage input{
+        height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    opacity: 0;
+    left: 0px;
+    top: 0px;
+}
+
+
+/*end*/
+.fmbahomebg{
+
+ background-image: url('../../../images/special/europe/fmbaindexbg.jpg');
+ background-position: left top;
+ background-size: 100% 100%;
+ background-repeat: no-repeat; 
+
+}
+
+
+/*中欧捐赠*/
+.donateWrite select,input{border:none;}
+.donateWrite input{text-indent:5px;}
+.donateWrite .logoWrap{height:104px;padding-top:38px;}
+.donateWrite .logo{display:block;width:30px;height:30px;margin:0 auto;background:url(../../../images/special/europe/don_commonIcon.png) no-repeat 0px 0px;background-size:30px 300px;}
+.donateWrite .itemBox{height:51px;margin-bottom:31px;padding:0 20px;border-top:1px solid #a61019;border-bottom:1px solid #a61019;background:#fff;}
+.donateWrite .titIcon{float:left;width:30px;height:100%;background:url(../../../images/special/europe/don_commonIcon.png) no-repeat;background-size:30px 300px;}
+.donateWrite .titIcon.grade{background-position:0px -54px;}
+.donateWrite .titIcon.name{background-position:0px -122px;}
+.donateWrite .titIcon.tel{background-position:0px -195px;}
+.donateWrite .titIcon.limit{background-position:4px -262px;}
+.donateWrite .inputBox{display:block;margin:12px 0 0 40px;}
+.donateWrite .inputBox input{height:26px;font-size:12px;font-weight:bold;color:#898989;}
+.donateWrite .btnWrap{padding:15px 0;text-align:center;}
+.donateWrite .submitBtn{display:inline-block;width:93px;height:29px;font:bold 12px/27px "Microsoft YaHei";color:#282828;border:1px solid #a61019;border-radius:10px;background:#fff;}
+/*end*/

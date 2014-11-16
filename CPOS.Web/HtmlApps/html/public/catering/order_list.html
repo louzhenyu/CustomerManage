@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title name="CateOrderList">订单列表</title>
+</head>
+<body style=" background-color: #F5F5F5;">
+	<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+	<section class="myOrderListArea">
+		<div id="menuList" class="ola_top">
+			<a href="javascript:;" data-type="record" data-status="100,200,300" data-menu="1">点菜记录</a>
+			<a href="javascript:;" data-type="feedback" data-status="700,800" data-menu="0">待评价</a>
+		</div>
+		<div id="itemList" class="ola_list" >
+			<!-- 	<div class="items">
+
+				<a href="javascript:;">
+					<div>点餐时间 2014-02-27 17:20</div>
+					<div>一茶一坐中环店</div>
+					<div>麻婆豆腐、糖醋里脊、上汤娃娃菜</div>
+				</a>
+
+				<div>
+					金额:
+					<span>￥25</span>
+					<div>
+						<a href="javascript:;">删除</a>
+						<a href="javascript:;">修改</a>
+						<a href="javascript:;">下单</a>
+					</div>
+				</div>
+
+			</div> -->
+		</div>
+	</section>
+	<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+	<script id="itemListTemp" type="text/html">
+	<%for(var i=0;i<list.length;i++){var idata= list[i];%>
+		<div class="items">
+			<a href="javascript:;">
+				<div>点餐时间 <%=idata.orderDate%></div>
+				<div><%=idata.storeName%></div>
+				<div><%=idata.orderDetailString%></div>
+			</a>
+			<div>
+				金额:
+				<span>￥<%=idata.totalAmount%></span>
+				<%if(hasMenu){%>
+					<div>
+						<a class="delete" data-orderid="<%=idata.orderId%>" href="javascript:;">删除</a>
+						<a class="modify" data-orderid="<%=idata.orderId%>" data-storeid="<%=idata.storeId%>" href="javascript:;">修改</a>
+						<a class="toBill" data-orderid="<%=idata.orderId%>" data-storeid="<%=idata.storeId%>" href="javascript:;">下单</a>
+					</div>
+				<%}%>
+			</div>
+		</div>
+	<%}%>
+	</script>
+</body>
+</html>

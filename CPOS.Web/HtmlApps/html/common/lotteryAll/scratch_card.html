@@ -1,0 +1,150 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=0" name="viewport">
+    <title name="ScratchCard">刮刮卡</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        .wrapper {
+            position: relative;
+            margin: 0 auto;
+            max-width: 640px;
+            min-height: 100%;
+        }
+        .img{
+            display:block;
+            margin:0 auto;
+        }
+        .awardBtnWrap{position:fixed;bottom:10px;left:0px;width:100%;height:45px;background:#fff;}
+		.awardBtnWrap span{width:43%;height:42px;line-height:42px;text-align:center;font-size:15px;font-weight:bold;border-radius:5px;background:#f60;color:#fff;cursor:pointer;}
+		.awardBtnWrap .prizeBtn{float:left;margin:0 2% 0 5%;}
+		.awardBtnWrap .rewardBtn{float:right;margin:0 5% 0 2%;}
+
+
+        /*下拉动画*/
+        @-webkit-keyframes pullDown {  
+        0% { top:-130px;}
+        40%{ top:130px;}
+        100% { top:0;}
+        }
+        .pullDownState{-webkit-animation:pullDown 0.5s ease-in-out 1;}/*infinite*/
+
+        @-webkit-keyframes pullUp {  
+        0% {top:150px;}
+        100% {top:-130px;}
+        }
+
+        .pullUpState{-webkit-animation:pullUp 0.5s ease-in-out 1;}/*infinite*/
+    </style>
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+<body>
+    
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <img src="/HtmlApps/images/common/share.png" id="shareImg" style="display: none;height: 130px;position:fixed;right: 25px;top: 0;width: 160px;z-index: 100;" class="pullDownState">
+    <section class="sharePanel wrapper hide">
+            <div id="shareWrapper">
+            </div>
+            <div class="awardBtnWrap">
+			    <span id="btn_join" class="prizeBtn">马上参与</span>
+			    <span id="btn_check" class="rewardBtn">我的推荐奖励</span>
+			</div>
+
+    </section>
+    
+    <!--信封-填写基本信息的层-->
+    <section  class="container" id="contact"  blockPage="true" style="display:none;">
+        
+        <div class="titWrap">
+             <a id="close" href="javascript:;" class="closeBtn"></a>
+             <h2 class="tit">请基本填写信息</h2>
+        </div>
+
+        <div class="userinfo">
+            <em>手机号</em>
+            <input type="tel" class="focus_in"  id="phone">
+            <span class="commonBtnStyle yzmBtn" id="btnGetCode">发送验证码</span>
+        </div>
+        <div class="userinfo">
+            <em>验证码</em>
+            <input type="text" class="focus_in" id="authCode">
+        </div>
+        <span class="commonBtnStyle confirmBtn" id="submit">确定</span>
+    </section>
+
+    <!--填写注册表单-->
+    <div id="registerFormArea" class="registerFormArea" blockPage="true" style="display:none;">
+        <span id="closeBtn" class="closeBtn"></span>
+        <h2 class="tit">填写注册表单</h2>
+        <div id="registerForm" class="formBox">
+            <p>
+                <em>姓名</em>
+                <lable>
+                    <input type="text" />
+                </lable>
+            </p>
+        </div>
+        <p>
+            <a href="javascript:JitPage.saveVipInfo();" class="submitBtn">提交</a>
+        </p>
+    </div>
+
+    <section class="prize_area mb44 lottery_area" style="display:none">
+        <div class="prize_list">
+    	<div class="prize_inner"> <span id="JPName" class="prizeTxt" style="width:140px; height:80px; z-index:8; line-height:80px; font-size:14px; text-align:center; color:#000"></span>
+          	<div id="AgianEI" onclick="location.href=document.URL" style="z-index: 10; background-color: rgb(189, 14, 14); border-radius: 5px; color: rgb(255, 255, 255); line-height: 40px; text-align: center; cursor: pointer; width: 80px; height: 40px; position: absolute; left: 19px; bottom: 40px; display: none;">再来一次</div>
+            <div id="asdi" class="prizeTxt" style="z-index:9; width:140px; height:80px;">
+              <div id="canvas" style="width:140px; height:80px;"><canvas height="80" width="140" id="maincanvas"></canvas></div>
+            </div>
+          </div>
+        <div class="goods_list">
+
+    	   <!--div style="color:Red;margin:10px;height:40px;">领奖方式：点击“拿个奖先”--“礼品领取通道”完成领取。</div>
+        	<<div  class="goods_head" style="margin-bottom:20px;">
+            <img src="../../../images/special/hs/prize/xx2.png" /></div>-->
+
+            <div id="goodsList">
+
+            </div>
+
+        </div>
+        
+            <div class="clearfix"></div>
+        </div>
+    </section>
+    
+
+
+    <script type="text/templete" id="tpl_PrizeItem">
+        <dl>
+            <dt><img src="<%=ImageUrl%>"><em></em></dt>
+            <dd><p><span><%=PrizeName%></span></p><p></p> &nbsp;<p></p></dd>
+        </dl>
+    </script>
+    
+    <script id="tpl_block_item" type="text/html">
+        <p>
+        <em><%=ControlInfo.ColumnDesc%></em>
+        <lable>
+        <%if(ControlInfo.ControlType==1){%>
+            <input type="text" data-type="<%=ControlInfo.ControlType%>" data-text="<%=ControlInfo.ColumnDesc%>"  name="vipinfo" wid="<%=ID%>"/>
+        <%}else if(ControlInfo.ControlType==6){%>
+            <select name="vipinfo" wid="<%=ID%>">
+        <%for(var i=0;i<ControlInfo.OptionValues.length;i++){ var val=ControlInfo.OptionValues[i];%>
+        <option value="<%=val.Key%>"><%=val.Value%></option>
+        <%}%>
+        </select>
+        <%}else if(ControlInfo.ControlType==4){%>
+            <input type="text" data-type="<%=ControlInfo.ControlType%>" data-text="<%=ControlInfo.ColumnDesc%>" name="vipinfo" wid="<%=ID%>" id="txtDate" class="date" placeholder="选择日期"  />
+        <%}%>
+        </lable>
+        </p>
+    </script>
+</body>
+</html>

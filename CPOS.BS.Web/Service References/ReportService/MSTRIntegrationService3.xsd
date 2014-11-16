@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://www.jitmarketing.cn:7084/MSTRIntegrationService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Utility.MSTRIntegration.WcfService" />
+  <xs:element name="GetData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="value" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetDataResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMstrReportUrl">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pMstrIntegrationSessionID" type="xs:int" />
+        <xs:element minOccurs="0" name="pReportGuid" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pClientId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pUserId" nillable="true" type="xs:string" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Utility.MSTRIntegration.WcfService" minOccurs="0" name="pPromptAnswers" nillable="true" type="q1:ArrayOfMstrPromptAnswerItem" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Utility.MSTRIntegration.WcfService" minOccurs="0" name="pDataRigthPromptAnswers" nillable="true" type="q2:ArrayOfMstrDataRigthPromptAnswerItem" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMstrReportUrlResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetMstrReportUrlResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Login">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pLanguageLCID" type="xs:int" />
+        <xs:element minOccurs="0" name="pClientIP" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pClientID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pUserID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pWebSiteSessionId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LoginResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LoginResult" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Logout">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pClientId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pUserId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pSessionID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="LogoutResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SwitchLanguage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pClientId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pUserId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pMstrIntegrationSessionID" type="xs:int" />
+        <xs:element minOccurs="0" name="pNewLanguageLCID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SwitchLanguageResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataUsingDataContract">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Utility.MSTRIntegration.WcfService" minOccurs="0" name="composite" nillable="true" type="q3:CompositeType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDataUsingDataContractResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Utility.MSTRIntegration.WcfService" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q4:CompositeType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

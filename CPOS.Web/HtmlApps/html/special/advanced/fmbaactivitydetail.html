@@ -1,0 +1,149 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title name="FmbaActivityDetail">活动简介</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+  <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+
+<body  class="bgwhite fmbaDetail"   >
+  <div id="masklayer"  class="pageloading" > <i></i>
+  </div>
+  <div class="headerArea">
+    <header  class="header" id="headerTop">
+      <div class="commonNav">
+        <ul>
+          <a href="javascript:Jit.AM.pageBack()">
+            <li class="getBack">
+              <span></span>
+            </li>
+          </a>
+          <a href="javascript:Jit.AM.toPage('Account')">
+            <li class="user">
+              <span></span>
+            </li>
+          </a>
+          <a href="javascript:Jit.AM.toPage('Home')">
+            <li class="home">
+              <span></span>
+            </li>
+          </a>
+        </ul>
+      </div>
+    </header>
+  </div>
+  <section class="activeDetailPage" style="height:auto;" >
+    <div id="actWrapper" class="DetailImg" >
+      <div id="scroller" class="DetailImgIeo" >
+        <ul></ul>
+      </div>
+      <div class="KzDGrayTOP"></div>
+      <div class="KzDGray"></div>
+      <dl id="indicator" class="indicator"></dl>
+    </div>
+
+    <div class="activeDetail">
+      <div class="area">
+
+        <div class="a_left">
+          <h2 class="title">主题：</h2>
+        </div>
+        <div class="a_right">
+          <p class="text acttitle" id="txtActTitle" ></p>
+          <p class="text intro " id="txtActIntro" style="display:none;" ></p>
+
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="area">
+        <div class="a_left">
+          <h2 class="title">时间：</h2>
+        </div>
+        <div class="a_right">
+          <p class="text" id="txtActStartTime"></p>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="area">
+        <a id="addressMap">
+          <div class="a_left">
+            <h2 class="title">地点：</h2>
+          </div>
+          <div class="a_right">
+            <p class="text address" id="txtActAddress"></p>
+          </div>
+          <div class="clearfix"></div>
+        </a>
+      </div>
+      <div class="area"  >
+        <div class="a_left">
+          <h2 class="title">组织者：</h2>
+        </div>
+        <div class="a_right">
+          <p class="text" id="txtActISOC"></p>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="area" style="display:none;" >
+        <div class="a_left">
+          <h2 class="title">联系人：</h2>
+        </div>
+        <div class="a_right">
+          <a href="#" id="btActPhone">
+            <p class="text contact" >
+              <span id="txtActContacts" ></span>
+              <span id="txtActPhone" ></span>
+            </p>
+          </a>
+          <a href="#" id="btActEmail">
+            <p class="text email" >
+              <span id="txtActEmail" ></span>
+            </p>
+          </a>
+        </div>
+        <div class="clearfix"></div>
+
+      </div>
+
+      <div class="area">
+        <div class="a_left">
+          <h2 class="title">报名：</h2>
+        </div>
+        <div class="a_right">
+          <p class="text" id="txtActivityUp"></p>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+      <div class="area enter">
+        <h2 class="title">活动门票：</h2>
+      </div>
+
+      <div class="applyArea clearfix" id="ticketList" ></div>
+      <input type="button" value="我要报名" id="btSignUp" class="applyBtn">
+
+      <div class="area activeIntr">
+        <h2 class="title">活动介绍</h2>
+        <p class="text" id="txtActExplain"></p>
+        <div class="clearfix"></div>
+      </div>
+
+    </div>
+
+    <div class="actBgShade" style="display:none;"></div>
+    <div class="submit_area" style="display:none;"  >
+      <div class="thclose" name='has'></div>
+      <div  id="actboxinfo" ></div>
+      <div class="sub" name='has'>
+        <a  href="javascript:;" id="actBoxCancel">取消</a>
+        <a  href="javascript:;" id="actBoxSubmit">提交</a>
+      </div>
+
+    </div>
+
+  </section>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<title>GetOpenID</title>
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+</head>
+
+<body>
+<div class="loading" style="position:absolute; width:140px; height:80px; left:-40px; top:-80px; text-align:center"><img src="images/382.gif" width="40" height="40" /><br />
+  <br />
+  <span class="SigininAppLoading">数据正在装载中...</span> </div>
+<div class="AlumniConnext1" id="AlumniConnext2" style="display:none; margin-top:15px;" >
+  <div class="AlumniConnext1Title">绑定中欧校友账号</div>
+  <span style=" height:20px;" class="blank1"></span>
+  <div id="AlumniConnextDD" style="display:none;">
+    <div style="width:82%; margin-left:auto; margin-right:auto; line-height:28px;">
+      <p style="padding-top:10px; padding-bottom:10px; font-size:16px;">绑定后，您可以查询中欧校友库、活动快速报名与现场参与。<br><span style="font-size:13px; color:#999;">注：为了您的账号安全，不要转发此页面</span></p>
+    </div>
+    <div class="inputAndSelect" style="position:relative;">
+      <div style=" border: 1px solid #B2BAC0; border-radius: 4px 4px 4px 4px; background-color:#fff; padding-right:108px; ">
+        <input type="text" value="中欧校友账号" onblur="FocusFun(this,'中欧校友账号',0)" onfocus="FocusFun(this,'中欧校友账号',1)" class="AlumniInputstyle" id="username" style="border:none; background-color:none; padding-right:1%; width:97%;">
+        <div style=" background-color:#f3f5f5; height:40px; position:absolute; right:1px; top:1px; line-height:40px; width:100px; padding-left:8px; border-radius:3px">@CEIBS.EDU</div>
+      </div>
+    </div>
+    <div class="inputAndSelect">
+      <input type="text" onblur="FocusFun(this,'中欧校友密码',0,1)" onfocus="FocusFun(this,'中欧校友密码',1,1)" value="中欧校友密码" class="AlumniInputstyle" id="pwd">
+    </div>
+    <div style="line-height:46px;" class="inputAndSelect"><span style="float:right;font-size:16px;"></span>
+      <input type="button" class="inputsubmitStyle " value="绑定" onClick="AppSet.LoginSubmit('1')" />
+    </div>
+  </div>
+  <div id="AlumniConnextDD2" style="display:none;">
+    <div style="width:82%; margin-left:auto; margin-right:auto; line-height:28px;">
+      <p style="padding-top:10px; padding-bottom:10px; font-size:16px;">该微信已绑定到用户:<br>
+        <span id="BindUsername"></span></p>
+    </div>
+    <div style="line-height:46px;" class="inputAndSelect" id="IsShowBindBtn">
+      <input type="button"  class="inputsubmitStyle " value="重新绑定" onClick="document.getElementById('AlumniConnextDD2').style.display='none';document.getElementById('AlumniConnextDD').style.display='block'" />
+    </div>
+  </div>
+</div>
+<input type="hidden" value="" id="BDOpenId" />
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/common.js?v=2013052913"></script> 
+<script type="text/javascript">
+	var GET = new Array();
+$(function(){
+	Win.Loading();
+	var localLink ='';
+	
+	function getParam1(){ 
+	    var QueString1 ='';
+		querystr = window.location.href.split("?")
+		if(querystr[1]){
+				var GETs = querystr[1].split("&")
+				for(i=0;i<GETs.length;i++){
+					tmp_arr = GETs[i].split("=")
+					key=tmp_arr[0]
+					GET[key] = tmp_arr[1]
+					if(tmp_arr[0]!="openId" && tmp_arr[0] !="page"){
+					
+							QueString1 += tmp_arr[0]+"="+tmp_arr[1]+"&"
+						}
+				}
+				QueString1 = QueString1.substring(0,QueString1.length-1);
+		}
+		if(GET["page"]=="Bind"){
+				//微信入口绑定跳转
+				
+				localStorage.setItem("openId",GET["openId"]?GET["openId"]:"");
+				WeiXin.SetCookie("openId",(GET["openId"]?GET["openId"]:""), 24*60*360,"/");
+				localLink =  'Siginin.html?page=BindPage&deBug='+(GET["deBug"]?GET["deBug"]:"0");
+				location.href = localLink;
+			}else{
+				
+				if(GET["page"] =="BindPage"){
+						//检查是否已经绑定微信帐号
+						$("#AlumniConnext2").show();	
+						Event.CheckHasBind(localStorage.getItem("openId"),'',"1");	
+						if(GET["bindbtn"] && GET["bindbtn"]=="1" ){
+								$("#IsShowBindBtn").hide();
+							}
+					}else if (GET["page"] =="ShopDetail"){
+						//跳转到福利详情页面
+						localStorage.setItem("openId",GET["openId"]);
+			 			localLink =  'ShopDetail.html?'+QueString1; 
+						location.href = localLink;
+					}else{
+						var SavePage = GET["page"], PageArrp = new Array();
+						PageArrp = SavePage.split("/");
+						//localLink = 'base.html?'+QueString1+'#'+GET["page"]
+						//跳转到活动详情页面
+						switch(PageArrp[0]){
+							case "Event" : localLink = 'base.html?'+QueString1+'#'+GET["page"]; 
+							break;
+							case "User": localLink = 'userQuery.html?'+QueString+'#'+GET["page"];
+							break;
+							}
+						
+						 location.href = localLink;
+					}
+			}
+		return querystr[1];
+	}
+	getParam1();
+	
+
+})
+
+
+</script>
+</body>
+</html>

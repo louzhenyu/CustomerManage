@@ -1,0 +1,196 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<title id="HeaderTitle">确认订单</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="background:url(images/orderbg.gif) repeat left top;">
+<form name="orderForm" method="post" action="http://o2oapi.aladingyidong.com/OnlineShopping/data/OnlinePayBefor.aspx" data-ajax="false">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span class="Comeback" id="BackPrev"  onClick="WelfareAction.BackPre()" ></span><span id="Btoo">确认订单</span></div>
+    </nav>
+  
+    <div style=" margin-top:55px;">
+    <div class="ProvideCom" style="margin-top:0; ">
+
+      <h3>订单详情</h3>
+      <div class="ProvideComBox ppIbox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+      					<input type="hidden" name="user_id" id="user_id" value="" /> 
+						<input type="hidden" name="prod_name" id="prod_name"  value=""/> 
+						<input type="hidden" name="order_id" id="order_id"  value="" /> 
+						<input type="hidden" name="prod_price" id="prod_price"  value=""/> 
+						<input type="hidden" name="merchant_url" id="merchant_url" value="" />						
+						<input type="hidden" name="call_back_url" id="call_back_url" value=""/>
+        <ul>
+        	<li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">名称：</div>
+              <div class="ProvideTextInput2">
+                <div id="itemname" class="inputs"></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">订单号：</div>
+              <div class="ProvideTextInput2">
+                <div id="ordercode" class="inputs"></div>
+              </div>
+            </div>
+          </li>
+           <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">金额：</div>
+              <div class="ProvideTextInput2">
+                <div id="totalamount" class="inputs"></div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">姓名：</div>
+              <div class="ProvideTextInput2">
+                <div id="username" class="inputs"></div>
+              </div>
+            </div>
+          </li>
+        
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">手机号码：</div>
+              <div class="ProvideTextInput2">
+               <div id="mobile" class="inputs"></div>
+               
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">邮箱：</div>
+              <div class="ProvideTextInput2">
+                <div id="email" class="inputs"></div>
+               
+              </div>
+            </div>
+          </li>
+          <li style="border:none;">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">备注：</div>
+              <div class="ProvideTextInput2">
+
+                 <div id="remark" class="inputs"></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    
+    <div class="ProvideCom" style="margin-top:10px; ">
+   
+      <div class="ProvideComBox ppIbox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+        	<li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">配送方式：</div>
+              <div class="ProvideTextInput2">
+                <div class="inputs" id="deliveryname"></div>
+              </div>
+            </div>
+          </li>
+         
+          <li id="Dea_1" style="display:none;">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">配送地址：</div>
+              <div class="ProvideTextInput2">
+                <div class="inputs deliveryaddress"></div>
+              </div>
+            </div>
+          </li>
+         <!--  <li style="border:0; display:none;" id="dDea_1">
+            <div class="ProvideDiv" ><span class="Xing"></span>
+              <div class="ProvideText">配送时间：</div>
+              <div class="ProvideTextInput2">
+                <div  class="inputs deliverytime"></div>
+              </div>
+            </div>
+          </li>-->
+          <li style="display:none;" id="dDea_2">
+            <div class="ProvideDiv" ><span class="Xing"></span>
+              <div class="ProvideText">门店地址：</div>
+              <div class="ProvideTextInput2">
+                <div  class="inputs deliveryaddress"></div>
+              </div>
+            </div>
+          </li>
+          <li style="display:none;" id="Dea_2">
+            <div class="ProvideDiv" ><span class="Xing"></span>
+              <div class="ProvideText">提货时间：</div>
+              <div class="ProvideTextInput2">
+                <div class="inputs deliverytime"></div>
+              </div>
+            </div>
+          </li>
+          
+           
+        </ul>
+      </div>
+
+    </div>
+    
+    <div class="ProvideCom" style="margin-top:10px; ">
+      <h3>选择支付方式</h3>
+      <div class="ProvideComBox ppIbox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+        	<li style="border:0;">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText"><img src="images/js.jpg" width="70" /></div>
+              <div class="ProvideTextInput2" style="text-align:left;">
+                <div><span style="font-size:16px; color:#565656">支付宝网页支付：</span><br>推荐有支付宝账户的用户使用</div>
+              </div>
+              <div style="position:absolute; right:5px; top:10px; width:28px; height:28px;"><img src="images/apd.jpg" width="28" /></div>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+      <div style="height:24px; margin-top:10px; line-height:24px; color:red; clear:both">注意：已模拟支付宝真实支付</div>
+      <div style="padding-top:20px;">
+        <input type="submit" class="btnStylecc"  value="确认提交" />
+      </div>
+    </div>
+    
+    
+    </div>
+  </div>
+  <div class="AppBgGray" id="searchBgGray" style="display:none" onClick="WelfareAction.CloseSearch()"></div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+</form>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="welfareDetail" id="backPrevPosition" />
+<input type="hidden" value="" id="skuId" />
+<input type="hidden" value="" id="stdPrice" />
+<input type="hidden" value="1" id="deliveryId" />
+
+
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'Welfare.getOrderPayment();';
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);</script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<div class="winBoxer" style="width:495px ;">
+    <div class="winCaption">
+        <span class="winCaption_icon tFilter"></span>
+        <a class="winCaption_btnClose" href="###">Close</a>
+    </div>
+    <ul class="winTabs">
+        <li class="time"><a href="./LayoutResource/templates/filter_time.html"></a></li>
+        <li class="customer"><a href="./LayoutResource/templates/filter_terminal.html"></a></li>
+        <li class="product selected1"></li>
+    </ul>
+
+    <div class="winContent contFilter">
+        <ul class="terminal">
+            <li>
+                <div class="seekCondition">
+                    <div class="input">
+                        <input type="text" value="品牌"/>
+                        <a class="iconSearcher" href="###">Search</a>
+                    </div>
+                    <div class="check">
+                        <p><input type="checkbox"/>全部</p>
+
+                        <p><input type="checkbox"/>选项11</p>
+
+                        <p><input type="checkbox"/>选项12</p>
+
+                        <p><input type="checkbox"/>选项13</p>
+
+                        <p><input type="checkbox"/>选项24</p>
+
+                        <p><input type="checkbox"/>选项3</p>
+
+                        <p><input type="checkbox"/>选项4</p>
+
+                        <p><input type="checkbox"/>选项5</p>
+
+                        <p><input type="checkbox"/>选项6</p>
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="seekCondition">
+                    <div class="input">
+                        <input type="text" value="品类"/>
+
+                        <a class="iconSearcher" href="###">搜索</a>
+                    </div>
+                    <div class="check">
+                        <p><input type="checkbox"/>全部</p>
+
+                        <p><input type="checkbox"/>选项1</p>
+
+                        <p><input type="checkbox"/>选项1</p>
+
+                        <p><input type="checkbox"/>选项1</p>
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="seekCondition">
+                    <div class="input">
+                        <input type="text" value="产品"/>
+                        <a class="iconSearcher" href="###">搜索</a>
+                    </div>
+                    <div class="check">
+                        <p><input type="checkbox"/>全部</p>
+
+                        <p><input type="checkbox"/>选项1</p>
+
+                        <p><input type="checkbox"/>选项1</p>
+
+                        <p><input type="checkbox"/>选项1</p>
+
+                        <p><input type="checkbox"/>选项1</p>
+
+                        <p><input type="checkbox"/>选项1</p>
+                    </div>
+
+                </div>
+            </li>
+        </ul>
+
+        <div class="splitLine_1"></div>
+        <div class="linkButton txtCenter">
+            <a class="btn_bottom cancel" href="###">取消</a>
+            <a class="btn_bottom ok" href="###" onclick="alert('ok')">确定</a>
+        </div>
+
+    </div>
+    <div class="clearFix_12"></div>
+</div>
+
+<script type="text/javascript">
+    // 标签切换
+    filterTabs();
+
+    // 选中选项框
+    $(".seekCondition input[type=checkbox]").click(function () {
+        if($(this).attr("checked")==true){
+            $(this).parents('p').addClass("selected")
+        }else{
+            $(this).parents('p').removeClass("selected")
+        }
+
+    })
+
+    //获取数据
+    var mask = new Ext.LoadMask(Ext.getBody(), {
+        msg: '加载数据,请等待...'
+    });
+    mask.show();
+    var request = {};
+
+    Ext.Ajax.request({
+        method: 'POST'
+        , url: JITPage.HandlerUrl.getValue() + '&op=1'
+        , params: Ext.JSON.encode(request)
+        , callback: function (options, success, response) {
+            alert('aaa');
+            mask.hide();
+        }
+    });
+</script>

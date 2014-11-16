@@ -1,0 +1,18 @@
+/*common*/
+html,body{height:100%;min-height:100%;}
+body{font:14px/1.3em "Microsoft YaHei";background:#f6f6f6;color:#333;}
+
+.shopList{max-width:640px;padding-left:10px;margin:0 auto;}
+.shopList li{height:100px;padding:10px 0;border-bottom:1px solid #ccc;}
+.shopList li:nth-last-of-type(1){border-bottom:none;}
+.shopList .pic{float:left;width:80px;height:80px;}
+.shopList .info{margin-left:90px;}
+.shopList .exp{height:20px;line-height:20px;margin:2px 0 13px 0;padding-right:12px;overflow:hidden;}
+.shopList .sold{color:#999;}
+.shopList .currentPrice{position:relative;left:-3px;font-size:19px;font-weight:bold;color:#fe7c23;}
+.shopList .originalPrice{position:relative;left:-2px;text-decoration:line-through;font-weight:bold;color:#999;}
+.shopList .disWrap{margin-top:5px;}
+.shopList .disBox{float:right;margin-right:10px;}
+.shopList .location{font-size:12px;margin-right:5px;color:#999;}
+.shopList .dis{display:inline-block;font-size:12px;text-indent:12px;background:url(../images/disIcon.png) no-repeat 0px 3px;background-size:10px 11px;color:#fe7c23;}
+

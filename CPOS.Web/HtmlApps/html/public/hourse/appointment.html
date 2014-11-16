@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="x-rim-auto-match" content="none">
+		<title name="Appointment">我的预约</title>
+	</head>
+
+	<body class="appointmentPage">
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<section id="section">
+			<div class="appointmentArea">
+				<img class="bgPic" src="../../../images/public/hourse_default/bg02.jpg" alt="car">
+				<h1 class="logo"><img src="../../../images/public/hourse_default/logo.jpg" alt="logo"/></h1>
+				<div class="selectFormArea" style="display:block;">
+					<h2 class="tit">预约看房</h2>
+					<div class="selectBox">
+						<p>
+							<select>
+								<option>上海市</option>
+								<option>北京市</option>
+								<option>广州市</option>
+								<option>南京市</option>
+								<option>杭州省</option>
+								<option>西安省</option>
+								<option>深圳省</option>
+							</select>
+						</p>
+						<p>
+							<select>
+								<option>中意房产</option>
+								<option>联合房产</option>
+								<option>神农房产</option>
+							</select>
+						</p>
+						<p>
+							<select>
+								<option>A户</option>
+								<option>B户 </option>
+								<option>C户</option>
+								<option>D户</option>
+								<option>E户</option>
+								<option>F户</option>
+							</select>
+						</p>
+					</div>
+
+					<a href="javascript:;" id="cityOKBtn" class="cmmonBtn">确定</a>
+				</div>
+
+				<div class="affirmFormArea" style="display: none;">
+					<h2 class="tit">预约看房</h2>
+					<div class="inputBox">
+						<p>
+							<input class="textinput" id="name" type="text" placeholder="姓名">
+						</p>
+						<p>
+							<em>称呼</em>
+							<label>
+								<input type="radio" name="sex" value="男" checked="checked">
+								先生</label>
+							<label>
+								<input type="radio" name="sex" value="女">
+								女士</label>
+						</p>
+						<p>
+							<input id="phone" class="textinput" type="tel" placeholder="手机号">
+						</p>
+						<p>
+							<em>日期</em>
+							<input type="text" name="appDate" id="txtDate" class="date" placeholder="选择日期"  />
+							<input type="text" name="appTime" id="txtTime" class="time"  placeholder="选择时间"/>
+						</p>
+					</div>
+
+					<a id="submit" href="javascript:;" class="cmmonBtn">立即预约</a>
+					<a href="javascript:;" class="cmmonBtn shareBtn"><span class="mark"></span>马上分享</a>
+				</div>
+
+			</div>
+
+		</section>
+
+		<footer class="footer">
+			<div class="commonNav">
+				<a href="javascript:Jit.AM.toPage('HourseIndex');" class=""><span>首页</span></a>
+				<a href="javascript:Jit.AM.toPage('Introduce');" class=""><span>楼盘展示</span></a>
+				<a href="javascript:Jit.AM.toPage('StoreList');" class=""><span>楼盘查看</span></a>
+				<a href="javascript:Jit.AM.toPage('Appointment');" class=""><span>预约看房</span></a>
+			</div>
+		</footer>
+
+		<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+	</body>
+</html>

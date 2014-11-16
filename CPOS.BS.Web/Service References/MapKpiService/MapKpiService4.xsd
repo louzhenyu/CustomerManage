@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://www.jitmarketing.cn:18101/Impls/MapKpiService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/JIT.MapAnalysis.DataService.Contracts" />
+  <xs:import schemaLocation="http://www.jitmarketing.cn:18101/Impls/MapKpiService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/JIT.MapAnalysis.DataService" />
+  <xs:import schemaLocation="http://www.jitmarketing.cn:18101/Impls/MapKpiService.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:element name="GetAllCategories">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetAllCategoriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetAllCategoriesResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetThreshold">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetThresholdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/JIT.MapAnalysis.DataService.Contracts" minOccurs="0" name="GetThresholdResult" nillable="true" type="q1:Threshold" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKpiByClientId">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pClientId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKpiByClientIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/JIT.MapAnalysis.DataService" minOccurs="0" name="GetKpiByClientIdResult" nillable="true" type="q2:ArrayOfKpiCategory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKPIs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pCategoryID" type="xs:int" />
+        <xs:element minOccurs="0" name="pKpiId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pClientId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKPIsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetKPIsResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataSet" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:element ref="xs:schema" />
+              <xs:any />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKpiDataByJsonParameter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pRequestJson" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKpiDataByJsonParameterResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetKpiDataByJsonParameterResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKpiData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pLevel" type="xs:int" />
+        <xs:element minOccurs="0" name="pPBoundId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pKpiId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pStyleCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pStyleSubCode" nillable="true" type="xs:string" />
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pSkuId" nillable="true" type="q3:ArrayOfstring" />
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pSkuBrandId" nillable="true" type="q4:ArrayOfstring" />
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pSkuCategoryId" nillable="true" type="q5:ArrayOfstring" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pStoreIds" nillable="true" type="q6:ArrayOfstring" />
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pChannelId" nillable="true" type="q7:ArrayOfstring" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pChainId" nillable="true" type="q8:ArrayOfstring" />
+        <xs:element minOccurs="0" name="pDateFrom" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pDateTo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pClientId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pUserId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKpiDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetKpiDataResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKpiDataExportData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="pLevel" type="xs:int" />
+        <xs:element minOccurs="0" name="pPBoundId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pKpiId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pStyleCode" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pStyleSubCode" nillable="true" type="xs:string" />
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pSkuId" nillable="true" type="q9:ArrayOfstring" />
+        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pSkuBrandId" nillable="true" type="q10:ArrayOfstring" />
+        <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pSkuCategoryId" nillable="true" type="q11:ArrayOfstring" />
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pStoreIds" nillable="true" type="q12:ArrayOfstring" />
+        <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pChannelId" nillable="true" type="q13:ArrayOfstring" />
+        <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pChainId" nillable="true" type="q14:ArrayOfstring" />
+        <xs:element minOccurs="0" name="pDateFrom" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pDateTo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pClientId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="pUserId" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetKpiDataExportDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="GetKpiDataExportDataResult" nillable="true">
+          <xs:complexType>
+            <xs:annotation>
+              <xs:appinfo>
+                <ActualType Name="DataTable" Namespace="http://schemas.datacontract.org/2004/07/System.Data" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+              </xs:appinfo>
+            </xs:annotation>
+            <xs:sequence>
+              <xs:any minOccurs="0" maxOccurs="unbounded" namespace="http://www.w3.org/2001/XMLSchema" processContents="lax" />
+              <xs:any minOccurs="1" namespace="urn:schemas-microsoft-com:xml-diffgram-v1" processContents="lax" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

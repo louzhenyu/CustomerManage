@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<link href="/HtmlApps/css/base/global.css" rel="stylesheet" type="text/css" />
+		<title name="RedPacket"></title>
+	</head>
+
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+	        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+	    </div>
+		
+		<section id="unget" class="hide">
+			<div class="wrap">
+				<div class="hongbao-list" id="hb_bg">
+			    	<dl class="dl01">
+			        	<dt id="winheight" style="height:350px"><!--img src="/HtmlApps/images/common/lotteryAll/pic-qiang.png" alt="抢红包啦！等你来！"--></dt>
+			            <dd>
+			            	<a class="btn-ling" onclick="JitPage.showAward()">领红包</a>
+			                <a class="btn-fen" onclick="JitPage.showSharePanel()">分红包</a>
+			            </dd>
+			            <dd>
+			            	<a onclick="JitPage.toPage('RedPacketSend')">我发的红包</a>|
+			                <a onclick="JitPage.toPage('RedPacketGet')">收到的红包</a>|
+			                <a name="useDes">使用须知</a>
+			            </dd>
+			        </dl>
+			    </div>
+			</div>
+		</section>
+
+		<section id="geted" class="hide">
+			<div class="wrap">
+			    <div class="hongbao-list">
+			        <dl class="dl02">
+			            <dt>
+			            	<span id="msgTit">恭喜你</span>
+			                <p id="msgSubTit">成功领取</p>
+			            </dt>
+			            <dd id="prize"></dd>
+			            <dd> <a name="useDes">使用须知</a> </dd>
+			        </dl>
+			    </div>
+			</div>
+		</section>
+		
+		<section id="shareMask" class="hide" style="position:absolute;top:0;left:0">
+			<div class="mask" onclick="JitPage.hideSharePanel();"></div>
+    		<div class="tips-share"><img src="/HtmlApps/images/common/lotteryAll/tips-share.png" alt="请点击此处将本页面转发给好友或转发到朋友圈。"></div>
+		</section>
+
+		<section id="sharePanel" class="wrapper hide" style="position:absolute;top:0;left:0">
+			<img src="/HtmlApps/images/common/share.png" id="shareImg" style="height: 130px;position:fixed;right: 25px;top: 0;width: 160px;z-index: 100;" class="pullDownState">
+            <div id="shareWrapper">
+            </div>
+            <div class="awardBtnWrap">
+			    <span id="btn_join" class="prizeBtn">马上参与</span>
+			    <span id="btn_check" class="rewardBtn">我的推荐奖励</span>
+			</div>
+    	</section>
+
+		<script id="tpl_dialog" type="text/template">
+		    <section id="dialog" class="zoomIn">
+				<div class="mask">
+				    <div class="popup">
+				    	<div class="popup-t">{{title}}</div>
+				    	<div class="popup-m">
+				        	<p>{{content}}</p>
+				        </div>
+				    	<div class="popup-b">
+				        	{{#labelOk}}<a onclick="{{callback_ok}}">{{labelOk}}</a>{{/labelOk}}
+				            {{#labelCancel}}<a onclick="{{callback_cancel}}">{{labelCancel}}</a>{{/labelCancel}}
+				        </div>
+				    </div>
+			    </div>
+			</section>
+		</script>
+		
+		<script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+	</body>
+</html>

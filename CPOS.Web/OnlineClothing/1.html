@@ -1,0 +1,108 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body>
+    <div>
+        <script type="text/javascript">
+            (function ($) {
+                $.getUrlParam = function (name) {
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                    var r = window.location.search.substr(1).match(reg);
+                    if (r != null) return unescape(r[2]); return "";
+                }
+            })(jQuery);
+            fnAuthLoad = function () {
+                var url = location.href;
+                var appid = $.getUrlParam('applicationId');
+                var code = $.getUrlParam('code');
+                var state = "";
+                state += "customerId=" + $.getUrlParam('customerId');
+                state += "&eventId=" + $.getUrlParam('eventId');
+                state += "&userId=" + $.getUrlParam('userId');
+                state += "&openId=" + $.getUrlParam('openId');
+                state += "&applicationId=" + $.getUrlParam('applicationId');
+                if (url.indexOf("?") > -1) url = url.substring(0, url.indexOf("?"));
+                //alert(url)
+                var gourl = encodeURIComponent(url);
+                //alert(gourl)
+
+                var customerId = $.getUrlParam('customerId');
+                var userId = $.getUrlParam('userId');
+                var openId = $.getUrlParam('openId');
+                var eventId = $.getUrlParam('eventId');
+
+                var ReqContent = "{\"common\":{}, \"special\":{\"state\":\"" + "" +
+                    "\", \"userId\":\"" + userId +
+                    "\", \"openId\":\"" + openId +
+                    "\", \"customerId\":\"" + customerId +
+                    "\", \"applicationId\":\"" + appid +
+                    "\", \"goUrl\":\"" + gourl +
+                    "\", \"eventId\":\"" + eventId + "\"} }";
+
+                // 压缩state
+                var stateZip = "";
+                if (code.length == 0) {
+                    $.ajax({
+                        url: "/OnlineShopping/data/Data.aspx?action=setToBase64String&ReqContent=" + ReqContent,
+                        async: false,
+                        success: function (result) {
+                            var d = jQuery.parseJSON(result);
+                            if (d.code == "200") {
+                                stateZip = d.content.state;
+                                appid = d.content.appId;
+                                //alert(appid);
+                            }
+                            else {
+                                alert(result);
+                            }
+                        },
+                        failure: function (result) {
+                            alert("error:" + result);
+                        }
+                    });
+                }
+
+                if (code == undefined || code == null || code.length == 0) {
+                    S("code", "");
+                    var redUrl = gourl; //"http://o2oapi.aladingyidong.com/WXOAuth/AuthGoHtml.aspx"
+                    location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appid + "&redirect_uri=" + redUrl + "&response_type=code&scope=snsapi_base&state=" + stateZip + "#wechat_redirect";
+                } else {
+                    var codeTmp = G("code");
+                    if (codeTmp == code) {
+                        S("code", "");
+                        return;
+                    } else {
+                        S("code", getParam("code"));
+                        var redUrl = encodeURIComponent("http://o2oapi.aladingyidong.com/WXOAuth/AuthGoHtml.aspx");
+                        location.href = "http://o2oapi.aladingyidong.com/WXOAuth/AuthGoHtml.aspx?code=" + code + "&gourl=" + redUrl + "&state=" + stateZip + "";
+                    }
+                }
+
+            };
+            fnAuthLoad();
+
+        </script>
+
+        <script type="text/javascript">
+            var loadMore = '';
+            var Von = 'indexAbs()';
+            function indexAbs() {
+                document.title = "抽奖";
+            }
+</script>
+    </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<configuration>  
+    <panwheel visible="true" fullexticon="assets/images/jit/kpi/navigation/i_globe.png"  fullextlabel="全图" pandownlabel="" panleftlabel=""
+    panrightlabel="" panuplabel="" />
+    <prevextbutton visible="true" label="前一视图"/>
+    <nextextbutton visible="true" label="后一视图"/>
+    <panbutton label="平移" visible="true" icon="assets/images/jit/kpi/navigation/i_pan.png" />
+    <zoominbutton label="放大" visible="true" icon="assets/images/jit/kpi/navigation/i_zoomin.png" />
+    <zoomoutbutton label="缩小" visible="true" icon="assets/images/jit/kpi/navigation/i_zoomout.png" />
+    <polygonselectbutton label="多选"  visible="false" icon="assets/images/jit/kpi/navigation/i_draw_freepoly.png" />
+    <polygonclearbutton label="清除" visible="false" icon="assets/images/jit/kpi/navigation/i_clear.png" />
+    <exportmapbutton label="导出" visible="false" icon="assets/images/jit/kpi/navigation/i_exportmap.png"/>
+    <printmapbutton label="打印" visible="false" icon="assets/images/jit/kpi/navigation/i_print.png" />
+    <switchmapbutton label="切换地图" visible="true" icon="assets/images/jit/kpi/navigation/i_switchmap.png" />
+</configuration>
+
+<!--
+    See Navigation widget tag reference at
+    http://links.esri.com/navigationwidget
+-->

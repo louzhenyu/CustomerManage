@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="format-detection" content="telephone=no" />
+<title>泸州老窖</title>
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<!--<script type="text/javascript" src="js/data.js"></script>-->
+<script type="text/javascript" src="js/htmlTemplates.js"></script>
+<script type="text/javascript" src="js/iscroll.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+
+$(function(){
+	VipCard.IsVipCard();
+})
+</script>
+</head>
+
+<body>
+<div class="LZdiv" style="height:3px; margin-top:45px; width:94%; overflow:hidden; "></div>
+<div class="LZdiv" style="width:96%; height:3px; overflow:hidden"></div>
+<div class="LZdiv" style="padding-bottom:10px; min-height:400px;">
+  <div class="SqVip" id="SqVip" style="width:260px; height:300px; display:none;">
+    <div class="SpanBg1"><img src="images/spbg2.png" width="100%"></div>
+    <div class="SpanBg3" id="SpanBg3"><img src="images/vipCard.png" width="100%" class="VipCardImg"  /><span class="Jfen" id="VipCode"></span></div>
+    <div class="SpanBg2"><img src="images/spbg1.png" width="100%"></div>
+    <Span class="blank" style="height:240px;"></Span>
+    <div class="HdSqVip"><a href="javascript:void(0)" onClick="VipCard.setVipCard()" class="RuiHuanBtn1" style="display:block; width:100%; text-align:center; margin:0;">点击申请泸州老窖会员卡</a></div>
+  </div>
+  <div style="display:none;" id="HasVip">
+    <div class="Connext" >
+      <div class="ConnextVip" style=" width:280px;"><img src="images/vipCard.png" width="100%" class="VipCardImg"  /><span class="Jfen" id="VipCode1"></span></div>
+      <div class="VipTip">*个人隐私信息,请勿转发他人</div>
+    </div>
+    <div class="VipCardMenu">
+      <div class="VipCardMenuBtn" onclick="VipCard.getIntegrationExchange(this)"><span class="incSkin icn3"></span><span class="incSkin icn1"></span>我的积分 <span style="color:#cc0000;"><span id="VipCardJf"></span>分</span></div>
+      <div class="VipCardMenuTxtRd" style="display:none;" id="VipCardMenuTxtJf">
+        <p class="VipCardMenuTxtRdTT">您可兑换的商品如下:</p>
+        <div class="VipJfenBoxRd" id="VipCardMenuTxtJfInner"> </div>
+      </div>
+    </div>
+    <div class="VipCardMenu">
+      <div class="VipCardMenuBtn" onClick="VipCard.getOrders('1')"><span class="incSkin icn3"></span><span class="incSkin icn2"></span>我的订购 <span style="color:#cc0000;" ><span id="VipCardDG"></span>个</span></div>
+    </div>
+    <div class="VipCardMenu">
+      <div class="VipCardMenuBtn" style="padding-left:20px;">积分说明</div>
+      <div class="VipCardMenuTxt" style="background-color:#eaeaea; box-shadow:0 0 20px #d2d2d2 inset ;">
+        <div class="VipJfenBox">
+          <h2><strong>积分获得</strong></h2>
+          <p><span class="enBi">●</span>会员购物且订单生成后，积分将自动打入会员的积分帐户，当客户此次购物为有效购物后，便可以使用。</p>
+          <p><span class="enBi">●</span>购物成功后可以对所购的商品进行评论，每条评论展示后可获得相应的积分。</p>
+          <p><span class="enBi">●</span>一键把您在泸州老窖消费感受分享给您的好友或朋友圈，赚取相应的积分。</p>
+        </div>
+        <div class="VipJfenBox">
+          <h2><strong>积分使用途径</strong></h2>
+          <p><span class="enBi">●</span>积分不可用于兑换现金，仅限参加泸州老窖指定兑换物品、参与积分抽奖活动。</p>
+          <p><span class="enBi">●</span>您通过各种途径获得的积分是可以累积的，积分的有效期不作任何限制。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<span class="blank" style="height:10px;"></span>
+<div class="AppLayer" id="AppLayer" style="display:none;"></div>
+<div style="position: absolute; left: 0; top: 0; display:none;  z-index:10000" class="loading"><img width="40" height="40" src="images/382.gif"></div>
+</body>
+</html>

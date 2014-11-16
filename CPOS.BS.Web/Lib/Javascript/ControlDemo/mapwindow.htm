@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>地图窗口</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <!--  引入Ext JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Ext4.1.0/ext-all.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Lib/Javascript/Ext4.1.0/Resources/CSS/ext-all.css" />
+    <!--引入Jit的JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Jit/jit-all-dev.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Lib/Css/jit-all.css" />
+    <!--示例的样式-->
+    <style type="text/css">
+        dt
+        {
+           color:#333333; 
+           font-size:18px;
+           font-family:宋体;
+           font-weight:bolder;
+           margin:10px;
+        }
+        .sample
+        {
+        	border-style:dashed;
+        	border-width:1px;
+        	margin:20px;
+        	padding:20px;
+        	width:800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>地图窗体</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder1"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //创建地图窗口示例
+                    Ext.create('Jit.window.MapWindow', {
+                        id: "wndMap",
+                        title: "杰亦特GIS系统"
+                        , modal: false
+                        , jitPoint: {//默认坐标
+                    pointID: '0',           //[StoreID] 整数，唯一标识，必须
+                    lng: '121',               //[Lng] 浮点数，商店GPS坐标的经度，必须，范围0-180.
+                    lat: '30',               //[Lat] 浮点数，商店GPS坐标的纬度，必须，范围0-90
+                    icon: 'g.png',          //[Icon] 图片样式，g.png绿色点（gs.png选择后），b.png蓝色点（bs.png选择后），o.png橙色点（os.png选择后），必须
+                    isEditable: false,      //[IsEdit] 是否可拖拽
+                    insideText: '',         //[LabelID] 图片上放的文字
+                    pointTitle: '',         //[LabelContent] 图片边上文字
+                    pointInfoHeight: '0',   //[PopInfoHeight] 弹出框长度
+                    pointInfoWidth: '0',    //[PopInfoWidth] 弹出框宽度
+                    tips: '',               //[Tips] 字符串，鼠标悬停到点上时显示的文本信息
+                    pointInfo: new Array(),  //[PopInfo] 门店信息,必须 {"title":"客户名称","value":"坂田医院","type":"1" }type=1为文本、type=2为图片、type=3为按钮,type=4 为iframe
+                    mapScale: 6             //地图等级
+                }
+            });
+                    //显示地图窗口示例
+                    Ext.create('Jit.button.Button', {
+                        renderTo: "dvPlaceholder1",
+                        text: "显示地图",
+                        handler: function () {
+                            Ext.getCmp("wndMap").show();
+                        }
+                    });
+                    //获取地图信息示例
+                    Ext.create('Jit.button.Button', {
+                        renderTo: "dvPlaceholder1",
+                        text: "获取坐标信息",
+                        handler: function () {
+                            alert(Ext.getCmp("wndMap").jitGetValue().lng + "," + Ext.getCmp("wndMap").jitGetValue().lat);
+                        }
+                    });
+                </pre>
+            </dd>
+        </dl>
+    </div> 
+    <script language="javascript" type="text/javascript">
+        Ext.onReady(function () {
+            //创建地图窗口示例
+            Ext.create('Jit.window.MapWindow', {
+                id: "wndMap",
+                title: "杰亦特GIS系统"
+                , modal: false
+                , jitPoint: {//默认坐标
+            pointID: '0',           //[StoreID] 整数，唯一标识，必须
+            lng: '121',               //[Lng] 浮点数，商店GPS坐标的经度，必须，范围0-180.
+            lat: '30',               //[Lat] 浮点数，商店GPS坐标的纬度，必须，范围0-90
+            icon: 'g.png',          //[Icon] 图片样式，g.png绿色点（gs.png选择后），b.png蓝色点（bs.png选择后），o.png橙色点（os.png选择后），必须
+            isEditable: false,      //[IsEdit] 是否可拖拽
+            insideText: '',         //[LabelID] 图片上放的文字
+            pointTitle: '',         //[LabelContent] 图片边上文字
+            pointInfoHeight: '0',   //[PopInfoHeight] 弹出框长度
+            pointInfoWidth: '0',    //[PopInfoWidth] 弹出框宽度
+            tips: '',               //[Tips] 字符串，鼠标悬停到点上时显示的文本信息
+            pointInfo: new Array(),  //[PopInfo] 门店信息,必须 {"title":"客户名称","value":"坂田医院","type":"1" }type=1为文本、type=2为图片、type=3为按钮,type=4 为iframe
+            mapScale: 6             //地图等级
+        }
+    });
+            //显示地图窗口示例
+            Ext.create('Jit.button.Button', {
+                renderTo: "dvPlaceholder1",
+                text: "显示地图",
+                handler: function () {
+                    Ext.getCmp("wndMap").show();
+                }
+            });
+            //获取地图信息示例
+            Ext.create('Jit.button.Button', {
+                renderTo: "dvPlaceholder1",
+                text: "获取坐标信息",
+                handler: function () {
+                    alert(Ext.getCmp("wndMap").jitGetValue().lng + "," + Ext.getCmp("wndMap").jitGetValue().lat);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

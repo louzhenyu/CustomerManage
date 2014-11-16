@@ -1,0 +1,42 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>正在跳转中...</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+
+</head>
+
+<body>
+
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'indexAbs()';
+function indexAbs(){
+	
+	S("openId",getParam("openId"));
+	S("userId",getParam("userId"));
+	S("islogin","1");
+	var backUrl = decodeURIComponent(getParam("backUrl")); 
+	if(backUrl.indexOf("?") >-1){
+		backUrl  = backUrl+"&customerId="+getParam("customerId")+"&rand="+Math.random();
+		}else{
+		
+			backUrl  = backUrl+"?customerId="+getParam("customerId")+"&rand="+Math.random();
+		}
+
+	setTimeout(function(){location.href = backUrl;},100)
+}
+</script>
+
+</body>
+</html>

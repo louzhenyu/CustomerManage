@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>我的菜单</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/base.js"></script>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body>
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="aboutVipDiv">
+    <div class="vipCartBox" style="border-bottom:0; ">
+      <div class="vipCart" id="VipCart" style="min-height:200px;"> </div>
+      <div class="vipCartBoxBottom"></div>
+    </div>
+    <div style="width:94%; margin-left:auto; margin-right:auto; margin-top:15px; padding-bottom:50px;" id="LoginTip"></div>
+  </div>
+  <div class="MenuBox" id="MenuBox" rel="2"> </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var Von = 'Vip.getOrderDetail()';
+var loadMore = '';
+</script> 
+<script id="getShoppingCart" type="text/template">
+	
+
+<% _.each(orderDetailList,function(item){%>
+ <div class="vipCartLi" skuId="<%=item.skuId %>" itemId="<%=item.itemId %>" id="CartLi_<%=item.skuId %>" >
+            <ul>
+            
+              <li class="cartTD2" style="left:10px;"><img src="<%=item.imageList[0].imageUrl %>"></li>
+              <li class="cartTD3" style="margin-left:80px;">
+                <div class="cartTD3Div"><%=item.itemName %><span class="guigeCC"><%=item.itemCategoryName %></span></div>
+              </li>
+              <li class="cartTD4">￥<span id="danjia_<%=item.itemId %>"><%=item.salesPrice %></span><br>
+                x<span id="shuliang_<%=item.itemId %>"><%=item.qty %></span></li>
+             
+            </ul>
+          </div>
+<% })%>
+<div class="vipCartBoxBtm"><a href="sureOrder.html?orderId=<%=orderId%>"  class="jieSuanBtn">买单</a>合计： <strong style="color:#cc0000">￥<span id="totalAmount"><%=totalAmount %></span></strong></div>
+</script>
+</body>
+</html>

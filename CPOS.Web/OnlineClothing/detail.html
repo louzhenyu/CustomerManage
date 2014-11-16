@@ -1,0 +1,118 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">商品详情</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="DetailBigBox" id="DetailBigBox"></div>
+</div>
+<div class="MenuBox" id="MenuBox"></div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'GetData.getItemDetail();GetData.setBrowseHistory()';  
+</script> 
+
+<script id="DetailHideScript" type="text/template"> 
+<input type="hidden" value="<%=skuInfo.skuId%>" id="DetailSkuId" />
+<input type="hidden" value="<%=skuInfo.prop1DetailId%>" id="prop2DetailId" />
+<div class="appOpacity" style="display:none;" id="appOpacity"></div>
+<div class="appDetailBox" style="display:none;" id="appDetailBox">
+<div class="CloseApp" onclick="ClickCloseDetail()"><img src="images/close.png" width="30" /></div>
+  <div class="appDetailBoxTop">
+    <div class="appDetailBoxTopLeft" style="text-align:center"><img style="margin-left:auto; margin-right:auto;" height="90" src="<%=imageList[0].imageURL%>"> </div>
+    <div class="appDetailBoxTopRight">
+      <h3><%=itemName%></h3>
+      <p style=" line-height:30px;">
+      <div class="frdisplay" style="margin-right:10px; margin-top:-10px; font-size:22px; color:#e75e9e">￥<%=skuList[0].salesPrice%></div>
+     <%=itemCategoryName%>
+      </p>
+    </div>
+  </div>
+  <div class="Oddt">
+    <dl>
+      <dt><%=prop1Name%></dt>
+	  <%_.each(prop1List,function(item){%>
+      <dd <% if(skuInfo.prop1DetailId == item.prop1DetailId){%>class="DefaultDo"<%}%> onclick="selectItemList('<%=item.prop1DetailId%>',this)" skuId="<%=item.skuId%>"><%=item.prop1DetailName%></dd>
+		<%})%>
+    </dl>
+  </div>
+  <%if(isProp2=="1"){%>
+  <div class="Oddt" >
+    <dl>
+       <dt><%=prop2Name%></dt>
+     	<div id="getSkuProp2List">
+			
+		</div>	
+    </dl>
+  </div>
+  <%}%>
+  <div class="aodPtn">
+  	<div class="SureDiid" onclick="Vip.setShoppingCart('',this)"><img src="images/sureAdd.png" width="120" style="margin-left:auto; margin-right:auto;" /></div>
+  </div>
+</div>
+</script>
+<script type="text/template" id="DetailGetSkuProp2Script">
+<%if(prop2List.length > 0 ){%>
+  <%_.each(prop2List,function(item){%>
+      <dd  <%if(skuId == item.skuId){%>class="DefaultDo"<%}%> onclick="selectPop2ItemList('<%=item.prop2DetailId%>','<%=item.skuId%>',this)" skuId="<%=item.skuId%>"><%=item.prop2DetailName%></dd>
+	<%})%>
+<%}%>
+</script>
+<script id="appDetail" type="text/template"> 
+<div id="wrapper" class="DetailImg" style="overflow: hidden; height:280px">
+  <div id="scroller" class="DetailImgIeo" >
+    <ul>
+		<% _.each(imageList,function(item){ %>
+     	 <li style="width:<%= w %>px"><img style="height:280px;" src="<%= item.imageURL%>"></li>
+      <% })%>
+    </ul>
+  </div>
+  <div class="KzDGrayTOP"></div>
+  <div class="KzDGray" style="height:40px;"></div>
+  <div style=" width:120px; position:absolute; bottom:0px; right:10px; z-index:10; cursor:pointer" id="fav"><%if(isKeep=="0"){%><img src="images/fav.png" width="100%" onclick="GetData.setItemKeep('<%=itemId%>','1',this)" /><%}else{%>
+  	<img src="images/hasfav.png" width="100%" onclick="GetData.setItemKeep('<%=itemId%>','0',this)" />
+  <%}%></div>
+  <dl id="indicator" style="right:50%;">
+  <% _.each(imageList,function(item,key){ %>
+    <dd <% if(key==0){%>class="active" <%}%>><%= key+1 %></dd>
+	 <% })%>
+  </dl>
+</div>
+<div class="DetailSmallBox">
+  <div class="DetailSmallBoxYW">
+  	<div class="DetailmdkINner"><div class="DetailmdkZv">￥
+<span class="qian" style="font-size:24px;">
+		<%= skuList[0].salesPrice %>
+		</span>
+
+元</div>
+
+<div class="DetailmdkZBtnLeft"><a class="DetailActionBtnLeft"  href="vipCart.html">查看购物车</a></div>
+<div class="DetailmdkZBtnRight"><a class="DetailActionBtn" onclick="SelectGouWu()" href="javascript:void(0)">加入购物车</a></div></div>
+	
+  	<h1><%= itemName %></h1>
+    <h2>商品描述</h2>
+    <div class="EPSdg"><%= useInfo %>
+      </div>
+	    <div class="DetailSmallBoxYWDlR"><span class="Detailicn Dicn1"></span>&nbsp;<%= salesPersonCount %>人已购买</div>
+  </div>
+<div class="vipCartBoxBottom"></div>
+</div>
+
+</script>
+</body>
+</html>

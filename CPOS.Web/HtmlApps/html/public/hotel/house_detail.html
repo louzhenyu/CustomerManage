@@ -1,0 +1,68 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="HouseDetail"></title>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <dl id="tool_bar" class="tool_bar clearfix">
+                <dd>
+                    <a href="javascript:Jit.AM.pageBack();"></a>
+                </dd>
+                <dd>
+                    <a href="javascript:Jit.AM.toPage('OrderList');"></a>
+                </dd>
+                <dd style="display:none">
+                    
+                </dd>
+                <dd>
+                    <a href="javascript:Jit.AM.toPage('Reserve');"></a>
+                </dd>
+            </dl>
+        </nav>
+    </header>
+    <section class="wrap">
+        <div class="slide">
+            <div id="goodsScroll">
+                <div class="goods_img_list">
+                    <ul id="goodsImgs">
+                    </ul>
+                </div>
+                <div class="slide_tiger">
+                    <a href="javascript:JitPage.setItemKeep();" class="btn_colt" id="btn_keep" style="display:none"><i></i></a>
+                    <ol id="goodsImgBar">
+                    </ol>
+                    <a href="javascript:;" class="btn_share"><i></i>分享</a>
+                </div>
+            </div>
+        </div>
+        <div class="detail_info" tplpanel="house_detail_list">
+            <dl>
+                <dt>
+                    <h2 id="itemInfo">
+                        <a href="#"></a>
+                        <b id="price"></b>
+                    </h2>
+                    <p id="hotelDescription" style="text-indent:2em">
+                    </p>
+                    <p id="remark">
+                    </p>
+                </dt>
+                <dd>
+                    <i style="display:none">礼</i>
+                </dd>
+            </dl>
+        </div>
+        <div class="bot">
+        </div>
+    </section>
+    <div id="share-mask">
+    </div>
+    <img style="display:none" id="share-mask-img" src="../../../images/common/share.png" alt=""/>
+</body>
+</html>

@@ -1,0 +1,139 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=yes"/>
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+
+<link href="css/welfaceV1.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">中欧国际工商学院</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body style="background:url(images/orderbg.gif) repeat left top;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span class="Comeback"  onClick="history.back()" ></span><span id="Btoo">在线报名</span></div>
+    </nav>
+    <div class="ProvideCom" style="margin-top:55px;">
+    	感谢您关注中欧国际工商学院！请尽量完整提供以下信息。
+您所填写的所有信息仅供中欧国际工商学院使用，绝不外泄<span style="color:#cc0000">（加 * 的为必填项）</span>
+      <h3>个人信息</h3>
+      <div class="ProvideComBox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+        	<li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">称谓：</div>
+              <div style="margin-left:100px; position:relative; height:25px; padding-top:10px;">
+              		<div style=" float:left; width:35%; position:relative; padding-left:12%">
+               		<span class="HasSelectYY Detailicn sKg1" style="top:0; left:0;" rel="1"></span>男士
+                    </div>
+                    
+                    <div style=" float:left; width:35%; position:relative; padding-left:12%">
+                    <span class="HasSelectNo Detailicn sKg1" style="top:0; left:0;" rel="0"></span>女士
+                    </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">姓名：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="username" >
+              </div>
+            </div>
+          </li>
+          <!--<li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">班级：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="userClass" >
+              </div>
+            </div>
+          </li>-->
+          
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">公司：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="company" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">职位：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="post" >
+              </div>
+            </div>
+          </li>
+         <!-- <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">电话：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="tel" >
+              </div>
+            </div></li>-->
+              <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">邮箱：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="email" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">电话：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="phone" >
+              </div>
+            </div>
+          </li>
+        
+         <li style="border:none;"  class="Tetdd">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">备注：</div>
+              <div class="ProvideTextInput">
+                <textarea id="remark"></textarea>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div style="padding-top:20px;">
+        <input type="button" class="btnStylecc" onclick="Course.CourseSetOrder()" value="提交">
+      </div>
+    </div>
+
+    
+    
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="courseDetail" id="backPrevPosition" />
+<script type="text/javascript">
+    var loadMore = '';
+    var Von = 'abc()';</script>
+<script type="text/javascript" src="js/base.js"></script> 
+<script type="text/javascript">
+    function abc() {
+        $(".sKg1").click(function () {
+            if ($(this).hasClass("HasSelectNo")) {
+                $(".sKg1").removeClass("HasSelectYY").addClass("HasSelectNo");
+                $(this).removeClass("HasSelectNo").addClass("HasSelectYY");
+            }
+        })
+        title = $("#Btoo").text();
+        desc = '感谢您关注中欧国际工商学院！请尽量完整提供以下信息，进行相关课程信息下载。您所填写的所有信息仅供中欧国际工商...';
+        weiXinFollow();
+    }
+</script>
+</body>
+</html>

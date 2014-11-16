@@ -1,0 +1,132 @@
+body{
+	background-color:#f6f6f6;
+}
+.voteContainer{
+	padding:0 2%;
+}
+.vote-info{
+}
+.vote-info-title{
+	text-align: center;
+	padding:30px 0;
+	font-size:16px;
+	font-weight: bold;
+}
+.vote-info-content{
+	font-size:14px;
+}
+.vote-info-content p{
+	padding-bottom:30px;
+}
+.vote-hint{
+	font-size:14px;
+	color:#e60012;
+	padding:15px 0;
+	border:1px solid #afd5ff;
+	text-align: center;
+	background-color: #e8effb;
+	font-weight: bold;
+	margin-top:20px;
+	display:none;
+}
+.vote-form{
+
+}
+.vote-form-title{
+	height:15px;
+	border-top:1px solid #cccccc;
+	margin:30px 0;
+	text-align: center;
+}
+.vote-form-title span{
+	color:#cccccc;
+	font-size:14px;
+	position:relative;
+	top:-15px;
+	background: #f6f6f6;
+}
+.vote-form-content{
+
+}
+.vote-form-content dl{
+	padding-bottom: 20px;
+}
+.vote-form-content dl dt{
+	font-size:16px;
+	padding:10px 0;
+}
+.vote-form-content dl dt i{
+	color:#ff3333;
+}
+.vote-form-content dl dd .vote-input{
+	width:100%;
+	padding:0 2%;
+	height:41px;
+	line-height:41px\9;
+	border-radius:5px;
+	border:1px solid #e0e0e0;
+	font-size:14px;
+}
+.vote-form-content dl dd .vote-form-hint{
+	padding-bottom:20px;
+	font-size:14px;
+}
+.vote-list{
+	overflow: hidden;
+}
+.vote-list-item{
+	float:left;
+	width:49%;
+	border:1px solid #e0e0e0;
+	padding:10px 2%;
+	background-color:#ffffff;
+	margin-bottom:20px;
+	height:150px;
+}
+.vote-list-item.ml{
+	margin-left:2%;
+}
+.item-name{
+	font-size:16px;
+}
+.item-name .checkbox{
+	vertical-align: -3px;
+	display:inline-block;
+	position: relative;
+	width:15px;
+	height:15px;
+	background: url(../../../images/special/europe/vote_unchecked.png) no-repeat;
+}
+.item-name .checkbox.checked{
+	background: url(../../../images/special/europe/vote_checked.png) no-repeat;
+}
+.item-name .checkbox input{
+	position: absolute;
+	top:0;
+	left:0;
+	width:15px;
+	height:15px;
+	margin:0;
+	opacity: 0;
+	filter:alpha(opacity=0);
+}
+.item-name i{
+	display:inline-block;
+}
+.item-info{
+	font-size:12px;
+	color:#999999;
+	padding-top:10px;
+}
+.vote-form-submit{
+	height:38px;
+	line-height:38px;
+	background-color:#dd3939;
+	color:#fff;
+	font-size:16px;
+	text-align: center;
+	border-radius:5px;
+}
+.vote-form-submit.has_post{
+	background: #ccc;
+}

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="AddAddress"></title>
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</head>
+
+<body class="addAddressPage">
+  <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<section class="goods_wrap">
+   <nav id="topNav">
+        <ul>
+          <li><a href="javascript:Jit.AM.pageBack();"></a></li>
+          <li style="display:none;"><a href="javascript:Jit.AM.toPage('MyOrder');"></a></li>
+          <li style="display:none;"><a href="javascript:Jit.AM.toPage('GoodsCart');"><span id="menuCartCount"></span> </a></li>
+          <li> <a href="javascript:Jit.AM.toPage('IndexShop');"></a></li>
+        </ul>
+    </nav>
+  <div class="order_list">
+    <h3 id="pagetitle">添加收货地址</h3>
+    <div class="order_mod select_store">
+      <dl class="clearfix">
+        <dt>姓名</dt>
+        <dd><input type="text" id="username">
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>手机</dt>
+        <dd><input type="text" id="phone">
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>省份</dt>
+        <dd><select id="province" onchange="JitPage.fnGetCityByProvince(this.value)" ><option value=''>--请选择--</option></select>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>城市</dt>
+        <dd>
+        <select id="city" onchange="JitPage.fnGetDistrictByCity(this.value)" ><option value=''>--请选择--</option></select>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>地区</dt>
+        <dd>
+        <select id="district"><option value=''>--请选择--</option></select>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>详细地址</dt>
+        <dd><input type="text" id="address">
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <div class="order_confirm"> <a href="javascript:JitPage.saveAddress()">确 定</a></div>
+</section>
+</body>
+</html>

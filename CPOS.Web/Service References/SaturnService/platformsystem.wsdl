@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SaturnGetProductDetails">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="TraceCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ClientCode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DeviceNum" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="BillID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SecretCode" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SaturnGetProductDetailsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SaturnGetProductDetailsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SaturnGetProductDetailsSoapIn">
+    <wsdl:part name="parameters" element="tns:SaturnGetProductDetails" />
+  </wsdl:message>
+  <wsdl:message name="SaturnGetProductDetailsSoapOut">
+    <wsdl:part name="parameters" element="tns:SaturnGetProductDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="SaturnGetProductDetailsHttpGetIn">
+    <wsdl:part name="TraceCode" type="s:string" />
+    <wsdl:part name="ClientCode" type="s:string" />
+    <wsdl:part name="DeviceNum" type="s:string" />
+    <wsdl:part name="BillID" type="s:string" />
+    <wsdl:part name="SecretCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SaturnGetProductDetailsHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="SaturnGetProductDetailsHttpPostIn">
+    <wsdl:part name="TraceCode" type="s:string" />
+    <wsdl:part name="ClientCode" type="s:string" />
+    <wsdl:part name="DeviceNum" type="s:string" />
+    <wsdl:part name="BillID" type="s:string" />
+    <wsdl:part name="SecretCode" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SaturnGetProductDetailsHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="PlatformSystemSoap">
+    <wsdl:operation name="SaturnGetProductDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">商品认证接口&lt;br&gt;参数说明：&lt;br&gt;TraceCode:产品追溯码 &lt;br&gt;ClientCode: 查询客户名称&lt;br&gt;DeviceNum: 查询者设备号&lt;br&gt;BillID:经销商发货扫描的时候传递相应的提货单（发货单）编号&lt;br&gt;SecretCode: 赛腾分配给杰亦特的系统秘钥</wsdl:documentation>
+      <wsdl:input message="tns:SaturnGetProductDetailsSoapIn" />
+      <wsdl:output message="tns:SaturnGetProductDetailsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PlatformSystemHttpGet">
+    <wsdl:operation name="SaturnGetProductDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">商品认证接口&lt;br&gt;参数说明：&lt;br&gt;TraceCode:产品追溯码 &lt;br&gt;ClientCode: 查询客户名称&lt;br&gt;DeviceNum: 查询者设备号&lt;br&gt;BillID:经销商发货扫描的时候传递相应的提货单（发货单）编号&lt;br&gt;SecretCode: 赛腾分配给杰亦特的系统秘钥</wsdl:documentation>
+      <wsdl:input message="tns:SaturnGetProductDetailsHttpGetIn" />
+      <wsdl:output message="tns:SaturnGetProductDetailsHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PlatformSystemHttpPost">
+    <wsdl:operation name="SaturnGetProductDetails">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">商品认证接口&lt;br&gt;参数说明：&lt;br&gt;TraceCode:产品追溯码 &lt;br&gt;ClientCode: 查询客户名称&lt;br&gt;DeviceNum: 查询者设备号&lt;br&gt;BillID:经销商发货扫描的时候传递相应的提货单（发货单）编号&lt;br&gt;SecretCode: 赛腾分配给杰亦特的系统秘钥</wsdl:documentation>
+      <wsdl:input message="tns:SaturnGetProductDetailsHttpPostIn" />
+      <wsdl:output message="tns:SaturnGetProductDetailsHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PlatformSystemSoap" type="tns:PlatformSystemSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SaturnGetProductDetails">
+      <soap:operation soapAction="http://tempuri.org/SaturnGetProductDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PlatformSystemSoap12" type="tns:PlatformSystemSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SaturnGetProductDetails">
+      <soap12:operation soapAction="http://tempuri.org/SaturnGetProductDetails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PlatformSystemHttpGet" type="tns:PlatformSystemHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="SaturnGetProductDetails">
+      <http:operation location="/SaturnGetProductDetails" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PlatformSystemHttpPost" type="tns:PlatformSystemHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="SaturnGetProductDetails">
+      <http:operation location="/SaturnGetProductDetails" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PlatformSystem">
+    <wsdl:port name="PlatformSystemSoap" binding="tns:PlatformSystemSoap">
+      <soap:address location="http://tts.lzlj.com.cn/webservice/platformsystem.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PlatformSystemSoap12" binding="tns:PlatformSystemSoap12">
+      <soap12:address location="http://tts.lzlj.com.cn/webservice/platformsystem.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PlatformSystemHttpGet" binding="tns:PlatformSystemHttpGet">
+      <http:address location="http://tts.lzlj.com.cn/webservice/platformsystem.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PlatformSystemHttpPost" binding="tns:PlatformSystemHttpPost">
+      <http:address location="http://tts.lzlj.com.cn/webservice/platformsystem.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

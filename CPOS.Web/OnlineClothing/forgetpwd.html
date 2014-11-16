@@ -1,0 +1,59 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<title>找回密码</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body>
+<div class="PcBox indexbox" id="PcBox" style="height:500px; display:none;">
+  <div><img src="images/tran1.png" width="100%"  id="loginImage" /></div>
+  <div class="loginbox">
+    <div class="loginbga" style="background:none;height:250px; position:relative;">
+      <div style="position:absolute; left:0; top:0; height:250px; background-color:#fff; opacity:0.5; width:100%"></div>
+      <div class="loginboxBox" style="position:absolute;  top:0; z-index:2; left:5%;" >
+        <div class="loginboxInput" style="margin-top:20px;">
+          <input type="text" placeholder="输入手机号码" class="inputAndSelect" id="username" value="" />
+        </div>
+        <div class="loginboxInput" style="margin-top:20px;">
+          <input type="password" placeholder="输入密码" class="inputAndSelect" id="pwd" value="" />
+        </div>
+        <div class="loginboxInput" style="margin-top:20px;">
+          <input type="password" placeholder="再次确认密码" class="inputAndSelect" id="pwd1" value="" />
+        </div>
+        <div class="loginboxInput">
+          <input type="button" onClick="AppSet.forgetpwd()"  value="确认" class="btnStylecc" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'indexAbs()';
+function indexAbs(){
+		
+	if($(window).height() > 500){
+	 $("#PcBox,#loginImage").css("height",$(window).height())	
+	}
+
+	$("#loginImage").attr("src", G("skin.loginImage"));
+	
+	$("#PcBox").show();
+	
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="H_StoreList">花间堂</title>
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</head>
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <header id="tool_bar" class="commonHeader">
+        <div class="commonNav" >
+            <ul>
+                <li class="getBack" id="goBack"><a href="javascript:Jit.AM.toPage('H_Reserve');"></a></li>
+                <li class="home"><a href="javascript:Jit.AM.toPage('H_Reserve');"></a></li>
+                <li class="user"><a href="javascript:Jit.AM.toPage('H_OrderList');"></a></li>
+            </ul>
+        </div>
+    </header>
+    
+    
+    <section class="pt-50-pb-45">
+    	<div class="storeListArea">
+        	<ul tplpanel="store_html_list"></ul>
+        </div>
+    </section>
+    
+    
+    <footer class="commonFooter">
+    	<div class="footerWrap">
+        	<p class="telBtn"><a href="tel:4000-767-123">4000-767-123</a></p>
+        </div>
+    </footer>
+</body>
+</html>
+<script id="store_list_temp" type="text/template">
+    <li> 
+        <a class="clearfix" href="javascript:JitPage.fnExChange('{{StoreID}}');">
+            <div class="imgBox"><img src="{{ImageUrl}}"/></div>
+			
+            <div class="infoBox">
+				<p class="name"><span class="text t-overflow">{{StoreName}}</span><span class="priceBox"><strong>{{MinPrice}}</strong>起</span></p>
+                <p class="address">{{Address}}</p>
+            </div>
+			
+			
+            <div class="mark" style="position:absolute;top:0px;right:5px;width:40px;height:40px">
+                <img src="../../../images/public/hotel_default/full_room.png" style="text-align: right;">
+            </div>
+        </a>
+    </li>
+</script>

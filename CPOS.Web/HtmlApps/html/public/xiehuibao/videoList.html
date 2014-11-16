@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="VideoList"></title>
+		     <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+      <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+	</head>
+	<body >
+    <div id="masklayer" style="background-color:#FFF;" class="pageloading" >
+      <i></i>
+    </div>
+		 <div class="headerArea">
+        <header  class="header" id="headerTop">
+            <div class="commonNav">
+                <ul>
+                    <a href="javascript:Jit.AM.pageBack()">
+                        <li class="getBack">
+                            <span></span>
+                        </li>
+                    </a>
+                    <a href="javascript:Jit.AM.toPage('Account')">
+                        <li class="user">
+                            <span></span>
+                        </li>
+                    </a>
+                    <a href="javascript:Jit.AM.toPage('Home')">
+                        <li class="home">
+                            <span></span>
+                        </li>
+                    </a>
+                </ul>
+            </div>
+        </header>
+    </div>
+		<section id="section" class="wrapper">
+			<div id="videoList" class="videoList followDetail">
+			</div>
+		</section>
+		<script id="videoListTemp" type="text/html">
+			<%for(var i=0;i<list.length;i++){var idata=list[i];%>
+				<div class="videoArea">
+					<div class="videoBox" data-type="1" data-id="<%=idata.albumId%>">
+						<video src="<%=idata.description%>" poster="<%=idata.imageUrl%>" -webkit-playsinline="true" controls="controls" width="100%" height="100%"></video>
+						<p class="tit t-overflow">
+							<%=idata.title%>
+						</p>
+					</div>
+					<div class="handle">
+						<span data-id="<%=idata.albumId%>" data-type="2" class="itemBtn heart <%if(idata.isPraise==1){%>on<%}%>"><%=idata.praiseCount||0%></span>
+						<em class="line"></em>
+						<span data-id="<%=idata.albumId%>" class="itemBtn see"><%=idata.browseCount||0%></span>
+						<em class="line"></em>
+						<span data-id="<%=idata.albumId%>" data-type="0"   class="itemBtn share"></span>
+					</div>
+				</div>
+			<%}%>
+		</script>
+ <div id="detailArea"></div>
+  <div id="share-mask" ></div>
+  
+
+	</body>
+</html>

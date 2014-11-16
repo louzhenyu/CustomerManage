@@ -1,0 +1,106 @@
+
+body{font:12px/1.2em "STHeiti","Microsoft YaHei";background:#fff;color:#4d4d4d;}
+.allPage{position:relative;}
+.allPage .packup{display:block;position:absolute;top:10px;left:-21px;width:39px;height:43px;background:url(../images/packup.png) no-repeat 0 0;cursor:pointer;z-index:99;}
+
+/*common*/
+input{border:1px solid #ccc;border-radius:2px;width:120px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"STHeitiSC Medium";color:#a5a5a5;}
+label{display:block;float:left;}
+.commonNav-sub{width:100%;height:67px;line-height:67px;text-align:center;background:#5fafe4;}
+.commonNav-sub a{position:relative;float:left;width:170px;font-size:16px;color:#fff;}
+.commonNav-sub a em{position:absolute;top:17px;right:0px;width:3px;height:50px;background:#fff;}
+.commonNav-sub a.on{background:#fff;color:#5fafe4;}
+.commonTitWrap{width:1000px;padding-bottom:19px;border-bottom:1px solid #ccc;}
+.commonTitWrap span{display:block;height:19px;line-height:19px;padding:0 7px;font-weight:bold;font-size:17px;font-family:"黑体";border-left:3px solid #5fafe4;color:#333;}
+.commonSelBox{position:relative;display:inline-block;width:120px;height:33px;line-height:33px;text-align:center;font-size:14px;font-family:"STHeitiSC Medium";border:1px solid #ccc;border-radius:2px;background:url(../images/selIcon.png) no-repeat 98px center;color:#a5a5a5;}
+.commonSelBox .selPulldown{display:none;z-index:99;position:absolute;top:31px;left:-1px;right:0px;width:120px;border:1px solid #ccc;background:#fff;}
+.commonSelBox .selPulldown span{display:block;height:32px;line-height:32px;text-align:center;font-size:14px;color:#4d4d4d;}
+.commonSelBox .selPulldown span:hover{background:#5fafe4;color:#fff;}
+.commonSelBox:hover .selPulldown{display:block;}
+.tfooter
+{
+    height: 250px;
+    text-align: center;
+    line-height: 250px;
+    vertical-align: middle;
+}
+.contentArea {
+    margin-left:0px;
+    float: left;
+}
+/*内容区域*/
+.contentArea_withdraw{padding:28px;}
+/*数据表格展示*/
+.dataTableShow table{border-radius:5px;width:100%;padding:0;margin:0 auto;border-collapse:collapse;font-size:14px;}
+.dataTableShow tr{height:39px;line-height:39px;}
+.dataTableShow .title td{font:bold 14px/39px "黑体";background:#f4f4f4;}
+.dataTableShow td{padding-left:5px;border:1px solid #e8e6e6;font-size:13px;color:#4d4d4d;}
+.dataTableShow .title td:nth-of-type(1){border-radius:5px 0 0 5px;}
+.dataTableShow .title td:nth-last-of-type(1){border-radius:0 5px 5px 0;}
+
+.dataTableShow .status span{display:block;width:55px;min-width: 100px;height:25px;line-height:25px;margin:0 auto;text-align:center;background:#46b031;color:#fff;}
+.dataTableShow .failure span{background:#a1a1a1;}
+.dataTableShow .handle{background:url(../images/searchIcon.png) no-repeat center center;}
+
+/*搜索区域*/
+.searchArea{padding:13px 0 28px;}
+.searchArea .minTit{float:left;line-height:33px;margin:0 15px 0 20px;font-size:14px;}
+.searchBtn{display:block;width:65px;height:33px;line-height:33px;margin-left:18px;text-indent:30px;border:1px solid #ccc;border-radius:2px;background:#f8f8f8 url(../images/searchIcon.png) no-repeat 8px center;cursor:pointer;}
+.inputSource{margin-left:10px;}
+.searchArea .mt1{margin-top:1px;}
+
+.searchArea .inputDate{margin-left:15px;margin-left:8px\9;}
+.searchArea .inputDate input{text-align:center;font-family:"黑体";color:#4d4d4d;}
+.searchArea .inputDate span{margin:0 3px;}
+
+
+/*申请提现*/
+.withdrawInfo{height: 210px;margin:34px 0 40px;font:15px/1.3em "Microsoft YaHei";color:#000;}
+.withdrawInfo .leftBox{float:left;width:425px;border-right:1px solid #ccc;}
+.withdrawInfo p{margin-bottom:18px;}
+.withdrawInfo .tit{float:left;width:130px;text-align:right;margin-right:25px;color:#999;}
+.withdrawInfo .rightBox .tit{width:160px;}
+.withdrawInfo .rightBox{float:left;width:485px;}
+.withdrawInfo .rightBox p{width:370px;}
+.withdrawInfo .rightBox strong{font-family:"Arial";font-size:24px;}
+.withdrawInfo .applyWithdrawBtn,.withdrawInfo .modifyWithdrawBtn{ clear:both;float:right;width:112px;height:47px;line-height:47px;text-align:center;font-size:16px;border:1px solid #d1d1d1;border-radius:3px;background:#f8f8f8;color:#666;}
+.withdrawInfo .applyWithdrawBtn{margin:5px 0 10px 0}
+.withdrawInfo .mb2{margin-bottom:2px;}
+/*结算信息*/
+.clearingInfo{padding:50px 0 0 20px;}
+.clearingInfo h2{width:920px;height:52px;text-indent:20px;font:bold 16px/52px "黑体";background:#f8f8f8;color:#333;}
+.clearingContent{float:left;width:287px;margin-top:30px;border-right:1px solid #ccc;}
+.clearingContent p .tit{width:108px;}
+.clearingContent strong{color:#fe9153;}
+.clearingExplain{float:left;width:571px;margin:30px 0 0 60px;font:15px/1.7em "Microsoft YaHei";color:#666;}
+.clearingExplain .titText{display:block;margin-bottom:2px;font-weight:bold;color:#333;}
+
+/*弹层*/
+.commonHintArea{position:fixed;top:30%;left:50%;min-height:250px;margin-left:-195px;width:390px;font:16px/1.5em "黑体";box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:9px;background:#fff;z-index:1000;}
+.commonHintArea .titBox{height:46px;text-indent:18px;font:16px/46px "黑体";border-radius:8px 8px 0 0;background:#5fafe4;color:#fff;}
+.commonHintArea .hintText{padding:48px;text-align:center;}
+.commonHintArea .hintForm{padding:15px 22px 0;}
+.commonHintArea .hintForm p{margin-bottom:10px;}
+.commonHintArea .hintForm input{width:100%;height:50px;line-height:50px\9;font-size:16px;font-family:"黑体";text-indent:10px;border:1px solid #e6e8ec;border-radius:6px;color:#999;}
+.commonHintArea .applyInput{padding:30px 0 50px;}
+.commonHintArea .hintBtn{display:block;width:128px;height:48px;margin:10px auto 17px;letter-spacing:3px;text-indent:3px;text-align:center;font:bold 16px/48px "黑体";border:1px solid #ccc;border-radius:5px;background:#f8f8f8;color#333;cursor:pointer;}
+.commonHintArea .titBox span{float:left;}
+.commonHintArea .hintClose{float:right;display:inline-block;width:24px;height:46px;margin-right:10px;background:url(../images/hintClose.png) no-repeat center center;cursor:pointer;}
+/*弹层*/
+.popUpArea{position:fixed;top:50%;left:50%;height:530px;overflow:auto; margin:-265px 0 0 -570px;width:1140px;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:9px;background:#fff;z-index:1000;}
+.popUpArea .titBox{height:46px;text-indent:18px;font:16px/46px "黑体";border-radius:8px 8px 0 0;background:#5fafe4;color:#fff;}
+.popUpArea .hintClose{float:right;display:inline-block;width:24px;height:46px;margin-right:10px;background:url(../images/hintClose.png) no-repeat center center;cursor:pointer;}
+.popUpArea .pagination{margin:10px 0 10px 10px;}
+
+.m_loading
+{
+    position: fixed;
+    text-align: center;
+    margin-top: -30%;
+    margin-left: 39%;
+}
+.m_loading div
+{
+    padding-left: 11px;
+    padding-top: 5px;
+ }

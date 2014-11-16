@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="format-detection" content="telephone=no" />
+<title>泸州老窖</title>
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/htmlTemplates.js"></script>
+<script type="text/javascript" src="js/iscroll.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" >
+
+document.oncontextmenu=new Function('event.returnValue=false;');
+document.onselectstart=new Function('event.returnValue=false;');
+
+
+  </script>
+</head>
+
+<body>
+<div class="LZMenuWapper">
+    <div class="LZMenu">
+      <div class="LZMenuInner" > <span class="frdisplay" id="LZEventTitle"></span> <a href="javascript:void(0)" class="BackPre" id="BackPrev" style="display:none;" onClick="LZEvent.BackPre()"><span class="incSkin EventIcn0" id="BackPrev"></span></a>泸州老窖 </div>
+    </div>
+</div>
+<div id="LZEventBase">
+
+<div style="margin:0 1%; overflow:hidden;">
+  <div class="LZEventDiv" id="LZEventDiv" defaultleft="0">
+    <div id="LZEventUBox" style="display:none; position:relative;" defaultleft="0">
+      <div class="LZEventDivLI" onclick="LZEvent.EventDetail('EventDetail')">
+        <div class="LZEventDivLIInner"><span class="incSkin EventIcn1"></span><span class="incSkin EventIcn0"></span>活动介绍</div>
+      </div>
+      <span class="blank" style="height:20px;"></span>
+      <div class="LZEventDivLI" onClick="LZEvent.ActionApply()">
+        <div class="LZEventDivLIInner"><span class="incSkin EventIcn2"></span><span class="incSkin EventIcn0"></span>活动报名</div>
+      </div>
+      <span class="blank" style="height:20px;"></span> <a href="wineList.html" id="WineList">
+      <div class="LZEventDivLI">
+        <div class="LZEventDivLIInner"><span class="incSkin EventIcn3"></span><span class="incSkin EventIcn0"></span>定制酒介绍</div>
+      </div>
+      </a> <span class="blank" style="height:20px;"></span>
+      <div class="LZEventDivLI"  onClick="LZEvent.ActionSubscription()">
+        <div class="LZEventDivLIInner"><span class="incSkin EventIcn4"></span><span class="incSkin EventIcn0"></span>认购流程及注意事项</div>
+      </div>
+      <span class="blank" style="height:20px;"></span>
+      <div class="LZEventDivLI" onClick="LZEvent.getPosition()">
+        <div class="LZEventDivLIInner"><span class="incSkin EventIcn5"></span><span class="incSkin EventIcn0"></span>签到及现场抽奖</div>
+      </div>
+      <span class="blank" style="height:20px;"></span>
+      <div class="LZEventDivLI" onClick="LZEvent.ActionGetOrders()">
+        <div class="LZEventDivLIInner"><span class="incSkin EventIcn6"></span><span class="incSkin EventIcn0"></span>我的认购</div>
+      </div>
+    </div>
+    <div class="LZWineDetailInner" id="LZWineDetailInner" style="display:none; position:relative;"></div>
+    <div id="AppdLConnnext" style="display:none; position:relative; top:-10px;"></div>
+    <div id="Subscription" style="position:relative; display:none;">
+      <div class="SubscriptionBox">
+        <div class="SubscriptionBoxTitle"><span class="incSkin EventIcn4"></span>认购流程</div>
+        <div class="SubscriptionBoxConnexr">
+          <div class="WineDiv2" style="padding:20px; color:#af7322">
+            <p><em> 1、</em><span> 有认购意向的客户，向现场工作人员提出要求，由工作人员协助您填写认购单，或者您自行通过微信平台进行自主认购。</span></p>
+            <p><em> 2、</em><span> 认购完成后，由工作人员引领，或者自主方式，统一到柜台，核实信息并交纳定金。 </span></p>
+            <p><em> 3、</em><span> 根据您的认购记录我们会开具收据、尾款缴纳说明和提货凭证，一并交付给您。 </span></p>
+            <p><em> 4、</em><span> 请妥善保管好您的尾款缴纳说明和提货凭证，并按尾款缴纳说明书内容，在指定时间内完成尾款的支付。 </span></p>
+            <p><em> 5、</em><span> 尾款结清后，如需提取酒品，请拨打尊享发货热线：4008001573。 </span></p>
+            <p> <em>6、</em><span> 我们在收到您的发货需求后，将安排专人为您送货。您收到所定制的酒品后，请将提货凭证交由送货专员。 </span></p>
+          </div>
+        </div>
+      </div>
+      <div class="SubscriptionBox" style="margin-top:20px;">
+        <div class="SubscriptionBoxTitle"><span class="incSkin EventIcn4"></span>注意事项</div>
+        <div class="SubscriptionBoxConnexr">
+          <div class="WineDiv2" style="padding:20px; color:#af7322">
+            <p><em> 1、</em><span> 个性化定制信息最多接受15个中文字</span></p>
+            <p><em> 2、</em><span> 每坛酒品认购定金为￥3000元。</span></p>
+            <p><em> 3、</em><span> 认购人交纳定金日起七个工作日内全额交纳购酒款项，过期视为放弃认购，定金不予退还。 </span></p>
+            <p><em> 4、</em><span> 尾款支付请采用电汇或网上银行支付方式支付。</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="LZApplyDiv" id="LZApplyDiv" style="position:relative; min-width:280px; display:none;">
+    <div class="LZApplyDivConnext">
+      <div class="LZApplyDivTitle"></div>
+      <Span class="blank" style="height:12px;"></Span>
+      <div class="LZApplyDivInner">
+        <div class="LZApplyDivInnerTxt" style="position:absolute; z-index:3; width:90%; left:5%; top:35px;">
+          <div class="FipDiv" onclick="GOFocus(this,'ASVipCode')">
+            <div class="cTipDivName">会员编号</div>
+            <div class="cTipDivNameInput">
+              <input type="text" value="" id="ASVipCode" disabled  />
+            </div>
+          </div>
+          <div class="FipDiv" onclick="GOFocus(this,'Cname')">
+            <div class="cTipDivName">姓名</div>
+            <div class="cTipDivNameInput">
+              <input type="text" value="" id="Cname"  />
+            </div>
+          </div>
+          <div class="FipDiv" onclick="GOFocus(this,'Cphone')">
+            <div class="cTipDivName">手机号</div>
+            <div class="cTipDivNameInput">
+              <input type="text" value="" id="Cphone"  />
+            </div>
+          </div>
+          <div class="FipDiv" onclick="GOFocus(this,'CCity')">
+            <div class="cTipDivName">所在城市</div>
+            <div class="cTipDivNameInput">
+              <input type="text" value="" id="CCity" disabled  />
+            </div>
+          </div>
+          <div style="clear:both; padding-top:30px; margin-right:100px;">
+            <input type="button"  value="确定" class="RuiHuanBtn1" onClick="LZEvent.setEventSignUp()" style="width:100%; margin:0; " >
+          </div>
+        </div>
+        <span class="cR1"></span>
+        <div class="cR2">
+          <div class="cR2Inner"></div>
+        </div>
+        <div class="cR3"></div>
+      </div>
+    </div>
+    <Span class="blank" style="height:22px;"></Span> </div>
+  <div class="LZPrizes" id="LZPrizes" style="position:relative; display:none;">
+    <div class="LZdiv" style="height:3px; margin-top:85px; width:94%; overflow:hidden; "></div>
+    <div class="LZdiv" style="width:96%; height:3px; overflow:hidden"></div>
+    <div class="LZdiv" style="padding-bottom:10px; min-height:400px;">
+      <div class="SqVip" style="width:280px;">
+        <div class="PrizesSpanBg" ><div class="VipCardImg" style="width:263px; background:url(images/guajiang.png) no-repeat left top; height:133px; overflow:hidden;"></div><span class="prizeTxt" id="JPName" ></span><div class="prizeTxt" style="z-index:102"><div  id="canvas" style="width:80px; height:30px;"></div></div></div>
+      </div>
+      	<span class="blank" style="height:80px;"></span>
+      <div class="Prizebg">
+      		<div class="PrizebgList">
+          	  <div class="PrizebgListTitle prizeAni"></div>
+              <span class="PrizebgListTitleIcn "></span>
+              <span class="PrizebgListTitleRight "></span>
+              <div class="PrizebgListConext" id="PrizebgListConext">
+              
+
+              </div>
+              
+            </div>
+            	<span class="blank" style="height:30px;"></span>
+            <div class="PrizebgList">
+          	  <div class="PrizebgListTitle prizeAni"></div>
+              <span class="PrizebgListTitleIcn1 "></span>
+              <div class="PrizebgListConext">
+              	请在活动期间内进入本页面刮奖，如逾期将无法参与抽奖。亲，祝您好运！
+
+              </div>
+              
+            </div>
+      </div>
+    </div>
+      <Span class="blank" style="height:22px;"></Span> 
+  </div>
+  <div id="BackVipCardTip" style="display:none; position:relative"><img src="images/yd.png" width="100%"></div>
+</div>
+</div>
+<!--<div class="LZWineDetail" style=" display:none;"><span class="blank" style="height:20px;"></span>
+  <div class="LZWineDetailInner" id="LZWineDetailInner">
+    
+  </div>
+</div>-->
+<input type="hidden" id="isHasApply" value="">
+<input type="hidden" id="isOverEvent" value="">
+<input type="hidden" id="isSite" value="">
+<input type="hidden" id="backPrevPosition" value="0">
+<input type="hidden" id="Longitude" value="">
+<input type="hidden" id="Latitude" value="">
+<div class="AppLayer" id="AppLayer" style="display:none;"></div>
+<div style="position: absolute; left: 0; top: 0; display:none;  z-index:10000" class="loading"><img width="40" height="40" src="images/382.gif"></div>
+<script type="text/javascript">
+$(function(){
+	LZEvent.getEventInfo('','');	
+	
+})
+</script>
+</body>
+</html>

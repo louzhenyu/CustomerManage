@@ -1,0 +1,61 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+	<title name="SelectAddress"></title>
+	<link href="../css/global.css" rel="stylesheet" type="text/css" />
+	<link href="../css/style.css?ver=2" rel="stylesheet" type="text/css" />
+		
+	<script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch.js?ver=2"></script>
+</head>
+
+<body>
+<section class="goods_wrap">
+  <dl class="tool_bar clearfix">
+	<dt><a href="javascript:Jit.AM.pageBack();">返回</a><!--<span>选择收货地址</span>--></dt>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsList');">列表</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsCart');">购物车</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('MyOrder');">首页</a></dd>
+  </dl>
+  <div id="address_list" class="order_list">
+  	<a href="javascript:Jit.AM.toPage('AddAddress')" class="btn_addAds">新增收货地址+</a>
+	<!--a href="javascript:JitPage.saveAddress()" class="btn_addAds">确认选择</a-->
+    <h3>收货地址</h3>
+    <!--div name="address_item" class="order_mod address_store cur">
+    	<h3>王孟孟 <span>13888888888</span></h3>
+        <p>上海市静安区延平路121号</p>
+        <div><a href="#"><b class="edit"></b>修改</a><a href="#"><b class="remove"></b>删除</a></div>
+        <i></i>     
+    </div>
+    <div name="address_item" class="order_mod address_store">
+    	<h3>静安寺店 <span>电话：021-88888888</span></h3>
+        <p>上海市静安区延平路121号</p>
+        <div><a href="#">设为默认</a><a href="#"><b class="edit"></b>修改</a><a href="#"><b class="remove"></b>删除</a></div>
+        <i></i>     
+    </div>
+    <div name="address_item" class="order_mod address_store">
+    	<h3>静安寺店 <span>电话：021-88888888</span></h3>
+        <p>上海市静安区延平路121号</p>
+        <div><a href="#">设为默认</a><a href="#"><b class="edit"></b>修改</a><a href="#"><b class="edit"></b>删除</a></div>
+        <i></i>     
+    </div-->
+  </div>
+</section>
+</body>
+<script id="Tpl_address_item" type="text/template">
+	<div  class="order_mod address_store" name="address_area" >
+<div name="address_item" adrId="{{vipAddressID}}">
+    	<h3>{{linkMan}} <span>电话：{{linkTel}}</span></h3>
+        <p>{{address}}</p>
+</div>
+
+        <div class="bom">
+			<a href="javascript:JitPage.setDefault('{{vipAddressID}}')">设为默认</a>
+			<a href="javascript:JitPage.modify('{{vipAddressID}}')"><b class="edit"></b>修改</a>
+			<a href="javascript:JitPage.removeAddress('{{vipAddressID}}')"><b class="edit"></b>删除</a>
+		</div>
+        <i></i>     
+    </div>
+</script>
+</html>

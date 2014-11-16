@@ -1,0 +1,192 @@
+/*common*/
+body{font:12px/1.5em "黑体","Microsoft YaHei";background:#fff;color:#4d4d4d;}
+input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"黑体";color:#a5a5a5;}
+.ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
+.commonBtn{display:block;width:142px;height:42px;line-height:42px;text-align:center;font-size:18px;border-radius:5px;background:#fe7c24;color:#fff;}
+/*布局layout*/
+.centreArea{min-height:587px;background:url(../images/topShadow.png) repeat-x 0 0;}
+.contentArea{margin-left:134px;min-height:587px;}
+/*公共弹层*/
+.jui-dialog{position:fixed;top:50%;left:50%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
+.jui-dialog-tit{position:relative;padding-left:25px;height:55px;background:#f3f3f6;border-radius:6px 6px 0 0;color:#66666d;}
+.jui-dialog-tit h2,.jui-dialog-tit h3{font:bold 16px/55px "黑体";}
+.jui-dialog-close{position:absolute;top:12px;right:12px;width:30px;height:30px;background:url(../images/hintClose.png) no-repeat center center;}
+.jui-dialog .btnWrap{padding:50px 0;text-align:center;}
+.jui-dialog .btnWrap a{display:inline-block;}
+.jui-dialog .titName{position:absolute;top:0;left:50%;margin-left:-225px;width:450px;line-height:55px;text-align:center;color:#333;}
+.jui-dialog .cancelBtn{margin-left:35px;background:#949ca7;}
+/*弹出-提示*/
+.jui-dialog.jui-dialog-prompt{width:694px;height:424px;margin:-212px 0 0 -347px;}
+.jui-dialog .promptContent{padding:120px 0 40px 0;}
+.jui-dialog .promptContent p{text-align:center;font:bold 18px/1.5em "黑体";color:#66666d;}
+.jui-dialog-prompt .cancelBtn{background:#fff;border:1px solid #fe7c23;color:#fe7c23;}
+
+
+/*公共的头部，导航，logo，信息*/
+.commonHeader{height:58px;border-bottom:2px solid #fe7c23;}
+.commonHeader .logoWrap{float:left;width:139px;height:58px;background:url(../images/line.png) no-repeat right center;}
+.commonHeader .logo{width:61px;height:44px;margin:7px 0 0 19px;background:url(../images/logo.png) no-repeat 0 0;text-indent:-9999px;}
+.commonHeader .logoWrap .arr{float:right;width:14px;height:8px;margin:25px 20px 0 0;background:url(../images/arr002.png) right center;}
+.commonNav{height:32px;margin-left:139px;padding:0 20px;}
+.commonNav li{float:left;width:100px;height:32px;margin-top:13px;line-height:32px;text-align:center;text-indent:18px;font:13px/32px "黑体";}
+.commonNav li a{display:block;color:#b5b5b5;}
+.commonNav .wechat a{background:url(../images/nav001.png) no-repeat 10px center;}
+.commonNav .action a{background:url(../images/nav002.png) no-repeat 10px center;}
+.commonNav .shop a{background:url(../images/nav003.png) no-repeat 10px center;}
+.commonNav .store a{background:url(../images/nav004.png) no-repeat 10px center;}
+.commonNav .order a{background:url(../images/nav005.png) no-repeat 10px center;}
+.commonNav .basic a{background:url(../images/nav006.png) no-repeat 10px center;}
+
+.commonNav .wechat.on a{background:url(../images/on-nav001.png) no-repeat 10px center;}
+.commonNav .action.on a{background:url(../images/on-nav002.png) no-repeat 10px center;}
+.commonNav .shop.on a{background:url(../images/on-nav003.png) no-repeat 10px center;}
+.commonNav .store.on a{background:url(../images/on-nav004.png) no-repeat 10px center;}
+.commonNav .order.on a{background:url(../images/on-nav005.png) no-repeat 10px center;}
+.commonNav .basic.on a{background:url(../images/on-nav006.png) no-repeat 10px center;}
+.commonNav li.on a{color:#fe7c23;}
+
+.commonNav .wechat:hover a{background:url(../images/h-nav001.png) no-repeat 10px center;}
+.commonNav .action:hover a{background:url(../images/h-nav002.png) no-repeat 10px center;}
+.commonNav .shop:hover a{background:url(../images/h-nav003.png) no-repeat 10px center;}
+.commonNav .store:hover a{background:url(../images/h-nav004.png) no-repeat 10px center;}
+.commonNav .order:hover a{background:url(../images/h-nav005.png) no-repeat 10px center;}
+.commonNav .basic:hover a{background:url(../images/h-nav006.png) no-repeat 10px center;}
+.commonNav li:hover a{color:#fe7c23;}
+
+
+.commonHeader .infoBox{float:right;height:32px;line-height:32px;margin:13px 19px 0 0;padding:0 15px 0 16px;border-left:1px solid #e0e0e0;background:url(../images/arr001.png) no-repeat right center;cursor:pointer;}
+.commonHeader .picWrap{float:left;width:32px;height:32px;}
+.commonHeader .picWrap img{display:block;width:100%;height:100%;}
+.commonHeader .name{margin-left:45px;color:#2d83cf;font:15px/32px "arial";}
+
+/*公共菜单*/
+.commonMenu{float:left;width:133px;min-height:587px;padding:27px 0 3px;border-right:1px solid #ccc;}
+.commonMenu li{position:relative;height:54px;margin-bottom:16px;}
+.commonMenu li a{position:absolute;top:0px;left:0px;display:block;width:100%;height:54px;text-indent:36px;text-align:center;font:14px/54px "黑体";color:#bfbfbf;z-index:6;}
+.commonMenu .menuBg{position:absolute;top:0px;left:0px;display:none;width:142px;height:54px;background:url(../images/menuBg.png) no-repeat 0 0;z-index:5;}
+
+.commonMenu .activity a{background:url(../images/menu001.png) no-repeat 15px center;}
+.commonMenu .grade a{background:url(../images/menu002.png) no-repeat 15px center;}
+.commonMenu .rule a{background:url(../images/menu003.png) no-repeat 15px center;}
+.commonMenu .change a{background:url(../images/menu004.png) no-repeat 15px center;}
+.commonMenu .sign a{background:url(../images/menu005.png) no-repeat 15px center;}
+.commonMenu .reward a{background:url(../images/menu006.png) no-repeat 15px center;}
+.commonMenu .reward2 a{background:url(../images/menu007.png) no-repeat 15px center;}
+.commonMenu .reward3 a{background:url(../images/menu008.png) no-repeat 15px center;}
+
+.commonMenu .on a{color:#fe7c23;}
+.commonMenu .activity.on a{background:url(../images/on-menu001.png) no-repeat 15px center;}
+.commonMenu .grade.on a{background:url(../images/on-menu002.png) no-repeat 15px center;}
+.commonMenu .rule.on a{background:url(../images/on-menu003.png) no-repeat 15px center;}
+.commonMenu .change.on a{background:url(../images/on-menu004.png) no-repeat 15px center;}
+.commonMenu .sign.on a{background:url(../images/on-menu005.png) no-repeat 15px center;}
+.commonMenu .reward.on a{background:url(../images/on-menu006.png) no-repeat 15px center;}
+.commonMenu .reward2.on a{background:url(../images/on-menu007.png) no-repeat 15px center;}
+.commonMenu .reward3.on a{background:url(../images/on-menu008.png) no-repeat 15px center;}
+
+.commonMenu li:hover .menuBg{display:block;}
+.commonMenu li:hover a{color:#fff;}
+.commonMenu li.activity:hover a{background:url(../images/h-menu001.png) no-repeat 15px center;}
+.commonMenu li.grade:hover a{background:url(../images/h-menu002.png) no-repeat 15px center;}
+.commonMenu li.rule:hover a{background:url(../images/h-menu003.png) no-repeat 15px center;}
+.commonMenu li.change:hover a{background:url(../images/h-menu004.png) no-repeat 15px center;}
+.commonMenu li.sign:hover a{background:url(../images/h-menu005.png) no-repeat 15px center;}
+.commonMenu li.reward:hover a{background:url(../images/h-menu006.png) no-repeat 15px center;}
+.commonMenu li.reward2:hover a{background:url(../images/h-menu007.png) no-repeat 15px center;}
+.commonMenu li.reward3:hover a{background:url(../images/h-menu008.png) no-repeat 15px center;}
+
+
+
+
+
+
+/******活动管理*****/
+/*头部原来信息*/
+.activityInfo-item{height:97px;padding:20px 10px 0px 30px;background:#f8f8f8 url(../images/topShadow.png) repeat-x 0 0;}
+.activityInfo-item .markBox{float:left;width:56px;height:62px;border:1px solid #4d4e53;text-align:center;font-size:16px;font-family:"Arial";background:#fff;color:#fe7c23;}
+.activityInfo-item .month{height:21px;line-height:21px;background:#4d4e53;color:#fffefe;}
+.activityInfo-item .day{font-size:30px;line-height:41px;}
+.activityInfo-item .infoBox{height:64px;margin-left:74px;}
+.activityInfo-item .titWrap{height:30px;line-height:30px;}
+.activityInfo-item .shelf{float:left;margin-left:2px;font-size:16px;color:#fe7c23;}
+.activityInfo-item .tit{float:left;font-size:18px;color:#333;}
+.activityInfo-item .timeSlot{float:left;margin-left:68px;padding-left:20px;font-family:"Arial";font-size:14px;color:#666;background:url(../images/timeIcon2.png) no-repeat left center;}
+.activityInfo-item .other{margin-top:14px;}
+.activityInfo-item .other .exp{float:left;font-size:14px;color:#666;}
+.activityInfo-item .read{float:left;padding-left:20px;margin:0 50px;font-size:14px;background:url(../images/seeIcon2.png) no-repeat 0 center;}
+.activityInfo-item .enroll{float:left;padding-left:20px;font-size:14px;background:url(../images/enrollIcon2.png) no-repeat 0 center;}
+.activityInfo-item .other strong{padding-left:3px;font-family:"Arial";color:#fe7c23;}
+.activityInfo-item .clickMore{width:130px;margin:7px auto 0;font-size:14px;background:url(../images/moreIcon.png) no-repeat right center;color:#ccc;cursor:pointer;}
+
+/*设置菜单*/
+.subMenu{height:62px;margin-top:20px;padding-left:85px;background:#eee;}
+.subMenu li{float:left;width:91px;height:59px;margin:3px 22px 0 0;text-align:center;line-height:98px;color:#999;cursor:pointer;}
+.subMenu .modify{background:url(../images/modifyIcon.png) no-repeat center 4px;}
+.subMenu .apply{background:url(../images/applyIcon.png) no-repeat center 4px;}
+.subMenu .sign{background:url(../images/signIcon.png) no-repeat center 3px;}
+.subMenu li.on{background-color:#fff;}
+
+
+/*报名管理*/
+.subMenuContentArea{padding:20px;}
+.subMenuContentArea .commonBtn{float:right;position:relative;top:-5px;width:103px;height:28px;margin:0 21px 5px 0;text-align:center;font:15px/28px "黑体";background:url(../images/commonBtnBg.png) no-repeat 0 0;color:#fff;cursor:pointer;}
+.tableMenu{width:261px;height:32px;border:1px solid #ececec;border-bottom:none;border-radius:3px 3px 0 0;}
+.tableMenu .first span{border-right:1px solid #ececec;}
+.tableMenu a{float:left;height:29px;text-align:center;font-size:14px;color:#d8d8d8;border-bottom:3px solid #fff;}
+.tableMenu a.on{border-bottom:3px solid #fe7c23;color:#fe7c23;}
+.tableMenu a span{display:block;width:130px;height:20px;line-height:20px;margin-top:6px;}
+.tableMenu a em{font-family:"Arial";}
+
+.tableWrap{min-height:300px;padding:20px;border:1px solid #ececec;}
+.tablehandle{height:26px;padding:9px;border:1px solid #d8d8d8;background:#f5f5f5;}
+.tablehandle a{float:left;width:75px;height:27px;margin-right:20px;}
+.tablehandle .importBtn{background:url(../images/importBtn.png) no-repeat 0 0;}
+.tablehandle .exportBtn{background:url(../images/exportBtn.png) no-repeat 0 0;}
+.tablehandle .selectBox{position:relative;float:right;width:149px;height:25px;border:1px solid #b9b9b9;border-radius:2px;text-align:center;font:12px/25px "宋体";color:#666;background:#fff url(../images/moreIcon.png) no-repeat 130px center;cursor:pointer;}
+.tablehandle .selectBox .text{display:block;width:125px;}
+.tablehandle .selectList{display:none;position:absolute;top:26px;left:-1px;width:149px;border-left:1px solid #b9b9b9;border-right:1px solid #b9b9b9;}
+.tablehandle .selectList p{line-height:25px;border-bottom:1px solid #b9b9b9;background:#f1f1f1;}
+.tablehandle .selectList p:hover{background:#f8f8f8;}
+.tablehandle .selectBox:hover .selectList{display:block;}
+.tablehandle .count{float:right;margin-right:10px;line-height:26px;}
+.tablehandle .count span{font-weight:bold;color:#2d83cf;}
+
+.dataTable{width:100%;border:1px solid #d8d8d8;border-top:none;font:13px/39px "黑体";color:#4d4d4d;}
+.dataTable .fontC{color:#fe7c23;}
+.dataTable .fontF{font-family:"Arial";}
+.dataTable .title{border-bottom:2px solid #fe7c23;}
+.dataTable .title th{font-weight:bold;*border-bottom:2px solid #fe7c23;text-align: center;vertical-align: middle;min-width: 30px;padding:0 5px;}
+.dataTable tr{height:39px;border-bottom:1px solid #fedbc3;text-align:center;}
+.dataTable tbody td{*border-bottom:1px solid #fedbc3;text-align: center;vertical-align: middle;min-width: 30px;padding:0 5px;}
+.dataTable tbody tr:hover{background:#fff1d8;}
+.dataTable .joinBtn{display:block;width:100px;height:30px;line-height:30px;margin:0 auto;text-align:center;border-radius:4px;cursor:pointer;}
+.dataTable tbody tr:hover .joinBtn{background:#fe7c23;color:#fff;}
+
+.dataTable input{width:100px;height:26px;border:1px solid #ccc;color:#333;border-radius:2px;}
+.dataTable .checkBox{vertical-align:middle;cursor:pointer;}
+.dataTable .checkBox em{display:block;width:25px;height:25px;margin:0 auto;background:url(../images/radio1.png) no-repeat center center;}
+.dataTable .checkBox.on em{background:url(../images/radio2.png) no-repeat center center;}
+
+/*签到管理*/
+.subMenuContentArea .signCount{height:30px;margin-bottom:3px;font:16px/30px "黑体";color:#666;}
+.subMenuContentArea .signCount strong{padding:0 2px;font:bold 24px/30px "Arial";}
+/*弹出-导入*/
+.jui-dialog.jui-dialog-import{width:685px;height:530px;margin:-280px 0 0 -343px;}
+.jui-dialog-import .promptContent{padding:40px 145px;}
+.jui-dialog-import .promptContent.stepTwo{padding:40px 102px;}
+.jui-dialog-import .stepWrap{text-align:center;}
+.jui-dialog-import .stepWrap span{display:inline-block;width:162px;height:63px;}
+.jui-dialog-import .step01{background:url(../images/tip-downTmpl.png) no-repeat 0 0;}
+.jui-dialog-import .step02{position:relative;margin-left:52px;background:url(../images/tip-downRoll.png) no-repeat 0 0;}
+.jui-dialog-import .step02 em{position:absolute;top:30px;left:-53px;width:48px;height:2px;background:#ccc;}
+.jui-dialog-import .step02.on{background:url(../images/tip-downRoll2.png) no-repeat 0 0;}
+.jui-dialog-import .step02.on em{background:#fe7c23;}
+.jui-dialog-import .exp{margin:80px 0 30px;text-align:center;font:18px/1.5em "黑体";color:#fe7c23;}
+.jui-dialog-import .stepTwo .exp{margin:80px 0 20px;}
+.jui-dialog-import .downTmplBtn{display:block;width:230px;height:60px;margin:0 auto 30px;background:url(../images/downTmplBtn.png) no-repeat 0 0;}
+
+.jui-dialog-import .uploadArea{width:496px;height:39px;margin-bottom:35px;background:url(../images/popUploadInput.png) no-repeat 0 0;}
+.jui-dialog-import .uploadBtn{float:right;width:112px;height:39px;background:url(../images/popUploadBtn.png) no-repeat 0 0;}
+.jui-dialog-import .uploadInput{height:39px;margin-right:112px;}
+.jui-dialog-import .uploadInput input{display:block;width:374px;height:39px;text-indent:15px;border:none;background:none;color:#333;}
+.jui-dialog-import .cancelBtn{width:138px;height:38px;margin-right:40px;line-height:38px;border:1px solid #fe7c23;background:#fff;color:#fe7c23;}

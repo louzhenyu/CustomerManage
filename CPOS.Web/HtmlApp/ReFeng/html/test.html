@@ -1,0 +1,89 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+	<title name="GoodsOrder"></title>
+	<link rel="stylesheet" type="text/css" href="../css/global.css"/>
+	<link rel="stylesheet" type="text/css" href="../css/style.css"></head>
+	<script type="text/javascript"  src="../lib/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript"  src="../js/iscroll.min.js"></script>
+<body>
+
+<!-- <video width="100%" controls="controls" webkit-playsinline="true" type="video/mp4" poster="http://www.o2omarketing.cn:8400/Framework/Upload/File/20131223/zndd.png" src="http://www.o2omarketing.cn:8400/Framework/Upload/File/20131223/zndd.mp4" width="90%" height="400px" autoplay="autoplay"></video> -->
+
+<div id="mod_tenvideo_flash_player_1392002910565"><embed width="300px" height="200px" align="middle" pluginspage="http://get.adobe.com/cn/flashplayer/" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" bgcolor="#000000" id="tenvideo_flash_player_1392002910565" name="tenvideo_flash_player_1392002910565" quality="high" src="http://imgcache.qq.com/tencentvideo_v1/player/TPout.swf?max_age=86400&amp;v=20121230" flashvars="vid=w0125fccu39&amp;tpid=0&amp;showend=1&amp;showcfg=1&amp;searchbar=1&amp;skin=http://imgcache.qq.com/minivideo_v1/vd/res/skins/TencentPlayerMiniSkin.swf&amp;shownext=1&amp;list=2&amp;autoplay=0" wmode="direct"></div>
+
+	<!-- 	<input type="button" id="test" value="测试" style="  border: 1px solid #000000;
+    height: 100px;
+    width: 100px;-webkit-border-radius:0;-webkit-appearance: none;" />
+	-->
+	<div class="goods_img ac" >
+
+		<div  id="goodsScroll"  >
+			<div class="goods_img_list"  >
+				<ul id="goodsImgs" >
+					<li>
+						<img height="160" src="." jitval="itemImage">
+
+						</li>
+				</ul>
+			</div>
+			<ul class="goods_img_bar" id="goodsImgBar">
+				<li class="on">1</li>
+				<li>2</li>
+				<li>3</li>
+			</ul>
+		</div>
+	</div>
+
+</body>
+
+	<script type="text/javascript">
+
+
+var myScroll;
+
+function loaded() {
+	var menuList=$('#goodsImgBar li'),goodsScroll=$('#goodsScroll');
+
+		//重新設置大小
+		ReSize();
+		function ReSize(){
+		goodsScroll.find('.goods_img_list').css({width:goodsScroll.width()*goodsScroll.find('.goods_img_list li').size()});
+		goodsScroll.find('.goods_img_list li').css({width:goodsScroll.width()});
+
+
+		}
+
+	//綁定滾動事件
+		myScroll = new iScroll('goodsScroll', {
+		snap: true,
+		momentum: false,
+		hScrollbar: false,
+		onScrollEnd: function () {
+		if (this.currPageX>(menuList.size()-1)) {
+			return false;
+			};
+		menuList.removeClass('on');
+		menuList.eq(this.currPageX).addClass('on');
+		}
+	 });
+		menuList.bind('click',function(){
+		myScroll.scrollToPage(menuList.index(this));
+		});
+
+	$(window).resize(function(){
+	ReSize();
+	 myScroll.refresh();
+		});
+
+
+}
+
+document.addEventListener('DOMContentLoaded', loaded, false);
+
+
+</script>
+
+</html>

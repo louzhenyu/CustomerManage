@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title  name="ClassDetail" >班级通讯录</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+</head>
+
+<body class="classdetailbody">
+  <div id="masklayer"  class="pageloading" > <i></i>
+  </div>
+    <section>
+        <div class="classdetailhead">
+            <div class="cdlitem">
+                <div class="cdlleft c1">班&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</div>
+                <div class="cdlright" id="txtClassName"></div>
+            </div>
+               <div class="cdlitem">
+                <div class="cdlleft">已上传名片：</div>
+                <div class="cdlright" ><span id="txtCount">0</span>人</div>
+            </div>
+
+        </div>
+        <div class="explain">通过拍照，上传您最新的名片，我们就可以通过名片信息更新到中欧校友数据库中，这样您的同学、校友、老师就可以联系到您了。
+        如果您使用的是安卓手机，请先将名片拍照，再点击“上传名片”后在相册中勾选已拍好的名片后点击“确认”即可。
+        </div>
+        <div class="uparea">
+            <div class="upimage" >
+                <a href="javascript:;" id="btUpImage">
+                    <img src="../../../images/special/europe/upcard01.jpg">
+                    <input type="file" name="fileUp" id="fileUp">
+                </a>
+            </div>
+            <div>请确保名片中主要信息的清晰可见</div>
+            <div class="upimage">
+                <img id="acreImage"  src="../../../images/special/europe/defaultup01.jpg" onerror="javascript:this.src='../../../images/special/europe/defaultup01.jpg'" />
+            </div>
+        </div>
+        
+    </section>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</body>
+</html>

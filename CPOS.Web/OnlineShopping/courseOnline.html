@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/welfaceV1.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">在线申请</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/iscroll.js"></script>
+</head>
+
+<body style="background:url(images/orderbg.gif) repeat left top;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span class="Comeback" id="BackPrev" onClick="WelfareAction.BackPre()" ></span><span id="Btoo">个人信息</span></div>
+    </nav>
+    <div class="ProvideCom" style="margin-top:55px;">
+    	感谢您关注中欧国际工商学院高层经理培训课程！请尽量完整提供以下信息，进行相关课程信息下载。
+您所填写的所有信息仅供中欧国际工商学院使用，绝不外泄。<span style="color:#cc0000">（加 * 的为必填项）</span>
+      <h3>个人信息</h3>
+      <div class="ProvideComBox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+        	<li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">称谓：</div>
+              <div style="margin-left:100px; position:relative; height:25px; padding-top:10px;">
+              		<div style=" float:left; width:35%; position:relative; padding-left:12%">
+               		<span class="HasSelectYY Detailicn sKg1" style="top:0; left:0;" rel="1"></span>男士
+                    </div>
+                    
+                    <div style=" float:left; width:35%; position:relative; padding-left:12%">
+                    <span class="HasSelectNo Detailicn sKg1" style="top:0; left:0;" rel="0"></span>女士
+                    </div>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">姓名：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="username" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">班级：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="userClass" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">公司：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="company" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">职务：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="usertitle" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">电话：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="tel" >
+              </div>
+            </div>
+          <li>
+            <div class="ProvideDiv"><span class="Xing">*</span>
+              <div class="ProvideText">手机：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="mobile" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">邮箱：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="email" >
+              </div>
+            </div>
+          </li>
+          <li style="border:none;"  class="Tetdd">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">通讯地址：</div>
+              <div class="ProvideTextInput">
+                <textarea id="address"></textarea>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div style="padding-top:20px;">
+        <input type="button" class="btnStylecc" onclick="Course.CourseSetOrder()" value="提交">
+      </div>
+    </div>
+
+    
+    
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="courseDetail" id="backPrevPosition" />
+<script type="text/javascript" src="js/jquery1.6.js"></script> 
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/welfareHtmlTemplatesV1.js?v=20130927"></script> 
+<script type="text/javascript" src="js/welfareCommonBase.js?v=20130927"></script> 
+<script type="text/javascript" src="js/welfareCommonV1.js?v=20130927"></script> 
+<script type="text/javascript">
+$(function(){
+	$(".sKg1").click(function(){
+		
+		if($(this).hasClass("HasSelectNo")){
+			$(".sKg1").removeClass("HasSelectYY").addClass("HasSelectNo");
+			$(this).removeClass("HasSelectNo").addClass("HasSelectYY");	
+		}
+	})	
+})
+</script>
+</body>
+</html>

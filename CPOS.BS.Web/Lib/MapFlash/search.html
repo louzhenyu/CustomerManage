@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>地图查询</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+    <style type="text/css" media="screen">
+        html, body
+        {
+            height: 100%;
+        }
+        body
+        {
+            margin: 0;
+            padding: 0;
+            overflow: auto;
+            text-align: left;
+            background-color: #ffffff;
+            font-size: 12px;
+            line-height:20px;
+        }
+        input
+        {
+            line-height:25px;
+            height:25px;
+            vertical-align:middle;
+            }
+    </style>
+    <script type="text/javascript">
+
+      function _map_key(){if (event.keyCode == 13){ _map_search(); }}
+        function _map_search() {
+            var map = new BMap.Map("divMap"); //创建地图
+            map.clearOverlays(); //清除地图上所有标记
+            var c =document.getElementById("Txt_Map").value; 
+            if(c==""){
+            c="北京";
+            }          
+            var city = new BMap.LocalSearch(map, { renderOptions: { map: map, autoViewport: true} });
+            city.search(c); //查找城市
+            var s = c;
+            var ls = new BMap.LocalSearch(c);
+            ls.search(s);
+            var i = 1;
+            var y = false;
+            ls.setSearchCompleteCallback(function (rs) {
+                if (ls.getStatus() == BMAP_STATUS_SUCCESS) {
+                    for (j = 0; j < rs.getCurrentNumPois(); j++) {
+                        var poi = rs.getPoi(j);
+                        xy = parent._map_XYChange(poi.point.lng.toString(), poi.point.lat.toString())
+                        if (xy!=null&&xy != "") {
+                            parent._map_OnClick(xy.split(',')[0], xy.split(',')[1])
+                        }
+                        break;
+                    }
+                }
+            });
+        }
+        function _map_Update() {
+            parent._map_Update();
+        }
+        function _map_RemoveStores() {
+            parent._map_RemoveStores();
+        }
+        function _map_RemoveTitle() {
+            document.getElementById("Txt_Map").value = "";
+        }
+    </script>
+</head>
+<body style="background-color:#e8e8e8">
+    &nbsp;地址：<input id="Txt_Map" style="width: 100px; height: 14px; line-height:14px" onkeydown="_map_key()"
+        maxlength="20" /><input id="Btn_Search" type="button" value="搜索位置" onclick="_map_search()" />
+        <input id="Button1" type="button" value="清 除" onclick="_map_RemoveStores()" />
+        <input id="Btn_Update" type="button" value="确 定" onclick="_map_Update()" />
+    <div id="divMap">
+    </div>
+</body>
+</html>

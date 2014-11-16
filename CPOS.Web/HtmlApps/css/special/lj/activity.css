@@ -1,0 +1,114 @@
+@charset "utf-8";
+header ul li a,.scratchcard_wrap,.prize_list h2{ background:url(/HtmlApps/images/special/LJ/sprites.png) no-repeat 0 0;}
+body { background:url(/HtmlApps/images/special/LJ/wrap_bg.jpg) repeat 0 0;}
+
+header { height:45px; background:#fff;}
+header ul {width:100%; height:45px; display:-webkit-box;}
+header ul li {-webkit-box-flex:1;-webkit-box-pack:center; border-left:1px solid #C5C5C5;}
+header ul li:first-child { border:none;}
+header ul li a { display:block; width:45px; height:45px; text-indent:-9999px; overflow:hidden; background-size:310px auto; margin:0 auto;}
+header ul li:nth-child(1) a { background-position:6px 7px;}
+header ul li:nth-child(2) a { background-position:-83px 8px;}
+header ul li:nth-child(3) a { background-position:-187px 9px;}
+header ul li:nth-child(4) a { background-position:-275px 8px;}
+
+.home { width:100%; height:100%; position:relative;}
+.home nav { width:100%; position:fixed; bottom:30px;}
+.home nav ol { width:72%; margin:0 auto; display:-webkit-box;}
+.home nav ol li { width:50%; margin:2px;}
+.home nav ol li a { display:block; background:rgba(255,255,255,.8); text-align:center; color:#1f1f1f; font-size:16px; height:40px; line-height:40px;}
+
+.home .addressBtn,.home .redPacket{margin:5px auto 0;width:160px;height:40px;}
+.home .addressBtn{margin:10px auto 10px auto;}
+
+.home img{display:block;}
+.home .bg{margin:0 auto;}
+.home .contentWrap{position:absolute;top:0;width:100%;height:100%;}
+.home .picText{width:242px;height:43px;margin:40px auto 20px;}
+.home .redBox{width:180px;height:251px;margin:50px auto 10px auto;}
+.home .redPacket{margin:30px auto;}
+.thanksPage .thanks{}
+
+
+
+.about { padding:25px;}
+.about h3 { color:#971f19; text-align:center; margin-top:15px;}
+.about p { text-indent:28px; margin-top:20px;}
+.about div { margin-top:20px;}
+
+.prize_box { padding:130px 10px 20px 10px; position:relative;}
+.scratchcard { width:95%; height:100%; position:absolute; top:15px;}
+.scratchcard_wrap { background-position:0 -40px; background-size:264px auto; width:265px; height:160px; margin:0 auto; position:relative;}
+.scratchcard a { display:block; width:90px; height:30px; line-height:30px; text-align:center; color:#fff; background:#a1301e; border:1px solid #c7c7c7;-webkit-border-radius:5px;border-radius:5px; position:absolute; top:70px; left:20px;}
+.scratchcard .scratchbar { width:115px; height:45px; line-height:45px; text-align:center; color:#fff; position:absolute; top:64px; left:134px;}
+.scratchcard .scratchbar span:nth-child(2) { display:block; position:absolute; top:0; left:0; z-index:10; background:#C3C5C2; width:115px; height:45px;}
+.prize_list { background:#fff; padding:60px 20px 20px 20px; border:1px solid #CBCBCB;-webkit-border-radius:5px;border-radius:5px;-webkit-box-shadow:0 0 5px rgba(0,0,0,0.3);
+box-shadow:0 0 5px rgba(0,0,0,0.3);}
+.prize_list h2 { background-position:0 -229px; background-size:282px auto; height:30px; line-height:30px; color:#fff; padding-left:35px; margin-bottom:10px;}
+.prize_list li { border-bottom:1px dotted #999; padding:10px 0; display:-webkit-box;}
+.prize_list li .imgbox { width:28%; margin-right:10px;}
+.prize_list li .imgbox img { width:100%;}
+.prize_list li .infobox { width:68%;}
+.prize_list li .infobox h3 { margin-bottom:15px; font-size:16px;}
+.prize_list li .infobox h3 span { font-size:12px; color:#707070;}
+
+.coupon { padding:30px 15px;}
+.coupon p { color:#782427; font-size:16px; text-align:center; margin-bottom:25px;}
+.coupon dt { margin:35px 0 5px 0; font-size:16px;}
+
+.red_packet { width:100%; height:100%; position:relative;}
+.red_packet a { background:url(/HtmlApps/images/special/LJ/red-packe.png) no-repeat 0 0; background-size:contain; display:block; width:120px; height:30px; text-indent:-9999px; overflow:hidden; position:absolute; right:20px; bottom:20px;}
+
+.sign_in { padding:70px 40px 0 40px;}
+.sign_in dt { text-align:center; font-size:16px;}
+.sign_in dd { margin-top:15px;}
+.sign_in dd input[type="text"],.sign_in dd input[type="tel"]{ padding:5px; width:100%;}
+.sign_in dd input[type="button"] { width:100%; height:40px; background:#A1301E; -webkit-border-radius:5px;border-radius:5px; color:#fff;}
+.sign_in p { margin-top:20px;}
+
+
+
+.addressPage .wrap{padding:10px;}
+.addressPage .wrap .tit,.addressPage .wrap .exp{padding-left:10px;}
+.addressPage .wrap .exp{margin:5px 0 20px 0;font-size:14px;}
+.inputAddress{margin-top:6px;padding:10px 10px 0px;background:#fff;border:1px solid #ccc;}
+.inputAddress p{margin-bottom:10px;}
+.inputAddress em{display:inline-block;width:65px;}
+.inputAddress input,.inputAddress select{ padding:5px; width:70%;}
+.addressPage .confirmBtn{display:block; line-height:40px;text-align:center; letter-spacing:5px; font-weight:bold;font-size:16px;background:#ffe6a3; color:#fff;background-image:-webkit-gradient(linear, left top, left bottom, from(#ff4e4f), to(#f52f40));}
+.inputAddress input{background:#fff;color:#aaa;border:1px solid #ccc;-webkit-box-shadow:inset 0 1px 3px rgba(0,0,0,0);
+box-shadow:inset 0 1px 3px rgba(0,0,0,0);-webkit-border-radius:0px;border-radius:0px}
+
+
+.schedule h2 { padding:15px 25px; border-bottom:2px solid #ccc; font-size:18px;}
+.schedule_cont { padding:15px 25px;}
+.schedule_cont dt { margin-top:20px; border-bottom:1px solid #ccc; font-size:16px; padding-bottom:5px;}
+.schedule_cont dd { margin-top:15px;}
+.schedule_cont li { margin:10px 0;  background-size:300px auto;}
+.schedule_cont li:nth-child(1) { background-position:-284px -289px;}
+.schedule_cont li:nth-child(2) { background-position:-284px -322px;}
+
+.introduce{width:320px;height:315px;margin:0 auto;}
+.introduce .top{margin-top:120px;}
+.introduce p{margin-top:10px;text-align:center;font-size:22px;color:#2c2c2c;}
+
+/*转圈圈动画*/
+@-webkit-keyframes rotate {  
+0% { -webkit-transform:rotate(0deg);}
+50% { -webkit-transform:rotate(30deg);}
+100% { -webkit-transform:rotate(0deg);}
+}
+.rotateState{-webkit-animation:rotate 0.3s linear infinite;}
+
+
+/*注册*/
+.registerArea{padding:15px 10px;margin:28px auto 50px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#fff;}
+.registerArea p{display:-webkit-box;}
+.registerArea p:nth-child(1){margin-bottom:10px;}
+.registerArea .tit{display:block;line-height:32px;font-size:16px;color:#363636;}
+.registerArea label{display:block;-webkit-box-flex:1;padding:5px 0;}
+.registerArea .name{border-bottom:1px solid #ccc;}
+.registerArea label input{width:100%;border:none;}
+.commonBtn{display:block;width:300px;height:44px;margin:0 auto;background:url(../../../images/special/LJ/zc.png) no-repeat 0 0;background-size:100%;}
+.commonNav{display:-webkit-box;line-height:45px;padding:0 10px;background:#c0101a;}
+.commonNav .title{-webkit-box-flex:1;text-align:center;font-size:18px;letter-spacing:1px;color:#fff;}

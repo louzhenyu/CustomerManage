@@ -1,0 +1,44 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+    <title name="Val">用户认证</title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+	<div class="fxloading"><img width="40" height="40" src="../images/loading.gif"></div>
+    <section class="search_area register">
+	    <div>会员注册</div>
+	    <div><input type="text" id="username" placeholder="姓名(必填)"  /> </div>
+		<div><input type="text" id="txtPhone" placeholder="手机(必填)"  /> </div>
+		<!--div>
+			<input type="text" style="width:148px" id="code" placeholder="验证码"  /> 
+			<a style="vertical-align: middle;" class="btn" onclick="JitPage.getCode();" >获取验证码</a>
+		</div-->
+		<div><input type="text" id="gs" placeholder="公司(必填)"  /> </div>
+		<div><input type="text" id="zw" placeholder="职位(必填)"  /> </div>
+		<div><input type="text" id="xx" placeholder="学校(必填)"  /> </div>
+		<div><input type="text" id="bj" placeholder="班级(必填)" /> </div>
+		<div><input type="text" id="wbzh" placeholder="微博帐号"  /> </div>
+		<div><input type="text" id="wxzh" placeholder="微信帐号"  /> </div>
+		<div><input type="text" id="yx" placeholder="邮箱"  /> </div>
+		<div><input type="text" id="xqah" placeholder="兴趣爱好"  /> </div>
+		<div><textarea id="tgjz" placeholder="我能为协会提供的价值"></textarea> </div>
+		<div><textarea id="hdjz" placeholder="我希望从协会获得的价值"></textarea> </div>
+	    <div> <a id="toVal" class="btn" >注册</a> </div>
+	</section>
+    <dl class="bot_nav  ">
+        <dt><!--<a href="javascript:Jit.AM.pageBack()">返回</a>--></dt>
+        <dd>
+            <a href="javascript:window.location.reload()">刷新</a></dd>
+        <dd>
+            <a href="javascript:Jit.AM.toPage('MyDetail')">个人中心</a></dd>
+
+        <dd>
+            <a href="javascript:Jit.AM.toPage('HomePage')">首页</a></dd>
+    </dl>
+</body>
+</html>

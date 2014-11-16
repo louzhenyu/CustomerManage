@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title name="AppDownload"></title>
+<link rel="stylesheet" type="text/css" href="assets/global.css">
+</head>
+	<body >
+		<section>
+			<div class="searchWrap">
+				<em class="logo"></em>
+				<p class="searchBox">
+					<input type="text" id="searchText" class="searchInput" placeholder="搜索">
+					<a href="javascript:;" id="search" class="searchBtn"></a>
+				</p>
+			</div>
+
+			<div class="searchList">
+				<ul id="list">
+					
+				</ul>
+				<p id="noresult" style="display: none;text-align: center;line-height: 200px;">暂无数据</p>
+			</div>
+
+		</section>
+
+	</body>
+	<script id="listTpl" type="text/template">
+		<%for(var i=0;i<AppList.length;i++){var item=AppList[i];%>
+			<li>
+				<p class="pic"><img src="<%=item.LogoUrl?item.LogoUrl:'assets/images/logo.png'%>" alt=""/></p>
+				<figure class="info">
+					<p class="tit">
+						<%=item.ClientName%>
+					</p>
+					<p>
+						<a href="javascript:;" data-downurl="itms-services://?action=download-manifest&url=<%=item.IOSUrl%>" class="iphoneBtn <%=item.IOSUrl?'':'gray'%>"><span></span></a>
+						<a href="javascript:;" data-downurl="<%=item.AndroidUrl%>" class="androidBtn <%=item.AndroidUrl?'':'gray'%>"><span></span></a>
+					</p>
+				</figure>
+			</li>
+		<%}%>
+	</script>
+</html>
+<script type="text/javascript" src="assets/zepto.min.js"></script>
+<script type="text/javascript" src="assets/bdTemplate.js"></script>
+<script type="text/javascript" src="assets/download.js"></script>

@@ -1,0 +1,97 @@
+body{
+ background-color:#c90000;
+}
+.rotate_box{
+	position:relative;
+	min-height: 200px;
+	overflow: hidden;
+	text-align: center;
+}
+.rotate_start{
+    background-image: url("../../../images/common/circle-small.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 6;
+   
+}
+.l_area{
+ width: 90%;
+ margin: 0 auto;
+
+}
+.l_tip{
+line-height: 32px;text-align: center;font-size:16px;
+  border-bottom: 1px solid #CECECE;
+}
+.l_explain{
+
+
+    line-height: 32px;
+    text-align: center;
+    
+}
+
+#lotterycount{color:yellow;font-size:20px;padding:0 2px}
+.lottery_area{
+height: 100%;
+width: 100%;
+margin: 0;
+color: #FFFFFF;
+font-size: 1.2em;
+}
+
+.goods_list{
+	background:none;
+	text-align:left;
+}
+.goods_list dl
+{
+ height: 80px;
+ margin:0 10px 30px;
+ width: 90%;
+}
+.goods_list dl dt
+{
+    float: left;
+    height: 80px;
+    margin:0 12px 0 48px;
+    width: 65px;
+	position:relative;
+}
+.goods_list dl dt em{
+	position:absolute;
+	bottom:0px;
+	left:-40px;
+	width:146px;
+	height:34px;
+	line-height:43px;
+	text-align:center;
+	color:#fff;
+	background:url("../../../images/special/hs/prize/icon.png") no-repeat 0 0;
+}
+.goods_list dl dt img
+{
+  width:65px;
+  height:65px;
+  
+}
+
+.goods_list dl dd
+{
+   float:left;
+   width:122px;
+   /* margin:30px 0 0 40px; */
+   text-align: center;
+}
+.goods_list dl dd span
+{
+   color:#FFF;  
+   font-size:14px; 
+   
+}

@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/common20130801.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">中欧校友汇APP</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/jquery1.6.js"></script> 
+</head>
+
+<body id="DLoading" >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="TopMenu"><span class="Comeback" id="BackPrev" style="display:none;" onClick="Event.BackPre()"></span><span style="margin-left:0" id="Btoo">中欧协会活动</span></div>
+  <div id="CommonGID" class="WAppConBase" style="position:relative;" defaultleft="0">
+    <div class="EventDetail ClassTabJs" id="EventDetailId"  > </div>
+    <span style=" height:15px;" class="blank1"></span>
+    <section class="DetailEventAll" id="DetailEventAll" style="display:none;">
+      <div class="ApplyEventParent">
+        <h4>报名 <span class="Pnum" id="Pnum"></span> 人</h4>
+       <!-- <div class="PaidPei">
+         <h5>已缴费</h5>
+          <div class="EventPersonAll" id="EventPersonAllPay1"> </div>
+        </div>-->
+        <div class="PaidPei1">
+       <!--   <h5>未缴费</h5>-->
+          <div class="EventPersonAll" id="EventPersonAllPay0"> </div>
+        </div>
+      </div>
+    </section>
+    <div style=" display:none; line-height:20px;  background-color:#ebebeb; margin-left:auto; margin-right:auto;  position:relative; width:90%; padding:3% 10px; margin-top:20px;" id="FollowStyle" ></div>
+    <span style=" height:15px;" class="blank1"></span> </div>
+  <div class="PrizeInfoDiv" id="PrizeInfoDiv" style="display:none; position:relative">
+    <div class="PrizeInfoDivInner">
+      <div class="PrizeInfoInnerTop">
+      <span id="JPName" class="prizeTxt"></span><div style="z-index:102" class="prizeTxt"><div style="width:70px; height:30px;" id="canvas"></div></div>
+      </div>
+      <div  class="PrizeInfoInnerBottom">
+        <dl id="PrizeListee">
+        </dl>
+        <dl>
+          <dt class="s2"></dt>
+          <dd>请在活动期间内进入本页面刮奖，如逾期将无法参与抽奖。亲，祝您好运！ </dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <div class="TopMenu" id="BottomMenu" style="display:none;"><span class="frdisplay" style=" width:60px; text-align:right; cursor:pointer; display:none;" id="TopFun">Top</span><span>中欧校友汇APP</span></div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+  <div class="AlumniConnext1" id="AlumniConnext1" style="display:none;"></div>
+  <div class="AlumniConnext1" id="EventApply" style="display:none;" >
+    <div class="AlumniConnext1Title"><a class="AlumniBack icnbg" href="javascript:void(0)" onClick="AppSet.Close('EventApply')" ></a>活动报名</div>
+    <span style=" height:20px;" class="blank1"></span>
+    <div id="ApplyBmID"></div>
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="" id="EventAction"  />
+<input type="hidden" value="" id="IsReferLoad"  />
+<input type="hidden" value="0" id="backPrevPosition" />
+
+
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/htmlTemplates20130801.js"></script> 
+<script type="text/javascript" src="js/common20130801.js"></script> 
+<script type="text/javascript">
+$(function(){
+	
+	Event.Detail();
+
+	Event.EventApplyPerson("0",1);
+//	Event.EventApplyPerson("1",1);
+})
+</script>
+</body>
+</html>

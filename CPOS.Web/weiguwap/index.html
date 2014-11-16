@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery1.6.js?v=1111"></script>
+<script type="text/javascript" src="js/interfaces.js"></script>
+<script type="text/javascript" src="js/htmlTemplates.js?v=1212"></script>
+<script type="text/javascript" src="js/iscroll.js"></script>
+<script type="text/javascript" src="js/common.js?v=112"></script>
+<script type="text/javascript">
+
+var myScroll,myScrol1,myScrol2,ReserveType;
+function loaded() {
+	
+	myScroll = new iScroll('ReSeverInner_1', { useTransition:true });
+	myScrol1 = new iScroll('myScrol1', { useTransition:true });
+	myScrol2 = new iScroll('myScrol2', { useTransition:true });
+	ReserveType = new iScroll('ReSeverInner_2', { useTransition:true });
+}
+
+//document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+document.addEventListener('DOMContentLoaded', loaded, false);
+
+
+</script>
+<title >在线服务预约</title>
+</head>
+
+<body style="overflow-x:hidden; ">
+<div style="display:none;">
+  <nav class="ComMenu">
+    <ul>
+      <li><span class="icn_skin Icn1"></span>
+        <div class="ComMenuApp" >首页</div>
+      </li>
+      <li class="ActiveMenu" ><span class="icn_skin Icn3"></span>
+        <div class="ComMenuApp" >预约</div>
+      </li>
+      <li><span class="icn_skin Icn2"></span>
+        <div class="ComMenuApp" >活动</div>
+      </li>
+      <li><span class="icn_skin Icn4"></span>
+        <div class="ComMenuApp" >会员中心</div>
+      </li>
+    </ul>
+  </nav>
+  <span class="blank" style="height:44px;"></span> </div>
+<div class="ActionDiv" id="NowReserveDiv" >
+  <div class="ComDiv" >
+    <div id="Reservation"> </div>
+    <div class="NowRe"><a href="javascript:void(0)" onclick="Reserve.NowReserve()" class="NowReserveBtn">现在预定</a></div>
+    <div class="ServerTip"><Span style="font-size:16px;">服务说明：</Span><br>
+      1.在线预约成功后，我们即会为您预留工位，如需变更请提前4小时在线取<br>
+      消或电话联系我们<br>
+      2.为了能保证服务质量，预约服务仅限本店付费会员使用，且仅限会员卡登<br>
+      记车牌车辆使用<br>
+      3.请在预约时间准时到店，我们最多为您保留5分钟，超过5分钟后，工位将<br>
+      不会为您保留，同时服务费用将直接扣除。敬请谅解！</div>
+  </div>
+</div>
+<div class="ActionDiv" id="ReserveActionDiv"  style="display:none; overflow:hidden;">
+  <div class="ReseverALL">
+    <div class="ReseverALLReturn"><a class="ReturnDefault icn_skin" href="javascript:void(0)" onclick="Reserve.ReturnDefault()"></a>服务预约</div>
+    <div class="ReseverMenu">
+      <ul>
+        <li class="ReseverQ"  id="ReSeverSelect_1" onclick="Reserve.FristReserve(1)" cur-id=""><i>请选择服务类型</i><span class="icn_skin Icn5"></span><span class="IcnJtou" style="display:none;"></span></li>
+        <li id="ReSeverSelect_2" cur-id="" onclick="Reserve.FristReserve(2)"><span class="Line1"></span> <i>请选择时间</i> <span class="icn_skin Icn5"></span> <span class="IcnJtou" style="display:none;"></span> </li>
+      </ul>
+      <div class="DateList" style="display:none;" id="ReSever_1" >
+        <div id="ReSeverWarpInner_1" style="height:195px; position:absolute; z-index:5; left:0; top:0; width:100%;" >
+          <div id="ReSeverInner_1" style="position:relative; height:195px; background-color:#eaeaea; overflow:hidden;">
+            <dl>
+            </dl>
+          </div>
+        </div>
+        <div class="PsGray" onClick="Reserve.CloseSelect()"></div>
+      </div>
+      <div class="DateList" style="display:none;" id="ReSever_2"  >
+        <div id="ReSeverWarpInner_2"  style="height:195px; position:absolute; z-index:5; left:0; top:0; width:100%;">
+          <div id="ReSeverInner_2" style="position:relative; height:195px; background-color:#eaeaea; overflow:hidden;">
+            <dl>
+            </dl>
+          </div>
+        </div>
+        <div  class="PsGray" onClick="Reserve.CloseSelect()"></div>
+      </div>
+    </div>
+    <span class="blank" style="height:3px; background-color:#dce0e4; "></span>
+    <div class="SelectTimeBox">
+      <div class="Imgbox"><img src="images/ReseverBg1.jpg" width="100%" /></div>
+      <div class="TimeBox">
+        <div class="SelectDate" style="position:relative; height:255px;  overflow:hidden;" id="myScrol1">
+          <ul >
+          </ul>
+        </div>
+        <div class="SelectTime" style="position:relative; height:255px; overflow:hidden; " id="myScrol2" >
+          <ul style="padding:0 0 20px 0;">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="opacityBg" style="display:none;" ></div>
+<div class="PopDiv" style="display:none;" >
+  <div class="PopDivClose icn_skin"></div>
+  <div class="PopConnext">
+    <div class="PopLogin">
+      <div class="PopLogintitle">在线预约仅向本店会员开放，请输入您的会员卡号及手机号码</div>
+      <div class="InputStyleA">
+        <input type="text" value="会员卡号" class="InputStyleText">
+      </div>
+      <div class="InputStyleA">
+        <input type="text" value="手机号码" class="InputStyleText">
+      </div>
+      <div class="NowRe" style="width:100%"><a href="#" class="NowReserveBtn">确定</a></div>
+      <div style="padding-top:20px; color:#828282; line-height:22px;">
+        <p>如需开通会员卡，请来店办理</p>
+        <p>如需帮助，请拨打门店客户电话：<br>
+          021-64454454<br>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="position: absolute; left: 0; top: 0; display:none; z-index:10000" class="loading"><img width="40" height="40" src="images/382.gif"></div>
+<script type="text/javascript">
+$(function(){
+	Reserve.ReturnDefault(1)
+})
+</script>
+</body>
+</html>

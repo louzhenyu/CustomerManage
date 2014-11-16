@@ -1,0 +1,1 @@
+F:\Trade\CustomerManage\CPOS.BS.DataAccess\obj\Debug\CPOS.BS.DataAccess.csprojResolveAssemblyReference.cache

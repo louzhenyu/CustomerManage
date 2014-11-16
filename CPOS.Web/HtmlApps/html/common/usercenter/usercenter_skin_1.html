@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title name="UserCenter"></title>
+<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+<style type="text/css">
+.userCenterPage{background:#eaeaea;}
+.userCenterPage .headInfo{height:140px;padding:30px 15px;border-top:1px solid #e5b091;border-bottom:1px solid #e5b091;background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f89051),color-stop(0.3, #fbb583), color-stop(1, #fff6dc));background-image: -moz-linear-gradient(top, #f89051, #fff6dc);}
+.userCenterPage .headInfo p{float:left;margin-right:15px;}
+.userCenterPage .headWrap{padding:3px;background:#fff;}
+.userCenterPage .headWrap img{width:70px;height:70px;}
+.userCenterPage .headInfo .name{display:block;margin:5px 0 10px;font-size:18px;font-weight:bold;color:#fffefe;}
+.userCenterPage .headInfo .vip{display:block;padding:2px 18px;border-radius:12px;background:#fff;color:#e77630;}
+/*commonList*/
+.userInfoList{padding:15px 0;}
+.userInfoList li{position:relative;height:50px;line-height:50px;margin-bottom:15px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;font-size:16px;background:#fff;color:#666;}
+.userInfoList li a{display:-webkit-box;display:-moz-box;padding:0 20px;}
+.userInfoList li em{display:block;width:40px;background:url(/HtmlApps/images/common/usercenter/commonIcon2.png) no-repeat;background-size:20px 150px;}
+.userInfoList .vipTit{background:url(/HtmlApps/images/common/usercenter/vipTit.png) no-repeat 0 center;background-size:24px 17px;}
+.userInfoList .telTit{background:url(/HtmlApps/images/common/usercenter/telTit.png) no-repeat 0 center;background-size:25px 17px;}
+.userInfoList li span{display:block;-webkit-box-flex:1;-moz-box-flex:1;}
+
+.userInfoList .xxTit{background-position:5px 19px;}
+.userInfoList .jfTit{background-position:7px -24px;}
+.userInfoList .ddTit{background-position:6px -66px;}
+.userInfoList .dhTit{background-position:6px -103px;}
+</style>
+</head>
+
+<body class="userCenterPage">
+<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<section>
+	<div class="headInfo">
+    	<p class="headWrap"><img src="/HtmlApps/images/common/usercenter/head.jpg" alt=""/></p>
+        <p>
+        	<span class="name" tplname="username">晓丽</span>
+            <span class="vip" tplname="isvip">VIP会员</span>
+        </p>
+    </div>
+    <div class="userInfoList">
+    	<ul>
+        	<li>
+            	<a tplname="MyInfo" >
+                	<em class="xxTit"></em>
+                    <span>个人信息</span>
+                </a>
+            </li>
+            
+            <li>
+            	<a tplname="MyPoint" onclick="Jit.AM.toPage('JiFenDetail')">
+                	<em class="jfTit"></em>
+                    <span>积分查看</span>
+                </a>
+            </li>
+            
+            <li>
+            	<a tplname="MyOrder" onclick="Jit.AM.toPage('MyOrder')">
+                	<em class="ddTit"></em>
+                    <span>我的订单</span>
+                </a>
+            </li>
+            
+            <li>
+            	<a onclick="Jit.AM.toPage('JiFenDetail')">
+                	<em class="dhTit"></em>
+                    <span>我的兑换</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+
+</section>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body>
+<div class="PcBox indexbox" id="PcBox" style="height:500px; display:none;">
+	<div><img src="images/tran1.png" width="100%" id="firstPageImage" /></div>
+  <!--    <div style=" position:absolute; z-index:9; right:10px; top:18px; display:none;" id="AppdownLoadIndex"><a href="http://www.weixun.co/o2oapp.html
+"><img src="images/downloadapp.png" width="60" ></a></div>-->
+  <div class="IndexMenu" style="position:absolute; left:0; top:0;">
+    <ul>
+      <li><a href="event.html" class="indexa">
+        <div class="indexIcnbase"><img src="images/indexicn1.png" width="35" /></div>
+        特价活动</a></li>
+      <li><a href="list.html" class="indexa">
+        <div class="indexIcnbase"><img src="images/indexicn3.png" width="35" /></div>
+        在线点餐</a></li>
+      <li><a href="shoplist.html" class="indexa">
+        <div class="indexIcnbase"><img src="images/indexicn4.png" width="35" /></div>
+        门店预定</a></li>
+      <li><a href="case.html" class="indexa">
+        <div class="indexIcnbase"><img src="images/indexicn2.png" width="35" /></div>
+        健康餐饮</a></li>
+      <li><a href="about.html" class="indexa">
+        <div class="indexIcnbase"><img src="images/indexicn5.png" width="35" /></div>
+        关于我们</a></li>
+     
+    </ul>
+  </div>
+</div>
+
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'indexAbs()';
+function casdallback(img){
+	var getWindowWidth  = $("#PcBox").width();	
+
+	var ih = (getWindowWidth/img.width)*img.height;
+	$("#firstPageImage").attr("src", G("skin.firstPageImage"));
+	if(ih > $(window).height()){
+		$("#PcBox,#firstPageImage").css("height",ih)	
+	}else{
+		$("#PcBox,#firstPageImage").css("height", $(window).height())	
+	}
+}
+function indexAbs(){
+	
+	
+	Imagess(G("skin.firstPageImage"));
+	document.title = G("skin.unitName");
+	$("#PcBox").show();
+
+	
+}
+
+var Browser=new Object();
+Browser.userAgent=window.navigator.userAgent.toLowerCase();
+Browser.ie=/msie/.test(Browser.userAgent);
+Browser.Moz=/gecko/.test(Browser.userAgent);
+function Imagess(url,callback){    
+    var val=url;
+    var img=new Image();
+    if(Browser.ie){
+        img.onreadystatechange =function(){  
+            if(img.readyState=="complete"||img.readyState=="loaded"){
+                casdallback(img);
+            }
+        }        
+    }else if(Browser.Moz){
+        img.onload=function(){
+            if(img.complete==true){
+                casdallback(img);
+            }
+        }        
+    }    
+    //如果因为网络或图片的原因发生异常，则显示该图片
+    img.onerror=function(){$("#PcBox,#firstPageImage").css("height",$(window).height())	}
+    img.src=val;
+}
+</script>
+
+</body>
+</html>

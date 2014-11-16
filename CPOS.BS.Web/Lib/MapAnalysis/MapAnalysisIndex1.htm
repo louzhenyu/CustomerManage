@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
+    <head>
+        <title></title>
+        <meta name="google" value="notranslate" />         
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css" media="screen"> 
+            html, body  { height:100%; }
+            body { margin:0; padding:0; overflow:auto; text-align:center; 
+                   background-color: #ffffff; }   
+            object:focus { outline:none; }
+            #flashContent { display:none; }
+        </style>
+
+        <!--Flash所必须的引用的Javascript-->
+        <script type="text/javascript" src="swfobject.js"></script>
+        <script type="text/javascript">
+            // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+            var swfVersionStr = "11.1.0";
+            // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+            var xiSwfUrlStr = "playerProductInstall.swf";
+            var flashvars = {};
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "#ffffff";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            params.wmode = "opaque"; // 注意这里，这里是关键部分
+
+            var attributes = {};
+            attributes.id = "index1";
+            attributes.name = "index1";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "index.swf", "flashContent",
+                "100%", "100%",
+                swfVersionStr, xiSwfUrlStr,
+                flashvars, params, attributes);
+            // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
+            swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+        </script>
+    </head>
+    <body >
+        <!--Flash的内容-->
+        <div id="flashContent">
+            <p>
+                To view this page ensure that Adobe Flash Player version 
+                11.1.0 or greater is installed. 
+            </p>
+            <script type="text/javascript">
+                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://");
+                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='"
+                                + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>"); 
+            </script> 
+        </div>
+        
+        <!--引入Flash对象-->
+        <noscript>
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="index">
+                <param name="movie" value="index.swf" />
+                <param name="quality" value="high" />
+                <param name="bgcolor" value="#ffffff" />
+                <param name="allowScriptAccess" value="sameDomain" />
+                <param name="allowFullScreen" value="true" />
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="index.swf" width="100%" height="100%">
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <param name="allowScriptAccess" value="sameDomain" />
+                    <param name="allowFullScreen" value="true" />
+                <!--<![endif]-->
+                <!--[if gte IE 6]>-->
+                    <p> 
+                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+                        11.1.0 or greater is not installed.
+                    </p>
+                <!--<![endif]-->
+                    <a href="http://www.adobe.com/go/getflashplayer">
+                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+                    </a>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+        </noscript>    
+        
+        <!--API接口-->
+        <script type="text/javascript" language="javascript" >
+            /*
+            获取Map Flash对象
+            */
+            function _map_getMapObject1() {
+                return index1;
+            }
+            /*
+            地图初始化通知
+            */
+            function _map_InitMap() {
+
+                parent.CallbackFun(1);
+
+                if (parent._map_InitMap1) {
+                    parent._map_InitMap1();
+
+                }
+            }
+            /*
+            KPI数据回调方法
+            */
+            function _map_product_ReturnKpi_js(kpiCode, queryLayer, queryFilterLayer, queryFilterVal) {
+
+                if (parent._map_product_ReturnKpi_js) {
+                    parent._map_product_ReturnKpi_js(kpiCode, queryLayer, queryFilterLayer, queryFilterVal,1);
+                }
+            }
+        
+          
+
+           
+
+            /*
+            反向向parent注册一些工具方法
+            */
+            var isRegistered = false;
+            function registerMethodToParent() {
+                if (!isRegistered) {
+                    parent._map_getMapObject1 = _map_getMapObject1;
+
+                    isRegistered = true;
+                }
+            }
+
+            registerMethodToParent();
+           
+        </script>
+   </body>
+</html>

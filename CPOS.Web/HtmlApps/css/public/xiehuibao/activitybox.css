@@ -1,0 +1,122 @@
+.actBgShade {
+    background-color: #333333;
+    height: 100%;
+    left: 0;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+    display: none;
+}
+.submit_area {
+    background-color: #ffffff;
+    border-radius: 3px;
+    box-shadow: 0 0 5px #575757;
+    color: #353535;
+    display: none;
+    font-size: 1.5em;
+    left: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    min-height: 300px;
+    padding-bottom: 20px;
+    position: absolute;
+    top: 70px;
+    width: 90%;
+    z-index: 6;
+}
+.submit_area div.thclose {
+    background-image: url("http://o2oapi.aladingyidong.com/HtmlApps/images/special/europe/thclose.png");
+    background-repeat: no-repeat;
+    cursor: pointer;
+    height: 54px;
+    position: absolute;
+    right: -15px;
+    top: -30px;
+    width: 54px;
+}
+
+.commonBox {
+    background: none repeat scroll 0 0 #fff;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    color: #858585;
+    margin-bottom: 15px;
+}
+.commonBox > .commonList {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+}
+.commonTit {
+    color: #666666;
+    display: block;
+    font-size: 16px;
+    line-height: 30px;
+}
+caption, cite, em, i, th {
+    font-style: normal;
+    font-weight: 400;
+}
+.wrapInput {
+    display: block;
+    height: 40px;
+    position: relative;
+}
+.wrapInput > i,.commonTit>i {
+    color: red;
+}
+.commonBox input {
+    border: medium none;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+}
+body, button, input, select, textarea {
+    font: 14px/1.5 Arial,Helvetica,sans-serif;
+}
+select, input, button, textarea {
+    font-size: 100%;
+    font-style: normal;
+    font-weight: 400;
+    vertical-align: middle;
+}
+.comline {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 4px;
+    margin-left: 20px;
+}
+.commonBox .comline:last-child, .commonBox > p.curline {
+    border-bottom: medium none;
+}
+.submit_area div.sub {
+    font-size: 1em;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.submit_area div.sub a {
+    background-color: #015eac;
+    border-radius: 2px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 1em;
+    height: 40px;
+    line-height: 40px;
+    width: 40%;
+}
+.submit_area div.sub a:first-child {
+    background-color: #e0e0e0;
+    color: #666666;
+}
+
+.commonBox select {
+    -moz-appearance: none;
+    background: url("../../../images/special/europe/selectBtn.png") no-repeat scroll right center / 25px 25px rgba(0, 0, 0, 0);
+    border: medium none;
+    height: 30px;
+    line-height: 30px;
+    width: 100%;
+}

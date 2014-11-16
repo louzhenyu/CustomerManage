@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<title>抽奖</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript" src="js/smart.js"></script>
+<script type="text/javascript" src="js/common.js?234"></script>
+</head>
+
+<body>
+<!--<div class="MarketMenu">
+	<span class="iskin MenuBox"></span>    
+</div>-->
+<div id="dframe" cuRound=""></div>
+<div class="loading" style="position:absolute;  z-index:9999; left:45%; top:40%;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/templete" id="EventScript">
+  <div class="MarketBox" id="MarketBoxID" time="0">
+    <div class="MarketTitle iskin"><span class="iskin MarketTitleIcn"></span></div>
+    <div class="MarketConnext">
+		<ul class="bp">
+		<% _.each(roundList,function(item1,key){%>
+        <li <%if(key%3==2){%>style="border-right:0;"<%}%>><i class="iskin li1"><%=item1.roundDesc%></i>
+		<span id="roundId_<%=item1.roundId%>" roundId="<%=item1.roundId%>">
+          <%if(item1.roundStatus==0){%><div class="MarketText1 iskin" onclick="MarketEventRoundStatust(1,'<%=item1.roundId%>')"></div><%}%>
+		  <%if(item1.roundStatus==1){%><div class="MarketText2 iskin" onclick="MarketEventRoundStatust(0,'<%=item1.roundId%>')"></div><%}%>
+		  <%if(item1.roundStatus==2){%><div class="MarketText3 iskin"></div><%}%>
+		  </span>
+        </li>
+			<%if(key%3==2){%>
+	  			</ul><ul class="bp">
+	  		<%}%>
+		  
+		<%})%>	
+    </ul>
+    </div>
+  </div>
+  <div class="MarketBox">
+    <div class="MarketTitle iskin"><span class="iskin MarketTitleIcn1"></span>
+	<% _.each(roundList,function(item1,key){%>
+		<div class="soide" id="RandData_<%=item1.roundId%>" onclick="MarketEventRoundData('<%=item1.roundId%>')">第<%=item1.roundDesc%>轮</div>
+	<%})%>	
+	</div>
+    <div class="MarketConnext" id="ConnextID">
+	
+	<% _.each(prizeList,function(item,key){%>
+    	<div class="MarketConnextBox" <% if(key == prizeList.length- 1){%>style="border-bottom:0;"<%}%>>
+            <div class="MarketConnextBoxLeft"><img src="<%=item.imageUrl%>" /></div>
+	<div class="MarketConnextBoxRight"><div class="aod">奖品:&nbsp;&nbsp;<Span style="color:#13a4ff;"><%=item.prizeBrand%></Span></div>
+                	<div class="prizePerson"><span class="aod">获奖人员：</span><span class="blank1" style="height:10px;"></span>
+						<div id="dperson_<%=item.id%>"><% _.each(item.prizeWinnerList,function(item2,key2){%>
+							<span style="margin-left:20px;"><%=item2.vipName%></span>
+						<%})%></div>
+					</div>
+                </div>
+            </div>
+	<%})%>
+	</div>
+  </div>
+	<span class="blank1" style="height:25px;"></span>
+    </script> 
+<script type="text/templete" id="EventAjaxScript">
+<% _.each(prizeList,function(item,key){%>
+    	<div class="MarketConnextBox" <% if(key == prizeList.length- 1){%>style="border-bottom:0;"<%}%>>
+            <div class="MarketConnextBoxLeft"><img src="<%=item.imageUrl%>" /></div>
+	<div class="MarketConnextBoxRight"><div class="aod">奖品:&nbsp;&nbsp;<Span style="color:#13a4ff;"><%=item.prizeBrand%></Span></div>
+                	<div class="prizePerson"><span class="aod">获奖人员：</span><span class="blank1" style="height:10px;"></span>
+						<div id="dperson_<%=item.id%>"><% _.each(item.prizeWinnerList,function(item2,key2){%>
+							<span style="margin-left:20px;"><%=item2.vipName%></span>
+						<%})%></div>
+					</div>
+                </div>
+            </div>
+	<%})%>
+</script>
+<script type="text/javascript">
+    $(function(){
+			MarketEvent();
+			gofIframe();
+			setInterval(function(){MarketEventRoundData($("#dframe").attr("cuRound"))},1000*18)
+		})
+    </script>
+</body>
+</html>

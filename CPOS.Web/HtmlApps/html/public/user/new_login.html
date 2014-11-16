@@ -1,0 +1,39 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="NewLogin">登录/注册</title>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <section class="registerPage newloginarea" style="padding-top:15px;" >
+
+        <div class="commonBox ">
+            <p class="commonList"> <em class="commonTit">账号：</em>
+                <span class="wrapInput">
+                    <input type="text" id="txtUserName" placeholder="输入手机号码或邮箱" maxlength="126"></span>
+            </p>
+            <p class="cwline"></p>
+
+            <p class="commonList"> <em class="commonTit">密码：</em>
+                <input type="password" id="txtPassword"  maxlength="126" ></p>
+        </div>
+        <a href="javascript:;" class="findPassword">找回密码</a>
+
+        <div class="wrapSign">
+            <a href="javascript:Jit.AM.toPage('AddUserInfo');"   class="commonBtn signBtn">注册</a>
+            <a href="javascript:;" id="submitLogin" class="commonBtn">登录</a>
+        </div>
+
+        <p class="tag">
+            本联盟由中外名校EMBA 同学代表共同发起，由中外各大商学院、经济管理学院、管理学院毕业或正在就读的EMBA 精英自愿组成的非营利性、群众性联盟团体。
+        </p>
+
+    </section>
+</body>
+
+</html>

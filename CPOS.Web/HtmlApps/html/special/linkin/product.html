@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+<title name="LinkinVideo">产品视频</title>
+</head>
+
+<body>
+	<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<div class="allPage">
+	<div class="commonBg">
+        <div href="###" class="top-logo">
+        	<a href="javascript:Jit.AM.toPage('LinkinIndex');">
+        		<img src="../../../images/special/linkin/top-logo.png" alt="" />
+        	</a>
+        </div>
+        <div class="headBar">
+        	<img src="../../../images/special/linkin/title-bg.png" alt="" />
+            <div class="titleWrap">
+                <a href="javascript:Jit.AM.pageBack();"><span class="goBack">返回</span></a>
+                <div class="tit">
+                	<span data-type="2" class="first">产品视频</span>
+                    <span class="menuList">
+                    	<a data-type="5" href="javascript:;">O2O组合</a>
+                        <a data-type="3" href="javascript:;">B2B组合</a>
+                        <a data-type="4" href="javascript:;">市场活动</a>
+                        <a data-type="6" href="javascript:;">客户口碑</a>
+                        <a data-type="7" href="javascript:;">黄金销售</a>
+                        <a data-type="2" href="javascript:;">品牌一点通</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- 广告语 -->
+        <div class="sloganBox">
+            <img class="lineBg" src="../../../images/special/linkin/line-bg.png"/>
+        </div>
+        <div class="picWrap">
+        	<img src="" style="display: none;">
+        	<video id="video"  preload  width="100%"></video>
+            <em class="status playBtn"></em>
+            <div class="textBox" id="titleDesc">
+            	<span class="textClose"></span>
+            </div>
+        </div>
+        
+        <div class="playerBox" >
+   
+        </div>
+        
+        <div id="moreVideo" class="videoListBox clearfix" style="">
+        </div>
+        
+    </div>
+</div>
+<script id="tpl_video_item" type="text/html">
+	<%for(var i=0;i<list.length;i++){var item=list[i];%>
+		<div class="item" data-poster="<%=item.ImageUrl%>" data-intro="<%=item.Intro%>"  data-video="<%=item.VideoURL%>">
+	    	<img src="<%=item.ImageUrl%>" alt="">
+	        <div class="tit t-overflow"><%=item.Title%></div>
+	    </div>
+	<%}%>
+</script>
+<script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</body>
+</html>

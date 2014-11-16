@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title>新上市</title>
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+<style>
+	/*common*/
+html,body{height:100%;min-height:100%;}
+body{font:14px/1.3em "Microsoft YaHei";background:#f6f6f6;color:#333;}
+
+.shopList{max-width:640px;padding-left:10px;margin:0 auto;}
+.shopList li{height:100px;padding:10px 0;border-bottom:1px solid #ccc;}
+.shopList li:nth-last-of-type(1){border-bottom:none;}
+.shopList .pic{float:left;width:80px;height:80px;}
+.shopList .info{margin-left:90px;}
+.shopList .exp{height:36px;margin-bottom:18px;padding-right:12px;overflow:hidden;}
+.shopList .sold{float:right;margin-right:10px;color:#999;}
+.shopList .currentPrice{position:relative;left:-3px;font-size:19px;font-weight:bold;color:#fe7c23;font-family:arial;}
+.shopList .originalPrice{position:relative;left:-2px;text-decoration:line-through;font-weight:bold;color:#999;font-family:arial;}
+
+</style>
+</head>
+
+<body>
+<section id="section" data-js="/HtmlApps/other/alading/js/newGoods">
+    <div class="shopList">
+    	<ul id="goodList">
+        	<!-- <li>
+            	<a href="###">
+                	<img class="pic" src="images/tuan003.jpg" alt=""/>
+                    <div class="info">
+                        <p class="exp">笑巴喜全面婴儿空调被宝宝春秋空调被</p>
+                        <p class="clearfix">
+                        	<span class="sold">已售6522</span>
+                            <span class="currentPrice">￥70</span>
+                            <span class="originalPrice">￥150</span>
+                        </p>
+                    </div>
+                </a>
+            </li>
+             -->
+        </ul>
+    </div>
+    
+</section>
+<script type="text/html" id="tplListItem">
+<%for(var i=0,idata;i<list.length;i++){idata=list[i];%>
+	<li>
+    	<a href="<%=idata.TargetUrl%>">
+        	<img class="pic" src="<%=idata.ImageUrl%>" alt=""/>
+            <div class="info">
+                <p class="exp"><%=idata.ItemName%></p>
+                <p class="clearfix">
+                	<span class="sold">已售<%=idata.SalesQty%></span>
+                    <span class="currentPrice">￥<%=idata.PreferentialPrice%></span>
+                    <span class="originalPrice">￥<%=idata.MarketPrice%></span>
+                </p>
+            </div>
+        </a>
+    </li>
+<%}%>
+</script>
+<script type="text/javascript" src="/HtmlApps/other/static/js/lib/require.js" defer async="true" data-main="/HtmlApps/other/static/js/main.js"></script>
+
+</body>
+</html>

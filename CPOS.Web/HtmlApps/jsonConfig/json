@@ -1,0 +1,1466 @@
+{
+    "pageKey":"$HomeIndex",
+    "pageDes":"微官网",
+    "htmls":[
+        {
+            "id":1,
+            "path":"common/home/homeIndex3.html",
+            "css":[
+                "base/global",
+                "public/cars/style"
+            ],
+            "des":"默认微官网"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"微官网",
+    "plugin":[
+        "alice"
+    ],
+    "script":[
+        "common/home/index"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+        {
+            "Name":"页面标题",
+            "Key":"title",
+            "valueType":"string",
+            "defaultValue":"微官网"
+        },
+        {
+            "Name":"logo图标",
+            "Key":"logo",
+            "valueType":"image",
+            "defaultValue":"../../../images/public/cars_default/logo.jpg"
+        },
+        {
+            "Name":"背景图片",
+            "Key":"backgroundImage",
+            "valueType":"image",
+            "defaultValue":"../../../images/public/cars_default/bg.jpg"
+        },
+        {
+            "Name":"动画方向",
+            "Key":"animateDirection",
+            "valueType":"option",
+            "values":["up","down","left","right"],
+            "valuesText":["向上","向下","向左","向右"],
+            "defaultValue":"up"
+        },
+        {
+			"Name":"入口配置",
+			"Key":"links",
+			"SubKey":"title,english,toUrl",
+			"SubName":"入口名,入口英文名,入口链接",
+			"SubValueType":"string,string,string",
+			"SubDefaultValue":"入口,Entry,www.jitmarketing.cn",
+			"valueType":"Array",
+			"arrayLength":5,
+			"defaultValue":""
+		}
+    ]
+}
+
+
+{
+    "pageKey": "ScratchCard",
+    "pageDes": "刮刮卡",
+    "htmls": [
+        {
+            "id": 1,
+            "path": "common/lotteryAll/scratch_card.html",
+            "css": [
+                "base/global",
+                "common/lotteryAll/scratch_card"
+            ],
+            "des": "红色刮刮卡面页"
+        }
+    ],
+    "defaultHtml": 1,
+    "isEntry": 1,
+    "pageCode": "Event",
+    "NeedAuth": 1,
+    "customerId": "null",
+    "title": "刮刮卡",
+    "plugin": [
+        "mustache",
+        "canvas_prize"
+    ],
+    "script": [
+        "common/lotteryAll/scratch_card"
+    ],
+    "urlTemplete": "/HtmlApps/html/_pageName_?eventId={eventId}",
+    "params": [
+        
+    ]
+}
+
+{
+    "pageKey": "BigWheel",
+    "pageDes": "大转盘页面",
+    "htmls": [
+        {
+            "id": 1,
+            "path": "common/lotteryAll/big_wheel.html",
+            "css": [
+                "base/global",
+                "common/lotteryAll/big_wheel"
+            ],
+            "des": "大转盘页面皮肤一"
+        }
+    ],
+    "defaultHtml": 1,
+    "isEntry": 1,
+    "pageCode": "Event",
+    "NeedAuth": 1,
+    "customerId": "null",
+    "title": "幸运大转盘",
+    "plugin": [
+        "mustache"
+    ],
+    "script": [
+        "common/lotteryAll/big_wheel"
+    ],
+    "urlTemplete": "/HtmlApps/html/_pageName_?eventId={eventId}",
+    "params": [
+        {
+            "Name":"转盘图片",
+            "Key":"prizeImage",
+            "valueType":"image",
+            "defaultValue":"/HtmlApps/images/common/circle-big.png"
+        },
+        {
+            "Name":"转盘分块数量",
+            "Key":"prizeCount",
+            "valueType":"string",
+            "defaultValue":"8"
+        },
+        {
+            "Name":"转盘奖品配置",
+            "Key":"prizeList",
+            "valueType":"string",
+            "defaultValue":"[{\"item\":1,\"indexList\":\"63\"},{\"item\": 2,\"indexList\": \"334\"},{\"item\": 3,\"indexList\": \"156, 224\"},{\"item\": 4,\"indexList\": \"20,113, 201,290\"}]"
+        }
+    ]
+}
+
+
+{
+    "pageKey":"EventList",
+    "pageDes":"活动列表",
+    "htmls":[
+        {
+            "id":1,
+            "path":"common/home/homeIndex3.html",
+            "css":[
+                "base/global",
+                "common/lotteryAll/scratch_card"
+            ],
+            "des":"默认微官网"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"EventList",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"活动列表",
+    "plugin":[
+        "template","iscroll"
+    ],
+    "script":[
+        "base/global","public/cars/style"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_?eventType={eventType}",
+    "params":[
+        
+    ]
+}
+
+
+
+
+
+{
+    "pageKey":"NewsList",
+    "pageDes":"资讯列表页-全部分类",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/news/news_list.html",
+            "css":[
+                "base/global","public/news/style"
+            ],
+            "des":"资讯列表皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"资讯列表",
+    "plugin":[
+        "iscroll","mustache"
+    ],
+    "script":[
+        "public/news/news_list"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+{
+    "pageKey":"NewsListSingle",
+    "pageDes":"资讯列表页-单个分类",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/news/news_list.html",
+            "css":[
+                "base/global","public/news/style"
+            ],
+            "des":"资讯列表皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"NewsList",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"资讯列表",
+    "plugin":[
+        "iscroll","mustache"
+    ],
+    "script":[
+        "public/news/news_list"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_?newsType={newsType}",
+    "params":[
+    ]
+}
+
+
+{
+    "pageKey":"GetVipCard",
+    "pageDes":"会员卡页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"common/vipCard/getCard.html",
+            "css":[
+                "base/global","common/vipCard/style","common/vipCard/letter"
+            ],
+            "des":"会员卡皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"会员卡",
+    "plugin":[
+    ],
+    "script":[
+        "common/vipCard/getCard"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+        {
+            "Name":"会员卡图片",
+            "Key":"vipCardImg",
+            "valueType":"image",
+            "defaultValue":""
+        },
+        {
+            "Name":"会员卡字体颜色",
+            "Key":"infoColor",
+            "valueType":"string",
+            "defaultValue":"#000"
+        },
+        {
+            "Name":"功能项配置",
+            "Key":"links",
+            "SubKey":"title,toUrl",
+            "SubName":"标题,入口链接",
+            "SubValueType":"string,string",
+            "SubDefaultValue":"功能项,www.jitmarketing.cn",
+            "valueType":"Array",
+            "arrayLength":6,
+            "defaultValue":""
+        }
+    ]
+}
+
+{
+    "pageKey":"CouponList",
+    "pageDes":"我的优惠卷列表页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/user/couponlist.html",
+            "css":[
+                "base/global","public/user/style_list"
+            ],
+            "des":"我的优惠卷列表页皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"我的优惠卷",
+    "plugin":[
+        "template"
+    ],
+    "script":[
+        "public/user/couponlist"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+{
+    "pageKey":"CouponDetail",
+    "pageDes":"我的优惠卷列表页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/user/coupondetail.html",
+            "css":[
+                "base/global","public/user/style_list"
+            ],
+            "des":"我的优惠卷列表页皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"优惠卷详情",
+    "plugin":[
+    ],
+    "script":[
+        "public/user/coupondetail"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+{
+    "pageKey":"VipBenefits",
+    "pageDes":"会员权益页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"common/vipCard/vipBenefits.html",
+            "css":[
+                "base/global"
+            ],
+            "des":"会员权益页皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"会员权益",
+    "plugin":[
+        "mustache"
+    ],
+    "script":[
+        "common/vipCard/vipBenefits"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+
+
+
+
+
+
+
+{
+    "pageKey":"IndexShop",
+    "pageDes":"微商城首页",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/index/index_shop.html",
+            "css":[
+                "base/global","public/index/style"
+            ],
+            "des":"微商城首页皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"微商城首页",
+    "plugin":[
+        "mustache","iscroll"
+    ],
+    "script":[
+        "public/index/index_shop"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+{
+    "pageKey":"IndexShopApp",
+    "pageDes":"微商城首页-App版",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/index/index_shop_app.html",
+            "css":[
+                "base/global","public/index/style_app"
+            ],
+            "des":"微商城首页app版皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"微商城首页",
+    "plugin":[
+        "mustache","iscroll"
+    ],
+    "script":[
+        "public/index/index_shop_app"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+{
+    "pageKey":"NewsDetail",
+    "pageDes":"资讯详页",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/news/news_detail.html",
+            "css":[
+                "base/global","public/news/style"
+            ],
+            "des":"资讯详页皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"NewsDetail",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"资讯详页",
+    "plugin":[
+        "mustache","iscroll"
+    ],
+    "script":[
+        "public/news/news_detail"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_?itemId={itemId}",
+    "params":[
+    ]
+}
+
+
+
+{
+    "pageKey":"SharePage",
+    "pageDes":"分享页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"common/sharePage/share_page.html",
+            "css":[
+                "base/global"
+            ],
+            "des":"分享页面皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Recommend",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"分享有礼",
+    "plugin":[
+    ],
+    "script":[
+        "common/sharePage/share_page"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_?eventId={eventId}",
+    "params":[
+		{
+            "Name":"页面背景图",
+            "Key":"mainBg",
+            "valueType":"image",
+            "defaultValue":"/HtmlApps/images/public/recommend/tjyl.jpg"
+        }
+    ]
+}
+
+
+
+
+
+{
+    "pageKey":"GoodsList",
+    "pageDes":"商品列表页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop_skin_1/goods_list.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"商品列表皮肤一"
+        },
+        {
+            "id":2,
+            "path":"public/shop_skin_2/goods_list.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"商品列表皮肤二"
+        },
+        {
+            "id":3,
+            "path":"public/shop_skin_3/goods_list.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"商品列表皮肤三"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"商品列表",
+    "plugin":[
+		"mustache"
+    ],
+    "script":[
+        "public/shop/base","public/shop/goods_list"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+		{
+            "Name":"显示Banner",
+            "Key":"bannerDisplay",
+            "valueType":"option",
+            "values":["false","true"],
+            "valuesText":["不显示","显示"],
+            "defaultValue":"false"
+        },
+		{
+            "Name":"Banner图片",
+            "Key":"imgUrl",
+            "valueType":"image"
+        },
+		{
+            "Name":"Banner链接",
+            "Key":"toUrl",
+            "valueType":"string",
+			"defaultValue":""
+        }
+    ]
+}
+
+
+
+
+
+{
+    "pageKey":"GoodsDetail",
+    "pageDes":"商品详细页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/goods_detail.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"商品详细皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"商品详细",
+    "plugin":[
+		"mustache","iscroll"
+    ],
+    "script":[
+        "public/shop/base","public/shop/goods_detail"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+		{
+            "Name":"是否显示评论",
+            "Key":"gdeDisplay",
+            "valueType":"option",
+            "values":["false","true"],
+            "valuesText":["不显示","显示"],
+            "defaultValue":"false"
+        },
+		{
+            "Name":"是否显示产品参数",
+            "Key":"imgUrl",
+            "valueType":"option",
+            "values":["false","true"],
+            "valuesText":["不显示","显示"],
+            "defaultValue":"false"
+        }
+    ]
+}
+
+
+
+{
+    "pageKey":"GoodsOrder",
+    "pageDes":"商品确认页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/goods_order.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"商品确认皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"商品确认",
+    "plugin":[
+		"mustache"
+    ],
+    "script":[
+        "public/shop/base","public/shop/goods_order"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+		{
+            "Name":"是否显示快递",
+            "Key":"express",
+            "valueType":"option",
+            "values":[0,1],
+            "valuesText":["不显示","显示"],
+            "defaultValue":0
+        },
+        {
+            "Name":"是否显示发票",
+            "Key":"invoice",
+            "valueType":"option",
+            "values":[0,1],
+            "valuesText":["不显示","显示"],
+            "defaultValue":0
+        }
+    ]
+}
+
+
+
+
+
+
+{
+    "pageKey":"GoodsCart",
+    "pageDes":"购物车页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/goods_cart.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"购物车皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"购物车",
+    "plugin":[
+		"mustache"
+    ],
+    "script":[
+        "public/shop/base","public/shop/goods_cart"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+
+
+{
+    "pageKey":"AddAddress",
+    "pageDes":"添加地址页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/add_address.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"添加地址皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"添加地址",
+    "plugin":[
+		"mustache"
+    ],
+    "script":[
+        "public/shop/base","common/area","public/shop/add_address"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+{
+    "pageKey":"SelectAddress",
+    "pageDes":"选择地址页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/select_address.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"选择地址皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"选择地址",
+    "plugin":[
+		"mustache"
+    ],
+    "script":[
+        "public/shop/base","public/shop/select_address"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+
+
+
+{
+    "pageKey":"SelectStore",
+    "pageDes":"选择门店",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/select_store.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"选择门店皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"选择门店",
+    "plugin":[
+		"mustache"
+    ],
+    "script":[
+        "public/shop/base","public/shop/select_store"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+
+{
+    "pageKey":"StoreList",
+    "pageDes":"门店列表页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"common/store/storeList.html",
+            "css":[
+                "base/global","common/store/style"
+            ],
+            "des":"门店列表皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"门店列表",
+    "plugin":[
+		"template"
+    ],
+    "script":[
+        "common/store/storeList"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+
+
+{
+    "pageKey":"StoreDetail",
+    "pageDes":"门店详情页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"common/store/storeDetail.html",
+            "css":[
+                "base/global","common/store/style"
+            ],
+            "des":"门店详情皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"门店详情",
+    "plugin":[
+		"template","touchslider"
+    ],
+    "script":[
+        "common/store/storeDetail"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+{
+    "pageKey":"MyOrder",
+    "pageDes":"我的订单页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/my_order.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"我的订单皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"我的订单",
+    "plugin":[
+		"template","iscroll"
+    ],
+    "script":[
+        "public/shop/base","public/shop/my_order"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+{
+    "pageKey":"OrderPay",
+    "pageDes":"订单支付页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/order_pay.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"订单支付皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"订单支付",
+    "plugin":[
+    ],
+    "script":[
+        "public/shop/base","public/shop/order_pay"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+
+{
+    "pageKey":"PaySuccess",
+    "pageDes":"支付结果页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/pay_success.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"支付结果皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"支付结果",
+    "plugin":[
+    ],
+    "script":[
+        "public/shop/base","public/shop/pay_success"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+{
+    "pageKey":"OrderDetail",
+    "pageDes":"订单详情页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/order_detail.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"订单详情皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"订单详情",
+    "plugin":[
+    ],
+    "script":[
+        "public/shop/base","public/shop/order_detail"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+{
+    "pageKey":"RushGoodsList",
+    "pageDes":"限时购",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/rush_goods_list.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"限时购皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"限时购",
+    "plugin":[
+        "mustache"
+    ],
+    "script":[
+        "public/shop/rush_goods_list"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[]
+}
+
+{
+    "pageKey":"RushGoodsDetail",
+    "pageDes":"商品详细页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/shop/rush_goods_detail.html",
+            "css":[
+                "base/global","public/shop/style"
+            ],
+            "des":"商品详细皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"商品详细",
+    "plugin":[
+        "mustache","iscroll"
+    ],
+    "script":[
+        "public/shop/base","public/shop/rush_goods_detail"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+        {
+            "Name":"是否显示评论",
+            "Key":"gdeDisplay",
+            "valueType":"option",
+            "values":["false","true"],
+            "valuesText":["不显示","显示"],
+            "defaultValue":"false"
+        },
+        {
+            "Name":"是否显示产品参数",
+            "Key":"imgUrl",
+            "valueType":"option",
+            "values":["false","true"],
+            "valuesText":["不显示","显示"],
+            "defaultValue":"false"
+        }
+    ]
+}
+
+
+
+
+{
+    "pageKey":"RepositoryIndex",
+    "pageDes":"知识库页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/repository/repository_index.html",
+            "css":[
+                "base/global","public/repository/style"
+            ],
+            "des":"知识库皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"知识库",
+    "plugin":[
+        "iscroll"
+    ],
+    "script":[
+        "public/repository/repository_index"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+{
+    "pageKey":"RepositoryList",
+    "pageDes":"知识库列表页",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/repository/repository_list.html",
+            "css":[
+                "base/global","public/repository/style"
+            ],
+            "des":"知识库皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"知识库列表",
+    "plugin":[
+        "iscroll"
+    ],
+    "script":[
+        "public/repository/repository_list"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+{
+    "pageKey":"RepositoryDetail",
+    "pageDes":"知识库详情页",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/repository/repository_detail.html",
+            "css":[
+                "base/global","public/repository/style"
+            ],
+            "des":"知识库皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"知识库详细",
+    "plugin":[
+        "iscroll"
+    ],
+    "script":[
+        "public/repository/repository_detail"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+
+
+
+{
+    "pageKey":"JiFenShop",
+    "pageDes":"积分商城页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/jifen/jifen_shop.html",
+            "css":[
+                "base/global","public/jifen/style_jifen"
+            ],
+            "des":"积分商城皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"积分商城",
+    "plugin":[
+        "mustache"
+    ],
+    "script":[
+        "public/jifen/jifen_shop"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+{
+    "pageKey":"GoodsJiFenDetail",
+    "pageDes":"积分商品页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/jifen/goods_detail_jifen.html",
+            "css":[
+                "base/global","public/jifen/style"
+            ],
+            "des":"积分商品皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":0,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"积分商品",
+    "plugin":[
+        "mustache","iscroll"
+    ],
+    "script":[
+        "public/jifen/goods_detail_jifen"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+{
+    "pageKey":"JiFenDetail",
+    "pageDes":"我的积分明细页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"public/jifen/jifen_detail.html",
+            "css":[
+                "base/global","public/jifen/style"
+            ],
+            "des":"积分明细皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"积分明细",
+    "plugin":[
+        "mustache"
+    ],
+    "script":[
+        "public/jifen/jifen_detail"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+{
+    "pageKey":"Ranking",
+    "pageDes":"推荐排行榜页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"special/lj/ranking.html",
+            "css":[
+                "base/global","special/lj/style_other"
+            ],
+            "des":"积分明细皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"推荐排行榜",
+    "plugin":[
+        "mustache"
+    ],
+    "script":[
+        "special/lj/record"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+{
+    "pageKey":"Record",
+    "pageDes":"推荐战绩页面",
+    "htmls":[
+        {
+            "id":1,
+            "path":"special/lj/record.html",
+            "css":[
+                "base/global","special/lj/style_other"
+            ],
+            "des":"推荐战绩皮肤一"
+        }
+    ],
+    "defaultHtml":1,
+    "isEntry":1,
+    "pageCode":"Default",
+    "NeedAuth":1,
+    "customerId":"null",
+    "title":"推荐战绩",
+    "plugin":[
+        "mustache"
+    ],
+    "script":[
+        "special/lj/record"
+    ],
+    "urlTemplete":"/HtmlApps/html/_pageName_",
+    "params":[
+    ]
+}
+
+
+
+
+
+
+{
+    "pageKey": "RedPacket",
+    "pageDes": "红包-新",
+    "htmls": [
+        {
+            "id": 1,
+            "path": "common/lotteryAll/red_packet.html",
+            "css": [
+                "base/global",
+                "common/lotteryAll/style_redpacket"
+            ],
+            "des": "红包皮肤一"
+        }
+    ],
+    "defaultHtml": 1,
+    "isEntry": 1,
+    "pageCode": "EventDetail",
+    "NeedAuth": 1,
+    "customerId": "null",
+    "title": "红包",
+    "plugin": [
+        "mustache"
+    ],
+    "script": [
+        "common/lotteryAll/red_packet"
+    ],
+    "urlTemplete": "/HtmlApps/html/_pageName_?eventId={eventId}",
+    "params": [
+    ]
+}
+
+
+
+{
+    "pageKey": "RedPacketGet",
+    "pageDes": "我领的红包",
+    "htmls": [
+        {
+            "id": 1,
+            "path": "common/lotteryAll/red_packet_get.html",
+            "css": [
+                "base/global",
+                "common/lotteryAll/style_redpacket"
+            ],
+            "des": "我领的红包皮肤一"
+        }
+    ],
+    "defaultHtml": 1,
+    "isEntry": 0,
+    "pageCode": "Default",
+    "NeedAuth": 1,
+    "customerId": "null",
+    "title": "红包",
+    "plugin": [
+        "mustache"
+    ],
+    "script": [
+        "common/lotteryAll/red_packet_get"
+    ],
+    "urlTemplete": "/HtmlApps/html/_pageName_?eventId={eventId}",
+    "params": [
+    ]
+}
+
+{
+    "pageKey": "RedPacketSend",
+    "pageDes": "我发的红包",
+    "htmls": [
+        {
+            "id": 1,
+            "path": "common/lotteryAll/red_packet_send.html",
+            "css": [
+                "base/global",
+                "common/lotteryAll/style_redpacket"
+            ],
+            "des": "我发的红包皮肤一"
+        }
+    ],
+    "defaultHtml": 1,
+    "isEntry": 0,
+    "pageCode": "Default",
+    "NeedAuth": 1,
+    "customerId": "null",
+    "title": "红包",
+    "plugin": [
+        "mustache"
+    ],
+    "script": [
+        "common/lotteryAll/red_packet_send"
+    ],
+    "urlTemplete": "/HtmlApps/html/_pageName_?eventId={eventId}",
+    "params": [
+    ]
+}

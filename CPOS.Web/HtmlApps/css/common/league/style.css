@@ -1,0 +1,46 @@
+@charset "utf-8";
+/*首页*/
+html,body,body>section{height:100%;}
+body{background:#ebebeb;-webkit-tap-highlight-color: rgba(255, 255, 255, 0);}
+.mask{display: none;position: fixed;width: 100%;height: 100%;z-index: 99;top: 0;left: 0;background: rgba(0,0,0,0.6);}
+
+
+/*注册*/
+.registerFormArea{position:fixed; top:0; min-height:100%;height:100%;overflow:auto; background:#fff;z-index:990;}
+.registerFormArea .closeBtn{float:right;width:30px;height:30px;margin:10px 10px 5px;background:url(../../../images/common/vipCard/closeBtn.png) no-repeat;background-size:100%;}
+.registerFormArea .tit{clear:right;font-size:18px;padding:10px 0;font-weight:bold;text-align:center;color:#222;}
+.registerFormArea .formBox{padding:0 20px 0;}
+.registerFormArea .formBox p{min-height:45px;border-bottom:1px solid #ccc;}
+.registerFormArea .formBox input,.registerFormArea .formBox select{border:none;height:35px;width:100%;margin-top:6px;padding-left:10px;}
+.registerFormArea .formBox select{line-height:35px;}
+.registerFormArea .formBox textarea{width:100%;height:90px;padding:13px 5px;border:none;box-shadow:none;color:#333;}
+.registerFormArea .formBox em{float:left;margin-top:13px;font-weight:bold;color:#666;}
+.registerFormArea .formBox lable{display:table-cell;width:3000px;height:45px;}
+.registerFormArea .submitBtn{display:inline-block;width:110px;height:40px;line-height:40px;margin:25px auto;text-align:center;border-radius:3px;box-shadow:0 2px 0 #e34b00;letter-spacing:5px;font:16px/42px "宋体";background:#f60;color:rgba(255,255,255,0.9);}
+.registerFormArea .doBtn{text-align:center;}
+.registerFormArea .doBtn a:nth-of-type(1){margin-right:20px;}
+@-webkit-keyframes pullFormDown {0% {top:-100%;}  70%{top:30%;}  100% {top:0;}}
+@-webkit-keyframes pullFormUp {0% {top:0;}  	30%{top:30%;}	100% {top:-100%;}}
+.pullDown{-webkit-animation:pullFormDown 1s ease-in-out 1;}
+.pullUp{-webkit-animation:pullFormUp 1s ease-in-out 1;}
+
+
+
+@-webkit-keyframes pullDown {0% {top:0%;margin-top:-234px;}70%{top:65%;margin-top:-117px;}100% {top:50%;margin-top:-117px;}}
+@-webkit-keyframes pullUp {0% {top:50%;margin-top:-117px;}30%{margin-top:50px;}100% {top:0%;margin-top:-234px;}}
+.pullDownState{-webkit-animation:pullDown 1s ease-in-out 1;}
+.pullUpState{-webkit-animation:pullUp 1s ease-in-out 1;}
+
+.container{position:fixed;top:50%;left:5%;width:90%;height:234px;margin-top:-117px;padding:0px 20px;background:#fff;z-index:990;}/*-webkit-transition:all 1.5s ease-in-out;*/
+.container .titWrap{margin-bottom:10px;}
+.container .closeBtn{float:right;width:30px;height:30px;margin:10px 0px 5px;background:url(../../../images/common/vipCard/closeBtn.png) no-repeat;background-size:100%;}
+.container .tit{padding:15px 0;clear:right;font-size:18px;font-weight:bold;text-align:center;color:#222;}
+
+.userinfo{height:45px;line-height:45px;margin:0 10px;display:-webkit-box;display:-moz-box;border-bottom:1px solid #ccc;}
+.userinfo em{display:block;font-size:14px;color:#666;}
+.userinfo input{display:block;-webkit-box-flex:1;-moz-box-flex:1;padding-left:5px;height:43px;border:none;background:#fff;}
+
+.commonBtnStyle{display:block;width:80px;height:32px;line-height:32px;text-align:center;border-radius:3px;box-shadow:0 2px 0 #f60;background:#ff8331;color:rgba(255,255,255,0.9);font-size:12px;}
+.confirmBtn{margin:17px auto;}
+.fixbot { background-color:#F8F8F8; padding:10px 0;border-top:1px solid #ccc; position:fixed; left:0; bottom:0; width:100%;}
+.fixbot .btn-join { display:block; margin:0 auto; width:40%; color:#fff; background-color:#FF5000; height:30px; line-height:30px; text-align:center; -webkit-border-radius:20px;border-radius:20px;}

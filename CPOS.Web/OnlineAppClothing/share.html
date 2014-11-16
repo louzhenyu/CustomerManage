@@ -1,0 +1,43 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">分享</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body  >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="DetailBigBox" id="DetailBigBox"></div>
+  <div class="MenuBox" id="MenuBox" rel="3"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'Vip.ShareDetail()'; // GetData.setBrowseHistory() 
+</script> 
+<script id="ShareDetail" type="text/template"> 
+<div class="DetailSmallBox">
+	<img src="<%=imageURL%>" width="100%">
+  <div class="DetailSmallBoxYW">
+  	
+  	<h1 style="color:#47c1a8">我正在使用<span style="color:#ff6b50"> <%=storeName%></span>的在线平台，这里可以在线浏览及选购。</h1>
+    <h2 style="color:#47c1a8">
+	微信公众号: <%= tel%></h2>
+    
+  </div>
+<div class="vipCartBoxBottom"></div>
+</div>
+<div class="follow" style="width:92%; margin-left:auto; margin-right:auto; margin-top:20px; padding-bottom:10px; position:relative;"><img src="images/fenx.png" width="100%" /><div style="position:absolute; left:0; top:0; height:50px; width:100%;  cursor:pointer" onclick="openFollowTips()"></div></div>
+
+</script>
+</body>
+</html>

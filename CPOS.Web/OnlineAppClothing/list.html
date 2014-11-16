@@ -1,0 +1,104 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">产品专区</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body  >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;"> 
+  <!--  <div class="ListLocation" id="ListLocation" style="display:none;"><span class="frdisplay" id="tableNum"></span><span id="storeNanme"></span></div>-->
+  <div style="position:relative; padding-bottom:50px;" id="AppCom">
+    <div class="WelfareConnext" id="WelfareConnext" page="1" isnext="1" isloading="0">
+      <div style="text-align:center; padding-top:20px; display:none;" id="WelfareNoConnext">该类别暂无内容</div>
+      <div class="WelfareConnextBox">
+        <ul id="waterwall1">
+        </ul>
+      </div>
+      <div class="WelfareConnextBox">
+        <ul id="waterwall2">
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="TgongFuli" onClick="WelfareAction.Search()">全部</div>
+  <a href="vipCart.html">
+  <div class="CartincDiv">
+    <div style="position:relative; padding-left:44px;">
+      <div class="Cartinc"><img src="images/nt5.png?v=2013" /></div>
+      购物车<span id="CardNum">0</span></div>
+  </div>
+  </a>
+  <div class="MenuBox" id="MenuBox" rel="2"> </div>
+</div>
+<div class="AppBgGray" id="searchBgGray" style="display:none; z-index:9;"  ></div>
+<div class="AppBgGray" id="AppBgGray"></div>
+<div class="WelfareSearch"  id="WelfareSearch">
+  <div class="SearchInput">
+    <form action="" method="get" onsubmit="return SearchBtnGo()">
+      <div class="SearchInputInner">
+        <input type="search"  class="SearchInputInnerInput" id="SearchInputInnerInputss" placeholder="输入关键字快速搜索"  value="" />
+      </div>
+      <input class="SearchInputInnerBtn" type="submit" value=""  />
+    </form>
+  </div>
+  <Span class="blank1" style="height:10px;"></Span>
+  <div class="SearchListCy" id="SearchListCy">
+    <ul>
+    </ul>
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = ['WelfareConnext','GetData.getItemList()'];
+var Von = 'GetData.getItemList("1")';//.getStoreDetail()
+</script> 
+<script type="text/javascript">
+
+function SearchBtnGo(){
+	GetData.getItemList("1","","#sood","cc");
+	return false; 
+}
+var nStartX = 0, nChangX = 0;
+var idc = document.getElementById("searchBgGray");
+idc.addEventListener("touchstart",function(e){
+	nStartX = e.targetTouches[0].pageX;	
+})
+idc.addEventListener("touchend",function(e){
+
+nChangX = e.changedTouches[0].pageX;
+var sum = nStartX - nChangX;
+	if(sum> 20){
+		WelfareAction.CloseSearch();	
+	}
+})
+
+
+</script> 
+<script id="applist" type="text/template"> 
+<% _.each(itemList,function(item){ %>
+	  <a href="detail.html?itemId=<%= item.itemId %>">
+	<li>
+	  <div class="WelfareConnextBoxLi"><img width="100%" src="<%= item.imageUrl %>"><span class="rightpp" isselect="<% if(item.isShoppingCart=="1"){%>1<% }else{ %>0<% }%>" onclick="SelectList(this,event,'<%=item.skuId %>')"><img src="<% if(item.isShoppingCart=="1"){%>images/right1.png<% }else{ %>images/right2.png<% } %>" /></span></div>
+	  <div class="WelfareConnextBoxLiTxt">
+		<h2><%= item.itemName %></h2>
+		<h3><%=item.itemCategoryName%><br />
+		  <span class="gray"><%=item.salesPersonCount%>人购买<span></h3>
+		<div class="WelfareRmb">￥<span class="qian"><%= item.salesPrice %></span> 元</div>
+	  </div>
+	</li>
+	</a>
+ <%});%>
+ 
+</script>
+</body>
+</html>

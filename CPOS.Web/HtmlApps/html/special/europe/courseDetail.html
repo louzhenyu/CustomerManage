@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title name="CourseDetail"></title>
+	     <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+      <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body class="autosize">
+   <div id="masklayer" style="background-color:#FFF;" class="pageloading" >
+      <i></i>
+    </div>
+	<div class="headerArea">
+		<header  class="header" id="headerTop">
+			<div class="commonNav">
+				<ul>
+					<a href="javascript:Jit.AM.pageBack()">
+						<li class="getBack">
+							<span></span>
+						</li>
+					</a>
+					<a href="javascript:Jit.AM.toPage('Account')">
+						<li class="user">
+							<span></span>
+						</li>
+					</a>
+					<a href="javascript:Jit.AM.toPage('Home')">
+						<li class="home">
+							<span></span>
+						</li>
+					</a>
+				</ul>
+			</div>
+		</header>
+	</div>
+	<section>
+		<div id="section"></div>
+
+	</section>
+	<script id="courseInfo" type="text/html">
+			<div class="followDetail">
+	
+			<div class="articleWrap">
+			<%for(var i=0;i<courseList.length;i++){var idata=courseList[i];%>
+			<p>
+			<%==idata.courseName%></p>
+			<p>
+			<%==idata.couseDesc%></p>
+			<p>
+			<%==idata.courseStartTime%></p>
+			<p>
+			<%=#idata.courseSummary%></p>
+			<p>
+			<%==idata.couseCapital%></p>
+			<p>
+			<%=#idata.couseContact%></p>
+			<%}%></div>
+
+			</div>
+		</script>
+	<div class="clearfootfix"></div>
+</body>
+</html>

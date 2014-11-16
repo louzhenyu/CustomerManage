@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="UserInfo">查看用户信息</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body class="infoViewPage">
+    <div id="masklayer" style="background-color:#FFF;" class="pageloading" > <i></i>
+    </div>
+    <section>
+
+        <div class="cardHead">
+            <div>
+            <a data-lightbox="true" >
+                <img   id="imgUserHead" /></a>
+            </div>
+            <div class="info">
+                <p class="name" >
+                    <span id="txtUserName"></span>
+
+                    <span id="txtEnglishName"></span>
+                </p>
+                <p class="corp" ><span id="txtLearnItem"></span> <span id="txtClass"></span>     </p>
+                <p class="corp" >
+                    <span id="txtCompany"  ></span>
+                    <span  id="txtPosition" ></span>
+                </p>
+
+            </div>
+        </div>
+
+        <div class="btnWrap">
+            <a id="btCollectOrEdit" class="commonBtn editBtn">收藏</a>
+            <a  class="commonBtn transpondBtn">转发名片</a>
+        </div>
+
+        <div class="contactWayArea">
+            <div class="contactWayBox">
+                <p class="tel"> <em></em>
+                    <span id="txtMobile"></span>
+                </p>
+                <p class="email"> <em></em>
+                    <span id="txtSaifEmail" ></span>
+                </p>
+                <p class="links">
+                    <em></em>
+                    <span>
+                        可通过   alumni@saif.sjtu.edu.cn  联系到我
+                        <!--     私信  电话 --> </span>
+                </p>
+            </div>
+        </div>
+        <div class="infoMenu">
+            <span class="on">
+                <em>商务信息</em>
+            </span>
+            <span>
+                <em>个人信息</em>
+            </span>
+            <span>
+                <em>联系信息</em>
+            </span>
+        </div>
+
+        <!-- 商业信息 -->
+        <div class="commonBox tab" style="display:block;">
+            <div class="item" id="Special">
+                <div class="info">
+                    <span class="tit">擅长或经验</span>
+                    <span class="text fColor" id="txtSpecial"></span>
+                </div>
+
+            </div>
+            <div class="item" id="Trade">
+                <div class="info">
+                    <span class="tit">所在行业</span>
+                    <span class="text fColor" id="txtTrade"></span>
+                </div>
+
+            </div>
+            <div class="item" >
+          <div class="info" id="Company">
+              <span class="tit">
+                  机构名称 
+              </span>
+
+              <span  class="text" id="tabTxtCompany"  ></span>          
+          </div> 
+ 
+
+          </div>
+<div class="item" >
+<div class="info" id="Branch">
+<span class="tit">
+    部门
+  
+</span>
+<span class="text"  id="txtBranch"   ></span>
+</div>
+<div class="info" id="Position">
+<span class="tit">
+    职务
+   
+</span>
+ <span class="text" id="tabTxtPosition" ></span>
+
+</div>
+
+</div>
+
+
+
+
+
+
+            <div class="item" id="CompanyUrl">
+                <div class="info">
+                    <span class="tit">机构网站</span>
+                    <span class="text" id="txtCompanyUrl"></span>
+                </div>
+
+            </div>
+
+            <div class="item" id="CompanyIntro">
+                <div class="info">
+                    <span class="tit">机构介绍</span>
+                    <span class="text" id="txtCompanyIntro"></span>
+                </div>
+            </div>
+
+            <!--      <div class="item" id="CompanyEnglishName">
+            <div class="info">
+                <span class="tit">工作单位（英文名称）</span>
+                <span class="text" id="txtCompanyEnglishName"></span>
+            </div>
+
+        </div>
+        -->
+        <!-- 
+
+                <div class="item notevent" >
+        <div class="info" id="Branch">
+            <span class="tit">所在部门</span>
+            <span class="text" id="txtBranch"></span>
+        </div>
+
+    </div>
+    -->
+    <div class="item" id="FollowTrade">
+        <div class="info">
+            <span class="tit">关注行业</span>
+            <span class="text fColor" id="txtFollowTrade"></span>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- 个人信息 -->
+<div class="commonBox tab" style="display:none;">
+ 
+    <div class="item" id="EnrolDate">
+        <div class="info">
+            <span class="tit">入学</span>
+            <span class="text" id="txtEnrolDate"></span>
+        </div>
+        <div class="info">
+            <span class="tit">毕业</span>
+            <span class="text" id="txtGraduationDate"></span>
+        </div>
+    </div><div class="item off" id="Birthday">
+        <div class="info">
+            <span class="tit">出生日期</span>
+            <span class="text" id="txtBirthday"></span>
+        </div>
+
+    </div>
+    <!--      <div class="item" id="GraduationDate"></div>
+-->
+<div class="item off" id="Nationality">
+    <div class="info">
+        <span class="tit">国籍</span>
+        <span class="text" id="txtNationality"></span>
+    </div>
+    <div class="info">
+        <span class="tit">民族</span>
+        <span class="text" id="txtNation"></span>
+    </div>
+</div>
+
+<!--         <div class="item off" id="Nation"></div>
+-->
+<div class="item off" id="City">
+<div class="info">
+    <span class="tit">城市</span>
+    <span class="text fColor" id="txtCity"></span>
+</div>
+
+</div>
+<div class="item" id="MyIntroduce">
+<div class="info">
+    <span class="tit">自我介绍</span>
+    <span class="text" id="txtMyIntroduce"></span>
+</div>
+
+</div>
+<div class="item" id="Hobby">
+<div class="info">
+    <span class="tit">兴趣爱好</span>
+    <span class="text fColor" id="txtHobby"></span>
+</div>
+
+</div>
+
+<div class="item" >
+<div class="info">
+    <span class="tit">学习经历</span>
+    <span class="text" id="txtEducation"></span>
+</div>
+
+</div>
+
+<div class="item" >
+<div class="info" id="SocietyPosition">
+    <span class="tit">社会职务</span>
+    <span class="text" id="txtSocietyPosition" ></span>
+</div>
+
+</div>
+
+<div class="item" id="WishActivityPosition">
+<div class="info">
+    <span class="tit">我愿意在校友活动中承担</span>
+    <span class="text fColor" id="txtWishActivityPosition"></span>
+</div>
+
+</div>
+
+</div>
+
+<!-- 联系信息 -->
+<div class="commonBox tab">
+<div class="item notevent" >
+<div class="info" id="CompanyPhone">
+    <span class="tit">单位座机</span>
+    <span class="text" id="txtCompanyPhone"></span>
+</div>
+<div class="info" id="SpreadPhone">
+    <span class="tit">分机</span>
+    <span class="text" id="txtSpreadPhone"></span>
+</div>
+
+</div>
+<div class="item" id="Email">
+<div class="info">
+    <span class="tit">个人邮箱</span>
+    <span class="text"  name="txtEmail"  ></span>
+</div>
+</div>
+<div class="item off" id="ContactAddress">
+<div class="info">
+    <span class="tit">通讯地址</span>
+    <span class="text" id="txtContactAddress"></span>
+</div>
+
+</div>
+
+<div class="item off" id="AssistantName">
+<div class="info">
+    <span class="tit">助理姓名</span>
+    <span class="text" id="txtAssistantName"></span>
+</div>
+<div class="info">
+    <span class="tit">助理邮箱</span>
+    <span class="text" id="txtAssistantEmail"></span>
+</div>
+
+</div>
+<div class="item off" id="AssistantMobile">
+<div class="info">
+    <span class="tit">助理手机</span>
+    <span class="text" id="txtAssistantMobile"></span>
+</div>
+
+</div>
+
+<div class="item" >
+<div class="info">
+    <span class="tit">微信号</span>
+    <span class="text" id="txtWeiXinNumber"></span>
+</div>
+
+</div>
+
+
+<div class="item" id="WeiBo">
+<div class="info">
+    <span class="tit">微博</span>
+    <span class="text" id="txtWeiBo"></span>
+</div>
+
+</div>
+<div class="item" id="Blog">
+<div class="info">
+    <span class="tit">个人博客</span>
+    <span class="text" id="txtBlog"></span>
+</div>
+
+</div>
+
+</div>
+
+</section>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<title>品味不一样的“月映中国” 国窖1573中秋随手拍“品味达人”获奖名单 </title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript">
+function photoSize(imgObject)
+{
+		var oWidth = $(imgObject).parent().width(), oHeight = $(imgObject).parent().height();
+		
+		if((imgObject.width/imgObject.height) >= oWidth/oHeight ){	
+					imgObject.width = (imgObject.width/imgObject.height) * oWidth;
+					imgObject.height  = oHeight;
+					imgObject.style.marginLeft = -((imgObject.width  - oWidth)/2 ) +"px";
+			}else{
+					imgObject.width  = oWidth;
+					imgObject.height = (imgObject.height / imgObject.width) * oHeight;
+					
+			}
+			
+}
+</script>
+</head>
+
+<body >
+<div class="PcBox" id="PcBox">
+  <div id="DaRenDivId" style="display:none;">
+    <div class="DaRenTT" style="font-size:14px; position:relative;"> <span style="font-size:18px; color:#000">品味不一样的“月映中国”</span><br>
+      国窖1573中秋随手拍“品味达人”获奖名单 </div>
+    <div class="DaRenImgDiv">
+      <div style="padding:15px 2% 0 2%;">经过激烈的投票评比，本次活动共评选出10位
+        品味达人，获奖作品如下：</div>
+      <div class="DaRenImgDiv" id="DaRenImgDiv">
+        
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript" src="js/jquery1.6.js"></script> 
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/tpl.js"></script> 
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	DaRen.getEventsEntriesMonthDaren();
+})
+</script>
+</body>
+</html>

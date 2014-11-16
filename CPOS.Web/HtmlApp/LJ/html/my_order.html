@@ -1,0 +1,54 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+	<title name="MyOrder"></title>
+	<link href="../css/global.css" rel="stylesheet" type="text/css" />
+	<link href="../css/style.css" rel="stylesheet" type="text/css" />
+		
+	<script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+
+<body>
+<section class="goods_wrap">
+  <dl class="tool_bar clearfix">
+    <dt><a href="javascript:Jit.AM.pageBack();">返回</a> <!--<span>我的订单</span>--></dt>
+    <!--<dd><a href="javascript:Jit.AM.toPage('HomePage');">列表</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsCart');">购物车</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsList');">首页</a></dd>-->
+  </dl>
+  <div class="myorder">
+    <div class="order_mod nav_myorder">
+      <ul>
+        <li class="cur"><a href="javascript:JitPage.tabUnpaidData();"><i></i>待支付</a></li>
+        <li><a href="javascript:JitPage.tabDeilivery();"><i></i>待收货</a></li>
+        <li><a href="javascript:JitPage.tabComplete();"><i></i>已完成</a></li>
+      </ul>
+    </div>
+
+    <ul tplpanel="order_list">
+            </ul>
+  </div>
+</section>
+
+<script id="Tpl_list" type="text/template">
+    <div class="order_mod order_goods_list">
+      <h4><a href="javascript:Jit.AM.toPage('OrderDetail','&orderId={{orderId}}');">&gt;</a>{{createTime}}</h4>
+      <div class="cart_list">
+        <ul id="itemlist{{index}}">
+        </ul>
+        <dl class="order_total clearfix">
+          <dd>合 计：<b>￥{{totalAmount}}</b> </dd>
+          <dd>数 量：<b>x{{totalQty}}</b></dd>
+        </dl>
+      </div>
+      <div class="last">
+        <p><span>待付款</span>共计{{totalQty}}件商品  总价：<b>￥{{totalAmount}}</b></p>
+        <div class="order_confirm" style="display:none;"> <a href="#">付 款</a></div>
+      </div>
+    </div>
+</script>
+
+</body>
+</html>

@@ -1,0 +1,134 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+	<title name="GoodsOrder"></title>
+	<link href="../css/global.css?ver=12" rel="stylesheet" type="text/css" />
+	<link href="../css/style.css?ver=12" rel="stylesheet" type="text/css" />
+		
+	<script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch.js?ver=2"></script>
+</head>
+
+<body>
+<section class="goods_wrap">
+  <dl class="tool_bar clearfix">
+    <dt><a href="javascript:Jit.AM.pageBack();">返回</a></dt>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsList');">列表</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsCart');">购物车</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('MyOrder');">首页</a></dd>
+  </dl>
+  <div class="order_list">
+    <h3>配送方式</h3>
+    <div class="order_mod delivery_mode">
+      <dl class="clearfix" style="display:none" name="select_address" psfs="fs1">
+			<dt>
+			  <input type="radio" name="radio_address" id="radio" value="radioA">
+			</dt>
+			<dd><b>送货上门：</b> <b>送货地址：</b>
+			  <p id="addressdetail">周晓,上海延平路121号三合大厦15F</p>
+			</dd>
+      </dl>
+      <dl class="clearfix" style="display:none" name="select_address" psfs="fs2">
+			<dt>
+			  <input type="radio" name="radio_address" id="radio" value="radioB">
+			</dt>
+			<dd>
+				<b>到店提货：</b>
+				<p></p>
+			</dd>
+      </dl>
+    </div>
+    <div class="express mb-10"> <a><em>快递</em><b>0元</b><span>﹥</span> </a> </div>
+    <h3>商品详情</h3>
+    <div class="order_mod cart_list">
+      <ul id="goods_list">
+        <!--li class="clearfix">
+          <div class="imgBox"><img src="../images/pic_02.jpg" width="70" height="95"></div>
+          <div class="infoBox">
+            <h3>泸州老窖特曲三年陈酿60度高级定制级新春贺岁酒</h3>
+            <div class="gray">灰色 XL</div>
+            <b>￥188.00</b> <a href="#" class="btn_remove"></a> </div>
+        </li-->
+      </ul>
+      <dl class="order_total clearfix">
+        <dd>合 计：<b id="totalprice">&nbsp;</b> </dd>
+        <dd>数 量：<b id="totalqty">&nbsp;</b></dd>
+      </dl>
+    </div>
+    <h3 style="display:block">使用优惠券</h3>
+    <div style="display:block" class="order_mod delivery_mode">
+      <dl class="clearfix" id="select-juan">
+        <dd><a href="javascript:void(0);" class="btn_view">▼ 查看</a><b>使用优惠券</b>
+          <p style="color:#cc0000;">抵用券<span id="juan-count">0</span>张，总价值<span id="juan-amount">0</span>元</p>
+        </dd>
+      </dl>
+    </div>
+    <div class="delivery_mode_list clearfix" style="display:none;">
+		<div class="list">
+			<div class="tit">
+				<span>类型</span>
+				<span>面值</span>
+				<span>获取方式</span>
+			</div>
+			<ul class="goods-order-list">
+				
+			</ul>
+			<span class="btn-yes">确 定</span>
+		</div>
+      
+    </div>
+    <h3>选择支付方式</h3>
+    <div class="order_mod delivery_mode order_pay">
+      <dl class="clearfix">
+        <dt>
+          <input id="ck0" type="checkbox" onclick="JitPage.checkPayType(this);" class="ckpay" checked="checked" value="0">
+        </dt>
+        <dd> <span><!--<img src="../images/psfs_hdfk.jpg">--></span>
+          <p> <label for="ck0"><b>货到付款</b></label> </p>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>
+          <input id="ck1" type="checkbox" onclick="JitPage.checkPayType(this)" class="ckpay" value="1">
+        </dt>
+        <dd> <span></span>
+          <p> <label for="ck1"><b>支付宝网页支付：</b>推荐有支付宝账户的用户使用</label> </p>
+        </dd>
+      </dl>
+      <!--dl class="clearfix">
+        <dt>
+          <input id="ck3" type="checkbox" onclick="JitPage.checkPayType(this)" class="ckpay" value="3">
+        </dt>
+        <dd> <span></span>
+          <p> <label for="ck3"><b>银联网页支付：</b>推荐有网上银行账户的用户使用</label> </p>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt>
+          <input id="ck2" type="checkbox" onclick="JitPage.checkPayType(this)" class="ckpay" value="2">
+        </dt>
+        <dd> <span></span>
+          <p> <label for="ck2"><b>银联语音支付：</b>推荐有网上银行账户的用户使用</label> <br /><label>电话</label><input id="phonenum" type="text" /></p>
+        </dd>
+      </dl-->
+    </div>
+  </div>
+  <div class="order_submit clearfix"> <a href="javascript:JitPage.submitOrder()">提交订单</a> 应付金额： <b id="payprice"></b> </div>
+  <div class="ui-mask"></div>
+</section>
+</body>
+
+<script id="Tpl_goods_info" type="text/template">
+	<li class="clearfix">
+		<div class="imgBox"><img src="{{imageList.0.imageUrl}}" width="70" height="95"></div>
+		<div class="infoBox">
+		<h3>{{itemName}}</h3>
+		<div class="gray">{{GG}}</div>
+        <div class="gray">数量 {{qty}}</div>
+			<b>￥{{stdPrice}}</b> <a href="#" style="display:none" class="btn_remove"></a> 
+		</div>
+	</li>
+</script>
+
+</html>

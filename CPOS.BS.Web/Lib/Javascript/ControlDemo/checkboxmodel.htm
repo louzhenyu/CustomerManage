@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>复选框列</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <!--  引入Ext JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Ext4.1.0/ext-all.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Lib/Javascript/Ext4.1.0/Resources/CSS/ext-all.css" />
+    <!--引入Jit的JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Jit/jit-all-dev.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Lib/Css/jit-all.css" />
+    <!--示例的样式-->
+    <style type="text/css">
+        dt
+        {
+           color:#333333; 
+           font-size:18px;
+           font-family:宋体;
+           font-weight:bolder;
+           margin:10px;
+        }
+        .sample
+        {
+        	border-style:dashed;
+        	border-width:1px;
+        	margin:20px;
+        	padding:20px;
+        	width:800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>用于数据网格的复选框列</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder1"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                     //定义Entity结构
+                    var testEntity = Ext.define("TestEntity", {
+                        extend: "Ext.data.Model",
+                        fields: [
+                                   { name: 'ID', type: 'int' },
+                                    { name: 'Name', type: 'string' },
+                                    { name: 'IsSelected', type: 'int'}//标识出当前记录是否为选中状态
+                                    ]
+                    });
+                    //定义数据来源
+                    var store = new Ext.data.Store({
+                        storeId: "store",
+                        model: "TestEntity",
+                        proxy: {
+                            type: 'ajax',
+                            reader: {
+                                type: 'json',
+                                root: "topics",
+                                totalProperty: "totalCount",
+                                url: "Handler/CheckboxModelHandler.ashx"
+                            },
+                            extraParams: {
+                                form: ""
+                            },
+                            actionMethods: { read: 'get' }
+                        }
+                    });
+                    //创建复选框列
+                    var selModel = Ext.create('Jit.selection.CheckboxModel', {
+                        idProperty: 'ID', //指定 当前数据源的主键列
+                        idSelect: 'IsSelected'//指定 是否选中的标识列（0：未选中，1：选中。）
+                    });
+                    //创建数据网格
+                    Ext.create('Ext.grid.Panel', {
+                        renderTo: 'dvPlaceholder1'
+                        , id: "gridView"
+                        , columnLines: true
+                        , store: store
+                       , columns: [
+                  { xtype: 'jitcolumn',
+                      jitDataType: 'int',
+                      text: 'ID',
+                      width: 110,
+                      sortable: true,
+                      dataIndex: 'ID',
+                      align: 'left'
+
+                  }, { xtype: 'jitcolumn',
+                      jitDataType: 'String',
+                      text: 'Name',
+                      width: 110,
+                      sortable: true,
+                      dataIndex: 'Name',
+                      align: 'left'
+
+                  }]
+                        , selModel: selModel,
+                        deferRowRender: true,
+                        bbar: new Ext.PagingToolbar({
+                            displayInfo: true,
+                            id: "pageBar",
+                            defaultType: 'button',
+                            store: store
+                        })
+                    });
+                    fnSearch();
+                    store.on("load", function () { selModel.jitSetValue("gridView"); });
+                    //获取选择项的信息
+                    Ext.create('Jit.button.Button', {
+                        renderTo: "dvPlaceholder1",
+                        text: "获取选中ID",
+                        jitSize: 'big',
+                        handler: function () {
+                            var selectedInfo = selModel.jitGetValue();
+
+                            //根据全选框的状态及列表区的状态获取选中项
+                            switch (selectedInfo.allSelectorStatus) {
+                                case 0:
+                                    alert("（全选状态未改变）：当前选中以下数据：" + selectedInfo.includeList );
+                                    break;
+                                case 1:
+                                    alert("（全选状态）：当前选中全部数据减去以下数据：" + selectedInfo.excludeList);
+                                    break;
+                                case 2:
+                                    alert("（全清状态）：当前选中以下数据：" + selectedInfo.includeList );
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    });
+                    //翻页功能参数
+                    function fnSearch() {
+                        Ext.getCmp("pageBar").store.proxy.url = "/Lib/Javascript/ControlDemo/Handler/CheckboxModelHandler.ashx?method=GetStore&TestID=11";
+                        Ext.getCmp("pageBar").store.pageSize = 10;
+                        Ext.getCmp("pageBar").moveFirst();
+                    }
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <script language="javascript" type="text/javascript">
+        Ext.onReady(function () {
+            //定义Entity结构
+            var testEntity = Ext.define("TestEntity", {
+                extend: "Ext.data.Model",
+                fields: [
+                           { name: 'ID', type: 'int' },
+                            { name: 'Name', type: 'string' },
+                            { name: 'IsSelected', type: 'int'}//标识出当前记录是否为选中状态
+                            ]
+            });
+            //定义数据来源
+            var store = new Ext.data.Store({
+                storeId: "store",
+                model: "TestEntity",
+                proxy: {
+                    type: 'ajax',
+                    reader: {
+                        type: 'json',
+                        root: "topics",
+                        totalProperty: "totalCount",
+                        url: "Handler/CheckboxModelHandler.ashx"
+                    },
+                    extraParams: {
+                        form: ""
+                    },
+                    actionMethods: { read: 'get' }
+                }
+            });
+            //创建复选框列
+            var selModel = Ext.create('Jit.selection.CheckboxModel', {
+                idProperty: 'ID', //指定 当前数据源的主键列
+                idSelect: 'IsSelected'//指定 是否选中的标识列（0：未选中，1：选中。）
+            });
+            //创建数据网格
+            Ext.create('Ext.grid.Panel', {
+                renderTo: 'dvPlaceholder1'
+                , id: "gridView"
+                , columnLines: true
+                , store: store
+               , columns: [
+          { xtype: 'jitcolumn',
+              jitDataType: 'int',
+              text: 'ID',
+              width: 110,
+              sortable: true,
+              dataIndex: 'ID',
+              align: 'left'
+
+          }, { xtype: 'jitcolumn',
+              jitDataType: 'String',
+              text: 'Name',
+              width: 110,
+              sortable: true,
+              dataIndex: 'Name',
+              align: 'left'
+
+          }]
+                , selModel: selModel,
+                deferRowRender: true,
+                bbar: new Ext.PagingToolbar({
+                    displayInfo: true,
+                    id: "pageBar",
+                    defaultType: 'button',
+                    store: store
+                })
+            });
+            fnSearch();
+            store.on("load", function () { selModel.jitSetValue("gridView"); });
+            //获取选择项的信息
+            Ext.create('Jit.button.Button', {
+                renderTo: "dvPlaceholder1",
+                text: "获取选中ID",
+                jitSize: 'big',
+                handler: function () {
+                    var selectedInfo = selModel.jitGetValue();
+
+                    //根据全选框的状态及列表区的状态获取选中项
+                    switch (selectedInfo.allSelectorStatus) {
+                        case 0:
+                            alert("（全选状态未改变）：当前选中以下数据：" + selectedInfo.includeList );
+                            break;
+                        case 1:
+                            alert("（全选状态）：当前选中全部数据减去以下数据：" + selectedInfo.excludeList);
+                            break;
+                        case 2:
+                            alert("（全清状态）：当前选中以下数据：" + selectedInfo.includeList );
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+            //翻页功能参数
+            function fnSearch() {
+                Ext.getCmp("pageBar").store.proxy.url = "/Lib/Javascript/ControlDemo/Handler/CheckboxModelHandler.ashx?method=GetStore&TestID=11";
+                Ext.getCmp("pageBar").store.pageSize = 10;
+                Ext.getCmp("pageBar").moveFirst();
+            }
+        });
+    </script>
+</body>
+</html>

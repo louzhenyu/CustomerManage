@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="Account">校友中心</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body  >
+    <div id="masklayer" style="background-color:#FFF;" class="pageloading" > <i></i>
+    </div>
+    <section class="personalPage">
+        <a  id="toUserInfo">
+            <div class="cardHead">
+                <div>
+                    <img   id="imgUserHead" />
+                </div>
+                <div class="info">
+                    <p class="name" >
+                        <span id="txtUserName"></span>
+                        <span id="txtEnglishName"></span>
+                    </p>
+                    <p class="corp" >
+                        <span id="txtCompany"></span>
+                        <span id="txtPosition"></span>
+                    </p>
+                    <p class="tips" >
+                    编辑个人资料
+                    </p>
+                    <span class="pointer"></span>
+                </div>
+
+            </div>
+        </a>
+
+        <div class="commonBox">
+                       <a href="javascript:Jit.AM.toPage('AddressBook')">
+                <div class="item accountioc book">
+                    <div class="info">
+                        <span class="tit oneLine">我的通讯录</span>
+                    </div>
+                    <span class="pointer"></span>
+                </div>
+            </a>
+        </div>
+
+
+
+        <div class="commonBox">
+            <a href="javascript:Jit.AM.toPage('MyClass')">
+                <div class="item accountioc class">
+                    <div class="info">
+                        <span class="tit oneLine">我的班级</span>
+                    </div>
+                    <span class="pointer"></span>
+                </div>
+            </a>
+            <a href="javascript:Jit.AM.toPage('MyActivity')">
+                <div class="item accountioc association">
+                    <div class="info">
+                        <span class="tit oneLine">我的地区校友会</span>
+                    </div>
+                    <span class="pointer"></span>
+                </div>
+            </a>
+            <a href="javascript:Jit.AM.toPage('MyVisitor')">
+                <div class="item accountioc club">
+                    <div class="info">
+                        <span class="tit oneLine">我的俱乐部</span>
+                    </div>
+                   
+                    <span class="pointer"></span>
+                </div>
+            </a>
+        </div>
+
+        <div class="commonBox">
+            <div class="item" id="userExit">
+                <div class="info">
+                    <span class="tit oneLine">&nbsp;&nbsp;注销登录</span>
+                </div>
+                <span class="pointer"></span>
+            </div>
+        </div>
+
+    </section>
+</body>
+</html>

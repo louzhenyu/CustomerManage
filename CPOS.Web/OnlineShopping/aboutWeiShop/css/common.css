@@ -1,0 +1,111 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img,div{ border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 14px; font-family: STHeiti,"微软雅黑",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #333333; resize: none; outline: none; }
+body { background:#e9e7df;}
+h1, h2, h3, h4, h5, h6 { font-size: 16px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 16px; margin: 0; padding: 0; }
+textarea, input[type="text"],input[type="password"],input[type="button"],input[type="submit"]{ resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1 }
+.frdisplay{ float:right; display:block;}
+a,a:hover{ text-decoration:none; color:#565656;}
+.CommonBox{ background-color:#CCC; margin-left:auto; margin-right:auto;}
+.blank1{ height:1px; overflow:hidden; display:block; clear:both;}
+.CMenu{ height:8px; background-color:#fff; clear:both;}
+.CmenuCur{ width:25%; height:8px; background-color:#0066cc; display:block; }
+.ListBox{ clear:both; position:relative;}
+.ClassBoxLi{  float:left; width:320px; position:relative; overflow:hidden; -webkit-backface-visibility:hidden;  
+	-webkit-transform-style:preserve-3d;}
+.ClassBoxLi2{ float:left; width:320px; position:relative;}
+.ListBoxWifont2{ width:320px; position:absolute; left:0; top:0; height:1000px;}
+
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+	-ms-touch-action: none;
+}
+
+
+
+
+#viewport {
+	position: relative;
+	/*width: 320px;
+	height: 240px;*/
+	margin: 0 auto;
+	background: #444;
+	overflow: hidden;
+}
+
+#wrapper {
+	
+	margin: 0 auto;
+}
+
+#scroller {
+	position: absolute;
+	z-index: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	
+	/*height: 240px;*/
+	-webkit-transform: translateZ(0);
+	-moz-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	-o-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+	-o-text-size-adjust: none;
+	text-size-adjust: none;
+	 
+}
+
+.slide {
+/*	width: 200px;
+	height: 240px;*/
+	float: left;
+}
+
+.painting {
+	width: 140px;
+	height: 200px;
+	border-radius: 10px;
+	margin: 20px auto;
+	border: 1px solid #000;
+	box-shadow:
+		inset 2px 2px 6px rgba(255,255,255,0.6),
+		inset -2px -2px 6px rgba(0,0,0,0.6),
+		0 1px 8px rgba(0,0,0,0.8);
+}
+
+
+
+#indicator {
+	position: relative;
+	height: 10px;
+	background-color:#FFF;
+
+}
+
+#dotty,.ccBg{
+	position: absolute;
+	
+	height: 10px;
+	z-index:1;
+	background: #01468c;
+}
+
+.Side,.Side3{ width:320px; float:left; position:relative; background:url(../images/gif1.png) repeat left top; display:block; overflow:hidden;}

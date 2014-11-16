@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>下拉框</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <!--  引入Ext JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Ext4.1.0/ext-all.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Lib/Javascript/Ext4.1.0/Resources/CSS/ext-all.css" />
+    <!--引入Jit的JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Jit/jit-all.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Lib/Css/jit-all.css" />
+    <!--示例的样式-->
+    <style type="text/css">
+        dt
+        {
+           color:#333333; 
+           font-size:18px;
+           font-family:宋体;
+           font-weight:bolder;
+           margin:10px;
+        }
+        .sample
+        {
+        	border-style:dashed;
+        	border-width:1px;
+        	margin:20px;
+        	padding:20px;
+        	width:800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>下拉框 - 多选的示例</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder1"></div>
+                <div id="dvShowSelectValues1"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //准备测试数据
+                    var store = Ext.create('Ext.data.Store', {
+                        fields: ['ChannelID', 'ChannelName'],
+                        data: [
+                            { ChannelID: '1', ChannelName: '超市' },
+                            { ChannelID: '2', ChannelName: '大卖场' },
+                            { ChannelID: '3', ChannelName: '夫妻老婆店夫妻老婆店' },
+                            { ChannelID: '4', ChannelName: '便利店' },
+                            { ChannelID: '5', ChannelName: '现代通路' },
+                            { ChannelID: '6', ChannelName: '中型超市' },
+                            { ChannelID: '7', ChannelName: '网上商城' }
+                        ]
+                    });
+                    //创建多选下拉框
+                    Ext.create('Jit.form.field.ComboBox', {
+                        renderTo: 'dvPlaceholder1'
+                        , id: 'cmbMultiSelect'
+                        , valueField: 'ChannelID'
+                        , displayField: 'ChannelName'
+                        , store: store
+                        , multiSelect: true
+                        , fieldLabel:'渠道'
+                        , jitAllText :'全选'  //设置全选的文本内容，默认为All
+                    });
+                    //创建按钮显示选中值
+                    Ext.create('Jit.button.Button', {
+                        text: '显示选中值'
+                        , renderTo: 'dvShowSelectValues1'
+                        , handler: function () {
+                            var selectedValues = Ext.getCmp('cmbMultiSelect').getValue();
+                            alert(selectedValues);
+                        }
+                    });
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>下拉框 - 单选的示例</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder2"></div>
+                <div id="dvShowSelectValues2"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //准备测试数据
+                    var store = Ext.create('Ext.data.Store', {
+                        fields: ['ChannelID', 'ChannelName'],
+                        data: [
+                            { ChannelID: '1', ChannelName: '超市' },
+                            { ChannelID: '2', ChannelName: '大卖场' },
+                            { ChannelID: '3', ChannelName: '夫妻老婆店夫妻老婆店' },
+                            { ChannelID: '4', ChannelName: '便利店' },
+                            { ChannelID: '5', ChannelName: '现代通路' },
+                            { ChannelID: '6', ChannelName: '中型超市' },
+                            { ChannelID: '7', ChannelName: '网上商城' }
+                        ]
+                    });
+                    //创建单选下拉框
+                    Ext.create('Jit.form.field.ComboBox', {
+                        renderTo: 'dvPlaceholder2'
+                        , id: 'cmbSingleSelect'
+                        , valueField: 'ChannelID'
+                        , displayField: 'ChannelName'
+                        , store: store
+                        , multiSelect: false
+                        , fieldLabel: '渠道'
+                    });
+                     //设置值
+                     Ext.getCmp('cmbMultiSelect').jitSetValue(['3','5']);
+                    //创建按钮显示选中值
+                    Ext.create('Jit.button.Button', {
+                        text: '显示选中值'
+                        , renderTo: 'dvShowSelectValues2'
+                        , handler: function () {
+                            var selectedValues = Ext.getCmp('cmbSingleSelect').getValue();
+                            alert(selectedValues);
+                        }
+                    });
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <script language="javascript" type="text/javascript">
+        Ext.onReady(function () {
+            //准备测试数据
+            var store = Ext.create('Ext.data.Store', {
+                fields: ['ChannelID', 'ChannelName'],
+                data: [
+                    { ChannelID: '1', ChannelName: '超市' },
+                    { ChannelID: '2', ChannelName: '大卖场' },
+                    { ChannelID: '3', ChannelName: '夫妻老婆店夫妻老婆店' },
+                    { ChannelID: '4', ChannelName: '便利店' },
+                    { ChannelID: '5', ChannelName: '现代通路' },
+                    { ChannelID: '6', ChannelName: '中型超市' },
+                    { ChannelID: '7', ChannelName: '网上商城' }
+                ]
+            });
+            //创建多选下拉框
+            Ext.create('Jit.form.field.ComboBox', {
+                renderTo: 'dvPlaceholder1'
+                , id: 'cmbMultiSelect'
+                , valueField: 'ChannelID'
+                , displayField: 'ChannelName'
+                , store: store
+                , multiSelect: true
+                , fieldLabel: '渠道'
+                , jitAllText: '全选'  //设置全选的文本内容，默认为All
+            });
+             //设置值
+             Ext.getCmp('cmbMultiSelect').jitSetValue(['3','5']);
+            //创建按钮显示选中值
+            Ext.create('Jit.button.Button', {
+                text: '显示选中值'
+                , renderTo: 'dvShowSelectValues1'
+                , handler: function () {
+                    var selectedValues = Ext.getCmp('cmbMultiSelect').jitGetValue();
+                    alert(selectedValues);
+                }
+            });
+            //创建单选下拉框
+            Ext.create('Jit.form.field.ComboBox', {
+                renderTo: 'dvPlaceholder2'
+                , id: 'cmbSingleSelect'
+                , valueField: 'ChannelID'
+                , displayField: 'ChannelName'
+                , store: store
+                , multiSelect: false
+                , fieldLabel: '渠道'
+            });
+            //创建按钮显示选中值
+            Ext.create('Jit.button.Button', {
+                text: '显示选中值'
+                , renderTo: 'dvShowSelectValues2'
+                , handler: function () {
+                    var selectedValues = Ext.getCmp('cmbSingleSelect').jitGetValue();
+                    alert(selectedValues);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

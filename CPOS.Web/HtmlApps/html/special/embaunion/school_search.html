@@ -1,0 +1,71 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="SchoolSearch">校友查询</title>
+          <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+      <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+
+<body class="queryPage">
+        <div id="masklayer" style="background-color:#FFF;" class="pageloading" >
+      <i></i>
+    </div>
+     <div class="headerArea">
+        <header  class="header" id="headerTop">
+            <div class="commonNav">
+                <ul>
+                    <a href="javascript:Jit.AM.pageBack()">
+                        <li class="getBack">
+                            <span></span>
+                        </li>
+                    </a>
+                    <a href="javascript:Jit.AM.toPage('Account')">
+                        <li class="user">
+                            <span></span>
+                        </li>
+                    </a>
+                    <a href="javascript:Jit.AM.toPage('Home')">
+                        <li class="home">
+                            <span></span>
+                        </li>
+                    </a>
+                </ul>
+            </div>
+        </header>
+    </div>
+    <section>
+        <div class="queryArea">
+            <div class="commonFillArea">
+                <p class="clearfix"> <em class="name"></em>
+                    <label>
+                        <input type="text" placeholder="名字" id="txtName" maxlength="126"></label>
+                </p>
+                <p class="clearfix"> <em class="grade"></em>
+                    <label>
+                        <input type="" placeholder="班级" id="txtClasses" maxlength="126"></label>
+                </p>
+                <p class="clearfix">
+                    <em class="company"></em>
+                    <label>
+                        <input type="text" placeholder="公司" maxlength="126" id="txtCompany"></label>
+                </p>
+                <p class="clearfix">
+                    <em class="address"></em>
+                    <label>
+                        <input type="" placeholder="地址" maxlength="126" id="txtAddress" ></label>
+                </p>
+            </div>
+
+            <div class="wrapBtn">
+                <a  id="btSubmit" class="queryBtn">查询</a>
+            </div>
+
+        </div>
+    </section>
+
+   
+
+</body>
+</html>

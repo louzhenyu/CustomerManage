@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1195BE69-FE3F-4654-A85A-E84E3C0E64C7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JIT.TestCPOS.TestBS.TestWeb</RootNamespace>
+    <AssemblyName>TestCPOS.TestBS.TestWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Infrastructure\Code\ReferenceDll\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\WX\Account\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\WX\Event\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\WX\Keyword\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\WX\MaterialText\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\WX\Menu\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\WX\News\TestAPI.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\WX\Module\TestAPI.cs" />
+    <Compile Include="TestMaterial\APIClientProxy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
+      <Project>{6d911430-7243-4ab2-b70e-4daffc4d1b22}</Project>
+      <Name>CPOS.BS.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CPOS.BS.Web\CPOS.BS.Web.csproj">
+      <Project>{D5725CD5-20AA-4A3E-B72E-146F781C4FDA}</Project>
+      <Name>CPOS.BS.Web</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CPOS.DTO\CPOS.DTO.csproj">
+      <Project>{E90B49C0-4C8E-42EC-88EF-DACCFD56F2B5}</Project>
+      <Name>CPOS.DTO</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

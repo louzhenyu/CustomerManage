@@ -1,0 +1,113 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="JiFenDetail"></title>
+
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+
+</head>
+<body style="background-color:#f6f6f6">
+
+<style type="text/css">
+    
+.popup {
+    margin: 0 auto;
+    position: absolute;
+    width: 90%;
+    z-index: 999;
+}
+.popup a.btn_close {
+    background: none repeat scroll 0 0 #333333;
+    border-radius: 50%;
+    color: #F4F4F4;
+    display: block;
+    font-size: 18px;
+    height: 20px;
+    line-height: 20px;
+    position: absolute;
+    right: -5px;
+    text-align: center;
+    top: -5px;
+    width: 20px;
+    z-index: 1000;
+}
+.popup th {
+    background: none repeat scroll 0 0 #333333;
+    border-bottom: 1px solid #ABABAB;
+    color: #999999;
+    padding: 20px 10px;
+}
+.popup td {
+    background: none repeat scroll 0 0 #F4F4F4;
+    border-bottom: 1px dashed #CCCCCC;
+    padding: 20px 10px;
+}
+.popup td span {
+    font-size: 12px;
+}
+.popup td b {
+    color: #CC0001;
+}
+
+
+
+    
+</style>
+
+
+
+
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <section class="goods_wrap">
+       <nav id="topNav">
+        <ul>
+          <li onclick="javascript:Jit.AM.pageBack();"><a></a></li>
+          <li style="display:none" onclick="javascript:Jit.AM.toPage('JiFenDetail');"><a></a></li>
+          <li style="display:none" onclick="javascript:Jit.AM.toPage('GoodsCart');"><a><span id="menuCartCount"></span> </a></li>
+          <li  onclick="javascript:Jit.AM.toPage('JiFenShop');"> <a ></a></li>
+        </ul>
+    </nav>
+    </section>
+    <section class="jifen_detail" style="padding-top: 50px">
+    <div class="givelogs">
+            <span> 
+                <a href="javascript:;" onclick="javascript:JitPage.openWindow();">我的兑换记录<i></i></a>
+            </span>
+        </div>
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <thead>
+                <tr>
+                    <th scope="col">日期</th>
+                    <th scope="col">获得方式</th>
+                    <th scope="col">获得积分</th>
+                </tr>
+
+            </thead>
+
+            <tbody tplpanel="jifen_list"></tbody>
+
+        </table>
+    
+        <div class="jifen_rule" style="display:none">
+            <h3 style="color:black; font-size:15px;">获得积分规则：</h3>
+            <div tplpanel="rule_list"></div>
+        </div>
+    </section>
+</body>
+    <script id="Tpl_rule_list" type="text/template">
+    <p>{{IntegralSourceName}}：{{Integral}}分</p>
+</script>
+    <script id="Tpl_jifen_list" type="text/template">
+    <tr>
+        <td >{{createTime}}</td>
+        <td >{{VipIntegralSourceName}}</td>
+        <td >{{Integral}}分</td>
+    </tr>
+</script>
+</html>

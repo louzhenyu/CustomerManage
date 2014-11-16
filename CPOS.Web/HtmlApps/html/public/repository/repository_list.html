@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title name="RepositoryList"></title>
+<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</head>
+
+<body>
+<section id="section">
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+	<div style="z-index: 100;position: relative;background: #FFF;">
+		<img class="commonTopBg" src="/HtmlApps/images/public/repository/topBg.jpg" alt=""/>
+	    <div class="listSearch">
+	    	<div class="searchWrap">
+	            <input type="type" class="searchInput" placeholder="输入关键字">
+	            <span class="searchBtn"></span>
+	        </div>
+	    </div>
+	    
+	    <div class="listNavArea" id="classScroll">
+	    	<div class="navWrap clearfix">
+	        </div>
+	    </div>
+	</div>
+    
+    
+    <div id="scrollContainer" style="height:100%;overflow: hidden;position: absolute;top:0;bottom:0;left:0;right:0;z-index: 1;">
+		<div style="padding:90px 0;">
+			<div id="pullDown">
+				<span class="pullDownIcon"></span><span class="pullDownLabel"></span>
+			</div>
+			<div class="contentTextList" style="padding:0;margin: 0;">
+	            <ul id="resultList">
+	                
+	            </ul>
+		    </div>
+			<div id="pullUp" style="text-align: center;">
+				<span class="pullUpIcon"></span><span class="pullUpLabel"></span>
+			</div>
+		</div>
+	</div>
+</section>
+
+<footer class="footer" style="background: #FFF;z-index: 100;">
+	<div class="baseBtnWrap clearfix">
+    	<a class="engineerLine" href="tel:45346"><span>在线工程师</span></a>
+        <a class="hotLine" href="tel:123456"><span>400热线</span></a>
+    </div>
+</footer>
+
+</body>
+</html>

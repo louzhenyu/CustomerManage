@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+	<title name="CateSeats">订座</title>
+	<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+
+<body>
+	<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+	<section class="bookSeatsArea ">
+		<div class ="bookDataArea">
+			<div class="bda_left" id="btSelectArea">
+				人数
+				<span id="txtCount">1</span>
+
+				<select id="btSelectCount">
+					<option value="1">1</option>
+				</select>
+
+			</div>
+			<div class="bda_right">
+				<div >
+					<input type="text" name="appDate" id="txtDate" placeholder="请选择日期"  />
+					<span id="txtWeek"></span>
+				</div>
+				<div >
+					<input type="text" name="appTime" id="txtTime"  placeholder="请选择时间"/>
+				</div>
+
+			</div>
+
+		</div>
+		
+		<div id="storeArea" class="bookStoreArea" style="display: none;">
+			<div>
+				<select id="storeSelect">
+					<option value="">请选择订座门店</option>
+				</select>
+			</div>
+		</div>
+		<div class="bookContactsArea">
+			<div class="bc">
+				<input id="txtContacts" type="text" placeholder="请输入名称" class="tc" />
+				<div>
+					<span class="on" data-val="0"> <i></i>
+						女士
+					</span>
+					<span data-val="1"> <i></i>
+						先生
+					</span>
+				</div>
+			</div>
+			<div>
+				<input type="number" id="txtPhone" placeholder="输入手机号码" maxlength="126" />
+			</div>
+
+		</div>
+
+		<div class="bookExplainArea">
+			<div>备注</div>
+			<div>
+				<input type="text" id="txtRemark" placeholder="输入备注信息"  maxlength="512"/>
+			</div>
+
+		</div>
+
+		<div class="bookSubmitArea">
+			<a href="javascript:;">订座</a>
+		</div>
+
+	</section>
+
+</body>
+</html>

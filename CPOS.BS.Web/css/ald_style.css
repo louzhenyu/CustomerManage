@@ -1,0 +1,29 @@
+@charset "utf-8";
+.header h1 a,.ser_list dt,.login_bar li i { background:url(../images/sprites_ald.png) no-repeat 0 0;}
+
+.header { width:980px; height:80px; margin:0 auto;}
+.header h1 { padding-top:15px;}
+.header h1 a { display:block; width:483px; height:55px; text-indent:-9999px; overflow:hidden;}
+
+.banner { width:100%; height:410px; position:relative; top:0; overflow:hidden; z-index:1; text-align:center;}
+.banner_wrap { width:1350px; height:410px; position:absolute; top:0; left:50%; margin:0 0 0 -675px;}
+.login_bar { width:265px; padding:30px 30px 0 30px; background:#fff; border-top:1px solid #666; border-left:1px solid #666; border-right:1px solid #666; position:absolute; top:163px; right:185px; text-align:left;}
+.login_bar li { margin-bottom:10px; position:relative; height:42px;}
+.login_bar li .button { background:#c37624; height:50px; color:#fff; font-size:18px; width:265px; font-family:"微软雅黑";}
+.login_bar li .button:hover { background:#b2691b;}
+.login_bar li .inp_txt { height:24px; font-size:16px; padding:8px 8px 8px 60px; border:1px solid #e9e9e9; width:195px; color:#aaa;}
+.login_bar li i { display:block; background-color:#ccc; width:45px; height:40px; position:absolute; left:1px; top:1px; _top:3px;}
+.login_bar li .i01 { background-position:-452px -371px;}
+.login_bar li .i02 { background-position:-454px -429px;}
+
+.wrap { width:980px; margin:0 auto;}
+.ser_list { padding-bottom:80px;}
+.ser_list h2 { font-size:30px; color:#333; margin-bottom:50px;}
+.ser_list h2 b { font-size:56px; color:#e0a15e; font-family:Arial;font-style:italic;}
+.ser_list dl { float:left; margin:0 20px; _display:inline; width:205px;}
+.ser_list dt { color:#333; font-size:20px; height:35px; padding-top:108px; text-align:center;}
+.ser_list .dt01 { background-position:50px -85px;}
+.ser_list .dt02 { background-position:-329px -85px;}
+.ser_list .dt03 { background-position:50px -229px;}
+.ser_list .dt04 { background-position:-329px -229px;}
+.ser_list dd { margin-top:10px; font-size:14px;}

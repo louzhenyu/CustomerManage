@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>弹出框</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <!--  引入Ext JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Ext4.1.0/ext-all.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Lib/Javascript/Ext4.1.0/Resources/CSS/ext-all.css" />
+    <!--引入Jit的JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Jit/jit-all-dev.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Lib/Css/jit-all.css" />
+    <!--示例的样式-->
+    <style type="text/css">
+        dt
+        {
+           color:#333333; 
+           font-size:18px;
+           font-family:宋体;
+           font-weight:bolder;
+           margin:10px;
+        }
+        .sample
+        {
+        	border-style:dashed;
+        	border-width:1px;
+        	margin:20px;
+        	padding:20px;
+        	width:800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>小尺寸弹窗</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder1"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //创建弹出窗对象
+                    Ext.create('Jit.window.Window', {
+                        jitSize: "small",
+                        id: "wndSmall",
+                        title: "small window"
+                    });
+                    //显示弹出窗
+                    Ext.getCmp("wndSmall").show();
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>大尺寸弹窗</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder2"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //创建弹出窗对象
+                    Ext.create('Jit.window.Window', {
+                        jitSize: "big",
+                        id: "wndBig",
+                        title: "big window"
+                    });
+                    //显示弹出窗
+                    Ext.getCmp("wndBig").show();
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>超大尺寸弹窗</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder3"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //创建弹出窗对象
+                    Ext.create('Jit.window.Window', {
+                        jitSize: "large",
+                        id: "wndLarge",
+                        title: "large window"
+                    });
+                    //显示弹出窗
+                    Ext.getCmp("wndLarge").show();
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <script language="javascript" type="text/javascript">
+        Ext.onReady(function () {
+            //小尺寸弹窗
+            Ext.create('Jit.window.Window', {
+                jitSize: "small",
+                id: "wndSmall",
+                title: "small window"
+            });
+            Ext.create('Jit.button.Button', {
+                renderTo: "dvPlaceholder1",
+                text: "small window",
+                handler: function () {
+                    Ext.getCmp("wndSmall").show();
+                }
+            });
+            //大尺寸弹窗
+            Ext.create('Jit.window.Window', {
+                jitSize: "big",
+                id: "wndBig",
+                title: "big window"
+            });
+            Ext.create('Jit.button.Button', {
+                renderTo: "dvPlaceholder2",
+                text: "big window",
+                handler: function () {
+                    Ext.getCmp("wndBig").show();
+                }
+            });
+            //超大尺寸弹窗
+            Ext.create('Jit.window.Window', {
+                jitSize: "large",
+                id: "wndLarge",
+                title: "large window"
+            });
+            Ext.create('Jit.button.Button', {
+                renderTo: "dvPlaceholder3",
+                text: "large window",
+                handler: function () {
+                    Ext.getCmp("wndLarge").show();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<title>我的积分详情</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+</head>
+
+<body style="background:#e5e5e5;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+  
+    <div class="aboutVipDiv" id="PPgetItemExchangeList" style="margin-bottom:50px;">
+    		
+     	 <div class="vipIntegralDetailDiv" >
+         	<ul id="PPgetItemExchangeListccc">
+     			 </ul>
+         
+         </div>
+      		
+    </div>
+  </div>
+    <div class="MenuBox" id="MenuBox"></div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = ['PPgetItemExchangeList','Vip.getItemExchangeList()'];
+var Von = 'Vip.getItemExchangeList("1")';
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);</script> 
+<script id="getItemExchangeList" type="text/template">
+				<% _.each(itemList,function(item){%>
+			
+            	<li><div class="vipIntegralLi"><span class="zjd">-<%=item.integralExchange%></span><%=item.itemName%></div><div class="vipIntegralLiTime"><%=item.selDate%></div></li>
+				<% }) %>				
+</script>
+</body>
+</html>

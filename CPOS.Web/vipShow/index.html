@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<title>会员中心</title>
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="header">
+	<div class="Logo"></div>
+	<div class="headerMenu">
+    	<ul>
+        	<li><a href="#" class="hm1 skinicn1">首页</a></li>
+            <li><a href="#" class="hm2 skinicn1">帮助中心</a></li>
+            <li><a href="#" class="hm3 skinicn1">语言切换</a></li>
+            <li><a href="#" class="hm4 skinicn1">注销登录</a></li>
+        </ul>
+    </div>
+</div>
+<div class="MainConnext" id="MainConnextId">
+	<div class="MainMenu" id="MainMenuId">
+        	<h2><a href="#">会员管理</a></h2>
+          <dl class="MainSecond">
+            <dd><a href="#" class="skinicn m1hover">会员中心</a></dd>
+            <dd><a href="#" class="skinicn m2">电子质保</a></dd>
+            <dd><a href="#" class="skinicn m3">会员数据清理/完善</a></dd>
+            <dd><a href="#" class="skinicn m4">客服中心</a></dd>
+            <dd><a href="#" class="skinicn m5">市场活动</a></dd>
+            <dd><a href="#" class="skinicn m6">报表分析</a></dd>
+            <dd><a href="#" class="skinicn m7">会员相关设置</a></dd>
+        </dl>
+        <h2><a href="#">门店管理</a></h2>
+       
+    </div>
+    <div class="MainMenuA"><div class="LcTu" style="padding-bottom:20px;" >
+    	<div id="loading" style="display:none;">数据正在加载中...</div>
+   	  <div style="position: absolute; color: #fff; font-size: 16px; font-weight: bold; left: 272px; top: 395px; width: 140px; text-align: center;"><Span class="WeixinPerson" id="CountAll">0</Span>人</div>
+    
+		<div style="position: absolute; color: #27ae60; font-size: 16px; font-weight: bold; left: 300px; top: 101px; width:80px; text-align:center"><Span class="WeixinPerson" id="weixin"></Span>人</div>
+    	<div style="position: absolute; color: #2187dc; font-size: 16px; font-weight: bold; left: 75px; top: 204px; width: 80px; text-align: center"><Span class="WeixinPerson" id="secondCode"></Span>人</div>
+        <div style="position: absolute; color: #8a00d4; font-size: 16px; font-weight: bold; left: 43px; top: 444px; width: 80px; text-align: center"><Span class="WeixinPerson" id="ShopIpad" ></Span>人</div>
+        <div style="position: absolute; color: #ed39a7; font-size: 16px; font-weight: bold; left: 194px; top: 614px; width: 80px; text-align: center"><Span class="WeixinPerson" id="VipApp"></Span>人</div>
+        <div style="position: absolute; color: #c60000; font-size: 16px; font-weight: bold; left: 441px; top: 606px; width: 80px; text-align: center"><Span class="WeixinPerson" id="Weibo"></Span>人</div>
+        <div style="position: absolute; color: #e74c3c; font-size: 16px; font-weight: bold; left: 571px; top: 421px; width: 80px; text-align: center"><Span class="WeixinPerson" id="WebShop"></Span>人</div>
+        <div style="position: absolute; color: #ea9b00; font-size: 16px; font-weight: bold; left: 527px; top: 195px; width: 80px; text-align: center"><Span class="WeixinPerson" id="TelSevire"></Span>人</div>
+        
+      <div style="position: absolute; color: #27ae60; font-size: 50px; font-weight: bold; left: 409px; top: -3px; width: 104px; text-align: center; height: 78px; line-height: 78px; filter:alpha(opacity=0); opacity:0; " id="Add_weixin"><span>+</span><span id="AddTxt_weixin">12</span></div>
+      <div style="position: absolute; color: #2187dc; font-size: 50px; font-weight: bold; left: -58px; top: 111px; width: 104px; text-align: center; height: 78px; line-height: 78px; filter:alpha(opacity=0); opacity:0;" id="Add_secondCode"><span>+</span><span id="AddTxt_secondCode">12</span></div>
+      <div style="position: absolute; color: #8a00d4; font-size: 50px; font-weight: bold; left: -90px; top: 449px; width: 104px; text-align: center; height: 78px; line-height: 78px; filter:alpha(opacity=0); opacity:0;" id="Add_ShopIpad"><span>+</span><span id="AddTxt_ShopIpad">12</span></div>
+      <div style="position: absolute; color: #ed39a7; font-size: 50px; font-weight: bold; left: 28px; top: 594px; width: 104px; text-align: center; height: 78px; line-height: 78px; filter:alpha(opacity=0); opacity:0;" id="Add_VipApp"><span>+</span><span id="AddTxt_VipApp">12</span></div>
+        
+      <div style="position: absolute; color: #c60000; font-size: 50px; font-weight: bold; left: 572px; top: 600px; width: 104px; text-align: center; height: 78px; line-height: 78px; filter:alpha(opacity=0); opacity:0;" id="Add_Weibo"><span>+</span><span id="AddTxt_Weibo">12</span></div>
+        
+      <div style="position: absolute; color: #e74c3c; font-size: 50px; font-weight: bold; left: 657px; top: 451px; width: 104px; text-align: center; height: 78px; line-height: 78px; filter:alpha(opacity=0); opacity:0;" id="Add_WebShop"><span>+</span><span id="AddTxt_WebShop">12</span></div>
+        
+      <div style="position: absolute; color: #ea9b00; font-size: 50px; font-weight: bold; left: 637px; top: 107px; width: 104px; text-align: center; height: 78px; line-height: 78px; filter:alpha(opacity=0); opacity:0;" id="Add_TelSevire" ><span>+</span><span id="AddTxt_TelSevire">12</span></div>
+        
+        
+        <div style="position: absolute; color: #27ae60; font-size: 44px; font-weight: bold; left: 292px; top: 88px; width: 104px; text-align: center; height: 52px; line-height: 52px; display:none;" id="DUP_weixin"><span>+</span><span id="DOP_weixin"></span></div>
+        
+  </div><input type="hidden" value="" id="timesamp" /></div>
+</div>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript">
+$(function(){
+	function ResizeWinDows(){var  mainHeight = $("#MainConnextId").height(),MainMenuHeight = $("#MainMenuId").height();
+	if(mainHeight >= MainMenuHeight){
+			$("#MainMenuId").css("height",mainHeight);	
+		}
+	if((Win.H() -75 ) >= mainHeight ){
+	
+			$("#MainMenuId").css("height",Win.H() -75);
+		}
+	}
+	ResizeWinDows();
+	$(window).resize(function(){
+		ResizeWinDows();	
+	})
+	ShopDetailAjax(1);
+})
+var  idArr = ["weixin", "secondCode", "ShopIpad", "VipApp", "Weibo", "WebShop", "TelSevire"];
+var  Win={
+		Loading:function(type){
+				
+			
+				if(type == "CLOSE"){
+						$(".loading").hide();
+						return false; 
+					}
+				 var getWindowsWidth = $(window).width(), getWindowsHeight = $(window).height();
+					$(".loading").css({left: (getWindowsWidth - $(".loading").width())/ 2 , top: (getWindowsHeight - $(".loading").height())/ 2 }); 
+					$(".loading").show();
+			},
+		W: function(){
+				return $(window).width(); 
+			},
+		H:function(){
+			return  $(window).height();
+			},
+		DH:function(){
+			return  $(document).height();
+			}
+	}
+var url = '/Pad/webData.aspx'; 
+
+//var url = 'test.php'; 
+function ShopDetailAjax(type){
+
+		//var jsonarr = {'action':"getShopDetail",ReqContent:JSON.stringify({"common":{},"special":{"timesamp":$("#timesamp").val()}})};
+			$.ajax({
+				type:'get',
+				url:url,
+				data:{dataType:"GetShowCount",Timestamp:$("#timesamp").val()},
+				timeout:90000,
+				cache:false,
+				beforeSend:function(){
+					if(type==1){
+					$("#loading").show();
+					}
+				},
+				dataType : 'json',
+				success:function(data){
+					$("#loading").hide();
+					if(data.Code == 200){
+							//if(type==1){
+									
+									//}
+						
+					var o = {"Code":"200","content":{"count":"","weixin":data.count,"secondCode":"1203","ShopIpad":"1293","VipApp":"999","Weibo":"129","WebShop":"1233","TelSevire":"998"},"description":"操作成功"};
+					if(o.Code == 200){
+						$("#timesamp").val(data.NewTimestamp)
+						if(type == 1){
+							
+							$("#weixin").text(o.content.weixin);
+							$("#secondCode").text(o.content.secondCode);
+							$("#ShopIpad").text(o.content.ShopIpad);
+							$("#VipApp").text(o.content.VipApp);
+							$("#Weibo").text(o.content.Weibo);
+							$("#WebShop").text(o.content.WebShop);
+							$("#TelSevire").text(o.content.TelSevire);
+								AnimateFunction();
+							
+							}else{
+							var o = {"Code":"200","content":{"count":"","weixin":data.count,"secondCode":"0","ShopIpad":"0","VipApp":"0","Weibo":"0","WebShop":"0","TelSevire":"0"},"description":"操作成功"};	
+							
+								AddNewData(o.content)
+								
+							}	
+						}
+					}
+						setTimeout(function(){ShopDetailAjax()},5000);
+					},
+				error:function(){
+						setTimeout(function(){ShopDetailAjax()},5000);	
+					}
+				})
+}
+var Timeouta = null;
+function AnimateFunction(){
+	
+	var  AString = ''; IntNum = new Array();
+		var c = 0; 
+	for(var i=0; i<idArr.length; i++){
+			var getStyle = $("#"+idArr[i]).parent().attr("style");
+			
+			AString += '<div style="'+getStyle+'" id="WarpApp'+idArr[i]+'"><Span class="WeixinPerson">'+($("#"+idArr[i]).text())+'</Span></div>';
+			c += parseInt($("#"+idArr[i]).text());	
+
+			//IntNum.push(parseInt($("#"+idArr).text()));
+		}	
+	$(".LcTu").append(AString);
+	$("div[id^=WarpApp]").animate({"left":300,"top":355,"opacity":0},1500,function(){
+		$("#CountAll").text(c); 
+			$(this).remove();
+		});
+		//var m=0;
+		
+	/*Timeouta = setInterval(function(){
+		c += IntNum[m]
+		 if(m>=IntNum.length){clearTimeout(Timeouta); return false;}
+		m++;*/
+	//$("#CountAll").text(c); },500)
+}
+function AddNewData(Dataobj){
+	var NewDataArray = new Array();
+	//var  idArr = ["weixin", "secondCode", "ShopIpad", "VipApp", "Weibo", "WebShop", "TelSevire"];	
+	NewDataArray.push(Dataobj.weixin);
+	NewDataArray.push(Dataobj.secondCode);
+	NewDataArray.push(Dataobj.ShopIpad);
+	NewDataArray.push(Dataobj.VipApp);
+	NewDataArray.push(Dataobj.Weibo);
+	NewDataArray.push(Dataobj.WebShop);
+	NewDataArray.push(Dataobj.TelSevire);
+	
+	for(var u=0; u<NewDataArray.length; u++){
+		// 检查数据是否为空
+			if(NewDataArray[u]=="" || NewDataArray[u]=="0"){
+					NewDataArray[u] = 0;
+					
+				}
+				$("#AddTxt_"+idArr[u]).text(NewDataArray[u]);
+		}
+	for(var j=0; j<idArr.length; j++){
+		
+			if(parseInt(NewDataArray[j])!=0){
+					if(j>0 && j<4){
+					$("#Add_"+idArr[j]).css({"left":parseInt($("#Add_"+idArr[j]).css("left"))-50, "opacity":0});	
+						}else{
+					$("#Add_"+idArr[j]).css({"left":parseInt($("#Add_"+idArr[j]).css("left"))+50, "opacity":0});	
+					}
+			
+				}
+		}
+	for(var g=0; g<NewDataArray.length; g++){
+		
+		if(NewDataArray[g]!=0){
+			$("#Add_"+idArr[g]).attr("index",g);
+			if(g>0 && g<4){
+			
+			$("#Add_"+idArr[g]).show().animate({"opacity":1,"left":parseInt($("#Add_"+idArr[g]).css("left"))+50},400,function(){ 	
+			
+					var indexo = $(this).attr("index");
+			 		AnimateAddNewData(idArr[indexo],NewDataArray[indexo]);	
+					$(this).hide();
+				 }); 
+			}else{
+			
+				$("#Add_"+idArr[g]).show().animate({"opacity":1,"left":parseInt($("#Add_"+idArr[g]).css("left"))-50},400,function(){
+					 var indexo = $(this).attr("index");
+			 		AnimateAddNewData(idArr[indexo],NewDataArray[indexo]);	
+					 $(this).hide();
+				}); 	
+				}
+		}
+	}
+}
+function AnimateAddNewData(idDe,num){
+		var bstring = '<div id="NewUI_'+idDe+'" style="'+$("#Add_"+idDe).attr("style")+'"><span>+</span><span>'+num+'</span></div>'
+		$(".LcTu").append(bstring);
+		var ParentLeft = parseInt($("#"+idDe).parent().css("left")), ParentTop = parseInt($("#"+idDe).parent().css("top"));
+			$("#NewUI_"+idDe).animate({left:ParentLeft, top: ParentTop, opacity:0},900,function(){$(this).remove();
+				$("#"+idDe).text((parseInt(num)+parseInt($("#"+idDe).text())));
+				if($("#DUP_"+idDe).length > 0){
+						$("#DOP_"+idDe).text(num)
+						
+						
+						$("#DUP_"+idDe).show().attr("cleft",$(this).css("left")).attr("ctop",$(this).css("top")).animate({"left":300,"top":355,"opacity":0},800,function(){
+								$("#CountAll").text((parseInt(num)+parseInt($("#CountAll").text()))); 
+								$(this).css({"left":$(this).attr("cleft"),"top":$(this).attr("ctop"),"opacity":"1"}).hide();	
+									
+							})
+					}
+		})
+}
+</script>
+</body>
+</html>

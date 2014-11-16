@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--  引入Ext JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Ext4.1.0/ext-all-dev.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Lib/Javascript/Ext4.1.0/Resources/CSS/ext-all.css" />
+</head>
+<body>
+
+    <div class="sample">
+        <dl>
+            <dt>说明</dt> 
+            <dd>
+                <div id="dvPlaceholder1"></div> 
+            </dd> 
+        </dl>
+    </div>
+    <script language="javascript" type="text/javascript">
+        Ext.onReady(function () {
+        //创建数据源
+            var ss = Ext.create('Ext.data.TreeStore', {
+                id: 'store',
+                  proxy: {  
+                      type: 'ajax',  
+                      url: 'Handler/BrandSKUTreeHandler.ashx&op=1', 
+                        reader: {
+                            type: 'json'
+                        }
+                }
+    //root: { expanded: false }, //
+    //autoLoad: true
+    }); 
+            //创建多选下拉树
+            Ext.create('Ext.tree.Panel', {
+                id: 'treeBrandSKU',
+                store: ss,
+        width: 250,
+        height: 300,
+        /*
+        viewConfig: {
+            plugins: {
+                ptype: 'treeviewdragdrop',
+                appendOnly: true
+            }
+        },
+        */
+               renderTo: 'dvPlaceholder1'
+           });
+
+
+           alert('aaa');
+       });
+
+    </script>
+</body>
+</html>

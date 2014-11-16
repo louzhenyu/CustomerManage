@@ -1,0 +1,44 @@
+<div class="winBoxer" style="width:495px;">
+    <div class="winCaption">
+        <span class="winCaption_icon tFilter"></span>
+        <a class="winCaption_btnClose" href="###">关闭</a>
+    </div>
+    <ul class="winTabs">
+        <li class="time selected0"></li>
+        <li class="customer"><a href="./LayoutResource/templates/filter_terminal.html"></a></li>
+        <li class="product"><a href="./LayoutResource/templates/filter_product.html"></a></li>
+    </ul>
+    <div class="winContent contFilter">
+        <ul>
+            <li><label for="">请选择数据周期</label>
+                <select name="" id="drpPeriod">
+                    <option value="">年</option>
+                    <option value="">季度</option>
+                    <option value="">月</option>
+                    <option value="">周</option>
+                </select></li>
+            <li><input type="checkbox"/>
+                <label for="">自定义周期跨度</label></li>
+            <li class="selDatetime"><label for="">开始日期</label>
+                <select name="" id=""></select>
+                <label for="">结束日期</label>
+                <select name="" id=""></select></li>
+        </ul>
+        <div class="splitLine_1"></div>
+        <div class="linkButton txtCenter">
+            <a class="btn_bottom cancel" href="###">取消</a>
+            <a class="btn_bottom ok" href="###">确定</a>
+        </div>
+
+    </div>
+    <div class="clearFix_12"></div>
+</div>
+
+<script type="text/javascript">
+    filterTabs();
+    var isLoaded = false;
+//    Ext.create('Jit.form.field.Date', {
+//        id:'dt'
+    //    });
+    alert(parent.mapKPIs.length);
+</script>

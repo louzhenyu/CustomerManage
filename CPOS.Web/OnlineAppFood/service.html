@@ -1,0 +1,96 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">服务</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+<style type="text/css">
+.DisBox{ width:96%; margin-left:auto; margin-right:auto; box-shadow:0 0 2px #999; background-color:#fff; padding-bottom:10px; overflow:hidden; margin-top:10px; }
+.DisBoxLeft{ float:left; width:30%;}
+.DisBoxLeftInner{ width:70%; margin-left:auto; margin-right:auto; padding-top:14px;}
+.DisBoxRight{ padding-top:10px; margin-right:10px;	}
+.DisBoxRightBtn{ line-height:18px; font-size:12px;}
+.uiBtn{ height:38px;  box-shadow:0 0 1px #63e4ca; background-color:#47c1a8; display:block; border-radius:3px;}
+</style>
+</head>
+
+<body>
+
+<div style="width: 320px; margin-left: auto; margin-right: auto; overflow: hidden; padding-bottom:20px;" id="PcBox" class="PcBox">
+  <div class="DisBox" onclick="abbS()">
+  	<div class="DisBoxLeft">
+    	<div class="DisBoxLeftInner">
+        	<img src="images/c_1.png" width="100%" />
+        </div>
+    </div>
+  	<div class="DisBoxRight">
+    	<div class="DisBoxRightTop"><img src="images/c_12.png" width="150" /></div>
+        <div class="DisBoxRightBtn">亲！请扫我们店小二提供的二维码，我们将为您的菜单做最终确认。</div>
+    </div>
+  </div>
+ <div class="DisBox">
+  	<div class="DisBoxLeft">
+    	<div class="DisBoxLeftInner">
+        	<img src="images/c_2.png" width="100%" />
+        </div>
+    </div>
+  	<div class="DisBoxRight">
+    	<div class="DisBoxRightTop"><img src="images/c_22.png" width="150" /></div>
+        <div class="DisBoxRightBtn">亲！周一至周日我们每天提供不一样的优惠和特价，保证您吃的又好又实惠。</div>
+    </div>
+  </div>
+  
+  <div class="DisBox">
+  	<div class="DisBoxLeft">
+    	<div class="DisBoxLeftInner">
+        	<img src="images/c_3.png" width="100%" />
+        </div>
+    </div>
+  	<div class="DisBoxRight">
+    	<div class="DisBoxRightTop"><img src="images/c_32.png" width="150" /></div>
+        <div class="DisBoxRightBtn">亲！在本店成功点餐消费后，可获相应积分，积分在有效期内可兑换本店的各种小食。</div>
+    </div>
+  </div>
+  
+  <div class="DisBox">
+  	<div class="DisBoxLeft">
+    	<div class="DisBoxLeftInner">
+        	<img src="images/c_4.png" width="100%" />
+        </div>
+    </div>
+  	<div class="DisBoxRight">
+    	<div class="DisBoxRightTop"><img src="images/c_42.png" width="150" /></div>
+        <div class="DisBoxRightBtn">亲！快来订阅我们的电子快报吧，更多本店资讯及时掌握。</div>
+    </div>
+  </div>
+  <a class="DisBox uiBtn" href="tel:400-110-2002"><img src="images/telkf.png" width="100%" /></a>
+</div>
+<div class="MenuBox" id="MenuBox"> </div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'abc()'; //  
+
+function abc(){
+	$("#PcBox").show();
+	
+}
+function abbS(){
+	if(getParam("plat") == "android"){
+	var ood = JSON.stringify({"userId":G("userId"),"openId":G("openId"),"customerId":G("customerId"),"islogin":G("islogin")});
+		window.jsObj.StartSecondCode(ood);	
+	}else{
+		$("#isLoadComplete").append('<iframe scrolling="no" src="http://gotoapp?link=StartSecondCode" frameborder="0"></iframe>');
+	}
+}
+</script>
+</body>
+</html>

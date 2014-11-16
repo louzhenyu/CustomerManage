@@ -1,0 +1,86 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/Event.css" type="text/css" rel="stylesheet" />
+<title></title>
+</head>
+
+<body>
+<div class="PcBox" id="PcBox" style=" overflow:hidden; display:none;">
+  <div class="banner" style="background-color:#00acee; padding:5px 0; " id="imageURL" >
+  <img src="images/banner.jpg" style="width:100%">
+  </div>
+  <div style="position:relative; z-index:8" id="ConnextID"></div>
+  <div id="ChessTip" style=" display:none; font-size:14px; padding:20px; text-align:left; line-height:24px;">谢谢您填写本问卷。<br />
+为表示感谢，稍候您可以参与本次活动的抽奖，祝您好运！<br />
+活动嘉宾信息已发给您。<br />请点击左上角返回按钮查看。
+</div>
+</div>
+<div class="loading" style="position:absolute; display:none; z-index:9999"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">var Von = 'Event.EventList()';</script> 
+<script type="text/javascript" src="js/base.js?v=1.22"></script>
+<style type="text/css">
+.zh{ display:block}
+.en{ display:none;}
+</style>
+<script type="text/templete" id="EventScript">
+<% _.each(questions,function(item,key){%>
+ <div class="textBox" data-type="<%=item.questionType %>" id="QuestionAbc_<%=item.questionId  %>" value="<%=item.questionId  %>" isSaveOutEvent="<%=item.isSaveOutEvent  %>" cookieName="<%=item.cookieName  %>">
+      <div class="textBoxDl">
+        <dl>
+          <dt>
+            <span class="Icnoo">
+                <img src="images/icn1.jpg" width="100%"></span>
+                <span class="zh"><%=item.questionText %></span>
+          </dt>
+		  <%if(item.questionType =="4"){%>
+			  <% _.each(item.options,function(item2){%>
+				<dd onclick="Event.ClickCheckBox(this)">
+					<% if(item2.isSelected !="1"){%>
+					<div class="checkBox" rel="0" eventId="<%=item2.optionId  %>" ><img src="images/icn3.jpg" width="100%" /></div>	
+					<%}else{%>
+						<div class="checkBox" rel="1" eventId="<%=item2.optionId  %>" ><img src="images/icn4.jpg" width="100%" /></div>	
+						<% }%>
+					<span class="zh"><%=item2.optionText %></span>
+				</dd>
+			  <% })%>
+		 <%}%>
+		
+		 <%if(item.questionType =="3"){%>
+			  <% _.each(item.options,function(item2){%>
+			 		<% if(item2.isSelected !="1"){%>
+				<dd onclick="Event.ClickRudioBox(this,'<%=item.questionId%>')">
+					<div rel="0" eventId="<%=item2.optionId  %>" class="checkBox AUU_<%=item.questionId%>" ><img src="images/icn9.jpg" width="100%" /></div>
+					<%}else{%>
+					<dd onclick="Event.ClickRudioBox(this,'<%=item.questionId%>')">
+					<div rel="1" eventId="<%=item2.optionId  %>" class="checkBox AUU_<%=item.questionId%>" ><img src="images/icn7.jpg" width="100%" /></div>
+					<%}%>
+					<span class="zh"><%=item2.optionText %></span>
+				</dd>
+			  <% })%>
+		<% }%>
+        <%if(item.questionType =="6"){%>
+				<dd class="starBox">
+                	<span data-i="1"></span>
+                    <span data-i="2"></span>
+                    <span data-i="3"></span>
+                    <span data-i="4"></span>
+                    <span data-i="5"></span>
+                    <div class="starText">轻按星型评分</div>
+				</dd>
+		<% }%>
+        </dl>
+			<% if(key == questions.length -1 ){%><Span class="blank1" style="height:20px;"></Span><% }%>
+	</div>
+</div>
+
+<% })%>
+<div class="bottonIn" onclick="Event.SelectDiv()"><span class="zh">确 定</span></div>
+</script>
+</body>
+</html>

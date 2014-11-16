@@ -1,0 +1,42 @@
+{
+	'Config' : {
+		'Name':'微汽车',
+		'Shorthand':{
+			'cars':'common/cars/',
+			'lr':'public/cars/',
+		}
+	},
+	'Cars3':{
+		'path':'%cars%cars3.html',
+		'title':'微汽车',
+		'plugin':['alice','jquery_plugin/nivo.slider.min','jquery_plugin/sly','jquery_plugin/transform'],
+		'script':['%cars%cars3'],
+		'style':['%cars%common','%cars%home',
+		'common/nivo-slider','common/nivo-themes/bar/bar','common/cars/jit-font-awesome'
+		]
+	},
+	'Cars2':{
+		'path':'%cars%cars2.html',
+		'title':'微汽车',
+		'plugin':[],
+		'script':['%cars%jquery.easing.1.3','%cars%txt_scroll'
+		,'%cars%yl3d','%cars%ylMap','%cars%1_picker','%cars%2_picker.date',
+		'%cars%3_picker.time','%cars%4_legacy','%cars%9_slidepic'
+		,'%cars%wxm-core176ed4','%cars%wxshare','%cars%cars2'],
+		'style':['%cars%default','%cars%default.date','%cars%default.time','%cars%main2']
+	},
+	'Cars':{
+		'path':'%cars%cars.html',
+		'title':'微汽车',
+		'plugin':['jquery_plugin/sly'],
+		'script':['%cars%cars'],
+		'style':['%cars%default','%cars%default.date','%cars%default.time','%cars%main']
+	},
+	'Landrover':{
+		'path':'%lr%index.html',
+		'title':'路虎微官网',
+		'plugin':['alice'],
+		'script':['%lr%index'],
+		'style':['base/global','%lr%style']
+	}
+}

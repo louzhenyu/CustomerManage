@@ -1,0 +1,47 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="Reserve">花间堂</title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+    <header>
+  <nav>
+    <ul class="clearfix">
+      <!--<li><a href="#">返回</a></li>-->
+      <li><a href="#">账户</a></li>
+      <li><a href="#">用户</a></li>
+      <li><a href="javascript:Jit.AM.toPage('Reserve');">首页</a></li>
+    </ul>
+  </nav>
+</header>
+    <section class="wrap">
+  <div class="select_box">
+    <dl>
+      <!--<a href="#"></a>-->
+      <dt>入住城市</dt>
+       <select id="selCity" onchange="JitPage.fnSelChange()" ></select><!--<dd>上海 </dd>-->
+    </dl>
+    <dl>
+      <a onclick="Jit.AM.toPage('ChooseDate')">
+      <dt>选择日期 </dt>
+      <dd id="ddTime" >选择时间 </dd>
+      </a>
+    </dl>
+    <dl>
+      <!--<a href="#"></a>-->
+      <dt>选择分店 </dt>
+       <select id="selStore"><option value=''>请选择</option></select><!--<dd>请选择 </dd>-->
+    </dl>
+    <input type="hidden" id="txtTime" />
+    <input type="button" value="搜 索" onclick='JitPage.fnSubmit()' />
+  </div>
+  <div class="bot"></div>
+</section>
+</body>
+</html>

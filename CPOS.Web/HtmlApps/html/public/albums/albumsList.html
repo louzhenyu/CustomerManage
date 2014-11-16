@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="albumsList"></title>
+		<style>
+			img {
+				max-width: 100% !important;
+			}
+		</style>
+	</head>
+	<body onselectstart="return true;" ondragstart="return false;" id="photo">
+		<div class="body">
+			<div class="qiandaobanner">
+				<a href="javascript:;"> <img src=".../../../../../images/public/albums_default/albums_head.png" alt="" style="max-height:200px;"> </a>
+			</div>
+			<div id="main" role="main" style="height: 1326px;">
+				<ul id="Gallery" class="gallery">
+				</ul>
+			</div>
+		</div>
+		<footer style="text-align:center; color:#ffd800;margin-right:20px;margin-top:0px;">
+			<a href="javascript:;">©杰亦特技术支持</a>
+		</footer>
+		<script id="albumsTpl" type="text/template">
+			<%for(var i=0;i<content.photoList.length;i++){var item=content.photoList[i];%>
+				<li>
+					<a href="<%=item.linkUrl%>"> <img src="<%=item.linkUrl%>" alt="<%=item.title%>"> </a>
+				</li>
+			<%}%>
+		</script>
+		<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
+	</body>
+</html>
+<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>

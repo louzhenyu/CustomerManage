@@ -1,0 +1,135 @@
+@charset "utf-8";
+/*------------------ HTML5 Reset ------------------*/
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,address,cite,code,del,em,img,strong,sub,sup,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+ul,ol,li{list-style: none;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
+select,input,button,textarea{font-size:100%;font-style:normal;font-weight:400;vertical-align:middle}
+body,button,input,select,textarea{font:14px/1.5 Arial,Helvetica,sans-serif}
+body{text-align:left;color:#333;background:#fff}
+input[type="radio"]{vertical-align:middle}
+input[type="checkbox"]{vertical-align:middle}
+label,input[type="button"],input[type="submit"],button,.button{cursor:pointer;border:none;outline:none;padding:0;margin:0;-webkit-appearance:button}
+/*通用样式*/
+a{color:#333;text-decoration:none;}
+a:hover{color:#none;}
+:focus{outline:none}
+/*清除浮动*/
+.clear{display:block;clear:both;overflow:hidden;height:0;line-height:0;font-size:0}
+.clearfix:after{content:" ";visibility:hidden;display:block;clear:both;height:0;font-size:0}
+.clearfix{*zoom:1}
+/*省略号*/
+.t-overflow{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+/*public*/
+.mb-15{margin-bottom:15px;}
+.mrml-35{margin:0 35px;}
+.ui-mask{display:none;position:fixed;_position:absolute;_width:100%;_height:100%;top:0px;left:0px;right:0px;bottom:0px;background:rgba(0,0,0,0.7);background:#000\9;filter:Alpha(opacity=70);z-index:999;}
+
+body{_height:100%;}
+/*创建新表单*/
+.createdArea,.createdModifyArea{width:100%;height:75px;padding:22px 25px;border-bottom:1px solid #d0cedc;background:#f2f2fa;}
+.createdArea .btn{float:left;width:95px;height:30px;line-height:30px;text-align:center;border-radius:3px;background:#66c3ec;color:#fff;cursor:pointer;}
+
+.createdContentArea{padding:15px;}
+
+.commonCreatedLayer{width:80%;height:92px;margin-bottom:15px;border:1px solid #d0cedc;background:#fff;}
+.commonCreatedLayer .titName{padding:7px 15px;height:50px;font-size:18px;color:#666;}
+.commonCreatedLayer .titName input{display:none;padding-left:15px;width:235px;height:35px;border-radius:3px;border:1px solid #d0cedc;font-size:16px;color:#666;}
+.commonCreatedLayer .btnWrap{height:40px;padding:5px 15px;background:#f6f6f8;}
+.commonCreatedLayer .btnWrap span{width:95px;height:30px;line-height:30px;text-align:center;border-radius:3px;color:#fefeff;cursor:pointer;}
+
+.commonCreatedLayer .delBtn{float:right;background:#f05f4a;}
+.commonCreatedLayer .editBtn{float:left;margin-right:15px;background:#b3c7ac;}
+.commonCreatedLayer .renameBtn{float:left;background:#a2c3c8;}
+
+
+/*公共弹窗*/
+.commonPopupLayer{display:none;width:480px;height:255px;position:fixed;_position:absolute;top:50%;left:50%;margin:-127px 0 0 -240px;border-radius:3px;background:#fff;z-index:9999;}
+.commonPopupLayer .titleWrap{height:55px;line-height:55px;padding:0 20px 0 25px;border-radius:3px 3px 0 0;background:#f2f2fa;color:#66666d;}
+.commonPopupLayer .titleWrap .title{float:left;font-weight:bold;font-size:16px;}
+.commonPopupLayer .closeBtn{float:right;width:32px;height:32px;margin-top:11px;background:url(../images/closeBtn.png) center center;cursor:pointer;}
+
+.commonPopupLayer .contentWrap{padding:20px;}
+.commonPopupLayer .textTit{margin:20px 0 40px 0;text-align:center;font-size:16px;color:#66666d;}
+.commonPopupLayer .btnWrap{text-align:center;}
+.commonPopupLayer .btnWrap span{display:inline-block;width:98px;height:42px;line-height:42px;border-radius:3px;font-size:15px;color:#fefeff;cursor:pointer;}
+.commonPopupLayer .delBtn{margin-right:32px;background:#ef5f4a;}
+.commonPopupLayer .cancelBtn,.commonPopupLayer .editBtn{background:#afafaf;}
+.commonPopupLayer .createdBtn{margin-right:32px;background:#a7bea1;}
+
+.commonPopupLayer  .textTit.clearMargin{margin:10px 0 12px;}
+
+.commonPopupLayer .inputWrap{text-align:center;margin-bottom:30px;}
+.commonPopupLayer .inputWrap input{width:235px;height:33px;padding-left:10px;border-radius:3px;border:1px solid #cfcddb;background:#f8f8fa;}
+
+/*弹窗-添加扩展属性*/
+.addAttrExtendLayer{width:520px;height:auto;margin-top:-225px;}
+.addAttrExtendLayer .btnWrap{padding-top:9px;}
+.addAttrExtendLayer .btnWrap .cancelBtn{margin-left:10px;}
+.commonPopupLayer  .formBox{padding:10px;}
+.commonPopupLayer  .formBox p{margin-bottom:16px;}
+.commonPopupLayer  .formBox .tit{float:left;width:134px;min-width:134px;height:35px;line-height:35px;font-size:16px;text-align:center;color:#666;}
+.commonPopupLayer  .formBox input,.commonPopupLayer .formBox select,.commonPopupLayer .formBox textarea{float:left;width:235px;height:35px;border-radius:3px;border:1px solid #cecedc;text-indent:5px;}
+.commonPopupLayer .formBox select{line-height:35px;}
+.commonPopupLayer .formBox .tip{float:left;line-height:35px;margin-left:5px;font-size:12px;color:#f93838;}
+.commonPopupLayer .formBox textarea{resize:none;width:229px;height:125px;}
+
+
+/*表单创建修改*/
+.createdModifyArea .digTit{font-size:18px;font-weight:bold;color:#666;}
+
+.createdModifyContentArea{width:1036px;border-radius:3px;margin:15px;border:1px solid #cecedc;}
+.createdModifyContentArea .tipArea{padding:22px;font-size:14px;font-weight:bold;border-top:1px solid #cecedc;color:#666;}
+.createdModifyContentArea .titleWrap{height:57px;padding:0 17px;border-bottom:1px solid #cecedc;background:#f2f2f9;}
+.createdModifyContentArea .titleWrap h2{float:left;margin-top:15px;font-size:16px;font-weight:bold;color:#666;}
+.createdModifyContentArea .titleWrap span{float:right;width:100px;height:30px;line-height:30px;margin:12px 0 0 16px;border-radius:3px;text-align:center;color:#fff;cursor:pointer;}
+.createdModifyContentArea .saveBtn{background:#84b8be;}
+.createdModifyContentArea .viewBtn{background:#a8bea1;}
+.createdModifyContentArea .cancelBtn{background:#949ca7;}
+
+/*左边的修改*/
+.leftModifyWrap{float:left;width:512px;border-right:1px solid #cecedc;}
+.leftModifyWrap .phoneArea{padding:10px 0 20px;background:#f5f8fa;}
+.leftModifyWrap .phoneArea p{padding:8px 0;}
+.leftModifyWrap .tit{float:left;width:110px;height:32px;line-height:32px;font-size:16px;color:#666;text-align:center;}
+.leftModifyWrap .tit span{display:none;}
+.leftModifyWrap .inputBox{width:225px;height:32px;text-indent:5px;border:none;border-radius:3px;background:#fff;_line-height:32px;}
+
+.leftModifyWrap .phoneArea.on .tit,.commonAttrArea.on .tit{position:relative;}
+.leftModifyWrap .phoneArea.on .tit span,.commonAttrArea.on .tit span{display:block;position:absolute;top:-4px;right:5px;font-size:25px;color:#ee6956;}
+
+/*公共的创建层*/
+.commonAttrArea{padding:24px 0;border-top:1px solid #cecedc;background:#fff;}
+.commonAttrArea.hover{position:relative;background:#e0f0fe;border-top:1px dashed #cecedc;border-bottom:1px dashed #cecedc;}
+.commonAttrArea .inputBox{border:1px solid #cecedc;}
+.commonAttrArea .checkBox{display:inline-block;height:32px;line-height:32px;margin-left:26px;text-indent:35px;background:url(../images/check01.png) no-repeat left center;color:#ee6956;cursor:pointer;}
+.commonAttrArea.on .checkBox{background:url(../images/check02.png) no-repeat left center;}
+.commonAttrArea .closeBtn{display:none;position:absolute;top:5px;right:4px;width:22px;height:22px;background:url(../images/closeBtn02.png) no-repeat 0 0;cursor:pointer;}
+.commonAttrArea.hover .closeBtn{display:block;}
+
+
+
+/*右边的修改*/
+.rightModifyWrap,.showAttrWrap{float:left;width:522px;margin-bottom:50px;border-left:1px solid #cecedc;}
+.commonBox .titWrap{height:50px;line-height:50px;padding:0 18px;background:#eff3f6;}
+.commonBox .titWrap h2{float:left;font-size:16px;color:#666;}
+.commonBox .help{float:right;width:28px;height:28px;margin-top:11px;background:url(../images/help.png) no-repeat 0 0;cursor:pointer;}
+.commonBox .info{min-height:150px;height:auto;padding-bottom:20px;border-bottom:1px solid #cecedc;}
+.commonBox .info .list,.commonBox .info .item{float:left;height:30px;line-height:30px;margin:18px 0 0 25px;border:1px solid #c3c7cd;border-radius:3px;font-size:14px;font-weight:bold;background:#fff;color:#666;cursor:pointer;}
+.commonBox .info .tit{float:left;width:auto;min-width:70px;line-height:28px;padding:0 10px;text-align:center;}
+.commonBox .info .icon{float:left;width:35px;height:28px;background:#e5e8ed url(../images/option01.png) no-repeat center center;}
+.commonBox .list.on .icon{background:#e5e8ed url(../images/option02.png) no-repeat center center;}
+.commonBox .list.not{width:98px;text-align:center;border:none;background:#e5e8ed}
+
+
+
+/*表单属性修改*/
+.createdModifyContentArea .titleWrap .tit{margin-top:19px;font-size:14px;font-weight:bold;color:#666;}
+.showAttrWrap{border-left:none;border-right:1px solid #cecedc;}
+.showAttrWrap .titWrap{background:#e4eef2;}
+.commonBox .info .item{padding:0 20px;position:relative;}
+.extendBox .info .item{height:36px;line-height:36px;margin:25px 40px 10px 25px;border:none;background:#9198a2;color:#fff;_white-space:nowrap;}
+.commonBox .info .item span{position:absolute;top:-14px;right:-30px;padding:0 7px;height:25px;line-height:25px;border-radius:25px;text-align:center;font-size:12px;}
+.commonBox .item.on1 span{background:#e48577;}
+.commonBox .item.on2 span{background:#79c5e1;}
+.commonBox .item.on3 span{background:#8ccf9b;}
+.extendBox .info .addBtn{background:#67b9c2 url(../images/addBtn.png) no-repeat 20px center;text-indent: 25px;}

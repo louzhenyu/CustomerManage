@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<title></title>
+<link href="css/c.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript" src="js/smart.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+
+<body>
+<div class="OrderCommon" >
+  <div class="OrderCommonMenu">
+    <div class="OrderCommonMenuTab HoverTab" onclick="Tab(1,this)">待处理</div>
+    <div class="OrderCommonMenuTab" onclick="Tab(2,this)">已处理</div>
+  </div>
+  <div class="OrderdivTabel">
+    <table width="100%" border="0" class="OrderTabel" id="ConnextID">
+    </table>
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="/OnlineClothing/images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+$(function(){
+	GetOrder("1")		
+})
+function Tab(star,o){
+	$(".OrderCommonMenuTab").removeClass("HoverTab");
+	$(o).addClass("HoverTab");
+	$("#ConnextID").html('');
+	GetOrder(star)
+}
+</script>
+<script type="text/template" id="OrderScript">
+<tr style="background-color:#f2f2f2;">
+      <%if (status == "1"){ %>  <td width="60">操作</td><%}%>
+        <td>订单编号</td>
+		<td>会员名称</td>
+		<td>金额(元)</td>
+        <td>商品数量</td>
+        <td>手机号</td>
+        <td> 配送方式</td>
+        <td>地址</td>
+        <td>交易时间</td>
+</tr>
+<%if(orderList.length > 0){%>
+ 	<% _.each(orderList,function(item,key){%>
+ <tr <%if(key%2 != 0){%> style="background-color:#fcfbfb;" <%}%> id="order_<%=item.orderId%>">
+       <%if (status == "1"){ %>  <td><a href="javascript:" onclick="DelOrder('<%=item.orderId%>')" id="Load_<%=item.orderId%>">完成</a></td><%}%>
+        <td><%if(item.orderNo==""){%>&nbsp;<%}%><%=item.orderNo%></td>
+		<td><%if(item.vipName==""){%>&nbsp;<%}%><%=item.vipName%></td>
+		<td><%if(item.totalAmount==""){%>&nbsp;<%}%><%=item.totalAmount%></td>
+        <td style="color:#0f6ded"><%if(item.itemCount==""){%>&nbsp;<%}%><%=item.itemCount%></td>
+        <td><%if(item.phone==""){%>&nbsp;<%}%><%=item.phone%></td>
+        <td><%if(item.deliveryName==""){%>&nbsp;<%}%><%=item.deliveryName%></td>
+        <td><%if(item.address==""){%>&nbsp;<%}%><%=item.address%></td>
+        <td><%if(item.createTime==""){%>&nbsp;<%}%><%=item.createTime%></td>
+      </tr>
+	 <%})%>
+	<%}else{%>
+	 <tr>
+	 <td colspan="<%if (status == "1"){ %>9<%}else{%>8<%}%>" align="center">没有数据！</td>
+        </tr>
+	<%}%>
+</script>
+</body>
+</html>

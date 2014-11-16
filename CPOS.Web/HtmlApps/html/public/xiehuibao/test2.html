@@ -1,0 +1,82 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title >test2</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+<style type="text/css">
+  
+#test1{
+ width: 50%;
+ background-color: blue;
+ height: 200px;
+/* transition:all 1s;*/
+-webkit-transition: left 1s;
+-moz-transition: left 1s;
+
+left: 5000px;
+position: absolute;
+}
+#test1.on{
+left: 0;
+
+
+}
+
+
+</style>
+
+</head>
+
+<body>
+ 
+
+<div id="test1" >  
+
+<!-- sdfdsf -->
+
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+ <a href="javascript:$('#test1').addClass('on')"  >测试</a>
+</body>
+</html>
+
+<script type="text/javascript"  src="../../../lib/jquery-1.8.3.min.js"  ></script>
+<script type="text/javascript">
+	var cookie = {
+		SetCookie:function(name,value,expires,path){var expdate=new Date();expdate.setTime(expdate.getTime()+(expires*1000));document.cookie=name+"="+escape(value)+"; expires="+expdate.toGMTString()+( ( path ) ? ";path=" + path : "" )}, 
+		GetCookie:function(name){var arg=name+"=";var alen=arg.length;var clen=document.cookie.length;var i=0;while(i<clen){var j=i+alen;if(document.cookie.substring(i,j)==arg)return this.GetCookieVal(j);i=document.cookie.indexOf(" ",i)+1;if(i==0)break};return""},
+		GetCookieVal:function(offset){var endstr=document.cookie.indexOf(";",offset);if(endstr==-1){endstr=document.cookie.length};return unescape(document.cookie.substring(offset,endstr))},
+	};
+
+
+!function(a) {
+
+alert(a);
+}(2);
+
+
+(function(a){
+alert(a);
+
+})(1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>

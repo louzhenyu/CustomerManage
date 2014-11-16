@@ -1,0 +1,70 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="OrderSubmit">预订房间</title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="clearfix">
+                <li><a href="javascript:Jit.AM.pageBack()">返回</a></li>
+                <li><a href="#">账户</a></li>
+                <li><a href="#">用户</a></li>
+                <li><a href="javascript:Jit.AM.toPage('Reserve');">首页</a></li>
+            </ul>
+        </nav>
+    </header>
+    <section class="wrap">
+  <div class="mod mod_order order_info">
+    <ul>
+      <li fvalue='storeName'>酒店：</li>
+      <li fvalue='itemName'>房型：</li>
+      <li fvalue='inDate'>入住时间：</li>
+      <li fvalue='outDate'>离店时间：</li>
+      <li>入住人姓名
+        <p>
+          <input type="text" value="" id="txtUserName"/>
+        </p>
+      </li>
+      <li> 手机
+        <p>
+          <input type="text" value="" id="txtPhone" />
+        </p>
+      </li>
+      <li>房间数
+        <p class="fore br-5">
+          <input type="button" value="-" onclick="JitPage.fnSub()"/>
+          <input type="text" value="1" id="goods_number"/>
+          <input type="button" value="+" onclick="JitPage.fnAdd()" />
+        </p>
+      </li>
+      <li>房价信息
+        <div class="table">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="tblWeek">
+          <tr>
+            <th scope="col">周日</th>
+            <th scope="col">周一</th>
+            <th scope="col">周二</th>
+            <th scope="col">周三</th>
+            <th scope="col">周四</th>
+            <th scope="col">周五</th>
+            <th scope="col">周六</th>
+          </tr>           
+        </table>
+        </div>
+      </li>
+      <li>您选择了<b style="font-weight: bold;" fvalue="number">1</b>间，总金额：<b style="font-weight: bold;" fvalue="amount">0</b></li>
+    </ul>
+  </div>
+    </section>
+    <div class="total">
+        <a href="javascript:JitPage.fnSubmit();">确定</a> 合计：￥<b style="font-weight: bold;" fvalue="amount">0</b>
+    </div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title name="NewsList">资讯</title>
+<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</head>
+
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<section>
+    <div style="position:fixed;top:0;">
+        <img class="commonTopBg" src="/HtmlApps/images/public/repository/topBg.jpg" alt=""/>
+        <div class="listNavArea" id="classScroll">
+            <div class="navWrap clearfix">
+                <a class="on" id="hottab" onclick="JitPage.getHotNews()"><span>热门</span></a>
+            </div>
+        </div>
+    </div>
+	
+    
+    <div class="hotspotList" id="resultListScroll">
+    	<ul id="newslist">
+            
+        </ul>
+        <div id="getNextPage" class="hide" style="height:30px;line-height:30px;text-align:center;">刷新</div>
+    </div>
+    
+</section>
+<script id="Tpl_news_item" type="text/template">
+    <li>
+        <a onclick="JitPage.toPage('NewsDetail','itemId={{NewsId}}')">
+            <img class="pic" src="{{ImageUrl}}" alt="">
+            <figure class="info">
+                <p class="text">{{NewsTitle}}</p>
+                <span class="date">{{PublishTime}}</span>
+            </figure>
+        </a>
+    </li>
+</script>
+
+<script id="Tpl_news_hot_item" type="text/template">
+    <li>
+        <a onclick="JitPage.toPage('NewsDetail','itemId={{newsID}}')">
+            <img class="pic" src="{{imageUrl}}" alt="">
+            <figure class="info">
+                <p class="text">{{title}}</p>
+                <span class="date">{{createTime}}</span>
+            </figure>
+        </a>
+    </li>
+</script>
+
+</body>
+</html>

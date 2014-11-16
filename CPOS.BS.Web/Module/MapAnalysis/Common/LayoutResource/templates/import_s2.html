@@ -1,0 +1,37 @@
+<div class="winBoxer" style="width:492px">
+    <div class="winCaption">
+        <span class="winCaption_icon tImport"></span>
+        <a class="winCaption_btnClose" href="###">关闭</a>
+    </div>
+    <div class="winContent contShare">
+        <b class="h3">上传数据</b>
+        <ul>
+            <li class="process">
+                <div class="step_num">
+                    <span class="sn1">1</span><span class="sn2">2</span> <span class="sn3">3</span>
+                </div>
+                <span class="process_line"></span>
+
+                <div class="step_pic">
+                    <span class="sp1 sp_complete"></span><span class="sp2 sp_current"></span> <span class="sp3"></span>
+                </div>
+                <div class="step_txt">
+                    <span class="st1">模板选择</span><span class="st2">上传数据</span><span class="st3">完成</span>
+                </div>
+            </li>
+            <li class="select">
+                <a class="btnSelect" href="./LayoutResource/templates/import_s3.html">选择数据上传</a>
+            </li>
+            <li class="txtFormat">
+                <span>目前支持数据文件格式：Excel2003 ,2007,2010</span>
+            </li>
+        </ul>
+    </div>
+    <div class="clearFix_12"></div>
+</div>
+<script type="text/javascript">
+    $("a.btnSelect").fancybox({
+        'showCloseButton': false,
+        'padding': 0
+    });
+</script>

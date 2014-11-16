@@ -1,0 +1,55 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="GoodsList"></title>
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</head>
+
+<body style="background-color:#eaeaea ">
+<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<section class="goods_wrap" style="margin-top:3em;" >
+
+<div>
+    <a href="#" id="goodsTitleUrl">
+		<img src=""/>
+	</a>
+</div>
+     <nav id="topNav">
+        <ul>
+          <li  style="display:none;"  ><a href="javascript:Jit.AM.pageBack();"></a></li>
+          <li><a href="javascript:Jit.AM.toPage('MyOrder');"></a></li>
+          <li><a href="javascript:Jit.AM.toPage('GoodsCart');"><span id="menuCartCount"></span> </a></li>
+          <li> <a href="javascript:Jit.AM.toPage('IndexShop');"></a></li>
+        </ul>
+    </nav>
+  <div class="goods_list_cell">
+    <section tplpanel="goods_list" class="clearfix">
+    </section>
+  </div>
+</section>
+</body>
+<script id="Tpl_goods_list" type="text/template">
+	<div class="bigGoodsList">
+        <div class="bigGoodsBox">
+        	<a href="javascript:Jit.AM.toPage('GoodsDetail','&goodsId={{itemId}}')">
+	            <img class="listPic" src="{{imageUrl}}" alt=""/>
+	            <div class="goodsInfo">
+	            	<h2 class="tit">{{itemName}}</h2>
+	                <p class="passage">路虎揽胜极光在每一个街角，都能受到世人瞩目。其现代独到的设计和轮廓，让您在城市中脱颖而出。</p>
+	                <div class="wrap">
+	                	<span class="buyBtn">立即购买</span>
+	                	<del>原价：￥{{price}}</del>
+						<p class="price">价格：<strong>￥{{salesPrice}}</strong></p>
+	                    
+	                </div>
+	            </div>
+	         </a>
+         </div>
+    </div>
+</script>
+</html>

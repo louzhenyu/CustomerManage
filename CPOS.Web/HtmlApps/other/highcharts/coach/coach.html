@@ -1,0 +1,158 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="x-rim-auto-match" content="none">
+		<title>coach</title>
+		<link href="/HtmlApps/css/base/global.css" rel="stylesheet" type="text/css" />
+		<style type="text/css">
+			/*common*/
+			html, body, body > section {
+				height: 100%;
+				min-height: 100%;
+			}
+			body > section {
+				max-width: 640px;
+				margin: 0 auto;
+			}
+			body {
+				font: 15px/1.2em "Microsoft YaHei";
+				background: #ffffff;
+				color: #242424;
+			}
+
+			.coachChartList {
+				background: #e0e0e0;
+			}
+			.coachChartList ul {
+				padding-left: 15px;
+				background: #f9f9f9;
+			}
+			.coachChartList li {
+				height: 66px;
+				border-bottom: 1px solid #cfcfcf;
+			}
+			.coachChartList ul li:nth-last-of-type(1) {
+				border-bottom: none;
+			}
+			.coachChartList li img {
+				float: left;
+				width: 50px;
+				height: 65px;
+			}
+			.coachChartList .info {
+				margin-left: 70px;
+				padding-top: 21px;
+			}
+			.coachChartList .pt-14 {
+				padding-top: 14px;
+			}
+		</style>
+	</head>
+	<body>
+		<section class="coachChartList">
+			<ul>
+				<li>
+					<a href="coachUsers.html" id="userreport"> <img src="images/01.png" alt="" />
+					<div class="info">
+						<h3>Coach－参与者统计表</h3>
+					</div> </a>
+				</li>
+				<!--<li>
+					<a href="coachBar.html"> <img src="images/02.png" alt="" />
+					<div class="info">
+						<h3>Coach－按评分项统计柱状图</h3>
+					</div> </a>
+				</li>-->
+				<li>
+					<a href="coachLine.html" id="line1report"> <img src="images/03.png" alt="" />
+					<div class="info">
+						<h3>Coach－平均得分 按月统计折线图</h3>
+					</div> </a>
+				</li>
+				<li>
+					<a href="coachPie.html" id="radarreport"> <img src="images/04.png" alt="" />
+					<div class="info">
+						<h3>Coach－按评分项统计蛛网图</h3>
+					</div> </a>
+				</li>
+				<li style="height:5px">
+				</li>
+				<li>
+					<a href="coachCircle.html" id="barreport"> <img src="images/02.png" alt="" />
+					<div class="info pt-14">
+						<h3>Coachee-
+						<br>
+						Strength&Opportunity 统计图</h3>
+					</div> </a>
+				</li>
+				<li>
+					<a href="coachLine2.html" id="line2report"> <img src="images/03.png" alt="" />
+					<div class="info">
+						<h3>Coachee－平均得分 按月统计折线图</h3>
+					</div> </a>
+				</li>
+				<li>
+					<a href="coachUsers2.html" id="user2report"> <img src="images/01.png" alt="" />
+					<div class="info">
+						<h3>Coachee－Assess汇总表</h3>
+					</div> </a>
+				</li>
+			</ul>
+		</section>
+	</body>
+    <script type="text/javascript" src="../../../plugin/jquery_plugin/jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        var customerId, userid, token, email;
+        var systemParaString;
+        $(document).ready(function () {
+            customerId = request("customerid");
+            userid = request("userid");
+            token = request("token");
+            email = request("email");
+            systemParaString = "?CustomerId=" + customerId + "&UserId=" + userid + "&token=" + token + "&email=" + email;
+
+            var l = $(userreport).attr('href');
+            l = l + systemParaString;
+            $(userreport).attr('href', l);
+
+            l = $(line1report).attr('href');
+            l = l + systemParaString;
+            $(line1report).attr('href', l);
+
+            l = $(radarreport).attr('href');
+            l = l + systemParaString;
+            $(radarreport).attr('href', l);
+
+            l = $(barreport).attr('href');
+            l = l + systemParaString;
+            $(barreport).attr('href', l);
+
+            l = $(line2report).attr('href');
+            l = l + systemParaString;
+            $(line2report).attr('href', l);
+
+            l = $(user2report).attr('href');
+            l = l + systemParaString;
+            $(user2report).attr('href', l);
+        });
+
+        function request(paras) {
+            var url = location.href;
+            var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+            var paraObj = {}
+            for (i = 0; j = paraString[i]; i++) {
+                paraObj[j.substring(0, j.indexOf("=")).toLowerCase()] = j.substring(j.indexOf("=") + 1, j.length);
+            }
+            var returnValue = paraObj[paras.toLowerCase()];
+            if (typeof (returnValue) == "undefined") {
+                return "";
+            } else {
+                return returnValue;
+            }
+        }
+    </script>
+</html>
+

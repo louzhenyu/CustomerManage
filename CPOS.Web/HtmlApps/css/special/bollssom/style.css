@@ -1,0 +1,299 @@
+@charset "utf-8";
+html,body,body>section{min-height:100%;}
+body{background:#fff;}
+.pt-50-pb-45{padding:50px 0 45px;}
+
+/*公共的头部导航*/
+.commonHeader{position:fixed;top:0px;left:0;right:0;z-index:999;}
+.commonNav{height:50px;padding:0 10px;border-bottom:1px solid #e2e1e0;background:#fff;}
+.commonNav li{float:right;width:50px;text-align:center;}
+.commonNav li a{display:inline-block;width:35px;height:50px;background:url(../../../images/special/bollssom/commonIcon.png) no-repeat;background-size:35px 596px;}
+.commonNav .getBack{float:left;}
+/*.commonNav .getBack a{background-position:0px 12px;}
+.commonNav .home a{background-position:0px -75px;}
+.commonNav .user a{background-position:0px -32px;}
+.commonNav .affirm a{background-position:0px -119px;}*/
+.commonNav .getBack a{background-position:0px 9px;}
+.commonNav .home a{background-position:0px -95px;}
+.commonNav .user a{background-position:0px -43px;}
+.commonNav .affirm a{background-position:0px -148px;}
+
+/*公共的页脚*/
+.commonFooter{position:fixed;bottom:0px;left:0;right:0;z-index:999;}
+.footerWrap{height:45px;line-height:45px;border-top:1px solid #e2e1e0;background:#fff;color:#8a8a8a;}
+.footerWrap p{text-align:center;}
+.footerWrap p a{display:inline-block;padding-left:30px;}
+.footerWrap .telBtn a{background:url(../../../images/special/bollssom/commonIcon.png) no-repeat;background-size:30px 500px;background-position:5px -205px;}
+
+/*公共的横幅banner滑动切换*/
+/*-webkit-transition:all 0.5s ease-in-out;*/
+.commonBanner{position:relative;max-width:320px;height:265px;margin:0 auto;overflow:hidden;}
+.commonBanner .picList{width:1000%;height:265px;z-index:99;}
+.commonBanner .picList li{float:left;width:320px;height:265px;}
+.commonBanner .picList li img{width:100%;height:100%;display:block;}
+.commonBanner .asideShow{height:42px;padding-top:2px;letter-spacing:1px;position:absolute;bottom:0;left:0;right:0;text-align:center;background:rgba(0,0,0,0.5);z-index:9999;}
+.commonBanner .describe{height:21px;font-weight:bold;color:#fff;}
+.commonBanner .dot{display:inline-block;margin:4px 0 2px;}
+.commonBanner .dot em{float:left;width:10px;height:10px;margin-left:10px;border-radius:10px;background:#ccc;}
+.commonBanner .dot .on{background:#fff;}
+
+
+/*首页*/
+.indexPage .bgPic{background:url(../../../images/special/bollssom/bg.png) no-repeat left 230px;background-size:181px 228px;}
+.logoText{padding:35px 0;text-align:center;}
+.logoText img{width:107px;height:32px;}
+.indexPage .selectArea{padding:0 20px;}
+.indexPage .selectArea select{display:block;width:100%;height:32px;padding-left:10px;border:none;background:none;-webkit-appearance:none;color:#010101;}
+.indexPage .selectArea p{display:-webkit-box;display:-moz-box;display:box;margin-bottom:18px;}
+.indexPage .selectArea .tit{display:block;height:32px;line-height:32px;color:#8a8a8a;}
+.indexPage .selectArea .box{position:relative;height:32px;line-height:32px;display:block;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;margin-left:25px;text-indent:10px;border-bottom:1px solid #e1e1e1;color:#010101;}
+.indexPage .selectArea p:nth-child(1) .box:after,.indexPage .selectArea p:nth-child(3) .box:after{content:'';position:absolute;top:9px;right:9px;width:10px;height:10px;border-top:1px solid #818390;border-right:1px solid #818390;-webkit-transform:rotate(45deg);}
+.selectArea .searchBtn{display:block;width:75%;height:32px;line-height:32px;margin:40px auto;letter-spacing:2px;background:#763448;color:rgba(255,255,255,0.9);}
+
+
+/*日期的选择*/
+.btn_date {position:fixed;width:100%;top:50px;display:-webkit-box; text-align:center;padding:20px;background:#fff;}
+.btn_date a {-webkit-box-flex:1;height:30px; padding:5px 0;display:block;background:#fff; }
+.btn_date a:nth-child(2) { margin-left:20px;}
+.btn_date .active {border:1px solid #F2805C; background:#F5EEDC;}
+.btn_date .wrap{padding:5px;border-bottom:1px solid #ccc;}
+
+.btn_date dt { font-size:16px; position:relative;}
+.btn_date a dt:before {content:""; position:absolute; left:0; top:1px; width:20px; height:20px; background-size:27px auto;}
+.btn_date a:first-child dt:before { background-position:0px -226px;}
+.btn_date a:last-child dt:before { background-position:0px -189px;}
+.btn_date dd span:first-child { float:left;margin-left:10px;}
+.btn_date dd span:last-child { float:right;margin-right:10px;}
+
+.dateWrapList{background:url(../../../images/special/bollssom/bg2.png) repeat-y 0 0;background-size:320px 416px;margin:110px 0 45px;}
+.cui_cldunit { margin:70px 27px 15px;text-align:center;}
+
+.cui_cldmonth { height:40px; line-height:50px;margin-bottom:10px;border-bottom:1px solid #ccc;color:#8a8a8a; font-size:18px;}
+
+.cui_cldweek { width:100%; height:30px;}
+.cui_cldweek li { float:left; width:14%;color:#8a8a8a}
+.cui_cldweek li:first-child,.cui_cldweek li:last-child { }
+
+.cui_cld_daybox { overflow:hidden;}
+.cui_cld_daybox li { float:left; width:14%; height:48px; line-height:45px; padding:4px 0;}
+.cui_cld_daybox li:nth-child(7n),.cui_cld_daybox li:nth-child(7n+1) {color:#ff902d}
+.cui_cld_day_nocrtmonth {visibility:hidden}
+.cui_cld_day_havetxt em,.cui_cld_nopro em,.cui_cld_haspro em,.cui_cld_daycrt em { display:block; line-height:20px; font-size:12px}
+.cui_cld_daybox .no_i_tag em{line-height:40px;}
+.cui_cld_day_havetxt i,.cui_cld_nopro i,.cui_cld_haspro i,.cui_cld_daycrt i { display:block; line-height:15px; font-size:12px}
+.cui_spandate {line-height:22px;display:block}
+.cui_cld_daybox li{color:#8a8a8a!important}
+.cui_cld_daybox li.cui_cld_daycrt{background:url(../../../images/special/bollssom/commonIcon.png) no-repeat;background-size: 33px 645px;background-position:center -324px;color:#fff!important}
+
+/*房列表页*/
+.houseListNav{background:rgba(0,0,0,0.3);border:none;}
+.houseListNav .getBack a{background-position:0px -353px;}
+.houseListNav .home a{background-position:0px -408px;}
+.houseListNav .user a{background-position:0px -471px;}
+
+.houseListArea{max-width:640px;margin:0 auto;}
+.chooseDateArea{padding:10px 15px;border-bottom:1px solid #e2e1e0;}
+.chooseDateArea .dateWrap{width:100%;display:-webkit-box;display:-moz-box;display:box;}
+.chooseDateArea .dateWrap span{margin-right:5px;display:block;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;font-size:15px;color:#8a8a8a;}
+.chooseDateArea .dateWrap span:nth-last-child(1){min-width:24px;color:#76374a;-webkit-box-flex:0;-moz-box-flex:0;box-flex:0;margin-right:0px;}
+.chooseDateArea .dateWrap span:nth-child(1) b,.chooseDateArea .dateWrap span:nth-child(2) b{margin-right:5px;}
+
+.houseList{padding:5px 0 50px;}
+.houseList li{position:relative;}
+.houseList li a{display:-webkit-box;display:-moz-box;display:box;padding:0 25px;width:100%;height:95px;border-bottom:1px dashed #ededed;}
+.houseList li:nth-last-child(1) a{border-bottom:none;}
+.houseList .imgBox img{width:75px;height:75px;margin-top:10px;border-radius:50%;}
+.houseList .infoBox{padding:0 5px 0 10px;-webkit-box-flex:1;-moz-box-flex:1;box-flex:1;}
+.houseList .infoBox span{display:block;color:#8a8a8a;}
+.houseList .infoBox .name{height:21px;margin:10px 0 3px 0;overflow:hidden;font-weight:bold;color:#0a0a0a;}
+.houseList .infoBox .price{color:#763549;}
+.houseList .infoBox .bazaarPrice{}
+.houseList .book{display:block;width:60px;height:26px;line-height:26px;margin-top:38px;text-align:center;background:#753448;color:rgba(255,255,255,0.9);}
+.houseList .fullStatus .book{background:#c7c7c7;}
+.houseList .mark{display:none;position:absolute;top:0px;right:5px;width:40px;height:40px;}
+.houseList .fullStatus .mark{display:block;}
+
+.footerWrap.specialFooter{display:-webkit-box;}
+.specialFooter .locationBtn{-webkit-box-flex:1;width:176px;height:45px;overflow: hidden;}
+.specialFooter .telBtn{-webkit-box-flex:1;}
+.specialFooter a{font-size:12px;}
+
+.footerWrap .locationBtn a{background:url(../../../images/special/bollssom/commonIcon.png) no-repeat;background-size:30px 500px;background-position:5px -444px;}
+
+
+/*房的详情页*/
+.bookingArea{display:-webkit-box;display:-moz-box;width:100%;height:55px;padding:0px 10px;border-bottom:1px solid #e2e1e0;color:#8a8a8a;}
+.bookingArea .name{margin-top:18px;color:#0f0f0f;-webkit-box-flex:1;-moz-box-flex:1;}
+.bookingArea .info{margin:6px 15px 0 10px;font-size:15px;}
+.bookingArea .info span{display:block;color:#783348;}
+.bookingArea .bookBtn{display:block;width:80px;height:30px;line-height:30px;margin-top:13px;text-align:center;background:#763448;color:#fff;}
+
+.detailExplain{padding:20px 30px 10px;}
+.detailExplain.ptpb{padding:55px 15px 45px;}
+.detailExplain .pic{float:left;}
+.detailExplain .pic img{width:100px;height:100px;border-radius:50%;}
+.detailExplain .exp{float:left;margin-left:20px;color:#8a8a8a;}
+.detailExplain .exp p{line-height:25px;}
+
+.shareArea{padding:0 10px 55px 0;text-align:right;}
+.shareArea .btn_share{display:inline-block;padding-left:30px;color:#8a8a8a;background:url(../../../images/special/bollssom/commonIcon.png) no-repeat;background-size:30px 500px;background-position:5px -176px;}
+
+
+
+/*订单填写*/
+.bookFillInfoArea,.orderListArea,.orderDetailArea,.introduceDetail{background: url(../../../images/special/bollssom/bg2.png) repeat-y 0 0;background-size: 320px 416px;height:auto;}
+.bookFillInfo{padding:15px 15px 5px;color:#8a8a8a;}
+.bookFillInfo li {padding:5px 0;}
+.bookFillInfo li p {position:relative; margin-top:5px;}
+.bookFillInfo li p input[type="text"],.bookFillInfo li p input[type="tel"] {border:1px solid #e2e1e0;color:#333; padding:5px 10px;}
+.bookFillInfo li .fore {width:142px;height:42px;border:2px solid #a4a6af;}
+.bookFillInfo .fore .minus,.bookFillInfo .fore .add{position:relative;float:left;width:45px;height:38px;}
+.bookFillInfo .fore .num{float:left;width:48px;height:38px;border:2px solid #a4a6af;border-width:0 2px 0 2px;text-align:center;font-size:18px;}
+
+.bookFillInfo .fore .minus:before,.bookFillInfo .fore .add:before{content:"";width:16px;height:2px;background:#753448;position:absolute;top:19px;left:15px;}
+.bookFillInfo .fore .add:after{content:"";width:2px;height:16px;background:#753448;position:absolute;top:12px;left:22px;}
+
+.bookFillInfo li p.fore input[type="button"] { width:44px;background:#8a8a8a; padding:6px 0px; text-align:center;font-size:16px;color:#fff;}
+.bookFillInfo li p.fore input[type="text"],.bookFillInfo li p.fore input[type="tel"] { border:0;-webkit-box-shadow:none;box-shadow:none; width:100px; text-align:center;}
+.bookFillInfo li .table { margin:5px 0px;}
+.bookFillInfo td{vertical-align: top;}
+.bookFillInfo li th {color:#763448; padding:10px 0px; text-align:center;}
+.bookFillInfo li td {padding:10px 2px;}
+.bookFillInfo li .tdline span{display:inline-block;width:100%;height:85px;border:1px solid #e2e1e0;}
+.bookFillInfo li .tdline span.on {border:1px solid #753448;}
+.bookFillInfo li .tdline em{font-size:12px;}
+.bookFillInfo li:last-child { border:none;}
+.showInfoArea{margin-bottom:10px;padding:10px 15px;border-top:1px solid #e2e1e0;border-bottom:1px solid #e2e1e0;font-size:13px;color:#8a8a8a;}
+.confirmBtnArea a,.canceOrderBtn{display:block;width:60%;height:35px;line-height:35px;margin:0 auto 20px;text-align:center;letter-spacing:5px;background:#763448;color:#fff;}
+.remindArea{padding:10px 15px;color:#763448;}
+.remindArea p{line-height:20px;}
+
+/*订单列表页*/
+.orderListArea{background-position:right 50px;}
+.orderListArea .orderListBox{margin:0 15px;color:#8a8a8a;}
+.orderListArea .orderListBox dl{padding:10px 5px 0px;}
+.orderListArea .orderListBox dt{margin-bottom:15px;}
+.orderListArea .orderListBox dd p:nth-last-child(1){padding-bottom:20px;border-bottom:1px solid #e2e1e0;width:60%;}
+.orderListArea .orderListBox:nth-last-child(1) dd p:nth-last-child(1){border-bottom:none;}
+.orderListArea .serialNumber{margin-bottom:15px;}
+.orderListArea .orderListBox .price{margin:15px 0;}
+.orderListArea .orderListBox .status{color:#763448;}
+
+/*订单详情*/
+.orderDetailArea{background-position:0px 50px;}
+.orderDetailArea .orderDetailBox{margin-bottom:30px;padding:10px 15px 15px;color:#8a8a8a;border-bottom:1px solid #e2e1e0;}
+/*.orderDetailArea .markArea{position:relative;margin-bottom:15px;padding:5px 15px;background:#eae9e8;color:#8a8a8a;}
+.orderDetailArea .markArea:after{content:'';position:absolute;left:45px;bottom:-5px;width:10px;height:10px;background:#eae9e8;-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);transform:rotate(45deg);}*/
+.orderDetailBox .orderDate,.orderDetailBox .gg,.orderDetailBox .linkTel,.orderDetailBox .qty,.orderDetailBox .remark{margin-bottom:15px;}
+.orderDetailBox .optiontext{color:#763448;}
+.orderDetailArea .canceOrderBtn{letter-spacing:2px;}
+
+/*选择酒店列表*/
+.storeListArea{}
+.storeListArea li{position:relative;padding:6px 20px;border-bottom:1px solid #e2e1e0;}
+.storeListArea li:nth-last-child(1){border-bottom:none;}
+.storeListArea a{display:block;font-size:13px;color:#747474;}
+.storeListArea .imgBox{float:left;}
+.storeListArea .imgBox img{display:block;width:80px;height:80px;border-radius:50%;}
+.storeListArea .infoBox{display:table-cell;width:3000px;padding:10px 0 0 10px;overflow:hidden;}
+.storeListArea .infoBox .name{display:-webkit-box;margin-top:3px;line-height:27px;font-size:14px;font-weight:bold;color:#0a0a0a;}
+.storeListArea .infoBox .text{display:block;-webkit-box-flex:1;}
+.storeListArea .priceBox{display:block;padding-left:6px;color:#8a8a8a;}
+.storeListArea .priceBox strong{font-size:18px;color:#773348;}
+.storeListArea .infoBox .address{padding-left:15px;background:url(../../../images/special/bollssom/locationMark.png) no-repeat 0 3px;background-size:10px 14px;}
+.storeListArea .mark{display:none;position:absolute;top:0px;right:5px;width:40px;height:40px;}
+.storeListArea .fullStatus .mark{display:block;}
+
+/*酒店详情*/
+.introduceDetail { background-color:#fff;background-position:0 80px;padding-top:50px;}
+.introduceDetail nav { background:#eee0f7; width:100%; height:45px;}
+.introduceDetail nav ul {display:-webkit-box;-webkit-box-flex:1;-webkit-box-pack:center;}
+.introduceDetail nav ul li { width:25%; line-height:45px; text-align:center;}
+.introduceDetail nav ul li a { display:block; width:100%; height:100%; position:relative;color:#8a8a8a;}
+.introduceDetail nav ul li.cur a { background:#fff; }
+.introduceDetail nav ul li a:after {width:1px; height:45px; font-size:16px; color:#9FA2AB; position:absolute; right:-1px; top:0; display:block;}
+.introduceDetail article { padding:15px 20px;}
+.introduceDetail article h4 { margin-bottom:20px;}
+.introduceDetail article p { margin-bottom:20px;}
+.introduceDetail .contact { padding:15px 20px;}
+.introduceDetail .contact h4 { text-align:center; color:#047fe5; margin-bottom:10px;}
+.introduceDetail .contact h3 { font-size:18px; color:#3f76a4; margin-bottom:10px;}
+.introduceDetail .contact p { line-height:25px; color:#5c6372;}
+.introduceDetail .contact p a i { display:inline-block; vertical-align:-6px; width:10px; height:22px; background-size:25px auto;background: url(../../../images/special/bollssom/locationMark.png) no-repeat 0 3px; background-size:10px 14px;}
+.introduceDetail article span{white-space:normal!important;}
+
+
+
+
+/*动画*/
+#share-mask{display:none;position:fixed;top:0;left:0;bottom:0;right:0;background:rgba(0,0,0,0.7);z-index:9998;}
+#share-mask-img{display:none;position:fixed;top:0;right:25px;width:160px;height:130px;z-index:9999;}
+@-webkit-keyframes pullDown {0% { top:-130px;}30%{ top:90px;}50%{ top:-130px;}100% { top:0;}}
+.pullDownState{-webkit-animation:pullDown 0.7s ease-in-out 1;}/*infinite*/
+
+@-webkit-keyframes pullUp {0% { top:0px;}30%{ top:-130px;}50%{ top:90px;}100% {top:-130px;}}
+.pullUpState{-webkit-animation:pullUp 0.7s ease-in-out 1;}/*infinite*/
+
+
+/*分享，发送给朋友按钮的样式*/
+#mcover {position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(0, 0, 0, 0.7);display: none;z-index: 20000;}
+#mcover img {position: fixed;right: 18px;top: 5px;width: 160px!important;height: 130px!important;z-index: 20001;}
+.introduceDetail .text {margin: 15px 0;font-size: 14px;word-wrap: break-word;color: #727272;}
+#mess_share {margin: 15px 0;display: block;}
+#share_1 {float: left;width: 49%;display: block;}
+#share_2 {float: right;width: 49%;display: block;}
+.clr {display: block;clear: both;height: 0;overflow: hidden;}
+.button2 {font-size: 16px;padding: 8px 0;border: 1px solid #adadab;color: #000000;background-color: #e8e8e8;background-image: linear-gradient(to top, #dbdbdb, #f4f4f4);box-shadow: 0 1px 1px rgba(0, 0, 0, 0.45), inset 0 1px 1px #efefef;text-shadow: 0.5px 0.5px 1px #fff;text-align: center;border-radius: 3px;width: 100%;}
+#mess_share img {width: 22px!important;height: 22px!important;vertical-align: top;border: 0;}
+
+
+/*公共的弹出提示*/
+.popup {background:#333; padding:10px; width:90%; margin:0 auto;}
+.popup p.ac { padding:10px 0;}
+.popup_btn {display:-webkit-box;-webkit-box-flex:1;-webkit-box-pack:center;}
+.popup_btn a { display:block; height:40px; line-height:40px; width:48%; text-align:center; background:#3C3C3C; border:1px solid #000; color:#fff; -webkit-border-radius:5px;-o-border-radius:5px;border-radius:5px; font-size:14px; margin:0 5px;-webkit-box-shadow:inset 0 1px 3px rgba(255,255,255, 0.3);}
+
+/*优惠劵，积分*/
+.commonUseArea{margin-bottom:23px;}
+.commonUseArea .checkBox{float:left;width:23px;height:22px;background:url(../../../images/public/shop_default/checkBox.png) no-repeat 0px -43px;background-size:25px 75px;}
+.commonUseArea .on .checkBox{background-position:0px 0px;}
+.commonUseArea .tit{font-size:15px;font-weight:bold;color:#333;}
+.commonUseArea .optionBox{height:50px;line-height:50px;margin-top:6px;padding:0 13px;font-size:14px;border:1px solid #d0d0d0;background:#fff;color:#ccc;}
+.commonUseArea .pointer{float:right;width:9px;height:50px;background:url(../../../images/public/shop_default/pointer.png) no-repeat right center;background-size:9px 13px;}
+
+.actualPayAmount{font-size:15px;font-weight:bold;color:#f33;}
+
+/*优惠劵-弹层*/
+.commonPopup{display:none;position:fixed;left:10px;right:10px;top:60px;border-radius:6px;background:#f8f8f8;z-index:999;max-height: 75%;
+overflow: auto;}
+.commonPopup .titWrap{height:42px;line-height:42px;padding:0 18px;border-radius:7px 7px 0 0;border-bottom:1px solid #ccc;background:#f8f8f8;}
+.commonPopup .tit{float:left;font-size:15px;font-weight:bold;color:#333;}
+.commonPopup .okBtn{float:right;width:65px;height:26px;line-height:26px;margin-top:8px;font-size:12px;font-weight:bold;text-align:center;border-radius:5px;background:#76374a;color:#fff;}
+.commonPopup .contentWrap{min-height:50px;padding:18px;border-radius:0 0 7px 7px ;color:#999;}
+
+.commonPopup .item{height:40px;margin-bottom:20px;}
+.commonPopup .item:nth-last-of-type(1){margin-bottom:0px;}
+.commonPopup .radioBox{float:left;width:25px;height:25px;background: url("../../../images/public/shop_default/icon.png") no-repeat 0 -430px;background-size:25px 524px;}
+.commonPopup .on .radioBox{background-position: 0 -397px;}
+.commonPopup .off .radioBox{background-size:25px 524px;background-position: 0 -468px;}
+.commonPopup .info{float:left;font-weight:bold;font-size:12px;color:#999;}
+.commonPopup .exp{font-size:15px;color:#666;}
+.commonPopup .on .exp{color:#76374a;}
+
+/*提示-弹层*/
+.commonPopup .btnWrap{padding-bottom:18px;text-align:center;}
+.commonPopup .contentWrap>p{font-weight:bold;line-height:24px;text-align:center;}
+.commonPopup .btnWrap .btn{display:inline-block;width:42%;height:42px;line-height:42px;text-align:center;font-size:15px;font-weight:bold;background:#76374a;color:#fff;}
+.commonPopup .btnWrap .cancel,#cancel{background:#a0a0a0;}
+.commonPopup .btnWrap .btn:nth-of-type(2){margin-left:10px;}
+
+/*请输入支付密码-弹层*/
+.commonPopup .contentWrap input,.commonPopup .vCardBtn{display:block;width:100%;height:42px;text-indent:10px;font-size:14px;font-weight:bold;border:1px solid #ccc;;border-radius:4px;background:#fff;}
+
+/*请设置支付密码-弹层*/
+.commonPopup .formBox p{margin-bottom:6px;}
+.commonPopup .formBox p:nth-last-of-type(1){margin-bottom:0;}
+.commonPopup .vCardBox{display:-webkit-box;display:-moz-box;}
+.commonPopup .vCardBox input{display:block;-webkit-box-flex:1;-moz-box-flex:1;}
+.commonPopup .vCardBtn{margin-left:6px;width:auto;line-height:42px;padding:0 10px;text-indent:0px;text-align:center;font-size:12px;color:#f33;}
+

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE HTML> 
+<html>
+<head>
+  <script type="text/javascript">
+  (function(){  
+    var onBridgeReady =  function () {  
+   // 隐藏右上角的选项菜单入口;  
+    WeixinJSBridge.call('hideOptionMenu');
+    // 隐藏底部菜单;  
+    WeixinJSBridge.call('hideToolbar');
+    };  
+     if(document.addEventListener){  
+              document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);  
+            } else if(document.attachEvent){  
+              document.attachEvent('WeixinJSBridgeReady'   , onBridgeReady);  
+              document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);  
+            }  
+    })();  
+</script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+    <title name="UserEdit">编辑个人资料</title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+<div class="fxloading"><img width="40" height="40" src="../images/loading.gif"></div>
+  <section class="screen_wrap mb44">
+<div class="edittop">编辑个人资料</div>
+
+
+  <div class="info edit">
+    <dl>
+      <dt></dt>
+      <dd> <span>姓名/Name</span>
+        <p id="username"></p>
+      </dd>
+    </dl>
+    <dl>
+      <dt></dt>
+      <dd> <span>手机号码/Phone Number</span>
+        <input id="phone" type="text"  maxlength="62" />
+
+      </dd>
+    </dl>
+
+        <dl>
+      <dt></dt>
+      <dd> <span>公司/Company</span>
+                 <input id="company" type="text"  maxlength="62" />
+      </dd>
+    </dl>
+
+    <dl>
+      <dt></dt>
+      <dd> <span>职位/Position</span>
+                <input id="position" type="text"  maxlength="62"   />
+      </dd>
+    </dl>
+    <dl>
+      <dt></dt>
+      <dd> <span>邮箱/E-mail</span>
+                <input id="email" type="email"  maxlength="62"  />
+      </dd>
+    </dl>
+    <div > <a href="javascript:;" id="edit">确认</a>  </div>
+  </div>
+</section>
+    <dl class="bot_nav">
+        <dt><a href="javascript:Jit.AM.pageBack()">返回</a></dt>
+        <dd>
+            <a href="javascript:window.location.reload()">刷新</a></dd>
+        <dd>
+            <a href="javascript:Jit.AM.toPage('MyDetail')">个人中心</a></dd>
+   
+        <dd>
+            <a href="javascript:Jit.AM.toPage('HomePage')">首页</a></dd>
+    </dl>
+</body>
+</html>

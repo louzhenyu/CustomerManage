@@ -1,0 +1,47 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img { border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 12px; font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #4d4d4d; resize: none; outline: none; }
+body { background-color:#f3f5f5; }
+h1, h2, h3, h4, h5, h6 { font-size: 14px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+a { text-decoration: none; /*color: #377CA2;*/ }
+a:hover { text-decoration: underline; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 16px; margin: 0; padding: 0; }
+textarea, input { resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1 }
+.frdisplay{ float:right; display:block;}
+
+
+
+/*.header{ background:url(../images/headerbg.jpg) repeat-x left top; height:75px; clear:both; box-shadow:0 0 10px #b2b4b4;}*/
+.headerMenu{ float:right; width:400px; margin-right:20px; display:block; _display:inline;}
+.headerMenu li{ float:left; width:100px; text-align:center;}
+.headerMenu li a,.headerMenu li a:hover{ padding-top:45px; display:block; font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif; font-size:14px; color:#fff; text-decoration:none; font-weight:bold; }
+
+.MainConnext{ position:relative; clear:both; zoom:1}
+.MainMenu{ width:210px; background-color:#e7ebef; border-right:1px solid #708fad; position:absolute ; left:0; top:0;}
+.MainMenuA{ margin-left:0px; padding-top:20px;}
+.MainMenu h2{ height:36px; line-height:36px; background-color:#dae3ed; }
+.MainMenu h2 a,.MainMenu h2 a:hover{ height:36px; line-height:36px; color:#1f4266; font-size:14px; font-weight:bold; display:block; text-decoration:none; padding-left:18px;}
+.MainSecond{ clear:both; padding-bottom:12px; padding-top:5px;}
+.MainSecond dd{ height:36px; line-height:36px; clear:both; font-size:14px; padding:5px 0;padding-left:12px; }
+.MainSecond dd a,.MainSecond dd a:hover{ padding-left:38px;  line-height:36px; display:block; text-decoration:none;}
+.skinicn{ background-image:url(../images/skinicn.jpg); background-repeat:no-repeat;}
+.MainSecond dd a.m1hover,.MainSecond dd a.m1hover:hover{ background-position:left -5px; color:#15a3e1; font-weight:bold;}
+.m2{ background-position:left -57px;}
+.m3{ background-position:left -105px;}
+.m4{ background-position:left -155px;}
+.m5{ background-position:left -202px;}
+.m6{ background-position:left -250px;}
+.m7{ background-position:left -297px;}
+.MainSecond dd a:hover{ background-color:#dae3ed}
+.skinicn1{background-image:url(../images/skinicn2.png); background-repeat:no-repeat;}
+.hm1{ background-position:left 0;}
+.hm2{ background-position:left -82px;}
+.hm3{ background-position:left -170px;}
+.hm4{ background-position:left -248px;}
+.LcTu{background:url(../images/fxt_1.png) no-repeat left top;  width:580px; height:561px; margin-left:auto;  margin-right:auto; position:relative;}
+.WeixinPerson{ font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;}

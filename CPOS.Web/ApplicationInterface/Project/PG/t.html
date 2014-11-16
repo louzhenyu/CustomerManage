@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <title></title>
+    <script src="../../../Javascript/jquery-1.9.0.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(function () {
+            //绑定事件
+            $("#btnTest").click(fnTestClick);
+        });
+        function fnTestClick() {
+
+            var strUrl = $("#txtUrl").val();
+            strUrl = strUrl + "?type=" + $("#cmbType").val();
+            strUrl = strUrl + "&action=" + $("#cmbAction").val();
+            var req = $("#areaReq").val();
+            $("#areaUrl").val(strUrl + "&req=" + req);
+
+            $.ajax({
+                url: strUrl,
+                data: {
+                    "req": req
+                },
+                type: "POST",
+                success: function (data) {
+                    if (data) {
+                        //alert(data);
+                        $("#areaJson").val(data)
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <form id="form1">
+    例如：http://localhost:23130/ApplicationInterface/Project/PG/PGHandler.ashx
+    <div>
+        commUrl:<input type="text" id="txtUrl" style="width: 100%" value="http://localhost:23130/ApplicationInterface/Project/PG/PGHandler.ashx" />
+    </div>
+    <div>
+        Type：<select id="cmbType">
+            <option>Product</option>
+            <option>Project</option>
+        </select>
+        Action:<select id="cmbAction">
+            <option>GetPowerHour</option>
+            <option>VerifyIsMeetingChairman</option>
+            <option>GetAllAvailablePowerHour</option>
+            <option>GetCityPowerHourState</option>
+            <option>RegisterPowerHour</option>
+            <option>GetSingleCityPowerHour</option>
+            <option>ModifyPowerHourSiteAddress</option>
+            <option>AcceptPowerHourInvite</option>
+            <option>SubmitAppOrder</option>
+            <option>GetOrder</option>
+            <option>GetSubscribeOrderDetail</option>
+            <option>GetRunningServiceOrder</option>
+            <option>GetMasterTaskList</option>
+            <option>GetAvailablePowerHourTopics</option>
+            <option>MarkPowerHourAttendence</option>
+            <option>BatchImportUserList</option>
+            <option>TrainingCalendarLog</option>
+            <option>SavePowerHourSitePicutre</option>
+        </select></div>
+    req：<div>
+        <textarea id="areaReq" cols="200" rows="3"></textarea>
+    </div>
+    url：<div>
+        <textarea id="areaUrl" cols="200" rows="3"></textarea>
+    </div>
+    <div>
+        <input type="button" value="接口测试" id="btnTest" />
+    </div>
+    return JSON:
+    <div id="dvJson">
+        <textarea id="areaJson" cols="200" rows="20"></textarea>
+    </div>
+    </form>
+    <form id="f1" enctype="multipart/form-data" action="PGHandler.ashx?action=SavePowerHourSitePicutre&type=Product&req={}"
+    method="post">
+    <div>
+        <input id="File1" type="file" name="FileUp" />
+        <input id="Submit1" type="submit" value="PowerHourImage上传" />
+    </div>
+</body>
+</html>

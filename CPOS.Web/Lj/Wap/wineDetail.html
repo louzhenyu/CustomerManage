@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="format-detection" content="telephone=no" />
+<title>泸州老窖</title>
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript" src="js/htmlTemplates.js"></script>
+<script type="text/javascript" src="js/iscroll.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+
+
+<script type="text/javascript">
+var myScrollWine;
+
+function loadImGWine() {
+	myScrollWine = new iScroll('wrapper', {
+		snap: true,
+		momentum: false,
+		hScrollbar: false,
+		onScrollEnd: function () {
+			document.querySelector('#indicator > dd.active').className = '';
+			document.querySelector('#indicator > dd:nth-child(' + (this.currPageX+1) + ')').className = 'active';
+		}
+	 });
+}
+
+//document.addEventListener('DOMContentLoaded', loaded, false);
+</script>
+</head>
+
+<body>
+<div class="LZMenuWapper">
+<div class="LZMenu">
+  <div class="LZMenuInner" style="padding-left:30px;"><span class="frdisplay"></span> <a href="javascript:void(0)" class="BackPre" id="BackPrev" onClick="LZEvent.BackPre()"><span class="incSkin EventIcn0" id="BackPrev"></span></a>泸州老窖 </div>
+</div>
+</div>
+<div id="LZEventBase" style="overflow:hidden;">
+<div class="LZWineDetail" id="LZWineDetail" style="position:relative;" defaultleft="0" ><span class="blank" style="height:20px;"></span>
+  <div class="LZWineDetailInner" id="LZWineDetailInner"></div>
+  
+</div>
+ <div id="BackVipCardTip" style="display:none; position:relative"><img src="images/yd.png" width="100%"></div>
+<span class="blank" style="height:50px;"></span>
+</div>
+<style type="text/css">
+.AppBoxLConnnext,.AcppBoxLConnnext{ background-color:#fff;}
+.AppBoxLTitle{ height:20px; line-height:20px;}
+a.ClosePop{ width:30px; height:30px; right:8px; top:8px; z-index:33; left:auto;}
+a.ClosePop span.deTran{ width:30px; height:30px; background-position:-2px -372px; right:0; top:0;}
+#wrapper{width:280px; margin-left:auto; margin-right:auto; height:200px; overflow:hidden;position:relative; z-index:3}
+#wrapper img{ height:200px;}
+#scroller {width:280;height:100%;float:left;
+	padding:0;
+}
+#scroller ul {list-style:none;display:block;float:left;width:100%;height:100%;padding:0;margin:0;text-align:left;}
+
+#scroller li {display:block; float:left;width:280px; text-align:center; font-size:18px;
+}
+
+ #indicator > dd {display:block; float:left;list-style:none;padding:0; margin:0;}
+#indicator {position:absolute; z-index:9; bottom:10px; right:30px; height:20px;}
+
+#indicator > dd {text-indent:-9999em;width:8px; height:8px;-webkit-border-radius:4px;-moz-border-radius:4px;-o-border-radius:4px;border-radius:4px;background:#ddd;overflow:hidden;margin-right:4px;}
+#indicator > dd.active {background:#888;}
+#indicator > dd:last-child {margin:0;}
+</style>
+<div class="DingGou" style="display:none;bottom:-50px;" id="DingGou">
+  <input type="button"  value="购买" class="RuiHuanBtn1" onClick="LZEvent.LZWineGOSale()" style=" margin-top:7px; height:35px; line-height:35px; margin-right:0">
+  认购价：<span id="RenGouJia"></span></div>
+<div class="AppLayer" id="AppLayer" style="display:none;"></div>
+<div class="AdpLayer1" id="AdLayer1" style="display:none; z-index:1001; opacity:0.5;"></div>
+<div class="ApdpBoxL12" id="ApdpBoxL12" style="top: 20px; opacity: 1; z-index:1002; display:none;">
+	<div class="AppBoxLTitle"><a class="ClosePop" onclick="document.getElementById('ApdpBoxL12').style.display='none'; document.getElementById('AdLayer1').style.display='none'; document.getElementById('CddTipID').innerHTML='' " href="javascript:void(0)"><span class=" incSkin icn3 deTran"></span></a></div>
+  <div class="AcppBoxLConnnext">
+    <div class="cTipDiv">
+      <div class="cTipTitle">选择酒的品类</div>
+      <div id="CddTipID">
+      
+      </div>
+    </div>
+  </div>
+</div>
+<div style="position: absolute; left: 0; top: 0; display:none;  z-index:10000" class="loading"><img width="40" height="40" src="images/382.gif"></div>
+<input type="hidden" id="backPrevPosition" value="2">
+<input type="hidden" value="" id="itemId" /><input type="hidden" value="" id="skuId" /><input type="hidden" value="" id="salesPrice" /><input type="hidden" id="priceCID" value="" />
+<script type="text/javascript">
+$(function(){
+	LZEvent.getSkuDetail();	
+	if(getParam("back") != "1"){
+		$("#BackPrev").hide();
+		$("#BackPrev").parent().css("padding-left","3%");
+	}
+})
+</script>
+</body>
+</html>

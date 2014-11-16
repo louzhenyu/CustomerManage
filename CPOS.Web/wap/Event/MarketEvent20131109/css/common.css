@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img { border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 14px; font-family: THeiti,"微软雅黑",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #565656; resize: none; outline: none; }
+body { background-color:#eaedf1;}
+h1, h2, h3, h4, h5, h6 { font-size: 16px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 14px; margin: 0; padding: 0; }
+textarea, input[type="text"],input[type="password"],input[type="button"],input[type="submit"]{ resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1;  }
+.frdisplay{ float:right; display:block;}
+a,a:hover{ text-decoration:none; color:#7c7c7c;}
+.PcBox{ position:relative; margin-left:auto; margin-right:auto; overflow:hidden;  }
+.indexbox{ }
+.blank1{ height:1px; overflow:hidden; display:block; clear:both;}
+
+.MarketMenu{ height:55px; background-color:#fff; border-bottom:1px solid #d2d3d3; overflow:hidden}
+.iskin{ background-image:url(../images/skin.png); background-repeat:no-repeat;}
+.MenuBox{ display:block; width:195px; height:44px; background-position:-14px -13px; margin-left:30px; margin-top:4px;}
+.MarketBox{ border:1px solid #d2d3d3; background-color:#fff; width:840px; margin-left:20px; margin-top:20px; overflow:hidden;}
+.MarketBox .MarketTitle{ height:42px; overflow:hidden; background-repeat:repeat-x; background-position:left bottom; }	
+.MarketTitleIcn{ width:126px; height:26px; display:block; margin-left:20px; margin-top:9px; background-position:-13px -81px;}
+.MarketConnext{ clear:both; min-height:20px;}
+.MarketConnext ul.bp{ clear:both; padding:20px 0; border-bottom:1px solid #d2d3d3; overflow:hidden}
+.MarketConnext ul.bp li{ width:190px; margin-left:80px; border-right:1px solid #d2d3d3;  height:95px; float:left; display:block; _display:inline; }
+.MarketConnext ul.bp li i{ display:block; clear:both;}
+.li1{ background-position:-13px -111px;  width:126px; height:26px;}
+.li2{ background-position:-13px -144px;  width:126px; height:26px;}
+.li3{ background-position:-13px -177px;  width:126px; height:26px;}
+.li4{ background-position:-13px -218px;  width:126px; height:26px;}
+.li5{ background-position:-13px -250px;  width:126px; height:26px;}
+.li6{ background-position:-13px -282px;  width:126px; height:26px;}
+.MarketText{ clear:both; font-size:50px; font-weight:bold; padding-top:10px; position:relative;}
+.bf{ font-size:24px; margin-left:10px; position:absolute; left:85px; top:20px;}
+.MarketTitleIcn1{width:126px; height:26px; display:block; margin-left:20px; margin-top:9px; background-position:-13px -316px;}
+.MarketConnextBoxLeft{ border:1px solid #d2d3d3; width:120px; height:110px; float:left;}
+.MarketConnextBoxLeft img{ width:120px; height:110px;}
+.MarketConnextBoxRight{ float:left; display:block; _display:inline; margin-left:25px; line-height:22px;}
+.aod{ font-size:16px; font-weight:bold;}
+.MarketConnextBox{ padding:20px; overflow:hidden;  border-bottom:1px solid #d2d3d3;}
+.prizePerson{ padding-top:20px; font-size:16px; line-height:22px;}

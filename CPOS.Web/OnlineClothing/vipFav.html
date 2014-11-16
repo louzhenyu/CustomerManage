@@ -1,0 +1,65 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>收藏夹商品</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body>
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="aboutVipDiv" id="vipSureCart" style="display:none;">
+    <div class="vipCartBox" style="border-bottom:0; ">
+      <div class="vipCart" id="VipFav"> </div>
+      <div class="vipCartBoxBottom"></div>
+    </div>
+    
+    
+    <div style="width:94%; margin-left:auto; margin-right:auto; padding-bottom:50px;" id="LoginTip"></div>
+  </div>
+  <div class="MenuBox" id="MenuBox" rel="0"> </div>
+ 
+</div>
+<input type="hidden" value="1" id="deliveryId" />
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var Von = 'Vip.getItemKeep("1")';
+var loadMore = ['VipFav','Vip.getItemKeep()'];
+</script> 
+<script id="getItemKeep" type="text/template">
+
+<% _.each(itemList,function(item){%>
+ <div class="vipCartLi"itemId="<%=item.itemId %>" id="CartLi_<%=item.itemId %>" >
+            <ul>
+            
+              <li class="cartTD2" style="left:10px;"><img src="<%=item.imageUrl %>" /></li>
+              <li class="cartTD3" style="margin-left:80px; margin-right:10px;">
+                <div class="cartTD3Div"><%=item.itemName %><span class="guigeCC"><%=item.itemCategoryName %></span></div>
+				<Div style="overflow:hidden;"><span class="frdisplay" style="color:#b9b9b9;"><%=item.selDate%></span><span style="color:#e75e9e">￥<%=item.salesPrice %></span></div>
+				<div class="cartTD3InnerDiv" style="padding-top:10px;"><table width="100%" border="0">
+  <tr>
+    <td width="50" height="45" valign="middle"><a href="javascript:void(0)"  onclick="GetData.setItemKeep('<%=item.itemId%>','0','defav')"><img src="images/delFav.png" width="24"></a></td>
+     <td align="right" valign="middle"><a href="detail.html?itemId=<%=item.itemId %>"><img src="images/goumai.png" width="90"></a></td>
+  </tr>
+</table>
+</div>
+              </li>
+             
+             
+            </ul>
+          </div>
+<% })%>
+
+</script> 
+
+
+</body>
+</html>

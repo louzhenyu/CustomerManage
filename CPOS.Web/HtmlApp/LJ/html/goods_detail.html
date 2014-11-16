@@ -1,0 +1,98 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+	<title name="GoodsDetail"></title>
+	<link href="../css/global.css" rel="stylesheet" type="text/css" />
+	<link href="../css/style.css?ver=2" rel="stylesheet" type="text/css" />
+		
+	<script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch.js?ver=2"></script>
+</head>
+
+<body>
+<section class="goods_wrap">
+    <dl class="tool_bar clearfix">
+        <dt>
+            <a href="javascript:Jit.AM.pageBack();">返回</a>
+        </dt>
+        <dd>
+            <a href="javascript:Jit.AM.toPage('MyOrder');">用户</a>
+        </dd>
+        <dd>
+            <a href="javascript:Jit.AM.toPage('GoodsCart');">购物车</a>
+        </dd>
+        <dd>
+            <a href="javascript:Jit.AM.toPage('GoodsList');">列表</a>
+        </dd>
+    </dl>
+  <div class="goods_detail">
+    <div class="goods_img ac">
+
+ <!--    <img jitval="itemImage" src="" height="160"> -->
+  <div  id="goodsScroll"  >
+      <div class="goods_img_list"  >
+        <ul id="goodsImgs" >
+        <!--   <li>
+            <img height="160" src="." jitval="itemImage">
+
+            </li> -->
+        </ul>
+      </div>
+      <ul class="goods_img_bar" id="goodsImgBar">
+     <!--    <li class="on">1</li> -->
+      </ul>
+    </div>
+
+    </div>
+    <div class="goods_txt">
+      <h2 jitval="itemName"></h2>
+      <p><b jitval="itemPrice">会员价：￥</b><span>市场零售价：<del jitval="oldPrice">￥</del></span></p>
+    </div>
+    <div class="goods_parameter">
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="1"></dd>
+		</dl>
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="2"></dd>
+		</dl>
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="3"></dd>
+		</dl>
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="4"></dd>
+		</dl>
+		<dl name="propitem">
+			<dt name="prop_name"></dt>
+			<dd name="prop_option" propidx="5"></dd>
+		</dl>
+      <dl class="goods_num">
+        <dt>数量：</dt>
+        <dd>
+          <input type="button" id="btn_delNum" value=""><input id="goods_number" type="text" readonly="true" value="1"><input id="btn_addNum" type="button" value="">
+		  <label style="margin-left:10px;color:#c90000">可获积分：</label><label id="forpoint" style="color:#c90000"></label>
+        </dd>
+      </dl>
+      <dl class="goods_address" style="display:none">
+        <dt>配送：</dt>
+        <dd>
+          <select>
+            <option>成都</option>
+          </select>
+          <b>现货</b> <span style="display:none">无货</span> </dd>
+      </dl>
+    </div>
+    <div class="goods_btn"> <a href="javascript:JitPage.setItemKeep()" id="btn_keep">&nbsp;</a> <a href="javascript:JitPage.addToGoodsCart()" class="btn_cart ">加入购物车</a> <a href="javascript:JitPage.submitOrder()" class="btn_buy ">立即购买</a> </div>
+    <div class="goods_desc">
+      <h3><span>商品详情</span></h3>
+      <p id="description"></p>
+      <div class="btn_unfold"><a style="cursor:pointer">ˇ</a></div> </div>
+  </div>
+</section>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="format-detection" content="telephone=yes"/>
+<link href="css/welfaceV1.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">中欧国际工商学院</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body style=" background:#fff;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span onclick="history.back()" class="Comeback"></span><span id="Btoo"></span></div>
+    </nav>
+  
+    <div class="newsList" id="CeisDetail" style="margin-top:0; display:none; ">
+      
+    </div>
+  </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="consultList" id="backPrevPosition" />
+<script type="text/javascript">
+var loadMore = ''; var Von = 'Consult.CeisDetail(); abc()';
+function abc(){
+	if(getParam("typeId")=="1"){
+		$("#Btoo").text("中欧智库");
+	}else{
+		$("#Btoo").text("中欧新闻");
+	}
+}
+
+</script> 
+<script type="text/javascript" src="js/base.js"></script> 
+<script type="text/templete" id="CeisNewListId">
+<div style="width: 92%; margin-left: auto; margin-right: auto; line-height: 28px; font-size: 14px;">
+ <h2 style="padding-top: 60px; padding-bottom: 5px; font-size: 16px;">
+                    <%=title%></h2>
+				     <p style="color: gray; padding-bottom: 10px;">
+                    <%=createTime%></p>
+	  <div>
+                    <img src="<%=imageUrl%>" alt="" width="100%" />
+                </div>
+				<div style="text-align:justify"><%=text%></div>
+</div>
+</script>
+
+</body>
+</html>

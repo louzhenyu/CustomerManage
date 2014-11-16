@@ -1,0 +1,1 @@
+{"AJAX_PARAMS":"openId,customerId,userId","APP_JSLIB":"jquery","APP_CODE":"APP_CODE","APP_TYPE":"SUBSCIBE","APP_DEBUG":"False","APP_OPTION_MENU":"True","APP_VERSION":"2014031121","APP_NAME":"泸州老窖VIP俱乐部","APP_TOOL_BAR":"False","APP_CACHE":"False"}

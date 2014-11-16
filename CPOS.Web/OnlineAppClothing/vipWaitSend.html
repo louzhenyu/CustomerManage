@@ -1,0 +1,66 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>待收货订单</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+
+</head>
+
+<body>
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative; padding-bottom:50px;" id="AppCom">
+    <div class="aboutVipDiv" id="OrderXX" status="1"> </div>
+  </div>
+   <div class="MenuBox" id="MenuBox" rel="4"> </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = ['OrderXX','Vip.getOrderList("","3")'];
+var Von = 'Vip.getOrderList("1","3"); ';
+</script> 
+<script id="getOrderList" type="text/template">
+
+<% _.each(orderList,function(item){%>
+<div  class="VipDivasd"> <span class="vipTime"><%= item.createTime %>
+</span>
+        <div class="vipCartBox" style="border-bottom:0; margin-top:15px;" id="OrderID_<%= item.orderId %>">
+          <div class="vipCart">
+		  
+			<% _.each(item.orderDetailList,function(item1){%>
+			<a href="orderDetail.html?itemId=<%=item1.itemId%>&skuId=<%=item1.skuId%>&orderId=<%=item1.orderId%>">
+            <div class="vipCartLi">
+              <ul>
+                <li class="cartTD2"  style="left:5px;"><% if(item1.imageList.length > 0){%><img src="<%=item1.imageList[0].imageUrl%>"><%}%>
+    
+                </li>
+                <li class="cartTD3" style="margin-left:75px">
+                  <div class="cartTD3Div"><%=item1.itemName%>
+<span class="guigeCC">规格：<%=item1.GG%></span></div>
+                </li>
+                <li class="cartTD4"><span >￥<%=item1.salesPrice%></span><br>
+                  x<%=item1.qty%><br>
+                  <br>
+                  <span ><%=item1.deliveryName%></span> </li>
+              </ul>
+            </div>
+			</a>
+			<%})%>
+          </div>
+          <div class="vipCartBoxBtm"><a href="javascript:void(0)" onclick="Vip.SureReceived('<%= item.skuId %>')" class="PayBtn" >确定收货</a>合计： <strong style="color:#cc0000">￥<%= item.totalAmount %></strong></div>
+          <div class="vipCartBoxBottom"></div>
+        </div>
+      </div>
+<%})%>
+</script>
+</body>
+</html>

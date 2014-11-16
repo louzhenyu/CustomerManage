@@ -1,0 +1,119 @@
+@charset "utf-8";
+/*首页*/
+html,body,body>section{height:100%;}
+body{background:#ebebeb;}
+.commonTopBg{display:block;margin:0 auto;}
+/*topBanner*/
+.vipClipBanner{position:relative;margin-bottom:15px;padding:15px 25px;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #666), color-stop(1, #3d3d3d));background-image:-moz-linear-gradient(top, #666, #3d3d3d);}
+.vipClipBanner .picWrap{position:relative;max-width:545px;margin:0 auto;}
+.vipClipBanner .banner{display:block;margin:0 auto;}
+.vipClipBanner.bannerImgMoveOut{
+    margin-left:-100%;
+    -webkit-transform:scale(0);
+    -webkit-transition:all 1s;
+}
+.vipClipBanner .receiveMask{position:absolute;bottom:0;left:0;width:100%;height:50%;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #666), color-stop(1, #333));background-image:-moz-linear-gradient(top, #666, #333);}
+
+.vipClipBanner .receiveBtn{display:block;-webkit-transform:scale(1);position:absolute;top:50%;left:50%;margin:-20px 0 0 -55px;width:110px;height:42px;text-align:center; letter-spacing:1px;font:16px/42px "宋体";border-radius:3px;-webkit-box-shadow:0 3px 0px #007fb4;background:#01a1e3;color:rgba(255,255,255,0.9);}
+.vipClipBanner .receiveBtnHide{-webkit-transform:scale(0);left:-100px;-webkit-transition:all 1s;}
+.vipClipBanner .receiveBtnShow{-webkit-transform:scale(1);left:50%;-webkit-transition:all 1s;}
+.vipClipBanner .infoWrap{position:absolute;bottom:15px;left:15px;font-size:12px;color:#4a4a4a;}
+.vipClipBanner .infoWrap .grade{margin:6px 0;}
+.vipClipBanner .card{font-size:18px;font-weight:bold;font-family:"Arial";}
+/*commonList*/
+.commonFeatureList{}
+.commonFeatureList ul{margin-bottom:15px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
+.commonFeatureList li{position:relative;background:#fff;}
+.commonFeatureList li a{display:-webkit-box;display:-moz-box;margin-left:25px;height:50px;line-height:50px;font-size:16px;font-weight:bold;border-bottom:1px solid #ccc;color:#333;}
+
+.commonFeatureList ul li:nth-last-child(1) a{border-bottom:none;}
+/*.commonFeatureList li:after{content:'';position:absolute;top:20px;right:20px;width:10px;height:10px;border:1px solid #ccc;border-width:0 1px 1px 0;-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);transform:rotate(-45deg);}*/
+
+.commonFeatureList li em{display:block;width:35px;background:url(../../../images/common/vipCard/commonIcon.png) no-repeat;background-size:20px 350px;}
+.commonFeatureList .vipTit{background-position:2px 16px;}
+.commonFeatureList .storeTit{background-position:2px -305px;}
+.commonFeatureList li span{display:block;-webkit-box-flex:1;-moz-box-flex:1;}
+.commonFeatureList li strong{margin-right:10px;padding:5px 13px;border-radius:15px;background:#ff611b;color:rgba(255,255,255,0.9);}
+.commonFeatureList .qyTit{background-position:2px 16px;}
+.commonFeatureList .xgTit{background-position:2px -35px;}
+.commonFeatureList .bdTit{background-position:2px -98px;}
+.commonFeatureList .ddTit{background-position:2px -162px;}
+.commonFeatureList .zxTit{background-position:2px -212px;}
+.commonFeatureList .dzTit{background-position:2px -262px;}
+.commonFeatureList .mdTit{background-position:2px -305px;}
+
+/*注册*/
+.registerFormArea{position:fixed;top:5%;left:5%;width:90%;height:90%;background:#fff;z-index:999;}
+.registerFormArea .closeBtn{float:right;width:30px;height:30px;margin:10px 10px 5px;background:url(../../../images/common/vipCard/closeBtn.png) no-repeat;background-size:100%;}
+.registerFormArea .tit{clear:right;font-size:18px;font-weight:bold;text-align:center;color:#222;}
+.registerFormArea .formBox{padding:20px 0 0 15px;}
+.registerFormArea .formBox p{min-height:45px;border-bottom:1px solid #ccc;}
+.registerFormArea .formBox input,.registerFormArea .formBox select{border:none;height:35px;width:100%;margin-top:6px;padding-left:10px;}
+.registerFormArea .formBox select{line-height:35px;}
+.registerFormArea .formBox textarea{width:100%;height:90px;padding:13px 5px;border:none;box-shadow:none;color:#333;}
+.registerFormArea .formBox em{float:left;margin-top:16px;font-weight:bold;color:#666;}
+.registerFormArea .formBox lable{display:table-cell;width:3000px;height:45px;}
+.registerFormArea .submitBtn{display:block;width:110px;height:40px;line-height:40px;margin:25px auto;text-align:center;border-radius:3px;box-shadow:0 2px 0 #e34b00;letter-spacing:5px;font:16px/42px "宋体";background:#f60;color:rgba(255,255,255,0.9);}
+
+
+/*会员卡领取后的页面c*/
+.memberCardInfoArea{}
+.memberCardInfoArea .vipClipBanner{margin-bottom:0;}
+.memberCardInfoArea .showInfo{width:100%;height:60px;display:-webkit-box;display:-moz-box;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #3d3d3d), color-stop(1, #2d2d2d));background-image:-moz-linear-gradient(top, #3d3d3d, #2d2d2d);color:rgba(255,255,255,1);}
+.memberCardInfoArea .showInfo>div{height:46px;padding-top:2px;-webkit-box-flex:1;-moz-box-flex:1;border-right:2px solid #9d9d9d;}
+.memberCardInfoArea .showInfo>div:nth-last-child(1){border-right:none;}
+.memberCardInfoArea .showInfo span{display:block;line-height:22px;text-align:center;font-size:13px;font-weight:bold;}
+.memberCardInfoArea .showInfo .num{font:bold 14px/22px "Arial";}
+
+/*账号绑定*/
+.accountBindingArea{position:fixed;z-index:999;top:50%;right:10px;left:10px;margin-top:-115px;padding:10px;background:#fff;-webkit-transform: scale(0);}
+.accountBindingArea .exp{clear:right;margin:10px 0 15px -15px;font-size:13px;color:#e60012;-webkit-transform:scale(0.9);}
+.accountBindingArea .inputBox{}
+.accountBindingArea .inputBox>p{height:45px;margin-bottom:6px;display:-webkit-box;display:-moz-box;}
+.accountBindingArea .inputBox em{display:block;line-height:45px;margin-right:5px;font-size:13px;font-weight:bold;}
+.accountBindingArea .inputBox input{display:block;height:40px;padding-left:7px;-webkit-box-flex:1;-moz-box-flex:1;border:1px solid #ccc;border-radius:5px;}
+.accountBindingArea .vCodeBtn{display:block;height:40px;line-height:40px;margin-left:5px;padding:0 15px;border-radius:5px;font-size:12px;background:#dadada;color:#858585;}
+
+.accountBindingArea .submitBtn{width:100%;height:45px;line-height:45px;margin-top:10px;text-align:center;border-radius:5px;font-size:15px;font-weight:bold;letter-spacing:5px;background:#f60;color:rgba(255,255,255,0.9);}
+
+.accountBindingArea .closeBtn{float:right;width:30px;height:30px;background:url(../../../images/common/vipCard/closeBtn.png) no-repeat;background-size:100%;}
+
+.mask{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.6);
+}
+.trash{
+    display: none;
+    position: fixed;
+    width: 20%;
+    z-index: 99;
+    bottom: 0;
+    right: 0;
+}
+.myCard{
+    position:fixed;
+    width: 100%;
+    z-index: 99;
+    bottom: 0;
+    margin:0 auto;
+    -webkit-transform: rotate(180deg);
+    -webkit-transform:scale(0.4);
+}
+.moveCenter{
+    bottom:50%;
+    -webkit-transform:scale(0.8);
+    -webkit-transform: rotate(360deg);
+    -webkit-transition:all 1s;
+}
+.moveTop{
+    bottom: 65%;
+    -webkit-transform: scale(0.9) rotateX(20deg);
+
+    -webkit-transition:all 1s;
+}

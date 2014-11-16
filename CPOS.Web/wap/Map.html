@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>    
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=GB2312" />
+    <style type="text/css">
+    body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-size:14px}
+    #l-map{height:100%;width:78%;float:left;border-right:2px solid #bcbcbc;}
+    #r-result{height:100%;width:20%;float:left;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.3"></script>
+    <script type="text/javascript">
+        var GET = [];
+	    function getParam1(){
+	        var QueString = '';
+		    querystr = window.location.href.split("?")
+		    if(querystr[1]){
+				    var GETs = querystr[1].split("&")
+				    for(i=0;i<GETs.length;i++){
+					    tmp_arr = GETs[i].split("=")
+					    key=tmp_arr[0]
+					    GET[key] = tmp_arr[1]
+				    }
+				    QueString = QueString.substring(0,QueString.length-1);
+		    }
+	
+		    return querystr[1];
+		}
+
+		getParam1();
+		
+    </script>    
+    <title>门店定位</title>
+  </head>
+  <body>
+    <div id="allmap"></div>
+  </body>
+</html>
+<script type="text/javascript">
+    var map = new BMap.Map("allmap");
+    var pointA;
+    var geolocation = new BMap.Geolocation();
+    var gc = new BMap.Geocoder();
+    geolocation.getCurrentPosition(function (r) {
+        if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+            var myIcon = new BMap.Icon("images/agent.png", new BMap.Size(24, 24));
+            var mk = new BMap.Marker(r.point, { icon: myIcon });
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            pointA = r.point;
+            var pt = r.point;
+            var message = "";
+            gc.getLocation(pt, function (rs) {
+                var addComp = rs.addressComponents;
+                var opts = {
+                    width: 200,     // 信息窗口宽度
+                    height: 30,     // 信息窗口高度
+                    title: "当前位置："  // 信息窗口标题
+                }
+                //var infoWindow = new BMap.InfoWindow(addComp.province + addComp.city + addComp.district + addComp.street + addComp.streetNumber, opts);  // 创建信息窗口对象
+                //map.openInfoWindow(infoWindow, r.point); //开启信息窗口
+
+                var label = new BMap.Label(addComp.city + addComp.district + addComp.street + addComp.streetNumber, { offset: new BMap.Size(20, -10) })
+                mk.setLabel(label);
+
+                //mk.addEventListener("click", function () { map.openInfoWindow(infoWindow, r.point); });
+                map.centerAndZoom(r.point, 14);
+
+                addMarker(new BMap.Point(GET['lng'], GET['lat']));
+            });
+        }
+        else {
+            alert('failed' + this.getStatus());
+        }
+    });
+    map.enableScrollWheelZoom(true);
+    //map.addControl(new BMap.ScaleControl());                    // 添加默认比例尺控件
+    //map.addControl(new BMap.NavigationControl());  //添加默认缩放平移控件
+
+    function addMarker(pointB) {
+        var distance = parseInt(map.getDistance(pointA, pointB));
+        var marker = new BMap.Marker(pointB);
+        var label = new BMap.Label(decodeURI(GET['Na']) + "（相距" + distance + "米）", { offset: new BMap.Size(20, -10) });
+        marker.setLabel(label); //添加百度label  
+        map.addOverlay(marker);
+        var walking = new BMap.WalkingRoute(map, { renderOptions: { map: map, autoViewport: false} });
+        walking.search(pointA, pointB);
+    }
+</script>
+

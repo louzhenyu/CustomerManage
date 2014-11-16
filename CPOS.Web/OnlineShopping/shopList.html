@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<title id="HeaderTitle">所有门店</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body  >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span class="Comeback" id="BackPrev"  onClick="WelfareAction.BackPre()" ></span><span id="Btoo">所有门店</span></div>
+    </nav>
+    <div class="AppShopList" id="AppShopList" page="1" isloading="0" isnext="1"> 
+      
+    </div>
+  </div>
+  <div class="AppBgGray" id="searchBgGray" style="display:none" onClick="WelfareAction.CloseSearch()"></div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="welfareDetail" id="backPrevPosition" />
+<input type="hidden" value="" id="longitude" />
+<input type="hidden" value="" id="latitude" />
+<script type="text/javascript">
+var loadMore = ['AppShopList','Welfare.getStoreListByItem()'];
+var Von = 'Welfare.getPosition()';
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);</script> 
+
+</body>
+</html>

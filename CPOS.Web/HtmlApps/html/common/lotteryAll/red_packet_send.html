@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title name="RedPacketSend">我发的红包</title>
+<link href="/HtmlApps/css/base/global.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <div class="wrap">
+    	<div class="myHongbao-list">
+        	<div class="tab">
+            	<a class="cur">我发的红包</a>
+                <a onclick="JitPage.toPage('RedPacketGet')">我领的红包</a>
+            </div>
+            <div class="myHongbao-cont">
+            	<h3>您已成功发送<span id="recommendNum">0</span>个红包，<br>共获得<span id="parValue"></span>积分</h3>
+                <dl>
+                	<dt>领取人</dt>
+                    <dd id="infoList">
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+    <script id="tpl_record_item" type="text/template">
+        <p><span>{{recommendDate}}</span>{{vipName}}</p>
+    </script>
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</body>
+</html>

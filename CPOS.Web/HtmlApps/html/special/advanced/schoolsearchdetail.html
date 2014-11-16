@@ -1,0 +1,60 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title name="SchoolSearchDetail">校友查询详情</title>
+  <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+  <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+
+<body class="addressBookPage">
+  <div id="masklayer" style="background-color:#FFF;" class="pageloading" > <i></i>
+  </div>
+
+  <section>
+    <div class="commonSearchBox">
+      <div class="searchBox">
+
+        <p class="inputBox">
+          <input type="text" placeholder="搜索" id="txtSearch"></p>
+        <span class="serchBtn"></span>
+      </div>
+    </div>
+    <div class="commonBox" id="SearchList">
+     
+    </div>
+      <div class="clearfootfix" id="nextPosition" ></div>
+    <div class="searcharea" style="height:40px;">
+      <div class="searchcount" >
+        已查询到<span id="searchTotalCount">0</span>人,当前显示<span id="txtSearchCount">0</span>人<span id="scrollMore">,下拉显示更多。</span>
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+</html>
+
+<script type="text/html" id="tpDataList" > 
+
+  <%for (var i = 0; i < datas.length; i++) {
+    var dataInfo=datas[i];
+    %>
+
+    <div class="item"  ><div>
+      <a data-lightbox="<%=dataInfo.VIPID%>" href="<%=dataInfo.HeadImgUrl||'../../../images/special/advanced/defaulthead.png' %>">
+        <img class="headPic" src="<%=dataInfo.HeadImgUrl||'../../../images/special/advanced/defaulthead.png' %>" /></a>
+
+        </div>
+        <div class="info" onclick="javascript:Jit.AM.toPage('UserInfo','toUserId=<%=dataInfo.VIPID %>')">
+          <span class="tit"><%=dataInfo.VipName %> | <%=dataInfo.CourseInfoName%> </span>
+          <span class="text"><%=dataInfo.Col11 %>&nbsp;</span>
+        </div>
+      </div>
+<%
+  };
+%>
+
+</script>

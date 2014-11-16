@@ -1,0 +1,47 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+    <title name="Prize">抽奖</title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+<div class="fxloading"><img width="40" height="40" src="../images/loading.gif"></div>
+    <section class="prize_area mb44">
+
+    <div class="prize_list">
+   <div class="prize_inner"> <span id="JPName" class="prizeTxt" style="width:140px; height:80px; z-index:8; line-height:80px; font-size:14px; text-align:center; "></span>
+      	<div id="AgianEI" onclick="location.href=document.URL" style="z-index: 10; background-color: rgb(189, 14, 14); border-radius: 5px; color: rgb(255, 255, 255); line-height: 40px; text-align: center; cursor: pointer; width: 80px; height: 40px; position: absolute; left: 19px; bottom: 40px; display: none;">再来一次</div>
+        <div id="asdi" class="prizeTxt" style="z-index:9; width:140px; height:80px;">
+          <div id="canvas" style="width:140px; height:80px;"><canvas height="80" width="140" id="maincanvas"></canvas></div>
+        </div>
+      </div>
+    <div class="goods_list">
+    <div  class="goods_head"><h2> 奖项设置</h2></div>
+
+    <div id="goodsList">
+
+    </div>
+
+    </div>
+    
+<div  class="clearfix"></div>
+    </div>
+
+
+</section>
+    <dl class="bot_nav ">
+        <dt><a href="javascript:Jit.AM.pageBack()">返回</a></dt>
+        <dd>
+            <a href="javascript:window.location.reload()">刷新</a></dd>
+        <dd>
+            <a href="javascript:Jit.AM.toPage('MyDetail')">个人中心</a></dd>
+
+        <dd>
+            <a href="javascript:Jit.AM.toPage('HomePage')">首页</a></dd>
+    </dl>
+</body>
+</html>

@@ -1,0 +1,3 @@
+F:\Trade\CustomerManage\CPOS.SendMarketingMessage\obj\x86\Debug\CPOS.SendMarketingMessage.csprojResolveAssemblyReference.cache
+F:\Trade\CustomerManage\CPOS.SendMarketingMessage\obj\x86\Debug\CPOS.SendMarketingMessage.ProjectInstaller.resources
+F:\Trade\CustomerManage\CPOS.SendMarketingMessage\obj\x86\Debug\CPOS.SendMarketingMessage.csproj.GenerateResource.Cache

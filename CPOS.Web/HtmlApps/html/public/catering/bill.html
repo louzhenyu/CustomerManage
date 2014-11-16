@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="CateBill">菜单已下载</title>
+	</head>
+
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<section id="sectionInfo" class="orderAffirmArea">
+			<!-- <div class="shopInfo" id="orderInfo">
+				<h2 class="title">请与服务员确认你所点的菜品</h2>
+				<p>
+					<span class="brandName"></span>一茶一坐静安店
+				</p>
+				<p>
+					<span class="tel"></span>021-5652626
+				</p>
+				<p>
+					<span class="address"></span>愚园路150号近万航渡路
+				</p>
+			</div>
+
+			<p class="fillDesk">
+				<input type="tel" placeholder="请输入桌号">
+			</p>
+			<div class="commonGreensList">
+				<ul id="itemList">
+					<li>
+						<img class="pic" src="../../../images/public/catering_default/pic.png" alt=""/>
+						<figure class="info">
+							<h2 class="tit t-overflow">三文鱼刺身</h2>
+						</figure>
+						<div class="showInfo">
+							<span class="price">￥50</span>
+							<span class="count">X1</span>
+						</div>
+					</li>
+					<li>
+						<img class="pic" src="../../../images/public/catering_default/pic.png" alt=""/>
+						<figure class="info">
+							<h2 class="tit t-overflow">三文鱼刺身</h2>
+						</figure>
+						<div class="showInfo">
+							<span class="price">￥50</span>
+							<span class="count">X1</span>
+						</div>
+					</li>
+				</ul>
+				<p class="total">
+					共计<em id="totalCount">0</em>个菜，￥<em id="totalAmount">0</em>
+				</p>
+				<p class="personCount">
+					点餐人数：2人
+				</p>
+			</div> -->
+
+		</section>
+
+		<footer id="footer" class="footer">
+			<div class="orderBottomWrap">
+				<p class="wrapBtn">
+					<a class="submit" href="javascript:;">买单</a>
+				</p>
+			</div>
+		</footer>
+		<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+		<script id="sectionInfoTemp" type="text/html">
+			<div class="shopInfo" id="orderInfo">
+				<h2 class="title">请与服务员确认你所点的菜品</h2>
+				<p>
+					<span class="brandName"></span><%=storeName%>
+				</p>
+				<p>
+					<span class="tel"></span><%=mobile%>
+				</p>
+				<p>
+					<span class="address"></span><%=address%>
+				</p>
+			</div>
+
+			<p class="fillDesk">
+				<input id="tableNo" type="tel" placeholder="请输入桌号">
+			</p>
+			<div class="commonGreensList">
+				<ul>
+					<%for(var i=0;i<orderDetailList.length;i++){var idata=orderDetailList[i];%>
+					<li>
+						<img class="pic" src="<%=idata.imageList[0].imageUrl%>" alt=""/>
+						<figure class="info">
+							<h2 class="tit t-overflow"><%=idata.itemName%></h2>
+						</figure>
+						<div class="showInfo">
+							<span class="price">￥<%=idata.salesPrice%></span>
+							<span class="count">X<%=idata.qty%></span>
+						</div>
+					</li>
+					<%}%>
+				</ul>
+				<p class="total">
+					共计<%=totalQty%>个菜，￥<%=totalAmount%>
+				</p>
+				<p class="personCount">
+					点餐人数：<%=joinNo%>人
+				</p>
+			</div>
+		</script>
+	</body>
+</html>

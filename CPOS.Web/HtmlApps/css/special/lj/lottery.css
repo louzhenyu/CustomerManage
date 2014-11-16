@@ -1,0 +1,50 @@
+body{
+
+ background-color:#c90000;
+
+}
+.rotate_box{
+position:relative;
+min-height: 200px;
+overflow: hidden;
+
+}
+.rotate_start{
+    background-image: url("../../../images/common/circle-small.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 6;
+   
+}
+.l_area{
+ width: 90%;
+ margin: 0 auto;
+
+}
+.l_tip{
+line-height: 32px;text-align: center;font-size:16px;
+  border-bottom: 1px solid #CECECE;
+}
+.l_explain{
+
+
+    line-height: 32px;
+    text-align: center;
+    
+}
+
+#lotterycount{color:yellow;font-size:20px;padding:0 2px}
+.lottery_area{
+height: 100%;
+width: 100%;
+margin: 0;
+color: #FFFFFF;
+font-size: 1.2em;
+}
+

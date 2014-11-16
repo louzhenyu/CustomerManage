@@ -1,0 +1,128 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">最新资讯</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body  >
+<div style="width: 320px; margin-left: auto; margin-right: auto; overflow: hidden; display:none;" id="PcBox" class="PcBox">
+  <div class="DetailBigBox" id="DetailBigBox"> </div>
+  <div class="MenuBox" id="MenuBox"> </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<!--  <div class="DetailmdkZBtn" style="left:10px; top:40px;">
+        <Div style="font-size:22px; color:#fff; text-align:left; padding-bottom:15px; line-height:30px;">本月最优门店<br>
+          静安三店</Div>
+       </div>--> 
+<script type="text/javascript">
+var loadMore = ['DetailBigBox','newsList()'];
+var Von = 'newsList("1");abc();'; //  
+
+function abc(){
+	$("#PcBox").show();
+	
+}
+function newsList(isfirst){
+
+        if (isfirst == "1") {
+            $("#DetailBigBox").attr("page", "1");
+        }
+        var itemName = '';
+
+        $("#DetailBigBox").attr("isloading", "1");
+        var page = $("#DetailBigBox").attr("page");
+        var jsonarr = {
+            'action': "getNewsList",
+            ReqContent: JSON.stringify({
+                "common": Base.All(),
+                "special": {
+                    'page': page,
+					'newsType':"3",
+                    "pageSize": 12
+                }
+            })
+        };
+        $.ajax({
+            type: 'get',
+            url: url,
+            data: jsonarr,
+            timeout: 90000,
+            cache: false,
+            beforeSend: function() {
+                if (isfirst == "1") {
+                    Win.Loading();
+                } else {
+                    Win.Loading('', "#DetailBigBox");
+                }
+
+            },
+            dataType: 'json',
+            success: function(o) {
+                $("#DetailBigBox").attr("isloading", "0");
+                if (isfirst == "1") {
+                    Win.Loading("CLOSE");
+                }
+                Win.Loading("CLOSE", "#DetailBigBox");
+                if (o.code == "200") {
+                    $("#DetailBigBox").attr("page", parseInt(page) + 1).attr("isnext", o.content.isNext);
+
+                    var Listdata = o.content.newsList;
+					o.content.w = Win.W();
+					o.content.isfirst =isfirst;
+                    if (Listdata.length > 0) {} else {
+                        $("#DetailBigBox").html("<div align='center' style='padding-top:20px;'>还没有资讯</div>");
+                    }
+                    var tpl = _.template($('#newsList').html(), o.content);
+                    if (isfirst != "1") {
+                        $("#DetailBigBox").append(tpl);
+                    } else {
+                        $("#DetailBigBox").html(tpl);
+                    }
+
+                } else {
+                    alert(o.description);
+                }
+            }
+        })
+    
+}
+</script> 
+<script id="newsList" type="text/template">
+<% if(isfirst =="1" && newsList.length > 0 ){%>
+ <a href="newsDetail.html?newsId=<%=newsList[0].newsId%>"  > <div class="DetailImg">
+      <div class="DetailImgIeo" >
+        <ul>
+     	 	<li style="width:<%= w %>px"><img style="height:220px;" src="<%= newsList[0].imageURL%>"></li>  
+        </ul>
+      </div>
+      <div class="KzDGrayTOP"></div>
+      <div class="KzDGray" style="opacity:0.5"></div>
+    	<div style="position:absolute;left:10px; bottom:0px; height:25px; line-height:25px; color:#000; z-index:8"><%= newsList[0].newsTitle.substring(0,15)%>...</div>
+    </div>
+	</a>
+<%}%>
+	<% _.each(newsList,function(item){ %>
+   <div class="DetailSmallBox" style="border-bottom:1px solid #C9CDCF; box-shadow:0 0 2px #ccc; ">
+     <div class="DetailSmallBoxYW" style="position:relative">
+	
+     <div class="DetailmdkZBtn" style="width:100px; top:10px; right:-2px;"><a href="newsDetail.html?newsId=<%=item.newsId%>"  class="DetailActionBtn">查看详情</a></div>
+	
+        <h1 style="margin-right:100px; padding-top:5px;"><%= item.newsTitle.substring(0,20)%>...</h1>
+        <div class="EPSdg" style="padding:5px 0; padding-top:15px;">
+          <%= item.noHtmlContent.substring(0,40)%>...</div>
+      </div>
+    </div>
+    <% })%>
+</script>
+</body>
+</html>

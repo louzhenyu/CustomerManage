@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>树状下拉框</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <!--  引入Ext JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Ext4.1.0/ext-all-dev.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Lib/Javascript/Ext4.1.0/Resources/CSS/ext-all.css" />
+    <!--引入Jit的JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Jit/jit-all-dev.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Lib/Css/jit-all.css" />
+    <!--示例的样式-->
+    <style type="text/css">
+        dt
+        {
+           color:#333333; 
+           font-size:18px;
+           font-family:宋体;
+           font-weight:bolder;
+           margin:10px;
+        }
+        .sample
+        {
+        	border-style:dashed;
+        	border-width:1px;
+        	margin:20px;
+        	padding:20px;
+        	width:800px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sample">
+        <dl>
+            <dt>功能点：</dt>
+            <dd>1.数据为延迟加载.</dd>
+            <dd>2.支持单选和多选</dd>
+            <dd>3.支持设置默认选中项</dd>
+            <dd>4.支持仅叶子节点选择</dd>
+            <dd>5.支持设置值</dd>
+        </dl>
+    </div>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt>
+            <dd>树状下拉框 - 多选</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder1"></div>
+                <div id="dvShowSelectValues1"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //创建多选下拉树
+                    Ext.create('Jit.form.field.ComboTree', {
+                        id: 'cmtMultiSelectionSaleArea'
+                        , fieldLabel: '销售区域'
+                        , emptyText: '--请选择--'
+                        , renderTo: 'dvPlaceholder1'
+                        , url: 'Handler/TreeHandler.ashx'    //树的数据从后台加载
+                        , multiSelect: false                 //树是否为多选
+                        , rootText: '全国'                  //树的根节点的文本
+                        , rootID: '-1'                      //树的根节点的值
+                        , isSelectLeafOnly: true
+                        , pickerWidth: 250
+                        , pickerHeight: 400
+                        , onSelect: function () {
+                            alert("onSelect 事件");
+                        }
+                    });
+                    //创建按钮显示选中值
+                    Ext.create('Jit.button.Button', {
+                        text: '显示选中值'
+                        , renderTo: 'dvShowSelectValues1'
+                        , handler: function () {
+                            var selectedValues = Ext.getCmp('cmtMultiSelectionSaleArea').jitGetValue();
+                            var ids = new Array();
+                            if (selectedValues != null) {
+                                for (var i = 0; i < selectedValues.length; i++) {
+                                    ids.push(selectedValues[i].id);
+                                }
+                            }
+                            alert(ids.join(','));
+                        }
+                    });
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>树状下拉框 - 多选,仅能选择叶子节点</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder3"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //创建多选下拉树 - 只能选择叶子节点
+                    Ext.create('Jit.form.field.ComboTree', {
+                        id: 'cmtMultiSelectionSaleAreaSelectLeafOnly'
+                        , fieldLabel: '销售区域'
+                        , emptyText: '--请选择--'
+                        , renderTo: 'dvPlaceholder3'
+                        , url: 'Handler/TreeHandler.ashx'   //树的数据从后台加载
+                        , multiSelect: true                 //树是否为多选
+                        , rootText: '全国'                  //树的根节点的文本
+                        , rootID: '-1'                      //树的根节点的值
+                        , isSelectLeafOnly: true            //只能选择树的叶子节点
+                    });
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>树状下拉框 - 多选,默认选中项&设置选中项</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder5"></div>
+                <div id="dvShowSelectValues5"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //创建多选下拉树 - 多选,设置初始值&初始文本
+                    //组织初始值数据
+                    var initValues = new Array();
+                    initValues.push({ id: '3', text: '长宁区' });
+                    initValues.push({ id: '2', text: '普陀区' });
+                    //创建下拉树
+                    Ext.create('Jit.form.field.ComboTree', {
+                        id: 'cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit'
+                        , fieldLabel: '销售区域'
+                        , emptyText: '--请选择--'
+                        , renderTo: 'dvPlaceholder5'
+                        , url: 'Handler/TreeHandler.ashx'   //树的数据从后台加载
+                        , multiSelect: true                 //树是否为多选
+                        , rootText: '全国'                  //树的根节点的文本
+                        , rootID: '-1'                      //树的根节点的值
+                        , isSelectLeafOnly: true            //只能选择树的叶子节点
+                        , initSelectedItems: initValues     //初始选中的项,该参数为一个数组，数组中的每个元素都包含id和text属性
+                    });
+                    //创建测试值面板
+                    Ext.create('Ext.panel.Panel', {
+                        renderTo: 'dvShowSelectValues5'
+                        , layout: 'hbox'
+                        , items: [
+                            { xtype: 'jitbutton', text: '显示选中值', handler: function () {
+
+                                var selectedValues = Ext.getCmp('cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit').jitGetValue();
+                                alert(selectedValues);
+                                var ids = new Array();
+                                if (selectedValues != null) {
+                                    for (var i = 0; i < selectedValues.length; i++) {
+                                        ids.push(selectedValues[i].id);
+                                    }
+                                }
+                                alert(ids.join(','));
+                            }
+                            }
+                            , { xtype: 'jittextfield', fieldLabel: '选中项JSON', width: 400, id: 'txtSelectedItems', value: '[{id:"4",text:"静安区"}]' }
+                            , { xtype: 'jitbutton', text: '设置值(覆盖)', handler: function () {
+                                var ctl_txtSelectedItems = Ext.getCmp('txtSelectedItems');
+                                var ctl_cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit = Ext.getCmp('cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit');
+                                var selectedItems = Ext.JSON.decode(ctl_txtSelectedItems.getValue());
+                                ctl_cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit.setValues(selectedItems, false);
+                            }
+                            }
+                            , { xtype: 'jitbutton', text: '设置值(添加)', handler: function () {
+                                var ctl_txtSelectedItems = Ext.getCmp('txtSelectedItems');
+                                var selectedItems = Ext.JSON.decode(ctl_txtSelectedItems.getValue());
+                                Ext.getCmp('cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit').setValues(selectedItems,true);
+                            }
+                            }
+                        ]
+                    });
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>树状下拉框 - 单选</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder2"></div>
+                <div id="dvShowSelectValues2"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //创建单选下拉树
+                    Ext.create('Jit.form.field.ComboTree', {
+                        id: 'cmtSingleSelectionSaleArea'
+                        , fieldLabel: '销售区域'
+                        , emptyText: '--请选择--'
+                        , renderTo: 'dvPlaceholder2'
+                        , url: 'Handler/TreeHandler.ashx'    //树的数据从后台加载
+                        , multiSelect: false                 //树是否为多选
+                        , rootText: '全国'                   //树的根节点的文本
+                        , rootID: '-1'                       //树的根节点的值
+                    });
+                    //创建按钮显示选中值
+                    Ext.create('Jit.button.Button', {
+                        text: '显示选中值'
+                        , renderTo: 'dvShowSelectValues2'
+                        , handler: function () {
+                            var selectedValues = Ext.getCmp('cmtSingleSelectionSaleArea').jitGetValue();
+                            var ids = new Array();
+                            if (selectedValues != null) {
+                                for (var i = 0; i < selectedValues.length; i++) {
+                                    ids.push(selectedValues[i].id);
+                                }
+                            }
+                            alert(ids.join(','));
+                        }
+                    });
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <div class="sample">
+        <dl>
+            <dt>说明</dt><dd>树状下拉框 - 单选,只能选择叶子节点</dd>
+            <dt>示例</dt>
+            <dd>
+                <div id="dvPlaceholder4"></div>
+            </dd>
+            <dt>代码</dt>
+            <dd>
+                <pre>
+                    //创建单选下拉树,只能选择叶子节点
+                    Ext.create('Jit.form.field.ComboTree', {
+                        id: 'cmtSingleSelectionSaleAreaSelectLeafOnly'
+                        , fieldLabel: '销售区域'
+                        , emptyText: '--请选择--'
+                        , renderTo: 'dvPlaceholder4'
+                        , url: 'Handler/TreeHandler.ashx'    //树的数据从后台加载
+                        , multiSelect: false                 //树是否为多选
+                        , rootText: '全国'                   //树的根节点的文本
+                        , rootID: '-1'                       //树的根节点的值
+                        , isSelectLeafOnly: true             //只能选择叶子节点
+                    });
+                </pre>
+            </dd>
+        </dl>
+    </div>
+    <script language="javascript" type="text/javascript">
+        Ext.onReady(function () {
+            //创建多选下拉树
+            Ext.create('Jit.form.field.ComboTree', {
+                id: 'cmtMultiSelectionSaleArea'
+                , fieldLabel: '销售区域'
+                , emptyText: '--请选择--'
+                , renderTo: 'dvPlaceholder1'
+                , url: 'Handler/TreeHandler.ashx'    //树的数据从后台加载
+                , multiSelect: false                 //树是否为多选
+                , rootText: '全国'                  //树的根节点的文本
+                , rootID: '-1'                      //树的根节点的值
+                , isSelectLeafOnly: true
+                , pickerCfg: {
+                    minHeight: 100
+                    , maxHeight:120
+                    , width: 500
+                }
+                , onSelect: function () {
+                    alert("onSelect 事件");
+                }
+            });
+            //创建按钮显示选中值
+            Ext.create('Jit.button.Button', {
+                text: '显示选中值'
+                , renderTo: 'dvShowSelectValues1'
+                , handler: function () {
+                    alert(Ext.getCmp('cmtMultiSelectionSaleArea').jitGetValue("id"));
+                }
+            });
+            //创建多选下拉树 - 只能选择叶子节点
+            Ext.create('Jit.form.field.ComboTree', {
+                id: 'cmtMultiSelectionSaleAreaSelectLeafOnly'
+                , fieldLabel: '销售区域'
+                , emptyText: '--请选择--'
+                , renderTo: 'dvPlaceholder3'
+                , url: 'Handler/TreeHandler.ashx'   //树的数据从后台加载
+                , multiSelect: true                 //树是否为多选
+                , rootText: '全国'                  //树的根节点的文本
+                , rootID: '-1'                      //树的根节点的值
+                , isSelectLeafOnly: true            //只能选择树的叶子节点
+            });
+            //创建多选下拉树 - 多选,设置初始值&初始文本
+            //组织初始值数据
+            var initValues = new Array();
+            // initValues.push({ id: '3', text: '长宁区' });
+            //initValues.push({ id: '2', text: '普陀区' });
+            //创建下拉树
+            Ext.create('Jit.form.field.ComboTree', {
+                id: 'cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit'
+                , fieldLabel: '销售区域'
+                , emptyText: '--请选择--'
+                , renderTo: 'dvPlaceholder5'
+                , url: 'Handler/TreeHandler.ashx'   //树的数据从后台加载
+                , multiSelect: true                 //树是否为多选
+                , rootText: '全国'                  //树的根节点的文本
+                , rootID: '-1'                      //树的根节点的值
+                , isSelectLeafOnly: true            //只能选择树的叶子节点
+                , initSelectedItems: initValues     //初始选中的项,该参数为一个数组，数组中的每个元素都包含id和text属性
+            });
+            //创建测试值面板
+            Ext.create('Ext.panel.Panel', {
+                renderTo: 'dvShowSelectValues5'
+                , layout: 'hbox'
+                , items: [
+                    { xtype: 'jitbutton', text: '显示选中值', handler: function () {
+
+                        var selectedValues = Ext.getCmp('cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit').jitGetValue();
+                        alert(selectedValues);
+                        var ids = new Array();
+                        if (selectedValues != null) {
+                            for (var i = 0; i < selectedValues.length; i++) {
+                                ids.push(selectedValues[i].id);
+                            }
+                        }
+                        alert(ids.join(','));
+                    }
+                    }
+                    , { xtype: 'jittextfield', fieldLabel: '选中项JSON', width: 400, id: 'txtSelectedItems', value: '[{id:"4",text:"静安区"}]' }
+                    , { xtype: 'jitbutton', text: '设置值(覆盖)', handler: function () {
+                        var ctl_txtSelectedItems = Ext.getCmp('txtSelectedItems');
+                        var ctl_cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit = Ext.getCmp('cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit');
+                        var selectedItems = Ext.JSON.decode(ctl_txtSelectedItems.getValue());
+                        ctl_cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit.setValues(selectedItems, false);
+                    }
+                    }
+                    , { xtype: 'jitbutton', text: '设置值(添加)', handler: function () {
+                        var ctl_txtSelectedItems = Ext.getCmp('txtSelectedItems');
+                        var selectedItems = Ext.JSON.decode(ctl_txtSelectedItems.getValue());
+                        Ext.getCmp('cmtMultiSelectionSaleAreaSelectLeafOnlyAndInit').setValues(selectedItems,true);
+                    }
+                    }
+                ]
+            });
+            //创建单选下拉树
+            Ext.create('Jit.form.field.ComboTree', {
+                id: 'cmtSingleSelectionSaleArea'
+                , fieldLabel: '销售区域'
+                , emptyText: '--请选择--'
+                , renderTo: 'dvPlaceholder2'
+                , url: 'Handler/TreeHandler.ashx'    //树的数据从后台加载
+                , multiSelect: false                 //树是否为多选
+                , rootText: '全国'                   //树的根节点的文本
+                , rootID: '-1'                       //树的根节点的值
+            });
+            //创建按钮显示选中值
+            Ext.create('Jit.button.Button', {
+                text: '显示选中值'
+                , renderTo: 'dvShowSelectValues2'
+                , handler: function () {
+                    var selectedValues = Ext.getCmp('cmtSingleSelectionSaleArea').jitGetValue();
+                    var ids = new Array();
+                    if (selectedValues != null) {
+                        for (var i = 0; i < selectedValues.length; i++) {
+                            ids.push(selectedValues[i].id);
+                        }
+                    }
+                    alert(ids.join(','));
+                }
+            });
+            //创建单选下拉树,只能选择叶子节点
+            Ext.create('Jit.form.field.ComboTree', {
+                id: 'cmtSingleSelectionSaleAreaSelectLeafOnly'
+                , fieldLabel: '销售区域'
+                , emptyText: '--请选择--'
+                , renderTo: 'dvPlaceholder4'
+                , url: 'Handler/TreeHandler.ashx'    //树的数据从后台加载
+                , multiSelect: false                 //树是否为多选
+                , rootText: '全国'                   //树的根节点的文本
+                , rootID: '-1'                       //树的根节点的值
+                , isSelectLeafOnly: true             //只能选择叶子节点
+            });
+        });
+    </script>
+</body>
+</html>

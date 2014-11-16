@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UploadImg.aspx.cs" Inherits="JIT.CPOS.BS.Web.Module.College.CommRes.UploadImg" %>

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SynUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="customerID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="typeID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="userInfo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SynUserResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynUnit">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="customerID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="typeID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="unitInfo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynUnitResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SynUnitResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynTerminal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="customerID" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="typeID" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="terminalInfo" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SynTerminalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="SynTerminalResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAddUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="customerID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAddUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CanAddUserResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAddShop">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="customerID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAddShopResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CanAddShopResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAddTerminal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="customerID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CanAddTerminalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CanAddTerminalResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SynUserSoapIn">
+    <wsdl:part name="parameters" element="tns:SynUser" />
+  </wsdl:message>
+  <wsdl:message name="SynUserSoapOut">
+    <wsdl:part name="parameters" element="tns:SynUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="SynUnitSoapIn">
+    <wsdl:part name="parameters" element="tns:SynUnit" />
+  </wsdl:message>
+  <wsdl:message name="SynUnitSoapOut">
+    <wsdl:part name="parameters" element="tns:SynUnitResponse" />
+  </wsdl:message>
+  <wsdl:message name="SynTerminalSoapIn">
+    <wsdl:part name="parameters" element="tns:SynTerminal" />
+  </wsdl:message>
+  <wsdl:message name="SynTerminalSoapOut">
+    <wsdl:part name="parameters" element="tns:SynTerminalResponse" />
+  </wsdl:message>
+  <wsdl:message name="CanAddUserSoapIn">
+    <wsdl:part name="parameters" element="tns:CanAddUser" />
+  </wsdl:message>
+  <wsdl:message name="CanAddUserSoapOut">
+    <wsdl:part name="parameters" element="tns:CanAddUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="CanAddShopSoapIn">
+    <wsdl:part name="parameters" element="tns:CanAddShop" />
+  </wsdl:message>
+  <wsdl:message name="CanAddShopSoapOut">
+    <wsdl:part name="parameters" element="tns:CanAddShopResponse" />
+  </wsdl:message>
+  <wsdl:message name="CanAddTerminalSoapIn">
+    <wsdl:part name="parameters" element="tns:CanAddTerminal" />
+  </wsdl:message>
+  <wsdl:message name="CanAddTerminalSoapOut">
+    <wsdl:part name="parameters" element="tns:CanAddTerminalResponse" />
+  </wsdl:message>
+  <wsdl:portType name="CustomerDataExchangeServiceSoap">
+    <wsdl:operation name="SynUser">
+      <wsdl:input message="tns:SynUserSoapIn" />
+      <wsdl:output message="tns:SynUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SynUnit">
+      <wsdl:input message="tns:SynUnitSoapIn" />
+      <wsdl:output message="tns:SynUnitSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SynTerminal">
+      <wsdl:input message="tns:SynTerminalSoapIn" />
+      <wsdl:output message="tns:SynTerminalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAddUser">
+      <wsdl:input message="tns:CanAddUserSoapIn" />
+      <wsdl:output message="tns:CanAddUserSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAddShop">
+      <wsdl:input message="tns:CanAddShopSoapIn" />
+      <wsdl:output message="tns:CanAddShopSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CanAddTerminal">
+      <wsdl:input message="tns:CanAddTerminalSoapIn" />
+      <wsdl:output message="tns:CanAddTerminalSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CustomerDataExchangeServiceSoap" type="tns:CustomerDataExchangeServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SynUser">
+      <soap:operation soapAction="http://tempuri.org/SynUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynUnit">
+      <soap:operation soapAction="http://tempuri.org/SynUnit" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynTerminal">
+      <soap:operation soapAction="http://tempuri.org/SynTerminal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAddUser">
+      <soap:operation soapAction="http://tempuri.org/CanAddUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAddShop">
+      <soap:operation soapAction="http://tempuri.org/CanAddShop" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAddTerminal">
+      <soap:operation soapAction="http://tempuri.org/CanAddTerminal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="CustomerDataExchangeServiceSoap12" type="tns:CustomerDataExchangeServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SynUser">
+      <soap12:operation soapAction="http://tempuri.org/SynUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynUnit">
+      <soap12:operation soapAction="http://tempuri.org/SynUnit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynTerminal">
+      <soap12:operation soapAction="http://tempuri.org/SynTerminal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAddUser">
+      <soap12:operation soapAction="http://tempuri.org/CanAddUser" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAddShop">
+      <soap12:operation soapAction="http://tempuri.org/CanAddShop" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CanAddTerminal">
+      <soap12:operation soapAction="http://tempuri.org/CanAddTerminal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerDataExchangeService">
+    <wsdl:port name="CustomerDataExchangeServiceSoap" binding="tns:CustomerDataExchangeServiceSoap">
+      <soap:address location="http://ap.aladingyidong.com/customer/CustomerDataExchangeService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="CustomerDataExchangeServiceSoap12" binding="tns:CustomerDataExchangeServiceSoap12">
+      <soap12:address location="http://ap.aladingyidong.com/customer/CustomerDataExchangeService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

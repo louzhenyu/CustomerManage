@@ -1,0 +1,53 @@
+<!--// “导入-step1”弹出层-->
+<div class="winBoxer" style="width:492px">
+    <div class="winCaption">
+        <span class="winCaption_icon tImport"></span>
+        <a class="winCaption_btnClose" href="###">关闭</a>
+    </div>
+    <div class="winContent contShare">
+        <b class="h3">上传数据</b>
+        <ul>
+            <li class="process">
+                <div class="step_num">
+                    <span class="sn1">1</span><span class="sn2">2</span> <span class="sn3">3</span>
+                </div>
+                <span class="process_line"></span>
+
+                <div class="step_pic">
+                    <span class="sp1 sp_current"></span><span class="sp2"></span> <span class="sp3"></span>
+                </div>
+                <div class="step_txt">
+                    <span class="st1">模板选择</span><span class="st2">上传数据</span><span class="st3">完成</span>
+                </div>
+            </li>
+            <li class="download">
+                <!--<p class="fhs_16" style="margin-left: -6px">【全国各省】2013年全国各省人均GDP排名</p>-->
+                <p class="fhs_16" style="margin-left: -6px">【自定义数据导入模板】</p>
+                <a class="aDown" style="text-align:center; color:Blue" href="###" onclick="javascript:downloadTemplate();">下载模板</a>
+            </li>
+            <li class="next">
+                <span class="desc">按照该模板填写可以展现全国各省各类相关数据，展现形式直观</span>
+                <a class="btnNext fhs_16" href="./LayoutResource/templates/import_s2.html">下一步</a>
+            </li>
+        </ul>
+
+    </div>
+    <div class="clearFix_12"></div>
+</div>
+<script type="text/javascript">
+    $("a.btnNext").fancybox({
+        'showCloseButton': false,
+        'padding': 0
+    });
+
+    /*
+    下载模板
+    */
+    function downloadTemplate() {        
+        var submitForm = document.createElement("FORM");
+        document.body.appendChild(submitForm);
+        submitForm.action = "./LayoutResource/templates/导入模板.xlsx";
+        submitForm.submit();
+//        alert("正在下载模板.");
+    }
+</script>

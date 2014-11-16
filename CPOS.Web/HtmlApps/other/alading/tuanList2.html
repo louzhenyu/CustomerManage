@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title>团购</title>
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+<style>
+	/*common*/
+html,body{height:100%;min-height:100%;}
+body{font:14px/1.3em "Microsoft YaHei";background:#f6f6f6;color:#333;}
+
+.shopList{max-width:640px;padding-left:10px;margin:0 auto;}
+.shopList li{height:100px;padding:10px 0;border-bottom:1px solid #ccc;}
+.shopList li:nth-last-of-type(1){border-bottom:none;}
+.shopList .pic{float:left;width:80px;height:80px;}
+.shopList .info{margin-left:90px;}
+.shopList .exp{height:20px;line-height:20px;margin:2px 0 13px 0;padding-right:12px;overflow:hidden;}
+.shopList .sold{color:#999;font-family: arial;}
+.shopList .currentPrice{position:relative;left:-3px;font-family: arial;font-size:19px;font-weight:bold;color:#fe7c23;}
+.shopList .originalPrice{position:relative;left:-2px;text-decoration:line-through;font-family: arial;color:#999;}
+.shopList .disWrap{margin-top:5px;}
+.shopList .disBox{float:right;margin-right:10px;}
+.shopList .location{font-size:12px;margin-right:5px;color:#999;}
+.shopList .dis{display:inline-block;font-size:12px;text-indent:12px;background:url(images/disIcon.png) no-repeat 0px 3px;background-size:10px 11px;color:#fe7c23;}
+
+</style>
+</head>
+
+<body>
+<section id="section" data-js="/HtmlApps/other/alading/js/tuanList2">
+    <div class="shopList">
+    	<ul id="goodList">
+        	<!-- <li>
+            	<a href="###">
+                	<img class="pic" src="images/tuan001.jpg" alt=""/>
+                    <div class="info">
+                        <p class="exp t-overflow">屋企汤馆抵用券 抵用现150元券 抵用现150元</p>
+                        <p>
+                        	<span class="currentPrice">￥70</span>
+                            <span class="originalPrice">￥150</span>
+                        </p>
+                        <div class="disWrap clearfix">
+                        	<span class="sold">已售6522</span>
+                            <p class="disBox">
+                            	<span class="location">静安区</span>
+                            	<span class="dis">225m</span>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            
+            <li>
+            	<a href="###">
+                	<img class="pic" src="images/tuan002.jpg" alt=""/>
+                    <div class="info">
+                        <p class="exp t-overflow">屋企汤馆抵用券</p>
+                        <p>
+                        	<span class="currentPrice">￥70</span>
+                            <span class="originalPrice">￥150</span>
+                        </p>
+                        <div class="disWrap clearfix">
+                        	<span class="sold">已售6522</span>
+                            <p class="disBox">
+                            	<span class="location">静安区</span>
+                            	<span class="dis">225m</span>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            
+            <li>
+            	<a href="###">
+                	<img class="pic" src="images/tuan001.jpg" alt=""/>
+                    <div class="info">
+                        <p class="exp t-overflow">屋企汤馆抵用券</p>
+                        <p>
+                        	<span class="currentPrice">￥70</span>
+                            <span class="originalPrice">￥150</span>
+                        </p>
+                        <div class="disWrap clearfix">
+                        	<span class="sold">已售6522</span>
+                            <p class="disBox">
+                            	<span class="location">静安区</span>
+                            	<span class="dis">225m</span>
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </li> -->
+           
+        </ul>
+    </div>
+    
+</section>
+
+<script type="text/html" id="tplListItem">
+<%for(var i=0,idata;i<list.length;i++){idata=list[i];%>
+	<li>
+    	<a href="<%=idata.TargetUrl%>">
+        	<img class="pic" src="<%=idata.ImageUrl%>" alt=""/>
+            <div class="info">
+                <p class="exp t-overflow"><%=idata.ItemName%></p>
+                <p>
+                	<span class="currentPrice">￥<%=idata.PreferentialPrice%></span>
+                    <span class="originalPrice">￥<%=idata.MarketPrice%></span>
+                </p>
+                <div class="disWrap clearfix">
+                	<span class="sold" style="margin-right: 5px;"><%=idata.Discount/10%>折</span>
+                	<span class="sold">已售<%=idata.PeopleBuy%></span>
+                    <p class="disBox">
+                    	<span class="location">静安区</span>
+                    	<span class="dis"><%=idata.Distance%></span>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </li>
+<%}%>
+</script>
+<script type="text/javascript" src="/HtmlApps/other/static/js/lib/require.js" defer async="true" data-main="/HtmlApps/other/static/js/main.js"></script>
+
+</body>
+</html>

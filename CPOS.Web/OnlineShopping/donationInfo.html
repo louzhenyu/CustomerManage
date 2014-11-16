@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/welfaceV1.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">我要捐赠</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/iscroll.js"></script>
+</head>
+
+<body style="background:url(images/orderbg.gif) repeat left top;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span class="Comeback" id="BackPrev" onClick="WelfareAction.BackPre()" ></span><span id="Btoo">我要捐赠</span></div>
+    </nav>
+    <div class="ProvideCom" style="margin-top:55px;">
+      <h3>用户信息</h3>
+      <div class="ProvideComBox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">姓名：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="username" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">班级：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="userClass" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">公司：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="company" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">职务：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="usertitle" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">电话：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="tel" >
+              </div>
+            </div>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">手机：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="mobile" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">邮箱：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="email" >
+              </div>
+            </div>
+          </li>
+          <li style="border:none;"  class="Tetdd">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">通讯地址：</div>
+              <div class="ProvideTextInput">
+                <textarea id="address"></textarea>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="ProvideCom" style="margin-top:0;">
+      <h3>希望向中欧年度基金投资：</h3>
+      <div class="ProvideComBox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+          <li style="border-bottom:0">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">捐赠金额：</div>
+              <div class="ProvideTextInput">
+                <input type="text" class="inputs" id="money" value="" >
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="ProvideCom" style="margin-top:0;">
+      <h3>希望的投资用途：</h3>
+      <div class="ProvideComBox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+          <li style="cursor:pointer;border:none; padding-top:0;">
+            <div class="ProvideDiv" onclick="DonationAction.slideDownTT(this)" rel="1" style=" margin:0; padding:14px 20px 0 20px; position:relative"><span id="PleaseSelect">请选择</span> <span class="downShowListIcn Detailicn"></span></div>
+            <dl class="SelectMor" id="SelectMor" style="display:none;">
+              <dd onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">教授和研究</span></dd>
+              <dd  onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">案例研究中心</span></dd>
+              <dd  onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">民营企业研究中心</span></dd>
+              <dd  onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">创业与投资中心</span></dd>
+              <dd  onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">人力资源与组织管理研究中心</span></dd>
+              <dd  onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">中欧卫生管理与政策中心</span></dd>
+              <dd  onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">领导力研究中心</span></dd>
+
+              <dd onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">中国服务外包研究中心</span></dd>
+              <dd onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">陆家嘴国际金融研究院</span></dd>
+              <dd onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">汽车研究中心</span></dd>
+              <dd onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">中国创新研究中心</span></dd>
+              <dd onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">中欧文苑</span></dd>
+              <dd onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">服务经济研究院</span></dd>
+              <dd onClick="DonationAction.GetDD(this)"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">中欧凯风家族传承研究中心</span></dd>
+              <dd onClick="DonationAction.GetDD(this)" rel="1"><span class="HasSelectNo Detailicn sg1" ></span><span class="GetDD">
+其他用途</span></dd>
+            </dl>
+          </li>
+          <li style="border:none; display:none;"  class="Tetdd" id="Tetddc">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText">其他用途（请注明）:</div>
+              <div class="ProvideTextInput">
+                <textarea id="yongtu"></textarea>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="ProvideCom" style="margin-top:0;">
+      <h3>其他要求：</h3>
+      <div class="ProvideComBox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+        <ul>
+          <li style=" padding:10px 0; padding-bottom:0; border:none;"><span class="Detailicn NoChecked" onClick="DonationAction.YQ(this)" rel="0" showid="DeerApp"></span>
+            <div class="DonationDiv" >
+              <div class="DonationDivInner"> 这份投资也代表了其他人的心意： </div>
+            </div>
+          </li>
+          <span id="DeerApp" style="display:none;">
+          <li style="border:none;">
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText" style="width:70px">姓名：</div>
+              <div class="ProvideTextInput" style="margin-left:80px">
+                <input type="text" class="inputs" id="OtherUsername" >
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="ProvideDiv"><span class="Xing"></span>
+              <div class="ProvideText" style="width:70px">班级：</div>
+              <div class="ProvideTextInput" style="margin-left:80px">
+                <input type="text" class="inputs" id="OtherUserClass" >
+              </div>
+            </div>
+          </li></span>
+        </ul>
+        <ul>
+          <li style=" padding:10px 0; "><span class="Detailicn NoChecked"  rel="0" onClick="DonationAction.YQ(this)" rel="0" showid="Drooe"></span>
+            <div class="DonationDiv" >
+              <div class="DonationDivInner"> 我不想公开此次投入： </div>
+            </div>
+            <div class="DonationDiv" id="Drooe"  style="display:none;">* 所有捐赠将在学院网站及向所有校友发行的年度投资者报告中加以表彰。 </div>
+          </li>
+        </ul>
+        <ul>
+          <li style=" padding:10px 0;  border:none;"><span class="Detailicn NoChecked"  rel="0" onClick="DonationAction.YQ(this)" rel="0" showid="shenfz"></span>
+            <div class="DonationDiv" >
+              <div class="DonationDivInner">我希望获得“上海市公益性捐赠收<BR>
+                据”</div>
+            </div>
+            <div class="DonationDiv" id="shenfz" style="display:none;">
+              <p style="padding-bottom:10px;">身份证（护照）号码：</p>
+              <div class="ProvideTextInput" style="margin-left:0">
+                <input type="text" class="inputs" id="username" >
+              </div>
+              <div style="padding-top:14px; color:#666;">中欧国际工商学院教育发展基金会享有公益
+                性捐赠税前扣除资格。接受公益性捐赠时，
+                使用上海市财政局统一印制的《上海市公益
+                性捐赠票据》。<br />
+                为便于您接收票据快递，请再次核对身份及
+                地址等信息。</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div style="padding-top:20px;">
+        <input type="button" class="btnStylecc" onClick="Donation.setOrderDonation()" value="提交" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="donationList" id="backPrevPosition" />
+<script type="text/javascript" src="js/jquery1.6.js"></script> 
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/welfareHtmlTemplatesV1.js?v=20130927"></script> 
+<script type="text/javascript" src="js/welfareCommonBase.js?v=20130927"></script> 
+<script type="text/javascript" src="js/welfareCommonV1.js?v=20130927"></script> 
+<script type="text/javascript">
+$(function(){
+
+})
+</script>
+</body>
+</html>

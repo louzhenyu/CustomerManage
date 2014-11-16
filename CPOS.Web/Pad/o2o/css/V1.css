@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img { border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 14px; font-family: THeiti,"微软雅黑",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #565656; resize: none; outline: none; }
+body { background-color:#f0f2f5;}
+h1, h2, h3, h4, h5, h6 { font-size: 14px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 14px; margin: 0; padding: 0; }
+textarea, input[type="text"],input[type="password"],input[type="button"],input[type="submit"]{ resize: none; outline: none; -webkit-appearance: none;    }
+.zoom { overflow: hidden; zoom: 1;  }
+.frdisplay{ float:right; display:block;}
+a,a:hover{ text-decoration:none; color:#7c7c7c;}
+.PcBox{ position:relative; margin-left:auto; margin-right:auto; overflow:hidden;  }
+.indexbox{ }
+.blank1{ height:1px; overflow:hidden; display:block; clear:both;}
+.PadMenu{ position:fixed; left:0; top:0; height:100%; width:64px; background-color:#6c7073; text-indent:-999px;}
+.PadMenu li{ height:64px; overflow:hidden; margin-top:20px; cursor:pointer}
+.skin{ background-image:url(../images/pad.png); background-repeat:no-repeat;}
+.pm1Hover{ background-position:-1px -1px;}.pm1{ background-position:-239px -40px;}
+.pm2{ background-position:-1px -98px;}
+.pm3{ background-position:-1px -194px;}.pm3Hover{ background-position:-239px -236px;}
+.pm4{ background-position:-1px -285px;}
+.Common{ padding-left:64px;}
+.CommonInfo{ height:44px; background-color:#f0f2f5;  overflow:hidden;}
+.f1{ color:#0091ff; font-weight:bold}
+.CommonInfoDiv{ height:150px; background-color:#fff; padding-left:10px;}
+.CommonInfoDivLeft{ height:75px; overflow:hidden; border-bottom:1px solid #cccccc; position:relative;}
+.CommonInfoDivLeftH1{ width:133px; height:29px; background-position:-102px -10px; margin-top:20px; margin-left:20px;}
+.BtnBj{ background-position:-487px -2px; width:112px; height:38px; cursor:pointer; position:absolute; right:10px; top:20px;}
+.Btnqx{ background-position:-361px -2px; width:112px; height:38px; cursor:pointer; position:absolute; right:142px; top:20px;}
+.CommonInfoDivBtm{ height:75px; overflow:hidden; position:relative;}
+.CommonInfoDivBtmSS{ font-size:16px;}
+.Btngwc{ background-position:-454px -60px; width:144px; height:41px; cursor:pointer; position:absolute; right:10px; top:20px;}
+.Siddd{ background:url(../images/die.png) repeat-x left top; height:13px; overflow:hidden; clear:both;}
+.CardList td{ border-bottom:1px solid #c6ccd0; padding:5px;}
+.CardList .BoxTd td{ background-color:#e3e6ec; border-bottom:1px solid #9fa5a9; font-weight:bold}
+.ODoasd{ padding:5px 0; position:relative; min-height:90px; padding-top:10px; }
+.Detailicn{ background-repeat:no-repeat; background-image:url(../images/detail.png); }
+.Stitle{ font-size:14px; margin-left:110px;}
+.shuDown{width:23px; height:23px; background-position:-83px -241px; display:block; float:left; margin-right:10px; margin-top:1px; cursor:pointer}
+.ddNumcc{ float:left; display:block; width:30px;  background-color: #F7F7F7;border: 1px solid #C1C1C1;  background-color: #F7F7F7; box-shadow: 0 0 5px #C1C1C1 inset;border-radius: 5px 5px 5px 5px; height:23px; line-height:23px;  margin-right:10px; text-align:center; }
+.shuUp{width:23px; height:23px; background-position:-116px -240px; display:block; float:left; margin-top:1px; cursor:pointer;}
+.checkBoxFalse{ width:24px; height:24px; background-position:-114px -62px; display:block; margin-left:auto; margin-right:auto; cursor:pointer}
+.checkBoxTrue{ width:24px; height:24px; background-position:-114px -145px; display:block; margin-left:auto; margin-right:auto; cursor:pointer}
+.CommonInfoDivLeftH3{width:133px; height:29px; background-position:-349px -263px; margin-top:20px; margin-left:20px;}
+.Btnjdd{ background-position:-454px -115px; width:144px; height:41px; cursor:pointer; position:absolute; right:10px; top:20px;}

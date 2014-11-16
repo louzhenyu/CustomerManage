@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--  引入Ext JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Ext4.1.0/ext-all.js"></script>
+    <link rel="Stylesheet" type="text/css" href="/Lib/Javascript/Ext4.1.0/Resources/CSS/ext-all.css" />
+    <!--引入Jit的JS类库-->
+    <script type="text/javascript" src="/Lib/Javascript/Jit/jit-all-dev.js"></script>
+    <link rel="stylesheet" type="text/css" href="/Lib/Css/jit-all.css" />
+    <script language="javascript" type="text/javascript" src="../Framework/Javascript/Biz/CheckboxList.js"></script>
+</head>
+<body>
+    <div>this is a test</div>
+    <div id="dvPlaceHolder"></div>
+    <script language="javascript" type="text/javascript">
+        Ext.onReady(function () {
+            //            var dataes = Ext.create('Ext.data.Store', {
+            //                model: 'CheckBoxList'
+            //                , data: [
+            //                    { id: 'chk1', text: 'checkbox1' }
+            //                    , { id: 'chk2', text: 'checkbox2' }
+            //                    , { id: 'chk3', text: 'checkbox3' }
+            //                    , { id: 'chk4', text: 'checkbox4' }
+            //                    , { id: 'chk5', text: 'checkbox4' }
+            //                    , { id: 'chk6', text: 'checkbox4' }
+            //                ]
+            //            });
+            var ctl = Ext.getCmp('');
+            var ss = "[{ id: 'chk1', text: 'checkbox1' },{ id: 'chk2', text: 'checkbox2' }]";
+            var s = eval(ss);
+            var vals = new Array();
+            for (var i = 0; i < s.length; i++) {
+                var ctlID = s[i].id;
+                var val = Ext.geCmp(ctlID).getValue();
+                vals.push(val);
+            }
+            Ext.create('Jit.biz.CheckboxList', {
+                renderTo: 'dvPlaceHolder'
+                , items: s
+                //                , data: dataes
+            });
+        });
+    </script>
+</body>
+</html>

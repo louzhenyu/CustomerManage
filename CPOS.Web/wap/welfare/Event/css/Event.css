@@ -1,0 +1,32 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img { border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 12px; font-family:THeiti,Arial, Helvetica, sans-serif; color: #565656; resize: none; outline: none; }
+body { }
+h1, h2, h3, h4, h5, h6 { font-size: 16px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 14px; margin: 0; padding: 0; }
+textarea, input[type="text"],input[type="password"],input[type="button"],input[type="submit"]{ resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1 }
+.frdisplay{ float:right; display:block;}
+a,a:hover{ text-decoration:none; color:#565656;}
+.PcBox{ position:relative;  margin-left:auto; margin-right:auto; background-color:#e1e5e9; box-shadow:0 0 5px #ddd; }
+.blank1{ height:1px; overflow:hidden; display:block; clear:both;}
+.banner{ clear:both;}
+.Lang{ color:#fff; font-size:18px; width:80px; line-height:34px; position:absolute; height:34px; background-color:#fbab4a; right:0; top:-4px; text-align:center; cursor:pointer}
+.textBox{ width:94%; margin-left:auto; margin-right:auto; background-color:#f9fafb; }
+.textBoxDl{ margin-left:25px; border-left:1px solid #cfcfcf; margin-right:10px;}
+.textBoxDl dt{ border-bottom:1px solid #cfcfcf; padding:20px 0; padding-left:25px; position:relative; font-weight:bold; font-size:14px;}
+.Icnoo{ width:30px; display:block; position:absolute; left:-15px; top:15px;}
+.textBoxDl dd{ border-bottom:1px solid #cfcfcf; padding:10px 0; margin-left:15px; position:relative; padding-left:30px; line-height:20px; cursor:pointer}
+.checkBox{ width:22px; height:22px; position:absolute; display:block; left:3px; top:10px; cursor:pointer}
+.bottonIn{ height:38px; background-color:#a51d1d; font-size:14px; color:#fff; text-align:center; font-weight:bold; line-height:38px; cursor:pointer;}
+.abcp{ clear:both;}
+.abcp li{ padding:10px; padding-left:30px; cursor:pointer; position:relative;}
+.classINput{ height:24px; line-height:24px; border-bottom:1px solid #cccccc; width:180px;}
+.aosd td{ padding:10px; font-size:16px; color:#666666; }
+.aod{ padding-top:20px;}
+a.appCacel,a.appCacel:hover{ width:100px; height:40px; background-color:#fbab4a; text-align:center; color:#fff; line-height:40px; display:block; float:left; margin-left:15px; _display:inline; font-size:16px; font-weight:bold}
+.aosd td .en{ font-size:14px;}

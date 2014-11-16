@@ -1,0 +1,59 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+	<title name="GoodsCart"></title>
+	<link href="../css/global.css" rel="stylesheet" type="text/css" />
+	<link href="../css/style.css?ver=2" rel="stylesheet" type="text/css" />
+		
+	<script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch.js?ver=2"></script>
+</head>
+
+<body>
+<section class="goods_wrap">
+  <dl class="tool_bar clearfix">
+    <dt><a href="javascript:Jit.AM.pageBack();">返回</a></dt>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsList');">列表</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsCart');">购物车</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('MyOrder');">首页</a></dd>
+  </dl>
+  <div class="cart_list">
+    <ul id="goods_list">
+      <!--li class="clearfix">
+        <div class="imgBox"><img src="../images/shop/pic_02.jpg" width="70" height="95"></div>
+        <div class="infoBox">
+          <h3>泸州老窖特曲三年陈酿60度高级定制级新春贺岁酒</h3>
+          <b>￥188.00</b>
+          <p><a href="#" class="btn_remove"></a>
+            <input type="button" value="-"><input type="text" placeholder="2"><input type="button" value="+">
+          </p>
+        </div>
+      </li-->
+    </ul>
+    <dl class="order_total clearfix">
+      <dt><a href="javascript:Jit.AM.toPage('GoodsList')">继续购物</a></dt>
+      <dd>合 计：<b id="totalprice"></b></dd>
+      <dd>数 量：<b id="totalpty"></b></dd>
+    </dl>
+  </div>
+  <!--<div class="btn_coupon"> <a><em>优惠券抵用</em><b>0元</b><span>﹥</span> </a> </div>-->
+  <div class="order_submit clearfix"> <a href="javascript:JitPage.submitOrder()">提交订单</a> 应付金额： <b id="payprice"></b> </div>
+</section>
+</body>
+<script id="Tpl_goods_item" type="text/template">
+	<li class="clearfix">
+        <div class="imgBox"><img src="{{imageUrl}}" width="70" height="95"></div>
+        <div class="infoBox">
+			<h3>{{itemName}}</h3>
+			<b>￥{{salesPrice}}.00</b>
+			<p>
+				<a href="javascript:JitPage.removeGoods('{{skuId}}')" class="btn_remove"></a>
+				<input onclick="javascript:JitPage.modify('{{skuId}}',-1)" type="button" value="-">
+				<input type="text" value="{{qty}}" readonly="true" >
+				<input onclick="javascript:JitPage.modify('{{skuId}}',1)" type="button" value="+">
+			</p>
+        </div>
+    </li>
+</script>
+</html>

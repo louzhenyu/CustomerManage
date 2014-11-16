@@ -1,0 +1,84 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="AddOrder">订单提交</title>
+</head>
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <header>
+        <nav class="commonNav">
+            <ul>
+                <li><a href="javascript:Jit.AM.pageBack();"></a></li>
+                <li><a href="javascript:Jit.AM.toPage('Members');"></a></li>
+                <li class="on"><a href="javascript:Jit.AM.toPage('OrderList');"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <section>
+    <div class="selectPhoto">
+    	<h2 class="title">一、请选择订单照片</h2>
+        <form id="form" action="" method="POST" enctype="multipart/form-data" target="fileUp">
+            <input type="file" id="fileUp" style="width:245px" class="oldSubmit" name="fileUp">
+            <span id="btnUpload2"  class="oldSubmit"></span>
+            <div class="uploadWrap" id="iosSubmit" style="display:none">
+            	<span>选择文件</span>
+                <div class="fileInputContainer2" style="">
+                    <input class="fileInput" type="file">
+                </div>
+                <input id="location" readonly="readonly" type="text">
+                <span id="btnUpload">提交</span>
+            </div>
+        </form>
+        <div class="photoBox clearfix" style="margin-top: 17px;">
+        	<div id="imageBox" class="clearfix">
+            </div>
+            <p id="addFile" class="add" style="display:none;">+
+                <span class="fileInputContainer" style="">
+                    <input id="" class="fileInput" type="file" multiple>
+                </span>
+            </p>
+        <div>
+            <span style=" text-indent:2em; width: 100%;line-height: 35px;text-align: right;font-size: 15px;">
+                请上传3至6张照片，包括购买者信息照片，发票或购买凭证照片和保修卡照片。
+            </span>
+        </div>            
+        </div>
+    </div>
+    <div class="fillInfo">
+    	<h2 class="title">二、请填写详细信息</h2>
+        <p><em>产品型号:</em><label><input id="model" type="text"></label></p>
+        <p><em>产品序列号:</em><label><input id="idNumber" type="text"></label></p>
+        <p><em>产品价格:</em><label><input id="price" type="text"></label></p>
+        <p><em>购买方式:</em><label><select id="buyWay"><option></option></select><span class="point"></span></label></p>
+        <p><em>日期:</em><label><input type="text" id="date"><span id="showDate" class="point"></span></label></p>
+        <p><em>客户姓名:</em><label><input id="vipName" type="text"></label></p>
+        <p><em>电话:</em><label><input id="phone" type="tel"></label></p>
+        <p><em>E-mail:</em><label><input id="email" type="text"></label></p>
+        <p><em>客户获取方式:</em><label><select id="clientWay"><option></option></select><span class="point"></span></label></p>
+        <p><em>学校:</em><label><input id="school" type="text" /></label></p>
+        <p><em>专业:</em><label><input id="specialt" type="text" /></label></p>
+        <p><em>购买前意向:</em><label><input id="intent" type="text" /></label></p>
+    </div>    
+</section>
+    <a href="javascript:;" id="submit" class="commonBtn orderSubmitBtn"></a>
+    <div style="height: 10px; width: 100%">
+    </div>
+    <script type="text/template" id="imageTpl">
+    <p>
+        <img id="<%=id%>" src="<%=imgUrl%>" alt=""/>
+        <em data-index="<%=index%>" class="close"></em>
+    </p>
+    </script>
+    <script type="text/template" id="optionTpl">
+    <%for (var i = 0; i <optionList.length; i++) {var item=optionList[i];%>
+        <option value="<%=item.OptionValue%>"><%=item.OptionText%></option>
+    <%}%>
+    </script>
+</body>
+</html>
+<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>

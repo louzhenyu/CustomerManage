@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="SurveyIndex"></title>
+	</head>
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<div class="wrapper">
+			<img class="bg" src="http://stc.weimob.com/img/surveymobile/bg.jpg">
+			<div style="height: 25px;"></div>
+			<section id="section">
+				<div class="content">
+					<div class="title">
+						杰亦特产品功能小调查
+					</div>
+					<img class="connect" src="http://stc.weimob.com/img/surveymobile/connect.png">
+					<div class="desc-cont">
+						感谢您参与此次调查，本调查目的在于了解产品对消费者购物选择的影响。您对本问卷的所有回答都是以匿名形式进行并且答案得到严格保密，研究结果将是结论性质的报告，不会泄漏您的任何相关信息。每位参与调研的朋友都将获得我们送出的尊贵礼品，同时你还将参加抽奖，有机会获得iphone5等大奖。【演示】
+					</div>
+					<a class="beginBtn next-btn" href="javascript:;" style="text-decoration:none;">马上开始</a>
+				</div>
+			</section>
+		</div>
+		<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+		<script id="quesTemp"  type="text/html">
+			<%%>
+			<div class="question" style="overflow:hidden;">
+			<div class="title"><%=questionText%></div>
+			<div class="tip">
+			注：本题是<%if(questionType==1){%>单选题<%}else if(questionType==2){%>问答题<%}else if(questionType==3){%>多选题，至少选<%=minSelected%>项，最多选<%=maxSelected%>项<%}else{%>未知题型<%}%>
+			</div>
+			<div class="options">
+			<%for(var i=0;i<options.length;i++){var idata= options[i];%>
+			<div class="option <%if(idata.isSelected==1){%> option-sel<%}%>" data-id="<%=idata.optionId%>">
+			<img class="oimg" src="http://stc.weimob.com/img/surveymobile/option_bg.png">
+			<img class="oimg-sel" src="http://stc.weimob.com/img/surveymobile/option_sel_bg.png">
+			<div class="text">
+			<div class="otext"><%=idata.optionText%></div>
+			</div>
+			</div>
+			<%}%>
+			</div>
+			<div data-index="<%=quesIndex%>" data-questionId = "<%=questionId%>" data-minSelected="<%=minSelected%>" data-maxSelected="<%=maxSelected%>" data-isRequired="<%=isRequired%>" class="submit">
+			<img src="http://stc.weimob.com/img/surveymobile/next_btn.png">
+			<span>下一步</span>
+			</div>
+			</div>
+		</script>
+		<script id="quesTemps"  type="text/html">
+			<div class="question" style="overflow:hidden;">
+			<div class="title">啊时代发生的</div>
+			<div class="tip">
+			注：本题最多能选择1个答案！
+			</div>
+			<div class="options">
+
+			<div class="option" data-value="1">
+			<img class="oimg" src="http://stc.weimob.com/img/surveymobile/option_bg.png">
+			<img class="oimg-sel" src="http://stc.weimob.com/img/surveymobile/option_sel_bg.png">
+			<div class="text">
+			<div class="otext">非常强大</div>
+			</div>
+			</div>
+
+			<div class="option" data-value="2">
+			<img class="oimg" src="http://stc.weimob.com/img/surveymobile/option_bg.png">
+			<img class="oimg-sel" src="http://stc.weimob.com/img/surveymobile/option_sel_bg.png">
+			<div class="text">
+			<div class="otext">比较强大</div>
+			</div>
+			</div>
+			</div>
+			<div class="submit">
+			<img src="http://stc.weimob.com/img/surveymobile/next_btn.png">
+			<span>下一步</span>
+			</div>
+			</div>
+		</script>
+		<script id="beginTemp"  type="text/html">
+			<div class="content">
+			<div class="title">
+			微盟产品功能小调查
+			</div>
+			<img class="connect" src="http://stc.weimob.com/img/surveymobile/connect.png">
+			<div class="desc-cont">
+			感谢您参与此次调查，本调查目的在于了解产品对消费者购物选择的影响。您对本问卷的所有回答都是以匿名形式进行并且答案得到严格保密，研究结果将是结论性质的报告，不会泄漏您的任何相关信息。每位参与调研的朋友都将获得我们送出的尊贵礼品，同时你还将参加抽奖，有机会获得iphone5等大奖。【演示】
+			</div>
+			<a id="beginBtn" class="next-btn" href="javascript:;" style="text-decoration:none;">马上开始</a>
+			</div>
+		</script>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<configuration>
+     <icon>assets/images/jit/tms/</icon>
+	<weburl>http://webservice_url/WebService.asmx?wsdl</weburl>
+	<clustering sizeinpixels="80" mingraphiccount="1">
+		<clustersymbol type="flare" flaremaxcount="1" size="30"
+			weights="10,100,500,1500,10000" sizes="40,50,60,70,70" alphas="0.6,0.7,0.8,0.9"
+			colors="0xBDD7E6,0x6BACD6,0x3282BF,0x085299,0x085299" textsize="14" textcolor="0xFFFFFF"
+			bordercolor="0xb28f00" />
+	</clustering>
+</configuration>

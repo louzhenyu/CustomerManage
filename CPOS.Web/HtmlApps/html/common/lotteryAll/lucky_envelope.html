@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="LuckyEnvelope"></title>
+		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+			}
+			.wrapper {
+				position: relative;
+				margin: 0 auto;
+				max-width: 640px;
+				min-height: 100%;
+			}
+			.img{
+				display:block;
+				margin:0 auto;
+			}
+			.awardBtnWrap{position:fixed;bottom:10px;left:0px;width:100%;height:45px;background:#fff;}
+			.awardBtnWrap span{width:43%;height:42px;line-height:42px;text-align:center;font-size:15px;font-weight:bold;border-radius:5px;background:#f60;color:#fff;cursor:pointer;}
+			.awardBtnWrap .prizeBtn{float:left;margin:0 2% 0 5%;}
+			.awardBtnWrap .rewardBtn{float:right;margin:0 5% 0 2%;}
+			
+				/*下拉动画*/
+	        @-webkit-keyframes pullDown {  
+	        0% { top:-130px;}
+	        40%{ top:130px;}
+	        100% { top:0;}
+	        }
+	        .pullDownState{-webkit-animation:pullDown 0.5s ease-in-out 1;}/*infinite*/
+	
+	        @-webkit-keyframes pullUp {  
+	        0% {top:150px;}
+	        100% {top:-130px;}
+	        }
+	
+	        .pullUpState{-webkit-animation:pullUp 0.5s ease-in-out 1;}/*infinite*/
+		</style>
+	</head>
+
+	<body class="redPacketPage">
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<img src="/HtmlApps/images/common/share.png" id="shareImg" style="display: none;height: 130px;position:fixed;right: 25px;top: 0;width: 160px;z-index: 100;" class="pullDownState">
+		<section class="sharePanel wrapper hide">
+			<div id="shareWrapper">
+			</div>
+			<div class="awardBtnWrap">
+			    <span id="btn_join" class="prizeBtn">马上参与</span>
+			    <span id="btn_check" class="rewardBtn">我的推荐奖励</span>
+			</div>
+		</section>
+		<section id="section" class="home lottery_area" style="display:none">
+        	
+		</section>
+		<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+		<script id="winningSec" type="text/html">
+			<img class="bg" src="/HtmlApps/images/common/lotteryAll/bg.jpg" style="width:100%;height:100%;">
+			<div class="contentWrap">
+			<img class="bigPrize" src="<%=ImageUrl%>">
+			<!-- <img id="addressBtn" class="addressBtn" src="/HtmlApps/images/common/lotteryAll/addressBtn.png"> -->
+			</div>
+		</script>
+		<script id="loseSec" type="text/html">
+			<img class="bg" src="/HtmlApps/images/common/lotteryAll/bg.jpg" style="width:100%;height:100%;">
+			<div class="contentWrap">
+				<img class="thanks" style="padding: 72% 50px 75%;" src="/HtmlApps/images/common/lotteryAll/thanks.png">
+			</div>
+		</script>
+		<script id="getPrizeSec" type="text/html">
+			<img class="bg" src="/HtmlApps/images/common/lotteryAll/bg.jpg" style="width:100%;height:100%;">
+			<div class="contentWrap">
+			<img class="picText" src="/HtmlApps/images/common/lotteryAll/text.png">
+			<img id="tools" class="redBox" src="/HtmlApps/images/common/lotteryAll/hb.png">
+			<img id="checkBtn" class="redPacket" src="/HtmlApps/images/common/lotteryAll/redPacket.png">
+			</div>
+		</script>
+
+	</body>
+</html>

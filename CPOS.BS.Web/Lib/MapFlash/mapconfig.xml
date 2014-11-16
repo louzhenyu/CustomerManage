@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<configuration>
+    <icon>assets/images/jit/</icon><!--图标目录文件-->
+	<weburl>http://222.73.180.225:8081/WebService.asmx?wsdl</weburl><!--webservices-->
+	<menuop>1,1,1,1,1,1</menuop><!--多选,清除多选,导出,打印,前一视图,后一视图 1(开) 0(关)-->
+  <showmenu>false</showmenu>
+  <!--是否有右键-->
+</configuration>

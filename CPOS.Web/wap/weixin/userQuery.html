@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">微信App</title>
+</head>
+
+<body id="DLoading">
+<nav class="WAppMenu" style="display:none;">
+  <ul>
+    <li class="WAppMenuActive" style="width:50%">
+      <div class="WAppMenuLi" style="border-left:0;" id="Menu_UserSearch" onclick="MenuAppTab('Menu_UserSearch',0,'User/Search')">校友查询</div>
+    </li>
+    <li style="width:50%">
+      <div class="WAppMenuLi" id="Menu_Nearby" onclick="MenuAppTab('Menu_Nearby',1,'User/Nearby')" >附近校友</div>
+    </li>
+    <li style="width:34%; display:none;">
+      <div class="WAppMenuLi" style="border-right:0;" id="Menu_Welfare" onclick="MenuAppTab('Menu_Welfare',2,'User/Welfare')">校友福利</div>
+    </li>
+  </ul>
+</nav>
+<div style="overflow:hidden;" id="CommonGID">
+  <section class="WAppSection ClassTabJs" id="UserSearchId" style="display:none; position:relative; margin:0; padding-top:30px;" ></section>
+  <section class="WAppSection ClassTabJs" id="UserNearbyId" page="1" style=" position:relative; display:none; margin:0; padding-top:10px;"> </section>
+  <section class="WAppSection ClassTabJs" id="HuDongDetailID"  style="position:relative; display:none;"></section>
+  <section class="WAppSection ClassTabJs" id="UserSearchResultID"  style="position:relative; display:none; margin:0; padding-top:30px;" isNext="1"  loading="0"></section>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+
+<div class="AppBgGray" id="AppBgGray" style="display:none;"></div>
+<div class="AlumniConnext1" id="AlumniConnext1" style="display:none;">
+  <div class="AlumniConnext1Title"><a class="AlumniBack icnbg" href="javascript:void(0)" onClick="AppSet.Close('AlumniConnext1')" id="CloseHasBind" ></a>绑定中欧校友账号</div>
+  <span style=" height:20px;" class="blank1"></span>
+  <div style="width:82%; margin-left:auto; margin-right:auto; line-height:28px;">
+   
+    <p style="padding-top:10px; padding-bottom:10px; font-size:16px;">绑定后，您可以查询中欧校友库、活动快速报名与现场参与。</p>
+  </div>
+  <div class="inputAndSelect" style="position:relative;">
+  	<div style=" border: 1px solid #B2BAC0; border-radius: 4px 4px 4px 4px; background-color:#fff; padding-right:108px; ">
+    <input type="text" value="中欧校友账号" onblur="FocusFun(this,'中欧校友账号',0)" onfocus="FocusFun(this,'中欧校友账号',1)" class="AlumniInputstyle" id="username" style="border:none; background-color:none; padding-right:1%; width:97%;">
+    
+    <div style=" background-color:#f3f5f5; height:40px; position:absolute; right:1px; top:1px; line-height:40px; width:100px; padding-left:8px; border-radius:3px">@CEIBS.EDU</div>
+    </div>
+  </div>
+
+  <div class="inputAndSelect">
+    <input type="text" onblur="FocusFun(this,'中欧校友密码',0,1)" onfocus="FocusFun(this,'中欧校友密码',1,1)" value="中欧校友密码" class="AlumniInputstyle" id="pwd">
+  </div>
+  <div style="line-height:46px;" class="inputAndSelect"><span style="float:right;font-size:16px;"><a style="color:#3b3b3b;  text-decoration:underline; " href="#">找回用户名及密码</a></span>
+    <input type="button" style="width:40%" class="inputsubmitStyle " value="绑定" onClick="AppSet.LoginSubmit()" />
+  </div>
+</div>
+<input type="hidden" value="0" id="SearchPage" />
+<input type="hidden" value="" id="EventAction"  />
+<input type="hidden" value="" id="IsReferLoad"  />
+<input type="hidden" value="" id="latitude"  />
+<input type="hidden" value="" id="longitude"  />
+<script type="text/javascript" src="js/jquery1.6.js?v=20130619"></script> 
+
+<script type="text/javascript" src="js/htmlTemplates.js?v=20130619"></script> 
+<script type="text/javascript" src="js/common.js?v=20130619"></script>
+</body>
+</html>

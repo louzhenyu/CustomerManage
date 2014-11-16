@@ -1,0 +1,61 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title name="NewDetail">新闻详情</title>
+  <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+
+<body style="background-color:white;">
+  <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+
+  <section   class="mb50 detailArea" >
+    <div class="commonNav">
+      <a href="javascript:Jit.AM.pageBack()"> <em class="icon"></em>
+      </a>
+      <a href="javascript:Jit.AM.toPage('Home')"> <em class="icon"></em>
+      </a>
+      <a href="javascript:;">
+        <em class="icon"></em>
+      </a>
+    </div>
+
+    <div class="mt_Head_Area">
+<!--       <div>
+        <img src="../../../images/public/user_default/newstemp01.jpg"  ></div> -->
+
+
+    </div>
+    <div class="mdtitle" id="daDetilTitle"></div>
+          <div class="mthead_handle">
+        <ul>
+          <li><a id="txtPraise">0</a></li>
+          <li><a id="txtBroCount">0</a></li>
+          <li><a id="btFavorite">0</a></li>
+          <li><a id="btRelay">&nbsp;</a></li>
+        </ul>
+      </div>
+<!--     <div class="mdhandle">
+      点击数：
+      <span >0</span>
+      赞：
+      <span >0</span>
+      <span >点击收藏</span>
+    </div> -->
+    <div class="mttime" >
+      作者：
+      <span id="txtAuthor"></span>
+
+      <span id="deTime"></span>
+
+    </div>
+
+    <div id="detailArea"></div>
+    <div id="share-mask" ></div>
+    <img id="share-mask-img" class="pullDownState" src="../../../images/common/share.png" ></section>
+
+</body>
+</html>

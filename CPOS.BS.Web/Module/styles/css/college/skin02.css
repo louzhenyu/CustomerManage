@@ -1,0 +1,96 @@
+/*common*/
+.commonBtn{background:#fe7c24;}
+.commonTitle{border-left:4px solid #fe7c24;}
+.commonTitleBox .getBack{background:url(../../images/skin/bg02/getBack.png) no-repeat right center;}
+
+/*表格*/
+.tablehandle .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 90% center}
+.dataTable .title{border-bottom:2px solid #fe7c24;}
+.dataTable .title th{*border-bottom:2px solid #fe7c24;}
+.dataTable .title span{background:url(../../images/skin/bg02/selectIcon02.png) no-repeat right center;}
+.dataTable tr{border-bottom:1px solid #c9d7ec;}
+.dataTable tbody td{*border-bottom:1px solid #fedbc3;}
+.dataTable tbody tr:hover{background:#efefef;}
+.dataTable tbody tr:hover .joinBtn{background:#fe7c24;}
+.dataTable .checkBox.on em{background:url(../../images/skin/bg02/radio2.png) no-repeat center center;}
+.dataTable .links{color:#fe7c24;}
+.dataTable .operateWrap .editIcon{background:url(../../images/skin/bg02/editIcon.png) no-repeat center center;}
+.dataTable .operateWrap .delIcon{background:url(../../images/skin/bg02/delIcon.png) no-repeat center center;}
+.dataTable .operateWrap .minusIcon{background:url(../../images/skin/bg02/minusIcon.png) no-repeat center center;}
+.dataTable .selectListBox span{color:#fe7c24;}
+/*表格的菜单*/
+.tableMenu a.on{border-bottom:3px solid #fe7c24;color:#fe7c24;}
+/*添加资讯*/
+.addInfoArea .classInput .selectBox{background: #fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 85px center;}
+.addInfoArea .radioBox.on em{background:url(../../images/skin/bg02/radio3.png) no-repeat center center;}
+.topIssuesInfo .getBack{background:url(../../images/skin/bg02/getBack.png) no-repeat right center;}
+/*弹框*/
+.commdialog .row .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 107px center;}
+/*头部的微信，设置信息，退出*/
+.commonHeader .setBox{background:url(../../images/skin/bg02/userIcon.png) no-repeat center center;}
+.commonMenu li:hover{background:url(../../images/skin/bg02/commonMenuBg.png) no-repeat 0 0;}
+.commonMenu li:hover a{color:#fff;}
+.commonSelectWrap .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 120px center;}
+.selectDateBox p{background:#fbfbfb url(../../images/skin/bg02/dateIcon.png) no-repeat 80px center;}
+.moreQueryWrap .more{background:url(../../images/skin/bg02/moreQuery.png) no-repeat right 4px;color:#2d83cf;}
+
+
+/***公共的头部，导航，logo，信息***/
+.commonHeader{border-bottom:3px solid #fe7c24;}
+.commonHeader .logo{background:url(../../images/college/logo.png) no-repeat 0 0;}
+.commonNav li a{color:#b5b5b5;}
+.commonNav li.on a{color:#fe7c24;}
+
+
+.commonNav .nav001 a{background:url(../../images/college/bg01/nav001.png) no-repeat 0 center;}
+.commonNav .nav002 a{background:url(../../images/college/bg01/nav002.png) no-repeat 0 center;}
+.commonNav .nav003 a{background:url(../../images/college/bg01/nav003.png) no-repeat 0 center;}
+.commonNav .nav004 a{background:url(../../images/college/bg01/nav004.png) no-repeat 0 center;}
+.commonNav .nav005 a{background:url(../../images/college/bg01/nav005.png) no-repeat 0 center;}
+.commonNav .nav006 a{background:url(../../images/college/bg01/nav006.png) no-repeat 0 center;}
+
+
+.commonNav .nav001.on a{background:url(../../images/college/bg02/on-nav001.png) no-repeat 0 center;}
+.commonNav .nav002.on a{background:url(../../images/college/bg02/on-nav002.png) no-repeat 0 center;}
+.commonNav .nav003.on a{background:url(../../images/college/bg02/on-nav003.png) no-repeat 0 center;}
+.commonNav .nav004.on a{background:url(../../images/college/bg02/on-nav004.png) no-repeat 0 center;}
+.commonNav .nav005.on a{background:url(../../images/college/bg02/on-nav005.png) no-repeat 0 center;}
+.commonNav .nav006.on a{background:url(../../images/college/bg02/on-nav006.png) no-repeat 0 center;}
+
+/*全局菜单*/
+.commonMenu .menu001 a{background:url(../../images/college/bg01/menu001.png) no-repeat 15px center;}
+.commonMenu .menu002 a{background:url(../../images/college/bg01/menu002.png) no-repeat 15px center;}
+.commonMenu .menu003 a{background:url(../../images/college/bg01/menu003.png) no-repeat 15px center;}
+.commonMenu .menu004 a{background:url(../../images/college/bg01/menu004.png) no-repeat 15px center;}
+.commonMenu .menu005 a{background:url(../../images/college/bg01/menu005.png) no-repeat 15px center;}
+.commonMenu .menu006 a{background:url(../../images/college/bg01/menu006.png) no-repeat 15px center;}
+.commonMenu .menu007 a{background:url(../../images/college/bg01/menu007.png) no-repeat 15px center;}
+
+.commonMenu .menu001.on a{background:url(../../images/college/bg02/on-menu001.png) no-repeat 15px center;}
+.commonMenu .menu002.on a{background:url(../../images/college/bg02/on-menu002.png) no-repeat 15px center;}
+.commonMenu .menu003.on a{background:url(../../images/college/bg02/on-menu003.png) no-repeat 15px center;}
+.commonMenu .menu004.on a{background:url(../../images/college/bg02/on-menu004.png) no-repeat 15px center;}
+.commonMenu .menu005.on a{background:url(../../images/college/bg02/on-menu005.png) no-repeat 15px center;}
+.commonMenu .menu006.on a{background:url(../../images/college/bg02/on-menu006.png) no-repeat 15px center;}
+.commonMenu .menu007.on a{background:url(../../images/college/bg02/on-menu007.png) no-repeat 15px center;}
+
+.commonMenu li.menu001:hover a{background:url(../../images/college/bg01/h-menu001.png) no-repeat 15px center;}
+.commonMenu li.menu002:hover a{background:url(../../images/college/bg01/h-menu002.png) no-repeat 15px center;}
+.commonMenu li.menu003:hover a{background:url(../../images/college/bg01/h-menu003.png) no-repeat 15px center;}
+.commonMenu li.menu004:hover a{background:url(../../images/college/bg01/h-menu004.png) no-repeat 15px center;}
+.commonMenu li.menu005:hover a{background:url(../../images/college/bg01/h-menu005.png) no-repeat 15px center;}
+.commonMenu li.menu006:hover a{background:url(../../images/college/bg01/h-menu006.png) no-repeat 15px center;}
+.commonMenu li.menu007:hover a{background:url(../../images/college/bg01/h-menu007.png) no-repeat 15px center;}
+
+
+/******查询*****/
+/*头部简单查询*/
+.commonSelectWrap .searchBtn{float:right;width:64px;height:32px;}
+
+/*头部 全查询*/
+.allQueryTermArea .pointerIcon{background:url(../../images/college/bg02/pointer.png) no-repeat 0 0;color:#fe7c24;}
+.allQueryTermArea .digF{color:#fe7c24;}
+.allQueryTermArea .minF{color:#333;}
+.allQueryTermArea .recentBtn{color:#fe7c24;}
+.allQueryTermArea .drawBtn{background:#fbfbfb url(../../images/college/bg02/arr02.png) no-repeat 60px center;color:#3f97fe;}
+

@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/welfaceV1.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">中欧课程</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/iscroll.js"></script>
+</head>
+
+<body   style="background:url(images/orderbg.gif) repeat left top;">
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div style="position:relative;" id="AppCom">
+    <nav class="Menu">
+      <div class="TopMenu"><span class="Comeback" id="BackPrev"  onClick="WelfareAction.BackPre()"></span><span id="Btoo">中欧课程</span></div>
+    </nav>
+    
+    <div class="DetailBigBox" style="margin-top:55px;" id="CourseDetailDiv">
+     	
+        
+       
+        
+       
+   
+    </div>
+  </div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="courseList" id="backPrevPosition" />
+
+<script type="text/javascript" src="js/jquery1.6.js"></script> 
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/welfareHtmlTemplatesV1.js?v=20130927"></script> 
+<script type="text/javascript" src="js/welfareCommonBase.js?v=20130927"></script> 
+<script type="text/javascript" src="js/welfareCommonV1.js?v=20130927"></script> 
+<script type="text/javascript">
+$(function(){
+	Course.getCourseDetail();
+})
+</script>
+</body>
+</html>

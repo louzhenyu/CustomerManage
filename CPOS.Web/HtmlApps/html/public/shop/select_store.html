@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="SelectStore"></title>
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</head>
+
+<body>
+  <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<section class="goods_wrap">
+   <nav id="topNav">
+        <ul>
+          <li onclick="javascript:Jit.AM.pageBack();"><a></a></li>
+          <li onclick="javascript:Jit.AM.toPage('MyOrder');"><a></a></li>
+          <li onclick="javascript:Jit.AM.toPage('GoodsCart');"><a><span id="menuCartCount"></span> </a></li>
+          <li onclick="javascript:Jit.AM.toPage('IndexShop');"> <a ></a></li>
+        </ul>
+    </nav>
+  <div class="order_list">
+    <h3>选择您要去的门店</h3>
+    <div class="order_mod select_store" style="display: none;">
+      <dl class="clearfix">
+        <dt> 省份 </dt>
+        <dd>
+        	<select id="province" onchange="JitPage.fnSelCityByProvince(this.value)"><option value=''>--请选择--</option></select>
+        </dd>
+      </dl>
+      <dl class="clearfix">
+        <dt> 城市 </dt>
+        <dd>
+        	<select id="city" onchange="JitPage.storeList(this.value)"><option value=''>--请选择--</option></select>
+        	<!--<span class="text">上海市</span>
+            <span class="btn"></span>
+            <div class="comboBox" style="display:none">
+            	<span>北京</span>
+                <span>天津</span>
+                <span>重庆</span>
+            </div>-->
+            
+        </dd>
+      </dl>
+    </div>
+   
+   <div id="address_list">
+   </div>
+    
+    
+    <div class="order_confirm" style="display: none;"> <a href="javascript:JitPage.affirmAddress();">确 定</a></div>
+  </div>
+  
+</section>
+</body>
+
+<script id="Tpl_address_item" type="text/template">
+	<div class="order_mod address_store" data-storeid="{{storeId}}" data-address="{{address}}" data-tel="{{tel}}">
+    	<a class="telephone" href="tel:{{tel}}"></a>
+    	<h3>{{storeName}}</h3>
+        <span>电话：<a href="javascript:;">{{tel}}</a></span>
+        <p>{{address}}</p>
+        <i></i>
+    </div>
+</script>
+
+</html>

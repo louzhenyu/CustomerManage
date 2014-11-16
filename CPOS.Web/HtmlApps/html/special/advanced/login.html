@@ -1,0 +1,68 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="Login">登录</title>
+    <link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+</head>
+<body  >
+    <div id="masklayer" style="background-color:#FFF;" class="pageloading" > <i></i>
+    </div>
+    <section>
+        <h1 class="registerLogo">
+            <img src="../../../images/special/advanced/logo.png" id="imgUserHead"  />
+        </h1>
+        <div class="registerBox">
+
+      <!--       <div class="item">
+                <div id="selectCourseList" class="select">课程</div>
+            </div> -->
+    <!--         <div class="item">
+                <div id="selectClassList" class="select">班级</div> <em class="line"></em>
+            </div> -->
+            <div class="item">
+                <input type="text" placeholder="输入姓名" id="txtUserName" /> <em class="line"></em>
+            </div>
+            <div class="pace" >
+             <a  class="on">手机登录</a><a>SAIF ID登录</a>
+            </div>
+
+            <div class="item moe">
+                <input type="text" placeholder="输入手机" id="txtMobileOrEmail" />
+                 <!--<span class="tip">@saif.sjtu.edu.cn</span>-->
+            </div>
+        <!--         <div class="item moe on">
+                <input type="text" placeholder="输入学院邮箱" id="txtEmail" />
+                <span class="tip">@saif.sjtu.edu.cn</span>
+            </div> -->
+
+            <div class="item valcode">
+                <input type="text" placeholder="输入验证码" class="qrInput" id="txtValCode" />
+                <span class="qrCard" >获取验证码</span>
+            </div>
+
+        </div>
+        <div>
+        <a  class="commonBtn registerBtn">登录</a>
+        </div>
+        <div class="getpassword">
+            <a id="getPassword" >手机号更改或忘记学院邮箱账号和密码？</a>
+        </div>
+        <div class="jittip">技术实现与服务 400-110-0015</div>
+        <div class="selectbox">
+            <div class="selectlist">
+                <ul  id="boxCourseList"></ul>
+            </div>
+ <!--            <div class="selectlist">
+                <ul  id="boxClassList"></ul>
+            </div> -->
+            <div class="selectcancel">取消</div>
+
+        </div>
+
+    </section>
+
+</body>
+</html>

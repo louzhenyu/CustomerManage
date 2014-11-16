@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Expires" CONTENT="0">
+<meta http-equiv="Cache-Control" CONTENT="no-cache">
+<meta http-equiv="Pragma" CONTENT="no-cache">
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>关于微商城</title>
+<link type="text/css" href="css/common.css" rel="stylesheet" />
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript" src="js/iscroll.js"></script>
+<script type="text/javascript">
+var myScroll, myScroll2,myScroll3; 
+var NumWindth, WinW; 
+function loaded () {
+	myScroll = new IScroll('#wrapper', {
+		scrollX: true,
+		scrollY: false,
+		momentum: true,
+		snap: true,
+		snapSpeed: 400,
+		keyBindings: true,
+		indicators: {
+			el: document.getElementById('indicator'),
+			resize: true
+		}
+		 
+	});
+	myScroll2 = new IScroll('#wrapper2', {
+		scrollX: true,
+		scrollY: false,
+		momentum: true,
+		
+		snap: true,
+		snapSpeed: 400
+		 
+	});
+	myScroll3 = new IScroll('#wrapper3', {
+			scrollX: true,
+			scrollY: false,
+			momentum: true,
+			snap: true,
+			snapSpeed: 400
+			 
+		});
+	
+	myScroll2.on('scrollStart', function () {
+		 myScroll.disable();
+	}); 
+	myScroll.on('scrollStart', function () {
+		
+		 if(this.currentPage.pageX == 2){
+			 	myScroll2.enable();
+				myScroll2.goToPage(0,0,0);
+			 }
+	}); 
+	myScroll2.on('scrollMovecc', function () {
+			
+			//console.log(this.currentPage.pageX  + this.directionX)
+		if(this.directionX == -1 && this.currentPage.pageX == 0){
+						this.disable();
+						myScroll.enable();
+					//	myScroll2.enable();
+						myScroll.goToPage(1,0,400);
+				}
+				
+			if(this.directionX == 1 && this.currentPage.pageX == 2){
+					
+					this.disable();
+					myScroll.enable();
+					
+					//myScroll3.enable();
+					//myScroll3.refresh()
+					myScroll.goToPage(3,0,400)
+				}
+		
+	}); 
+	myScroll2.on('scrollEnd', function () {
+		
+	});
+	
+	myScroll.on('scrollEnd', function () {
+		
+		if(this.currentPage.pageX == 3 ){
+			this.disable();
+			myScroll3.enable();
+			myScroll3.refresh()
+				$(".ClickLink").hide();
+		}
+		//if(this.currentPage.pageX == 1 ){
+			
+			/*myScroll2.enable();
+			myScroll2.goToPage(0,0)
+			myScroll3.enable();
+			myScroll3.goToPage(0,0)*/
+	//	}
+		if(this.currentPage.pageX == 2 ){
+			this.disable();
+			myScroll2.enable();
+			myScroll2.refresh();
+		
+			
+		}
+		
+		
+	});  
+	 
+	
+	
+	myScroll3.on('scrollStart', function () {
+			 myScroll.disable();
+	}); 
+	myScroll3.on('scrollMovecc', function () {
+			$(".ClickLink").hide();
+				if(this.directionX == -1 && this.currentPage.pageX == 0){
+						this.disable();
+						myScroll.enable();
+						//myScroll.refresh()
+					//	myScroll2.enable();
+						myScroll.goToPage(2,0,400)
+				}
+				
+			if(this.directionX == 1 && this.currentPage.pageX == 2){
+					
+					this.disable();
+					myScroll.enable();
+					//myScroll.refresh()
+					myScroll.goToPage(4,0,400)
+					$(".ClickLink").show();
+				}
+		
+	}); 
+	myScroll3.on('scrollEnd', function () {
+		
+
+	});
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+$(function(){
+  WinW = $("#CommonBox").width(); 
+ 	 NumWindth = WinW / 5; 
+	 $("#dotty,.ccBg").css("width",NumWindth);
+	 $("#scroller").css("width", (WinW* $(".ClassBoxLi").length));
+	 $(".Side").css("height",458)
+	 $("#scroller2").css("width",320*3)
+	$("#scroller3").css("width",320*3)
+	$(".AboutClass3,.AboutClass6").css("width",320);
+
+	
+})
+
+//setTimeout(function () {loadImGWine(); myScrollWine.refresh(); }, 100)
+/*setTimeout(function () {loadImGWine2(); myScrollWine2.refresh(); }, 100)*/
+//document.addEventListener('DOMContentLoaded', loadImGWine, false);
+
+</script>
+</head>
+
+<body  onload="loaded()">
+
+<div class="CommonBox" id="CommonBox" style="width:320px; overflow:hidden; height:458px;">
+
+  <div id="indicator">
+    <div id="dotty"></div>
+    <div class="ccBg" style="z-index:0;"></div>
+  </div>
+  <!--  <div class="CMenu" style="display:none;"><span class="CmenuCur"></span></div>-->
+  <div class="ListBox" style="height:458px;">
+   <!-- <div style="overflow:hidden;"><img src="images/about3.jpg"  width="320" id="BoxBgImg3" style=" opacity:0" /></div>-->
+    <div class="ListBoxWifont"  id="wrapper" style="position:absolute; left:0; top:0; width:100%; height:458px;  ">
+      <ul   id="scroller" style="height:458px;">
+        <li class="ClassBoxLi"><img src="images/about1.jpg?_121212" width="100%"></li>
+        <li class="ClassBoxLi"><img src="images/about2.jpg?_121212" width="100%"></li>
+        <li class="ClassBoxLi"><img src="images/about3.jpg?_121212"  width="100%" class="AboutClass3" />
+          <div  id="wrapper2" style="position:absolute; left:0; top:0; width:100%; height:458px;  ">
+          	<div id="scroller2" >
+                <div class="Side" >
+                  <div style="position:absolute; width:240px; left:30px; top:135px; z-index:2;" > <img src="images/about3b1.png?_121212" width="100%" /> </div>
+                  <div style="position:absolute; width:360px; left:-20px; top:195px; z-index:3;" lr="200" dr="-20" > <img src="images/about3b2.png?_121212" width="100%" /> </div>
+                </div>
+                <div class="Side">
+                  <div style="position:absolute; width:280px; left:30px; top:135px; z-index:2;"> <img src="images/about4b1.png?_121212" width="100%" /> </div>
+                  <div style="position:absolute; width:520px; left:-100px; top:205px; z-index:2;"> <img src="images/about4b2.png?_121212" width="100%" /> </div>
+                </div>
+                <div class="Side" >
+                  <div style="position:absolute; width:265px; right:0px; top:135px; z-index:2;"> <img src="images/about5b1.png" width="100%" /> </div>
+                  <div style="position:absolute; width:300px; left:10px; top:190px; z-index:2;"> <img src="images/about5b2.png" width="100%" /> </div>
+                </div>
+            </div>
+          </div>
+        </li>
+        <li class="ClassBoxLi"> <img src="images/about6bg.jpg?_121212"  width="100%" class="AboutClass6" />
+          <div  id="wrapper3" style="position:absolute; left:0; top:0; width:100%; height:380px;  ">
+          	<div id="scroller3">
+              <div class="Side" >
+                <div style="position:absolute; width:265px; left:30px; top:135px; z-index:2;"> <img src="images/about6b1.png" width="100%" /> </div>
+                <div style="position:absolute; width:400px; left:50px; top:190px; z-index:2;"> <img src="images/about6b2.png" width="100%" /> </div>
+              </div>
+              <div class="Side" >
+                <div style="position:absolute; width:265px; left:30px; top:135px; z-index:2;"> <img src="images/about7b1.png" width="100%" /> </div>
+                <div style="position:absolute; width:500px; left:30px; top:190px; z-index:2;"> <img src="images/about7b2.png" width="100%" /> </div>
+              </div>
+              <div class="Side" >
+                <div style="position:absolute; width:265px; left:30px; top:135px; z-index:2;"> <img src="images/about8b1.png" width="100%" /> </div>
+                <div style="position:absolute; width:300px; left:10px; top:190px; z-index:2;"> <img src="images/about8b2.png" width="100%" /> </div>
+            </div>
+          </div>
+        </li>
+        <li class="ClassBoxLi"> <img src="images/about9bg.jpg?_121212"  width="320" /></li>
+      </ul>
+    </div>
+    
+     <a href="tel:4001102002" style="width:130px; height:40px; display:block; position:absolute; left:20px; top:140px; z-index:99; display:none;" class="ClickLink"></a><a href="mailto:info@o2omarketing.cn" style="width:140px; height:40px; display:block; position:absolute; left:160px; top:140px; z-index:99;display:none;" class="ClickLink"></a><a href="http://o2oapi.aladingyidong.com/OnlineShopping/welfareList.html?customerId=03201e18799a47179d2f6bf8424d86c9&userId=70413b931e6840d8898cfd69c62d3eb6&openId=o8Y7EjroqCTBer8gpGjVIsdlO9_s" style="width:110px; height:40px; display:block; position:absolute; left:200px; top:200px; z-index:99;display:none;" class="ClickLink"></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="albums"></title>
+		<style>
+			img {
+				max-width: 100% !important;
+			}
+		</style>
+	</head>
+	<body onselectstart="return true;" ondragstart="return false;" id="photo">
+
+		<style>
+			#Gallery li {
+				display: block;
+				width: inherit;
+				margin: 5px;
+			}
+			.album li p > span, .album1 li p > span, .album2 li p > span {
+				float: right;
+				color: #aaa;
+				position: absolute;
+				right: 5px;
+				background: #fff;
+				padding-left: 5px;
+			}
+			#Gallery li p {
+				display: inline-block;
+				max-width: 100%;
+			}
+		</style>
+
+		<div class="body">
+			<div class="qiandaobanner">
+				<a href="javascript:;"> <img src="../../../images/public/albums_default/albums_head.png" alt="" style="max-height:200px;"> </a>
+			</div>
+			<div id="main" role="main" class="album">
+				<ul id="Gallery" class="gallery">
+					
+				</ul>
+			</div>
+		</div>
+		<footer style="text-align:center; color:#ffd800;margin-right:20px;margin-top:0px;">
+			<a href="javascript:;">©杰亦特技术支持</a>
+		</footer>
+		<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
+		<script id="albumsTpl" type="text/template">
+				<%for(var i=0;i<content.albumList.length;i++){%>
+					<% var item=content.albumList[i];%>
+					<%if(item.albumType=="1"){%>
+					<li>
+						<a href="javascript:Jit.AM.toPage('albumsList','&albumId=<%=item.albumId%>');"> 
+							<img src="<%=item.imageUrl%>">
+							<p><%=item.albumTitle%><span>(<%=item.count%>张)</span></p> 
+						</a>
+					</li>
+					<%}%>
+				<%}%>
+		</script>
+	</body>
+	<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</html>

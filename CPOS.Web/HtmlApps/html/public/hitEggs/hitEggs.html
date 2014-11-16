@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="HitEggs"></title>
+    <style type="text/css">
+        body
+        {
+            background: #e1e5e7;
+        }
+    </style>
+	</head>
+	<body onselectstart="return true;" ondragstart="return false;">
+		<div class="body pb_10">
+			<div style="position:absolute;left:10px;top:10px;z-index:350;">
+				<a href="javascript:;" id="playbox" class="btn_music on" ></a><audio id="audio" loop="true" src="default.mp3" style="pointer-events:none;display:none;width:0!important;height:0!important;"></audio>
+			</div>
+			<section class="stage">
+				<img src="../../../images/public/hitEggs/stage.jpg">
+				<div id="shape" class="cube on">
+					<div class="plane one">
+						<span>
+							<figure>
+								&nbsp;
+							</figure></span>
+					</div>
+					<div class="plane two">
+						<span>
+							<figure>
+								&nbsp;
+							</figure></span>
+					</div>
+					<div class="plane three">
+						<span>
+							<figure>
+								&nbsp;
+							</figure></span>
+					</div>
+				</div>
+				<div id="hit" class="hit"><img src="../../../images/public/hitEggs/1.png">
+				</div>
+			</section>
+			<section>
+				<div class="instro_wall">
+					<article>
+						<h6>参与次数</h6>
+						<div>
+							<p>
+								您还可以抽奖次数：<label style="color:#126AEE;">不限次数</label>
+							</p>
+						</div>
+					</article>
+					<article>
+						<h6>活动说明</h6>
+						<div>
+							<p></p>
+							<p>
+								金“蛋”来袭，快来疯狂砸金蛋吧！
+							</p>
+							<p>
+								出现中奖信息到定点兑换
+							</p>
+							<p>
+								解释权为杰亦特官方所有。
+							</p>
+							<p></p>
+						</div>
+					</article>
+				</div>
+			</section>
+			<footer style="text-align:center; color:#fff;margin-right:20px">
+				<a href="javascript:;" style="color:#fff;">©杰亦特技术支持</a>
+			</footer>
+		</div>
+		<div mark="stat_code" style="width:0px; height:0px; display:none;"></div>
+		
+	</body>
+	<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</html>

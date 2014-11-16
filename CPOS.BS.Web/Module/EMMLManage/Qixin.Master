@@ -1,0 +1,75 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Qixin.master.cs" Inherits="JIT.CPOS.BS.Web.Module.EMMLManage.Qixin" %>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="format-detection" content="telephone=no"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <title>企信后台管理系统</title>
+    <link href="../styles/css/reset-pc.css" rel="stylesheet" />
+    <link href="../styles/css/common-layout.css" rel="stylesheet" />
+    <link href="../styles/css/qixin/skin01.css" rel="stylesheet" />
+</head>
+
+<body cache>
+<div class="allPage">
+	<!-- 公共的头部，导航，logo，信息 -->
+    <div class="commonHeader">
+        <div class="handleWrap">
+			<div class="qrBox">
+				<div class="qrBox-tip"><img src="/module/styles/images/qrImg.png" /></div>
+			</div>
+			<div class="setBox">
+				<div class="setBox-tip">
+					<a href="###">个人信息</a>
+					<a href="###">系统通知(1)</a>
+					<span class="commonBtn safetyOutBtn">安全退出</span>
+				</div>
+			</div>
+		</div>
+    	<div class="logoWrap">
+        	<div class="arr"></div>
+        	<h1 class="logo" title="阿拉丁">阿拉丁</h1>
+        </div>
+        <div class="commonNav">
+        	<ul class="clearfix">
+            	<li class="nav001 on">
+                	<a href="###">企信</a>
+                </li>
+                <li class="nav002">
+                	<a href="###">CRM系统</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    
+    <!-- 中间区域-->
+    <div class="centreArea">
+        <!-- 公共的菜单部分-->
+        <div class="commonMenu">
+            <ul>
+                <li class="menu001">
+                    <a href="###">资讯管理</a>
+                </li>
+                <li class="menu002 on">
+                    <a href="Sample.aspx">HR管理</a>
+                </li>
+                <li class="menu003">
+                    <a href="###">权限管理</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="contentArea">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/Module/static/js/lib/require.js" defer async="true" data-main="/Module/EMMLManage/js/main.js"></script>
+</body>
+</html>

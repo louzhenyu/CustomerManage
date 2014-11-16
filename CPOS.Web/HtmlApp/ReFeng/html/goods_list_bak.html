@@ -1,0 +1,40 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+	<title name="GoodsList"></title>
+	<link href="../css/global.css" rel="stylesheet" type="text/css" />
+	<link href="../css/style.css?ver=2" rel="stylesheet" type="text/css" />
+		
+	<script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch.js?ver=2"></script>
+</head>
+
+<body>
+<section class="goods_wrap">
+  <dl class="tool_bar clearfix">
+    <dt><a href="javascript:Jit.AM.pageBack();">返回</a></dt>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsList');">列表</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('GoodsCart');">购物车</a></dd>
+    <dd><a href="javascript:Jit.AM.toPage('MyOrder');">首页</a></dd>
+  </dl>
+  <div class="search_bar clearfix"> <a href="#"><i></i> 筛选</a>
+    <input type="text" id="ipt_search"><input type="button" value="" id="btn_search">
+  </div>
+  <div class="goods_list">
+    <ul tplpanel="goods_list" class="clearfix">
+    </ul>
+  </div>
+</section>
+</body>
+<script id="Tpl_goods_list" type="text/template">
+	<li> 
+		<a href="javascript:Jit.AM.toPage('GoodsDetail','&goodsId={{itemId}}')">
+			<div class="imgBox"><img src="{{imageUrl}}" width="145" height="145" alt=""></div>
+			<div class="infoBox"> <b>￥{{salesPrice}}</b> <del>{{oldprice}}</del>
+				<p>{{itemName}}</p>
+			</div>
+        </a> 
+	</li>
+</script>
+</html>

@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<configuration>
+    <icon>assets/images/jit/</icon><!--图标目录文件-->
+	<weburl>http://222.73.180.225:8081/WebService.asmx?wsdl</weburl><!--webservices-->
+  <!--webservices-->
+  <imgurl>http://121.14.47.46:8089/FluorineFxWeb/Gateway.aspx</imgurl>
+  <menuop>0,0,1,1,1,1</menuop>
+  <showmenu>true</showmenu>
+</configuration>

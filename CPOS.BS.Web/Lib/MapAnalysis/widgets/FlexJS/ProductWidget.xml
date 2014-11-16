@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<configuration>
+   <version>jitmap v1.0</version>
+   <province>http://arcgisserver_url/rest/services/kpi_chinamap/MapServer/1</province>
+   <city>http://arcgisserver_url/rest/services/kpi_chinamap/MapServer/2</city>
+   <county>http://arcgisserver_url/rest/services/kpi_chinamap/MapServer/3</county>
+   <uploadurl>http://www.qudaoyun.cn:2453/Gateway.aspx</uploadurl>
+</configuration>

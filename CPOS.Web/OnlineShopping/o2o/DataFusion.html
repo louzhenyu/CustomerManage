@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<title>O2O Marketing | 数据融合</title>
+<link href="css/base.css?3" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+<style type="text/css">
+.share {
+	text-align: center;
+	padding: 10px;
+}
+.share a, .share a:hover {
+	float: left;
+	display: block;
+	margin-left: 15px;
+}
+</style>
+<script type="text/javascript">
+
+var myScroll;
+var getWindowHeig = $(window).height()-42;
+function loaded () {
+
+	var getWindowHeight = getWindowHeig;	
+	
+		$("#odpage1").css({"height":getWindowHeig});
+		$("#commonBase,#wrapper").css("height",getWindowHeight);
+	
+	$(".Opacityck").each(function(index, element) {
+     	 $(this).css("height",$(this).parent().height()) 
+    });
+	$("#commonBase").css("opacity",1);
+	//$("#scroller").css("height",getWindowHeight*$(".common").length);
+	if(IsPC()){
+		$(".Menu,#wrapper,#wrapper li,#commonBase").css("width",320).show();	
+		$(".common").addClass("oeir2");
+	}else{
+		$("#Common,.Menu").css("width","100%").show();	
+	}
+	//$(".common").css("width",320).show();
+	//myScroll = new IScroll('#wrapper', { mouseWheel: true });
+
+	
+	
+}
+
+
+
+</script>
+</head>
+
+<body class="ActionClass" onLoad="loaded()">
+<Div id="commonBase" style="margin-left:auto; margin-right:auto; position:relative; opacity:0;">
+  <div class="common" style="background-color:#fff; ">
+    <div class="index2" style="margin-top:30px;"><img src="images/DataFusion1.png" width="100%" /><br>
+      <img src="images/DataFusion2.png" width="100%" /></div>
+  </div>
+  <div class="common" style="background-color:#fff; ">
+    <div class="index2" style="margin-top:30px;"><img src="images/DataFusion3.png" width="100%" /><br>
+      <img src="images/DataFusion4.png" width="100%" /></div>
+  </div>
+  <div class="common" style="background-color:#fff; ">
+    <div class="index2" style="margin-top:30px;"><img src="images/DataFusion5.png" width="100%" /><br>
+      <img src="images/DataFusion6.png" width="100%" /></div>
+  </div>
+  <div class="common" style="background-color:#fff; ">
+    <div class="index2" style="margin-top:30px;"><img src="images/DataFusion7.png" width="100%" /><br>
+      <img src="images/DataFusion8.png" width="100%" /></div>
+  </div>
+  <div class="common" style="background-color:#e1e5e7; padding-bottom:80px;" id="miaodian" name="miaodian">
+    <div class="odh1">欲了解更多，请留下您的信息，将有专人与您沟通</div>
+    <div class="odInput">
+      <input type="text" class="InputStyle" placeholder="姓名" id="userName" />
+    </div>
+    <div class="odInput">
+      <input type="text" class="InputStyle" placeholder="公司名称" id="company" />
+    </div>
+    <div class="odInput">
+      <input type="text" class="InputStyle" placeholder="公司邮箱"  id="email" />
+    </div>
+    <div class="odInput">
+      <input type="text" class="InputStyle" placeholder="公司总机+分机" id="tel" />
+    </div>
+    <div class="odInput">
+      <input type="text" class="InputStyle" placeholder="手机号" id="phone" />
+    </div>
+    <div class="odInput">
+      <input type="text" class="InputStyle" placeholder="行业" id="industry" />
+    </div>
+    <div class="odInput">
+      <input type="button" class="Inputbtn" value="提 交" onclick="Contact()" />
+    </div>
+    <div class="odh2">也可直接与我们联系</div>
+    <div class="odcacat">
+      <div class="dos"><a href="tel:400-110-0015"><img src="images/dh.png" width="24" style="top:8px;" />400-110-0015</a><a href="tel://31151366" style="position:absolute; left:180px;"><img src="images/pri.png" width="24" style="top:4px; left:-30px;" />31151366</a></div>
+      <div class="dos" style="line-height:20px; padding-top:5px;"><img src="images/wz.png" width="30" />上海市静安区延平路121号三和大厦15层D座</div>
+    </div>
+  </div>
+</div>
+</Div>
+<div class="Menu " style="display:none;" > <a href="tel:400-110-0015">
+  <div style="width:50%; float:left; cursor:pointer; height:100%">
+    <div style="margin-left:auto; margin-right:auto; width:100px; padding-top:7px;"><img src="images/m1.png" width="100%"  ></div>
+  </div>
+  </a>
+  <div style="width:50%; float:left;  cursor:pointer; height:100%" onClick="ShareSHow()">
+    <div style="margin-left:auto; margin-right:auto; width:100px; padding-top:7px;"><img src="images/m2.png" width="100%"  ></div>
+  </div>
+</div>
+<div style=" bottom: 0px; position:fixed; left:0; width:100%; z-index:999; text-align:center;  background-color: #333333;   opacity: 0.95; display:none;" class="share" id="shareBox">
+  <table border="0" align="center" style="margin-left:auto; margin-right:auto">
+    <tr>
+      <td><a target="_blank" href="" id="sina"> <img src="images/sinaminiblog.png"> <br>
+        <span>新浪微博</span> </a> <a target="_blank" href="" id="qqzone"> <img src="images/qzone.png"> <br>
+        <span>QQ空间</span> </a> <a target="_blank" href="" id="qqWeibo"> <img src="images/qqmb.png"> <br>
+        <span>腾讯微博</span> </a> <a target="_blank" href="" id="Renren"> <img src="images/renren.png"> <br>
+        <span>人人网</span> </a></td>
+    </tr>
+  </table>
+  <div class="Inputbtn" onClick="hideBox()" style=" background-color:#f8f8f8; color:#000; margin-top:10px;">取消</div>
+</div>
+<script type="text/javascript">
+function ShareSHow(){
+	$("#shareBox").show();
+	var ti = '基于微信和APP 助力传统企业O2O';
+	var sinaurl = "http://service.weibo.com/share/share.php?title="+ti+"&url="+encodeURIComponent(document.URL);
+	$("#sina").attr("href",sinaurl);
+	var qqZone ='http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url='+encodeURIComponent(document.URL)+'&title='+ti;
+	$("#qqzone").attr("href",qqZone);
+	var qqWeibo ='http://share.v.t.qq.com/index.php?c=share&a=index&title='+ti+'&url='+encodeURIComponent(document.URL);
+	$("#qqWeibo").attr("href",qqWeibo);
+	var Renren ='http://widget.renren.com/dialog/share?resourceUrl='+encodeURIComponent(document.URL)+'&title='+ti;
+	$("#Renren").attr("href",Renren);
+}
+function hideBox(){
+	$("#shareBox").hide();
+}
+var title = '基于微信和APP 助力传统企业O2O',defaultimgUrl="";
+var appId = '',imgUrl =defaultimgUrl, link = document.URL,fakeid = "",desc = document.title;
+function weiXinFollow(){
+
+	if(typeof(WeixinJSBridge) != "object"){
+		return false; 
+		}
+	WeixinJSBridge.on('menu:share:appmessage',function(argv) {
+		WeixinJSBridge.invoke('sendAppMessage', {
+			"appid": appId,
+			"img_url": imgUrl,
+			"img_width": "500",
+			"img_height": "500",
+			"link": link,
+			"desc": desc,
+			"title": title
+		},
+		function(res) {
+			});
+	});
+	WeixinJSBridge.on('menu:share:timeline',function(argv) {
+		WeixinJSBridge.invoke('shareTimeline', {
+			"img_url": imgUrl,
+			"img_width": "500",
+			"img_height": "500",
+			"link": link,
+			"desc": desc,
+			"title": title
+		},
+		function(res) {});
+	});
+	var weiboContent = '';
+	WeixinJSBridge.on('menu:share:weibo',function(argv) {
+		WeixinJSBridge.invoke('shareWeibo', {
+			"content": title + link,
+			"url": link
+		},
+		function(res) {
+		});
+	});
+}
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');weiXinFollow(); getWindowHeig = $(window).height(); loaded()});
+</script>
+</body>
+</html>

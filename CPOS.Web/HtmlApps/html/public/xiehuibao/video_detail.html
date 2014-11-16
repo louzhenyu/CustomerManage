@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <title name="VideoDetail">视频详情</title>
+     <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+      <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+
+<body  class="bgwhite" >
+    <div id="masklayer" style="background-color:#FFF;" class="pageloading" >
+      <i></i>
+    </div>
+  <div class="headerArea">
+    <header  class="header" id="headerTop">
+      <div class="commonNav">
+        <ul>
+          <a href="javascript:Jit.AM.pageBack()">
+            <li class="getBack">
+              <span></span>
+            </li>
+          </a>
+          <a href="javascript:Jit.AM.toPage('Account')">
+            <li class="user">
+              <span></span>
+            </li>
+          </a>
+          <a href="javascript:Jit.AM.toPage('Home')">
+            <li class="home">
+              <span></span>
+            </li>
+          </a>
+        </ul>
+      </div>
+    </header>
+  </div>
+  <section   class="detailArea" >
+    <div class="mt_Head_Area">
+      <div class="detailImg">
+        <video  width="100%" height="200"  preload="metadata" -webkit-playsinline="true" controls="controls" class="video" id="detailVideo"   ></video>
+      </div>
+    </div>
+    <div class="detailTitle" id="detailTitle"></div>
+    <div id="detailArea"></div>
+
+  </section>
+
+</body>
+</html>

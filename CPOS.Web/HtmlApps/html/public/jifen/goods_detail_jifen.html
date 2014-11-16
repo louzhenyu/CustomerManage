@@ -1,0 +1,170 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+    <title name="GoodsJiFenDetail"></title>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body>
+	<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <section class="goods_wrap">
+       <nav id="topNav">
+        <ul>
+          <li onclick="javascript:Jit.AM.pageBack();"><a></a></li>
+          <li  onclick="javascript:Jit.AM.toPage('JiFenDetail');"><a></a></li>
+          <li style="display:none" onclick="javascript:Jit.AM.toPage('GoodsCart');"><a><span id="menuCartCount"></span> </a></li>
+          <li  onclick="javascript:Jit.AM.toPage('JiFenShop');"> <a ></a></li>
+        </ul>
+    </nav>
+        <div class="goods_detail">
+               <div class="goods_img ac">
+                   <div  id="goodsScroll"  >
+                       <div class="goods_img_list"  >
+                           <ul id="goodsImgs" >
+                               <!--   <li>               
+                               <img height="160" src="." jitval="itemImage"></li>
+                           -->
+                       </ul>
+                   </div>
+                   <ul class="goods_img_bar" id="goodsImgBar">
+                       <!--         <li class="on">1</li>
+                   -->
+               </ul>
+
+               </div>
+
+               </div>
+            <div class="goods_txt">
+                <h2 jitval="itemName">
+                </h2>
+                <p>
+                   <b jitval="itemPrice"></b><span style="display: none">市场零售价：<del jitval="oldPrice">￥</del></span></p>
+            </div>
+            <div class="goods_parameter">
+                <dl name="propitem">
+                    <dt name="prop_name"></dt>
+                    <dd name="prop_option" propidx="1">
+                    </dd>
+                </dl>
+                <dl name="propitem">
+                    <dt name="prop_name"></dt>
+                    <dd name="prop_option" propidx="2">
+                    </dd>
+                </dl>
+                <dl name="propitem">
+                    <dt name="prop_name"></dt>
+                    <dd name="prop_option" propidx="3">
+                    </dd>
+                </dl>
+                <dl name="propitem">
+                    <dt name="prop_name"></dt>
+                    <dd name="prop_option" propidx="4">
+                    </dd>
+                </dl>
+                <dl name="propitem">
+                    <dt name="prop_name"></dt>
+                    <dd name="prop_option" propidx="5">
+                    </dd>
+                </dl>
+                <dl class="goods_num">
+                    <dt>数量：</dt>
+                    <dd>
+                        <input type="button" id="btn_delNum" value="-"><input id="goods_number" type="text"
+                            readonly="true" value="1"><input id="btn_addNum" type="button" value="+">
+                    </dd>
+                </dl>
+ 
+                <div class="proitem_point">
+                    <dl>
+                            <dd>需要积分：<label id="totaljf"></label></dd>
+                                <dd>我的积分：<label id="myjf"></label></dd>
+
+                    </dl>
+                </div>
+
+
+
+
+
+                <div class="order_list">
+                    <h3>
+                        配送方式</h3>
+                    <div class="order_mod delivery_mode">
+
+        <div class="clearfix"  name="select_address" psfs="fs1">
+          <div > <i name="radio_address" id="radio" value="radioA"></i> <b>送货上门：</b>
+            <span class="od_space" ></span>
+          </div>
+          <div>
+            <p>
+              联系人：
+              <span id="linkMan"></span>
+            </p>
+
+            <p>
+              电话：
+              <span id="linkTel"></span>
+            </p>
+
+            <p>
+              地址：
+              <span id="linkAddress"></span>
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="clearfix" style="border-top:1px solid #ccc;" name="select_address" psfs="fs2" id="pickShop" data-picking="hide">
+          <div > <i name="radio_address" id="radio" value="radioB"></i> <b>到店提货：</b>
+            <span class="od_space" </span>
+          </div>
+          <div>
+            <p>
+              提货时间:
+              <select>
+                <option value="2014-02-17">2014-02-17</option>
+                <option value="2014-02-18">2014-02-18</option>
+                <option value="2014-02-19">2014-02-19</option>
+                <option value="2014-02-20">2014-02-20</option>
+                <option value="2014-02-21">2014-02-21</option>
+                <option value="2014-02-22">2014-02-22</option>
+                <option value="2014-02-23">2014-02-23</option>
+            </select>
+            <select>
+                <option value="2014-02-17">9:00</option>
+                <option value="2014-02-18">10:00</option>
+                <option value="2014-02-19">11:00</option>
+                <option value="2014-02-20">12:00</option>
+                <option value="2014-02-21">13:00</option>
+                <option value="2014-02-22">14:00</option>
+                <option value="2014-02-23">15:00</option>
+            </select>
+              <span id="drawTime"></span>
+            </p>
+            <p id="shopTitle"></p>
+            <p id="shopTel"></p>
+            <p id="shopAddress"></p>
+          </div>
+
+        </div>
+                </div>
+                <div class="goods_btn" style="margin-top: 8px">
+                    <a id="btn_get" class="btn_cart ">立即兑换</a>
+                </div>
+                <div class="goods_desc">
+                    <h3>
+                        <span>商品详情</span></h3>
+                    <p id="description">
+                    </p>
+                    <div class="btn_unfold">
+                        <a>ˇ</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

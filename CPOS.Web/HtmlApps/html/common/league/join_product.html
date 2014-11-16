@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="JoinProduct">加盟产品与服务</title>
+		<link href="../../../css/base/global.css" rel="stylesheet" type="text/css"/>
+		<title>商户加盟</title>
+	</head>
+
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+			<div class="wx_loading_inner">
+				<i class="wx_loading_icon"></i>正在加载...
+			</div>
+		</div>
+		<div id="mask" class="mask" style="display:none;"></div>
+		<section id="content">
+			
+		</section>
+		<!--填写表单-->
+		<div id="registerFormArea" class="registerFormArea" blockPage="true"  style="display:none;">
+             <a id="closeBtn" href="javascript:;" class="closeBtn" style="display:none;"></a>
+			<h2 class="tit">填写表单</h2>
+			<div id="registerForm" class="formBox">
+				
+			</div>
+			<p class="doBtn clearfix">
+				<a href="javascript:JitPage.saveVipInfo();" class="submitBtn">提交</a>
+				<a href="javascript:JitPage.closeForm();" class="submitBtn">取消</a>
+			</p>
+		</div>
+
+		<!--信封-填写基本信息的层-->
+		<section  class="container" id="contact"  blockPage="true" style="display:none;">
+			<div class="titWrap">
+                 <a id="close" href="javascript:;" class="closeBtn"  style="display:none;"></a>
+                 <h2 class="tit">请基本填写信息</h2>
+			</div>
+            <div class="userinfo">
+                <em>手机号</em>
+                <input type="tel" class="focus_in"  id="phone">
+                <span class="commonBtnStyle yzmBtn" id="btnGetCode">发送验证码</span>
+            </div>
+            <div class="userinfo">
+                <em>验证码</em>
+                <input type="text" class="focus_in" id="authCode">
+            </div>
+            <span class="commonBtnStyle confirmBtn" id="submit">确定</span>
+		</section>
+        
+        
+		<script id="tpl_block_item" type="text/html">
+			<p>
+			<em><%=ControlInfo.ColumnDesc%></em>
+			<lable>
+			<%if(ControlInfo.ControlType==1){%>
+				<input type="text" data-type="<%=ControlInfo.ControlType%>" data-text="<%=ControlInfo.ColumnDesc%>"  name="vipinfo" wid="<%=ID%>"/>
+			<%}else if(ControlInfo.ControlType==6){%>
+				<select name="vipinfo" wid="<%=ID%>">
+			<%for(var i=0;i<ControlInfo.OptionValues.length;i++){ var val=ControlInfo.OptionValues[i];%>
+			<option value="<%=val.Key%>"><%=val.Value%></option>
+			<%}%>
+			</select>
+			<%}else if(ControlInfo.ControlType==4){%>
+				<input type="text" data-type="<%=ControlInfo.ControlType%>" data-text="<%=ControlInfo.ColumnDesc%>" name="vipinfo" wid="<%=ID%>" id="txtDate" class="date" placeholder="选择日期"  />
+			<%}%>
+			</lable>
+			</p>
+		</script>
+		<div class="fixbot">
+			<a onclick="JitPage.join(7)" class="btn-join">我要加盟</a>
+		</div>
+
+		<script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+	</body>
+</html>

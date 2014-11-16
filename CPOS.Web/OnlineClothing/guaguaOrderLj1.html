@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>天天有礼</title>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="touch-icon-iphone.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="touch-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="touch-icon-iphone4.png" />
+    <link href="css/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <script type="text/javascript" src="js/base.js"></script>
+    <style>
+.ui-grid-a { overflow:hidden;}
+.ui-grid-a .ui-block-a{ width:100%; position:relative;}
+#p_disk{ background:url(img/circle-big.png) no-repeat; background-size:100%;}
+#p_start {
+    background:url(img/circle-small.png) no-repeat;
+    background-position:center;
+    height:100%;
+    top:0;
+    left:0;
+    position:absolute;
+    width:100%;
+}
+.ui-body-c, .ui-dialog.ui-overlay-c{
+background-color:#c90000;
+background-image:none;
+
+}
+
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.clearfix {
+    display: block;
+    text-align: center;
+}
+.clearfix {
+    display: inline-block;
+}
+
+
+
+
+#p_alert_title { padding-bottom : 50px; padding-left:10px; padding-right:10px; }
+.overlay { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 998; width: 100%; height: 100%; _padding: 0 20px 0 0; background: #c90000; display: none; }
+        .showbox { position: fixed; top: 0; left: 50%; z-index: 9999; opacity: 0; filter: alpha(opacity=0); margin-left: -80px; }
+        *html .showbox, *html .overlay { position: absolute; top: expression(eval(document.documentElement.scrollTop)); }
+        #AjaxLoading { border: 1px solid #8CBEDA; color: #37a; font-size: 12px; font-weight: bold; }
+        #AjaxLoading div.loadingWord { width: 180px; height: 50px; line-height: 50px; border: 2px solid #D6E7F2; background: #fff; }
+        #AjaxLoading img { margin: 10px 15px; float: left; display: inline; }
+</style>
+</head>
+<body style="background-color:#c90000;">
+    <div class="overlay"></div>
+    <div id="AjaxLoading" class="showbox">
+        <div class="loadingWord">
+            <img src="Images/waiting.gif" alt="加载中，请稍候...">加载中，请稍候...</div>
+    </div>
+    <div id="content" style="display:none;background-color:#c90000;">
+        <div class="ui-grid-a" style="background-color:#c90000;">
+            <div class="ui-block-a" style="background-color:#c90000;">
+                <div id="p_disk"></div>
+                <div id="p_start"></div>
+            </div>
+        </div>
+        <div class="dibu" style="background-color:#c90000;border:none;color:#fff;box-shadow: none;">
+            <div  style="line-height: 32px;text-align: center;font-size:16px">
+                您目前有 <font style="color:yellow;font-size:20px;padding:0 2px" id="changes">0</font>
+                次抽奖机会
+            </div>
+            <div id="dibuword" style="border-top:1px solid #CECECE; line-height: 32px;text-align: center;">每天只有一次摇奖机会哦，请明天再试，或参与“推荐有礼”领取更多惊喜</div>
+        </div>
+        <div class="tanchu" id="p_alert" style="display:none;">
+
+            <h3>提 示</h3>
+            <p id="p_alert_title">本轮抽奖已失效，请重新载入页面。</p>
+            <div class="anniu" id="p_alert_body">
+                <a href="#">确认</a>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</body>
+    <script type="text/javascript">
+    var loadMore = '';
+
+    var Von = "fnSetWidth()";
+
+    function fnSetWidth() {
+        $('#p_start').css({ 'height': $(window).width() });
+        $('#p_disk').css({ 'height': $(window).width() });
+
+        $(window).bind("orientationchange", function (event) {
+            $('#p_start').css({ 'height': $(window).width() });
+            $('#p_disk').css({ 'height': $(window).width() });
+        });
+
+ 
+    }
+</script>
+</html>

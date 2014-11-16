@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title name="SelectShifu">选择师傅</title>
+<link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+</head>
+<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<section class="selectSifu">
+	<div class="sifuList">
+        
+        
+        
+    </div>
+</section>
+</body>
+</html>
+<script type="text/html" id="shifu_tpl">
+	<%for(var i=0;i<list.length;i++){ var item=list[i];%>
+		<div class="item" >
+        	<a href="javascript:JitPage.toPage('ShifuTask','personId=<%=item.ServicePersonId%>');"><img class="picWrap"  src="<%=item.Picture%>" alt="" /></a>
+            <div class="infoBox">
+            	<div class="clearfix">
+                	<p class="name">
+                    	<em></em>
+                        <span><%=item.Name%></span>
+                    </p>
+                    <p class="tel">
+                    	<em></em>
+                        <span><%=item.Mobile%></span>
+                    </p>
+                </div>
+                <div  class="clearfix">
+                	<p class="count">
+                    	<em></em>
+                        <span>接单次数<i><%=item.OrderCount%></i></span>
+                    </p>
+                    <p class="praise">
+                    	<em></em>
+                        <span>好评<i><%=item.Star%></i></span>
+                    </p>
+                </div>
+            </div>
+            <div class="btnWrap clearfix">
+            	<a href="tel:13818182626" class="telBtn"></a>
+                <a href="javascript:;" data-personId="<%=item.ServicePersonId%>" class="taBtn">就他了</a>
+            </div>
+        </div>
+    <%}%>
+</script>
+<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>

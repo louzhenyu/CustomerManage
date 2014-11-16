@@ -1,0 +1,30 @@
+@charset "utf-8";
+/*首页*/
+html,body,body>section{height:100%;}
+body{background:#ebebeb;}
+.commonTopBg{display:block;margin:0 auto;}
+/*topBanner*/
+.vipClipBanner{position:relative;padding:15px 27px;}
+.vipClipBanner img{display:block;margin:0 auto;}
+.vipClipBanner .receiveMask{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);}
+.vipClipBanner .receiveBtn{display:block;position:absolute;bottom:10px;left:50%;margin-left:-50px;width:100px;height:42px;line-height:40px;font-size:18px;;text-align:center;background:#69cafd;color:#fff;}
+
+.vipClipBanner .infoWrap{position:absolute;bottom:25px;left:45px;font-size:12px;}
+.vipClipBanner .card{font-size:13px;font-weight:bold;font-family:"Arial";}
+/*commonList*/
+.commonFeatureList{padding:10px 0;}
+.commonFeatureList li{position:relative;height:50px;line-height:50px;margin-bottom:10px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;font-size:16px;background:#fff;color:#666;}
+.commonFeatureList li:after{content:'';position:absolute;top:20px;right:20px;width:10px;height:10px;border:1px solid #ccc;border-width:0 1px 1px 0;-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);transform:rotate(-45deg);}
+.commonFeatureList li a{display:-webkit-box;display:-moz-box;padding:0 20px;}
+.commonFeatureList li em{display:block;width:40px;background:url(/HtmlApps/images/common/usercenter/commonIcon.png) no-repeat;background-size:15px 344px;}
+.commonFeatureList .vipTit{background:url(/HtmlApps/images/common/usercenter/vipTit.png) no-repeat 0 center;background-size:24px 17px;}
+.commonFeatureList .telTit{background:url(/HtmlApps/images/common/usercenter/telTit.png) no-repeat 0 center;background-size:25px 17px;}
+.commonFeatureList li span{display:block;-webkit-box-flex:1;-moz-box-flex:1;}
+
+.commonFeatureList .jfTit{background-position:5px 19px;}
+.commonFeatureList .scTit{background-position:5px -38px;}
+.commonFeatureList .csTit{background-position:5px -93px;}
+.commonFeatureList .jsTit{background-position:5px -146px;}
+.commonFeatureList .ttTit{background-position:5px -204px;}
+.commonFeatureList .gzTit{background-position:5px -258px;}
+.commonFeatureList .tjTit{background-position:5px -313px;}

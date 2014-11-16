@@ -1,0 +1,53 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, height=device-height,initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title name="ActivityList"></title>
+<style type="text/css">
+*{margin:0;padding:0;}
+html,body{height:100%;}
+body{background:#000;}
+.activePicList{max-width:640px;margin:0 auto;}
+.activePicList p{position:relative;margin-bottom:25px;border-top:1px solid #c93;border-bottom:1px solid #c93;}
+.activePicList p img{width:100%;display:block;}
+.activePicList p a{text-decoration: none;}
+.activePicList .title{position:absolute;left:0;right:0;bottom:0;padding:8px 10px;font-size:12px;background:rgba(0,0,0,0.6);color:#fff;}
+</style>
+</head>
+
+<body>
+<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<section id="section" style="height:100%;">
+	<div style="min-height: 100%;">
+		<div id="pullDown">
+			<span class="pullDownIcon"></span><span class="pullDownLabel"></span>
+		</div>
+
+		
+	    <div id="activityList" class="activePicList">
+	    </div>
+
+		<div id="pullUp">
+			<span class="pullUpIcon"></span><span class="pullUpLabel"></span>
+		</div>
+	</div>
+</section>
+<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+<script id="tplListItem" type="text/html">
+	<%for(var i=0;i<list.length;i++){var idata= list[i];%>
+		<p>
+			<a href="<%if(idata.LinkUrl){%><%=idata.LinkUrl%><%}else{%>javascript:;<%}%>">
+	        	<img src="<%=idata.ImageUrl%>" alt=""/>
+	            <span class="title t-overflow"><%=idata.Title%></span>
+            </a>
+        </p>
+    <%}%>
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">资讯详情</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body  >
+<div style="width: 320px; margin-left: auto; margin-right: auto; overflow: hidden; display:none;" id="PcBox" class="PcBox">
+  <div class="DetailBigBox" ><div class="newsdetail" id="DetailBigBox"></div></div>
+  <div class="MenuBox" id="MenuBox"> </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<!--  <div class="DetailmdkZBtn" style="left:10px; top:40px;">
+        <Div style="font-size:22px; color:#fff; text-align:left; padding-bottom:15px; line-height:30px;">本月最优门店<br>
+          静安三店</Div>
+       </div>--> 
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'newDetail("1");abc();'; //  
+
+function abc(){
+	$("#PcBox").show();
+	
+}
+function newDetail(){
+        var jsonarr = {
+            'action': "getNewsById",
+            ReqContent: JSON.stringify({
+                "common": Base.All(),
+                "special": {
+                    'newsId': getParam("newsId")
+		
+                }
+            })
+        };
+        $.ajax({
+            type: 'get',
+            url: url,
+            data: jsonarr,
+            timeout: 90000,
+            cache: false,
+            beforeSend: function() {
+                    Win.Loading();
+            },
+            dataType: 'json',
+            success: function(o) {
+           
+                    Win.Loading("CLOSE");
+              
+                if (o.code == "200") {
+					o.content.w = $(".newsdetail").width();
+					$("#HeaderTitle").text(o.content.title);
+                    var tpl = _.template($('#newsDetail').html(), o.content);
+                 	
+                     $("#DetailBigBox").html(tpl);
+						loadImGWine();
+							$(".DetailImgIeo").css("width", o.content.imageList.length * $(".newsdetail").width())
+					  			 setTimeout(function() {
+											myScrollWine.refresh();
+										},
+										100);	
+
+                } else {
+                    alert(o.description);
+                }
+            }
+        })
+    
+}
+</script> 
+<script id="newsDetail" type="text/template">
+
+<%if(imageList!=null && imageList.length > 0){%>
+	<div id="wrapper" class="DetailImg" style="overflow: hidden; height:160px">
+	  <div id="scroller" class="DetailImgIeo" >
+		<ul>
+			<% _.each(imageList,function(item){ %>
+			 <li style="width:<%= w %>px"><img style="width:100%;" src="<%= item.imageURL%>"></li>
+		  <% })%>
+		</ul>
+	  </div>
+
+	  <div class="KzDGray"></div>
+	  <dl id="indicator">
+	  <% _.each(imageList,function(item,key){ %>
+		<dd <% if(key==0){%>class="active" <%}%>><%= key+1 %></dd>
+		 <% })%>
+	  </dl>
+	</div>
+<%}%>
+	<div style=" padding:0 3%;">
+	<h1 class="newsdetailTitle"><%=title%></h1>
+	<div style="font-size:12px; color:gray; line-height:20px; text-align:center"><%=time%></div>
+	<div class="newsConnext1"><%=description%></div>
+	
+
+	
+</div>
+</script>
+</body>
+</html>

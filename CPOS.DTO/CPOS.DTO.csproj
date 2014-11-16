@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E90B49C0-4C8E-42EC-88EF-DACCFD56F2B5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JIT.CPOS.DTO</RootNamespace>
+    <AssemblyName>CPOS.DTO</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ReferenceDll\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base\APIException.cs" />
+    <Compile Include="Base\APIRequest.cs" />
+    <Compile Include="Base\APIResponse.cs" />
+    <Compile Include="Base\EmptyRequest.cs" />
+    <Compile Include="Base\EmptyRequestParameter.cs" />
+    <Compile Include="Base\EmptyResponse.cs" />
+    <Compile Include="Base\EmptyResponseData.cs" />
+    <Compile Include="Base\ErrorResponse.cs" />
+    <Compile Include="Base\ERROR_CODES.cs" />
+    <Compile Include="Base\IAPIRequestParameter.cs" />
+    <Compile Include="Base\IAPIResponseData.cs" />
+    <Compile Include="Base\SuccessResponse.cs" />
+    <Compile Include="Module\AppConfig\HomePageConfig\Request\HomePageConfigRP.cs" />
+    <Compile Include="Module\AppConfig\HomePageConfig\Request\SetEventAdRP.cs" />
+    <Compile Include="Module\AppConfig\HomePageConfig\Request\SetEventItemRP.cs" />
+    <Compile Include="Module\AppConfig\HomePageConfig\Response\HomePageConfigRD.cs" />
+    <Compile Include="Module\AppConfig\HomePageConfig\Response\SetEventAdRD.cs" />
+    <Compile Include="Module\AppConfig\HomePageConfig\Response\SetEventItemRD.cs" />
+    <Compile Include="Module\VIP\Attribute\Request\GetAttributeListRP.cs" />
+    <Compile Include="Module\VIP\Attribute\Request\SetAttributeRP.cs" />
+    <Compile Include="Module\VIP\Attribute\Response\GetAttributeListRD.cs" />
+    <Compile Include="Module\VIP\Attribute\Response\SetAttributeRD.cs" />
+    <Compile Include="Module\VIP\LoginOut\Request\RemoveAndriodMessageBindRP.cs" />
+    <Compile Include="Module\VIP\LoginOut\Request\RemoveIOSMessageBindRP.cs" />
+    <Compile Include="Module\VIP\LoginOut\Response\RemoveAndriodMessageBindRD.cs" />
+    <Compile Include="Module\VIP\LoginOut\Response\RemoveIOSMessageBindRD.cs" />
+    <Compile Include="Module\Event\EventPrizes\Request\GetEventPrizesRP.cs" />
+    <Compile Include="Module\Event\EventPrizes\Response\GetEventPrizesRD.cs" />
+    <Compile Include="Module\HomePage\Advertisement\Request\GetAdvertisementListRP.cs" />
+    <Compile Include="Module\HomePage\Advertisement\Response\GetAdvertisementListRD.cs" />
+    <Compile Include="Module\HtmlApp\Config\Response\GetConfigRD.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Request\GetKnowledgeDetailRP.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Request\KeepKnowledgeRP.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Request\PraiseKnowledgeRP.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Response\GetKnowledgeDetailRD.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Request\TreadKnowledgeRP.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Response\KeepKnowledgeRD.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Response\PraiseKnowledgeRD.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Response\TreadKnowledgeRD.cs" />
+    <Compile Include="Module\Knowledge\Type\Request\GetTypeListRP.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Request\SearchRP.cs" />
+    <Compile Include="Module\Knowledge\Type\Response\GetTypeListRD.cs" />
+    <Compile Include="Module\Knowledge\Knowledge\Response\SearchRD.cs" />
+    <Compile Include="Module\Knowledge\Tag\Request\GetHotTagsRP.cs" />
+    <Compile Include="Module\Knowledge\Tag\Response\GetHotTagsRD.cs" />
+    <Compile Include="Module\Order\Delivery\Request\GetOrderDeliveryTimeRangeRP.cs" />
+    <Compile Include="Module\Order\Delivery\Request\UpdateOrderDeliveryInfoRP.cs" />
+    <Compile Include="Module\Order\Delivery\Response\GetOrderDeliveryTimeRangeRD.cs" />
+    <Compile Include="Module\Order\Delivery\Response\UpdateOrderDeliveryInfoRD.cs" />
+    <Compile Include="Module\Order\Order\Request\CreateWXNativePayUrlRP.cs" />
+    <Compile Include="Module\Order\Order\Request\GetOrderActionsRP.cs" />
+    <Compile Include="Module\Order\Order\Request\GetOrderDetailRP.cs" />
+    <Compile Include="Module\Order\Order\Request\GetOrderListByUserIdRP.cs" />
+    <Compile Include="Module\Order\Order\Request\ProcessActionRP.cs" />
+    <Compile Include="Module\Order\Order\Response\CreateWXNativePayUrlRD.cs" />
+    <Compile Include="Module\Order\Order\Response\GetOrderActionsRD.cs" />
+    <Compile Include="Module\Order\Order\Response\GetOrderDetailRD.cs" />
+    <Compile Include="Module\Order\Order\Response\GetOrderListByUserIdRD.cs" />
+    <Compile Include="Module\Order\Order\Response\ProcessActionRD.cs" />
+    <Compile Include="Module\Sys\InterfaceLog\Request\RecordInterfaceLogRP.cs" />
+    <Compile Include="Module\Sys\InterfaceLog\Response\RecordInterfaceLogRD.cs" />
+    <Compile Include="Module\UnitAndItem\Item\Request\PraiseItemRP.cs" />
+    <Compile Include="Module\UnitAndItem\Item\Response\PraiseItemRD.cs" />
+    <Compile Include="Module\UnitAndItem\Unit\Request\GetDisplaynoneRP.cs" />
+    <Compile Include="Module\UnitAndItem\Unit\Request\SearchStoreListRP.cs" />
+    <Compile Include="Module\UnitAndItem\Unit\Response\GetDisplaynoneRD.cs" />
+    <Compile Include="Module\UnitAndItem\Unit\Response\SearchStoreListRD.cs" />
+    <Compile Include="Module\Order\Order\Request\GetOrderListRP.cs" />
+    <Compile Include="Module\Order\Order\Response\GetOrderListRD.cs" />
+    <Compile Include="Module\VIP\Login\Request\GetMemberInfoRP.cs" />
+    <Compile Include="Module\VIP\Login\Request\SetSignInRP.cs" />
+    <Compile Include="Module\VIP\Login\Response\GetMemberBenefitsRD.cs" />
+    <Compile Include="Module\VIP\Login\Response\GetMemberInfoRD.cs" />
+    <Compile Include="Module\VIP\Login\Response\SetSignInRD.cs" />
+    <Compile Include="Module\VIP\MobileModule\Request\DeleteFormRP.cs" />
+    <Compile Include="Module\VIP\MobileModule\Request\FormSaveRP.cs" />
+    <Compile Include="Module\VIP\MobileModule\Request\GetClientBusinessDefinedRP.cs" />
+    <Compile Include="Module\VIP\MobileModule\Request\GetFormsRP.cs" />
+    <Compile Include="Module\VIP\MobileModule\Request\GetMobileBusinessDefinedRP.cs" />
+    <Compile Include="Module\VIP\MobileModule\Request\ReNameFormRP.cs" />
+    <Compile Include="Module\VIP\MobileModule\Response\DeleteFormRD.cs" />
+    <Compile Include="Module\VIP\MobileModule\Response\FormSaveRD.cs" />
+    <Compile Include="Module\VIP\MobileModule\Response\GetClientBusinessDefinedRD.cs" />
+    <Compile Include="Module\VIP\MobileModule\Response\GetFormsRD.cs" />
+    <Compile Include="Module\VIP\MobileModule\Response\GetMobileBusinessDefinedRD.cs" />
+    <Compile Include="Module\VIP\MobileModule\Response\ReNameFormRD.cs" />
+    <Compile Include="Module\VIP\Register\Request\GetRegisterFormItemsRP.cs" />
+    <Compile Include="Module\VIP\Register\Request\MergeVipInfoRP.cs" />
+    <Compile Include="Module\VIP\Register\Request\SetRegisterFormItemsRP.cs" />
+    <Compile Include="Module\VIP\Register\Response\GetRegisterFormItemsRD.cs" />
+    <Compile Include="Module\VIP\Register\Response\MergeVipInfoRD.cs" />
+    <Compile Include="Module\VIP\Register\Response\SetRegisterFormItemsRD.cs" />
+    <Compile Include="Module\VIP\VipListNum\Request\GetVipListNumRP.cs" />
+    <Compile Include="Module\VIP\VipListNum\Response\GetVipListNumRD.cs" />
+    <Compile Include="Module\VIP\VipList\Request\GetVipListRP.cs" />
+    <Compile Include="Module\VIP\VipList\Response\GetVipListRD.cs" />
+    <Compile Include="Module\VIP\WifiSign\Request\WifiSignRP.cs" />
+    <Compile Include="Module\VIP\WifiSign\Response\WifiSignRD.cs" />
+    <Compile Include="Module\WeiXin\Account\Request\GetAccountListRP.cs" />
+    <Compile Include="Module\WeiXin\Account\Response\GetAccountListRD.cs" />
+    <Compile Include="Module\WeiXin\Customer\GetMaterialTextDetailRP.cs" />
+    <Compile Include="Module\WeiXin\Event\Request\GetDrawMethodListRP.cs" />
+    <Compile Include="Module\WeiXin\Event\Request\GetEventListRP.cs" />
+    <Compile Include="Module\WeiXin\Event\Request\GetEventTypeListRP.cs" />
+    <Compile Include="Module\WeiXin\Event\Request\GetRecommendRP.cs" />
+    <Compile Include="Module\WeiXin\Event\Response\GetDrawMethodListRD.cs" />
+    <Compile Include="Module\WeiXin\Event\Response\GetEventListRD.cs" />
+    <Compile Include="Module\WeiXin\Event\Response\GetEventTypeListRD.cs" />
+    <Compile Include="Module\WeiXin\Event\Response\GetRecommendRD.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Request\GetDefaultKeyWordRP.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Request\SaveDefaultKeyWordRP.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Request\SearchKeyWordRP.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Request\GetKeyWordRP.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Request\DeleteKeyWordRP.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Request\SetKeyWordRP.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Response\DeleteKeyWordRD.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Response\GetDefaultKeyWordRD.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Response\GetKeyWordRD.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Response\SaveDefaultKeyWordRD.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Response\SearchKeyWordRD.cs" />
+    <Compile Include="Module\WeiXin\KeyWord\Response\SetKeyWordRD.cs" />
+    <Compile Include="Module\WeiXin\MaterialText\Request\GetMaterialTextDetailRP.cs" />
+    <Compile Include="Module\WeiXin\MaterialText\Request\GetMaterialTextListRP.cs" />
+    <Compile Include="Module\WeiXin\MaterialText\Request\GetMaterialTextTypeListRP.cs" />
+    <Compile Include="Module\WeiXin\MaterialText\Request\SetMaterialTextRP.cs" />
+    <Compile Include="Module\WeiXin\MaterialText\Response\GetMaterialTextDetailRD.cs" />
+    <Compile Include="Module\WeiXin\MaterialText\Response\GetMaterialTextListRD.cs" />
+    <Compile Include="Module\WeiXin\MaterialText\Response\GetMaterialTextTypeListRD.cs" />
+    <Compile Include="Module\WeiXin\MaterialText\Response\SetMaterialTextRD.cs" />
+    <Compile Include="Module\WeiXin\Menu\Request\DeleteMenuRP.cs" />
+    <Compile Include="Module\WeiXin\Menu\Request\GetMenuListRP.cs" />
+    <Compile Include="Module\WeiXin\Menu\Request\PublishMenuRP.cs" />
+    <Compile Include="Module\WeiXin\Menu\Request\SetMenuRP.cs" />
+    <Compile Include="Module\WeiXin\Menu\Request\GetMenuDetailRP.cs" />
+    <Compile Include="Module\WeiXin\Menu\Response\DeleteMenuRD.cs" />
+    <Compile Include="Module\WeiXin\Menu\Response\GetMenuListRD.cs" />
+    <Compile Include="Module\WeiXin\Menu\Response\PublishMenuRD.cs" />
+    <Compile Include="Module\WeiXin\Menu\Response\SetMenuRD.cs" />
+    <Compile Include="Module\WeiXin\Menu\Response\GetMenuDetailRD.cs" />
+    <Compile Include="Module\WeiXin\Module\Request\GetSysModuleListRP.cs" />
+    <Compile Include="Module\WeiXin\Module\Response\GetSysModuleListRD.cs" />
+    <Compile Include="Module\WeiXin\News\Request\GetNewsListRP.cs" />
+    <Compile Include="Module\WeiXin\News\Request\GetNewsTypeListRP.cs" />
+    <Compile Include="Module\WeiXin\News\Response\GetNewsListRD.cs" />
+    <Compile Include="Module\WeiXin\News\Response\GetNewsTypeListRD.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\CreateCustomerConfigRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\GetCustomerModuleMappingRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\GetCustomerPageListRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\GetCustomerPageSettingRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\GetSysPageDetailRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\GetSysPageListRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\GetVocationVersionMappingListRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\SetCustomerModuleMappingRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\SetCustomerPageSettingRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\SetModulePageMappingRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Request\SetSysPageRP.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Response\CreateCustomerConfigRD.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Response\GetCustomerModuleMappingRD.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Response\GetCustomerPageListRD.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Response\GetCustomerPageSettingRD.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Response\GetSysPageDetailRD.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Response\GetSysPageListRD.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Response\GetVocationVersionMappingListRD.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Response\SetCustomerModuleMappingRD.cs" />
+    <Compile Include="Module\WeiXin\SysPage\Response\SetSysPageRD.cs" />
+    <Compile Include="Module\ZiXun\ZiXunInfo\Request\AddZiXunCommentRP.cs" />
+    <Compile Include="Module\ZiXun\ZiXunInfo\Request\SeacherZiXunRP.cs" />
+    <Compile Include="Module\ZiXun\ZiXunInfo\Response\AddZiXunCommentRD.cs" />
+    <Compile Include="Module\ZiXun\ZiXunInfo\Response\SeacherZiXunRD.cs" />
+    <Compile Include="Module\Order\Order\Request\OrderPayRP.cs" />
+    <Compile Include="Module\Order\Order\Response\OrderPayRD.cs" />
+    <Compile Include="Module\UnitAndItem\Area\Request\GetCityListRP.cs" />
+    <Compile Include="Module\UnitAndItem\Area\Response\GetCityListRD.cs" />
+    <Compile Include="Module\VIP\Evaluation\Request\GetEvaluationListRP.cs" />
+    <Compile Include="Module\VIP\Evaluation\Request\SetEvaluationRP.cs" />
+    <Compile Include="Module\VIP\Evaluation\Response\GetEvaluationListRD.cs" />
+    <Compile Include="Module\VIP\Evaluation\Response\SetEvaluationRD.cs" />
+    <Compile Include="Module\VIP\Login\Request\AuthCodeLoginRP.cs" />
+    <Compile Include="Module\VIP\Login\Request\ChangeVipPWDRP.cs" />
+    <Compile Include="Module\VIP\Login\Request\GetAuthCodeRP.cs" />
+    <Compile Include="Module\VIP\Login\Request\MemberLoginRP.cs" />
+    <Compile Include="Module\VIP\Login\Response\AuthCodeLoginRD.cs" />
+    <Compile Include="Module\VIP\Login\Response\ChangeVipPWDRD.cs" />
+    <Compile Include="Module\VIP\Login\Response\GetAuthCodeRD.cs" />
+    <Compile Include="Module\VIP\Login\Response\MemberLoginRD.cs" />
+    <Compile Include="Module\VIP\Order\Request\GetOrdersRP.cs" />
+    <Compile Include="Module\VIP\Order\Response\GetOrderRD.cs" />
+    <Compile Include="Project\LZLJ\Activity\Activity\Request\GetHomePageActivityListRP.cs" />
+    <Compile Include="Project\LZLJ\Activity\Activity\Response\GetHomePageActivityListRD.cs" />
+    <Compile Include="Project\YiMa\Order\Order\Request\OrderPayRP.cs" />
+    <Compile Include="Project\YiMa\Order\Order\Response\OrderPayRD.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueObject\APITypes.cs" />
+    <Compile Include="ValueObject\Locales.cs" />
+    <Compile Include="ValueObject\Modules.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
+      <Project>{6D911430-7243-4AB2-B70E-4DAFFC4D1B22}</Project>
+      <Name>CPOS.BS.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Module\HtmlApp\Config\Request\" />
+    <Folder Include="Product\Eclub\Module\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

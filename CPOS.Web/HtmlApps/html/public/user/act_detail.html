@@ -1,0 +1,100 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="ActDetail">活动详情</title>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+
+<body  style="background-color:white;" >
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <div class="commonNav">
+        <a href="javascript:Jit.AM.pageBack()"> <em class="icon"></em>
+        </a>
+        <a href="javascript:Jit.AM.toPage('Home')"> <em class="icon"></em>
+        </a>
+        <a href="javascript:;">
+            <em class="icon"></em>
+        </a>
+    </div>
+
+    <section class="activeDetailPage mb50">
+        <div class="picWrap">
+            <img src="../../../images/public/user_default/banner001.jpg" alt=""></div>
+        <div class="activeDetail">
+            <div class="area">
+                <h2 class="title">活动主题</h2>
+                <p class="text" id="txtActTitle" ></p>
+            </div>
+
+            <div class="area">
+                <h2 class="title">活动主办方</h2>
+                <p class="text" id="txtActISOC"></p>
+            </div>
+
+            <div class="area">
+                <h2 class="title">活动时间</h2>
+                <p class="text" id="txtActStartTime"></p>
+            </div>
+
+            <div class="area">
+                <h2 class="title">联系人</h2>
+                <p class="text contact" >
+                    <span id="txtActContacts" ></span>
+                    <span id="txtActPhone" ></span>
+                </p>
+                &nbsp;&nbsp;
+            </div>
+
+            <div class="area">
+                <h2 class="title">活动地址</h2>
+                <p class="text address" id="txtActAddress"></p>
+            </div>
+
+            <div class="area">
+                <h2 class="title">活动报名</h2>
+                <p class="text" id="txtActivityUp"></p>
+            </div>
+            <div class="area enter">
+                <h2 class="title">活动门票</h2>
+            </div>
+
+            <div class="applyArea" id="ticketList" ></div>
+            <div class="ticketExplain"></div>
+
+            <!--      <div class="totalWrap clearfix">
+            <p class="num">
+                报名合计：
+                <span>0人</span>
+            </p>
+            <p class="total">￥0元</p>
+        </div>
+        -->
+        <input type="button" value="我要报名" id="btSignUp" class="applyBtn">
+
+        <div class="area activeIntr">
+            <h2 class="title">活动介绍</h2>
+            <p class="text" id="txtActExplain"></p>
+        </div>
+        <div class="bromore" id="btActMore">+查看更多</div>
+   
+</div>
+
+<div class="actBgShade" style="display:none;"></div>
+<div class="submit_area" style="display:none;"  >
+    <div class="thclose" name='has'></div>
+    <div  id="actboxinfo" ></div>
+    <div class="sub" name='has'>
+        <a  href="javascript:;" id="actBoxCancel">取消</a>
+        <a  href="javascript:;" id="actBoxSubmit">确定</a>
+    </div>
+
+</div>
+
+</section>
+
+</body>
+</html>

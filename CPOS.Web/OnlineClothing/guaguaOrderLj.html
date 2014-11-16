@@ -1,0 +1,234 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>刮刮奖</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<style>
+  .tanchu {
+    width: 90%;
+    margin: 0 auto;
+    position: absolute;
+    z-index: 999;
+	border-radius: .5em;
+	-moz-border-radius: .5em;
+	-webkit-border-radius: .5em;
+	background:#ececec;
+	overflow:hidden;
+	border:1px solid #ccc;
+}
+
+.tanchu h3 {
+    width: 98%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+    height: 3em;
+    line-height: 3em;
+    border-bottom: 1px solid #ccc;
+}
+
+.tanchu p {
+    font-size: 14px;
+    color: #333333;
+    margin-top: 57px;
+    width: 98%;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+}
+
+.anniu {
+    text-align: center;
+	width:90%;
+	margin:10px auto;
+}
+
+.anniu a {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+	color:#fff;
+	font-weight:bold;
+	background: #0052b8;
+	display:block;
+	font-size:1.2em;
+}
+</style>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+    <body >
+        <div class="tanchu" id="p_alert" style="display:none;">
+   <h3>提 示</h3>
+            <p id="p_alert_title">每天只有一次抽奖机会哦，请明天再试。</p>
+            <p></p>
+  
+</div>
+        <div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; display:none;">
+            <div class="PrizeInfoDiv" id="PrizeInfoDiv" style=" position:relative; padding-bottom:230px;">
+                <div class="PrizeInfoDivInner">
+                    <div class="PrizeInfoInnerTop"> <span id="JPName" class="prizeTxt" style="width:140px; height:80px; z-index:8; line-height:80px; font-size:14px; text-align:center; "></span>
+                        <div style="z-index:10; background-color:#bd0e0e; border-radius:5px; color:#fff; line-height:40px; text-align:center; cursor:pointer; width:80px; height:40px; position:absolute; left:19px; bottom:40px; display:none;" onClick="location.href=document.URL" id="AgianEI">再来一次</div>
+                        <div style="z-index:9; width:140px; height:80px;" class="prizeTxt" id="asdi">
+                            <div style="width:140px; height:80px;" id="canvas"><canvas id="maincanvas" width="140" height="80"></canvas></div>
+                        </div>
+                    </div>
+                    <div  class="PrizeInfoInnerBottom" id="PrizeListee"></div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="MenuBox" id="MenuBox" rel="0"> </div>-->
+        <div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+        <!--<div id="tipApp" style=" display:none; width:160px; position:absolute; left:0; top:100px; z-index:10; height:60px;">
+                <div style="width:160px; height:60px; position:relative;">
+                    <div style="width:160px; position:absolute; left:0; top:0; z-index:11; height:60px; background-color:#000; opacity:0.5; border-radius:5px;"></div>
+                    <div style=" text-align:center; color:#fff; position:absolute; z-index:12; left:0; top:0; width:160px; height:60px; line-height:60px; font-weight:bold;" id="tipAppWenBen"></div>
+                </div>
+            </div>-->
+
+        <script type="text/javascript" src="js/cvas.js?v201311101"></script>
+        <script type="text/javascript">
+            var david;
+            var loadMore = '';
+            var lotteryCount = 0;
+            var Von = 'ggj.getEventPrizes()';
+            var isWinner = false; 
+            var image = { 
+                'back': { 'url':'images/tran1.png', 'img':null },
+                'front': { 'url':'images/gjx.png', 'img':null }
+            };
+            var prize = '', isLottery = 0;
+
+            var ggj = {
+
+
+                getEventPrizes: function (lotteryCount) {
+                    var openId = getParam("openId");
+                    if (openId == null || openId == "") {
+                        openId = Base.All().openId;
+                    }
+                    var customerId = getParam("customerId");
+                    if (customerId == null || customerId == "") {
+                        customerId = Base.All().customerId;
+                    }
+                    var userId = getParam("userId");
+                    if (userId == null || userId == "") {
+                        userId = Base.All().userId;
+                    }
+                    var eventId = getParam("eventId")
+                    //alert(userId);
+                    if (openId == null || openId == undefined || openId.length == 0) {
+                        location.href = "http://o2oapi.aladingyidong.com/OnlineClothing/boot/index.html";
+                    }
+                    var jsonarr = { 'action': "getEventPrizesBySales", ReqContent: JSON.stringify({ "common": { customerId: customerId, openId: openId, userId: userId }, "special": { "Longitude": "0.0", "Latitude": "0.0", eventId: eventId} }) };
+
+                    $.ajax({
+                        type: 'get',
+                        url: '/OnlineShopping/data/data.aspx',
+                        data: jsonarr,
+                        timeout: 90000,
+                        cache: false,
+                        beforeSend: function () {
+                            Win.Loading();
+                        },
+                        dataType: 'json',
+                        success: function (o) {
+                            Win.Loading("CLOSE");
+                            if (o.code == 200) {
+                                link = "http://o2oapi.aladingyidong.com/OnlineClothing/1214guagua.html";
+                                weiXinFollow();
+                                david = o.content;
+                                var htmldata = _.template($("#prizeSx").html(), o.content);
+                                $("#PrizeListee").html(htmldata);
+                                if (o.content.eventRound != "0") {
+
+                                    isLottery = o.content.isLottery;
+                                    if (o.content.isLottery == "1") {
+                                        $("#JPName").text(o.content.winningDesc);
+                                        $("#asdi").hide();
+                                    } else {
+                                        prize = o.content.winningDesc;
+                                        loadcanvas();
+
+                                        if(o.content.isWinning==0)
+                                        $("#p_alert").css("display", "block").css("left", (($(window).width()) / 2 - (parseInt($("#p_alert").width()) / 2)) + "px").css("top", (($(window).height()) / 2 - (parseInt($("#p_alert").height()) / 2) - 50) + "px");
+                                       
+                                    }
+                                } else {
+                                    $(".PrizeInfoInnerTop").css({ "background": "url(images/ggcardmkf.png) no-repeat left top" });
+                                }
+
+                            } else {
+                                alert(o.description);
+                            }
+
+                        }
+                    });
+                },
+                Winner: function () {
+                    var jsonarr = { 'action': "setEventPrizes", ReqContent: JSON.stringify({ "common": { customerId: getParam("customerId"), openId: getParam("openId"), userId: getParam("userId") }, "special": { "eventId": getParam("eventId")} }) };
+
+                    $.ajax({
+                        type: 'get',
+                        url: '/lj/Interface/data.aspx',
+                        data: jsonarr,
+                        timeout: 90000,
+                        cache: false,
+                        beforeSend: function () {
+
+                        },
+                        dataType: 'json',
+                        success: function (o) {
+                            if (o.code == "200") {
+                                if (isLottery == "0") {
+                                    //$("#AgianEI").show();
+                                }
+                            }
+                        }
+                    })
+                }
+            }
+
+        </script> 
+        <script type="text/template" id="prizeSx">
+
+	<% _.each(prizeList,function(item,key){%>
+ 		<% if(key == 0){%>
+        
+	  <dt class="s1"></dt>
+	  <% }%>
+	  		<dd>
+            <% 
+                var imageUrl ;
+                if(item.imageUrl.indexOf('http')>=0) 
+                {
+                    imageUrl = item.imageUrl;
+                }else{
+                    imageUrl = '/lj/' + item.imageUrl;
+                }
+            %>
+                	<div class="imgBox"><img src=<%=imageUrl %> width="65" height="65" alt=""></div>
+                    <div class="infoBox">
+                    	<h2><%=item.prizeName%> <span>(<%=item.countTotal%>名)</span></h2>
+                        <span><%=item.prizeDesc%></span>
+                    </div>
+                </dd>
+
+		 	<% if(key == 0){%>
+  	  
+	 <% }%>
+	<%})%>
+	
+</script>
+    </body>
+</html>

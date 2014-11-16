@@ -1,0 +1,322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=no">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>会员查询</title>
+<link href="css/reset-pc.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<style>
+.allQueryTermArea{}
+.allQueryTermArea{}
+.commonTitle{height:16px;line-height:16px;margin:0 0 15px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;}
+</style>
+</head>
+
+<body>
+<div class="allPage">
+    <!-- 内容区域 -->
+    <div class="contentArea">
+        <!--个别信息查询-->
+        <div class="queryTermArea" style="display:none;">
+            <div class="item">
+                <div class="moreQueryWrap">
+                	<a href="javascript:;" class="commonBtn queryBtn">查询</a>
+                    <a href="javascript:;" class="more">更多查询条件</a>
+                </div>
+                <div class="commonSelectWrap">
+                    <em class="tit">手机号：</em>
+                    <label class="searchInput"><input type="text" value=""></label>
+                </div>
+                <div class="commonSelectWrap">
+                    <em class="tit">微信昵称：</em>
+                    <label class="searchInput"><input type="text" value=""></label>
+                </div>
+                <div class="commonSelectWrap">
+                    <em class="tit">姓名：</em>
+                    <label class="searchInput"><input type="text" value=""></label>
+                </div>
+            </div>
+        </div>
+        
+        <!--全部信息查询-->
+        <div class="allQueryTermArea">
+        	<a href="javascript:;" class="drawBtn">收起</a>
+        	<h2 class="commonTitle">会员查询</h2>
+            <div class="fromWrap">
+                <div class="item">
+                    <div class="commonSelectWrap">
+                        <em class="tit">会员卡号：</em>
+                        <label class="searchInput"><input type="text" value=""></label>
+                    </div>
+                    <div class="commonSelectWrap">
+                        <em class="tit">线下会员卡号：</em>
+                        <label class="searchInput"><input type="text" value=""></label>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="commonSelectWrap">
+                        <em class="tit">手机号：</em>
+                        <label class="searchInput"><input type="text" value=""></label>
+                    </div>
+                    <div class="commonSelectWrap">
+                        <em class="tit">微信昵称：</em>
+                        <label class="searchInput"><input type="text" value=""></label>
+                    </div>
+                    <div class="commonSelectWrap">
+                        <em class="tit">姓名：</em>
+                        <label class="searchInput"><input type="text" value=""></label>
+                    </div>
+                </div>
+            </div>
+            <div class="fromWrap otherSelect">
+                <div class="item">
+                    <div class="commonSelectWrap">
+                        <em class="tit">会籍店：</em>
+                        <div class="selectBox">
+                            <span class="text"></span>
+                            <div class="selectList">
+                                <p>会籍店1</p>
+                                <p>会籍店2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="commonSelectWrap">
+                        <em class="tit">等级：</em>
+                        <div class="selectBox">
+                            <span class="text"></span>
+                            <div class="selectList">
+                                <p>5级</p>
+                                <p>8级</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="commonSelectWrap">
+                    	<label class="searchInput timeInput"><input type="text" value="2014/08/08-2014/09/08"></label>
+                        <em class="tit">入会日期：</em>
+                        <div class="selectBox">
+                            <span class="text">自定义</span>
+                            <div class="selectList">
+                                <p>自定义</p>
+                                <p>默认</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="commonSelectWrap">
+                        <em class="tit">是否注册会员：</em>
+                        <div class="selectBox">
+                            <span class="text">是</span>
+                            <div class="selectList">
+                                <p>是</p>
+                                <p>否</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="commonSelectWrap">
+                        <em class="tit">购物时间：</em>
+                        <label class="searchInput"><input type="text" value=""></label>
+                    </div>
+                </div>
+                
+                <div class="item labelWrap">
+                    <div class="commonSelectWrap">
+                        <em class="tit">会员标签：</em>
+                        <div class="pointerArea">
+                            <img src="images/leftBracket.png" />
+                            <span class="minF">包含</span>
+                            <span class="pointerIcon">高价值</span>
+                            <span class="digF">或</span>
+                            <span class="minF">不包含</span>
+                            <span class="pointerIcon">中价值</span>
+                            <span class="digF">且</span>
+                            <span class="pointerIcon weird">活跃会员中价值高价值</span>
+                            <a href="javascript:;" class="commonBtn modifyBtn">修改</a>
+                            <a href="javascript:;" class="commonBtn recentBtn">近期使用</a>
+                            <img src="images/rightBracket.png" />
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+            </div>
+            
+        </div>
+        
+        <!--设置菜单-->
+        <!--
+        <div class="subMenu" style="display:none">
+            <ul class="clearfix">
+                <li class="modify">修改活动</li>
+                <li class="apply on">报名管理</li>
+                <li class="sign">签到管理</li>
+            </ul>
+        </div>
+        -->
+        
+        
+        <!--表格操作按钮-->
+        <div class="tableHandleBox">
+            <span class="commonBtn">添加新会员</span>
+            <span class="commonBtn">全部导出</span>
+            <span class="commonBtn">删除</span>
+        </div>    
+        <div class="tableWrap">
+            <div class="tablehandle">
+                <div class="selectBox">
+                    <span class="text">按最近时间升序</span>
+                    <div class="selectList">
+                        <p>按最近时间降序</p>
+                        <p>按最近时间升序</p>
+                    </div>
+                </div>
+                <h3 class="count">共查询到<span>65</span>条符合条件的结果项目</h3>  
+                
+                <div class="selectBox fl">
+                    <span class="text">操作</span>
+                    <div class="selectList">
+                        <p>操作1</p>
+                        <p>操作2</p>
+                    </div>
+                </div>
+                
+                <div class="selectBox filterIcon fl">
+                    <span class="text">筛选</span>
+                    <div class="selectList">
+                        <p>筛选1</p>
+                        <p>筛选2</p>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- 未确认名单表格 -->
+            <table class="dataTable" style="display:none;">
+                <thead>
+                    <tr class="title">
+                        <th>姓名</th>
+                        <th>手机号码</th>
+                        <th>公司</th>
+                        <th>职位</th>
+                        <th>缴费信息</th>
+                        <th>参加人数</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>王萌萌</td>
+                        <td class="fontF">13927845509</td>
+                        <td>上海杰亦特信息技术有限公司</td>
+                        <td>经理</td>
+                        <td class="fontC">未缴纳</td>
+                        <td class="fontF">3</td>
+                        <td><span class="joinBtn">确定参加</span></td>
+                    </tr>
+                    <tr>
+                        <td>王萌萌</td>
+                        <td class="fontF">13927845509</td>
+                        <td>上海杰亦特信息技术有限公司</td>
+                        <td>经理</td>
+                        <td>已缴纳</td>
+                        <td class="fontF">3</td>
+                        <td><span class="joinBtn">确定参加</span></td>
+                    </tr>
+                    <tr>
+                        <td>王萌萌</td>
+                        <td class="fontF">13927845509</td>
+                        <td>上海杰亦特信息技术有限公司</td>
+                        <td>经理</td>
+                        <td>已缴纳</td>
+                        <td class="fontF">3</td>
+                        <td><span class="joinBtn">确定参加</span></td>
+                    </tr>
+                    <tr>
+                        <td>王萌萌</td>
+                        <td class="fontF">13927845509</td>
+                        <td>上海杰亦特信息技术有限公司</td>
+                        <td>经理</td>
+                        <td>已缴纳</td>
+                        <td class="fontF">3</td>
+                        <td><span class="joinBtn">确定参加</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <!-- 已确认名单表格 -->
+            <table class="dataTable" style="display:inline-table;">
+                <thead>
+                    <tr class="title">
+                        <th class="selectListBox">选择<div class="minSelectBox"><em class="minArr"></em><p>全选本页</p><p>全选所有页</p><p>取消选择</p></div></th>
+                        <th>操作</th>
+                        <th>会员编号</th>
+                        <th>姓名</th>
+                        <th>微信昵称</th>
+                        <th>会籍店</th>
+                        <th>状态</th>
+                        <th>等级</th>
+                        <th>积分</th>
+                        <th>手机号</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="checkBox on"><em></em></td>
+                        <td class="seeIcon"></td>
+                        <td class="fontC">HYVIP00001</td>
+                        <td>王晓刚</td>
+                        <td>大黄蜂</td>
+                        <td>静安店</td>
+                        <td>正常</td>
+                        <td>高级</td>
+                        <td class="fontF">998</td>
+                        <td class="fontF">138****7765</td>
+                    </tr>
+                    <tr>
+                        <td class="checkBox on"><em></em></td>
+                        <td class="seeIcon"></td>
+                        <td class="fontC">HYVIP00001</td>
+                        <td>王晓刚</td>
+                        <td>大黄蜂</td>
+                        <td>静安店</td>
+                        <td>正常</td>
+                        <td>高级</td>
+                        <td class="fontF">998</td>
+                        <td class="fontF">138****7765</td>
+                    </tr>
+                    <tr>
+                        <td class="checkBox on"><em></em></td>
+                        <td class="seeIcon"></td>
+                        <td class="fontC">HYVIP00001</td>
+                        <td>王晓刚</td>
+                        <td>大黄蜂</td>
+                        <td>静安店</td>
+                        <td>正常</td>
+                        <td>高级</td>
+                        <td class="fontF">998</td>
+                        <td class="fontF">138****7765</td>
+                    </tr>
+                    <tr>
+                        <td class="checkBox on"><em></em></td>
+                        <td class="seeIcon"></td>
+                        <td class="fontC">HYVIP00001</td>
+                        <td>王晓刚</td>
+                        <td>大黄蜂</td>
+                        <td>静安店</td>
+                        <td>正常</td>
+                        <td>高级</td>
+                        <td class="fontF">998</td>
+                        <td class="fontF">138****7765</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    
+    
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="Photo"></title>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+    <style>
+        img { max-width: 100% !important; }
+        #Gallery li { display: block; width: inherit; margin: 5px; }
+        .album li p > span, .album1 li p > span, .album2 li p > span { float: right; color: #aaa; position: absolute; right: 5px; background: #fff; padding-left: 5px; }
+        #Gallery li p { display: inline-block; max-width: 100%; }
+    </style>
+</head>
+<body onselectstart="return true;" ondragstart="return false;" id="photo">
+    <div class="body">
+        <div class="qiandaobanner">
+            <a href="javascript:;">
+                <img src="../../../images/public/hotel_default/hotel_head.png" alt="" style="max-height: 200px;">
+            </a>
+        </div>
+        <div id="main" role="main" style="height: 1326px;">
+            <ul id="Gallery" class="gallery">
+            </ul>
+        </div>
+    </div>
+    <footer style="text-align: center; color: #ffd800; margin-right: 20px; margin-top: 0px;">
+			<a href="javascript:;">©杰亦特技术支持</a>
+	</footer>
+    <script id="albumsTpl" type="text/template">
+			<%for(var i=0;i<content.imageList.length;i++){var item=content.imageList[i];%>
+				<li>
+					<a href="<%=item.imageURL%>"> <img src="<%=item.imageURL%>" alt=""> </a>
+				</li>
+			<%}%>
+		</script>
+    <div mark="stat_code" style="width: 0px; height: 0px; display: none;">
+    </div>
+</body>
+</html>

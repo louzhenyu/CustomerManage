@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title  name="SelectClassList" >选择班级</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+</head>
+
+<body class="classlistbody" style="min-height:700px;" >
+  <div id="masklayer"  class="pageloading" > <i></i>
+  </div>
+    <section>
+        <div class="classhead">
+            <div class="c_left">
+                <h3>入学年份</h3>
+                <div class="classbox" id="btClassList">
+                    <div class="classtitle">请选择</div>
+                    <div class="classoption" id="classList"  >
+                    <div id="classListArea">
+                        <div>
+                        </div>
+
+
+                    </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="c_left">
+                   <h3>项目课程</h3>
+                <div class="classbox" id="btCourseList">
+                    <div class="classtitle">请选择</div>
+                    <div class="classoption" id="courseList">
+                         <div id="courseListArea">
+                             <div></div>
+
+
+                         </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+
+        <div class="classitems">
+     
+        </div>
+
+
+    </section>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</body>
+</html>
+<script type="text/html" id="tpDataList" > 
+
+    <%for (var i = 0; i < datas.length; i++) {
+    var dataInfo=datas[i];
+    %>
+           <div class="item" >
+                <div class="itembox" id="<%=dataInfo.ClassInfoID%>">
+                        <h3><%=dataInfo.ClName %> <%=dataInfo.ClassInfoName %></h3>
+                        <div class="itemintro">
+                            <div class="img">
+                                <img src="../../../images/special/europe/classpeople.jpg">
+                            </div>
+                            <div class="handle">
+                                <p>已有<span><%=dataInfo.TotalCount %></span>人</p>
+                                <p>加入本班</p>
+                            </div>
+                        </div>
+                </div>
+            </div>
+<%
+  };
+%></script>

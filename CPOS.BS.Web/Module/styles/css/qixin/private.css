@@ -1,0 +1,87 @@
+/***内容的菜单菜单***/
+.subMenu .nav01{background:url(../../images/qixin/nav01.png) no-repeat center 4px;}
+.subMenu .nav02{background:url(../../images/qixin/nav02.png) no-repeat center 4px;}
+.subMenu .nav03{background:url(../../images/qixin/nav03.png) no-repeat center 4px;}
+.subMenu .nav04{background:url(../../images/qixin/nav04.png) no-repeat center 10px;}
+.subMenu .nav05{background:url(../../images/qixin/nav05.png) no-repeat center 8px;}
+.subMenu .nav06{background:url(../../images/qixin/nav06.png) no-repeat center 4px;}
+.subMenu .nav07{background:url(../../images/qixin/nav07.png) no-repeat center 9px;}
+.subMenu .nav08{background:url(../../images/qixin/nav08.png) no-repeat center 4px;}
+/*添加资讯*/
+.addInfoArea{margin-left:10px;}
+.addInfoArea .item-line{height:28px;margin-bottom:19px;}
+.addInfoArea .item-line .commonSelectWrap .tit{width:100px;text-align:right;}
+.addInfoArea .item-line .commonSelectWrap{height:auto;}
+.addInfoArea .authorInput{margin-left:40px;}
+.addInfoArea .classInput .selectBox,.authorInput .searchInput{width:102px;}
+.addInfoArea .item-line .w-596{width:596px;}
+.addInfoArea .item-line.desc{height:50px;}
+.addInfoArea .item-line.theme{height:136px;}
+.addInfoArea .item-line.theme .textarea{height:136px;}
+.addInfoArea .textarea{display: block;float: left;margin-left: 10px;height:50px;font-family: Arial;border: 1px solid #ccc;border-radius: 2px;background: #fff;}
+.addInfoArea .textarea textarea{width:95%;height:80%;}
+.addInfoArea .item-line.thumb{height:135px;}
+.addInfoArea .thumbBox{float:left;margin-left:10px;}
+.addInfoArea .uploadBtn{width:75px;height:75px;background:#eee url(../../images/downIcon.png) no-repeat center center;cursor:pointer;}
+.addInfoArea .relateWrap{height:28px;margin-top:25px;}
+.addInfoArea .relateWrap .classInput{margin-left:44px;}
+.addInfoArea .radioBox{float:left;height:28px;font-size:14px;cursor:pointer;}
+.addInfoArea .radioBox em{float:left;width:21px;height:21px;margin-top:2px;background:url(../../images/radio1.png) no-repeat center center;}
+.addInfoArea .radioBox span{display:block;margin-left:23px;line-height:28px;}
+.addInfoArea .item-line .selectDateBox{margin-left:-10px;}
+.selectDateBox input{width:70px;line-height:26px\9;text-indent:0px;}
+.addInfoArea .btnWrap{margin-top:50px;text-align:center;}
+.addInfoArea .btnWrap .commonBtn{display:inline-block;width:80px;height:26px;line-height:26px;}
+.addInfoArea .cancelBtn{margin:0 20px 0 62px;}
+
+/*弹层-添加员工*/
+.jui-dialog.jui-dialog-staff{width:805px;min-height:300px;top:30px;margin-left:-403px;}
+.jui-dialog .fromContent{padding:25px 0;}
+.jui-dialog .fromWrap{width:512px;margin:0 auto;}
+.from-item{height:38px;margin-bottom:10px;border:1px solid #c8c8c8;border-radius:3px;}
+.jui-dialog .tit{float:left;width:200px;line-height:38px;text-indent:48px;font:14px/38px "Microsoft Yahei";background:url(../../images/icon001.png) no-repeat;color:#333;cursor:pointer;}
+.jui-dialog .from-item input,.jui-dialog .from-item-select .textBox{display:inline-block; width:100%;height:38px;line-height:38px/9; padding:0; text-indent:0px;font-size:14px;font-family:"Microsoft Yahei";border:none;background:none;color:#333;}
+.jui-dialog .from-item-input,.jui-dialog .from-item-select{margin-left:201px;}
+.jui-dialog .listBox{display:none;position:absolute;top:39px;left:-1px;width:100%;border-left:1px solid #c8c8c8;border-right:1px solid #c8c8c8;}
+.jui-dialog .listBox p{height:32px;line-height:32px;text-indent:200px;font-size:14px;border-bottom:1px solid #c8c8c8;background:#f8f8f8;}
+.jui-dialog .listBox p:hover{background:#f2f2f2;}
+.jui-dialog .from-item-select{background:url(../images/selectIcon02.png) no-repeat 95% center;}
+.jui-dialog .from-item-select .textBox{line-height:38px;}
+.jui-dialog .from-item:hover{position:relative;}
+.jui-dialog .from-item:hover .listBox{display:block;}
+.jui-dialog .from-item .dateIcon{background:url(../images/dateIcon.png) no-repeat 95% center;}
+.jui-dialog .from-item .email{background-position:6px 10px;}
+.jui-dialog .from-item .name{background-position:8px -76px;}
+.jui-dialog .from-item .sex{background-position:6px -176px;}
+.jui-dialog .from-item .branch{background-position:6px -285px;}
+.jui-dialog .from-item .duty{background-position:6px -403px;}
+.jui-dialog .from-item .superior{background-position:6px -511px;}
+.jui-dialog .from-item .phone{background-position:11px -631px;}
+.jui-dialog .from-item .jurisdiction{background-position:6px -744px;}
+.jui-dialog .from-item .time{background-position:8px -857px;}
+.jui-dialog .from-item .idNumber{background-position:4px -1087px;}
+.jui-dialog .from-item .sexFemale{background-position:4px -974px;}
+
+.jui-dialog .btnWrap .commonBtn{display:inline-block;width:80px;height:26px;line-height:26px;}
+.jui-dialog .btnWrap .cancelBtn{margin-left:60px;}
+
+/*弹层，编辑员工信息*/
+.jui-dialog-staff .fromWrap{position:relative;}
+.jui-dialog-staff .logOut{position:absolute;top:0px;right:-70px;line-height:40px;font-size:14px;text-align:center;color:#007aff;}
+
+/*公共弹层*/
+.jui-dialog{position:fixed;top:50%;left:50%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
+.jui-dialog-tit{position:relative;padding-left:25px;height:55px;background:#f3f3f6;border-radius:6px 6px 0 0;color:#66666d;}
+.jui-dialog-tit h2,.jui-dialog-tit h3{font:bold 16px/55px "黑体";}
+/*fgy-update*/
+/*.jui-dialog-close{position:absolute;top:12px;right:12px;width:30px;height:30px;background:url(../images/hintClose.png) no-repeat center center;}*/
+.jui-dialog-close{position:absolute;top:12px;right:12px;width:30px;height:30px;background:url(../../images/hintClose.png) no-repeat center center;}
+.jui-dialog .btnWrap{padding:50px 0;text-align:center;}
+.jui-dialog .btnWrap a{display:inline-block;}
+.jui-dialog .titName{position:absolute;top:0;left:50%;margin-left:-225px;width:450px;line-height:55px;text-align:center;color:#333;}
+.jui-dialog .cancelBtn{margin-left:35px;background:#949ca7;}
+/*弹出-提示*/
+.jui-dialog.jui-dialog-prompt{width:694px;height:424px;margin:-212px 0 0 -347px;}
+.jui-dialog .promptContent{padding:20px 0 40px 0;}
+.jui-dialog .promptContent p{text-align:center;font:bold 18px/1.5em "黑体";color:#66666d;}
+.jui-dialog-prompt .cancelBtn{background:#fff;border:1px solid #fe7c23;color:#fe7c23;}

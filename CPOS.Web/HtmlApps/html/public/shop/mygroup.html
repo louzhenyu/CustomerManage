@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title name="MyGroup">我的成员</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+</head>
+
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<div class="mymember-list">
+    <ul id="myMemberList">
+     
+    </ul>
+</div>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script> 
+</body>
+</html>
+<script type="text/html" id="tpDataList" > 
+
+    <%for (var i = 0; i < datas.length; i++) {
+    var dataInfo=datas[i];
+    %>
+   <li>
+     <h3><%=dataInfo.UserName %></h3>
+            <div>
+                <p><span>公  司：</span><%=dataInfo.Company %></p>
+                <p><span>职  位：</span><%=dataInfo.Job %></p>
+                <a href="tel:<%=dataInfo.Mobile %>"><p><span>手  机：</span><%=dataInfo.formatMobile %></p></a>
+            </div>
+        </li>
+<%
+  };
+%></script>
+
+

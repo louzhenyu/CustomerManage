@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">会员秀详情</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body  >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="DetailBigBox" id="DetailBigBox"></div>
+  <div class="MenuBox" id="MenuBox"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'GetData.getVipShowById();'; //  
+</script> 
+<script id="appDetail" type="text/template"> 
+<div id="wrapper" class="DetailImg" style="overflow: hidden;">
+  <div id="scroller" class="DetailImgIeo" >
+    <ul>
+		<% _.each(imageList,function(item){ %>
+     	 <li style="width:<%= w %>px"><img style="height:220px;" src="<%= item.imageURL%>"></li>
+      <% })%>
+    </ul>
+  </div>
+  <div class="KzDGrayTOP"></div>
+  <div class="KzDGray" style="height:32px;"></div>
+  <dl id="indicator" style="bottom:0px;">
+  <% _.each(imageList,function(item,key){ %>
+    <dd <% if(key==0){%>class="active" <%}%>><%= key+1 %></dd>
+	 <% })%>
+  </dl>
+  <div style="position:absolute; left:10px; bottom:-5px; padding-left:50px; height:32px; line-height:32px; font:14px; font-weight:bold; ">
+  <%if (isPraise=="0"){%><span onclick="Vip.Good(this,event,'<%=vipShowId%>')" isselect="0" class="rightpp"><img src="images/zangray.png" style="width:30px;"></span><%}else{%>
+	  <span  isselect="1" class="rightpp"><img src="images/zan.png" style="width:30px;"></span>
+	  <%}%>
+	  <span style="color:#e93c8c"><span id="zan_<%=vipShowId%>"><%=praiseCount%></span>人赞过</span>
+	</div>
+</div>
+<div class="DetailSmallBox">
+  <div class="DetailSmallBoxYW"><div class="DetailmdkZBtn" style="top:10px; right:-3px;">
+<a class="DetailActionBtn" href="myShow.html"  href="javascript:void(0)">上传我的</a></div>
+	 
+  	<h1 style="font-size:14px; color:#e93c8c;"><%= hairStylistName %></h1>
+
+    <div class="EPSdg" style="padding-top:15px;"><%= experience %><br><span style="font-size:12px;"><%= createTime %></span>
+      </div>
+	    <div class="DetailSmallBoxYWDlR"><span class="Detailicn Dicn1"></span>&nbsp;<%= praiseCount %>人赞过</div>
+		
+		<div style="color:#e93c8c; text-align:right; padding-bottom:10px;">分享到</div>
+  	<div class="follow" style="width:100%; margin-left:auto; margin-right:auto;  padding-bottom:10px; position:relative;"><img src="images/fenx.png" width="100%" /><div style="position:absolute; left:0; top:0; height:50px; width:100%;  cursor:pointer" onclick="openFollowTips()"></div></div>
+<div class="vipCartBoxBottom"></div>
+  </div>
+  	
+</div>
+
+</script>
+
+</body>
+</html>

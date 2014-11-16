@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title name="SignInSuccess">签到成功</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+</head>
+
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+<div class="signin-success">
+    <div class="signin-success-t ac"> 签到成功，感谢您的莅临！
+        <p>核对您的签到信息，<br>
+            如有问题请与现场工作人员联系!</p>
+    </div>
+    <div class="signin-success-m">
+        <dl>
+            <dt>姓      名：</dt>
+            <dd id="txtName"></dd>
+        </dl>
+        <dl>
+            <dt>公      司：</dt>
+            <dd id="txtCompany"></dd>
+        </dl>
+        <dl>
+            <dt>职      位：</dt>
+            <dd id="txtPosition"></dd>
+        </dl>
+        <dl>
+            <dt>手      机：</dt>
+            <dd id="txtPhone"></dd>
+        </dl>
+        <dl>
+            <dt>分组信息：</dt>
+            <dd id="txtGroup"></dd>
+        </dl>
+        <dl>
+            <dt>支付状态：</dt>
+            <dd><span id="txtStatus" >未支付</span></dd>
+        </dl>
+    </div>
+    <div class="bot-bot"> <a href="javascript:;" class="btn-gray" id="btPrint" >打印胸卡</a><a href="javascript:;" class="btn-gray" id="btBrose">查看组成员</a> </div>
+</div>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</body>
+</html>

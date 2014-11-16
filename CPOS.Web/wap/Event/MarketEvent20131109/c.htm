@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<title>市场活动效果分析</title>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+<script type="text/javascript" src="js/smart.js"></script>
+<script type="text/javascript" src="js/common.js?123"></script>
+</head>
+
+<body>
+<div class="MarketMenu">
+	<span class="iskin MenuBox"></span>
+    
+</div>
+<div id="dframe">
+	<div class="MarketBox" id="MarketBoxID" time="0">
+    	<div class="MarketTitle iskin"><span class="iskin MarketTitleIcn"></span></div>
+        <div class="MarketConnext">
+   
+                	<ul class="bp">
+                    	<li><i class="iskin li1"></i><div class="MarketText" id="SG1">0</div></li>
+                        <li><i class="iskin li2"></i><div class="MarketText" id="SG2">0</div></li>
+                        <li style="border-right:0"><i class="iskin li3" ></i><div class="MarketText"><span id="SG3">0</span><span class="bf">%</span></div></li>
+                    </ul>
+              
+                	<ul style="border-bottom:0" class="bp">
+                    	<li><i class="iskin li4"></i><div class="MarketText" id="SG4">0</div></li>
+                        <li><i class="iskin li5"></i><div class="MarketText" id="SG5">0</div></li>
+                        <li style="border-right:0"><i class="iskin li6"></i><div class="MarketText" ><span id="SG6">0</span><span class="bf">%</span></div></li>
+                    </ul>
+             
+        </div>
+    </div>
+    
+    <div class="MarketBox">
+    	<div class="MarketTitle iskin"><span class="iskin MarketTitleIcn1"></span></div>
+        <div class="MarketConnext" id="ConnextID">
+        </div>
+    </div>
+    <span class="blank1" style="height:25px;"></span>
+ </div>
+    <script type="text/templete" id="EventScript">
+	<% _.each(prizeList,function(item,key){%>
+    	<div class="MarketConnextBox" <% if(key == prizeList.length- 1){%>style="border-bottom:0;"<%}%>>
+            <div class="MarketConnextBoxLeft"><img src="<%=item.imageUrl%>" /></div>
+	<div class="MarketConnextBoxRight"><div class="aod">奖品:&nbsp;&nbsp;<Span style="color:#13a4ff;"><%=item.prizeBrand%></Span></div>
+                	<div class="prizePerson"><span class="aod">获奖人员：</span><span class="blank1" style="height:10px;"></span>
+						<div id="dperson_<%=item.id%>"><% _.each(item.prizeWinnerList,function(item2,key2){%>
+							<span style="margin-left:20px;"><%=item2.vipName%></span>
+						<%})%></div>
+					</div>
+                </div>
+            </div>
+	<%})%>
+    </script>
+    <script type="text/javascript">
+    $(function(){
+			MarketEvent();
+			gofIframe();
+			setInterval(function(){MarketEvent()},1000*18)
+		})
+    </script>
+</body>
+</html>

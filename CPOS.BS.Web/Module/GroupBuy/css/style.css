@@ -1,0 +1,199 @@
+/*common*/
+body{font:12px/1.5em "Microsoft YaHei","黑体";background:#fff;color:#4d4d4d;}
+input{border:1px solid #ccc;border-radius:2px;width:120px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"Microsoft YaHei","黑体";color:#a5a5a5;}
+.ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
+.commonTopTitle{height:45px;line-height:45px;background:#fe7c23;}
+.commonTopTitle .addBtn{float:right;display:inline-block;width:116px;height:28px;margin:8px 32px 0 0 ;background:url(../images/addBtn.png) no-repeat 0px 0px;}
+.commonBtn{display:block;width:142px;height:42px;line-height:42px;text-align:center;font-size:18px;border-radius:5px;background:#fe7c24;color:#fff;}
+
+
+/*团购列表页*/
+.groupList{min-height:500px;/*margin:0 15px;padding:17px 0;*/border:1px solid #d9d9d9;border-top:none;box-shadow:0 0 3px rgba(217,217,217,0.8);}
+.groupList li{border-left:4px solid #fff;padding-left:30px;}
+.groupList li:hover{border-left:4px solid #fe7c23;background:#fff1d8;}
+.groupList  .on{border-left:4px solid #fe7c23;background:#fff1d8;}
+.groupList-item{height:106px;border-bottom:1px solid #e0dbd1;}
+.groupList li:nth-of-type(1) .groupList-item{border-top:1px solid #e0dbd1;}
+.groupList-item{padding-right:160px;font-size:16px;color:#666;}
+.groupList-item .markBox{float:left;width:56px;height:62px;margin-top:22px;border:1px solid #4d4e53;text-align:center;font-size:16px;font-family:"Arial";background:#fff;color:#fe7c23;}
+.groupList-item .month{height:21px;line-height:21px;background:#fe7c23;color:#fffefe;}
+.groupList-item .day{font-size:30px;line-height:41px;}
+.groupList-item .infoBox{margin-left:65px;padding-top:22px;}
+.groupList-item .shelf{float:right;font-size:15px;font-weight:bold;color:#fe7c23;}
+.groupList-item .tit{margin-right:60px;font-size:16px;font-weight:bold;color:#333;}
+.groupList-item .timeSlot{float:left;font-weight:bold;}
+.groupList-item .timeSlot span{font-family:"Arial";font-size:15px;color:#666;}
+.groupList-item .other{margin-top:20px;}
+.groupList-item .startTime{padding:0 15px 0 20px;font-weight:normal;background:url(../images/timeIcon.png) no-repeat left center;}
+.groupList-item .endTime{margin:0 107px 0 15px;}
+.groupList-item .surplus{margin-right:30px;}
+.groupList-item .other strong{padding-left:3px;font-family:"Arial";color:#fe7c23;}
+
+
+/*团购设置菜单*/
+.groupHandleArea{margin-left:15px;}
+.groupNav{height:62px;margin-top:20px;padding-left:85px;background:#e9e9e9;}
+.groupNav li{float:left;width:92px;height:62px;margin-right:17px;cursor:pointer;}
+.groupNav .groupSet{background:url(../images/setIcon.png) no-repeat center center;}
+.groupNav .shopManage{background:url(../images/manageIcon.png) no-repeat center center;}
+.groupNav .orderManage{background:url(../images/orderManageIcon.png) no-repeat center center;}
+.groupNav .groupSet.on{background:#fe7c23 url(../images/on-setIcon.png) no-repeat center center;}
+.groupNav .shopManage.on{background:#fe7c23 url(../images/on-manageIcon.png) no-repeat center center;}
+.groupNav .orderManage.on{background:#fe7c23 url(../images/on-orderManageIcon.png) no-repeat center center;}
+.groupNav li{text-align:center;line-height:104px;color:#999;}
+.groupNav li.on{color:#fff;}
+.commonTopTitle .addBtn{text-indent:26px;font:16px/28px "黑体";color:#fe7c23;}
+
+/*团购设置项*/
+.groupSetArea{padding:67px 0;background:#f8f8f8;}
+.groupSetArea-box{width:750px;margin:0 auto;line-height:40px;}
+.groupSetArea-box>div{height:40px;margin-bottom:30px;}
+.groupSetArea-box em{float:left;font-size:14px;color:#999;}
+.groupSetArea-box h3{float:left;font-size:15px;font-weight:bold;color:#666;}
+.groupSetArea-box label{float:left;width:438px;height:40px;margin:0 10px 0 3px;}
+.groupSetArea-box input{width:100%;height:100%;*height:40px;border:1px solid #ccc;font-size:14px;border-radius:3px;background:#fff;color:#999;}
+.groupSetArea-box .selectBox{position:relative;*margin:0 2px 0 8px;border:1px solid #ccc;border-radius:3px;font-size:14px;text-indent:5px;background:#fff url(../images/selectIcon.png) no-repeat 385px center;color:#999;cursor:pointer;}
+.groupSetArea-box .selectBox:hover .dropList{display:block;}
+.groupSetArea-box .dropList{display:none;position:absolute;top:39px;left:0px;width:100%;text-align:center;border-left:1px solid #ccc;border-right:1px solid #ccc;background:#f1f1f1;}
+.groupSetArea-box .dropList span{display:block;height:40px;line-height:40px;border-bottom:1px solid #ccc;font-size:14px;}
+.groupSetArea-box .commonBtn{margin:37px 235px;}
+
+
+/*团购原来信息*/
+.groupOriginalInfo{height:133px;*height:70px;padding:32px;font-size:16px;background:#f8f8f8;color:#666;}
+.groupOriginalInfo .infoBox{margin-left:65px;padding-top:22px;}
+.groupOriginalInfo .shelf{float:left;margin-left:20px;font-size:15px;font-weight:bold;color:#fe7c23;}
+.groupOriginalInfo .tit{float:left;font-size:16px;font-weight:bold;color:#333;}
+.groupOriginalInfo .timeSlot{float:left;font-weight:bold;}
+.groupOriginalInfo .timeSlot span{font-family:"Arial";font-size:15px;color:#666;}
+.groupOriginalInfo .other{margin:15px 0 22px 0;}
+.groupOriginalInfo .startTime{padding:0 15px 0 20px;font-weight:normal;background:url(../images/timeIcon.png) no-repeat left center;}
+.groupOriginalInfo .endTime{margin:0 107px 0 15px;}
+.groupOriginalInfo .surplus{margin-right:30px;}
+.groupOriginalInfo .other strong{padding-left:3px;font-family:"Arial";color:#fe7c23;}
+.groupOriginalInfo .clickMore{width:130px;margin:0 auto;font-size:14px;background:url(../images/moreIcon.png) no-repeat right center;color:#ccc;cursor:pointer;}
+
+
+
+/*团购商品管理*/
+.groupShopManage{padding:24px 24px 24px 8px;}
+.groupShopManage .titleBox{padding-bottom:6px;border-bottom:1px solid #ccc;}
+.groupShopManage .addShopBtn{float:right;width:115px;height:28px;margin-right:3px;background:url(../images/addShopBtn.png) no-repeat 0 0;}
+.groupShopManage .titleBox h2{float:left;height:18px;margin-top:6px;padding:0 5px;font-weight:bold;font-size:17px;border-left:4px solid #fe7c23;color:#333;}
+
+.groupShopManage-list{}
+.groupShopManage-list-item{padding:24px 0 5px 0;border-bottom:1px solid #e9e9e9;}
+.groupShopManage-list .picWrap{float:left;width:122px;height:122px;border:1px solid #e9e9e9;background:#fbfbfb;}
+.groupShopManage-list .picWrap img{width:120px;height:120px;}
+.groupShopManage-list .textInfo{height:123px;margin-left:154px;padding-top:2px;}
+.groupShopManage-list .textInfo .topText{height:28px;line-height:28px;margin-bottom:42px;}
+.groupShopManage-list .tit{float:left;font-weight:bold;font-size:16px;color:#333;}
+.groupShopManage-list .delShopBtn{float:left;width:99px;height:28px;margin-left:24px;background:url(../images/delShopBtn.png) no-repeat 0 0;}
+.groupShopManage-list .handleShop{height:28px;line-height:28px;}
+.groupShopManage-list .addSizeBtn{float:right;width:99px;height:28px;margin-right:3px;background:url(../images/addSizeBtn.png) no-repeat 0 0;}
+.groupShopManage-list .handleShop span{float:left;height:28px;line-height:28px;text-align:right;font-size:16px;color:#fe7c23;cursor:pointer;}
+.groupShopManage-list .uploadPicBtn{width:80px;background:url(../images/uploadPicBtn.png) no-repeat 0 0;}
+.groupShopManage-list .moveUp{width:62px;margin:0 35px 0 26px;background:url(../images/moveUp.png) no-repeat 0 center;}
+.groupShopManage-list .moveUp.first{background:url(../images/no-moveUp.png) no-repeat 0 center;color:#ccc;}
+.groupShopManage-list .moveDown{width:62px;background:url(../images/moveDown.png) no-repeat 0 center;}
+
+.commonMinBtn{display:block;width:60px;height:28px;line-height:28px;margin-right:10px;text-align:center;font-size:14px;font-weight:bold;border:1px solid #fe7c23;border-radius:3px;color:#fe7c23;cursor:pointer;}
+
+.groupShopNorms{margin-left:154px;padding:18px 0 10px 0;font-size:16px;border-top:1px solid #e9e9e9;color:#333;}
+.groupShopNorms .sizeText{height:28px;line-height:28px;}
+.groupShopNorms .delSizeBtn{float:right;width:99px;height:28px;margin-right:3px;background:url(../images/delSizeBtn.png) no-repeat 0 0;}
+.groupShopNorms .sizeText h3{float:left;padding-left:25px;font-weight:bold;font-size:15px;color:#333;background:url(../images/normsIcon.png) no-repeat 10px center;}
+.groupShopNorms .sizeText em{float:left;margin-left:25px;color:#fe7c23;}
+.groupShopNorms .sizeText .finish{color:#ccc;}
+.groupShopNorms .editArea{height:28px;}
+.groupShopNorms .editArea label{float:left;}
+.groupShopNorms .editArea input{width:78px;height:28px;font-size:16px;font-family:"Arial";border:1px solid #ccc;border-radius:5px;color:#666;}
+.groupShopNorms .editArea input:disabled{border:none;background:none;}
+.groupShopNorms .editArea input[disabled]{border:none;background:none;}
+.groupShopNorms .commonMinBtn{float:left;}
+.groupShopNorms .editArea em{float:left;width:115px;line-height:28px;font-size:15px;text-align:right;}
+.groupShopNorms .editArea .mlmr{margin:0 32px 0 102px;}
+.groupShopNorms .mtmb{margin:5px 0;}
+.groupShopNorms .editArea .btnWrap{display:none;}
+.groupShopNorms .editArea.on .btnWrap{display:block;}
+.groupShopNorms .editArea.on .modifyBtn{display:none;}
+
+
+
+
+/*弹层，添加新团购*/
+.jui-dialog{position:fixed;top:50%;left:50%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
+.jui-dialog-addGroup{width:792px;height:510px;margin:-255px 0 0 -396px;}
+.jui-dialog-tit{position:relative;padding-left:25px;height:55px;background:#f3f3f6;border-radius:6px 6px 0 0;color:#66666d;}
+.jui-dialog-tit h2,.jui-dialog-tit h3{font:bold 16px/55px "黑体";}
+.jui-dialog-close{position:absolute;top:12px;right:12px;width:30px;height:30px;background:url(../images/hintClose.png) no-repeat center center;background-size: 30px;}
+.jui-dialog .groupSetArea-box{width:auto;padding:64px 32px 0;}
+.jui-dialog .btnWrap{padding:35px 0;text-align:center;}
+.jui-dialog .btnWrap a{display:inline-block;}
+
+
+
+/*弹层，活动产品新规则*/
+.jui-dialog.jui-dialog-addRule{position:absolute;width:710px;height:670px;top:30px;margin-left:-355px;}
+.jui-dialog-addRule-edit{height:306px;padding:5px 0 0 55px;font-size:14px;color:#333;overflow-y:auto;}
+.jui-dialog-addRule .ruleTitText{padding:10px 0 5px 53px;font:16px/1.2em "黑体";color:#666;}
+.jui-dialog-addRule-info{height:130px;margin:18px;padding:0 20px 0 33px;font:16px/1.2em "黑体";background:#f3f3f6;}
+.jui-dialog-addRule-info .shopTit{padding:20px 0 26px 0;color:#666;}
+.jui-dialog-addRule-info .shopName{float:left;width:440px;height:58px;line-height:29px;font-weight:bold;overflow:hidden;color:#333;}
+.jui-dialog-addRule-info .quotaBox{float:right;}
+.jui-dialog-addRule-info .quotaBox em{float:left;line-height:29px;margin-right:10px;color:#666;}
+.jui-dialog-addRule-info .quotaBox .inputBox{float:left;}
+.jui-dialog-addRule-info .quotaBox input{width:78px;height:29px;border:1px solid #ccc;border-radius:4px;color:#333;}
+
+.jui-dialog .cancelBtn{margin-left:35px;background:#949ca7;}
+.jui-dialog-addRule-edit .item{height:100px;padding-top:19px;*padding-top:0px;}
+.jui-dialog-addRule-edit .editArea{height:28px;}
+.jui-dialog-addRule-edit .checkBox{float:left;width:240px;height:28px;line-height:28px;}
+.jui-dialog-addRule-edit .checkBox span{float:left;width:20px;height:28px;margin-right:13px;background:url(../images/checkBox01.png) no-repeat center center;}
+.jui-dialog-addRule-edit .editArea label{float:left;}
+.jui-dialog-addRule-edit .item input{float:left;width:78px;height:28px;font-family:"Arial";border:1px solid #ccc;border-radius:5px;background:#f3f3f6;color:#666;}
+.jui-dialog-addRule-edit .item.on input{background:#fff;}
+.jui-dialog-addRule-edit .item.on .checkBox span{background:url(../images/checkBox02.png) no-repeat center center;}
+.jui-dialog-addRule-edit .editArea input:disabled{border:none;background:none;}
+.jui-dialog-addRule-edit .editArea input[disabled]{border:none;background:none;}
+.jui-dialog-addRule-edit .editArea em{float:left;width:115px;line-height:28px;text-align:right;}
+.jui-dialog-addRule-edit .editArea .ml{margin-left:2px;}
+.jui-dialog-addRule-edit .mtmb{margin-bottom:8px;}
+.jui-dialog-addRule-edit .editArea.pl{height:45px;margin-left:32px;padding-left:210px;border-bottom:1px solid #e0e0e0;}
+/*弹层，添加商品*/
+.jui-dialog.jui-dialog-addShop{width:896px;height:500px;margin:-250px 0 0 -448px;}
+.jui-dialog-addShop .contentArea{width:730px;min-height:300px;margin:0 auto;}
+.jui-dialog-addShop .searchWrap{height:35px;margin:30px 0 25px 0;}
+.jui-dialog-addShop .searchWrap .tit{float:left;font:16px/35px "黑体";color:#404853;}
+.jui-dialog-addShop .selectBox{position:relative;float:left;width:152px;height:35px;margin:0 25px;border:1px solid #ccc;cursor:pointer;}
+.jui-dialog-addShop .selectBox em{float:right;width:28px;height:23px;margin-top:6px;border-left:1px solid #ccc;background:url(images/selectIcon.png) no-repeat center center;}
+.jui-dialog-addShop .selectBox p{margin-right:28px;line-height:35px;text-indent:8px;font-size:14px;}
+.jui-dialog-addShop .selectBox:hover .dropList{display:block;}
+.jui-dialog-addShop .dropList{display:none;position:absolute;top:34px;*top:36px;left:-1px;width:152px;border-left:1px solid #ccc;border-right:1px solid #ccc;background:#f1f1f1;}
+.jui-dialog-addShop .dropList span{display:block;height:35px;line-height:35px;text-align:center;font-size:14px;border-bottom:1px solid #ccc;}
+.jui-dialog-addShop .dropList span:hover{background:#f8f8f8;}
+.jui-dialog-addShop .inputBox{float:left;width:345px;height:35px;margin-right:25px;border:1px solid #ccc;border-radius:5px;}
+.jui-dialog-addShop .inputBox input{display:block;width:338px;height:32px;border:none;border-radius:5px;padding-left:5px;}
+.jui-dialog-addShop .searchBtn{float:left;width:72px;height:30px;line-height:32px;margin-top:3px;font-size:12px;}
+.jui-dialog-addShop .searchResult{min-height:300px;border:1px solid #ccc;}
+.jui-dialog-addShop .searchResult h2{height:56px;background:#f6f6f7;border-bottom:1px solid #e9e9ea;font:18px/56px "黑体";}
+.jui-dialog-addShop .searchResult .classify{float:left;width:251px;text-indent:62px;border-right:1px solid #e9e9ea;overflow:hidden;}
+.jui-dialog-addShop .searchResult .shopName{margin-left:251px;text-indent:96px;}
+.jui-dialog-addShop .searchList{height:245px;overflow-y:auto;}
+.jui-dialog-addShop .searchList li{height:35px;}
+.jui-dialog-addShop .searchList li p{height:35px;line-height:35px;font:16px/35px "黑体";}
+
+.jui-dialog-addShop .searchList li:nth-of-type(even){background:#fafafa;}
+/*弹层，图片上传*/
+.jui-dialog.jui-dialog-upload{width:650px;height:460px;margin:-250px 0 0 -325px;}
+.jui-dialog-upload .uploadArea{height:280px;*height:256px;padding:10px 10px 0px 10px;}
+.jui-dialog-upload .picView{float:left;width:240px;height:240px;border:1px solid #f2f2f2;}
+.jui-dialog-upload .picView img,.jui-dialog-upload .preview img{display:block;width:100%;height:100%;}
+.jui-dialog-upload .infoShow{margin-left:280px;}
+.jui-dialog-upload .infoShow .exp{margin-bottom:13px;line-height:1.6em;font-size:16px;color:#666;}
+.jui-dialog-upload .uploadBtn{width:72px;height:28px;line-height:26px;font-size:14px;}
+.jui-dialog-upload .previewTit{margin:23px 0 10px;font-size:16px;color:#666;}
+.jui-dialog-upload .preview{width:100px;height:100px;border:1px solid #f2f2f2;}
+
+
+

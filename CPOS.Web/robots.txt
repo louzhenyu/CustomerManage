@@ -1,0 +1,5 @@
+﻿# Robots.txt file from jitmarketing.cn
+# All robots will spider the domain
+
+User-agent: *
+Disallow: / 

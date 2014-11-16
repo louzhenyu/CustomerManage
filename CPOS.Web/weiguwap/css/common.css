@@ -1,0 +1,90 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img { border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 14px; font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #2e2e2e; resize: none; outline: none; }
+body { background-color:#dce0e4; }
+h1, h2, h3, h4, h5, h6 { font-size: 16px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+a { text-decoration: none; color: #377CA2; }
+a:hover { text-decoration: underline; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 16px; margin: 0; padding: 0; }
+textarea, input[type="text"],input[type="password"],input[type="button"],input[type="submit"]{ resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1 }
+.frdisplay{ float:right; display:block;}
+.blank{ display:block; height:1px; clear:both; overflow:hidden; }
+
+.ComMenu{ height:44px; background-color:#e9edf0; position:fixed; left:0; top:0; width:100%; overflow:hidden; border-bottom:2px solid #004e88; z-index:98;}
+.ComMenu li { float:left; width:25%; text-align:center; color:#2e2e2e; font-size:12px; height:40px; padding-top:4px; cursor:pointer}
+.icn_skin{ background-image:url(../images/icn_skin.png); background-repeat:no-repeat; width:25px; height:24px; display:block; margin-left:auto; margin-right:auto;}
+.Icn1{ background-position:left -3px;}
+.Icn2{ background-position:left -36px;}
+.Icn3{ background-position:3px -68px;}
+.Icn4{ background-position:left -98px;}
+.ActiveMenu .Icn1{ background-position:-30px -3px;}
+.ActiveMenu .Icn2{ background-position:-30px -36px;}
+.ActiveMenu .Icn3{ background-position:-27px -68px;}
+.ActiveMenu .Icn4{ background-position:-30px -98px;}
+.ComMenu li.ActiveMenu{ color:#fff; background: -webkit-gradient(linear, left top, left bottom, from(#005596), to(#004e88));}
+
+.ComDiv{ width:94%; margin-left:auto; margin-right:auto; padding-top:15px; padding-bottom:20px;}
+.TipTxt{ text-align:center; font-size:16px; color:#005392; font-weight:bold; height:36px; line-height:36px;}
+.HasReserveList{ clear:both; box-shadow:0 0 5px #CCC; border:1px solid #e2e2e2; margin-top:10px; background-color:#fff; position:relative; min-height:50px; padding:10px;}
+.HasReserveRight{ position:absolute; right:10px; top:20px;}
+.cacelReserve{ background:#e8e8e8; color:#626262; font-weight:bold; font-size:14px;  font-weight:bold; padding:5px 20px; cursor:pointer;}
+.HasReserveLeft{ margin-right:90px;}
+.HasReserveLeft .s1{ line-height:22px;}
+.HasReserveLeft .s2{ line-height:30px; font-size:18px; font-weight:bold; padding-top:3px;}
+.NowRe{ width:80%; margin-left:auto; margin-right:auto; clear:both; text-align:center; padding-top:30px;}
+a.NowReserveBtn,a.NowReserveBtn:hover{ height:36px; color:#fff; text-align:center; display:block; clear:both; font-weight:bold; font-size:16px; text-decoration:none; background-color:#006ac0; line-height:34px; border-radius:5px;}
+.ServerTip{ padding-top:30px; font-size:12px; line-height:22px;}
+
+.ReseverALLReturn{ height:42px; font-size:18px; color:#505050; text-align:center; background-color:#f6fbff; border-bottom:1px solid #b8b8b8; box-shadow:0 0 1px #a2b4c2; line-height:42px; position:relative; }
+a.ReturnDefault,a.ReturnDefault:hover{ text-align:center; width:28px; height:28px; display:block; position:absolute; left:12px; top:8px; background-color:#005494; background-position:5px -128px; border-radius:5px;}
+.ReseverMenu li{ width:50%; float:left; text-align:center; position:relative; cursor:pointer }
+.ReseverMenu li span.Icn5{ width:12px; height:10px; background-position:0 -180px; position:absolute; right:2%; top:17px;  -webkit-transition: -webkit-transform 0.2s ease-in;
+        -moz-transition:    -moz-transform 0.2s ease-in;}
+.ReseverALL .ReseverMenu li span.animateCss{
+	      -moz-transform:           rotate(180deg);
+      -moz-transform-origin:    center 30%;
+        -webkit-transform:        rotate(180deg);
+        -webkit-transform-origin: center 30%;
+}
+
+.ReseverMenu{ height:42px; background-color:#e4e7e9; border-bottom:1px solid #b7babe; box-shadow:0 0 3px #caced1; line-height:42px; position:relative; width:100%;}
+.ReseverMenu li i{ list-style:none; font-style:inherit; font-size:16px;}
+.Line1{ background-color:#dedede; height:36px; float:left; display:block; width:1px; overflow:hidden; }
+.SelectTimeBox{ clear:both; position:relative; height:600px;}
+.Imgbox{ position:absolute; left:0; top:0; width:100%; z-index:0;}
+.SelectDate{ width:60%; float:left;}
+.SelectTime{ width:40%; float:left; padding-top:0px; }
+.TimeBox{ height:600px; position:absolute; left:0; top:0; width:100%;}
+.SelectDate li{ width:80%; height:38px; background:url(../images/trans_gray.png) repeat left top; line-height:38px; margin-top:12px; color:#000; padding-left:12px;  position:relative; cursor:pointer; opacity:0;}
+.SelectDate li i{ font-style:normal; font-size:16px;}
+.SelectDate li span.Icn6{ width:11px; height:11px; background-position:-2px -160px; position:absolute; right:10px; top:15px; }
+.SelectDate li.SelectDateActive{ background:url(../images/trans_fff.png) repeat left top; color:#005493;  }
+.SelectDate li.SelectDateActive span.Icn6{ width:11px; height:11px; background-position:-18px -160px; position:absolute; right:10px; top:15px; }
+.SelectTime li{ width:92%; margin-left:auto; margin-right:auto; background:url(../images/trans_fff.png) repeat left top; color: #626262; text-align:center;  margin-top:12px; line-height:24px; padding-top:7px; padding-bottom:7px; opacity:0; cursor:pointer }
+.DateList{ position:absolute; left:0; top:44px; z-index:99;  width:100%; }
+
+.DateList dd{ height:38px; display:block; clear:both;  line-height:38px; font-size:14px; color:#000; border-bottom:1px solid #c9c9c9; padding-left:20px; cursor:pointer}
+.DateList dd.ActiveDateDD{ border-left:3px solid #0068b7; background-color:#d5d5d5;}
+.IcnJtou{ background:url(../images/jtou.png) no-repeat left top; width:10px; height:10px; position:absolute; left:49%; bottom:-4px; display:block;}
+.opacityBg{ background-color:#000; opacity:0.7; width:100%; height:800px; position:absolute; left:0; top:0; z-index:100; }
+.PopDiv{ border:1px solid #d5d5d7; width:92%; left:4%; position:absolute; z-index:101;background-color:#fff; border-top:6px solid #2980d7; box-shadow:0 0 4px #374853; opacity:0;}
+.PopDiv .PopDivClose{ position:absolute; width:20px; height:20px; background-position:0 -199px; z-index:102; display:block; right:15px; top:15px; cursor:pointer}
+.PopDetail{ width:90%; margin-left:auto; margin-right:auto; margin-top:20px; padding-top:20px}
+.PopDetail td{ padding: 8px 2%;}
+.SureServer{ padding:0 5%; background-color:#f3f3f3; clear:both; overflow:hidden; margin-top:15px;}
+.SureServerLeft{ float:left; width:50%; padding:15px 0; border-right:1px solid #e3e3e3;  padding-right:5%; font-weight:bold; line-height:22px;}
+.SureServeRight{ width:39%; float:left;   padding:15px 0; padding-left:5%;}
+a.SureServerBtn,a.SureServerBtn:hover{ background-color:#ff8c00; border-radius:5px; color:#fff; width:100%; display:block; padding:10px 0; text-align:center; text-decoration:none; font-size:16px; font-weight:bold; position:relative; margin-top:8px;}
+a.SureServerBtn .IcnSure,a.SureServerBtn:hover .IcnSure{ width:22px; height:23px; background-position:0  -226px; position:absolute; right:8%; top:8px;}
+.PopLogin{ width:86%; margin-left:auto; margin-right:auto; padding-top:40px; }
+.PopLogintitle{ font-size:16px; color:#2980d7; line-height:24px; font-weight:bold;}
+.InputStyleA{ margin-top:15px;}
+.InputStyleText{ height:36px; border:1px solid #b9b9b9; padding-left:2%; line-height:36px; width:98%; border-radius:3px; font-size:16px;}
+.ActionDiv{position:relative; left:0; top:0;}
+.PsGray{background-color:#000; opacity:0.5; height:400px; position:absolute; top:0; left:0; width:100%; overflow:hidden; }
+.yiman{ color:#F00; font-weight:bold; position:absolute; right:30px; top:0px}

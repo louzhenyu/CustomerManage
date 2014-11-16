@@ -1,0 +1,168 @@
+﻿
+/* CSS reset */
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{ margin:0;padding:0;}
+table{ border-collapse:collapse; border-spacing:0;}
+.clear{clear: both;}
+fieldset,img{ border:0;}
+a{ text-decoration:none;}
+address,caption,cite,code,dfn,em,strong,th,var,b { font-style:normal; font-weight:normal;}
+ol li,ul li{ list-style:none;}
+.listMainContent ul li{float: left;margin-right: 15px;}
+caption { text-align:left;}
+h1,h2,h3,h4,h5,h6 { font-size:100%;font-weight:normal; }
+q:before,q:after { content:'';}
+abbr,acronym { border:0;}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display: block; }
+
+/*文字排版*/
+.f12{ font-size:12px;}
+.f14{ font-size:14px;}
+.f16{ font-size:16px;}
+.f18{ font-size:18px;}
+.f20{ font-size:20px;}
+.fw{ font-family:Verdana, Geneva, sans-serif;}
+.fb{ font-weight:bold;}
+.fn{ font-weight:normal;}
+.t2e{ text-indent:2em;}
+.th{ text-indent:-9999em;}
+.lh150{ line-height:150%;}
+.lh180{ line-height:180%;}
+.lh200{ line-height:200%;}
+.udl{ text-decoration:underline;}
+.tdn{ text-decoration:none;}
+.tdl{ text-decoration:line-through;}
+.w980{ width:980px;}
+.wB100{ width:100%;}
+.pointer{ cursor:pointer;}
+
+/*布局*/
+.tl{ text-align:left;}
+.tc{ text-align:center;}
+.tr{ text-align:right;}
+.bc{ margin-left:auto;margin-right:auto;}
+.fl{ float:left; display:inline;}
+.fr{ float:right; display:inline;}
+.cb{ clear:both;}
+.cl{ clear:left;}
+.cr{ clear:right;}
+.clearfix:after{clear:both;content:".";display:block;height:0;visibility:hidden;}
+.clearfix{zoom:1;}
+.vm{ vertical-align:middle;}
+.pr{ position:relative;}
+.pa{ position:absolute;}
+.zoom{ zoom:1;}
+.hidden{ visibility:hidden;}
+.block{ display:block;}
+.inline{ display:inline;}
+.in_b {display:inline-block;}
+.in_b{ *display:inline;}
+.none{ display:none;}  
+.oh{ overflow:hidden;}
+.ov{ overflow:visible;}
+
+/*偏移*/
+.t0{top:0;}
+.t1{top:1px;}
+.t2{top:2px;}
+.t3{top:3px;}
+.t4{top:4px;}
+.t5{top:5px;}
+.r0{right:0;}
+.r1{right:1px;}
+.r2{right:2px;}
+.r3{right:3px;}
+.r4{right:4px;}
+.r5{right:5px;}
+.b0{bottom:0;}
+.b1{bottom:1px;}
+.b2{bottom:2px;}
+.b3{bottom:3px;}
+.b4{bottom:4px;}
+.b5{bottom:5px;}
+.l0{left:0;}
+.l1{left:1px;}
+.l2{left:2px;}
+.l3{left:3px;}
+.l4{left:4px;}
+.l5{left:5px;}
+
+/*边距*/
+.m5{ margin:5px;}
+.m8{ margin:8px;}
+.m10{ margin:10px;}
+.m12{ margin:12px;}
+.m15{ margin:15px;}
+.m20{ margin:20px;}
+
+.mt5{ margin-top:5px;}
+.mt8{ margin-top:8px;}
+.mt10{ margin-top:10px;}
+.mt12{ margin-top:12px;}
+.mt15{ margin-top:15px;}
+.mt20{ margin-top:20px;}
+.mt25{ margin-top:25px;}
+.mt30{ margin-top:30px;}
+
+.mr5{ margin-right:5px;}
+.mr8{ margin-right:8px;}
+.mr10{ margin-right:10px;}
+.mr12{ margin-right:12px;}
+.mr15{ margin-right:15px;}
+.mr20{ margin-right:20px;}
+.mr25{ margin-right:25px;}
+.mr30{ margin-right:30px;}
+
+.mb5{ margin-bottom:5px;}
+.mb8{ margin-bottom:8px;}
+.mb10{ margin-bottom:10px;}
+.mb12{ margin-bottom:12px;}
+.mb15{ margin-bottom:15px;}
+.mb20{ margin-bottom:20px;}
+.mb25{ margin-bottom:25px;}
+.mb30{ margin-bottom:30px;}
+
+.ml5{ margin-left:5px;}
+.ml8{ margin-left:8px;}
+.ml10{ margin-left:10px;}
+.ml12{ margin-left:12px;}
+.ml15{ margin-left:15px;}
+.ml20{ margin-left:20px;}
+.ml25{ margin-left:25px;}
+.ml30{ margin-left:30px;}
+
+/*补白*/
+.p5{ padding:5px;}
+.p8{ padding:8px;}
+.p10{ padding:10px;}
+.p12{ padding:12px;}
+.p15{ padding:15px;}
+.p20{ padding:20px;}
+
+.pt5{ padding-top:5px;}
+.pt8{ padding-top:8px;}
+.pt10{ padding-top:10px;}
+.pt12{ padding-top:12px;}
+.pt15{ padding-top:15px;}
+.pt20{ padding-top:20px;}
+
+
+.pr5{ padding-right:5px;}
+.pr8{ padding-right:8px;}
+.pr10{ padding-right:10px;}
+.pr12{ padding-right:12px;}
+.pr15{ padding-right:15px;}
+.pr20{ padding-right:20px;}
+
+.pb5{ padding-bottom:5px;}
+.pb8{ padding-bottom:8px;}
+.pb10{ padding-bottom:10px;}
+.pb12{ padding-bottom:12px;}
+.pb15{ padding-bottom:15px;}
+.pb20{ padding-bottom:20px;}
+
+.pl5{ padding-left:5px;}
+.pl8{ padding-left:8px;}
+.pl10{ padding-left:10px;}
+.pl12{ padding-left:12px;}
+.pl15{ padding-left:15px;}
+.pl20{ padding-left:20px;}

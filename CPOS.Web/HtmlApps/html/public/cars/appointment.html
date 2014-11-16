@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="x-rim-auto-match" content="none">
+		<title name="Appointment">我的预约</title>
+	</head>
+
+	<body class="appointmentPage">
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<section id="section">
+			<div class="appointmentArea">
+				<img class="bgPic" src="../../../images/public/cars_default/bg02.jpg" alt="car">
+				<h1 class="logo"><img src="../../../images/public/cars_default/logo.jpg" alt="logo"/></h1>
+				<div class="selectFormArea" style="display:block;">
+					<h2 id="title" class="tit">试驾/保养/维修预约</h2>
+					<div class="selectBox">
+						<p>
+							<select>
+								<option>上海市</option>
+								<option>北京市</option>
+								<option>广州市</option>
+								<option>南京市</option>
+								<option>杭州省</option>
+								<option>西安省</option>
+								<option>深圳省</option>
+							</select>
+						</p>
+						<p>
+							<select>
+								<option>徐汇4s店</option>
+								<option>浦东4s店</option>
+								<option>静安4s店</option>
+							</select>
+						</p>
+						<p>
+							<select>
+								<option>路虎Range_e</option>
+								<option>揽胜极光 </option>
+								<option>神行者2代</option>
+								<option>发现</option>
+								<option>揽胜运动版</option>
+								<option>路虎卫士</option>
+							</select>
+						</p>
+					</div>
+
+					<a href="javascript:;" id="cityOKBtn" class="cmmonBtn">确定</a>
+				</div>
+
+				<div class="affirmFormArea" style="display: none;">
+					<h2 class="tit">试驾/保养/维修预约</h2>
+					<div class="inputBox">
+						<p id="name">
+							<input class="textinput" id="name" type="text" placeholder="姓名">
+						</p>
+						<p id="called">
+							<em>称呼</em>
+							<label>
+								<input type="radio" name="sex" value="男" checked="checked">
+								先生</label>
+							<label>
+								<input type="radio" name="sex" value="女">
+								女士</label>
+						</p>
+						<p id="phone">
+							<input id="phone" class="textinput" type="tel" placeholder="手机号">
+						</p>
+						<p id="date">
+							<em>日期</em>
+							<input type="text" name="appDate" id="txtDate" class="date" placeholder="选择日期"  />
+							<input type="text" name="appTime" id="txtTime" class="time"  placeholder="选择时间"/>
+						</p>
+						<p id="badArea">
+							<input type="text" class="textinput" id="badPosition"  placeholder="填写保养或维修位置"  />
+						</p>
+						<div class="selectBox" id="carType">
+							<p >
+								<select style="width:80%;color: black;">
+									<option>车身美容</option>
+									<option>车内美容 </option>
+									<option>漆面处理</option>
+									<option>汽车防护</option>
+									<option>汽车精品</option>
+								</select>
+							</p>
+						</div>
+					</div>
+
+					<a id="submit" href="javascript:;" class="cmmonBtn">立即预约</a>
+					<a href="javascript:;" class="cmmonBtn shareBtn"><span class="mark"></span>马上分享</a>
+				</div>
+
+			</div>
+
+		</section>
+
+		<footer class="footer">
+			<div class="commonNav">
+				<a href="javascript:Jit.AM.toPage('Landrover');" class=""><span>首页</span></a>
+				<a href="javascript:Jit.AM.toPage('Introduce','&type=1')" class=""><span>车型展示</span></a>
+				<a href="javascript:Jit.AM.toPage('StoreList');" class=""><span>门店查看</span></a>
+				<a href="javascript:Jit.AM.toPage('Appointment','&typeId=1&title=预约试驾');" class=""><span>预约试驾</span></a>
+			</div>
+		</footer>
+
+		<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+	</body>
+</html>

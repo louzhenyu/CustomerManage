@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="OrderSuccess">预约成功</title>
+	</head>
+
+	<body>
+		<header>
+			<nav>
+				<ul>
+					<li>
+						<a href="javascript:Jit.AM.pageBack();"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('OrderList');"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('Reserve');"></a>
+					</li>
+				</ul>
+			</nav>
+
+		</header>
+
+		<section>
+			<div class="successContent">
+				<h2 class="title">预约成功！</h2>
+				<div class="info">
+					<p>
+						您的预约日期：<span id="inDate">2014-02-28</span>
+					</p>
+					<p>
+						服务门店：<span id="storeName">静安寺店</span>
+					</p>
+					<p>
+						预约时间：<span id="time">9:00</span>
+					</p>
+				</div>
+
+				<a href="javascript:Jit.AM.toPage('OrderList');" class="commonBtn">查看预约</a>
+
+				<a href="javascript:JitPage.cancelOrder()" class="cancelBtn">取消此预约</a>
+
+				<a href="tel:4006230770" class="contactUs">联系客服</a>
+
+			</div>
+
+		</section>
+
+	</body>
+</html>
+<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>

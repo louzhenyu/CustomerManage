@@ -1,0 +1,137 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">买单</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body style="background:url(images/orderbg.gif) repeat left top;">
+<form name="orderForm" method="post" action="http://o2oapi.aladingyidong.com/OnlineShopping/data/OnlinePayBefor.aspx" data-ajax="false">
+  <div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+ 
+      <input type="hidden" name="user_id" id="user_id" value="" />
+      <input type="hidden" name="prod_name" id="prod_name"  value=""/>
+      <input type="hidden" name="order_id" id="order_id"  value="" />
+      <input type="hidden" name="prod_price" id="prod_price"  value=""/>
+      <input type="hidden" name="merchant_url" id="merchant_url" value="" />
+      <input type="hidden" name="call_back_url" id="call_back_url" value=""/>
+    	<div class="vipCartBox" style="border-bottom:0; margin-bottom:50px; ">
+          <div class="vipCart" id="VipCart" >
+             <div class="ProvideCom" style="margin-top:0; border-bottom:1px dashed #cccccc; ">
+        	  <h3>订单详情</h3>
+          		<Div style="color:#47c1a8; font-weight:bold; line-height:20px; margin-top:10px;">订单号：<span id="ordercode1"></span>&nbsp;&nbsp;&nbsp;&nbsp;<span id="zhouhap">桌号：<span id="tableNum"></span></span></Div>
+                <Div style="color:#ff6b50; font-weight:bold; line-height:20px; margin-top:10px;">总金额：：<span id="totalamount1"></span>元&nbsp;&nbsp;&nbsp;&nbsp;菜品数量：：<span id="totalqty"></span></Div>
+        </div>
+        <div class="ProvideCom" style="margin-top:0; border-bottom:1px dashed #cccccc; padding-bottom:0;">
+        	  <h3>是否开发票</h3>
+          		<div style="  margin-top:0; border:none;" class="ProvideComBox">
+        <ul>
+          <li style=" padding:10px 0; border:none; padding-bottom:0;"><span id="SH_1_1" onclick="AKDDown(1,1)" class="HasSelectYY Detailicn"></span>
+            <div id="SHSm" class="SorderDiv">
+              <div class="SorderDivInner">
+                <div class="SorderDivLeft" style="width:30px;">是</div>
+                <div class="SorderDivRight"  style="margin-left:70px"><input type="text" class="inputAndSelect" value="" placeholder="发票抬头"></div>
+              </div>
+            </div>
+          </li>
+         
+        
+          <li style=" padding:10px 0; border:none;"><span id="SH_1_2" onclick="AKDDown(2,1)" class="HasSelectNo Detailicn "></span>
+            <div class="SorderDiv">
+              <div class="SorderDivInner">
+                <div class="SorderDivLeft">否</div>
+                <div class="SorderDivRight"></div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+                
+        </div>
+        <div class="ProvideCom" style="margin-top:10px; ">
+          <h3>选择支付方式</h3>
+          <div class="ProvideComBox ppIbox" style=" background-color:#f7f7f7; border:1px solid #bbc0c5; margin-top:0;">
+            <ul>
+              <li style="border:0;">
+                <div class="ProvideDiv">
+                  <div class="ProvideText"><img src="images/js.jpg" width="70" /></div>
+                  <div class="ProvideTextInput2" style="text-align:left;">
+                    <div><span style="font-size:16px; color:#565656">支付宝网页支付：</span><br>
+                      推荐有支付宝账户的用户使用</div>
+                  </div>
+                  <div style="position:absolute; right:5px; top:10px; width:28px; height:28px;"><span id="SH_2_1" onclick="AKDDown(1,2)" class="HasSelectYY Detailicn seee" rel="1" style="position:static; margin-left:13px;"></span></div>
+                </div>
+              </li>
+              <li style="border:0;">
+                <div class="ProvideDiv">
+                  <div class="ProvideText" style="width:40px;"><img src="images/die.png" width="100%" style="margin-left:12px; margin-top:10px;" /></div>
+                  <div class="ProvideTextInput2" style="text-align:left;">
+                    <div><span style="font-size:16px; color:#565656">柜台结账：</span><br>
+                      请稍等，服务人员会前来联系您</div>
+                  </div>
+                  <div style="position:absolute; right:5px; top:10px; width:28px; height:28px;"><span id="SH_2_2" onclick="AKDDown(2,2)" class="HasSelectNo Detailicn seee" rel="2" style="position:static; margin-left:13px;"></span></div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div style="height:24px; margin-top:10px; line-height:24px; color:red; clear:both">注意：已模拟支付宝真实支付</div>
+          <div style="padding-top:20px;">
+            <input type="button" class="btnStylecc" onclick="SoderBox()"  value="确认提交" />
+          </div>
+        </div>
+      </div>
+          <div class="vipCartBoxBottom"></div>
+        </div>
+     
+
+     <div class="MenuBox" id="MenuBox" rel="2"> </div>
+    <div class="AppBgGray" id="AppBgGray"></div>
+  </div>
+</form>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+
+<input type="hidden" value="" id="skuId" />
+<input type="hidden" value="" id="stdPrice" />
+<input type="hidden" value="1" id="deliveryId" />
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'GetData.getOrderPayment();';
+
+function AKDDown(index,type){
+	
+	$("#SH_"+type+"_"+index).removeClass("HasSelectNo").addClass("HasSelectYY");
+	for(var i=1; i<=2; i++){
+		if(i!=index){
+			$("#SH_"+type+"_"+i).addClass("HasSelectNo").removeClass("HasSelectYY");	
+		}	
+	}	
+}
+function SoderBox(){
+	var odd=  false;
+	
+	$(".seee").each(function(){
+		if($(this).hasClass("HasSelectYY") && $(this).attr("rel") == "2"){
+				odd = true;
+			
+				GetData.CurOrderPayment();	
+				return false; 
+			}
+	})
+	if(odd == false){
+		document.orderForm.submit();
+	}
+return false; 
+}
+
+</script>
+</body>
+</html>

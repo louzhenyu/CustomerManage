@@ -1,0 +1,90 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="Perfect"></title>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body>
+    <header>
+        <a href="javascript:;"></a>完善资料
+    </header>
+    <section class="form_list">
+        <ul>
+            <li>
+                <label for="mobile">
+                    手机:
+                </label>
+                <input type="tel" jitval="mobile" id="mobile" placeholder="输入手机号码" />
+            </li>
+            <li style="display:none">
+                <label for="code">
+                    验证码:
+                </label>
+                <input type="text" jitval="code" />
+                <span id="timeSpan"></span>
+                <a id="btnCode" href="javascript:JitPage.fnGetVeriCode();">发送验证码</a>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <label for="name">
+                    姓名:
+                </label>
+                <input type="text" jitval="name" id="name"/>
+            </li>
+            <li>
+                <label for="province">
+                    省份:
+                </label>
+                <select jitval="province"  onchange="JitPage.initCity();" id="province">
+                    <option>--请选择--</option>
+                </select>
+            </li>
+            <li>
+                <label for="city">
+                    城市:
+                </label>
+                <select jitval="city" onchange="JitPage.initSchool();" id="city">
+                    <option>--请选择--</option>
+                </select>
+            </li>
+            <li>
+                <label for="school">
+                    学校:
+                </label>
+                <select jitval="school" id="school">
+                    <option>--请选择--</option>
+                </select>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <label for="email">
+                    邮箱:
+                </label>
+                <input type="text" jitval="email" id="email" />
+                <span>(选填)</span>
+            </li>
+            <li>
+                <label for="inviteCode">
+                    邀请码:
+                </label>
+                <input type="text" jitval="inviteCode" id="inviteCode" />
+                <span>(选填)</span>
+            </li>
+            <li>
+                <input type="checkbox" jitval="check" id="check" checked="checked" /> 
+                <label for="check">
+                    我愿意接收电脑免费保养、购机特惠等活动信息
+                </label>               
+            </li>
+        </ul>
+        <p style="margin-top:50px !important">
+            <input type="button" value="" onclick="javascript:JitPage.fnRegister();" />
+        </p>
+    </section>
+</body>
+</html>

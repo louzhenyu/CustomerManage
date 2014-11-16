@@ -1,0 +1,226 @@
+@charset "utf-8";
+/* CSS Document */
+
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td, img { border: none; margin: 0; padding: 0;  }
+body, button, input, select, textarea { font-size: 14px; font-family: "Microsoft YaHei",Arial, Helvetica, sans-serif; word-break: break-all; word-wrap: break-word; color: #4d4d4d; resize: none; outline: none; }
+body { background:#f2f2f2 url(../images/bg.jpg) repeat left top;}
+h1, h2, h3, h4, h5, h6 { font-size: 16px; font-weight: normal; }
+em { font-style: normal; }
+ul, ol, img { list-style: none; border: 0; }
+table, th, td, tr { border-collapse: collapse; border-spacing: 0; border: 0; font-size: 14px; margin: 0; padding: 0; }
+textarea, input[type="text"],input[type="password"],input[type="button"],input[type="submit"]{ resize: none; outline: none; -webkit-appearance: none;   }
+.zoom { overflow: hidden; zoom: 1 }
+.frdisplay{ float:right; display:block;}
+a,a:hover{ text-decoration:none;}
+.blank{ height:1px; display:block; overflow:hidden; clear:both}
+
+.LZdiv{ width:98%; margin-left:auto; margin-right:auto; box-shadow:0 0 1px #695b4d;  background:#f2f2f2 url(../images/divbg.jpg) repeat left top; position:relative;}
+.Connext{ width:92%; margin-left:auto; margin-right:auto; position:relative; }
+.ConnextVip{width:96%; margin-left:auto; margin-right:auto; position:relative; }
+.VipCardImg{ position:relative; left:0; top:-20px;}
+.VipTip{ font-weight:bold;width:96%; margin-left:auto; margin-right:auto; margin-top:-20px; }
+
+.VipCardMenu{ width:94%; margin-left:auto; margin-right:auto; background-color:#fff; border:1px solid #cccccc; border-radius:5px; margin-top:20px;}
+.VipCardMenuBtn{ height:50px; line-height:50px; font-size:16px; padding-left:60px; font-weight:bold; cursor:pointer; position:relative;}
+.incSkin{ background-image:url(../images/icnskin.png); background-repeat:no-repeat;}
+.icn3{ width:22px; height:14px; position:absolute; right:15px; top:17px; background-position:-4px -71px; display:block;}
+.icn1{width:26px; height:26px; position:absolute; left:15px; top:12px; background-position:-2px -33px; display:block;}
+.icn2{width:26px; height:26px; position:absolute; left:15px; top:12px; background-position:-2px -3px; display:block;}
+.VipJfenBox{ padding:10px; }
+.VipJfenBox p{ padding-left:26px; margin-top:5px; position:relative; color:#7c7b7b}
+.enBi{ font-size:14px; position:absolute; top:0px; left:5px; color:#999}
+
+.VipCardMenuTxtRd{ background-color:#eaeaea; width:94%; padding-left:3%; padding-right:3%;  padding-bottom:10px; border-bottom-left-radius:4px;border-bottom-right-radius:4px;}
+.VipCardMenuTxtRdTT{ padding:10px 0; line-height:22px; font-weight:bold;}
+.VipJfenBoxRd{  border-radius:5px; overflow:hidden;}
+.VipJfenBoxRdTB{border-radius:5px;}
+.VipJfenBoxRdTB td{ padding:3px 5px; color:#000; background-color:#fff;} 
+.Dtitle td{ font-weight:bold; background-color:#d1d0d0}
+.jfddeo{ height:40px; background-color:#d1d0d0; font-weight:bold; font-size:16px; line-height:40px; padding-left:15px; overflow:hidden;}
+.jfddeo1{ height:70px; background-color:#d1d0d0; font-weight:bold; font-size:16px; line-height:30px; padding-left:15px; overflow:hidden; padding-top:10px;}
+.RuiHuanBtn{ float:right; margin-right:15px; height:30px; color:#f6f5f5; background:#a9834a; border-radius:5px; padding:0 20px; line-height:30px; cursor:pointer; margin-top:5px; border-bottom:1px solid #765b34; text-shadow:0 0 1px #000;}
+.RuiHuanBtn1{float:right; margin-right:15px; height:40px; color:#f6f5f5; background:#cc0000; border-radius:5px; width:100px; line-height:40px; cursor:pointer; margin-top:12px; border-bottom:1px solid #765b34; text-shadow:0 0 1px #000; color:#fff; font-size:16px; font-weight:bold; text-align:center; }
+.AppLayer,.AdpLayer1{ position:absolute; left:0; top:0; width:100%; height:1300px; background-color:#000; opacity:0.3; z-index:998;}
+.AppBoxL,.ApdpBoxL12{ background-color:#fff; border-radius:5px; width:94%; left:3%; position:absolute; z-index:999; top:20px;  box-shadow:0 0 10px #000; overflow:hidden}
+.AppBoxLConnnext,.AcppBoxLConnnext{ padding-bottom:20px; background-color:#eaeaea; clear:both; overflow:hidden;  border-bottom-left-radius:5px;border-bottom-right-radius:5px;}
+
+.VipJfenBoxRd1{ width:92%; margin-left:auto; margin-right:auto; border:1px solid #bababa; box-shadow:0 0 5px #bababa;  border-radius:5px; margin-top:20px;}
+.AppBoxLTitle{ height:50px; line-height:50px; font-size:16px; color:#333333; font-weight:bold; text-align:center; position:relative;}
+a.ClosePop span.deTran{-moz-transform:           rotate(90deg);
+      -moz-transform-origin:    center 50%;
+        -webkit-transform:        rotate(90deg);
+        -webkit-transform-origin: center 50%;
+		-webkit-transition: -webkit-transform 0.2s ease-in;  line-height:12px;
+        -moz-transition:    -moz-transform 0.2s ease-in; 
+		
+		}
+span.dddeTran{-moz-transform:           rotate(180deg);
+      -moz-transform-origin:    center 50%;
+        -webkit-transform:        rotate(180deg);
+        -webkit-transform-origin: center 50%;
+		-webkit-transition: -webkit-transform 0.2s ease-in;  line-height:12px;
+        -moz-transition:    -moz-transform 0.2s ease-in; 
+		
+		}
+span.dddeTranhover{-moz-transform:           rotate(0deg);
+      -moz-transform-origin:    center 50%;
+        -webkit-transform:        rotate(0deg);
+        -webkit-transform-origin: center 50%;
+		-webkit-transition: -webkit-transform 0.2s ease-in;  line-height:12px;
+        -moz-transition:    -moz-transform 0.2s ease-in; 
+		
+		}
+a.ClosePop{ display:block; width:50px; height:50px;left:0px; top:0px; position:absolute; }
+.SqVip{ width:94%; margin-left:auto; margin-right:auto; position:relative;}
+.SpanBg1{ position:absolute; left:0; top:0; z-index:99}
+.SpanBg2{ position:absolute; left:0; top:38px; z-index:102}
+.SpanBg3{position:absolute; left:0;top:-20px; z-index:100; left:3%; width:94%;}
+.Jfen{ position:absolute; z-index:101; left:172px; top:98px; font-size:14px; font-weight:bold; color:#735932; text-shadow:0 0 1px #fff;}
+#AppBoxLConnnext{ position:relative; overflow:hidden;}
+
+#VipCode1{ left:178px; top:102px;}
+
+
+#pullDown, #pullUp {
+	
+	height:40px;
+	line-height:40px;
+	padding:5px 10px;
+	text-align:center;
+	font-weight:bold;
+	font-size:14px;
+	color:#888;
+	vertical-align:middle;
+	font-family:Tahoma, Geneva, sans-serif;
+}
+.pullUpLabel{ vertical-align:middle; }
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+	display:block; float:left;
+	width:40px; height:40px;
+
+	-webkit-background-size:40px 80px; background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:250ms;	
+}
+#pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+	background-position:0 100%;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+.LZMenuInner{ height:43px; background:url(../images/tbg.png) no-repeat center top; box-shadow:0 0 2px #8c8c8c;padding:0 3%; line-height:43px;}
+.LZMenu{ height:43px;  background:url(../images/ptbg.png) repeat-x left top; color:#f5ca9e; box-shadow:0 0 1px #000000; font-size:16px; font-weight:bold; position:relative; }
+.LZMenuWapper{ height:43px;  position:fixed; left:0; top:0; width:100%; z-index:990}
+.LZEventDiv{  background:#f2f2f2 url(../images/divbg.jpg) repeat left top; padding-bottom:20px; min-width:280px; padding-top:20px; position:relative;}
+.LZEventDivLIInner{ height:50px; line-height:50px; font-size:16px; padding-left:60px; font-weight:bold; cursor:pointer; position:relative; background-color:#ffffff; border:1px solid #bb8d5f; border-radius:5px;  color:#734201; font-weight:bold;}
+.LZEventDivLI{width:90%; margin-left:auto; margin-right:auto;}
+.EventIcn0{ width:16px; height:24px; background-position:-8px -311px; display:block; position:absolute; right:3%; top:14px; }
+.EventIcn1{width:26px; height:26px; background-position:-2px -100px; display:block; position:absolute; left:18px; top:12px;}
+.EventIcn2{width:26px; height:26px; background-position:-2px -130px; display:block; position:absolute; left:18px; top:12px;}
+.EventIcn3{width:26px; height:26px; background-position:-2px -161px; display:block; position:absolute; left:18px; top:12px;}
+.EventIcn4{width:26px; height:26px; background-position:-2px -190px; display:block; position:absolute; left:18px; top:12px;}
+.EventIcn5{width:26px; height:26px; background-position:-2px -221px; display:block; position:absolute; left:18px; top:12px;}
+.EventIcn6{width:26px; height:26px; background-position:-2px -252px; display:block; position:absolute; left:18px; top:12px;}
+
+.WineLi{ margin:0 2%;  background:#f2f2f2 url(../images/divbg.jpg) repeat left top; min-width:280px; border-radius:7px; margin-top:10px; min-height:120px;  position:relative; }
+.WineLiLeft{ padding:10px;}
+.WineLiRight{ padding:10px 10px 20px 10px;}
+.WineLiRight h2{ border-bottom:1px solid #734201; line-height:35px; color:#734201; font-size:16px; padding-left:3px; font-weight:bold; margin-bottom:10px; margin-right:30px;}
+.WineLiRight p{ color:#bb8d5f; font-size:14px; line-height:22px; padding-top:3px;}
+
+.LZWineDetail{margin:0 1%;  background:#f2f2f2 url(../images/divbg.jpg) repeat left top; padding-bottom:20px; min-width:280px;  }
+.LZWineDetailInner{ position:relative; background-color:#ffffff; border:1px solid #bb8d5f; border-radius:5px;  color:#734201; margin:0 3%; }
+.LZWineDImage{ padding:10px 3%; clear:both; border-bottom:1px solid #bb8d5f; text-align:center;}
+.LZWineDConnext{ margin:0 4%;}
+.WineDiv1{ position:relative; padding-left:24px; margin-top:10px;}
+.LZWineDConnext h1{ font-size:16px; font-weight:bold; line-height:22px; padding:10px 0 ; }
+.WineDiv1 h2{ line-height:24px; font-weight:bold;}
+.WineDiv1 p{ padding-top:8px; line-height:20px; color:#bb8d5f;}
+.WineDiv1 .enBi{ color:#734201}
+.DingGou{ height:50px; background-color:#fff; position:fixed; left:0; bottom:0; width:94%; line-height:50px; font-size:18px; color:#cc0000; font-weight:bold; padding:0 3%; border-top:1px solid #744405; box-shadow:0 0 5px #c3c3c3; z-index:100;}
+.BackPre{ position:absolute; left:0; top:0; height:43px; width:120px; z-index:9;}
+a.BackPre .EventIcn0{left:5px; top:10px; background-position:-5px -340px;}
+.cTipDiv{ margin:0 5%; margin-top:12px; color:#734201}
+.cTipTitle{ line-height:22px; padding:3px 0; font-weight:bold; }
+.FipDiv{ min-height:40px; padding:5px; border:1px solid #bb8d5f; margin-top:12px; border-radius:5px; position:relative; cursor:pointer}
+.cTipDivName{ position:absolute; width:60px; line-height:40px; text-align:center; font-weight:bold;}
+.cTipDivNameInput{ margin-left:70px; height:40px;}
+.cTipDivNameInput input{ height:40px; line-height:40px; border:0; background:0; font-size:14px; font-weight:bold; color:#734201; width:100%;}
+.cTipDivName1{ clear:both; padding-left:6px;}
+.cTipDivNameInput1{ padding-top:5px; padding-left:6px;}
+.cTipDivNameInput1 textarea{ width:100%;border:0; background:0; height:50px; font-weight:bold; line-height:20px; color:#734201}
+.cTipDivName2{ line-height:30px; padding:5px 0 ;  padding-left:8px; line-height:30px; font-weight:bold;}
+span.EventIcnUp{-moz-transform:           rotate(90deg);
+      -moz-transform-origin:    center 50%;
+        -webkit-transform:        rotate(90deg);
+        -webkit-transform-origin: center 50%;
+		-webkit-transition: -webkit-transform 0.2s ease-in;  line-height:12px;
+        -moz-transition:    -moz-transform 0.2s ease-in; }
+.CddTip{ line-height:22px; border-bottom:1px solid #CCC; padding-bottom:10px; padding-top:10px; cursor:pointer}
+.LZApplyDivConnext{background:url(../images/mkbg.png) repeat left top; border-radius:6px; margin-top:40px;  position:relative; padding-bottom:40px;}
+.LZApplyDivTitle{ width:140px; height:57px; background:url(../images/applytitle.png) no-repeat left top; position:absolute; z-index:1; top:-20px; left:28%;}
+.LZApplyDivInner{ background-color:#f2f2f2; width:96%; margin-right:auto; margin-left:auto; height:370px; border-radius:5px; position:relative; }
+.cR1{ width:29px; height:39px; position:absolute; bottom:-34px; left:0; background:url(../images/icng1.png) no-repeat left top;}
+.cR2{ width:100%; height:39px; margin-left:29px; position:absolute; bottom:-34px; left:0;  }
+.cR2Inner{ height:39px; margin-right:200px; background:url(../images/imgg2.png) repeat-x left top;}
+.cR3{ width:300px; height:500px; background:url(../images/imgg3.png) no-repeat right bottom; position:absolute; right:0; bottom:-31px;}
+.LZApplyDivInnerTxt .FipDiv{ background-color:#fff;}
+.LZApplyDivInner{}
+#AppdLConnnext .VipJfenBoxRd1{ border:1px solid #bb8d5f; color:#734201;}
+#AppdLConnnext .VipJfenBoxRd1 .Dtitle td{ background-color:#ffffff; border-radius:5px;}
+#AppdLConnnext .jfddeo1{ background-color:#fff; border-bottom-left-radius:5px; border-bottom-right-radius:5px;}
+#AppdLConnnext .VipJfenBoxRdTB td{ background-color:#e9e9e9}
+.SubscriptionBox{ border:1px solid #bb8d5f; background-color:#ffffff; width:94%; margin-left:auto; margin-right:auto; border-radius: 5px 5px 5px 5px;}
+.SubscriptionBoxTitle{ height:50px; position:relative; line-height:50px; padding-left:60px; font-size:16px; font-weight:bold;}
+.SubscriptionBoxConnexr{ background-color:#eaeaea; box-shadow:0 0 30px #d2d2d2 inset;}
+.LZWineDConnext{ padding:14px 0 20px 0;}
+.LZWineDConnext .WineDiv1{ color:#86623c;}
+.WineDiv2 p{ position:relative; min-height:24px; line-height:24px;}
+.WineDiv2 em{ position:absolute; width:30px;}
+.WineDiv2 span{ margin-left:30px; display:block;}
+.LZPrizes{}
+.PrizesSpanBg{position:absolute; left:0;top:-60px; z-index:100; left:3%; width:94%;}
+.prizeTxt{ position:absolute; z-index:101; left:118px; top:60px; font-size:14px; font-weight:bold; color:#735932; width:80px; height:30px; line-height:30px; text-align:center; }
+.Prizebg{ background-color:#eed8c5; width:90%; margin-left:auto; margin-right:auto; border-radius:5px;  position:relative; z-index:102; opacity:0.8;}
+.PrizebgList{ position:relative; z-index:103 }
+.prizeAni{ -moz-transform:           rotate(-6deg);
+      -moz-transform-origin:    center 10%;
+        -webkit-transform:        rotate(-6deg);
+        -webkit-transform-origin: center 10%;
+		-webkit-transition: -webkit-transform 0.2s ease-in; 
+        -moz-transition:    -moz-transform 0.2s ease-in;}
+.PrizebgListTitle{ height:35px; line-height:35px; width:130px; background-color:#fff; opacity:0.8; position:absolute; border:1px solid #c2b0a1;  overflow:hidden; z-index:104; left:-10px; top:0;}
+.PrizebgListTitleIcn{ width:120px; position:absolute; z-index:105; height:35px; background:url(../images/prizetitle.png) no-repeat left top; display:block; left:18px; top:5px;}
+.PrizebgListTitleIcn1{ width:120px; position:absolute; z-index:105; height:35px; background:url(../images/prizetitle.png) no-repeat left -39px; display:block; left:18px; top:5px;}
+.PrizebgListConext{ font-size:14px; font-weight:bold; color:#7c4827; line-height:24px; width:80%; margin-left:auto; margin-right:auto; padding-top:50px; padding-bottom:10px;}
+.PrizebgListTitleRight{height:25px; line-height:25px; width:50px; background-color:#fff; opacity:0.8; position:absolute; border:1px solid #c2b0a1;  overflow:hidden; z-index:104; right:-10px; top:-5px;  -moz-transform: rotate(10deg);
+      -moz-transform-origin:    center 10%;
+        -webkit-transform:        rotate(16deg);
+        -webkit-transform-origin: center 10%;
+		-webkit-transition: -webkit-transform 0.2s ease-in; 
+        -moz-transition:    -moz-transform 0.2s ease-in;}
+#LZEventBase{ margin-top:50px;}
+.LZWineDImage{ height:200px; position:relative; overflow:hidden;}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>加盟商</title>
+<script type="text/javascript" src="../../../lib/zepto.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function(){
+
+        $('#imgbtn').bind('click',function(){
+
+            var s = $(this).attr('status');
+
+            if(s == 1){
+
+                $(this).attr('src','../../../images/special/aladdin/ptab_2.jpg').attr('status','2');
+
+                $('#img').attr('src','../../../images/special/aladdin/partner_2.jpg')
+
+            }else if(s == 2){
+
+                $(this).attr('src','../../../images/special/aladdin/ptab_1.jpg').attr('status','1');
+
+                $('#img').attr('src','../../../images/special/aladdin/partner_1.jpg')
+            }
+        });
+    });
+</script>
+</head>
+
+<body style="margin:0;padding:0;">
+    <div style="width:100%">
+        <div style="position:absolute;top:14px;right:6px;">
+            <img id="imgbtn" height="28" status="1" src="../../../images/special/aladdin/ptab_1.jpg"/>
+        </div>
+        <img id="img" width="100%" src="../../../images/special/aladdin/partner_1.jpg">
+    </div>
+</body>
+</html>

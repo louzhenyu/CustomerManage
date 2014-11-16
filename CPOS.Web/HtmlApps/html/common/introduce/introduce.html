@@ -1,0 +1,97 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="Introduce"></title>
+		<style>
+			/*页脚菜单*/
+			.footer {
+				position: fixed;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				z-index: 9999;
+			}
+			.footerMenuWrap {
+				width: 100%;
+				height: 50px;
+				display: -webkit-box;
+				display: -moz-box;
+				background: rgba(250,188,0,0.9);
+			}
+			.footerMenuWrap > a {
+				display: block;
+				height: 36px;
+				margin-top: 7px;
+				-webkit-box-flex: 1;
+				-moz-box-flex: 1;
+			}
+			.footerMenuWrap .testDrive {
+				background: url(../../../images/public/cars_default/sj-menu-btn.png) no-repeat center center;
+				background-size: 102px 19px;
+				border-right: 1px solid #fff;
+			}
+			.footerMenuWrap .see360 {
+				background: url(../../../images/public/cars_default/360-menu-btn.png) no-repeat center center;
+				background-size: 117px 25px;
+			}
+		</style>
+		<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+	</head>
+
+	<body class="intoListPage mb50">
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+
+		<section id="intoListArea">
+
+		</section>
+		<script id="tmplImgs" type="text/html">
+			<div  class="intoListArea" >
+				<%for(var i=0;i<itemList.length;i++){ var item=itemList[i];%>
+					<div id="subInto<%=(i+1)%>">
+						<span class="arrUp aflacUp">»</span>
+						<img src="<%=item.imgUrl%>">
+						<%if(item.position1){%>
+							<div class="into_sub_text "  style="width: 140px; height: 104px;top: 0;
+							left: 0;" data-width="300" data-height="142" data-curWidth="140" data-curHeight="104"  >
+								<div class="wtxt" class="notevent">
+								<h3 class="notevent"><%=item.title1%></h3>
+								<p class="notevent">
+								<%=item.content1%>
+								</p>
+							</div>
+							<span class="expand css_sprite01 notevent"></span>
+		
+							</div>
+					<%}%>
+					<%if(item.position2){%>
+						<div class="into_sub_text "  style="width: 140px; height: 104px;right: 0;
+							top: 52%;" data-width="300" data-height="130" data-curWidth="140" data-curHeight="104"  >
+							<div class="wtxt" class="notevent">
+							<h3 class="notevent"><%=item.title2%></h3>
+							<p class="notevent">
+							<%=item.content2%>
+							</p>
+						</div>
+					<span class="expand css_sprite01 notevent"></span>
+		
+					</div>
+				<%}%>
+				<span class="arr aflac">»</span>
+				</div>
+			<%}%>
+			</div>
+		</script>
+		<footer style="display: none" class="footer">
+			<div class="footerMenuWrap">
+				<a class="testDrive" href="javascript:Jit.AM.toPage('Appointment','&typeId=1&title=预约试驾');"></a>
+				<a class="see360" href="cars-360/cars_360.html"></a>
+			</div>
+		</footer>
+	</body>
+
+</html>

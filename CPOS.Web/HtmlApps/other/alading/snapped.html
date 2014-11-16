@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<title>抢购</title>
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+/*common*/
+html,body{height:100%;min-height:100%;}
+body{font:12px/1.5em "Microsoft YaHei";background:#fff;color:#666;}
+.snappedPage{background:#333;padding-top:9px;}
+.snappedList{min-width:310px;margin:0 auto;padding:4px;max-width:360px;}
+.snappedArea{position:relative;height:205px;margin-bottom:9px;background:#fff;}
+.snappedArea .pic{width:62%;height:100%}
+.snappedArea .pic img {width:100%;height:100%;}
+.snappedList .discount{position:absolute;top:7px;left:7px;width:60px;height:60px;line-height:60px;border-radius:30px;text-align:center;font-size:12px;font-family:arial;background:#fa5e1b;color:#fff;}
+.snappedList .discount strong{font-size:22px;font-family:arial;}
+.snappedList .info{background:url(images/infoBg.png) no-repeat 0 0;position:absolute;top:0px;right:0;width:38%;height:100%;padding:5px;background-size:100%;}
+.snappedList .info span{display:block;}
+.snappedList .num{float:right;height:14px;line-height:14px;margin-right:6px;min-width:40px;max-width:100%;text-align:center;border-radius:2px;font-size:12px;background:#fa5e1b;color:#fff;overflow: hidden;}
+.snappedList .num b{display:inline-block;font-size:12px;font-weight:normal;-webkit-transform:scale(0.7);line-height: 14px;height: 100%;}
+.snappedList .name{padding-right:5px;-webkit-box-flex:1;font-size:13px;color:#333;}
+.snappedList .currentPrice{height:21px;font-size:22px;color:#fa5e1b;font-family:arial;}
+.snappedList .originalPrice{float:left;text-indent:1px;line-height:16px;display:inline-block;font-size:12px;-webkit-transform:scale(0.85); color:#666;text-decoration:line-through;}
+
+.snappedList .info .moneyWrap{position:absolute;bottom:7px;left:5px;right:0;}
+.snappedList .info .time{margin-top:12px;font-size:12px;}
+.snappedList .info .time span{display:inline-block;width:8px;height:16px;font-weight:bold;background:#000;color:#fff;}
+.snappedList .info .time em{display:inline-block;width:9px;line-height:16px;margin-right:1px;}
+.snappedList .info .time span:nth-of-type(odd){margin-right:1px;}
+
+/*抢光了*/
+.snappedArea .pickedUpIcon{display:none;}
+.snappedArea.finish .discount{display:none;}
+.snappedArea.finish .pickedUpIcon{position:absolute;top:0;left:0;display:block;width:80px;height:80px;background:url(images/pickedUpIcon.png) no-repeat 0 0;background-size:80px 80px;}
+
+.snappedArea .hintText{display:none;margin-top:2px;color:#999;}
+.snappedArea.finish .hintText{display:block;}
+
+.snappedArea .time{display:block;}
+.snappedArea.finish .time{display:none;}
+
+.snappedArea.finish .currentPrice{color:#ccc;}
+.snappedArea.finish .originalPrice{color:#999;}
+.snappedArea.finish .num{background:#999;}
+</style>
+</head>
+
+<body class="snappedPage">
+<section id="section" data-js="/HtmlApps/other/alading/js/snapped">
+	<div id="goodList" class="snappedList">
+    	<!-- <div class="snappedArea finish">
+        	<span class="pickedUpIcon"></span>
+            <span class="discount"><strong>5.0</strong>折</span>
+            <div class="info">
+                <span class="name">Black collection 时尚组合</span>
+                <p class="hintText">已结束</p>
+                <p class="time">
+                	<em>剩</em>
+                    <span>0</span><span>1</span><em>时</em>
+                    <span>2</span><span>2</span><em>分</em>
+                    <span>2</span><span>6</span><em>秒</em>
+                </p>
+                <div class="moneyWrap">
+                	<span class="currentPrice">￥250</span>
+                    <p class="clearfix">
+                        <span class="originalPrice">原价￥800</span>
+                        <span class="num"><b>剩21件</b></span>
+                    </p>
+                </div>
+            </div>
+            <img class="pic" src="images/pic.png" alt=""/>
+        </div>
+        
+        
+    	<div class="snappedArea">
+        	<span class="pickedUpIcon"></span>
+            <span class="discount"><strong>5.0</strong>折</span>
+            <div class="info">
+                <span class="name">Black collection 时尚组合</span>
+                <p class="hintText">已结束</p>
+                <p class="time">
+                	<em>剩</em>
+                    <span>0</span><span>1</span><em>时</em>
+                    <span>2</span><span>2</span><em>分</em>
+                    <span>2</span><span>6</span><em>秒</em>
+                </p>
+                <div class="moneyWrap">
+                	<span class="currentPrice">￥250</span>
+                    <p class="clearfix">
+                        <span class="originalPrice">原价￥800</span>
+                        <span class="num"><b>剩21件</b></span>
+                    </p>
+                </div>
+            </div>
+            <img class="pic" src="images/pic.jpg" alt=""/>
+        </div>
+        
+        <div class="snappedArea">
+        	<span class="pickedUpIcon"></span>
+            <span class="discount"><strong>5.0</strong>折</span>
+            <div class="info">
+                <span class="name">Black collection 时尚组合</span>
+                <p class="hintText">已结束</p>
+                <p class="time">
+                	<em>剩</em>
+                    <span>0</span><span>1</span><em>时</em>
+                    <span>2</span><span>2</span><em>分</em>
+                    <span>2</span><span>6</span><em>秒</em>
+                </p>
+                <div class="moneyWrap">
+                	<span class="currentPrice">￥250</span>
+                    <p class="clearfix">
+                        <span class="originalPrice">原价￥800</span>
+                        <span class="num"><b>剩21件</b></span>
+                    </p>
+                </div>
+            </div>
+            <img class="pic" src="images/pic.png" alt=""/>
+        </div> -->
+    	
+    </div>
+</section>
+<script type="text/html" id="tplListItem">
+    <%for(var i=0,idata;i<list.length;i++){idata=list[i];%>
+        
+        <div data-page="<%=pageIndex%>" class="snappedArea <%if(idata.OverCount==0){%>finish<%}%>">
+            <a href="<%=idata.TargetUrl%>">
+            <span class="pickedUpIcon"></span>
+            <%if(idata.Discount/10<10){%>
+            <span class="discount"><strong><%=idata.Discount/10%></strong>折</span>
+            <%}%>
+            <div class="info">
+                <span class="name"><%=idata.ItemName%></span>
+                <p class="hintText">已结束</p>
+                <p class="time" time-date="<%=idata.DeadlineSecond%>">
+                    <em>剩</em>
+                    <span tn="time-h-max">0</span><span tn="time-h-min">0</span><em>时</em>
+                    <span tn="time-m-max">0</span><span tn="time-m-min">0</span><em>分</em>
+                    <span tn="time-s-max">0</span><span tn="time-s-min">0</span><em>秒</em>
+                </p>
+                <div class="moneyWrap">
+                    <span class="currentPrice">￥<%=idata.PreferentialPrice%></span>
+                    <p class="clearfix">
+                        <span class="originalPrice">原价￥<%=idata.MarketPrice%></span>
+                        <span class="num"><b>剩<%=idata.OverCount%>件</b></span>
+                    </p>
+                </div>
+            </div>
+           <div class="pic" >
+               <img  src="<%=idata.ImageUrl%>" alt=""/>
+           </div>
+
+           </a>
+        </div>
+    <%}%>
+</script>
+<script type="text/javascript" src="/HtmlApps/other/static/js/lib/require.js" defer async data-main="/HtmlApps/other/static/js/main.js"></script>
+</body>
+</html>

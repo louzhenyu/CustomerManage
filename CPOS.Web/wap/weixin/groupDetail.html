@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link href="css/commonnew.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">中欧校友汇APP</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body id="DLoading" >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="TopMenu"><span class="frdisplay">中欧校友汇APP</span><span id="GroupNameTitle">协会详情</span></div>
+  <div id="CommonGID" class="WAppConBase" page="1" paidtype="">
+  
+    <nav class="WAppMenu" >
+      <ul>
+        <li class="WAppMenuActive" style="width:33%;" >
+          <div class="WAppMenuLi" id="Menu_GroupDetail" onclick="MenuAppTab('Menu_GroupDetail',0,'Group/Detail')">简介</div>
+        </li>
+        <li style="margin:0 1%; width:32%;">
+            <div class="WAppMenuLi" id="Menu_GroupPerson" onclick="MenuAppTab('Menu_GroupPerson',1,'Group/Person')">已付费成员</div>
+        </li>
+        <li style="width:33%;"  >
+           <div class="WAppMenuLi" id="Menu_GroupPerson0" style="border-right:0;" onclick="MenuAppTab('Menu_GroupPerson0',1,'Group/Person0')">未付费成员</div>
+        </li>
+      </ul>
+    </nav>
+    <div class="BackgroundTy"></div>
+    <div style="overflow:hidden; width:100%; ">
+       <div class="EventDetail ClassTabJs" id="GroupDetailId" style="display:none; position:relative;" ></div>
+  		<div class="YaoJiangDetail ClassTabJs" id="GroupPersonId" style=" position:relative; display:none;"></div>
+  		<div class="HuDongDetail ClassTabJs" id="GroupHuDongId"  style="position:relative; display:none;"></div>
+    </div>
+    <div style=" display:none; line-height:20px; padding:12px 12px 5px 12px; background-color:#ebebeb; position:relative;" id="FollowStyle">
+      
+      
+    </div>
+  </div>
+   <span style=" height:20px;" class="blank1"></span>
+  <div class="TopMenu" id="BottomMenu" style="display:none;"><span class="frdisplay" style=" width:60px; text-align:right; cursor:pointer; display:none;" id="TopFun">Top</span><span>中欧校友汇APP</span></div>
+
+  <div class="AppBgGray" id="AppBgGray"></div>
+  <div class="AlumniConnext1" id="AlumniConnext1" style="display:none;">
+ 
+  </div>
+  <div class="AlumniConnext1" id="GroupToJoin" style="display:none;" >
+  <div class="AlumniConnext1Title"><a class="AlumniBack icnbg" href="javascript:void(0)" onClick="AppSet.Close('GroupToJoin')" ></a>申请加入</div>
+  <span style=" height:20px;" class="blank1"></span>
+  <div id="ApplyBmID"></div>
+</div>
+  </div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="" id="EventAction"  />
+<input type="hidden" value="" id="IsReferLoad"  />
+<input type="hidden" value="1" id="IsMenuClick"  />
+<input type="hidden" id="PersonGroupHiddenIsNext" value="1" isLoading="1" />
+<script type="text/javascript" src="js/jquery1.6.js"></script> 
+<script type="text/javascript" src="js/data.js"></script> 
+<script type="text/javascript" src="js/htmlTemplatesnew.js?v=0710"></script> 
+<script type="text/javascript" src="js/commonnew.js?v=0710"></script>
+</body>
+</html>

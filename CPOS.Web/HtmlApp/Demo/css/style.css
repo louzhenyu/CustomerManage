@@ -1,0 +1,31 @@
+@charset "utf-8";
+body { padding-bottom:800px; background:#E1E5E8;}
+.quick_btn li a i { background:url(../images/sprites.png) no-repeat 0 0;}
+
+
+.wrap { margin:15px;background:#fff;-webkit-box-shadow:0px 1px 3px rgba(0,0,0,.3);box-shadow:0px 1px 3px rgba(0,0,0,.3);}
+.quick_btn { padding:70px 15px;}
+.quick_btn li { margin-bottom:20px;}
+.quick_btn li a { display:block; width:100%; height:105px; line-height:105px; font-size:16px; color:#fff;-webkit-border-radius:5px;border-radius:5px}
+.quick_btn li:nth-child(1) a { background-color:#FA5E1B;}
+.quick_btn li:nth-child(2) a { background-color:#00ACEE;}
+.quick_btn li:nth-child(3) a { background-color:#33CC99;}
+.quick_btn li a i { display:inline-block; width:140px; height:105px; background-size:50%; vertical-align:-45px;}
+.quick_btn li:nth-child(1) a i { background-position:35px 20px;}
+.quick_btn li:nth-child(2) a i { background-position:35px -80px;}
+.quick_btn li:nth-child(3) a i { background-position:40px -185px;}
+
+.sendAsk { padding:20px;}
+.sendAsk textarea { width:100%; height:150px; padding:5px;}
+.sendAsk input,.reg_list p input[type="button"] { height:35px; width:100%; background:#E83E0B; color:#fff; margin-top:10px;-webkit-border-radius:5px;border-radius:5px}
+
+.reg_cont { padding-top:15px;}
+.reg_cont h2 { font-size:16px; color:#e83e0b; border-bottom:1px solid #999; height:50px; line-height:50px; padding:0 20px;}
+.reg_cont h2 i { float:right; background:url(../images/icon_gift.png) no-repeat 0 0; width:70px; height:50px; background-size:cover;}
+.reg_list { padding:20px;}
+.reg_list dl { margin-bottom:20px;}
+.reg_list dt,.reg_list dd { float:left;}
+.reg_list dt { width:70px; color:#333; line-height:30px;}
+.reg_list dd input[type="text"] { height:30px; padding:4px; width:100%;}
+.reg_list dd { width:72%;}
+.reg_list dd select { padding:5px; width:100%;}

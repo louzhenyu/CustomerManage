@@ -1,0 +1,11 @@
+var getEventsEntriesList = {"code":"200","content":{"strDate":"2013年9月18号","entriesList":[{"entriesId":"1","workTitle":"勇敢勇敢我的朋友","workUrl":"http://olex.gotoip55.com/productions/20130617205911914.jpgs_225.jpg","displayIndex":"2","praiseCount":"2","commentCount":"22"},{"entriesId":"1","workTitle":"勇敢勇敢我的朋友","workUrl":"http://olex.gotoip55.com/productions/20130617205911914.jpgs_225.jpg","strDate":"2013年9月18号","displayIndex":"2","praiseCount":"2","commentCount":"22"},{"entriesId":"1","workTitle":"勇敢勇敢我的朋友","workUrl":"http://olex.gotoip55.com/productions/20130617205911914.jpgs_225.jpg","strDate":"2013年9月18号","displayIndex":"2","praiseCount":"2","commentCount":"22"},{"entriesId":"1","workTitle":"勇敢勇敢我的朋友","workUrl":"http://olex.gotoip55.com/productions/20130617205911914.jpgs_225.jpg","strDate":"2013年9月18号","displayIndex":"2","praiseCount":"2","commentCount":"22"},{"entriesId":"1","workTitle":"勇敢勇敢我的朋友","workUrl":"http://olex.gotoip55.com/productions/20130617205911914.jpgs_225.jpg","strDate":"2013年9月18号","displayIndex":"2","praiseCount":"2","commentCount":"22"}],"isNext":"1"},"description":"操作成功"};
+
+
+
+var getEventsEntriesCommentList = {"code":"200","content":{"entriesId":"23232323","workTitle":"团购信息","workUrl":"http://olex.gotoip55.com/productions/20130715125038411.jpgs_800.jpg","praiseCount":"33","nextEntriesId":"3","preEntriesId":"1","commentCount":"21","commentList":[{"content":"很舒服的意境，确实是难得的优秀的摄影作品。中秋月圆，要品好酒！","userName":"史玉柱","phone":"13120985528","displayIndex":"2","createTime":"2013-9-13"},{"content":"很舒服的意境，确实是难得的优秀的摄影作品。中秋月圆，要品好酒！","userName":"史玉柱","phone":"13120985528","displayIndex":"2","createTime":"2013-9-13"},{"content":"很舒服的意境，确实是难得的优秀的摄影作品。中秋月圆，要品好酒！","userName":"史玉柱","phone":"13120985528","displayIndex":"2","createTime":"2013-9-13"}]},"description":"操作成功"};
+
+
+var setEventSignUp = {"code":"200","content":{"signUpId":"123333"},"description":"操作成功"};
+
+
+var getEventsEntriesWinners = {"code":"200","content":{"crowdDarenCount":"12","workDarenCount":"12","crowdDarentList":[{"userName":"史玉柱"},{"userName":"SHowdd"},{"userName":"Jiowp"},{"userName":"曹国伟"}],"workDarenList":[{"content":"很舒服的意境，确实是难得的优秀的摄影作品。中秋月圆，要品好酒！","userName":"史玉柱"},{"content":"很舒服的意境，确实是难得的优秀的摄影作品。中秋月圆，要品好酒！","userName":"史玉柱"},{"content":"很舒服的意境，确实是难得的优秀的摄影作品。中秋月圆，要品好酒！","userName":"史玉柱"}]},"description":"操作成功"};

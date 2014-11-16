@@ -1,0 +1,161 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="EventDetail">活动详情</title>
+		<link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+		<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+	</head>
+
+	<body  class="bgwhite"   >
+		<div id="masklayer" style="background-color:#FFF;" class="pageloading" >
+			<i></i>
+		</div>
+		<section class="activeDetailPage" style="height:auto;" >
+			<div id="actWrapper" class="DetailImg" >
+				<div id="scroller" class="DetailImgIeo" >
+					<ul></ul>
+				</div>
+				<div class="KzDGrayTOP"></div>
+				<div class="KzDGray"></div>
+				<dl id="indicator" class="indicator"></dl>
+			</div>
+
+			<div class="activeDetail">
+				<div class="area">
+					<h2 class="title">活动主题</h2>
+					<p class="text acttitle" id="txtActTitle" ></p>
+					<p class="text intro " id="txtActIntro" ></p>
+				</div>
+
+				<div class="area">
+					<h2 class="title">活动主办方</h2>
+					<p class="text" id="txtActISOC"></p>
+				</div>
+
+				<div class="area">
+					<h2 class="title">活动时间</h2>
+					<p class="text" id="txtActStartTime"></p>
+				</div>
+
+				<div class="area">
+
+					<h2 class="title">联系人</h2><a href="#" id="btActPhone">
+					<p class="text contact" >
+						<span id="txtActContacts" ></span>
+						<span id="txtActPhone" ></span>
+					</p></a>
+					<a href="#" id="btActEmail">
+					<p class="text email" >
+						<span id="txtActEmail" ></span>
+					</p> </a>
+				</div>
+
+				<div class="area">
+					<a id="addressMap"> <h2 class="title">活动地址</h2> <p class="text address" id="txtActAddress"></p> </a>
+				</div>
+
+				<div class="area">
+					<h2 class="title">报名人数</h2>
+					<p class="text" id="txtActivityUp"></p>
+				</div>
+				<div class="area enter">
+					<h2 class="title">活动门票</h2>
+				</div>
+
+				<div class="applyArea clearfix" id="ticketList" ></div>
+				<!-- <div class="ticketExplain"></div>
+				-->
+				<!--      <div class="totalWrap clearfix">
+				<p class="num">
+				报名合计：
+				<span>0人</span>
+				</p>
+				<p class="total">￥0元</p>
+				</div>
+				-->
+				<input type="button" value="我要报名" id="btSignUp" class="applyBtn">
+
+				<div class="area activeIntr">
+					<h2 class="title">活动介绍</h2>
+					<p class="text" id="txtActExplain"></p>
+					<div class="clearfix"></div>
+				</div>
+				<!--   <div class="bromore" id="btActMore">+查看更多</div>
+				-->
+			</div>
+
+			<div class="actBgShade" style="display:none;"></div>
+			<div class="submit_area" style="display:none;"  >
+				<div class="thclose" name='has'></div>
+				<div  id="actboxinfo" ></div>
+				<div class="sub" name='has'>
+					<a  href="javascript:;" id="actBoxCancel">取消</a>
+					<a  href="javascript:;" id="actBoxSubmit">提交</a>
+				</div>
+
+			</div>
+			<!-- <div class="clearfootfix" ></div>
+			-->
+		</section>
+
+		<!-- <div class="footarea">
+		<div class="footnumber">
+		<ul>
+		<li  >
+		<a class="praise" href="javascript:;">赞(<span>0</span>)</a>
+		</li>
+		<li>
+		<a class="browse" href="javascript:;">阅读(<span>0</span>)</a>
+		</li>
+		<li>
+		<a class="share" href="javascript:;">分享(<span>0</span>)</a>
+		</li>
+
+		</ul>
+		</div>
+
+		<div class="sharefriend">
+		<a href="javascript:;" id="shareFriends" > <i></i>
+		分享给好友
+		</a>
+		</div>
+		<div class="tojit">
+		<a href="/OnlineShopping/o2o/index.html?v20131105">
+		<img src="../../../images/public/xiehuibao/jitlink.jpg"></a>
+		</div>
+		<div class="toapp">
+		<a href="http://alumniapp.ceibs.edu:8080/ceibs/app/mobile/download.html">
+		<img src="../../../images/public/xiehuibao/jitapplink.jpg"></a>
+		</div>
+
+		<div class="footShare" id="foodShareBox" >
+		<table border="0" align="center" style="margin-left:auto; margin-right:auto">
+		<tbody>
+		<tr>
+		<td>
+		<a class="weixinShare" style="margin-left:0">
+		<img src="../../../images/public/xiehuibao/sendpyicn.png" width="52"></a>
+		<a  class="weixinShare" >
+		<img src="../../../images/public/xiehuibao/sendpyic.png" width="52"></a>
+		<a  id="sinaShare">
+		<img src="../../../images/public/xiehuibao/weiboc.png" width="52"></a>
+		<a  id="tencentShare">
+		<img src="../../../images/public/xiehuibao/qqweiboc.png" width="52"></a>
+		</td>
+		</tr>
+		</tbody>
+		</table>
+		<div class="Inputbtnpp"  id="foodShareBoxClose" >取消</div>
+		</div>
+
+		<div class="footTipShare"  >
+		<div >
+		<img src="../../../images/public/xiehuibao/tipFoo.png" >
+		</div>
+
+		</div></div> -->
+
+	</body>
+</html>

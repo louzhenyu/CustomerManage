@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<meta name="format-detection" content="telephone=no">
+		<meta http-equiv="x-rim-auto-match" content="none">
+		<title name="$HomeIndex">微官网</title>
+		<style>
+			@charset "utf-8";
+			html,body,body>section{height:100%;}
+			/*首页*/
+			.indexPage .indexArea,.appointmentArea{position:relative;max-width:640px;margin:0 auto;}
+			.indexPage .navBox{height:100%;width:100%;position:absolute;top:0;right:0;bottom:0;left:0;}
+			.indexPage .navBox ul{height:100%;width:100%;}
+			.indexPage .navBox li{width:33.33%;height:16.66%;background:rgba(0,0,0,0.4);}
+			.indexPage .navBox .logo{background:rgba(0,0,0,0);}
+			.indexPage .navBox a{display:block;width:100%;height:100%;background:url(../../../images/public/cars_default/mark.png) no-repeat 10px 18px;background-size:15px 15px;color:#fff;}
+			.indexPage .navBox span{display:block;margin-left:25px;font-size:12px;}
+			.indexPage .navBox a span:nth-child(1){padding-top:33px;font-weight:bold;}
+			.indexPage .logo img{display:block;width:76px;height:76px;margin:0 auto;/*border: 1px dashed #000;border-radius: 19px;*/}
+			.indexPage .show{margin-left:66.66%;}
+			.indexPage .sales{}
+			.indexPage .view{margin-left:66.66%;}
+			.indexPage .appointment span{margin-left:20px;}
+			.indexPage .store{margin-left:33.33%;}
+		</style>
+	</head>
+
+	<body class="indexPage">
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<section>
+			<div class="indexArea">
+				<img id="backgroundImg" class="bgPic" src="">
+				<div id="navList" class="navBox">
+					<ul>
+						<li  class="logo a_move">
+							<div class="boder"><img id="logo" class="logo" src="" alt="logo"/>
+							</div>
+						</li>
+						<li class="show a_move">
+							<a href="javascript:Jit.AM.toPage('Introduce','&type=1')"> <span></span> <span></span> </a>
+						</li>
+						<li class="sales a_move">
+							<a href="javascript:Jit.AM.toPage('Introduce','&type=2')"> <span></span> <span></span> </a>
+						</li>
+						<li class="view a_move">
+							<a href="javascript:Jit.AM.toPage('Introduce','&type=1')"> <span ></span> <span></span> </a>
+						</li>
+						<li class="appointment a_move">
+							<a href="javascript:Jit.AM.toPage('Introduce','&type=2');"> <span></span> <span></span> </a>
+						</li>
+						<li class="store a_move">
+							<a href="javascript:Jit.AM.toPage('Introduce','&type=1')"> <span></span> <span></span> </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+		</section>
+
+	</body>
+</html>
+<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>

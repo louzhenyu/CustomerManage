@@ -1,0 +1,117 @@
+<kpi label="指标">
+    <!-- 钻取图SA，等级符号图SB，等值图SC,统计图SD，热感图SE,人员分布图SG,聚合图SH，饼图SI-->
+    <bkpi label="客户数据"   code="101"  icon="assets/images/jit/kpi/bkpi/khsj.png" description=""  >
+     <skpi label="全国终端装修进度"  unit="家" code="1080"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="饼图" code="SI"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+      <skpi label="收银系统覆盖率"  unit="%" code="1041"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+      <skpi label="医院床位数"  unit="万张" code="1047"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+      <skpi label="市场潜力金额"  unit="千元" code="1049"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+       <skpi label="西药采购金额"  unit="千元" code="1053"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+      <skpi label="FMCG有效终端覆盖率"  unit="%" code="1059"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+      <skpi label="销量达成率"  unit="%" code="1062"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+       <skpi label="销量增长率"  unit="%" code="1063"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+       <skpi label="终端库存金额"  unit="千元" code="1064"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+	 
+    </bkpi>
+     <bkpi label="饼图"   code="101"  icon="assets/images/jit/kpi/bkpi/khsj.png" description=""  >
+     
+      <skpi label="全国普查数据"  unit="家" code="1037"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="并图" code="SI"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+       <skpi label="终端分销率"  unit="%" code="1061"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/sdl.png"  description="">
+       <sstyle label="并图" code="SI"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+     </bkpi>
+    <bkpi label="民生" code="102"  icon="assets/images/jit/kpi/bkpi/mssj.png"  description="" >
+     <skpi label="人口总数"  unit="万人"  code="1007"   level="3"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/rk.png"  description="">
+          <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+		  <sstyle label="等级符号图" code="SB"  icon="assets/images/jit/kpi/sstyle/sb.png" description=""/>
+      </skpi>
+       <skpi label="某品牌销量"  unit="万元" code="1031"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/hr.png"  description="">
+          <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+    <skpi label="某品牌渠道"  unit="%" code="1008"   level="4"  
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+	     icon="assets/images/jit/kpi/skpi/hr.png"  description="">
+          <sstyle label="钻取图" code="SA"  icon="assets/images/jit/kpi/sstyle/sa.png" description=""/>
+      </skpi>
+    </bkpi> 
+    <bkpi label="JIT" code="103"  icon="assets/images/jit/kpi/bkpi/mssj.png"  description="" >
+       <skpi label="人员分布点"  unit="" code="9001"  level="1" 
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+         icon="assets/images/jit/kpi/skpi/rk.png"  description="" >
+          <sstyle label="人员分布点" code="SG" icon="assets/images/jit/kpi/sstyle/sa.png"    description=""/>
+       </skpi>
+        <skpi label="人员分布面" unit="" code="1033"  level="1" 
+	     url="http://webservice_url/WebService.asmx?wsdl" 
+         icon="assets/images/jit/kpi/skpi/rk.png"  description="" >
+          <sstyle label="人员分布点" code="SA" icon="assets/images/jit/kpi/sstyle/sa.png"    description=""/>
+       </skpi>
+	</bkpi> 
+	
+	<bkpi label="其他" code="104"  icon="assets/images/jit/kpi/bkpi/qtsj.png"  description="" >
+	   <skpi label="pos使用情况" code="8001" type="dynamic" level="0"
+    	   url="http://arcgisserver_url/rest/services/kpi_pos/MapServer" 
+           icon="assets/images/jit/kpi/skpi/zyl.png"  description="" >
+           <sstyle label="统计图"   code="SD" icon="assets/images/jit/kpi/sstyle/sd.png"  description=""/>
+       </skpi>
+	   <skpi label="GDP" code="8003"  type="dynamic" level="0"
+     	   url="http://arcgisserver_url/rest/services/kpi_grid/MapServer" 
+           icon="assets/images/jit/kpi/skpi/zyl.png"  description="" >
+           <sstyle label="等值图"  code="SC"  icon="assets/images/jit/kpi/sstyle/sd.png"  description=""/>
+       </skpi>
+	   <skpi label="pos分布" code="8005"  type="feature" level="0"
+	      url="http://arcgisserver_url/rest/services/kpi_business/MapServer/0" 
+          icon="assets/images/jit/kpi/skpi/zyl.png"  description="" >
+          <sstyle label="聚合图"  code="SH"  icon="assets/images/jit/kpi/sstyle/sd.png"  description=""/>
+       </skpi>
+	   <skpi label="分销率" code="8002"  type="feature" level="0" 
+	      url="http://arcgisserver_url/rest/services/kpi_business/MapServer/0"
+           icon="assets/images/jit/kpi/skpi/zyl.png"  description="" >
+           <sstyle label="热感图" code="SE"  icon="assets/images/jit/kpi/sstyle/sd.png"   description=""/>
+       </skpi>
+    </bkpi> 
+</kpi>

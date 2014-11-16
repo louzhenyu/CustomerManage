@@ -1,0 +1,9 @@
+﻿/*validate.js css begin*/
+/*.highlight1{ border:1px solid #ffcc66; height:22px}
+.highlight2{border:1px solid red; line-height:22px; vertical-align:middle }*/
+
+.focus{color:#999999;}
+.null{color:#ff0000;}
+.error{color:#ff0000;}
+.succeed{ background-color:green;}
+/*validate.js css end*/

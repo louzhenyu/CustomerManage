@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+    <title name="Search">会员查找</title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+
+<body>
+<section class="screen_wrap">
+  <div class="search_top">
+    <input id="searchKey" type="text" placeholder="输入名字、公司名">
+	<input type="button" onclick="JitPage.getData();">
+  </div>
+  <div class="search_list" id="search_list">
+	
+    <ul style="width:100%;list-style:none;" id="list_panel">
+    
+    </ul>
+  </div>
+</section>
+<dl class="bot_nav clearfix">
+	<dl class="bot_nav ">
+        <dt><a href="javascript:Jit.AM.pageBack()">返回</a></dt>
+        <dd>
+            <a href="javascript:window.location.reload()">刷新</a></dd>
+        <dd>
+            <a href="javascript:Jit.AM.toPage('MyDetail')">个人中心</a></dd>
+
+        <dd>
+            <a href="javascript:Jit.AM.toPage('HomePage')">首页</a></dd>
+    </dl>
+</dl>
+</body>
+<script id="Tpl_user_item" type="text/template">
+	<li> 
+		<a href="javascript:JitPage.toPage('UserInfo','&vipId={{vipId}}')">
+			<div class="imgBox"><img src="{{imageUrl}}" width="45" height="45"></div>
+			<div class="infoBox">
+			  <h3>{{vipRealName}}</h3>
+			  <p>{{company}}</p>
+			  <p>{{position}}</p>
+			</div>
+        </a>
+	</li>
+</script>
+</html>

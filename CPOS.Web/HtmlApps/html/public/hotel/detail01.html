@@ -1,0 +1,71 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        name="viewport">
+    <title name="IntroduceDetail"></title>
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body>
+    <div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+    <header>
+        <nav>
+            <dl id="tool_bar" class="tool_bar clearfix">
+                <dd>
+                    <a href="javascript:JitPage.urlGoTo('HousingType');"></a>
+                </dd>
+                <dd>
+                    <a href="javascript:Jit.AM.toPage('OrderList');"></a>
+                </dd>
+                <dd style="display:none">
+                    
+                </dd>
+                <dd>
+                    <a href="javascript:Jit.AM.toPage('Reserve');"></a>
+                </dd>
+            </dl>
+        </nav>
+    </header>
+    <section class="detail">
+        <nav>
+            <ul>
+                <li class="cur"><a href="javascript:JitPage.urlGoTo('Introduce');">介绍</a></li>
+                <li><a href="javascript:JitPage.urlGoTo('Mating');">配套</a></li>
+                <li><a href="javascript:JitPage.urlGoTo('Hot');">热点</a></li>
+            </ul>
+        </nav>
+        <article jitval="info">
+        </article>
+        <div class="contact mt-20">
+            <h4>联系我们</h4>
+            <h3 jitval="itemName"></h3>
+            <p><span jitval="addr"></span> <a id="mapUrl" href="javascript:;" ><i></i> 地图</a></p>
+            <p jitval="tel"></p>
+            <p jitval="fax"></p>
+        </div>
+        <section style="width:95%; margin:0px auto;padding-bottom: 10px;">
+	        <div id="mcover" onclick="document.getElementById('mcover').style.display='';" style="">
+		        <img src="../../../images/common/share.png" />
+	        </div>
+	        <div class="text" id="content">
+		        <div id="mess_share">
+			        <div id="share_1">
+				        <button class="button2" onclick="document.getElementById('mcover').style.display='block';">
+					        <img src="../../../images/common/icon_msg.png" />&nbsp;发送给朋友
+				        </button>
+			        </div>
+			        <div id="share_2">
+				        <button class="button2" onclick="document.getElementById('mcover').style.display='block';">
+					        <img src="../../../images/common/icon_timeline.png" />&nbsp;分享到朋友圈
+				        </button>
+			        </div>
+			        <div class="clr"></div>
+		        </div>
+	        </div>
+        </section>
+    </section>
+</body>
+</html>

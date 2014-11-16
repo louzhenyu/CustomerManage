@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="CateHome"></title>
+	</head>
+
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<section id="section">
+			<div>
+				<div class="touchslider touchslider-demo">
+					<div class="touchslider-viewport">
+						<div id="topBannerList" style="position: absolute;width:100%;height:100%;">
+							<!-- <div class="newsLink touchslider-item">
+							<img class="m_pic" src="/HtmlApps/images/public/catering_default/heroImage1.jpg">
+							</div>
+							<div class="newsLink touchslider-item">
+							<img class="m_pic" src="/HtmlApps/images/public/catering_default/heroImage2.jpg">
+							</div>
+							<div class="newsLink touchslider-item">
+							<img class="m_pic" src="/HtmlApps/images/public/catering_default/heroImage3.jpg">
+							</div>
+							<div class="newsLink touchslider-item" data-newsid="">
+							<img class="m_pic" src="/HtmlApps/images/public/catering_default/heroImage4.jpg">
+							</div> -->
+						</div>
+					</div>
+					<div id="dotList" class="touchslider-nav">
+						<!-- <a class="touchslider-nav-item touchslider-nav-item-current"></a>
+						<a class="touchslider-nav-item"></a>
+						<a class="touchslider-nav-item"></a>
+						<a class="touchslider-nav-item"></a> -->
+					</div>
+				</div>
+				<div class="mainshowtop">
+					<div class="cate_list clearfix">
+						<div class="cate_lo newsListLink" data-typeid="A09219DFA7DE48AE9AFB48F1E7FA8905">
+							<a href="javascript:;">
+							<p class="m_text">
+								优惠活动
+							</p> <!-- <p style="FONT-SIZE: 12px" class="m_desc">
+							原价68元自助餐，现春节优惠价45元每位！
+							</p> -->
+							<p style="TEXT-ALIGN: right">
+								<img class="m_pic" src="/HtmlApps/images/public/catering_default/9_2.png">
+							</p> </a>
+						</div>
+						<div class="cate_lp slinkTo" data-page="CateStore">
+							<a href="javascript:;">
+							<p style="TEXT-ALIGN: center">
+								<img class="m_pic" src="/HtmlApps/images/public/catering_default/7_2.png">
+							</p>
+							<p class="m_text">
+								门店
+							</p> </a>
+						</div>
+						<div class="cate_lp slinkTo " data-page="CateSeats">
+							<a href="javascript:;">
+							<p style="TEXT-ALIGN: center"><img class="m_pic" src="/HtmlApps/images/public/catering_default/8_3.png">
+							</p>
+							<p class="m_text">
+								订座
+							</p> </a>
+						</div>
+						<div class="cate_lp  slinkTo" data-page="CateTakeaway">
+							<a href="javascript:;">
+							<p style="TEXT-ALIGN: center"><img class="m_pic" src="/HtmlApps/images/public/catering_default/7_7.png">
+							</p>
+							<p class="m_text">
+								外卖
+							</p> </a>
+						</div>
+						<div class="cate_lp slinkTo" data-page="CateTakeNumber">
+							<a href="javascript:;">
+							<p style="TEXT-ALIGN: center"><img class="m_pic" src="/HtmlApps/images/public/catering_default/bcfd2b96a1748de0ee3094f7a4f21d7a.png">
+							</p>
+							<p class="m_text">
+								排号
+							</p></a>
+						</div>
+					</div>
+					<div id="bottomInfoList" class="cate_list clearfix"></div>
+				</div>
+			</div>
+		</section>
+
+		<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+		<script id="topBannerListTemp" type="text/html">
+			<%for(var i=0;i<list.length;i++){var idata=list[i];%>
+			<div class="newsLink touchslider-item" data-newsid="<%=idata.NewsId%>">
+			<img class="m_pic" src="<%=idata.ImageUrl%>">
+			</div>
+			<%}%>
+		</script>
+		<script id="dotListTemp" type="text/html">
+			<%for(var i=0;i<list.length;i++){%>
+			<%if(!i){%>
+			<a class="touchslider-nav-item touchslider-nav-item-current"></a>
+			<%}else{%>
+			<a class="touchslider-nav-item"></a>
+			<%}%>
+			<%}%>
+		</script>
+		<script id="bottomInfoListTemp" type="text/html">
+			<%for(var i=0;i<list.length;i++){var idata=list[i];%>
+			<div class="cate_lol newsLink" data-newsid="<%=idata.NewsId%>">
+			<a href="javascript:;">
+			<p>
+			<img class="m_pic" src="<%=idata.ImageUrl%>">
+			</p>
+			<p class="absbottom">
+			<%=idata.NewsTitle%>
+			</p>
+			</a>
+			</div>
+			<%}%>
+			<div class="cate_lol">
+			<a href="tel:0539-8198198">
+			<p>
+			<img class="m_pic" src="/HtmlApps/images/public/catering_default/002.png">
+			</p>
+			<p class="absbottom">
+			一键呼叫
+			</p>
+			</a>
+			</div>
+		</script>
+	</body>
+</html>

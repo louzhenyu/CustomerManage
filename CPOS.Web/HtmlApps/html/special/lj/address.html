@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="FCaddress"></title>
+	</head>
+
+	<body class="addressPage">
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<header>
+			<nav>
+				<ul>
+					<li>
+						<a href="javascript:Jit.AM.pageBack();">返回</a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('FCindex');">首页</a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('FChelp');">帮助</a>
+					</li>
+					<li>
+						<a href="javascript:history.go(0);">刷新</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<section class="wrap">
+			<p class="tit">
+				添加收货地址
+			</p>
+			<div class="inputAddress clearfix">
+				<p>
+					<em>姓名</em>
+					<input type="text" id="username">
+				</p>
+				<p>
+					<em>手机</em>
+					<input type="text" id="phone">
+				</p>
+				<p>
+					<em>省份</em>
+					<select id="province" onchange="JitPage.fnSelChange()" ><option value=''>--请选择--</option></select>
+				</p>
+				<p>
+					<em>城市</em>
+					<select id="city"><option value=''>--请选择--</option></select>
+				</p>
+				<p>
+					<em>详细地址</em>
+					<input type="text" id="address">
+				</p>
+			</div>
+			<p class="exp">
+				您赢得的奖品我们将通过上面的地址邮寄给您
+			</p>
+			<a id="confirmBtn" href="javascript:JitPage.saveAddress();" class="confirmBtn">确定</a>
+		</section>
+		<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+	</body>
+</html>

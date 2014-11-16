@@ -1,0 +1,59 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title></title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+
+<body>
+<div class="PcBox indexbox" id="PcBox" style="height:500px; display:none;">
+  <div><img src="images/tran1.png" width="100%" id="firstPageImage" /></div>
+  <div style=" position:absolute; z-index:9; right:10px; top:18px; display:none;" id="AppdownLoadIndex"><a href="http://www.weixun.co/o2oapp.html
+"><img src="images/downloadapp.png" width="60" ></a></div>
+  <div class="IndexMenu" style="position:absolute; left:0; top:10px; width:100%;">
+    <ul>
+      <li><a href="list.html" class="indexa"  style="background-color:#ffb1bb">
+        <div class="indexIcnbase"><img src="images/indexicn1.png" width="35" /></div>
+        商城</a></li>
+      <li><a href="vipxiu.html" class="indexa"  style="background-color:#ff9999">
+        <div class="indexIcnbase"><img src="images/indexicn3.png" width="35" /></div>
+        会员秀</a></li>
+      <li ><a href="shoplist.html" class="indexa" style="background-color:#e93c8c">
+        <div class="indexIcnbase"><img src="images/indexicn2.png" width="35" /></div>
+        门店列表</a></li>
+      <li><a href="about.html" class="indexa" style="background-color:#a73856">
+        <div class="indexIcnbase"><img src="images/indexicn4.png" width="35" /></div>
+        关于我们</a></li>
+    </ul>
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'indexAbs()';
+function indexAbs(){
+
+	if($(window).height() > 500){
+		$("#PcBox,#firstPageImage").css("height",$(window).height())	
+	}
+	document.title = G("skin.unitName");
+	$("#firstPageImage").attr("src", G("skin.firstPageImage"));
+	if(G("skin.isApp")=="1"){
+		$("#AppdownLoadIndex").show();
+	}
+	$("#PcBox").show();
+	
+}
+</script>
+
+</body>
+</html>

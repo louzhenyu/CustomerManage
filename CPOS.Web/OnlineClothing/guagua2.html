@@ -1,0 +1,173 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>刮刮奖</title>
+<link href="css/V1.css" type="text/css" rel="stylesheet" />
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script type="text/javascript" src="js/base.js"></script>
+
+</head>
+
+<body >
+<div class="PcBox" id="PcBox" style=" margin-left:auto; margin-right:auto; ">
+  <div class="PrizeInfoDiv" id="PrizeInfoDiv" style=" position:relative; padding-bottom:230px;">
+    <div class="PrizeInfoDivInner">
+      <div class="PrizeInfoInnerTop"> <span id="JPName" class="prizeTxt" style="width:140px; height:45px; z-index:8; line-height:45px; font-size:16px; "></span>
+        <div style="z-index:9; width:140px; height:45px;" class="prizeTxt">
+          <div style="width:140px; height:45px;"><canvas id="maincanvas" width="140" height="45">
+		</canvas></div>
+        </div>
+      </div>
+      <div  class="PrizeInfoInnerBottom" id="PrizeListee"></div>
+    </div>
+  </div>
+</div>
+<div class="MenuBox" id="MenuBox" rel="0"> </div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<div id="tipApp" style=" display:none; width:160px; position:absolute; left:0; top:100px; z-index:10; height:60px;">
+  <div style="width:160px; height:60px; position:relative;">
+    <div style="width:160px; position:absolute; left:0; top:0; z-index:11; height:60px; background-color:#000; opacity:0.5; border-radius:5px;"></div>
+    <div style=" text-align:center; color:#fff; position:absolute; z-index:12; left:0; top:0; width:160px; height:60px; line-height:60px; font-weight:bold;" id="tipAppWenBen"></div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+var loadMore = '';
+var lotteryCount = 0 ; 
+var Von = '';
+var isWinner = false; 
+var image = { 
+	'back': { 'url':'images/tran1.png', 'img':null },
+	'front': { 'url':'images/gjx.png', 'img':null }
+};
+var prize = ''; 
+
+var ggj = {
+		getLotteryList:function(){
+			var jsonarr = {'action':"getLotteryList",ReqContent:JSON.stringify({"common":Base.All(),"special":{}})};
+			$.ajax({
+				type:'get',
+				url:url,
+				data:jsonarr,
+				timeout:90000,
+				cache:false,
+				beforeSend:function(){
+						
+				},
+				dataType : 'json',
+				success:function(o){
+						if(o.code == "200"){
+								lotteryCount = o.content.lotteryCount;
+								ggj.getEventPrizes(lotteryCount);
+								if(o.content.vipshowList!=null && o.content.vipshowList.length > 0 ){
+									$("#canvas").attr("vipShowId",o.content.vipshowList[0].vipShowId);
+								}
+						}
+				}
+					
+			 });
+		},
+		getEventPrizes:function(lotteryCount){
+			var jsonarr = {'action':"getEventPrizes",ReqContent:JSON.stringify({"common":Base.All(),"special":{"Longitude":"","Latitude":"",EventId:""}})};
+	
+			$.ajax({
+				type:'get',
+				url:url,
+				data:jsonarr,
+				timeout:90000,
+				cache:false,
+				beforeSend:function(){
+							Win.Loading();
+				},
+				dataType : 'json',
+				success:function(o){
+				
+					Win.Loading("CLOSE");
+						/*字段不存在初始化*/
+						
+				//	$("#JPName").attr("winPrizeId",o.content.winPrizeId);
+					if(o.code == 200){	
+								var htmldata = _.template($("#prizeSx").html(), o.content);	
+								$("#PrizeListee").html(htmldata);
+								if(lotteryCount>0 ){
+										prize = o.content.winningDesc;
+										loadcanvas()
+											//$("#JPName").html(o.content.winningDesc);
+										//	CanvasObj.init(document.getElementById("canvas"),140,45,"#908b85");
+								}else{
+										
+								}
+								var le = $(window).width()  - 160, topc = $(window).height()  - 60;
+								
+								$("#tipApp").css({"left":le/2,"top":topc/2}).show();
+								$("#tipAppWenBen").text("您还有"+lotteryCount+"次抽奖机会");
+								setTimeout(function(){$("#tipApp").hide()},1200)
+						}else{
+							alert(o.description);
+							}
+					
+				}
+			 });
+		},
+		Winner:function(){
+				var jsonarr = {'action':"setLottery",ReqContent:JSON.stringify({"common":Base.All(),"special":{"vipShowId":$("#canvas").attr("vipShowId")}})};
+	
+			$.ajax({
+				type:'get',
+				url:url,
+				data:jsonarr,
+				timeout:90000,
+				cache:false,
+				beforeSend:function(){
+						
+				},
+				dataType : 'json',
+				success:function(o){
+				}
+			})
+		}
+}
+
+
+</script> 
+
+<script type="text/template" id="prizeSx">
+
+	<% _.each(prizes,function(item,key){%>
+ 		<% if(key == 0){%>
+        <dl>
+	  <dt class="s1"></dt>
+	  <% }%>
+          	<dd><%=item.prizeName%>(<%=item.countTotal%>名): <%=item.prizeDesc%></dd>
+		 	<% if(key == 0){%>
+  	  </dl>
+	 <% }%>
+	<%})%>
+		<% _.each(winnerList,function(item,key){%>
+ 		<% if(key == 0){%>
+        <dl>
+	  <dt class="s2"></dt>
+	  <% }%>
+          	<dd><%=item.vipName%>(<%=item.phone.substring(0,8)%>****)</dd>
+		<% if(key == 0){%>
+  	 	 </dl>
+	 <% }%>
+	<%})%>
+	  <dl>
+	  <dt class="s3"></dt>
+
+          	<dd><%=winningExplain%></dd>
+	
+  	  </dl>
+</script>
+
+</body>
+</html>

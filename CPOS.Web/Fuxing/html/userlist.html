@@ -1,0 +1,56 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+  <script type="text/javascript">
+  (function(){  
+    var onBridgeReady =  function () {  
+   // 隐藏右上角的选项菜单入口;  
+    WeixinJSBridge.call('hideOptionMenu');
+    // 隐藏底部菜单;  
+    WeixinJSBridge.call('hideToolbar');
+    };  
+     if(document.addEventListener){  
+              document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);  
+            } else if(document.attachEvent){  
+              document.attachEvent('WeixinJSBridgeReady'   , onBridgeReady);  
+              document.attachEvent('onWeixinJSBridgeReady' , onBridgeReady);  
+            }  
+    })();  
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+    <title name="UserList">嘉宾列表</title>
+    <link href="../css/global.css" rel="stylesheet" type="text/css" />
+    <link href="../css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../lib/require.js" defer async="true" data-main="../launch"></script>
+</head>
+<body>
+<div class="fxloading"><img width="40" height="40" src="../images/loading.gif"></div>
+ <section class="screen_wrap mb44">
+<!--   <div class="search_top">
+    <input type="button"  id="btSearch">
+    <input type="text" placeholder="输入名字、公司名" id="txtSearch" >
+  </div>-->
+  <div id="userarea" class="scrollarea">
+  <div class="search_list">
+    <ul>
+ 
+    </ul>
+  </div>
+  </div>
+</section>
+
+
+
+    <dl class="bot_nav "  >
+        <dt><a href="javascript:Jit.AM.pageBack()">返回</a></dt>
+        <dd>
+            <a href="javascript:window.location.reload()">刷新</a></dd>
+        <dd>
+            <a href="javascript:Jit.AM.toPage('MyDetail')">个人中心</a></dd>
+
+        <dd>
+            <a href="javascript:Jit.AM.toPage('HomePage')">首页</a></dd>
+    </dl>
+</body>
+</html>

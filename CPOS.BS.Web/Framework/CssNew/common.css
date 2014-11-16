@@ -1,0 +1,71 @@
+﻿
+/* CSS Document */
+html,body{width:100%;height:100%;position:relative;}
+body{color:#333; font:12px SimSun, "Microsoft Yahei", sans-serif;}
+/*文字颜色*/
+.colorMain{ color:#333;}
+.color1{color:#666;}
+.color2{color:#999;}
+.colorW{color:#fff;}
+.colorO{color:#f47900;}
+.colorR{color:#f00;}
+/*链接颜色*/
+a{color:#666;}
+a:hover{color:#f47900;text-decoration:none;}
+a.hoverNone:hover{ text-decoration:none;}
+/*边框颜色*/
+.borderMain{border:1px solid #999;}
+.borderCare{border:1px solid #a00000;}
+/*背景*/
+.bgMain{background:#fff;}
+/*-----reset  end-----*/
+
+/*----------main start----------*/
+.header{width:100%;height:46px;font-family:"Microsoft Yahei", sans-serif;background:url(/images/list-header-bg.png) repeat-x 0 0;}
+	.inner_header{ padding-left:20px;}
+		.inner_header ul{margin-left:60px;}
+			.inner_header ul li{float:left;width:96px;height:46px;line-height:46px;font-size:14px;text-align:center;}
+				.inner_header ul li a{color:#fff;}
+				.inner_header ul li a:hover{color:#fff;}
+			.inner_header ul li.current{background:url(/images/list-header-li-bg.png) repeat-x 0 0;}
+/*----------main end----------*/
+
+/*----------main start----------*/
+.main{width:100%;background:#e1ebf1;}
+	.inner_main1{width:1080px;height:100%;margin:0 auto;}
+	
+.menu{ width:320px;background:url(/images/left-menu-shadow.png) repeat-y ; background-position: 121px 0}
+
+/*----------main end----------*/
+
+/*-------footer start------*/
+.footer{height:60px;line-height:60px;color:#fff;background:url(../image/footer-bg.jpg) repeat-x 0 0; width:auto; text-align:center; }
+
+/*-------footer end------*/
+
+/*------系统框默认样式 start-----*/
+.baison-base {position: fixed;height:100%;width:100%;top: 0;left: 0;visibility: hidden;_position:absolute;_top: expression(documentElement.scrollTop);}		
+.baison-base.baison-visible {visibility: visible;}
+	.smokebg {position: absolute;top: 0;left: 0;height:100%; width:100%;background-color:#000;opacity: 0.5; filter: alpha(opacity=50); }
+	.baison-base .dialog { position: absolute;top: 25%;left:50%; width:450px; margin-left:-225px; font-size:14px;}
+		.baison-base .dialog-inner{ padding:5px; background:rgba(140,161,172,0.5) none repeat scroll 0 0 !important;/*实现FF背景透明，文字不透明*/
+	background-color:#8ba1ac; filter:Alpha(Opacity=50); /*实现IE背景透明*/}
+		.dialog-inner .inner-inner{overflow:hidden; position:relative; background-color:#fff;}
+			.dialog-title{ height:30px; line-height:30px; color:#fff; padding-left:10px; background:url(/images/p_g_detail_t.png) right top no-repeat;} 
+				.dialog-title .close{ position:absolute; top:8px; right:5px; line-height:100%; cursor: pointer;}
+				.dialog-title .close:hover{ font-weight:bold;}
+			.dialog-con{ text-align:center; padding:25px 15px;}
+				.dialog-prompt {margin:8px 0;text-align: center;}
+				.dialog-buttons { text-align:center; padding:7px 0; border-top:1px solid #cacaca; background-color:#ebebeb;}
+					.dialog-buttons .button { display: inline-block; width:70px; height:26px; line-height:26px; cursor: pointer;margin: 0 5px; background:url(/images/btn_system_box.png) no-repeat;}
+					.dialog-buttons .button{ *display:inline;}
+					.dialog-buttons .cancel{ text-shadow:2px 2px 2px #fff;}
+					.dialog-buttons .ok{ background-position:-70px 0; color:#fff; text-shadow:1px 1px 2px #000;}
+			.dialog-prompt input { margin: 0;border: 0;outline: none;border: 1px solid #333;width: 97%;background-color: #fff;font-size: 12px;padding: 5px;}
+			.baison-base .timeout{ padding-bottom:8px; text-align:center; color:#999;}
+/*-------系统框样式 end------*/
+
+
+
+
+

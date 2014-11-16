@@ -1,0 +1,27 @@
+@charset "utf-8";
+html,body,body>section{min-height:100%;}
+body{background:#ebebeb;}
+/*二手车*/
+.secondHandList{max-width:640px;padding:10px;margin:0 auto;}
+.secondHandList li{margin-bottom:10px;-webkit-box-shadow:0 1px 5px rgba(0,0,0,0.2);}
+
+/*商品列表*/
+.commonGoodsListPage{background:#fff;}
+.commonGoodsList{}
+.commonGoodsList li{padding:0px 10px;}
+.commonGoodsList li a{display:block;padding:12px 0px;border-bottom:1px dashed #ccc;}
+.commonGoodsList .goodsPic{float:left;width:88px;height:88px;margin-right:15px;}
+.commonGoodsList .goodsInfo{display:table-cell;width:3000px;}
+.commonGoodsList .goodsInfo>span{display:block;}
+.commonGoodsList .goodsInfo .exp{color:#333;}
+.commonGoodsList .price{margin:3px 0;font-size:12px;color:#ec2222;}
+.commonGoodsList .price strong{margin-left:13px;font-size:15px;}
+.commonGoodsList .oPrice{font-size:12px;color:#999;}
+.commonGoodsList .oPrice em{margin:0 25px 0 8px;}
+
+/*页脚菜单*/
+.footer{position:fixed;right:0;bottom:0;left:0;}
+.footerMenuWrap{width:100%;height:50px;display:-webkit-box;display:-moz-box;background:rgba(250,188,0,0.9);}
+.footerMenuWrap>a{display:block;height:36px;margin-top:7px;-webkit-box-flex:1;-moz-box-flex:1;}
+.footerMenuWrap .testDrive{background:url(../../../images/public/cars_default/sj-menu-btn.png) no-repeat center center;background-size:102px 19px;border-right:1px solid #fff;}
+.footerMenuWrap .see360{background:url(../../../images/public/cars_default/360-menu-btn.png) no-repeat center center;background-size:117px 25px;}

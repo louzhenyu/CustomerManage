@@ -1,0 +1,321 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">搜索身边的酒店</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+</head>
+
+<body  >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="DetailBigBox" id="DetailBigBox"  style=" position:relative; display:none;"  defaultleft="0" >
+    <div class="DetailSmallBox" >
+      <div style="padding:10px 5%;">
+        <div class="Boxitem">
+          <div class="SearchBoxleft">入住城市</div>
+          <div class="SearchBoxRight icnKsin" id="SelectCity" onClick="Odate.SelectCity(this)">选择城市</div>
+        </div>
+        <div class="Boxitem">
+          <div class="SearchBoxleft">入住日期</div>
+          <div id="startDateInput" class="SearchBoxRight icnKsin" onclick="Odate.show(this,'')"><span ></span>选择时间</div>
+        </div>
+        <div class="Boxitem">
+          <div class="SearchBoxleft">离店日期</div>
+          <div id="backDateInput" class="SearchBoxRight icnKsin" onclick="Odate.show(this,'up')"><span ></span>选择时间</div>
+        </div>
+        <div class="Boxitem">
+          <div class="SearchBoxleft">酒店</div>
+          <div id="HotelName" onClick="Odate.SelectHotel(this)" storeId="" class="SearchBoxRight icnKsin">选择酒店</div>
+        </div>
+        <div style="padding:20px 0;">
+         	 <input type="button" value="搜索"  class="btnStylecc" onClick="SearchHotel()">
+        </div>
+        <div class="vipCartBoxBottom"></div>
+      </div>
+    </div>
+  </div>
+  <div id="scs_rl" style="padding-bottom:100px; background-color:#fff; position:relative; display:none; " >
+    <div style="height:40px;  background-color: #3F76A4; position:relative; text-align:center; font-size:14px; color:#fff; font-weight:bold; line-height:40px;">
+      <div style="width:40px; height:40px; cursor:pointer; position:absolute; left:0; top:0;" onClick='Odate.animate("#DetailBigBox","#scs_rl")'><img src="images/back.png" width="20" style="margin-left:10px; margin-top:7px;" ></div>
+      <span id="xuanx"></span></div>
+    <div id="DateDiv"></div>
+  </div>
+</div>
+<div class="MenuBox" id="MenuBox" rel="0"></div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var cityobj = {}, jiudian={};
+var loadMore = '';
+var Von = 'WelfareAction.getCityList();InitSearch()'; // Vip.ShareDetail()
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);</script> 
+<style type="text/css">
+#scs_rl table{ border-left:1px solid #ddd;border-top:1px solid #ddd; margin-left:auto; margin-right:auto}
+#scs_rl td{ padding:5px 10px; border-bottom:1px solid #ddd;border-right:1px solid #ddd; text-align:center; cursor:pointer;}
+#CurDate{ background-color:#3F76A4; color:#fff;}
+.graytd{ background-color:#f3f3f3; color:#A7A7A7; cursor:auto;}
+.centeral{ text-align:center; padding:10px; font-weight:bold; margin-top:15px;}
+#scs_rl td.timeTd{ background-color:#ccc}
+.SelectCityLI{ height:42px; border-bottom:1px solid #ddd; line-height:42px; padding-left:5%; cursor:pointer }
+</style>
+<SCRIPT LANGUAGE="JavaScript">
+function InitSearch(){
+	var getCookieSave = WeiXin.GetCookie("special");
+	if(getCookieSave!=""){
+		var specialObj =JSON.parse(getCookieSave);
+		if(specialObj.customerId ==getParam("customerId")){
+			$("#SelectCity").html(specialObj.SelectCity);	
+			$("#startDateInput").html(specialObj.startDateInput);		
+			$("#backDateInput").html(specialObj.backDateInput);
+			$("#HotelName").html(specialObj.HotelName);
+			$("#HotelName").attr("storeId",specialObj.storeId)
+		}
+	}
+}
+var od = false;
+var Odate={
+		createTime :function (year,month,dTime,gx,sTime){
+		
+			var html ='',CtimeID, cgg = [];
+			var getcurTime = new Date(year,month-1,1), curMonth1= getcurTime.getDay();
+				getcurTime = new Date(year,month,0);
+			var getThisMonthDayNumber = getcurTime.getDate();
+				var d_Date = new Date();			//系统时间对象
+				var d_y = d_Date.getFullYear();		//完整的年
+				var d_m = d_Date.getMonth()+1;		//注意获取的月份比实现的小1
+				var d_d = d_Date.getDate();
+			if(dTime !=""){
+				cgg = dTime.split("-");	
+				d_y = cgg[0];
+				d_m = cgg[1];
+				d_d = cgg[2];
+			}
+			if(sTime!=""){
+				var cggd = sTime.split("-");	
+				var d_y1 = cggd[0];
+				var d_m1 = cggd[1];
+				var d_d1 = cggd[2];
+			}
+			html += "<div class='centeral'>"+year+"年"+month+"月"+"</div>";
+			html+="<table class='timeTable'><tr><td class='timeTd'>日</td>"
+					html+="<td class='timeTd'>一</td>";
+					html+="<td class='timeTd'>二</td>";
+					html+="<td class='timeTd'>三</td>";
+					html+="<td class='timeTd'>四</td>";
+					html+="<td class='timeTd'>五</td>";
+					html+="<td class='timeTd'>六</td></tr>";
+					html+="<tr>";
+				for(var i=1;i<=35;i++){
+					if(curMonth1<i&&i<=(getThisMonthDayNumber+curMonth1)){
+						CtimeID=i-curMonth1;//显示出几号
+							
+							if(od == false){
+								html+="<td class='graytd' ";
+							}else{
+								html+="<td onclick='Odate.SelectEvent(this,\""+gx+"\")' ";
+							}
+					
+						html+=" value='"+year+"-"+month+"-"+CtimeID+"' px='"+(i%7)+"' "; 
+						if (year==d_y&&month==d_m&&d_d==CtimeID){//日历中为当天
+									od = true;
+							if(gx=="up"){
+							html+=" >"+CtimeID+"</td>";	
+								}else{
+							html+=" style='background-color:#fff; color:#565656'  onclick='Odate.SelectEvent(this,\""+gx+"\")' >"+CtimeID+"</td>";
+							}
+							
+						}else{
+							if(sTime!=""){
+								if( year==d_y1&&month==d_m1&&d_d1==CtimeID){
+									html+=" id='CurDate' onclick='Odate.SelectEvent(this,\""+gx+"\")' >"+CtimeID+"</td>";
+								}else{
+									html+=">"+CtimeID+"</td>";
+								}
+							}else{
+							html+=">"+CtimeID+"</td>";
+							}
+						}
+					}else{
+						html+="<td style='background-color:#ddd'>&nbsp;</td>";
+					}
+					if(i%7==0&&i<35){
+						html+="</tr><tr>";
+					}
+				}
+				html+="</tr></table>";
+				return html; 
+			//
+		},
+		SDate:function(Num,dTime,gx,sTime){
+				var d_Date = new Date();			//系统时间对象
+				var d_y = d_Date.getFullYear();		//完整的年份,千万不要使用getYear,firfox不支持
+				var d_m = d_Date.getMonth()+1;		//注意获取的月份比实现的小1
+				var d_d = d_Date.getDate();
+				var htmlc = '';
+				for(var i=0; i<Num; i++){
+					if(i!=0){
+						d_m = d_m+1;
+						if(d_m == 13){
+							d_m = 1; 
+							d_y =d_y+1;	
+						}
+						htmlc += Odate.createTime(d_y,d_m,dTime,gx,sTime);	
+					}else{
+						htmlc += Odate.createTime(d_y,d_m,dTime,gx,sTime);
+					}
+				}
+				document.getElementById("DateDiv").innerHTML=htmlc;
+		},
+		show:function(o,type){
+			if($(o).find("span").length > 0 ){
+				var getSpanVal = $(o).find("span").text();
+				od = false;
+				if(type==""){
+					this.SDate(3,'',type,getSpanVal)
+				}else{
+				
+					this.SDate(3,$("#startDateInput").find("span").text(),type,getSpanVal);	
+				}
+				this.animate("#scs_rl","#DetailBigBox");
+				$("#xuanx").html("选择时间");
+			}	
+		},
+		animate:function(id1,id2){
+		
+		//$(id1).css("left",$(id1).width());
+		var oleft = $(id2).width(); 
+		
+			if($(id2).attr("defaultleft") == "0"){
+					oleft  = -oleft; 
+					
+				}
+			$(id2).animate({left:oleft},500,function(){
+					$(this).hide();
+					$(id1).show().css("opacity",0);
+					var oleft1 = $(id1).width(), cLeft = 0 ; 
+					
+					if($(id1).attr("defaultleft") == "0"){
+							oleft1  = -oleft1; 
+						}
+					
+					$(id1).css("left", oleft1); 
+					$(id1).animate({"left":0,"opacity":1},500);
+					
+			})	
+			$(document).scrollTop(0);
+		},
+		SelectEvent:function(o,type){
+			var getValue = $(o).attr("value");
+			var getpx =$(o).attr("px");
+			var week = ["星期六","星期天","星期一","星期二","星期三","星期四","星期五"];
+			$(o).css({ "background-color": "#3F76A4","color":"#fff"});
+			$("#CurDate").css({"background-color": "#fff","color":"#565656"});
+			if(type == ""){
+				$("#startDateInput").html('<span style="margin-right:20px;">'+getValue+'</span>'+week[getpx]);
+				$("#backDateInput").html('<span ></span>选择时间');
+				
+			}else{
+				$("#backDateInput").html('<span style="margin-right:20px;">'+getValue+'</span>'+week[getpx]);
+			}
+			this.animate("#DetailBigBox","#scs_rl");
+		},
+		SelectCity:function(){
+			$("#DateDiv").html('');
+			this.animate("#scs_rl","#DetailBigBox");
+			$("#xuanx").html("选择城市");
+			var Ihtml = '';
+			if(cityobj.length > 0 ){
+				
+				for(var i=0; i<cityobj.length; i++ ){
+					Ihtml += "<div class='SelectCityLI' onclick='Odate.SureCity(this)'>"+cityobj[i].city+"</div>"
+				//	
+					}
+				}
+				$("#DateDiv").html(Ihtml);
+		},
+		SureCity:function(o){
+			var getValue = $(o).text();	
+			this.animate("#DetailBigBox","#scs_rl");
+			 $(o).css({"background-color": "#3F76A4","color":"#fff"});
+			 $("#SelectCity").text(getValue);
+			 $("#HotelName").text("选择酒店");
+				WelfareAction.getStoreListByCity(getValue);
+		},
+		SelectHotel:function(){
+			$("#DateDiv").html('');
+			
+			
+			$("#xuanx").html("选择酒店");
+			var Ihtml = '';
+			if(jiudian.length > 0 ){
+				
+				for(var i=0; i<jiudian.length; i++ ){
+					Ihtml += "<div class='SelectCityLI' onclick='Odate.SureHotel(this,\""+jiudian[i].storeId+"\")'>"+jiudian[i].storeName+"</div>"
+				//	
+					}
+				}else{
+					alert("请先选择所在的城市"); 
+					return ;
+				}
+			this.animate("#scs_rl","#DetailBigBox");
+			$("#DateDiv").html(Ihtml);
+		},
+		SureHotel:function(o,storeId){
+				var getValue = $(o).text();	
+				this.animate("#DetailBigBox","#scs_rl");
+			 $(o).css({"background-color": "#3F76A4","color":"#fff"});
+			 
+			 	$("#HotelName").text(getValue).attr("storeId",storeId);
+		
+					
+			
+		}
+}
+
+function SearchHotel(){
+	
+		var SelectCity = $("#SelectCity").text();
+		var startDateInput = $("#startDateInput").text();
+		var backDateInput = $("#backDateInput").text();
+		var HotelName = $("#HotelName").text();
+		
+		if(SelectCity == "选择城市"){
+			alert("请选择入住的城市");
+			return false; 	
+		}
+		if(startDateInput == "选择时间"){
+			alert("请选择入住的时间");
+			return false; 	
+		}
+		if(backDateInput == "选择时间"){
+			alert("请选择离店的时间");
+			return false; 	
+		}
+		if(HotelName == "选择酒店"){
+			alert("请选择酒店");
+			return false; 	
+		}
+		var specialObj = {};
+		specialObj.customerId =getParam("customerId");
+		specialObj.SelectCity =  $("#SelectCity").html();
+		specialObj.startDateInput =  $("#startDateInput").html();
+		specialObj.backDateInput =  $("#backDateInput").html();
+		specialObj.HotelName =  $("#HotelName").html();
+		specialObj.storeId = $("#HotelName").attr("storeId");
+		WeiXin.SetCookie("special",JSON.stringify(specialObj), 24 * 30 * 360*120, '/');
+		location.href="list.html?customerId="+getParam("customerId")+"&storeId="+$("#HotelName").attr("storeId")+"&startTime="+$("#startDateInput").find("span").text()+"&endTime="+$("#backDateInput").find("span").text()+"&random="+Math.floor(Math.random()*1000);
+}
+
+
+
+</script>
+</body>
+</html>

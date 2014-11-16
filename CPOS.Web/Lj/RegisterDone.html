@@ -1,0 +1,49 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>注册</title>
+
+<meta content="width=device-width, initial-scale=1.0, user-scalable=false" name="viewport">
+<link type="text/css" href="css/bootstrap.min.css" />
+<link  rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script type="text/javascript" src="js/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/base.js"></script>
+</head>
+<script type="text/javascript">
+    var loadMore = '';
+    var Von = '';
+	
+	setTimeout(function(){
+		
+		$('.btn_register').bind('click',function(){
+		
+			var info = Base.All();
+
+			location.href = '../HtmlApps/Auth.html?pageName=JiFenShop&openId='
+						  + getParam('openId') + '&customerId='+getParam('customerId')
+						  + '&userId=' + getParam('userId');
+		});
+	},2000);
+</script>
+<body>
+	<div class="register">
+		<div class="row-fluid body">
+			<br>
+			<br>
+			<br>
+			<br>
+			<div style="text-align:center;line-height:46px;color:#734201;font-size:16px">您已注册成为“泸州老窖VIP俱乐部”会员</div>
+			
+			<div class="ipt clearfix">
+				
+			</div>
+			<div class="ipt">
+				<div class="btn_register">进入积分商城</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+<!--
+////////////////////////////////////////////////////////////////////////////////
+//
+// cmap_v1
+//
+////////////////////////////////////////////////////////////////////////////////
+-->
+<configuration>
+    <title></title>
+    <subtitle></subtitle>
+    <logo></logo>
+    <style>
+    <!--  Sky Blue textColor，backgroundColor，rolloverColor，selectionColor，titleColor
+     ，applicationBackgroundColor
+  --> 
+        <colors>0x000000,0xFFFFFF,0xEFEFEF,0xFFFFFF,0x000000</colors>
+        <alpha>1</alpha>
+    </style>
+    <geometryservice url="http://geometryserver_url/rest/services/Geometry/GeometryServer" />
+	
+    <!-- UI elements -->
+   
+    <widget left="0"   top="0"     config="widgets/FlexJS/ProductWidget.xml" url="widgets/FlexJS/ProductWidget.swf"/>
+    <widget left="5"  top="5"  config="widgets/NavigationJS/NavigationWidget.xml" url="widgets/NavigationJS/NavigationWidget.swf"/>
+  	<widget left="5" bottom="5"  config="widgets/LegendJS/LegendWidget.xml" url="widgets/LegendJS/LegendWidget.swf"/> 
+   
+      
+      
+    <ips><!--访问的地址，需要替换的ip，替换后的ip,host根据ie地址匹配符  -->
+        <ip host="f" replace="basemap_url,222.73.180.225:7080/PBS"  /> 
+	    <ip host="f" replace="arcgisserver_url,222.73.180.225:8080/arcgis" /> 
+	    <ip host="f" replace="geometryserver_url,222.73.180.225:8080/arcgis" /> 
+	    <ip host="f" replace="webservice_url,222.73.180.225:9084"  />
+	    
+	    <ip host="h" replace="basemap_url,222.73.180.225:7080/PBS"  /> 
+	    <ip host="h" replace="arcgisserver_url,222.73.180.225:8080/arcgis" /> 
+	    <ip host="h" replace="geometryserver_url,222.73.180.225:8080/arcgis" /> 
+	    <ip host="h" replace="webservice_url,222.73.180.225:9084"  />
+
+	</ips>
+	
+     <map wraparound180="true" esrilogovisible="false" scalebarvisible="false" initialextent="7753280 1954430 15299200 7215000" fullextent="7753280 1954430 15299200 7215000" top="0" addarcgisbasemaps="false">
+	<lods>
+	<lod level="4"  scale="36978595.4744722"  resolution="9783.93962050254" type="中国"/>
+	<lod level="5"  scale="18489297.7372361"  resolution="4891.96981025" type="中国"/>
+	<lod level="6"  scale="9244648.86861805"  resolution="2445.98490512" type="市" />
+	<lod level="7"  scale="4622324.43430902"  resolution="1222.99245256282" type="市"/>
+	<lod level="8"  scale="2311162.21715451"  resolution="611.496226281"  type="县"/>
+	<lod level="9"  scale="1155581.10857726"  resolution="305.748113140704" type="县"/>
+	<lod level="10"  scale="577790.554288628"  resolution="152.874056570" type="县"/>
+	<lod level="11"  scale="288895.277144314"  resolution="76.4370282851761" type="县"/>
+	<lod level="12"  scale="144447.638572157"  resolution="38.218514142588" type="点"/>
+	<lod level="13"  scale="72223.8192860785"  resolution="19.109257071294" type="点"/>
+	<lod level="14"  scale="36111.9096430392"  resolution="9.55462853564701" type="点"/>
+	<lod level="15"  scale="18055.9548215196"  resolution="4.77731426782351" type="点"/>
+	<lod level="16"  scale="9027.97741075981"  resolution="2.38865713391175" type="点"/>
+	<lod level="17"  scale="4513.98870537991"  resolution="1.19432856695588" type="点"/>
+	<lod level="18"  scale="2256.99435268995"  resolution="0.597164283477938" type="点"/>
+	<!--lod level="19"  scale="1128.49717634498"  resolution="0.298582141738969" type="点"/-->
+	</lods>
+      <basemaps><!--底图-->
+			<layer label="高德" type="tiled" visible="true" alpha="1"
+		        icon="gaode.png" 	url="http://basemap_url/rest/services/GaoDeDiTuRoad/MapServer" />	
+		</basemaps>
+        <operationallayers><!--业务图-->
+          <layer label="中国" type="dynamic" visible="true" alpha="1"
+                   url="http://arcgisserver_url/rest/services/kpi_chinamap/MapServer" />
+        </operationallayers>
+    </map>
+
+    <!-- supported layout property options: horizontal(default)|float|vertical|fix-->
+    <widgetcontainer layout="float">
+    
+    </widgetcontainer>
+</configuration>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Utility.MSTRIntegration.WcfService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Utility.MSTRIntegration.WcfService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://www.jitmarketing.cn:7084/MSTRIntegrationService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfMstrPromptAnswerItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MstrPromptAnswerItem" nillable="true" type="tns:MstrPromptAnswerItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMstrPromptAnswerItem" nillable="true" type="tns:ArrayOfMstrPromptAnswerItem" />
+  <xs:complexType name="MstrPromptAnswerItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PromptCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="QueryCondition" nillable="true" type="q1:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MstrPromptAnswerItem" nillable="true" type="tns:MstrPromptAnswerItem" />
+  <xs:complexType name="ArrayOfMstrDataRigthPromptAnswerItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MstrDataRigthPromptAnswerItem" nillable="true" type="tns:MstrDataRigthPromptAnswerItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMstrDataRigthPromptAnswerItem" nillable="true" type="tns:ArrayOfMstrDataRigthPromptAnswerItem" />
+  <xs:complexType name="MstrDataRigthPromptAnswerItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Level" type="xs:int" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Values" nillable="true" type="q2:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MstrDataRigthPromptAnswerItem" nillable="true" type="tns:MstrDataRigthPromptAnswerItem" />
+  <xs:complexType name="CompositeType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BoolValue" type="xs:boolean" />
+      <xs:element minOccurs="0" name="StringValue" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CompositeType" nillable="true" type="tns:CompositeType" />
+</xs:schema>

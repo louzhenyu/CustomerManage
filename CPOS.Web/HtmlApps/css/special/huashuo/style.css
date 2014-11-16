@@ -1,0 +1,28 @@
+@charset "utf-8";
+body { background:#EBEBEB;}
+.form_list input[type="button"], .form_list li a { background: url('../../../images/special/hs/prize/sprites.png') no-repeat 0 0; }
+
+header { height:45px; line-height:45px; background:#C0101A; text-align:center; font-size:18px; color:#fff; position:relative;}
+header a { display:block; width:10px; height:10px; position:absolute; left:15px; top:18px;}
+header a:before {content: '';width:8px;height:8px;border-left:2px solid #fff;border-top:2px solid #fff;-webkit-transform: rotate(-45deg);transform: rotate(-45deg);display: block;}
+
+.form_list ul { margin-top:15px; border-bottom:1px solid #ccc; border-top:1px solid #ccc; background:#fff; padding:0 15px 15px 15px;}
+.form_list li { margin-top:10px; display:-webkit-box;border-bottom:1px solid #D5D5D5; height:32px; line-height:auto;}
+.form_list li:last-child { border:none;}
+.form_list li label { padding-right:10px; display:block; background:#fff; height:33px;}
+.form_list li input[type="text"] { border:none;-webkit-box-shadow:none;box-shadow:none;border-radius:0; display:block;-webkit-box-flex:1;}
+.form_list li input[type="tel"] { border:none;-webkit-box-shadow:none;box-shadow:none;border-radius:0; display:block;-webkit-box-flex:1;}
+.form_list li select { display:block;-webkit-box-flex:1; border:none;}
+
+.form_list p { text-align:center; margin:100px 0 20px 0;}
+.form_list input[type="button"] { background-position:center -44px; background-size:303px auto; width:95%; height:45px;}
+.form_list li a { background-position:0 0; background-size:292px auto; display:block; width:75px; height:30px; text-indent:-9999px; overflow:hidden;}
+
+/*µ¯³ö²ãÑùÊ½*/
+.popup {background:#333; padding:10px; width:90%; margin:0 auto;}
+.popup p.ac { padding:10px 0;}
+.popup_btn {display:-webkit-box;-webkit-box-flex:1;-webkit-box-pack:center;}
+.popup_btn a { display:block; height:40px; line-height:40px; width:48%; text-align:center; background:#3C3C3C; border:1px solid #000; color:#fff; -webkit-border-radius:5px;-o-border-radius:5px;border-radius:5px; font-size:14px; margin:0 5px;-webkit-box-shadow:inset 0 1px 3px rgba(255,255,255, 0.3);}
+.unenable{
+	opacity: 0.3;
+}

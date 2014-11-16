@@ -1,0 +1,69 @@
+﻿<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+		name="viewport">
+		<title name="OrderSubmit">我的预约</title>
+	</head>
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<header>
+			<nav>
+				<ul>
+					<li>
+						<a href="javascript:Jit.AM.pageBack();"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('OrderList');"></a>
+					</li>
+					<li>
+						<a href="javascript:Jit.AM.toPage('Reserve');"></a>
+					</li>
+				</ul>
+			</nav>
+
+		</header>
+		<section>
+
+			<div class="reservContent">
+				<div class="info">
+					<p>
+						您的预约日期：<span fvalue='inDate'>2014-02-28</span>
+					</p>
+					<p>
+						服务门店：<span fvalue='storeName'>静安寺店</span>
+					</p>
+					<p>
+						预约时间：<span fvalue='outDate'>9:00</span>
+					</p>
+				</div>
+
+				<div class="inputInfo">
+					<h2>姓名</h2>
+					<p>
+						<input type="text" id="txtUserName" class="box">
+					</p>
+					<h2>手机号码</h2>
+					<p>
+						<input id="txtPhone" type="tel" class="box">
+					</p>
+					<h2>人数</h2>
+					<p class="wrap">
+						<span class="drop" onclick="JitPage.fnSub()">－</span>
+						<span class="num" id="goods_number">1</span>
+						<span class="add" onclick="JitPage.fnAdd()">＋</span>
+					</p>
+				</div>
+
+				<a href="javascript:JitPage.fnSubmit();" class="commonBtn">提交预约</a>
+				<b style="font-weight: bold;display: none;"
+							fvalue="amount">0</b>
+			</div>
+
+		</section>
+	</body>
+</html>
+<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>

@@ -1,0 +1,67 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title>coach</title>
+<link href="/HtmlApps/css/base/global.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+/*common*/
+html,body,body>section{height:100%;min-height:100%;}
+body>section{max-width:640px;margin:0 auto;}
+body{font:15px/1.2em "Microsoft YaHei";}
+
+.coachShowInfo{padding-left:15px;background:#f9f9f9;color:#999;}
+.coachShowInfo .item{min-height:38px;line-height:38px;}
+.coachShowInfo .line{border-bottom:1px solid #ccc;}
+.coachShowInfo em{float:left;color:#666;}
+.coachShowInfo .tit{font-weight:bold;}
+</style>
+</head>
+<body>
+<section class="coachShowInfo" id="section" data-js="../coach/js/coachDetail">
+	<div>
+    	<p class="item line">
+            <em class="tit">Topic: </em>
+            <span id="topic"></span>
+        </p>
+        <p class="item line">
+            <em class="tit">Coach: </em>
+            <span id="coach"></span>
+        </p>
+        <p class="item line">
+            <em class="tit">Date: </em>
+            <span id="date"></span>
+        </p>
+        <p class="item line">
+            <em class="tit">Average Score: </em>
+            <span id="averagescore"></span>
+        </p>
+    </div>
+    <div>
+    	 <p class="item">
+             <em class="tit">Like Reason: </em>
+    	 </p>
+    </div>
+    <div>
+		<ul id ="likeList">
+        </ul>
+    </div>
+    
+    <div>
+    	 <p class="item">
+             <em class="tit">Dislike Reason: </em>
+    	 </p>
+    </div>
+    <div>
+		<ul id ="dislikeList">
+        </ul>
+    </div>
+    
+</section>
+<script type="text/javascript" src="/HtmlApps/other/static/js/lib/require.js" defer async data-main="js/main.js"></script>
+</body>
+</html>
+

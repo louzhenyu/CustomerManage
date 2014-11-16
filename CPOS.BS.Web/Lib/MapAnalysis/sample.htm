@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <title></title>
+        <meta name="google" value="notranslate" />         
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <style type="text/css" media="screen"> 
+            html, body  { height:100%; }
+            body { margin:0; padding:0; overflow:auto; text-align:center; 
+                   background-color: #ffffff; }   
+            object:focus { outline:none; }
+            #flashContent { display:none; }
+        </style>
+
+        <script type="text/javascript" src="swfobject.js"></script>
+        <script type="text/javascript">
+            // For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection. 
+            var swfVersionStr = "11.1.0";
+            // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
+            var xiSwfUrlStr = "playerProductInstall.swf";
+            var flashvars = {};
+            var params = {};
+            params.quality = "high";
+            params.bgcolor = "#ffffff";
+            params.allowscriptaccess = "sameDomain";
+            params.allowfullscreen = "true";
+            params.wmode = "opaque"; // 注意这里，这里是关键部分
+
+            var attributes = {};
+            attributes.id = "index";
+            attributes.name = "index";
+            attributes.align = "middle";
+            swfobject.embedSWF(
+                "index.swf", "flashContent",
+                "100%", "100%",
+                swfVersionStr, xiSwfUrlStr,
+                flashvars, params, attributes);
+            // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
+            swfobject.createCSS("#flashContent", "display:block;text-align:left;");
+        </script>
+        <!--kpi js-->
+         <script type="text/javascript">
+             function _map_InitMap() {
+                 alert('地图初始化完毕');
+             }
+
+             function doTest() {
+                 //定义KPI
+                 var kpi = {};
+                 kpi.skpi_code = 'ec44e43c-78bd-44c8-9eca-30d031e27e12';
+                 kpi.skpi_label = "销量数据";
+                 kpi.skpi_uint = "%";
+                 kpi.skpi_level = "1";
+                 kpi.style_code = "SA";
+//                 kpi.style_label = "人员分布图";
+                 kpi.query_url = "";
+                 kpi.query_methed = "ReturnKPI";
+                 //    kpi.query_layer = "1";
+                 //    kpi.query_filterlayer = "1";
+                 //    kpi.query_filterval = "16";
+                 kpi.title = "销量数据";
+                 kpi.legendname = "销量数据（*）";
+                 kpi.datatype = "json";
+                 //呈现KPI
+                 index._map_product_RenderKpi(kpi);
+             }
+             function _map_product_ReturnKpi_js(kpiCode,queryLayer,queryFilterLayer,queryFilterVal) {
+                 alert(kpiCode);
+                 //
+                 var kpiDataes = '{ "province": [{ "data": { "id": "3", "name": "河南省", "kpi": "4722310", "kpilabel": "销量:4722310"} }, { "data": { "id": "14", "name": "湖北省", "kpi": "64600", "kpilabel": "销量:64600"} }, { "data": { "id": "10", "name": "湖南省", "kpi": "67549", "kpilabel": "销量:67549"} }, { "data": { "id": "7", "name": "江西省", "kpi": "49282", "kpilabel": "销量:49282"} }, { "data": { "id": "29", "name": "甘肃省", "kpi": "81830", "kpilabel": "销量:81830"} }, { "data": { "id": "17", "name": "上海市", "kpi": "398102", "kpilabel": "销量:398102"} }, { "data": { "id": "9", "name": "四川省", "kpi": "18365", "kpilabel": "销量:18365"} }, { "data": { "id": "2", "name": "新疆维吾尔自治区", "kpi": "17861", "kpilabel": "销量:17861"} }, { "data": { "id": "11", "name": "安徽省", "kpi": "378491", "kpilabel": "销量:378491"} }, { "data": { "id": "23", "name": "福建省", "kpi": "1", "kpilabel": "销量:1"} }, { "data": { "id": "21", "name": "辽宁省", "kpi": "5117", "kpilabel": "销量:5117"} }, { "data": { "id": "13", "name": "陕西省", "kpi": "150619", "kpilabel": "销量:150619"} }, { "data": { "id": "22", "name": "浙江省", "kpi": "835513", "kpilabel": "销量:835513"} }, { "data": { "id": "24", "name": "广西壮族自治区", "kpi": "77178", "kpilabel": "销量:77178"} }, { "data": { "id": "26", "name": "宁夏回族自治区", "kpi": "16008", "kpilabel": "销量:16008"} }, { "data": { "id": "25", "name": "广东省", "kpi": "981378", "kpilabel": "销量:981378"} }, { "data": { "id": "16", "name": "江苏省", "kpi": "1140402", "kpilabel": "销量:1140402"} }, { "data": { "id": "5", "name": "海南省", "kpi": "9989", "kpilabel": "销量:9989"} }, { "data": { "id": "8", "name": "内蒙古自治区", "kpi": "2235962", "kpilabel": "销量:2235962"} }, { "data": { "id": "31", "name": "青海省", "kpi": "1483", "kpilabel": "销量:1483"}}] }';
+                 //
+                 index._map_product_RenderKpi_Back(kpiDataes);
+             }
+         </script>
+      
+     
+    </head>
+    <body >
+    
+      <!--项目js-->
+     
+      <div>
+        <input type='button' value='测试' onclick='doTest()'/>
+      </div> 
+      <div id="flashContent">
+            <p>
+                To view this page ensure that Adobe Flash Player version 
+                11.1.0 or greater is installed. 
+            </p>
+            <script type="text/javascript">
+                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://");
+                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='"
+                                + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>"); 
+            </script> 
+        </div>
+        
+        <noscript>
+            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="100%" height="100%" id="index">
+                <param name="movie" value="index.swf" />
+                <param name="quality" value="high" />
+                <param name="bgcolor" value="#ffffff" />
+                <param name="allowScriptAccess" value="sameDomain" />
+                <param name="allowFullScreen" value="true" />
+                <!--[if !IE]>-->
+                <object type="application/x-shockwave-flash" data="index.swf" width="100%" height="100%">
+                    <param name="quality" value="high" />
+                    <param name="bgcolor" value="#ffffff" />
+                    <param name="allowScriptAccess" value="sameDomain" />
+                    <param name="allowFullScreen" value="true" />
+                <!--<![endif]-->
+                <!--[if gte IE 6]>-->
+                    <p> 
+                        Either scripts and active content are not permitted to run or Adobe Flash Player version
+                        11.1.0 or greater is not installed.
+                    </p>
+                <!--<![endif]-->
+                    <a href="http://www.adobe.com/go/getflashplayer">
+                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+                    </a>
+                <!--[if !IE]>-->
+                </object>
+                <!--<![endif]-->
+            </object>
+        </noscript>     
+   </body>
+</html>

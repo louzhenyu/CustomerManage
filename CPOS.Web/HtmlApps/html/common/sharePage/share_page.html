@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+		<title name="SharePage"></title>
+		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+			}
+			.wrapper {
+				position: relative;
+				margin: 0 auto;
+				max-width: 640px;
+				min-height: 100%;
+			}
+			.img{
+				display:block;
+				margin:0 auto;
+			}
+			.btn{
+				background: none repeat scroll 0 0 #FF6600;
+				border-radius: 5px;
+				color: rgba(255, 255, 255, 0.9);
+				font-size: 15px;
+				font-weight: bold;
+				height: 45px;
+				letter-spacing: 5px;
+				line-height: 45px;
+				margin: 0 auto;
+				text-align: center;
+				width: 100%;
+				position:absolute;
+				bottom: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wx_loading" id="masklayer" style="background-color:#FFF;">
+        <div class="wx_loading_inner"><i class="wx_loading_icon"></i>正在加载...</div>
+    </div>
+		<div id="wrapper" class="wrapper">
+			
+		</div>
+		
+		<div class="btn" onclick="JitPage.directToPage()">马上参与</div>
+
+		<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../../../lib/require.js" defer async data-main="../../../launch"></script>
+	</body>
+</html>

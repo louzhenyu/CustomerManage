@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+/*common*/
+html,body,body>section{height:100%;min-height:100%;}
+body>section{max-width:640px;margin:0 auto;}
+body{font:15px/1.2em "Microsoft YaHei";background:#fff;color:#4d463e;}
+select,input{border:none;}
+input{text-indent:5px;}
+/*品牌列表*/
+.brandList{min-height:100%;padding:7px 0;background:#fff;}
+.brandList a{display:block;margin-bottom:2px;position:relative;}
+.brandList a img{display:block;}
+.brandList .picIcon{height:100%;position:absolute;top:0;right:0;}

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="description" content="杰亦特微相册">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="white">
+		<title name="Photos">十里画册</title>
+		<style type="text/css">
+			#popFail .bk {
+				background-color: rgba(194,194,194,0.5);
+			}
+			.pop_photo {
+				height: 100%;
+			}
+			.pop_photo .photo li {
+				float: left;
+				height: 100%;
+			}
+			.photo_show img {
+				/*background: #202020 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEwAAAAYCAMAAABnVuv4AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NUJCMjQ0QzVEMEI3MTFFMjkzMTg5MzNDOTA1MTA5QjAiIHhtcE1NOkRvY3VtZW50SU<p></p>Q9InhtcC5kaWQ6NUJCMjQ0QzZEMEI3MTFFMjkzMTg5MzNDOTA1MTA5QjAiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1QkIyNDRDM0QwQjcxMUUyOTMxODkzM0M5MDUxMDlCMCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1QkIyNDRDNEQwQjcxMUUyOTMxODkzM0M5MDUxMDlCMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgGdvqYAAAAzUExURT8/PyYmJkFBQTAwMCMjI0NDQzc3NygoKDs7OzIyMjk5OS0tLSsrKz09PTQ0NEVFRSAgIP6uubIAAAERSURBVHja7JTbjoMwDERN7oTY4///2rXTitUWtUUVD/vQkYJMsA+T4EB6oegL+w+wWl+kVK66jHQaxvwiZWCo2LgM9omzpQHNlrxxBq82kVrObLBoCZFXyn2x2ZVArbyBpYDWkZMKiTA21QAWmstUG7kXdA9C6ZnfwCLW+8VdQnT1eOwwc9WDKujJzvyBCapDmqYeAIMVr/+FzRStKOdgvs1g5VzGMBhDj7AxrZ+ARa8tOt89ndUjzK1b4XMYDdcCisP3O4QxmsEieNvCA8z8stiX0Vv3ieWpL2OHYcqKTeYuZiD4c7GAHmFJQu70FLZrMXuzScb9gKXb/UEJ5ZqDHpvM5rsGZn0Ttu+f9hL9CDAAnbBqw3t+r9QAAAAASUVORK5CYII=) no-repeat center center;*/
+			}
+			.pop_photo .photo li {
+				background: url(data:image/gif;base64,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) no-repeat center center;
+			}
+			.pop_photo .photo li.noLoading {
+				opacity: 0;
+				*filter: alpha(opacity=0);
+			}
+			.pop_photo .photo li img {
+				border-radius: 5px;
+			}
+		</style>
+		<body>
+			<script>
+				setTimeout(function(){
+	
+				},5000);
+				
+			</script>
+			<div class="wrapper" style="min-height: 555px;">
+				<!--  start -->
+				<div class="photo_area" id="scroller" style="opacity: 1.0000000000000002; overflow: hidden;">
+					<!--  photo_wide -->
+					<ul class="photo_show" id="scrollList" style="left: 0px; width: 3956px; -webkit-transition: -webkit-transform 0ms; transition: -webkit-transform 0ms; -webkit-transform-origin: 0px 0px; -webkit-transform: translate(0px, 0px) translateZ(0px);">
+						<!--缩略图-->
+						<li class="color_1" id="picshow1">
+							<div class="ps_1">
+								<div class="ps_1_0" style="width:150px;max-width:150px;overflow:hidden;">
+									<h3>滨海景观</h3>
+									<p>
+										Coastal Landscape
+									</p>
+								</div>
+								<div style="max-width:260px;"><img src="../../../images/common/photos/0.jpg" height="150" width="260" id="thubImg0">
+								</div>
+								<div style="max-width:100px;"><img src="../../../images/common/photos/1.jpg" height="150" width="100" id="thubImg1">
+								</div>
+								<div style="max-width:200px;"><img src="../../../images/common/photos/2.jpg" height="150" width="200" id="thubImg2">
+								</div>
+							</div>
+							<div class="ps_2">
+								<div style="max-width:220px;"><img src="../../../images/common/photos/3.jpg" height="150" width="220" id="thubImg3">
+								</div>
+								<div class="ps_2_0" style="width:160px;max-width:160px;">
+									<!-- 根据文字的多少计算层的宽度 -->
+									<p>
+										十公里绵长海岸线，湾区内滨海旅游资源丰富，水清沙白、海天一色，千奇百怪、形态各异的礁石群形成了一个无法复制的天然礁石公园。
+									</p>
+								</div>
+								<div style="max-width:200px;"><img src="../../../images/common/photos/4.jpg" height="150" width="200" id="thubImg4">
+								</div>
+								<div style="max-width:120px;"><img src="../../../images/common/photos/5.jpg" height="150" width="120" id="thubImg5">
+								</div>
+							</div>
+						</li>
+						<li class="color_2" id="picshow2">
+							<div class="ps_1">
+								<div class="ps_1_0" style="width:150px;max-width:150px;overflow:hidden;">
+									<h3>园林景观</h3>
+									<p>
+										Garden Landscape
+									</p>
+								</div>
+								<div style="max-width:260px;"><img src="../../../images/common/photos/6.jpg" height="150" width="260" id="thubImg6">
+								</div>
+								<div style="max-width:100px;"><img src="../../../images/common/photos/7.jpg" height="150" width="100" id="thubImg7">
+								</div>
+								<div style="max-width:200px;"><img src="../../../images/common/photos/8.jpg" height="150" width="200" id="thubImg8">
+								</div>
+							</div>
+							<div class="ps_2">
+								<div style="max-width:220px;"><img src="../../../images/common/photos/9.jpg" height="150" width="220" id="thubImg9">
+								</div>
+								<div class="ps_2_0" style="width:160px;max-width:160px;">
+									<!-- 根据文字的多少计算层的宽度 -->
+									<p>
+										5.3万平方米超大型东南亚风情园林，充分尊重海景、山峦、礁岩、椰林等原生态自然景观，最大化的打造出最醇正的海湾度假享受。
+									</p>
+								</div>
+								<div style="max-width:200px;"><img src="../../../images/common/photos/10.jpg" height="150" width="200" id="thubImg10">
+								</div>
+								<div style="max-width:120px;"><img src="../../../images/common/photos/11.jpg" height="150" width="120" id="thubImg11">
+								</div>
+							</div>
+						</li>
+						<li class="color_3" id="picshow3">
+							<div class="ps_1">
+								<div class="ps_1_0" style="width:150px;max-width:150px;overflow:hidden;">
+									<h3>滨海娱乐</h3>
+									<p>
+										Coastal Recreation
+									</p>
+								</div>
+								<div style="max-width:260px;"><img id="thubImg12" onclick="PICSHOW.slidePics(this,12);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511821/0" alt="无边游泳池" width="260" height="150">
+								</div>
+								<div style="max-width:100px;"><img id="thubImg13" onclick="PICSHOW.slidePics(this,13);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511586/0" alt="摩托艇" width="100" height="150">
+								</div>
+							</div>
+							<div class="ps_2">
+								<div style="max-width:220px;"><img id="thubImg14" onclick="PICSHOW.slidePics(this,14);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511590/0" alt="沙滩排球" width="220" height="150">
+								</div>
+								<div class="ps_2_0" style="width:160px;max-width:160px;">
+									<!-- 根据文字的多少计算层的宽度 -->
+									<p>
+										大型专题体验吧、特色滨海服务等旗舰级配套即将启动，下班了回到家中，一卸全身的疲惫，投身滨海体验中心，让您时时刻刻享有度假的体验。
+									</p>
+								</div>
+								<div style="max-width:120px;"><img id="thubImg15" onclick="PICSHOW.slidePics(this,15);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511762/0" alt="沙滩车" width="120" height="150">
+								</div>
+							</div>
+						</li>
+						<li class="color_4" id="picshow4">
+							<div class="ps_1">
+								<div class="ps_1_0" style="width:150px;max-width:150px;overflow:hidden;">
+									<h3>滨海酒店</h3>
+									<p>
+										Beach Hotel
+									</p>
+								</div>
+								<div style="max-width:260px;"><img id="thubImg16" onclick="PICSHOW.slidePics(this,16);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511598/0" alt="酒店外立面" width="260" height="150">
+								</div>
+								<div style="max-width:100px;"><img id="thubImg17" onclick="PICSHOW.slidePics(this,17);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511834/0" alt="酒店吧台" width="100" height="150">
+								</div>
+								<div style="max-width:200px;"><img id="thubImg18" onclick="PICSHOW.slidePics(this,18);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511835/0" alt="酒店大堂" width="200" height="150">
+								</div>
+							</div>
+							<div class="ps_2">
+								<div style="max-width:220px;"><img id="thubImg19" onclick="PICSHOW.slidePics(this,19);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511837/0" alt="豪华客房" width="220" height="150">
+								</div>
+								<div class="ps_2_0" style="width:160px;max-width:160px;">
+									<!-- 根据文字的多少计算层的宽度 -->
+									<p>
+										五星级标准的滨海酒店，拥有339间270度全海景客房，是深圳东至好的滨海度假酒店。国际凤凰宴会厅能容纳1500位嘉宾，中西餐厅、海景健身室、恒温泳池等康体娱乐设施一应俱全，还有东亚最大的水族箱。
+									</p>
+								</div>
+								<div style="max-width:200px;"><img id="thubImg20" onclick="PICSHOW.slidePics(this,20);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511860/0" alt="东南亚水族馆" width="200" height="150">
+								</div>
+								<div style="max-width:120px;"><img id="thubImg21" onclick="PICSHOW.slidePics(this,21);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511791/0" alt="健身房" width="120" height="150">
+								</div>
+							</div>
+						</li>
+						<li class="color_5" id="picshow5">
+							<div class="ps_1">
+								<div class="ps_1_0" style="width:150px;max-width:150px;overflow:hidden;">
+									<h3>休闲生活</h3>
+									<p>
+										Leisure Life
+									</p>
+								</div>
+								<div style="max-width:260px;"><img id="thubImg22" onclick="PICSHOW.slidePics(this,22);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511863/0" alt="休闲书吧" width="260" height="150">
+								</div>
+								<div style="max-width:100px;"><img id="thubImg23" onclick="PICSHOW.slidePics(this,23);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511796/0" alt="酒吧夜景" width="100" height="150">
+								</div>
+							</div>
+							<div class="ps_2">
+								<div style="max-width:220px;"><img id="thubImg24" onclick="PICSHOW.slidePics(this,24);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511797/0" alt="酒吧街" width="220" height="150">
+								</div>
+								<div class="ps_2_0" style="width:160px;max-width:160px;">
+									<!-- 根据文字的多少计算层的宽度 -->
+									<p>
+										优美的海岸沙滩、大城配套和休闲度假生活方式树立了未来中国滨海度假的标杆，滨海旅游演变成了集居住、休闲、度假为一体的深度滨海生活。
+									</p>
+								</div>
+								<div style="max-width:120px;"><img id="thubImg25" onclick="PICSHOW.slidePics(this,25);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc512027/0" alt="休闲区" width="120" height="150">
+								</div>
+							</div>
+						</li>
+						<li class="color_6" id="picshow6">
+							<div class="ps_1">
+								<div class="ps_1_0" style="width:150px;max-width:150px;overflow:hidden;">
+									<h3>银滩前景</h3>
+									<p>
+										Beach Landscape
+									</p>
+								</div>
+								<div style="max-width:260px;"><img id="thubImg26" onclick="PICSHOW.slidePics(this,26);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc512029/0" alt="沙滩美墅" width="260" height="150">
+								</div>
+								<div style="max-width:100px;"><img id="thubImg27" onclick="PICSHOW.slidePics(this,27);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc511871/0" alt="沙滩之心" width="100" height="150">
+								</div>
+							</div>
+							<div class="ps_2">
+								<div style="max-width:220px;"><img id="thubImg28" onclick="PICSHOW.slidePics(this,28);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc512031/0" alt="红花沙滩" width="220" height="150">
+								</div>
+								<div class="ps_2_0" style="width:160px;max-width:160px;">
+									<!-- 根据文字的多少计算层的宽度 -->
+									<p>
+										十里天然洁净的沙滩，海水纯净而透明，拥有极高的能见度，是中国南方环境最优美、最生态的海滩之一。社区内引入绿道，礁石公园，红树公园等原生态旅游资源。
+									</p>
+								</div>
+								<div style="max-width:120px;"><img id="thubImg29" onclick="PICSHOW.slidePics(this,29);" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" osrc="http://p.qpic.cn/ecc_merchant/0/P_idc512034/0" alt="最美银滩" width="120" height="150">
+								</div>
+							</div>
+						</li>
+					</ul><!-- 由于每个li的宽度不固定，需要用js来获取ul的宽度 -->
+					<ul class="nav_photo" id="scrollTips">
+						<!-- 数据-->
+						<li>
+							<a href="javascript:void(0);" class="current" onclick="sTo(1);return false;">滨海景观</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" onclick="sTo(2);return false;">园林景观</a>
+						</li>
+						<li>
+							<a href="javascript:void(0);" onclick="sTo(3);return false;">滨海娱乐</a>
+						</li>
+					</ul>
+				</div>
+				<div class="pop_photo" id="scroller1" style="display: none; overflow: hidden;">
+					<ul class="photo" id="scrollPic" style="width: 32070px; -webkit-transition: -webkit-transform 0ms; transition: -webkit-transform 0ms; -webkit-transform-origin: 0px 0px; -webkit-transform: translate(0px, 0px) translateZ(0px);">
+						<!--大图浏览-->
+						<li style="width:1069px;" class="noLoading" id="bLi0">
+							<img id="bImg0" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi1">
+							<img id="bImg1" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi2">
+							<img id="bImg2" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi3">
+							<img id="bImg3" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi4">
+							<img id="bImg4" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi5">
+							<img id="bImg5" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi6">
+							<img id="bImg6" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi7">
+							<img id="bImg7" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi8">
+							<img id="bImg8" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi9">
+							<img id="bImg9" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi10">
+							<img id="bImg10" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi11">
+							<img id="bImg11" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi12">
+							<img id="bImg12" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi13">
+							<img id="bImg13" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi14">
+							<img id="bImg14" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi15">
+							<img id="bImg15" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi16">
+							<img id="bImg16" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi17">
+							<img id="bImg17" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi18">
+							<img id="bImg18" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi19">
+							<img id="bImg19" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi20">
+							<img id="bImg20" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi21">
+							<img id="bImg21" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi22">
+							<img id="bImg22" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi23">
+							<img id="bImg23" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi24">
+							<img id="bImg24" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi25">
+							<img id="bImg25" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi26">
+							<img id="bImg26" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi27">
+							<img id="bImg27" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi28">
+							<img id="bImg28" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+						<li style="width:1069px;" class="noLoading" id="bLi29">
+							<img id="bImg29" load="false" width="1069" height="545" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+						</li>
+					</ul>
+					<div class="info" id="picName">
+						海岸线
+					</div>
+					<a href="javascript:void(0);" id="photoClick" class="btn_show_close" style="z-index:9999;"><span>关闭</span></a>
+				</div>
+				<!--  end -->
+			</div>
+			<div id="popFail" jqmoldstyle="block" style="display: none;">
+				<div class="bk"></div>
+				<div class="cont">
+					<img src="data:image/gif;base64,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" alt="loading...">
+					正在加载...
+				</div>
+			</div>
+			<div class="pop_tips" id="popTips" style="display:none;">
+				<div class="oval"></div>
+				<div class="pop_show">
+					<h4 id="tipsTitle">温馨提示</h4>
+					<div class="pop_info" id="tipsMsg">
+						<p></p>
+					</div>
+					<div class="pop_btns">
+						<a href="javascript:void(0);" id="tipsOK">确定</a>
+						<a href="javascript:void(0);" style="display:none;" id="tipsCancel">取消</a>
+					</div>
+				</div>
+			</div>
+			<div class="pop_mask" id="popMask" style="display:none;"></div>
+			<script type="text/template" id="template1">
+				<!--缩略图-->
+				<% for(var i=0,il=data.length;i < il;i++){ var idx = i%9 + 1;%>
+				<li class="color_<%=idx%>" id="picshow<%=idx%>">
+				<%
+				for(var ps=1;ps<3;ps++){
+				var psdata = data[i]['ps'+ps];
+				%>
+				<div class="ps_<%=ps%>">
+				<% for(var j=0,jl=psdata.length;j<jl;j++){
+				if(psdata[j].type == 'title'){
+				%>
+				<div class="ps_1_0" style="width:<%=psdata[j].width%>px;max-width:<%=psdata[j].width%>px;overflow:hidden;"><h3><%=psdata[j].title%></h3><p><%=psdata[j].subTitle%></p></div>
+				<% }else if(psdata[j].type == 'img'){ %>
+				<div style="max-width:<%=psdata[j].size[0]*(150/psdata[j].size[1])%>px;"><img id="thubImg<%=psdata[j].idx%>"
+				onclick="PICSHOW.slidePics(this,<%=psdata[j].idx%>);"
+				src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+				osrc="<%=psdata[j].img%>" alt="<%=psdata[j].name%>"
+				width="<%=psdata[j].size[0]*(150/psdata[j].size[1])%>" height="150"/></div>
+				<% }else if(psdata[j].type == 'text'){ %>
+				<div class="ps_2_0" style="width:<%=psdata[j].width%>px;max-width:<%=psdata[j].width%>px;"><!-- 根据文字的多少计算层的宽度 -->
+				<p><%=psdata[j].content%></p>
+				</div>
+				<% } /*end of psdata[j].type*/
+				} /*end of psdata loop*/
+				%>
+				</div>
+				<%
+				} /* end of ps for*/
+				%>
+				</li>
+				<%  } /* end of data.leng */
+				%>
+			</script>
+			<script type="text/tempalte" id="template2">
+				<!-- 数据-->
+				<% for(var i=0,il=data.length;i<il;i++){ var cidx = i+start, cls = (i == idx) ? ' class="current"':''; %>
+				<li><a href="javascript:void(0);"<%=cls%> onclick="sTo(<%=cidx%>);return false;"><%=data[i]%></a></li>
+				<% }%>
+			</script>
+			<script type="text/template" id="template3">
+				<!--大图浏览-->
+				<% for(var i=0,il=data.length;i<il;i++){ %><li style="width:<%=R.w%>px;" class="noLoading" id="bLi<%=data[i].idx%>">
+				<img id="bImg<%=data[i].idx%>" load="false" width="<%=R.w%>" height="<%=R.h%>" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+				</li><% } %>
+			</script>
+			<div class="mod-life__footer">
+				<div class="mod-life__footer-life">
+					<img src="../../../images/common/photos/logo.png" width="21" height="23" class="mod-life__footer-logo" alt="">
+					<span>微生活</span>
+					<span class="mod-life__footer-copyright">@2013腾讯公司版权所有</span>
+				</div>
+				<a id="footCompBtn" href="javascript:;" class="mod-life__footer-business">商务合作</a>
+			</div>
+		</body>
+		<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</html>

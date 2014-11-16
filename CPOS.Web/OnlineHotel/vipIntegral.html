@@ -1,0 +1,73 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>我的积分</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+</head>
+
+<body>
+<div class="PcBox" id="PcBox">
+  <div style="position:relative;" id="AppCom">
+    
+    <div class="aboutVipDiv" id="vipIntegralDiv" >
+      <div class="VipIntegralBox" style="width:92%; height:5px; margin-top:30px;"></div>
+      <div class="VipIntegralBox" style="width:94%; height:5px; margin-top:-2px;"></div>
+      <div class="VipIntegralBox">
+        <div class="VipIntegralDiv" id="vipCenter"> </div>
+        <div class="VipIntegralCdf">
+          <h3>您当前积分可兑换的菜品</h3>
+          <div class="VipIntegralXGlist" style="padding-bottom:20px;" id="VipIntegralXGlist" page="1">
+            <div class="WelfareConnextBox">
+              <ul id="waterwall1">
+              </ul>
+            </div>
+            <div class="WelfareConnextBox">
+              <ul id="waterwall2">
+              </ul>
+            </div>
+            <span class="blank1"></span> </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="MenuBox" id="MenuBox"></div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+
+<script id="ppList" type="text/template">
+	{section name=i loop=$itemList}
+	<% _.each(itemList,function(item){%>
+	<a href="detail.html?itemId=<%=itemList.itemId%>">
+	<li>
+	  <div class="WelfareConnextBoxLi"><img width="100%" src="<%=itemList.imageUrl%>"> </div>
+	  <div class="WelfareConnextBoxLiTxt">
+		<h2><%=itemList.itemName%></h2>
+		<h3>原价：<%= parseInt(itemList.price) %></h3>
+		<div class="WelfareRmb">换购价：<%= parseInt(itemList.integralExchange) %>积分</div>
+	  </div>
+	</li>
+	</a>
+	<% }) %>
+</script> 
+<script id="getVipDetail" type="text/template">
+<h2><span style="font-size:18px;"><%=vipName%></span> &nbsp; 会员卡号：<%=vipCode%></h2>
+<p style="padding-top:20px; line-height:22px;">您当前积分:   <%=parseInt(validIntegral)%><br> 已使用积分:  <%=parseInt(outIntegral) %></p>
+  <a href="vipIntegralDetail.html" class="Chakan">查看积分详情</a>
+</script> 
+<script type="text/javascript">
+var loadMore = ['VipIntegralXGlist','Vip.IntegralList()'];
+var Von = 'Vip.getVipDetail(); Vip.IntegralList("1")';
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);</script>
+</body>
+</html>

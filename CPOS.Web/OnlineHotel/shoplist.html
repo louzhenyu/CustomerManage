@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title id="HeaderTitle">门店查询</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+</head>
+
+<body  >
+<div style="width: 320px; margin-left: auto; margin-right: auto; overflow: hidden;" id="PcBox" class="PcBox">
+  <div class="DetailBigBox" id="DetailBigBox">
+    <div style="overflow: hidden;" class="DetailImg" id="wrapper">
+      <div class="DetailImgIeo" id="scroller" style="width: 320px;">
+        <ul>
+          <li style="width:320px"><img src="exam/shoplist.jpg" style="width:320px; height:180px;"></li>
+        </ul>
+      </div>
+      <div class="KzDGrayTOP"></div>
+      <div class="KzDGray"></div>
+      <dl id="indicator">
+        <dd class="active">1</dd>
+      </dl>
+      <div class="DetailmdkZBtn" style="left:10px; top:40px;">
+        <Div style="font-size:22px; color:#fff; text-align:left; padding-bottom:15px; line-height:30px;">本月最优门店<br>
+          静安三店</Div>
+        <a href="javascript:void(0)" class="DetailActionBtn" style="background-color:#5f8db1">立即预约</a></div>
+    </div>
+    <div class="DetailSmallBox" style="border-bottom:1px solid #C9CDCF; box-shadow:0 0 2px #ddd; ">
+      <div class="DetailSmallBoxYW" style="position:relative">
+        <div class="DetailmdkZBtn" style="width:100px; top:10px; right:-2px;"><a href="javascript:void(0)"  class="DetailActionBtn" style="background-color:#999">预约满</a></div>
+        <h1 style="margin-right:100px; padding-top:5px;">静安三店</h1>
+        <div class="EPSdg" style="padding:5px 0;">电话：021-65215668<br>
+          地址：静安2店</div>
+      </div>
+    </div>
+    
+    <div class="DetailSmallBox" style="border-bottom:1px solid #C9CDCF; box-shadow:0 0 2px #ddd; margin-top:10px;">
+      <div class="DetailSmallBoxYW" style="position:relative">
+        <div class="DetailmdkZBtn" style="width:100px; top:10px; right:-2px;"><a href="javascript:void(0)"  class="DetailActionBtn"  style="background-color:#999">预约满</a></div>
+        <h1 style="margin-right:100px; padding-top:5px;">延平店</h1>
+        <div class="EPSdg" style="padding:5px 0;">电话：021-65215668<br>
+          地址：静安2店</div>
+      </div>
+    </div>
+    
+    <div class="DetailSmallBox" style="border-bottom:1px solid #C9CDCF; box-shadow:0 0 2px #ddd; margin-top:10px;">
+      <div class="DetailSmallBoxYW" style="position:relative">
+        <div class="DetailmdkZBtn" style="width:100px; top:10px; right:-2px;"><a href="javascript:void(0)"  class="DetailActionBtn"  style="background-color:#999">预约满</a></div>
+        <h1 style="margin-right:100px; padding-top:5px;">胶州路店</h1>
+        <div class="EPSdg" style="padding:5px 0;">电话：021-65215668<br>
+          地址：静安2店</div>
+      </div>
+    </div>
+  </div>
+  <div class="MenuBox" id="MenuBox"> </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'abc()'; //  
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);
+function abc(){
+	$("#PcBox").show();
+	loadImGWine();
+	   setTimeout(function() {
+                            myScrollWine.refresh();
+                        },
+                        100);
+}
+</script>
+</body>
+</html>

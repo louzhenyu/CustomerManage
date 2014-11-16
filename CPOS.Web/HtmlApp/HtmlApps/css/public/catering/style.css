@@ -1,0 +1,164 @@
+@charset "utf-8";
+/*common*/
+html,body{height:100%;}
+.cateringPage{display:-webkit-box;-webkit-box-orient:vertical;}
+.page-max-640{max-width:640px;margin:0 auto;}
+
+.cateringArea{-webkit-box-flex:1;display:-webkit-box;-webkit-box-orient: horizontal;}
+
+.cateringPage .footer{position:static;}
+/*公共点菜菜单*/
+.commonMenu{min-width:75px;border-right:1px solid #c2c2c2;overflow-y:scroll;}
+.commonMenu::-webkit-scrollbar,.commonGreensList::-webkit-scrollbar{width:0px;}
+.commonMenu li{line-height:35px;text-indent:10px;position:relative;}
+/*.commonMenu li:nth-last-child(1){margin-bottom:60px;}*/
+.commonMenu li a{font-size:12px;}
+.commonMenu li em,.commonNav a em{display:none;position:absolute;top:2px;right:2px;min-width:15px;height:15px;line-height:15px;font-size:12px;text-align:center;border-radius:15px;background:#ff3333;color:#fff;}
+.commonMenu li.on{background:#f5f5f5;}
+.commonMenu li.on em{display:block;text-indent:0px;}
+.commonMenu li.on a{color:#ff3333;}
+.commonMenu .searchBtn{height:40px;background:url(../../../images/public/catering_default/searchIcon.png) no-repeat center center;background-size:22px;}
+
+
+/*公共的点菜列表*/
+.commonGreensList{-webkit-box-flex:1;overflow-y:scroll;}
+.commonGreensList li{display:-webkit-box;padding:12px 5px 12px 10px;border-bottom:1px solid #c2c2c2;}
+.commonGreensList li .sub,.commonGreensList li .num{display:none;}
+.commonGreensList li.on .sub,.commonGreensList li.on .num{display:block;}
+/*.commonGreensList li:nth-last-child(1){margin-bottom:60px;}*/
+.commonGreensList .pic{display:block;width:45px;height:45px;}
+.commonGreensList .info{-webkit-box-flex:1;margin-left:10px;}
+.commonGreensList .tit{font-size:14px;color:#4a5156;}
+.commonGreensList .price{font-size:16px;color:#ea2222;}
+.commonGreensList .handle{margin-top:15px;}
+.commonGreensList .handle span{float:left;width:30px;height:30px;line-height:30px;border:1px solid #dfdfdf;text-align:center;font-size:18px;font-weight:bold;color:#333;}
+.commonGreensList span.num{border-left:none;border-right:none;font-weight:normal;}
+
+/*公共页脚，导航*/
+.footer{position:fixed;bottom:0;left:0;right:0;z-index:999;}
+.commonNav{display:-webkit-box;height:55px;background:#212629;}
+.commonNav .navWrap{display:-webkit-box;-webkit-box-flex:1;}
+.commonNav .navWrap a{display:block;-webkit-box-flex:1;}
+.commonNav .dishes{background:url(../../../images/public/catering_default/dishes.png) no-repeat center 
+center;background-size:24px 36px;}
+.commonNav .rowNumber{background:url(../../../images/public/catering_default/rowNumber.png) no-repeat center 
+center;background-size:22px 36px;}
+.commonNav .book{background:url(../../../images/public/catering_default/book.png) no-repeat center 
+center;background-size:22px 36px;}
+.commonNav .myOrder{background:url(../../../images/public/catering_default/myOrder.png) no-repeat center 
+center;background-size:42px 36px;;}
+.commonNav .shopCart{background:url(../../../images/public/catering_default/shopCart.png) no-repeat center 
+center;background-size:54px 54px;position:relative;bottom:20px;right:5px;width:54px;height:54px;display:block;}
+.commonNav .shopCart.on em{display:block;position:absolute;top:0px;right:0px;} 
+
+
+/*购物车列表*/
+.orderListArea,.orderAffirmArea{height:100%;background:#eee;}
+.orderListArea .commonGreensList,.orderAffirmArea .commonGreensList{height:auto;}
+.orderListArea .commonGreensList li:nth-last-child(1) {margin-bottom:0px;border-bottom:none;}
+
+.orderListArea .selectInfo,.orderListArea .commonGreensList ul{padding-left:10px;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#fff;}
+.orderListArea .selectInfo p{padding:10px 10px 10px 0;border-bottom:1px solid #ccc;}
+.orderListArea .selectInfo p:nth-last-child(1){border-bottom:none;color:#8c8c8c;}
+.orderListArea .selectInfo select{width:100%;border:none;background:rgba(255,255,255,0) url(../../../images/public/catering_default/point3.png) no-repeat center 
+right;background-size:16px 11px;color:#F00;}
+.orderListArea .selectInfo .ask{width:100%;padding-left:10px;border:none;height:32px;border-radius:5px;background:#edecec;}
+
+.addGreensBtn{float:right;width:62px;line-height:25px;margin:15px 20px 20px 0;text-align:center;border-radius:5px;background:#fa5e1b;color:#fff;}
+.orderListArea .commonGreensList ul{margin-bottom:92px;background:#fff;}
+
+.orderBottomWrap{font-size:16px;background:#f0efef;color:#fa5e1b;}
+.orderBottomWrap .total{line-height:35px;text-align:center;border-top:1px solid #ccc;border-bottom:1px solid #ccc;background:#fff;}
+.orderBottomWrap .wrapBtn{text-align:center;padding:10px 0;}
+.orderBottomWrap .wrapBtn a{display:inline-block;width:110px;line-height:35px;letter-spacing:1px;border:1px solid #ff3333;border-radius:20px;color:#ff3333;}
+.orderBottomWrap .wrapBtn a:nth-child(1){margin-right:10px;}
+
+
+/*菜单确认页*/
+.orderAffirmArea .title{line-height:55px;text-align:center;font-size:16px;background:#fef8e6;color:#cc6633;}
+.orderAffirmArea .shopInfo{margin-bottom:10px;border-bottom:1px solid #ccc;background:#fff;}
+.orderAffirmArea .shopInfo p{margin-left:10px;height:50px;line-height:50px;border-bottom:1px solid #ccc;color:#8b8989;}
+.orderAffirmArea .shopInfo p:nth-last-child(1){border-bottom:none;}
+.orderAffirmArea .shopInfo span{float:left;margin:11px 10px 0 0;background-size:100%;}
+.orderAffirmArea .brandName{width:24px;height:22px;background:url(../../../images/public/catering_default/brandName.png) no-repeat center 
+center;}
+.orderAffirmArea .tel{width:22px;height:22px;background:url(../../../images/public/catering_default/tel.png) no-repeat center 
+center;}
+.orderAffirmArea .address{width:20px;height:24px;background:url(../../../images/public/catering_default/address.png) no-repeat center 
+center;}
+
+.orderingTime{line-height:35px;text-align:center;border-bottom:1px solid #ccc;color:#999}
+.orderAffirmArea .commonGreensList{margin-bottom:58px;padding-left:10px;border-top:1px solid #b2b2b2;border-bottom:1px solid #b2b2b2;background:#fff;}
+.orderAffirmArea .commonGreensList li:nth-last-child(1) {margin-bottom:0px;border-bottom:none;}
+.orderAffirmArea .commonGreensList .tit{font-size:16px;}
+.commonGreensList .showInfo span{display:block;text-align:right;}
+.orderAffirmArea .total{line-height:40px;padding-right:10px;text-align:right;border-top:1px solid #ccc;color:#ff3333;}
+.orderAffirmArea .personCount{line-height:32px;border-top:1px solid #ccc;color:#999;}
+.orderBottomWrap .wrapBtn .modify{color:#999;border:1px solid #999;}
+
+/*买单*/
+.orderAffirmArea .fillDesk{padding:8px 10px;border-top:1px solid #b2b2b2;background:#fff;}
+.orderAffirmArea .fillDesk input{width:100%;border:none;height:36px;font-size:16px;}
+
+/*外送信息*/
+.outsideInfoArea{height:100%;background:#eee;}
+.outsideInfo p{padding:15px 0;border-bottom:1px solid #ccc;}
+.outsideInfo .flex{display:-webkit-box;}
+.outsideInfo input{height:35px;border:none;width:100%;color:#333;}
+.outsideInfo .tit{display:block;line-height:35px;margin-right:10px;font-size:16px;color:#999;}
+.outsideInfo label{display:block;-webkit-box-flex:1;}
+.outsideInfo .userInfo,.outsideInfo .remark{padding-left:15px;border-bottom:1px solid #adadad;background:#fff;}
+.outsideInfo .userInfo p:nth-last-child(1){border-bottom:none;}
+.outsideInfo .remark{margin:10px 0;border-top:1px solid #adadad;}
+.outsideInfo .remark .tit{padding:15px 0 5px;}
+.outsideInfo .textArea{width:100%;height:80px;padding:10px 0;font-size:16px;border:none;resize:none;color:#333;}
+
+/*提示框*/
+.commonPromptBox{width:270px;position:fixed;top:50%;left:50%;margin:-65px 0 0 -135px;border-radius:5px;background:#e7e7e7;z-index:99999;text-align:center;}
+.commonPromptBox .title{margin:20px 0 15px 0;font-weight:bold;}
+.commonPromptBox .text{margin-bottom:20px;}
+.commonPromptBox .wrapBtn{display:-webkit-box;border-top:1px solid #999;}
+.commonPromptBox .wrapBtn a{display:block;line-height:50px;-webkit-box-flex:1;color:#06f;}
+.commonPromptBox .wrapBtn a:nth-child(2){border-left:1px solid #999;}
+
+
+
+/*商店列表*/
+.storeListArea{height:100%;padding:8px;background:#e9e9eb;}
+.storeList .storeArea{margin-bottom:15px;padding:10px;border:1px solid #d8d8d8;background:#fff;}
+.storeList .info{display:-webkit-box;padding-bottom:10px;border-bottom:1px solid #ccc;}
+.storeList .pic{display:block;width:80px;height:60px;-webkit-box-shadow:1px 1px 2px rgba(0,0,0,0.2);}
+.storeList .textWrap{-webkit-box-flex:1;margin-left:10px;}
+.storeList .textWrap span{display:block;font-weight:bold;}
+.storeList .storeName{font-size:18px;color:#666;margin-bottom:3px;}
+.storeList .storeAddress{font-size:14px;color:#999;}
+.storeList .handle{display:-webkit-box;margin-top:10px;}
+.storeList .handle p{-webkit-box-flex:1;border-right:1px solid #ccc;text-align:center;}
+.storeList .handle p:nth-last-child(1){border-right:none;}
+.storeList .handle a{display:inline-block;height:32px;line-height:32px;text-indent:35px;color:#666;background:url(../../../images/public/catering_default/commonIcon.png) no-repeat;background-size:25px 150px;}
+
+.storeList a.tel{background-position:8px 3px;}
+.storeList a.location{background-position:1px -45px;}
+.storeList a.scenery{background-position:1px -96px;}
+
+
+
+/*拿号*/
+.takeNumberPage{background:#eee;}
+.takeNumberArea{max-width:600px;margin:0 auto;padding:60px 15px 0;}
+.takeNumberArea .takeBox{min-height:250px;border:1px solid #c5c8cc;border-radius:5px;background:#f8f9fa;color:#666;}
+.takeNumberArea .takeBox .pic{margin-top:10px;}
+.takeNumberArea .takeBox .tit{margin:45px auto 20px;;font-size:20px;text-align:center;}
+.takeNumberArea .info{margin:0 25px;}
+.takeNumberArea .article{line-height:30px;padding:30px 10px;border-top:1px solid #ccc;font-size:16px;color:#0298e6;}
+.takeNumberArea .text{margin-top:30px;text-align:center;font-size:20px;color:#333;}
+.takeNumberArea .text strong{font-size:106px;color:#fa5e1b;}
+.takeNumberArea .text span{font-size:25px;font-weight:bold;color:#fa5e1b;}
+.takeNumberArea .tip{margin-bottom:30px;text-align:center;font-size:16px;color:#999;}
+
+.takeNumberArea .pastDue .text{color:#999;}
+.takeNumberArea .pastDue strong{color:#e5e5e5;}
+.takeNumberArea .pastDue .text span{color:#e5e5e5;}
+.takeNumberArea .pastDue .tip{color:#f63;}
+.takeNumberArea .pastDue .tip span{font-weight:bold;font-size:25px;}
+

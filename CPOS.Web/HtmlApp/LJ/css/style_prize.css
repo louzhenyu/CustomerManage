@@ -1,0 +1,142 @@
+@charset "utf-8";
+body {
+    background: none repeat scroll 0 0 #000000;
+}
+.mb44
+{
+ margin-bottom:44px;
+}
+.prize_area
+{
+ background-color: #252A2E;
+}
+.prize_list
+{
+   background-color: #FFFFFF;
+   border-radius: 5px;
+   box-shadow: 0 0 5px #1C2023;
+   margin-left: auto;
+   margin-right: auto;
+   min-height: 300px;
+   padding-bottom: 20px;
+   position: relative;
+   top: 160px;
+   width: 90%;
+   padding-top: 50px;
+}
+.prize_inner
+{
+   background: url("../images/prize/ggcard.png") no-repeat scroll left top rgba(0, 0, 0, 0);
+   height: 162px;
+   left: 16px;
+   margin-left: auto;
+   margin-right: auto;
+   overflow: hidden;
+   position: absolute;
+   top: -122px;
+   width: 266px;
+}
+.prizeTxt {
+    bottom: 12px;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    width: 70px;
+    z-index: 101;
+}
+.prizeTxt {
+    bottom: 12px;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    width: 70px;
+    z-index: 101;
+}
+.prizeTxt {
+    line-height: 30px;
+    text-align: center;
+}
+
+
+.bot_nav {   background: none repeat scroll 0 0 #000000;
+    bottom: 0;
+    height: 44px;
+    left: 0;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    z-index: 102; 
+}
+.bot_nav dt { float:left;}
+.bot_nav dd { float:right; margin:0 10px;}
+.bot_nav dt a, .bot_nav dd a {
+	background-size: 120% auto;
+	display: block;
+	height: 30px;
+	overflow: hidden;
+	text-indent: -9999px;
+	width: 30px;
+}
+.bot_nav dd:nth-child(2) a {
+	background-position: 0 -186px;
+}
+.bot_nav dd:nth-child(3) a {
+	background-position: 0 -139px;
+}
+
+.bot_nav dd:nth-child(4) a {
+	background-position: 0 -46px;
+}
+
+
+.goods_head
+{
+   height:20px;
+   line-height:20px;
+   color:#ff4545;
+   margin:10px;
+}
+.goods_list{
+	background:none;
+	text-align:left;
+}
+.goods_list dl
+{
+ border-bottom: 1px dotted #CDCDCD;
+ height: 80px;
+ margin-left: 10px;
+ margin-right: 10px;
+ width: 90%;
+ margin-bottom:5px;
+}
+.goods_list dl dt
+{
+    float: left;
+    height: 80px;
+    margin-right: 10px;
+    width: 65px;
+}
+.goods_list dl dt img
+{
+  width:65px;
+  height:65px;
+  
+}
+
+.goods_list dl dd
+{
+   width:80%;
+   height: 80px;
+}
+.goods_list dl dd span
+{
+   color:#158ae7;   
+   
+}
+

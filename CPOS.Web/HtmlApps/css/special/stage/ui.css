@@ -1,0 +1,14 @@
+@charset "utf-8";
+/*首页*/
+
+.commonBtn{display:inline-block;width:100%;height:50px;line-height:50px;border-radius:8px;text-align:center;letter-spacing:10px;font-size:20px;background-color:#d93957;color:#fff;}
+/*index*/
+.indexNavArea{position:relative;max-width:640px;height:100%;margin:0 auto;background:#fdf8ec;}
+.indexNavArea .bgPic{position:absolute;top:0;right:0;bottom:0;left:0;}
+
+.indexNavArea .showArea{position:absolute;top:0;padding:15px 12px;}
+.indexNavArea .showArea>div{float:left;margin-bottom:4%;}
+.indexNavArea .showArea>div img{width:100%;}
+.indexNavArea .news,.indexNavArea .course{width:65%;}
+.indexNavArea .video,.indexNavArea .growing,.indexNavArea .aboutUs{width:31%;margin-left:4%;}
+.registerBtn{margin-top:30px;}

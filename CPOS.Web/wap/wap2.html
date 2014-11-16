@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<link href="css/common.css" type="text/css" rel="stylesheet" />
+<title>wap2</title>
+<script type="text/javascript" src="js/jquery1.6.js"></script>
+</head>
+
+<body>
+<section id="appSHowImage" style="display:none;">
+ <Div style="line-height:22px; width:94%; margin-left:auto; margin-right:auto; margin-top:10px;" id="appCommentImg"></Div>
+ <div style="line-height:22px; width:94%; margin-left:auto; margin-right:auto" id="appCommentText"></div>
+</section>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript" src="js/common.js?v=2013052913"></script> 
+<script type="text/javascript">
+function SImageApp(){
+
+	//var jarr = "?action=GetImageComment&openID=123&id=111"
+	var opendid = GETc["openID"] ?  GETc["openID"]: "";
+	var id = GETc["id"] ? GETc["id"] : "";
+	$.ajax({
+	    type: 'get',
+	    url: url + "?action=GetImageComment&openID=" + opendid + "&id=" + id,
+	    //	url:"test.php?openID="+GETc["weixinUserId"],
+	    data: {},
+	    timeout: 90000,
+	    cache: false,
+	    beforeSend: function () {
+	        Win.Loading();
+	    },
+	    dataType: 'json',
+	    success: function (o) {
+	        $(".loading").hide();
+	        if (o.Code == "200") {
+	            $("#appCommentImg").html('<img src="' + o.Content.ImageUrl + '" width="100%">');
+	            $("#appCommentText").html(o.Content.Comment);
+	            $("#appSHowImage").show();
+	        }
+	    }
+	})
+}
+
+var GETc = [];
+function getParam(){ 
+	//获得html上的参数
+		var tmp_arr = [];
+		var querystr = window.location.href.split("?")
+		if(querystr[1]){
+				var GETs = querystr[1].split("&")
+				for(i=0;i<GETs.length;i++){
+					tmp_arr = GETs[i].split("=")
+					key=tmp_arr[0]
+					GETc[key] = tmp_arr[1]
+				}
+				
+		}
+}
+getParam();
+SImageApp();
+</script>
+</body>
+</html>

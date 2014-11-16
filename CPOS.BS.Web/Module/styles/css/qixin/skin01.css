@@ -1,0 +1,120 @@
+/*common*/
+.commonBtn{background:#007aff;}
+.commonTitle{border-left:4px solid #007aff;}
+.commonTitleBox .getBack{background:url(../../images/skin/bg01/getBack.png) no-repeat right center;}
+
+/*表格*/
+.tablehandle .selectBox{background:#fff url(../../images/skin/bg01/selectIcon02.png) no-repeat 90% center}
+.dataTable .title{border-bottom:2px solid #007aff;}
+.dataTable .title th{*border-bottom:2px solid #007aff;}
+.dataTable .title span{background:url(../../images/skin/bg01/selectIcon02.png) no-repeat right center;}
+
+.dataTable .title span.up{background:url(../../images/skin/bg01/selectIcon01.png) no-repeat right center;}
+
+.dataTable tr{border-bottom:1px solid #c9d7ec;}
+.dataTable tbody td{*border-bottom:1px solid #fedbc3;}
+.dataTable tbody tr:hover{background:#efefef;}
+.dataTable tbody tr:hover .joinBtn{background:#007aff;}
+.dataTable .checkBox.on em{background:url(../../images/skin/bg01/radio2.png) no-repeat center center;}
+.dataTable .links{color:#007aff;}
+.dataTable .operateWrap .editIcon{background:url(../../images/skin/bg01/editIcon.png) no-repeat center center;}
+.dataTable .operateWrap .delIcon{background:url(../../images/skin/bg01/delIcon.png) no-repeat center center;}
+.dataTable .operateWrap .minusIcon{background:url(../../images/skin/bg01/minusIcon.png) no-repeat center center;}
+.dataTable .selectListBox span{color:#007aff;}
+/*表格的菜单*/
+.tableMenu a.on{border-bottom:3px solid #007aff;color:#007aff;}
+/*添加资讯*/
+.addInfoArea .classInput .selectBox{background: #fff url(../../images/skin/bg01/selectIcon02.png) no-repeat 85px center;}
+.addInfoArea .radioBox.on em{background:url(../../images/skin/bg01/radio3.png) no-repeat center center;}
+.topIssuesInfo .getBack{background:url(../../images/skin/bg01/getBack.png) no-repeat right center;}
+/*弹框*/
+.commdialog .row .selectBox{background:#fff url(../../images/skin/bg01/selectIcon02.png) no-repeat 107px center;}
+/*头部的微信，设置信息，退出*/
+.commonHeader .setBox{background:url(../../images/skin/bg01/userIcon.png) no-repeat center center;}
+.commonMenu li:hover{background:url(../../images/skin/bg01/commonMenuBg.png) no-repeat 0 0;}
+.commonMenu li:hover a{color:#fff;}
+.commonSelectWrap .selectBox{background:#fff url(../../images/skin/bg01/selectIcon02.png) no-repeat 120px center;}
+.selectDateBox p{background:#fbfbfb url(../../images/skin/bg01/dateIcon.png) no-repeat 80px center;}
+.moreQueryWrap .more{background:url(../../images/skin/bg01/moreQuery.png) no-repeat right 4px;color:#2d83cf;}
+
+
+/***公共的头部，导航，logo，信息***/
+.commonHeader{border-bottom:3px solid #007aff;}
+.commonHeader .logo{background:url(../../images/qixin/logo.png) no-repeat 0 0;}
+.commonNav li a{color:#b5b5b5;}
+.commonNav li.on a{color:#007aff;}
+
+.commonNav .nav001 a{background:url(../../images/qixin/bg01/nav001.png) no-repeat 0 center;}
+.commonNav .nav002 a{background:url(../../images/qixin/bg01/nav002.png) no-repeat 0 center;}
+.commonNav .nav003 a{background:url(../../images/qixin/bg01/nav003.png) no-repeat 0 center;}
+.commonNav .nav004 a{background:url(../../images/qixin/bg01/nav004.png) no-repeat 0 center;}
+.commonNav .nav005 a{background:url(../../images/qixin/bg01/nav005.png) no-repeat 0 center;}
+.commonNav .nav006 a{background:url(../../images/qixin/bg01/nav006.png) no-repeat 0 center;}
+
+.commonNav .nav001.on a{background:url(../../images/qixin/bg01/on-nav001.png) no-repeat 0 center;}
+.commonNav .nav002.on a{background:url(../../images/qixin/bg01/on-nav002.png) no-repeat 0 center;}
+.commonNav .nav003.on a{background:url(../../images/qixin/bg01/on-nav003.png) no-repeat 0 center;}
+.commonNav .nav004.on a{background:url(../../images/qixin/bg01/on-nav004.png) no-repeat 0 center;}
+.commonNav .nav005.on a{background:url(../../images/qixin/bg01/on-nav005.png) no-repeat 0 center;}
+.commonNav .nav006.on a{background:url(../../images/qixin/bg01/on-nav006.png) no-repeat 0 center;}
+
+/*全局菜单*/
+.commonMenu .menu001 a{background:url(../../images/qixin/bg01/menu001.png) no-repeat 15px center;}
+.commonMenu .menu002 a{background:url(../../images/qixin/bg01/menu002.png) no-repeat 15px center;}
+.commonMenu .menu003 a{background:url(../../images/qixin/bg01/menu003.png) no-repeat 15px center;}
+.commonMenu .menu004 a{background:url(../../images/qixin/bg01/menu004.png) no-repeat 15px center;}
+.commonMenu .menu005 a{background:url(../../images/qixin/bg01/menu005.png) no-repeat 15px center;}
+.commonMenu .menu006 a{background:url(../../images/qixin/bg01/menu006.png) no-repeat 15px center;}
+.commonMenu .menu007 a{background:url(../../images/qixin/bg01/menu007.png) no-repeat 15px center;}
+
+.commonMenu .menu001.on a{background:url(../../images/qixin/bg01/on-menu001.png) no-repeat 15px center;}
+.commonMenu .menu002.on a{background:url(../../images/qixin/bg01/on-menu002.png) no-repeat 15px center;}
+.commonMenu .menu003.on a{background:url(../../images/qixin/bg01/on-menu003.png) no-repeat 15px center;}
+.commonMenu .menu004.on a{background:url(../../images/qixin/bg01/on-menu004.png) no-repeat 15px center;}
+.commonMenu .menu005.on a{background:url(../../images/qixin/bg01/on-menu005.png) no-repeat 15px center;}
+.commonMenu .menu006.on a{background:url(../../images/qixin/bg01/on-menu006.png) no-repeat 15px center;}
+.commonMenu .menu007.on a{background:url(../../images/qixin/bg01/on-menu007.png) no-repeat 15px center;}
+
+.commonMenu li.menu001:hover a{background:url(../../images/qixin/bg01/h-menu001.png) no-repeat 15px center;}
+.commonMenu li.menu002:hover a{background:url(../../images/qixin/bg01/h-menu002.png) no-repeat 15px center;}
+.commonMenu li.menu003:hover a{background:url(../../images/qixin/bg01/h-menu003.png) no-repeat 15px center;}
+.commonMenu li.menu004:hover a{background:url(../../images/qixin/bg01/h-menu004.png) no-repeat 15px center;}
+.commonMenu li.menu005:hover a{background:url(../../images/qixin/bg01/h-menu005.png) no-repeat 15px center;}
+.commonMenu li.menu006:hover a{background:url(../../images/qixin/bg01/h-menu006.png) no-repeat 15px center;}
+.commonMenu li.menu007:hover a{background:url(../../images/qixin/bg01/h-menu007.png) no-repeat 15px center;}
+
+
+/******查询*****/
+/*头部简单查询*/
+.commonSelectWrap .searchBtn{float:right;width:64px;height:32px;}
+
+/*头部 全查询*/
+.allQueryTermArea .pointerIcon{background:url(../../images/qixin/bg01/pointer.png) no-repeat 0 0;color:#007aff;}
+.allQueryTermArea .digF{color:#007aff;}
+.allQueryTermArea .minF{color:#333;}
+.allQueryTermArea .recentBtn{color:#007aff;}
+.allQueryTermArea .drawBtn{background:#fbfbfb url(../../images/qixin/bg01/arr02.png) no-repeat 60px center;color:#3f97fe;}
+
+/*glt-fgy*/
+.dataTable .operateWrap .logoutIcon{background:url(../../images/qixin/bg01/zxIcon.png) no-repeat center center;}
+/*弹出-导入*/
+.jui-dialog.jui-dialog-import{width:685px;height:530px;margin:-280px 0 0 -343px;}
+.jui-dialog-import .promptContent{padding:40px 145px;}
+.jui-dialog-import .promptContent.stepTwo{padding:40px 102px;}
+.jui-dialog-import .stepWrap{text-align:center;}
+.jui-dialog-import .stepWrap span{display:inline-block;width:162px;height:63px;}
+.jui-dialog-import .step01{background:url(../../images/qixin/bg01/tip-downTmpl.png) no-repeat 0 0;}
+.jui-dialog-import .step02{position:relative;margin-left:52px;background:url(../../images/qixin/bg01/tip-downRoll.png) no-repeat 0 0;}
+.jui-dialog-import .step02 em{position:absolute;top:30px;left:-53px;width:48px;height:2px;background:#ccc;}
+.jui-dialog-import .step02.on{background:url(../../images/qixin/bg01/tip-downRoll2.png) no-repeat 0 0;}
+.jui-dialog-import .step02.on em{background:#fe7c23;}
+.jui-dialog-import .exp{margin:80px 0 30px;text-align:center;font:18px/1.5em "黑体";color:#fe7c23;}
+.jui-dialog-import .stepTwo .exp{margin:80px 0 20px;}
+.jui-dialog-import .downTmplBtn{display:block;width:230px;height:60px;margin:0 auto 30px;background:url(../../images/qixin/bg01/downTmplBtn.png) no-repeat 0 0;}
+
+.jui-dialog-import .uploadArea{width:496px;height:39px;margin-bottom:35px;background:url(../../images/qixin/bg01/popUploadInput.png) no-repeat 0 0;}
+.jui-dialog-import .uploadBtn{float:right;width:112px;height:39px;background:url(../../images/qixin/bg01/popUploadBtn.png) no-repeat 0 0;}
+.jui-dialog-import .uploadInput{height:39px;margin-right:112px;}
+.jui-dialog-import .uploadInput input{display:block;width:374px;height:39px;text-indent:15px;border:none;background:none;color:#333;}
+/*.jui-dialog-import .cancelBtn{width:138px;height:38px;margin-right:40px;line-height:38px;border:1px solid #fe7c23;background:#fff;color:#fe7c23;}*/
+

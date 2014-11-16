@@ -1,0 +1,120 @@
+﻿@charset "utf-8";
+
+/*common*/
+html,body,body>section{height:100%;min-height:100%;}
+body>section{max-width:640px;margin:0 auto;}
+body{font:15px/1.2em "Microsoft YaHei";background:#b2b2b2;color:#4d463e;}
+select,input{border:none;}
+input{text-indent:5px;}
+.commonBtn{display:inline-block;height:42px;line-height:42px;text-align:center;font-size:15px;border-radius:5px;box-shadow:0 0 3px rgba(0,0,0,0.03);}
+
+/*长江商学院-首页*/
+
+
+.indexPage{position:relative;background:url(../../../images/special/yangtze/indexBg.jpg) no-repeat 0 0;background-size:cover;}
+.indexPage .tipBar{position:absolute;top:0px;left:0px;width:100%;height:26px;line-height:26px;text-align:center;font-size:12px;background:rgba(13,55,114,0.4);color:#fff;z-index: 100;}
+.indexPage .menuBtn{position:absolute;top:47px;right:0px;display:block;width:77px;height:29px;background:url(../../../images/special/yangtze/menuBtn.png) no-repeat 0 0;background-size:100%; z-index: 100; }
+.indexPage .logo{position:absolute;top:112px;left:0px;width:160px;height:87px;background:url(../../../images/special/yangtze/indexLogo.png) no-repeat 0 0;background-size:100%; z-index: 100; }
+.indexPage .logo em{float:right;margin:25px 14px 0 0;font-size:15px;color:#1c1c1c;}
+.indexPage .logo strong{padding:0 2px 0 1px;font-style:italic;font-size:25px;color:#0095d8;}
+.indexNav{position:absolute;bottom:0px;left:0px;width:100%;overflow:hidden; z-index: 100; }
+.indexNav ul{width:200%;}
+.indexNav li{  text-overflow: ellipsis; overflow: hidden;
+	float:left;width:79px;height:169px;margin-right:20px;text-align:center;background:rgba(17,53,103,0.4);  transition: all 1s;-weblot-transition: all 1s; }
+.indexNav a{color:#fff;}
+.indexNav .exp{  font-size: 12px;    margin: 0 10px;   text-align: center; letter-spacing: 2px;}
+.indexNav .navIcon{height:58px;}
+.indexNav .navTit{height:41px;line-height:48px;margin:0 10px;font-size:15px;border-bottom:1px solid rgba(255,255,255,0.4);}
+
+
+/*长江商学院-菜单页*/
+.menuPage{position:relative;background:url(../../../images/special/yangtze/menuBg.jpg) no-repeat 0 0;background-size:cover;overflow:hidden;}
+.menuPage a{display:block;width:280px;height:178px;position:absolute;right:-10px;top:50%;margin-top:-89px;-webkit-transition: 0ms;cursor:pointer;-webkit-transform-origin:382px 50%;}
+.menuPage a img{display:block;width:100%;height:100%;}
+.menuPage a:nth-of-type(1){-webkit-transform:rotate(0.40rad) translateZ(0px);}
+.menuPage a:nth-of-type(2){-webkit-transform:rotate(0.20rad) translateZ(0px);}
+.menuPage a:nth-of-type(3){-webkit-transform:rotate(0rad) translateZ(0px);}
+.menuPage a:nth-of-type(4){-webkit-transform:rotate(-0.2rad) translateZ(0px);}
+.menuPage a:nth-of-type(5){-webkit-transform:rotate(-0.40rad) translateZ(0px);}
+.menuPage a.on{z-index:9;right:0px;}
+
+
+
+/*长江商学院-公共文章详情页*/
+.commonDetailPage{   background-image: url("../../../images/special/yangtze/detailBg.jpg"); background-position: left top; background-repeat: no-repeat; background-size: 100%; }
+.commonDetailArea{padding:0px 10px;}
+.commonDetailArea .titleIcon{width:173px;height:48px;position:relative;}
+.commonDetailArea .titleIcon img{width:100%;height:100%;}
+.commonDetailArea .titleIcon .nper{position:absolute;top: 33px;right:-23px;display:block;width:65px;}
+.commonDetailArea .title{padding:19px 0 4px;line-height:1.55em;}
+.commonDetailArea .title h2{font-size:18px;font-weight:bold;color:#3b3b3b;}
+.commonDetailArea .title h3{font-size:15px;font-weight:bold;color:#3b3b3b;}
+.commonDetailArea .minInfo{font-size:12px;-webkit-transform:scale(0.75);-webkit-transform-origin:0 0}
+.commonDetailArea .minInfo .date{color:#a8a8a8;}
+.commonDetailArea .minInfo .name{color:#30a9f5;}
+.commonDetailArea .essayInfo{padding:10px 0;}
+.commonDetailArea .essayInfo p{float:left;width:94px;height:15px;line-height:17px;font-size:12px;text-indent:18px;color:#1e1e1e;cursor:pointer;}
+.commonDetailArea .see{background:url(../../../images/special/yangtze/seeIcon.png) no-repeat 0 center;background-size:18px 13px;}
+.commonDetailArea .praise{background:url(../../../images/special/yangtze/praiseIcon.png) no-repeat 0 center;background-size:16px 14px;}
+.commonDetailArea .share{background:url(../../../images/special/yangtze/shareIcon.png) no-repeat 0 center;background-size:16px 14px;}
+.commonDetailArea .essayContent{ height: 66px; overflow: hidden;}
+.essayUnfold{height:30px;line-height:30px;margin-left:10px;border-bottom:1px solid #828282;}
+.essayUnfold span{    color: #0074bd;
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    margin-right: 6px;
+    width: 42px;}
+.essayUnfold em{float:left;width:7px;height:7px;margin:12px 3px 0 0;background:url(../../../images/special/yangtze/arrIcon.png) no-repeat 0 0;background-size:100%;}
+.essayUnfold.on em{-webkit-transform:rotate(180deg);}
+
+/*长江商学院-学员菜单列表*/
+.essayMenuArea{
+ height: 24px;
+
+}
+.essayMenuList{
+  height: 22px;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 200;
+
+}
+.essayMenuList li{display:inline-block;width:80px;height:22px;margin:0 5px;text-align:center;border-radius:0 0 8px 8px;}
+.essayMenuList li a{display:inline-block;width:80px;height:22px;line-height:16px;font-size:15px;color:#1d1d1d;}
+.essayMenuList li.on{background:#0080c7;}
+.essayMenuList li.on a{color:#fff;}
+
+
+/*长江商学院-EMBA公益*/
+.imgTextList{padding:15px 0;}
+.imgTextList .titleWrap{height:32px;overflow:hidden;display:-webkit-box;}
+.imgTextList .titleWrap .month{height:32px;line-height:32px;font-size:26px;font-weight:bold;color:#000;}
+.imgTextList .titleWrap .tit{padding:3px 0 0 8px;line-height:1.3em;-webkit-box-flex:1;font-size:12px;font-weight:bold;color:#242424;}
+.imgTextList .imgText{margin:8px 0 16px 12px;padding:14px 0 0 23px;border-left:2px solid #0074bd;}
+.imgTextList .imgText .imgWrap{position:relative;padding:3px;border-radius:6px;border:1px solid #b2b2b2;background:#fff;}
+.imgTextList .imgText img{display:block;}
+.imgTextList .imgText .dot{position:absolute;top:12px;left:-33px;display:block;width:17px;height:17px;background:url(../../../images/special/yangtze/dot.png) no-repeat 0 0;background-size:100%;}
+.imgTextList .imgText .imgArr{position:absolute;top:14px;left:-13px;display:block;width:13px;height:15px;background:url(../../../images/special/yangtze/arrIcon02.png) no-repeat 0 0;background-size:100%}
+
+
+/*EMBA公益-详细*/
+.commonDetailArea.benefitDetailArea{padding:0px 22px 50px;}
+.commonDetailArea.benefitDetailArea .title{padding:15px 0 6px;}
+.commonDetailArea.benefitDetailArea .title h2{font-weight:normal;color:#242424;}
+.commonDetailArea.benefitDetailArea .essayInfo p{width:92px;}
+.commonDetailArea.benefitDetailArea .essayContent{height:auto;}
+.footPage{position:fixed;left:0px;bottom:0px;width:100%;height:44px;padding:0 35px;text-align:center;border-top:1px solid #d4d4d4;background:#b2b2b2;}
+.footPage a{width:84px;height:23px;line-height:23px;margin-top:10px;text-align:center;font-size:15px;border-radius:2px;background:#e6e6e6;color:#161616;}
+.footPage .prevBtn{float:left;}
+.footPage .nextBtn{float:right;}
+.footPage a.on{background:#949494;}
+
+#hotList{
+height: 400px;
+/*padding-top: 20px;*/
+
+}

@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title name="UserEdit">信息编辑</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+<body  >
+
+    <div id="masklayer" style="background-color:#FFF;" class="pageloading" > <i></i>
+    </div>
+    <section>
+        <div class="businessCardArea">
+            <div class="commonBox">
+                <div class="item notborder">
+                    <div class="info">
+                        <span class="tit oneLine">个人头像</span>
+                    </div>
+                    <div class="info">
+                        <img class="headPic" id="imgUserHead"    />
+                    </div>
+                    <!--     <span class="pointer"></span>
+                -->
+            </div>
+            <div class="userheadarea" >
+                <form id="upform"  >
+                    <div>
+                        <input type="file" id="fileUp" name="fileUp" />
+                    </div>
+                    <div>请选择您要上传的头像</div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="commonBox">
+        <div class="item " >
+            <div class="info" id="VipName">
+                <span class="tit">姓名</span>
+                <span class="text" id="txtUserName"></span>
+            </div>
+        </div>
+        <div class="item" >
+            <div class="info" id="EnglishName">
+                <span class="tit">英文名</span>
+                <input class="text"  placeholder="请输入英文名" type="text" id="txtEnglishName" />
+            </div>
+
+        </div>
+        <div class="item " >
+            <div class="info" id="Class">
+                <span class="tit">项目班级</span>
+                <span class="text" id="txtClass"></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="commonBox">
+        <div class="item off" >
+            <div class="info" id="Mobile">
+                <span class="tit">
+                    手机 <em class="must">*</em>
+                </span>
+                <input class="text" placeholder="请输入手机" id="txtMobile" type="text" />
+            </div>
+            <span class="switch"></span>
+            <!--     <span class="pointer"></span>
+        -->
+    </div>
+    <div class="item off" >
+        <div class="info" id="SaifEmail">
+            <span class="tit">
+                邮箱 <em class="must">*</em>
+            </span>
+            <input class="text" id="txtSaifEmail" placeholder="请输入邮箱" type="text" />
+        </div>
+            <span class="switch"></span>
+   
+    <!--     <span class="pointer"></span>
+-->
+</div>
+</div>
+
+<div class="infoMenu">
+<span class="on">
+<em>商务信息</em>
+</span>
+<span>
+<em>个人信息</em>
+</span>
+<span>
+<em>联系信息</em>
+</span>
+</div>
+
+<!-- 商业信息 -->
+<div class="commonBox tab" style="display:block;">
+<div class="item" >
+<div class="info select" id="Special">
+    <span class="tit">擅长或经验</span>
+    <span class="text fColor" id="txtSpecial"></span>
+</div>
+<!--         <span class="switch" ></span>
+-->
+<span class="pointer"></span>
+</div>
+<div class="item" >
+<div class="info " id="Trade">
+<span class="tit">所在行业</span>
+<span class="text fColor" id="txtTrade"></span>
+</div>
+<span class="pointer"></span>
+</div>
+<div class="item" >
+<div class="info" id="Company">
+<span class="tit">
+    机构名称
+    <em class="must">*</em>
+</span>
+<input class="text" placeholder="请输入机构名称" id="txtCompany" type="text"  />
+</div>
+
+
+</div>
+
+<div class="item" >
+<div class="info" id="Branch">
+<span class="tit">
+    部门
+    <em class="must">*</em>
+</span>
+<input class="text" placeholder="请输入部门名称" id="txtBranch" type="text"  />
+</div>
+<div class="info" id="Position">
+<span class="tit">
+    职务
+    <em class="must">*</em>
+</span>
+<input class="text" placeholder="请输入职务" id="txtPosition" type="text"  />
+</div>
+
+</div>
+
+
+<div class="item" >
+<div class="info" id="CompanyUrl">
+<span class="tit">机构网站</span>
+<input class="text" placeholder="请输入机构网站" id="txtCompanyUrl" type="text"  />
+
+</div>
+
+</div>
+
+<div class="item" >
+<div class="info" id="CompanyIntro">
+<span class="tit">机构介绍</span>
+
+<input class="text" placeholder="请输入机构介绍" id="txtCompanyIntro" type="text"  />
+
+</div>
+</div>
+
+<div class="item" >
+<div class="info" id="FollowTrade">
+<span class="tit">关注行业</span>
+<span class="text fColor" id="txtFollowTrade"></span>
+</div>
+<span class="pointer"></span>
+</div>
+
+</div>
+
+<!-- 个人信息 -->
+<div class="commonBox tab" style="display:none;">
+<div class="item" >
+    <div class="info" id="EnrolDate">
+        <span class="tit">入学</span>
+        <span class="text" id="txtEnrolDate"></span>
+ 
+    </div>
+    <div class="info" id="GraduationDate">
+        <span class="tit">毕业</span>
+         <span class="text" id="txtGraduationDate"></span>
+
+    </div>
+</div>
+
+
+<div class="item off" >
+    <div class="info" id="Birthday">
+        <span class="tit">出生日期</span>
+        <input class="text" placeholder="请输入出生日期" id="txtBirthday" type="text"  />
+    </div>
+    <span class="switch"></span>
+
+</div>
+
+
+<div class="item off" >
+<div class="info select" id="Nationality">
+<span class="tit">国籍</span>
+<span class="text" id="txtNationality"></span>
+</div>
+<div class="info" id="Nation">
+<span class="tit">民族</span>
+<input class="text" placeholder="请输入民族" id="txtNation" type="text"  />
+</div>
+<span class="pointer"></span>
+</div>
+
+<div class="item off" >
+<div class="info " name="moreSelect"  >
+<span class="tit">城市</span>
+<span class="text fColor" id="txtCitys">无</span>
+</div>
+<div  class="morelist" id="moreCityList" >
+<div class="edithead"><span>编辑常驻信息</span><a class="editcancel" >关闭</a></div>
+    <div class="commonBox">
+        <div class="item ">
+            <div class="info select notevent" id="City">
+                <span  class="tit">常驻地</span>
+                  <span class="text"></span>
+            </div>
+            <span class="pointer"></span>
+        </div>
+    </div>
+    <div class="commonBox">
+        <div class="item ">
+            <div class="info select" id="OftenAddress">
+                <span  class="tit">常来往</span>
+                <span class="text"></span>
+            </div>
+            <span class="pointer"></span>
+        </div>
+    </div>
+        <div class="commonBox">
+        <div class="item ">
+            <div class="info" id="NativePlace">
+                <span  class="tit">籍贯</span>
+                  <input class="text" placeholder="请输入籍贯" id="txtNativePlace" type="text"  />
+            </div>
+        </div>
+    </div>
+    <div>
+    
+    </div>
+
+</div>
+<span class="pointer"></span>
+</div>
+
+
+
+<div class="item" >
+    <div class="info" id="MyIntroduce">
+        <span class="tit">自我介绍</span>
+
+        <input class="text" placeholder="请输入自我介绍" id="txtMyIntroduce" type="text"  />
+
+    </div>
+
+</div>
+<div class="item" >
+    <div class="info select" id="Hobby">
+        <span class="tit">兴趣爱好</span>
+  <!--       <input class="text" placeholder="请输入兴趣爱好" maxlength="126" id="txtHobby" type="text"  /> -->
+        <span id="txtHobby" class="text"></span>
+    </div>
+            <span class="pointer"></span>
+</div>
+
+<div class="item" >
+    <div class="info" id="Education" name="moreSelect" >
+        <span class="tit">学习经历</span>
+    <!--     <input class="text" placeholder="请输入学习经历" maxlength="126" id="txtEducation" type="text"  /> -->
+        <span class="text fColor" id="txtEducation"></span>
+    </div>
+    <div  class="morelist" id="moreEducationList" >
+<div class="edithead"><span>编辑学习经历信息</span><a class="editcancel" >关闭</a></div>
+    <div class="commonBox">
+        <div class="item ">
+            <div class="info  notevent" >
+                <span  class="tit">商学院经历</span>
+             <input class="text" placeholder="请输入商学院经历"  type="text" value="" maxlength="126"  />
+            </div>
+          
+        </div>
+    </div>
+    <div class="commonBox">
+        <div class="item ">
+            <div class="info " >
+                <span  class="tit">大学经历</span>
+                <input class="text" placeholder="请输入大学经历"  type="text" value="" maxlength="126" />
+            </div>
+        </div>
+    </div>
+    <div class="commonBox">
+        <div class="item ">
+            <div class="info" >
+                <span  class="tit">其他经历</span>
+                <input class="text" placeholder="请输入其他经历" type="text" value="" maxlength="126" />
+            </div>
+        </div>
+    </div>
+    <div>
+    
+    </div>
+
+</div>
+<span class="pointer"></span>
+
+</div>
+
+<div class="item" >
+    <div class="info" id="SocietyPosition">
+        <span class="tit">社会职务</span>
+        <input class="text" placeholder="请输入社会职务" maxlength="126" id="txtSocietyPosition" type="text"  />
+    </div>
+
+</div>
+
+<div class="item" >
+    <div class="info select" id="WishActivityPosition">
+        <span class="tit">我愿意在校友活动中承担</span>
+        <span class="text fColor" id="txtWishActivityPosition"></span>
+    </div>
+    <span class="pointer"></span>
+</div>
+
+</div>
+
+<!-- 联系信息 -->
+<div class="commonBox tab">
+<div class="item " >
+    <div class="info" id="CompanyPhone">
+        <span class="tit">单位座机</span>
+        <input class="text" placeholder="请输入单位座机" maxlength="126" id="txtCompanyPhone" type="text"  />
+    </div>
+    <div class="info" id="SpreadPhone">
+        <span class="tit">分机</span>
+        <input class="text" placeholder="请输入单位分机" maxlength="126" id="txtSpreadPhone" type="text"  />
+
+    </div>
+
+</div>
+<div class="item" >
+    <div class="info" id="Email">
+        <span class="tit">个人邮箱</span>
+        <input class="text" placeholder="请输入个人邮箱" maxlength="126" id="txtEmail" type="text"  />
+
+    </div>
+</div>
+<div class="item off" >
+    <div class="info" id="ContactAddress">
+        <span class="tit">通讯地址</span>
+        <input class="text" placeholder="请输入通讯地址" maxlength="126" id="txtContactAddress" type="text"  />
+
+    </div>
+
+</div>
+
+<div class="item off" >
+    <div class="info" id="AssistantName">
+        <span class="tit">助理姓名</span>
+        <input class="text" placeholder="请输入处理姓名" maxlength="126" id="txtAssistantName" type="text"  />
+    </div>
+    <div class="info" id="AssistantEmail">
+        <span class="tit">助理邮箱</span>
+        <input class="text" placeholder="请输入助理邮箱" maxlength="126" id="txtAssistantEmail" type="text"  />
+
+    </div>
+
+</div>
+<div class="item off" >
+    <div class="info" id="AssistantMobile">
+        <span class="tit">助理手机</span>
+        <input class="text" placeholder="请输入助理手机" maxlength="126" id="txtAssistantMobile" type="text"  />
+    </div>
+
+</div>
+
+<div class="item"  >
+    <div class="info" id="WeiXinNumber">
+        <span class="tit">微信号</span>
+        <input class="text" placeholder="请输入助理手机" maxlength="126" id="txtWeiXinNumber" type="text"  />
+    </div>
+
+</div>
+
+<div class="item" >
+    <div class="info" id="WeiBo">
+        <span class="tit">微博</span>
+
+        <input class="text" placeholder="请输入微博" maxlength="126" id="txtWeiBo" type="text"  />
+
+    </div>
+
+</div>
+<div class="item" >
+    <div class="info" id="Blog">
+        <span class="tit">个人博客</span>
+        <input class="text" placeholder="请输入个人博客" maxlength="126" id="txtBlog" type="text"  />
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="editbottom">
+
+<a href="javascript:Jit.AM.pageBack()">下次再来</a>
+<a id="editSave" >保存</a>
+
+</div>
+
+</section>
+</body>
+</html>

@@ -1,0 +1,53 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>在线酒店预订</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+<script>
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+</head>
+
+<body>
+<div class="PcBox indexbox" id="PcBox" style="height:500px; display:none;">
+	<div><img src="images/indexbg.jpg" width="100%"  /></div>
+  <div class="IndexMenu" style="position:absolute; left:0; top:0;">
+    <ul>
+      <li><a href="Search.html" class="indexa">
+        <div class="indexIcnbase"><img src="images/indexicn1.png" width="35" /></div>
+        预订</a></li>
+      <li><a href="shoplist.html" class="indexa">
+        <div class="indexIcnbase"><img src="images/indexicn3.png" width="35" /></div>
+        门店</a></li>
+      <li><a href="about.html" class="indexa">
+        <div class="indexIcnbase"><img src="images/indexicn2.png" width="35" /></div>
+        介绍</a></li>
+      <li><a href="javascript:void(0)" class="indexa"  onClick="GotoLogin('vipCenter.html')">
+        <div class="indexIcnbase" ><img src="images/indexicn4.png" width="35" style="margin-top:5px;" /></div>
+        我的</a></li>
+      <li><a href="javascript:void(0)" onClick="shareAP('share.html')" class="indexa">
+        <div class="indexIcnbase"><img src="images/indexicn5.png" width="35" /></div>
+        分享</a></li>
+   
+    </ul>
+  </div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<script type="text/javascript">
+var loadMore = '';
+var Von = 'indexAbs()';
+var srcc = document.createElement("script"); srcc.setAttribute("src","js/base.js?v="+Math.random());document.body.appendChild(srcc);
+function indexAbs(){
+	$("#PcBox").fadeIn(800);
+}
+
+</script>
+</body>
+</html>

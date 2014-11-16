@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
+    <title name="Benefit">长江商学院-EMBA公益</title>
+    <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
+    <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+</head>
+
+<body>
+    <div id="masklayer"  class="pageloading" > <i></i>
+    </div>
+    <section class="commonDetailPage">
+        <div class="commonDetailArea">
+
+            <div id="hotList" >
+                <div>
+                <br>
+                    <p class="titleIcon">
+                        <img src="../../../images/special/yangtze/benefitIcon.png" > <strong class="nper" id="txtSerial" ></strong>
+                    </p>
+                    <div class="imgTextList" id="hotScroll"></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+</body>
+</html>
+<script type="text/html" id="tpDataList" > 
+
+    <%for (var i = 0; i < datas.length; i++) {
+    var dataInfo=datas[i];
+    %>
+        <a href="javascript:Jit.AM.toPage('BenefitDetail','MicroID=<%=dataInfo.MicroID%>&MicroTypeID=<%=dataInfo.MicroTypeID%>&MicroNumberID=<%=dataInfo.MicroNumberID%>')">
+                  <div class="titleWrap">
+                <p class="month"><%=dataInfo.PublishDate %>月</p>
+                <h2 class="tit"><%=dataInfo.MicroTitle %></h2>
+            </div>
+            <div class="imgText">
+                <p class="imgWrap">
+                    <img  src="<%=dataInfo.ImageUrl%>" onerror="javascript:this.src='../../../images/special/yangtze/img.jpg'" >
+                    <em class="dot"></em>
+                    <em class="imgArr"></em>
+                </p>
+            </div>
+            </a>
+<%
+  };
+%></script>

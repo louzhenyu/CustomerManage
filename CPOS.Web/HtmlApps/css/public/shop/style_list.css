@@ -1,0 +1,37 @@
+﻿@charset "utf-8";
+.search_bar a i,.search_bar input[type="button"],.btn_remove {
+    background:url(../images/sprites.png) no-repeat 0 0;
+}
+
+.goods_wrap {
+    background-color:#eaeaea;
+}
+/*新导航样式*/
+#topNav {background-color: #EBEAEA; border-bottom: 1px solid #CDCDCD; height:42px; position: fixed; top: 0; width: 100%; z-index: 9;}
+#topNav ul {width:100%; height:42px; display:-webkit-box;}
+#topNav ul li {-webkit-box-flex:1;-webkit-box-pack:center; border-left:1px solid #C5C5C5;text-align:center;}
+#topNav ul li:first-child { border:none;}
+#topNav ul li a { display:inline-block; width:35px; height:28px;margin:5px auto 0; background:url(../../../images/common/navmenu.png) no-repeat 0 0; background-size: 100% auto;}
+#topNav ul li:nth-child(1) a {background-position: 6px 1px;}
+#topNav ul li:nth-child(2) a {background-position: 8px -28px;}
+#topNav ul li:nth-child(3) a {background-position: 3px -62px;position: relative;text-indent: 0;}
+#topNav ul li:nth-child(4) a {background-position: 6px -92px;}
+#topNav ul li:nth-child(3) a span {background-color: #FF3344;border-radius: 50%;color: #FFFFFF;font-size: 0.7rem;height: 15px;
+line-height: 15px;position: absolute;right: -11px;text-align: center;top: 0;width: 15px;display: none;}
+/*end*/
+
+.pro_list { padding:0 10px;}
+.pro_list li { padding:10px 0; border-bottom:1px solid #ccc;}
+.pro_list li a { display:-webkit-box;}
+.pro_list li .imgBox { width:35%; margin-right:10px;}
+.pro_list li .imgBox img { border:1px solid #ccc; width:100%;}
+.pro_list li .infoBox { width:60%;}
+.pro_list li .infoBox h3 { margin-bottom:5px;}
+.pro_list li .infoBox p:nth-child(2) { color:#999;}
+.pro_list li .infoBox p:last-child { color:#cc0000;}
+
+.coupon_list { padding:50px 10px 10px 10px; background:#E1E5E8;}
+.coupon_wrap { background:#fff; border:1px solid #C9CDCE; padding:15px 10px; text-align:left;}
+.coupon_wrap th,.coupon_wrap td { padding:15px 5px; border-bottom:1px dashed #ccc;}
+.coupon_wrap td span { font-size:12px; color:#666;}
+.coupon_wrap td b { color:#cc0000;}

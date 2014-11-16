@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="format-detection" content="telephone=yes"/>
+<meta http-equiv='X-UA-Compatible' content='IE=EmulateIE7' />
+<meta name="viewport" content="width=device-width,  maximum-scale=1.0, minimum-scale=1.0" />
+
+<link href="css/welfaceV1.css" type="text/css" rel="stylesheet" />
+<title id="HeaderTitle">中欧国际工商学院</title>
+<!--[if IE]>  
+<script type="text/javascript" src="js/msie.js"></script>
+<![endif]-->
+
+</head>
+
+<body  >
+<div class="PcBox" id="PcBox" style="width:100%; margin-left:auto; margin-right:auto; overflow:hidden; display:none;">
+  <div class="WelfareSearch" style="display:none; position:absolute;" id="WelfareSearch">
+    <div class="SearchInput">
+      <div class="SearchInputInner">
+        <input type="text"  class="SearchInputInnerInput" value="搜索" />
+      </div>
+      <input class="SearchInputInnerBtn" type="button" value="" />
+    </div>
+    <Span class="blank1" style="height:20px;"></Span>
+    <div class="SearchListCy" id="SearchListCy">
+      <ul>
+      </ul>
+    </div>
+  </div>
+  <div style="position:relative;" id="AppCom">
+  <nav class="Menu">
+    <div class="TopMenu"><span class="Comeback" id="BackPrev"  onClick="Event.BackPre()" style="display:none;"></span><span id="Btoo">全部课程</span><!--<span class="ActionSearch" onclick="WelfareAction.Search()"></span>--></div>
+    </nav>
+    <div class="WelfareConnext" id="CourseConnext" page="1" isnext="1" isloading="0">
+      <div class="WelfareConnextBox">
+        <ul id="waterwall1">
+        </ul>
+      </div>
+      <div class="WelfareConnextBox">
+        <ul id="waterwall2">
+        </ul>
+      </div>
+    </div>
+    
+  </div>
+  <div class="AppBgGray" id="searchBgGray" style="display:none" onClick="WelfareAction.CloseSearch()"></div>
+  <div class="AppBgGray" id="AppBgGray"></div>
+</div>
+<div class="loading" style="position:absolute; display:none;"><img src="images/382.gif" width="40" height="40" /></div>
+<input type="hidden" value="0" id="backPrevPosition" />
+<script type="text/javascript">
+var loadMore = '';var Von = 'Course.getHighLevelCourseList("1")';</script> 
+<script type="text/javascript" src="js/base.js"></script>
+
+</body>
+</html>

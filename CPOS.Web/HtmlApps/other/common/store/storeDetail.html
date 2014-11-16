@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title name="StoreDetail"></title>
+<link href="../../../css/base/global.css" rel="stylesheet" type="text/css" />
+<link href="css/store.css" rel="stylesheet" type="text/css" />
+</head>
+
+<section id="section" data-js="../../common/store/js/storeDetail">
+        <img class="commonTopBg" src="/HtmlApps/images/common/store/topBg.jpg" alt=""/>
+        
+        <div id="touchslider" class="commonBanner">
+            
+        </div>
+    
+    
+        <div id="infoArea">
+        	
+        </div>
+    
+</section>
+ <script type="text/javascript" src="../../static/js/lib/require.js" defer async data-main="../../static/js/main.js"></script>
+<script id="tplSlider" type="text/html">
+	<div class="bannerViewport touchslider-viewport">
+	    <div class="bannerList">
+	    	<%if(list.length){%>
+	    		<%for(var i=0;i<list.length;i++){%>
+			        <div class="bannerItem">
+			            <img src="<%=list[i].imageURL%>" alt=""/>
+			        </div>
+	        	<%}%>
+	        <%}else{%>        	
+		        <div class="bannerItem">
+		            <img src="/HtmlApps/images/common/misspic.png" alt=""/>
+		        </div>
+        	<%}%>
+	    </div>
+	</div>
+	
+	<div class="bannerDot">
+	    <div class="dotItem">
+	        <%if(list.length){%>
+	    		<%for(var i=0;i<list.length;i++){%>
+		        	<span class="jsNavItem <%if(i==0){%>on<%}%>"></span>
+		        <%}%>
+	        <%}else{%>        	
+		       	<span class="jsNavItem on"></span>
+        	<%}%>
+	    </div>
+	</div>
+</script>
+<script id="tplInfo" type="text/html">
+	<div class="storeInfoArea">
+	    <p class="tit"><%=storeName%></p>
+	    <p class="adsArea">
+	        <span  class="adsBox clearfix">
+	            <span class="text"><em>地址</em><span><%=address%></span></span>
+	            <a class="icon" href="http://api.map.baidu.com/marker?location=<%=latitude%>,<%=longitude%>&coord_type=gcj02&title=<%=storeName%>&name=<%=storeName%>&content=<%=address%>&output=html&src=jit|jit">
+	            </a>
+	        </span>
+	    </p>
+	    
+	    <p>
+	    	<span  class="telBox clearfix">
+	        	<span class="text">电话<span><%=tel%></span></span>
+	            <a class="icon" href="tel:<%=tel%>"></a>
+	        </span>
+	    </p>
+	</div>
+	
+	<div class="storeIntroArea">
+	    <h2 class="title">门店介绍</h2>
+	    <p class="pTag"><%if(remark){%><%=remark%><%}else{%>暂无内容<%}%></p>
+	    <%if(remark&&remark.length>75){%><p class="jsMoreBtn moreBtn"><span>了解更多详情</span></p><%}%>
+	    
+	</div>
+	<%if(isApp==1){%>
+	<a href="javascript:;" class="jsBookOnline lineOrderBtn">在线预约</a>
+	<%}%>
+</script>
+
+</body>
+</html>

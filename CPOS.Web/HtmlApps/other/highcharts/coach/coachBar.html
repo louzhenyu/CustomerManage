@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title>coach</title>
+<link href="../../static/css/global.css" rel="stylesheet" type="text/css" />
+<link href="css/mobiscroll.core-2.5.2.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+/*common*/
+html,body,body>section{height:100%;min-height:100%;}
+body>section{max-width:640px;margin:0 auto;}
+body{font:15px/1.2em "Microsoft YaHei";background:#ffffff;}
+.devIcon{position:fixed;top:50%;left:50%;margin:-130px 0 0 -78px;width:155px;height:191px;}
+.devIcon img{width:100%;height:100%;}
+
+.coachPage{padding:10px;}
+.dateSelect{text-align:center;}
+.dateSelectBox{display:inline-block;margin-top:13px;}
+.dateSelectBox>*{float:left;height:28px;line-height:28px;}
+.dateSelectBox .text1{font-weight:bold;}
+.dateSelectBox .text2{font-weight:bold;}
+.dateSelectBox label{
+width: 100px;
+border: 1px solid #757575;
+background: url(images/dateIcon.png) no-repeat 79px center;
+background-size: 18px 15px;
+}
+.dateSelectBox .startDate{margin:0 10px 0 5px;}
+.dateSelectBox .endDate{margin-left:10px;}
+.dateSelectBox input{display:block;width:100%;text-indent:2px;border:none;background:none;}
+
+.dateSelect .searchBtn{float:right;width:100px;height:26px;margin:18px 2px 18px 0;line-height:26px;text-align:center;background:#dba449;color:#f9f9f9;}
+
+</style>
+</head>
+<body>
+<section class="coachPage" id="section" data-js="../coach/js/chartsbar">
+	<div class="dateSelect">
+        <div class="dateSelectBox clearfix">
+            <p class="text1">日期:&nbsp;&nbsp;从</p>
+            <label class="startDate"><input id="txtDate" type="text"/></label>
+            <p class="text2">至</p>
+            <label class="endDate"><input id="txtTime" type="text"/></label>
+        </div>
+        <div class="clearfix">
+        	<a class="searchBtn" id="search" href="javascript:;">查询</a>
+        </div>
+    </div>
+    
+    <div class="infoText">
+    	
+    </div>
+    <div id="container" style="min-width: 320px; max-width: 640px; height: 400px; margin: 0 auto"></div>
+</section>
+<script type="text/javascript" src="/HtmlApps/other/static/js/lib/require.js" defer async data-main="js/main.js"></script>
+</body>
+</html>
+

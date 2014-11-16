@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="x-rim-auto-match" content="none">
+<title>类目</title>
+<link href="css/global.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+html,body{height:100%;min-height:100%;}
+body{font:15px/1.2em "Microsoft YaHei";background:#fff;color:#333;}
+
+.categoryList{max-width:640px;padding-left:15px;margin:0 auto;}
+.subCategoryList{max-width:640px;margin:0 auto;}
+.categoryList .item{border-bottom:1px solid #eee;}
+.categoryList .picIcon{float:left;padding-top:14px;}
+.categoryList .picIcon img{display:block;width:35px;height:35px;}
+.categoryList .infoBox{height:60px;padding-top:15px;margin-left:50px;}
+.categoryList .title{font:bold 15px/1.2em "Microsoft YaHei";}
+.categoryList .subTit{margin-top:2px;font-size:12px;color:#999;}
+.categoryList .subTit span{height:17px;margin:0 6px 3px 0;}
+
+.categoryList .commonSubList{display:none;}
+.commonSubList li{position:relative;height:46px;line-height:46px;border-bottom:1px solid #eee;font-size:15px;background:#fff;color:#333;padding-left: 50px;}
+.commonSubList li a{display: block;}
+.commonSubList li:after{content:"";position:absolute;top:0px;right:10px;width:10px;height:45px;background:#fff url(images/arr.png) no-repeat center center;background-size:9px 15px;}
+.categoryList li.on .commonSubList{display:block;}
+.subCategoryList .commonSubList li{padding-left:8px;border-bottom:1px solid #dadada;font-weight:bold;font-size:14px;color:#333;}
+</style>
+</head>
+
+<body>
+<section id="section" data-js="/HtmlApps/other/alading/js/subCategory.js">
+	<div class="subCategoryList">
+        <ul id="categoryList" class="commonSubList">
+            
+        </ul>
+    </div>
+</section>
+<script type="text/html" id="tplListItem">
+<%for(var i=0,idata;i<list.length;i++){idata=list[i];%>
+    <li>
+    <a href='goodList.html?Action%3DGetMallItems%26ReqContent%3D%7B%22CityID%22%3A21%2C%22UserID%22%3A%22aa7c90bba10b44a79519cec5a7478b0b%22%2C%22deviceToken%22%3A%22747d1c07cd25190ca6e533ef10a5bf135d645a66f6c4b26cd46dca4f8117a271%22%2C%22Platform%22%3A%222%22%2C%22Parameters%22%3A%7B%22PageSize%22%3A10%2C%22PageIndex%22%3A0%2C%22CategoryID%22%3A%22<%=idata.CategoryID%>%22%7D%2C%22channel%22%3A%227%22%2C%22Locale%22%3A1%2C%22plat%22%3A%22iphone%22%7D%26title%3D<%=idata.Name%>'>
+        <%=idata.Name%>
+    </a>
+    </li>
+<%}%>
+</script>
+<script type="text/javascript" src="/HtmlApps/other/static/js/lib/require.js" data-main="/HtmlApps/other/static/js/main.js"></script>
+</body>
+</html>
