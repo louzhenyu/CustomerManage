@@ -1,1 +1,0 @@
-F:\Trade\CustomerManage\CPOS.Web\obj\Debug\CPOS.Web.csprojResolveAssemblyReference.cache

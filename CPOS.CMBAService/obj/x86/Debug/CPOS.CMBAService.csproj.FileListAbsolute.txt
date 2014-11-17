@@ -1,1 +1,0 @@
-F:\Trade\CustomerManage\CPOS.CMBAService\obj\x86\Debug\CPOS.CMBAService.csprojResolveAssemblyReference.cache
