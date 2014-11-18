@@ -29,9 +29,6 @@ using JIT.CPOS.BS.DataAccess.Base;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.DataAccess.Utility;
-using JIT.Utility.DataAccess;
-using JIT.CPOS.BS.Entity;
-using JIT.Utility.DataAccess.Query;
 using JIT.Utility.Reflection;
 
 namespace JIT.CPOS.BS.DataAccess

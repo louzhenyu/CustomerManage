@@ -63,6 +63,10 @@
     <Reference Include="ThoughtWorks.QRCode">
       <HintPath>..\..\..\Infrastructure\Code\ReferenceDll\ThoughtWorks.QRCode.dll</HintPath>
     </Reference>
+    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\Utility.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommonCompress.cs" />
@@ -77,12 +81,6 @@
     <Compile Include="Utils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
-      <Project>{1dfd5c01-71c0-41d9-82e4-caba22331835}</Project>
-      <Name>Utility</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

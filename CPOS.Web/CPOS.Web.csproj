@@ -79,6 +79,10 @@
     <Reference Include="ThoughtWorks.QRCode">
       <HintPath>..\..\..\Infrastructure\Code\ReferenceDll\ThoughtWorks.QRCode.dll</HintPath>
     </Reference>
+    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\Utility.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="AlipayWapTrade2\Call_Back.aspx" />
@@ -4372,14 +4376,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructure\Code\Const\Const.csproj">
-      <Project>{bb4c49e2-bd7c-4556-91c4-d3575433a8db}</Project>
-      <Name>Const</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
-      <Project>{1dfd5c01-71c0-41d9-82e4-caba22331835}</Project>
-      <Name>Utility</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
       <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
       <Name>CPOS.BS.BLL</Name>

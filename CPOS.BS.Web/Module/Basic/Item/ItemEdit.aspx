@@ -73,7 +73,6 @@
             }
 
             .upbtn span {
-                display: bl;
                 display: block;
                 float: left;
                 width: 100px;

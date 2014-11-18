@@ -68,6 +68,14 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Utility.Message, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\Utility.Message.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActivityMediaBLL.cs" />
@@ -1029,14 +1037,6 @@
     <Compile Include="Inout3Service.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility.Message\Utility.Message.csproj">
-      <Project>{365c2765-3bc4-462d-96c3-6c175e0ccb16}</Project>
-      <Name>Utility.Message</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
-      <Project>{1dfd5c01-71c0-41d9-82e4-caba22331835}</Project>
-      <Name>Utility</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.DataAccess\CPOS.BS.DataAccess.csproj">
       <Project>{928C0A63-F799-49B5-A566-65BE4ABC9F56}</Project>
       <Name>CPOS.BS.DataAccess</Name>

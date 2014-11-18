@@ -44,6 +44,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\Utility.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -57,10 +61,6 @@
     <Compile Include="TestMaterial\APIClientProxy.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
-      <Project>{1dfd5c01-71c0-41d9-82e4-caba22331835}</Project>
-      <Name>Utility</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
       <Project>{6d911430-7243-4ab2-b70e-4daffc4d1b22}</Project>
       <Name>CPOS.BS.Entity</Name>
