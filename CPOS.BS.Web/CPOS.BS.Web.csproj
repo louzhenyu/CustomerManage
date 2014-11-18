@@ -5985,6 +5985,7 @@
     <Content Include="Module\EMMLManage\Qixin.Master" />
     <None Include="Module\static\images\Sorting icons.psd" />
     <None Include="Properties\PublishProfiles\bs.pubxml" />
+    <None Include="Properties\PublishProfiles\bs_config.pubxml" />
     <None Include="Properties\PublishProfiles\cpos_bs.pubxml" />
     <Content Include="Service References\MapKpiService\JIT.CPOS.BS.Web.MapKpiService.KpiCategory.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
