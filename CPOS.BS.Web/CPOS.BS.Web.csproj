@@ -83,10 +83,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ReferenceDll\ThoughtWorks.QRCode.dll</HintPath>
     </Reference>
-    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ReferenceDll\Utility.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationInterface\NwEvents\Demo.htm" />
@@ -513,6 +509,16 @@
     <Content Include="Module\AppConfig\images\searchBtn.jpg" />
     <Content Include="Module\AppConfig\images\sm.png" />
     <Content Include="Module\AppConfig\images\ss.png" />
+    <Content Include="Module\AppConfig\js\homePageConfig.js" />
+    <Content Include="Module\AppConfig\js\main.js" />
+    <Content Include="Module\AppConfig\js\tempModel.js" />
+    <Content Include="Module\AppConfig\lib\jquery-1.8.3.min.js" />
+    <Content Include="Module\AppConfig\lib\require.js" />
+    <Content Include="Module\AppConfig\main.js" />
+    <Content Include="Module\AppConfig\plugin\jquery.jqpagination.js" />
+    <Content Include="Module\AppConfig\plugin\kindeditor.js" />
+    <Content Include="Module\AppConfig\plugin\template.js" />
+    <Content Include="Module\AppConfig\plugin\touchslider.js" />
     <Content Include="Module\Basic\ItemCategoryNew\Controller\ItemCategoryManagementCtl.js" />
     <Content Include="Module\Basic\ItemCategoryNew\ItemCategoryManagement.aspx" />
     <Content Include="Module\Basic\ItemCategoryNew\Model\ItemCategoryVM.js" />
@@ -7951,6 +7957,10 @@
     <Folder Include="Module\Withdraw\Handler\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
+      <Project>{1dfd5c01-71c0-41d9-82e4-caba22331835}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
       <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
       <Name>CPOS.BS.BLL</Name>
