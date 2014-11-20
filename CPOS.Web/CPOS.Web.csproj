@@ -315,6 +315,7 @@
     <Content Include="HtmlApps\css\public\hourse\style.css" />
     <Content Include="HtmlApps\css\public\hourse\style1.css" />
     <Content Include="HtmlApps\css\public\index\style.css" />
+    <Content Include="HtmlApps\css\public\index\style_app.css" />
     <Content Include="HtmlApps\css\public\jifen\style.css" />
     <Content Include="HtmlApps\css\public\jifen\style_jifen.css" />
     <Content Include="HtmlApps\css\public\shop\style.css" />
@@ -521,6 +522,7 @@
     <Content Include="HtmlApps\html\public\hourse\introduce.html" />
     <Content Include="HtmlApps\html\public\hourse\reserveStore.html" />
     <Content Include="HtmlApps\html\public\index\index_shop.html" />
+    <Content Include="HtmlApps\html\public\index\index_shop_app.html" />
     <Content Include="HtmlApps\html\public\jifen\goods_detail_jifen.html" />
     <Content Include="HtmlApps\html\public\jifen\jifen_detail.html" />
     <Content Include="HtmlApps\html\public\jifen\jifen_gift.html" />
@@ -1450,6 +1452,7 @@
     <Content Include="HtmlApps\js\public\hourse\val.js" />
     <Content Include="HtmlApps\js\public\hourse\zepto.js" />
     <Content Include="HtmlApps\js\public\index\index_shop.js" />
+    <Content Include="HtmlApps\js\public\index\index_shop_app.js" />
     <Content Include="HtmlApps\js\public\recommend\index.js" />
     <Content Include="HtmlApps\js\public\repository\repository_detail.js" />
     <Content Include="HtmlApps\js\public\repository\repository_index.js" />
