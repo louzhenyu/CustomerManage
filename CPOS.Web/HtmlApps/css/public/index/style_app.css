@@ -37,7 +37,6 @@ html,body{height:100%;}
 .navArea a img{display:block;width:40px;height:40px;margin:8px auto 5px;}
 .navArea a span{display:block;text-align:center;font:12px/1.2em "Microsoft YaHei";color:#666;}
 /*noticeList*/
-/*
 .noticeList{min-height:165px;margin:10px 0;text-align:center;font-size:12px;}
 .noticeList .noticeArea{width:32%;float:left;border:1px solid #e0e0e0;-webkit-box-sizing:border-box;}
 .noticeList .noticeArea.mlmr{margin:0 2%;}
@@ -56,7 +55,6 @@ html,body{height:100%;}
 .noticeList .info .time span{display:inline-block;width:8px;height:16px;font-weight:bold;background:#000;color:#fff;}
 .noticeList .info .time em{display:inline-block;width:9px;line-height:16px;margin-right:1px;}
 .noticeList .info .time span:nth-child(odd),.noticeList .info .minute{margin-right:1px;}
-*/
 
 
 /*图文列表*/
