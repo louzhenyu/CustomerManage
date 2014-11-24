@@ -150,7 +150,7 @@ var JitCfg = {
 		}
 
 	}
-	
+	 ///判定手机端还是pc端
 	function deviceType() {  
     
 		var sUserAgent= navigator.userAgent.toLowerCase();  
@@ -308,38 +308,49 @@ var JitCfg = {
 			appcookie = JSON.parse(appcookie);
 
 			return (appcookie[key]==undefined?null:appcookie[key]);
-		}
+		} ,
+        del:function(key){
+
+            if(!appManage.CUSTOMER_ID){
+                alert('cookie 操作出错，需要customerId');
+                return;
+            }
+
+            deleteCookie('jit_'+appManage.CUSTOMER_ID);
+
+
+        }
 	};
-	
-	var locStorage = {
-	
-		set:function(key,val){
-			
-			if(key){
-			
-				if(val){
-				
-					localStorage.setItem(key,val);
-					
-				}else{
-				
-					localStorage.removeItem(key);
-				}
-				
-			}else{
-				
-				log('set localStorage Error:key is null','error');
-			}
-		},
-		
-		get:function(key){
-			
-			return localStorage.getItem(key);
-		}
-	};
-	
+
+
+	///HTML5 LocalStorage 本地存储获取修改和删除
 	var store = function(){
-		
+        var locStorage = {
+
+            set:function(key,val){
+
+                if(key){
+
+                    if(val){
+
+                        localStorage.setItem(key,val);
+
+                    }else{
+
+                        localStorage.removeItem(key);
+                    }
+
+                }else{
+
+                    log('set localStorage Error:key is null','error');
+                }
+            },
+
+            get:function(key){
+
+                return localStorage.getItem(key);
+            }
+        };
 		var args = arguments;
 		
 		if(args.length == 1){
@@ -351,30 +362,28 @@ var JitCfg = {
 			locStorage.set(args[0],args[1]);
 		}
 	}
-	
-	
-	var sesStorage = {
-	
-		set:function(key,val){
-			
-			if(key){
-			
-				sessionStorage.setItem(key,val);
-				
-			}else{
-				
-				log('set sessionStorage Error:key is null','error');
-			}
-		},
-		
-		get:function(key){
-			
-			return sessionStorage.getItem(key);
-		}
-	};
-	
+
+    /// Html5 SessionStorage 类似设置一个会话Cookie（即不设置过期时间，当关闭浏览器或是页面时，会话Cookie将被清除）
 	var session = function(){
-		
+        var sesStorage = {
+
+            set:function(key,val){
+
+                if(key){
+
+                    sessionStorage.setItem(key,val);
+
+                }else{
+
+                    log('set sessionStorage Error:key is null','error');
+                }
+            },
+
+            get:function(key){
+
+                return sessionStorage.getItem(key);
+            }
+        };
 		var args = arguments;
 		
 		if(args.length == 1){
@@ -421,15 +430,14 @@ var JitCfg = {
 		store : store,
 		valid : validator,
 		cookie : cookie,
-		getPostion : getOffsetPos
+		getPostion : getOffsetPos,
+        session:session
 	};
 	
 	
-	/*
+	/******************* #appManage#obj对象
 		@@页面管模块
-		
 		appManage = {
-		
 			//设置应用的配置信息
 			setAppVersion(配置信息)，
 			
@@ -448,14 +456,12 @@ var JitCfg = {
 			//获取页面之间通信的数据信息
 			getPageParam(key)
 		}
-	*/
-	
+	*******************/
 	var appManage = {
 	 
 		'APP_CODE':'',
 		
 		//获得url上的参数
-
 		getUrlParam:function(key){
 
 			var value = "",itemarr = [],
@@ -486,7 +492,7 @@ var JitCfg = {
 				return rst;
 			}
 		},
-
+        //随机生成一个唯一的ID
 		buildUserId:function() {
 		
 			var guid = '';
@@ -500,9 +506,9 @@ var JitCfg = {
 			
 			return guid;
 		},
-		
+
 		setAppVersion:function(cfg){
-		
+		//HTML5 LocalStorage 缓存一个Version配置
 			var me = this;
 			
 			if(!me.CUSTOMER_ID){
@@ -546,8 +552,9 @@ var JitCfg = {
 			
 			store(me.CUSTOMER_ID,JSON.stringify(ver));
 		},
-		getAppVersion:function(){
-			
+        //取出当前页面version;
+	getAppVersion:function(){
+
 			var me = this;
 			
 			if(!me.CUSTOMER_ID){
@@ -575,12 +582,12 @@ var JitCfg = {
 		},
 		
 		/*
-			设置ajax交互时的基本数据 (需要和config.js 中的AJAX_PARAMS 相匹配)
-			
+         setBaseAjaxParam设置ajax交互时的基本数据 (需要和config.js 中的AJAX_PARAMS 相匹配)
+
 			@param : {
 				'openId':'xxx',
 				'userId':'xxx',
-				'locale':'xxx',
+				'locale':'ch',
 				'customerId':''
 			}
 		*/
@@ -607,7 +614,6 @@ var JitCfg = {
 				}
 			}
 		},
-		
 		getBaseAjaxParam:function(){
 			
 			var me = this , appcfg = me.getAppVersion();
@@ -628,7 +634,7 @@ var JitCfg = {
 			
 			return param;
 		},
-		
+        //HTML5 LocalStorage 本地存储获取修改、添加
 		setAppParam:function(type,key,val){
 			
 			var rkey = this.APP_CODE + '_' + type + '_' + key;
@@ -646,7 +652,7 @@ var JitCfg = {
 				store(rkey , 's_' + val );
 			}
 		},
-		
+
 		getAppParam:function(type,key){
 			
 			var rkey = this.APP_CODE + '_' + type + '_' + key;
@@ -671,7 +677,7 @@ var JitCfg = {
 				return eval('(' + rval + ')');
 			}
 		},
-		
+        //当前页面的  HTML5 Session    修改、添加
 		setAppSession:function(type,key,val){
 			
 			var rkey = this.APP_CODE + '_' + type + '_' + key;
@@ -714,16 +720,18 @@ var JitCfg = {
 				return eval('(' + rval + ')');
 			}
 		},
-		
-		setPageParam:function(key,val){
+
+        //HTML5 LocalStorage type=PageParam 本地存储获取修改、添加
+        setPageParam:function(key,val){
 			
 			this.setAppParam('PageParam',key,val);
 		},
-		
 		getPageParam:function(key){
 			
 			return this.getAppParam('PageParam',key);
 		},
+
+        //当前页面的  HTML5 Session  type=PageParam  修改、添加
 		setPageHashParam:function(key,val){
 
 			this.setAppSession('PageParam',key,val);
@@ -732,11 +740,12 @@ var JitCfg = {
 
 			return this.getAppSession('PageParam',key);
 		},
-		checkAppPageConfig:function(_needReLoad){
+         //将是否从新加载 config对应的   CUSTOMER_ID js文件
+        checkAppPageConfig:function(_needReLoad){
 			
 			var cfg = this.getAppVersion();
-			
-			var pcfg = this.getAppPageConfig();
+
+            var pcfg = this.getAppPageConfig();
 			
 			if(!pcfg || _needReLoad){
 				
@@ -755,17 +764,17 @@ var JitCfg = {
 				Jit.AM.setAppPageConfig(vcfg);
 			}
 		},
-		
+        //HTML5 LocalStorage type=PageCfg 本地存储修改、添加
 		setAppPageConfig:function(cfg){
 			
 			this.setAppParam('PageCfg','',cfg);
 		},
-		
+        //HTML5 LocalStorage type=PageCfg 本地存储获取
 		getAppPageConfig:function(){
 		
 			return this.getAppParam('PageCfg','');
 		},
-		
+        //pageHistory 历史导航记录缓存 pageHistoryPush 增加
 		pageHistoryPush:function(pagename){
 			
 			var history = this.getAppSession('PageHistory','');
@@ -788,7 +797,7 @@ var JitCfg = {
 				this.setAppSession('PageHistory','',pagename);
 			}
 		},
-		
+       //pageHistory 历史导航记录缓存 pageHistorypop 删除
 		pageHistoryPop:function(){
 			
 			var history = this.getAppSession('PageHistory','');
@@ -802,10 +811,12 @@ var JitCfg = {
 				this.setAppSession('PageHistory','',list.join(','));
 			}
 		},
+        // pageHistory 历史导航记录缓存清空
 		pageHistoryClear:function(){
 			
 			this.setAppSession('PageHistory','',null);
 		},
+        //pageHistory历史导航记录缓存
 		hasHistory:function(){
 			
 			var history = this.getAppSession('PageHistory','');
@@ -822,6 +833,7 @@ var JitCfg = {
 			
 			return false;
 		},
+        //返回上一页
 		pageBack:function(){
 			
 			var history = this.getAppSession('PageHistory','');
@@ -854,12 +866,17 @@ var JitCfg = {
 				}
 			}
 		},
-		
+		/*
+		 跳转指定页面
+		 pagename   取出 config 中对应的customerId的  json对象中的页面key
+         param 跳转页面要传递的参数
+		*/
+
 		toPage:function(pagename,param){
 			
-			var pagecfg = this.getAppPageConfig(),
+			var pagecfg = this.getAppPageConfig(), //取出 config 中对应的customerId的js json对象
 			
-			page = pagecfg[pagename];
+			page = pagecfg[pagename];// 获取页面中对应的详细参数
 			
 			var htmlpath = page.path.replace(/%(\S*)%/,function(str){
 
@@ -882,9 +899,10 @@ var JitCfg = {
 				version = (cfg.APP_CACHE?cfg.APP_VERSION:((new Date()).getTime()));
 				
 				location.href = '/HtmlApps/html/'+htmlpath+'?customerId='+Jit.AM.CUSTOMER_ID+(param?('&'+param):'')+'&version='+version;
+                console.log((param?('&'+param):'')+'&version='+version);
 			}
 		},
-
+         //返回不走 NoAuthGoto认证的页面路径。pageName页面的key pageName是页面的可以
 		getPageUrl:function(pageName,param){
 
 			var url = location.host+'/WXOAuth/NoAuthGoto.aspx?'
@@ -893,6 +911,7 @@ var JitCfg = {
 					+ 'Url=o2oapi.dev.aladingyidong.com/HtmlApps/html/_pageName_';
 			return url;
 		},
+        //既不走  Auth认证也不走订阅号，
 		toPageWithParam:function(pagename,param){
 		
 			var value = "",itemarr = [],params = {},
@@ -932,6 +951,7 @@ var JitCfg = {
 			
 			this.toPage(pagename,paramslist.join('&'));
 		},
+        //旧的ajax请求参数格式化方法
 		buildAjaxParams:function(param){
 			var _param = {
 				type: "post",
@@ -975,6 +995,7 @@ var JitCfg = {
 			
 			return _param;
 		},
+        //新的ajax请求参数格式化方法
 		buildNewAjaxParams:function(param){
 
 			var _param = {
@@ -1030,14 +1051,16 @@ var JitCfg = {
 
 			return _param;
 		},
-		ajax:function(param){
+		//ajax请求封装
+        ajax:function(param){
 			var action = param.data.action;
 			
 			var _param;
 			if(param.url.indexOf('Gateway.ashx')!=-1 || param['interfaceMode'] == 'V2.0'){
 
 				_param = this.buildNewAjaxParams(param);
-			}else{
+			}
+            else{
 
 				_param = this.buildAjaxParams(param);
 			}
@@ -1076,6 +1099,8 @@ var JitCfg = {
 			
 			$.ajax(_param);
 		},
+
+       //页面是否是存在version 中是否存在 LOG_PAGE
 		isPageNeedLog:function(){
 		
 			var cfg = Jit.AM.getAppVersion(),
@@ -1145,6 +1170,8 @@ var JitCfg = {
 			Jit.WX.shareFriends(shareInfo);
         	Jit.WX.shareTimeline(shareInfo);
 		},
+
+        //每个页面引用js必须运行的加载方法
 		defindPage:function(page){
 			
 			window.scrollTo(0, 0);
@@ -1253,7 +1280,7 @@ var JitCfg = {
 	var WeiXin = {
 		
 		shareInfo:{},
-
+        //显示或者隐藏网页右上角的按钮
 		OptionMenu:function(flag){
 			
 			if(typeof WeixinJSBridge == 'object'){
@@ -1269,7 +1296,7 @@ var JitCfg = {
 				});
 			}
 		},
-		
+		//显示或者隐藏 微信底部工具栏
 		ToolBar:function(flag){
 			
 			if(typeof WeixinJSBridge == 'object'){
@@ -1670,8 +1697,6 @@ var JitCfg = {
 		Image:{
 			
 			getSize:function(src,size){
-				
-				return src;
 				
 				if(!src){
 					
