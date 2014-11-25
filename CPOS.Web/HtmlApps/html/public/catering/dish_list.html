@@ -50,7 +50,7 @@
         <a id="totalCount" href="javascript:;" class="shopCart"><em>0</em></a>
     </div>
 </footer>
-<script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+<script type="text/javascript" src="../../../base/js/core/require.js" defer async="true" data-main="../../../base/js/core/launch"></script>
 <script id="typeListTemp" type="text/html">
 	<%for(var i=0;i<list.length;i++){var idata=list[i];%>
 		<li data-id="<%=idata.itemTypeId %>" data-code="<%=idata.itemTypeCode %>" class="type type<%=idata.itemTypeId %> <%if(idata.count!=0){%>on<%}%>"><a href="javascript:;"> <%=idata.itemTypeName %> </a><em><%=idata.count%></em></li>

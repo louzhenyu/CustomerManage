@@ -7,7 +7,7 @@
     <meta http-equiv="x-rim-auto-match" content="none">
   <title name="List2014">基金会2014年捐款汇总</title>
   <link rel="stylesheet" type="text/css" href="../../../css/base/global.css">
-  <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../launch"></script>
+  <script type="text/javascript" src="../../../lib/require.js" defer async="true" data-main="../../../base/js/core/launch"></script>
     <style type="text/css">
             /*common*/
         html,body,body>section{height:100%;min-height:100%;}
