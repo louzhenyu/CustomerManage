@@ -1,7 +1,7 @@
 
 var JitCfg = {
     'baseUrl':'../../../',
-    'ajaxUrl':'',
+    'ajaxUrl':'http://o2oapi2.test.aladingyidong.com',
     //http://o2oapi.aladingyidong.com
     'shareIco':'http://o2oapi.aladingyidong.com/HtmlApps/images/common/jitico.jpg',
     'statisticsCode':'<img src="http://dev.o2omarketing.cn:999/piwik.php?idsite=1&rec=1" style="border:0" alt="" />'
@@ -754,7 +754,7 @@ var JitCfg = {
                 var _cfgname = (isGloble=='true'?'_globle':this.CUSTOMER_ID);
 
                 var rst = $.ajax({
-                    url: '/HtmlApps/config/'+_cfgname+'.js',
+                    url: '../../../config/'+_cfgname+'.js',
                     async:false,
                     cache:false
                 });
@@ -898,7 +898,7 @@ var JitCfg = {
                 var cfg = Jit.AM.getAppVersion(),
                     version = (cfg.APP_CACHE?cfg.APP_VERSION:((new Date()).getTime()));
 
-                location.href = '/HtmlApps/html/'+htmlpath+'?customerId='+Jit.AM.CUSTOMER_ID+(param?('&'+param):'')+'&version='+version;
+                location.href = JitCfg.baseUrl + 'html/'+htmlpath+'?customerId='+Jit.AM.CUSTOMER_ID+(param?('&'+param):'')+'&version='+version;
                 console.log((param?('&'+param):'')+'&version='+version);
             }
         },

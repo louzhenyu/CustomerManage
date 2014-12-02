@@ -97,7 +97,7 @@
             })
             if (styl) {
 
-                styles.push(JitCfg.baseUrl + 'css/' + styl + '.css?version=' + version);
+                styles.push(JitCfg.baseUrl + styl + '.css?version=' + version);
             }
         }
     }
@@ -157,7 +157,7 @@
             return;
 
         var js_arr = [],
-            type = ( type == 'plugin' ? JitCfg.baseUrl + 'plugin/' : JitCfg.baseUrl + 'js/' );
+            type = ( type == 'plugin' ? JitCfg.baseUrl + 'base/js/plugin/' : JitCfg.baseUrl + 'js/' );
 
         $.each(list, function (key, val) {
 

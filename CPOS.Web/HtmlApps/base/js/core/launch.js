@@ -10,8 +10,8 @@ require.config({
 	baseUrl: "../../../",
 	
 	paths:{
-　　	'jquery':'lib/jquery-1.8.3.min',
-		'zepto':'lib/zepto.min',
+　　	'jquery':'base/js/lib/jquery-1.8.3.min',
+		'zepto':'base/js/lib/zepto.min',
 		'jit':'core/jit-lib'
 　　}
 });
@@ -68,7 +68,7 @@ require.config({
 	
 	var jslib = (cfg.APP_JSLIB?cfg.APP_JSLIB:'zepto'),
 		version = (cfg.APP_CACHE?cfg.APP_VERSION:((new Date()).getTime()));
-	
+		
 	require([jslib,pathroot+'jit-lib.js?version'+version], function (){
 		
 		if(typeof Zepto != 'undefined'){
