@@ -802,6 +802,9 @@
     <Content Include="Module\PayMent\Controller\PayMentCtl.js" />
     <Content Include="Module\PayMent\Controller\PayMentEditCtl.js" />
     <Content Include="Module\PayMent\Controller\PayMentListCtl.js" />
+    <Content Include="Module\PayMent\js\jquery.js" />
+    <Content Include="Module\PayMent\js\main.js" />
+    <Content Include="Module\PayMent\js\payMentList.js" />
     <Content Include="Module\PayMent\Model\PayMentListVM.js" />
     <Content Include="Module\PayMent\PayMent.aspx" />
     <Content Include="Module\PayMent\PayMentAlipay.aspx" />
@@ -905,6 +908,7 @@
     <Content Include="Module\static\js\plugin\jquery.dataTables.min.js" />
     <Content Include="Module\static\js\plugin\jquery.datetimepicker.js" />
     <Content Include="Module\static\js\plugin\jquery.drag.js" />
+    <Content Include="Module\static\js\plugin\jquery.form.js" />
     <Content Include="Module\static\js\plugin\jquery.jqpagination.js" />
     <Content Include="Module\static\js\plugin\jquery.localStorage.js" />
     <Content Include="Module\static\js\plugin\jquery.poshytip.js" />
