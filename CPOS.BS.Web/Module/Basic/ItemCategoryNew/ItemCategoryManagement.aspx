@@ -5,13 +5,14 @@
     <script language="javascript" type="text/javascript" src="<%=StaticUrl+"/Framework/Javascript/Biz/Status.js"%>"></script>
     <script language="javascript" type="text/javascript" src="<%=StaticUrl+"/module/basic/ItemCategoryNew/Model/ItemCategoryVM.js"%>"></script>
     <script language="javascript" type="text/javascript" src="<%=StaticUrl+"/module/basic/ItemCategoryNew/Store/ItemCategoryVMStore.js"%>"></script>
-    <script language="javascript" type="text/javascript" src="<%=StaticUrl+"/module/basic/ItemCategoryNew/View/ItemCategoryView.js?v=1"%>"></script>
-    <script language="javascript" type="text/javascript" src="<%=StaticUrl+"/module/basic/ItemCategoryNew/Controller/ItemCategoryManagementCtl.js?v=1"%>"></script>
+    <script language="javascript" type="text/javascript" src="<%=StaticUrl+"/module/basic/ItemCategoryNew/View/ItemCategoryView.js?v=1.3"%>"></script>
+    <script language="javascript" type="text/javascript" src="<%=StaticUrl+"/module/basic/ItemCategoryNew/Controller/ItemCategoryManagementCtl.js?v=1.3"%>"></script>
     <%--图片上传控件--%>
     <link rel="stylesheet" href="<%=StaticUrl+"/Framework/Javascript/Other/kindeditor/themes/default/default.css"%>" />
     <script charset="utf-8" type="text/javascript" src="<%=StaticUrl+"/Framework/Javascript/Other/kindeditor/examples/jquery.js"%>"></script>
     <script charset="utf-8" type="text/javascript" src="<%=StaticUrl+"/Framework/Javascript/Other/kindeditor/kindeditor.js"%>"></script>
     <script charset="utf-8" type="text/javascript" src="<%=StaticUrl+"/Framework/Javascript/Other/kindeditor/lang/zh_CN.js"%>"></script>
+  
     <style type="text/css">
         .picmargin
         {

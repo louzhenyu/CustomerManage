@@ -10,6 +10,7 @@
             d.close().remove();
         }, 2000);
     }
+    //
     var page =
     {
         pageSize: 2,
@@ -70,6 +71,8 @@
             //把table的状态修改过来
             $(".groupNav").find("."+this.showPage).addClass("on").siblings().removeClass("on");
             $("[data-table='block']").hide();
+            //要跳转的地址
+            $("#toBrowser").attr("href","GroupList.aspx?pageType="+that.pageType+"&pageName="+pageName);
 
         },
         init: function () {
@@ -113,6 +116,7 @@
                 $("#eventName").val(detailInfo.EventName);
                 $("#beginTime").val(detailInfo.BeginTime);
                 $("#endTime").val(detailInfo.EndTime);
+                $("#curEventName").html(detailInfo.EventName);
 
                 var str="";
                 if(status==10){
@@ -226,47 +230,81 @@
             });
             //上移  下移操作
             $("#goodsList").delegate(".moveUp","click",function(e){
+                //当前点击对象
                 var $t=$(this);
+                debugger;
+                //商品item对象
                 var father=$t.parent().parent().parent();
                 //获得位置
-                var position=father.data("position");
+                var position=father.attr("data-position");
                 if(!$t.hasClass("first")){
+                    //当前的移动的商品id
+                    page.moveItemId=father.data("itemid");
                     //上一个dom节点
                     var prevJquery=father.prev();
-                    var prevPosition=prevJquery.data("position");
+                    //上一个商品id
+                    page.itemId=prevJquery.data("itemid");
+                    var prevPosition=prevJquery.attr("data-position");
                     //上一个dom节点=1
-                    prevJquery.data("position",(prevPosition+1));
-                    father.data("position",(position-1));
+                    prevJquery.attr("data-position",parseInt(prevPosition)+1);
+                    father.attr("data-position",position-1);
                     if((position-1)==1){
                         //设置当前的添加为first不能再点击上移
                         $t.addClass("first");
                     }
+                    //设置向下不能点击
+                    if(prevJquery.attr("data-position")==$("#goodsList .groupShopManage-list-item").length){
+                        prevJquery.find(".moveDown").addClass("last");
+                    }
+                    $t.parent().find(".moveDown").removeClass("last");
                     prevJquery.before(father);
                     //设置前一个为可以进行上移的操作
                     prevJquery.find(".moveUp").removeClass("first");
+                    //数据提交
+                    that.loadData.setEventItemDisplay(function(){});
                 }
                 that.stopBubble(e);
-            }).delegate(".moveDown","click",function(e){
+            }).delegate(".moveDown","click",function(e){   //商品下移
                 var $t=$(this);
+                debugger;
                 var father=$t.parent().parent().parent();
                 //获得位置
-                var position=father.data("position");
-                if(!$t.hasClass("first")){
+                var position=father.attr("data-position");
+                if(!$t.hasClass("last")){
+                    //当前的移动的商品id
+                    page.moveItemId=father.data("itemid");
                     //下一个dom节点
                     var nextJquery=father.next();
-                    var nextPosition=nextJquery.data("position");
-                    nextJquery.data("position",nextPosition-1);
-                    father.data("position",position+1);
-                    if((nextJquery.data("position")==1)){
+                    //下一个商品id
+                    page.itemId=nextJquery.data("itemid");
+                    var nextPosition=nextJquery.attr("data-position");
+                    nextJquery.attr("data-position",nextPosition-1);
+                    father.attr("data-position",parseInt(position)+1);
+                    if((nextJquery.attr("data-position")==1)){
                         nextJquery.find(".moveUp").addClass("first");
                     }
+                    //删除要上移的最后的一个标识last
+                    nextJquery.find(".moveDown").removeClass("last");
                     father.find(".moveUp").removeClass("first");
-                    //下移的时候判断是否是第一个   是的话 不能上移
-                    if(nextPosition==1){
-
+                    //下移的时候判断是否是最后一个   是的话 不能下移
+                    if(nextPosition==$("#goodsList .groupShopManage-list-item").length){
+                        $t.addClass("last");
                     }
                     nextJquery.after(father);
                     nextJquery.find(".moveDown").removeClass("first");
+                    //数据提交
+                    that.loadData.setEventItemDisplay(function(){});
+                }
+                that.stopBubble(e);
+            }).delegate("._showMore","click",function(e){  //点击展开更多
+                var $t=$(this);
+                var pclass=$t.find("p");
+                if(pclass.hasClass("showUp")){
+                    $t.parent().find(".groupShopNorms").hide(500);
+                    $t.find("p").removeClass("showUp").css("width","96px").html("下拉查看更多");
+                }else{
+                    $t.parent().find(".groupShopNorms").show(500);
+                    $t.find("p").addClass("showUp").css("width","45px").html("收起");
                 }
                 that.stopBubble(e);
             });
@@ -826,6 +864,31 @@
                 {
                     'action': 'GetPanicbuyingEventDetails',
                     'EventId':page.eventId
+                },
+                success: function (data) {
+                    if (data.ResultCode == 0) {
+                        //表示成功
+                        if (callback) {
+                            callback(data);
+                        }
+                    }
+                    else {
+                        alert(data.Message);
+                    }
+                }
+            });
+        },
+        //商品上下移
+        setEventItemDisplay: function (callback) {
+            $.util.ajax({
+                url: page.url,
+                type: "post",
+                data:
+                {
+                    'action': 'UpdateEventItemDisplayIndex',
+                    'EventID':page.eventId,
+                    'MoveItemID':page.moveItemId,   //移动的商品ID
+                    "ItemID":page.itemId      //商品ID
                 },
                 success: function (data) {
                     if (data.ResultCode == 0) {

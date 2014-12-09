@@ -149,6 +149,8 @@ BEGIN
                     END
                 ELSE
                     SELECT  2 --超过限制
+			ELSE
+				SELECT 'Exceeds limit(50)'
 		END
 
 	COMMIT TRAN

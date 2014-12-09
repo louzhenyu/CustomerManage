@@ -103,7 +103,7 @@
         </tr>
         <tr><td colspan="10"><span>&nbsp;</span></td></tr>
         <tr>
-            <th>序号</th><th>商品编码</th><th>商品条码</th><th style="width:150px;" colspan="2">商品名称</th><th>单位</th><th>商品单价</th><th>商品数量</th><th>金额</th><th>备注</th>
+            <th>序号</th><th>商品编码</th><th>商品条码</th><th style="width:150px;" colspan="2">商品名称</th><th>单位</th><th>商品单价(元)</th><th>商品数量</th><th>金额(元)</th><th>备注</th>
         </tr>
         <#var list = entity.Details;#>
         <#for(var i=0;i<list.length;i++){var item=list[i];#>
@@ -141,12 +141,19 @@
             <td class="number"><#=entity.SumQty#></td>
             <td class="number"><#=entity.SumAmount#></td>
             <td></td>
+        </tr>        
+        <tr>
+            <th style="text-align:center;" colspan="2">配送费</th>
+            <th colspan="6">
+                
+            </th>
+            <td class="number"><#=entity.E9#></td>
+            <td></td>
         </tr>
-
        <tr>
             <th style="text-align:center;" colspan="2">抵&nbsp;&nbsp;扣</th>
             <th colspan="5">
-                <#if(entity.couponAmount!=0){#>
+                <%--<#if(entity.couponAmount!=0){#>
                     <font>优惠券抵扣：<#=entity.couponAmount#>；</font>
                 <#}#>
 
@@ -159,19 +166,27 @@
                 <#}#>
 
                 <#if(entity.ALBAmount!=0){#>
-                    <font>阿拉币：<#=entity.ALBAmount#>（<#=entity.ALB#>）阿拉币；</font>
+                    <font>阿拉币：<#=entity.ALBAmount#>（<#=entity.ALB#>阿拉币）；</font>
+                <#}#>--%>
+                使用阿拉币
+                <#if(entity.ALBAmount!=0){#>
+                    <font>：<#=entity.ALB#>（<#=entity.ALBAmount#>元）</font>
+                <#}#>
+                、优惠券
+                <#if(entity.couponAmount!=0){#>
+                    <font>：<#=entity.couponAmount#></font>
+                <#}#>
+                、积分
+                <#if(entity.payPointsAmount!=0){#>
+                    <font>：<#=entity.payPoints#>（<#=entity.payPointsAmount#>元）</font>
+                <#}#>
+                、余额抵扣
+                <#if(entity.vipEndAmount!=0){#>
+                    <font>：<#=entity.vipEndAmount#></font>
                 <#}#>
             </th>
             <th>总抵扣</th>
             <td class="number"><#=entity.AllDeduction#></td>
-            <td></td>
-        </tr>
-        <tr>
-            <th style="text-align:center;" colspan="2">配送费</th>
-            <th colspan="6">
-                
-            </th>
-            <td class="number"><#=entity.E9#></td>
             <td></td>
         </tr>
         <tr>

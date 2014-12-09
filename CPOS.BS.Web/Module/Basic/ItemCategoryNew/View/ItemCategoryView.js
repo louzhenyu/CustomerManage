@@ -9,8 +9,8 @@
         border: 0,
         margin: '5 0 5 5',
         items: [{
-            xtype: 'treepanel',
-            width: 300,
+            xtype: 'treepanel',//用的树面板
+            width: 400,
             height: 550,
             margin: '0 2 0 0',
             id: 'trpItemCategoryTree',
@@ -68,6 +68,7 @@
                 id: 'pnlEdit',
                 margin: '0 0 0 0',
                 height: 550,
+                 labelWidth:100,
                 items: [{
                     xtype: 'jittextfield',
                     id: 'txtCode',
@@ -86,9 +87,9 @@
                     id: 'cmbStatus',
                     fieldLabel: '<font color="red">*</font>状态'
                 }, {
-                    xtype: 'jitcombotree',
+                    xtype: 'jitcombotree',//这里可以使用别名，如果直接create就只能使用全部的命名空间的。
                     id: 'cmbParent',
-                    fieldLabel: '<font color="red">*</font>上级分类',
+                    fieldLabel: '<font color="red">*</font>上级分类',  //取的是一个树数据
                     emptyText: '--请选择--',
                     multiSelect: false,
                     isAddPleaseSelectItem: true,
@@ -97,7 +98,8 @@
                         minHeight: 100,
                         maxHeight: 120,
                         width: 500
-                    }, url: 'Handler/ItemCategoryTreeHandler.ashx?Status=1'
+                    }
+                    , url: 'Handler/ItemCategoryTreeHandler.ashx?Status=1'  //获取数据
                 }, {
                     xtype: 'jitnumberfield',
                     id: 'nmbNO',
@@ -139,6 +141,7 @@
                     xtype: 'jittextfield',
                     id: 'txtGUID',
                     fieldLabel: '类型标识',
+                      labelWidth:95,
                     width: 320,
                     readOnly: true,
                     cls: "margin-top: 3px"
@@ -146,6 +149,24 @@
                 , {
                     xtype: 'hiddenfield',
                     id: 'hddID'
+                }
+                //取阿拉丁的分类。
+                , {
+                    xtype: 'jitcombotree',
+                    id: 'aldCategory',
+                    fieldLabel: '<font color="red" >*</font>对应阿拉丁分类',  //取的是一个树数据
+                    labelWidth:95,
+                    emptyText: '--请选择--',
+                    width:320,
+                    multiSelect: false,
+                    isAddPleaseSelectItem: true,
+                    pleaseSelectText: '--请选择--',
+                    isSelectLeafOnly:true,//设置只能选择叶子结点。
+                    pickCfg: {
+                        minHeight: 100,
+                        maxHeight: 120,
+                        width: 500
+                    }, url: 'Handler/ALDCategoryTreeHandler.ashx?Status=1'  //获取数据
                 }
                 , {
                     xtype: 'fieldcontainer',

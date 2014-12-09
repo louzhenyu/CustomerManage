@@ -9,7 +9,7 @@
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/PropInputFlag.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/PropSelectTree.js"%>" type="text/javascript"></script>
 
-    <script src="<%=StaticUrl+"/Module/basic/prop/Controller/PropCtl.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Module/basic/prop/Controller/PropCtl.js?v=0.1"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/basic/prop/Model/PropVM.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/basic/prop/Store/PropVMStore.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/basic/prop/View/PropView.js"%>" type="text/javascript"></script>

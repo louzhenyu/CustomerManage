@@ -32,7 +32,7 @@
         	<ul class="clearfix" >
             	<li class="groupSet">团购设置</li>
                 <li class="shopManage">团购商品管理</li>
-                <li class="orderManage">活动订单管理</li>
+              <%--  <li class="orderManage">活动订单管理</li>--%>
             </ul>
         </div>
         

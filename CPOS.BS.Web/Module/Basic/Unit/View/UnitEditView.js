@@ -18,6 +18,7 @@ function InitView() {
         }
         , {
             contentEl: 'tabProp',
+            hidden:true,
             title: '属性信息',
             listeners: {
                 activate: function (tab) {

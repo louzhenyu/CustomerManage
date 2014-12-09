@@ -45,18 +45,22 @@ namespace JIT.CPOS.BS.Web.Module.Basic.ChangePWD.Handler
         {
             string error = "";
             string pNewPass = MD5Helper.Encryption(pNewPWD);
-            pOldPWD = MD5Helper.Encryption(pOldPWD);
+            //pOldPWD = MD5Helper.Encryption(pOldPWD);
+            pOldPWD = EncryptManager.Hash(pOldPWD, HashProviderType.MD5);
             string res = "{success:false,msg:'保存失败'}";
             //组装参数
             UserInfo entity = new UserInfo();
-            entity = new cUserService(CurrentUserInfo).GetUserById(CurrentUserInfo, pID);
-            if (pOldPWD == entity.User_Password)
+            var serviceBll = new cUserService(CurrentUserInfo);
+            entity = serviceBll.GetUserById(CurrentUserInfo, pID);
+            string apPwd = serviceBll.GetPasswordFromAP(CurrentUserInfo.ClientID, pID);
+            //if (pOldPWD == entity.User_Password)
+            if(pOldPWD == apPwd)
             {
                 entity.userRoleInfoList = new cUserService(CurrentUserInfo).GetUserRoles(pID, PageBase.JITPage.GetApplicationId());
                 entity.User_Password = pNewPass;
                 entity.ModifyPassword = true;
                 //new cUserService(CurrentUserInfo).SetUserInfo(entity, entity.userRoleInfoList, out error);
-                bool bReturn = new cUserService(CurrentUserInfo).SetUserPwd(CurrentUserInfo, pNewPass, out error);
+                bool bReturn = serviceBll.SetUserPwd(CurrentUserInfo, pNewPass, out error);
                 res = "{success:true,msg:'" + error + "'}";
             }
             else

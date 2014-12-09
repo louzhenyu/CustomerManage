@@ -74,6 +74,12 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                 {
                     this.Response.Redirect("~/GoSso.aspx");
                 }
+                else {
+                    if (lblLoginUserName!=null)
+                    {
+                        lblLoginUserName.InnerText = loggingSessionInfo.CurrentUser.User_Name;//因为ChildPage.Master的前台页面Inherits="JIT.CPOS.BS.Web.Framework.MasterPage.CPOS" 但是不含有 lblLoginUserName
+                    }
+                }
                 AppSysService appSysService = new AppSysService(loggingSessionInfo);
                 this.MenuList = appSysService.GetRoleMenus(loggingSessionInfo, 
                     loggingSessionInfo.CurrentUserRole.RoleId);//根据当前用户的角色，来取他拥有的页面
@@ -116,6 +122,8 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                     else {
                         strWebLogo = customerBSList[0].SettingValue;
                     }
+
+                   
                 }
             }
             else

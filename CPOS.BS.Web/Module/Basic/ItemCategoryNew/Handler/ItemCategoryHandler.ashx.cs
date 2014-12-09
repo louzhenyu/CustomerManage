@@ -11,6 +11,8 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.Reflection;
 using JIT.Utility.Web;
 using System.Data;
+using System.Configuration;
+using JIT.Utility.Log;
 
 namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
 {
@@ -39,6 +41,9 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                     break;
                 case "add":
                     content = this.UpdateItemCategory();
+                    break;
+                case "GetALDByCategoryId":
+                    content = this.GetALDByCategoryId();
                     break;
             }
             pContext.Response.Write(content);
@@ -74,6 +79,41 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
         }
 
         /// <summary>
+        /// 根据类别ID获取阿拉丁分类
+        /// </summary>
+        /// <returns></returns>
+        protected string GetALDByCategoryId()
+        {
+            var data = this.DeserializeJSONContent<ItemCategoryInfo>();
+              //同步到ALDCategoryID分类 data.CustomerID，      data.Item_Category_Id. data.ALDCategoryID
+            var url = ConfigurationManager.AppSettings["ALDApiURL"].ToString() + "/Gateway.ashx";
+                var request = new ItemCategory2ALDRequest()
+                {
+                    Parameters = data                   
+                };
+                var res = new MallALDCategoryEntity();//
+                var resstr = "";
+                try
+                {
+                   resstr = JIT.Utility.Web.HttpClient.GetQueryString(url, string.Format("Action=GetALDByCategoryId&ReqContent={0}", request.ToJSON()));
+                    Loggers.Debug(new DebugLogInfo() { Message = "调用获取ALD类别接口:" + resstr });
+                 //   res = resstr.DeserializeJSONTo<MallALDCategoryEntity>();
+                }
+                catch (Exception ex)
+                {
+                    Loggers.Exception(new ExceptionLogInfo(ex));
+                    throw new Exception("调用ALD平台失败:" + ex.Message);
+                }
+
+
+
+
+                return resstr;
+        }
+
+
+
+        /// <summary>
         /// 获取所有的商品分类
         /// </summary>
         /// <returns></returns>
@@ -94,7 +134,7 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
             var rsp = new ResponseData();
             if (data != null)
             {
-                IList<ItemCategoryInfo> listdata = bll.GetItemCagegoryList("");
+                IList<ItemCategoryInfo> listdata = bll.GetItemCagegoryList("");//获取所有类别
 
                 if (Searchtype(listdata, data.Item_Category_Id, data.Parent_Id))
                 {
@@ -128,13 +168,43 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                 data.CustomerID = CurrentUserInfo.CurrentUser.customer_id;
                 //
                 bll.SetItemCategoryInfo(this.CurrentUserInfo, data);
-                rsp.success = true;
-                rsp.msg = "保存成功";
+
+                //同步到ALDCategoryID分类 data.CustomerID，      data.Item_Category_Id. data.ALDCategoryID
+                var url = ConfigurationManager.AppSettings["ALDApiURL"].ToString() + "/Gateway.ashx";
+                var request = new ItemCategory2ALDRequest()
+                {
+                    Parameters = data
+                    //new
+                    //{
+                    //    MemberId = new Guid(rp.UserID),
+                    //    Amount = vipEndAmount/0.01M,
+                    //    AmountSourceId = "11",
+                    //    ObjectId = orderId,
+                    //    IsALD = 1
+                    //}
+                };
+                try
+                {
+                    var resstr = JIT.Utility.Web.HttpClient.GetQueryString(url, string.Format("Action=ItemCategoty2ALD&ReqContent={0}", request.ToJSON()));
+                    Loggers.Debug(new DebugLogInfo() { Message = "调用ALD同步商品类别接口:" + resstr });
+                 //   var res = resstr.DeserializeJSONTo<ItemCategory2ALDResponse>();
+                }
+                catch (Exception ex)
+                {
+                    Loggers.Exception(new ExceptionLogInfo(ex));
+                    throw new Exception("调用ALD平台失败:" + ex.Message);
+                }
             }
+
+            rsp.success = true;
+            rsp.msg = "保存成功";
+
             //
             return rsp.ToJSON();
         }
         #endregion
+
+
 
         #region 判断是否选择自己的子类
         /// <summary>
@@ -187,5 +257,99 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
             return false;
         }
         #endregion
+    }
+    public partial class MallALDCategoryEntity
+    {
+        #region 构造函数
+        /// <summary>
+        /// 构造函数 
+        /// </summary>
+        public MallALDCategoryEntity()
+        {
+        }
+        #endregion
+
+        #region 属性集
+        /// <summary>
+        /// 
+        /// </summary>
+        public Guid? CategoryID { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String CategoryName { get; set; }
+
+        /// <summary>
+        /// 父级ID
+        /// </summary>
+        public Guid? ParentID { get; set; }
+
+        /// <summary>
+        /// 图片URL
+        /// </summary>
+        public String ImageUrl { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String Description { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? DisPlayIndex { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String CreateBy { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? CreateTime { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String LastUpdateBy { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? LastUpdateTime { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? IsDelete { get; set; }
+
+
+        #endregion
+
+    }
+
+    public class ItemCategory2ALDRequest
+    {
+        public int? Locale { get; set; }
+        public Guid? UserID { get; set; }
+        public int? BusinessZoneID { get; set; }
+        public string Token { get; set; }
+        public object Parameters { get; set; }
+    }
+    public class ItemCategory2ALDResponse
+    {
+        public int? ResultCode { get; set; }
+        public string Message { get; set; }
+        public string Data { get; set; }
+        public bool IsSuccess()
+        {
+            if (this.ResultCode.HasValue && this.ResultCode.Value >= 200 && this.ResultCode.Value < 300)
+                return true;
+            else
+                return false;
+        }
+
     }
 }

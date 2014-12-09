@@ -32,8 +32,8 @@
 /*弹框*/
 .commdialog .row .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 107px center;}
 /*头部的微信，设置信息，退出*/
-.commonHeader .setBox{background:url(../../images/skin/bg02/userIcon.png) no-repeat center center;}
-.commonMenu li:hover{background:url(../../images/skin/bg02/commonMenuBg.png) no-repeat 0 0;}
+.commonHeader .setBox{background:url(../../images/skin/bg02/userIcon.png) no-repeat left center;}
+.commonMenu li:hover{border-top-right-radius:5px;border-bottom-right-radius:5px;background:#fe7c24;}
 .commonMenu li:hover a{color:#fff;}
 .commonSelectWrap .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 120px center;}
 .selectDateBox p{background:#fbfbfb url(../../images/skin/bg02/dateIcon.png) no-repeat 80px center;}

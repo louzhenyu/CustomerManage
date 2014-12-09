@@ -32,6 +32,7 @@ using JIT.CPOS.BS.Entity;
 using JIT.CPOS.DTO.Module.VIP.Order.Response;
 using JIT.CPOS.DTO.Module.Order.Order.Response;
 using JIT.Utility.Log;
+using JIT.CPOS.Common;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -287,7 +288,7 @@ namespace JIT.CPOS.BS.BLL
                         detailInfo.Qty = it.Qty; //购买数量
                         detailInfo.SpecificationDesc = it.SpecificationDesc; //规格描述
                         detailInfo.SalesPrice = it.SalesPrice; //实际单价
-                        detailInfo.ImageUrl = it.ImageUrl; //Url图片
+                        detailInfo.ImageUrl =ImagePathUtil.GetImagePathStr(it.ImageUrl,"240"); //Url图片 update by Henry 2014-12-8
 
                         #region 新增规格
 

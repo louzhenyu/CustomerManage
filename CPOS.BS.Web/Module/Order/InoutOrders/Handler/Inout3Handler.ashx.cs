@@ -294,8 +294,11 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             r.payPointsAmount = IntegralDetailEntity == null ? 0 :
                 (IntegralDetailEntity.SalesAmount == null ? 0 : IntegralDetailEntity.SalesAmount);//积分抵扣金额
 
-            r.vipEndAmount = AmountDetailEntity==null?0:
-                (AmountDetailEntity.Amount == null ? 0 : AmountDetailEntity.Amount); //余额实付
+            r.vipEndAmount =  orderInfo.Field3 == "1" ? 0:
+                (
+                    AmountDetailEntity == null ? 0 :
+                    (AmountDetailEntity.Amount == null ? 0 : AmountDetailEntity.Amount)
+                ); //余额实付
 
             r.ALB = orderInfo.Field3 == "1" ? 
                 (
@@ -2384,8 +2387,9 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             order.carrier_id = rParams["DeliverCompany"];
                             info.DeliverCompanyID = rParams["DeliverCompany"];
                         }
-                        if (!string.IsNullOrEmpty(rParams["DeliverOrder"]) || !string.IsNullOrEmpty(rParams["DeliverCompany"]))
+                        if (status == "600" || !string.IsNullOrEmpty(rParams["DeliverOrder"]) || !string.IsNullOrEmpty(rParams["DeliverCompany"]))
                         {
+                            order.Field9 = DateTime.Now.ToSQLFormatString();
                             //更新订单配送商及配送单号
                             inoutService.Update(order, out error);
                         }

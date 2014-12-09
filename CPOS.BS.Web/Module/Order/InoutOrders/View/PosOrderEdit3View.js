@@ -148,6 +148,7 @@
                 name: "create_time",
                 id: "tbSYCreateTime",
                 readOnly: true,
+                width:250,
                 allowBlank: true
                 , fieldCls: "txtDisable"
             },
@@ -318,11 +319,12 @@
             allowBlank: true
         },
         {
-            xtype: "jitdatefield",
+            xtype: "jittextfield",
             fieldLabel: "配送时间",
             name: "Field9",
             readOnly: true,
             id: "txtField9",
+            width:250,
             //readOnly: true,
             allowBlank: true
                 , fieldCls: "txtDisable"
@@ -698,59 +700,59 @@
                     readOnly: true,
                     allowBlank: true
                         , fieldCls: "txtDisable"
-                },
-                {
-                    xtype: "jittextfield",
-                    fieldLabel: "微信",
-                    name: "vip_weixin",
-                    id: "txtVipweixin",
-                    value: 0,
-                    readOnly: true,
-                    allowBlank: true
-                        , fieldCls: "txtDisable"
-                },
-                {
-                    xtype: "jittextfield",
-                    fieldLabel: "微博",
-                    name: "vip_wb",
-                    id: "txtVipwb",
-                    value: 0,
-                    readOnly: true,
-                    allowBlank: true
-                        , fieldCls: "txtDisable"
-                },
-                {
-                    xtype: "jittextfield",
-                    fieldLabel: "积分",
-                    name: "vip_integration",
-                    id: "txtVipintegration",
-                    value: 0,
-                    readOnly: true,
-                    allowBlank: true
-                        , fieldCls: "txtDisable"
-                },
-                {
-                    xtype: "jittextfield",
-                    fieldLabel: "消费总额",
-                    name: "vip_TotalSum",
-                    id: "txtTotalSum",
-                    colspan: 3,
-                    value: 0,
-                    readOnly: true,
-                    allowBlank: true
-                        , fieldCls: "txtDisable"
-                },
-                {
-                    xtype: "jitdisplayfield",
-                    fieldLabel: "标签",
-                    name: "vip_Tags",
-                    id: "labTags",
-                    colspan: 4,
-                    value: 0,
-                    readOnly: true,
-                    allowBlank: true
-                        , fieldCls: "txtDisable"
                 }
+                //{
+                //    xtype: "jittextfield",
+                //    fieldLabel: "微信",
+                //    name: "vip_weixin",
+                //    id: "txtVipweixin",
+                //    value: 0,
+                //    readOnly: true,
+                //    allowBlank: true
+                //        , fieldCls: "txtDisable"
+                //},
+                //{
+                //    xtype: "jittextfield",
+                //    fieldLabel: "微博",
+                //    name: "vip_wb",
+                //    id: "txtVipwb",
+                //    value: 0,
+                //    readOnly: true,
+                //    allowBlank: true
+                //        , fieldCls: "txtDisable"
+                //},
+                //{
+                //    xtype: "jittextfield",
+                //    fieldLabel: "积分",
+                //    name: "vip_integration",
+                //    id: "txtVipintegration",
+                //    value: 0,
+                //    readOnly: true,
+                //    allowBlank: true
+                //        , fieldCls: "txtDisable"
+                //},
+                //{
+                //    xtype: "jittextfield",
+                //    fieldLabel: "消费总额",
+                //    name: "vip_TotalSum",
+                //    id: "txtTotalSum",
+                //    colspan: 3,
+                //    value: 0,
+                //    readOnly: true,
+                //    allowBlank: true
+                //        , fieldCls: "txtDisable"
+                //},
+                //{
+                //    xtype: "jitdisplayfield",
+                //    fieldLabel: "标签",
+                //    name: "vip_Tags",
+                //    id: "labTags",
+                //    colspan: 4,
+                //    value: 0,
+                //    readOnly: true,
+                //    allowBlank: true
+                //        , fieldCls: "txtDisable"
+                //}
         ]
         }
         //        ,

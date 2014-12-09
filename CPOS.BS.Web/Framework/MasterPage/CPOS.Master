@@ -30,8 +30,8 @@
 </script>
 
    <link href="<%=StaticUrl+"/module/styles/css/reset-pc.css?v=0.4"%>"  rel="stylesheet" />
-    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.4"%>"  rel="stylesheet" />
-    <link href="<%=StaticUrl+"/module/styles/css/alading/skin02.css?v=0.4"%>" rel="stylesheet" />
+    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.5"%>"  rel="stylesheet" />
+    <link href="<%=StaticUrl+"/module/styles/css/alading/skin02.css?v=0.5"%>" rel="stylesheet" />
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="<%=StaticUrl+"/framework/css/reset.css"%>" rel="stylesheet" type="text/css" />
@@ -67,13 +67,7 @@
 
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/Window.js"%>" type="text/javascript"></script>
     <link href="<%=StaticUrl+"/Framework/Css/cpos.css"%>" rel="stylesheet" type="text/css" />
-    <script src="<%=StaticUrl+"/Framework/javascript/Other/cpos.js"%>" type="text/javascript"></script>
-
-
-
-
-
-
+    <script src="<%=StaticUrl+"/Framework/javascript/Other/cpos.js?v=0.2"%>" type="text/javascript"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 
 </head>
@@ -83,7 +77,6 @@
             <!-- 公共的头部，导航，logo，信息 -->
             <div class="commonHeader">
                 <div class="handleWrap">
-
                     <%
                         bool haslink = false;
                         var level1 = from c in MenuList where c.Parent_Menu_Id == "--" select c;  //在这里取父节点为空的
@@ -109,22 +102,25 @@
                             <img src="/module/styles/images/qrImg.jpg" />
                         </div>
                     </div>
+
                     <div class="setBox">
-                        <div class="setBox-tip" style="border-bottom:2px solid #ccc;height:86px;border-radius:5px;">
+                    <p id="lblLoginUserName" runat="server">登陆用户</p>
+                        <div class="setBox-tip" style="border-bottom:2px solid #ccc;height:120px;border-radius:5px;">
 
                            <%-- <a href="###">个人信息</a>
                             <a href="###">系统通知(1)</a>--%>
                             <%--    <a href="#" class="fl mr25 nava3" onclick="fnChangePwd()">修改密码</a>--%>
+                            <span class="commonBtn safetyOutBtn">
+                                <a href="#" onclick="fnChangePwd();" >修改密码</a>
+                            </span>
                             <span class="commonBtn safetyOutBtn"><a href="/default.aspx?method=LogOut">安全退出</a>
                             </span>
                         </div>
                     </div>
                 </div>
-                <a href="/Default.aspx">
-                    <div class="logoWrap">
-                        <div class="arr"></div>
-                        <h1 class="logo" title="阿拉丁">阿拉丁</h1>
-                    </div>
+                <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="阿拉丁">
+                    <img id="img_logo" style="margin-top:20px;" src="/module/styles/images/alading/logo.png" alt="阿拉丁" />
+                        <%--<div class="arr"></div>--%>
                 </a>
                 <div class="commonNav">
                     <ul class="clearfix">
@@ -285,5 +281,9 @@
 
         </script>
     </form>
+
+<!-- Piwik Image Tracker-->
+<img src="http://stats.aladingyidong.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" />
+<!-- End Piwik -->
 </body>
 </html>

@@ -72,6 +72,11 @@ fnSearch = function () {
     var ApplicationId =  get("hAppId").value;
     if (ApplicationId == null || ApplicationId.length == 0) return;
     var parentId = get("tree_selected").value;
+
+    if (parentId=="") {
+        parentId = "-88";
+    }
+
     if (parentId == undefined) {
         parentId = null;
     }
@@ -89,7 +94,8 @@ fnSearch = function () {
     store.load();
 }
 fnSearch2 = function () {
-    get("tree_selected").value = "";
+    get("tree_selected").value = "-88";
+    get("tree_prop_type").value = "1";
     fnSearch();
 }
 

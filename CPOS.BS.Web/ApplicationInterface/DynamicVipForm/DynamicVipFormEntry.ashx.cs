@@ -22,7 +22,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.DynamicVipForm
         private JIT.CPOS.BS.Entity.LoggingSessionInfo PrivateLoggingSessionInfo { get { return new SessionManager().CurrentUserLoginInfo;} }
         private MobileModuleBLL PrivatePublicMobileModuleBLL { get { return new MobileModuleBLL(PrivateLoggingSessionInfo); } }
         private OptionsBLL PrivateOptionsBLL { get { return new OptionsBLL(PrivateLoggingSessionInfo); } }
-
+        private ClientBussinessDefinedBLL clientBussinessDefinedBLL { get { return new ClientBussinessDefinedBLL(PrivateLoggingSessionInfo); ; } }
         #region 表单管理
 
         public string DynamicVipFormList(string pRequest)
@@ -271,7 +271,44 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.DynamicVipForm
             }
             return rsp.ToJSON();
         }
-
+        /// <summary>
+        /// 查询自定义控件
+        /// wen wu 20140928
+        /// </summary>
+        /// <param name="pType"></param>
+        /// <param name="pRequest"></param>
+        /// <returns></returns>
+        public string DynamicControlDisplayList(string pType, string pRequest)
+        {
+            var rd = new JIT.CPOS.BS.BLL.ClientBussinessDefinedBLL.FieldCDLoadRP();
+            var rp = pRequest.DeserializeJSONTo<APIRequest<JIT.CPOS.BS.BLL.ClientBussinessDefinedBLL.DynamicControlDisplayListRP>>();
+            rp.Parameters.Validate();
+            rd = clientBussinessDefinedBLL.DynamicControlDisplayList(rp.Parameters);
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
+        /// <summary>
+        /// 查询正在使用的动态属性
+        /// Add by wen wu 20140928
+        /// </summary>
+        /// <param name="ptype"></param>
+        /// <param name="pRequest"></param>
+        /// <returns></returns>
+        public string DynamicControlDisplaySave(string ptype, string pRequest)
+        {
+            var clientBussinessDefinedBLL = new ClientBussinessDefinedBLL(PrivateLoggingSessionInfo);
+            var rd = new EmptyRD();
+            var rp = pRequest.DeserializeJSONTo<APIRequest<JIT.CPOS.BS.BLL.ClientBussinessDefinedBLL.DynamicControlDisplayListRP>>();
+            rp.Parameters.Validate();
+            string result = clientBussinessDefinedBLL.DynamicControlDisplaySave(rp.Parameters);
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            if (result != "1")
+            {
+                rsp.Message = "保存属性失败.";
+                rsp.ResultCode = 201;
+            }
+            return rsp.ToJSON();
+        }
         #endregion
 
         protected override string ProcessAction(string pType, string pAction, string pRequest)
@@ -311,6 +348,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.DynamicVipForm
                     break;
                 case "DynamicVipPropertySave":
                     rst = this.DynamicVipPropertySave(pRequest);
+                    break;
+                case "DynamicControlDisplayList":
+                    rst = this.DynamicControlDisplayList(pType, pRequest);
+                    break;
+                case "DynamicControlDisplaySave":
+                    rst = this.DynamicControlDisplaySave(pType, pRequest);
                     break;
                 //case "DynamicVipPropertyOptionList":
                 //    rst = this.DynamicVipPropertyOptionList(pRequest);

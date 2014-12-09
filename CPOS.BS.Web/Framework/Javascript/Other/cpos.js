@@ -21,8 +21,33 @@ var SearchPanelMoreBtnHideText = "隐藏高级查询";
 //Ext.lib.Ajax.defaultPostHeader += ";charset=utf-8";
 
 var timeoutMsg = "页面超时，请重新登录";
-
-
+function SetLogoInfo() {
+    Ext.Ajax.request({
+        method: 'GET',
+        async: true,
+        url: '/Module/CustomerBasicSetting/Handler/CustomerBasicSettingHander.ashx?mid=' + getUrlParam('mid') + '&method=GetCustomerList',
+        success: function (response) {
+            var data = Ext.decode(response.responseText);
+            var logo = $('#img_logo');
+            logo.attr('alt', data.data.loadInfo.customerName);
+            logo.closest('a').attr('title', data.data.loadInfo.customerName);
+            if (data.data.requset != null) {
+                for (var i = 0; i < data.data.requset.length; i++) {
+                    var code = data.data.requset[i].SettingCode;
+                    if (code == 'WebLogo') {
+                        var val = data.data.requset[i].SettingValue;
+                        if (val == '') break;
+                        logo.attr('src', val).css({'margin-top':'auto','max-width':'139px','max-height':'62px'});
+                        break;
+                    }
+                }
+            }
+        }
+    });
+}
+$(function () {
+    SetLogoInfo();
+});
 
 //{"order_no":"","vip_no":"","sales_unit_id":"","order_date_begin":"","order_date_end":"","data_from_id":null,"DeliveryId":null,"ModifyTime_begin":"","ModifyTime_end":""}
 function GetUnAuditCount() {

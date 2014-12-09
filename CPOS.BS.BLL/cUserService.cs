@@ -73,7 +73,16 @@ namespace JIT.CPOS.BS.BLL
             return userInfo;
         }
 
-
+        /// <summary>
+        /// 获取用户登陆密码
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public string GetPasswordFromAP(string customerId, string userId)
+        {
+            return userService.GetPasswordFromAP(customerId, userId);
+        }
         /// <summary>
         /// 根据用户的Id获取用户信息
         /// </summary>

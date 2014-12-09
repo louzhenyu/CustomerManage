@@ -6116,6 +6116,7 @@
     <None Include="Framework\swfupload\jsp\upload.jsp" />
     <None Include="Framework\swfupload\php\upload.php" />
     <Content Include="Module\EMMLManage\Qixin.Master" />
+    <Content Include="Module\Basic\ItemCategoryNew\Handler\ALDCategoryTreeHandler.ashx" />
     <None Include="Module\static\images\Sorting icons.psd" />
     <None Include="Properties\PublishProfiles\bs.pubxml" />
     <None Include="Properties\PublishProfiles\bs_config.pubxml" />
@@ -7473,6 +7474,9 @@
     <Compile Include="Module\Basic\ChangePWD\Handler\ClientUserHandler.ashx.cs">
       <DependentUpon>ClientUserHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Module\Basic\ItemCategoryNew\Handler\ALDCategoryTreeHandler.ashx.cs">
+      <DependentUpon>ALDCategoryTreeHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Module\Basic\ItemCategoryNew\Handler\ItemCategoryHandler.ashx.cs">
       <DependentUpon>ItemCategoryHandler.ashx</DependentUpon>
     </Compile>
@@ -8103,6 +8107,10 @@
     <ProjectReference Include="..\CPOS.Common\CPOS.Common.csproj">
       <Project>{4E164CF5-3114-4C70-874F-1353FB6A6215}</Project>
       <Name>CPOS.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
+      <Project>{1DFD5C01-71C0-41D9-82E4-CABA22331835}</Project>
+      <Name>Utility</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.DTO\CPOS.DTO.csproj">
       <Project>{E90B49C0-4C8E-42EC-88EF-DACCFD56F2B5}</Project>

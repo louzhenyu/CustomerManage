@@ -454,6 +454,18 @@ namespace JIT.CPOS.BS.DataAccess
             return dt;
         }
         /// <summary>
+        /// 获取用户登陆密码
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public string GetPasswordFromAP(string customerId, string userId)
+        {
+            string sql = @"select cu_pwd from cpos_ap.dbo.t_customer_user
+                        where customer_id='{0}' and customer_user_id='{1}'";
+            return SQLHelper.ExecuteScalar(string.Format(sql, customerId, userId)) as string;
+        }
+        /// <summary>
         /// 获取用户在某种角色下的缺省的单位
         /// </summary>
         /// <param name="userId">用户标识</param>

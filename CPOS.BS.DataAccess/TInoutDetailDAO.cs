@@ -206,8 +206,8 @@ namespace JIT.CPOS.BS.DataAccess
             // return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
             StringBuilder sql = new StringBuilder();
             //sql.Append("select ObjectId,imageId,imageUrl from ObjectImages where ObjectId in (@pItemIdList) and isdelete = 0");
-
-            sql.AppendFormat("select ObjectId,imageId,imageUrl,isnull(displayIndex,0) displayIndex from ObjectImages where ObjectId in ({0}) and isdelete = 0 order by displayIndex", itemIdList);
+            //不取二维码图片
+            sql.AppendFormat("select ObjectId,imageId,imageUrl,isnull(displayIndex,0) displayIndex from ObjectImages where ObjectId in ({0}) and isdelete = 0 and  Description!='自动生成的产品二维码' order by displayIndex", itemIdList);
             return this.SQLHelper.ExecuteDataset(sql.ToString());
         }
     }

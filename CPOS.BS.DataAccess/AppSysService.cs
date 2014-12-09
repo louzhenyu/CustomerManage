@@ -62,7 +62,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " where a.status = '1'"
 
                       //+ " and a.menu_id in (select distinct menu_id from t_role_menu where role_id='"+roleId+"' and status = '1')"
-                      + " order by a.menu_level, a.display_index";
+                      + " order by a.menu_level, a.display_index,a.create_time";
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;

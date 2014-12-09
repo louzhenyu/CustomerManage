@@ -656,8 +656,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
 
                     //【已付款】同步ald订单
-                    #region 更新阿拉丁订单状态
-                    if (tInoutEntity.ActualAmount == 0)
+                    #region 更新阿拉丁订单状态                
                     {                        
                         var orderbll = new InoutService(loggingSessionInfo);
                         var orderInfo = orderbll.GetInoutInfoById(orderId);
@@ -671,7 +670,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                             aldChangeOrder.MemberID = new Guid(orderInfo.vip_no);
                             aldChangeOrder.SourceOrdersID = orderId;
                             aldChangeOrder.Status = int.Parse(orderInfo.status);
-                            aldChangeOrder.IsPaid = true;
+                            if (tInoutEntity.ActualAmount == 0)
+                            {
+                                aldChangeOrder.IsPaid = true;
+                            }
                             JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatusRequest aldRequest = new JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatusRequest();
                             aldRequest.BusinessZoneID = 1;//写死
                             aldRequest.Locale = 1;

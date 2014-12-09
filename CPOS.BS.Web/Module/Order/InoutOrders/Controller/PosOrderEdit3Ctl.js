@@ -77,7 +77,7 @@ function fnGetInoutInfoById() {
                 var storeId = "salesOutOrderEditStore";
                 var pnl = Ext.getCmp("editPanel");
                 var d = Ext.decode(response.responseText).topics;//解码
-                console.log(response.responseText);   //打出来了，看看是什么
+                //console.log(response.responseText);   //打出来了，看看是什么
         
                 Ext.getCmp("txtRemark").setValue(getStr(d.remark));
                 fnStatusSetting(d.Field7)
@@ -101,7 +101,7 @@ function fnGetInoutInfoById() {
                 Ext.getCmp("txtinvoice").setValue(getStr(d.Field19));//发票抬头
                 Ext.getCmp("tbDiscountRate").setValue(getStr(d.discount_rate)); //折扣
                 Ext.getCmp("txtTotalRetail").setValue(getStr(d.total_retail));//应付金额
-                Ext.getCmp("txtTotalAmount").setValue(getStr(d.actual_amount));//现在用的是应付金额
+                Ext.getCmp("txtTotalAmount").setValue(getStr(d.total_amount));//商品总金额
 
                 //第二行
 
@@ -317,7 +317,7 @@ function fnCalTotal() {
     }
    // tbTotalAmountCtrl.setValue(totalAmount);//支付信息中的订单金额
     tbTotalNumCtrl.setValue(totalNum);
-    Ext.getCmp("txtTotalSum").jitSetValue(totalAmount)
+    //Ext.getCmp("txtTotalSum").jitSetValue(totalAmount)
 }
 
 //获取VIP的信息
@@ -332,15 +332,15 @@ function fnGetVipInfo() {
             Ext.getCmp("txtVipCode").jitSetValue(d.VipCode);
             //姓名
             //微信
-            Ext.getCmp("txtVipweixin").jitSetValue(d.WeiXin);
+            //Ext.getCmp("txtVipweixin").jitSetValue(d.WeiXin);
             //微博
-            Ext.getCmp("txtVipwb").jitSetValue(d.SinaMBlog);
+            //Ext.getCmp("txtVipwb").jitSetValue(d.SinaMBlog);
             //积分
-            Ext.getCmp("txtVipintegration").jitSetValue(d.Integration);
+            //Ext.getCmp("txtVipintegration").jitSetValue(d.Integration);
             //总额
             //Ext.getCmp("txtTotalSum").jitSetValue(d.TotalSum);
             //标签
-            Ext.getCmp("labTags").setValue(d.TotalSum);
+            //Ext.getCmp("labTags").setValue(d.TotalSum);
 
             //myMask.hide();
         },

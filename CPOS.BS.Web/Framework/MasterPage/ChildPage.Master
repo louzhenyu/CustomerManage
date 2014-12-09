@@ -46,5 +46,8 @@
         <asp:ContentPlaceHolder ID="MainContent" runat="server">
         </asp:ContentPlaceHolder>
     </form>
+<!-- Piwik Image Tracker-->
+<img src="http://stats.aladingyidong.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" />
+<!-- End Piwik -->
 </body>
 </html>

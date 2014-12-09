@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="css/style.css?v=0.2" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<div data-js="Vip14/page" id="section">
+<div data-js="/Module/static/js/Vip14/page.js?ver=0.1" id="section">
     <div class="followDataArea">
         <div class="userFollow clearfix">
         <div class="commonShow orderArea">

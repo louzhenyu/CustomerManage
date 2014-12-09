@@ -59,49 +59,7 @@
             </thead>
             <tbody id="payMentList">
                 <tr>
-                    <td class="checkBox"><em></em></td>
-                    <td class="operateWrap" title="编辑" data-pay="alipayPayMent">
-                        <span class="editIcon"></span>
-                    </td>
-                    <td>支付宝WAP支付</td>
-                    <td>HYVP100335</td>
-                    <td>已启用</td>
-                </tr>
-                <tr>
-                    <td class="checkBox"><em></em></td>
-                    <td class="operateWrap" title="编辑"  data-pay="offlinePayMent">
-                        <span class="editIcon"></span>
-                    </td>
-                    <td>支付宝线下支付</td>
-                    <td>HYVP100335</td>
-                    <td class="blue">未启用</td>
-                </tr>
-                <tr>
-                    <td class="checkBox"><em></em></td>
-                    <td class="operateWrap" title="编辑" data-pay="wechatPayMent">
-                        <span class="editIcon"></span>
-                    </td>
-                    <td>微信支付</td>
-                    <td>HYVP100335</td>
-                    <td>已启用</td>
-                </tr>
-                <tr>
-                    <td class="checkBox"><em></em></td>
-                    <td class="operateWrap" title="编辑"  data-pay="unionPayMent">
-                        <span class="editIcon"></span>
-                    </td>
-                    <td>银联网页支付</td>
-                    <td>HYVP100335</td>
-                    <td>已启用</td>
-                </tr>
-                <tr>
-                    <td class="checkBox"><em></em></td>
-                    <td class="operateWrap" title="编辑"  data-pay="voicePayMent">
-                        <span class="editIcon"></span>
-                    </td>
-                    <td>银联语音支付</td>
-                    <td>HYVP100335</td>
-                    <td class="blue">未启用</td>
+                    <td colspan="5"><img src="../static/images/loading.gif" width="32" height="32" alt="loading" /></td>
                 </tr>
             </tbody>
         </table>
@@ -382,7 +340,7 @@
      <#for(var i=0;i<list.length;i++){ var item=list[i];#>
         	<tr>
 				<td class="checkBox"><em></em></td>
-				<td class="operateWrap" title="编辑" data-typecode="<#=item.PaymentTypeCode#>" data-typeid="<#=item.PaymentTypeID#>" data-channelid="<#=item.ChannelId#>" >
+				<td class="operateWrap" title="编辑" data-usertype="{'IsOpen':<#=item.IsOpen#>,'IsDefault':<#=item.IsDefault#>,'IsCustom':<#=item.IsCustom#>}" data-typecode="<#=item.PaymentTypeCode#>" data-typeid="<#=item.PaymentTypeID#>" data-channelid="<#=item.ChannelId#>" >
 					<span class="editIcon"></span>
 				</td>
 				<td><#=item.PaymentTypeName#></td>

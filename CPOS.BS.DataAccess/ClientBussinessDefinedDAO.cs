@@ -56,5 +56,42 @@ namespace JIT.CPOS.BS.DataAccess
 
             return this.SQLHelper.ExecuteScalar(CommandType.StoredProcedure, "DynamicVipPropertySave", lsp.ToArray()).ToString();
         }
+        /// <summary>
+        /// 加载正在使用的动态属性
+        /// Add by wen wu 20140928
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <param name="TableName"></param>
+        /// <param name="ClientID"></param>
+        /// <returns></returns>
+        public DataSet DynamicControlDisplayList(string Type, string TableName)
+        {
+            DataSet dataSet = new DataSet();
+            List<SqlParameter> lsp = new List<SqlParameter>();
+            lsp.Add(new SqlParameter("@Type", Type));
+            lsp.Add(new SqlParameter("@TableName", TableName));
+            lsp.Add(new SqlParameter("@ClientID", CurrentUserInfo.ClientID));
+            dataSet=this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "DynamicControlDisplayList", lsp.ToArray());
+            return dataSet;
+        }
+        /// <summary>
+        ///保存正在使用的动态属性
+        ///Add by wen wu 20140928
+        /// </summary>
+        /// <param name="propertyID"></param>
+        /// <param name="displayType"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="dataTable"></param>
+        /// <returns></returns>
+        public string DynamicControlDisplaySave(string Type, string TableName, DataTable dataTable)
+        {
+            List<SqlParameter> lsp = new List<SqlParameter>();
+            lsp.Add(new SqlParameter("@Type", Type));
+            lsp.Add(new SqlParameter("@TableName", TableName));
+            lsp.Add(new SqlParameter("@ClientID", CurrentUserInfo.ClientID));
+            lsp.Add(new SqlParameter("@FieldList", SqlDbType.Structured) { Value = dataTable });
+
+            return this.SQLHelper.ExecuteScalar(CommandType.StoredProcedure, "DynamicControlDisplaySave", lsp.ToArray()).ToString();
+        }
     }
 }

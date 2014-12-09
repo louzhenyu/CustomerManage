@@ -49,6 +49,11 @@ fnSearch = function() {
     if (parentId == undefined) {
         parentId = null;
     }
+    
+    if (ApplicationId == "SKU" && (parentId == "" || parentId=="-99")) {
+        parentId = "-88";
+    }
+
     var store = Ext.getStore("PropStore");
     store.proxy.url = JITPage.HandlerUrl.getValue()
         + "&method=search_prop";
@@ -64,6 +69,7 @@ fnSearch = function() {
 }
 fnSearch2 = function() {
     get("tree_selected").value = "";
+    get("tree_prop_type").value = "1";
     fnSearch();
 }
 fnAppSearch = function() {

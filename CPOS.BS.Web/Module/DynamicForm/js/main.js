@@ -46,6 +46,7 @@ require.config({
         artDialog: '/Module/static/js/plugin/artDialog',
         newJquery: '/Module/Withdraw/js/jquery',
         tools: '/Module/static/js/lib/tools-lib',
+        bdTemplate: '/Module/static/js/lib/bdTemplate',
         template: '/Module/static/js/plugin/template',
         pagination: '/Module/static/js/plugin/jquery.jqpagination',
         json2: '/Module/static/js/plugin/json2',

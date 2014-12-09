@@ -5,12 +5,16 @@ var K;
 var htmlEditor;
 var disabledString = "(已停用)";
 var uploadImageUrl = "";
+var isAld; //判断该客户信息是否同步到阿拉丁
+
+//alert(isAld);
 Ext.onReady(function () {
     //初始化
     InitVE();
     InitStore();
     InitView();
-
+    //判断客户是否同步信息到阿拉丁
+    fnIsAld();
     //绑定事件
     fnBindEvents();
 
@@ -55,8 +59,8 @@ Ext.onReady(function () {
         uploadbutton.submit();
     });
 
-    var itemCategoryStore = Ext.getStore('itemCategoryStore');
-    itemCategoryStore.proxy.url = "Handler/ItemCategoryHandler.ashx?method=getAll";
+    var itemCategoryStore = Ext.getStore('itemCategoryStore');//用于获取父类树节点
+    itemCategoryStore.proxy.url = "Handler/ItemCategoryHandler.ashx?method=getAll";//获取了全部的节点。
     itemCategoryStore.load();
 });
 
@@ -121,6 +125,7 @@ function fnBtnSave_Click() {
     var ctl_cmbParent = Ext.getCmp('cmbParent');
     var ctl_nmbNO = Ext.getCmp('nmbNO');
     //var ctl_txtImageUrl =  Ext.getCmp('txtImageUrl');
+    var ctl_aldCategory = Ext.getCmp('aldCategory'); //阿拉丁分类,要判断，只有是
 
     var method = 'update';
     //检查数据
@@ -129,9 +134,13 @@ function fnBtnSave_Click() {
     var name = ctl_txtName.getValue();
     var zjm = ctl_txtZJM.getValue();
     var status = ctl_cmbStatus.getValue();
-    var parentID = ctl_cmbParent.jitGetValue();
+    var parentID = ctl_cmbParent.jitGetValue();//父类获取值
     var no = ctl_nmbNO.getValue();
     var imageUrl = uploadImageUrl;  //ctl_txtImageUrl.getValue();
+    var aldCategoryID = ctl_aldCategory.jitGetValue(); //阿拉丁分类获取值，只有同步到阿拉丁的，才是必填，才需要同步
+//    alert(aldCategoryID);
+//    return;
+
     if (method == "update") {
         if (parentID == id) {
             Ext.Msg.alert('提示信息', '自身不能作为上级分类.');
@@ -165,15 +174,23 @@ function fnBtnSave_Click() {
     data.Parent_Id = parentID;
     data.DisplayIndex = no;
     data.ImageUrl = imageUrl;
+    if (isAld == "1") {
+        if (aldCategoryID == null ||  aldCategoryID =='' || aldCategoryID == '--请选择--') {
+            Ext.Msg.alert('提示信息', '必须选择对应的阿拉丁分类.');
+            return;
+        }
+        data.ALDCategoryID = aldCategoryID; //只有同步到阿拉丁的，才是必填，才需要同步，这里需要判断，如果不需要同步到ALD，就设为空
+    } else {data.ALDCategoryID = ""; }
+  //遮罩层
     var mask = new Ext.LoadMask(Ext.getBody(), {
         msg: '正在向服务器提交,请稍等...'
     });
     if (id == null || id == '') {
         method = "add";
     }
-    mask.show();
+    mask.show();//遮罩层显示
     Ext.Ajax.request({
-        url: 'Handler/ItemCategoryHandler.ashx?method=' + method
+        url: 'Handler/ItemCategoryHandler.ashx?method=' + method   //又获取值
         , method: 'POST'
         , params: Ext.JSON.encode(data)
         , callback: function (options, success, response) {
@@ -189,7 +206,7 @@ function fnBtnSave_Click() {
             if (method == "add") {
                 isNeedReload = true;
             } else {
-                var updatedRecord = Ext.getStore('itemCategoryStore').getById(data.Item_Category_Id);
+                var updatedRecord = Ext.getStore('itemCategoryStore').getById(data.Item_Category_Id);//
                 if (updatedRecord.get('Parent_Id') != data.Parent_Id) {
                     isNeedReload = true;
                 }
@@ -200,14 +217,72 @@ function fnBtnSave_Click() {
 
                 if (Ext.getCmp('cmbParent').store != null)
                     Ext.getCmp('cmbParent').store.load();
-                Ext.getStore('itemCategoryTreeStore').load();
-                Ext.getStore('itemCategoryStore').load();
+                Ext.getStore('itemCategoryTreeStore').load();//加载数据，左边树面板
+                Ext.getStore('itemCategoryStore').load();//右边父类
             }
             //
             var ctl_pnlEdit = Ext.getCmp('pnlEdit');
             ctl_pnlEdit.setTitle('编辑');
             //
             mask.hide();
+        }
+    });
+}
+
+//判断客户信息是否同步到阿拉丁
+function fnIsAld() {
+    var isALDUrl = "../../CustomerBasicSetting/Handler/CustomerBasicSettingHander.ashx?mid=" + __mid
+    Ext.Ajax.request({
+        url: isALDUrl + "&method=IsAld",
+        async: false,
+        method: 'post',
+        success: function (response) {
+            var isald = response.responseText;//这个参数没太有用
+            if (isald == "1") {
+                isAld = isald;
+              //  Ext.getCmp("aldCategory").setVisible(false);
+            }
+            else {
+                Ext.getCmp("aldCategory").setVisible(false);
+                isAld = isald;
+            }
+        },
+        failure: function () {
+            Ext.Msg.alert("提示", "获取参数数据失败");
+        }
+    });
+}
+//获取分类对应的阿拉丁分类的信息
+function fnGetALDCategory(itemCategoryId) {
+    var data = {};
+    data.Item_Category_Id = itemCategoryId;
+    Ext.Ajax.request({
+        url: 'Handler/ItemCategoryHandler.ashx?method=' + 'GetALDByCategoryId',  //又获取值,
+        params: Ext.JSON.encode(data),
+        async: true, //异步处理吧
+        method: 'post',
+        success: function (response) {
+            debugger;
+            var jdata = Ext.JSON.decode(response.responseText);
+            var ctl_aldCategory = Ext.getCmp('aldCategory'); //父类
+            if (jdata && jdata.ResultCode == '200') {//不为空或者undefined
+
+                var id = jdata.Data.CategoryID;
+                var name = jdata.Data.CategoryName;
+                var item = [{ id: id, text: name}];
+                if (id != null) {
+                    ctl_aldCategory.setValues(item, false);
+                } else {
+                    var id = '';
+                    var name = '--请选择--';
+                    var item = [{ id: id, text: name}];
+                    ctl_aldCategory.setValues(item, false);
+                }
+            }
+        },
+        failure: function () {
+            debugger;
+            Ext.Msg.alert("提示", "获取参数数据失败");
         }
     });
 }
@@ -270,7 +345,7 @@ function fnTrpItemCategoryTree_ItemClick(view, record, item, e, options) {
         var ctl_txtName = Ext.getCmp('txtName');
         var ctl_txtZJM = Ext.getCmp('txtZJM');
         var ctl_cmbStatus = Ext.getCmp('cmbStatus');
-        var ctl_cmbParent = Ext.getCmp('cmbParent');
+       
         var ctl_nmbNO = Ext.getCmp('nmbNO');
         //var ctl_txtImageUrl = Ext.getCmp('txtImageUrl');
         var ctl_pnlEdit = Ext.getCmp('pnlEdit');
@@ -282,11 +357,15 @@ function fnTrpItemCategoryTree_ItemClick(view, record, item, e, options) {
         ctl_txtName.setValue(detailData.get('Item_Category_Name'));
         ctl_txtZJM.setValue(detailData.get('Pyzjm'));
         var parentID = detailData.get('Parent_Id');
+        var ctl_cmbParent = Ext.getCmp('cmbParent'); //父类
         if (parentID != null && parentID != '') {
             var name = detailData.get('Parent_Name');
             var item = [{ id: parentID, text: name}];
             ctl_cmbParent.setValues(item, false);
         }
+        //阿拉分类，需要处理吗？
+        fnGetALDCategory(detailData.get('Item_Category_Id'));
+
 
         var status = detailData.get('Status');
         ctl_cmbStatus.setValue(status);
@@ -319,7 +398,7 @@ function fnCtnMenuItemAdd_Click(view, record, item, e, options) {
         //清除数据
         fnClearEditArea();
         //
-        var ctl_cmbParent = Ext.getCmp('cmbParent');
+        var ctl_cmbParent = Ext.getCmp('cmbParent');//设置值
         ctl_cmbParent.setValue(null);
 
         var ctl_pnlEdit = Ext.getCmp('pnlEdit');

@@ -3,9 +3,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>商品管理</title>
+   
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/Status.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/YesNoStatus.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/ItemCategorySelectTree.js"%>" type="text/javascript"></script>
+    <script type="text/javascript" src="<%=StaticUrl+"/Lib/Javascript/Jit/form/field/ComboTree.js?v=1.2"%>"></script>
     <script src="<%=StaticUrl+"/module/basic/Item/Controller/ItemCtl.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/module/basic/Item/Model/ItemVM.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/module/basic/Item/Store/ItemVMStore.js"%>" type="text/javascript"></script>

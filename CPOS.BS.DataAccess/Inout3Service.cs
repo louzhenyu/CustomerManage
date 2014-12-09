@@ -89,7 +89,7 @@ namespace JIT.CPOS.BS.DataAccess
                 a.customer_id like  '%{0}%'
                 and a.order_type_id like  '%{1}%' 
                 and a.red_flag = '1' and b.path_unit_id like '%{2}%'
-                and a.Field7='100' and a.Field7 IS NOT NULL AND a.Field7 <> '' 
+                and a.Field7='100' and a.status<>'-1'  
                 ) x",orderSearchInfo.customer_id,orderSearchInfo.order_type_id,orderSearchInfo.path_unit_id);
 
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
@@ -852,7 +852,7 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field6 "
                         + " ,a.Field7 "
                         + " ,a.Field8 "
-                        + " ,a.Field9 "
+                        + " ,cast(a.Field9 as varchar(19)) as Field9 "
                         + " ,a.Field10 "
                         + " ,a.Field11 "
                         + " ,a.Field12 "
@@ -862,7 +862,7 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field16 "
                         + " ,a.Field17 "
                         + " ,a.Field18 "
-                        + " ,a.Field19 "
+                        + " ,a.Field19"
                         + " ,a.Field20 "
                          + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"  //配送方式
                         + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.Field11 ) DefrayTypeName "
@@ -989,7 +989,35 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public DataSet GetDeliveryDetail(string orderId)
         {
-            string sql = @"select ItemCode,BarCode,SalesUnitName,EnterPrice,qty,EnterAmount,Remark,ItemName from VwInoutOrderItems where orderid='{0}'
+            string sql1 = @"(SELECT   v.status as s1,S.status as s2,TI.status  as s3, ISNULL(I.order_id, N'') AS OrderId, ISNULL(V.VIPID, N'') AS VipId, ISNULL(OI.ImageURL, N'') AS HeadImgUrl, ISNULL(V.VipName, N'游客') AS VipName, 
+                      ISNULL(V.VipLevel, 0) AS VipLevel, ISNULL(CONVERT(DECIMAL(18, 2), ID.retail_price), 0) AS Price, ISNULL(ID.order_qty, 0) AS Qty, ISNULL(T.ItemType, N'') 
+                      AS ItemDesc, I.modify_time AS PayTime, TI.item_id AS ItemId, S.sku_id AS SkuId, I.customer_id AS CustomerId, TI.item_code AS ItemCode, S.barcode, 
+                      TI.item_name AS ItemName, U.unit_name AS SalesUnitName, ID.enter_price AS EnterPrice, ID.enter_amount AS EnterAmount, I.remark, ISNULL(ISS.ItemSortId, 1) 
+                      AS ItemSort, I.Field1 AS IsPay
+FROM         dbo.T_Inout AS I INNER JOIN
+                      dbo.T_Inout_Detail AS ID ON I.order_id = ID.order_id 
+                      LEFT OUTER JOIN
+                      dbo.Vip AS V ON I.vip_no = V.VIPID INNER JOIN
+                      dbo.T_Sku AS S ON ID.sku_id = S.sku_id INNER JOIN
+                      dbo.T_Item AS TI ON S.item_id = TI.item_id LEFT OUTER JOIN
+                      dbo.t_unit AS U ON I.sales_unit_id = U.unit_id LEFT OUTER JOIN
+                      dbo.ItemItemSortMapping AS IIS ON IIS.ItemId = TI.item_id LEFT OUTER JOIN
+                      dbo.ItemSort AS ISS ON IIS.ItemSortId = ISS.ItemSortId LEFT OUTER JOIN
+                          (SELECT     ObjectId, MAX(ImageURL) AS ImageURL
+                            FROM          dbo.ObjectImages
+                            WHERE      (IsDelete = 0) AND (ISNULL(ImageURL, N'') <> '')
+                            GROUP BY ObjectId) AS OI ON V.VIPID = OI.ObjectId LEFT OUTER JOIN
+                          (SELECT     sku_id, item_id, CASE WHEN prop_1_id IS NOT NULL 
+                                                   THEN prop_1_name + N':' + prop_1_detail_code + N'.' ELSE '' END + CASE WHEN prop_2_id IS NOT NULL 
+                                                   THEN prop_2_name + N':' + prop_2_detail_code + N'.' ELSE '' END + CASE WHEN prop_3_id IS NOT NULL 
+                                                   THEN prop_3_name + N':' + prop_3_detail_code + N'.' ELSE '' END + CASE WHEN prop_4_id IS NOT NULL 
+                                                   THEN prop_4_name + N':' + prop_4_detail_code + N'.' ELSE '' END + CASE WHEN prop_5_id IS NOT NULL 
+                                                   THEN prop_5_name + N':' + prop_5_detail_code + N'.' ELSE '' END AS ItemType
+                            FROM          dbo.vw_sku) AS T ON S.sku_id = T.sku_id
+WHERE     1=1) as t";
+            //VwInoutOrderItems
+            string sql = @"select ItemCode,BarCode,SalesUnitName,EnterPrice,qty,EnterAmount,Remark,ItemName from "+sql1
+                + @" where orderid='{0}'
                             union all select null,null,null,null,null,null,null,null
                             union all select null,null,null,null,null,null,null,null
                             union all select null,null,null,null,null,null,null,null

@@ -5,14 +5,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="headContent" runat="server">
     <title>商品信息</title>
 
-
-
-   
+ <script src="<%=StaticUrl+"/Framework/javascript/Biz/ItemCategorySelectTree.js"%>" type="text/javascript"></script>
     <script type="text/javascript" src="<%=StaticUrl+"/module/static/js/lib/tools-lib.js?v=1.2"%>"></script>
     <script type="text/javascript"  src="<%=StaticUrl+"/module/static/js/lib/bdTemplate.js"%>"></script>
     <script type="text/javascript" src="<%=StaticUrl+"/module/static/js/plugin/jquery.jqpagination.js"%>"></script>
     <script type="text/javascript" src="<%=StaticUrl+"/module/static/js/plugin/jquery.drag.js"%>"></script>
     <link rel="stylesheet" href="<%=StaticUrl+"/Framework/Javascript/Other/kindeditor/themes/default/default.css?v=Math.random()"%>" />
+  <%--   <script type="text/javascript" src="<%=StaticUrl+"/Lib/Javascript/Jit/form/field/ComboTree.js?v=1.2"%>"></script>
+--%>
+
     <link href="<%=StaticUrl+"/module/basic/Item/css/keywords.css?v=Math.random()"%>" rel="stylesheet" type="text/css" />
     <link href="<%=StaticUrl+"/module/static/css/pagination.css"%>" rel="stylesheet" />
         <style type="text/css">
@@ -73,6 +74,7 @@
             }
 
             .upbtn span {
+                display: bl;
                 display: block;
                 float: left;
                 width: 100px;
@@ -831,12 +833,12 @@ height:150px;
     <!--<script charset="utf-8" type="text/javascript" src="/Framework/Javascript/Other/kindeditor/examples/jquery.js"></script>-->
     <script src="/Framework/Javascript/Other/editor/kindeditor.js" type="text/javascript"></script>
    <%-- v=0.2起到缓存的目的--%>
-    <script src="View/ItemEditView.js?v=0.51" type="text/javascript"></script> 
-    <script src="Model/ItemVM.js?v=0.51" type="text/javascript"></script>
-    <script src="Model/ItemDetailVM.js?v=0.51" type="text/javascript"></script>
-    <script src="Store/ItemVMStore.js?v=0.51" type="text/javascript"></script>
-    <script src="Store/ItemEditVMStore.js?v=0.51" type="text/javascript"></script>
-    <script src="Controller/ItemEditCtl.js?v=0.58" type="text/javascript"></script>
+    <script src="View/ItemEditView.js?v=0.6" type="text/javascript"></script> 
+    <script src="Model/ItemVM.js?v=0.6" type="text/javascript"></script>
+    <script src="Model/ItemDetailVM.js?v=0.6" type="text/javascript"></script>
+    <script src="Store/ItemVMStore.js?v=0.6" type="text/javascript"></script>
+    <script src="Store/ItemEditVMStore.js?v=0.6" type="text/javascript"></script>
+    <script src="Controller/ItemEditCtl.js?v=0.6" type="text/javascript"></script>
     <style type="text/css">
         .uploadImageUrl {
             padding-left: 30px;

@@ -406,6 +406,17 @@ namespace JIT.CPOS.BS.DataAccess
             else
                 result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
         }
+        
+        /// <summary>
+        /// 根据ItemMappingID删除sku
+        /// </summary>
+        /// <param name="guid"></param>
+        public void DeleteByItemMappingId(Guid guid)
+        {
+            string sql = string.Format(@"update PanicbuyingEventSkuMapping SET IsDelete=1 WHERE EventItemMappingId='{0}'",guid);
+            this.SQLHelper.ExecuteNonQuery(sql);
+        }
+
         #endregion
 
         #region IQueryable 成员

@@ -181,12 +181,47 @@ function InitView() {
         }
     });
 
-    Ext.create('Jit.Biz.ItemCategorySelectTree', {
+//    Ext.create('Jit.Biz.ItemCategorySelectTree', {
+//        id: "txtItemCategory",
+//        text: "",
+//        isSelectLeafOnly: true,
+//        renderTo: "txtItemCategory",
+//        width: 100
+    //    });
+    //这个必须用完整的命名空间，直接用jitcombotree不行，而在Itemview里可以直接用jitcombotree，辅助的alias：jitcombotree***
+    Ext.create('Jit.form.field.ComboTree', {
         id: "txtItemCategory",
-        text: "",
+        text: "",     
         renderTo: "txtItemCategory",
-        width: 100
+        width: 100,
+          emptyText: '--请选择--',
+     multiSelect: false,
+     isAddPleaseSelectItem: true,
+     pleaseSelectText: '--请选择--',
+     isSelectLeafOnly: true, //设置只能选择叶子结点。
+     pickCfg: {
+         minHeight: 100,
+         maxHeight: 120,
+         width: 500
+     }, url: '../ItemCategoryNew/Handler/ItemCategoryTreeHandler.ashx?Status=1'  //获取数据
+
     });
+
+//     , {
+//     xtype: 'jitcombotree',
+//     id: 'txtItemCategory',
+//     fieldLabel: '商品分类',  //取的是一个树数据
+//     emptyText: '--请选择--',
+//     multiSelect: false,
+//     isAddPleaseSelectItem: true,
+//     pleaseSelectText: '--请选择--',
+//     isSelectLeafOnly: true, //设置只能选择叶子结点。
+//     pickCfg: {
+//         minHeight: 100,
+//         maxHeight: 120,
+//         width: 500
+//     }, url: '../ItemCategoryNew/Handler/ItemCategoryTreeHandler.ashx?Status=1'  //获取数据
+// }
 
     /* ItemCategoryMapping begin */
 

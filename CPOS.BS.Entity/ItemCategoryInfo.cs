@@ -126,5 +126,10 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public IList<ItemCategoryInfo> children = new List<ItemCategoryInfo>();
 
+        ///// <summary>
+        ///// 阿拉丁平台对应的ID
+        ///// </summary>
+        public string ALDCategoryID { get; set; }
+
     }
 }

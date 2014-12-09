@@ -81,7 +81,13 @@
                                     <%if(idata.defaultValue){%><img src="<%=idata.defaultValue%>" /><%}else{%>暂无<%}%>\
                                     </p>\
                                     <div class="info">\
+                                <%if(idata.Key=="backgroundImage"){%>\
+                                        <p class="exp">建议上传尺寸为1008*768,文件大小不超过100k的图片。</p>\
+                                <%}else if(idata.Key=="logo"){%>\
+                                        <p class="exp">建议上传尺寸为114*114,文件大小不超过100k的图片。</p>\
+                                <%} else{%>\
                                         <p class="exp">建议上传尺寸为536*300,文件大小不超过100k的图片。</p>\
+                                <%}%>\
                                         <buttom class="jsUploadBtn uploadBtn" value="上传">上传</buttom>\
                                     </div>\
                                 </div>\

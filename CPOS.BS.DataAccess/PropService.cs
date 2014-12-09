@@ -241,7 +241,14 @@ namespace JIT.CPOS.BS.DataAccess
 
             if (entity.Parent_Prop_id != null)
             {
-                sql += " and isnull(a.Parent_Prop_id,'-99') = '" + entity.Parent_Prop_id.Trim() + "' ";
+                if (entity.Prop_Domain != null && entity.Prop_Domain.Trim().ToUpper() == "SKU"&&entity.Parent_Prop_id=="-88")
+                {
+                    sql += " and a.Prop_Type=2 ";  
+                }
+                else
+                {
+                    sql += " and isnull(a.Parent_Prop_id,'-99') = '" + entity.Parent_Prop_id.Trim() + "' ";
+                }                
             }
             //sql += " order by a.[Prop_Name] asc ";
             return sql;

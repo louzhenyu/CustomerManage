@@ -9,10 +9,10 @@
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/PropInputFlag.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/PropSelectTree.js"%>" type="text/javascript"></script>
 
-    <script src="<%=StaticUrl+"/Module/basic/prop/Controller/PropSkuCtl.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Module/basic/prop/Controller/PropSkuCtl.js?v=0.2"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/basic/prop/Model/PropVM.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/basic/prop/Store/PropVMStore.js"%>" type="text/javascript"></script>
-    <script src="<%=StaticUrl+"/Module/basic/prop/View/PropSkuView.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Module/basic/prop/View/PropSkuView.js?v=1"%>" type="text/javascript"></script>
       <style type="text/css">
         td {
         vertical-align: middle; 
@@ -38,7 +38,7 @@
         <%--属性域--%>
         <input type="hidden" id="hAppId" value="SKU" />
         <%--查询类型--%>
-        <input type="hidden" id="tree_prop_type" value="" />
+        <input type="hidden" id="tree_prop_type" value="1" />
         <%--点击树节点时的查询信息--%>
         <input id="tree_selected" type="hidden" />
         <%--点击树节点时，改树类型--%>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                  <div style="padding-left:4px; border:1px solid #c2c3c8; border-bottom:0px; cursor:pointer; color:blue;"
-                    onclick="fnSearch2('-99')">回到根节点</div>
+                    onclick="fnSearch2('')">回到根节点</div>
                 <div id="span_tree"></div>                
             </div>
         </div>

@@ -548,7 +548,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.UnitAndItem.Item
         public class GoodsList
         {
             public string ItemDescription { get; set; }  //商品描述
-            public string ItemUrl { get; set; }  //商品图片
+            /// <summary>
+            /// 商品图片 update by Henry 2014-12-8
+            /// </summary>
+            private string itemUrl;
+            public string ItemUrl
+            {
+                get { return ImagePathUtil.GetImagePathStr(this.itemUrl, "240"); }  //请求图片缩略图 
+                set { this.itemUrl = value; }
+            } 
             public decimal CostPrice { get; set; } //原价
             public decimal SalesPrice { get; set; } //促销价格
             public string ItemDetailUrl { get; set; } //点击商品详情URL
@@ -727,7 +735,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.UnitAndItem.Item
                 {
                     ItemId = t["ItemId"].ToString(),
                     ItemName = t["ItemName"].ToString(),
-                    ItemUrl = t["ItemUrl"].ToString(),
+                    ItemUrl =ImagePathUtil.GetImagePathStr(t["ItemUrl"].ToString(),"240"),
                     SalesQty = Convert.ToInt32(t["SalesQty"].ToString()),
                     SalesPrice = Convert.ToDecimal(t["SalesPrice"].ToString()),
                     CategoryId = t["CategoryId"].ToString(),

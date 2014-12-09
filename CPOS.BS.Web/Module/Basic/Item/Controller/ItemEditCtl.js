@@ -52,7 +52,8 @@ Ext.onReady(function () {
                 var d = Ext.decode(response.responseText).data;//从商品里获取的信息
             //    console.log(response.responseText);//读取商品信息，查看sku信息
 
-                Ext.getCmp("txtItemCategory").jitSetValue([{ "id": d.Item_Category_Id, "text": d.Item_Category_Name }]);
+                Ext.getCmp("txtItemCategory").jitSetValue([{ "id": d.Item_Category_Id, "text": d.Item_Category_Name}]);
+                //设置值
                 Ext.getCmp("txtItemCode").jitSetValue(getStr(d.Item_Code));
                 Ext.getCmp("txtItemName").jitSetValue(getStr(d.Item_Name));
                 Ext.getCmp("txtItemEnglish").jitSetValue(getStr(d.Item_Name_En));
@@ -142,7 +143,7 @@ Ext.onReady(function () {
                     if (txtItemCategory.length > 0) {
                         txtItemCategory = txtItemCategory.substring(0, txtItemCategory.length - 1);
                     }
-                    Ext.getCmp("txtCategoryMapping").jitSetValue(txtItemCategory);
+                    Ext.getCmp("txtCategoryMapping").jitSetValue(txtItemCategory);//设置值
                 }
 
                 // prop
@@ -578,7 +579,7 @@ function fnSave() {
     var _gridUnit = Ext.getStore("itemEditUnitStore");
     var item = {};
 
-    var hdItemCategoryCtrl = Ext.getCmp("txtItemCategory");
+    var hdItemCategoryCtrl = Ext.getCmp("txtItemCategory");//获取种类
     var tbItemCodeCtrl = Ext.getCmp("txtItemCode");
     var tbItemNameCtrl = Ext.getCmp("txtItemName");
     var tbItemEnglishCtrl = Ext.getCmp("txtItemEnglish");
@@ -592,7 +593,7 @@ function fnSave() {
     var tbRemarkCtrl = Ext.getCmp("txtRemark");
 
     item.Item_Id = getUrlParam("item_id");//通过传过来的参数获取到商品Id
-    item.Item_Category_Id = hdItemCategoryCtrl.jitGetValue();
+    item.Item_Category_Id = hdItemCategoryCtrl.jitGetValue();//类别的值
     item.Item_Code = tbItemCodeCtrl.jitGetValue();
     item.Item_Name = tbItemNameCtrl.jitGetValue();
     item.Item_Name_En = tbItemEnglishCtrl.jitGetValue();

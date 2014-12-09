@@ -56,12 +56,12 @@ namespace JIT.CPOS.BS.DataAccess
             };
             StringBuilder strb = new StringBuilder();
             strb.Append(@"select item_id ItemID,item_name ItemName ,isnull(DisplayIndex,0)displayindex,ISNULL(SinglePurchaseQty,0) as SinglePurchaseQty
-                            ,(case when ObjectURL is null or ObjectURL='' then Imageurl else Imageurl end)Imageurl
+                            ,(case when ObjectURL is null or ObjectURL='' then Imageurl else ObjectUrl end)Imageurl
                             ,EventItemMappingId
                             from
                             (select item_id,item_name,DisplayIndex,EventItemMappingId,SinglePurchaseQty,
                             (select top 1 imageUrl from ObjectImages as img where T.item_id=img.ObjectId and IsDelete=0 order by displayindex) Imageurl,
-                            (select top 1 ImageURL from ObjectImages where ObjectImages.ObjectId=Pe.EventItemMappingId order by createtime desc) ObjectURL
+                            (select top 1 ImageURL from ObjectImages where ObjectImages.ObjectId=cast(Pe.EventItemMappingId as nvarchar(200)) order by createtime desc) ObjectURL
                             from PanicbuyingEventItemMapping as Pe
                             inner join T_Item as T on T.item_id=Pe.ItemId
                             where Pe.EventId=@EventId 
@@ -113,21 +113,21 @@ namespace JIT.CPOS.BS.DataAccess
             new SqlParameter{ParameterName="@pCustomerId",Value=this.CurrentUserInfo.ClientID},
             new SqlParameter{ParameterName="@EventItemMappingId",Value=EventItemMappingId}
             };
+            //js和更新时的操作都是正确的，查询时出错了
             StringBuilder strb = new StringBuilder();
-
             strb.Append(@"
                         select   
                             MappingId,vw.sku_id  as SkuID 
-                            ,isnull(vp.price,0)price ,ISNULL(ps.SalesPrice,0)SalesPrice
+                            ,isnull(vp.price,0)price ,ISNULL(pe.SalesPrice,0)SalesPrice
                             ,(vw.prop_1_detail_name+vw.prop_2_detail_name+vw.prop_3_detail_name+vw.prop_4_detail_name+vw.prop_5_detail_name) SkuName
                             ,ISNULL(pe.Qty,0) Qty,ISNULL(pe.KeepQty,0) KeepQty,ISNULL(pe.SoldQty,0) SoldQty,
                             (ISNULL(pe.Qty,0)-ISNULL(pe.KeepQty,0)-ISNULL(pe.SoldQty,0)) InverTory,
                             (case when MappingId is null or CONVERT(NVARCHAR(50),MappingId)='' then 'false' else 'true' end)IsSelected
                             from vw_sku  as vw
                             left join  PanicbuyingEventSkuMapping as pe on pe.SkuId=vw.sku_id  and convert(nvarchar(50),pe.EventItemMappingId)=@EventItemMappingId and pe.IsDelete=0
-                            left join  PanicbuyingEventItemMapping ps on ps.EventItemMappingId=ps.EventItemMappingId and ps.ItemId=@ItemId and ps.EventId=@EventId and ps.IsDelete=0 
+                            left join  PanicbuyingEventItemMapping ps on ps.EventItemMappingId=pe.EventItemMappingId and ps.ItemId=@ItemId and ps.EventId=@EventId and ps.IsDelete=0 
                             left join vw_sku_price vp on vp.sku_id=vw.sku_id and  vp.item_price_type_id='77850286E3F24CD2AC84F80BC625859D'
-                            where vw.item_id=@ItemId  
+                            where vw.item_id=@ItemId  and vw.status='1'
                             order by SkuID desc");
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, strb.ToString(), paras.ToArray());
             return ds;

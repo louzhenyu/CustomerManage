@@ -179,6 +179,15 @@ namespace JIT.CPOS.BS.BLL
         {
             _currentDAO.Delete(pIDs,pTran);
         }
+        /// <summary>
+        /// 根据ItemMappingID  删除sku
+        /// </summary>
+        /// <param name="guid"></param>
+        public void DeleteByItemMappingId(Guid guid)
+        {
+            _currentDAO.DeleteByItemMappingId(guid);
+        }
+
         #endregion
 
         #region IQueryable 成员

@@ -28,8 +28,24 @@
             fieldLabel: "商品分类",
             id: "txtItemCategory",
             name: "item_category_id",
+           
             jitSize: 'small'
-        }
+                }
+// , {
+//     xtype: 'jitcombotree',
+//     id: 'txtItemCategory',
+//     fieldLabel: '商品分类',  //取的是一个树数据
+//     emptyText: '--请选择--',
+//     multiSelect: false,
+//     isAddPleaseSelectItem: true,
+//     pleaseSelectText: '--请选择--',
+//     isSelectLeafOnly: true, //设置只能选择叶子结点。
+//     pickCfg: {
+//         minHeight: 100,
+//         maxHeight: 120,
+//         width: 500
+//     }, url: '../ItemCategoryNew/Handler/ItemCategoryTreeHandler.ashx?Status=1'  //获取数据
+// }
         , {
             xtype: "jitbizstatus",
             fieldLabel: "状态",

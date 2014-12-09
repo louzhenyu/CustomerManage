@@ -137,6 +137,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Prop.Handler
             PropInfo queryEntity = new PropInfo();
             queryEntity.Parent_Prop_id = "-99";
             queryEntity.Prop_Domain = FormatParamValue(Request("ApplicationId"));
+            if (queryEntity.Prop_Domain != null && queryEntity.Prop_Domain.Trim().ToUpper()=="SKU")
+            {
+                //查询sku的tree
+                queryEntity.Parent_Prop_id = "-88";
+                queryEntity.CustomerId = CurrentUserInfo.ClientID;
+            }
+            
             list = propService.GetWebProp(queryEntity, 0, 1000);
             StringBuilder sb = new StringBuilder();
             if (list != null && list.Count > 0)

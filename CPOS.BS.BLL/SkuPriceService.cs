@@ -50,11 +50,11 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="skuIds"></param>
         /// <returns></returns>
-        public IList<SkuPrice> GetPriceListBySkuIds(string skuIds)
+        public IList<SkuPrice> GetPriceListBySkuIds(string skuIds, string EventId)
         {
             IList<SkuPrice> PriceList = new List<SkuPrice>();
             DataSet ds = new DataSet();
-            ds = skuPriceService.GetPriceListBySkuIds(skuIds);
+            ds = skuPriceService.GetPriceListBySkuIds(skuIds,EventId);
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
                 PriceList = DataTableToObject.ConvertToList<SkuPrice>(ds.Tables[0]);

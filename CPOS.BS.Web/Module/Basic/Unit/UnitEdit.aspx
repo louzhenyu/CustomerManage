@@ -159,7 +159,7 @@
             <div style="width: 100%; padding: 0px; border: 0px solid #d0d0d0;">
                 <div id="tabsMain" style="width: 100%; height: 451px;">
                 </div>
-                <div id="tabInfo" style="height: 427px; background: rgb(241, 242, 245); overflow: auto;">
+                <div id="tabInfo"  style="height: 427px; background: rgb(241, 242, 245); overflow: auto;">
                     <div class="z_detail_tb" style="width: 700px;">
                         <div style="height: 5px;">
                         </div>
@@ -442,8 +442,8 @@
                         </table>
                     </div>
                 </div>
-                <div style="display: none">
-                    <div id="tabProp">
+                <div style="display:none">
+                    <div id="tabProp" style="display:none">
                         <div style="width: 100%; padding-left: 10px; padding-right: 10px;">
                             <div style="height: 5px;">
                             </div>
@@ -605,7 +605,7 @@
                                        <span style="margin-left:10px;">
                                            <select  id="Valueselect" style="width: 320px;padding: 8px 0px 8px 5px;border: 1px solid #cecedc;">
                                                 <option selected="selected" value="1" >文本</option>
-                                                <option value="3" >图文</option>
+                                            <%--    <option value="3"  >图文</option>--%>
                                             </select>
                                       </span>
                                  </div>
@@ -831,7 +831,7 @@
     <script src="<%=StaticUrl+"/Module/Basic/Unit/Model/UnitDetailVM.js?v=0.1"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Basic/Unit/Store/UnitVMStore.js?v=0.1"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Basic/Unit/Store/UnitEditVMStore.js?v=0.1"%>" type="text/javascript"></script>
-    <script src="<%=StaticUrl+"/Module/Basic/Unit/View/UnitEditView.js?v=0.1"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Module/Basic/Unit/View/UnitEditView.js?v=0.2"%>" type="text/javascript"></script>
     <script type="text/javascript">
             var map = new BMap.Map("allmap");
             map.centerAndZoom(new BMap.Point(116.331398, 39.897445), 11);

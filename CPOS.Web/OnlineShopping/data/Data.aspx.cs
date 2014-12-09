@@ -691,7 +691,15 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         {
             public string itemId { get; set; } //商品标识
             public string itemName { get; set; } //商品名称（譬如：浪漫主题房）
-            public string imageUrl { get; set; } //图片链接地址
+            /// <summary>
+            /// 图片链接地址 update by Henry 2014-12-8
+            /// </summary>
+            private string imageurl;
+            public string imageUrl
+            {
+                get { return ImagePathUtil.GetImagePathStr(this.imageurl, "240"); }  //请求图片缩略图 
+                set { this.imageurl = value; }
+            } 
             public decimal price { get; set; } //商品原价
             public decimal salesPrice { get; set; } //商品零售价（优惠价）
             public decimal everyoneSalesPrice { get; set; }   //人人销售价
@@ -7091,7 +7099,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             {
                                 resList.itemId = ToStr(item.ItemDetail.item_id);
                                 resList.itemName = ToStr(item.ItemDetail.item_name);
-                                resList.imageUrl = ToStr(item.ItemDetail.imageUrl);
+                                resList.imageUrl =ImagePathUtil.GetImagePathStr(ToStr(item.ItemDetail.imageUrl),"240"); //获取缩略图 update by Henry 2014-12-8
                                 resList.price = ToDouble(item.ItemDetail.Price);
                                 resList.salesPrice = ToDouble(item.ItemDetail.SalesPrice);
                                 resList.discountRate = ToDouble(item.ItemDetail.DiscountRate);

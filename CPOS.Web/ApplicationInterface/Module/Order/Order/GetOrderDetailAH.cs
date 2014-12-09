@@ -8,6 +8,7 @@ using JIT.CPOS.Web.ApplicationInterface.Base;
 using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using System.Data;
+using JIT.CPOS.Common;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 {
@@ -210,7 +211,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                             .Select(c => new OrderDetailImage
                             {
                                 ImageID = c["imageId"].ToString(),
-                                ImageUrl = c["imageUrl"].ToString()
+                                ImageUrl =ImagePathUtil.GetImagePathStr(c["imageUrl"].ToString(),"240")
                             }).ToArray()
                 });
                 rd.OrderListInfo.OrderDetailInfo = tmp.ToArray();

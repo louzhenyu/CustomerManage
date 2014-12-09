@@ -286,6 +286,7 @@ function fnSave() {
         success: function (response) {
             var jdata = Ext.JSON.decode(response.responseText);
             if (jdata.ResponseData.success) {
+                var logo = $('#img_logo');
                 Ext.Msg.show({
                     title: '提示',
                     msg: jdata.ResponseData.msg,
@@ -293,7 +294,7 @@ function fnSave() {
                     icon: Ext.Msg.INFO,
                     fn: function () {
                         myMask.hide()
-
+                        logo.attr('src', imageurl).css({ 'margin-top': 'auto', 'max-width': '139px', 'max-height': '62px' });
                     }
                 });
             }

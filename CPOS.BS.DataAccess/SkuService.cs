@@ -146,7 +146,13 @@ namespace JIT.CPOS.BS.DataAccess
         public DataTable GetSKUAndItemBySKUIDs(string[] pSKUIDs)
         {
             StringBuilder sql = new StringBuilder();
-            sql.Append("select a.sku_id,a.item_id,b.item_name,b.imageurl,c.prop_1_detail_name,c.prop_2_detail_name,c.prop_3_detail_name,c.prop_4_detail_name,c.prop_5_detail_name from t_sku a left join vw_item_detail b on a.item_id =b.item_id left join vw_sku_detail c on a.sku_id=c.sku_id where 1=1");
+            sql.Append(@"select a.sku_id,a.item_id,b.item_name,b.imageurl
+,prop_1_name,c.prop_1_detail_name,prop_2_name,c.prop_2_detail_name
+,prop_3_name,c.prop_3_detail_name,prop_4_name,c.prop_4_detail_name,prop_5_name,c.prop_5_detail_name 
+from t_sku a 
+left join vw_item_detail b on a.item_id =b.item_id 
+left join vw_sku_detail c on a.sku_id=c.sku_id 
+where 1=1   ");
             bool isFirst = true;
             sql.Append(" and a.sku_id in (");
             foreach (var id in pSKUIDs)
@@ -488,6 +494,8 @@ namespace JIT.CPOS.BS.DataAccess
             //sql.AppendLine(" ,overQty=a.RemainingQty");
             //sql.AppendLine(@" FROM vwPEventItemDetail a");
             //sql.AppendLine(string.Format(" WHERE a.itemid = '{0}' and a.eventid='{1}'", itemId, eventId));
+
+            /*
             string sql = @"select b.sku_id as skuId,b.prop_1_name as skuProp1,b.prop_2_name as skuProp2,
 	                        a.Price as price,a.SalesPrice as salesPrice,convert(decimal(18,1),b.DiscountRate) as discountRate,
 	                        b.Integral as integral
@@ -495,6 +503,26 @@ namespace JIT.CPOS.BS.DataAccess
                             inner join vw_sku_detail b
                             on(a.itemid = b.item_id)
                             where a.itemid='{0}' and a.eventid='{1}' and b.status='1'";
+             */
+
+            // modify by donal 2014-11-13 11:22:46
+            //以前查的结果不对，现在重新整理sql
+            string sql = @"
+                SELECT  b.SkuId AS skuId,
+                c.prop_1_name AS skuProp1 ,
+                c.prop_2_name AS skuProp2,
+                b.Price AS price,
+                b.SalesPrice AS salesPrice,
+                CONVERT (DECIMAL(18, 1), c.DiscountRate) AS discountRate,
+                c.Integral AS integral
+                FROM    PanicbuyingEventItemMapping a
+                        LEFT JOIN dbo.PanicbuyingEventSkuMapping b ON a.EventItemMappingId = b.EventItemMappingId
+                        INNER JOIN dbo.vw_sku_detail c ON b.SkuId = c.sku_id
+                WHERE   a.IsDelete = 0
+                        AND b.IsDelete = 0
+                        AND a.ItemId = '{0}'
+                        AND a.EventId = '{1}'
+                        AND c.status ='1'";
             return this.SQLHelper.ExecuteDataset(string.Format(sql,itemId,eventId));
         }
 

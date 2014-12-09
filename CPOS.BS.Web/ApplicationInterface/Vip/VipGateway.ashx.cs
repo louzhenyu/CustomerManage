@@ -46,7 +46,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                     MonthVipCount = Convert.ToInt32(t["NewMemberCountThisMonth"]),
                     AddRatioByMonth = t["NewMemberPercentByMonth"].ToString(),
                     CashOnDeliveryCount = Convert.ToInt32(t["CashOnDeliveryCount"]),
-                    OffShelfCount = Convert.ToInt32(t["CashOnDeliveryCount"]),
+                    OffShelfCount = Convert.ToInt32(t["OffShelfCount"]),
                     OnlineUnitCount = Convert.ToInt32(t["OnlineUnitCount"]),
                     PaidNotSentCount = Convert.ToInt32(t["PaidNotSentCount"]),
                     SentCount=Convert.ToInt32(t["SentCount"]),

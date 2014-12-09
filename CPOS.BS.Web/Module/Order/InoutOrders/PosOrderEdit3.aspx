@@ -27,11 +27,11 @@
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/Options.js"%>" type="text/javascript"></script>
 
 
-    <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Controller/PosOrderEdit3Ctl.js?v=0.7"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Controller/PosOrderEdit3Ctl.js?v=0.8"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Model/InoutOrderEntity.js?v=0.7"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Model/InoutOrderDetailItemVM.js?v=0.7"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Store/SalesOutOrderEditVMStore.js?v=0.7"%>" type="text/javascript"></script>
-    <script src="<%=StaticUrl+"/Module/Order/InoutOrders/View/PosOrderEdit3View.js?v=0.7"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Module/Order/InoutOrders/View/PosOrderEdit3View.js?v=0.8"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Store/PosOrderEdit3VMStore.js?v=0.7"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Model/PosOrderEdit3Entity.js?v=0.7"%>" type="text/javascript"></script>
 

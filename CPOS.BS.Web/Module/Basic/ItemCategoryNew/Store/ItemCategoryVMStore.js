@@ -23,6 +23,6 @@
             }
         }
         , autoLoad:false
-        , storeId: 'itemCategoryTreeStore'
+        , storeId: 'itemCategoryTreeStore'//这个是用于右边的树面板的。
     });
 }

@@ -49,12 +49,33 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="skuIds"></param>
         /// <returns></returns>
-        public DataSet GetPriceListBySkuIds(string skuIds)
+        public DataSet GetPriceListBySkuIds(string skuIds, string EventId)
         { 
             DataSet ds = new DataSet();
-            string sql = string.Format("select sku_id = a.sku_id,price= a.SalesPrice,EveryoneSalesPrice=a.EveryoneSalesPrice  from vw_sku_detail a where sku_id in ({0})", skuIds);
-            ds = this.SQLHelper.ExecuteDataset(sql);
-         
+
+            //旧的sql不包含团购价
+            //string sql = string.Format("select sku_id = a.sku_id,price= a.SalesPrice,EveryoneSalesPrice=a.EveryoneSalesPrice  from vw_sku_detail a where sku_id in ({0})", skuIds);
+
+            //modify by donal 2014-11-13 13:43:08  新的sql，团购ID不为空时，查询团购价。
+            string sql = @"
+                SELECT  sku_id = a.sku_id ,
+                        price = a.SalesPrice ,
+                        EveryoneSalesPrice = a.EveryoneSalesPrice,
+                        x.SalesPrice as groupPrice
+                FROM    vw_sku_detail a
+                LEFT JOIN ( SELECT 
+                                    c.SalesPrice,c.SkuId
+                          FROM      PanicbuyingEvent a
+                                    LEFT JOIN PanicbuyingEventItemMapping b ON a.EventId = b.EventId
+                                    LEFT JOIN dbo.PanicbuyingEventSkuMapping c ON b.EventItemMappingId = c.EventItemMappingId
+                          WHERE     a.IsDelete = 0
+                                    AND b.IsDelete = 0
+                                    AND c.IsDelete = 0
+                                    AND a.EventId = {0}
+                        ) x ON x.SkuId =  a.sku_id
+                WHERE   a.sku_id in({1})";
+            string sEventId = string.IsNullOrWhiteSpace(EventId)? "NULL" : "'"+EventId.ToString()+"'";
+            ds = this.SQLHelper.ExecuteDataset(string.Format(sql,sEventId,skuIds));         
             return ds;       
         }
         #endregion

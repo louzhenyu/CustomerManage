@@ -245,6 +245,10 @@
     <Compile Include="ValueObject\Modules.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Infrastructure\Code\Utility\Utility.csproj">
+      <Project>{1DFD5C01-71C0-41D9-82E4-CABA22331835}</Project>
+      <Name>Utility</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
       <Project>{6D911430-7243-4AB2-B70E-4DAFFC4D1B22}</Project>
       <Name>CPOS.BS.Entity</Name>

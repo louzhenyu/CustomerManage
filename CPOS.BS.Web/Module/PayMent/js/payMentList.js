@@ -1,24 +1,24 @@
 ﻿define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform'], function () {
     var page =
         {
-			notifyUrl: '',
+            notifyUrl: '',
             //关联到的类别
             elems:
             {
                 uiMask: $(".jui-mask"),
-				dataObj:{}
+                dataObj: {}
             },
-            
+
             init: function () {
                 var that = this;
                 //var pageType = $.util.getUrlParam("pageType");
                 //var pageName = decodeURIComponent($.util.getUrlParam("pageName"));
-				
-				that.queryPayMentList(function(data){
-					that.notifyUrl = data.url;
-				});
+
+                that.queryPayMentList(function (data) {
+                    that.notifyUrl = data.url;
+                });
                 that.initEvent();
-				//that.pager();
+                //that.pager();
             },
             stopBubble: function (e) {
                 if (e && e.stopPropagation) {
@@ -53,7 +53,7 @@
                 this.elems.uiMask.fadeIn(500);
                 $(selector).fadeIn(500);
             },
-			alert: function (content) {
+            alert: function (content) {
                 var d = dialog({
                     fixed: true,
                     title: '提示',
@@ -64,35 +64,35 @@
                     d.close().remove();
                 }, 3500);
             },
-			pager: function(){
-				var that = this;
-				kkpager.generPageHtml({
-					pno: 1,
-					mode: 'click', //设置为click模式
-					//总页码  
-					total: 2,
-					isShowTotalPage: false,
-					isShowTotalRecords: false,
-					isGoPage: false,
-					//点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
-					//适用于不刷新页面，比如ajax
-					click: function (n) {
-						//这里可以做自已的处理
-						//...
-						//处理完后可以手动条用selectPage进行页码选中切换
-						this.selectPage(n);
-						
-						//that.loadMoreData(n);
-					},
-					//getHref是在click模式下链接算法，一般不需要配置，默认代码如下
-					getHref: function (n) {
-						return '#';
-					}
+            pager: function () {
+                var that = this;
+                kkpager.generPageHtml({
+                    pno: 1,
+                    mode: 'click', //设置为click模式
+                    //总页码  
+                    total: 2,
+                    isShowTotalPage: false,
+                    isShowTotalRecords: false,
+                    isGoPage: false,
+                    //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
+                    //适用于不刷新页面，比如ajax
+                    click: function (n) {
+                        //这里可以做自已的处理
+                        //...
+                        //处理完后可以手动条用selectPage进行页码选中切换
+                        this.selectPage(n);
 
-				}, true);
-			},
-			loadMoreData: function(currentPage){
-				var that = this;
+                        //that.loadMoreData(n);
+                    },
+                    //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
+                    getHref: function (n) {
+                        return '#';
+                    }
+
+                }, true);
+            },
+            loadMoreData: function (currentPage) {
+                var that = this;
                 this.loadData.args.PageIndex = currentPage - 1;
                 this.loadData.getEventsList(function (data) {
                     var list = data.Data.PanicbuyingEventList;
@@ -103,381 +103,398 @@
                     var html = bd.template("tpl_content", { list: list })
                     $("#goodsList").html(html);
                 });
-			},
+            },
             initEvent: function () {
                 //初始化事件集
                 var that = this,
 					$tr;
-				//单选框
-				$('.jui-dialog-payMent .radioBox').bind('click',function(){
-					var $this = $(this);
-						
-					$('#jui-dialog-'+that.elems.dataObj.typecode+' .radioBox').removeClass('on');
-					$this.addClass('on');
-					if($this.data('radio')== 'disable'){
-						$this.parents('.payMentContent').find('input').attr('disabled','disabled').parent().css({'border':'none'});
-						$this.parents('.payMentContent').find('.uploadFileBox').hide();
-					}else{
-						$this.parents('.payMentContent').find('input').attr('disabled',false).parent().css({'border':'1px solid #dedede'});
-						$this.parents('.payMentContent').find('.uploadFileBox').show();
-					}
-					//$("#text").disable = ture;
-				});
-				//复选框选择
-				$('.payMentListArea').delegate('.checkBox','click',function(){
-					var $this = $(this);
-					if($this.hasClass('on')){
-						$this.removeClass('on');
-					}else{
-						$this.addClass('on');
-					}
-				});
-				
-				//编辑操作
-				$('#payMentList').delegate('.operateWrap','click',function(e){
-					var $this = $(this);
-					$tr = $('.unstart',$this.parent());
-					that.elems.dataObj.typecode = $this.data('typecode');
-					that.elems.dataObj.typeid = $this.data('typeid');
-					that.elems.dataObj.channelid = $this.data('channelid');
-					
-					that.showElements('#jui-dialog-'+that.elems.dataObj.typecode);
-					$('#jui-dialog-'+that.elems.dataObj.typecode+' .radioBox').eq(0).trigger('click');
-					that.stopBubble(e);
-				});
+                //单选框
+                $('.jui-dialog-payMent .radioBox').bind('click', function () {
+                    var $this = $(this);
+
+                    $('#jui-dialog-' + that.elems.dataObj.typecode + ' .radioBox').removeClass('on');
+                    $this.addClass('on');
+                    if ($this.data('radio') == 'disable') {
+                        $this.parents('.payMentContent').find('input').attr('disabled', 'disabled').parent().css({ 'border': 'none' });
+                        $this.parents('.payMentContent').find('.uploadFileBox').hide();
+                    } else {
+                        $this.parents('.payMentContent').find('input').attr('disabled', false).parent().css({ 'border': '1px solid #dedede' });
+                        $this.parents('.payMentContent').find('.uploadFileBox').show();
+                    }
+                    if ($this.index() == 1) {
+                        that.elems.dataObj.action = "SetPayChannel"
+                    }
+
+                    //$("#text").disable = ture;
+                });
+                //复选框选择
+                $('.payMentListArea').delegate('.checkBox', 'click', function () {
+                    var $this = $(this);
+                    if ($this.hasClass('on')) {
+                        $this.removeClass('on');
+                    } else {
+                        $this.addClass('on');
+                    }
+                });
+
+                //编辑操作
+                $('#payMentList').delegate('.operateWrap', 'click', function (e) {
+                    var $this = $(this);
+                    $tr = $('.unstart', $this.parent());
+                    that.elems.dataObj.typecode = $this.data('typecode');
+                    that.elems.dataObj.typeid = $this.data('typeid');
+                    that.elems.dataObj.channelid = $this.data('channelid');
+                    that.elems.dataObj.userType = $this.data("usertype");
+                    that.elems.dataObj.action = "SetDefaultPayChannel"//启用商户 和启用阿拉丁调用不同的方法。 默认SetDefaultPayChannel
+                    that.showElements('#jui-dialog-' + that.elems.dataObj.typecode);
+                    var index = 0;
+                    var userType = eval('(' + $this.data("usertype") + ')')//IsOpen 是否启用 IsDefault 是否是默认（阿拉丁）是否是商户IsCustom
+                    if (userType.IsOpen) {
+                        if (userType.IsCustom) {
+                            index = 1
+
+                        }
+                    } else {
+                        index = 2;
+                    }
+                    $('#jui-dialog-' + that.elems.dataObj.typecode + ' .radioBox').eq(index).trigger('click');
+                    that.stopBubble(e);
+                });
                 //关闭弹出层
                 $(".jui-dialog-close").bind("click", function () {
                     that.elems.uiMask.slideUp();
                     $(this).parents('.jui-dialog').fadeOut();
                 });
-				$('.jui-dialog').delegate('.cancelBtn','click',function(){
-					that.elems.uiMask.slideUp();
+                $('.jui-dialog').delegate('.cancelBtn', 'click', function () {
+                    that.elems.uiMask.slideUp();
                     $(this).parents('.jui-dialog').fadeOut();
-				});
-				
-				
-				//点击上传文件按钮
-				$('.jui-dialog').delegate('.uploadFileBox','click',function(){
-					var $this = $(this),
-						randomNum = Math.ceil(Math.random()*1000);
-					$this.append('<form id="form'+randomNum+'" action="/Framework/Upload/UploadFile.ashx" method="post" enctype="multipart/form-data" ><input id="file'+randomNum+'" name="file'+randomNum+'" type="file" value=""/></form>').attr('class','uploadFileBox01');
-					$("#file"+randomNum).change(function () {
-						if ($(this).val()) {
-							$("#form"+randomNum).ajaxSubmit({
-								success: function(data) {
-									var data = JSON.parse(data);
-									if (data.success == true)
-									$('input',$this.siblings('p')).val(data.file.url);
-									else {
-										alert(data.msg);
-									}
-								}
-							});
-						}
-					});
-					
-				});
+                });
 
-				
-				//点击保存按钮
-				$('.jui-dialog').delegate('.saveBtn','click',function(){
-					var $this = $(this),
-						radioValue = $('.radioBox.on',$this.parents('.payMentContent')).data('value');
 
-					var paymentId = that.elems.dataObj.typeid;
-					var paymentCode =  that.elems.dataObj.typecode;
-					var channelId = that.elems.dataObj.channelid;
-					if (channelId == "" || channelId == null) {
-						channelId = 0;
-					}
-					
-					if(radioValue=='unalading'){
-						that.disablePayment(function(){
-							alert('停用成功');
-							$tr.text('未启用').addClass('blue');
-							that.elems.uiMask.slideUp();
-							$this.parents('.jui-dialog').fadeOut();
-						});
-					}else{
-						var AddPayChannelList = new Array();
-						var pay = {};
-						var obj = {};
-						var WapData = {};
-						pay.PaymentTypeId = paymentId;
-						pay.ChannelId = channelId;
-						//判断是哪种支付方式
-						if(paymentCode=='AlipayWap'){//支付宝wap
+                //点击上传文件按钮
+                $('.jui-dialog').delegate('.uploadFileBox', 'click', function () {
+                    var $this = $(this),
+						randomNum = Math.ceil(Math.random() * 1000);
+                    $this.append('<form id="form' + randomNum + '" action="/Framework/Upload/UploadFile.ashx" method="post" enctype="multipart/form-data" ><input id="file' + randomNum + '" name="file' + randomNum + '" type="file" value=""/></form>').attr('class', 'uploadFileBox01');
+                    $("#file" + randomNum).change(function () {
+                        if ($(this).val()) {
+                            $("#form" + randomNum).ajaxSubmit({
+                                success: function (data) {
+                                    var data = JSON.parse(data);
+                                    if (data.success == true)
+                                        $('input', $this.siblings('p')).val(data.file.url);
+                                    else {
+                                        alert(data.msg);
+                                    }
+                                }
+                            });
+                        }
+                    });
 
-							pay.PayType = "3";
+                });
 
-							if(radioValue=='busine'){
-								if($("#AlipayWap_id").val() == ''){
-									that.alert('账号不能为空！');
-									return ;
-								}
-								if($("#AlipayWap_tbid").val() == ''){
-									that.alert('卖家淘宝账号不能为空！');
-									return ;
-								}
-								if($("#AlipayWap_publicKey").val() == ''){
-									that.alert('支付宝公钥不能为空！');
-									return ;
-								}
-								if($("#AlipayWap_privateKey").val() == ''){
-									that.alert('私钥不能为空！');
-									return ;
-								}
-								
-								pay.NotifyUrl = that.notifyUrl;
-								WapData = {
-									"Partner": $("#AlipayWap_id").val(),
-									"SellerAccountName": $("#AlipayWap_tbid").val(),
-									"RSA_PublicKey": $("#AlipayWap_publicKey").val(),
-									"RSA_PrivateKey": $("#AlipayWap_privateKey").val(),
-									"MD5Key": ""
-								};
-							}
 
-							pay.WapData = WapData;
-							AddPayChannelList[0] = pay;
-							
-							
-						}else if(paymentCode=='AlipayOffline'){
-							pay.PayType = "4";
+                //点击保存按钮
+                $('.jui-dialog').delegate('.saveBtn', 'click', function () {
+                    var $this = $(this),
+						radioValue = $('.radioBox.on', $this.parents('.payMentContent')).data('value');
 
-							if(radioValue=='busine'){
-								if($("#AlipayOffline_id").val() == ''){
-									that.alert('账号不能为空！');
-									return ;
-								}
-								if($("#AlipayOffline_md5").val() == ''){
-									that.alert('秘钥不能为空！');
-									return ;
-								}
-								pay.NotifyUrl = that.notifyUrl;
-								WapData = {
-									"Partner": $("#AlipayOffline_id").val(),
-									"MD5Key": $("#AlipayOffline_md5").val()
-								};
-							}
+                    var paymentId = that.elems.dataObj.typeid;
+                    var paymentCode = that.elems.dataObj.typecode;
+                    var channelId = that.elems.dataObj.channelid;
+                    if (channelId == "" || channelId == null) {
+                        channelId = 0;
+                    }
 
-							pay.WapData = WapData;
-							AddPayChannelList[0] = pay;
-							
-						}else if(paymentCode=='WXJS'){
-							pay.PayType = "5";
+                    if (radioValue == 'unalading') {
+                        that.disablePayment(function () {
+                            alert('停用成功');
+                            $tr.text('未启用').addClass('blue');
+                            that.elems.uiMask.slideUp();
+                            $this.parents('.jui-dialog').fadeOut();
+                        });
+                    } else {
+                        var AddPayChannelList = new Array();
+                        var pay = {};
+                        var obj = {};
+                        var WapData = {};
+                        pay.PaymentTypeId = paymentId;
+                        pay.ChannelId = channelId;
+                        //判断是哪种支付方式
+                        if (paymentCode == 'AlipayWap') {//支付宝wap
 
-							if(radioValue=='busine'){
-								if($("#WXJS_appid").val() == ''){
-									that.alert('身份标识不能为空！');
-									return ;
-								}
-								if($("#WXJS_appsecret").val() == ''){
-									that.alert('公众平台秘钥不能为空！');
-									return ;
-								}
-								if($("#WXJS_parnterid").val() == ''){
-									that.alert('财付商户通身份标识别不能为空！');
-									return ;
-								}
-								if($("#WXJS_parnterkey").val() == ''){
-									that.alert('财付通商户权限私钥不能为空！');
-									return ;
-								}
-								
-								pay.PayType = "6";
-								pay.NotifyUrl = that.notifyUrl;
-								var WxPayData = {
-									"AppID": $("#WXJS_appid").val(),
-									"AppSecret": $("#WXJS_appsecret").val(),
-									"ParnterID": $("#WXJS_parnterid").val(),
-									"ParnterKey": $("#WXJS_parnterkey").val(),
-									"PaySignKey": $("#WXJS_paysignkey").val()
-								};
-								pay.WxPayData = WxPayData;
-							}
+                            pay.PayType = "3";
 
-							pay.WapData = WapData;
-							AddPayChannelList[0] = pay;
-							
-						}else if(paymentCode=='CupWap'){//银联网页支付
-							pay.PayType = "1";
-							
-							if(radioValue=='busine'){
-								if($("#CupWap_merchantid").val() == ''){
-									that.alert('账号ID不能为空！');
-									return ;
-								}
-								if($("#CupWap_certificatecilepath").val() == ''){
-									that.alert('加密证书不能为空！');
-									return ;
-								}
-								if($("#CupWap_certificatefilepassword").val() == ''){
-									that.alert('加密密码不能为空！');
-									return ;
-								}
-								if($("#CupWap_decryptcertificatefilepath").val() == ''){
-									that.alert('解密证书不能为空！');
-									return ;
-								}
-								if($("#CupWap_packetencryptkey").val() == ''){
-									that.alert('解密密码不能为空！');
-									return ;
-								}
-								
-								pay.NotifyUrl = that.notifyUrl;
-								var UnionPayData = {
-									"MerchantID": $("#CupWap_merchantid").val(),
-									"CertificateFilePath": $("#CupWap_certificatecilepath").val(),
-									"CertificateFilePassword": $("#CupWap_certificatefilepassword").val(),
-									"DecryptCertificateFilePath": $("#CupWap_decryptcertificatefilepath").val(),
-									"PacketEncryptKey": $("#CupWap_packetencryptkey").val()
-								};
-								pay.UnionPayData = UnionPayData;
-							}
+                            if (radioValue == 'busine') {
+                                if ($("#AlipayWap_id").val() == '') {
+                                    that.alert('账号不能为空！');
+                                    return;
+                                }
+                                if ($("#AlipayWap_tbid").val() == '') {
+                                    that.alert('卖家淘宝账号不能为空！');
+                                    return;
+                                }
+                                if ($("#AlipayWap_publicKey").val() == '') {
+                                    that.alert('支付宝公钥不能为空！');
+                                    return;
+                                }
+                                if ($("#AlipayWap_privateKey").val() == '') {
+                                    that.alert('私钥不能为空！');
+                                    return;
+                                }
 
-							pay.WapData = WapData;
-							AddPayChannelList[0] = pay;
-							
-						}else if(paymentCode=='CupVoice'){
-							pay.PayType = "2";
-							
-							if(radioValue=='busine'){
-								if($("#CupVoice_merchantid").val() == ''){
-									that.alert('账号ID不能为空！');
-									return ;
-								}
-								if($("#CupVoice_certificatecilepath").val() == ''){
-									that.alert('加密证书不能为空！');
-									return ;
-								}
-								if($("#CupVoice_certificatefilepassword").val() == ''){
-									that.alert('加密密码不能为空！');
-									return ;
-								}
-								if($("#CupVoice_decryptcertificatefilepath").val() == ''){
-									that.alert('解密证书不能为空！');
-									return ;
-								}
-								if($("#CupVoice_packetencryptkey").val() == ''){
-									that.alert('解密密码不能为空！');
-									return ;
-								}
-								
-								pay.NotifyUrl = that.notifyUrl;
-								var UnionPayData = {
-									"MerchantID": $("#CupVoice_merchantid").val(),
-									"CertificateFilePath": $("#CupVoice_certificatecilepath").val(),
-									"CertificateFilePassword": $("#CupVoice_certificatefilepassword").val(),
-									"DecryptCertificateFilePath": $("#CupVoice_decryptcertificatefilepath").val(),
-									"PacketEncryptKey": $("#CupVoice_packetencryptkey").val()
-								};
-								pay.UnionPayData = UnionPayData;
-							}
-							
-							pay.WapData = WapData;
-							AddPayChannelList[0] = pay;
-							
-						}else if(paymentCode=='CustomerSelfPay'){//
-							pay.WapData = WapData;
-							AddPayChannelList[0] = pay;
-							
-						}else if(paymentCode=='GetToPay'){
-							pay.WapData = WapData;
-							AddPayChannelList[0] = pay;
-						}
-						
-						obj.Parameters = {
-							'AddPayChannelData' : AddPayChannelList
-						};
-						obj = JSON.stringify(obj);
-						that.startPayment(obj,function(){
-							//location.reload();
-							alert('启用账号成功');
-							$('input',$this.parents('.jui-dialog')).val('');
-							$tr.text('已启用').removeClass('blue');
-							that.elems.uiMask.slideUp();
-							$this.parents('.jui-dialog').fadeOut();
-						});
-						
-					}
-					
-				});
-				
+                                pay.NotifyUrl = that.notifyUrl;
+                                WapData = {
+                                    "Partner": $("#AlipayWap_id").val(),
+                                    "SellerAccountName": $("#AlipayWap_tbid").val(),
+                                    "RSA_PublicKey": $("#AlipayWap_publicKey").val(),
+                                    "RSA_PrivateKey": $("#AlipayWap_privateKey").val(),
+                                    "MD5Key": ""
+                                };
+                            }
+
+                            pay.WapData = WapData;
+                            AddPayChannelList[0] = pay;
+
+
+                        } else if (paymentCode == 'AlipayOffline') {
+                            pay.PayType = "4";
+
+                            if (radioValue == 'busine') {
+                                if ($("#AlipayOffline_id").val() == '') {
+                                    that.alert('账号不能为空！');
+                                    return;
+                                }
+                                if ($("#AlipayOffline_md5").val() == '') {
+                                    that.alert('秘钥不能为空！');
+                                    return;
+                                }
+                                pay.NotifyUrl = that.notifyUrl;
+                                WapData = {
+                                    "Partner": $("#AlipayOffline_id").val(),
+                                    "MD5Key": $("#AlipayOffline_md5").val()
+                                };
+                            }
+
+                            pay.WapData = WapData;
+                            AddPayChannelList[0] = pay;
+
+                        } else if (paymentCode == 'WXJS') {
+                            pay.PayType = "5";
+
+                            if (radioValue == 'busine') {
+                                if ($("#WXJS_appid").val() == '') {
+                                    that.alert('身份标识不能为空！');
+                                    return;
+                                }
+                                if ($("#WXJS_appsecret").val() == '') {
+                                    that.alert('公众平台秘钥不能为空！');
+                                    return;
+                                }
+                                if ($("#WXJS_parnterid").val() == '') {
+                                    that.alert('财付商户通身份标识别不能为空！');
+                                    return;
+                                }
+                                if ($("#WXJS_parnterkey").val() == '') {
+                                    that.alert('财付通商户权限私钥不能为空！');
+                                    return;
+                                }
+
+                                pay.PayType = "6";
+                                pay.NotifyUrl = that.notifyUrl;
+                                var WxPayData = {
+                                    "AppID": $("#WXJS_appid").val(),
+                                    "AppSecret": $("#WXJS_appsecret").val(),
+                                    "ParnterID": $("#WXJS_parnterid").val(),
+                                    "ParnterKey": $("#WXJS_parnterkey").val(),
+                                    "PaySignKey": $("#WXJS_paysignkey").val()
+                                };
+                                pay.WxPayData = WxPayData;
+                            }
+
+                            pay.WapData = WapData;
+                            AddPayChannelList[0] = pay;
+
+                        } else if (paymentCode == 'CupWap') {//银联网页支付
+                            pay.PayType = "1";
+
+                            if (radioValue == 'busine') {
+                                if ($("#CupWap_merchantid").val() == '') {
+                                    that.alert('账号ID不能为空！');
+                                    return;
+                                }
+                                if ($("#CupWap_certificatecilepath").val() == '') {
+                                    that.alert('加密证书不能为空！');
+                                    return;
+                                }
+                                if ($("#CupWap_certificatefilepassword").val() == '') {
+                                    that.alert('加密密码不能为空！');
+                                    return;
+                                }
+                                if ($("#CupWap_decryptcertificatefilepath").val() == '') {
+                                    that.alert('解密证书不能为空！');
+                                    return;
+                                }
+                                if ($("#CupWap_packetencryptkey").val() == '') {
+                                    that.alert('解密密码不能为空！');
+                                    return;
+                                }
+
+                                pay.NotifyUrl = that.notifyUrl;
+                                var UnionPayData = {
+                                    "MerchantID": $("#CupWap_merchantid").val(),
+                                    "CertificateFilePath": $("#CupWap_certificatecilepath").val(),
+                                    "CertificateFilePassword": $("#CupWap_certificatefilepassword").val(),
+                                    "DecryptCertificateFilePath": $("#CupWap_decryptcertificatefilepath").val(),
+                                    "PacketEncryptKey": $("#CupWap_packetencryptkey").val()
+                                };
+                                pay.UnionPayData = UnionPayData;
+                            }
+
+                            pay.WapData = WapData;
+                            AddPayChannelList[0] = pay;
+
+                        } else if (paymentCode == 'CupVoice') {
+                            pay.PayType = "2";
+
+                            if (radioValue == 'busine') {
+                                if ($("#CupVoice_merchantid").val() == '') {
+                                    that.alert('账号ID不能为空！');
+                                    return;
+                                }
+                                if ($("#CupVoice_certificatecilepath").val() == '') {
+                                    that.alert('加密证书不能为空！');
+                                    return;
+                                }
+                                if ($("#CupVoice_certificatefilepassword").val() == '') {
+                                    that.alert('加密密码不能为空！');
+                                    return;
+                                }
+                                if ($("#CupVoice_decryptcertificatefilepath").val() == '') {
+                                    that.alert('解密证书不能为空！');
+                                    return;
+                                }
+                                if ($("#CupVoice_packetencryptkey").val() == '') {
+                                    that.alert('解密密码不能为空！');
+                                    return;
+                                }
+
+                                pay.NotifyUrl = that.notifyUrl;
+                                var UnionPayData = {
+                                    "MerchantID": $("#CupVoice_merchantid").val(),
+                                    "CertificateFilePath": $("#CupVoice_certificatecilepath").val(),
+                                    "CertificateFilePassword": $("#CupVoice_certificatefilepassword").val(),
+                                    "DecryptCertificateFilePath": $("#CupVoice_decryptcertificatefilepath").val(),
+                                    "PacketEncryptKey": $("#CupVoice_packetencryptkey").val()
+                                };
+                                pay.UnionPayData = UnionPayData;
+                            }
+
+                            pay.WapData = WapData;
+                            AddPayChannelList[0] = pay;
+
+                        } else if (paymentCode == 'CustomerSelfPay') {//
+                            pay.WapData = WapData;
+                            AddPayChannelList[0] = pay;
+
+                        } else if (paymentCode == 'GetToPay') {
+                            pay.WapData = WapData;
+                            AddPayChannelList[0] = pay;
+                        }
+
+                        obj.Parameters = {
+                            'AddPayChannelData': AddPayChannelList
+                        };
+                        obj = JSON.stringify(obj);
+                        that.startPayment(obj, function () {
+                            //location.reload();
+                            alert('启用账号成功');
+                            $('input', $this.parents('.jui-dialog')).val('');
+                            $tr.text('已启用').removeClass('blue');
+                            that.elems.uiMask.slideUp();
+                            $this.parents('.jui-dialog').fadeOut();
+                        });
+
+                    }
+
+                });
+
             },
-			queryPayMentList: function(callback){
-				$.ajax({
-					url: '/Module/PayMent/Handler/PayMentHander.ashx?mid=' + __mid + "&method=getPayMentTypePage",//查询支付列表接口
-					type: "post",
-					data:
+            queryPayMentList: function (callback) {
+                $.ajax({
+                    url: '/Module/PayMent/Handler/PayMentHander.ashx?mid=' + __mid + "&method=getPayMentTypePage", //查询支付列表接口
+                    type: "post",
+                    data:
 					{
-						'form': {
-							"Payment_Type_Name":"",
-							"Payment_Type_Code":""
-						},
-						'page': 1
+					    'form': {
+					        "Payment_Type_Name": "",
+					        "Payment_Type_Code": ""
+					    },
+					    'page': 1
 					},
-					success: function (data) {
-						var data = JSON.parse(data),
+                    success: function (data) {
+                        var data = JSON.parse(data),
 							list = data.topics;
-						var html = bd.template("tpl_payMentList", { list: list })
-                    	$("#payMentList").html(html);
-						if ( data.totalCount > 0) {
-							//表示成功
-							if (callback) {
-								callback(data);
-							}
-						}else {
-							alert(data.Message);
-						}
-					}
-				});
-			},
-			//启用账号接口调用
-			startPayment: function(params,callback){
-				$.ajax({
-					url: '/ApplicationInterface/PayChannel/PayChannelGateway.ashx?type=Product&action=SetDefaultPayChannel',
-					type: "post",
-					data:
+                        var html = bd.template("tpl_payMentList", { list: list })
+                        $("#payMentList").html(html);
+                        if (data.totalCount > 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //启用账号接口调用
+            startPayment: function (params, callback) {
+                var that = this;
+                $.ajax({
+                    url: '/ApplicationInterface/PayChannel/PayChannelGateway.ashx?type=Product&action=' + that.elems.dataObj.action,
+                    type: "post",
+                    data:
 					{
-						'req': params
+					    'req': params
 					},
-					success: function (data) {
-						var data = JSON.parse(data);
-						if (data.ResultCode == 0) {
-							if (callback) {
-								callback(data);
-							}
-						}else {
-							alert(data.Message);
-						}
-					}
-				});
-			},
-			//停用账号接口调用
-			disablePayment: function(callback){
-				var that = this;
-				$.ajax({
-					url: '/Module/PayMent/Handler/PayMentHander.ashx?type=Product&method=disablePayment',
-					type: "post",
-					data:
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        if (data.ResultCode == 0) {
+                            if (callback) {
+                                callback(data);
+                                that.queryPayMentList();
+                            }
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //停用账号接口调用
+            disablePayment: function (callback) {
+                var that = this;
+                $.ajax({
+                    url: '/Module/PayMent/Handler/PayMentHander.ashx?type=Product&method=disablePayment',
+                    type: "post",
+                    data:
 					{
-						'paymentTypeId':that.elems.dataObj.typeid
+					    'paymentTypeId': that.elems.dataObj.typeid
 					},
-					success: function (data) {
-						var data = JSON.parse(data);
-						if (data.ResultCode == 0) {
-							//表示成功
-							if (callback) {
-								callback(data);
-							}
-						}else {
-							alert(data.Message);
-						}
-					}
-				});
-			}
-			
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            }
+
         };
 
     page.init();

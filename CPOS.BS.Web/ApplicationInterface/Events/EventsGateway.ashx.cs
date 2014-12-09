@@ -69,8 +69,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
             {
                 var rp = pRequest.DeserializeJSONTo<APIRequest<RemoveEventItemRP>>();
                 var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+
+                //删除item
                 var bll = new PanicbuyingEventItemMappingBLL(loggingSessionInfo);
                 bll.Delete(new PanicbuyingEventItemMappingEntity { EventItemMappingId = rp.Parameters.EventItemMappingId });
+
+                //删除item下的sku  add by donal 2014-11-13 10:27:56
+                /*
+                 以前删除团购商品时，没有删除团购商品下的sku，现在一并删除。提高数据准确性。
+                 */
+                var skuBll = new PanicbuyingEventSkuMappingBLL(loggingSessionInfo);
+                skuBll.DeleteByItemMappingId(rp.Parameters.EventItemMappingId);
                 var rsp = new SuccessResponse<IAPIResponseData>();
                 return rsp.ToJSON();
             }

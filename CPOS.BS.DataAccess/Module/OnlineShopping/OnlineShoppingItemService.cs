@@ -41,10 +41,10 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId)
         {
-            page = page <= 0 ? 1 : page;
+            page = page < 0 ? 0 : page;
             pageSize = pageSize <= 0 ? 15 : pageSize;
-            int beginSize = (page - 1) * pageSize + 1;
-            int endSize = (page - 1) * pageSize + pageSize;
+            int beginSize = page * pageSize + 1;
+            int endSize = page * pageSize + pageSize;
             
             /*
              *modify by donal 2014-9-25 17:53:16
