@@ -58,7 +58,7 @@
       <HintPath>C:\Program Files (x86)\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="NetDimension.Weibo">
-      <HintPath>..\..\ReferenceDll\NetDimension.Weibo.dll</HintPath>
+      <HintPath>..\ReferenceDll\NetDimension.Weibo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
