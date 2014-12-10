@@ -42,7 +42,7 @@
   <ItemGroup>
     <Reference Include="Aspose.Cells, Version=7.0.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Infrastructure\Code\ReferenceDll\Aspose.Cells.dll</HintPath>
+      <HintPath>..\ReferenceDll\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="JdSoft.Apns.Notifications">
       <HintPath>..\..\ReferenceDll\JdSoft.Apns.Notifications.dll</HintPath>
