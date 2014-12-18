@@ -381,6 +381,12 @@
         }
 
         delete debugInfo;
+        if(this.getUrlParam("FromYun")) {
+            info.userId=this.getUrlParam("userId");
+            Jit.AM.setBaseAjaxParam({
+                'userId': userId
+            });
+        }
 
         info = Jit.AM.getBaseAjaxParam();
 

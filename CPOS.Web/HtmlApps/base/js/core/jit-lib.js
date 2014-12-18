@@ -976,9 +976,6 @@ var JitCfg = {
             if((!baseInfo.userId)&&this.getUrlParam("userId")){
                 baseInfo.userId=this.getUrlParam("userId");
             }
-            if(this.getUrlParam("FromYun")) {
-                baseInfo.userId=this.getUrlParam("userId");
-            }
             if((!baseInfo.openId)&&this.getUrlParam("openId")){
                 baseInfo.openId=this.getUrlParam("openId");
             }
