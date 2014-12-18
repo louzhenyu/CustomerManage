@@ -108,7 +108,7 @@
 						Jit.UI.Dialog({
 							'content':'购物车列表为空',
 							'type':'Alert',
-							'LabelOk':'返回商场首页',
+							'LabelOk':'返回商品列表',
 							'CallBackOk':function(){
 								
 								me.toPage('GoodsList');
