@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/5/5 18:19:19
+ * Create On	:2014/12/22 17:22:45
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -38,7 +38,7 @@ namespace JIT.CPOS.BS.DataAccess
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class MHCategoryAreaGroupDAO : BaseCPOSDAO, ICRUDable<MHCategoryAreaGroupEntity>, IQueryable<MHCategoryAreaGroupEntity>
+    public partial class MHCategoryAreaGroupDAO : Base.BaseCPOSDAO, ICRUDable<MHCategoryAreaGroupEntity>, IQueryable<MHCategoryAreaGroupEntity>
     {
         #region 构造函数
         /// <summary>
@@ -70,22 +70,22 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            
+
             //初始化固定字段
-			pEntity.IsDelete=0;
-			pEntity.CreateTime=DateTime.Now;
-			pEntity.LastUpdateTime=pEntity.CreateTime;
-			pEntity.CreateBy=CurrentUserInfo.UserID;
-			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+            pEntity.IsDelete = 0;
+            pEntity.CreateTime = DateTime.Now;
+            pEntity.LastUpdateTime = pEntity.CreateTime;
+            pEntity.CreateBy = CurrentUserInfo.UserID;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
 
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [MHCategoryAreaGroup](");
-            strSql.Append("[ModelName],[ModelDesc],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[ModelTypeId],[CustomerId],[GroupValue],[GroupId])");
+            strSql.Append("[ModelName],[ModelDesc],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[ModelTypeId],[CustomerID],[GroupValue],[styleType],[titleName],[titleStyle],[GroupId])");
             strSql.Append(" values (");
-            strSql.Append("@ModelName,@ModelDesc,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@ModelTypeId,@CustomerId,@GroupValue,@GroupId)");            
+            strSql.Append("@ModelName,@ModelDesc,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@ModelTypeId,@CustomerID,@GroupValue,@styleType,@titleName,@titleStyle,@GroupId)");
 
-			int? pkInt = pEntity.GroupId;
+            int? pkInt = pEntity.GroupId;
 
             SqlParameter[] parameters = 
             {
@@ -97,28 +97,34 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@ModelTypeId",SqlDbType.Int),
-					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@GroupValue",SqlDbType.Int),
+					new SqlParameter("@styleType",SqlDbType.VarChar),
+					new SqlParameter("@titleName",SqlDbType.VarChar),
+					new SqlParameter("@titleStyle",SqlDbType.VarChar),
 					new SqlParameter("@GroupId",SqlDbType.Int)
             };
-			parameters[0].Value = pEntity.ModelName;
-			parameters[1].Value = pEntity.ModelDesc;
-			parameters[2].Value = pEntity.CreateTime;
-			parameters[3].Value = pEntity.CreateBy;
-			parameters[4].Value = pEntity.LastUpdateBy;
-			parameters[5].Value = pEntity.LastUpdateTime;
-			parameters[6].Value = pEntity.IsDelete;
-			parameters[7].Value = pEntity.ModelTypeId;
-			parameters[8].Value = pEntity.CustomerId;
-			parameters[9].Value = pEntity.GroupValue;
-			parameters[10].Value = pkInt;
+            parameters[0].Value = pEntity.ModelName;
+            parameters[1].Value = pEntity.ModelDesc;
+            parameters[2].Value = pEntity.CreateTime;
+            parameters[3].Value = pEntity.CreateBy;
+            parameters[4].Value = pEntity.LastUpdateBy;
+            parameters[5].Value = pEntity.LastUpdateTime;
+            parameters[6].Value = pEntity.IsDelete;
+            parameters[7].Value = pEntity.ModelTypeId;
+            parameters[8].Value = pEntity.CustomerId;
+            parameters[9].Value = pEntity.GroupValue;
+            parameters[10].Value = pEntity.styleType;
+            parameters[11].Value = pEntity.titleName;
+            parameters[12].Value = pEntity.titleStyle;
+            parameters[13].Value = pkInt;
 
             //执行并将结果回写
             int result;
             if (pTran != null)
-               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
             pEntity.GroupId = pkInt;
         }
 
@@ -178,9 +184,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(MHCategoryAreaGroupEntity pEntity , IDbTransaction pTran)
+        public void Update(MHCategoryAreaGroupEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity , pTran,true);
+            Update(pEntity, pTran, true);
         }
 
         /// <summary>
@@ -188,7 +194,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(MHCategoryAreaGroupEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
+        public void Update(MHCategoryAreaGroupEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
@@ -197,28 +203,34 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
-             //初始化固定字段
-			pEntity.LastUpdateTime=DateTime.Now;
-			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+            //初始化固定字段
+            pEntity.LastUpdateTime = DateTime.Now;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
 
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [MHCategoryAreaGroup] set ");
-                        if (pIsUpdateNullField || pEntity.ModelName!=null)
-                strSql.Append( "[ModelName]=@ModelName,");
-            if (pIsUpdateNullField || pEntity.ModelDesc!=null)
-                strSql.Append( "[ModelDesc]=@ModelDesc,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.ModelTypeId!=null)
-                strSql.Append( "[ModelTypeId]=@ModelTypeId,");
-            if (pIsUpdateNullField || pEntity.CustomerId!=null)
-                strSql.Append( "[CustomerId]=@CustomerId,");
-            if (pIsUpdateNullField || pEntity.GroupValue!=null)
-                strSql.Append( "[GroupValue]=@GroupValue");
+            if (pIsUpdateNullField || pEntity.ModelName != null)
+                strSql.Append("[ModelName]=@ModelName,");
+            if (pIsUpdateNullField || pEntity.ModelDesc != null)
+                strSql.Append("[ModelDesc]=@ModelDesc,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy != null)
+                strSql.Append("[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
+                strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.ModelTypeId != null)
+                strSql.Append("[ModelTypeId]=@ModelTypeId,");
+            if (pIsUpdateNullField || pEntity.CustomerId != null)
+                strSql.Append("[CustomerID]=@CustomerID,");
+            if (pIsUpdateNullField || pEntity.GroupValue != null)
+                strSql.Append("[GroupValue]=@GroupValue,");
+            if (pIsUpdateNullField || pEntity.styleType != null)
+                strSql.Append("[styleType]=@styleType,");
+            if (pIsUpdateNullField || pEntity.titleName != null)
+                strSql.Append("[titleName]=@titleName,");
+            if (pIsUpdateNullField || pEntity.titleStyle != null)
+                strSql.Append("[titleStyle]=@titleStyle");
             strSql.Append(" where GroupId=@GroupId ");
             SqlParameter[] parameters = 
             {
@@ -227,18 +239,24 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@ModelTypeId",SqlDbType.Int),
-					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@GroupValue",SqlDbType.Int),
+					new SqlParameter("@styleType",SqlDbType.VarChar),
+					new SqlParameter("@titleName",SqlDbType.VarChar),
+					new SqlParameter("@titleStyle",SqlDbType.VarChar),
 					new SqlParameter("@GroupId",SqlDbType.Int)
             };
-			parameters[0].Value = pEntity.ModelName;
-			parameters[1].Value = pEntity.ModelDesc;
-			parameters[2].Value = pEntity.LastUpdateBy;
-			parameters[3].Value = pEntity.LastUpdateTime;
-			parameters[4].Value = pEntity.ModelTypeId;
-			parameters[5].Value = pEntity.CustomerId;
-			parameters[6].Value = pEntity.GroupValue;
-			parameters[7].Value = pEntity.GroupId;
+            parameters[0].Value = pEntity.ModelName;
+            parameters[1].Value = pEntity.ModelDesc;
+            parameters[2].Value = pEntity.LastUpdateBy;
+            parameters[3].Value = pEntity.LastUpdateTime;
+            parameters[4].Value = pEntity.ModelTypeId;
+            parameters[5].Value = pEntity.CustomerId;
+            parameters[6].Value = pEntity.GroupValue;
+            parameters[7].Value = pEntity.styleType;
+            parameters[8].Value = pEntity.titleName;
+            parameters[9].Value = pEntity.titleStyle;
+            parameters[10].Value = pEntity.GroupId;
 
             //执行语句
             int result = 0;
@@ -252,7 +270,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(MHCategoryAreaGroupEntity pEntity )
+        public void Update(MHCategoryAreaGroupEntity pEntity)
         {
             this.Update(pEntity, null);
         }
@@ -281,7 +299,7 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.GroupId.Value, pTran);           
+            this.Delete(pEntity.GroupId.Value, pTran);
         }
 
         /// <summary>
@@ -292,7 +310,7 @@ namespace JIT.CPOS.BS.DataAccess
         public void Delete(object pID, IDbTransaction pTran)
         {
             if (pID == null)
-                return ;   
+                return;
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [MHCategoryAreaGroup] set  isdelete=1 where GroupId=@GroupId;");
@@ -303,10 +321,10 @@ namespace JIT.CPOS.BS.DataAccess
             //执行语句
             int result = 0;
             if (pTran != null)
-                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
-            return ;
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+            return;
         }
 
         /// <summary>
@@ -338,7 +356,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(MHCategoryAreaGroupEntity[] pEntities)
-        { 
+        {
             Delete(pEntities, null);
         }
 
@@ -348,7 +366,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pIDs">标识符值数组</param>
         public void Delete(object[] pIDs)
         {
-            Delete(pIDs,null);
+            Delete(pIDs, null);
         }
 
         /// <summary>
@@ -356,24 +374,24 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran) 
+        public void Delete(object[] pIDs, IDbTransaction pTran)
         {
-            if (pIDs == null || pIDs.Length==0)
-                return ;
+            if (pIDs == null || pIDs.Length == 0)
+                return;
             //组织参数化SQL
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("'{0}',",item.ToString());
+                primaryKeys.AppendFormat("'{0}',", item.ToString());
             }
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [MHCategoryAreaGroup] set  isdelete=1 where GroupId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
-            int result = 0;   
+            int result = 0;
             if (pTran == null)
                 result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
         }
         #endregion
 
@@ -438,7 +456,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pOrderBys)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
                     }
@@ -457,7 +475,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pWhereConditions)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
                         totalCountSql.AppendFormat(" and {0}", item.GetExpression());
@@ -466,7 +484,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
-            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
             PagedQueryResult<MHCategoryAreaGroupEntity> result = new PagedQueryResult<MHCategoryAreaGroupEntity>();
             List<MHCategoryAreaGroupEntity> list = new List<MHCategoryAreaGroupEntity>();
@@ -498,7 +516,7 @@ namespace JIT.CPOS.BS.DataAccess
         public MHCategoryAreaGroupEntity[] QueryByEntity(MHCategoryAreaGroupEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
-            return Query(queryWhereCondition,  pOrderBys);            
+            return Query(queryWhereCondition, pOrderBys);
         }
 
         /// <summary>
@@ -509,7 +527,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<MHCategoryAreaGroupEntity> PagedQueryByEntity(MHCategoryAreaGroupEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
+            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
@@ -521,31 +539,37 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <returns></returns>
         protected IWhereCondition[] GetWhereConditionByEntity(MHCategoryAreaGroupEntity pQueryEntity)
-        { 
+        {
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.GroupId!=null)
+            if (pQueryEntity.GroupId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "GroupId", Value = pQueryEntity.GroupId });
-            if (pQueryEntity.ModelName!=null)
+            if (pQueryEntity.ModelName != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ModelName", Value = pQueryEntity.ModelName });
-            if (pQueryEntity.ModelDesc!=null)
+            if (pQueryEntity.ModelDesc != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ModelDesc", Value = pQueryEntity.ModelDesc });
-            if (pQueryEntity.CreateTime!=null)
+            if (pQueryEntity.CreateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.CreateBy!=null)
+            if (pQueryEntity.CreateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateBy!=null)
+            if (pQueryEntity.LastUpdateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
-            if (pQueryEntity.LastUpdateTime!=null)
+            if (pQueryEntity.LastUpdateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.IsDelete!=null)
+            if (pQueryEntity.IsDelete != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
-            if (pQueryEntity.ModelTypeId!=null)
+            if (pQueryEntity.ModelTypeId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ModelTypeId", Value = pQueryEntity.ModelTypeId });
-            if (pQueryEntity.CustomerId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
-            if (pQueryEntity.GroupValue!=null)
+            if (pQueryEntity.CustomerId != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerId });
+            if (pQueryEntity.GroupValue != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "GroupValue", Value = pQueryEntity.GroupValue });
+            if (pQueryEntity.styleType != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "styleType", Value = pQueryEntity.styleType });
+            if (pQueryEntity.titleName != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "titleName", Value = pQueryEntity.titleName });
+            if (pQueryEntity.titleStyle != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "titleStyle", Value = pQueryEntity.titleStyle });
 
             return lstWhereCondition.ToArray();
         }
@@ -561,50 +585,62 @@ namespace JIT.CPOS.BS.DataAccess
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["GroupId"] != DBNull.Value)
-			{
-				pInstance.GroupId =   Convert.ToInt32(pReader["GroupId"]);
-			}
-			if (pReader["ModelName"] != DBNull.Value)
-			{
-				pInstance.ModelName =  Convert.ToString(pReader["ModelName"]);
-			}
-			if (pReader["ModelDesc"] != DBNull.Value)
-			{
-				pInstance.ModelDesc =  Convert.ToString(pReader["ModelDesc"]);
-			}
-			if (pReader["CreateTime"] != DBNull.Value)
-			{
-				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
-			}
-			if (pReader["CreateBy"] != DBNull.Value)
-			{
-				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
-			}
-			if (pReader["LastUpdateBy"] != DBNull.Value)
-			{
-				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
-			}
-			if (pReader["LastUpdateTime"] != DBNull.Value)
-			{
-				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
-			}
-			if (pReader["IsDelete"] != DBNull.Value)
-			{
-				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
-			}
-			if (pReader["ModelTypeId"] != DBNull.Value)
-			{
-				pInstance.ModelTypeId =   Convert.ToInt32(pReader["ModelTypeId"]);
-			}
-			if (pReader["CustomerId"] != DBNull.Value)
-			{
-				pInstance.CustomerId =  Convert.ToString(pReader["CustomerId"]);
-			}
-			if (pReader["GroupValue"] != DBNull.Value)
-			{
-				pInstance.GroupValue =   Convert.ToInt32(pReader["GroupValue"]);
-			}
+            if (pReader["GroupId"] != DBNull.Value)
+            {
+                pInstance.GroupId = Convert.ToInt32(pReader["GroupId"]);
+            }
+            if (pReader["ModelName"] != DBNull.Value)
+            {
+                pInstance.ModelName = Convert.ToString(pReader["ModelName"]);
+            }
+            if (pReader["ModelDesc"] != DBNull.Value)
+            {
+                pInstance.ModelDesc = Convert.ToString(pReader["ModelDesc"]);
+            }
+            if (pReader["CreateTime"] != DBNull.Value)
+            {
+                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
+            }
+            if (pReader["CreateBy"] != DBNull.Value)
+            {
+                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
+            }
+            if (pReader["LastUpdateBy"] != DBNull.Value)
+            {
+                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
+            }
+            if (pReader["LastUpdateTime"] != DBNull.Value)
+            {
+                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
+            }
+            if (pReader["IsDelete"] != DBNull.Value)
+            {
+                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
+            }
+            if (pReader["ModelTypeId"] != DBNull.Value)
+            {
+                pInstance.ModelTypeId = Convert.ToInt32(pReader["ModelTypeId"]);
+            }
+            if (pReader["CustomerID"] != DBNull.Value)
+            {
+                pInstance.CustomerId = Convert.ToString(pReader["CustomerID"]);
+            }
+            if (pReader["GroupValue"] != DBNull.Value)
+            {
+                pInstance.GroupValue = Convert.ToInt32(pReader["GroupValue"]);
+            }
+            if (pReader["styleType"] != DBNull.Value)
+            {
+                pInstance.styleType = Convert.ToString(pReader["styleType"]);
+            }
+            if (pReader["titleName"] != DBNull.Value)
+            {
+                pInstance.titleName = Convert.ToString(pReader["titleName"]);
+            }
+            if (pReader["titleStyle"] != DBNull.Value)
+            {
+                pInstance.titleStyle = Convert.ToString(pReader["titleStyle"]);
+            }
 
         }
         #endregion

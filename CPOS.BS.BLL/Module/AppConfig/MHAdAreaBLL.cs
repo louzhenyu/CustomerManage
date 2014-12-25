@@ -44,6 +44,15 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetAdList(homeId);
         }
+        /// <summary>
+        /// 获取搜索框信息
+        /// </summary>
+        /// <param name="homeId"></param>
+        /// <returns></returns>
+        public DataSet GetMHSearchArea(string homeId)
+        {
+            return this._currentDAO.GetMHSearchArea(homeId);
+        }
 
         /// <summary>
         /// 获取客户下的所有数据

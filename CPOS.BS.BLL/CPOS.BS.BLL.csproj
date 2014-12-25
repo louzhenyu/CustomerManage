@@ -245,6 +245,7 @@
     <Compile Include="CodeGeneration\MHCategoryAreaBLL.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaGroupBLL.cs" />
     <Compile Include="CodeGeneration\MHItemAreaBLL.cs" />
+    <Compile Include="CodeGeneration\MHSeachAreaBLL.cs" />
     <Compile Include="CodeGeneration\MLAccessControlBLL.cs" />
     <Compile Include="CodeGeneration\MLAnswerSheetBLL.cs" />
     <Compile Include="CodeGeneration\MLAnswerSheetItemBLL.cs" />
@@ -653,6 +654,7 @@
     <Compile Include="LNewsMicroMappingBLL.cs" />
     <Compile Include="LNumberTypeMappingBLL.cs" />
     <Compile Include="MHCategoryAreaGroupBLL.cs" />
+    <Compile Include="MHSeachAreaBLL.cs" />
     <Compile Include="MobileBussinessDefinedBLL.cs" />
     <Compile Include="MobileModuleBLL.cs" />
     <Compile Include="MobileModuleObjectMappingBLL.cs" />

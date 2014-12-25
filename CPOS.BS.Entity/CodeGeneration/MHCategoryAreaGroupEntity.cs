@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/5/5 18:19:18
+ * Create On	:2014/12/22 17:22:45
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,7 +25,7 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class MHCategoryAreaGroupEntity : BaseEntity 
+    public partial class MHCategoryAreaGroupEntity : BaseEntity
     {
         #region 构造函数
         /// <summary>
@@ -34,63 +34,78 @@ namespace JIT.CPOS.BS.Entity
         public MHCategoryAreaGroupEntity()
         {
         }
-        #endregion     
+        #endregion
 
         #region 属性集
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? GroupId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? GroupId { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String ModelName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String ModelName { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String ModelDesc { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String ModelDesc { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? CreateTime { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? CreateTime { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String CreateBy { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String CreateBy { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String LastUpdateBy { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String LastUpdateBy { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? LastUpdateTime { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? LastUpdateTime { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? IsDelete { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? IsDelete { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? ModelTypeId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? ModelTypeId { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String CustomerId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String CustomerId { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? GroupValue { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? GroupValue { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String styleType { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String titleName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String titleStyle { get; set; }
 
 
         #endregion

@@ -58,10 +58,53 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 case "UpdateMHCategoryAreaByGroupId":
                     content = UpdateMHCategoryAreaByGroupId();
                     break;
+                case "UpdateMobileHomeSort":
+                    content = UpdateMobileHomeSort();
+                    break;
+                case "SaveSeach":
+                    content = SaveSeach();
+                    break;
+
             }
             pContext.Response.Write(content);
             pContext.Response.End();
         }
+
+        #region  更新首页各个模块的排列顺序
+        public string UpdateMobileHomeSort()
+        {
+            var responseData = new ResponseData();
+            var sortActionJson = this.CurrentContext.Request["sortActionJson"].ToString();//转换成
+
+
+            if (string.IsNullOrEmpty(sortActionJson))
+            {
+                responseData.success = false;
+                responseData.msg = "排序信息不能为空";
+                return responseData.ToJSON();
+            }
+            var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
+            var homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID }, null);
+
+            string customerId = this.CurrentUserInfo.CurrentUser.customer_id;
+            if (homeList == null && homeList.Length == 0)
+            {
+                responseData.success = false;
+                responseData.msg = "没有查询到对应首页主表的数据";
+                return responseData.ToJSON();
+            }
+
+
+            //var homeId = homeList.FirstOrDefault().HomeId;
+            var currentHome = homeList.FirstOrDefault();
+            currentHome.sortActionJson = sortActionJson;
+            homeBll.Update(currentHome);
+            responseData.success = true;
+            responseData.msg = "更新成功";
+            return responseData.ToJSON();
+        }
+
+        #endregion
 
         #region GetLevel1ItemCategory 获取第一级商品分类
 
@@ -240,8 +283,14 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     {
                         adList = new List<AdEntity>(),
                         eventList = new List<EventAreaEntity>(),
-                        categoryList = new List<CategoryEntity>()
+                        categoryList = new List<CategoryEntity>(),
+                        categoryEntrance = new CategoryEntity(),
+                        navList = new CategoryEntity(),
+                        search = new MHSearchAreaEntity(),
+                        sortActionJson = ""
                     };  //客户端首页所有配置信息
+
+                    content.sortActionJson =  homeEntity.sortActionJson == null ? "" : homeEntity.sortActionJson;//返回排序数据
 
                     #region 广告集合 A 图片广告 B活动集合 C 商品分类和商品
 
@@ -249,6 +298,15 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     if (dsAd != null && dsAd.Tables.Count > 0 && dsAd.Tables[0].Rows.Count > 0)
                     {
                         content.adList = DataTableToObject.ConvertToList<AdEntity>(dsAd.Tables[0]);
+                    }
+
+                    #endregion
+                    #region 搜索框
+
+                    var dsSearch = adAreaBll.GetMHSearchArea(homeEntity.HomeId.ToString());//获取搜索框
+                    if (dsSearch != null && dsSearch.Tables.Count > 0 && dsSearch.Tables[0].Rows.Count > 0)
+                    {
+                        content.search = DataTableToObject.ConvertToObject<MHSearchAreaEntity>(dsSearch.Tables[0].Rows[0]);//转换成一个对象时，里面的参数不能是一个表，而是一行数据
                     }
 
                     #endregion
@@ -276,16 +334,19 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                                 groupId = dr[0].ToString(),//有个groupId
                                 itemList = new List<ItemEntity>()
                             };
-                            //根据groupId和HomeId来取
+                            //根据groupId和HomeId来取MHCategoryArea
                             var dsItem = adAreaBll.GetItemList(category.groupId, homeEntity.HomeId.ToString());
                             if (dsItem != null && dsItem.Tables.Count > 0 && dsItem.Tables[0].Rows.Count > 0)
                             {
-                                //广告
+                                //获取MHCategoryAreaGroup的modelTypeId和modelname，先取子元素，再取父元素的原因是防止冗余数据。
                                 DataSet modelDs = adAreaBll.GetModelTypeIdByGroupId(category.groupId);//传category的GroupID
                                 if (modelDs.Tables[0].Rows.Count > 0)
                                 {
                                     category.modelTypeId = Convert.ToInt32(modelDs.Tables[0].Rows[0]["modelTypeId"]);
                                     category.modelTypeName = Convert.ToString(modelDs.Tables[0].Rows[0]["modelTypeName"]);
+                                    category.styleType = Convert.ToString(modelDs.Tables[0].Rows[0]["styleType"]);  //直接Convert.ToString会把null值变为“”
+                                    category.titleName = Convert.ToString(modelDs.Tables[0].Rows[0]["titleName"]);
+                                    category.titleStyle = Convert.ToString(modelDs.Tables[0].Rows[0]["titleStyle"]);
                                 }
 
                                 category.itemList = DataTableToObject.ConvertToList<ItemEntity>(dsItem.Tables[0]);
@@ -304,8 +365,14 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     {
                         content.categoryEntrance = lc[0];
                     }
-                    //过滤分类集合，把ModelTypeID<>8的取出来
-                    content.categoryList = content.categoryList.Where(p => p.modelTypeId != 8).ToList();
+                    // 过滤分类集合，把ModelTypeID=4的取出来(导航部门)
+                    List<CategoryEntity> lc4 = content.categoryList.Where(p => p.modelTypeId == 4).ToList();
+                    if (lc4 != null && lc4.Count != 0)
+                    {
+                        content.navList = lc4[0];//(获取唯一的)
+                    }
+                    //过滤分类集合，把ModelTypeID<>8的和不等于8的取出来
+                    content.categoryList = content.categoryList.Where(p => p.modelTypeId != 8).Where(p => p.modelTypeId != 4).ToList();
 
                     responseData.success = true;
                     responseData.data = content;
@@ -339,6 +406,25 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             public IList<EventAreaEntity> eventList { get; set; }   //活动集合
             public IList<CategoryEntity> categoryList { get; set; } //首页分类分组信息(分组8以外的)
             public CategoryEntity categoryEntrance { get; set; } //C8区分类分组信息(新增)
+            public CategoryEntity navList { get; set; } //C8区分类分组信息(新增)
+            public MHSearchAreaEntity search { get; set; } //C8区分类分组信息(新增)
+            public string sortActionJson { get; set; } //C8区分类分组信息(新增)
+        }
+
+        public class MHSearchAreaEntity
+        {
+            public Guid? MHSearchAreaID { get; set; }
+
+            public string imageUrl { get; set; }        //图片链接
+            public string url { get; set; }
+            public string styleType { get; set; }
+            public string show { get; set; }
+            public string titleName { get; set; }
+            public string titleStyle { get; set; }
+
+
+
+
         }
         public class AdEntity
         {
@@ -371,6 +457,13 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             public string modelTypeName { get; set; }
             public string groupId { get; set; }          //分组ID
             public IList<ItemEntity> itemList { get; set; }   //商品集合
+
+            public String styleType { get; set; }
+
+            public String titleName { get; set; }
+
+            public String titleStyle { get; set; }
+
         }
         public class ItemEntity
         {
@@ -380,6 +473,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             public string objectId { get; set; }        //对象ID
             public string objectName { get; set; }      //对象名称
             public int typeId { get; set; }             //类型ID： 1=商品分类 2=商品
+            public string navName { get; set; }        //导航里各个小图片下面的文字
         }
 
         public class GetMHCategoryAreaInfoRespContentData
@@ -399,7 +493,9 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
 
             int modelTypeId = (Int32)Utils.GetIntVal(FormatParamValue(Request("modelTypeId")));//模块ID，含有1,3,8这样的
             string modelTypeName = FormatParamValue(Request("modelTypeName"));//模块名称
-            //groupId
+            string _styleType = FormatParamValue(Request("styleType"));//样式
+            string _titleName = FormatParamValue(Request("titleName"));//标题名称
+            string _titleStyle = FormatParamValue(Request("titleStyle"));//标题样式
 
             if (modelTypeId == 0)
             {
@@ -417,7 +513,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             int groupId = -1;
             try
             {
-                groupId = (Int32)Utils.GetIntVal(FormatParamValue(Request("groupId")));//分组信息
+                groupId = (Int32)Utils.GetIntVal(FormatParamValue(Request("groupId")));//分组信息  ，保存c区模板8时，传了这个值，其他c区模板都没有传
             }
             catch
             {
@@ -436,10 +532,10 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 responseData.msg = "没有查询到对应首页主表的数据";
                 return responseData.ToJSON();
             }
-            if (itemCategory != null && itemCategory.Count > 0)
+            if (itemCategory != null && itemCategory.Count > 0)//防错判断
             {
                 //分组ID
-                //兼容性，保证除c8区的通用性
+                //兼容性，保证除c8区的通用性**
                 groupId = itemCategory.FirstOrDefault().groupId;
                 #region
                 //if (homeList != null && homeList.Length > 0)
@@ -463,7 +559,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     }
                 }
                 else
-                { 
+                {
                     //modelTypeId==8的情况
                     //先把所有的都删除，然后再插入      //根据HomeId和GroupId删除     
                     if (groupId == 0 || string.IsNullOrEmpty(groupId.ToString()))
@@ -474,29 +570,33 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     }
                     else
                     {
-                        DeleteItemCategoryByGroupIdandHomeID(groupId, (Guid)homeId);//如果之前有数据，先删除
+                        DeleteItemCategoryByGroupIdandHomeID(groupId, (Guid)homeId);//如果之前有数据，先删除。必须同时根据groupId和homeId
                     }
                     InsertItemCategory(itemCategory, groupId);//全部都是插入数据
                 }
 
                 //查找大块的信息
                 var mHCategoryAreaGroup = new MHCategoryAreaGroupBLL(this.CurrentUserInfo);
-                var categoryAreaGroup = mHCategoryAreaGroup.QueryByEntity(new MHCategoryAreaGroupEntity()
+                var categoryAreaGroup = mHCategoryAreaGroup.QueryByEntity(new MHCategoryAreaGroupEntity()   //QueryByEntity取出来的是一个集合
                 {
-                    GroupValue = groupId,
+                    GroupValue = groupId,//这里对应的是categoryAreaGroup表里的GroupValue，而不是groupId
                     CustomerId = this.CurrentUserInfo.ClientID
                 }, null);//根据GroupValue取值，查找出相关信息
 
-                var categoryAreaGroupEntity = new MHCategoryAreaGroupEntity()
+                var categoryAreaGroupEntity = new MHCategoryAreaGroupEntity()  //这里直接用传request穿过来的参数了
                 {
                     ModelTypeId = modelTypeId,
                     ModelName = modelTypeName,
                     GroupValue = groupId,
-                    CustomerId = this.CurrentUserInfo.ClientID
+                    CustomerId = this.CurrentUserInfo.ClientID,
+                    titleName = _titleName,
+                    titleStyle = _titleStyle,
+                    styleType = _styleType
+
                 };
                 if (categoryAreaGroup == null || !categoryAreaGroup.Any())
                 {
-                    categoryAreaGroupEntity.GroupId = mHCategoryAreaGroup.GetMaxGroupId();
+                    categoryAreaGroupEntity.GroupId = mHCategoryAreaGroup.GetMaxGroupId();//这时因为之前在插入mHCategoryArea已经创建了最新的MaxGroupId
                     mHCategoryAreaGroup.Create(categoryAreaGroupEntity);//创建
                 }
                 else
@@ -523,6 +623,10 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 content.modelTypeId = modelTypeId;
                 content.modelTypeName = modelTypeName;
                 content.groupId = groupId.ToString();   //返回groupID做为主表的
+                content.styleType = _styleType;
+                content.titleName = _titleName;
+                content.titleStyle = _titleStyle;
+
                 content.itemList = new List<ItemEntity>();
 
                 var dsItem = adAreaBll.GetItemList(content.groupId, homeId.ToString());
@@ -550,7 +654,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 //删除大块的内容
                 DeleteCategoryGroupByGroupIdandCustomerId(groupId, this.CurrentUserInfo.ClientID);//删除大块的内容,,CustomerId = this.CurrentUserInfo.ClientID
 
-               // responseData.success = false;
+                // responseData.success = false;
                 responseData.success = true;
                 responseData.data = "查无数据";
                 return responseData.ToJSON();
@@ -607,7 +711,8 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     GroupID = item.groupId,
                     ObjectName = item.objectName,
                     ImageUrlObject = item.imageUrl,
-                    DisplayIndex = item.displayIndex
+                    DisplayIndex = item.displayIndex,
+                    navName=item.navName
                 };
                 adAreaBll.UpdateMHCategoryArea(entity);
             }
@@ -634,13 +739,14 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
         }
         public class ItemCategoryEntity
         {
-            public int typeId { get; set; }             //类型ID： 1=商品分类 2=商品
+            public int typeId { get; set; }             //类型ID： 1=商品分类 2=商品  3 =自定义链接（资讯） ，8=全部分类 
             public string categoryAreaId { get; set; }  //商品类别区域ID
             public string objectId { get; set; }        //对象ID
             public string objectName { get; set; }      //对象名称
             public int groupId { get; set; }            //分组ID（1、2、3…….）
             public int displayIndex { get; set; }       //序号（1、2、3）
             public string imageUrl { get; set; }        //图片链接
+            public string navName { get; set; }        //导航里各个小图片下面的文字 
         }
 
         #endregion
@@ -682,7 +788,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     var itemCategoryService = new ItemCategoryService(this.CurrentUserInfo);
                     if (adsIdList != "")
                     {
-                        itemCategoryService.UpdateMHAdAreaData(adsIdList, customerId);
+                        itemCategoryService.UpdateMHAdAreaData(adsIdList, customerId);//其实是把id不在这个列表里面的给更新删除掉
                     }
                     else
                     {
@@ -730,7 +836,94 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
         }
         #endregion
 
-        #region  保存商品分类区域
+
+
+        #region 保存搜索区域
+
+        public class SaveMHSearchArea
+        {
+            public Guid? MHSearchAreaID { get; set; }
+            public Guid? homeId { get; set; }
+            public string imageUrl { get; set; }        //图片链接
+            public string url { get; set; }
+            public string styleType { get; set; }
+            public string show { get; set; }
+            public string titleName { get; set; }
+            public string titleStyle { get; set; }
+
+        }
+
+        public string SaveSeach()
+        {
+            var responseData = new ResponseData();
+            var itemMHSearchArea = this.CurrentContext.Request["seach"].DeserializeJSONTo<SaveMHSearchArea>();//转换成
+
+            #region
+            if (itemMHSearchArea != null)
+            {
+                var mHSeachAreaBLL = new MHSeachAreaBLL(this.CurrentUserInfo);
+                var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
+                var homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID }, null);
+
+                string customerId = this.CurrentUserInfo.CurrentUser.customer_id;
+                if (homeList != null && homeList.Length > 0)
+                {
+                    var homeId = homeList.FirstOrDefault().HomeId;
+                    //比较底层的求和方式
+                    //string adsIdList = itemAds.Where(item => !string.IsNullOrEmpty(item.adId.ToString())).Aggregate("", (current, item) => current + "'" + item.adId.ToString() + "',");
+                    //根据AdAreaId删除MHAdArea中旧数据（not in adsList） 
+                    var itemCategoryService = new ItemCategoryService(this.CurrentUserInfo);
+                    if (itemMHSearchArea.MHSearchAreaID != null)//不为null
+                    {
+                        itemCategoryService.UpdateMHSearchAreaData((Guid)itemMHSearchArea.MHSearchAreaID, customerId);
+                    }
+                    else
+                    {
+                        itemCategoryService.DeleteMHSearchAreaData(customerId);
+                    }
+
+                    //根据AdAreaId判断是新增还是更新MHAdArea数据
+                    if (string.IsNullOrEmpty(itemMHSearchArea.MHSearchAreaID.ToString()))
+                    {
+                        var entity = new MHSeachAreaEntity()
+                        {
+                            MHSearchAreaID = Guid.NewGuid(),
+                            HomeId = homeId,
+                            ImageUrl = itemMHSearchArea.imageUrl,
+                            Url = itemMHSearchArea.url,
+                            styleType = itemMHSearchArea.styleType,
+                            show = itemMHSearchArea.show,
+                            titleName = itemMHSearchArea.titleName,
+                            titleStyle = itemMHSearchArea.titleStyle
+                        };
+                        mHSeachAreaBLL.Create(entity);
+                    }
+                    else
+                    {
+                        var entity = new MHSeachAreaEntity()
+                        {
+                            MHSearchAreaID = itemMHSearchArea.MHSearchAreaID,
+                            HomeId = homeId,
+                            ImageUrl = itemMHSearchArea.imageUrl,
+                            Url = itemMHSearchArea.url,
+                            styleType = itemMHSearchArea.styleType,
+                            show = itemMHSearchArea.show,
+                            titleName = itemMHSearchArea.titleName,
+                            titleStyle = itemMHSearchArea.titleStyle
+                        };
+                        mHSeachAreaBLL.Update(entity);
+                    }
+                }
+
+            }
+            #endregion
+            responseData.success = true;
+            responseData.msg = "更新成功";
+            return responseData.ToJSON();
+        }
+        #endregion
+
+        #region  保存商品分类（团购）区域
 
         public class SaveItemArea
         {

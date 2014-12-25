@@ -564,6 +564,18 @@ namespace JIT.CPOS.BS.BLL
         }
 
 
+        public void UpdateMHSearchAreaData(Guid MHSearchAreaID, string customerId)
+        {
+            itemCategoryService.UpdateMHSearchAreaData(MHSearchAreaID, customerId);
+        }
+
+        public void DeleteMHSearchAreaData(string customerId)
+        {
+            itemCategoryService.DeleteMHSearchAreaData(customerId);
+        }
+
+
+
 
         public DataSet GetItemCategoryInfoList(string customerId)
         {

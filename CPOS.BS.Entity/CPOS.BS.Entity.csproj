@@ -194,6 +194,7 @@
     <Compile Include="CodeGeneration\MHCategoryAreaEntity.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaGroupEntity.cs" />
     <Compile Include="CodeGeneration\MHItemAreaEntity.cs" />
+    <Compile Include="CodeGeneration\MHSeachAreaEntity.cs" />
     <Compile Include="CodeGeneration\MLAccessControlEntity.cs" />
     <Compile Include="CodeGeneration\MLAnswerSheetEntity.cs" />
     <Compile Include="CodeGeneration\MLAnswerSheetItemEntity.cs" />
@@ -394,6 +395,7 @@
     <Compile Include="LNewsMicroMappingEntity.cs" />
     <Compile Include="LNumberTypeMappingEntity.cs" />
     <Compile Include="MHCategoryAreaGroupEntity.cs" />
+    <Compile Include="MHSeachAreaEntity.cs" />
     <Compile Include="MobileBussinessDefinedEntity.cs" />
     <Compile Include="MobileModuleEntity.cs" />
     <Compile Include="MobileModuleObjectMappingEntity.cs" />

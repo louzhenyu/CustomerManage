@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/3/31 15:58:37
+ * Create On	:2014/12/23 17:24:20
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,7 +25,7 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class MobileHomeEntity : BaseEntity 
+    public partial class MobileHomeEntity : BaseEntity
     {
         #region 构造函数
         /// <summary>
@@ -34,48 +34,53 @@ namespace JIT.CPOS.BS.Entity
         public MobileHomeEntity()
         {
         }
-        #endregion     
+        #endregion
 
         #region 属性集
-		/// <summary>
-		/// 
-		/// </summary>
-		public Guid? HomeId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Guid? HomeId { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Title { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String Title { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? CreateTime { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? CreateTime { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String CreateBy { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String CreateBy { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String LastUpdateBy { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String LastUpdateBy { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public DateTime? LastUpdateTime { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? LastUpdateTime { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? IsDelete { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? IsDelete { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String CustomerId { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public String CustomerId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String sortActionJson { get; set; }
 
 
         #endregion

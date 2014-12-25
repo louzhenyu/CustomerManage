@@ -60,7 +60,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " , typeId = a.ObjectTypeId ";
             sql += ",url";
             sql += " , objectName = CASE a.ObjectTypeId ";
-            
+
             sql += " WHEN 1 THEN (SELECT b.Title FROM dbo.LEvents b WHERE b.EventID = a.ObjectId) ";
             sql += " WHEN 2 THEN (SELECT b.NewsTitle FROM dbo.LNews b WHERE b.NewsId = a.ObjectId) ";
             sql += " WHEN 3 THEN (SELECT b.item_name FROM dbo.T_Item b WHERE b.item_id = a.ObjectId) ";
@@ -71,6 +71,13 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " AND a.HomeId = '" + homeId + "' ";
             sql += " ORDER BY a.DisplayIndex ";
 
+            return this.SQLHelper.ExecuteDataset(sql);
+        }
+        public DataSet GetMHSearchArea(string homeId)
+        {
+            string sql = string.Empty;
+            sql += "select	 * from MHSeachArea  a WHERE a.IsDelete = 0  ";
+            sql += " AND a.HomeId = '" + homeId + "' ";
             return this.SQLHelper.ExecuteDataset(sql);
         }
 
@@ -160,12 +167,13 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public DataSet GetItemList(string groupId,string homeId)
+        public DataSet GetItemList(string groupId, string homeId)
         {
             string sql = string.Empty;
             sql += " SELECT categoryAreaId = a.CategoryAreaId ";
             sql += " , displayIndex = a.DisplayIndex ";
             sql += " , imageUrl = a.ImageUrlObject ";
+            sql += " , navName";
             sql += " , objectId = a.ObjectId ";
             sql += " , typeId = a.ObjectTypeId ";
             sql += " , objectName = CASE a.ObjectTypeId ";
@@ -183,7 +191,7 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetModelTypeIdByGroupId(string groupId)
         {
             string customerId = CurrentUserInfo.ClientID;
-            string sql = string.Format("select modelTypeId,modelname as modelTypeName from MHCategoryAreaGroup where groupValue = {0} and customerId = '{1}' and IsDelete=0", groupId, customerId);//Òª°ÑÉ¾³ýµÄÅÅ³ýµô
+            string sql = string.Format("select styleType,titleName,titleStyle,modelTypeId,modelname as modelTypeName from MHCategoryAreaGroup where groupValue = {0} and customerId = '{1}' and IsDelete=0", groupId, customerId);//Òª°ÑÉ¾³ýµÄÅÅ³ýµô
 
             return this.SQLHelper.ExecuteDataset(sql);
         }
@@ -205,8 +213,11 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " GroupID = '" + entity.GroupID + "', ";
             sql += " ObjectName = '" + entity.ObjectName + "', ";
             sql += " ImageUrlObject = '" + entity.ImageUrlObject + "', ";
+            sql += " navName = '" + entity.navName + "', ";
             sql += " DisplayIndex = '" + entity.DisplayIndex + "' ";
+
             sql += " WHERE CategoryAreaId = '" + entity.CategoryAreaId + "' ";
+
 
             this.SQLHelper.ExecuteNonQuery(sql);
         }
@@ -215,9 +226,9 @@ namespace JIT.CPOS.BS.DataAccess
             string sql = string.Empty;
             List<SqlParameter> ls = new List<SqlParameter>();
             sql = @"delete from MHCategoryArea where HomeId=@HomeId and GroupId=@GroupId";
-            ls.Add(new SqlParameter("@HomeId",HomeId));
+            ls.Add(new SqlParameter("@HomeId", HomeId));
             ls.Add(new SqlParameter("@GroupId", GroupID));
-            this.SQLHelper.ExecuteNonQuery(CommandType.Text,sql,ls.ToArray());
+            this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql, ls.ToArray());
         }
         public void DeleteCategoryGroupByGroupIdandCustomerId(int GroupID, string customerId)
         {

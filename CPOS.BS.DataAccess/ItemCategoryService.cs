@@ -499,6 +499,31 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
         }
         #endregion
 
+        #region 根据ADAreaId更新MHSearchArea的数据
+        public void UpdateMHSearchAreaData(Guid MHSearchAreaID, string customerId)
+        {
+            //把最后一位的标点符号去掉
+            //adsIdList = adsIdList.Substring(0, adsIdList.Length - 1);
+            string userId = this.CurrentUserInfo.UserID;
+
+            string sql = string.Format(@"update a set a.isdelete = 1,LastUpdateBy = '{2}',LastUpdateTime = getdate()
+                            from MHSeachArea a,MobileHome b where  a.HomeId = b.HomeId and 
+                            MHSearchAreaID!='{0}' and b.customerId = '{1}'", MHSearchAreaID, customerId, userId);
+            this.SQLHelper.ExecuteNonQuery(sql);
+        }
+        #endregion
+
+        #region 删除MHSearchArea的数据
+        public void DeleteMHSearchAreaData(string customerId)
+        {
+            string userId = this.CurrentUserInfo.UserID;
+
+            string sql = string.Format(@"update a set isdelete = 1,LastUpdateBy = '{1}',LastUpdateTime = getdate() 
+                    from MHSeachArea a,MobileHome b where a.HomeId = b.HomeId and b.customerId = '{0}'", customerId, userId);
+            this.SQLHelper.ExecuteNonQuery(sql);
+        }
+        #endregion
+
         #region 根据ADAreaId更新MHAdArea的数据
         public void UpdateMHAdAreaData(string adsIdList, string customerId)
         {
@@ -523,6 +548,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
             this.SQLHelper.ExecuteNonQuery(sql);
         }
         #endregion
+
 
         #region 根据ItemAreaId更新MHItemArea的数据
         public void UpdateMHItemAreaData(string itemAreaList, string customerId)

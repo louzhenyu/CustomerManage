@@ -206,6 +206,7 @@
     <Compile Include="CodeGeneration\MHCategoryAreaDAO.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaGroupDAO.cs" />
     <Compile Include="CodeGeneration\MHItemAreaDAO.cs" />
+    <Compile Include="CodeGeneration\MHSeachAreaDAO.cs" />
     <Compile Include="CodeGeneration\MLAccessControlDAO.cs" />
     <Compile Include="CodeGeneration\MLAnswerSheetDAO.cs" />
     <Compile Include="CodeGeneration\MLAnswerSheetItemDAO.cs" />
@@ -591,6 +592,7 @@
     <Compile Include="LNewsMicroMappingDAO.cs" />
     <Compile Include="LNumberTypeMappingDAO.cs" />
     <Compile Include="MHCategoryAreaGroupDAO.cs" />
+    <Compile Include="MHSeachAreaDAO.cs" />
     <Compile Include="MobileBussinessDefinedDAO.cs" />
     <Compile Include="MobileModuleDAO.cs" />
     <Compile Include="MobileModuleObjectMappingDAO.cs" />

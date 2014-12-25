@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/3/31 19:00:57
+ * Create On	:2014/12/23 14:13:25
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,13 +25,13 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class MHCategoryAreaEntity : BaseEntity 
+    public partial class MHSeachAreaEntity : BaseEntity 
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public MHCategoryAreaEntity()
+        public MHSeachAreaEntity()
         {
         }
         #endregion     
@@ -40,12 +40,17 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Guid? CategoryAreaId { get; set; }
+		public Guid? MHSearchAreaID { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public Guid? HomeId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String ImageUrl { get; set; }
 
 		/// <summary>
 		/// 
@@ -60,27 +65,17 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? Level { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String ObjectName { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String ImageUrlObject { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
 		public Int32? DisplayIndex { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String Remark { get; set; }
+		public String Url { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? Status { get; set; }
 
 		/// <summary>
 		/// 
@@ -110,11 +105,22 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-        public Int32? GroupID { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public String navName { get; set; }
+		public String titleName { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String titleStyle { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String styleType { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String show { get; set; }
 
 
         #endregion
