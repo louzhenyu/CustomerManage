@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [MHItemArea](");
-            strSql.Append("[HomeId],[IsUrl],[EventId],[ItemId],[DisplayIndex],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[ItemAreaId])");
+            strSql.Append("[HomeId],[IsUrl],[EventId],[ItemId],[DisplayIndex],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[areaFlag],[ItemAreaId])");
             strSql.Append(" values (");
-            strSql.Append("@HomeId,@IsUrl,@EventId,@ItemId,@DisplayIndex,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@ItemAreaId)");            
+            strSql.Append("@HomeId,@IsUrl,@EventId,@ItemId,@DisplayIndex,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@areaFlag,@ItemAreaId)");            
 
 			Guid? pkGuid;
 			if (pEntity.ItemAreaId == null)
@@ -103,6 +103,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@areaFlag",SqlDbType.VarChar),
 					new SqlParameter("@ItemAreaId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.HomeId;
@@ -115,7 +116,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[7].Value = pEntity.LastUpdateBy;
 			parameters[8].Value = pEntity.LastUpdateTime;
 			parameters[9].Value = pEntity.IsDelete;
-			parameters[10].Value = pkGuid;
+			parameters[10].Value = pEntity.areaFlag;
+			parameters[11].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -222,7 +224,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.areaFlag!=null)
+                strSql.Append( "[areaFlag]=@areaFlag");
             strSql.Append(" where ItemAreaId=@ItemAreaId ");
             SqlParameter[] parameters = 
             {
@@ -233,6 +237,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@DisplayIndex",SqlDbType.Int),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@areaFlag",SqlDbType.VarChar),
 					new SqlParameter("@ItemAreaId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.HomeId;
@@ -242,7 +247,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[4].Value = pEntity.DisplayIndex;
 			parameters[5].Value = pEntity.LastUpdateBy;
 			parameters[6].Value = pEntity.LastUpdateTime;
-			parameters[7].Value = pEntity.ItemAreaId;
+			parameters[7].Value = pEntity.areaFlag;
+			parameters[8].Value = pEntity.ItemAreaId;
 
             //执行语句
             int result = 0;
@@ -550,6 +556,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.areaFlag!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "areaFlag", Value = pQueryEntity.areaFlag });
 
             return lstWhereCondition.ToArray();
         }
@@ -608,6 +616,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["areaFlag"] != DBNull.Value)
+			{
+				pInstance.areaFlag =  Convert.ToString(pReader["areaFlag"]);
 			}
 
         }

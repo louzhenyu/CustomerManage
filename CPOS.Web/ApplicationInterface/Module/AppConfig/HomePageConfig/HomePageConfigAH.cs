@@ -63,11 +63,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
                 AddedTime = t.AddedTime.To19FormatString(),
                 BeginTime = t.BeginTime.To19FormatString(),
                 EndTime = t.EndTime.To19FormatString(),
-                TypeID = t.TypeId
+                TypeID = t.TypeId,
+                areaFlag=t.areaFlag
             }));
 
             #endregion
-
+            #region 废弃代码
             //#region 分类和商品部分
             //List<CategoryGroupInfo> CategoryAreaList = new List<CategoryGroupInfo> { };
             //var categoryBll = new MHCategoryAreaBLL(logginUserInfo);
@@ -91,7 +92,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
             //        });
             //    });
             //#endregion
-
+            #endregion
 
             //获取分组ID
 
@@ -99,6 +100,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
             var homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID }, null);
 
             var homeEntity = homeList.FirstOrDefault();
+            resData.sortActionJson = homeEntity.sortActionJson == null ? "" : homeEntity.sortActionJson;//返回排序数据
             
             var dsGroup = adBll.GetCategoryGroupId(homeEntity.HomeId.ToString());
              var categoryList = new List<CategoryGroupInfo>();
@@ -120,6 +122,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
                         {
                             category.ModelTypeId = Convert.ToInt32(modelDs.Tables[0].Rows[0]["modelTypeId"]);
                             category.ModelTypeName = Convert.ToString(modelDs.Tables[0].Rows[0]["modelTypeName"]);
+                            category.styleType = Convert.ToString(modelDs.Tables[0].Rows[0]["styleType"]);  //直接Convert.ToString会把null值变为“”
+                            category.titleName = Convert.ToString(modelDs.Tables[0].Rows[0]["titleName"]);
+                            category.titleStyle = Convert.ToString(modelDs.Tables[0].Rows[0]["titleStyle"]);
                         }
 
                         category.CategoryAreaList = DataTableToObject.ConvertToList<CategoryAreaInfo>(dsItem.Tables[0]).ToArray();
@@ -132,18 +137,49 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
             }
 
 
-            resData.AdAreaList = AdAreaList.OrderBy(t => t.DisplayIndex).ToArray();           
-            resData.ItemEventAreaList = ItemEventAreaList.ToArray();
+            resData.AdAreaList = AdAreaList.OrderBy(t => t.DisplayIndex).ToArray();    
+            //这里要根据areaFlag来分出eventList和secondKill
+         //   resData.ItemEventAreaList = ItemEventAreaList.ToArray();
+            if (ItemEventAreaList != null && ItemEventAreaList.Count > 0)
+            {
+                resData.ItemEventAreaList = new EventListEntity();//要先实例化
+                //原来的团购部分，三块分别是抢购、团购、热销的
+                resData.ItemEventAreaList.arrayList = ItemEventAreaList.Where(p => p.areaFlag == "eventList").ToList();
+                // content.eventList.shopType =-1;//不是任何的一个值,不赋值
+                resData.ItemEventAreaList.areaFlag = "eventList";//不是任何的一个值
+                //新秒杀部分，要么团购，要么全是秒杀
+                //  secondKill
+                resData.secondKill = new EventListEntity();//要先实例化
+                resData.secondKill.arrayList = ItemEventAreaList.Where(p => p.areaFlag == "secondKill").ToList();
+                if (resData.secondKill.arrayList != null && resData.secondKill.arrayList.Count != 0)
+                {
+                    resData.secondKill.shopType = resData.secondKill.arrayList[0].TypeID;//不是任何的一个值
+                }
+                resData.secondKill.areaFlag = "secondKill";//不是任何的一个值
+
+            }
+
             // 过滤分类集合，把ModelTypeID=8的取出来(获取唯一的)
           resData.CategoryEntrance = categoryList.Where(p => p.ModelTypeId == 8).SingleOrDefault();
+          resData.navList = categoryList.Where(p => p.ModelTypeId == 4).SingleOrDefault();
             //List<CategoryGroupInfo> lc = categoryList.Where(p => p.ModelTypeId == 8).ToList();
             //if (lc != null && lc.Count != 0)
             //{
             //    resData.CategoryEntrance = lc[0];
             //}
             //过滤分类集合，把ModelTypeID<>8的取出来
-            resData.CategoryGroupList = categoryList.Where(p => p.ModelTypeId != 8).ToList().ToArray();
-         
+          resData.CategoryGroupList = categoryList.Where(p => p.ModelTypeId != 8).Where(p => p.ModelTypeId != 4).ToList().ToArray();
+
+
+          #region 搜索框
+
+          var dsSearch = adBll.GetMHSearchArea(homeEntity.HomeId.ToString());//获取搜索框
+          if (dsSearch != null && dsSearch.Tables.Count > 0 && dsSearch.Tables[0].Rows.Count > 0)
+          {
+              resData.search = DataTableToObject.ConvertToObject<MHSearchAreaEntity>(dsSearch.Tables[0].Rows[0]);//转换成一个对象时，里面的参数不能是一个表，而是一行数据
+          }
+
+          #endregion
 
             return resData;
         }

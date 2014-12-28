@@ -116,7 +116,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             string sql = string.Empty;
             sql += " SELECT eventAreaItemId = a.ItemAreaId ";
-            sql += " , typeId = b.EventTypeId ";
+            sql += " ,areaFlag, typeId = b.EventTypeId ";//ªÒ»°¡ÀtypeId
             sql += " , eventId = a.EventId ";
             sql += " , itemId = a.ItemId ";
             sql += " , displayIndex = a.DisplayIndex ";

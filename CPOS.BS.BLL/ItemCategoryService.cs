@@ -548,9 +548,13 @@ namespace JIT.CPOS.BS.BLL
         {
             itemCategoryService.DeleteMHAdAreaData(customerId);
         }
-        public void UpdateMHItemAreaData(string itemAreaList,string customerId)
+        public void UpdateMHItemAreaData(string itemAreaList,string customerId,string _areaFlag)
         {
-            itemCategoryService.UpdateMHItemAreaData(itemAreaList,customerId); 
+            itemCategoryService.UpdateMHItemAreaData(itemAreaList, customerId, _areaFlag); 
+        }
+        public void DeleteMHItemAreaData( string customerId, string _areaFlag)
+        {
+            itemCategoryService.DeleteMHItemAreaData( customerId, _areaFlag);
         }
 
         public void DeleteItemCategoryAreaData(string groupID)

@@ -282,7 +282,8 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     var content = new GetHomePageConfigInfoRespContentData
                     {
                         adList = new List<AdEntity>(),
-                        eventList = new List<EventAreaEntity>(),
+                        eventList = new EventListEntity(),
+                        secondKill = new EventListEntity(),
                         categoryList = new List<CategoryEntity>(),
                         categoryEntrance = new CategoryEntity(),
                         navList = new CategoryEntity(),
@@ -312,12 +313,29 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     #endregion
 
                     #region 活动集合
-
+                    //团购整体的
                     var dsEvent = adAreaBll.GetEventInfo(homeEntity.HomeId.ToString());//获取
+                   
+                
+                     
                     if (dsEvent != null && dsEvent.Tables.Count > 0 && dsEvent.Tables[0].Rows.Count > 0)
                     {
-                        content.eventList = DataTableToObject.ConvertToList<EventAreaEntity>(dsEvent.Tables[0]);
+                        var dsEventList= DataTableToObject.ConvertToList<EventAreaEntity>(dsEvent.Tables[0]);
+                        //原来的团购部分，三块分别是抢购、团购、热销的
+                        content.eventList.arrayList = dsEventList.Where(p => p.areaFlag == "eventList").ToList<EventAreaEntity>();
+                       // content.eventList.shopType =-1;//不是任何的一个值,不赋值
+                        content.eventList.areaFlag = "eventList";//不是任何的一个值
+                        //新秒杀部分，要么团购，要么全是秒杀
+                        //  secondKill
+                        content.secondKill.arrayList = dsEventList.Where(p => p.areaFlag == "secondKill").ToList<EventAreaEntity>();
+                        if (content.secondKill.arrayList != null && content.secondKill.arrayList.Count != 0)
+                        {
+                            content.secondKill.shopType = content.secondKill.arrayList[0].typeId;//不是任何的一个值
+                        }
+                        content.secondKill.areaFlag = "secondKill";//不是任何的一个值
+                     
                     }
+                 
 
                     #endregion
 
@@ -403,12 +421,19 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
         public class GetHomePageConfigInfoRespContentData
         {
             public IList<AdEntity> adList { get; set; }             //广告集合
-            public IList<EventAreaEntity> eventList { get; set; }   //活动集合
+          
             public IList<CategoryEntity> categoryList { get; set; } //首页分类分组信息(分组8以外的)
             public CategoryEntity categoryEntrance { get; set; } //C8区分类分组信息(新增)
-            public CategoryEntity navList { get; set; } //C8区分类分组信息(新增)
-            public MHSearchAreaEntity search { get; set; } //C8区分类分组信息(新增)
-            public string sortActionJson { get; set; } //C8区分类分组信息(新增)
+            public CategoryEntity navList { get; set; } //导航区域，c区模块4
+            public MHSearchAreaEntity search { get; set; } //搜索框
+            public string sortActionJson { get; set; } //整体排序字段
+            public EventListEntity eventList { get; set; }   //活动集合
+            public EventListEntity secondKill { get; set; }   //秒杀区
+        }
+        public class EventListEntity {
+            public string areaFlag { get; set; }  //区域标识，eventList,secondKill
+            public int shopType { get; set; }  //用与存放秒杀区的整体类型数据，便于前端获取。
+            public IList<EventAreaEntity> arrayList { get; set; }   //活动集合
         }
 
         public class MHSearchAreaEntity
@@ -439,6 +464,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
         public class EventAreaEntity
         {
             public Guid eventAreaItemId { get; set; }   //活动区域项ID
+            public string areaFlag { get; set; }             //eventList,secondKill
             public int typeId { get; set; }             //1=疯狂团购  2=限时抢购  3=热销榜单
             public Guid eventId { get; set; }           //活动ID
             public string itemId { get; set; }          //商品ID
@@ -938,6 +964,8 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             var responseData = new ResponseData();
 
             var itemArea = this.CurrentContext.Request["eventItemList"].DeserializeJSONTo<List<SaveItemArea>>();
+             //eventList  ||  secondKill ---一个是放原来的团购的，另一个是放秒杀区的
+            var _areaFlag = this.CurrentContext.Request["areaFlag"] == null ? "eventList" : this.CurrentContext.Request["areaFlag"].ToString().Trim();
 
             #region
             if (itemArea != null)
@@ -955,7 +983,12 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     if (itemAreaIdList != "")
                     {
                         var itemCategoryService = new ItemCategoryService(this.CurrentUserInfo);
-                        itemCategoryService.UpdateMHItemAreaData(itemAreaIdList, customerId);
+                        itemCategoryService.UpdateMHItemAreaData(itemAreaIdList, customerId, _areaFlag);
+                    }
+                    else {
+                        var itemCategoryService = new ItemCategoryService(this.CurrentUserInfo);
+                        itemCategoryService.DeleteMHItemAreaData(customerId, _areaFlag);//主要针对秒杀区的，一个客户秒杀区的信息值能存一个类型（eventtypeid）的
+             
                     }
 
                     //根据ItemAreaId判断是新增还是更新MHItemArea数据
@@ -970,6 +1003,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                                 IsUrl = item.isUrl,
                                 EventId = item.eventId,
                                 ItemId = item.itemId,
+                                areaFlag=_areaFlag,//所属区域
                                 DisplayIndex = item.displayIndex,
                             };
                             itemAreaBll.Create(entity);
@@ -983,6 +1017,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                                 IsUrl = item.isUrl,
                                 EventId = item.eventId,
                                 ItemId = item.itemId,
+                                areaFlag=_areaFlag,//所属区域
                                 DisplayIndex = item.displayIndex,
                             };
                             itemAreaBll.Update(entity);

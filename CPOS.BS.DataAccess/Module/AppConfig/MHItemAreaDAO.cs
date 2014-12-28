@@ -64,6 +64,7 @@ namespace JIT.CPOS.BS.DataAccess
                     m.BeginTime = Convert.ToDateTime(rd["BeginTime"]);
                     m.EndTime = Convert.ToDateTime(rd["EndTime"]);
                     m.TypeId = Convert.ToString(rd["EventTypeID"]);
+                    m.areaFlag = Convert.ToString(rd["areaFlag"]);
                     list.Add(m);
                 }
             }

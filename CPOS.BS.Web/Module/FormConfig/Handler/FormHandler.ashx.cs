@@ -664,6 +664,7 @@ namespace JIT.CPOS.BS.Web.Module.FormConfig.Handler
             var responseData = new ResponseData();
 
             var itemArea = this.CurrentContext.Request["eventItemList"].DeserializeJSONTo<List<SaveItemArea>>();
+            var _areaFlag = this.CurrentContext.Request["areaFlag"] == null ? "eventList" : this.CurrentContext.Request["areaFlag"].ToString();
 
             #region
             if (itemArea != null)
@@ -681,7 +682,7 @@ namespace JIT.CPOS.BS.Web.Module.FormConfig.Handler
                     if (itemAreaIdList != "")
                     {
                         var itemCategoryService = new ItemCategoryService(this.CurrentUserInfo);
-                        itemCategoryService.UpdateMHItemAreaData(itemAreaIdList,customerId);
+                        itemCategoryService.UpdateMHItemAreaData(itemAreaIdList,customerId,_areaFlag);
                     }
 
                     //根据ItemAreaId判断是新增还是更新MHItemArea数据
@@ -696,6 +697,7 @@ namespace JIT.CPOS.BS.Web.Module.FormConfig.Handler
                                 IsUrl = item.isUrl,
                                 EventId = item.eventId,
                                 ItemId = item.itemId,
+                                areaFlag=_areaFlag,
                                 DisplayIndex = item.displayIndex,
                             };
                             itemAreaBll.Create(entity);
@@ -709,6 +711,7 @@ namespace JIT.CPOS.BS.Web.Module.FormConfig.Handler
                                 IsUrl = item.isUrl,
                                 EventId = item.eventId,
                                 ItemId = item.itemId,
+                                areaFlag = _areaFlag,
                                 DisplayIndex = item.displayIndex,
                             };
                             itemAreaBll.Update(entity);

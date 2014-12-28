@@ -551,14 +551,27 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
 
 
         #region 根据ItemAreaId更新MHItemArea的数据
-        public void UpdateMHItemAreaData(string itemAreaList, string customerId)
+        public void UpdateMHItemAreaData(string itemAreaList, string customerId,string _areaFlag)
         {
             //把最后一位的标点符号去掉
             itemAreaList = itemAreaList.Substring(0, itemAreaList.Length - 1);
             string userId = this.CurrentUserInfo.UserID;
             string sql = string.Format(@"update a set a.isdelete = 1 ,LastUpdateBy = '{2}',LastUpdateTime = getdate() 
                     from MHItemArea a,MobileHome b where  a.HomeId = b.HomeId and 
-                    ItemAreaId not in( {0}) and b.customerId = '{1}'", itemAreaList, customerId, userId);
+                    ItemAreaId not in( {0}) and b.customerId = '{1}' and areaFlag='{3}'"
+                , itemAreaList, customerId, userId, _areaFlag);
+            this.SQLHelper.ExecuteNonQuery(sql);
+        }
+
+
+        public void DeleteMHItemAreaData( string customerId, string _areaFlag)
+        {
+            //把最后一位的标点符号去掉
+       //     itemAreaList = itemAreaList.Substring(0, itemAreaList.Length - 1);
+            string userId = this.CurrentUserInfo.UserID;
+            string sql = string.Format(@"update a set a.isdelete = 1 ,LastUpdateBy = '{1}',LastUpdateTime = getdate() 
+                    from MHItemArea a,MobileHome b where  a.HomeId = b.HomeId  and b.customerId = '{0}' and areaFlag='{2}'"
+                ,  customerId, userId, _areaFlag);
             this.SQLHelper.ExecuteNonQuery(sql);
         }
         #endregion

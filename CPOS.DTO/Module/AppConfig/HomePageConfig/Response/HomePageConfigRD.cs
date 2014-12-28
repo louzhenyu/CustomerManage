@@ -8,12 +8,30 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
 {
     public class HomePageConfigRD : IAPIResponseData
     {
-        public AdAreaInfo[] AdAreaList { get; set; }
-        public ItemEventAreaInfo[] ItemEventAreaList { get; set; }
+        public AdAreaInfo[] AdAreaList { get; set; }       
         public CategoryGroupInfo[] CategoryGroupList { get; set; }//首页分类分组信息(分组8以外的)
         public CategoryGroupInfo CategoryEntrance { get; set; } //C8区分类分组信息(新增)
+        public CategoryGroupInfo navList { get; set; } //导航区域，c区模块4(新增)
+        public EventListEntity ItemEventAreaList { get; set; }
+        public EventListEntity secondKill { get; set; }
+        public MHSearchAreaEntity search { get; set; } //搜索框
+        public string sortActionJson { get; set; } //整体排序字段
     }
+    public class MHSearchAreaEntity
+    {
+        public Guid? MHSearchAreaID { get; set; }
 
+        public string imageUrl { get; set; }        //图片链接
+        public string url { get; set; }
+        public string styleType { get; set; }
+        public string show { get; set; }
+        public string titleName { get; set; }
+        public string titleStyle { get; set; }
+
+
+
+
+    }
     public class AdAreaInfo
     {
         /// <summary>
@@ -93,9 +111,15 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         /// 商品类别 1=团购 2=抢购,3=热销		【必须】
         /// </summary>
         public string TypeID { get; set; }
+        public string areaFlag { get; set; }
 
     }
-
+    public class EventListEntity
+    {
+        public string areaFlag { get; set; }  //区域标识，eventList,secondKill
+        public string shopType { get; set; }  //用与存放秒杀区的整体类型数据，便于前端获取。
+        public IList<ItemEventAreaInfo> arrayList { get; set; }   //活动集合
+    }
     public class CategoryAreaInfo
     {
         /// <summary>
@@ -118,6 +142,7 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         /// 群组ID
         /// </summary>
         public int? GroupID { get; set; }
+        public string navName { get; set; }        //导航里各个小图片下面的文字
     }
 
     public class CategoryGroupInfo
@@ -126,5 +151,10 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         public string ModelTypeName { get; set; }
         public int? GroupID { get; set; }
         public CategoryAreaInfo[] CategoryAreaList { get; set; }
+        public String styleType { get; set; }
+
+        public String titleName { get; set; }
+
+        public String titleStyle { get; set; }
     }
 }
