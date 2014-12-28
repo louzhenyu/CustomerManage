@@ -116,6 +116,10 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public String navName { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public String url { get; set; }
 
         #endregion
 

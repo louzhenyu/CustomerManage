@@ -143,6 +143,7 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         /// </summary>
         public int? GroupID { get; set; }
         public string navName { get; set; }        //导航里各个小图片下面的文字
+        public string url { get; set; }        //导航里各个小图片下面的文字
     }
 
     public class CategoryGroupInfo

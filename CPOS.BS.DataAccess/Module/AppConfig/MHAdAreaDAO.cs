@@ -173,7 +173,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " SELECT categoryAreaId = a.CategoryAreaId ";
             sql += " , displayIndex = a.DisplayIndex ";
             sql += " , imageUrl = a.ImageUrlObject ";
-            sql += " , navName";
+            sql += " , navName,url";
             sql += " , objectId = a.ObjectId ";
             sql += " , typeId = a.ObjectTypeId ";
             sql += " , objectName = CASE a.ObjectTypeId ";
@@ -214,6 +214,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ObjectName = '" + entity.ObjectName + "', ";
             sql += " ImageUrlObject = '" + entity.ImageUrlObject + "', ";
             sql += " navName = '" + entity.navName + "', ";
+            sql += " url = '" + entity.url + "', ";
             sql += " DisplayIndex = '" + entity.DisplayIndex + "' ";
 
             sql += " WHERE CategoryAreaId = '" + entity.CategoryAreaId + "' ";

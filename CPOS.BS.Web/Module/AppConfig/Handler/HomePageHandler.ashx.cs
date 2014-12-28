@@ -381,13 +381,13 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     List<CategoryEntity> lc = content.categoryList.Where(p => p.modelTypeId == 8).ToList();
                     if (lc != null && lc.Count != 0)
                     {
-                        content.categoryEntrance = lc[0];
+                        content.categoryEntrance = lc.OrderByDescending(p => p.groupId).ToList()[0]; ;
                     }
                     // 过滤分类集合，把ModelTypeID=4的取出来(导航部门)
                     List<CategoryEntity> lc4 = content.categoryList.Where(p => p.modelTypeId == 4).ToList();
                     if (lc4 != null && lc4.Count != 0)
                     {
-                        content.navList = lc4[0];//(获取唯一的)
+                        content.navList = lc4.OrderByDescending(p => p.groupId).ToList()[0]; ;//(获取唯一的)
                     }
                     //过滤分类集合，把ModelTypeID<>8的和不等于8的取出来
                     content.categoryList = content.categoryList.Where(p => p.modelTypeId != 8).Where(p => p.modelTypeId != 4).ToList();
@@ -500,6 +500,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             public string objectName { get; set; }      //对象名称
             public int typeId { get; set; }             //类型ID： 1=商品分类 2=商品
             public string navName { get; set; }        //导航里各个小图片下面的文字
+            public string url { get; set; }
         }
 
         public class GetMHCategoryAreaInfoRespContentData
@@ -710,7 +711,9 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     GroupID = groupId,
                     ObjectName = item.objectName,
                     ImageUrlObject = item.imageUrl,
-                    DisplayIndex = item.displayIndex
+                    DisplayIndex = item.displayIndex,
+                    navName = item.navName,
+                    url = item.url
                 };
                 categoryAreaBll.Create(entity);
 
@@ -738,7 +741,8 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     ObjectName = item.objectName,
                     ImageUrlObject = item.imageUrl,
                     DisplayIndex = item.displayIndex,
-                    navName=item.navName
+                    navName=item.navName,
+                    url=item.url
                 };
                 adAreaBll.UpdateMHCategoryArea(entity);
             }
@@ -773,6 +777,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             public int displayIndex { get; set; }       //序号（1、2、3）
             public string imageUrl { get; set; }        //图片链接
             public string navName { get; set; }        //导航里各个小图片下面的文字 
+            public string url { get; set; }        //导航里各个小图片下面的文字 
         }
 
         #endregion
