@@ -906,6 +906,14 @@ namespace JIT.CPOS.BS.BLL
         }
         #endregion
 
+
+        #region 获取店员门店
+        public string GetUnitByUserId(string userId)
+        {
+            return this._currentDAO.GetUnitByUserId(userId);
+        }
+        #endregion
+
         #region 同步阿拉丁会员信息
 
         /// <summary>
@@ -1544,5 +1552,22 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+
+        #region 获取云店会员卡包
+        public DataSet GetCardBag(string weixinUserId, string cloudCustomerId)
+        {
+            return this._currentDAO.GetCardBag(weixinUserId, cloudCustomerId);
+        }
+        #endregion
+
+        /// <summary>
+        /// 会员邀请统计
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public int GetInviteCount(string userID)
+        {
+            return _currentDAO.GetInviteCount(userID);
+        }
     }
 }

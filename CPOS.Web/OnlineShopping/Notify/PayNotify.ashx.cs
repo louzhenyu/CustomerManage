@@ -204,6 +204,17 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                         }
 
                         #endregion
+
+                        #region 订单与分润关系处理 add by Henry 2014-10-10
+                        var orderSubBll = new OrderOrderSubRunObjectMappingBLL(loggingSessionInfo);
+                        dynamic o = orderSubBll.SetOrderSub(CustomerID, OrderID);
+                        Type t = o.GetType();
+                        var Desc = t.GetProperty("Desc").GetValue(o, null).ToString();
+                        var IsSuccess = t.GetProperty("IsSuccess").GetValue(o, null).ToString();
+                        if (int.Parse(IsSuccess.ToString()) == 0) //失败
+                            Loggers.Debug(new DebugLogInfo() { Message = string.Format("订单与分润关系处理失败:{0}",Desc) });
+                        #endregion
+
                         context.Response.Write("SUCCESS");
                     }
                 }

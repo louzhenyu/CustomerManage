@@ -50,6 +50,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
                 case "GetCouponDetail"://获取优惠券二维码
                     rst = GetCouponDetail(pRequest);
                     break;
+                case "UpdateCoupon"://使用优惠券
+                    rst = UpdateCoupon(pRequest);
+                    break;
                 case "GetMyIntegral"://我的积分
                     rst = GetMyIntegral(pRequest);
                     break;
@@ -410,6 +413,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
             //return "{\"ResultCode\":0,\"Message\":null,\"Data\":{\"CouponList\":[{\"CouponCount\":1,\"CouponCode\":\"12365\",\"CouponPassword\":\"\",\"CouponDesc\":\"\u8BA2\u5355\u6EE1300\u5143\u53EF\u4F7F\u7528\u8BE5\u5238\",\"EndDate\":\"2014/05/31\",\"CouponTypeName\":\"\u62B5\u7528\u5238\",\"ParValue\":\"100\",\"Status\":0,\"Rule\":\"q/00848A1B9E284972AF84B13AA2A2AB78\"},{\"CouponCount\":1,\"CouponCode\":\"78256\",\"CouponPassword\":\"\",\"CouponDesc\":\"\u8BA2\u5355\u6EE1300\u5143\u53EF\u4F7F\u7528\u8BE5\u5238\",\"EndDate\":\"2014/05/31\",\"CouponTypeName\":\"\u4F18\u60E0\u5238\",\"ParValue\":\"100\",\"Status\":0,\"Rule\":\"q/00848A1B9E284972AF84B13AA2A2AB78\"},{\"UseType\":1,\"CouponCount\":1,\"CouponCode\":\"14796\",\"CouponPassword\":\"\",\"CouponDesc\":\"\u8BA2\u5355\u6EE1300\u5143\u53EF\u4F7F\u7528\u8BE5\u5238\",\"EndDate\":\"2014/05/31\",\"CouponTypeName\":\"\u62B5\u7528\u5238\",\"ParValue\":\"100\",\"Status\":0,\"Rule\":\"q/00848A1B9E284972AF84B13AA2A2AB78\"}]}}";
+        }
+        /// <summary>
+        /// 使用优惠券
+        /// </summary>
+        /// <param name="pRequest"></param>
+        /// <returns></returns>
+        protected string UpdateCoupon(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<GetCouponDetailRP>>();
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+            var couponBll=new CouponBLL(loggingSessionInfo);
+            var couponInfo = couponBll.GetByID(rp.Parameters.CouponID);
+            if (couponInfo != null)
+            {
+                couponInfo.Status = 1;      //置为已用；（0：未用，1：已使用，2：已过期，3：全部）
+                couponBll.Update(couponInfo);   //修改
+            }
+            var rd = new EmptyRD();
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
         }
         /// <summary>
         /// 我的积分

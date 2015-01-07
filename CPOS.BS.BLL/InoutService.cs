@@ -1294,6 +1294,8 @@ namespace JIT.CPOS.BS.BLL
                 inoutInfo.Field15 = SetOrderInfo.IsGroupBuy;
                 inoutInfo.sales_user = SetOrderInfo.SalesUser; //销售ID add by donal 2014-9-26 14:39:45
                 inoutInfo.ChannelId = SetOrderInfo.ChannelId; // 渠道ID add by donal 2014-9-28 14:39:45
+                inoutInfo.ReturnCash = SetOrderInfo.ReturnCash;//佣金 add by donal 2014-12-9 10:46:33
+
                 if (SetOrderInfo.PurchaseUnitId != null)
                 {
                     inoutInfo.purchase_unit_id = SetOrderInfo.PurchaseUnitId;

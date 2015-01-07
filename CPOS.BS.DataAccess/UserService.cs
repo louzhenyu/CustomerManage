@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using JIT.Utility.DataAccess;
 using System.Collections;
+using System.Configuration;
 
 namespace JIT.CPOS.BS.DataAccess
 {
@@ -465,6 +466,32 @@ namespace JIT.CPOS.BS.DataAccess
                         where customer_id='{0}' and customer_user_id='{1}'";
             return SQLHelper.ExecuteScalar(string.Format(sql, customerId, userId)) as string;
         }
+        #region 根据客户ID获取当前所有销售人员 2014-10-16
+        /// <summary>
+        /// 根据客户ID和门店号获取当前所有服务顾问（不填门店号则获取所有）
+        /// </summary>
+        /// <param name="user_id">用户标识</param>
+        /// <returns></returns>
+        public DataTable GetUserByCustomerID(string customerID,string unitID,string roleCode)
+        {
+            string sql = "";
+
+            sql += "select u.user_name as SName,u.user_id as SalesmanID from T_User u ";
+            sql += " left join T_User_Role ur on u.user_id=ur.user_id  ";
+            sql += " left join T_Role r on ur.role_id=r.role_id ";
+            sql += " where u.customer_id='" + customerID + "' ";
+
+            sql += " and r.role_code='" + roleCode + "' ";
+
+            if (!string.IsNullOrEmpty(unitID))
+            {
+                sql += "  and ur.unit_id='" + unitID + "' ";
+            }
+            DataTable dt = this.SQLHelper.ExecuteDataset(sql).Tables[0];
+            return dt;
+        }
+
+        #endregion
         /// <summary>
         /// 获取用户在某种角色下的缺省的单位
         /// </summary>

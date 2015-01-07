@@ -123,8 +123,6 @@ namespace JIT.CPOS.Web.WeiXin
                 #endregion
                 var loggingSessionInfo = Default.GetAPLoggingSession("");
 
-                
-
                 #region 2.管理平台处理日志
                 VipShowLogEntity vipShowLogInfo = new VipShowLogEntity();
                 vipShowLogInfo.VipLogID = System.Guid.NewGuid().ToString().Replace("-", "");
@@ -238,6 +236,7 @@ namespace JIT.CPOS.Web.WeiXin
                 //}
                 //张伟封装的固定二维码扫描
                 customerIdUnoin = menuServer.GetCustomerIdByWx(WeiXin);
+                
                 //update by wzq 20140805 cancel old push qrcode info
              //   SetPushQRCode(OpenID, customerIdUnoin, VipIdTmp, qrcode_id, WeiXin);
                 respData.QRVipCode = vipInfo.QRVipCode;
@@ -254,9 +253,6 @@ namespace JIT.CPOS.Web.WeiXin
                 });
                 
                 eventsBll.SendQrCodeWxMessage(loggingSessionInfo, customerIdUnoin, WeiXin, qrcode_id, OpenID, HttpContext.Current);
-
-
-
             }
             catch (Exception ex)
             {
@@ -1403,15 +1399,38 @@ namespace JIT.CPOS.Web.WeiXin
                     {
                         //case 1: //返利集客员工二维码，已经做好
                         case 2: //人人销售 集客员工二维码
+                            
                             var subBll = new VipOrderSubRunObjectMappingBLL(tmpUser);
-                            var o = subBll.SetVipOrderSubRun(customerIdUnoin, vipId, 3, vipDCodeInfo.CreateBy);
+
+                            //设置集客员工与会员关系
+                            var o = subBll.SetVipOrderSubRun(customerIdUnoin, vipId, 15, vipDCodeInfo.CreateBy);
                             Type t = o.GetType();
                             var Desc = t.GetProperty("Desc").GetValue(o, null).ToString();
                             var IsSuccess = t.GetProperty("IsSuccess").GetValue(o, null).ToString();
+
                             Loggers.Debug(new DebugLogInfo()
                             {
-                                Message = string.Format("设置集客员工与会员关系IsSuccess:{0},Desc:{1}",IsSuccess,Desc)
+                                Message = string.Format("设置集客员工与会员关系IsSuccess:{0},Desc:{1}", IsSuccess, Desc)
                             });
+
+                            //如果销售员没有汇集店，直接不错任何操作
+                            if (!string.IsNullOrWhiteSpace(vipDCodeInfo.UnitId))
+                            {
+
+                                //给集客员工奖励
+                                subBll.setJiKeGift(vipDCodeInfo.CreateBy, vipId);
+
+                                //设置集客员工与会集店关系
+                                dynamic ob = subBll.SetVipOrderSubRun(customerIdUnoin, vipId, 3, vipDCodeInfo.UnitId);
+                                Type ty = ob.GetType();
+                                var Desc_ = ty.GetProperty("Desc").GetValue(o, null).ToString();
+                                var IsSuccess_ = ty.GetProperty("IsSuccess").GetValue(o, null).ToString();
+                                Loggers.Debug(new DebugLogInfo()
+                                {
+                                    Message = string.Format("设置集客员工与会集店关系IsSuccess:{0},Desc:{1}", IsSuccess_, Desc_)
+                                });                                 
+                            }                                                      
+
                             break;
                         default:
                             break;

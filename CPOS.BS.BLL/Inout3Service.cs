@@ -691,6 +691,25 @@ namespace JIT.CPOS.BS.BLL
         }
         
         /// <summary>
+        /// 修改订单门店
+        /// </summary>
+        /// <param name="orderList"></param>
+        /// <param name="unitID"></param>
+        /// <returns></returns>
+        public int SetOrderUnit(string orderList,string unitID)
+        {
+            try
+            {
+                return inoutService.SetOrderUnit(orderList, unitID);
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+            
+        }
+        
+        /// <summary>
         /// 查询未审核订单数
         /// </summary>
         /// <returns></returns>

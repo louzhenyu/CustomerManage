@@ -383,6 +383,7 @@
     <Compile Include="CodeGeneration\TimingPushMessageVipLastRecordBLL.cs" />
     <Compile Include="CodeGeneration\TInoutBLL.cs" />
     <Compile Include="CodeGeneration\TInoutDetailBLL.cs" />
+    <Compile Include="CodeGeneration\TInoutExpandBLL.cs" />
     <Compile Include="CodeGeneration\TInoutStatusBLL.cs" />
     <Compile Include="CodeGeneration\TInOutStatusNodeBLL.cs" />
     <Compile Include="CodeGeneration\TItemTagBLL.cs" />
@@ -435,6 +436,7 @@
     <Compile Include="CodeGeneration\VIPRoleMappingBLL.cs" />
     <Compile Include="CodeGeneration\VipShowLogBLL.cs" />
     <Compile Include="CodeGeneration\VipSnapshotBLL.cs" />
+    <Compile Include="CodeGeneration\VipStoreBLL.cs" />
     <Compile Include="CodeGeneration\VipTagsMappingBLL.cs" />
     <Compile Include="CodeGeneration\VipUnitMappingBLL.cs" />
     <Compile Include="CodeGeneration\VipVipMappingBLL.cs" />
@@ -472,6 +474,10 @@
     <Compile Include="CodeGeneration\WiFiDeviceBLL.cs" />
     <Compile Include="CodeGeneration\WiFiUserVisitBLL.cs" />
     <Compile Include="CodeGeneration\WiFiUserVisitDetailBLL.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\BankBLL.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\VipBankBLL.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositApplyBLL.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositBLL.cs" />
     <Compile Include="CodeGeneration\WKeywordReplyBLL.cs" />
     <Compile Include="CodeGeneration\WLegalizeBLL.cs" />
     <Compile Include="CodeGeneration\WMaterialImageBLL.cs" />
@@ -613,6 +619,7 @@
     <Compile Include="EventVipBLL.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="EveryoneSales\EveryoneSalesBLL.cs" />
     <Compile Include="FStaffBLL.cs" />
     <Compile Include="GetResponseParams.cs" />
     <Compile Include="GOrderBLL.cs" />
@@ -880,6 +887,7 @@
     <Compile Include="TimingPushMessageRuleModelMappingBLL.cs" />
     <Compile Include="TimingPushMessageVipLastRecordBLL.cs" />
     <Compile Include="TInoutDetailBLL.cs" />
+    <Compile Include="TInoutExpandBLL.cs" />
     <Compile Include="TInoutStatusBLL.cs" />
     <Compile Include="TInOutStatusNodeBLL.cs" />
     <Compile Include="TItemTagBLL.cs" />
@@ -934,6 +942,7 @@
     <Compile Include="VipPropertyBLL.cs" />
     <Compile Include="VipShowLogBLL.cs" />
     <Compile Include="VipSnapshotBLL.cs" />
+    <Compile Include="VipStoreBLL.cs" />
     <Compile Include="VipTagsMappingBLL.cs" />
     <Compile Include="VipUnitMappingBLL.cs" />
     <Compile Include="VipVipMappingBLL.cs" />
@@ -965,6 +974,10 @@
     <Compile Include="WiFiDeviceBLL.cs" />
     <Compile Include="WiFiUserVisitBLL.cs" />
     <Compile Include="WiFiUserVisitDetailBLL.cs" />
+    <Compile Include="WithdrawDeposit\BankBLL.cs" />
+    <Compile Include="WithdrawDeposit\VipBankBLL.cs" />
+    <Compile Include="WithdrawDeposit\VipWithdrawDepositApplyBLL.cs" />
+    <Compile Include="WithdrawDeposit\VipWithdrawDepositBLL.cs" />
     <Compile Include="WKeywordReplyBLL.cs" />
     <Compile Include="WLegalizeBLL.cs" />
     <Compile Include="WMaterialImageBLL.cs" />

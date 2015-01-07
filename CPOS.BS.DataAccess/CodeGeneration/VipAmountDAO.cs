@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipAmount](");
-            strSql.Append("[BeginAmount],[InAmount],[OutAmount],[EndAmount],[PayPassword],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[IsLocking],[VipId])");
+            strSql.Append("[BeginAmount],[InAmount],[OutAmount],[EndAmount],[PayPassword],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[IsLocking],[VipId],[TotalAmount])");
             strSql.Append(" values (");
-            strSql.Append("@BeginAmount,@InAmount,@OutAmount,@EndAmount,@PayPassword,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@IsLocking,@VipId)");            
+            strSql.Append("@BeginAmount,@InAmount,@OutAmount,@EndAmount,@PayPassword,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@IsLocking,@VipId,@TotalAmount)");            
 
 			string pkString = pEntity.VipId;
 
@@ -100,7 +100,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@IsLocking",SqlDbType.Int),
-					new SqlParameter("@VipId",SqlDbType.NVarChar)
+					new SqlParameter("@VipId",SqlDbType.NVarChar),                    
+					new SqlParameter("@TotalAmount",SqlDbType.Decimal)
             };
 			parameters[0].Value = pEntity.BeginAmount;
 			parameters[1].Value = pEntity.InAmount;
@@ -113,7 +114,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[8].Value = pEntity.LastUpdateBy;
 			parameters[9].Value = pEntity.IsDelete;
 			parameters[10].Value = pEntity.IsLocking;
-			parameters[11].Value = pkString;
+            parameters[11].Value = pkString;
+            parameters[12].Value = pEntity.TotalAmount;
 
             //执行并将结果回写
             int result;
@@ -222,7 +224,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.IsLocking!=null)
-                strSql.Append( "[IsLocking]=@IsLocking");
+                strSql.Append( "[IsLocking]=@IsLocking,");
+            if (pIsUpdateNullField||pEntity.TotalAmount!=null)
+                strSql.Append(" [TotalAmount]=@TotalAmount");
             strSql.Append(" where VipId=@VipId ");
             SqlParameter[] parameters = 
             {
@@ -234,6 +238,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsLocking",SqlDbType.Int),
+					new SqlParameter("@TotalAmount",SqlDbType.Decimal),
 					new SqlParameter("@VipId",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.BeginAmount;
@@ -243,8 +248,9 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[4].Value = pEntity.PayPassword;
 			parameters[5].Value = pEntity.LastUpdateTime;
 			parameters[6].Value = pEntity.LastUpdateBy;
-			parameters[7].Value = pEntity.IsLocking;
-			parameters[8].Value = pEntity.VipId;
+            parameters[7].Value = pEntity.IsLocking;
+            parameters[8].Value = pEntity.TotalAmount;
+			parameters[9].Value = pEntity.VipId;
 
             //执行语句
             int result = 0;
@@ -616,7 +622,11 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsLocking"] != DBNull.Value)
 			{
 				pInstance.IsLocking =   Convert.ToInt32(pReader["IsLocking"]);
-			}
+            }
+            if (pReader["TotalAmount"] != DBNull.Value)
+            {
+                pInstance.TotalAmount = Convert.ToDecimal(pReader["TotalAmount"]);
+            }
 
         }
         #endregion

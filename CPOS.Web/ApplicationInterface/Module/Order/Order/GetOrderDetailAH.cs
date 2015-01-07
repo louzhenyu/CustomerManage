@@ -123,6 +123,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
                 var deliveryBll = new TOrderCustomerDeliveryStrategyMappingBLL(this.CurrentUserInfo);
                 rd.OrderListInfo.DeliveryAmount = deliveryBll.GetDeliverAmount(orderId);//配送费 add by henry
+                
+                if (!string.IsNullOrEmpty(orderList[0].Field15) && orderList[0].Field15 != "0") //是否是团购商品 add by Henry 2014-12-22
+                    rd.OrderListInfo.IsEvent = 1;   //团购商品
+                else
+                    rd.OrderListInfo.IsEvent = 0;   //普通商品
 
                 #region update by changjian.tian
 

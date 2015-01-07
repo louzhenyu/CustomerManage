@@ -196,6 +196,26 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "ProcGetOrderDetail", parm);
 
         }
+
+        /// <summary>
+        /// 根据订单状态,店员ID获取人人销售订单
+        /// </summary>
+        public DataSet GetOrderByGroupingTypeEvery(string UserID, int PageIndex, int PageSize, string customer_id, int groupingType)
+        {
+            var parm = new SqlParameter[5];
+            parm[0] = new SqlParameter("@UserID", System.Data.SqlDbType.NVarChar) { Value = UserID };
+            parm[1] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = customer_id };
+            parm[2] = new SqlParameter("@GroupingType", System.Data.SqlDbType.Int) { Value = groupingType };
+            parm[3] = new SqlParameter("@PageIndex", System.Data.SqlDbType.Int) { Value = PageIndex + 1 };
+            parm[4] = new SqlParameter("@PageSize", System.Data.SqlDbType.Int) { Value = PageSize };
+
+            Loggers.Debug(new DebugLogInfo()
+            {
+                Message = parm.ToJSON()
+            });
+            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "ProcGetUserOrderGrouping", parm);
+
+        }
         /// <summary>
         /// 获取每种状态下的订单数目
         /// </summary>

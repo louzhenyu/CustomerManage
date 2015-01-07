@@ -26,6 +26,11 @@ namespace JIT.CPOS.BS.Entity
         public decimal EveryoneSalesPrice{get;set;}
 
         /// <summary>
+        /// 佣金
+        /// </summary>
+        public decimal ReturnCash { get; set; }
+
+        /// <summary>
         /// 团购价
         /// </summary>
         public decimal groupPrice { get; set; }

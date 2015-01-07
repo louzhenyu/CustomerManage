@@ -28,6 +28,7 @@ using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.Common;
+using JIT.Utility.Web.ComponentModel.ExtJS.Data.Field;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -51,7 +52,6 @@ namespace JIT.CPOS.BS.BLL
             }
         }
         #endregion
-
         public string DynamicVipPropertySave(DynamicVipPropertySaveRP dynamicVipPropertySaveRP)
         {
             string result = "";

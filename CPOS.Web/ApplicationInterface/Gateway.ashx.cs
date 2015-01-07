@@ -34,6 +34,7 @@ namespace JIT.CPOS.Web.ApplicationInterface
             {
                 //参数解析
                 var action = context.Request.QueryString["action"];
+           
                 //var strVersion = context.Request.QueryString["v"];
                 var strAPIType = context.Request.QueryString["type"];
                 var reqContent = context.Request["req"];
@@ -143,5 +144,6 @@ namespace JIT.CPOS.Web.ApplicationInterface
             }
         }
         #endregion
+
     }
 }

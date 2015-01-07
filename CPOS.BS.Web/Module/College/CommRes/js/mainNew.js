@@ -91,7 +91,8 @@ require.config({
         commonMethod: 'commonMethod',
         datetimePicker: '/Module/static/js/plugin/jquery.datetimepicker',
         formtojson: 'plugin/formtojson',
-        mooarray: 'plugin/array'
+        mooarray: 'plugin/array',
+        ajaxform: 'plugin/jquery.form'
     }
 });
 

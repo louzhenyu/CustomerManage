@@ -104,5 +104,26 @@ namespace JIT.CPOS.BS.DataAccess
             return null;
         }
         #endregion
+
+        #region 返回AppId下所有帐号
+        /// <summary>
+        /// 返回AppId下所有帐号
+        /// </summary>
+        /// <param name="AppId">AppId</param>
+        /// <returns></returns>
+        public DataTable GetAccountByAppId(string pAppId)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("SELECT UserId,VoipAccount,StatusCode,AppId FROM dbo.TUserThirdPartyMapping where ");
+            sql.AppendLine(" AppId='" + pAppId + "'");
+            sql.AppendLine(" and IsDelete=0;");
+            DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString());
+            if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+            {
+                return ds.Tables[0];
+            }
+            return null;
+        }
+        #endregion
     }
 }

@@ -93,13 +93,16 @@ namespace JIT.CPOS.BS.DataAccess
 	            ,inout_detail.Field2 EndDate --离店日期
                 ,ISNULL(inout.remark,'') Remark    --备注
 	            ,cast(inout_detail.order_qty as int) RoomCount --房间数
+                , vip.VipRealName   --下单人
+                , vip.Phone         --下单人电话
             into #Result	
             from T_Inout inout  --订单
+            left join Vip on inout.vip_no = vip.VipID and vip.isdelete = 0
             inner join T_Inout_Detail inout_detail on inout.order_id=inout_detail.order_id  --订单明细
             left join t_unit unit on inout.purchase_unit_id=unit.unit_id and unit.customer_id=inout.customer_id --门店
             left join T_Sku sku on inout_detail.sku_id=sku.sku_id
             left join T_Item item on sku.item_id=item.item_id   --房型名称
-            left join Delivery del on inout.Field11=del.DeliveryId and IsDelete=0  --付款方式
+            left join Delivery del on inout.Field11=del.DeliveryId and del.IsDelete=0  --付款方式
             inner join Options opt on inout.status=opt.OptionValue and opt.OptionName='OrdersStatus' and opt.CustomerID='{0}' and opt.IsDelete=0 --订单状态
             where inout.customer_id='{0}' and inout.status !=-1 {1}
 

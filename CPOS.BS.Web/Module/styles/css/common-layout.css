@@ -177,12 +177,12 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .commdialog .row {margin:0 auto 28px;height:28px;}
 .commdialog .row .tit{width:70px;text-align:right;color:#333;float:left;font-family:黑体;}
 .commdialog .row .selectBox{float:left;margin-left:10px;height:26px;line-height:26px;font-family:Arial;border:1px solid #ccc;border-radius:2px;cursor:pointer;}
-.commdialog .row .selectBox .text{display:block;width:90%;line-height:26px;text-align:left;text-indent:5px;/*mod by zyh*/}
+.commdialog .row .selectBox .text{display:block;width:90%;line-height:26px;text-align:left;text-indent:5px; height:26px;/*mod by zyh*/}
 .commdialog .row .selectList{display:none;position:absolute;top:28px;left:-1px;width:100%;border-top:2px solid #007aff;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;font-size:12px;max-height:136px; overflow:auto;}
 .commdialog .row .selectList p{line-height:26px;text-align:left;text-indent:3px;border-bottom:1px solid #ccc;background:#fff;color:#333;}
-.commdialog .row .selectList p:hover{background:#007aff;color:#fff;}
-.commdialog .row .selectBox:hover{position:relative;}
-.commdialog .row .selectBox:hover .selectList{display:block;}
+/*.commdialog .row .selectList p:hover{background:#007aff;color:#fff;}*/
+/*.commdialog .row .selectBox:hover{position:relative;}*/
+/*.commdialog .row .selectBox:hover .selectList{display:block;}*/
 .commdialog .row .input{float:left;margin-left:10px;}
 .commdialog .row .input input{height:26px;}
 .commdialog .btns {margin:16px 0;text-align:center;}

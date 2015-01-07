@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/9/5 15:57:10
+ * Create On	:2014/9/11 18:12:58
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -506,6 +506,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String ShareUserId { get; set; }
+
+        /// <summary>
+        /// 用户是否开店
+        /// </summary>
+        public int? IsSotre { get; set; }
 
 
         #endregion

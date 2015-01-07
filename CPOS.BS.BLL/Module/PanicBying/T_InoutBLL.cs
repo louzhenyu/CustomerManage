@@ -216,7 +216,7 @@ namespace JIT.CPOS.BS.BLL
         /// 获取订单状态 Add by Alex Tian 2014-04-16
         /// </summary>
         /// <returns></returns>
-        public GetOrdersRD GetOrder(string vipno, int PageIndex, int PageSize, string customer_id, int GroupingType)
+        public GetOrdersRD GetOrder(string vipno, int PageIndex, int PageSize, string customer_id, int GroupingType, string ChannelId, string UserId)
         {
             GetOrdersRD rdata = new GetOrdersRD();
             DataSet ds = null;
@@ -234,8 +234,15 @@ namespace JIT.CPOS.BS.BLL
             //    default:
             //        break;
             //}
-            ds = this._currentDAO.GetOrderByGroupingType(vipno, PageIndex, PageSize, customer_id, GroupingType);
-            if (ds.Tables[1].Rows.Count > 0)
+
+
+            //如果是人人销售渠道取新的存储过程 add by donal 2014-9-26 17:41:10
+            if (ChannelId=="6")
+                ds = this._currentDAO.GetOrderByGroupingTypeEvery(UserId, PageIndex, PageSize, customer_id, GroupingType);
+            else                
+                ds = this._currentDAO.GetOrderByGroupingType(vipno, PageIndex, PageSize, customer_id, GroupingType);
+
+            if (ds!=null&&ds.Tables[1]!=null&&ds.Tables[1].Rows.Count > 0)
             {
                 List<T_InoutEntity> list = new List<T_InoutEntity> { };
                 int count = Convert.ToInt32(ds.Tables[1].Rows[0][0]);
@@ -258,7 +265,7 @@ namespace JIT.CPOS.BS.BLL
                 var detailEntitys = detailBLL.GetByIDS(ids);
                 var Orderlist = new List<JIT.CPOS.DTO.Module.VIP.Order.Response.OrderInfo> { };
 
-                #region 组织orderInfo
+                #region [ 组织orderInfo ]
 
                 foreach (var item in list)
                 {
@@ -274,6 +281,7 @@ namespace JIT.CPOS.BS.BLL
                     orderinfo.TotalQty = Convert.ToInt32(item.total_qty); //商品购买数量
                     orderinfo.TotalAmount = Convert.ToDecimal(item.actual_amount); //总金额
                     orderinfo.PaymentTypeCode = item.Payment_Type_Code;//支付方式
+                    orderinfo.ReturnCash = item.ReturnCash == null ? 0.00m : Convert.ToDecimal(item.ReturnCash);//佣金
 
                     #region 根据OrderInfo组织detail
 
@@ -289,6 +297,7 @@ namespace JIT.CPOS.BS.BLL
                         detailInfo.SpecificationDesc = it.SpecificationDesc; //规格描述
                         detailInfo.SalesPrice = it.SalesPrice; //实际单价
                         detailInfo.ImageUrl =ImagePathUtil.GetImagePathStr(it.ImageUrl,"240"); //Url图片 update by Henry 2014-12-8
+                        detailInfo.ReturnCash = it.ReturnCash;
 
                         #region 新增规格
 
@@ -326,24 +335,16 @@ namespace JIT.CPOS.BS.BLL
 
                 #endregion
 
-                #region  获得不同分组下的订单数量
+                rdata.PageIndex = PageIndex;
+                rdata.TotalPageCount = count;
+                rdata.Orders = Orderlist.ToArray();
+            }
 
-                //var tempGroupList = this._currentDAO.GetGroupOrderCount(vipno, customer_id);
+            //获得不同分组下的订单数量
+            if (ds!=null&&ds.Tables[0]!=null&&ds.Tables[0].Rows.Count>0)
+            {
                 var Grouplist = new List<JIT.CPOS.DTO.Module.VIP.Order.Response.GroupingOrderCount> { };
-
-                #region 原通过sql取各状态个数的方式
-                //int i = 1;
-                //foreach (DataTable dt in tempGroupList.Tables)
-                //{
-                //    var grouporder = new JIT.CPOS.DTO.Module.VIP.Order.Response.GroupingOrderCount();
-                //    grouporder.GroupingType = i;
-                //    grouporder.OrderCount = Convert.ToInt32(dt.Rows[0][0]);
-                //    i++;
-                //    Grouplist.Add(grouporder);
-                //}
-                #endregion
-
-                #region 获取各状态的订单个数
+                                
                 if(ds.Tables[0].Rows.Count>0){
                 //待付款
                 var grouporder1 = new JIT.CPOS.DTO.Module.VIP.Order.Response.GroupingOrderCount();
@@ -360,16 +361,20 @@ namespace JIT.CPOS.BS.BLL
                 grouporder3.GroupingType = 3;
                 grouporder3.OrderCount = int.Parse(ds.Tables[0].Rows[0]["RowRnt3"].ToString());
                 Grouplist.Add(grouporder3);
+
+                //已付款且门店自提 Add by Henry 2014-12-18
+                if (ChannelId == "6")
+                {
+                    var grouporder4 = new JIT.CPOS.DTO.Module.VIP.Order.Response.GroupingOrderCount();
+                    grouporder4.GroupingType = 4;
+                    grouporder4.OrderCount = int.Parse(ds.Tables[0].Rows[0]["RowRnt4"].ToString());
+                    Grouplist.Add(grouporder4);
                 }
-                #endregion
-
-                #endregion
-
-                rdata.PageIndex = PageIndex;
-                rdata.TotalPageCount = count;
+                }
+                
                 rdata.GroupingOrderCounts = Grouplist.ToArray();
-                rdata.Orders = Orderlist.ToArray();
             }
+
             return rdata;
         }
 

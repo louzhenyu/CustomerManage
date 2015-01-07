@@ -175,10 +175,8 @@ namespace JIT.CPOS.BS.BLL.WX
             WApplicationInterfaceEntity appObj = null;
             var appList = wApplicationInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity
             {
-                AppID = appID
-                ,
-                AppSecret = appSecret
-                ,
+                AppID = appID ,
+                AppSecret = appSecret,
                 CustomerId = loggingSessionInfo.CurrentUser.customer_id.ToString()
             }, null);
             //var appList = wApplicationInterfaceBLL.GetWebWApplicationInterface(new WApplicationInterfaceEntity() {
@@ -188,11 +186,29 @@ namespace JIT.CPOS.BS.BLL.WX
             ////WApplicationInterfaceEntity appObj = null;
             if (appList != null && appList.Length > 0)
             {
+                if (appList[0].IsHeight == 0)
+                {
+                    //获取云店公众号信息
+                    appList = wApplicationInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity
+                    {
+                        AppID = appID,
+                        AppSecret = appSecret,
+                        CustomerId = ConfigurationManager.AppSettings["CloudCustomerId"]
+                    }, null);
+                }
                 appObj = appList[0];
             }
             else
             {
-                throw new Exception("未查询到公众号");
+                //获取云店公众号信息
+                appList = wApplicationInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity
+                {
+                    AppID = appID,
+                    AppSecret = appSecret,
+                    CustomerId = ConfigurationManager.AppSettings["CloudCustomerId"]
+                }, null);
+                appObj = appList[0];
+                //throw new Exception("未查询到公众号");
             }
             AccessTokenEntity accessToken = null;
             if (appObj.ExpirationTime == null || appObj.ExpirationTime <= DateTime.Now)

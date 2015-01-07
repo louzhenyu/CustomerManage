@@ -538,7 +538,12 @@ namespace JIT.CPOS.BS.Entity
         /// 推荐会员
         /// </summary>
         /// add by donal 2014-9-28 14:30:40
-        public string RecommandVip { get; set; } 
+        public string RecommandVip { get; set; }
+
+        /// <summary>
+        /// 佣金
+        /// </summary>
+        public decimal ReturnCash { get; set; }
 
     }
 

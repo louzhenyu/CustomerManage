@@ -6132,6 +6132,7 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\local.pubxml" />
+    <None Include="Properties\PublishProfiles\www_bs.pubxml" />
     <None Include="Service References\MapKpiService\MapKpiService.wsdl" />
     <None Include="Service References\MapKpiService\MapKpiService.xsd">
       <SubType>Designer</SubType>

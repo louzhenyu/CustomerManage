@@ -217,6 +217,11 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public String Field10 { get; set; }
 
+        /// <summary>
+        /// Ó¶½ð
+        /// </summary>
+        public decimal ReturnCash { get; set; }
+
 
         #endregion
 

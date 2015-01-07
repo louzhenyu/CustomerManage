@@ -1,4 +1,5 @@
 ﻿
+
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -27,6 +28,8 @@ using JIT.CPOS.Web.ApplicationInterface.Module.UnitAndItem.Item;
 using JIT.Utility.ExtensionMethod;
 using System.Net;
 using System.IO;
+using JIT.CPOS.BS.DataAccess.Base;
+using JIT.CPOS.DTO.Base;
 
 namespace JIT.CPOS.Web.OnlineShopping.data
 {
@@ -901,7 +904,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 }
                 //商品sku信息
                 //update by wzq 修改会员价
-                var dsSkus = itemService.GetItemSkuList(itemId, userId, customerId,DateTime.Now,DateTime.Now);//暂时这个方法没有地方调用
+                var dsSkus = itemService.GetItemSkuList(itemId, userId, customerId, DateTime.Now, DateTime.Now);//暂时这个方法没有地方调用
                 if (dsSkus != null && dsSkus.Tables.Count > 0 && dsSkus.Tables[0].Rows.Count > 0)
                 {
                     respData.content.skuList =
@@ -1117,6 +1120,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 respData.content = new getStoreListByItemRespContentData();
                 respData.content.storeList = new List<getStoreListByItemRespContentItemTypeData>();
                 respData.content.imageList = new List<getStoreListByItemImageList>();
+                
+                //respData.content.DeliveryDateList = GetDeliveryDate(loggingSessionInfo);
 
                 #region
 
@@ -1183,13 +1188,27 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     respData.exception = strError;
                 }
 
-                
-                #endregion
 
-                #region 到店提货可选日期
-                               
-                
-                /*  配送时间算法
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                respData.code = "103";
+                respData.description = "数据库操作错误";
+                respData.exception = ex.ToString();
+            }
+            content = respData.ToJSON();
+            return content;
+        }
+
+        /// <summary>
+        /// 获取用户的配送时间
+        /// </summary>
+        /// <param name="loggingSessionInfo"></param>
+        /// <returns></returns>
+        public List<getTakeDeliveryDate> GetDeliveryDate(LoggingSessionInfo loggingSessionInfo)
+        {
+            /*  配送时间算法
                  *  
                  *  1.提货日期：
                  *      开始提货日期 = 当前时间+备货期（小时）
@@ -1203,112 +1222,115 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                  *      如：   "9:100-11:00","11:100-13:00","13:100-15:00","15:100-17:00" 
                  */
 
-                CustomerTakeDeliveryBLL takeDeliveryBLL = new CustomerTakeDeliveryBLL(loggingSessionInfo);
-                CustomerTakeDeliveryEntity takeDeliveryEntity = takeDeliveryBLL.QueryByEntity(
-                        new CustomerTakeDeliveryEntity() { 
-                            CustomerId = loggingSessionInfo.ClientID
-                        }
-                        ,null
-                ).FirstOrDefault();
+            CustomerTakeDeliveryBLL takeDeliveryBLL = new CustomerTakeDeliveryBLL(loggingSessionInfo);
+            CustomerTakeDeliveryEntity takeDeliveryEntity = takeDeliveryBLL.QueryByEntity(
+                    new CustomerTakeDeliveryEntity()
+                    {
+                        CustomerId = loggingSessionInfo.ClientID
+                    }
+                    , null
+            ).FirstOrDefault();
 
+            List<getTakeDeliveryDate> DeliverList = new List<getTakeDeliveryDate>();
+
+            try
+            {
                 if (takeDeliveryEntity != null
-                    &&takeDeliveryEntity.EndWorkTime.HasValue
-                    &&takeDeliveryEntity.BeginWorkTime.HasValue
-                    && DateTime.Parse(takeDeliveryEntity.EndWorkTime.ToString()).Hour >
-                       DateTime.Parse(takeDeliveryEntity.BeginWorkTime.ToString()).Hour
-                    && takeDeliveryEntity.StockUpPeriod.HasValue
-                    && takeDeliveryEntity.StockUpPeriod > 0
-                    &&takeDeliveryEntity.MaxDelivery.HasValue
-                    &&takeDeliveryEntity.MaxDelivery >0
-                    )
+                && takeDeliveryEntity.EndWorkTime.HasValue
+                && takeDeliveryEntity.BeginWorkTime.HasValue
+                && DateTime.Parse(takeDeliveryEntity.EndWorkTime.ToString()).Hour >
+                   DateTime.Parse(takeDeliveryEntity.BeginWorkTime.ToString()).Hour
+                && takeDeliveryEntity.StockUpPeriod.HasValue
+                && takeDeliveryEntity.StockUpPeriod > 0
+                && takeDeliveryEntity.MaxDelivery.HasValue
+                && takeDeliveryEntity.MaxDelivery > 0
+                )
                 {
                     //当前时间
                     DateTime now = DateTime.Now;  //当前时间
-                    
+
                     //门店工作开始时间（小时）
                     int beginWorkDay = DateTime.Parse(takeDeliveryEntity.BeginWorkTime.ToString()).Hour;
                     //门店工作结束时间（小时）
                     int endWorkDay = DateTime.Parse(takeDeliveryEntity.EndWorkTime.ToString()).Hour;
                     //备货时间 （小时）
-                    int takeDeliveryDay = int.Parse(takeDeliveryEntity.StockUpPeriod.ToString()); //加1是从当前小时的下个整时算起 
+                    int takeDeliveryDay = int.Parse(takeDeliveryEntity.StockUpPeriod.ToString());
                     //提货期最长 （天）
-                    int MaxDeliveryDay = int.Parse(takeDeliveryEntity.MaxDelivery.ToString());                    
+                    int MaxDeliveryDay = int.Parse(takeDeliveryEntity.MaxDelivery.ToString());
 
                     //备货天数 = 备货时间/每天工作小时 取整
                     int bDay = takeDeliveryDay / (endWorkDay - beginWorkDay);
                     //备货小时 = 备货时间/每天工作小时 取余
                     int bHour = takeDeliveryDay % (endWorkDay - beginWorkDay);
                     if (now.Hour + bHour > endWorkDay)
-	                {
+                    {
                         //如果当前时间加上 备货小时 大于 门店工作结束时间
                         //那么 时间加上工作日之间间隔时间
-                        bHour += 24-endWorkDay+beginWorkDay;
-	                }
+                        bHour += 24 - endWorkDay + beginWorkDay;
+                    }
 
                     //开始提货时间
                     DateTime beginDate = now.AddDays(bDay).AddHours(bHour);
                     //结束提货日期
                     DateTime endDate = beginDate.AddDays(int.Parse(takeDeliveryEntity.MaxDelivery.ToString()));
-
-                    respData.content.DeliveryDateList = new List<getTakeDeliveryDate>();
+                    ////门店开始时间
+                    //int beginHour, endHour;
+                    //    beginHour = flagFristDay ? beginDate.Hour : beginWorkDay;
+                    //    endHour = endWorkDay;
 
                     bool flagFristDay = true;
-
                     do
                     {
-                        getTakeDeliveryDate takeDeliveryDate = new getTakeDeliveryDate() {  HourList = new List<string>()};
-                       
-                        int beginHour, endHour;
+                        getTakeDeliveryDate takeDeliveryDate = new getTakeDeliveryDate();
 
-                        beginHour = flagFristDay ? beginDate.Hour : beginWorkDay;
-                        endHour = endWorkDay;
+                        //当天配送信息
+                        //1.当天  2.当天开始时间   3.当天结束时间
 
-                        if (beginDate.Month == endDate.Month && beginDate.Day == endDate.Day)
+                        DateTime dtB;
+                        DateTime dtE;
+
+                        //当天开始时间
+                        if (flagFristDay)
                         {
-                            endHour = endDate.Hour;
+                            dtB = new DateTime(beginDate.Year, beginDate.Month, beginDate.Day, beginDate.Hour, 0, 0);
+                            dtE = new DateTime(beginDate.Year, beginDate.Month, beginDate.Day, endWorkDay, 0, 0);
+                        }
+                        else if (beginDate.Day == endDate.Day)
+                        {
+                            dtB = new DateTime(beginDate.Year, beginDate.Month, beginDate.Day, beginWorkDay, 0, 0);
+                            dtE = new DateTime(beginDate.Year, beginDate.Month, beginDate.Day, endDate.Hour, 0, 0);
+                        }
+                        else
+                        {
+                            dtB = new DateTime(beginDate.Year, beginDate.Month, beginDate.Day, beginWorkDay, 0, 0);
+                            dtE = new DateTime(beginDate.Year, beginDate.Month, beginDate.Day, endWorkDay, 0, 0);
                         }
 
-                        while (true)
+                        if (dtB.Hour >= beginWorkDay && dtB.Hour < endWorkDay && dtE.Hour <= endWorkDay && dtE.Hour > beginWorkDay)
                         {
-                            if (beginHour + 2 <= endHour)
-                            {
-                                takeDeliveryDate.HourList.Add(string.Format("{0}:00-{1}:00", beginHour, beginHour + 2));
-                                beginHour += 2;
-                            }
-                            else if (beginHour < endHour && beginHour+2>endHour)
-                            {
-                                takeDeliveryDate.HourList.Add(string.Format("{0}:00-{1}:00", beginHour, endHour));
-                                break;
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            DeliverList.Add(
+                                new getTakeDeliveryDate()
+                                {
+                                    DeliveryDate = new DateTime(beginDate.Year, beginDate.Month, beginDate.Day, 0, 0, 0).ToString("yyyy-MM-dd HH:mm:ss"),
+                                    beginTime = dtB.ToString("yyyy-MM-dd HH:mm:ss"),
+                                    endTime = dtE.ToString("yyyy-MM-dd HH:mm:ss")
+                                }
+                            );
                         }
 
-                        if (takeDeliveryDate != null && takeDeliveryDate.HourList != null && takeDeliveryDate.HourList.Count() > 0)
-                        {
-                            takeDeliveryDate.DeliveryDate = beginDate.ToString("yy-MM-dd");
-                            respData.content.DeliveryDateList.Add(takeDeliveryDate);
-                        }
 
                         flagFristDay = false;
                         beginDate = beginDate.AddDays(1);
                     }
-                    while (beginDate.Day < endDate.Day + 1);
+                    while (beginDate.Day <= endDate.Day);
                 }
-                    
-
-                #endregion
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                respData.code = "103";
-                respData.description = "数据库操作错误";
-                respData.exception = ex.ToString();
             }
-            content = respData.ToJSON();
-            return content;
+
+            return DeliverList;
+        #endregion
         }
 
         #region
@@ -1350,7 +1372,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         public class getTakeDeliveryDate
         {
             public string DeliveryDate { get; set; }
-            public List<string> HourList { get; set; }
+            public string beginTime { get; set; }
+            public string endTime { get; set; }
         }
 
 
@@ -1370,7 +1393,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
         #endregion
 
-        #endregion
 
         #region 6.获取门店详细信息
 
@@ -3166,7 +3188,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         public class getPaymentTypeListReqSpecialData
         {
             public string dataFromId { get; set; }      //来源：2=Pad，3=微信【必须】
-           
+
         }
 
         #endregion
@@ -3211,10 +3233,11 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 DeliveryBLL dService = new DeliveryBLL(loggingSessionInfo);
                 var deliveryList = dService.QueryByEntity(
-                        new DeliveryEntity() { 
+                        new DeliveryEntity()
+                        {
                             Status = 1
                         }
-                        ,null
+                        , null
                     );
                 IList<getDeliveryListRespContentItemTypeData> list = new List<getDeliveryListRespContentItemTypeData>();
                 foreach (var paymentInfo in deliveryList)
@@ -7590,7 +7613,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                         "", //ModifyTime_begin, 
                         "", //ModifyTime_end
                         reqObj.special.orderId,
-                        vipId, "", null,false);
+                        vipId, "", null, false);
                     tempList.Add(data);
                 }
 
@@ -7990,6 +8013,42 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 {
                     //判断是否是ALD的订单
                     var orderInfo = inoutService.GetInoutInfoById(reqObj.special.orderId);
+
+                    #region 佣金处理 add by Henry 2014-11-26
+                    //确认收货时，如果销售者(sales_user)不为空,则将商品佣金*购买的数量保存到余额表中
+                    if (reqObj.special.status == "700" && !string.IsNullOrEmpty(orderInfo.sales_user))
+                    {
+                        var skuPriceBll = new SkuPriceService(loggingSessionInfo);              //sku价格
+                        var vipAmountBll = new VipAmountBLL(loggingSessionInfo);                //账户余额 
+                        decimal totalAmount = 0;                                                //订单总佣金
+                        List<OrderDetail> orderDetailList = skuPriceBll.GetSkuPrice(orderInfo.order_id);
+                        if (orderDetailList.Count > 0)
+                        {
+                            foreach (var detail in orderDetailList)
+                            {
+                                totalAmount += decimal.Parse(detail.salesPrice) * decimal.Parse(detail.qty);
+                            }
+                            if (totalAmount > 0)
+                            {
+                                IDbTransaction tran = new TransactionHelper(loggingSessionInfo).CreateTransaction();
+                                using (tran.Connection)
+                                {
+                                    try
+                                    {
+                                        vipAmountBll.AddVipEndAmount(reqObj.common.userId, totalAmount, tran, "10", orderInfo.order_id, loggingSessionInfo);  //变更余额和余额记录
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        tran.Rollback();
+                                        throw new APIException(ex.Message);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    #region 订单状态同步到ALD
                     if (orderInfo.Field3 == "1")
                     {
                         var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
@@ -8024,7 +8083,9 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             throw new Exception("调用ALD平台失败:" + ex.Message);
                         }
                     }
+                    #endregion
                 }
+
             }
             catch (Exception ex)
             {
@@ -8413,9 +8474,9 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     VipAmountEntity amountEntity = new VipAmountEntity();
                     amountEntity.VipId = vip.VIPID;
                     var tempAmountEntity = AmountBLL.QueryByEntity(amountEntity, null);
-                    if (tempAmountEntity.Length>0)
+                    if (tempAmountEntity.Length > 0)
                     {
-                        EndAmount =tempAmountEntity.FirstOrDefault().EndAmount.HasValue?Convert.ToDecimal(tempAmountEntity.FirstOrDefault().EndAmount):0;
+                        EndAmount = tempAmountEntity.FirstOrDefault().EndAmount.HasValue ? Convert.ToDecimal(tempAmountEntity.FirstOrDefault().EndAmount) : 0;
                     }
                     respData.content = new { userId = vip.VIPID, username = vip.UserName, phone = vip.Phone, headURL = vip.HeadImgUrl, balance = EndAmount, integral = vip.Integration };
                 }
@@ -15938,7 +15999,11 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 UnitService service = new UnitService(loggingSessionInfo);
                 var temp = service.GetRecentlyUsedStore(reqObj.special.position, reqObj.common.customerId,
                     reqObj.common.userId, reqObj.common.openId);
-                resData.content = new { Store = temp };
+                resData.content = new
+                {
+                    Store = temp,
+                    DeliveryDateList = GetDeliveryDate(loggingSessionInfo)
+                };
             }
             catch (Exception ex)
             {

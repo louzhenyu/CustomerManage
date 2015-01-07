@@ -39,9 +39,10 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pageSize"></param>
         /// <param name="isKeep">true 已收藏列表， false 所有列表</param>
         /// <returns></returns>
-        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId)
+        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore)
         {
-            page = page < 0 ? 0 : page;
+            //page = page < 0 ? 0 : page;
+            page = page <= 0 ? 0 : page;
             pageSize = pageSize <= 0 ? 15 : pageSize;
             int beginSize = page * pageSize + 1;
             int endSize = page * pageSize + pageSize;
@@ -59,19 +60,19 @@ namespace JIT.CPOS.BS.DataAccess
              */
 
             StringBuilder dbdSql = new StringBuilder();
-            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy));
-            dbdSql.Append("select * From #tmp a where 1=1 ");
+            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy,ChannelId,isStore));
+            dbdSql.Append(" select * From #tmp a where 1=1 ");
 
-            if (ChannelId=="6")
-            {
-                dbdSql.Append(" and a.EveryoneSalesPrice !=0 ");
-            }
-            dbdSql.Append(string.Format(@"and UnixLocalTime BETWEEN UnixBeginTime AND UnixEndTime and a.displayIndex between '{0}' and '{1}' order by a.displayindex;", beginSize, endSize));
+            //if (ChannelId=="6")
+            //{
+            //    dbdSql.Append(" and a.EveryoneSalesPrice !=0 ");
+            //}
+            dbdSql.Append(string.Format(@" and a.displayIndex between '{0}' and '{1}' order by a.displayindex;", beginSize, endSize));
             dbdSql.Append("select count(*) count From #tmp a where ");
-            if (ChannelId=="6")
-            {
-                dbdSql.Append(" a.EveryoneSalesPrice !=0 and ");
-            }            
+            //if (ChannelId=="6")
+            //{
+            //    dbdSql.Append(" a.EveryoneSalesPrice !=0 and ");
+            //}            
             dbdSql.Append("a.UnixLocalTime BETWEEN a.UnixBeginTime AND a.UnixEndTime; drop table #tmp;");                     
 
             DataSet ds = new DataSet();
@@ -86,16 +87,24 @@ namespace JIT.CPOS.BS.DataAccess
         //    var obj = this.SQLHelper.ExecuteScalar(sql);
         //    return obj == null || obj == DBNull.Value ? 0 : Convert.ToInt32(obj);
         //}
-        public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId, string isGroupBy)
+
+        public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId, string isGroupBy, string channelId, int isStore = 0)
         {
-            string sql = " SELECT itemId = a.item_id ";
+
+            string sql = @"SELECT   displayIndex = Row_number() over(order by isnull(t.ItemDisplayIndex,0),t.BeginTime DESC) ,* 
+            into #tmp 
+            FROM 
+            (";
+            sql += " SELECT itemId = a.item_id ";
             sql += " ,itemName = a.item_name ";
             sql += " ,imageUrl = a.imageUrl ";
             sql += " ,TargetUrl='aldlinks://product/list/' ";
             sql += " ,price = a.Price ";
             sql += " ,salesPrice = a.SalesPrice ";
+            sql += " ,ItemDisplayIndex ";
+            sql += " ,BeginTime";
             sql += " ,discountRate = a.DiscountRate ";
-            sql += " ,displayIndex = row_number() over(order by a.ItemDisplayIndex asc, a.BeginTime desc) ";
+            //sql += " ,displayIndex = row_number() over(order by a.ItemDisplayIndex asc, a.BeginTime desc) ";
             sql += " ,pTypeId = a.PTypeId ";
             sql += " ,pTypeCode = a.PTypeCode ";
             sql += " ,CouponURL = a.CouponURL ";
@@ -113,10 +122,12 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,salesCount = (CASE WHEN ISNUMERIC(a.Qty) = 1 THEN CONVERT(DECIMAL, a.Qty) ELSE 0 END) - a.OverCount ";
             sql += " ,endTime = a.EndTime";
             sql += " ,EveryoneSalesPrice = a.EveryoneSalesPrice";
+            sql += ",CASE ISNULL(vIsstore.vipStoreID,'')  WHEN '' THEN 0 ELSE 1 END AS isStore ";
+            sql += " ,ReturnAmount = a.ReturnAmount";
             sql += @",UnixLocalTime=DATEDIFF(MINUTE,'1900-01-01',GETDATE() ) 
                     ,UnixBeginTime=DATEDIFF(MINUTE,'1900-01-01',a.BeginTime ) 
                     ,UnixEndTime=DATEDIFF(MINUTE,'1900-01-01',a.EndTime ) ";
-            sql += " into #tmp ";
+            //sql += " into #tmp ";
             sql += " FROM dbo.vw_item_detail a ";
             //if (!string.IsNullOrEmpty(itemTypeId))
             //{
@@ -127,6 +138,15 @@ namespace JIT.CPOS.BS.DataAccess
                 sql += " INNER JOIN dbo.ItemKeep b ON b.CreateBy = '" + userId + "' ";
             }
             sql += " left join (select * From ShoppingCart where vipid = '" + userId + "' and qty > 0 and isdelete= '0' ) c on(a.skuId = c.skuId) ";
+
+            //查询是否是小店商品
+            sql += " LEFT JOIN dbo.VipStore vIsstore ON vIsstore.IsDelete=0 AND vIsstore.ItemID=a.item_id AND vIsstore.VIPID='" + userId + "'";
+
+            //我的小店商品
+            if (isStore == 1)
+            {
+                sql += " INNER JOIN vipstore vipStore ON a.item_id = vipStore.itemid AND vipStore.isdelete =0 AND vipStore.vipid='" + userId + "'";
+            }
 
             //Jermyn20131008 餐饮门店关系
             if (storeId != null && !storeId.Equals(""))
@@ -164,7 +184,12 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sql += " AND a.PTypeId = '2' "; //团购商品
             }
-
+            if (channelId == "6")
+            {
+                sql += " AND a.EveryoneSalesPrice != 0 ";
+            }
+            sql += @"  ) t
+            where  UnixLocalTime BETWEEN UnixBeginTime AND UnixEndTime ";
             return sql;
         }
         #endregion

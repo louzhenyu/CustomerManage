@@ -48,6 +48,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             rd.MemberInfo.Name = VipLoginInfo.UserName; //姓名
             rd.MemberInfo.VipID = VipLoginInfo.VIPID;  //组标识
             rd.MemberInfo.VipName = VipLoginInfo.VipName; //会员名
+            rd.MemberInfo.ImageUrl = VipLoginInfo.HeadImgUrl;//会员头像  add by Henry 2014-12-5
             rd.MemberInfo.VipRealName = VipLoginInfo.VipRealName;
             rd.MemberInfo.VipNo = VipLoginInfo.VipCode;
             rd.MemberInfo.Integration = VipLoginInfo.Integration ?? 0;

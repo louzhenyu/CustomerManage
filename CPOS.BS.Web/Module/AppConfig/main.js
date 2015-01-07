@@ -25,15 +25,16 @@ require.config({
     }
 });
 
-define(['jquery'], function($) {
-    var pageJs=$("#section").data("js"),
+define(['jquery'], function ($) {
+    var pageJs = $("#section").data("js"),
         pageJsPrefix = 'js/';
-    if(pageJs.length){
-        var arr=pageJs.split(" ");
-        for(var i=0;i<arr.length;i++){
-            arr[i]=pageJsPrefix+arr[i];
+    if (pageJs.length) {
+        var arr = pageJs.split(" ");
+        for (var i = 0; i < arr.length; i++) {
+            arr[i] = pageJsPrefix + arr[i];
         }
-        require([arr.join(",")],function(){});
+        require([arr.join(",")], function () {
+        });
     }
-    
+
 });

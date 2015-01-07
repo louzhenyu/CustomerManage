@@ -36,9 +36,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pageSize"></param>
         /// <param name="isKeep"></param>
         /// <returns></returns>
-        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId)
+        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore)
         {
-            return itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, isKeep, isExchange, storeId, isGroupBy,ChannelId);
+            return itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, isKeep, isExchange, storeId, isGroupBy,ChannelId,isStore);
         }
 
         //public int GetWelfareItemListCount(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId)

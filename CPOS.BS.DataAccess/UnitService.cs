@@ -737,6 +737,20 @@ namespace JIT.CPOS.BS.DataAccess
         }
         #endregion
 
+        #region 获取门店信息 2014-10-16
+        /// <summary>
+        /// 获取总部门店信息
+        /// </summary>
+        /// <param name="customerId">客户ID</param>
+        /// <returns></returns>
+        public DataSet GetAllStoreId(string customerId)
+        {
+            string sql = "SELECT unit_name,unit_id FROM dbo.T_Unit WHERE type_id = 'EB58F1B053694283B2B7610C9AAD2742' AND customer_id = '" + customerId + "'";
+            DataSet ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+        #endregion
+
 
         public DataSet GetPosOrder(string unitId, int top)
         {
@@ -874,8 +888,18 @@ namespace JIT.CPOS.BS.DataAccess
                 if (!string.IsNullOrEmpty(Position))//坐标不为''
                 {
                     string[] pos = Position.Split(',');
+                    
                     string lng = pos[0].Trim();  //经度
                     string lat = pos[1].Trim();  //纬度
+                    if (lng == "undefined" || lat == "undefined")
+                    {                       
+                        strdistance = (string.Format(" ,(0) as Distance ", lng, lat));
+                        //try
+                        //{
+                        //    throw new Exception("无法获取到经纬度信息！");
+                        //}
+                        //catch { }
+                    }else
                     strdistance = (string.Format(" ,(GEOGRAPHY::STGeomFromText('POINT('+isnull(a.longitude,0)+' '+isnull(a.dimension,0)+')',4326).STDistance(GEOGRAPHY::STGeomFromText('POINT({0} {1})',4326))) as Distance ", lng, lat));
                     temp.AppendFormat(" and LTRIM(a.longitude)<>'' and LTRIM(a.dimension)<>'' ");
                 }

@@ -347,7 +347,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
         #region GetItemSku 获取活动商品规格
         public string GetItemSku(string pRequest)
         {
-
+            //查询的语句是新的
             ItemSkuRD rd = new ItemSkuRD();
             try
             {

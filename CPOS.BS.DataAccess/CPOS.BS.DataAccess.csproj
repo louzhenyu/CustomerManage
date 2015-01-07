@@ -349,6 +349,7 @@
     <Compile Include="CodeGeneration\TimingPushMessageVipLastRecordDAO.cs" />
     <Compile Include="CodeGeneration\TInoutDAO.cs" />
     <Compile Include="CodeGeneration\TInoutDetailDAO.cs" />
+    <Compile Include="CodeGeneration\TInoutExpandDAO.cs" />
     <Compile Include="CodeGeneration\TInoutStatusDAO.cs" />
     <Compile Include="CodeGeneration\TInOutStatusNodeDAO.cs" />
     <Compile Include="CodeGeneration\TItemTagDAO.cs" />
@@ -402,6 +403,7 @@
     <Compile Include="CodeGeneration\VIPRoleMappingDAO.cs" />
     <Compile Include="CodeGeneration\VipShowLogDAO.cs" />
     <Compile Include="CodeGeneration\VipSnapshotDAO.cs" />
+    <Compile Include="CodeGeneration\VipStoreDAO.cs" />
     <Compile Include="CodeGeneration\VipTagsMappingDAO.cs" />
     <Compile Include="CodeGeneration\VipUnitMappingDAO.cs" />
     <Compile Include="CodeGeneration\VipVipMappingDAO.cs" />
@@ -439,6 +441,10 @@
     <Compile Include="CodeGeneration\WiFiDeviceDAO.cs" />
     <Compile Include="CodeGeneration\WiFiUserVisitDAO.cs" />
     <Compile Include="CodeGeneration\WiFiUserVisitDetailDAO.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\BankDAO.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\VipBankDAO.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositApplyDAO.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositDAO.cs" />
     <Compile Include="CodeGeneration\WKeywordReplyDAO.cs" />
     <Compile Include="CodeGeneration\WLegalizeDAO.cs" />
     <Compile Include="CodeGeneration\WMaterialImageDAO.cs" />
@@ -556,6 +562,7 @@
     <Compile Include="ESalesVisitVipMappingDAO.cs" />
     <Compile Include="EScaleDAO.cs" />
     <Compile Include="EventVipDAO.cs" />
+    <Compile Include="EveryoneSales\EveryoneSalesDAO.cs" />
     <Compile Include="FStaffDAO.cs" />
     <Compile Include="GOrderDAO.cs" />
     <Compile Include="HotelDynamicPriceDAO.cs" />
@@ -793,6 +800,7 @@
     <Compile Include="TimingPushMessageRuleModelMappingDAO.cs" />
     <Compile Include="TimingPushMessageVipLastRecordDAO.cs" />
     <Compile Include="TInoutDetailDAO.cs" />
+    <Compile Include="TInoutExpandDAO.cs" />
     <Compile Include="TInoutStatusDAO.cs" />
     <Compile Include="TInOutStatusNodeDAO.cs" />
     <Compile Include="TItemTagDAO.cs" />
@@ -854,6 +862,7 @@
     <Compile Include="VipPropertyDAO.cs" />
     <Compile Include="VipShowLogDAO.cs" />
     <Compile Include="VipSnapshotDAO.cs" />
+    <Compile Include="VipStoreDAO.cs" />
     <Compile Include="VipTagsMappingDAO.cs" />
     <Compile Include="VipUnitMappingDAO.cs" />
     <Compile Include="VipVipMappingDAO.cs" />
@@ -891,6 +900,10 @@
     <Compile Include="WiFiDeviceDAO.cs" />
     <Compile Include="WiFiUserVisitDAO.cs" />
     <Compile Include="WiFiUserVisitDetailDAO.cs" />
+    <Compile Include="WithdrawDeposit\BankDAO.cs" />
+    <Compile Include="WithdrawDeposit\VipBankDAO.cs" />
+    <Compile Include="WithdrawDeposit\VipWithdrawDepositApplyDAO.cs" />
+    <Compile Include="WithdrawDeposit\VipWithdrawDepositDAO.cs" />
     <Compile Include="WKeywordReplyDAO.cs" />
     <Compile Include="WLegalizeDAO.cs" />
     <Compile Include="WMaterialImageDAO.cs" />

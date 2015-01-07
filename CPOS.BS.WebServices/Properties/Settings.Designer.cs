@@ -45,7 +45,7 @@ namespace JIT.CPOS.BS.WebServices.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://180.153.154.21:8100/AuthService.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://sso.t.aladingyidong.com/AuthService.asmx")]
         public string CPOS_BS_WebServices_AuthManagerWebServices_AuthService {
             get {
                 return ((string)(this["CPOS_BS_WebServices_AuthManagerWebServices_AuthService"]));
@@ -55,7 +55,7 @@ namespace JIT.CPOS.BS.WebServices.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://o2oapi.aladingyidong.com/WebServices/ShortUrlChangeService.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://www.o2omarketing.cn:9004/WebServices/ShortUrlChangeService.asmx")]
         public string CPOS_BS_WebServices_ShortUrlChangeService_ShortUrlChangeService {
             get {
                 return ((string)(this["CPOS_BS_WebServices_ShortUrlChangeService_ShortUrlChangeService"]));

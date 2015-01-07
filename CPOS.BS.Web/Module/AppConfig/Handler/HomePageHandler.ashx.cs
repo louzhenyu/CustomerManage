@@ -129,6 +129,9 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 responseData.success = true;
                 responseData.data = content;
                 return responseData.ToJSON();
+                //responseData.success = true;
+                //responseData.msg = "asd".ToString();
+                //return responseData.ToJSON();
             }
             catch (Exception ex)
             {

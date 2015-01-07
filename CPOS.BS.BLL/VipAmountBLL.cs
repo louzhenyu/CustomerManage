@@ -186,6 +186,76 @@ namespace JIT.CPOS.BS.BLL
 
             return b;
         }
+        /// <summary>
+        /// 充值(修改订单状态使用，事务不同)
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="amount"></param>
+        /// <param name="tran"></param>
+        /// <param name="type">类型</param>
+        /// <param name="objectId">资源id</param>
+        /// <param name="loggingSessionInfo"></param>
+        /// <returns></returns>
+        public bool AddVipEndAmount(string userId, decimal amount, IDbTransaction tran, string type, string objectId, LoggingSessionInfo loggingSessionInfo)
+        {
+            bool b = false;
+            //更新个人账户的可使用余额 
+            try
+            {
+                var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
 
+                var vipAmountEntity = vipAmountBll.GetByID(userId);
+
+                if (vipAmountEntity == null)
+                {
+                    vipAmountEntity = new VipAmountEntity
+                    {
+                        VipId = userId,
+                        BeginAmount = amount,
+                        InAmount = amount,
+                        EndAmount = amount,
+                        TotalAmount = amount,
+                        IsLocking = 0
+                    };
+
+                    vipAmountBll.Create(vipAmountEntity, tran);
+
+
+                    // throw new APIException("您尚未开通付款账户") { ErrorCode = 121 };
+                }
+                else
+                {
+                    vipAmountEntity.EndAmount = vipAmountEntity.EndAmount + amount;
+                    vipAmountEntity.InAmount = vipAmountEntity.InAmount + amount;
+                    vipAmountEntity.TotalAmount = vipAmountEntity.TotalAmount + amount;
+
+                    vipAmountBll.Update(vipAmountEntity, tran);
+                }
+
+
+                //Insert VipAmountDetail
+
+                var vipamountDetailBll = new VipAmountDetailBLL(loggingSessionInfo);
+
+                var vipAmountDetailEntity = new VipAmountDetailEntity
+                {
+                    AmountSourceId = type,
+                    Amount = amount,
+                    VipAmountDetailId = Guid.NewGuid(),
+                    VipId = userId,
+                    ObjectId = objectId
+                };
+
+                vipamountDetailBll.Create(vipAmountDetailEntity, tran);
+
+                tran.Commit();
+            }
+            catch (Exception ex)
+            {
+                throw new APIException(ex.ToString()) { ErrorCode = 121 };
+            }
+
+            return b;
+        }
     }
 }

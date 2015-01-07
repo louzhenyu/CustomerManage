@@ -13,6 +13,8 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         public string CustomerName { get; set; }
         public string UserName { get; set; }
         public RoleCodeInfo[] RoleCodeList { get; set; }
+        //用户汇集店ID
+        public string UnitId { get; set; }
     }
 
     public class RoleCodeInfo

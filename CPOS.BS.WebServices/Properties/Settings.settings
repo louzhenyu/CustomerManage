@@ -9,7 +9,7 @@
       <Value Profile="(Default)">http://180.153.154.21:8101/customer/CustomerDataExchangeService.asmx</Value>
     </Setting>
     <Setting Name="CPOS_BS_WebServices_AuthManagerWebServices_AuthService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://180.153.154.21:8100/AuthService.asmx</Value>
+      <Value Profile="(Default)">http://sso.t.aladingyidong.com/AuthService.asmx</Value>
     </Setting>
     <Setting Name="CPOS_BS_WebServices_ShortUrlChangeService_ShortUrlChangeService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://www.o2omarketing.cn:9004/WebServices/ShortUrlChangeService.asmx</Value>

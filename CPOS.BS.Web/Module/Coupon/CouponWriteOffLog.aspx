@@ -5,7 +5,7 @@
     <title>优惠券核销</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link href="css/global.css" rel="stylesheet" type="text/css" />
-        <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <link href="css/style.css?v=0.2" rel="stylesheet" type="text/css" />
         <link href="css/jit-card.css" rel="stylesheet" type="text/css" />
         <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
         <link href="../static/css/datepicker.css" rel="stylesheet" type="text/css" />
@@ -14,12 +14,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/CouponWriteOffLog">
 	<span class="packup"></span>
-	<div class="commonNav">
-    	<a  href="couponWriteOff.aspx">优惠券核销</a>
+	<div class="commonNav_coupon">
+    	 <a href="javascript:void(0)" onclick='AddMid("couponWriteOff.aspx")'>优惠券核销</a>
         <a href="javascript:;" class="on" >使用记录</a>
     </div>
     
-    <div class="contentArea">
+    <div class="contentArea_coupon">
     	<div class="commonTitWrap">
         	<span>使用记录</span>
         </div>
@@ -39,7 +39,7 @@
                     </li>
                     
                     <li>
-                        <input type="text" id="Comment" placeholder="组段号">
+                        <input type="text" id="Comment" placeholder="组单号">
                     </li>
                     <li>
                         <input type="text" id="VipName" placeholder="核销人">
@@ -64,7 +64,7 @@
                         <th align="center" scope="col">优惠券号</th>
                         <th align="center" scope="col">优惠券名称</th>
                         <th align="center" scope="col">核销日期</th>
-                        <th align="center" scope="col">组段号</th>
+                        <th align="center" scope="col">组单号</th>
                         <th align="center" scope="col">核销人</th>
                     </tr>
                     <tbody id="content">

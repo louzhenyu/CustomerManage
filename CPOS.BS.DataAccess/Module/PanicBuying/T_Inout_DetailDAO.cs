@@ -69,6 +69,7 @@ namespace JIT.CPOS.BS.DataAccess
                     m.SalesPrice = Convert.ToDecimal(rd["enter_price"]);//实际单价
                     m.ImageUrl = rd["imageurl"].ToString();//SKU图片
                     m.SpecificationDesc = rd["item_remark"].ToString();
+                    m.ReturnCash = rd["ReturnCash"] == DBNull.Value ? 0.00m : Convert.ToDecimal(rd["ReturnCash"]); 
                     list.Add(m);
                 }
             }

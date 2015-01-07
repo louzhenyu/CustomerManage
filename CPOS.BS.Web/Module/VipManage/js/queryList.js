@@ -176,6 +176,7 @@
                             //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
 
                             that.loadMoreData(n);
+							
                         },
                         //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
                         getHref: function (n) {

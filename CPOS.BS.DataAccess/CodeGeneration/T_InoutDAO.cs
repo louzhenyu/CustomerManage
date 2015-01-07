@@ -1354,6 +1354,14 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.paymentcenter_id =  Convert.ToString(pReader["paymentcenter_id"]);
 			}
+            if (pReader["paymentcenter_id"] != DBNull.Value)
+            {
+                pInstance.paymentcenter_id = Convert.ToString(pReader["paymentcenter_id"]);
+            }
+            if (pReader["ReturnCash"] != DBNull.Value)
+            {
+                pInstance.ReturnCash = Convert.ToDecimal(pReader["ReturnCash"]);
+            }
 
 
             if (pReader.GetSchemaTable().Select("[ColumnName]='Payment_Type_Code'").Length == 1&& pReader["Payment_Type_Code"] != DBNull.Value)

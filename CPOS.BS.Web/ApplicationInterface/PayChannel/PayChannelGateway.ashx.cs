@@ -207,7 +207,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.PayChannel
 
             if (channelId == "-1")
             {
-                throw new APIException(" : 当前商户未加入阿拉丁，无法启用阿拉丁支付。") { ErrorCode = 122 };
+                throw new APIException("未找到默认的支付通道.") { ErrorCode = 122 };
             }
             else
             {

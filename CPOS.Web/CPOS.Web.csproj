@@ -1049,6 +1049,7 @@
     <Content Include="ApplicationInterface\AppVersion\AppVersionGateway.ashx" />
     <Content Include="ApplicationInterface\Services\ServiceGateway.ashx" />
     <Content Include="ApplicationInterface\Project\HuaAn\HuaAnRetCallbackHandler.ashx" />
+    <Content Include="ApplicationInterface\Customer\CloudGateway.ashx" />
     <None Include="HtmlApp\Demo\images\Thumbs.db" />
     <None Include="HtmlApp\LJ\images\Thumbs.db" />
     <Content Include="log4net.config">
@@ -2085,6 +2086,9 @@
     <Compile Include="ApplicationInterface\BaseGateway.cs" />
     <Compile Include="ApplicationInterface\Base\BaseActionHandler.cs" />
     <Compile Include="ApplicationInterface\Base\IActionHandler.cs" />
+    <Compile Include="ApplicationInterface\Customer\CloudGateway.ashx.cs">
+      <DependentUpon>CloudGateway.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Customer\CustomerGateway.ashx.cs">
       <DependentUpon>CustomerGateway.ashx</DependentUpon>
     </Compile>
@@ -2100,6 +2104,9 @@
     </Compile>
     <Compile Include="ApplicationInterface\Event\EventGateway.ashx.cs">
       <DependentUpon>EventGateway.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\EveryoneSale\EveryoneGetway.ashx.cs">
+      <DependentUpon>EveryoneGetway.ashx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\Gateway.ashx.cs">
       <DependentUpon>Gateway.ashx</DependentUpon>
@@ -2365,6 +2372,9 @@
     <Compile Include="ApplicationInterface\Util\ExtensionMethods\APIRequestExtensionMethods.cs" />
     <Compile Include="ApplicationInterface\Util\ExtensionMethods\StringExtensionMethods.cs" />
     <Compile Include="ApplicationInterface\Util\SMS\SMSHelper.cs" />
+    <Compile Include="ApplicationInterface\VipStore\VipStoreGateway.ashx.cs">
+      <DependentUpon>VipStoreGateway.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Vip\VipGateway.ashx.cs">
       <DependentUpon>VipGateway.ashx</DependentUpon>
     </Compile>

@@ -122,10 +122,10 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public String VipId { get; set; }
 
-		/// <summary> 
-		/// 二维码类型 
-		/// </summary> 
-		public int DCodeType { get; set; } // add by donal 2014-9-22 10:00:24
+        /// <summary>
+        /// 二维码类型
+        /// </summary>
+        public int DCodeType { get; set; } // add by donal 2014-9-22 10:00:24
 
 
         #endregion

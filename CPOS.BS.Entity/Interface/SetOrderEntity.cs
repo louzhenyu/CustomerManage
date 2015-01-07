@@ -208,10 +208,8 @@ namespace JIT.CPOS.BS.Entity.Interface
 
         public string ChannelId { get; set; } //渠道ID add by donal 2014-9-28 14:29:00
 
-        public int OSSId { get; set; } //场景 add by doanl 2014-9-28 14:29:56
-
-        public string RecommandVip { get; set; } //推荐会员 add by donal 2014-9-28 14:30:40
-
+        public decimal ReturnCash { get; set; } //佣金  add by donal 2014-12-9 10:37:10
+        
         #endregion
     }
 }

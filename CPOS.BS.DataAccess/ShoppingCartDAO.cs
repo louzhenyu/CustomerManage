@@ -72,7 +72,7 @@ namespace JIT.CPOS.BS.DataAccess
             string sql = string.Empty;
             sql = "select a.* ";
             sql += " ,DisplayIndex = row_number() over(order by a.CreateTime desc) ";
-            sql += " ,b.item_id ItemId, b.prop_1_detail_name GG, b.salesPrice,c.ItemCategoryName,isnull(datediff(day,a.beginDate,a.endDate),0) DayCount ";
+            sql += " ,b.item_id ItemId, b.prop_1_detail_name GG, b.salesPrice,b.EveryoneSalesPrice,c.ItemCategoryName,isnull(datediff(day,a.beginDate,a.endDate),0) DayCount ";
             sql += " into #tmp ";
             sql += " from [ShoppingCart] a ";
             sql += " left join vw_sku_detail b on a.skuId=b.sku_id ";

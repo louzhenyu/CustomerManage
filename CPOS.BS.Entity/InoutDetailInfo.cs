@@ -195,5 +195,8 @@ namespace JIT.CPOS.BS.Entity
         /// 天数 Field1与Field2时间差
         /// </summary>
         public int DayCount { get; set; }
+
+
+        public decimal ReturnCash { get; set; } // add by donal 2014-12-9 10:42:33
     }
 }

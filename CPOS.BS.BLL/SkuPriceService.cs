@@ -74,5 +74,23 @@ namespace JIT.CPOS.BS.BLL
         }
         #endregion
 
+        /// <summary>
+        /// 根据订单Id获取订单的sku个数和sku佣金价格集合
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public List<OrderDetail> GetSkuPrice(string orderId)
+        {
+            List<OrderDetail> orderDetail = new List<OrderDetail>();
+            DataSet ds = new DataSet();
+            ds = skuPriceService.GetSkuPrice(orderId, "D1A9373A2D2F4A09B824E9F59EFEAABF");
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                orderDetail = DataTableToObject.ConvertToList<OrderDetail>(ds.Tables[0]);
+            }
+            return orderDetail;
+        }
+
+
     }
 }

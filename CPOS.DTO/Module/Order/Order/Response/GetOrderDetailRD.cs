@@ -165,6 +165,10 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// 使用阿拉币抵扣金额
         /// </summary>
         public decimal ALDAmountMoney { get; set; }
+        /// <summary>
+        /// 是否是活动 1=团购商品；0=普通商品
+        /// </summary>
+        public int IsEvent { get; set; }
     }
     public class OrderDetailEntity
     {

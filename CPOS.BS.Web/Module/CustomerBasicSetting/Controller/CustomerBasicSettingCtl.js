@@ -135,6 +135,10 @@ function fnView() {
                         }
                     }
 
+                    if (code == "ShareWeixinPage") {
+                        Ext.getCmp('ShareWeixinPage').jitSetValue(data.data.requset[i].SettingValue);
+                    }
+
                 }
             }
 
@@ -205,7 +209,7 @@ function fnSave() {
         return;
 
     }
-    var NewsTypeName = Ext.getCmp("txtCustomerMobile").jitGetValue();
+    var NewsTypeName = Ext.getCmp("txtCustomerMobile").jitGetValue().toString().trim();
     if (NewsTypeName == null || NewsTypeName == "") {
         Ext.Msg.alert("提示", "请输入400电话");
         return;
@@ -269,6 +273,7 @@ function fnSave() {
             form1: Ext.JSON.encode(Ext.getCmp("cuserinfocf").getValues()),
             form2: Ext.JSON.encode(Ext.getCmp("cuserserch").getValues()),
             form3: Ext.JSON.encode(Ext.getCmp("App").getValues()),
+            form4: Ext.JSON.encode(Ext.getCmp("CsutomerWeixinPage").getValues()),
             imageurl: imageurl,
             imagecfurl: imagecfurl,
             forwardingMessageLogourl: forwardingMessageLogourl,

@@ -183,6 +183,15 @@ Ext.create('Jit.button.Button', {
         , jitIsDefaultCSS: true
 });
 
+    // 导出按钮
+Ext.create('Jit.button.Button', {
+    text: "配发货门店",
+    renderTo: "btn_SetUnit",
+    handler: fnSetUnit
+        , jitIsHighlight: true
+        , jitIsDefaultCSS: true
+});
+
 //查询按钮
 Ext.create('Ext.form.Panel', {
     id: 'btn_panel',
@@ -277,6 +286,7 @@ Ext.create('Jit.window.Window', {
 });
 // jifeng.cao end
 
+
 // 查询的数据集
 var grid = Ext.create('Ext.grid.Panel', {
     store: Ext.getStore("salesOutOrderStore1"),
@@ -303,7 +313,8 @@ var grid = Ext.create('Ext.grid.Panel', {
             }).hide();
         }
     },
-    columns: [{
+    columns: [
+        {
         text: '单据号码',
         width: 150,
         sortable: true,//可排序，其实不是真排序，只是本页的排序

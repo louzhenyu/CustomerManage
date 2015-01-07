@@ -144,6 +144,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             }
             catch (Exception ex)
             {
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = string.Format("获取二维码出错:{0}",ex.Message)
+                });
                 rsp.ResultCode = 303;
                 rsp.Message = "数据库操作错误";
 
@@ -371,10 +375,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         if (string.IsNullOrWhiteSpace(RP.Parameters.orderId))
                         {
                             RP.Parameters.orderId = Common.Utils.NewGuid();//生成虚拟订单
-
+                            string unitId = SalesPolicybll.GetUnitIDByUserId(RP.UserID, customerId);
                             var result = server.SetVirtualOrderInfo(ToStr(RP.Parameters.orderId)
                                                           , ToStr(RP.CustomerID)
-                                                          , ToStr(RP.Parameters.unitId)
+                                                          , ToStr(unitId)
                                                           , ToStr(RP.UserID)
                                                           , ToStr(RP.Parameters.dataFromId)
                                                           , ToStr(RP.Parameters.amount));

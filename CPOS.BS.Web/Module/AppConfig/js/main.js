@@ -28,7 +28,8 @@ require.config({
 
         // lib
         jquery: '/Module/static/js/lib/jquery-1.8.3.min',
-        tools:'/Module/static/js/lib/tools-lib',
+        jqueryui: '/Module/static/js/lib/jquery-ui.min',
+        tools: '/Module/static/js/lib/tools-lib',
         // plugin
         touchslider: '/Module/static/js/plugin/touchslider',
         template: '/Module/static/js/plugin/template',
@@ -38,15 +39,16 @@ require.config({
 });
 
 
-var section = document.getElementById("section"),pageJs,pageJsPrefix="";
-pageJs = section.hasAttribute("data-js")?section.getAttribute("data-js"):"";
+var section = document.getElementById("section"), pageJs, pageJsPrefix = "";
+pageJs = section.hasAttribute("data-js") ? section.getAttribute("data-js") : "";
 
-if(pageJs.length){
-    var arr=pageJs.split(" ");
-    for(var i=0;i<arr.length;i++){
-        arr[i]=arr[i].indexOf(".js")==-1?(pageJsPrefix+arr[i]+".js"):pageJsPrefix+arr[i];
+if (pageJs.length) {
+    var arr = pageJs.split(" ");
+    for (var i = 0; i < arr.length; i++) {
+        arr[i] = arr[i].indexOf(".js") == -1 ? (pageJsPrefix + arr[i] + ".js") : pageJsPrefix + arr[i];
     }
-    require([arr.join(",")],function(){});
+    require([arr.join(",")], function () {
+    });
 }
 
 

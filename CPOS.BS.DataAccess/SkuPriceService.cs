@@ -61,6 +61,7 @@ namespace JIT.CPOS.BS.DataAccess
                 SELECT  sku_id = a.sku_id ,
                         price = a.SalesPrice ,
                         EveryoneSalesPrice = a.EveryoneSalesPrice,
+                        ReturnCash= a.ReturnCash,
                         x.SalesPrice as groupPrice
                 FROM    vw_sku_detail a
                 LEFT JOIN ( SELECT 
@@ -190,7 +191,24 @@ namespace JIT.CPOS.BS.DataAccess
             }
         }
         #endregion
-
-
+        
+        /// <summary>
+        /// 根据订单Id和价格类型获取订单的sku个数和sku价格集合
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="itemPriceTypeId"></param>
+        /// <returns></returns>
+        public DataSet GetSkuPrice(string orderId, string itemPriceTypeId)
+        {
+            string sql = @"
+                        SELECT  ISNULL(order_qty,0) qty ,
+                                ISNULL(r.price,0) salesPrice
+                        FROM    dbo.T_Inout_Detail l
+                                LEFT JOIN dbo.vw_sku_price r ON l.sku_id = r.sku_id
+                                                             AND r.item_price_type_id = '{0}'
+                        WHERE   l.order_id = '{1}'  
+                        ";
+            return this.SQLHelper.ExecuteDataset(string.Format(sql, itemPriceTypeId, orderId));
+        }
     }
 }

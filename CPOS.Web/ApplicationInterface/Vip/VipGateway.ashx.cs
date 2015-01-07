@@ -278,10 +278,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
-
-
+            
             var rd = new GetVipInfoRD();
             var bll = new VipBLL(loggingSessionInfo);
+
+            //用户信息
             var vipEntity = bll.GetByID(rp.UserID);
             if (vipEntity == null)
             {
@@ -291,14 +292,41 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             {
                 rd.VipId = rp.UserID;
                 rd.Status = vipEntity.Status ?? 0;
+                rd.isStore = vipEntity.IsSotre??0;
+                rd.HeadImgUrl = vipEntity.HeadImgUrl;
+                rd.VipName = vipEntity.VipName;
+                rd.UnitId = vipEntity.CouponInfo;
             }
+
+            //用户余额信息
             var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
             var vipAmountEntity = vipAmountBll.GetByID(rp.UserID);
             if (vipAmountEntity != null)
             {
                 rd.LockFlag = vipAmountEntity.IsLocking ?? 1;
                 rd.PasswordFlag = string.IsNullOrEmpty(vipAmountEntity.PayPassword) ? 0 : 1;
+                rd.EndAmount = vipAmountEntity.EndAmount;
             }
+            else {
+                rd.EndAmount = 0;
+            }
+
+            //用户积分信息
+            var vipIntegralBll = new VipIntegralBLL(loggingSessionInfo);
+            var vipIntegralEntity = vipIntegralBll.GetByID(rp.UserID);
+            if (vipIntegralEntity != null)
+            {
+                rd.EndIntegral = vipIntegralEntity.EndIntegral;
+            }
+            else
+            {
+                rd.EndIntegral = 0;
+            }
+
+            //邀请的小伙伴
+            rd.inviteCount = bll.GetInviteCount(rp.UserID);
+
+
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
 
             return rsp.ToJSON();
@@ -630,26 +658,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     //这个订单扩展表用于【人人销售，分润数据】
                     //add by donal 2014-10-14 09:40:12
                     #region
-                    //TInoutExpandBLL intoutExpandBll = new TInoutExpandBLL(loggingSessionInfo);
-                    //TInoutExpandEntity inoutExpandEntity = new TInoutExpandEntity();
-                    //inoutExpandEntity.OrderId = orderId;
-                    //inoutExpandEntity.APPChannelID = Convert.ToInt32(rp.ChannelId);
-                    //inoutExpandEntity.OSSId = rp.Parameters.OSSId;
-                    //inoutExpandEntity.CreateBy = loggingSessionInfo.CurrentUser.Create_User_Id;
-                    //inoutExpandEntity.CreateTime = DateTime.Now;
-                    //inoutExpandEntity.LastUpdateBy = loggingSessionInfo.CurrentUser.Create_User_Id;
-                    //inoutExpandEntity.LastUpdateTime = DateTime.Now;
-                    //inoutExpandEntity.IsDelete = 0;
-                    //inoutExpandEntity.RecommandVip = rp.Parameters.RecommandVip;
-                    //if (intoutExpandBll.GetByID(orderId)==null)
-                    //    //如果有数据就修改，没有数据就插入
-                    //{
-                    //    intoutExpandBll.Create(inoutExpandEntity, tran);
-                    //}
-                    //else
-                    //{
-                    //    intoutExpandBll.Update(inoutExpandEntity, tran);
-                    //}
+                    TInoutExpandBLL intoutExpandBll = new TInoutExpandBLL(loggingSessionInfo);
+                    TInoutExpandEntity inoutExpandEntity = new TInoutExpandEntity();
+                    inoutExpandEntity.OrderId = orderId;
+                    inoutExpandEntity.APPChannelID = Convert.ToInt32(rp.ChannelId);
+                    inoutExpandEntity.OSSId = rp.Parameters.OSSId;
+                    inoutExpandEntity.CreateBy = loggingSessionInfo.CurrentUser.Create_User_Id;
+                    inoutExpandEntity.CreateTime = DateTime.Now;
+                    inoutExpandEntity.LastUpdateBy = loggingSessionInfo.CurrentUser.Create_User_Id;
+                    inoutExpandEntity.LastUpdateTime = DateTime.Now;
+                    inoutExpandEntity.IsDelete = 0;
+                    inoutExpandEntity.RecommandVip = rp.Parameters.RecommandVip;
+                    if (intoutExpandBll.GetByID(orderId)==null)
+                        //如果有数据就修改，没有数据就插入
+                    {
+                        intoutExpandBll.Create(inoutExpandEntity, tran);
+                    }
+                    else
+                    {
+                        intoutExpandBll.Update(inoutExpandEntity, tran);
+                    }
                     #endregion
 
                     tran.Commit();
@@ -1405,6 +1433,30 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         public int PasswordFlag { get; set; }
         //账户是否冻结 1为冻结 0 为为冻结
         public int LockFlag { get; set; }
+        //是否开通我的小店
+        public int? isStore { get; set; }
+        //余额
+        public decimal? EndAmount { get; set; }
+        //积分
+        public decimal? EndIntegral { get; set; }
+        //邀请人数
+        public int inviteCount { get; set; }
+
+        /// <summary>
+        /// 用户头像
+        /// </summary>
+        public string HeadImgUrl { get; set; }
+
+        /// <summary>
+        /// 用户名称
+        /// </summary>
+        public string VipName { get; set; }
+
+        /// <summary>
+        /// 用户汇集店
+        /// </summary>
+        public string UnitId { get; set; }
+
     }
 
     public class SetOrderStatusRP : IAPIRequestParameter

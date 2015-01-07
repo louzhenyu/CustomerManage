@@ -40,7 +40,9 @@
                 <div class="view_Button" style="margin: 0px; margin-top: 10px; background: #E6E4E1;">
                     <div id='btn_Create' style="float: left; width: 100px;">
                     </div>
-                    <div id='btn_excel' style="float: left; width: 200px;">
+                    <div id='btn_excel' style="float: left; width: 100px;">
+                    </div>
+                    <div id='btn_SetUnit' style="float: left; width: 230px;">
                     </div>
                 </div>
             </div>

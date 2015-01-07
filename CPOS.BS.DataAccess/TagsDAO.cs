@@ -114,5 +114,20 @@ namespace JIT.CPOS.BS.DataAccess
             return true;
         }
         #endregion
+
+        #region  查询出属于当前标签的人数 2014-11-12
+        /// <summary>
+        /// 查询出属于当前标签的人数
+        /// </summary>
+        public int GetTagsCount(string tagsIDs)
+        {
+            string sql = "select COUNT(distinct(v.VipName)) from Tags t "
+                        + "left join VipTagsMapping m on t.TagsId=m.TagsId "
+                        + "left join Vip v on m.VipId=v.VIPID "
+                        + "where t.TagsId in (" + tagsIDs + ")";
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
+        }
+
+        #endregion
     }
 }

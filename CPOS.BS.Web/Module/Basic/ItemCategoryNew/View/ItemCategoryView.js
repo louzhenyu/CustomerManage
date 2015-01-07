@@ -134,7 +134,7 @@
                         xtype: 'panel',
                         border: 0,
                         width: 100,
-                        html: '<input type="button" value="选择图片" name="btnUploadImage" id="btnUploadImage" />'
+                        html: '<input type="button" value="选择图片" name="btnUploadImage" id="btnUploadImage" /><span style="color:red;">建议图片大小240*170</span>'
                     }]
                 }
                 , {

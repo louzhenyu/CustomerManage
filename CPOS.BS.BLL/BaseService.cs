@@ -311,7 +311,6 @@ namespace JIT.CPOS.BS.BLL
         public string ConvertHttpContextToString(HttpContext httpContext)
         {
             BaseService.WriteLogWeixin("将HTTP请求参数转换为字符串");
-
             System.IO.Stream stream = httpContext.Request.InputStream;
             byte[] bt = new byte[stream.Length];
             stream.Read(bt, 0, (int)stream.Length);

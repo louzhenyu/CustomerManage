@@ -82,7 +82,21 @@ namespace JIT.CPOS.DTO.Module.VIP.Order.Response
         /// </summary>
         public OrderDetailInfo[] OrderDetails { get; set; }
 
+        /// <summary>
+        /// 支付方式号码,T_Payment_Type.Payment_Type_Code
+        /// 如果是货到付款的支付方 PaymentTypeCode 的值为GetToPay
+        /// 终端需要特殊处理,不显示支付的按钮
+        /// </summary>
         public string PaymentTypeCode { get; set; }
+
+        /// <summary>
+        /// 佣金
+        /// </summary>
+        public decimal ReturnCash { get; set; }
+
+
+
+        
     }
 
     public class OrderDetailInfo
@@ -119,6 +133,11 @@ namespace JIT.CPOS.DTO.Module.VIP.Order.Response
         /// SKU图片
         /// </summary>
         public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// 佣金
+        /// </summary>
+        public decimal ReturnCash { get; set; }
 
         public GuiGeInfo GG { get; set; }
 

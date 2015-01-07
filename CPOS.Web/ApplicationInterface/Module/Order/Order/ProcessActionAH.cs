@@ -27,6 +27,8 @@ using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.CPOS.DTO.Base;
+using System.Data;
+using JIT.CPOS.BS.DataAccess.Base;
 namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 {
     public class ProcessActionAH : BaseActionHandler<ProcessActionRP, ProcessActionRD>
@@ -104,9 +106,46 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    throw new APIException(ex.Message);
+                    throw new APIException(ex.Message) { ErrorCode = ERROR_ORDER_NOTEXISTS };
                 }
             }
+
+            #region 佣金处理 add by Henry 2014-11-26
+            //确认收货时，如果销售者(sales_user)不为空,则将商品佣金*购买的数量保存到余额表中
+            var inoutService = new InoutService(this.CurrentUserInfo);
+            var orderInfo = inoutService.GetInoutInfoById(OrderID);
+            if (ActionCode == "700" && !string.IsNullOrEmpty(orderInfo.sales_user))
+            {
+                var skuPriceBll = new SkuPriceService(this.CurrentUserInfo);              //sku价格
+                var vipAmountBll = new VipAmountBLL(this.CurrentUserInfo);                //账户余额 
+                decimal totalAmount = 0;                                                  //订单总佣金
+                List<OrderDetail> orderDetailList = skuPriceBll.GetSkuPrice(OrderID);
+                if (orderDetailList.Count > 0)
+                {
+                    foreach (var detail in orderDetailList)
+                    {
+                        totalAmount += decimal.Parse(detail.salesPrice) * decimal.Parse(detail.qty);
+                    }
+                    if (totalAmount > 0)
+                    {
+                        IDbTransaction tran1 = new TransactionHelper(this.CurrentUserInfo).CreateTransaction();
+                        using (tran.Connection)
+                        {
+                            try
+                            {
+                                vipAmountBll.AddVipEndAmount(orderInfo.sales_user, totalAmount, tran1, "10", OrderID, this.CurrentUserInfo);  //变更余额和余额记录
+                            }
+                            catch (Exception ex)
+                            {
+                                tran.Rollback();
+                                throw new APIException(ex.Message);
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+
             return rd;
         }
         #region 获取订单对应状态描述

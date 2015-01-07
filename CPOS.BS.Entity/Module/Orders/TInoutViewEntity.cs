@@ -123,6 +123,11 @@ namespace JIT.CPOS.BS.Entity
         public string VipName { get; set; }
 
         /// <summary>
+        /// 会员真实姓名
+        /// </summary>
+        public string VipRealName { get; set; }
+
+        /// <summary>
         /// 会员手机
         /// </summary>
         public string Phone { get; set; }

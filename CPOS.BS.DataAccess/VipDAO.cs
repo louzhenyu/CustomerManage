@@ -564,7 +564,7 @@ namespace JIT.CPOS.BS.DataAccess
                             Col20,Col21,Col22,Col23,Col24,Col25,Col26,Col27,Col28,Col29,Col30,Col31,Col32,Col33,Col34,Col35,Col36,Col37,Col38,Col39,Col40,Col41,Col42,
                             Col43,Col44,Col45,Col46,Col47,Col48,Col49,Col50,
                             isActivate,VIPImportID,VipRealName,ShareVipId,SetoffUserId,ShareUserId ) "
-                        + @" SELECT a.VIPID,a.VipName,a.VipLevel,a.VipCode,a.WeiXin,a.WeiXinUserId,a.Gender,a.Age,
+                         + @" SELECT a.VIPID,a.VipName,a.VipLevel,a.VipCode,a.WeiXin,a.WeiXinUserId,a.Gender,a.Age,
                             a.Phone,a.SinaMBlog,a.TencentMBlog,a.Birthday,a.Qq,a.Email,a.Status,
                             a.VipSourceId,a.Integration,a.ClientID,a.RecentlySalesTime,a.RegistrationTime,a.CreateTime,a.CreateBy,a.LastUpdateTime,
                             a.LastUpdateBy,a.IsDelete,a.APPID,a.HigherVipID,a.QRVipCode,a.City,a.CouponURL,
@@ -572,8 +572,8 @@ namespace JIT.CPOS.BS.DataAccess
                             a.Col2,a.Col3,a.Col4,a.Col5,a.Col6,a.Col7,a.Col8,a.Col9,a.Col10,a.Col11,a.Col12,a.Col13,a.Col14,a.Col15,a.Col16,a.Col17,a.Col18,a.Col19,a.Col20,a.Col21,a.Col22,
                             a.Col23,a.Col24,a.Col25,a.Col26,a.Col27,a.Col28,a.Col29,a.Col30,a.Col31,a.Col32,a.Col33,a.Col34,a.Col35,a.Col36,a.Col37,a.Col38,a.Col39,a.Col40,a.Col41,a.Col42,a.Col43,a.Col44,a.Col45,a.Col46,
                             a.Col47,a.Col48,a.Col49,a.Col50,a.isActivate,a.VIPImportID,a.VipRealName,a.ShareVipId,a.SetoffUserId,a.ShareUserId FROM cpos_ap.dbo.vip a "
-                        + " LEFT JOIN vip b ON(a.WeiXinUserId = b.WeiXinUserId and b.isdelete='0') "
-                        + " WHERE 1=1 ";
+                         + " LEFT JOIN vip b ON(a.WeiXinUserId = b.WeiXinUserId and b.isdelete='0') "
+                         + " WHERE 1=1 ";
             if (OpenId != null && !OpenId.Equals(""))
             {
                 sql += " and a.WeiXinUserId = '" + OpenId + "' ";
@@ -1002,6 +1002,21 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, sql);
         }
 
+        #region 获取店员门店
+        public string GetUnitByUserId(string userId)
+        {
+            string sql = string.Format(@"SELECT unit_id FROM dbo.T_User_Role l
+                        LEFT JOIN T_Role r ON l.role_id=r.role_id
+                        WHERE l.user_id='{0}'
+                        AND r.role_code='Unit'", userId);
+            object obj = SQLHelper.ExecuteScalar(sql);
+            string ret = string.Empty;
+            if (obj != null)
+                ret = obj.ToString();
+            return ret;
+        }
+        #endregion
+
         #region 获取会员的各种状态订单数量Jermyn201223
 
         /// <summary>
@@ -1244,7 +1259,13 @@ namespace JIT.CPOS.BS.DataAccess
         {
             string sql = "spVipInfo";
 
-            platform = platform.Equals("1") ? "2" : "1";
+            if (platform != null)
+            {
+                platform = platform.Equals("1") ? "2" : "1";
+            }
+            else {
+                platform = "1";
+            }
 
             List<SqlParameter> parameter = new List<SqlParameter>();
             parameter.Add(new SqlParameter("@CustomerID", customerId));
@@ -1392,7 +1413,7 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder sql = new StringBuilder();
 
-            sql.Append(" select distinct role_code from T_Role a,T_User_Role b where");
+            sql.Append(" select distinct role_code,a.role_id from T_Role a,T_User_Role b where");
             sql.Append(" a.role_id = b.role_id and a.customer_id = @pCustomerId");
             sql.Append(" and b.user_id = @pUserId");
 
@@ -1622,10 +1643,11 @@ select @ReturnValue", pCustomerID);
             {
                 result = this.SQLHelper.ExecuteScalar(tran, CommandType.Text, sql.ToString(), paras.ToArray());
             }
-            else {
-                result = this.SQLHelper.ExecuteScalar( CommandType.Text, sql.ToString(), paras.ToArray());
+            else
+            {
+                result = this.SQLHelper.ExecuteScalar(CommandType.Text, sql.ToString(), paras.ToArray());
             }
-            
+
             if (result == null || string.IsNullOrEmpty(result.ToString()) || result.ToString() == "")
             {
                 return 0;
@@ -1770,7 +1792,7 @@ select @ReturnValue", pCustomerID);
         {
             var sql = new StringBuilder();
 
-            if (string.IsNullOrEmpty(criterion) && (!string.IsNullOrEmpty(couponCode) ))
+            if (string.IsNullOrEmpty(criterion) && (!string.IsNullOrEmpty(couponCode)))
             {
                 sql.Append("select row_number() over(order by a.createTime desc) as _row, a.*, b.EndAmount  into #tmp  from Vip a ");
                 sql.Append("left join VipAmount b on a.VipID = b.VipID  where ");
@@ -1828,7 +1850,7 @@ select @ReturnValue", pCustomerID);
         }
 
 
-        public string GetVipSearchPropList(string customerId, string tableName,string unitId)
+        public string GetVipSearchPropList(string customerId, string tableName, string unitId)
         {
             string sql = "ProcGetVipSelectAttr";
             List<SqlParameter> parameter = new List<SqlParameter>();
@@ -1852,7 +1874,7 @@ select @ReturnValue", pCustomerID);
         /// </summary>
         /// <param name="customerId">客户ID</param>
         /// <returns></returns>
-        public string GetCreateVipPropList(string customerId,string userId)
+        public string GetCreateVipPropList(string customerId, string userId)
         {
             var sql = "ProcGetVipEditAttr";
             List<SqlParameter> parameters = new List<SqlParameter>();
@@ -1871,14 +1893,14 @@ select @ReturnValue", pCustomerID);
         /// <param name="userId"></param>
         /// <param name="vipId"></param>
         /// <returns></returns>
-        public DataSet GetExistVipInfo(string customerId,string userId, string vipId)
+        public DataSet GetExistVipInfo(string customerId, string userId, string vipId)
         {
             var sql = @" exec ProcGetVipEditAttr '{0}','{1}', 'VIP';
                         declare @columns nvarchar(4000);
                         select @columns = dbo.FnGetCustomerTableColumn('{0}','vip',2);
                         set @columns = 'select '+@columns + ' from vip where vipid='''+'{2}'+'''';
                         exec (@columns)";
-            return this.SQLHelper.ExecuteDataset(string.Format(sql, customerId, userId,vipId));
+            return this.SQLHelper.ExecuteDataset(string.Format(sql, customerId, userId, vipId));
         }
 
         public DataSet GetVipTagTypeList()
@@ -1900,10 +1922,10 @@ select @ReturnValue", pCustomerID);
                         and b.isdelete = 0 
                         and a.customerId = '{0}'
                         order by a.CreateTime
-                        ",customerId);
+                        ", customerId);
             return this.SQLHelper.ExecuteDataset(sql);
         }
-        public DataSet GetVipIntegralList(string vipId, int pageIndex, int pageSize,string sortType)
+        public DataSet GetVipIntegralList(string vipId, int pageIndex, int pageSize, string sortType)
         {
             if (string.IsNullOrEmpty(sortType))
                 sortType = "DESC";
@@ -1915,12 +1937,12 @@ select @ReturnValue", pCustomerID);
             sql.Append(" on a.IntegralSourceId = b.IntegralSourceId  and b.isdelete = 0 where a.isdelete = 0");
             sql.AppendFormat(" and a.vipId = '{0}'", vipId);
             sql.Append(") t");
-            sql.AppendFormat(" where t._row>{0}*{1} and t._row<=({0}+1)*{1}",pageIndex-1,pageSize);
+            sql.AppendFormat(" where t._row>{0}*{1} and t._row<=({0}+1)*{1}", pageIndex - 1, pageSize);
 
 
             return this.SQLHelper.ExecuteDataset(sql.ToString());
         }
-       
+
         public DataSet GetVipOrderList(string vipId, string customerId, int pageIndex, int pageSize, string sortType)
         {
             if (string.IsNullOrEmpty(sortType))
@@ -1976,7 +1998,7 @@ select @ReturnValue", pCustomerID);
 
             return this.SQLHelper.ExecuteDataset(sql.ToString());
         }
-        public DataSet GetVipConsumeCardList(string vipId, int pageIndex, int pageSize,string sortType)
+        public DataSet GetVipConsumeCardList(string vipId, int pageIndex, int pageSize, string sortType)
         {
             #region comment
             //var sql = new StringBuilder();
@@ -1996,7 +2018,7 @@ select @ReturnValue", pCustomerID);
             //sql.Append(") t");
             //sql.AppendFormat(" where t._row>{0}*{1} and t._row<=({0}+1)*{1}", pageIndex, pageSize);
             #endregion
-            if(string.IsNullOrEmpty(sortType))
+            if (string.IsNullOrEmpty(sortType))
                 sortType = "desc";
             var sql = @"declare @totalPages int
                 select @totalPages = count(1)  from
@@ -2023,9 +2045,9 @@ select @ReturnValue", pCustomerID);
                  ) t 
                 where t._row between {1} and {2}";
 
-            return this.SQLHelper.ExecuteDataset(string.Format(sql.ToString(),vipId,(pageIndex-1)*pageSize,pageIndex * pageSize,sortType));
+            return this.SQLHelper.ExecuteDataset(string.Format(sql.ToString(), vipId, (pageIndex - 1) * pageSize, pageIndex * pageSize, sortType));
         }
-        public DataSet GetVipOnlineOffline(string vipId,int pageIndex, int pageSize,string sortType)
+        public DataSet GetVipOnlineOffline(string vipId, int pageIndex, int pageSize, string sortType)
         {
             if (string.IsNullOrEmpty(sortType))
                 sortType = "desc";
@@ -2050,30 +2072,30 @@ select @ReturnValue", pCustomerID);
                     on v.vipid=x.highervipid
                     where v.highervipid = '{0}'
                     ) tb where tb._row between {1} and {2}";
-            return this.SQLHelper.ExecuteDataset(string.Format(sql, vipId, (pageIndex - 1) * pageSize, pageIndex * pageSize,sortType));
+            return this.SQLHelper.ExecuteDataset(string.Format(sql, vipId, (pageIndex - 1) * pageSize, pageIndex * pageSize, sortType));
 
         }
         public DataSet GetVipDetailInfo(string vipId, string customerId)
         {
             var sql = new StringBuilder();
-            
+
             sql.Append("select a.VipId,a.VipName,a.Phone,a.VipRealName,a.VipCode,a.Integration,c.vipcardgradename,a.CouponInfo,'UnitName'= b.unit_name");
             sql.AppendFormat(" from Vip a left join t_unit b on a.couponinfo = b.unit_id left join sysvipcardgrade c on a.viplevel=c.vipcardgradeid where a.VipId = '{0}';", vipId);
             sql.AppendFormat(@"SELECT DISTINCT b.TagsId,b.TagsName,b.TagsDesc FROM VipTagsMapping a 
                                 INNER JOIN dbo.Tags b ON(a.TagsId = b.TagsId) 
                                 WHERE a.IsDelete = '0' 
                                 AND b.IsDelete = '0'  
-                                AND a.VipId = '{0}';" ,vipId);
+                                AND a.VipId = '{0}';", vipId);
             return this.SQLHelper.ExecuteDataset(sql.ToString());
         }
 
-        public DataSet GetVipAmountList(string vipid, int pageIndex, int pageSize,string sortType) 
+        public DataSet GetVipAmountList(string vipid, int pageIndex, int pageSize, string sortType)
         {
             if (string.IsNullOrEmpty(sortType))
                 sortType = "desc";
             var sql = string.Format(@"select * from ( select ROW_NUMBER()over(order by a.CreateTime {3}) _row,a.createtime,a.VipAmountDetailId,b.optiontext,a.Amount,a.Remark  
                                     from vipamountdetail a left join options b on b.optionvalue=a.amountsourceid where b.optionname='VipAmountFrom' and a.VipId = '{0}' and a.isdelete = 0 ) t
-                                    where t._row>{1}*{2} and t._row<=({1}+1)*{2}", vipid,pageIndex-1,pageSize,sortType);
+                                    where t._row>{1}*{2} and t._row<=({1}+1)*{2}", vipid, pageIndex - 1, pageSize, sortType);
             return this.SQLHelper.ExecuteDataset(sql.ToString());
         }
         /// <summary>
@@ -2086,7 +2108,7 @@ select @ReturnValue", pCustomerID);
             var sql = new StringBuilder();
             sql.Append("update vip set ");
             var len = columns.Length;
-            for (int i = len - 1; i >= 0;i--)
+            for (int i = len - 1; i >= 0; i--)
             {
                 var c = columns[i];
                 if (i < len - 1)
@@ -2096,7 +2118,7 @@ select @ReturnValue", pCustomerID);
                 {
                     case 2:
                     case 5:
-                        sql.Append(string.IsNullOrEmpty(c.ColumnValue1)? "NULL" : c.ColumnValue1);
+                        sql.Append(string.IsNullOrEmpty(c.ColumnValue1) ? "NULL" : c.ColumnValue1);
                         break;
                     case 4:
                     case 6:
@@ -2115,7 +2137,7 @@ select @ReturnValue", pCustomerID);
         /// 根据动态配置，添加会员
         /// </summary>
         /// <param name="columns"></param>
-        public string InsertVipEntity(SearchColumn[] columns,string clientId, string vipCode)
+        public string InsertVipEntity(SearchColumn[] columns, string clientId, string vipCode)
         {
             var vipId = Guid.NewGuid().ToString();
             var sql = new StringBuilder();
@@ -2123,7 +2145,7 @@ select @ReturnValue", pCustomerID);
             var sqlValue = new StringBuilder();
             //? 因为 [uq_weixinguserid] 的约束，所以目前写死插入和VIPID一样的值，不然会报错，
             //而且动态属性中不能出现列 weixinuserid
-            sqlValue.Append(string.Format("values('{0}','{1}','{2}','{3}'", vipId,vipId,clientId,vipCode));
+            sqlValue.Append(string.Format("values('{0}','{1}','{2}','{3}'", vipId, vipId, clientId, vipCode));
             foreach (var c in columns)
             {
                 /*****
@@ -2230,10 +2252,10 @@ select @ReturnValue", pCustomerID);
         /// 删除会员
         /// </summary>
         /// <param name="vipIds">会员id列表</param>
-        public void DeleteVips(string[] vipIds,string userId)
+        public void DeleteVips(string[] vipIds, string userId)
         {
             var sql = @"update vip set isdelete=1, LastUpdateBy='{1}' where vipid in ({0})";
-            SQLHelper.ExecuteNonQuery(string.Format(sql,vipIds.ToSqlInString(),userId));
+            SQLHelper.ExecuteNonQuery(string.Format(sql, vipIds.ToSqlInString(), userId));
         }
 
         private string GetVipTagLogicOperator(string tagOperator)
@@ -2243,12 +2265,12 @@ select @ReturnValue", pCustomerID);
             {
                 case "=":
                 case "include":
-                    r= "=";
+                    r = "=";
                     break;
                 case "!=":
                 case "<>":
                 case "exclude":
-                    r= "<>";
+                    r = "<>";
                     break;
                 default:
                     break;
@@ -2272,7 +2294,7 @@ select @ReturnValue", pCustomerID);
                 foreach (var sc in searchColumns)
                 {
                     string lVal = string.IsNullOrEmpty(sc.ColumnValue1) ? "" : sc.ColumnValue1.Trim();
-                    string rVal = string.IsNullOrEmpty(sc.ColumnValue2)?"":sc.ColumnValue2.Trim();
+                    string rVal = string.IsNullOrEmpty(sc.ColumnValue2) ? "" : sc.ColumnValue2.Trim();
                     switch (sc.ControlType)
                     {
                         //1:文本类型，3：手机号码类型，4：邮件类型，7：手机
@@ -2285,7 +2307,7 @@ select @ReturnValue", pCustomerID);
                             sb.Append(" and ").Append(sc.ColumnName).Append(" like '%").Append(lVal.Replace("'", "''"))
                                 .Append("%'");
                             break;
-                            //6:日期类型
+                        //6:日期类型
                         case 6:
                             if (string.IsNullOrEmpty(lVal) && string.IsNullOrEmpty(rVal))
                                 break;
@@ -2303,7 +2325,7 @@ select @ReturnValue", pCustomerID);
                             sb.Append(" and ").Append(sc.ColumnName).Append(" between '").Append(lVal)
                                 .Append("' and '").Append(sc.ColumnValue2).Append("'");
                             break;
-                           //2：数值类型
+                        //2：数值类型
                         case 2:
                             lVal = lVal.Replace("'", "");
                             rVal = rVal.Replace("'", "");
@@ -2330,14 +2352,14 @@ select @ReturnValue", pCustomerID);
                             if (string.IsNullOrEmpty(lVal))
                                 break;
                             //对会员来源特殊处理，来源为NULL认定为电话客服来源：5
-                            if (sc.ColumnName.ToLower() == "vipsourceid" && lVal=="5")
+                            if (sc.ColumnName.ToLower() == "vipsourceid" && lVal == "5")
                             {
                                 sb.Append(" and (VIPSOURCEID = 5 OR VIPSOURCEID IS NULL)");
                                 break;
                             }
                             sb.Append(" and ").Append(sc.ColumnName).Append("=").Append(lVal);
                             break;
-                            //205：会籍店树状类型
+                        //205：会籍店树状类型
                         case 205:
                             if (string.IsNullOrEmpty(lVal))
                                 break;
@@ -2373,7 +2395,7 @@ select @ReturnValue", pCustomerID);
             string sql = "select dbo.FnGetCustomerTableColumn('{0}','vip')";
             var result = this.SQLHelper.ExecuteDataset(CommandType.Text, string.Format(sql, customerId));
             if (result.Tables[0].Rows.Count > 0)
-                return result.Tables[0].Rows[0][0].ToString().Split(new char[]{','});
+                return result.Tables[0].Rows[0][0].ToString().Split(new char[] { ',' });
             return null;
         }
         /// <summary>
@@ -2437,6 +2459,26 @@ select @ReturnValue", pCustomerID);
             return this.SQLHelper.ExecuteDataset(sql.ToString());
         }
 
+        #endregion
+
+
+        public int GetInviteCount(string userID)
+        {
+            string sql = string.Format("SELECT COUNT(*) FROM dbo.Vip WHERE SetoffUserId='{0}'",userID);
+            return Convert.ToInt32(SQLHelper.ExecuteScalar(sql)); 
+        }
+
+        #region 获取云店会员卡包
+        public DataSet GetCardBag(string weixinUserId, string cloudCustomerId)
+        {
+            string sql = string.Format(@"
+                        SELECT v.ClientID CustomerID,v.VIPID userId,c.customer_name CustomerName,s.SettingValue ImageUrl FROM dbo.Vip v
+                        LEFT JOIN cpos_ap..t_customer c ON c.customer_id=v.ClientID 
+                        LEFT JOIN dbo.CustomerBasicSetting s ON v.ClientID=s.CustomerID AND s.SettingCode='AppLogo'
+                        WHERE v.WeiXinUserId='{0}' and v.ClientID!='{1}'
+                    ", weixinUserId, cloudCustomerId);
+            return this.SQLHelper.ExecuteDataset(sql);
+        }
         #endregion
     }
 }

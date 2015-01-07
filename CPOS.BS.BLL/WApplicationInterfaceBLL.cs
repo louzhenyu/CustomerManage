@@ -108,5 +108,17 @@ namespace JIT.CPOS.BS.BLL
         {
             this._currentDAO.RemoveSession(Id);
         }
+
+
+        /// <summary>
+        /// Trade-获取平台微信公众号信息  add by Henry 2014-12-11
+        /// </summary>
+        /// <param name="pWhereConditions"></param>
+        /// <param name="pOrderBys"></param>
+        /// <returns></returns>
+        public WApplicationInterfaceEntity[] GetCloudWAppInterface(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        {
+            return this._currentDAO.GetCloudWAppInterface(pWhereConditions, pOrderBys);
+        }
     }
 }

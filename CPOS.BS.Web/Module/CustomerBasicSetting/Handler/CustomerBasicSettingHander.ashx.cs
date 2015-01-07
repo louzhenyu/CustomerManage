@@ -130,6 +130,7 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
             SttingCode entity1 = Request("form1").DeserializeJSONTo<SttingCode>();
             SttingCode entity2 = Request("form2").DeserializeJSONTo<SttingCode>();
             SttingCode entity3 = Request("form3").DeserializeJSONTo<SttingCode>();
+            SttingCode entity4 = Request("form4").DeserializeJSONTo<SttingCode>();
             var customerBasicSettingBLL = new CustomerBasicSettingBLL(this.CurrentUserInfo);
             ResponseData res = new ResponseData();
             List<CustomerBasicSettingEntity> list = new List<CustomerBasicSettingEntity>();
@@ -253,6 +254,16 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
                 SettingCode = "DeliveryStrategy",
                 SettingValue = entity3.DeliveryStrategy
             });
+
+            //微信分享页面
+            if (!string.IsNullOrWhiteSpace(entity4.ShareWeixinPage))
+            {
+                list.Add(new CustomerBasicSettingEntity(){
+                    SettingCode ="ShareWeixinPage",
+                    SettingValue = entity4.ShareWeixinPage
+                });
+            }
+
             #endregion
             int i = customerBasicSettingBLL.SaveustomerBasicrInfo(list);
             #region 配送费保存
@@ -454,6 +465,8 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
         public string DeliveryStrategy { set; get; }//配送费描述
         public string AmountEnd { set; get; }//大于等于AmountEnd，配送费
         public string DeliveryAmount { set;get; } //配送费  
+
+        public string ShareWeixinPage { set; get; } //微信分享页面
     }
     #endregion
 }

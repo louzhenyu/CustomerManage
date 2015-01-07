@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/9/5 15:57:10
+ * Create On	:2014/9/11 18:12:59
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -540,7 +540,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.ShareVipId!=null)
                 strSql.Append( "[ShareVipId]=@ShareVipId,");
             if (pIsUpdateNullField || pEntity.SetoffUserId!=null)
-                strSql.Append( "[SetoffUserId]=@SetoffUserId,");
+                strSql.Append("[SetoffUserId]=@SetoffUserId,");
+            if (pIsUpdateNullField || pEntity.IsSotre != null)
+                strSql.Append("[IsSotre]=@IsSotre,");
             if (pIsUpdateNullField || pEntity.ShareUserId!=null)
                 strSql.Append( "[ShareUserId]=@ShareUserId");
             if (strSql.ToString().EndsWith(","))
@@ -637,6 +639,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@VIPImportID",SqlDbType.NVarChar),
 					new SqlParameter("@ShareVipId",SqlDbType.NVarChar),
 					new SqlParameter("@SetoffUserId",SqlDbType.NVarChar),
+					new SqlParameter("@IsSotre",SqlDbType.NVarChar),
 					new SqlParameter("@ShareUserId",SqlDbType.NVarChar),
 					new SqlParameter("@VIPID",SqlDbType.NVarChar)
             };
@@ -728,9 +731,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[85].Value = pEntity.IsActivate;
 			parameters[86].Value = pEntity.VIPImportID;
 			parameters[87].Value = pEntity.ShareVipId;
-			parameters[88].Value = pEntity.SetoffUserId;
-			parameters[89].Value = pEntity.ShareUserId;
-			parameters[90].Value = pEntity.VIPID;
+            parameters[88].Value = pEntity.SetoffUserId;
+            parameters[89].Value = pEntity.IsSotre;
+			parameters[90].Value = pEntity.ShareUserId;
+			parameters[91].Value = pEntity.VIPID;
 
             //Ö´ÐÐÓï¾ä
             int result = 0;
@@ -1601,8 +1605,14 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.ShareUserId =  Convert.ToString(pReader["ShareUserId"]);
 			}
+            if (pReader["IsSotre"] != DBNull.Value)
+            {
+                pInstance.IsSotre = Convert.ToInt32(pReader["IsSotre"]);
+            }
 
         }
         #endregion
+
+        
     }
 }

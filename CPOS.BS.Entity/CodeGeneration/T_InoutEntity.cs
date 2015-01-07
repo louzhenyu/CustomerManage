@@ -412,7 +412,12 @@ namespace JIT.CPOS.BS.Entity
         /// 支付方式名称
         /// Payment_Type_Name
         /// </summary>
-        public String Payment_Type_Name { get; set; }        
+        public String Payment_Type_Name { get; set; }
+
+        /// <summary>
+        /// 佣金
+        /// </summary>
+        public decimal? ReturnCash { get; set; }
 
         #endregion
 

@@ -27,6 +27,7 @@ using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
+using JIT.Utility.Log;
 
 namespace JIT.CPOS.BS.BLL
 {   
@@ -35,6 +36,7 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class VipOrderSubRunObjectMappingBLL
     {
+        private LoggingSessionInfo loggingSessionInfo; 
         private BasicUserInfo CurrentUserInfo;
         private VipOrderSubRunObjectMappingDAO _currentDAO;
         #region 构造函数
@@ -43,6 +45,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         public VipOrderSubRunObjectMappingBLL(LoggingSessionInfo pUserInfo)
         {
+            this.loggingSessionInfo = pUserInfo;
             this._currentDAO = new VipOrderSubRunObjectMappingDAO(pUserInfo);
             this.CurrentUserInfo = pUserInfo;
         }
@@ -222,5 +225,208 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+
+        public void setJiKeGift(string UserID,string vipID)
+        {
+            //如果扫码用户有上线会员就不给扫码奖励。
+            VipDAO vipDao = new VipDAO(loggingSessionInfo);
+            var vip = vipDao.QueryByEntity(
+                    new VipEntity()
+                    {
+                        VIPID = vipID
+                    },
+                    null
+                ).FirstOrDefault();
+
+            if (vip!=null&&!string.IsNullOrWhiteSpace(vip.CouponInfo))
+            {
+
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = "集客反还积分:返回"
+                }); 
+                return;
+            }
+
+            ////查询集客奖励设置
+            //int GiftIntegral = 0;
+
+            //CustomerBasicSettingDAO CustomerBasicSettingDao = new CustomerBasicSettingDAO(loggingSessionInfo);
+            //CustomerBasicSettingEntity CustomerBasicSettingEntity = CustomerBasicSettingDao.GetBasicSettings(UserID, "GetVipIntegral").FirstOrDefault();
+
+            //if (CustomerBasicSettingEntity!=null&&!string.IsNullOrWhiteSpace(CustomerBasicSettingEntity.SettingValue))
+            //{
+            //    int.TryParse(CustomerBasicSettingEntity.SettingValue, out GiftIntegral);
+            //}
+            
+            //if (GiftIntegral == 0)
+            //{
+            //    GiftIntegral = 100;
+            //}
+            
+            ////积分换算为金额
+            //decimal GiftAmount = GiftIntegral / 100;
+                        
+            ////保存
+            //VipAmountDAO VipAmountDao = new VipAmountDAO(loggingSessionInfo);
+            //VipAmountDetailDAO VipAmountDetailDao = new VipAmountDetailDAO(loggingSessionInfo);
+
+
+            //VipAmountEntity amountEntity = VipAmountDao.QueryByEntity(
+            //        new VipAmountEntity()
+            //        {
+            //            VipId = UserID
+            //        }
+            //        , null
+            //    ).FirstOrDefault();
+
+            //if (amountEntity==null)
+            //{
+            //    VipAmountDao.Create(
+            //        new VipAmountEntity(){
+            //            VipId = UserID,
+            //            BeginAmount = 0,
+            //            EndAmount = GiftAmount,
+            //            InAmount = GiftAmount,
+            //            OutAmount = 0,
+            //            IsLocking =0,
+            //            TotalAmount = GiftAmount 
+            //        }
+            //    );                
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        Loggers.Debug(new DebugLogInfo()
+            //        {
+            //            Message = "集客反积分:" + "集客信息有" + amountEntity.TotalAmount == null ? "00000" : amountEntity.TotalAmount.ToString()
+            //        });
+
+            //        amountEntity.TotalAmount = amountEntity.TotalAmount + GiftAmount;
+            //        amountEntity.InAmount = amountEntity.InAmount + GiftAmount;
+            //        amountEntity.EndAmount = amountEntity.EndAmount + GiftAmount;
+            //        VipAmountDao.Update(amountEntity);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Loggers.Debug(new DebugLogInfo()
+            //        {
+            //            Message = "集客反还积分:" + ex.Message.ToString()
+            //        }); ;
+            //    }
+                
+            //}
+
+            //VipAmountDetailDao.Create(
+            //    new VipAmountDetailEntity(){
+            //        VipAmountDetailId = Guid.NewGuid(),
+            //        VipId = UserID,
+            //        Amount = GiftAmount,
+            //        AmountSourceId = "12",
+            //        ObjectId = string.Empty,
+            //        Remark ="集客反积分兑换为余额"
+            //    }
+            //);
+
+
+            //查询集客奖励设置
+            int GiftIntegral = 0;
+
+            CustomerBasicSettingDAO CustomerBasicSettingDao = new CustomerBasicSettingDAO(loggingSessionInfo);
+            CustomerBasicSettingEntity CustomerBasicSettingEntity = CustomerBasicSettingDao.GetBasicSettings(UserID, "GetVipIntegral").FirstOrDefault();
+
+            if (CustomerBasicSettingEntity != null && !string.IsNullOrWhiteSpace(CustomerBasicSettingEntity.SettingValue))
+            {
+                int.TryParse(CustomerBasicSettingEntity.SettingValue, out GiftIntegral);
+            }
+
+            if (GiftIntegral == 0)
+            {
+                GiftIntegral = 100;
+            }
+
+
+            Loggers.Debug(new DebugLogInfo()
+            {
+                Message = "集客反还积分:得到积分" + GiftIntegral.ToString()
+            }); 
+
+            //保存
+            VipIntegralDAO VipIntegralDao = new VipIntegralDAO(loggingSessionInfo);
+            VipIntegralDetailDAO vipIntegralDetailDao = new VipIntegralDetailDAO(loggingSessionInfo);
+
+
+            VipIntegralEntity integralEntity = VipIntegralDao.QueryByEntity(
+                    new VipIntegralEntity()
+                    {
+                        VipID = UserID
+                    }
+                    , null
+                ).FirstOrDefault();
+
+            if (integralEntity == null)
+            {
+                VipIntegralDao.Create(
+                    new VipIntegralEntity()
+                    {
+                        VipID = UserID,
+                        BeginIntegral = GiftIntegral,
+                        InIntegral = GiftIntegral,
+                        OutIntegral =0,
+                        EndIntegral = GiftIntegral,
+                        InvalidIntegral =0,
+                        ValidIntegral =0,
+                        IsDelete =0
+                    }
+                );
+            }
+            else
+            {
+                try
+                {
+                    Loggers.Debug(new DebugLogInfo()
+                    {
+                        Message = "集客反积分:" + "集客信息有" + integralEntity.EndIntegral == null ? "00000" : integralEntity.EndIntegral.ToString()
+                    });
+
+                    integralEntity.BeginIntegral += GiftIntegral;
+                    integralEntity.InvalidIntegral += GiftIntegral;
+                    integralEntity.EndIntegral += GiftIntegral;
+                    VipIntegralDao.Update(integralEntity);
+                }
+                catch (Exception ex)
+                {
+                    Loggers.Debug(new DebugLogInfo()
+                    {
+                        Message = "集客反还积分:" + ex.Message.ToString()
+                    }); 
+                }
+
+            }
+
+            try
+            {
+                vipIntegralDetailDao.Create(
+                    new VipIntegralDetailEntity()
+                    {
+                        VipIntegralDetailID = Guid.NewGuid().ToString().Replace("-", ""),
+                        VIPID = UserID,
+                        SalesAmount = 0,
+                        Integral = GiftIntegral,
+                        IntegralSourceID = "25",
+                        IsDelete = 0
+                    }
+                );
+            }
+            catch (Exception ex)
+            {
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = "集客反还积分:" + ex.Message.ToString()
+                }); 
+            }
+            
+        }
     }
 }

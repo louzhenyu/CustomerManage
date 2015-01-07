@@ -195,7 +195,7 @@ namespace JIT.CPOS.BS.DataAccess
                 {
                     sql += ",pay_id = (select top 1 PaymentTypeID from TPaymentTypeCustomerMapping where IsDelete = '0' and ChannelId = '" + ChannelId + "' and CustomerId='" + this.CurrentUserInfo.CurrentUser.customer_id.ToString() + "') ";
                 }
-                sql += ",modify_time = CONVERT(nvarchar(30), GETDATE(),120) where order_id = '" + orderId + "' ";
+                sql += ",modify_time = CONVERT(nvarchar(30), GETDATE(),120),complete_date = CONVERT(nvarchar(30), GETDATE(),120) where order_id = '" + orderId + "' ";
                 this.SQLHelper.ExecuteNonQuery(sql);
                 strError = "³É¹¦.";
                 return true;

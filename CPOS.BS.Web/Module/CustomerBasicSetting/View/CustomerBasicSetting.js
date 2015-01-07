@@ -258,6 +258,35 @@ html: '<img id="vippicture" src="" width="179px" height="100px">'
 
     });
 
+    Ext.create('Ext.form.Panel', {
+        id: 'CsutomerWeixinPage',
+        collapsible: true,
+        header: {
+            xtype: "header",
+            headerAsText: false,
+            height: '40',
+            items: [{
+                id: "WeixinPage",
+                cls: 'divllabl',
+                xtype: 'label',
+                text: '用户微信配置',
+                margin: '6 6 6 10'
+            }],
+            layout: "hbox"
+        },
+        renderTo: "divmain",
+        layout: 'anchor',
+        width: '100%',
+        bodyStyle: "background:#F1F2F5;padding-top:10px",
+        items: [{
+            xtype: "jittextfield",
+            fieldLabel: "用户微信分享加关注页面",
+            name: "ShareWeixinPage",
+            id: "ShareWeixinPage",
+            width: 600
+        }]
+    });
+
 
         Ext.create('Ext.form.Panel', {
         id: 'App',

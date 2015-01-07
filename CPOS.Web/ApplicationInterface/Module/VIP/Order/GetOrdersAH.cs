@@ -27,6 +27,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Order
             string customer_id = pRequest.CustomerID;
             int pageindex = pRequest.Parameters.PageIndex;
             int PageSize = pRequest.Parameters.PageSize;
+            string ChannelId = pRequest.ChannelId; // add by donal 2014-9-26 13:34:55
+            string UserId = pRequest.UserID; // add by donal 2014-9-26 17:46:46
             //switch (pRequest.Parameters.GroupingType)
             //{
             //    case 1:
@@ -44,7 +46,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Order
             //    default:
             //        break;
             //}
-            rd = orderBll.GetOrder(vipno, pageindex, PageSize, customer_id, pRequest.Parameters.GroupingType);
+            rd = orderBll.GetOrder(vipno, pageindex, PageSize, customer_id, pRequest.Parameters.GroupingType, ChannelId, UserId);
             return rd;
         }
     }

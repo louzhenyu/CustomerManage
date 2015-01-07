@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using JIT.Utility.Log;
 using JIT.CPOS.Common;
+using JIT.CPOS.DTO.Base;
 
 namespace JIT.CPOS.BS.BLL
 {

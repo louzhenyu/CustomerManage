@@ -28,6 +28,7 @@ using JIT.Utility.Log;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.DataAccess.Base;
+using System.Configuration;
 
 namespace JIT.CPOS.BS.DataAccess
 {
@@ -206,5 +207,49 @@ namespace JIT.CPOS.BS.DataAccess
             this.SQLHelper.ExecuteNonQuery(sql);
         }
         #endregion
+
+        /// <summary>
+        /// Trade-获取平台微信公众号信息  add by Henry 2014-12-11
+        /// </summary>
+        /// <param name="pWhereConditions"></param>
+        /// <param name="pOrderBys"></param>
+        /// <returns></returns>
+        public WApplicationInterfaceEntity[] GetCloudWAppInterface(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        {
+            //组织SQL
+            StringBuilder sql = new StringBuilder();
+            sql.AppendFormat("select * from [WApplicationInterface] where isdelete=0 ");
+            if (pWhereConditions != null)
+            {
+                foreach (var item in pWhereConditions)
+                {
+                    sql.AppendFormat(" and {0}", item.GetExpression());
+                }
+            }
+            if (pOrderBys != null && pOrderBys.Length > 0)
+            {
+                sql.AppendFormat(" order by ");
+                foreach (var item in pOrderBys)
+                {
+                    sql.AppendFormat(" {0} {1},", item.FieldName, item.Direction == OrderByDirections.Asc ? "asc" : "desc");
+                }
+                sql.Remove(sql.Length - 1, 1);
+            }
+            //执行SQL
+            List<WApplicationInterfaceEntity> list = new List<WApplicationInterfaceEntity>();
+            string conn = ConfigurationManager.AppSettings["Conn_alading"];
+            DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
+            using (SqlDataReader rdr = sqlHelper.ExecuteReader(sql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    WApplicationInterfaceEntity m;
+                    this.Load(rdr, out m);
+                    list.Add(m);
+                }
+            }
+            //返回结果
+            return list.ToArray();
+        }
     }
 }

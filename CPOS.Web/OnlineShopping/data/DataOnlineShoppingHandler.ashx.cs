@@ -102,7 +102,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 OnlineShoppingItemBLL itemService = new OnlineShoppingItemBLL(loggingSessionInfo);
 
                 sw = new Stopwatch(); sw.Start();
-                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId);
+                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId,reqObj.special.isStore);
                 sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取所有藏商品列表，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
 
                 if (dsItems != null && dsItems.Tables.Count > 0 && dsItems.Tables[0].Rows.Count > 0)
@@ -239,6 +239,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public IList<StoreItemDailyStatusEntity> storeItemDailyStatus;
             public decimal EveryoneSalesPrice { get; set; } // 人人销售价 add by doanl 2014-9-23 10:06:58
             public decimal ReturnAmount { get; set; } //佣金 add by donal 2014-11-25 17:56:36
+            public int isStore { get; set; } //是否我的小店商品
         }
         public class getItemListReqData : ReqData
         {
@@ -257,6 +258,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string beginDate { get; set; }
             public string endDate { get; set; }
             public string isGroupBy { get; set; }   //是否获取团购商品列表 1=是，否则不是
+
+            public int isStore { get; set; } //是否我的小店商品
         }
         #endregion
 
@@ -2250,6 +2253,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 IList<SkuPrice> skuPriceList = SkuPriceBll.GetPriceListBySkuIds(skuIds.ToString(), reqObj.special.isGroupBy);
                 decimal TotalAmount = 0.00m;
+                decimal TotalReturnCash = 0.00m;
 
                 foreach (var item in reqObj.special.orderDetailList)
                 {
@@ -2260,6 +2264,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                         if (reqObj.common.channelId == "6")
                         {
                             item.salesPrice = skuprice.EveryoneSalesPrice.ToString("f2");
+                            item.ReturnCash = skuprice.ReturnCash.ToString("f2");
                         }
 
                         //团购
@@ -2269,6 +2274,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                         }
                     }
                     TotalAmount += (Convert.ToDecimal(item.salesPrice) * Convert.ToInt32(item.qty));
+                    TotalReturnCash += (Convert.ToDecimal(item.ReturnCash) * Convert.ToInt32(item.qty));
                 }
                 reqObj.special.totalAmount = TotalAmount.ToString("f2");
 
@@ -2277,6 +2283,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 //orderInfo.SalesPrice = Convert.ToDecimal(reqObj.special.salesPrice);
                 //orderInfo.StdPrice = Convert.ToDecimal(reqObj.special.stdPrice);
                 orderInfo.TotalAmount = Convert.ToDecimal(reqObj.special.totalAmount);
+                orderInfo.ReturnCash = TotalReturnCash;
                 orderInfo.Mobile = ToStr(reqObj.special.mobile);
                 orderInfo.Email = ToStr(reqObj.special.email);
                 orderInfo.Remark = ToStr(reqObj.special.remark);
@@ -2302,6 +2309,12 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 orderInfo.DataFromId = reqObj.special.dataFromId;
                 orderInfo.SalesUser = reqObj.special.SalesUser; //店员ID add by donal 2014-9-25 18:09:49
                 orderInfo.ChannelId = reqObj.common.channelId; //渠道 add by donal 2014-9-28 14:32:05
+
+                //如果是【人人销售/我的小店】销售人为空，销售人就是他自己
+                if (orderInfo.ChannelId == "6" && string.IsNullOrWhiteSpace(orderInfo.SalesUser))
+                {
+                    orderInfo.SalesUser = reqObj.common.userId;
+                }
 
                 if (reqObj.special.actualAmount != null && !reqObj.special.actualAmount.Equals("") && !ToStr(reqObj.special.actualAmount).Equals(""))
                 {
@@ -2386,6 +2399,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     orderDetailInfo.discount_rate = rate;
                     //orderDetailInfo.discount_rate = 100
 
+                    decimal ReturnCash = 0.00m;
+                    decimal.TryParse(detail.ReturnCash, out ReturnCash);
+                    orderDetailInfo.ReturnCash = ReturnCash;
+
                     i++;
                     orderInfo.OrderDetailInfoList.Add(orderDetailInfo);
                 }
@@ -2413,7 +2430,11 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             if (unitEntity != null)
                             {
                                 if (unitEntity.CustomerID == loggingSessionInfo.ClientID)
+                                {
                                     unit = vipInfo.CouponInfo;
+                                    inoutEntity.SalesUnitID = unit; //消费门店
+                                    inoutEntity.UnitID= unit;       //配送门店
+                                }
                             }
                         }
                         inoutBll.Update(inoutEntity);
@@ -2436,6 +2457,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 });
 
                 #endregion
+
+                
 
                 //如果是送货到家，根据订单和用户ID来给总金额和实际支付金额加上运费
                 TOrderCustomerDeliveryStrategyMappingBLL tOrderCustomerDeliveryStrategyMappingBLL = new TOrderCustomerDeliveryStrategyMappingBLL(loggingSessionInfo);
@@ -2596,13 +2619,13 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 #endregion
 
+
                 if (!string.IsNullOrEmpty(reqObj.special.reqBy) && reqObj.special.reqBy.Equals("1"))
                 {
                     //订单消息推送
                     var inoutServer = new InoutService(loggingSessionInfo);
                     inoutServer.OrderPushMessage(orderInfo.OrderId, "100");
                 }
-
                 #region 返回信息设置
                 respData.content = new setOrderInfoNewRespContentData();
                 respData.content.orderId = orderInfo.OrderId;
@@ -2829,6 +2852,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string endDate { get; set; }
             public string appointmentTime { get; set; }//added by zhangwei 2014-2-26预约时间
             public string itemName { get; set; }
+
+            public string ReturnCash { get; set; } //返现金额
         }
 
         public class setOrderCouponClass

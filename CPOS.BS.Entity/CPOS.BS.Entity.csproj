@@ -246,6 +246,7 @@
     <Compile Include="CodeGeneration\TimingPushMessageVipLastRecordEntity.cs" />
     <Compile Include="CodeGeneration\TInoutDetailEntity.cs" />
     <Compile Include="CodeGeneration\TInoutEntity.cs" />
+    <Compile Include="CodeGeneration\TInoutExpandEntity.cs" />
     <Compile Include="CodeGeneration\TInoutStatusEntity.cs" />
     <Compile Include="CodeGeneration\TInOutStatusNodeEntity.cs" />
     <Compile Include="CodeGeneration\TItemTagEntity.cs" />
@@ -275,12 +276,17 @@
     <Compile Include="CodeGeneration\VipOrderSubRunObjectMappingEntity.cs" />
     <Compile Include="CodeGeneration\VIPRoleMappingEntity.cs" />
     <Compile Include="CodeGeneration\VipSnapshotEntity.cs" />
+    <Compile Include="CodeGeneration\VipStoreEntity.cs" />
     <Compile Include="CodeGeneration\VipVipMappingEntity.cs" />
     <Compile Include="CodeGeneration\vwItemPEventDetailEntity.cs" />
     <Compile Include="CodeGeneration\WeiXinH5ConfigEntity.cs" />
     <Compile Include="CodeGeneration\WiFiDeviceEntity.cs" />
     <Compile Include="CodeGeneration\WiFiUserVisitDetailEntity.cs" />
     <Compile Include="CodeGeneration\WiFiUserVisitEntity.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\BankEntity.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\VipBankEntity.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositApplyEntity.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositEntity.cs" />
     <Compile Include="CodeGeneration\WMenuMTextMappingEntity.cs" />
     <Compile Include="CodeGeneration\WOperatingEntity.cs" />
     <Compile Include="CodeGeneration\WQRCodeManagerEntity.cs" />
@@ -880,6 +886,7 @@
     <Compile Include="TimingPushMessageRuleEntity.cs" />
     <Compile Include="TimingPushMessageRuleModelMappingEntity.cs" />
     <Compile Include="TimingPushMessageVipLastRecordEntity.cs" />
+    <Compile Include="TInoutExpandEntity.cs" />
     <Compile Include="TInoutStatusEntity.cs" />
     <Compile Include="TInOutStatusNodeEntity.cs" />
     <Compile Include="TItemTagEntity.cs" />
@@ -943,6 +950,7 @@
     <Compile Include="VipPropertyEntity.cs" />
     <Compile Include="VipSearchEntity.cs" />
     <Compile Include="VipShowLogEntity.cs" />
+    <Compile Include="VipStoreEntity.cs" />
     <Compile Include="VipTagsMappingEntity.cs" />
     <Compile Include="VipUnitMappingEntity.cs" />
     <Compile Include="VipViewEntity.cs" />
@@ -973,6 +981,10 @@
     <Compile Include="WiFiDeviceEntity.cs" />
     <Compile Include="WiFiUserVisitDetailEntity.cs" />
     <Compile Include="WiFiUserVisitEntity.cs" />
+    <Compile Include="WithdrawDeposit\BankEntity.cs" />
+    <Compile Include="WithdrawDeposit\VipBankEntity.cs" />
+    <Compile Include="WithdrawDeposit\VipWithdrawDepositApplyEntity.cs" />
+    <Compile Include="WithdrawDeposit\VipWithdrawDepositEntity.cs" />
     <Compile Include="WKeywordReplyEntity.cs" />
     <Compile Include="WLegalizeEntity.cs" />
     <Compile Include="WMaterialImageEntity.cs" />

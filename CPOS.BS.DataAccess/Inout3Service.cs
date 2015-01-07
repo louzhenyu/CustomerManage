@@ -70,9 +70,37 @@ namespace JIT.CPOS.BS.DataAccess
                   INNER JOIN @TmpTable b on(a.order_id = b.order_id) 
                   WHERE a.Field7 IS NOT NULL AND a.Field7 <> '' 
                   GROUP BY a.Field7 ) y ON(x.StatusType = y.StatusType) ", CurrentUserInfo.CurrentLoggingManager.Customer_Id);
+
+
+            //未配置发货门店
+
+            sql += string.Format(@"
+                UNION                  
+                  SELECT    1234567890 ,
+                            '未选择门店' ,
+                            COUNT(*)
+                  FROM      @TmpTable aa
+                            INNER JOIN T_Inout bb ON aa.order_id = bb.order_id
+                  WHERE     bb.Field7 NOT IN ( '600', '700', '800', '900' )
+                            AND (bb.unit_id = '' or bb.unit_id is null)
+            ", CurrentUserInfo.CurrentLoggingManager.Customer_Id);
+
             // this.CurrentUserInfo.CurrentLoggingManager.Customer_Id
             return this.SQLHelper.ExecuteDataset(sql);
         }
+
+        /// <summary>
+        /// 修改订单门店
+        /// </summary>
+        /// <param name="orderList"></param>
+        /// <param name="unitID"></param>
+        /// <returns></returns>
+        public int SetOrderUnit(string orderList,string unitID)
+        {
+            string sql = string.Format("UPDATE T_Inout SET unit_id='{0}' WHERE order_no IN ({1})", unitID, orderList);
+            return SQLHelper.ExecuteNonQuery(sql);
+        }
+
         /// <summary>
         /// 查询未审核订单数 
         /// </summary> 
@@ -479,8 +507,16 @@ namespace JIT.CPOS.BS.DataAccess
             if (IsStatus == 1)
             {
                 if ((!string.IsNullOrEmpty(orderSearchInfo.DeliveryStatus)) && orderSearchInfo.DeliveryStatus != "0")
-                {
-                    sql = pService.GetLinkSql(sql, "a.Field7", orderSearchInfo.DeliveryStatus, "=");
+                {                    
+                    if (orderSearchInfo.DeliveryStatus == "1234567890")
+                        //未分配门店
+                    {
+                        sql += " AND( a.unit_id = '' OR  a.unit_id is null) AND a.Field7 NOT IN ('600','700','800','900') ";
+                    }
+                    else
+                    {
+                        sql = pService.GetLinkSql(sql, "a.Field7", orderSearchInfo.DeliveryStatus, "=");
+                    }                    
                 }
                 else {
                     sql += " and isnull(a.Field7,'')!='' and a.Field7!='0' ";

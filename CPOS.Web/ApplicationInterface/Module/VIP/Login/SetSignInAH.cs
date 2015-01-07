@@ -90,9 +90,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             });
 
             #endregion
-
-
-
+            rd.UnitId = vipBll.GetUnitByUserId(rd.UserId);//获取会集店
             rd.RoleCodeList = tmp.ToArray();
             rd.CustomerName = currentUserInfo.ClientName;
             return rd;

@@ -64,6 +64,9 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 case "GetPosOrderTotalCount_lj": //统计数量
                     content = GetPosOrder3TotalCount();
                     break;
+                case "SetUnit":
+                    content = SetUnit();
+                    break;
                 case "GetPosOrderUnAuditTotalCount": //统计未审核数量 add by donal 2014-10-10 15:40:00
                     content = GetPosOrderUnAuditTotalCount();
                     break;
@@ -2713,6 +2716,49 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
 
             content = responseData.ToJSON();
             return content;
+        }
+
+
+        /// <summary>
+        /// 设置门店
+        /// </summary>
+        /// <returns></returns>
+        public string SetUnit()
+        {
+            var responseData = new ResponseData();
+
+            string unitID = Request("unitID");
+            string orderList = Request("orderList");
+
+            if (string.IsNullOrWhiteSpace(unitID))
+            {
+                responseData.success = false;
+                responseData.msg = "请选择门店";
+                return responseData.ToJSON();
+            }
+
+            if (string.IsNullOrWhiteSpace(orderList))
+            {
+                responseData.success = false;
+                responseData.msg = "请选择订单";
+                return responseData.ToJSON();
+            }
+
+            var inoutService = new Inout3Service(CurrentUserInfo);
+
+            int result =inoutService.SetOrderUnit(orderList,unitID);
+
+
+            if (result>0)
+	        {
+		        responseData.success = true;
+                return responseData.ToJSON();
+	        }
+            else
+            {
+                responseData.success = false;
+                return responseData.ToJSON();
+            }
         }
 
         /// <summary>
