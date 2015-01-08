@@ -122,7 +122,7 @@
                         $this.parents('.payMentContent').find('.uploadFileBox').show();
                     }
                     if ($this.index() == 1) {
-                        that.elems.dataObj.action = "SetPayChannel"
+                        that.elems.dataObj.action = "SetPayChannel" //启用商户支付
                     }
 
                     //$("#text").disable = ture;

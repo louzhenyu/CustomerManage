@@ -9,6 +9,7 @@ using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.Entity.WX;
 using JIT.CPOS.BS.BLL.WX.Interface;
 using JIT.CPOS.BS.BLL.WX.Factory;
+using JIT.Utility.ExtensionMethod;
 
 namespace JIT.CPOS.Web.WX
 {
@@ -44,10 +45,13 @@ namespace JIT.CPOS.Web.WX
                     //把HTTP请求转换为字符串
                     string postStr = new BaseService().ConvertHttpContextToString(httpContext);
 
+                    BaseService.WriteLogWeixin("post string:" + postStr);
+
                     if (!string.IsNullOrEmpty(postStr))
                     {
                         //设置请求参数
                         var requestParams = SetRequestParams(postStr);
+                        BaseService.WriteLogWeixin("请求参数:" + requestParams.ToJSON());
 
                         //响应微信平台推送消息
                         ResponseMsg(httpContext, requestParams);
@@ -126,7 +130,7 @@ namespace JIT.CPOS.Web.WX
                         weixin = factory.CreateWeiXin(httpContext, requestParams);
                         BaseService.WriteLogWeixin("服务号");
                         break;
-                    case WeiXinType.CERTIFICATION:
+                    case WeiXinType.CERTIFICATION:    //目前我们的客户一般是认证服务号，所以关注事件从这里查看
                         factory = new CertificationFactory();
                         weixin = factory.CreateWeiXin(httpContext, requestParams);
                         BaseService.WriteLogWeixin("认证服务号");
@@ -147,40 +151,6 @@ namespace JIT.CPOS.Web.WX
                         break;
                 }
             }
-
-            #endregion
-
-            #region 通过微信ID生成对应的业务处理类（历史版本，现已弃用）
-
-            //switch (requestParams.WeixinId)
-            //{
-            //    case WeiXinAccount.LOHASBAR:
-            //        IFactory lohasBar = new LohasBarFactory();
-            //        weixin = lohasBar.CreateWeiXin(httpContext, requestParams);
-            //        break;
-            //    case WeiXinAccount.CEIBS:
-            //        IFactory ceibs = new CeibsFactory();
-            //        weixin = ceibs.CreateWeiXin(httpContext, requestParams);
-            //        break;
-            //    case WeiXinAccount.VIOLET:
-            //        IFactory violet = new VioletFactory();
-            //        weixin = violet.CreateWeiXin(httpContext, requestParams);
-            //        break;
-            //    case WeiXinAccount.JITMARKETING:
-            //        IFactory jitmarketing = new JitmarketingFactory();
-            //        weixin = jitmarketing.CreateWeiXin(httpContext, requestParams);
-            //        break;
-            //    case WeiXinAccount.LZLJ:
-            //        IFactory lzlj = new LzljFactory();
-            //        weixin = lzlj.CreateWeiXin(httpContext, requestParams);
-            //        break;
-            //    case WeiXinAccount.YIMAGUWEN:
-            //        IFactory ymgw = new YmgwFactory();
-            //        weixin = ymgw.CreateWeiXin(httpContext, requestParams);
-            //        break;
-            //    default:
-            //        break;
-            //}
 
             #endregion
 

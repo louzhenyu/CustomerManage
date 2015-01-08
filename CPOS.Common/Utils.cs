@@ -457,7 +457,7 @@ namespace JIT.CPOS.Common
         #region GetIntVal
         public static int GetIntVal(object obj)
         {
-            return obj == DBNull.Value || obj == null || obj.ToString() == string.Empty ?
+            return obj == DBNull.Value || obj == null || obj.ToString() == string.Empty ? 
                 0 : int.Parse(obj.ToString());
         }
         #endregion
@@ -550,12 +550,12 @@ namespace JIT.CPOS.Common
         #region SMSSend Obsoleted
         public static string SMSSendOrder(string mobileNO, string SMSContent)
         {
-            var para = new { MobileNO = mobileNO, SMSContent };
+            var para = new { MobileNO = mobileNO, SMSContent};
             var request = new { Action = "SendMessage", Parameters = para };
             string str = string.Format("request={0}", request.ToJSON());
 
-            string url = ConfigurationManager.AppSettings["SMSURL"];
-            if (string.IsNullOrEmpty(url))//用来测试
+           string url = ConfigurationManager.AppSettings["SMSURL"];
+            if(string.IsNullOrEmpty(url))//用来测试
             {
                 url = @"http://www.jitmarketing.cn:10001/Geteway.ashx";
             }
@@ -578,20 +578,19 @@ namespace JIT.CPOS.Common
             {
                 return 0;
             }
-            else
-            {
+            else { 
                 string returnvalue = "";
                 string s = obj.ToString();
-                int i = s.IndexOf(".");
-                if (i > 0)
+                int i = s.IndexOf( "." );
+                if ( i > 0 )
                 {
-                    returnvalue = s.Substring(0, i);
+                    returnvalue = s.Substring( 0,i );
                 }
                 else
                 {
                     returnvalue = s;
                 }
-                return int.Parse(returnvalue);
+                return int.Parse( returnvalue );
             }
         }
         #endregion
@@ -652,7 +651,7 @@ namespace JIT.CPOS.Common
             string fileName = System.Guid.NewGuid().ToString().Replace("-", "") + ".jpg";
             string host = domain;
             if (!host.EndsWith("/")) host += "/";
-            string fileUrl = host + "qrcode_image/" + fileName;
+            string fileUrl = host + "QRCodeImage/" + fileName;
             string newFilePath = string.Empty;
             string newFilename = string.Empty;
             System.Drawing.Image imgSrc = System.Drawing.Image.FromFile(sourcePath);
@@ -880,7 +879,7 @@ namespace JIT.CPOS.Common
                 }
             }
             return result;
-        }
+        } 
 
         #endregion
 

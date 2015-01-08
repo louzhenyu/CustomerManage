@@ -117,10 +117,14 @@ namespace JIT.CPOS.BS.BLL
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 GridColumnEntity m = new GridColumnEntity();
-                m.ColumnText = Convert.ToString(dt.Rows[i]["ColumnDesc"]);
-                m.ColumnWdith =string.IsNullOrEmpty( dt.Rows[i]["GridWidth"].ToString() )?0:Convert.ToInt32(dt.Rows[i]["GridWidth"]);
-                m.DataIndex = Convert.ToString(dt.Rows[i]["ColumnName"]);
-                m.ColumnControlType = Convert.ToInt32(dt.Rows[i]["ControlType"]);
+                if(dt.Rows[i]["ColumnDesc"] !=DBNull.Value)
+                    m.ColumnText = Convert.ToString(dt.Rows[i]["ColumnDesc"]);
+                if (dt.Rows[i]["GridWidth"] != DBNull.Value)
+                    m.ColumnWdith = Convert.ToInt32(dt.Rows[i]["GridWidth"]);
+                if (dt.Rows[i]["ColumnName"] != DBNull.Value)
+                    m.DataIndex = Convert.ToString(dt.Rows[i]["ColumnName"]);
+                if (dt.Rows[i]["ControlType"] != DBNull.Value)
+                    m.ColumnControlType = Convert.ToInt32(dt.Rows[i]["ControlType"]);
                 if (dt.Rows[i]["CorrelationValue"] != DBNull.Value)
                     m.CorrelationValue = Convert.ToString(dt.Rows[i]["CorrelationValue"]);
                 if (!string.IsNullOrEmpty(dt.Rows[i]["IsMustDo"].ToString()))

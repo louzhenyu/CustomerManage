@@ -6,6 +6,8 @@ using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
+using System.Diagnostics;
+using JIT.Utility.ExtensionMethod;
 
 namespace CPOS.SendMarketingMessage
 {
@@ -15,33 +17,52 @@ namespace CPOS.SendMarketingMessage
         private bool sendFlag = true;
         private int sleepTime = int.Parse(ConfigurationManager.AppSettings["SleepingTime"]);
         // private const int sleepTime = 300000;
+
+        EventLog log = new EventLog("SendMarketingMessage Windows Service");
+
         public SendMarketingMessageService()
         {
+            if (!EventLog.SourceExists("SendMarketingMessage"))
+                EventLog.CreateEventSource("SendMarketingMessage", "SendMarketingMessage Windows Service");
+
+            log.Source = "SendMarketingMessage";
+
             InitializeComponent();
+
+            //OnStart(null);              //for debug
         }
 
         protected override void OnStart(string[] args)
         {
+            log.WriteEntry("服务已启动......", EventLogEntryType.Information);
+
             sendFlag = true;
+
+            log.WriteEntry("要推送的客户ID有：" + customerID, EventLogEntryType.Information);
             //启动发送线程
             string[] customers = customerID.Split(',');
             foreach (var customer in customers)
             {
+                log.WriteEntry("为" + customer + "创建进程......", EventLogEntryType.Information);
                 ParameterizedThreadStart parameterizedThreadStart = SendMarketingMessage;
                 Thread sendThread = new Thread(parameterizedThreadStart);
+                sendThread.IsBackground = true;
                 sendThread.Start(customer);
+                log.WriteEntry( customer + "进程已启动......", EventLogEntryType.Information);
             }
         }
 
         protected override void OnStop()
         {
             sendFlag = false;
+            log.WriteEntry("服务已停止.", EventLogEntryType.Information);
         }
         /// <summary>
         /// 发送营销消息消息
         /// </summary>
         public void SendMarketingMessage(object o)
         {
+            TimeSpan timeSpan = new TimeSpan();
             while (true)
             {
                 try
@@ -50,14 +71,18 @@ namespace CPOS.SendMarketingMessage
                     {
                         LoggingSessionInfo loggingSessionInfo = GetLoggingSession(o.ToString(), "1");
                         SendMarketingMessageBLL bll = new SendMarketingMessageBLL(loggingSessionInfo);
-                        bll.Send();
+                        timeSpan = bll.Send();
                     }
                 }
                 catch (Exception ex)
                 {
                     Loggers.Exception(new ExceptionLogInfo(ex));
+                    log.WriteEntry(ex.ToJSON(), EventLogEntryType.Error);
                 }
-                Thread.Sleep(sleepTime);
+                log.WriteEntry(o.ToString() + "将在" + timeSpan.TotalSeconds + "秒后再次启动。", EventLogEntryType.Information);
+
+                //timeSpan = new TimeSpan(0, 0, 3);   //for debug
+                Thread.Sleep(timeSpan);
             }
         }
         public static LoggingSessionInfo GetLoggingSession(string customerId, string userId)

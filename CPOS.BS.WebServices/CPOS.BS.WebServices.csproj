@@ -122,10 +122,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://sso.t.aladingyidong.com/AuthService.asmx">
+    <WebReferenceUrl Include="http://sso.chainclouds.com/AuthService.asmx">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\AuthManagerWebServices\</RelPath>
-      <UpdateFromURL>http://sso.t.aladingyidong.com/AuthService.asmx</UpdateFromURL>
+      <UpdateFromURL>http://sso.chainclouds.com/AuthService.asmx</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

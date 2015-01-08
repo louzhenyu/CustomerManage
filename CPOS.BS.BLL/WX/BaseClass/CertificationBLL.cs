@@ -6,6 +6,7 @@ using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.Entity.WX;
 using System.Collections.Generic;
 using System.Configuration;
+using JIT.Utility.ExtensionMethod;
 
 namespace JIT.CPOS.BS.BLL.WX.BaseClass
 {
@@ -30,7 +31,6 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
         public override void UserSubscribe()
         {
             //设置关注信息
-            BaseService.WriteLogWeixin("公众号贱人贱人");
             var modelDAO = new WModelDAO(requestParams.LoggingSessionInfo);
             var ds = modelDAO.GetMaterialByWeixinIdJermyn(requestParams.WeixinId,2);
 
@@ -43,8 +43,8 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                 string ReplyId = ds.Tables[0].Rows[0]["ReplyId"].ToString();  //素材ID
                 string Text = ds.Tables[0].Rows[0]["text"].ToString();  //素材ID
 
-                BaseService.WriteLogWeixin("typeId：" + typeId);
-                BaseService.WriteLogWeixin("ReplyId：" + ReplyId);
+                BaseService.WriteLogWeixin("自动回复： typeId：" + typeId);
+                BaseService.WriteLogWeixin("自动回复：ReplyId：" + ReplyId);
 
                 switch (typeId)
                 {
@@ -78,7 +78,7 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
 
                 //扫描带参数二维码事件
                 var eventKey = requestParams.XmlNode.SelectSingleNode("//EventKey");
-                BaseService.WriteLogWeixin("eventKey:  " + eventKey.InnerText);
+                BaseService.WriteLogWeixin("二维码 eventKey:  " + eventKey.InnerText);
 
                 var qrcodeId = string.Empty;
                 if (!string.IsNullOrEmpty(eventKey.InnerText))
@@ -86,7 +86,7 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                     qrcodeId = eventKey.InnerText.Substring(8);
                 }
 
-                BaseService.WriteLogWeixin("qrcodeId:  " + qrcodeId);
+                BaseService.WriteLogWeixin("二维码 qrcodeId:  " + qrcodeId);
 
                 //保存用户信息
                 commonService.SaveUserInfo(requestParams.OpenId, requestParams.WeixinId, "1", entity.AppID, entity.AppSecret, qrcodeId, requestParams.LoggingSessionInfo);

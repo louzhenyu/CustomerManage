@@ -140,10 +140,10 @@
   </wsdl:binding>
   <wsdl:service name="AuthService">
     <wsdl:port name="AuthServiceSoap" binding="tns:AuthServiceSoap">
-      <soap:address location="http://sso.t.aladingyidong.com/AuthService.asmx" />
+      <soap:address location="http://sso.chainclouds.com/AuthService.asmx" />
     </wsdl:port>
     <wsdl:port name="AuthServiceSoap12" binding="tns:AuthServiceSoap12">
-      <soap12:address location="http://sso.t.aladingyidong.com/AuthService.asmx" />
+      <soap12:address location="http://sso.chainclouds.com/AuthService.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

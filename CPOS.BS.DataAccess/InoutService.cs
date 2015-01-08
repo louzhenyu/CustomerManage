@@ -897,6 +897,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
             sql = pService.GetIsNotNullUpdateSql(sql, "purchase_unit_id", inoutInfo.purchase_unit_id);
             sql = pService.GetIsNotNullUpdateSql(sql, "sales_warehouse_id", inoutInfo.sales_warehouse_id);
             sql = pService.GetIsNotNullUpdateSql(sql, "purchase_warehouse_id", inoutInfo.purchase_warehouse_id);
+            sql = pService.GetIsNotNullUpdateSql(sql, "ReturnCash", inoutInfo.ReturnCash.ToString());
 
             sql = pService.GetIsNotNullUpdateSql(sql, "Field1", inoutInfo.Field1);
             sql = pService.GetIsNotNullUpdateSql(sql, "Field2", inoutInfo.Field2);
@@ -990,6 +991,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                       + " ,data_from_id "
                       + " ,if_flag "
                       + " ,customer_id ,sales_warehouse_id,purchase_warehouse_id"
+                      + " ,ReturnCash"
                       + " ,Field1"
                       + " ,Field2"
                       + " ,Field3"
@@ -1063,6 +1065,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                       + " ,'" + inoutInfo.customer_id + "' customer_id"
                       + " ,'" + inoutInfo.sales_warehouse_id + "' sales_warehouse_id"
                       + " ,'" + inoutInfo.purchase_warehouse_id + "' purchase_warehouse_id"
+                      + " ,'" + inoutInfo.ReturnCash + "' ReturnCash"
                       + " ,'" + inoutInfo.Field1 + "' Field1 "
                       + " ,'" + inoutInfo.Field2 + "' Field2 "
                       + " ,'" + inoutInfo.Field3 + "' Field3 "
@@ -1165,6 +1168,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                         + " ,Field8 "
                         + " ,Field9 "
                         + " ,Field10 "
+                        + " ,ReturnCash "
                         + " )"
                         + "select  '" + inoutDetailInfo.order_detail_id + "' "
                         + " ,'" + inoutDetailInfo.order_id + "'  "
@@ -1202,6 +1206,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                         + " ,'" + inoutDetailInfo.Field8 + "' Field8 "
                         + " ,'" + inoutDetailInfo.Field9 + "' Field9 "
                         + " ,'" + inoutDetailInfo.Field10 + "' Field10 "
+                        + " ,'" + inoutDetailInfo.ReturnCash + "'  "
                         ;
             #endregion
             if (pTran != null)

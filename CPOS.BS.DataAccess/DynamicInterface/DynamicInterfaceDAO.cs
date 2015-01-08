@@ -617,7 +617,7 @@ drop table #mobilebusinessdefined
                             FROM LEvents  as l
                             left join EventStats as es
                             on es.ObjectID=l.EventID and es.IsDelete=l.IsDelete  
-                            where EventID='{0}';    
+                            where EventID='{0}'  and l.CustomerId='{2}' ;    
 
                             --取活动报名信息
                             select sku_id,lvo.*,a.Field1 

@@ -364,7 +364,7 @@
                 });
             }
         },
-        //页面过来的新增图文消息的时候      默认加载数据    
+        //根据传递的参数判断是否是新增还是编辑模式
         fillContent: function (edit) {
 
             var that = this;
@@ -393,13 +393,12 @@
                         //获得数据并且把数据填充到页面上
                         that.loadData.getMaterialTextList(that.MaterialTextId, function (data) {
                             var itemList = data.Data.MaterialTextList;
-                            debugger;
                             if (itemList.length) {
                                 var obj = itemList[0];
                                 var pageParamJson = obj.PageParamJson;
                                 pageParamJson = JSON.parse(pageParamJson);
                                 var config = {};
-                                if (pageParamJson&&pageParamJson.length) {
+                                if (pageParamJson && pageParamJson.length) {
                                     config = pageParamJson[0];  //底部关联的内容
                                 }
                                 //设置微信账号
@@ -526,7 +525,7 @@
                                                         //默认名称显示
                                                         that.elems.eventDetailSelect.val(pageDetail.EventName);
                                                         //数据绑定
-                                                        that.elems.eventDetailSelect.attr("data-value", config.pageDetail);
+                                                        that.toSave.domObj.attr("data-value", config.pageDetail);
                                                         that.elems.eventDetail.removeClass("hide").addClass("show");
                                                         break;
                                                     case 4:
@@ -1336,8 +1335,9 @@
 
                         }
                         break;
+                    case 3:
                     case 4:
-                        if (this.toSave.domObj.val() == "") {
+                        if (this.toSave.domObj.find("input").val() == "") {
                             alert("请选择一个活动!");
                             return false;
                         }
