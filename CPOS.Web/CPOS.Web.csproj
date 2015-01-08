@@ -2178,6 +2178,7 @@
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextListAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextTypeListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WX\SysPage\CreateCustomerConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\SysPage\GetCustomerModuleMappingAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\SysPage\GetSysPageDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\SysPage\GetSysPageListAH.cs" />
