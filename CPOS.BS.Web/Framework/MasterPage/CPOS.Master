@@ -118,8 +118,8 @@
                         </div>
                     </div>
                 </div>
-                <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="阿拉丁">
-                    <img id="img_logo" style="margin-top:20px;" src="/module/styles/images/alading/logo.png" alt="阿拉丁" />
+                <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="LOGO">
+                    <img id="img_logo" style="margin-top:20px;" src="/module/styles/images/alading/logo.png" alt="LOGO" />
                         <%--<div class="arr"></div>--%>
                 </a>
                 <div class="commonNav">
@@ -167,7 +167,7 @@
 						<a href="###">基础管理</a>
 					</li>--%>
                     <li class="nav008">
-                        <a href="http://alddoc.aladingyidong.com/" target="_blank" id="" class="" title="帮助手册">帮助手册</a>
+                        <a href="http://help.chainclouds.com/" target="_blank" id="" class="" title="帮助手册">帮助手册</a>
                     </li>
                         
                     </ul>
