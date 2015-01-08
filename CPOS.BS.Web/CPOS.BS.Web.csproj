@@ -45,7 +45,7 @@
   <ItemGroup>
     <Reference Include="Aspose.Cells, Version=7.0.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Infrastructure\Code\ReferenceDll\Aspose.Cells.dll</HintPath>
+      <HintPath>..\ReferenceDll\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\ReferenceDll\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -55,7 +55,7 @@
       <HintPath>Framework\Javascript\Other\kindeditor\asp.net\bin\LitJSON.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
-      <HintPath>..\..\ReferenceDll\log4net.dll</HintPath>
+      <HintPath>..\ReferenceDll\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -8133,7 +8133,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

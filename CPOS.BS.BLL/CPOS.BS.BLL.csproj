@@ -37,7 +37,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Aspose.Cells, Version=7.0.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
@@ -45,15 +45,15 @@
       <HintPath>..\ReferenceDll\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="JdSoft.Apns.Notifications">
-      <HintPath>..\..\ReferenceDll\JdSoft.Apns.Notifications.dll</HintPath>
+      <HintPath>..\ReferenceDll\JdSoft.Apns.Notifications.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ReferenceDll\log4net.dll</HintPath>
+      <HintPath>..\ReferenceDll\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ReferenceDll\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\ReferenceDll\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -1065,7 +1065,7 @@
       <Name>CPOS.BS.Entity</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.WebServices\CPOS.BS.WebServices.csproj">
-      <Project>{3e853c2f-aaf0-4668-87c1-658cc015cda0}</Project>
+      <Project>{3E853C2F-AAF0-4668-87C1-658CC015CDA0}</Project>
       <Name>CPOS.BS.WebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.Common\CPOS.Common.csproj">
@@ -1082,6 +1082,9 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /r /y $(TargetFileName) $(ProjectDir)..\ReferenceDll\</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

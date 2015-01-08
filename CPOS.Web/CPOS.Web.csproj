@@ -46,16 +46,16 @@
   <ItemGroup>
     <Reference Include="Const, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Infrastructure\Code\Const\bin\Debug\Const.dll</HintPath>
+      <HintPath>..\ReferenceDll\Const.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Infrastructure\Code\ReferenceDll\log4net.dll</HintPath>
+      <HintPath>..\ReferenceDll\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Types.dll</HintPath>
+      <HintPath>..\ReferenceDll\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="NetDimension.Weibo">
       <HintPath>..\ReferenceDll\NetDimension.Weibo.dll</HintPath>
@@ -81,7 +81,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="ThoughtWorks.QRCode">
-      <HintPath>..\..\..\Infrastructure\Code\ReferenceDll\ThoughtWorks.QRCode.dll</HintPath>
+      <HintPath>..\ReferenceDll\ThoughtWorks.QRCode.dll</HintPath>
     </Reference>
     <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -2984,10 +2984,6 @@
       <Project>{6D911430-7243-4AB2-B70E-4DAFFC4D1B22}</Project>
       <Name>CPOS.BS.Entity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CPOS.BS.WebServices\CPOS.BS.WebServices.csproj">
-      <Project>{3E853C2F-AAF0-4668-87C1-658CC015CDA0}</Project>
-      <Name>CPOS.BS.WebServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CPOS.Common\CPOS.Common.csproj">
       <Project>{4E164CF5-3114-4C70-874F-1353FB6A6215}</Project>
       <Name>CPOS.Common</Name>
@@ -3062,7 +3058,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
