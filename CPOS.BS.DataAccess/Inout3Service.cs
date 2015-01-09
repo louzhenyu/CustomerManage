@@ -82,7 +82,7 @@ namespace JIT.CPOS.BS.DataAccess
                   FROM      @TmpTable aa
                             INNER JOIN T_Inout bb ON aa.order_id = bb.order_id
                   WHERE     bb.Field7 NOT IN ( '600', '700', '800', '900' )
-                            AND (bb.unit_id = '' or bb.unit_id is null)
+                            AND (bb.sales_unit_id = '' or bb.sales_unit_id is null)
             ", CurrentUserInfo.CurrentLoggingManager.Customer_Id);
 
             // this.CurrentUserInfo.CurrentLoggingManager.Customer_Id
@@ -97,7 +97,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public int SetOrderUnit(string orderList,string unitID)
         {
-            string sql = string.Format("UPDATE T_Inout SET unit_id='{0}' WHERE order_no IN ({1})", unitID, orderList);
+            string sql = string.Format("UPDATE T_Inout SET sales_unit_id='{0}' WHERE order_no IN ({1})", unitID, orderList);
             return SQLHelper.ExecuteNonQuery(sql);
         }
 
@@ -511,7 +511,7 @@ namespace JIT.CPOS.BS.DataAccess
                     if (orderSearchInfo.DeliveryStatus == "1234567890")
                         //未分配门店
                     {
-                        sql += " AND( a.unit_id = '' OR  a.unit_id is null) AND a.Field7 NOT IN ('600','700','800','900') ";
+                        sql += " AND( a.sales_unit_id = '' OR  a.sales_unit_id is null) AND a.Field7 NOT IN ('600','700','800','900') ";
                     }
                     else
                     {

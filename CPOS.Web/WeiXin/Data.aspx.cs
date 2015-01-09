@@ -1749,6 +1749,7 @@ namespace JIT.CPOS.Web.WeiXin
             {
                 foreach (var wqrCodeTypeOperatingMappingEntity in wqrCodeTypeOperatingMappingEntities)
                 {
+                    //1: 添加签到记录；2：推送消息
                     switch (wqrCodeTypeOperatingMappingEntity.OperatingId)
                     {
                         //如果有多个case，扩展此项
@@ -1756,15 +1757,25 @@ namespace JIT.CPOS.Web.WeiXin
                             WEventUserMappingBLL eventUserMappingServer = new WEventUserMappingBLL(loggingSessionInfo);
                             WEventUserMappingEntity eventUserMappingInfo = new WEventUserMappingEntity();
                             LEventsBLL eventsBll = new LEventsBLL(loggingSessionInfo);
+
                             if (!string.IsNullOrEmpty(qCodeManagerEntity.ObjectId))
                             {
-                                var eventInfo = eventsBll.GetByID(qCodeManagerEntity.ObjectId);
-                                if (eventInfo != null)
+                                //避免重复签到
+                                var eventUserEntity = eventUserMappingServer.Query(new IWhereCondition[] { 
+                                    new EqualsCondition() { FieldName="EventID", Value=qCodeManagerEntity.ObjectId},
+                                    new EqualsCondition(){ FieldName="UserID", Value = userId }
+                                }, null);
+
+                                if (eventUserEntity.Length == 0)
                                 {
-                                    eventUserMappingInfo.Mapping = Common.Utils.NewGuid();
-                                    eventUserMappingInfo.EventID = eventInfo.EventID;
-                                    eventUserMappingInfo.UserID = userId;
-                                    eventUserMappingServer.Create(eventUserMappingInfo);
+                                    var eventInfo = eventsBll.GetByID(qCodeManagerEntity.ObjectId);
+                                    if (eventInfo != null)
+                                    {
+                                        eventUserMappingInfo.Mapping = Common.Utils.NewGuid();
+                                        eventUserMappingInfo.EventID = eventInfo.EventID;
+                                        eventUserMappingInfo.UserID = userId;
+                                        eventUserMappingServer.Create(eventUserMappingInfo);
+                                    }
                                 }
                             }
                             break;

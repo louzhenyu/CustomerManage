@@ -50,6 +50,7 @@ namespace JIT.CPOS.BS.BLL.WX
             req.KeepAlive = false;
             req.Method = method.ToUpper();
             req.Credentials = System.Net.CredentialCache.DefaultCredentials;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
             ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(CheckValidationResult);
             if (method == "POST")
             {
@@ -855,7 +856,7 @@ namespace JIT.CPOS.BS.BLL.WX
 
             if (accessToken.errcode == null || accessToken.errcode.Equals(string.Empty))
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
                 string uri = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=" + accessToken.access_token;
                 string method = "POST";
                 string content = string.Empty;

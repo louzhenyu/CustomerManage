@@ -843,6 +843,23 @@ namespace JIT.CPOS.BS.BLL.WX
                     Message = "二维码信息：" + eventKey
                 });
 
+                string nodeMsg = string.Empty;
+                foreach ( System.Xml.XmlNode item in requestParams.XmlNode.ChildNodes)
+	            {
+                    nodeMsg += " |  " + item.Name +"-"+ item.Value;
+	            }  
+
+                //加log记录信息看下 2014-11-24 15:57:30
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = "二维码全部信息："
+                    + "~" + requestParams.OpenId
+                    + "~" + requestParams.WeixinId
+                    + "~" + requestParams.MsgType
+                    + "~" + requestParams.XmlNode.ToString()
+                    + nodeMsg
+                });
+
                 BaseService.WriteLogWeixin("开始推送消息Wzq");
 
                 eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, eventKey,

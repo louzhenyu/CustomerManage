@@ -51,10 +51,13 @@ namespace JIT.CPOS.BS.DataAccess
         /// 获取首页每个模块间距配置
         /// </summary>
         /// <returns></returns>
+
         public DataSet GetLayoutList(string pCustomerId)
         {
+            
+            //C区模板2没有对应的ObjectCSSDefine,通过该程序不符合实际的需求，应该在数据库里添加这条记录
             StringBuilder sbSQL = new StringBuilder();
-            sbSQL.Append("select distinct a.GroupValue,a.ModelName,b.Height,b.TopDistance,b.ModelType,b.DisplayIndex from dbo.MHCategoryAreaGroup a inner join ObjectCSSDefine b on b.ObjectId=a.ModelName inner join MHCategoryArea c on c.GroupId=a.GroupValue where a.IsDelete=0  and c.IsDelete=0 and b.IsDelete=0 and a.CustomerID='" + pCustomerId + "' and c.HomeId =(select top 1 HomeId from MobileHome where CustomerID='" + pCustomerId + "') order by DisplayIndex ");
+            sbSQL.Append("select distinct a.GroupValue,a.ModelName,b.Height,b.TopDistance,b.ModelType,b.DisplayIndex from dbo.MHCategoryAreaGroup a inner join ObjectCSSDefine b on b.ObjectId=a.ModelName inner join MHCategoryArea c on c.GroupId=a.GroupValue where a.IsDelete=0 and b.IsDelete=0 and c.IsDelete=0  and a.CustomerID='" + pCustomerId + "' and c.HomeId =(select top 1 HomeId from MobileHome where CustomerID='" + pCustomerId + "') order by DisplayIndex ");
             return this.SQLHelper.ExecuteDataset(CommandType.Text,sbSQL.ToString());
         }
     }

@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/7/1 9:45:39
+ * Create On	:2014/11/4 14:54:54
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -80,9 +80,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [APPUpgrade](");
-            strSql.Append("[CustomerId],[IOSUpgradeUrl],[AndroidUpgradeUrl],[IOSUpgradeCon],[AndroidUpgradeCon],[Versions],[AppName],[IsMandatoryUpdate],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[AppUpgradeId])");
+            strSql.Append("[CustomerId],[Plat],[IOSUpgradeUrl],[AndroidUpgradeUrl],[IOSUpgradeCon],[AndroidUpgradeCon],[Versions],[AppName],[IsMandatoryUpdate],[ServerUrl],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[AppUpgradeId])");
             strSql.Append(" values (");
-            strSql.Append("@CustomerId,@IOSUpgradeUrl,@AndroidUpgradeUrl,@IOSUpgradeCon,@AndroidUpgradeCon,@Versions,@AppName,@IsMandatoryUpdate,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@AppUpgradeId)");            
+            strSql.Append("@CustomerId,@Plat,@IOSUpgradeUrl,@AndroidUpgradeUrl,@IOSUpgradeCon,@AndroidUpgradeCon,@Versions,@AppName,@IsMandatoryUpdate,@ServerUrl,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@AppUpgradeId)");            
 
 			Guid? pkGuid;
 			if (pEntity.AppUpgradeId == null)
@@ -93,6 +93,7 @@ namespace JIT.CPOS.BS.DataAccess
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
+					new SqlParameter("@Plat",SqlDbType.NVarChar),
 					new SqlParameter("@IOSUpgradeUrl",SqlDbType.NVarChar),
 					new SqlParameter("@AndroidUpgradeUrl",SqlDbType.NVarChar),
 					new SqlParameter("@IOSUpgradeCon",SqlDbType.NVarChar),
@@ -100,6 +101,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@Versions",SqlDbType.NVarChar),
 					new SqlParameter("@AppName",SqlDbType.NVarChar),
 					new SqlParameter("@IsMandatoryUpdate",SqlDbType.Int),
+					new SqlParameter("@ServerUrl",SqlDbType.NVarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
@@ -108,19 +110,21 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@AppUpgradeId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.CustomerId;
-			parameters[1].Value = pEntity.IOSUpgradeUrl;
-			parameters[2].Value = pEntity.AndroidUpgradeUrl;
-			parameters[3].Value = pEntity.IOSUpgradeCon;
-			parameters[4].Value = pEntity.AndroidUpgradeCon;
-			parameters[5].Value = pEntity.Versions;
-			parameters[6].Value = pEntity.AppName;
-			parameters[7].Value = pEntity.IsMandatoryUpdate;
-			parameters[8].Value = pEntity.CreateTime;
-			parameters[9].Value = pEntity.CreateBy;
-			parameters[10].Value = pEntity.LastUpdateTime;
-			parameters[11].Value = pEntity.LastUpdateBy;
-			parameters[12].Value = pEntity.IsDelete;
-			parameters[13].Value = pkGuid;
+			parameters[1].Value = pEntity.Plat;
+			parameters[2].Value = pEntity.IOSUpgradeUrl;
+			parameters[3].Value = pEntity.AndroidUpgradeUrl;
+			parameters[4].Value = pEntity.IOSUpgradeCon;
+			parameters[5].Value = pEntity.AndroidUpgradeCon;
+			parameters[6].Value = pEntity.Versions;
+			parameters[7].Value = pEntity.AppName;
+			parameters[8].Value = pEntity.IsMandatoryUpdate;
+			parameters[9].Value = pEntity.ServerUrl;
+			parameters[10].Value = pEntity.CreateTime;
+			parameters[11].Value = pEntity.CreateBy;
+			parameters[12].Value = pEntity.LastUpdateTime;
+			parameters[13].Value = pEntity.LastUpdateBy;
+			parameters[14].Value = pEntity.IsDelete;
+			parameters[15].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -209,6 +213,8 @@ namespace JIT.CPOS.BS.DataAccess
             strSql.Append("update [APPUpgrade] set ");
             if (pIsUpdateNullField || pEntity.CustomerId!=null)
                 strSql.Append( "[CustomerId]=@CustomerId,");
+            if (pIsUpdateNullField || pEntity.Plat!=null)
+                strSql.Append( "[Plat]=@Plat,");
             if (pIsUpdateNullField || pEntity.IOSUpgradeUrl!=null)
                 strSql.Append( "[IOSUpgradeUrl]=@IOSUpgradeUrl,");
             if (pIsUpdateNullField || pEntity.AndroidUpgradeUrl!=null)
@@ -223,6 +229,8 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[AppName]=@AppName,");
             if (pIsUpdateNullField || pEntity.IsMandatoryUpdate!=null)
                 strSql.Append( "[IsMandatoryUpdate]=@IsMandatoryUpdate,");
+            if (pIsUpdateNullField || pEntity.ServerUrl!=null)
+                strSql.Append( "[ServerUrl]=@ServerUrl,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
@@ -233,6 +241,7 @@ namespace JIT.CPOS.BS.DataAccess
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
+					new SqlParameter("@Plat",SqlDbType.NVarChar),
 					new SqlParameter("@IOSUpgradeUrl",SqlDbType.NVarChar),
 					new SqlParameter("@AndroidUpgradeUrl",SqlDbType.NVarChar),
 					new SqlParameter("@IOSUpgradeCon",SqlDbType.NVarChar),
@@ -240,21 +249,24 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@Versions",SqlDbType.NVarChar),
 					new SqlParameter("@AppName",SqlDbType.NVarChar),
 					new SqlParameter("@IsMandatoryUpdate",SqlDbType.Int),
+					new SqlParameter("@ServerUrl",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@AppUpgradeId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.CustomerId;
-			parameters[1].Value = pEntity.IOSUpgradeUrl;
-			parameters[2].Value = pEntity.AndroidUpgradeUrl;
-			parameters[3].Value = pEntity.IOSUpgradeCon;
-			parameters[4].Value = pEntity.AndroidUpgradeCon;
-			parameters[5].Value = pEntity.Versions;
-			parameters[6].Value = pEntity.AppName;
-			parameters[7].Value = pEntity.IsMandatoryUpdate;
-			parameters[8].Value = pEntity.LastUpdateTime;
-			parameters[9].Value = pEntity.LastUpdateBy;
-			parameters[10].Value = pEntity.AppUpgradeId;
+			parameters[1].Value = pEntity.Plat;
+			parameters[2].Value = pEntity.IOSUpgradeUrl;
+			parameters[3].Value = pEntity.AndroidUpgradeUrl;
+			parameters[4].Value = pEntity.IOSUpgradeCon;
+			parameters[5].Value = pEntity.AndroidUpgradeCon;
+			parameters[6].Value = pEntity.Versions;
+			parameters[7].Value = pEntity.AppName;
+			parameters[8].Value = pEntity.IsMandatoryUpdate;
+			parameters[9].Value = pEntity.ServerUrl;
+			parameters[10].Value = pEntity.LastUpdateTime;
+			parameters[11].Value = pEntity.LastUpdateBy;
+			parameters[12].Value = pEntity.AppUpgradeId;
 
             //执行语句
             int result = 0;
@@ -550,6 +562,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "AppUpgradeId", Value = pQueryEntity.AppUpgradeId });
             if (pQueryEntity.CustomerId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
+            if (pQueryEntity.Plat!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Plat", Value = pQueryEntity.Plat });
             if (pQueryEntity.IOSUpgradeUrl!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IOSUpgradeUrl", Value = pQueryEntity.IOSUpgradeUrl });
             if (pQueryEntity.AndroidUpgradeUrl!=null)
@@ -564,6 +578,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "AppName", Value = pQueryEntity.AppName });
             if (pQueryEntity.IsMandatoryUpdate!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsMandatoryUpdate", Value = pQueryEntity.IsMandatoryUpdate });
+            if (pQueryEntity.ServerUrl!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ServerUrl", Value = pQueryEntity.ServerUrl });
             if (pQueryEntity.CreateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
             if (pQueryEntity.CreateBy!=null)
@@ -597,6 +613,10 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.CustomerId =  Convert.ToString(pReader["CustomerId"]);
 			}
+			if (pReader["Plat"] != DBNull.Value)
+			{
+				pInstance.Plat =  Convert.ToString(pReader["Plat"]);
+			}
 			if (pReader["IOSUpgradeUrl"] != DBNull.Value)
 			{
 				pInstance.IOSUpgradeUrl =  Convert.ToString(pReader["IOSUpgradeUrl"]);
@@ -624,6 +644,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsMandatoryUpdate"] != DBNull.Value)
 			{
 				pInstance.IsMandatoryUpdate =   Convert.ToInt32(pReader["IsMandatoryUpdate"]);
+			}
+			if (pReader["ServerUrl"] != DBNull.Value)
+			{
+				pInstance.ServerUrl =  Convert.ToString(pReader["ServerUrl"]);
 			}
 			if (pReader["CreateTime"] != DBNull.Value)
 			{

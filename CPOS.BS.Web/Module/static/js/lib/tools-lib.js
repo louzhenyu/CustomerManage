@@ -249,7 +249,7 @@
            } 
         });
         //模拟下拉框的点击事件
-        $(selector).delegate(".selectBox span","click",function(e){
+        $(selector).delegate(".selectBox span", "click", function (e) {
             //获得当前元素jquery对象
             var $t=$(this);
             var selList=$t.parent().find(".selectList");
@@ -263,7 +263,8 @@
             }
             util.stopBubble(e);
 			
-        }).delegate(".selectBox p","click",function(e){  //下拉列表的点击事件
+        }).delegate(".selectBox p", "click", function (e) {  //下拉列表的点击事件
+
             //获得当前元素jquery对象
             var $t=$(this);
             //获得选择内容的id

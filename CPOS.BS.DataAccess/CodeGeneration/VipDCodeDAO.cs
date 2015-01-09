@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipDCode](");
-            strSql.Append("[CustomerId],[UnitId],[OpenId],[Status],[ImageUrl],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[SalesAmount],[IsReturn],[ArriveDate],[ReturnAmount],[ObjectId],[VipId],[DCodeId])");
+            strSql.Append("[CustomerId],[UnitId],[OpenId],[Status],[ImageUrl],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[SalesAmount],[IsReturn],[ArriveDate],[ReturnAmount],[ObjectId],[VipId],[DCodeId],[DCodeType])");
             strSql.Append(" values (");
-            strSql.Append("@CustomerId,@UnitId,@OpenId,@Status,@ImageUrl,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@SalesAmount,@IsReturn,@ArriveDate,@ReturnAmount,@ObjectId,@VipId,@DCodeId)");            
+            strSql.Append("@CustomerId,@UnitId,@OpenId,@Status,@ImageUrl,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@SalesAmount,@IsReturn,@ArriveDate,@ReturnAmount,@ObjectId,@VipId,@DCodeId,@DCodeType)");            
 
 			string pkString = pEntity.DCodeId;
 
@@ -105,7 +105,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@ReturnAmount",SqlDbType.Decimal),
 					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
 					new SqlParameter("@VipId",SqlDbType.NVarChar),
-					new SqlParameter("@DCodeId",SqlDbType.NVarChar)
+					new SqlParameter("@DCodeId",SqlDbType.NVarChar),
+                    new SqlParameter("@DCodeType",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.CustomerId;
 			parameters[1].Value = pEntity.UnitId;
@@ -124,6 +125,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[14].Value = pEntity.ObjectId;
 			parameters[15].Value = pEntity.VipId;
 			parameters[16].Value = pkString;
+            parameters[17].Value = pEntity.DCodeType;
 
             //执行并将结果回写
             int result;
@@ -677,6 +679,10 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.VipId =  Convert.ToString(pReader["VipId"]);
 			}
+            if (pReader["DCodeType"] != DBNull.Value)
+            {
+                pInstance.DCodeType = Convert.ToInt32(pReader["DCodeType"]);
+            }
 
         }
         #endregion

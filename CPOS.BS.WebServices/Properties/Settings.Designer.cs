@@ -25,7 +25,7 @@ namespace JIT.CPOS.BS.WebServices.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.0.55:8100/AuthService.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://sso.chainclouds.com/AuthService.asmx")]
         public string JITCPos_BS_WebServices_AuthManagerWebServices_AuthService {
             get {
                 return ((string)(this["JITCPos_BS_WebServices_AuthManagerWebServices_AuthService"]));
@@ -35,7 +35,7 @@ namespace JIT.CPOS.BS.WebServices.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://180.153.154.21:8101/customer/CustomerDataExchangeService.asmx")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://ap.chainclouds.com/customer/CustomerDataExchangeService.asmx")]
         public string CPOS_BS_WebServices_CustomerDataExchangeWebService_CustomerDataExchangeService {
             get {
                 return ((string)(this["CPOS_BS_WebServices_CustomerDataExchangeWebService_CustomerDataExchangeService"]));

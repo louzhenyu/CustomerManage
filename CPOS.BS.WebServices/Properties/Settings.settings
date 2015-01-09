@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="JITCPos_BS_WebServices_AuthManagerWebServices_AuthService" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://192.168.0.55:8100/AuthService.asmx</Value>
+      <Value Profile="(Default)">http://sso.chainclouds.com/AuthService.asmx</Value>
     </Setting>
     <Setting Name="CPOS_BS_WebServices_CustomerDataExchangeWebService_CustomerDataExchangeService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://180.153.154.21:8101/customer/CustomerDataExchangeService.asmx</Value>
+      <Value Profile="(Default)">http://ap.chainclouds.com/customer/CustomerDataExchangeService.asmx</Value>
     </Setting>
     <Setting Name="CPOS_BS_WebServices_AuthManagerWebServices_AuthService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://sso.chainclouds.com/AuthService.asmx</Value>
     </Setting>
     <Setting Name="CPOS_BS_WebServices_ShortUrlChangeService_ShortUrlChangeService" Type="(Web Service URL)" Scope="Application">
-      <Value Profile="(Default)">http://www.o2omarketing.cn:9004/WebServices/ShortUrlChangeService.asmx</Value>
+      <Value Profile="(Default)">http://api.chainclouds.com/WebServices/ShortUrlChangeService.asmx</Value>
     </Setting>
   </Settings>
 </SettingsFile>

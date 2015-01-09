@@ -323,6 +323,7 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.CouponTypeID!=null)
                 strSql.Append( "[CouponTypeID]=@CouponTypeID,");
+            /**
             if (pIsUpdateNullField || pEntity.Col1 != null)
                 strSql.Append("[Col1]=@Col1,");
             if (pIsUpdateNullField || pEntity.Col2 != null)
@@ -423,6 +424,7 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append("[Col49]=@Col49,");
             if (pIsUpdateNullField || pEntity.Col50 != null)
                 strSql.Append("[Col50]=@Col50");
+             ***/
             if (strSql.ToString().EndsWith(","))
                 strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where CouponID=@CouponID ; ");
@@ -440,6 +442,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@CouponTypeID",SqlDbType.NVarChar),
 					new SqlParameter("@CouponID",SqlDbType.NVarChar),
+                    /**
                     new SqlParameter("@Col1",SqlDbType.NVarChar),
 					new SqlParameter("@Col2",SqlDbType.NVarChar),
 					new SqlParameter("@Col3",SqlDbType.NVarChar),
@@ -490,6 +493,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@Col48",SqlDbType.NVarChar),
 					new SqlParameter("@Col49",SqlDbType.NVarChar),
 					new SqlParameter("@Col50",SqlDbType.NVarChar)
+                     * **/
 
             };
 			parameters[0].Value = pEntity.CouponCode;
@@ -503,6 +507,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[8].Value = pEntity.LastUpdateBy;
 			parameters[9].Value = pEntity.CouponTypeID;
 			parameters[10].Value = pEntity.CouponID;
+            /**
             parameters[11].Value = pEntity.Col1;
             parameters[12].Value = pEntity.Col2;
             parameters[13].Value = pEntity.Col3;
@@ -553,7 +558,7 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[58].Value = pEntity.Col48;
             parameters[59].Value = pEntity.Col49;
             parameters[60].Value = pEntity.Col50;
-
+            **/
             //Ö´ÐÐÓï¾ä
             int result = 0;
             if (pTran != null)
@@ -1074,6 +1079,7 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.CouponTypeID =  Convert.ToString(pReader["CouponTypeID"]);
 			}
+            /**
             if (pReader["Col1"] != DBNull.Value)
             {
                 pInstance.Col1 = Convert.ToString(pReader["Col1"]);
@@ -1274,6 +1280,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pInstance.Col50 = Convert.ToString(pReader["Col50"]);
             }
+             * **/
 
         }
         #endregion

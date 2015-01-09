@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/7/1 9:45:39
+ * Create On	:2014/11/4 14:54:54
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -50,6 +50,11 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public String Plat { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public String IOSUpgradeUrl { get; set; }
 
 		/// <summary>
@@ -81,6 +86,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsMandatoryUpdate { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String ServerUrl { get; set; }
 
 		/// <summary>
 		/// 

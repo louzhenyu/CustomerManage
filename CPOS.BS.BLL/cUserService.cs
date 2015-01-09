@@ -14,6 +14,7 @@ using JIT.CPOS.Common;
 using System.Configuration;
 using System.Web;
 using JIT.Utility.ExtensionMethod;
+using JIT.CPOS.DTO.Base;
 
 
 namespace JIT.CPOS.BS.BLL
@@ -99,6 +100,29 @@ namespace JIT.CPOS.BS.BLL
             }
             return userInfo;
         }
+
+        #region 根据CusID获取销售人员列表 2014-10-16
+
+        /// <summary>
+        /// 获取门店服务顾问人员列表（后台用）
+        /// </summary>
+        /// <param name="customerID">客户ID</param>
+        /// <param name="unitID">门店ID</param>
+        /// <param name="roleCode">人员code 销售人员为：xsgw </param>
+        /// <returns></returns>
+        public IList<UserInfoRD> GetUserByCustomerID(string customerID, string unitID, string roleCode)
+        {
+            DataTable dt = userService.GetUserByCustomerID(customerID, unitID, roleCode);
+
+            IList<UserInfoRD> userList = new List<UserInfoRD>();
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                userList = DataTableToObject.ConvertToList<UserInfoRD>(dt);
+            }
+            return userList;
+        }
+
+        #endregion
 
         /// <summary>
         /// 获取用户在某种角色下的缺省的单位
@@ -1344,6 +1368,63 @@ namespace JIT.CPOS.BS.BLL
             public string Data;
             public string qrImageUrl;
         }
+        #endregion
+
+        #region RequestParameter 2014-10-16
+
+        /// <summary>
+        /// 销售人员信息
+        /// </summary>
+        public class UserInfoRP : IAPIRequestParameter
+        {
+            /// <summary>
+            /// 门店ID
+            /// </summary>
+            public string UnitID { get; set; }
+
+            public string ReserveType { get; set; }
+
+            public void Validate()
+            {
+                if (string.IsNullOrEmpty(UnitID))
+                    throw new APIException(201, "门店不能为空！");
+            }
+        }
+
+        /// <summary>
+        /// 销售人员列表
+        /// </summary>
+        public class UserInfoListRD : IAPIResponseData
+        {
+            /// <summary>
+            /// 销售人员列表信息
+            /// </summary>
+            public IList<UserInfoRD> SalesmanList { get; set; }
+
+            /// <summary>
+            /// 工位列表信息
+            /// </summary>
+            public IList<ObjectInfoRD> ObjectList { get; set; }
+        }
+
+        /// <summary>
+        /// 销售人员
+        /// </summary>
+        public class ObjectInfoRD : IAPIResponseData
+        {
+            public string ObjectID { get; set; }
+            public string ObjectName { get; set; }
+        }
+
+        /// <summary>
+        /// 销售人员
+        /// </summary>
+        public class UserInfoRD : IAPIResponseData
+        {
+            public string SalesmanID { get; set; }
+            public string SName { get; set; }
+        }
+
         #endregion
 
     }
