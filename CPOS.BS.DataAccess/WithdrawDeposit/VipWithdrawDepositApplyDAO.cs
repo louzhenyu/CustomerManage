@@ -90,5 +90,154 @@ namespace JIT.CPOS.BS.DataAccess
         {
             return this.SQLHelper.CreateTransaction();
         }
+
+        /// <summary>
+        /// 根据会员名称执行分页查询
+        /// </summary>
+        /// <param name="pWhereConditions">筛选条件</param>
+        /// <param name="pOrderBys">排序</param>
+        /// <param name="pPageSize">每页的记录数</param>
+        /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
+        /// <returns></returns>
+        public PagedQueryResult<VipWithdrawDepositApplyEntity> PagedQueryByVipName(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        {
+            //组织SQL
+            StringBuilder pagedSql = new StringBuilder();
+            StringBuilder totalCountSql = new StringBuilder();
+            //分页SQL
+            pagedSql.AppendFormat("select * from (select row_number()over( order by ");
+            if (pOrderBys != null && pOrderBys.Length > 0)
+            {
+                foreach (var item in pOrderBys)
+                {
+                    if (item != null)
+                    {
+                        pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
+                    }
+                }
+                pagedSql.Remove(pagedSql.Length - 1, 1);
+            }
+            else
+            {
+                pagedSql.AppendFormat(" [ApplyID] desc"); //默认为主键值倒序
+            }
+            pagedSql.AppendFormat(") as ___rn,a.*,v.VipName FROM VipWithdrawDepositApply a INNER JOIN dbo.Vip v ON v.VIPID=a.VipID where 1=1  and a.isdelete=0 ");
+            //总记录数SQL
+            totalCountSql.AppendFormat("select count(1)  FROM VipWithdrawDepositApply a INNER JOIN dbo.Vip v ON v.VIPID=a.VipID where 1=1  and a.isdelete=0 ");
+            //过滤条件
+            if (pWhereConditions != null)
+            {
+                foreach (var item in pWhereConditions)
+                {
+                    if (item != null)
+                    {
+                        pagedSql.AppendFormat(" and {0}", item.GetExpression());
+                        totalCountSql.AppendFormat(" and {0}", item.GetExpression());
+                    }
+                }
+            }
+            pagedSql.AppendFormat(") as A ");
+            //取指定页的数据
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
+            //执行语句并返回结果
+            PagedQueryResult<VipWithdrawDepositApplyEntity> result = new PagedQueryResult<VipWithdrawDepositApplyEntity>();
+            List<VipWithdrawDepositApplyEntity> list = new List<VipWithdrawDepositApplyEntity>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    VipWithdrawDepositApplyEntity m;
+                    this.Load(rdr, out m);
+                    if (rdr["VipName"] != DBNull.Value)
+                    {
+                        m.VipName = Convert.ToString(rdr["VipName"]);
+                    }
+                    list.Add(m);
+                }
+            }
+            result.Entities = list.ToArray();
+            int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(totalCountSql.ToString()));    //计算总行数
+            result.RowCount = totalCount;
+            int remainder = 0;
+            result.PageCount = Math.DivRem(totalCount, pPageSize, out remainder);
+            if (remainder > 0)
+                result.PageCount++;
+            return result;
+        }
+
+        /// <summary>
+        /// 根据店员名称执行分页查询
+        /// </summary>
+        /// <param name="pWhereConditions">筛选条件</param>
+        /// <param name="pOrderBys">排序</param>
+        /// <param name="pPageSize">每页的记录数</param>
+        /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
+        /// <returns></returns>
+        public PagedQueryResult<VipWithdrawDepositApplyEntity> PagedQueryByUserName(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        {
+            //组织SQL
+            StringBuilder pagedSql = new StringBuilder();
+            StringBuilder totalCountSql = new StringBuilder();
+            //分页SQL
+            pagedSql.AppendFormat("select * from (select row_number()over( order by ");
+            if (pOrderBys != null && pOrderBys.Length > 0)
+            {
+                foreach (var item in pOrderBys)
+                {
+                    if (item != null)
+                    {
+                        pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
+                    }
+                }
+                pagedSql.Remove(pagedSql.Length - 1, 1);
+            }
+            else
+            {
+                pagedSql.AppendFormat(" [ApplyID] desc"); //默认为主键值倒序
+            }
+            pagedSql.AppendFormat(") as ___rn,a.*,u.user_name FROM VipWithdrawDepositApply a INNER JOIN dbo.T_User u ON u.user_id=a.VipID where 1=1  and a.isdelete=0 ");
+            //总记录数SQL
+            totalCountSql.AppendFormat("select count(1)  FROM VipWithdrawDepositApply a INNER JOIN dbo.T_User u ON  u.user_id=a.VipID where 1=1  and a.isdelete=0 ");
+            //过滤条件
+            if (pWhereConditions != null)
+            {
+                foreach (var item in pWhereConditions)
+                {
+                    if (item != null)
+                    {
+                        pagedSql.AppendFormat(" and {0}", item.GetExpression());
+                        totalCountSql.AppendFormat(" and {0}", item.GetExpression());
+                    }
+                }
+            }
+            pagedSql.AppendFormat(") as A ");
+            //取指定页的数据
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
+            //执行语句并返回结果
+            PagedQueryResult<VipWithdrawDepositApplyEntity> result = new PagedQueryResult<VipWithdrawDepositApplyEntity>();
+            List<VipWithdrawDepositApplyEntity> list = new List<VipWithdrawDepositApplyEntity>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    VipWithdrawDepositApplyEntity m;
+                    this.Load(rdr, out m);
+                    if (rdr["user_name"] != DBNull.Value)
+                    {
+                        m.VipName = Convert.ToString(rdr["user_name"]);
+                    }
+                    list.Add(m);
+                }
+            }
+            result.Entities = list.ToArray();
+            int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(totalCountSql.ToString()));    //计算总行数
+            result.RowCount = totalCount;
+            int remainder = 0;
+            result.PageCount = Math.DivRem(totalCount, pPageSize, out remainder);
+            if (remainder > 0)
+                result.PageCount++;
+            return result;
+        }
+
     }
 }

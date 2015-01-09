@@ -1218,9 +1218,11 @@
     <Content Include="Module\VipManage\js\main.js" />
     <Content Include="Module\VipManage\js\queryList.js" />
     <Content Include="Module\VipManage\js\vipDetail.js" />
+    <Content Include="Module\VipManage\js\withdrawDeposit.js" />
     <Content Include="Module\VipManage\QueryList.aspx" />
     <Content Include="Module\VipManage\QueryList.html" />
     <Content Include="Module\VipManage\VipDetail.aspx" />
+    <Content Include="Module\VipManage\withdrawDeposit.aspx" />
     <Content Include="Module\Vip\Vip14\css\global.css" />
     <Content Include="Module\Vip\Vip14\css\style.css" />
     <Content Include="Module\Vip\Vip14\images\good_icon.png" />
@@ -6019,6 +6021,7 @@
     <Content Include="File\ExcelTemplate\DeliveryTemplate.xlsx" />
     <Content Include="ApplicationInterface\Coupon\CouponEntry.ashx" />
     <Content Include="ApplicationInterface\Delivery\DeliveryEntry.ashx" />
+    <Content Include="ApplicationInterface\Vip\WithdrawDepositGateway.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -7046,6 +7049,9 @@
     <Compile Include="ApplicationInterface\Module\VIP\MobileModule\ReNameFormAH.cs" />
     <Compile Include="ApplicationInterface\Vip\VipGateway.ashx.cs">
       <DependentUpon>VipGateway.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Vip\WithdrawDepositGateway.ashx.cs">
+      <DependentUpon>WithdrawDepositGateway.ashx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\WithdrawalAndBooking\WithdrawalGateway.ashx.cs">
       <DependentUpon>WithdrawalGateway.ashx</DependentUpon>

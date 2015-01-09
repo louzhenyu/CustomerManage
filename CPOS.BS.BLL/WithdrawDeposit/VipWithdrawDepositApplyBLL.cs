@@ -47,6 +47,20 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetTran();
         }
-
+        /// <summary>
+        /// 根据会员/店员名称执行分页查询
+        /// </summary>
+        /// <param name="pWhereConditions">筛选条件</param>
+        /// <param name="pOrderBys">排序</param>
+        /// <param name="pPageSize">每页的记录数</param>
+        /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
+        /// <returns></returns>
+        public PagedQueryResult<VipWithdrawDepositApplyEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex,int isVip)
+        {
+            if (isVip == 1)//会员
+                return this._currentDAO.PagedQueryByVipName(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
+            else//店员
+                return this._currentDAO.PagedQueryByUserName(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
+        }
     }
 }

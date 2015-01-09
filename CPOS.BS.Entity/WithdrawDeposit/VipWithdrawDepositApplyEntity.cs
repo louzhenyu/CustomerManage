@@ -33,6 +33,10 @@ namespace JIT.CPOS.BS.Entity
         /// 银行名称
         /// </summary>
         public string BankName { get; set; }
+        /// <summary>
+        /// 会员/店员名称
+        /// </summary>
+        public string VipName { get; set; }
 
         #endregion
     }
