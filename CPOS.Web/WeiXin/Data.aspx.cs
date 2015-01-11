@@ -83,13 +83,13 @@ namespace JIT.CPOS.Web.WeiXin
         /// <returns></returns>
         public string SetSignIn()
         {
-            
+
             Random rad = new Random();
             int iRad = rad.Next(1000, 100000);
             string content = string.Empty;
             var respData = new SetSignInRespData();
             string VipIdTmp = string.Empty;
-            
+
             try
             {
                 string OpenID = Request["openID"];
@@ -102,7 +102,7 @@ namespace JIT.CPOS.Web.WeiXin
                 string qrcode_id = Request["qrcode_id"];    //门店转换id
 
                 string headimgurl = Request["headimgurl"];
-               
+
                 #region 1.头像处理
                 if (headimgurl == null || headimgurl.Equals(""))
                 {
@@ -136,12 +136,12 @@ namespace JIT.CPOS.Web.WeiXin
                 vipShowLogBll.Create(vipShowLogInfo);
                 #endregion
 
-               
+
 
                 VipBLL vipService = new VipBLL(loggingSessionInfo);
                 var vipCode = vipService.GetVipCode();
                 var vipCodeShort = vipCode.Substring(4).Insert(3, " ");
-                
+
 
                 VipEntity vipQueryInfo = new VipEntity();
                 VipEntity vipInfo = new VipEntity();
@@ -193,16 +193,17 @@ namespace JIT.CPOS.Web.WeiXin
                             }
                         }
                     }
-                    catch (Exception ex1) {
+                    catch (Exception ex1)
+                    {
                         Loggers.Debug(new DebugLogInfo()
                         {
                             Message = "扫描插入管理平台出错：" + ex1.ToString()
                         });
                     }
-                    
+
                     #endregion
                 }
-                #endregion 
+                #endregion
 
                 Loggers.Debug(new DebugLogInfo()
                 {
@@ -236,9 +237,9 @@ namespace JIT.CPOS.Web.WeiXin
                 //}
                 //张伟封装的固定二维码扫描
                 customerIdUnoin = menuServer.GetCustomerIdByWx(WeiXin);
-                
+
                 //update by wzq 20140805 cancel old push qrcode info
-             //   SetPushQRCode(OpenID, customerIdUnoin, VipIdTmp, qrcode_id, WeiXin);
+                //   SetPushQRCode(OpenID, customerIdUnoin, VipIdTmp, qrcode_id, WeiXin);
                 respData.QRVipCode = vipInfo.QRVipCode;
                 respData.CouponURL = vipInfo.CouponURL;
                 respData.Data = vipInfo.QRVipCode;
@@ -251,8 +252,31 @@ namespace JIT.CPOS.Web.WeiXin
                 {
                     Message = "三维码扫描---：" + qrcode_id + "------" + customerIdUnoin
                 });
-                
+
                 eventsBll.SendQrCodeWxMessage(loggingSessionInfo, customerIdUnoin, WeiXin, qrcode_id, OpenID, HttpContext.Current);
+
+                #region 云店处理 Add Henry
+                var wAppBll = new WApplicationInterfaceBLL(loggingSessionInfo);       //实例化微信公众号信息BLL
+                var qrCodeBll = new WQRCodeManagerBLL(loggingSessionInfo);            //实例化门店二维码BLL
+                string cloudCustomerId = ConfigurationManager.AppSettings["CloudCustomerId"].ToString();    //读取云店客户ID
+                //获取云店微信号信息
+                var appInterfaceEntity = wAppBll.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = cloudCustomerId }, null).FirstOrDefault();
+                if (appInterfaceEntity != null)
+                {
+                    //根据QRCode和公众号的ApplicationID获取商户的门店ID
+                    var qrCodeEntity = qrCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ApplicationId = appInterfaceEntity.ApplicationId, QRCode = qrcode }, null).FirstOrDefault();
+                    if (qrCodeEntity != null)
+                    {
+                        //根据获取的门店ID和客户ID商户的会员信息
+
+                        //根据OpenID判断商户的此用户信息是否存在
+
+
+                    }
+                }
+
+
+                #endregion
             }
             catch (Exception ex)
             {
@@ -1245,7 +1269,7 @@ namespace JIT.CPOS.Web.WeiXin
 
             string customerIdUnoin = string.Empty;
             string unitName = string.Empty;
-          
+
             vipQueryInfo.WeiXinUserId = OpenID;
             vipQueryInfo.WeiXin = WeiXin;
             WMenuBLL menuServer = new WMenuBLL(AploggingSessionInfo);
@@ -1271,7 +1295,8 @@ namespace JIT.CPOS.Web.WeiXin
                 vipShowLogBllTmp.Create(vipShowLogInfoTmp);
 
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Loggers.Debug(new DebugLogInfo()
                 {
                     Message = "插入关注日志：" + ex.ToString()
@@ -1287,8 +1312,8 @@ namespace JIT.CPOS.Web.WeiXin
                 vipInfo.City = City;
                 if (Gender != string.Empty) vipInfo.Gender = Convert.ToInt32(Gender);
                 vipInfo.VipName = VipName;
-               // vipInfo.QRVipCode = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + newFilePath;
-               // vipInfo.CouponURL = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + couponNewFilePath;
+                // vipInfo.QRVipCode = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + newFilePath;
+                // vipInfo.CouponURL = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + couponNewFilePath;
                 vipInfo.Col49 = qrcode;
                 vipInfo.WeiXin = WeiXin;
                 vipInfo.VipSourceId = "3";
@@ -1322,7 +1347,8 @@ namespace JIT.CPOS.Web.WeiXin
                     {
                         vipInfo.Status = 1;
                     }
-                    else {
+                    else
+                    {
                         vipInfo.Status = 2;
                     }
                     #endregion
@@ -1399,7 +1425,7 @@ namespace JIT.CPOS.Web.WeiXin
                     {
                         //case 1: //返利集客员工二维码，已经做好
                         case 2: //人人销售 集客员工二维码
-                            
+
                             var subBll = new VipOrderSubRunObjectMappingBLL(tmpUser);
 
                             //设置集客员工与会员关系
@@ -1428,8 +1454,8 @@ namespace JIT.CPOS.Web.WeiXin
                                 Loggers.Debug(new DebugLogInfo()
                                 {
                                     Message = string.Format("设置集客员工与会集店关系IsSuccess:{0},Desc:{1}", IsSuccess_, Desc_)
-                                });                                 
-                            }                                                      
+                                });
+                            }
 
                             break;
                         default:
@@ -1453,10 +1479,10 @@ namespace JIT.CPOS.Web.WeiXin
                 #region Jermyn20140213关注获取积分
                 VipIntegralBLL vipIntegralServer = new VipIntegralBLL(tmpUser);
                 vipIntegralServer.ProcessPoint(3, customerIdUnoin, vipId, vipId);
-                 
+
                 #endregion
                 #region 关注获取返现
-            string strErrormessage="";
+                string strErrormessage = "";
                 VipAmountBLL Amountbll = new VipAmountBLL(tmpUser);
                 Amountbll.SetVipAmountChange(customerIdUnoin, 9, vipId, 0, vipId, "关注奖励", "IN", out strErrormessage);//关注奖励对应的
 
@@ -1488,7 +1514,7 @@ namespace JIT.CPOS.Web.WeiXin
                 {
                     Message = string.Format("SetCustomerVipInfo-Cancel: {0}", IsShow + Convert.ToString(System.DateTime.Now))
                 });
-                
+
                 var vipEntity = vipObj[0];
 
                 try
@@ -1509,9 +1535,9 @@ namespace JIT.CPOS.Web.WeiXin
                         IsSuccess = 0
                     });
                 }
-                #endregion 
+                #endregion
             }
-       
+
             return customerIdUnoin;
             #endregion
         }
@@ -1592,7 +1618,8 @@ namespace JIT.CPOS.Web.WeiXin
                     throw new Exception("二维码不存在:" + qrcode_id);
                 }
                 #region Jermyn20140530 插入活动签到
-                else {
+                else
+                {
                     SetEventSign(customerId, userId, qCodeManagerEntity.ObjectId);
                 }
                 #endregion
@@ -1877,14 +1904,14 @@ namespace JIT.CPOS.Web.WeiXin
         /// <param name="qrcode_id"></param>
         /// <param name="userId"></param>
         /// <param name="eventId"></param>
-        public void SetEventSign(string customerId, string userId,string eventId)
+        public void SetEventSign(string customerId, string userId, string eventId)
         {
             #region 活动
             var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
             LEventsBLL eventServer = new LEventsBLL(loggingSessionInfo);
             LEventsEntity eventInfo = new LEventsEntity();
             DataSet ds = eventServer.GetEventInfo(eventId);
-            if (ds != null && ds.Tables.Count > 0 )
+            if (ds != null && ds.Tables.Count > 0)
             {
                 #region 获取门店需要退出的特殊信息
                 //Jermyn20131209 添加用户与活动关系
@@ -1894,7 +1921,7 @@ namespace JIT.CPOS.Web.WeiXin
                 eventUserMappingInfo.EventID = eventId;
                 eventUserMappingInfo.UserID = userId;
                 eventUserMappingServer.Create(eventUserMappingInfo);
-                
+
                 #endregion
 
             }

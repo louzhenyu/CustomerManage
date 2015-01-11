@@ -189,7 +189,7 @@ namespace JIT.CPOS.BS.BLL.WX
             {
                 if (appList[0].IsHeight == 0)
                 {
-                    //获取云店公众号信息
+                    //获取云店公众号信息 Add by Henry 
                     appList = wApplicationInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity
                     {
                         AppID = appID,
@@ -201,7 +201,7 @@ namespace JIT.CPOS.BS.BLL.WX
             }
             else
             {
-                //获取云店公众号信息
+                //获取云店公众号信息 Add by Henry
                 appList = wApplicationInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity
                 {
                     AppID = appID,
