@@ -364,7 +364,7 @@ function fnTrpItemCategoryTree_ItemClick(view, record, item, e, options) {
             ctl_cmbParent.setValues(item, false);
         }
         //阿拉分类，需要处理吗？
-        fnGetALDCategory(detailData.get('Item_Category_Id'));
+        //fnGetALDCategory(detailData.get('Item_Category_Id'));
 
 
         var status = detailData.get('Status');
