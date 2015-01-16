@@ -173,4 +173,6 @@ function fnLoadMenus(app_sys_id, role_id) {
         width: 372,
         height: 268
     });
+
+	
 }

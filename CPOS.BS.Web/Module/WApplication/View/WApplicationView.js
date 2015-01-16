@@ -62,14 +62,17 @@
         , jitIsDefaultCSS: true
     });
 
+
     Ext.create('Jit.button.Button', {
-        text: "批量导入",
+        text: "批量导入微信公众号会员",
         renderTo: "Bulkimport",
+	hidden: true, 
         //hidden: __getHidden("create"),
         handler: fnImport
         , jitIsHighlight: true
         , jitIsDefaultCSS: true
     });
+
 
     //list area
     Ext.create('Ext.grid.Panel', {

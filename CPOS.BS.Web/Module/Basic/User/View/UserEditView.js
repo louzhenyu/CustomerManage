@@ -15,7 +15,7 @@
         }
         , {
             contentEl: 'tabRole',
-            title: '职务信息',
+            title: '角色配置',
             listeners: {
                 activate: function (tab) {
                     var tmp = get("tabRole");

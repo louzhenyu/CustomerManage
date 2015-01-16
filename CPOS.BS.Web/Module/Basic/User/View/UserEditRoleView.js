@@ -30,12 +30,13 @@
         labelHeight: 100,
         matchFieldHeight: false
     });
-    
+
     Ext.create('jit.biz.YesNoStatus', {
         id: "txtDefaultFlag",
         text: "",
         renderTo: "txtDefaultFlag",
         dataType: "yn",
+	value:'1',//初始值
         width: 100
     });
 

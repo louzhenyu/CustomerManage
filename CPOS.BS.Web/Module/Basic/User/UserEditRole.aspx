@@ -43,7 +43,7 @@
                                 <div id="txtUnit" style="margin-top:0px;"></div>
                             </td>
                         </tr>
-                        <tr class="z_main_tb_tr">
+                        <tr class="z_main_tb_tr" style="display:none;">
                             <td class="z_main_tb_td" style="vertical-align:top; line-height:22px;"><font color="red">*</font>缺省标志</td>
                             <td class="z_main_tb_td2" colspan="3" style="vertical-align:top; line-height:32px; width:auto;">
                                 <div id="txtDefaultFlag" style="margin-top:0px;"></div>

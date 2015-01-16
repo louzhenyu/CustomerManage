@@ -1,7 +1,7 @@
 ﻿function InitView() {
     Ext.create('Ext.form.Panel', {
         collapsible: true,
-        height: 1450,
+        height: 1080,
         id: 'cuserinfo',
         header: {
             xtype: "header",
@@ -22,42 +22,52 @@
         layout: 'anchor',
         width: '100%',
         bodyStyle: "background:#F1F2F5;padding-top:10px",
+	
         items: [{
+            layout: 'column',
+            border: 0,
+            items: [{
             xtype: "jitdisplayfield",
-            fieldLabel: "客户号码",
+            fieldLabel: "客户号码:",
             name: "userCode",
+	    width:300,
             id: "txtuserCode"
 
-        }, {
+            }, {
+                xtype: "jitdisplayfield",
+                fieldLabel: "客户名称:",
+                name: "userName",
+	        width:300,
+                id: "txtuserName"
+            }]
+            },{
             xtype: "jitdisplayfield",
-            fieldLabel: "客户名称",
-            name: "userName",
-            id: "txtuserName"
-        }, {
-            xtype: "jitdisplayfield",
-            fieldLabel: "客户标识",
+            fieldLabel: "客户标识:",
             name: "userID",
+	    width:300,
             id: "txtuserID"
         },
+	
+	
         {
             layout: 'column',
             border: 0,
             items: [{
                 xtype: "jitdisplayfield",
-                labelWidth: 71,
+                //labelWidth: 71,
                 width: 71,
-                fieldLabel: "<font color='red'>*</font>客户Logo"
+                fieldLabel: "<font color='red'>*</font>客户Logo:"
             }, {
-                html: '<img id="logopicture" src="" width="150px" height="80px">'    //这里直接用的html
+                html: '<img id="logopicture" src="" width="138px" height="60px">'    //这里直接用的html
 
             }, {
                 xtype: 'label',
-                html: '<input type="button" id="uploadImageUrl" value=" 选择图片 " style="margin-left: 10px" /><p style="line-height: 28px;font-size: 15px;color: red;margin-top: 20px;margin-left: 20px;">建议图片大小,高40\宽自动</p>'
+                html: '<input type="button" id="uploadImageUrl" value="选择图片" style="padding-top:2px;margin-left: 20px" /><p style="line-height: 22px;color: red;margin-left: 10px;">图片尺寸138px * 60px</p>'
             }]
         }, {
 
             xtype: "jitcombobox",
-            fieldLabel: "<font color='red'>*</font>客户分类",
+            fieldLabel: "<font color='red'>*</font>客户分类:",
             store: Ext.getStore("customeTypeStore"),//设置Store
             name: "CustomerType",
             id: "cmbCustomerType",
@@ -65,23 +75,23 @@
             displayField: "SortName"
         }, {
             xtype: "jittextarea",
-            fieldLabel: "关于我们",       //<font color='red'>*</font>
+            fieldLabel: "关于我们:",       //<font color='red'>*</font>
             name: "kindeditorcontent",
             id: "txtAboutUs"
 
         }, {
             xtype: "jittextarea",
-            fieldLabel: "品牌故事",      //<font color='red'>*</font>
+            fieldLabel: "品牌故事:",      //<font color='red'>*</font>
             name: "kindeditorcontent",
             id: "txtBrandStory"
         }, {
             xtype: "jittextarea",
-            fieldLabel: "品牌相关",               // <font color='red'>*</font>
+            fieldLabel: "品牌相关:",               // <font color='red'>*</font>
             name: "kindeditorcontent",
             id: "txtBrandRelated"
         }, {
             xtype: "jittextfield",
-            fieldLabel: "<font color='red'>*</font>积分抵用金额的比率",
+            fieldLabel: "<font color='red'>*</font>积分抵用金额的比率:",
             name: "IntegralAmountPer",
             id: "txtIntegralAmountPer",
                mouseWheelEnabled: false,   //鼠标不能滑动
@@ -92,7 +102,7 @@
         
         }, {
             xtype: "jittextfield",
-            fieldLabel: "<font color='red'>*</font>手机短信签名",
+            fieldLabel: "<font color='red'>*</font>短信签名:",
             name: "SMSSign",
              width: 480,
             id: "txtSMSSign"
@@ -103,23 +113,23 @@
                 xtype: "jitdisplayfield",
                 labelWidth: 71,
                 width: 71,
-                fieldLabel: "<font color='red'>*</font>转发消息图标"
+                fieldLabel: "<font color='red'>*</font>转发消息图标:"
             }, {
-                html: '<img id="ForwardingMessageLogopicture" src="" width="150px" height="80px">'
+                html: '<img id="ForwardingMessageLogopicture" src="" width="60px" height="60px">'
 
             }, {
                 xtype: 'label',
-                html: '<input type="button" id="uploadForwardingImageUrl" value=" 选择图片 " style="margin-left: 10px" /><p style="line-height: 28px;font-size: 15px;color: red;margin-top: 20px;margin-left: 20px;">建议图片大小,高40\宽自动</p>'
+                html: '<input type="button" id="uploadForwardingImageUrl" value=" 选择图片 " style="margin-left: 10px" /><p style="line-height: 22px;color: red;margin-top: 10px;margin-left: 10px;">建议图片大小,高40\宽自动</p>'
             }]
         }, {
             xtype: "jittextfield",
-            fieldLabel: "<font color='red'>*</font>转发消息默认标题",
+            fieldLabel: "<font color='red'>*</font>转发消息默认标题:",
             name: "ForwardingMessageTitle",
              width: 480,
             id: "txtForwardingMessageTitle"
         }, {
             xtype: "jittextfield",
-            fieldLabel: "<font color='red'>*</font>转发消息默认摘要文字",
+            fieldLabel: "<font color='red'>*</font>转发消息默认摘要文字:",
             name: "ForwardingMessageSummary",
              width: 480,
             id: "txtForwardingMessageSummary",
@@ -128,15 +138,17 @@
             xtype: "jittextarea",
             fieldLabel: "<font color='red'>*</font>什么是通用积分",
             name: "kindeditorcontent",
+	    hidden: true, 
             id: "txtWhatCommonPoints"
         }, {
             xtype: "jittextarea",
             fieldLabel: "<font color='red'>*</font>如何获得积分",
             name: "kindeditorcontent",
+	    hidden: true, 
             id: "txtGetPoints"
         }, {
             xtype: "jittextarea",
-            fieldLabel: "<font color='red'>*</font>如何消费积分",
+            fieldLabel: "<font color='red'>*</font>如何消费积分:",
             name: "kindeditorcontent",
             id: "txtSetSalesPoints"
         }
@@ -145,6 +157,7 @@
 
     Ext.create('Ext.form.Panel', {
         collapsible: true,
+	hidden: true, 
         id: 'cuserinfocf',
         height: 380,
         header: {
@@ -210,6 +223,7 @@ html: '<img id="vippicture" src="" width="179px" height="100px">'
              ]
     });
 
+    
     Ext.create('Ext.form.Panel', {
         id: 'cuserserch',
         collapsible: true,

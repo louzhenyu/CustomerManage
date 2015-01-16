@@ -31,7 +31,7 @@ body{_height:100%;}
 }
 
 /*前端页面客户化配置列表*/
-.commonOutArea{width:1038px;margin:15px;padding-bottom:40px;border:1px solid #cecedc;border-radius:4px;}
+.commonOutArea{padding:15px;border:1px solid #cecedc;border-radius:4px;}
 /*公共标题*/
 .commonTitleWrap{height:52px;padding:0 15px;border-bottom:1px solid #cecedc;border-radius:4px 4px 0 0;background:#f2f2f9;}
 .commonTitleWrap h2{float:left;margin-top:15px;font-size:16px;font-weight:bold;color:#666;}

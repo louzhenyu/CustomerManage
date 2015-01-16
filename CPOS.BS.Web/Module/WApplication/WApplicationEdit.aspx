@@ -93,7 +93,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr class="z_main_tb_tr">
+                            <tr class="z_main_tb_tr" style="display:none;">
                                 <td class="z_main_tb_td" style="vertical-align: top; line-height: 22px;">
                                     文件存放地址
                                 </td>

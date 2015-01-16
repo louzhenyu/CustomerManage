@@ -166,7 +166,7 @@
 					<li class="nav005">
 						<a href="###">基础管理</a>
 					</li>--%>
-                    <li class="nav008">
+                    <li class="nav008" style="display:none;">
                         <a href="http://help.chainclouds.com/" target="_blank" id="" class="" title="帮助手册">帮助手册</a>
                     </li>
                         

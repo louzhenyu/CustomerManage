@@ -38,6 +38,7 @@ function fnSave() {
         showError("请选择单位");
         return;
     }
+
     
     z_selected_data = {};
 
