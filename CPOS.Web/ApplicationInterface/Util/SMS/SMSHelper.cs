@@ -20,7 +20,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Util.SMS
                 string url = ConfigurationManager.AppSettings["SMSURL"];
                 if (string.IsNullOrEmpty(url))
                     throw new Exception("未配置短信服务URL");
-                var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的验证码是：【{0}】", pContent), Sign = pSign };
+                //var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的验证码是：【{0}】", pContent), Sign = pSign };
+                var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的【连锁云掌柜】云店验证码是：【{0}】，请不要把验证码泄露给其他人。", pContent), Sign = pSign };
                 var request = new { Action = "SendMessage", Parameters = para };
                 string str = string.Format("request={0}", request.ToJSON());
                 Loggers.Debug(new DebugLogInfo() { Message = "发送短信:" + str });
