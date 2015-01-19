@@ -520,7 +520,7 @@
                     }
                         break; //底部导航
                     case "adList":
-                        if(self.isAdd(self.ele.navigation)){
+                        if(self.isAdd(self.ele.adList)){
                             self.renderADList();
                         }else{
                             alert("幻灯片已存在");
@@ -591,7 +591,7 @@
                 $this.parents(".jsAreaItem").eq(0).data("objectid", "").data("typeid", this.value.substring(this.value.indexOf("-") + 1));
 
 
-                if (this.value == "ad-2"||this.value=="cg-3") {
+                if (this.value == "ad-2"||this.value=="cg-3"||this.value == "et-3") {
                     $this.parent().siblings(".infoContainer").show().children(".jsNameInput").removeAttr("disabled");
                     $this.parent().siblings(".infoContainer").children(".jsChooseBtn").attr("disabled", "disabled").css({"opacity": 0.2});
                 } else if (this.value == "et-8") {
@@ -608,7 +608,8 @@
                 }else if (this.value == "sk-1"||this.value == "sk-2") {
                     var text=$(".jsTypeSelect option:selected").text();
                      self.ele.secondKill.find(".tit").children("b").text(text);
-                } else if(this.value == "cg-31"||this.value == "cg-32"||this.value == "cg-33"||this.value == "cg-34"){
+                }//自定义链接
+                else if(this.value == "cg-31"||this.value == "cg-32"||this.value == "cg-33"||this.value == "cg-34"){
                     $this.parent().siblings(".infoContainer").hide();
                 }
                 else {
@@ -861,20 +862,31 @@
                     obj["categoryAreaId"] = $this.data("categoryareaid");
                     obj["displayIndex"] = $this.data("displayindex");
                     obj["groupId"] = self.currentEditData.groupId;
-                } else {
+                }
 
                     obj["displayIndex"] = i + 1;
-                    if (!obj.objectId) {
-                        flag = false;
-                        alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
-                        return false;
+                    if (obj.typeId == 3) {
+                        obj["url"] = $this.find(".jsNameInput").val();
+                        if(!obj.url){
+                            flag = false;
+                            alert("第" + (i + 1) + "项展示不能为空，请自定义的url链接");
+                            return false;
+                        }
+                    } else {
+                        obj["objectId"] = $this.data("objectid")==""?$this.attr("data-objectid"):$this.data("objectid");
+                        if (!obj.objectId) {
+                            flag = false;
+                            alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
+                            return false;
+                        }
                     }
+
                     if (!obj.imageUrl) {
                         flag = false;
                         alert("第" + (i + 1) + "项展示图片不能为空，请选择展示图片");
                         return false;
                     }
-                }
+
                 list.push(obj);
             });
             if (flag) {
@@ -916,7 +928,7 @@
                 } else {
 
 
-                    if (!obj.objectId) {
+                    if (!obj.objectId&&!obj["url"]) {
                         flag = false;
                         alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
                         return false;
@@ -971,12 +983,16 @@
                 //debugger;
                 var obj = {}, $this = $(e);
                 obj["typeId"] = $this.data("typeid");
-                obj["objectId"] = $this.data("objectid")==''?$this.attr("data-objectid"): $this.data("objectid");
                 obj["objectName"] = $this.data("name");
                 obj["imageUrl"] = $this.data("imageurl");
                 if (self.currentEditData) {
                     obj["categoryAreaId"] = $this.data("categoryareaid");
                     obj["groupId"] = self.currentEditData.groupId;
+                }
+                if (obj.typeId == 3) {
+                    obj["url"] = $this.find(".jsNameInput").val();
+                } else {
+                    obj["objectId"] = $this.data("objectid")==""?$this.attr("data-objectid"):$this.data("objectid");
                 }
                 if (!obj.imageUrl) {
                     flag = false;
@@ -987,11 +1003,20 @@
                     flag = false;
                     alert("第" + (i + 1) + "项信息已编辑，选项分类不完善");
                     return false;
+                }else{
+                    if(obj["typeId"]==3){
+                        if(!obj["url"]){
+                            flag = false;
+                            alert("第" + (i + 1) + "项信息已编辑,url不完善");
+                            return false;
+                        }
+                    }
+
                 }
 
 
 
-                if (obj.imageUrl && (obj.typeId == 1 && obj.objectId || obj.typeId == 8)) {
+                if (obj.imageUrl && (obj.typeId == 1 && obj.objectId||obj.typeId == 3 || obj.typeId == 8)) {
                     obj["displayIndex"] = list.length;
                     list.push(obj);
                 }
@@ -1077,7 +1102,11 @@
         },
         renderNavItemList:function(obj){
             self.ele.editLayer.find(".jsAreaItem,.jsAreaTitle").remove();
-
+            if(obj.itemList&&obj.itemList.length>0){
+                obj.length= obj.itemList.length;
+            }else{
+                obj.length=4;
+            }
             self.ele.editLayer.html(self.render(self.template.rightNavigationTemp,obj));
             // 注册上传按钮
             self.registerUploadImgBtn();
@@ -1100,7 +1129,7 @@
         },
         renderSecondKillItemList:function(obj){
             self.ele.editLayer.find(".jsAreaItem,.jsAreaTitle").remove();
-            if(obj.arrayList){
+            if(obj.arrayList&&obj.arrayList.length>0){
                 obj.length= obj.arrayList.length;
             }else{
                 obj.length=3;
