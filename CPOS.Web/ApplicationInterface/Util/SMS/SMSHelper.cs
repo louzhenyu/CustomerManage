@@ -18,10 +18,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Util.SMS
             try
             {
                 string url = ConfigurationManager.AppSettings["SMSURL"];
+                var currentUserInfo = Default.GetBSLoggingSession(customerId, "1");
                 if (string.IsNullOrEmpty(url))
                     throw new Exception("未配置短信服务URL");
                 //var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的验证码是：【{0}】", pContent), Sign = pSign };
-                var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的【连锁云掌柜】云店验证码是：【{0}】，请不要把验证码泄露给其他人。", pContent), Sign = pSign };
+              var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的【{0}】云店验证码是：【{1}】，请不要把验证码泄露给其他人。", currentUserInfo.ClientName , pContent), Sign = pSign };
                 var request = new { Action = "SendMessage", Parameters = para };
                 string str = string.Format("request={0}", request.ToJSON());
                 Loggers.Debug(new DebugLogInfo() { Message = "发送短信:" + str });
@@ -30,7 +31,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Util.SMS
                 Loggers.Debug(new DebugLogInfo() { Message = "收到返回信息:" + response.ToJSON() });
 
                 
-                var currentUserInfo = Default.GetBSLoggingSession(customerId, "1");
+                //var currentUserInfo = Default.GetBSLoggingSession(customerId, "1");//放到方法头使用
                 var vipBll = new VipBLL(currentUserInfo);
 
                 var vipEntity = vipBll.QueryByEntity(new VipEntity()
