@@ -937,6 +937,8 @@ namespace JIT.CPOS.Web.Interface.Data
             public string QrCodeUrl { get; set; }       //线下支付预支付订单生成的二维码URL(AliPayOffline支付)
             public string Message { get; set; }         //返回的信息,如发生错误时返回错误信息
             public string WXPackage { get; set; }       //微信返回包信息
+
+            public string WeiXinPreOrderContent { get; set; }
         }
         public class SetPayOrderReqData : Default.ReqData
         {
