@@ -46,6 +46,7 @@ namespace JIT.CPOS.BS.BLL.WX
                         strState = "State";
                     }
                 }
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
                 string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + strAppId + "&redirect_uri=" + HttpUtility.UrlEncode(strRedirectUri) + "&response_type=code&scope=" + scope + "&state=" + strState + "#wechat_redirect";
                 //string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + strAppId + "&redirect_uri=" + HttpUtility.UrlEncode(strRedirectUri) + "&response_type=code&scope=" + scope + "";
                 //string postString = "state=" + strState + "#wechat_redirect";
@@ -111,6 +112,7 @@ namespace JIT.CPOS.BS.BLL.WX
 				string data = string.Empty;
 				if (sendObjList == null || sendObjList.Length == 0 || sendObjList[0] == null)
 				{
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
 					string url = "https://api.weixin.qq.com/sns/oauth2/access_token";
 					WebClient myWebClient = new WebClient();
 					// 注意这种拼字符串的ContentType

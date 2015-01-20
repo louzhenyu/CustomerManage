@@ -168,6 +168,7 @@ namespace JIT.CPOS.Web.WXOAuth
         {
             try
             {
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
                 string url = "https://api.weixin.qq.com/sns/oauth2/access_token";
                 WebClient myWebClient = new WebClient();
                 // 注意这种拼字符串的ContentType

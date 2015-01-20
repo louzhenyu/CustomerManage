@@ -50,7 +50,7 @@ namespace JIT.CPOS.BS.BLL.WX
             req.KeepAlive = false;
             req.Method = method.ToUpper();
             req.Credentials = System.Net.CredentialCache.DefaultCredentials;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
             ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(CheckValidationResult);
             if (method == "POST")
             {
@@ -217,7 +217,6 @@ namespace JIT.CPOS.BS.BLL.WX
                 BaseService.WriteLogWeixin("获取凭证接口： ");
                 BaseService.WriteLogWeixin("appID： " + appID);
                 BaseService.WriteLogWeixin("appSecret： " + appSecret);
-
                 string uri = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appID + "&secret=" + appSecret;
                 string method = "GET";
                 string data = GetRemoteData(uri, method, string.Empty);
@@ -666,7 +665,6 @@ namespace JIT.CPOS.BS.BLL.WX
                 string uri = string.Empty;
                 string method = "POST";
                 string content = string.Empty;
-
                 if (isCustomMsg)
                 {
                     uri = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=" + accessToken.access_token;
@@ -734,7 +732,6 @@ namespace JIT.CPOS.BS.BLL.WX
                 var appEntity = appList.FirstOrDefault();
                 //获取access_token
                 var accessToken = this.GetAccessTokenByCache(appEntity.AppID, appEntity.AppSecret, loggingSessionInfo);
-
                 string uri = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + accessToken.access_token;
                 string method = "POST";
                 string content = message;
@@ -856,7 +853,6 @@ namespace JIT.CPOS.BS.BLL.WX
 
             if (accessToken.errcode == null || accessToken.errcode.Equals(string.Empty))
             {
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
                 string uri = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=" + accessToken.access_token;
                 string method = "POST";
                 string content = string.Empty;
@@ -912,7 +908,6 @@ namespace JIT.CPOS.BS.BLL.WX
             try
             {
                 BaseService.WriteLogWeixin("导入微信公众账号用户信息:  ImportUserInfo()");
-
                 var accessToken = GetAccessTokenByCache(appId, appSecret, loggingSessionInfo);
                 string uri = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=" + accessToken.access_token;
                 string method = "GET";
