@@ -790,7 +790,7 @@ namespace JIT.CPOS.Web.Interface.Data
                     respData.description = "操作成功";
                     respData.content = new SetPayOrderRespContentData();
                     respData.content.OrderID = reqObj.special.orderId;
-                    //respData.content.WeiXinPreOrderContent = json;
+                    respData.content.WeiXinPreOrderContent = json;
 
                     #endregion
                 }
