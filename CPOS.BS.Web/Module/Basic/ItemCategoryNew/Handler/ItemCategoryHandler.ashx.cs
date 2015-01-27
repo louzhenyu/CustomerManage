@@ -170,10 +170,10 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                 bll.SetItemCategoryInfo(this.CurrentUserInfo, data);
 
                 //同步到ALDCategoryID分类 data.CustomerID，      data.Item_Category_Id. data.ALDCategoryID
-                var url = ConfigurationManager.AppSettings["ALDApiURL"].ToString() + "/Gateway.ashx";
-                var request = new ItemCategory2ALDRequest()
-                {
-                    Parameters = data
+                //var url = ConfigurationManager.AppSettings["ALDApiURL"].ToString() + "/Gateway.ashx";
+                //var request = new ItemCategory2ALDRequest()
+                //{
+                //    Parameters = data
                     //new
                     //{
                     //    MemberId = new Guid(rp.UserID),
@@ -182,18 +182,18 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                     //    ObjectId = orderId,
                     //    IsALD = 1
                     //}
-                };
-                try
-                {
-                    var resstr = JIT.Utility.Web.HttpClient.GetQueryString(url, string.Format("Action=ItemCategoty2ALD&ReqContent={0}", request.ToJSON()));
-                    Loggers.Debug(new DebugLogInfo() { Message = "调用ALD同步商品类别接口:" + resstr });
+                //};
+                //try
+                //{
+                    //var resstr = JIT.Utility.Web.HttpClient.GetQueryString(url, string.Format("Action=ItemCategoty2ALD&ReqContent={0}", request.ToJSON()));
+                    //Loggers.Debug(new DebugLogInfo() { Message = "调用ALD同步商品类别接口:" + resstr });
                  //   var res = resstr.DeserializeJSONTo<ItemCategory2ALDResponse>();
-                }
-                catch (Exception ex)
-                {
-                    Loggers.Exception(new ExceptionLogInfo(ex));
-                    throw new Exception("调用ALD平台失败:" + ex.Message);
-                }
+                //}
+                //catch (Exception ex)
+                //{
+                //    Loggers.Exception(new ExceptionLogInfo(ex));
+                //    throw new Exception("调用ALD平台失败:" + ex.Message);
+                //}
             }
 
             rsp.success = true;
