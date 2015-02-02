@@ -6,6 +6,9 @@ using System.Web;
 using JIT.CPOS.BS.BLL;
 using JIT.CPOS.DTO.Base;
 using JIT.Utility.ExtensionMethod;
+using JIT.CPOS.BS.Entity;
+using JIT.CPOS.BS.BLL.WX;
+using System.Web.Security;
 
 namespace JIT.CPOS.Web.ApplicationInterface
 {
@@ -123,6 +126,46 @@ namespace JIT.CPOS.Web.ApplicationInterface
                 throw new APIException(ex.Message);
             }
         }
+        /// <summary>
+        /// 获取jsapi_ticket
+        /// </summary>
+        /// <returns></returns>
+        public string getJsApiTicket(string customerId, string appid, string appSecret)
+        {
+            return new CommonBLL().GetJsApiTicketByCache(appid, appSecret, Default.GetBSLoggingSession(customerId, "1")).ticket;
+        }
+        /// <summary>
+        /// 获取jsapi_ticket
+        /// </summary>
+        /// <returns></returns>
+        public string getJsApiSignature(string ticket, string noncestr, string timestamp, string url)
+        {
+            string paramater = string.Format("jsapi_ticket={0}&noncestr={1}&timestamp={2}&url={3}", ticket, noncestr, timestamp, url);
+            return FormsAuthentication.HashPasswordForStoringInConfigFile(paramater, "SHA1").ToLower();
+        }
+        /// <summary>
+        /// 获取jsapi_ticket
+        /// </summary>
+        /// <returns></returns>
+        public string getJsApiConfig(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<WeiXinConfigRq>>();
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+            var appService = new WApplicationInterfaceBLL(loggingSessionInfo);
+            var appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = rp.CustomerID }, null)[0];
+            string timestamp = ((long)((DateTime.Now - new DateTime(1970, 1, 1)).TotalSeconds)).ToString();
+            string nonceStr = Guid.NewGuid().ToString("N").Substring(0, 16);
+            XeiXinJsApiConfig config = new XeiXinJsApiConfig()
+            {
+                debug = rp.Parameters.debug,
+                appId = appEntity.AppID,
+                timestamp = timestamp,
+                nonceStr = nonceStr,
+                signature = this.getJsApiSignature(this.getJsApiTicket(rp.CustomerID, appEntity.AppID, appEntity.AppSecret), nonceStr, timestamp, rp.Parameters.url),
+                jsApiList = new List<string>()
+            };
+            return new SuccessResponse<IAPIResponseData>(config).ToJSON();
+        }
         protected override string ProcessAction(string pType, string pAction, string pRequest)
         {
             string rst;
@@ -133,6 +176,9 @@ namespace JIT.CPOS.Web.ApplicationInterface
                     break;
                 case "GetCustomerIdByCode":
                     rst = GetCustomerId(pRequest);
+                    break;
+                case "getJsApiConfig":
+                    rst = this.getJsApiConfig(pRequest);
                     break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
@@ -149,7 +195,7 @@ namespace JIT.CPOS.Web.ApplicationInterface
 
         public void Validate()
         {
-            
+
         }
     }
     public class CustomerCodeRD : IAPIResponseData
@@ -175,5 +221,27 @@ namespace JIT.CPOS.Web.ApplicationInterface
     {
         public string ImageId { get; set; }
         public string ImageUrl { get; set; }
+    }
+
+
+
+    public class WeiXinConfigRq : IAPIRequestParameter
+    {
+        public bool debug { get; set; }
+        public string url { get; set; }
+        public string code { get; set; }
+        public void Validate()
+        {
+
+        }
+    }
+    public class XeiXinJsApiConfig : IAPIResponseData
+    {
+        public bool debug { get; set; }
+        public string appId { get; set; }
+        public string timestamp { get; set; }
+        public string nonceStr { get; set; }
+        public string signature { get; set; }
+        public List<string> jsApiList { get; set; }
     }
 }

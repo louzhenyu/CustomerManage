@@ -47,6 +47,15 @@ namespace JIT.CPOS.BS.Entity
         /// 2:安全模式，采用AES加密
         /// </summary>
         public int? EncryptType { get; set; }
+
+        /// <summary>
+        /// from JIT  Add by Henry 2015-2-2
+        /// </summary>
+        public DateTime TicketExpirationTime { get; set; }
+        /// <summary>
+        /// from JIT 接口调用凭证 Add by Henry 2015-2-2
+        /// </summary>
+        public string JsApiTicket { get; set; }
         #endregion
     }
 }

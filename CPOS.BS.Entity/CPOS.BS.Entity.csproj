@@ -1023,6 +1023,7 @@
     <Compile Include="WX\SendMessageEntity.cs" />
     <Compile Include="WX\UploadMediaEntity.cs" />
     <Compile Include="WX\UserInfoEntity.cs" />
+    <Compile Include="WX\WeiXinEntity.cs" />
     <Compile Include="ZCourseApplyEntity.cs" />
     <Compile Include="ZCourseEntity.cs" />
     <Compile Include="ZCourseNewsMappingEntity.cs" />

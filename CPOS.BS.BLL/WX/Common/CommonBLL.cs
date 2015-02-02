@@ -255,6 +255,93 @@ namespace JIT.CPOS.BS.BLL.WX
 
         #endregion
 
+        #region 获取jsapi_ticket
+        /// <summary>
+        /// 在使用通用接口前，你需要做以下两步工作:
+        /// 1.拥有一个微信公众账号，并获取到appid和appsecret
+        /// 2.通过获取凭证接口获取到access_token
+        /// access_token是第三方访问微信公众平台api资源的票据。
+        /// </summary>
+        /// <param name="appID">AppId</param>
+        /// <param name="appSecret">AppSecret</param>
+        /// <returns></returns>
+        public JsApiTicketEntity GetJsApiTicketByCache(string appID, string appSecret, LoggingSessionInfo loggingSessionInfo)
+        {
+            MarketSendLogBLL logServer = new MarketSendLogBLL(loggingSessionInfo);
+            MarketSendLogEntity logInfo = new MarketSendLogEntity();
+            logInfo.LogId = BaseService.NewGuidPub();
+            logInfo.VipId = appID;
+            logInfo.MarketEventId = appSecret;
+            logInfo.TemplateContent = loggingSessionInfo.CurrentUser.customer_id.ToString();
+            logInfo.IsSuccess = 1;
+            logInfo.SendTypeId = "2";
+            logInfo.CreateTime = System.DateTime.Now;
+
+            logServer.Create(logInfo);
+
+            WApplicationInterfaceBLL wApplicationInterfaceBLL = new WApplicationInterfaceBLL(loggingSessionInfo);
+            WApplicationInterfaceEntity appObj = null;
+            var appList = wApplicationInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity
+            {
+                AppID = appID
+                ,
+                AppSecret = appSecret
+                ,
+                CustomerId = loggingSessionInfo.CurrentUser.customer_id.ToString()
+            }, null);
+
+            if (appList != null && appList.Length > 0)
+            {
+                appObj = appList[0];
+            }
+            else
+            {
+                throw new Exception("未查询到公众号");
+            }
+            JsApiTicketEntity jsApiTicket = null;
+            if (appObj.TicketExpirationTime == null || appObj.TicketExpirationTime <= DateTime.Now)
+            {
+                BaseService.WriteLogWeixin("获取jsapi_ticket接口： ");
+                BaseService.WriteLogWeixin("appID： " + appID);
+                BaseService.WriteLogWeixin("appSecret： " + appSecret);
+
+                AccessTokenEntity token = this.GetAccessTokenByCache(appID, appSecret, loggingSessionInfo);
+
+                string uri = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?type=jsapi&access_token=" + token.access_token;
+                string method = "GET";
+                string data = GetRemoteData(uri, method, string.Empty);
+
+                BaseService.WriteLogWeixin("调用获取jsapi_ticket接口返回值： " + data);
+                Loggers.Debug(new DebugLogInfo() { Message = "调用获取jsapi_ticket接口返回值： " + data });
+
+                jsApiTicket = data.DeserializeJSONTo<JsApiTicketEntity>();
+
+                appObj.JsApiTicket = jsApiTicket.ticket;
+                appObj.TicketExpirationTime = DateTime.Now.AddHours(1);
+                wApplicationInterfaceBLL.Update(appObj, false);
+            }
+            else
+            {
+                jsApiTicket = new JsApiTicketEntity();
+                jsApiTicket.ticket = appObj.JsApiTicket;
+                jsApiTicket.expires_in = "7200";
+
+                Loggers.Debug(new DebugLogInfo() { Message = "使用未过期的jsapi_ticket:" + appObj.JsApiTicket + ", 到期时间：" + appObj.TicketExpirationTime });
+            }
+            logInfo.LogId = BaseService.NewGuidPub();
+            logInfo.VipId = appObj.AppID;
+            logInfo.MarketEventId = appObj.AppSecret;
+            logInfo.TemplateContent = appObj.JsApiTicket;
+            logInfo.IsSuccess = 1;
+            logInfo.SendTypeId = "2";
+            logInfo.WeiXinUserId = appObj.WeiXinID;
+
+            logServer.Create(logInfo);
+            return jsApiTicket;
+        }
+
+        #endregion
+
         #region 创建自定义菜单
 
         /// <summary>
