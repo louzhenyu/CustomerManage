@@ -897,7 +897,7 @@
             var list = [];
             var model = {};
             var flag = true;
-            if (self.currentEditData) {
+            if (self.currentEditData&&self.currentEditData.modelTypeId) {//首次加载currentEditData对象不为空。
                 model.id = self.currentEditData.modelTypeId;
                 model.name = self.currentEditData.modelTypeName;
             } else {
