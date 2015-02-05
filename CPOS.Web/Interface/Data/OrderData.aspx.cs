@@ -859,7 +859,7 @@ namespace JIT.CPOS.Web.Interface.Data
                             DynamicIDType = reqObj.special.dynamicIdType,
                             Paras = dic,
                             OpenId=reqObj.common.openId,
-                            ClientIP = reqObj.special.spbillCreateIp
+                            ClientIP = pBillCreateIP
                         };
 
                         var request = new
