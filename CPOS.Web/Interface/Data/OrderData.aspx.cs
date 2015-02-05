@@ -857,7 +857,9 @@ namespace JIT.CPOS.Web.Interface.Data
                             ReturnUrl = pReturnUrl,
                             DynamicID = reqObj.special.dynamicId,
                             DynamicIDType = reqObj.special.dynamicIdType,
-                            Paras = dic
+                            Paras = dic,
+                            OpenId=reqObj.common.openId,
+                            ClientIP = reqObj.special.spbillCreateIp
                         };
 
                         var request = new
