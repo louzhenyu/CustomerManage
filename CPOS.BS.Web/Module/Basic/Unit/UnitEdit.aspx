@@ -605,7 +605,7 @@
                                        <span style="margin-left:10px;">
                                            <select  id="Valueselect" style="width: 320px;padding: 8px 0px 8px 5px;border: 1px solid #cecedc;">
                                                 <option selected="selected" value="1" >文本</option>
-                                            <%--    <option value="3"  >图文</option>--%>
+                                                <option value="3"  >图文</option>
                                             </select>
                                       </span>
                                  </div>
