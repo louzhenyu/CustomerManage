@@ -386,11 +386,19 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     {
                         content.categoryEntrance = lc.OrderByDescending(p => p.groupId).ToList()[0]; ;
                     }
+                    else {
+                        content.categoryEntrance = null ;
+                    }
+
                     // 过滤分类集合，把ModelTypeID=4的取出来(导航部门)
                     List<CategoryEntity> lc4 = content.categoryList.Where(p => p.modelTypeId == 4).ToList();
                     if (lc4 != null && lc4.Count != 0)
                     {
                         content.navList = lc4.OrderByDescending(p => p.groupId).ToList()[0]; ;//(获取唯一的)
+                    }
+                    else
+                    {
+                        content.navList = null;
                     }
                     //过滤分类集合，把ModelTypeID<>8的和不等于8的取出来
                     content.categoryList = content.categoryList.Where(p => p.modelTypeId != 8).Where(p => p.modelTypeId != 4).ToList();
