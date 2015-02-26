@@ -194,15 +194,15 @@ function fnSave() {
     //    return;
     //}
     var GetPoints = Ext.getCmp("txtGetPoints").jitGetValue();
-    if (GetPoints == null || GetPoints == "") {
-        Ext.Msg.alert("提示", "请输入如何获得积分");
-        return;
-    }
+    //if (GetPoints == null || GetPoints == "") {
+    //    Ext.Msg.alert("提示", "请输入如何获得积分");
+    //    return;
+    //}
     var SetSalesPoints = Ext.getCmp("txtSetSalesPoints").jitGetValue();
-    if (SetSalesPoints == null || SetSalesPoints == "") {
-        Ext.Msg.alert("提示", "请输入如何消费积分");
-        return;
-    }
+    //if (SetSalesPoints == null || SetSalesPoints == "") {
+    //    Ext.Msg.alert("提示", "请输入如何消费积分");
+    //    return;
+    //}
 
     if (forwardingMessageLogourl == null || forwardingMessageLogourl == "") {
         Ext.Msg.alert("提示", "请上传转发消息图标");
