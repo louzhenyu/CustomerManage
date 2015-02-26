@@ -231,10 +231,10 @@ function fnSave() {
         Ext.Msg.alert("提示", "请上传客户Logo");
         return;
     }
-    if (imagecfurl == null || imagecfurl == "") {
-        Ext.Msg.alert("提示", "请上传会员图片");
-        return;
-    }
+    //if (imagecfurl == null || imagecfurl == "") {
+    //    Ext.Msg.alert("提示", "请上传会员图片");
+    //    return;
+    //}
     var cmbCustomerType = Ext.getCmp("cmbCustomerType").jitGetValue();
     if (cmbCustomerType == null || cmbCustomerType == "") {
         Ext.Msg.alert("提示", "请选择客户分类");
