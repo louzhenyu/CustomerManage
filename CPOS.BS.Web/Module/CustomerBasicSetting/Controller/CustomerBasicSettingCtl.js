@@ -210,17 +210,17 @@ function fnSave() {
 
     }
     var NewsTypeName = Ext.getCmp("txtCustomerMobile").jitGetValue().toString().trim();
-    if (NewsTypeName == null || NewsTypeName == "") {
-        Ext.Msg.alert("提示", "请输入400电话");
-        return;
-    }
-    else {
-        re = /^((\d{3,4}-)*\d{7,8}(-\d{3,4})*|13\d{9}|(400)*\d{7,8}(-\d{3,4})*|(400)*\d{7,8}(-\d{3,4})*)$/  //匹配电话正则 
-        if (!re.test(NewsTypeName)) {
-            Ext.Msg.alert("提示", "请输入正确的客服电话");
-            return;
-        }
-    }
+    //if (NewsTypeName == null || NewsTypeName == "") {
+    //    Ext.Msg.alert("提示", "请输入400电话");
+    //    return;
+    //}
+    //else {
+    //    re = /^((\d{3,4}-)*\d{7,8}(-\d{3,4})*|13\d{9}|(400)*\d{7,8}(-\d{3,4})*|(400)*\d{7,8}(-\d{3,4})*)$/  //匹配电话正则 
+    //    if (!re.test(NewsTypeName)) {
+    //        Ext.Msg.alert("提示", "请输入正确的客服电话");
+    //        return;
+    //    }
+    //}
 
     var NewsTypeName = Ext.getCmp("txtMemberBenefits").jitGetValue();
     if (NewsTypeName == null || NewsTypeName == "") {
