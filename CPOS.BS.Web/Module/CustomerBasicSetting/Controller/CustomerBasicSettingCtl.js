@@ -189,10 +189,10 @@ function fnSave() {
         return;
     }
     var WhatCommonPoints = Ext.getCmp("txtWhatCommonPoints").jitGetValue();
-    if (WhatCommonPoints == null || WhatCommonPoints == "") {
-        Ext.Msg.alert("提示", "请输入什么是通用积分");
-        return;
-    }
+    //if (WhatCommonPoints == null || WhatCommonPoints == "") {
+    //    Ext.Msg.alert("提示", "请输入什么是通用积分");
+    //    return;
+    //}
     var GetPoints = Ext.getCmp("txtGetPoints").jitGetValue();
     if (GetPoints == null || GetPoints == "") {
         Ext.Msg.alert("提示", "请输入如何获得积分");
