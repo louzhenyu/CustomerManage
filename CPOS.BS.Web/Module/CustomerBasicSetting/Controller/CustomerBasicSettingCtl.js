@@ -223,10 +223,10 @@ function fnSave() {
     //}
 
     var NewsTypeName = Ext.getCmp("txtMemberBenefits").jitGetValue();
-    if (NewsTypeName == null || NewsTypeName == "") {
-        Ext.Msg.alert("提示", "请输入会员权益");
-        return;
-    }
+    //if (NewsTypeName == null || NewsTypeName == "") {
+    //    Ext.Msg.alert("提示", "请输入会员权益");
+    //    return;
+    //}
     if (imageurl == null || imageurl == "") {
         Ext.Msg.alert("提示", "请上传客户Logo");
         return;
