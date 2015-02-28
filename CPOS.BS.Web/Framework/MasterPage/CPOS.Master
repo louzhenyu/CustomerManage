@@ -119,7 +119,7 @@
                     </div>
                 </div>
                 <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="LOGO">
-                    <img id="img_logo" style="margin-top:20px;" src="/module/styles/images/alading/logo.png" alt="LOGO" />
+                    <img id="img_logo" src="/module/styles/images/alading/logo.png" alt="LOGO" />
                         <%--<div class="arr"></div>--%>
                 </a>
                 <div class="commonNav">
