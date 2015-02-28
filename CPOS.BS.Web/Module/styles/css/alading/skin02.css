@@ -50,23 +50,23 @@
 .commonNav li.on a{color:#fe7c24;}
 
 
-.commonNav .nav001 a{background:url(../../images/alading/bg02/nav001.png) no-repeat 0 center;}
-.commonNav .nav002 a{background:url(../../images/alading/bg02/nav002.png) no-repeat 0 center;}
-.commonNav .nav003 a{background:url(../../images/alading/bg02/nav003.png) no-repeat 0 center;}
-.commonNav .nav004 a{background:url(../../images/alading/bg02/nav004.png) no-repeat 0 center;}
-.commonNav .nav005 a{background:url(../../images/alading/bg02/nav005.png) no-repeat 0 center;}
-.commonNav .nav006 a{background:url(../../images/alading/bg02/nav006.png) no-repeat 0 center;}
-.commonNav .nav007 a{background:url(../../images/alading/bg02/nav007.png) no-repeat 0 center;}
-.commonNav .nav008 a{background:url(../../images/alading/bg02/nav008.png) no-repeat 0 center;}
+.commonNav .nav001 a{background:url(../../images/alading/bg02/nav007.png) no-repeat 0 center;}
+.commonNav .nav002 a{background:url(../../images/alading/bg02/nav001.png) no-repeat 0 center;}
+.commonNav .nav003 a{background:url(../../images/alading/bg02/nav002.png) no-repeat 0 center;}
+.commonNav .nav004 a{background:url(../../images/alading/bg02/nav003.png) no-repeat 0 center;}
+.commonNav .nav005 a{background:url(../../images/alading/bg02/nav006.png) no-repeat 0 center;}
+.commonNav .nav006 a{background:url(../../images/alading/bg02/nav008.png) no-repeat 0 center;}
+.commonNav .nav007 a{background:url(../../images/alading/bg02/nav004.png) no-repeat 0 center;}
+.commonNav .nav008 a{background:url(../../images/alading/bg02/nav005.png) no-repeat 0 center;}
 
-.commonNav .nav001.on a{background:url(../../images/alading/bg02/on-nav001.png) no-repeat 0 center;}
-.commonNav .nav002.on a{background:url(../../images/alading/bg02/on-nav002.png) no-repeat 0 center;}
-.commonNav .nav003.on a{background:url(../../images/alading/bg02/on-nav003.png) no-repeat 0 center;}
-.commonNav .nav004.on a{background:url(../../images/alading/bg02/on-nav004.png) no-repeat 0 center;}
-.commonNav .nav005.on a{background:url(../../images/alading/bg02/on-nav005.png) no-repeat 0 center;}
-.commonNav .nav006.on a{background:url(../../images/alading/bg02/on-nav006.png) no-repeat 0 center;}
-.commonNav .nav007.on a{background:url(../../images/alading/bg02/on-nav007.png) no-repeat 0 center;}
-.commonNav .nav008.on a{background:url(../../images/alading/bg02/on-nav008.png) no-repeat 0 center;}
+.commonNav .nav001.on a{background:url(../../images/alading/bg02/on-nav007.png) no-repeat 0 center;}
+.commonNav .nav002.on a{background:url(../../images/alading/bg02/on-nav001.png) no-repeat 0 center;}
+.commonNav .nav003.on a{background:url(../../images/alading/bg02/on-nav002.png) no-repeat 0 center;}
+.commonNav .nav004.on a{background:url(../../images/alading/bg02/on-nav003.png) no-repeat 0 center;}
+.commonNav .nav005.on a{background:url(../../images/alading/bg02/on-nav006.png) no-repeat 0 center;}
+.commonNav .nav006.on a{background:url(../../images/alading/bg02/on-nav008.png) no-repeat 0 center;}
+.commonNav .nav007.on a{background:url(../../images/alading/bg02/on-nav004.png) no-repeat 0 center;}
+.commonNav .nav008.on a{background:url(../../images/alading/bg02/on-nav005.png) no-repeat 0 center;}
 /*全局菜单*/
 .commonMenu li.on a{color:#fe7c24;}
 .commonMenu li.on:hover a{color:#fff;}
