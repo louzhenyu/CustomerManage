@@ -2619,13 +2619,13 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 #endregion
 
-
-                if (!string.IsNullOrEmpty(reqObj.special.reqBy) && reqObj.special.reqBy.Equals("1"))
-                {
-                    //订单消息推送
-                    var inoutServer = new InoutService(loggingSessionInfo);
-                    inoutServer.OrderPushMessage(orderInfo.OrderId, "100");
-                }
+                //订单消息推送应该在提交订单时处理 annotation by Henry 2015-03-03
+                //if (!string.IsNullOrEmpty(reqObj.special.reqBy) && reqObj.special.reqBy.Equals("1"))
+                //{
+                //    //订单消息推送
+                //    var inoutServer = new InoutService(loggingSessionInfo);
+                //    inoutServer.OrderPushMessage(orderInfo.OrderId, "100");
+                //}
                 #region 返回信息设置
                 respData.content = new setOrderInfoNewRespContentData();
                 respData.content.orderId = orderInfo.OrderId;

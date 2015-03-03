@@ -278,7 +278,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
-            
+
             var rd = new GetVipInfoRD();
             var bll = new VipBLL(loggingSessionInfo);
 
@@ -292,7 +292,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             {
                 rd.VipId = rp.UserID;
                 rd.Status = vipEntity.Status ?? 0;
-                rd.isStore = vipEntity.IsSotre??0;
+                rd.isStore = vipEntity.IsSotre ?? 0;
                 rd.HeadImgUrl = vipEntity.HeadImgUrl;
                 rd.VipName = vipEntity.VipName;
                 rd.UnitId = vipEntity.CouponInfo;
@@ -307,7 +307,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 rd.PasswordFlag = string.IsNullOrEmpty(vipAmountEntity.PayPassword) ? 0 : 1;
                 rd.EndAmount = vipAmountEntity.EndAmount;
             }
-            else {
+            else
+            {
                 rd.EndAmount = 0;
             }
 
@@ -537,7 +538,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                         var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
                         var vipAmountEntity = vipAmountBll.GetByID(rp.UserID);
                         if (rp.ChannelId != "4")//自阿拉丁平台不执行判断 add by Henry 2014-10-15
-                        { 
+                        {
                             #region 判断该会员账户是否被冻结
                             if (vipAmountEntity.IsLocking == 1)
                             {
@@ -558,7 +559,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
                             #endregion
 
-                            #region Update VipAmount.EndAmount 
+                            #region Update VipAmount.EndAmount
 
                             vipAmountEntity.EndAmount = vipAmountEntity.EndAmount - vipEndAmount;
                             vipAmountEntity.OutAmount = vipAmountEntity.OutAmount + vipEndAmount;
@@ -576,7 +577,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                             VipAmountDetailId = Guid.NewGuid(),
                             ObjectId = orderId,
                             VipId = rp.UserID,
-                            Amount =rp.ChannelId == "4" ? (vipEndAmount/0.01M):vipEndAmount,//如果來自阿拉丁平台，換算成阿拉幣 update by Henry 2014-10-14
+                            Amount = rp.ChannelId == "4" ? (vipEndAmount / 0.01M) : vipEndAmount,//如果來自阿拉丁平台，換算成阿拉幣 update by Henry 2014-10-14
                             AmountSourceId = rp.ChannelId == "4" ? "11" : "1"  //如果来自阿拉丁平台，来源=阿拉币消费(11)；否来源=订单余额支付(1) update by Henry 2014-10-14
                         };
 
@@ -596,7 +597,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                                         new
                                         {
                                             MemberId = new Guid(rp.UserID),
-                                            Amount = vipEndAmount/0.01M,
+                                            Amount = vipEndAmount / 0.01M,
                                             AmountSourceId = "11",
                                             ObjectId = orderId,
                                             IsALD = 1
@@ -669,8 +670,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     inoutExpandEntity.LastUpdateTime = DateTime.Now;
                     inoutExpandEntity.IsDelete = 0;
                     inoutExpandEntity.RecommandVip = rp.Parameters.RecommandVip;
-                    if (intoutExpandBll.GetByID(orderId)==null)
-                        //如果有数据就修改，没有数据就插入
+                    if (intoutExpandBll.GetByID(orderId) == null)
+                    //如果有数据就修改，没有数据就插入
                     {
                         intoutExpandBll.Create(inoutExpandEntity, tran);
                     }
@@ -684,8 +685,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
 
                     //【已付款】同步ald订单
-                    #region 更新阿拉丁订单状态                
-                    {                        
+                    #region 更新阿拉丁订单状态
+                    {
                         var orderbll = new InoutService(loggingSessionInfo);
                         var orderInfo = orderbll.GetInoutInfoById(orderId);
                         if (orderInfo.Field3 == "1")
@@ -729,6 +730,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     TOrderCustomerDeliveryStrategyMappingBLL tOrderCustomerDeliveryStrategyMappingBLL = new TOrderCustomerDeliveryStrategyMappingBLL(loggingSessionInfo);
                     tOrderCustomerDeliveryStrategyMappingBLL.UpdateOrderAddDeliveryAmount(orderId, rp.CustomerID);
 
+                    //订单消息推送 and by Henry 2015-03-03
+                    inoutService.OrderPushMessage(orderId, "100");
 
                 }
                 catch (Exception ex)
