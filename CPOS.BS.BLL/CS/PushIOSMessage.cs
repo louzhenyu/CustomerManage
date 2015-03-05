@@ -73,7 +73,7 @@ namespace JIT.CPOS.BS.BLL.CS
                     {
                         channelId = Convert.ToInt32(userBasic.Channel);
                     }
-                    PushRequest pRequest2 = RequestBuilder.CreateIOSUnicastNotificationRequest(2, channelId, userBasic.DeviceToken, messageContent);
+                    PushRequest pRequest2 = RequestBuilder.CreateIOSUnicastNotificationRequest(1, channelId, userBasic.DeviceToken, messageContent);
                     var json = "{\"pRequest\":" + pRequest2.ToJSON() + "}";
                     var response2 = SendHttpRequest(url, method, json);
                     var msg = "会员ID：" + memberID + " DeviceToken：" + userBasic.DeviceToken;
@@ -98,7 +98,7 @@ namespace JIT.CPOS.BS.BLL.CS
             string requestData = json;
             //拼接URL
             string serviceUrl = string.Format("{0}/{1}", requestURI, requestMethod);
-            HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(serviceUrl);
+                HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(serviceUrl);
             //utf-8编码
             byte[] buf = System.Text.Encoding.GetEncoding("UTF-8").GetBytes(requestData);
 
