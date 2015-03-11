@@ -31,7 +31,7 @@ namespace JIT.CPOS.BS.BLL.CS
                     {
                         channelId = Convert.ToInt32(userBasic.Channel);
                     }
-                    PushRequest pRequest2 = RequestBuilder.CreateAndroidUnicastNotificationRequest(1, channelId, userBasic.UserIDBaiDu, userBasic.ChannelIDBaiDu, "消息", messageContent);
+                    PushRequest pRequest2 = RequestBuilder.CreateAndroidUnicastNotificationRequest(2, channelId, userBasic.UserIDBaiDu, userBasic.ChannelIDBaiDu, "消息", messageContent);
                     var json = "{\"pRequest\":" + pRequest2.ToJSON() + "}";
                     var response2 = PushIOSMessage.SendHttpRequest(url, method, json);
                     var msg = "会员ID：" + memberID + " DeviceToken：" + userBasic.DeviceToken;
