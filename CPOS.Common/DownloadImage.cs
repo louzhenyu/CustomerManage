@@ -25,7 +25,8 @@ namespace JIT.CPOS.Common
                     DownloadUrl = "http://o2oapi.aladingyidong.com";
                 }
                 string host = DownloadUrl + "/HeadImage/";
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
+                //  ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;//这个是Ssl3的升级版本***可能微信那边安全版本升级，这里也要跟着升级才行
                 WebClient webClient = new WebClient();
 
                 //创建下载根文件夹
