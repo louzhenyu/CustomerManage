@@ -914,6 +914,13 @@ namespace JIT.CPOS.BS.BLL
         }
         #endregion
 
+        #region 根据会员角色获取App权限 add by Henry 2015-3-26
+        public DataSet GetAppMenuByUserId(string userId)
+        {
+            return this._currentDAO.GetAppMenuByUserId(userId);
+        }
+        #endregion
+
         #region 同步阿拉丁会员信息
 
         /// <summary>

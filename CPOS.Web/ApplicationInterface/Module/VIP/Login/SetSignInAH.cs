@@ -81,8 +81,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
 
             #region 获取角色列表
-
-            var roleCodeDs = new VipBLL(currentUserInfo).GetRoleCodeByUserId(rd.UserId, customerId);
+            var roleCodeDs = vipBll.GetRoleCodeByUserId(rd.UserId, customerId);
 
             var tmp = roleCodeDs.Tables[0].AsEnumerable().Select(t => new RoleCodeInfo()
             {
@@ -91,6 +90,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
             #endregion
             rd.UnitId = vipBll.GetUnitByUserId(rd.UserId);//获取会集店
+
+            //app登陆用户权限 add by henry 2015-3-26
+            var roleCodeList = vipBll.GetAppMenuByUserId(rd.UserId);
+            if (roleCodeList != null)
+            {
+                rd.MenuCodeList = DataTableToObject.ConvertToList<Menu>(roleCodeList.Tables[0]);
+            }
+
             rd.RoleCodeList = tmp.ToArray();
             rd.CustomerName = currentUserInfo.ClientName;
             return rd;

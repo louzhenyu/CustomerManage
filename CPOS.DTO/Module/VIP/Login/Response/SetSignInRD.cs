@@ -15,11 +15,22 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         public RoleCodeInfo[] RoleCodeList { get; set; }
         //用户汇集店ID
         public string UnitId { get; set; }
+        /// <summary>
+        /// app权限code数组
+        /// </summary>
+        public List<Menu> MenuCodeList { get; set; }
     }
 
     public class RoleCodeInfo
     {
         public string RoleCode { get; set; }
  
+    }
+    /// <summary>
+    /// app权限code
+    /// </summary>
+    public class Menu
+    {
+        public string MenuCode { get; set; }
     }
 }

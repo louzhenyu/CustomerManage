@@ -1005,15 +1005,37 @@ namespace JIT.CPOS.BS.DataAccess
         #region 获取店员门店
         public string GetUnitByUserId(string userId)
         {
+            //            string sql = string.Format(@"SELECT unit_id FROM dbo.T_User_Role l
+            //                        LEFT JOIN T_Role r ON l.role_id=r.role_id
+            //                        WHERE l.user_id='{0}'
+            //                        AND r.role_code='Unit'", userId);
             string sql = string.Format(@"SELECT unit_id FROM dbo.T_User_Role l
-                        LEFT JOIN T_Role r ON l.role_id=r.role_id
-                        WHERE l.user_id='{0}'
-                        AND r.role_code='Unit'", userId);
+                                    LEFT JOIN T_Role r ON l.role_id=r.role_id
+                                    WHERE l.user_id='{0}'
+                                    and l.default_flag=1 
+                                    AND r.role_code in ('CustomerOrders','CustomerService')", userId);
             object obj = SQLHelper.ExecuteScalar(sql);
             string ret = string.Empty;
             if (obj != null)
                 ret = obj.ToString();
             return ret;
+        }
+
+
+        #endregion
+
+        #region 根据会员角色获取App权限 add by Henry 2015-3-26
+        public DataSet GetAppMenuByUserId(string userId)
+        {
+            string sql = string.Format(@"SELECT m.menu_code as MenuCode FROM dbo.T_User u
+                                        INNER JOIN T_User_Role ur ON ur.user_id=u.user_id
+                                        INNER JOIN dbo.T_Role_Menu rm ON rm.role_id=ur.role_id
+                                        INNER JOIN dbo.T_Menu m ON m.menu_id=rm.menu_id
+                                        INNER JOIN T_Def_App da ON da.def_app_id=m.reg_app_id
+                                        WHERE u.user_id='{0}' AND da.def_app_code='APP' 
+                                        ORDER BY m.display_index ASC
+                                        ",userId);
+            return this.SQLHelper.ExecuteDataset(sql);
         }
         #endregion
 
@@ -1263,7 +1285,8 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 platform = platform.Equals("1") ? "2" : "1";
             }
-            else {
+            else
+            {
                 platform = "1";
             }
 
@@ -2464,8 +2487,8 @@ select @ReturnValue", pCustomerID);
 
         public int GetInviteCount(string userID)
         {
-            string sql = string.Format("SELECT COUNT(*) FROM dbo.Vip WHERE SetoffUserId='{0}'",userID);
-            return Convert.ToInt32(SQLHelper.ExecuteScalar(sql)); 
+            string sql = string.Format("SELECT COUNT(*) FROM dbo.Vip WHERE SetoffUserId='{0}'", userID);
+            return Convert.ToInt32(SQLHelper.ExecuteScalar(sql));
         }
 
         #region 获取云店会员卡包
