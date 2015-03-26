@@ -1033,8 +1033,9 @@ namespace JIT.CPOS.BS.DataAccess
                                         INNER JOIN dbo.T_Menu m ON m.menu_id=rm.menu_id
                                         INNER JOIN T_Def_App da ON da.def_app_id=m.reg_app_id
                                         WHERE u.user_id='{0}' AND da.def_app_code='APP' 
+                                        AND rm.status=1 AND m.status=1 AND ur.status=1 AND u.user_status=1
                                         ORDER BY m.display_index ASC
-                                        ",userId);
+                                        ", userId);
             return this.SQLHelper.ExecuteDataset(sql);
         }
         #endregion
