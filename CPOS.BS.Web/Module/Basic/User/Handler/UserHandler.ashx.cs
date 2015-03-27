@@ -256,6 +256,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             responseData.success = true;
             responseData.msg = error;
 
+
             content = responseData.ToJSON();
             return content;
         }

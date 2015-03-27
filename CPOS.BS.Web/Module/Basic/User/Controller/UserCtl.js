@@ -1,6 +1,7 @@
 ﻿Ext.Loader.setConfig({
     enabled: true
 });
+
 Ext.Loader.setPath('Ext.ux', '/Lib/Javascript/Ext4.1.0/ux');
 Ext.require([
     'Ext.grid.*',

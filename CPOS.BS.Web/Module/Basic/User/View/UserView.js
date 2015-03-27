@@ -50,6 +50,7 @@
         }]
 
     });
+
     //operator area
     Ext.create('Jit.button.Button', {
         text: "添加",
@@ -144,14 +145,14 @@
             text: '手机',
             width: 110,
             sortable: true,
-            dataIndex: 'User_Cellphone',
+            dataIndex: 'User_Telephone',
             align: 'left'
         }
         , {
-            text: 'QQ',
+            text: '门店',
             width: 110,
             sortable: true,
-            dataIndex: 'QQ',
+            dataIndex: 'UnitName',
             align: 'left'
         }
         , {
