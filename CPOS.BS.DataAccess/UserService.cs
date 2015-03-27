@@ -145,7 +145,7 @@ namespace JIT.CPOS.BS.DataAccess
                      + " select a.user_id,rownum_=row_number() over(order by a.user_code) "   //使用了rownum_的方式
                      + " from t_user a where 1=1 "
             + @"and user_id in (select user_id from  T_User_Role c inner join   vw_unit_level d ON d.unit_id = c.unit_id "
-                + @"and d.path_unit_id like '%" + _ht["UnitID"] + "%' )";
+                + @"and d.path_unit_id like '%" + _ht["UnitID"] + "%'  AND d.customer_id='" + _ht["CustomerId"].ToString()+ "')";
             sql = pService.GetLinkSql(sql, "a.User_Name", _ht["UserName"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.User_Code", _ht["UserCode"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.User_Status", _ht["UserStatus"].ToString(), "=");
