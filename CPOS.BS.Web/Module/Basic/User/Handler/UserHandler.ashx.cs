@@ -84,7 +84,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 user_tel,
                 user_status,
                 maxRowCount,
-                startRowIndex);
+                startRowIndex,
+                CurrentUserInfo.CurrentUserRole.UnitId);
 
             var jsonData = new JsonData();
             jsonData.totalCount = data.ICount.ToString();

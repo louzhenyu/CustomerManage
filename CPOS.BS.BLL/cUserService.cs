@@ -73,7 +73,41 @@ namespace JIT.CPOS.BS.BLL
 
             return userInfo;
         }
+        /// <summary>
+        /// 用户查询,根据条件返回用户查询信息与查询结果总记录数
+        /// </summary>
+        /// <param name="User_Code">用户工号</param>
+        /// <param name="User_Name">用户名</param>
+        /// <param name="CellPhone">手机</param>
+        /// <param name="User_Status">状态</param>
+        /// <param name="maxRowCount">每页所占行数</param>
+        /// <param name="startRowIndex">当前页的起始行数</param>
+        /// <returns></returns>
+        public UserInfo SearchUserListByUnitID(string User_Code, string User_Name, string CellPhone, string User_Status, int maxRowCount, int startRowIndex, string UnitID)
+        {
+            Hashtable hashtable = new Hashtable();
+            hashtable.Add("UserCode", User_Code);
+            hashtable.Add("UserName", User_Name);
+            hashtable.Add("CellPhone", CellPhone);
+            hashtable.Add("UserStatus", User_Status);
+            hashtable.Add("LoginUserId", loggingSessionInfo.CurrentUser.User_Id.ToString());
+            hashtable.Add("StartRow", startRowIndex);
+            hashtable.Add("EndRow", startRowIndex + maxRowCount);
+            hashtable.Add("CustomerId", loggingSessionInfo.CurrentLoggingManager.Customer_Id);
+            hashtable.Add("UnitID", UnitID);
+            IList<UserInfo> userInfoList = new List<UserInfo>();
+            DataSet ds = userService.SearchUserListByUnitID(hashtable);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                userInfoList = DataTableToObject.ConvertToList<UserInfo>(ds.Tables[0]);
+            }
 
+            UserInfo userInfo = new UserInfo();
+            userInfo.ICount = userService.SearchUserCount(hashtable);
+            userInfo.UserInfoList = userInfoList;
+
+            return userInfo;
+        }
         /// <summary>
         /// 获取用户登陆密码
         /// </summary>
