@@ -86,7 +86,48 @@ namespace JIT.CPOS.BS.DataAccess
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
-
+        public DataSet SearchUserListByUnitID(Hashtable _ht)
+        {
+            DataSet ds = new DataSet();
+            string sql = SearchPublicSql(_ht);
+            sql = sql + "select "
+                      + " a.user_id "
+                      + ",user_name "
+                      + ",user_gender,(case user_gender when 1 then '男' else '女' end) as  user_genderText"
+                      + ",user_code "
+                      + ",user_birthday "
+                      + ",user_password "
+                      + ",user_email "
+                      + ",user_identity "
+                      + ",User_Telephone "
+                      + ",user_cellphone "
+                      + ",user_address "
+                      + ",user_postcode "
+                      + ",user_remark "
+                      + ",user_name_en "
+                      + ",qq "
+                      + ",msn "
+                      + ",blog "
+                      + ",a.create_user_id "
+                      + ",a.create_time "
+                      + ",a.modify_user_id "
+                      + ",a.modify_time "
+                      + ",user_status "
+                      + ",user_status_desc "
+                      + ",fail_date "
+                           + @",isnull((	select top 1 c.unit_name from 	  T_User_Role b  inner join t_unit c on	  b.unit_id=c.unit_id where b.user_id=a.user_id),'') as UnitName "//UnitName
+                      + ",b.row_no "
+                      + ", @iCount icount "
+                      + "From t_user a "
+                      + "inner join @TmpTable b "                     
+                      + "on(a.user_id = b.user_id) "
+                      + "where 1=1 "
+                   
+                      + "and b.row_no  > '" + _ht["StartRow"].ToString() + "' and  b.row_no <= '" + _ht["EndRow"] + "' "
+                      + " ;";
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
         /// <summary>
         /// 获取查询地公共部分
         /// </summary>
@@ -101,14 +142,21 @@ namespace JIT.CPOS.BS.DataAccess
                      + " ); "
                      + " Declare @iCount int; "
                      + " insert into @TmpTable(user_id,row_no) "
-                     + " select a.user_id,rownum_=row_number() over(order by a.user_code) "
-                     + " from t_user a where 1=1 ";
+                     + " select a.user_id,rownum_=row_number() over(order by a.user_code) "   //使用了rownum_的方式
+                     + " from t_user a where 1=1 "
+            + @"and user_id in (select user_id from  T_User_Role c inner join   vw_unit_level d ON d.unit_id = c.unit_id "
+                + @"and d.path_unit_id like '%" + _ht["UnitID"] + "%' )";
             sql = pService.GetLinkSql(sql, "a.User_Name", _ht["UserName"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.User_Code", _ht["UserCode"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.User_Status", _ht["UserStatus"].ToString(), "=");
             sql = pService.GetLinkSql(sql, "a.User_CellPhone", _ht["CellPhone"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.customer_id", _ht["CustomerId"].ToString(), "=");
             sql = sql + " select @iCount = COUNT(*) From @TmpTable; ";
+
+         
+                //+ "left join T_User_Role c on b.user_id=c.user_id "
+                //      + "INNER JOIN vw_unit_level d ON d.unit_id = c.unit_id "
+                //      + "and d.path_unit_id like '%"+_ht["UnitID"]+"%' "
 
             return sql;
         }

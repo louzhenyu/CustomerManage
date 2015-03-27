@@ -4,13 +4,13 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>用户管理</title>
     
-    <script src="<%=StaticUrl+"/Framework/javascript/Biz/UserGender.js"%>" type="text/javascript"></script>
-    <script src="<%=StaticUrl+"/Framework/javascript/Biz/Status.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Framework/javascript/Biz/UserGender.js?v=1.2"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Framework/javascript/Biz/Status.js?v=1.2"%>" type="text/javascript"></script>
 
-    <script src="<%=StaticUrl+"/module/basic/user/Controller/UserCtl.js"%>" type="text/javascript"></script>
-    <script src="<%=StaticUrl+"/module/basic/user/Model/UserVM.js"%>" type="text/javascript"></script>
-    <script src="<%=StaticUrl+"/module/basic/user/Store/UserVMStore.js"%>" type="text/javascript"></script>
-    <script src="<%=StaticUrl+"/module/basic/user/View/UserView.js"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/module/basic/user/Controller/UserCtl.js?v=1.2"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/module/basic/user/Model/UserVM.js?v=1.2"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/module/basic/user/Store/UserVMStore.js?v=1.2"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/module/basic/user/View/UserView.js?v=1.2"%>" type="text/javascript"></script>
       <style type="text/css">
         td {
         vertical-align: middle; 

@@ -238,6 +238,12 @@ namespace JIT.CPOS.BS.Entity.User
         [XmlIgnore()]
         public bool ModifyPassword { get; set; }
 
+        
+                [XmlIgnore()]
+        public string user_genderText { get; set; }
+           
+        
+
 
     }
 }

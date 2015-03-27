@@ -441,11 +441,11 @@ namespace JIT.CPOS.BS.BLL
             _ht.Add("CustomerId", loggingSessionInfo.CurrentLoggingManager.Customer_Id);//还传了CustomerId
             UnitInfo unitInfo = new UnitInfo();
 
-            int iCount = unitService.SearchCount(_ht);
+            int iCount = unitService.SearchCount(_ht, loggingSessionInfo.UserID, loggingSessionInfo.ClientID);//查找数量
 
             IList<UnitInfo> unitInfoList = new List<UnitInfo>();
             DataSet ds = new DataSet();
-            ds = unitService.SearchList(_ht);
+            ds = unitService.SearchList(_ht, loggingSessionInfo.UserID, loggingSessionInfo.ClientID);//查找列表
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 unitInfoList = DataTableToObject.ConvertToList<UnitInfo>(ds.Tables[0]);

@@ -261,17 +261,25 @@ namespace JIT.CPOS.BS.DataAccess
         #endregion
 
         #region 查询
-        public int SearchCount(Hashtable _ht)
+        public int SearchCount(Hashtable _ht, string UserID, string CustomerID)
         {
+            List<SqlParameter> ls = new List<SqlParameter>();
+            ls.Add(new SqlParameter("@UserID", UserID));
+            ls.Add(new SqlParameter("@CustomerId", CustomerID));
             string sql = SearchPublicSql(_ht);
-            sql = sql + " select @iCount; ";
-            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
+            sql = sql + " select @iCount; ";//
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text, sql,ls.ToArray()));
         }
-        public DataSet SearchList(Hashtable _ht)
+        public DataSet SearchList(Hashtable _ht, string UserID, string CustomerID)
         {
+
+            List<SqlParameter> ls = new List<SqlParameter>();
+            ls.Add(new SqlParameter("@UserID", UserID));
+            ls.Add(new SqlParameter("@CustomerId", CustomerID));
+
             DataSet ds = new DataSet();
             string sql = SearchPublicSql(_ht);
-            sql = sql + "select a.unit_id Id"
+            sql = sql + " select a.unit_id Id"
                       + " ,a.type_id TypeId"
                       + " ,a.unit_code Code"
                       + " ,a.unit_name Name"
@@ -315,7 +323,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " where b.row_no >= '" + _ht["StartRow"] + "' "
                       + " and b.row_no <= '" + _ht["EndRow"] + "' "
                 + " order by a.customer_level desc, a.type_id, a.unit_code, a.unit_name ;";
-            ds = this.SQLHelper.ExecuteDataset(sql);
+            ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());
             return ds;
         }
         /// <summary>
@@ -328,14 +336,25 @@ namespace JIT.CPOS.BS.DataAccess
             PublicService pService = new PublicService();
 
             #region
-            string sql = "Declare @TmpTable Table "
+
+            string sql = @"----在这里要把用户的权限能看到的数据加上
+DECLARE @AllUnit NVARCHAR(200)
+
+CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
+ INSERT #UnitSET (UnitID)                  
+   SELECT DISTINCT R.UnitID                   
+   FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  (@CustomerId,UR.unit_id,205)  R                  
+   WHERE user_id=@UserID          ---根据账户的角色去查角色对应的  所有门店unit_id
+";
+            
+           sql += "Declare @TmpTable Table "
                      + " (unit_id nvarchar(100) "
                      + " ,row_no int "
                      + " ); "
                      + " Declare @iCount int; "
                      + " insert into @TmpTable(unit_id,row_no) "
                      + " select x.unit_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.unit_code),unit_id "
-                     + " from t_unit a where 1=1 ";
+                     + @" from t_unit a inner join  #UnitSET R  on a.unit_id=R.unitID  where 1=1 ";
             sql = pService.GetLinkSql(sql, "a.unit_code", _ht["unit_code"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.customer_id", _ht["CustomerId"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.unit_name", _ht["unit_name"].ToString(), "%");
@@ -347,6 +366,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql = sql + " ) x";
 
             sql = sql + " select @iCount = COUNT(*) From @TmpTable; ";
+            sql = sql + " drop table #UnitSET ";//删除零时表
             #endregion
 
             return sql;

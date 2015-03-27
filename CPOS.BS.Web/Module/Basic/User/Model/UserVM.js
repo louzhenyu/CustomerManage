@@ -24,7 +24,11 @@
             { name: "Create_User_Name", type: 'string' }, 
             { name: "Create_Time", type: 'string' }, 
             { name: "Modify_User_Id", type: 'string' }, 
-            { name: "Modify_User_Name", type: 'string' }, 
+            { name: "Modify_User_Name", type: 'string' },
+        { name: "User_Telephone", type: 'string' },
+        { name: "user_genderText", type: 'string' },
+         { name: "UnitName", type: 'string' },//所属门店
+        
             { name: "Modify_Time", type: 'string' }
             ]
     });

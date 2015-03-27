@@ -78,7 +78,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 key = Request("id").ToString().Trim();
             }
 
-            data = userService.SearchUserList(
+            data = userService.SearchUserListByUnitID(   //SearchUserListByUnitID
                 user_code,
                 user_name,
                 user_tel,

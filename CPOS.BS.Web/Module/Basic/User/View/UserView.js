@@ -137,7 +137,7 @@
             text: '性别',
             width: 110,
             sortable: true,
-            dataIndex: 'User_Gender',
+            dataIndex: 'user_genderText',
             align: 'left'
         }
         , {

@@ -74,7 +74,7 @@ function fnRevert(id) {
 fnSearch = function () {
     var store = Ext.getStore("userStore");
     store.proxy.url = JITPage.HandlerUrl.getValue()
-        + "&method=search_user";
+        + "&method=search_user";   //设置代理请求的路径
     store.pageSize = JITPage.PageSize.getValue();
     store.proxy.extraParams = {
         form: Ext.JSON.encode(Ext.getCmp("searchPanel").getValues())

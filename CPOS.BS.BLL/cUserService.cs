@@ -61,14 +61,14 @@ namespace JIT.CPOS.BS.BLL
             
 
             IList<UserInfo> userInfoList = new List<UserInfo>();
-            DataSet ds = userService.SearchUserList(hashtable);
+            DataSet ds = userService.SearchUserListByUnitID(hashtable);//根据unitid获取会员信息
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 userInfoList = DataTableToObject.ConvertToList<UserInfo>(ds.Tables[0]);
             }
 
             UserInfo userInfo = new UserInfo();
-            userInfo.ICount = userService.SearchUserCount(hashtable);
+            userInfo.ICount = userService.SearchUserCount(hashtable); //获取会员数量
             userInfo.UserInfoList = userInfoList;
 
             return userInfo;
