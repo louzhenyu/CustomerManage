@@ -64,10 +64,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             #endregion
 
             #region 判断该客服人员是否有客服或操作订单的权限
-            if (!vipBll.JudgeUserRoleExist(phone, customerId, password))
-            {
-                throw new APIException("该账号无权登录本系统") { ErrorCode = Error_Password_InValid };
-            }
+            //if (!vipBll.JudgeUserRoleExist(phone, customerId, password))
+            //{
+            //    throw new APIException("该账号无权登录本系统") { ErrorCode = Error_Password_InValid };
+            //}
             #endregion
 
             #region 获取UserId
