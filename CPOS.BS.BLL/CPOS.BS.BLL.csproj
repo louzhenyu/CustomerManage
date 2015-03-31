@@ -139,6 +139,7 @@
     <Compile Include="CodeGeneration\CouponBLL.cs" />
     <Compile Include="CodeGeneration\CouponSourceBLL.cs" />
     <Compile Include="CodeGeneration\CouponTypeBLL.cs" />
+    <Compile Include="CodeGeneration\Coupon\CouponUseBLL.cs" />
     <Compile Include="CodeGeneration\CSConversationBLL.cs" />
     <Compile Include="CodeGeneration\CSMessageBLL.cs" />
     <Compile Include="CodeGeneration\CSPointBLL.cs" />
@@ -538,6 +539,7 @@
     <Compile Include="CouponBLL.cs" />
     <Compile Include="CouponSourceBLL.cs" />
     <Compile Include="CouponTypeBLL.cs" />
+    <Compile Include="Coupon\CouponUseBLL.cs" />
     <Compile Include="CSConversationBLL.cs" />
     <Compile Include="CS\CSInvokeMessageBLL.cs" />
     <Compile Include="CSMessageBLL.cs" />

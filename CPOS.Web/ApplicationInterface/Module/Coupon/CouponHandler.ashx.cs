@@ -159,7 +159,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
 
         #region BestowCoupon
         /// <summary>
-        /// 获取优惠劵列表
+        /// 核销优惠劵
         /// </summary>
         /// <param name="pRequest"></param>
         /// <returns></returns>
@@ -175,10 +175,25 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                     respData.Message = "登陆用户不能为空";
                 }
                 var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, "1");
+                var couponUseBll = new CouponUseBLL(loggingSessionInfo);          //优惠券使用BLL实例化
                 CouponBLL bll = new CouponBLL(loggingSessionInfo);
                 int res = bll.BestowCoupon(reqObj.Parameters.cuponID, reqObj.Parameters.doorID);
                 if (res > 0)
                 {
+                #region 优惠券使用记录
+                    var couponUseEntity = new CouponUseEntity()
+                    {
+                        CouponID = reqObj.Parameters.cuponID,
+                        VipID = reqObj.userId,
+                        UnitID = reqObj.Parameters.doorID,
+                        //OrderID = orderEntity.OrderID.ToString(),
+                        CreateBy = reqObj.userId,
+                        Comment = "核销电子券",
+                        CustomerID = reqObj.customerId
+                    };
+                    couponUseBll.Create(couponUseEntity);//生成优惠券使用记录
+                #endregion
+
                     respData.ResultCode = "200";
                     respData.Message = "优惠劵使用成功";
                 }
