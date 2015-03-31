@@ -417,7 +417,7 @@ namespace JIT.CPOS.BS.DataAccess
             strb.AppendFormat(@"SELECT a.CouponID,CouponDesc,CouponCode,a.CouponTypeID,b.CouponTypeName,b.Discount,a.CoupnName as CouponName
                                  ,a.Status,convert(date,BeginDate)  BeginDate,convert(date,EndDate) EndDate
                                  ,b.ParValue,b.IsRepeatable,b.IsMixable,b.ValidPeriod,f.VipName,f.WeiXin,
-                                 (case when EndDate='9999-12-31 00:00:00.000' then '0' when EndDate is null then '0' when  GETDATE() <= EndDate then '0' else '1' end) isexpired,
+                                 (case when BeginDate>getdate() then '-1'  when EndDate='9999-12-31 00:00:00.000' then '0' when EndDate is null then '0' when  GETDATE() <= EndDate then '0' else '1' end) isexpired,
                                  (case when EndDate='9999-12-31 00:00:00.000' then '1' when EndDate is null then '1' else '0' end) iseffective
                                  ,(case when EndDate='9999-12-31 00:00:00.000' then 0 when EndDate is null then 0 else (select datediff( dd, getdate(), EndDate)) end) diffDay
                                  FROM Coupon a 
