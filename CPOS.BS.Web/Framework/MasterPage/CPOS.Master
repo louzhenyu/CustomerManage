@@ -101,7 +101,7 @@
                             }
                         } 
             %>           --%>
-              <div style="float: left;height: 20px;line-height: 58px;font-size: 16px;cursor: default;white-space: nowrap;" id="unitName">
+              <div style="float: left;height: 20px;line-height: 60px;font-size: 12px;cursor: default;white-space: nowrap;" id="unitName">
                         
              </div>
                   <div class="qrBox">
