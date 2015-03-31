@@ -57,6 +57,7 @@ namespace JIT.CPOS.BS.Web.Login
             LoggingSessionInfo loggingSession = new LoggingSessionInfo();
             loggingSession.CurrentLoggingManager = myLoggingManager;
             cUserService userService = new cUserService(loggingSession);
+            UnitService unitService = new UnitService(loggingSession);
             if (!userService.IsExistUser(loggingSession))
             {
                 this.lbErr.Text = "用户不存在,请与管理员联系";
@@ -92,17 +93,18 @@ namespace JIT.CPOS.BS.Web.Login
                     Response.End();
                 }
 
-                //try
-                //{
-                //    loggingSession.CurrentUserRole.UnitName = unitService.GetUnitById(
-                //        loggingSessionInfo, loggingSession.CurrentUserRole.UnitId).ShortName;
-                //}
-                //catch (Exception ex)
-                //{
-                //    PageLog.Current.Write(ex);
-                //    Response.Write("找不到单位");
-                //    Response.End();
-                //}
+                try
+                {
+                    var unitInfo = unitService.GetUnitById(loggingSession.CurrentUserRole.UnitId);
+                    loggingSession.CurrentUserRole.UnitName = unitInfo.Name;
+                    loggingSession.CurrentUserRole.UnitShortName = unitInfo.ShortName;
+                }
+                catch (Exception ex)
+                {
+                    PageLog.Current.Write(ex);
+                    Response.Write("找不到单位");
+                    Response.End();
+                }
             }
 
 
@@ -149,7 +151,7 @@ namespace JIT.CPOS.BS.Web.Login
             }
             else
             {
-                loggingSession.CurrentUserRole.RoleName = "793150439CF94190A70CF2EC229A951D";
+                //loggingSession.CurrentUserRole.RoleName = "793150439CF94190A70CF2EC229A951D";
                 Response.Redirect(go_url, true);
             }
             //}

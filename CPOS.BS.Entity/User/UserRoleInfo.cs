@@ -20,6 +20,7 @@ namespace JIT.CPOS.BS.Entity.User
 
         private string userName;
         private string unitName;
+        private string unitShortName;
         private string applicationDescription;
         private string roleName;
         /// <summary>
@@ -78,6 +79,14 @@ namespace JIT.CPOS.BS.Entity.User
         {
             get { return unitName; }
             set { unitName = value; }
+        }
+        /// <summary>
+        /// 单位名称(简称)(查询结果用)
+        /// </summary>
+        public string UnitShortName
+        {
+            get { return unitShortName; }
+            set { unitShortName = value; }
         }
         /// <summary>
         /// 角色所属的应用系统的描述(查询结果用)

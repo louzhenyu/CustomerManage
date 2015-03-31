@@ -1,5 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CPOS.Master.cs"
     Inherits="JIT.CPOS.BS.Web.Framework.MasterPage.CPOS" %>
+<%@ Import Namespace="JIT.CPOS.BS.Entity" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,6 +28,9 @@
             return res;
         };
         __mid = "903407F66A2746D689305C7730FA64B5";
+        //前端接口url
+        var apiurl = '<%=System.Web.Configuration.WebConfigurationManager.AppSettings["interfacehost"] %>';
+        window.apiurl = apiurl;
 </script>
 
    <link href="<%=StaticUrl+"/module/styles/css/reset-pc.css?v=0.4"%>"  rel="stylesheet" />
@@ -97,7 +101,15 @@
                             }
                         }            
                     %>
-                    <div class="qrBox">
+<<<<<<< .mine                      <div style="float: left;height: 20px;line-height: 62px;cursor: default;white-space: nowrap;" id="unitName">
+                        
+                    </div>
+
+
+=======                     <div style="float: left;height: 20px;line-height: 58px;font-size: 16px;cursor: default;white-space: nowrap;" id="unitName">
+                        
+                    </div>
+>>>>>>> .theirs                    <div class="qrBox">
                         <div class="qrBox-tip">
                             <img src="/module/styles/images/qrImg.jpg" />
                         </div>
@@ -228,7 +240,7 @@
             </div>
         </div>
         <img src="" id="imgKeep" style="width: 0px; height: 0px;" />
-
+        <div id="session"></div>
         <script language="javascript" type="text/javascript">
             function keepSession() {
                 document.getElementById("imgKeep").src = "/default.aspx?r=" + Math.random();
@@ -281,9 +293,34 @@
 
         </script>
     </form>
-
+<script type="text/javascript">
+    $(function () {
+        window.clientID = '<%=CustomerID%>';
+        window.adminUserID = '<%=adminUserID%>';
+        window.UnitName = '<%=UnitName%>';
+        window.UnitID = '<%=UnitID%>';
+        window.UnitShortName = '<%=UnitShortName%>';
+        window.RoleName = '<%=RoleName%>';
+        $(".session1").text((window.clientID));
+        //     console.log($(".session1").text());
+    });
+        </script>
 <!-- Piwik Image Tracker-->
 <img src="http://tj.chainclouds.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" />
 <!-- End Piwik -->
+        <div class="session1" style="display:none"/>
+        <script type="text/javascript">
+            $(function () {
+                window.clientID = '<%=CustomerID%>';
+                window.adminUserID = '<%=adminUserID%>';
+                window.UnitName = '<%=UnitName%>';
+                window.UnitID = '<%=UnitID%>';
+                window.UnitShortName = '<%=UnitShortName%>';
+                window.RoleName = '<%=RoleName%>';
+                $(".session1").text((window.clientID));
+           //     console.log($(".session1").text());
+            });
+        </script>
+     
 </body>
 </html>

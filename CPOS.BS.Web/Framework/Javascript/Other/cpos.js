@@ -29,8 +29,11 @@ function SetLogoInfo() {
         success: function (response) {
             var data = Ext.decode(response.responseText);
             var logo = $('#img_logo');
+           
             logo.attr('alt', data.data.loadInfo.customerName);
             logo.closest('a').attr('title', data.data.loadInfo.customerName);
+
+            $('#unitName').html(window.UnitShortName ? window.UnitShortName : window.UnitName).attr("title", window.UnitName + "(" + window.RoleName + ")") //title是全称html是简写名;        
             if (data.data.requset != null) {
                 for (var i = 0; i < data.data.requset.length; i++) {
                     var code = data.data.requset[i].SettingCode;

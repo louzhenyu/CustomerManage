@@ -29,6 +29,29 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
 
             }
         }
+        #region LoggingSessionInfo 登录信息类集合
+
+        protected string CustomerID
+        {
+            get
+            {
+               return  new SessionManager().CurrentUserLoginInfo.ClientID;
+                
+
+            }
+        }
+        protected string adminUserID
+        {
+            get
+            {
+                return new SessionManager().CurrentUserLoginInfo.UserID;
+                
+
+            }
+        }
+        #endregion
+
+       
         protected string PMenuID
         {
             get;
@@ -48,6 +71,35 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                   staticUrl="";
                 }
                 return staticUrl;
+            }
+        }
+
+        protected string UnitID
+        {
+            get
+            {
+                return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.UnitId;
+            }
+        }
+        protected string UnitName
+        {
+            get
+            {
+                return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.UnitName;
+            }
+        }
+        protected string UnitShortName
+        {
+            get
+            {
+                return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.UnitShortName;
+            }
+        }
+        protected string RoleName
+        {
+            get
+            {
+                return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.RoleName;
             }
         }
       
