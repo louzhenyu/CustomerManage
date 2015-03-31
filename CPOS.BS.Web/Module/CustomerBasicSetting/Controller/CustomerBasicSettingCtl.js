@@ -188,7 +188,7 @@ function fnSave() {
         Ext.Msg.alert("提示", "请输入转发消息默认摘要文字");
         return;
     }
-    var WhatCommonPoints = Ext.getCmp("txtWhatCommonPoints").jitGetValue();
+    /*var WhatCommonPoints = Ext.getCmp("txtWhatCommonPoints").jitGetValue();
     //if (WhatCommonPoints == null || WhatCommonPoints == "") {
     //    Ext.Msg.alert("提示", "请输入什么是通用积分");
     //    return;
@@ -223,24 +223,24 @@ function fnSave() {
     //}
 
     var NewsTypeName = Ext.getCmp("txtMemberBenefits").jitGetValue();
-    //if (NewsTypeName == null || NewsTypeName == "") {
-    //    Ext.Msg.alert("提示", "请输入会员权益");
-    //    return;
-    //}
+    if (NewsTypeName == null || NewsTypeName == "") {
+        Ext.Msg.alert("提示", "请输入会员权益");
+        return;
+    }*/
     if (imageurl == null || imageurl == "") {
         Ext.Msg.alert("提示", "请上传客户Logo");
         return;
     }
-    //if (imagecfurl == null || imagecfurl == "") {
-    //    Ext.Msg.alert("提示", "请上传会员图片");
-    //    return;
-    //}
+    /*if (imagecfurl == null || imagecfurl == "") {
+        Ext.Msg.alert("提示", "请上传会员图片");
+        return;
+    }*/
     var cmbCustomerType = Ext.getCmp("cmbCustomerType").jitGetValue();
     if (cmbCustomerType == null || cmbCustomerType == "") {
         Ext.Msg.alert("提示", "请选择客户分类");
         return;
     }
-    if (isAld == "1") {
+    /*if (isAld == "1") {
         if (uploadAppLogoImageUrl == null || uploadAppLogoImageUrl == "") {
             Ext.Msg.alert("提示", "请上传主页Logo");
             return;
@@ -260,7 +260,7 @@ function fnSave() {
     if (deliveryAmount!="" && isNaN(deliveryAmount)) {
         Ext.Msg.alert("提示", "收取的配送费金额必须是数值类型");
         return;
-    }
+    }*/
 
     var myMask_info = JITPage.Msg.GetData;
     var myMask = new Ext.LoadMask(Ext.getBody(), { msg: myMask_info });

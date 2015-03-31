@@ -98,6 +98,8 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " SELECT itemId = a.item_id ";
             sql += " ,itemName = a.item_name ";
             sql += " ,imageUrl = a.imageUrl ";
+            sql += " ,imageUrl2 = a.imageUrl2 ";
+            sql += " ,imageUrl3 = a.imageUrl3 ";
             sql += " ,TargetUrl='aldlinks://product/list/' ";
             sql += " ,price = a.Price ";
             sql += " ,salesPrice = a.SalesPrice ";
@@ -110,6 +112,8 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,CouponURL = a.CouponURL ";
             sql += " ,salesPersonCount = a.SalesPersonCount ";
             sql += " ,itemCategoryName = a.ItemCategoryName ";
+            sql += " ,prop_2_detail_name = a.prop_2_detail_name ";
+            sql += " ,sku_prop_id3 = a.sku_prop_id3 ";
             sql += " ,skuId = a.SkuId ";
             sql += " ,isShoppingCart = case when c.vipid is null then 0 else 1 end ";
             sql += ",CONVERT(NVARCHAR(10),a.CreateTime,120) createDate ";
@@ -168,7 +172,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " WHERE 1 = 1 and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
             if (!string.IsNullOrEmpty(itemName))
             {
-                sql += " AND a.item_name LIKE '%" + itemName + "%' ";
+                sql += " AND (a.item_name LIKE '%" + itemName + "%' OR a.prop_2_detail_name LIKE '%" + itemName + "%' OR a.sku_prop_id3 LIKE '%" + itemName + "%') "; //通过商品名、颜色、材质查询
             }
             //if (!string.IsNullOrEmpty(itemTypeId))
             //{
