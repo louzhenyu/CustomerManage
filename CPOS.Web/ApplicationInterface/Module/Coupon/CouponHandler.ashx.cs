@@ -174,7 +174,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                     respData.ResultCode = "103";
                     respData.Message = "登陆用户不能为空";
                 }
-                var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, "1");
+                var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, reqObj.userId);
                 var couponUseBll = new CouponUseBLL(loggingSessionInfo);          //优惠券使用BLL实例化
                 CouponBLL bll = new CouponBLL(loggingSessionInfo);
                 int res = bll.BestowCoupon(reqObj.Parameters.cuponID, reqObj.Parameters.doorID);
@@ -187,7 +187,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                         VipID = reqObj.userId,
                         UnitID = reqObj.Parameters.doorID,
                         //OrderID = orderEntity.OrderID.ToString(),
-                        CreateBy = reqObj.userId,
+                        //CreateBy = reqObj.userId,
                         Comment = "核销电子券",
                         CustomerID = reqObj.customerId
                     };
