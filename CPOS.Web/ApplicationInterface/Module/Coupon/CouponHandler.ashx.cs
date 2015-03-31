@@ -176,7 +176,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 }
                 var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, reqObj.userId);
                 var couponUseBll = new CouponUseBLL(loggingSessionInfo);          //优惠券使用BLL实例化
+                var vcmBll = new VipCouponMappingBLL(loggingSessionInfo);                //优惠券BLL实例化
+                //var vcmEntity = new VipCouponMappingEntity();
                 CouponBLL bll = new CouponBLL(loggingSessionInfo);
+
+                List<IWhereCondition> wheresOrderNo = new List<IWhereCondition>();
+                    wheresOrderNo.Add(new EqualsCondition() { FieldName = "CouponID", Value = reqObj.Parameters.cuponID });
+                    var resultCouponVipID = vcmBll.Query(wheresOrderNo.ToArray(), null);
+
+                //couponEntity = couponBll.GetByID(reqObj.Parameters.cuponID);
                 int res = bll.BestowCoupon(reqObj.Parameters.cuponID, reqObj.Parameters.doorID);
                 if (res > 0)
                 {
@@ -184,7 +192,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                     var couponUseEntity = new CouponUseEntity()
                     {
                         CouponID = reqObj.Parameters.cuponID,
-                        VipID = reqObj.userId,
+                        VipID = resultCouponVipID == null ? "" : resultCouponVipID[0].VIPID,
                         UnitID = reqObj.Parameters.doorID,
                         //OrderID = orderEntity.OrderID.ToString(),
                         //CreateBy = reqObj.userId,
