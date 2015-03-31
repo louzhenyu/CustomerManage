@@ -81,7 +81,7 @@
             <!-- 公共的头部，导航，logo，信息 -->
             <div class="commonHeader">
                 <div class="handleWrap">
-                    <%
+                   <%--未审核订单 <%
                         bool haslink = false;
                         var level1 = from c in MenuList where c.Parent_Menu_Id == "--" select c;  //在这里取父节点为空的
                         foreach (var n in level1)
@@ -99,17 +99,12 @@
                                         (result ? (m.Url_Path + "&mid=" + m.Menu_Id) : (m.Url_Path + "?mid=" + m.Menu_Id))));
                                 }
                             }
-                        }            
-                    %>
-<<<<<<< .mine                      <div style="float: left;height: 20px;line-height: 62px;cursor: default;white-space: nowrap;" id="unitName">
+                        } 
+            %>           --%>
+              <div style="float: left;height: 20px;line-height: 58px;font-size: 16px;cursor: default;white-space: nowrap;" id="unitName">
                         
-                    </div>
-
-
-=======                     <div style="float: left;height: 20px;line-height: 58px;font-size: 16px;cursor: default;white-space: nowrap;" id="unitName">
-                        
-                    </div>
->>>>>>> .theirs                    <div class="qrBox">
+             </div>
+                  <div class="qrBox">
                         <div class="qrBox-tip">
                             <img src="/module/styles/images/qrImg.jpg" />
                         </div>
