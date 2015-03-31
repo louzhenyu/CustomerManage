@@ -1012,8 +1012,8 @@ namespace JIT.CPOS.BS.DataAccess
             string sql = string.Format(@"SELECT unit_id FROM dbo.T_User_Role l
                                     LEFT JOIN T_Role r ON l.role_id=r.role_id
                                     WHERE l.user_id='{0}'
-                                    and l.default_flag=1 
-                                    AND r.role_code in ('CustomerOrders','CustomerService')", userId);
+                                    and l.default_flag=1 ", userId);
+                                   // AND r.role_code in ('CustomerOrders','CustomerService')", userId);
             object obj = SQLHelper.ExecuteScalar(sql);
             string ret = string.Empty;
             if (obj != null)
