@@ -2079,8 +2079,9 @@ select @ReturnValue", pCustomerID);
                     select @totalCount = 
                       count(1)  from(
                     select v.vipid,v.vipcode,v.vipname,v.viprealname,g.vipcardgradename,p.endintegral,x.highercount,v.createtime
-                    from vip v inner join vipintegral p
-                    on v.vipid=p.vipid inner join  sysvipcardgrade g
+                    from vip v left join vipintegral p
+                    on v.vipid=p.vipid 
+                    left join  sysvipcardgrade g
                     on v.viplevel = g.vipcardgradeid
                     left join (select highervipid,higherCount=count(*) from vip where highervipid is not null group by highervipid) x
                     on v.vipid=x.highervipid
@@ -2089,8 +2090,8 @@ select @ReturnValue", pCustomerID);
                     select @totalCount
                     select * from (
                     select row_number() over(order by v.createtime {3}) _row, v.vipid,v.vipcode,v.vipname,v.viprealname,g.vipcardgradename,p.endintegral,x.highercount,convert(varchar(10),v.createtime,120) createtime
-                    from vip v inner join vipintegral p
-                    on v.vipid=p.vipid inner join  sysvipcardgrade g
+                    from vip v left join vipintegral p
+                    on v.vipid=p.vipid left join  sysvipcardgrade g
                     on v.viplevel = g.vipcardgradeid
                     left join (select highervipid,higherCount=count(*) from vip where highervipid is not null group by highervipid) x
                     on v.vipid=x.highervipid

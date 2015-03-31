@@ -83,7 +83,7 @@
                 <li data-id="nav03" class="nav03">积分明细</li>
                 <li data-id="nav04" class="nav04">帐内余额</li>
                 <li data-id="nav05" class="nav05">消费卡</li>
-                <li data-id="nav06" class="nav06">上线与下线</li>
+                <li data-id="nav06" class="nav06">下线会员</li>
                 <li data-id="nav07" class="nav07">客服记录</li>
                 <li data-id="nav08" class="nav08">变更记录</li>
             </ul>
