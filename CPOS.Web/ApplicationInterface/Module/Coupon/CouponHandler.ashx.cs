@@ -174,6 +174,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                     respData.ResultCode = "103";
                     respData.Message = "登陆用户不能为空";
                 }
+                if (string.IsNullOrEmpty(reqObj.Parameters.doorID))
+                {
+                    respData.ResultCode = "103";
+                    respData.Message = "此APP版本无法核销，请升级到新版本。";
+                    return respData.ToJSON();
+                }
                 var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, reqObj.userId);
                 var couponUseBll = new CouponUseBLL(loggingSessionInfo);          //优惠券使用BLL实例化
                 var vcmBll = new VipCouponMappingBLL(loggingSessionInfo);                //优惠券BLL实例化
