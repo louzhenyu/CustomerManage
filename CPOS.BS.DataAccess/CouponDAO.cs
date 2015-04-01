@@ -427,6 +427,7 @@ namespace JIT.CPOS.BS.DataAccess
                                  left join  Vip f on d.VIPID=f.VIPID
                                  WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0
                                  and a.CouponID='{0}' ", couponID);
+            strb.AppendFormat(" and a.CustomerID='{0}'", CurrentUserInfo.CurrentLoggingManager.Customer_Id);
 
             //if (!string.IsNullOrEmpty(userID) && userID != "-1")
             //{

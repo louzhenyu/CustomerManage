@@ -134,8 +134,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 {
                     respData.ResultCode = "103";
                     respData.Message = "登陆用户不能为空";
+                    return respData.ToJSON();
                 }
-                var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, "1");
+                var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, reqObj.userId);
                 CouponBLL bll = new CouponBLL(loggingSessionInfo);
                 DataSet ds = bll.GetCouponDetail(reqObj.Parameters.cuponID,reqObj.userId);
 
