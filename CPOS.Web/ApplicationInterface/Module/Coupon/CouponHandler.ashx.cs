@@ -144,6 +144,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 {
                     respData.couponDetail = DataTableToObject.ConvertToObject<CouponEntity>(ds.Tables[0].Rows[0]);
                     respData.couponDetail.QRUrl = GeneratedQR(reqObj.Parameters.cuponID);
+                }else
+                {
+                    respData.ResultCode = "103";
+                    respData.Message = "无效的优惠券";
+                    return respData.ToJSON();
                 }
                
 
