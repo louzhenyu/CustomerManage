@@ -167,7 +167,7 @@ namespace JIT.CPOS.Web.WeiXin
                             vipInfo.WeiXin = WeiXin;
                             vipInfo.VipSourceId = "3";
                             vipInfo.HeadImgUrl = headimgurl;
-                            //var vipObj = vipService.QueryByEntity(vipQueryInfo, null);
+                            //var vipObj = vipService.QueryByEntity(vipQueryInfo, null);  update by Henry
                             var vipObj = vipService.QueryByEntity(new VipEntity() { WeiXinUserId = OpenID }, null);
                             if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                             {
@@ -1320,7 +1320,8 @@ namespace JIT.CPOS.Web.WeiXin
                 vipInfo.VipSourceId = "3";
                 vipInfo.HeadImgUrl = headimgurl;
 
-                var vipObj = vipServiceUnion.QueryByEntity(vipQueryInfo, null);
+                //var vipObj = vipServiceUnion.QueryByEntity(vipQueryInfo, null);
+                var vipObj = vipServiceUnion.QueryByEntity(new VipEntity() {WeiXinUserId=OpenID }, null);
                 if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                 {
                     if (vipInfo.VIPID == null || vipInfo.VIPID.Equals(""))
