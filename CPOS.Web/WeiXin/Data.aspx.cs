@@ -180,10 +180,10 @@ namespace JIT.CPOS.Web.WeiXin
                             else
                             {
                                 vipInfo.VIPID = vipObj[0].VIPID;
-                                //if (vipInfo.VipCode == null || vipInfo.VipCode.Equals(""))
-                                //{
-                                //    vipInfo.VipCode = vipCode;
-                                //}
+                                if (vipInfo.VipCode == null || vipInfo.VipCode.Equals(""))
+                                {
+                                    vipInfo.VipCode = vipCode;
+                                }
                                 //vipInfo.CreateTime = System.DateTime.Now;
                                 if (headimgurl != null && !headimgurl.Equals(""))
                                 {
@@ -1321,7 +1321,7 @@ namespace JIT.CPOS.Web.WeiXin
                 vipInfo.HeadImgUrl = headimgurl;
 
                 //var vipObj = vipServiceUnion.QueryByEntity(vipQueryInfo, null);
-                var vipObj = vipServiceUnion.QueryByEntity(new VipEntity() {WeiXinUserId=OpenID }, null);
+                var vipObj = vipServiceUnion.QueryByEntity(new VipEntity() { WeiXinUserId = OpenID }, null);
                 if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                 {
                     if (vipInfo.VIPID == null || vipInfo.VIPID.Equals(""))
@@ -1363,7 +1363,7 @@ namespace JIT.CPOS.Web.WeiXin
                         vipInfo.HeadImgUrl = headimgurl;
                     }
                     vipInfo.ClientID = tmpUser.CurrentUser.customer_id;
-                    vipInfo.VipCode = null;
+                    //vipInfo.VipCode = null;
                     vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";
                     vipInfo.Col49 = iRad.ToString();
                     vipInfo.IsDelete = 0;
