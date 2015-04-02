@@ -167,7 +167,8 @@ namespace JIT.CPOS.Web.WeiXin
                             vipInfo.WeiXin = WeiXin;
                             vipInfo.VipSourceId = "3";
                             vipInfo.HeadImgUrl = headimgurl;
-                            var vipObj = vipService.QueryByEntity(vipQueryInfo, null);
+                            //var vipObj = vipService.QueryByEntity(vipQueryInfo, null);
+                            var vipObj = vipService.QueryByEntity(new VipEntity() { WeiXinUserId = OpenID }, null);
                             if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                             {
                                 vipInfo.Status = 1;
