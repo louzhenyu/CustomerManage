@@ -582,13 +582,13 @@ namespace JIT.CPOS.BS.DataAccess
 
         #region 新增核销后插入数据方法 2014-10-8
 
-        public void UpdateCouponUse(string CouponID, string Comment, string CreateBy, string CustomerID)
+        public void UpdateCouponUse(string CouponID, string Comment, string VipID, string CreateBy, string UnitID, string CustomerID)
         {
             string sql = string.Format(@"
                     insert into dbo.CouponUse 
-                    (CouponUseID,CouponID,Comment,CreateBy,CustomerID,CreateTime,IsDelete)
+                    (CouponUseID,CouponID,VipID,UnitID,Comment,CreateBy,CustomerID,CreateTime,IsDelete)
                     VALUES
-                    (newid(),'{0}','{1}','{2}','{3}',getdate(),0)", CouponID, Comment, CreateBy, CustomerID);
+                    (newid(),'{0}','{1}','{2}','{3}','{4}','{5}',getdate(),0)", CouponID, VipID, UnitID, Comment, CreateBy, CustomerID);
             SQLHelper.ExecuteNonQuery(sql);
         }
 

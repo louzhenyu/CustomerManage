@@ -714,8 +714,14 @@ namespace JIT.CPOS.BS.BLL
                          Col3 = CurrentUserInfo.UserID,
                          LastUpdateTime = DateTime.Now
                      }, false);
-                ////核销之后去插入数据
-                //this._currentDAO.UpdateCouponUse(writeOffCouponRP.CouponID, writeOffCouponRP.Comment, CurrentUserInfo.UserID, CurrentUserInfo.ClientID);
+                //核销之后去插入数据
+                writeOffCouponRP.Comment = "后台核销电子券";
+                var vipcouponMappingBll = new VipCouponMappingBLL(CurrentUserInfo);
+                var vipcouponmappingList = vipcouponMappingBll.QueryByEntity(new VipCouponMappingEntity()
+                {
+                    CouponID = writeOffCouponRP.CouponID
+                }, null);
+                this._currentDAO.UpdateCouponUse(writeOffCouponRP.CouponID, writeOffCouponRP.Comment, vipcouponmappingList[0].VIPID, CurrentUserInfo.UserID, CurrentUserInfo.CurrentUserRole.UnitId, CurrentUserInfo.ClientID);
                 sr.Message = "核销成功！";
             }
 

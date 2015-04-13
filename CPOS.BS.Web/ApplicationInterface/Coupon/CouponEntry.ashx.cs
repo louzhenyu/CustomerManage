@@ -130,19 +130,21 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Coupon
             var rp = pRequest.DeserializeJSONTo<APIRequest<WriteOffCouponRP>>();
             rp.Parameters.Validate();
             
-            //创建虚拟订单
-            string order_no = setOrderInfo();
+            ////创建虚拟订单
+            //string order_no = setOrderInfo();
 
-            //绑定虚拟订单和优惠券的关系
-            InoutService inoutBll=new InoutService(loggingSessionInfo);
-            string orderID= inoutBll.GetOrderIDByOrderNo(order_no, loggingSessionInfo.CurrentLoggingManager.Customer_Id);
+            ////绑定虚拟订单和优惠券的关系
+            //InoutService inoutBll=new InoutService(loggingSessionInfo);
+            //string orderID= inoutBll.GetOrderIDByOrderNo(order_no, loggingSessionInfo.CurrentLoggingManager.Customer_Id);
 
-            TOrderCouponMappingEntity entity = new TOrderCouponMappingEntity();
-            TOrderCouponMappingBLL mappingBLL = new TOrderCouponMappingBLL(loggingSessionInfo);
-            entity.CouponId = rp.Parameters.CouponID;
-            entity.OrderId = orderID;
-            entity.MappingId = BaseService.NewGuidPub(); 
-            mappingBLL.Create(entity);
+            //TOrderCouponMappingEntity entity = new TOrderCouponMappingEntity();
+            //TOrderCouponMappingBLL mappingBLL = new TOrderCouponMappingBLL(loggingSessionInfo);
+            //entity.CouponId = rp.Parameters.CouponID;
+            //entity.OrderId = orderID;
+            //entity.MappingId = BaseService.NewGuidPub(); 
+            //mappingBLL.Create(entity);
+
+
 
             //核销优惠券
             var rsp = couponBLL.WriteOffCoupon(rp.Parameters);
