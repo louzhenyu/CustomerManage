@@ -422,13 +422,43 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
         protected string UpdateCoupon(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<GetCouponDetailRP>>();
-            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
             var couponBll=new CouponBLL(loggingSessionInfo);
             var couponInfo = couponBll.GetByID(rp.Parameters.CouponID);
             if (couponInfo != null)
             {
                 couponInfo.Status = 1;      //置为已用；（0：未用，1：已使用，2：已过期，3：全部）
                 couponBll.Update(couponInfo);   //修改
+
+                #region 优惠券使用记录
+                var couponUseBll = new CouponUseBLL(loggingSessionInfo);          //优惠券使用BLL实例化
+                var vcmBll = new VipCouponMappingBLL(loggingSessionInfo);                //优惠券BLL实例化
+                //var vcmEntity = new VipCouponMappingEntity();
+                CouponBLL bll = new CouponBLL(loggingSessionInfo);
+                List<IWhereCondition> wheresOrderNo = new List<IWhereCondition>();
+                wheresOrderNo.Add(new EqualsCondition() { FieldName = "CouponID", Value = rp.Parameters.CouponID });
+                var resultCouponVipID = vcmBll.Query(wheresOrderNo.ToArray(), null);
+                List<IWhereCondition> wheresCouponUse = new List<IWhereCondition>();
+                wheresCouponUse.Add(new EqualsCondition() { FieldName = "CouponID", Value = rp.Parameters.CouponID });
+                var resultCouponUse = couponUseBll.Query(wheresCouponUse.ToArray(), null);
+                foreach (var rcu in resultCouponUse)
+                {
+                    couponUseBll.Delete(rcu);
+                }
+
+                var couponUseEntity = new CouponUseEntity()
+                {
+                    CouponID = rp.Parameters.CouponID,
+                    VipID = resultCouponVipID == null ? "" : resultCouponVipID[0].VIPID,
+                    UnitID = rp.Parameters.UnitID,
+                    //OrderID = orderEntity.OrderID.ToString(),
+                    CreateBy = rp.UserID,
+                    Comment = "核销电子券",
+                    CustomerID = rp.CustomerID
+                };
+                couponUseBll.Create(couponUseEntity);//生成优惠券使用记录
+                
+                #endregion
             }
             var rd = new EmptyRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -902,6 +932,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
     public class GetCouponDetailRP : IAPIRequestParameter
     {
         public string CouponID { get; set; }
+        public string UnitID { get; set; }
         public string Rule { get; set; }
         public void Validate()
         {
