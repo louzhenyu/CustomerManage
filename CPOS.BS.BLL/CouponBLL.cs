@@ -709,13 +709,13 @@ namespace JIT.CPOS.BS.BLL
                          CouponID = writeOffCouponRP.CouponID,
                          Status = 1,
                          LastUpdateBy = CurrentUserInfo.UserID,
-                         Col1 = writeOffCouponRP.Comment,
-                         Col2 = DateTime.Now.ToString(),
-                         Col3 = CurrentUserInfo.UserID,
+                         //Col1 = writeOffCouponRP.Comment,
+                         //Col2 = DateTime.Now.ToString(),
+                         //Col3 = CurrentUserInfo.UserID,
                          LastUpdateTime = DateTime.Now
                      }, false);
                 //核销之后去插入数据
-                writeOffCouponRP.Comment = "后台核销电子券";
+                writeOffCouponRP.Comment = string.IsNullOrEmpty(writeOffCouponRP.Comment) ? "后台核销电子券" : writeOffCouponRP.Comment;
                 var vipcouponMappingBll = new VipCouponMappingBLL(CurrentUserInfo);
                 var vipcouponmappingList = vipcouponMappingBll.QueryByEntity(new VipCouponMappingEntity()
                 {
@@ -963,7 +963,18 @@ namespace JIT.CPOS.BS.BLL
     public class WriteOffCouponRP : IAPIRequestParameter
     {
         public string CouponID { get; set; }
+        /// <summary>
+        /// 组单号
+        /// </summary>
         public string Comment { get; set; }
+        /// <summary>
+        /// 门店ID
+        /// </summary>
+        //public string UnitID { get; set; }
+        /// <summary>
+        /// 核销店员ID
+        /// </summary>
+        //public string WriteOffUserID { get; set; }
 
         public void Validate()
         {

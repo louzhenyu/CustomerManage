@@ -1821,7 +1821,7 @@ select @ReturnValue", pCustomerID);
                 sql.Append("select row_number() over(order by a.createTime desc) as _row, a.*, b.EndAmount  into #tmp  from Vip a ");
                 sql.Append("left join VipAmount b on a.VipID = b.VipID  where ");
                 sql.Append("a.VipId=(select VIPID from VipCouponMapping where ");
-                sql.Append("CouponID=(select CouponID from Coupon where CouponCode='" + couponCode + "'))");
+                sql.Append("CouponID=(select CouponID from Coupon where Status =0 and CouponCode='" + couponCode + "'))");
             }
             else
             {
@@ -1832,7 +1832,7 @@ select @ReturnValue", pCustomerID);
                 if (!string.IsNullOrEmpty(couponCode))
                 {
                     sql.Append(" and a.VipId=(select VIPID from VipCouponMapping ");
-                    sql.Append("where CouponID=(select CouponID from Coupon where CouponCode='" + couponCode + "'))");
+                    sql.Append("where CouponID=(select CouponID from Coupon where Status =0 and CouponCode='" + couponCode + "'))");
                 }
             }
             sql.Append(" ; ");

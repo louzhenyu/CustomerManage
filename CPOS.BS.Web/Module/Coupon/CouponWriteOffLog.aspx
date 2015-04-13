@@ -39,7 +39,7 @@
                     </li>
                     
                     <li>
-                        <input type="text" id="Comment" placeholder="组单号">
+                        <input type="text" id="Comment" placeholder="备注">
                     </li>
                     <li>
                         <input type="text" id="VipName" placeholder="核销人">
@@ -64,7 +64,7 @@
                         <th align="center" scope="col">优惠券号</th>
                         <th align="center" scope="col">优惠券名称</th>
                         <th align="center" scope="col">核销日期</th>
-                        <th align="center" scope="col">组单号</th>
+                        <th align="center" scope="col">备注</th>
                         <th align="center" scope="col">核销人</th>
                     </tr>
                     <tbody id="content">

@@ -14,7 +14,7 @@
         <span class="packup"></span>
         <div class="commonNav_coupon">
             <a href="javascript:;" class="on">优惠券核销</a> 
-             <a href="javascript:void(0)" onclick='AddMid("couponWriteOffLog.aspx")'>使用记录</a>
+            <%-- <a href="javascript:void(0)" onclick='AddMid("couponWriteOffLog.aspx")'>使用记录</a>--%>
         </div>
         <div class="contentArea_coupon">
             <div class="commonTitWrap">
@@ -96,7 +96,7 @@
                                     有效期
                                 </th>
                                 <th align="center" scope="col">
-                                    组单号
+                                    备注
                                 </th>
                             </tr>
                             <tbody id="couponListContent">

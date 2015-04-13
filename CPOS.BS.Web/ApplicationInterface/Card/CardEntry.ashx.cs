@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using JIT.CPOS.BS.BLL;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.Web.Session;
 using JIT.CPOS.DTO.Base;
 using JIT.Utility.ExtensionMethod;
@@ -246,6 +247,25 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Card
             }
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            //获取优惠券
+            var couponBll = new CouponBLL(loggingSessionInfo);                //优惠券BLL实例化
+            var couponEntity = couponBll.QueryByEntity(new CouponEntity()
+            {
+                CouponCode = rp.Parameters.CouponCode
+            }, null);
+
+            if (couponEntity == null || couponEntity.Length == 0)
+            {
+                rsp.ResultCode = 103;
+                rsp.Message = "优惠券无效";
+                return rsp.ToJSON();
+            }
+            if (couponEntity[0].Status == 1)
+            {
+                rsp.ResultCode = 103;
+                rsp.Message = "优惠券已核销";
+                return rsp.ToJSON();
+            }
 
             return rsp.ToJSON();
         }

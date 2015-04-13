@@ -586,9 +586,9 @@ namespace JIT.CPOS.BS.DataAccess
         {
             string sql = string.Format(@"
                     insert into dbo.CouponUse 
-                    (CouponUseID,CouponID,VipID,UnitID,Comment,CreateBy,CustomerID,CreateTime,IsDelete)
+                    (CouponUseID,CouponID,VipID,UnitID,Comment,CreateBy,CustomerID,CreateTime,LastUpdateBy,LastUpdateTime,IsDelete)
                     VALUES
-                    (newid(),'{0}','{1}','{2}','{3}','{4}','{5}',getdate(),0)", CouponID, VipID, UnitID, Comment, CreateBy, CustomerID);
+                    (newid(),'{0}','{1}','{2}','{3}','{4}','{5}',getdate(),'{6}',getdate(),0)", CouponID, VipID, UnitID, Comment, CreateBy, CustomerID, CreateBy);
             SQLHelper.ExecuteNonQuery(sql);
         }
 
