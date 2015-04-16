@@ -630,7 +630,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             rd.Disabled = vipBll.Query(disabledComplexCondition.ToArray(), lstOrder.ToArray()).Length;    //停用会员行数
 
             #region 排名
-            
+            var everyoneBll = new EveryoneSalesBLL(loggingSessionInfo);
+            DataSet dt = everyoneBll.GetRankingByUserID(rp.CustomerID, rp.UserID, "6");
+            rd.Ranking = Convert.ToInt32(dt.Tables[0].Rows[0]["Ordinal"]);
 
             #endregion
             #region 响应数据

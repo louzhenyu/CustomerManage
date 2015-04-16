@@ -55,6 +55,14 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetVipCount(CustomerID, PageSize, PageIndex,ChanelId);
         }
+        /// <summary>
+        /// 集客榜排名 By UserID
+        /// </summary>
+        /// <returns></returns>
+        public DataSet GetRankingByUserID(string CustomerID, string UserID, string ChanelId)
+        {
+            return this._currentDAO.GetRankingByUserID(CustomerID, UserID, ChanelId);
+        }
 
         /// <summary>
         /// 收入榜

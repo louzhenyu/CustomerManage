@@ -86,6 +86,23 @@ namespace JIT.CPOS.BS.DataAccess.EveryoneSales
         }
 
         /// <summary>
+        /// 集客榜排名 By UserID
+        /// </summary>
+        /// <returns></returns>
+        public DataSet GetRankingByUserID(string CustomerID, string UserID, string ChanelId)
+        {
+            var parm = new SqlParameter[3];
+            parm[0] = new SqlParameter("@CustomerID", CustomerID);
+            parm[1] = new SqlParameter("@UserID", UserID);
+            parm[2] = new SqlParameter("@ChanelId", ChanelId);
+            Loggers.Debug(new DebugLogInfo()
+            {
+                Message = parm.ToJSON()
+            });
+            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "ProcGetRankingByUserID", parm);
+        }
+
+        /// <summary>
         /// 收入榜
         /// </summary>
         /// <returns></returns>
