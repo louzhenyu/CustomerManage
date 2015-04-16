@@ -146,7 +146,9 @@
     <Compile Include="Module\VIP\Register\Response\SetRegisterFormItemsRD.cs" />
     <Compile Include="Module\VIP\VipListNum\Request\GetVipListNumRP.cs" />
     <Compile Include="Module\VIP\VipListNum\Response\GetVipListNumRD.cs" />
+    <Compile Include="Module\VIP\VipList\Request\GetMyVipListRP.cs" />
     <Compile Include="Module\VIP\VipList\Request\GetVipListRP.cs" />
+    <Compile Include="Module\VIP\VipList\Response\GetMyVipListRD.cs" />
     <Compile Include="Module\VIP\VipList\Response\GetVipListRD.cs" />
     <Compile Include="Module\VIP\WifiSign\Request\WifiSignRP.cs" />
     <Compile Include="Module\VIP\WifiSign\Response\WifiSignRD.cs" />
