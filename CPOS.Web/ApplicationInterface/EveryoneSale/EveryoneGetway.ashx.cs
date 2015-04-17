@@ -632,7 +632,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             #region 排名
             var everyoneBll = new EveryoneSalesBLL(loggingSessionInfo);
             DataSet dt = everyoneBll.GetRankingByUserID(rp.CustomerID, rp.UserID, "6");
-            rd.Ranking = Convert.ToInt32(dt.Tables[0].Rows[0]["Ordinal"]);
+            if (dt.Tables[0].Rows.Count > 0)
+                rd.Ranking = Convert.ToInt32(dt.Tables[0].Rows[0]["Ordinal"]);
 
             #endregion
             #region 响应数据
@@ -645,6 +646,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 VipName = string.IsNullOrEmpty(t.VipRealName) ? t.VipName : t.VipRealName,
                 VipPhoto = t.HeadImgUrl,
                 Phone = t.Phone,
+                Birthday = string.IsNullOrEmpty(t.Birthday) ? "" : t.Birthday,
+                City = (string.IsNullOrEmpty(t.City) && t.City == "0") ? "" : t.City,
+                CreateTime = t.CreateTime.ToString(),
                 Status = t.Status
             }).ToArray();
             #endregion

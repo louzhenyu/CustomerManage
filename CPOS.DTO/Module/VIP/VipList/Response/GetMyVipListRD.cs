@@ -57,6 +57,15 @@ namespace JIT.CPOS.DTO.Module.VIP.VipList.Response
         /// </summary>
         public string Phone { get; set; }
         /// <summary>
+        /// 生日
+        /// </summary>
+        public string Birthday { get; set; }
+        /// <summary>
+        /// 城市
+        /// </summary>
+        public string City { get; set; }
+        public string CreateTime { get; set; }
+        /// <summary>
         /// 会员状态
         /// </summary>
         public int? Status { get; set; }
