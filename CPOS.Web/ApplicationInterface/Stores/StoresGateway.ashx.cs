@@ -232,11 +232,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 string status = string.Empty;
                 string vipId = string.Empty;
                 string openId = string.Empty;
+
+                
+                
+
                 if (info == null || info.DCodeId == null)
                 {
                     rsp.ResultCode = 303;
                     rsp.Message = "不存在对应的记录";
-                    return rsp.ToJSON().ToString();
+                    return rsp.ToJSON();
                 }
                 else
                 {
@@ -263,7 +267,21 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 temp.openId = openId;
                 RD.content = temp;
                 rsp = new SuccessResponse<IAPIResponseData>(RD);
-                content = rsp.ToJSON();
+                if (!string.IsNullOrEmpty(info.VipId))
+                {
+                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                    var vipInfo = vipBll.GetByID(info.VipId);
+                    if (!string.IsNullOrEmpty(vipInfo.CouponInfo))
+                    {
+                        //rsp.ResultCode = 303;
+                        rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
+                        return rsp.ToJSON();
+                    }
+                }
+                if (!string.IsNullOrEmpty(vipId))
+                {
+                    rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
+                }
                 #endregion
             }
             catch (Exception ex)
