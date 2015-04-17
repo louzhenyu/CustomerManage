@@ -582,9 +582,7 @@ namespace JIT.CPOS.BS.BLL.WX
                     var qrcode = webUrl + "/Member.aspx?weixin_id=" + weixinID + "&open_id=" + openID;
 
                     webUrl = ConfigurationManager.AppSettings["website_WWW"];
-#if DEBUG
-                   webUrl = "http://localhost:1950/";//临时调试********
-#endif
+
                     string uri = webUrl + "/weixin/data.aspx?datatype=SignIn";//调用用户关注事件
                     uri += "&openID=" + HttpUtility.UrlEncode(openID);
                     uri += "&weixin_id=" + HttpUtility.UrlEncode(weixinID);
