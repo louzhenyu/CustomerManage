@@ -288,18 +288,7 @@
 
         </script>
     </form>
-<script type="text/javascript">
-    $(function () {
-        window.clientID = '<%=CustomerID%>';
-        window.adminUserID = '<%=adminUserID%>';
-        window.UnitName = '<%=UnitName%>';
-        window.UnitID = '<%=UnitID%>';
-        window.UnitShortName = '<%=UnitShortName%>';
-        window.RoleName = '<%=RoleName%>';
-        $(".session1").text((window.clientID));
-        //     console.log($(".session1").text());
-    });
-        </script>
+
 <!-- Piwik Image Tracker-->
 <img src="http://tj.chainclouds.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" />
 <!-- End Piwik -->
@@ -311,6 +300,7 @@
                 window.UnitName = '<%=UnitName%>';
                 window.UnitID = '<%=UnitID%>';
                 window.UnitShortName = '<%=UnitShortName%>';
+                window.RoleCode = '<%=RoleCode%>';
                 window.RoleName = '<%=RoleName%>';
                 $(".session1").text((window.clientID));
            //     console.log($(".session1").text());

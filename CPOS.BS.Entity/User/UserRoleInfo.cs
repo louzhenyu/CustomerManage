@@ -16,6 +16,7 @@ namespace JIT.CPOS.BS.Entity.User
         private string userId;
         private string unitId;
         private string roleId;
+        private string roleCode;
         private int defaultFlag = 0;
 
         private string userName;
@@ -54,6 +55,14 @@ namespace JIT.CPOS.BS.Entity.User
         {
             get { return roleId; }
             set { roleId = value; }
+        }
+        /// <summary>
+        /// 角色代码
+        /// </summary>
+        public string RoleCode
+        {
+            get { return roleCode; }
+            set { roleCode = value; }
         }
         /// <summary>
         /// 用户是否是该角色在该单位下的缺省用户(1:是,0:不是)

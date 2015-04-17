@@ -75,6 +75,7 @@ namespace JIT.CPOS.BS.Web.Login
                 loggingSession.CurrentUserRole.UserId = login_user.User_Id;
                 loggingSession.CurrentUserRole.UserName = login_user.User_Name;
                 loggingSession.CurrentUserRole.RoleId = userRoleList[0].RoleId;
+                loggingSession.CurrentUserRole.RoleCode = userRoleList[0].RoleCode;
                 loggingSession.CurrentUserRole.RoleName = userRoleList[0].RoleName;
 
                 loggingSession.ClientID = login_user.customer_id;

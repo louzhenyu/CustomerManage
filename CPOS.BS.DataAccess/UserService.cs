@@ -570,6 +570,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " , a.user_id UserId"
                       + " , a.unit_id UnitId"
                       + " , a.role_id RoleId"
+                      + " , e.role_code RoleCode"
                       + " , a.default_flag DefaultFlag"
                       + " , e.role_name as  RoleName"
                       + " , c.unit_code + ' - ' + c.unit_name as  UnitName"

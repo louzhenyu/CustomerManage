@@ -929,7 +929,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="appId"></param>
         /// <param name="appSecret"></param>
         /// <param name="type">二维码类型  0： 临时二维码  1：永久二维码</param>
-        /// <param name="sceneId">场景值ID，临时二维码时为32位整型，永久二维码时最大值为1000</param>
+        /// <param name="sceneId">场景值ID，临时二维码时为32位整型，永久二维码时只支持1--100000</param>
         /// <returns></returns>
         public string GetQrcodeUrl(string appId, string appSecret, string type, int sceneId, LoggingSessionInfo loggingSessionInfo)
         {

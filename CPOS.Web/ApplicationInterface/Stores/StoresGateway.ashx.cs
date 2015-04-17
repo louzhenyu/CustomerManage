@@ -84,12 +84,25 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
 
                 #endregion
-                string imageUrl = string.Empty;
+                var imageUrl = string.Empty;
                 Random ro = new Random();
-                int iResult;
-                int iUp = 100000000;
-                int iDown = 50000000;
-                iResult = ro.Next(iDown, iUp); //8位
+                var iUp = 100000000;
+                var iDown = 50000000;
+
+                if (string.IsNullOrEmpty(RP.Parameters.VipDCode.ToString("")))
+                {
+                    rsp.ResultCode = 302;
+                    rsp.Message = "参数 VipDCode 不能为空";
+                    return rsp.ToJSON();
+                }
+                var rpVipDCode = 0;                 //临时二维码
+                if (RP.Parameters.VipDCode == 9)    //永久二维码
+                {
+                    iUp = 100000;
+                    iDown = 1;
+                    rpVipDCode = 1;                 //永久
+                }
+                var iResult = ro.Next(iDown, iUp);  //随机数
 
                 #region 获取微信帐号
 
@@ -111,7 +124,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     JIT.CPOS.BS.BLL.WX.CommonBLL commonServer = new JIT.CPOS.BS.BLL.WX.CommonBLL();
                     imageUrl = commonServer.GetQrcodeUrl(ToStr(wxObj[0].AppID)
                         , ToStr(wxObj[0].AppSecret)
-                        , ToStr("0")
+                        , rpVipDCode.ToString("")
                         , iResult, loggingSessionInfo);
                     if (imageUrl != null && !imageUrl.Equals(""))
                     {
@@ -232,6 +245,20 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 string status = string.Empty;
                 string vipId = string.Empty;
                 string openId = string.Empty;
+
+                if (!string.IsNullOrEmpty(info.VipId))
+                {
+                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                    var vipInfo = vipBll.GetByID(info.VipId); 
+                    if (!string.IsNullOrEmpty(vipInfo.CouponInfo))
+                    {
+                        rsp.ResultCode = 303;
+                        rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
+                        return rsp.ToJSON();
+                    }
+                }
+                
+
                 if (info == null || info.DCodeId == null)
                 {
                     rsp.ResultCode = 303;
@@ -291,7 +318,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             {
                 Message = string.Format("setSignUp content: {0}", temp)
             });
-            return content;
+            return rsp.ToJSON();
         }
         public class getPollRespData : IAPIResponseData
         {

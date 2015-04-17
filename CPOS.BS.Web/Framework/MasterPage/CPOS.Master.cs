@@ -35,9 +35,7 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
         {
             get
             {
-               return  new SessionManager().CurrentUserLoginInfo.ClientID;
-                
-
+               return  new SessionManager().CurrentUserLoginInfo.ClientID; 
             }
         }
         protected string adminUserID
@@ -95,12 +93,12 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                 return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.UnitShortName;
             }
         }
-        protected string RoleName
+        protected string RoleCode
         {
-            get
-            {
-                return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.RoleName;
-            }
+            get { return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.RoleCode; }
+        }
+        protected string RoleName{
+            get{return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.RoleName;}
         }
       
         #region 页面入口
