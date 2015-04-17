@@ -263,22 +263,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 temp.openId = openId;
                 RD.content = temp;
                 rsp = new SuccessResponse<IAPIResponseData>(RD);
-                if (!string.IsNullOrEmpty(info.VipId))
-                {
-                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
-                    var vipInfo = vipBll.GetByID(info.VipId);
-                    if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
-                    {
-                        //rsp.ResultCode = 303;
-                        rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
-                        return rsp.ToJSON();
-                    }
-                    if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
-                    {
-                        rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
-                    }
-                }
-                
+                content = rsp.ToJSON();
                 #endregion
             }
             catch (Exception ex)
