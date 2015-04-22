@@ -185,7 +185,7 @@
                                 <td class="z_main_tb_td2" style="position:relative;">
                                     <div id="txtUnitName" style="margin-top: 5px;">
                                     </div>
-                                    <span style="position:absolute; left:125px; top:4px; width:140px; height:40px; line-height:20px; color:red;">*填写格式:品牌(店名),如"惠康超市(大学城店)"</span>
+                                    <span style="position:absolute; left:125px; top:4px; width:140px; height:40px; line-height:20px; color:red;">如：新天地店</span>
                                 </td>
                             </tr>
                             <tr class="z_main_tb_tr">
@@ -240,7 +240,7 @@
                                     </div>
                                 </td>
                                 <td  colspan="4" style="color:red;">
-                                    如： 电话：13588888888 、 座机：029-888888 、 400电话：4008888888
+                                    如：15866666666、021-888888、4008888888
                                 </td>
                             </tr><tr class="z_main_tb_tr">
                                 <td class="z_main_tb_td" style="vertical-align: top; line-height: 22px;">

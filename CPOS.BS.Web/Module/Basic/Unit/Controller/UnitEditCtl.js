@@ -478,11 +478,11 @@ function fnSave() {
         if (txtRQcode != "" && txtRQcode != null) {
             var text = $("#text").val();
             if (text == "" || text == null) {
-                showError('文本编辑不能为空!');
+                showError('二维码文本编辑不能为空!');
                 return;
             }
             else if (text.length >= 1000) {
-                alert('文本编辑长度不能超过1000!');
+                alert('二维码文本编辑长度不能超过1000!');
                 return;
             }
         }
@@ -540,7 +540,7 @@ function fnSave() {
         return;
     }
     else {
-        re = /^((\d{3,4}-)*\d{7,8}(-\d{3,4})*|13\d{9}|(400)*\d{7,8}(-\d{3,4})*|(400)*\d{7,8}(-\d{3,4})*)$/  //匹配电话正则 
+        re = /^((\d{3,4}-)*\d{7,8}(-\d{3,4})*|1\d{10}|(400)*\d{7,8}(-\d{3,4})*|(400)*\d{7,8}(-\d{3,4})*)$/  //匹配电话正则 
         if (!re.test(unit.Telephone)) {
             Ext.Msg.alert("提示", "请按照提示输入正确的电话");
             return;
