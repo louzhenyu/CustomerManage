@@ -22,7 +22,7 @@ namespace JIT.CPOS.Common
             {
                 if (DownloadUrl == null || DownloadUrl.Equals(""))
                 {
-                    DownloadUrl = "http://o2oapi.aladingyidong.com";
+                    DownloadUrl = "http://api.chainclouds.com";
                 }
                 string host = DownloadUrl + "/HeadImage/";
                 //  ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3;

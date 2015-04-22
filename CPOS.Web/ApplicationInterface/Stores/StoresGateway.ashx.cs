@@ -69,7 +69,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             string content = string.Empty;
             string customerId = string.Empty;
             var RD = new DimensionalCodeRD();
-            var rsp = new SuccessResponse<IAPIResponseData>();
+            var rsp = new SuccessResponse<IAPIResponseData>(RD);
             try
             {
                 #region 解析传入参数
@@ -81,7 +81,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 {
                     customerId = RP.CustomerID;
                 }
-                var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
+                var loggingSessionInfo = Default.GetBSLoggingSession(customerId, RP.UserID);
 
                 #endregion
                 var imageUrl = string.Empty;
@@ -96,13 +96,24 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     return rsp.ToJSON();
                 }
                 var rpVipDCode = 0;                 //临时二维码
+                var iResult = ro.Next(iDown, iUp);  //随机数
                 if (RP.Parameters.VipDCode == 9)    //永久二维码
                 {
-                    iUp = 100000;
-                    iDown = 1;
+                    var userQrCodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
+                    var userQrCode = userQrCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ObjectId = RP.UserID }, null);
+
+                    if (userQrCode != null && userQrCode.Length > 0)
+                    {
+                        RD.imageUrl = userQrCode[0].ImageUrl;
+                        RD.paraTmp = userQrCode[0].QRCode;
+                        return rsp.ToJSON();
+                    }
+
+                    //获取当前二维码 最大值
+                    iResult = new WQRCodeManagerBLL(loggingSessionInfo).GetMaxWQRCod() + 1;
                     rpVipDCode = 1;                 //永久
                 }
-                var iResult = ro.Next(iDown, iUp);  //随机数
+                
 
                 #region 获取微信帐号
 
@@ -122,8 +133,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 else
                 {
                     JIT.CPOS.BS.BLL.WX.CommonBLL commonServer = new JIT.CPOS.BS.BLL.WX.CommonBLL();
-                    imageUrl = commonServer.GetQrcodeUrl(ToStr(wxObj[0].AppID)
-                        , ToStr(wxObj[0].AppSecret)
+                    imageUrl = commonServer.GetQrcodeUrl(wxObj[0].AppID
+                        , wxObj[0].AppSecret
                         , rpVipDCode.ToString("")
                         , iResult, loggingSessionInfo);
                     if (imageUrl != null && !imageUrl.Equals(""))
@@ -136,24 +147,55 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
 
                 #endregion
 
-                #region 创建临时匹配表
-
-                VipDCodeBLL vipDCodeServer = new VipDCodeBLL(loggingSessionInfo);
-                VipDCodeEntity info = new VipDCodeEntity();
-                info.DCodeId = iResult.ToString();
-                info.CustomerId = customerId;
-                info.UnitId = ToStr(RP.Parameters.unitId);
-                info.Status = "0";
-                info.IsReturn = 0;
-                info.DCodeType = RP.Parameters.VipDCode; // add by donal 2014-9-22 10:02:08
-                loggingSessionInfo.UserID = ToStr(RP.UserID);
-                info.ImageUrl = imageUrl;
-                vipDCodeServer.Create(info);
-
-                #endregion
+                
+                if (RP.Parameters.VipDCode == 9 && !string.IsNullOrEmpty(imageUrl))    //永久二维码
+                {
+                    #region 创建店员永久二维码匹配表
+                    //string host = ConfigurationManager.AppSettings["website_WWW"];
+                    //CPOS.Common.DownloadImage downloadServer = new DownloadImage();
+                    //imageUrl = downloadServer.DownloadFile(imageUrl, host);
+                    var unitTypeBll = new WQRCodeTypeBLL(loggingSessionInfo);
+                    var unitType = unitTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = "UserQrCode" }, null);
+                    var unit_id = RP.Parameters.unitId;
+                    if (!string.IsNullOrEmpty(unit_id) && unitType != null && unitType.Length > 0)
+                    {
+                        var unitQrcodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
+                        var unitQrCode = new WQRCodeManagerEntity();
+                        unitQrCode.QRCode = iResult.ToString();
+                        unitQrCode.QRCodeTypeId = unitType[0].QRCodeTypeId;
+                        unitQrCode.IsUse = 1;
+                        unitQrCode.CustomerId = loggingSessionInfo.ClientID;
+                        unitQrCode.ImageUrl = imageUrl;
+                        unitQrCode.ApplicationId = wxObj[0].ApplicationId;
+                        //objectId 为店员ID
+                        unitQrCode.ObjectId = RP.UserID;
+                        unitQrcodeBll.Create(unitQrCode);
+                    }
+                    #endregion
+                }
+                else
+                {
+                    #region 创建临时匹配表
+                    VipDCodeBLL vipDCodeServer = new VipDCodeBLL(loggingSessionInfo);
+                    VipDCodeEntity info = new VipDCodeEntity();
+                    info.DCodeId = iResult.ToString();
+                    info.CustomerId = customerId;
+                    info.UnitId = ToStr(RP.Parameters.unitId);
+                    info.Status = "0";
+                    info.IsReturn = 0;
+                    info.DCodeType = RP.Parameters.VipDCode; // add by donal 2014-9-22 10:02:08
+                    loggingSessionInfo.UserID = ToStr(RP.UserID);
+                    info.ImageUrl = imageUrl;
+                    vipDCodeServer.Create(info);
+                    #endregion
+                }
+                
 
                 RD.imageUrl = imageUrl;
-                RD.paraTmp = iResult.ToString().Insert(4, " "); //加空格
+                if (RP.Parameters.VipDCode == 9)
+                    RD.paraTmp = iResult.ToString("");
+                else
+                    RD.paraTmp = iResult.ToString().Insert(4, " "); //加空格
             }
             catch (Exception ex)
             {
@@ -165,7 +207,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 rsp.Message = "数据库操作错误";
 
             }
-            rsp = new SuccessResponse<IAPIResponseData>(RD);
+            
             content = rsp.ToJSON();
 
             Loggers.Debug(new DebugLogInfo()
@@ -296,9 +338,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     var vipInfo = vipBll.GetByID(info.VipId);
                     if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
                     {
-                        //rsp.ResultCode = 303;
                         rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
-                        return rsp.ToJSON();
+                        //return rsp.ToJSON();
                     }
                     if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
                     {

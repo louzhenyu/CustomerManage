@@ -909,7 +909,37 @@ namespace JIT.CPOS.BS.BLL
                     {
                         switch (qrCodeTypeInfo.TypeCode.ToString().ToLower())
                         {
-                            case "unitqrcode":
+                            case "userqrcode"://店员二维码
+                                #region 绑定会籍店
+                                VipBLL vipBll = new VipBLL(loggingSessionInfo);
+
+                                var vipEntity = vipBll.QueryByEntity(new VipEntity()
+                                {
+                                    WeiXinUserId = openId
+                                }, null).FirstOrDefault();
+                                if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
+                                {
+                                    UnitService unitServer = new UnitService(loggingSessionInfo);
+                                    var userOnUnit = unitServer.GetUnitListByUserId(qrCodeEntity.ObjectId);
+                                    vipEntity.CouponInfo = userOnUnit[0].unit_id;//会籍店ID
+                                    vipEntity.SetoffUserId = qrCodeEntity.ObjectId;//店员ID（上线）
+                                    vipBll.Update(vipEntity);
+                                    //var bll = new VipOrderSubRunObjectMappingBLL(loggingSessionInfo);
+                                    //dynamic o = bll.SetVipOrderSubRun(loggingSessionInfo.ClientID, vipEntity.VIPID, 3, userOnUnit[0].Id);
+                                    //Type t = o.GetType();
+                                    //var Desc = t.GetProperty("Desc").GetValue(o, null).ToString();
+                                    //var IsSuccess = t.GetProperty("IsSuccess").GetValue(o, null).ToString();
+                                    //if (IsSuccess == "0")
+                                    //{
+                                    //    Loggers.Debug(new DebugLogInfo()
+                                    //    {
+                                    //        Message = string.Format("分润绑定会籍店时出错：{0} ", Desc)
+                                    //    });
+                                    //}
+                                }
+                                #endregion
+                                break;
+                            case "unitqrcode"://门店二维码
                                 #region 绑定会籍店
                                 VipBLL vipServer = new VipBLL(loggingSessionInfo);
                                 
@@ -918,7 +948,7 @@ namespace JIT.CPOS.BS.BLL
                                     WeiXinUserId = openId
                                 }, null).FirstOrDefault();
                                 Loggers.Debug(new DebugLogInfo() { Message = string.Format("vipInfo!=null:{0},openid:{1},vipInfo.CouponInfo:{2}", vipInfo != null, openId, vipInfo.CouponInfo) });
-                                if (vipInfo != null && (vipInfo.CouponInfo == null || vipInfo.CouponInfo.Equals("") || vipInfo.CouponInfo.Length != 32))
+                                if (vipInfo != null && (string.IsNullOrEmpty(vipInfo.CouponInfo) || vipInfo.CouponInfo.Length != 32))
                                 {
                                     //vipInfo.CouponInfo = qrCodeEntity.ObjectId.ToString();
                                     //vipInfo.Col50 = "已经绑定会籍店:" + Convert.ToString(System.DateTime.Now);

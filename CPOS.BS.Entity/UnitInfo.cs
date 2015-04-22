@@ -129,9 +129,8 @@ namespace JIT.CPOS.BS.Entity
             set { _saleUnit = value; }
         }
         /// <summary>
-        /// 单位标识
+        /// 门店标识
         /// </summary>
-        [XmlElement("unit_id")]
         public string Id
         {
             get { return id; }
@@ -443,6 +442,10 @@ namespace JIT.CPOS.BS.Entity
         /// 序号
         /// </summary>
         public int Row_No { get; set; }
+        /// <summary>
+        /// 门店标识
+        /// </summary>
+        public string unit_id { get; set; }
         /// <summary>
         /// 父节点标识[保存必须]
         /// </summary>
