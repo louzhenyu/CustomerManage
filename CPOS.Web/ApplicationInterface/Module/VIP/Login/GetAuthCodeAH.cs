@@ -189,5 +189,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             //return rd;
             #endregion
         }
+
+
     }
 }

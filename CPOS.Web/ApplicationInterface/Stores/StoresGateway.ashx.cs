@@ -450,7 +450,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 var tran = server.GetTran();
                 //  System.Data.SqlClient.SqlTransaction tran = new System.Data.SqlClient.SqlTransaction();
 
-                using (tran.Connection)//事物
+                using (tran.Connection)//事务
                 {
                     try
                     {
@@ -464,7 +464,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                                           , ToStr(unitId)
                                                           , ToStr(RP.UserID)
                                                           , ToStr(RP.Parameters.dataFromId)
-                                                          , ToStr(RP.Parameters.amount));
+                                                          , ToStr(RP.Parameters.amount)
+                                                          , ToStr(RP.Parameters.OffOrderNo), ToStr(RP.Parameters.remark));
                             if (result.Equals("1"))
                             {
                                 VipDCodeBLL bll = new VipDCodeBLL(loggingSessionInfo);
@@ -628,6 +629,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             public string DcodeId { get; set; }
             public string Isscan { get; set; }  //是否扫描 0.不扫描。1.扫描
             public string VipId { get; set; }
+            public string OffOrderNo{ get; set; }
+            public string remark { get; set; }
+            
             public void Validate()
             {
                 if (string.IsNullOrWhiteSpace(this.Isscan))
