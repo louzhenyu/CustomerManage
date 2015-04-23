@@ -13,7 +13,7 @@ using JIT.Utility;
 namespace JIT.CPOS.Web.ApplicationInterface.Customer
 {
     /// <summary>
-    /// CloudGeteway 的摘要说明
+    /// CloudGateway 的摘要说明
     /// </summary>
     public class CloudGateway : BaseGateway
     {
