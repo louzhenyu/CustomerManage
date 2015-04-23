@@ -24,10 +24,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Util.SMS
                 //var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的验证码是：【{0}】", pContent), Sign = pSign };
               var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的验证码是：{1}，请不要把验证码泄露给其他人。", currentUserInfo.ClientName , pContent), Sign = pSign };
                 var request = new { Action = "SendMessage", Parameters = para };
-                string str = string.Format("request={0}", request.ToJSON());
+                string str = string.Format("request={0}", request.ToJSON());//请求参数
                 Loggers.Debug(new DebugLogInfo() { Message = "发送短信:" + str });
-                var res = HttpClient.PostQueryString(url, str);
-                var response = res.DeserializeJSONTo<Response>();
+                var res = HttpClient.PostQueryString(url, str);//发送请求，开始发送短信
+                var response = res.DeserializeJSONTo<Response>();//解析发送短信后，返回的内容
                 Loggers.Debug(new DebugLogInfo() { Message = "收到返回信息:" + response.ToJSON() });
 
                 

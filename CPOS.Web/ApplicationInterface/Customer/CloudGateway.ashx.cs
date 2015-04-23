@@ -8,6 +8,7 @@ using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using System.Configuration;
 using System.Data;
+using JIT.Utility;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Customer
 {
@@ -24,6 +25,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Customer
                 {
                     case "GetCardBag":  //获取我的卡包
                         rst = GetCardBag(pRequest);
+                        break;
+                    case "SetPassWord":
+                        rst = this.SetPassWord(pRequest);
                         break;
                     default:
                         throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
@@ -69,6 +73,40 @@ namespace JIT.CPOS.Web.ApplicationInterface.Customer
                 throw new APIException(ex.Message);
             }
         }
+
+
+            private string SetPassWord(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<SetPassWordRP>>();
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            string error = "";
+            string pNewPass = MD5Helper.Encryption( rp.Parameters.pNewPWD);
+            //pOldPWD = MD5Helper.Encryption(pOldPWD);
+            rp.Parameters.pOldPWD = EncryptManager.Hash(rp.Parameters.pOldPWD, HashProviderType.MD5);
+            string res = "{success:false,msg:'保存失败'}";
+            //组装参数
+            JIT.CPOS.BS.Entity.User.UserInfo entity = new JIT.CPOS.BS.Entity.User.UserInfo();
+            var serviceBll = new cUserService(loggingSessionInfo);
+            entity = serviceBll.GetUserById(loggingSessionInfo, rp.Parameters.pID);
+            string apPwd = serviceBll.GetPasswordFromAP(loggingSessionInfo.ClientID, rp.Parameters.pID);
+            //if (pOldPWD == entity.User_Password)
+            if (rp.Parameters.pOldPWD == apPwd)
+            {
+                entity.userRoleInfoList = new cUserService(loggingSessionInfo).GetUserRoles(rp.Parameters.pID);//, PageBase.JITPage.GetApplicationId()
+                entity.User_Password = pNewPass;
+                entity.ModifyPassword = true;
+                //new cUserService(CurrentUserInfo).SetUserInfo(entity, entity.userRoleInfoList, out error);
+                bool bReturn = serviceBll.SetUserPwd(loggingSessionInfo, pNewPass, out error);
+                res = "{success:true,msg:'" + error + "'}";
+            }
+            else
+            {
+                res = "{success:false,msg:'旧密码不正确'}";
+            }
+            return res;
+        }
+  
+
         public class CardBagRD : IAPIResponseData
         {
             public List<CardBag> CardBagList { get; set; }
@@ -90,5 +128,31 @@ namespace JIT.CPOS.Web.ApplicationInterface.Customer
                 set { targetUrl = value; }
             }
         }
+
+
+
+    }
+
+ public class SetPassWordRP : IAPIRequestParameter
+    {
+        public string pID { get; set; }
+        public string pOldPWD { get; set; }
+        public string pNewPWD { get; set; }
+
+
+        public void Validate()
+        {
+        }
+    }
+
+
+
+
+
+    public class SetPassWordRD : IAPIResponseData
+    {
+        //public VipCardInfo VipCardInfo { get; set; }
+        //public VipInfo[] RelateVipList { get; set; }
+
     }
 }
