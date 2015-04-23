@@ -149,7 +149,7 @@ namespace JIT.CPOS.Web.Interface.Data
                                                     , ToStr(reqObj.special.unitId)
                                                     , ToStr(reqObj.common.userId)
                                                     , ToStr(reqObj.special.dataFromId)
-                                                    , ToStr(reqObj.special.amount));
+                                                    , ToStr(reqObj.special.amount),"","");
                 if (result.Equals("1"))
                 {
                     respData.code = "200";
@@ -744,7 +744,7 @@ namespace JIT.CPOS.Web.Interface.Data
                                                         //, ToStr(reqObj.common.userId)  //Henry 
                                                         , ToStr(loggingSessionInfo.UserID)
                                                         , ToStr(reqObj.special.dataFromId)
-                                                        , amount.ToString());
+                                                        , amount.ToString(),"","");
                     if (!result.Equals("1"))
                     {
                         respData.code = "103";

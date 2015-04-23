@@ -83,7 +83,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Customer
             string pNewPass = MD5Helper.Encryption( rp.Parameters.pNewPWD);
             //pOldPWD = MD5Helper.Encryption(pOldPWD);
             rp.Parameters.pOldPWD = EncryptManager.Hash(rp.Parameters.pOldPWD, HashProviderType.MD5);
-            string res = "{success:false,msg:'保存失败'}";
+            string res = "{\"success\":\"false\",\"msg\":\"保存失败\"}";
             //组装参数
             JIT.CPOS.BS.Entity.User.UserInfo entity = new JIT.CPOS.BS.Entity.User.UserInfo();
             var serviceBll = new cUserService(loggingSessionInfo);
@@ -97,11 +97,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Customer
                 entity.ModifyPassword = true;
                 //new cUserService(CurrentUserInfo).SetUserInfo(entity, entity.userRoleInfoList, out error);
                 bool bReturn = serviceBll.SetUserPwd(loggingSessionInfo, pNewPass, out error);
-                res = "{success:true,msg:'" + error + "'}";
+                res = "{\"success\":\"false\",\"msg\":\"" + error + "\"}";
             }
             else
             {
-                res = "{success:false,msg:'旧密码不正确'}";
+                res = "{\"success\":\"false\",\"msg\":\"旧密码不正确\"}";
             }
             return res;
         }
