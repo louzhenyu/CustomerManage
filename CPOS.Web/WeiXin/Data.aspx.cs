@@ -165,7 +165,7 @@ namespace JIT.CPOS.Web.WeiXin
                             vipInfo.VipName = VipName;
                             vipInfo.CouponInfo = qrcode;
                             vipInfo.WeiXin = WeiXin;
-                            vipInfo.VipSourceId = "3";
+                            vipInfo.VipSourceId = "3";//是否需要把这个去掉，因为VipSourceId=13也会走到这里
                             vipInfo.HeadImgUrl = headimgurl;
                             //var vipObj = vipService.QueryByEntity(vipQueryInfo, null);  update by Henry
                             var vipObj = vipService.QueryByEntity(new VipEntity() { WeiXinUserId = OpenID }, null);
@@ -190,7 +190,7 @@ namespace JIT.CPOS.Web.WeiXin
                                     vipInfo.HeadImgUrl = headimgurl;
                                 }
                                 //vipInfo.VipCode = null;
-                                vipService.Update(vipInfo, false);
+                                vipService.Update(vipInfo, false);//修改
                             }
                         }
                     }
@@ -1315,7 +1315,7 @@ namespace JIT.CPOS.Web.WeiXin
                 vipInfo.VipName = VipName;
                 // vipInfo.QRVipCode = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + newFilePath;
                 // vipInfo.CouponURL = ConfigurationManager.AppSettings["website_url"].Trim() + "WeiXin/" + couponNewFilePath;
-                vipInfo.Col49 = qrcode;
+                vipInfo.Col49 = qrcode;//这个应该放在这里，因为这样会作为一个查询条件，这样之前不是集客方式注册的会员就不会被查到
                 vipInfo.WeiXin = WeiXin;
                 vipInfo.VipSourceId = "3";
                 vipInfo.HeadImgUrl = headimgurl;
@@ -1332,6 +1332,7 @@ namespace JIT.CPOS.Web.WeiXin
                     {
                         vipInfo.VipCode = vipServiceUnion.GetVipCode();
                     }
+                   // vipInfo.Col49 = qrcode;//应该放在这里****
                     vipInfo.ClientID = tmpUser.CurrentUser.customer_id;
                     vipInfo.Status = 1;
                     vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";
@@ -1366,7 +1367,8 @@ namespace JIT.CPOS.Web.WeiXin
                     //vipInfo.VipCode = null;
                     vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";
                     vipInfo.Col49 = iRad.ToString();
-                    vipInfo.IsDelete = 0;
+                    vipInfo.IsDelete = 0;//设为没有被删除***
+                 
                     vipServiceUnion.Update(vipInfo, false);
                 }
                 #endregion
@@ -1441,14 +1443,14 @@ namespace JIT.CPOS.Web.WeiXin
                                 Message = string.Format("设置集客员工与会员关系IsSuccess:{0},Desc:{1}", IsSuccess, Desc)
                             });
 
-                            //如果销售员没有汇集店，直接不错任何操作
+                            //如果销售员没有会籍店，直接不错任何操作
                             if (!string.IsNullOrWhiteSpace(vipDCodeInfo.UnitId))
                             {
 
                                 //给集客员工奖励
                                 subBll.setJiKeGift(vipDCodeInfo.CreateBy, vipId);
 
-                                //设置集客员工与会集店关系
+                                //设置集客员工与会集店关系****
                                 dynamic ob = subBll.SetVipOrderSubRun(customerIdUnoin, vipId, 3, vipDCodeInfo.UnitId);
                                 Type ty = ob.GetType();
                                 var Desc_ = ty.GetProperty("Desc").GetValue(o, null).ToString();

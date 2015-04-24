@@ -322,14 +322,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 temp.openId = openId;
                 RD.content = temp;
                 rsp = new SuccessResponse<IAPIResponseData>(RD);
-                if (!string.IsNullOrEmpty(info.VipId))
+                if (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && RP.Parameters.special.Mode.Equals("Inbound") && !string.IsNullOrEmpty(info.VipId))
                 {
                     VipBLL vipBll = new VipBLL(loggingSessionInfo);
                     var vipInfo = vipBll.GetByID(info.VipId);
                     if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
                     {
                         rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
-                        //return rsp.ToJSON();
                     }
                     if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
                     {
@@ -377,6 +376,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
         {
             public string unitId { get; set; }
             public string paraTmp { get; set; }
+            public string Mode { get; set; }
         }
         #endregion
 
