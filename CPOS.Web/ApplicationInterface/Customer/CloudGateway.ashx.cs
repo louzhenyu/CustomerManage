@@ -97,7 +97,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Customer
                 entity.ModifyPassword = true;
                 //new cUserService(CurrentUserInfo).SetUserInfo(entity, entity.userRoleInfoList, out error);
                 bool bReturn = serviceBll.SetUserPwd(loggingSessionInfo, pNewPass, out error);
-                res = "{\"success\":\"false\",\"msg\":\"" + error + "\"}";
+                res = "{\"success\":\"true\",\"msg\":\"" + error + "\"}";
             }
             else
             {

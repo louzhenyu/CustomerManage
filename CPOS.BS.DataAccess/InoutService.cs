@@ -2231,7 +2231,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
         {
             DataSet ds = new DataSet();
 
-            SqlParameter[] Parm = new SqlParameter[6];
+            SqlParameter[] Parm = new SqlParameter[8];
             Parm[0] = new SqlParameter("@OrderID ", System.Data.SqlDbType.NVarChar, 100);
             Parm[0].Value = orderId;
             Parm[1] = new SqlParameter("@OrderAmt", System.Data.SqlDbType.Decimal, 10);

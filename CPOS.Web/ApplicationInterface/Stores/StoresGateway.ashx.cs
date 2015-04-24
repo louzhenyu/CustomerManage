@@ -288,24 +288,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 string vipId = string.Empty;
                 string openId = string.Empty;
 
-                if (!string.IsNullOrEmpty(info.VipId))
-                {
-                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
-                    var vipInfo = vipBll.GetByID(info.VipId); 
-                    if (!string.IsNullOrEmpty(vipInfo.CouponInfo))
-                    {
-                        rsp.ResultCode = 303;
-                        rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
-                        return rsp.ToJSON();
-                    }
-                }
+                
                 
 
                 if (info == null || info.DCodeId == null)
                 {
                     rsp.ResultCode = 303;
                     rsp.Message = "不存在对应的记录";
-                    return rsp.ToJSON().ToString();
+                    return rsp.ToJSON();
                 }
                 else
                 {
