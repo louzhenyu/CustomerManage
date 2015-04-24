@@ -322,7 +322,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 temp.openId = openId;
                 RD.content = temp;
                 rsp = new SuccessResponse<IAPIResponseData>(RD);
-                if (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && RP.Parameters.special.Mode.Equals("Inbound") && !string.IsNullOrEmpty(info.VipId))
+                if ((RP.Parameters.special.Mode == null || (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && RP.Parameters.special.Mode.Equals("Inbound"))) && !string.IsNullOrEmpty(info.VipId))
                 {
                     VipBLL vipBll = new VipBLL(loggingSessionInfo);
                     var vipInfo = vipBll.GetByID(info.VipId);
