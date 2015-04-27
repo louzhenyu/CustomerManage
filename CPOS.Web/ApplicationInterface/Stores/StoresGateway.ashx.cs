@@ -151,25 +151,21 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 if (RP.Parameters.VipDCode == 9 && !string.IsNullOrEmpty(imageUrl))    //永久二维码
                 {
                     #region 创建店员永久二维码匹配表
-                    //string host = ConfigurationManager.AppSettings["website_WWW"];
-                    //CPOS.Common.DownloadImage downloadServer = new DownloadImage();
-                    //imageUrl = downloadServer.DownloadFile(imageUrl, host);
-                    var unitTypeBll = new WQRCodeTypeBLL(loggingSessionInfo);
-                    var unitType = unitTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = "UserQrCode" }, null);
-                    var unit_id = RP.Parameters.unitId;
-                    if (!string.IsNullOrEmpty(unit_id) && unitType != null && unitType.Length > 0)
+                    var userQrTypeBll = new WQRCodeTypeBLL(loggingSessionInfo);
+                    var userQrType = userQrTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = "UserQrCode" }, null);
+                    if (userQrType != null && userQrType.Length > 0)
                     {
-                        var unitQrcodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
-                        var unitQrCode = new WQRCodeManagerEntity();
-                        unitQrCode.QRCode = iResult.ToString();
-                        unitQrCode.QRCodeTypeId = unitType[0].QRCodeTypeId;
-                        unitQrCode.IsUse = 1;
-                        unitQrCode.CustomerId = loggingSessionInfo.ClientID;
-                        unitQrCode.ImageUrl = imageUrl;
-                        unitQrCode.ApplicationId = wxObj[0].ApplicationId;
+                        var userQrcodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
+                        var userQrCode = new WQRCodeManagerEntity();
+                        userQrCode.QRCode = iResult.ToString();
+                        userQrCode.QRCodeTypeId = userQrType[0].QRCodeTypeId;
+                        userQrCode.IsUse = 1;
+                        userQrCode.CustomerId = loggingSessionInfo.ClientID;
+                        userQrCode.ImageUrl = imageUrl;
+                        userQrCode.ApplicationId = wxObj[0].ApplicationId;
                         //objectId 为店员ID
-                        unitQrCode.ObjectId = RP.UserID;
-                        unitQrcodeBll.Create(unitQrCode);
+                        userQrCode.ObjectId = RP.UserID;
+                        userQrcodeBll.Create(userQrCode);
                     }
                     #endregion
                 }
