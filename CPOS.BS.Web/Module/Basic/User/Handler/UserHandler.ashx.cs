@@ -349,16 +349,17 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             string imageName = string.Empty;//图片名称
             string imagePath = string.Empty;//图片路径
             //请求参数
-            string pQueryString="/ApplicationInterface/Stores/StoresGateway.ashx?type=Product&action=getDimensionalCode&req={\"UserID\":\""+user_id+"\",\"Parameters\":{\"unitId\":\"\",\"VipDCode\":9},\"CustomerID\":\""+CurrentUserInfo.ClientID+"\",\"OpenID\":\"\",\"JSONP\":\"\",\"Locale\":1,\"Token\":\"\"}";
-            var rsp = APIClientProxy.CallAPI(pQueryString,"");
-            getDimensionalCodeRespData qrInfo = JsonHelper.JsonDeserialize<getDimensionalCodeRespData>(rsp);
+            //string pQueryString="/ApplicationInterface/Stores/StoresGateway.ashx?type=Product&action=getDimensionalCode&req={\"UserID\":\""+user_id+"\",\"Parameters\":{\"unitId\":\"\",\"VipDCode\":9},\"CustomerID\":\""+CurrentUserInfo.ClientID+"\",\"OpenID\":\"\",\"JSONP\":\"\",\"Locale\":1,\"Token\":\"\"}";
+            //var rsp = APIClientProxy.CallAPI(pQueryString,"");
+            //getDimensionalCodeRespData qrInfo = JsonHelper.JsonDeserialize<getDimensionalCodeRespData>(rsp);
             try
             {
-                imageName = qrInfo.Data.imageUrl.Substring(qrInfo.Data.imageUrl.LastIndexOf("/"));
-                imagePath = imageName.Substring(1, 8) + imageName;
-                imagePath = targetPath +imagePath;
+                //imageName = qrInfo.Data.imageUrl.Substring(qrInfo.Data.imageUrl.LastIndexOf("/"));
+                //imagePath = imageName.Substring(1, 8) + imageName;
+                //imagePath = targetPath +imagePath;
                 Loggers.Debug(new DebugLogInfo() { Message = "imagePath：" + imagePath });
                 //要下载的文件名
+                imagePath = "D:/trade/api/HeadImage/20150427/20150427214135_8053.jpg";
                 FileInfo DownloadFile = new FileInfo(imagePath);
                 if (DownloadFile.Exists)
                 {
