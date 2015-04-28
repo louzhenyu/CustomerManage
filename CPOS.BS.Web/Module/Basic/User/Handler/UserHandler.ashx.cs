@@ -354,7 +354,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             try
             {
                 //imagePath = targetPath + qrInfo.Data.imageUrl.Substring(qrInfo.Data.imageUrl.IndexOf("/",6));  
-                imagePath = targetPath + "/HeadImage/20150427/20150427214135_8053.jpg";
+                imagePath = targetPath + "HeadImage/20150427/20150427214135_8053.jpg";
                 //要下载的文件名
                 FileInfo DownloadFile = new FileInfo(imagePath);
 
