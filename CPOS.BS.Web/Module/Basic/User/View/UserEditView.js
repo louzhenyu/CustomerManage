@@ -217,6 +217,11 @@
             xtype: "jitbutton",
             text: "关闭",
             handler: fnClose
+        },
+        {
+            xtype: "jitbutton",
+            text: "下载二维码",
+            handler: fnDownloadQRCode
         }
         ]
     });

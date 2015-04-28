@@ -12,6 +12,11 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.Reflection;
 using JIT.Utility.Web;
 using JIT.CPOS.BS.Entity.User;
+using System.IO;
+using System.Configuration;
+using JIT.CPOS.BS.Web.ApplicationInterface.Product;
+using JIT.CPOS.DTO.Base;
+using JIT.CPOS.DTO.ValueObject;
 
 namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 {
@@ -46,6 +51,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                     break;
                 case "revertPassword":
                     content = RevertPassword();
+                    break;
+                case "DownloadQRCode":
+                    content = DownloadQRCode();
                     break;
 
             }
@@ -326,7 +334,56 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             return responseData.ToJSON();
         }
         #endregion
+
+        private string DownloadQRCode()
+        {
+            string weixinDomain = ConfigurationManager.AppSettings["original_url"];
+            //string sourcePath = this.CurrentContext.Server.MapPath("/QRCodeImage/qrcode.jpg");
+            //string targetPath = this.CurrentContext.Server.MapPath("/QRCodeImage/");
+            string targetPath = "D:/trade/api/";
+            string currentDomain = this.CurrentContext.Request.Url.Host;
+            string user_id=user_id = Request("user_id").ToString().Trim();
+            string imagePath = string.Empty;
+
+            string pQueryString="/ApplicationInterface/Stores/StoresGateway.ashx?type=Product&action=getDimensionalCode&req={\"UserID\":\""+user_id+"\",\"Parameters\":{\"unitId\":\"\",\"VipDCode\":9},\"CustomerID\":\""+CurrentUserInfo.ClientID+"\",\"OpenID\":\"\",\"JSONP\":\"\",\"Locale\":1,\"Token\":\"\"}";
+
+            var rsp = APIClientProxy.CallAPI(pQueryString,"");
+            getDimensionalCodeRespData qrInfo = JsonHelper.JsonDeserialize<getDimensionalCodeRespData>(rsp);
+            //return qrInfo.Data.imageUrl;
+
+            try
+            {
+                //imagePath = targetPath + qrInfo.Data.imageUrl.Substring(qrInfo.Data.imageUrl.IndexOf("/",6));  
+                imagePath = targetPath + "/HeadImage/20150427/20150427214135_8053.jpg";
+                //要下载的文件名
+                FileInfo DownloadFile = new FileInfo(imagePath);
+
+                if (DownloadFile.Exists)
+                {
+                    CurrentContext.Response.Clear();
+                    CurrentContext.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + user_id + ".jpg" + "\"");
+                    CurrentContext.Response.AddHeader("Content-Length", DownloadFile.Length.ToString());
+                    CurrentContext.Response.ContentType = "application/octet-stream";
+                    CurrentContext.Response.TransmitFile(DownloadFile.FullName);
+                    CurrentContext.Response.Flush();
+                }
+                //else
+                //Loggers.Debug(new DebugLogInfo() { Message = "二维码未找到" });
+            }
+            catch (Exception ex)
+            {
+                CurrentContext.Response.ContentType = "text/plain";
+                CurrentContext.Response.Write(ex.Message);
+            }
+            finally
+            {
+                CurrentContext.Response.End();
+            }
+            return null;
+        }
     }
+
+
 
     #region QueryEntity
     public class UserQueryEntity
@@ -336,6 +393,35 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         public string user_tel;
         public string user_status;
     }
+
+    //生成员工固定二维码请求参数 copy by Henry 2015-4-27
+    public class getDimensionalCodeReqData : JIT.CPOS.BS.Web.Default.ReqData
+    {
+        public getDimensionalCodeReqSpecialData special;
+    }
+    public class getDimensionalCodeReqSpecialData
+    {
+        public string unitId { get; set; }
+        /// <summary>
+        /// 二维码类型
+        /// </summary>
+        public string VipDCode { get; set; } 
+    }
+    //生成员工固定二维码返回参数 copy by Henry 2015-4-27
+    public class getDimensionalCodeRespData 
+    {
+        public int ResultCode { get; set; }
+        public string Message { get; set; }
+        public bool IsSuccess { get; set; }
+        public getDimensionalCodeRespContentData Data { get; set; }
+        //public getDimensionalCodeRespContentData content { get; set; }
+    }
+    public class getDimensionalCodeRespContentData
+    {
+        public string imageUrl { get; set; }
+        public string paraTmp { get; set; }
+    }
+
     #endregion
 
 }
