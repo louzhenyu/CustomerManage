@@ -357,12 +357,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 imageName = qrInfo.Data.imageUrl.Substring(qrInfo.Data.imageUrl.LastIndexOf("/"));
                 imagePath = imageName.Substring(1, 8) + imageName;
                 imagePath = targetPath +imagePath;
-                Loggers.Debug(new DebugLogInfo() { Message = "imagePath：" + imagePath });
                 //要下载的文件名
                 FileInfo DownloadFile = new FileInfo(imagePath);
                 if (DownloadFile.Exists)
                 {
-                    Loggers.Debug(new DebugLogInfo() { Message = "imagePath：" + imagePath });
                     CurrentContext.Response.Clear();
                     CurrentContext.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + user_id + ".jpg" + "\"");
                     CurrentContext.Response.AddHeader("Content-Length", DownloadFile.Length.ToString());
@@ -397,27 +395,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         public string user_status;
     }
 
-    //生成员工固定二维码请求参数 copy by Henry 2015-4-27
-    public class getDimensionalCodeReqData : JIT.CPOS.BS.Web.Default.ReqData
-    {
-        public getDimensionalCodeReqSpecialData special;
-    }
-    public class getDimensionalCodeReqSpecialData
-    {
-        public string unitId { get; set; }
-        /// <summary>
-        /// 二维码类型
-        /// </summary>
-        public string VipDCode { get; set; } 
-    }
-    //生成员工固定二维码返回参数 copy by Henry 2015-4-27
+    //成员工固定二维码返回参数 copy by Henry 2015-4-27
     public class getDimensionalCodeRespData 
     {
         public int ResultCode { get; set; }
         public string Message { get; set; }
         public bool IsSuccess { get; set; }
         public getDimensionalCodeRespContentData Data { get; set; }
-        //public getDimensionalCodeRespContentData content { get; set; }
     }
     public class getDimensionalCodeRespContentData
     {
