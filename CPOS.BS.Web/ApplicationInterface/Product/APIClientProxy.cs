@@ -39,7 +39,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Product
 
         static APIClientProxy()
         {
-            APIClientProxy.URL = ConfigurationManager.AppSettings["glt_service_url"];
+            APIClientProxy.URL = ConfigurationManager.AppSettings["original_url"];
         }
 
         /// <summary>
