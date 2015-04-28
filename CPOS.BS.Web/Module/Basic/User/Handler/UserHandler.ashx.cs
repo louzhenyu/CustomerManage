@@ -356,11 +356,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             {
                 imageName = qrInfo.Data.imageUrl.Substring(qrInfo.Data.imageUrl.LastIndexOf("/"));
                 imagePath = imageName.Substring(1, 8) + imageName;
-                imagePath = targetPath +imagePath;  
+                imagePath = targetPath +imagePath;
+                Loggers.Debug(new DebugLogInfo() { Message = "imagePath：" + imagePath });
                 //要下载的文件名
                 FileInfo DownloadFile = new FileInfo(imagePath);
                 if (DownloadFile.Exists)
                 {
+                    Loggers.Debug(new DebugLogInfo() { Message = "imagePath：" + imagePath });
                     CurrentContext.Response.Clear();
                     CurrentContext.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + user_id + ".jpg" + "\"");
                     CurrentContext.Response.AddHeader("Content-Length", DownloadFile.Length.ToString());
@@ -373,9 +375,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             }
             catch (Exception ex)
             {
+                Loggers.Debug(new DebugLogInfo() { Message = "二维码ii:" + ex.Message });
                 CurrentContext.Response.ContentType = "text/plain";
                 CurrentContext.Response.Write(ex.Message);
-                Loggers.Debug(new DebugLogInfo() { Message = "二维码ii:"+ex.Message });
             }
             finally
             {
