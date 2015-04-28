@@ -17,6 +17,7 @@ using System.Configuration;
 using JIT.CPOS.BS.Web.ApplicationInterface.Product;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.DTO.ValueObject;
+using JIT.Utility.Log;
 
 namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 {
@@ -52,7 +53,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 case "revertPassword":
                     content = RevertPassword();
                     break;
-                case "DownloadQRCode":
+                case "DownloadQRCode"://下载员工固定二维码
                     content = DownloadQRCode();
                     break;
 
@@ -335,29 +336,29 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         }
         #endregion
 
+        /// <summary>
+        /// 下载员工固定二维码
+        /// </summary>
+        /// <returns></returns>
         private string DownloadQRCode()
         {
-            string weixinDomain = ConfigurationManager.AppSettings["original_url"];
-            //string sourcePath = this.CurrentContext.Server.MapPath("/QRCodeImage/qrcode.jpg");
-            //string targetPath = this.CurrentContext.Server.MapPath("/QRCodeImage/");
-            string targetPath = "D:/trade/api/";
+            //员工固定二维码磁盘路径
+            string targetPath = ConfigurationManager.AppSettings["DiskImagePath"];
             string currentDomain = this.CurrentContext.Request.Url.Host;
             string user_id=user_id = Request("user_id").ToString().Trim();
-            string imagePath = string.Empty;
-
+            string imageName = string.Empty;//图片名称
+            string imagePath = string.Empty;//图片路径
+            //请求参数
             string pQueryString="/ApplicationInterface/Stores/StoresGateway.ashx?type=Product&action=getDimensionalCode&req={\"UserID\":\""+user_id+"\",\"Parameters\":{\"unitId\":\"\",\"VipDCode\":9},\"CustomerID\":\""+CurrentUserInfo.ClientID+"\",\"OpenID\":\"\",\"JSONP\":\"\",\"Locale\":1,\"Token\":\"\"}";
-
             var rsp = APIClientProxy.CallAPI(pQueryString,"");
             getDimensionalCodeRespData qrInfo = JsonHelper.JsonDeserialize<getDimensionalCodeRespData>(rsp);
-            //return qrInfo.Data.imageUrl;
-
             try
             {
-                //imagePath = targetPath + qrInfo.Data.imageUrl.Substring(qrInfo.Data.imageUrl.IndexOf("/",6));  
-                imagePath = targetPath + "HeadImage/20150427/20150427214135_8053.jpg";
+                imageName = qrInfo.Data.imageUrl.Substring(qrInfo.Data.imageUrl.LastIndexOf("/"));
+                imagePath = imageName.Substring(1, 8) + imageName;
+                imagePath = targetPath +imagePath;  
                 //要下载的文件名
                 FileInfo DownloadFile = new FileInfo(imagePath);
-
                 if (DownloadFile.Exists)
                 {
                     CurrentContext.Response.Clear();
@@ -367,13 +368,14 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                     CurrentContext.Response.TransmitFile(DownloadFile.FullName);
                     CurrentContext.Response.Flush();
                 }
-                //else
-                //Loggers.Debug(new DebugLogInfo() { Message = "二维码未找到" });
+                else
+                    Loggers.Debug(new DebugLogInfo() { Message = "二维码未找到" });
             }
             catch (Exception ex)
             {
                 CurrentContext.Response.ContentType = "text/plain";
                 CurrentContext.Response.Write(ex.Message);
+                Loggers.Debug(new DebugLogInfo() { Message = "二维码ii:"+ex.Message });
             }
             finally
             {

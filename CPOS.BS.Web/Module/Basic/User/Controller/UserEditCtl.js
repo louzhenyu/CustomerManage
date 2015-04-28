@@ -80,22 +80,10 @@ fnLoadRole = function () {
 function fnClose() {
     CloseWin('UserEdit');
 }
-
+//下载员工固定二维码
 function fnDownloadQRCode() {
-    Ext.Ajax.request({
-        method: 'POST',
-        sync: true,
-        async: false,
-        url: JITPage.HandlerUrl.getValue() + "&method=DownloadQRCode&user_id=" + getUrlParam("user_id"),
-        //params: { "user": Ext.encode(user) },
-        success: function (result, request) {
-            debugger;
-            window.open(result.responseText)
-        },
-        failure: function (result) {
-            showError("下载二维码失败" + result.responseText);
-        }
-    });
+    var user_id = getUrlParam("user_id");
+    window.open('/Module/Basic/User/Handler/UserHandler.ashx?method=DownloadQRCode&user_id=' + user_id);
 }
 
 function fnSave() {
