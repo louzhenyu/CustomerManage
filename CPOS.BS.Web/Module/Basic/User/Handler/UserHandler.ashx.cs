@@ -54,7 +54,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                     content = RevertPassword();
                     break;
                 case "DownloadQRCode"://下载员工固定二维码
-                    content = DownloadQRCode();
+                    DownloadQRCode();
                     break;
 
             }
@@ -340,7 +340,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         /// 下载员工固定二维码
         /// </summary>
         /// <returns></returns>
-        private string DownloadQRCode()
+        private void DownloadQRCode()
         {
             //员工固定二维码磁盘路径
             string targetPath = ConfigurationManager.AppSettings["DiskImagePath"];
@@ -383,7 +383,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             {
                 CurrentContext.Response.End();
             }
-            return null;
         }
     }
 
