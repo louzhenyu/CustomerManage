@@ -1034,6 +1034,7 @@ namespace JIT.CPOS.BS.DataAccess
                                         INNER JOIN T_Def_App da ON da.def_app_id=m.reg_app_id
                                         WHERE u.user_id='{0}' AND da.def_app_code='APP' 
                                         AND rm.status=1 AND m.status=1 AND ur.status=1 AND u.user_status=1
+                                        GROUP BY m.menu_code,m.display_index
                                         ORDER BY m.display_index ASC
                                         ", userId);
             return this.SQLHelper.ExecuteDataset(sql);
@@ -1417,7 +1418,7 @@ namespace JIT.CPOS.BS.DataAccess
             paras.Add(new SqlParameter() { ParameterName = "@pCustomerId", Value = customerId });
 
             StringBuilder sql = new StringBuilder();
-            sql.Append(" select user_id,user_name from t_user where customer_id = @pCustomerId and ");
+            sql.Append(" select user_id,user_name,user_status,user from t_user where customer_id = @pCustomerId and ");
             sql.Append(" (user_code = @pUserName or user_telephone = @pUserName)");
             sql.Append(" and user_password = @pPassword");
 

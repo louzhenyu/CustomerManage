@@ -12,6 +12,10 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string UserName { get; set; }
+        /// <summary>
+        /// 用户状态1：正常；-1不正常
+        /// </summary>
+        public int Status { get; set; }
         public RoleCodeInfo[] RoleCodeList { get; set; }
         //用户汇集店ID
         public string UnitId { get; set; }

@@ -74,6 +74,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             var ds = vipBll.GetUserIdByUserNameAndPassword(phone, customerId, password);
             rd.UserId = ds.Tables[0].Rows[0]["user_id"].ToString();
             rd.UserName = ds.Tables[0].Rows[0]["user_name"].ToString();
+            rd.Status =int.Parse(ds.Tables[0].Rows[0]["user_status"].ToString());
             rd.CustomerId = customerId;
 
             #endregion
