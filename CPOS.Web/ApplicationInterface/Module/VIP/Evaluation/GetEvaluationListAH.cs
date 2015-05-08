@@ -36,7 +36,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
             int goodCount = evaluationBll.GetEvaluationCount(pRequest.Parameters.ObjectID, 3);
             rd.TotalPageCount = tempEvaluationList.PageCount;
             rd.Count = tempEvaluationList.RowCount;
-            rd.GoodPer = rd.TotalPageCount == 0 ? "0" : (goodCount /rd.Count) + "%";
+        
+            rd.GoodPer = rd.Count == 0 ? "0%" : Convert.ToInt32(goodCount / Convert.ToDecimal(rd.Count) * 100) + "%";
             rd.EvaluationList = tempEvaluationList.Entities.Select(t => new EvaluationInfo()
             {
                 EvaluationID = t.EvaluationID,
@@ -44,7 +45,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
                 VipName = t.VipName,
                 Content = t.Content,
                 StarLevel = t.StarLevel,
-                CreateTime = t.CreateTime.Value.ToString("yyyy-MM-hh"),
+                CreateTime = t.CreateTime.Value.ToString("yyyy-MM-dd"),
                 IsAnonymity = t.IsAnonymity,
                 Remark = t.Remark
             }).ToArray();

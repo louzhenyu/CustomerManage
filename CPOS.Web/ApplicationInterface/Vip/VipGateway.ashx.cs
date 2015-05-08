@@ -661,6 +661,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                         }
                         //}
                     }
+
                     #endregion
 
                     var tInoutBll = new TInoutBLL(loggingSessionInfo);
