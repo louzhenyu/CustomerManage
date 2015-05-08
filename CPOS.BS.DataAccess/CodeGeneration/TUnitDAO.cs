@@ -795,6 +795,14 @@ namespace JIT.CPOS.BS.DataAccess
             if (pReader["unit_city_id"] != DBNull.Value)
             {
                 pInstance.UnitCityID = Convert.ToString(pReader["unit_city_id"]);
+                var cityDao = new T_CityDAO(CurrentUserInfo);
+                var cityInfo = cityDao.GetByID(pInstance.UnitCityID);
+                if (cityInfo != null)
+                {
+                    pInstance.Province = cityInfo.city1_name;
+                    pInstance.CityName = cityInfo.city2_name;
+                    pInstance.DistrictName = cityInfo.city3_name;
+                }
             }
             if (pReader["unit_address"] != DBNull.Value)
             {

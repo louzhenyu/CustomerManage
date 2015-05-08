@@ -17,7 +17,6 @@ using JIT.CPOS.BS.Entity.Interface;
 using JIT.CPOS.BS.Entity.User;
 using JIT.CPOS.Common;
 using JIT.CPOS.DTO.Module.Order.Order.Response;
-using JIT.CPOS.Entity;
 using JIT.Utility.DataAccess.Query;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.Log;
@@ -702,7 +701,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             {
                 get { return ImagePathUtil.GetImagePathStr(this.imageurl, "240"); }  //请求图片缩略图 
                 set { this.imageurl = value; }
-            } 
+            }
             public decimal price { get; set; } //商品原价
             public decimal salesPrice { get; set; } //商品零售价（优惠价）
             public decimal everyoneSalesPrice { get; set; }   //人人销售价
@@ -1120,7 +1119,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 respData.content = new getStoreListByItemRespContentData();
                 respData.content.storeList = new List<getStoreListByItemRespContentItemTypeData>();
                 respData.content.imageList = new List<getStoreListByItemImageList>();
-                
+
                 //respData.content.DeliveryDateList = GetDeliveryDate(loggingSessionInfo);
 
                 #region
@@ -3223,7 +3222,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 {
                     customerId = reqObj.common.customerId;
                 }
-                var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
+                 var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
 
                 //查询参数
                 string userId = reqObj.common.userId;
@@ -3249,6 +3248,54 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     list.Add(info);
                 }
                 respData.content.deliveryList = list;
+
+                //增加会员地址返回
+                var vipAddressBLL = new VipAddressBLL(loggingSessionInfo);
+                OrderBy[] orderbys = new OrderBy[]{
+                    new OrderBy(){FieldName="IsDefault",Direction=OrderByDirections.Desc},
+                    new OrderBy(){FieldName="LastUpdateTime",Direction=OrderByDirections.Desc}
+                };
+                var vipAddress = vipAddressBLL.QueryByEntity(new VipAddressEntity() { VIPID = userId }, orderbys).FirstOrDefault();
+                var vipAddressInfo = new VipAddressInfo() { };
+                if (vipAddress != null)
+                {
+                    vipAddressInfo.vipAddressID = vipAddress.VipAddressID;
+                    vipAddressInfo.vipid = vipAddress.VIPID;
+                    vipAddressInfo.linkMan = vipAddress.LinkMan;
+                    vipAddressInfo.linkTel = vipAddress.LinkTel;
+                    vipAddressInfo.cityID = vipAddress.CityID;
+                    vipAddressInfo.province = vipAddress.Province;
+                    vipAddressInfo.cityName = vipAddress.CityName;
+                    vipAddressInfo.districtName = vipAddress.DistrictName;
+                    vipAddressInfo.address = vipAddress.Address;
+                    vipAddressInfo.isDefault = vipAddress.IsDefault.ToString();
+                    respData.content.vipAddressInfo = vipAddressInfo;
+                }
+                //增加会员会集店信息
+                var unitBLL = new TUnitBLL(loggingSessionInfo);
+                var vipBLL = new VipBLL(loggingSessionInfo);
+                var vipInfo = vipBLL.GetByID(userId);
+                VipUnitInfo vipUnitInfo = null;
+                if (vipInfo != null)
+                {
+                    if (!string.IsNullOrEmpty(vipInfo.CouponInfo))
+                    {
+                        var unitInfo = unitBLL.GetByID(vipInfo.CouponInfo);
+                        vipUnitInfo = new VipUnitInfo();
+                        if (unitInfo != null)
+                        {
+                            vipUnitInfo.unitID = unitInfo.UnitID;
+                            vipUnitInfo.unitName = unitInfo.UnitName;
+                            vipUnitInfo.province = unitInfo.Province;
+                            vipUnitInfo.cityName = unitInfo.CityName;
+                            vipUnitInfo.districtName = unitInfo.DistrictName;
+                            vipUnitInfo.address = unitInfo.UnitAddress;
+                        }
+                    }
+                }
+                respData.content.vipUnitInfo = vipUnitInfo;
+
+
             }
             catch (Exception ex)
             {
@@ -3270,6 +3317,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         public class getDeliveryListRespContentData
         {
             public IList<getDeliveryListRespContentItemTypeData> deliveryList { get; set; } //商品类别集合
+            public VipAddressInfo vipAddressInfo { get; set; }//会员地址信息
+            public VipUnitInfo vipUnitInfo { get; set; }//会员会集店信息
         }
 
         public class getDeliveryListRespContentItemTypeData
@@ -3277,6 +3326,32 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string deliveryId { get; set; } //支付方式标识
             public string deliveryName { get; set; } //支付产品类别
             public string isAddress { get; set; }
+
+        }
+        /// <summary>
+        /// 地址信息
+        /// </summary>
+        public class VipAddressInfo
+        {
+            public string vipAddressID { get; set; }
+            public string vipid { get; set; }
+            public string linkMan { get; set; }
+            public string linkTel { get; set; }
+            public string cityID { get; set; }
+            public string districtName { get; set; }
+            public string address { get; set; }
+            public string isDefault { get; set; }
+            public string province { get; set; }//省
+            public string cityName { get; set; }//市
+        }
+        public class VipUnitInfo
+        {
+            public string unitID { get; set; }
+            public string unitName { get; set; }
+            public string province { get; set; }//省
+            public string cityName { get; set; }//市
+            public string districtName { get; set; }//区
+            public string address { get; set; }//地址
         }
 
         public class getDeliveryListReqData : ReqData
@@ -7122,7 +7197,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             {
                                 resList.itemId = ToStr(item.ItemDetail.item_id);
                                 resList.itemName = ToStr(item.ItemDetail.item_name);
-                                resList.imageUrl =ImagePathUtil.GetImagePathStr(ToStr(item.ItemDetail.imageUrl),"240"); //获取缩略图 update by Henry 2014-12-8
+                                resList.imageUrl = ImagePathUtil.GetImagePathStr(ToStr(item.ItemDetail.imageUrl), "240"); //获取缩略图 update by Henry 2014-12-8
                                 resList.price = ToDouble(item.ItemDetail.Price);
                                 resList.salesPrice = ToDouble(item.ItemDetail.SalesPrice);
                                 resList.discountRate = ToDouble(item.ItemDetail.DiscountRate);
@@ -16109,9 +16184,9 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 var bll = new ObjectEvaluationBLL(loggingSessionInfo);
                 var entity = new ObjectEvaluationEntity()
                 {
-                    ClientID = reqObj.common.customerId,
-                    MemberID = reqObj.special.memberId,
-                    ItemEvaluationID = Guid.NewGuid().ToString("N"),
+                    //ClientID = reqObj.common.customerId,
+                    //MemberID = reqObj.special.memberId,
+                    //ItemEvaluationID = Guid.NewGuid().ToString("N"),
                     ObjectID = reqObj.special.objectId,
                     Content = reqObj.special.content,
                     Platform = reqObj.special.platform
@@ -16164,7 +16239,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     {
                         Content = t.Content,
                         StarLevel = t.StarLevel,
-                        MemberName = t.MemberName,
+                        MemberName = t.VipName,
                         EvaluationTime = t.CreateTime
                     });
                     resData.content = new { Count = entitys[0].Count, EvaluationList = list.ToArray() };
@@ -16213,7 +16288,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     {
                         Content = t.Content,
                         StarLevel = t.StarLevel,
-                        MemberName = t.MemberName,
+                        MemberName = t.VipName,
                         EvaluationTime = t.CreateTime
                     });
                     resData.content = new { Count = entitys[0].Count, EvaluationList = list.ToArray() };

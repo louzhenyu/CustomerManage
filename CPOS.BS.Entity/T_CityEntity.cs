@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/7/25 10:37:49
+ * Create On	:2015-4-11 11:18:23
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -26,13 +26,10 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class TUnitEntity : BaseEntity 
+    public partial class T_CityEntity : BaseEntity 
     {
         #region 属性集
 
-        public string Province { get; set; }
-        public string CityName { get; set; }
-        public string DistrictName { get; set; }
         #endregion
     }
 }

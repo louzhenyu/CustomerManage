@@ -26,10 +26,10 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
 using JIT.Utility.DataAccess.Query;
-using JIT.CPOS.Entity;
 using JIT.CPOS.BS.Entity;
+using JIT.CPOS.BS.DataAccess.Base;
 
-namespace JIT.CPOS.DataAccess
+namespace JIT.CPOS.BS.DataAccess
 {
     /// <summary>
     /// 数据访问：  
@@ -38,7 +38,7 @@ namespace JIT.CPOS.DataAccess
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class ObjectEvaluationDAO : JIT.CPOS.BS.DataAccess.Base.BaseCPOSDAO, ICRUDable<ObjectEvaluationEntity>, IQueryable<ObjectEvaluationEntity>
+    public partial class ObjectEvaluationDAO : Base.BaseCPOSDAO, ICRUDable<ObjectEvaluationEntity>, IQueryable<ObjectEvaluationEntity>
     {
         #region 构造函数
         /// <summary>
@@ -70,57 +70,78 @@ namespace JIT.CPOS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-
+            
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [ObjectEvaluation](");
-            strSql.Append("[ObjectID],[MemberID],[ClientID],[Content],[StarLevel],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[Platform],[ItemEvaluationID])");
+            strSql.Append("[ObjectID],[Type],[VipID],[CustomerID],[Content],[StarLevel],[StarLevel1],[StarLevel2],[StarLevel3],[StarLevel4],[StarLevel5],[Platform],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[OrderID],[Remark],[IsAnonymity],[EvaluationID])");
             strSql.Append(" values (");
-            strSql.Append("@ObjectID,@MemberID,@ClientID,@Content,@StarLevel,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@Platform,@ItemEvaluationID)");
+            strSql.Append("@ObjectID,@Type,@VipID,@CustomerID,@Content,@StarLevel,@StarLevel1,@StarLevel2,@StarLevel3,@StarLevel4,@StarLevel5,@Platform,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@OrderID,@Remark,@IsAnonymity,@EvaluationID)");            
 
-            string pkString = pEntity.ItemEvaluationID;
+			string pkString = pEntity.EvaluationID;
+            if (string.IsNullOrEmpty(pkString))
+                pkString = Guid.NewGuid().ToString();
 
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@ObjectID",SqlDbType.NVarChar),
-					new SqlParameter("@MemberID",SqlDbType.NVarChar),
-					new SqlParameter("@ClientID",SqlDbType.NVarChar),
+					new SqlParameter("@Type",SqlDbType.Int),
+					new SqlParameter("@VipID",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@Content",SqlDbType.NVarChar),
 					new SqlParameter("@StarLevel",SqlDbType.Int),
-					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
+					new SqlParameter("@StarLevel1",SqlDbType.Int),
+					new SqlParameter("@StarLevel2",SqlDbType.Int),
+					new SqlParameter("@StarLevel3",SqlDbType.Int),
+					new SqlParameter("@StarLevel4",SqlDbType.Int),
+					new SqlParameter("@StarLevel5",SqlDbType.Int),
+					new SqlParameter("@Platform",SqlDbType.NVarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
+					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@Platform",SqlDbType.NVarChar),
-					new SqlParameter("@ItemEvaluationID",SqlDbType.NVarChar)
+					new SqlParameter("@OrderID",SqlDbType.NVarChar),
+					new SqlParameter("@Remark",SqlDbType.NVarChar),
+					new SqlParameter("@IsAnonymity",SqlDbType.Int),
+					new SqlParameter("@EvaluationID",SqlDbType.NVarChar)
             };
-            parameters[0].Value = pEntity.ObjectID;
-            parameters[1].Value = pEntity.MemberID;
-            parameters[2].Value = pEntity.ClientID;
-            parameters[3].Value = pEntity.Content;
-            parameters[4].Value = pEntity.StarLevel;
-            parameters[5].Value = pEntity.CreateBy;
-            parameters[6].Value = pEntity.CreateTime;
-            parameters[7].Value = pEntity.LastUpdateBy;
-            parameters[8].Value = pEntity.LastUpdateTime;
-            parameters[9].Value = pEntity.IsDelete;
-            parameters[10].Value = pEntity.Platform;
-            parameters[11].Value = pkString;
+			parameters[0].Value = pEntity.ObjectID;
+			parameters[1].Value = pEntity.Type;
+			parameters[2].Value = pEntity.VipID;
+			parameters[3].Value = pEntity.CustomerID;
+			parameters[4].Value = pEntity.Content;
+			parameters[5].Value = pEntity.StarLevel;
+			parameters[6].Value = pEntity.StarLevel1;
+			parameters[7].Value = pEntity.StarLevel2;
+			parameters[8].Value = pEntity.StarLevel3;
+			parameters[9].Value = pEntity.StarLevel4;
+			parameters[10].Value = pEntity.StarLevel5;
+			parameters[11].Value = pEntity.Platform;
+			parameters[12].Value = pEntity.CreateTime;
+			parameters[13].Value = pEntity.CreateBy;
+			parameters[14].Value = pEntity.LastUpdateBy;
+			parameters[15].Value = pEntity.LastUpdateTime;
+			parameters[16].Value = pEntity.IsDelete;
+			parameters[17].Value = pEntity.OrderID;
+			parameters[18].Value = pEntity.Remark;
+			parameters[19].Value = pEntity.IsAnonymity;
+			parameters[20].Value = pkString;
 
             //执行并将结果回写
             int result;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
-            pEntity.ItemEvaluationID = pkString;
+               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
+            pEntity.EvaluationID = pkString;
         }
 
         /// <summary>
@@ -135,7 +156,7 @@ namespace JIT.CPOS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [ObjectEvaluation] where ItemEvaluationID='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [ObjectEvaluation] where EvaluationID='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             ObjectEvaluationEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -158,7 +179,7 @@ namespace JIT.CPOS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [ObjectEvaluation] where isdelete=0");
+            sql.AppendFormat("select * from [ObjectEvaluation] where 1=1  and isdelete=0");
             //读取数据
             List<ObjectEvaluationEntity> list = new List<ObjectEvaluationEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -179,9 +200,9 @@ namespace JIT.CPOS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(ObjectEvaluationEntity pEntity, IDbTransaction pTran)
+        public void Update(ObjectEvaluationEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity, pTran, true);
+            Update(pEntity , pTran,true);
         }
 
         /// <summary>
@@ -189,60 +210,97 @@ namespace JIT.CPOS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(ObjectEvaluationEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
+        public void Update(ObjectEvaluationEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.ItemEvaluationID == null)
+            if (pEntity.EvaluationID == null)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
-            //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+             //初始化固定字段
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [ObjectEvaluation] set ");
-            if (pIsUpdateNullField || pEntity.ObjectID != null)
-                strSql.Append("[ObjectID]=@ObjectID,");
-            if (pIsUpdateNullField || pEntity.MemberID != null)
-                strSql.Append("[MemberID]=@MemberID,");
-            if (pIsUpdateNullField || pEntity.ClientID != null)
-                strSql.Append("[ClientID]=@ClientID,");
-            if (pIsUpdateNullField || pEntity.Content != null)
-                strSql.Append("[Content]=@Content,");
-            if (pIsUpdateNullField || pEntity.StarLevel != null)
-                strSql.Append("[StarLevel]=@StarLevel,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy != null)
-                strSql.Append("[LastUpdateBy]=@LastUpdateBy,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
-                strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.Platform != null)
-                strSql.Append("[Platform]=@Platform");
-            strSql.Append(" where ItemEvaluationID=@ItemEvaluationID ");
+                        if (pIsUpdateNullField || pEntity.ObjectID!=null)
+                strSql.Append( "[ObjectID]=@ObjectID,");
+            if (pIsUpdateNullField || pEntity.Type!=null)
+                strSql.Append( "[Type]=@Type,");
+            if (pIsUpdateNullField || pEntity.VipID!=null)
+                strSql.Append( "[VipID]=@VipID,");
+            if (pIsUpdateNullField || pEntity.CustomerID!=null)
+                strSql.Append( "[CustomerID]=@CustomerID,");
+            if (pIsUpdateNullField || pEntity.Content!=null)
+                strSql.Append( "[Content]=@Content,");
+            if (pIsUpdateNullField || pEntity.StarLevel!=null)
+                strSql.Append( "[StarLevel]=@StarLevel,");
+            if (pIsUpdateNullField || pEntity.StarLevel1!=null)
+                strSql.Append( "[StarLevel1]=@StarLevel1,");
+            if (pIsUpdateNullField || pEntity.StarLevel2!=null)
+                strSql.Append( "[StarLevel2]=@StarLevel2,");
+            if (pIsUpdateNullField || pEntity.StarLevel3!=null)
+                strSql.Append( "[StarLevel3]=@StarLevel3,");
+            if (pIsUpdateNullField || pEntity.StarLevel4!=null)
+                strSql.Append( "[StarLevel4]=@StarLevel4,");
+            if (pIsUpdateNullField || pEntity.StarLevel5!=null)
+                strSql.Append( "[StarLevel5]=@StarLevel5,");
+            if (pIsUpdateNullField || pEntity.Platform!=null)
+                strSql.Append( "[Platform]=@Platform,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.OrderID!=null)
+                strSql.Append( "[OrderID]=@OrderID,");
+            if (pIsUpdateNullField || pEntity.Remark!=null)
+                strSql.Append( "[Remark]=@Remark,");
+            if (pIsUpdateNullField || pEntity.IsAnonymity!=null)
+                strSql.Append( "[IsAnonymity]=@IsAnonymity");
+            strSql.Append(" where EvaluationID=@EvaluationID ");
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@ObjectID",SqlDbType.NVarChar),
-					new SqlParameter("@MemberID",SqlDbType.NVarChar),
-					new SqlParameter("@ClientID",SqlDbType.NVarChar),
+					new SqlParameter("@Type",SqlDbType.Int),
+					new SqlParameter("@VipID",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@Content",SqlDbType.NVarChar),
 					new SqlParameter("@StarLevel",SqlDbType.Int),
+					new SqlParameter("@StarLevel1",SqlDbType.Int),
+					new SqlParameter("@StarLevel2",SqlDbType.Int),
+					new SqlParameter("@StarLevel3",SqlDbType.Int),
+					new SqlParameter("@StarLevel4",SqlDbType.Int),
+					new SqlParameter("@StarLevel5",SqlDbType.Int),
+					new SqlParameter("@Platform",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@Platform",SqlDbType.NVarChar),
-					new SqlParameter("@ItemEvaluationID",SqlDbType.NVarChar)
+					new SqlParameter("@OrderID",SqlDbType.NVarChar),
+					new SqlParameter("@Remark",SqlDbType.NVarChar),
+					new SqlParameter("@IsAnonymity",SqlDbType.Int),
+					new SqlParameter("@EvaluationID",SqlDbType.NVarChar)
             };
-            parameters[0].Value = pEntity.ObjectID;
-            parameters[1].Value = pEntity.MemberID;
-            parameters[2].Value = pEntity.ClientID;
-            parameters[3].Value = pEntity.Content;
-            parameters[4].Value = pEntity.StarLevel;
-            parameters[5].Value = pEntity.LastUpdateBy;
-            parameters[6].Value = pEntity.LastUpdateTime;
-            parameters[7].Value = pEntity.Platform;
-            parameters[8].Value = pEntity.ItemEvaluationID;
+			parameters[0].Value = pEntity.ObjectID;
+			parameters[1].Value = pEntity.Type;
+			parameters[2].Value = pEntity.VipID;
+			parameters[3].Value = pEntity.CustomerID;
+			parameters[4].Value = pEntity.Content;
+			parameters[5].Value = pEntity.StarLevel;
+			parameters[6].Value = pEntity.StarLevel1;
+			parameters[7].Value = pEntity.StarLevel2;
+			parameters[8].Value = pEntity.StarLevel3;
+			parameters[9].Value = pEntity.StarLevel4;
+			parameters[10].Value = pEntity.StarLevel5;
+			parameters[11].Value = pEntity.Platform;
+			parameters[12].Value = pEntity.LastUpdateBy;
+			parameters[13].Value = pEntity.LastUpdateTime;
+			parameters[14].Value = pEntity.OrderID;
+			parameters[15].Value = pEntity.Remark;
+			parameters[16].Value = pEntity.IsAnonymity;
+			parameters[17].Value = pEntity.EvaluationID;
 
             //执行语句
             int result = 0;
@@ -256,7 +314,7 @@ namespace JIT.CPOS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(ObjectEvaluationEntity pEntity)
+        public void Update(ObjectEvaluationEntity pEntity )
         {
             this.Update(pEntity, null);
         }
@@ -280,12 +338,12 @@ namespace JIT.CPOS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.ItemEvaluationID == null)
+            if (pEntity.EvaluationID == null)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.ItemEvaluationID, pTran);
+            this.Delete(pEntity.EvaluationID, pTran);           
         }
 
         /// <summary>
@@ -296,23 +354,21 @@ namespace JIT.CPOS.DataAccess
         public void Delete(object pID, IDbTransaction pTran)
         {
             if (pID == null)
-                return;
+                return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [ObjectEvaluation] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where ItemEvaluationID=@ItemEvaluationID;");
+            sql.AppendLine("update [ObjectEvaluation] set  isdelete=1 where EvaluationID=@EvaluationID;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.Int,Value=Convert.ToInt32(CurrentUserInfo.UserID)},
-                new SqlParameter{ParameterName="@ItemEvaluationID",SqlDbType=SqlDbType.VarChar,Value=pID}
+                new SqlParameter{ParameterName="@EvaluationID",SqlDbType=SqlDbType.VarChar,Value=pID}
             };
             //执行语句
             int result = 0;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
-            return;
+                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+            return ;
         }
 
         /// <summary>
@@ -330,11 +386,11 @@ namespace JIT.CPOS.DataAccess
                 //参数校验
                 if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (pEntity.ItemEvaluationID == null)
+                if (pEntity.EvaluationID == null)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = pEntity.ItemEvaluationID;
+                entityIDs[i] = pEntity.EvaluationID;
             }
             Delete(entityIDs, pTran);
         }
@@ -344,7 +400,7 @@ namespace JIT.CPOS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(ObjectEvaluationEntity[] pEntities)
-        {
+        { 
             Delete(pEntities, null);
         }
 
@@ -354,7 +410,7 @@ namespace JIT.CPOS.DataAccess
         /// <param name="pIDs">标识符值数组</param>
         public void Delete(object[] pIDs)
         {
-            Delete(pIDs, null);
+            Delete(pIDs,null);
         }
 
         /// <summary>
@@ -362,24 +418,24 @@ namespace JIT.CPOS.DataAccess
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran)
+        public void Delete(object[] pIDs, IDbTransaction pTran) 
         {
-            if (pIDs == null || pIDs.Length == 0)
-                return;
+            if (pIDs == null || pIDs.Length==0)
+                return ;
             //组织参数化SQL
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("'{0}',", item.ToString());
+                primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [ObjectEvaluation] set LastUpdateTime='" + DateTime.Now.ToString() + "',LastUpdateBy=" + CurrentUserInfo.UserID + ",IsDelete=1 where ItemEvaluationID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [ObjectEvaluation] set  isdelete=1 where EvaluationID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
-            int result = 0;
+            int result = 0;   
             if (pTran == null)
                 result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
         }
         #endregion
 
@@ -394,7 +450,7 @@ namespace JIT.CPOS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [ObjectEvaluation] where isdelete=0 ");
+            sql.AppendFormat("select * from [ObjectEvaluation] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -444,7 +500,7 @@ namespace JIT.CPOS.DataAccess
             {
                 foreach (var item in pOrderBys)
                 {
-                    if (item != null)
+                    if(item!=null)
                     {
                         pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
                     }
@@ -453,17 +509,17 @@ namespace JIT.CPOS.DataAccess
             }
             else
             {
-                pagedSql.AppendFormat(" [ItemEvaluationID] desc"); //默认为主键值倒序
+                pagedSql.AppendFormat(" [EvaluationID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [ObjectEvaluation] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [ObjectEvaluation] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [ObjectEvaluation] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [ObjectEvaluation] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
                 {
-                    if (item != null)
+                    if(item!=null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
                         totalCountSql.AppendFormat(" and {0}", item.GetExpression());
@@ -472,7 +528,7 @@ namespace JIT.CPOS.DataAccess
             }
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
-            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
             PagedQueryResult<ObjectEvaluationEntity> result = new PagedQueryResult<ObjectEvaluationEntity>();
             List<ObjectEvaluationEntity> list = new List<ObjectEvaluationEntity>();
@@ -486,7 +542,7 @@ namespace JIT.CPOS.DataAccess
                 }
             }
             result.Entities = list.ToArray();
-            int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(totalCountSql.ToString()));    //计算总行数
+           int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(totalCountSql.ToString()));    //计算总行数
             result.RowCount = totalCount;
             int remainder = 0;
             result.PageCount = Math.DivRem(totalCount, pPageSize, out remainder);
@@ -504,7 +560,7 @@ namespace JIT.CPOS.DataAccess
         public ObjectEvaluationEntity[] QueryByEntity(ObjectEvaluationEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
-            return Query(queryWhereCondition, pOrderBys);
+            return Query(queryWhereCondition,  pOrderBys);            
         }
 
         /// <summary>
@@ -515,7 +571,7 @@ namespace JIT.CPOS.DataAccess
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<ObjectEvaluationEntity> PagedQueryByEntity(ObjectEvaluationEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
+            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
@@ -527,33 +583,51 @@ namespace JIT.CPOS.DataAccess
         /// </summary>
         /// <returns></returns>
         protected IWhereCondition[] GetWhereConditionByEntity(ObjectEvaluationEntity pQueryEntity)
-        {
+        { 
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.ItemEvaluationID != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemEvaluationID", Value = pQueryEntity.ItemEvaluationID });
-            if (pQueryEntity.ObjectID != null)
+            if (pQueryEntity.EvaluationID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EvaluationID", Value = pQueryEntity.EvaluationID });
+            if (pQueryEntity.ObjectID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ObjectID", Value = pQueryEntity.ObjectID });
-            if (pQueryEntity.MemberID != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "MemberID", Value = pQueryEntity.MemberID });
-            if (pQueryEntity.ClientID != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ClientID", Value = pQueryEntity.ClientID });
-            if (pQueryEntity.Content != null)
+            if (pQueryEntity.Type!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Type", Value = pQueryEntity.Type });
+            if (pQueryEntity.VipID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = pQueryEntity.VipID });
+            if (pQueryEntity.CustomerID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
+            if (pQueryEntity.Content!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Content", Value = pQueryEntity.Content });
-            if (pQueryEntity.StarLevel != null)
+            if (pQueryEntity.StarLevel!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "StarLevel", Value = pQueryEntity.StarLevel });
-            if (pQueryEntity.CreateBy != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.CreateTime != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.LastUpdateBy != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
-            if (pQueryEntity.LastUpdateTime != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.IsDelete != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
-            if (pQueryEntity.Platform != null)
+            if (pQueryEntity.StarLevel1!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "StarLevel1", Value = pQueryEntity.StarLevel1 });
+            if (pQueryEntity.StarLevel2!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "StarLevel2", Value = pQueryEntity.StarLevel2 });
+            if (pQueryEntity.StarLevel3!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "StarLevel3", Value = pQueryEntity.StarLevel3 });
+            if (pQueryEntity.StarLevel4!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "StarLevel4", Value = pQueryEntity.StarLevel4 });
+            if (pQueryEntity.StarLevel5!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "StarLevel5", Value = pQueryEntity.StarLevel5 });
+            if (pQueryEntity.Platform!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Platform", Value = pQueryEntity.Platform });
+            if (pQueryEntity.CreateTime!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
+            if (pQueryEntity.CreateBy!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
+            if (pQueryEntity.LastUpdateBy!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
+            if (pQueryEntity.LastUpdateTime!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
+            if (pQueryEntity.IsDelete!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.OrderID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "OrderID", Value = pQueryEntity.OrderID });
+            if (pQueryEntity.Remark!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Remark", Value = pQueryEntity.Remark });
+            if (pQueryEntity.IsAnonymity!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsAnonymity", Value = pQueryEntity.IsAnonymity });
 
             return lstWhereCondition.ToArray();
         }
@@ -569,54 +643,94 @@ namespace JIT.CPOS.DataAccess
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-            if (pReader["ItemEvaluationID"] != DBNull.Value)
-            {
-                pInstance.ItemEvaluationID = Convert.ToString(pReader["ItemEvaluationID"]);
-            }
-            if (pReader["ObjectID"] != DBNull.Value)
-            {
-                pInstance.ObjectID = Convert.ToString(pReader["ObjectID"]);
-            }
-            if (pReader["MemberID"] != DBNull.Value)
-            {
-                pInstance.MemberID = Convert.ToString(pReader["MemberID"]);
-            }
-            if (pReader["ClientID"] != DBNull.Value)
-            {
-                pInstance.ClientID = Convert.ToString(pReader["ClientID"]);
-            }
-            if (pReader["Content"] != DBNull.Value)
-            {
-                pInstance.Content = Convert.ToString(pReader["Content"]);
-            }
-            if (pReader["StarLevel"] != DBNull.Value)
-            {
-                pInstance.StarLevel = Convert.ToInt32(pReader["StarLevel"]);
-            }
-            if (pReader["CreateBy"] != DBNull.Value)
-            {
-                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
-            }
-            if (pReader["CreateTime"] != DBNull.Value)
-            {
-                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
-            }
-            if (pReader["LastUpdateBy"] != DBNull.Value)
-            {
-                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
-            }
-            if (pReader["LastUpdateTime"] != DBNull.Value)
-            {
-                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
-            }
-            if (pReader["IsDelete"] != DBNull.Value)
-            {
-                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
-            }
-            if (pReader["Platform"] != DBNull.Value)
-            {
-                pInstance.Platform = Convert.ToString(pReader["Platform"]);
-            }
+			if (pReader["EvaluationID"] != DBNull.Value)
+			{
+				pInstance.EvaluationID =  Convert.ToString(pReader["EvaluationID"]);
+			}
+			if (pReader["ObjectID"] != DBNull.Value)
+			{
+				pInstance.ObjectID =  Convert.ToString(pReader["ObjectID"]);
+			}
+			if (pReader["Type"] != DBNull.Value)
+			{
+				pInstance.Type =   Convert.ToInt32(pReader["Type"]);
+			}
+			if (pReader["VipID"] != DBNull.Value)
+			{
+				pInstance.VipID =  Convert.ToString(pReader["VipID"]);
+                var vipDao = new VipDAO(CurrentUserInfo);
+                var vipInfo = vipDao.GetByID(pInstance.VipID);
+                if (vipInfo != null)
+                    pInstance.VipName = vipInfo.VipName;
+			}
+			if (pReader["CustomerID"] != DBNull.Value)
+			{
+				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
+			}
+			if (pReader["Content"] != DBNull.Value)
+			{
+				pInstance.Content =  Convert.ToString(pReader["Content"]);
+			}
+			if (pReader["StarLevel"] != DBNull.Value)
+			{
+				pInstance.StarLevel =   Convert.ToInt32(pReader["StarLevel"]);
+			}
+			if (pReader["StarLevel1"] != DBNull.Value)
+			{
+				pInstance.StarLevel1 =   Convert.ToInt32(pReader["StarLevel1"]);
+			}
+			if (pReader["StarLevel2"] != DBNull.Value)
+			{
+				pInstance.StarLevel2 =   Convert.ToInt32(pReader["StarLevel2"]);
+			}
+			if (pReader["StarLevel3"] != DBNull.Value)
+			{
+				pInstance.StarLevel3 =   Convert.ToInt32(pReader["StarLevel3"]);
+			}
+			if (pReader["StarLevel4"] != DBNull.Value)
+			{
+				pInstance.StarLevel4 =   Convert.ToInt32(pReader["StarLevel4"]);
+			}
+			if (pReader["StarLevel5"] != DBNull.Value)
+			{
+				pInstance.StarLevel5 =   Convert.ToInt32(pReader["StarLevel5"]);
+			}
+			if (pReader["Platform"] != DBNull.Value)
+			{
+				pInstance.Platform =  Convert.ToString(pReader["Platform"]);
+			}
+			if (pReader["CreateTime"] != DBNull.Value)
+			{
+				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
+			}
+			if (pReader["CreateBy"] != DBNull.Value)
+			{
+				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
+			}
+			if (pReader["LastUpdateBy"] != DBNull.Value)
+			{
+				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
+			}
+			if (pReader["LastUpdateTime"] != DBNull.Value)
+			{
+				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
+			}
+			if (pReader["IsDelete"] != DBNull.Value)
+			{
+				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["OrderID"] != DBNull.Value)
+			{
+				pInstance.OrderID =  Convert.ToString(pReader["OrderID"]);
+			}
+			if (pReader["Remark"] != DBNull.Value)
+			{
+				pInstance.Remark =  Convert.ToString(pReader["Remark"]);
+			}
+			if (pReader["IsAnonymity"] != DBNull.Value)
+			{
+				pInstance.IsAnonymity =   Convert.ToInt32(pReader["IsAnonymity"]);
+			}
 
         }
         #endregion

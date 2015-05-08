@@ -364,6 +364,7 @@
     <Compile Include="CodeGeneration\TUnitSortDAO.cs" />
     <Compile Include="CodeGeneration\TUnitUnitSortMappingDAO.cs" />
     <Compile Include="CodeGeneration\TUserThirdPartyMappingDAO.cs" />
+    <Compile Include="CodeGeneration\T_CityDAO.cs" />
     <Compile Include="CodeGeneration\t_customerDAO.cs" />
     <Compile Include="CodeGeneration\T_InoutDAO.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailDAO.cs" />
@@ -443,6 +444,7 @@
     <Compile Include="CodeGeneration\WiFiUserVisitDAO.cs" />
     <Compile Include="CodeGeneration\WiFiUserVisitDetailDAO.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\BankDAO.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\RechargeOrderDAO.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\VipBankDAO.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositApplyDAO.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositDAO.cs" />
@@ -817,6 +819,7 @@
     <Compile Include="TUnitUnitSortMappingDAO.cs" />
     <Compile Include="TUserThirdPartyMappingDAO.cs" />
     <Compile Include="TypeService.cs" />
+    <Compile Include="T_CityDAO.cs" />
     <Compile Include="t_customerDAO.cs" />
     <Compile Include="UnitCommentDAO.cs" />
     <Compile Include="UnitService.cs" />
@@ -903,6 +906,7 @@
     <Compile Include="WiFiUserVisitDAO.cs" />
     <Compile Include="WiFiUserVisitDetailDAO.cs" />
     <Compile Include="WithdrawDeposit\BankDAO.cs" />
+    <Compile Include="WithdrawDeposit\RechargeOrderDAO.cs" />
     <Compile Include="WithdrawDeposit\VipBankDAO.cs" />
     <Compile Include="WithdrawDeposit\VipWithdrawDepositApplyDAO.cs" />
     <Compile Include="WithdrawDeposit\VipWithdrawDepositDAO.cs" />

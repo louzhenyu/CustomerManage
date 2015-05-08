@@ -64,10 +64,11 @@ namespace JIT.CPOS.DTO.Module.Order.Delivery.Request
                 {
                     throw new APIException("更新方式为到店自提时,未传自提门店ID") { ErrorCode = ERROR_CODE_NO_STOREID };
                 }
-                if (string.IsNullOrWhiteSpace(this.PickupUpDateRange.ToString()))
-                {
-                    throw new APIException("更新方式为到店自提时,未传自提时间范围") { ErrorCode = ERROR_CODE_NO_DATERANGE };
-                }
+                //注释 by Henry 2015-4-16
+                //if (string.IsNullOrWhiteSpace(this.PickupUpDateRange.ToString()))
+                //{
+                //    throw new APIException("更新方式为到店自提时,未传自提时间范围") { ErrorCode = ERROR_CODE_NO_DATERANGE };
+                //}
             }
         }
     }

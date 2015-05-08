@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/1/11 11:45:55
+ * Create On	:2015-4-16 17:36:32
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,26 +25,26 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
 {
     /// <summary>
     /// 数据访问：  
-    /// 表VipAddress的数据访问类     
+    /// 表RechargeOrder的数据访问类     
     /// 1.实现ICRUDable接口
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class VipAddressDAO : Base.BaseCPOSDAO, ICRUDable<VipAddressEntity>, IQueryable<VipAddressEntity>
+    public partial class RechargeOrderDAO : Base.BaseCPOSDAO, ICRUDable<RechargeOrderEntity>, IQueryable<RechargeOrderEntity>
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public VipAddressDAO(LoggingSessionInfo pUserInfo)
+        public RechargeOrderDAO(LoggingSessionInfo pUserInfo)
             : base(pUserInfo)
         {
         }
@@ -55,7 +55,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 创建一个新实例
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Create(VipAddressEntity pEntity)
+        public void Create(RechargeOrderEntity pEntity)
         {
             this.Create(pEntity, null);
         }
@@ -65,68 +65,86 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Create(VipAddressEntity pEntity, IDbTransaction pTran)
+        public void Create(RechargeOrderEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-
+            
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into [VipAddress](");
-            strSql.Append("[VIPID],[LinkMan],[LinkTel],[CityID],[Address],[IsDefault],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete])");
+            strSql.Append("insert into [RechargeOrder](");
+            strSql.Append("[OrderNo],[OrderDesc],[VipID],[TotalAmount],[ActuallyPaid],[ReturnAmount],[PayPoints],[ReceivePoints],[PayerID],[PayID],[Status],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[OrderID])");
             strSql.Append(" values (");
-            strSql.Append("@VIPID,@LinkMan,@LinkTel,@CityID,@Address,@IsDefault,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete)");
-            strSql.AppendFormat("{0}select SCOPE_IDENTITY();", Environment.NewLine);
+            strSql.Append("@OrderNo,@OrderDesc,@VipID,@TotalAmount,@ActuallyPaid,@ReturnAmount,@PayPoints,@ReceivePoints,@PayerID,@PayID,@Status,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@OrderID)");            
+
+			Guid? pkGuid;
+			if (pEntity.OrderID == null)
+				pkGuid = Guid.NewGuid();
+			else
+				pkGuid = pEntity.OrderID;
 
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@VIPID",SqlDbType.NVarChar),
-					new SqlParameter("@LinkMan",SqlDbType.NVarChar),
-					new SqlParameter("@LinkTel",SqlDbType.NVarChar),
-					new SqlParameter("@CityID",SqlDbType.NVarChar),
-					new SqlParameter("@Address",SqlDbType.NVarChar),
-					new SqlParameter("@IsDefault",SqlDbType.Int),
-					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
+					new SqlParameter("@OrderNo",SqlDbType.VarChar),
+					new SqlParameter("@OrderDesc",SqlDbType.NVarChar),
+					new SqlParameter("@VipID",SqlDbType.VarChar),
+					new SqlParameter("@TotalAmount",SqlDbType.Decimal),
+					new SqlParameter("@ActuallyPaid",SqlDbType.Decimal),
+					new SqlParameter("@ReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@PayPoints",SqlDbType.Decimal),
+					new SqlParameter("@ReceivePoints",SqlDbType.Decimal),
+					new SqlParameter("@PayerID",SqlDbType.VarChar),
+					new SqlParameter("@PayID",SqlDbType.VarChar),
+					new SqlParameter("@Status",SqlDbType.Int),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@CreateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@IsDelete",SqlDbType.Int)
+					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
+					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@OrderID",SqlDbType.UniqueIdentifier)
             };
-            parameters[0].Value = pEntity.VIPID;
-            parameters[1].Value = pEntity.LinkMan;
-            parameters[2].Value = pEntity.LinkTel;
-            parameters[3].Value = pEntity.CityID;
-            parameters[4].Value = pEntity.Address;
-            parameters[5].Value = pEntity.IsDefault;
-            parameters[6].Value = pEntity.CreateBy;
-            parameters[7].Value = pEntity.CreateTime;
-            parameters[8].Value = pEntity.LastUpdateBy;
-            parameters[9].Value = pEntity.LastUpdateTime;
-            parameters[10].Value = pEntity.IsDelete;
+			parameters[0].Value = pEntity.OrderNo;
+			parameters[1].Value = pEntity.OrderDesc;
+			parameters[2].Value = pEntity.VipID;
+			parameters[3].Value = pEntity.TotalAmount;
+			parameters[4].Value = pEntity.ActuallyPaid;
+			parameters[5].Value = pEntity.ReturnAmount;
+			parameters[6].Value = pEntity.PayPoints;
+			parameters[7].Value = pEntity.ReceivePoints;
+			parameters[8].Value = pEntity.PayerID;
+			parameters[9].Value = pEntity.PayID;
+			parameters[10].Value = pEntity.Status;
+			parameters[11].Value = pEntity.CustomerID;
+			parameters[12].Value = pEntity.CreateTime;
+			parameters[13].Value = pEntity.CreateBy;
+			parameters[14].Value = pEntity.LastUpdateTime;
+			parameters[15].Value = pEntity.LastUpdateBy;
+			parameters[16].Value = pEntity.IsDelete;
+			parameters[17].Value = pkGuid;
 
             //执行并将结果回写
-
-            object result;
+            int result;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteScalar((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteScalar(CommandType.Text, strSql.ToString(), parameters);
-
-            pEntity.VipAddressID = result.ToString();
+               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
+            pEntity.OrderID = pkGuid;
         }
 
         /// <summary>
         /// 根据标识符获取实例
         /// </summary>
         /// <param name="pID">标识符的值</param>
-        public VipAddressEntity GetByID(object pID)
+        public RechargeOrderEntity GetByID(object pID)
         {
             //参数检查
             if (pID == null)
@@ -134,9 +152,9 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipAddress] where VipAddressID='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [RechargeOrder] where OrderID='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
-            VipAddressEntity m = null;
+            RechargeOrderEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
@@ -153,18 +171,18 @@ namespace JIT.CPOS.BS.DataAccess
         /// 获取所有实例
         /// </summary>
         /// <returns></returns>
-        public VipAddressEntity[] GetAll()
+        public RechargeOrderEntity[] GetAll()
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipAddress] where isdelete=0");
+            sql.AppendFormat("select * from [RechargeOrder] where 1=1  and isdelete=0");
             //读取数据
-            List<VipAddressEntity> list = new List<VipAddressEntity>();
+            List<RechargeOrderEntity> list = new List<RechargeOrderEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    VipAddressEntity m;
+                    RechargeOrderEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -178,66 +196,95 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(VipAddressEntity pEntity , IDbTransaction pTran)
+        public void Update(RechargeOrderEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity,true,pTran);
+            Update(pEntity , pTran,true);
         }
-        public void Update(VipAddressEntity pEntity , bool pIsUpdateNullField, IDbTransaction pTran)
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(RechargeOrderEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipAddressID==null)
+            if (!pEntity.OrderID.HasValue)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
              //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update [VipAddress] set ");
-            if (pIsUpdateNullField || pEntity.VIPID!=null)
-                strSql.Append( "[VIPID]=@VIPID,");
-            if (pIsUpdateNullField || pEntity.LinkMan!=null)
-                strSql.Append( "[LinkMan]=@LinkMan,");
-            if (pIsUpdateNullField || pEntity.LinkTel!=null)
-                strSql.Append( "[LinkTel]=@LinkTel,");
-            if (pIsUpdateNullField || pEntity.CityID!=null)
-                strSql.Append( "[CityID]=@CityID,");
-            if (pIsUpdateNullField || pEntity.Address!=null)
-                strSql.Append( "[Address]=@Address,");
-            if (pIsUpdateNullField || pEntity.IsDefault!=null)
-                strSql.Append( "[IsDefault]=@IsDefault,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            strSql.Append("update [RechargeOrder] set ");
+                        if (pIsUpdateNullField || pEntity.OrderNo!=null)
+                strSql.Append( "[OrderNo]=@OrderNo,");
+            if (pIsUpdateNullField || pEntity.OrderDesc!=null)
+                strSql.Append( "[OrderDesc]=@OrderDesc,");
+            if (pIsUpdateNullField || pEntity.VipID!=null)
+                strSql.Append( "[VipID]=@VipID,");
+            if (pIsUpdateNullField || pEntity.TotalAmount!=null)
+                strSql.Append( "[TotalAmount]=@TotalAmount,");
+            if (pIsUpdateNullField || pEntity.ActuallyPaid!=null)
+                strSql.Append( "[ActuallyPaid]=@ActuallyPaid,");
+            if (pIsUpdateNullField || pEntity.ReturnAmount!=null)
+                strSql.Append( "[ReturnAmount]=@ReturnAmount,");
+            if (pIsUpdateNullField || pEntity.PayPoints!=null)
+                strSql.Append( "[PayPoints]=@PayPoints,");
+            if (pIsUpdateNullField || pEntity.ReceivePoints!=null)
+                strSql.Append( "[ReceivePoints]=@ReceivePoints,");
+            if (pIsUpdateNullField || pEntity.PayerID!=null)
+                strSql.Append( "[PayerID]=@PayerID,");
+            if (pIsUpdateNullField || pEntity.PayID!=null)
+                strSql.Append( "[PayID]=@PayID,");
+            if (pIsUpdateNullField || pEntity.Status!=null)
+                strSql.Append( "[Status]=@Status,");
+            if (pIsUpdateNullField || pEntity.CustomerID!=null)
+                strSql.Append( "[CustomerID]=@CustomerID,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
-            if (strSql.ToString().EndsWith(","))
-                strSql.Remove(strSql.Length - 1, 1);
-            strSql.Append(" where VipAddressID=@VipAddressID ");
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
+            strSql.Append(" where OrderID=@OrderID ");
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@VIPID",SqlDbType.NVarChar),
-					new SqlParameter("@LinkMan",SqlDbType.NVarChar),
-					new SqlParameter("@LinkTel",SqlDbType.NVarChar),
-					new SqlParameter("@CityID",SqlDbType.NVarChar),
-					new SqlParameter("@Address",SqlDbType.NVarChar),
-					new SqlParameter("@IsDefault",SqlDbType.Int),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@OrderNo",SqlDbType.VarChar),
+					new SqlParameter("@OrderDesc",SqlDbType.NVarChar),
+					new SqlParameter("@VipID",SqlDbType.VarChar),
+					new SqlParameter("@TotalAmount",SqlDbType.Decimal),
+					new SqlParameter("@ActuallyPaid",SqlDbType.Decimal),
+					new SqlParameter("@ReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@PayPoints",SqlDbType.Decimal),
+					new SqlParameter("@ReceivePoints",SqlDbType.Decimal),
+					new SqlParameter("@PayerID",SqlDbType.VarChar),
+					new SqlParameter("@PayID",SqlDbType.VarChar),
+					new SqlParameter("@Status",SqlDbType.Int),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@VipAddressID",SqlDbType.NVarChar)
+					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
+					new SqlParameter("@OrderID",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.VIPID;
-			parameters[1].Value = pEntity.LinkMan;
-			parameters[2].Value = pEntity.LinkTel;
-			parameters[3].Value = pEntity.CityID;
-			parameters[4].Value = pEntity.Address;
-			parameters[5].Value = pEntity.IsDefault;
-			parameters[6].Value = pEntity.LastUpdateBy;
-			parameters[7].Value = pEntity.LastUpdateTime;
-			parameters[8].Value = pEntity.VipAddressID;
+			parameters[0].Value = pEntity.OrderNo;
+			parameters[1].Value = pEntity.OrderDesc;
+			parameters[2].Value = pEntity.VipID;
+			parameters[3].Value = pEntity.TotalAmount;
+			parameters[4].Value = pEntity.ActuallyPaid;
+			parameters[5].Value = pEntity.ReturnAmount;
+			parameters[6].Value = pEntity.PayPoints;
+			parameters[7].Value = pEntity.ReceivePoints;
+			parameters[8].Value = pEntity.PayerID;
+			parameters[9].Value = pEntity.PayID;
+			parameters[10].Value = pEntity.Status;
+			parameters[11].Value = pEntity.CustomerID;
+			parameters[12].Value = pEntity.LastUpdateTime;
+			parameters[13].Value = pEntity.LastUpdateBy;
+			parameters[14].Value = pEntity.OrderID;
 
             //执行语句
             int result = 0;
@@ -251,20 +298,16 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(VipAddressEntity pEntity )
+        public void Update(RechargeOrderEntity pEntity )
         {
-            Update(pEntity ,true);
-        }
-        public void Update(VipAddressEntity pEntity ,bool pIsUpdateNullField )
-        {
-            this.Update(pEntity, pIsUpdateNullField, null);
+            this.Update(pEntity, null);
         }
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="pEntity"></param>
-        public void Delete(VipAddressEntity pEntity)
+        public void Delete(RechargeOrderEntity pEntity)
         {
             this.Delete(pEntity, null);
         }
@@ -274,17 +317,17 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(VipAddressEntity pEntity, IDbTransaction pTran)
+        public void Delete(RechargeOrderEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipAddressID==null)
+            if (!pEntity.OrderID.HasValue)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.VipAddressID, pTran);           
+            this.Delete(pEntity.OrderID.Value, pTran);           
         }
 
         /// <summary>
@@ -298,12 +341,10 @@ namespace JIT.CPOS.BS.DataAccess
                 return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipAddress] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where VipAddressID=@VipAddressID;");
+            sql.AppendLine("update [RechargeOrder] set  isdelete=1 where OrderID=@OrderID;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.VarChar,Value=Convert.ToString(CurrentUserInfo.UserID)},
-                new SqlParameter{ParameterName="@VipAddressID",SqlDbType=SqlDbType.VarChar,Value=pID}
+                new SqlParameter{ParameterName="@OrderID",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
             };
             //执行语句
             int result = 0;
@@ -319,21 +360,21 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(VipAddressEntity[] pEntities, IDbTransaction pTran)
+        public void Delete(RechargeOrderEntity[] pEntities, IDbTransaction pTran)
         {
             //整理主键值
             object[] entityIDs = new object[pEntities.Length];
             for (int i = 0; i < pEntities.Length; i++)
             {
-                var item = pEntities[i];
+                var pEntity = pEntities[i];
                 //参数校验
-                if (item == null)
+                if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.VipAddressID==null)
+                if (!pEntity.OrderID.HasValue)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = item.VipAddressID;
+                entityIDs[i] = pEntity.OrderID;
             }
             Delete(entityIDs, pTran);
         }
@@ -342,7 +383,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 批量删除
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
-        public void Delete(VipAddressEntity[] pEntities)
+        public void Delete(RechargeOrderEntity[] pEntities)
         { 
             Delete(pEntities, null);
         }
@@ -372,7 +413,7 @@ namespace JIT.CPOS.BS.DataAccess
                 primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipAddress] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy='"+CurrentUserInfo.UserID+"',IsDelete=1 where VipAddressID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [RechargeOrder] set  isdelete=1 where OrderID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
             int result = 0;   
             if (pTran == null)
@@ -389,11 +430,11 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pWhereConditions">筛选条件</param>
         /// <param name="pOrderBys">排序</param>
         /// <returns></returns>
-        public VipAddressEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        public RechargeOrderEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipAddress] where isdelete=0 ");
+            sql.AppendFormat("select * from [RechargeOrder] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -411,12 +452,12 @@ namespace JIT.CPOS.BS.DataAccess
                 sql.Remove(sql.Length - 1, 1);
             }
             //执行SQL
-            List<VipAddressEntity> list = new List<VipAddressEntity>();
+            List<RechargeOrderEntity> list = new List<RechargeOrderEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    VipAddressEntity m;
+                    RechargeOrderEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -432,7 +473,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<VipAddressEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<RechargeOrderEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             //组织SQL
             StringBuilder pagedSql = new StringBuilder();
@@ -452,11 +493,11 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
             {
-                pagedSql.AppendFormat(" [VipAddressID] desc"); //默认为主键值倒序
+                pagedSql.AppendFormat(" [OrderID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [VipAddress] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [RechargeOrder] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [VipAddress] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [RechargeOrder] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -473,13 +514,13 @@ namespace JIT.CPOS.BS.DataAccess
             //取指定页的数据
             pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
-            PagedQueryResult<VipAddressEntity> result = new PagedQueryResult<VipAddressEntity>();
-            List<VipAddressEntity> list = new List<VipAddressEntity>();
+            PagedQueryResult<RechargeOrderEntity> result = new PagedQueryResult<RechargeOrderEntity>();
+            List<RechargeOrderEntity> list = new List<RechargeOrderEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    VipAddressEntity m;
+                    RechargeOrderEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -500,7 +541,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public VipAddressEntity[] QueryByEntity(VipAddressEntity pQueryEntity, OrderBy[] pOrderBys)
+        public RechargeOrderEntity[] QueryByEntity(RechargeOrderEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return Query(queryWhereCondition,  pOrderBys);            
@@ -512,7 +553,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public PagedQueryResult<VipAddressEntity> PagedQueryByEntity(VipAddressEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<RechargeOrderEntity> PagedQueryByEntity(RechargeOrderEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
@@ -525,32 +566,44 @@ namespace JIT.CPOS.BS.DataAccess
         /// 根据实体非Null属性生成查询条件。
         /// </summary>
         /// <returns></returns>
-        protected IWhereCondition[] GetWhereConditionByEntity(VipAddressEntity pQueryEntity)
+        protected IWhereCondition[] GetWhereConditionByEntity(RechargeOrderEntity pQueryEntity)
         { 
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.VipAddressID!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipAddressID", Value = pQueryEntity.VipAddressID });
-            if (pQueryEntity.VIPID!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VIPID", Value = pQueryEntity.VIPID });
-            if (pQueryEntity.LinkMan!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LinkMan", Value = pQueryEntity.LinkMan });
-            if (pQueryEntity.LinkTel!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LinkTel", Value = pQueryEntity.LinkTel });
-            if (pQueryEntity.CityID!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CityID", Value = pQueryEntity.CityID });
-            if (pQueryEntity.Address!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Address", Value = pQueryEntity.Address });
-            if (pQueryEntity.IsDefault!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDefault", Value = pQueryEntity.IsDefault });
-            if (pQueryEntity.CreateBy!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
+            if (pQueryEntity.OrderID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "OrderID", Value = pQueryEntity.OrderID });
+            if (pQueryEntity.OrderNo!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "OrderNo", Value = pQueryEntity.OrderNo });
+            if (pQueryEntity.OrderDesc!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "OrderDesc", Value = pQueryEntity.OrderDesc });
+            if (pQueryEntity.VipID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = pQueryEntity.VipID });
+            if (pQueryEntity.TotalAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TotalAmount", Value = pQueryEntity.TotalAmount });
+            if (pQueryEntity.ActuallyPaid!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ActuallyPaid", Value = pQueryEntity.ActuallyPaid });
+            if (pQueryEntity.ReturnAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ReturnAmount", Value = pQueryEntity.ReturnAmount });
+            if (pQueryEntity.PayPoints!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "PayPoints", Value = pQueryEntity.PayPoints });
+            if (pQueryEntity.ReceivePoints!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ReceivePoints", Value = pQueryEntity.ReceivePoints });
+            if (pQueryEntity.PayerID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "PayerID", Value = pQueryEntity.PayerID });
+            if (pQueryEntity.PayID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "PayID", Value = pQueryEntity.PayID });
+            if (pQueryEntity.Status!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Status", Value = pQueryEntity.Status });
+            if (pQueryEntity.CustomerID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
             if (pQueryEntity.CreateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.LastUpdateBy!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
+            if (pQueryEntity.CreateBy!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
             if (pQueryEntity.LastUpdateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
+            if (pQueryEntity.LastUpdateBy!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
 
@@ -561,64 +614,80 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(SqlDataReader pReader, out VipAddressEntity pInstance)
+        protected void Load(IDataReader pReader, out RechargeOrderEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
-            pInstance = new VipAddressEntity();
+            pInstance = new RechargeOrderEntity();
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["VipAddressID"] != DBNull.Value)
+			if (pReader["OrderID"] != DBNull.Value)
 			{
-				pInstance.VipAddressID =  Convert.ToString(pReader["VipAddressID"]);
+				pInstance.OrderID =  (Guid)pReader["OrderID"];
 			}
-			if (pReader["VIPID"] != DBNull.Value)
+			if (pReader["OrderNo"] != DBNull.Value)
 			{
-				pInstance.VIPID =  Convert.ToString(pReader["VIPID"]);
+				pInstance.OrderNo =  Convert.ToString(pReader["OrderNo"]);
 			}
-			if (pReader["LinkMan"] != DBNull.Value)
+			if (pReader["OrderDesc"] != DBNull.Value)
 			{
-				pInstance.LinkMan =  Convert.ToString(pReader["LinkMan"]);
+				pInstance.OrderDesc =  Convert.ToString(pReader["OrderDesc"]);
 			}
-			if (pReader["LinkTel"] != DBNull.Value)
+			if (pReader["VipID"] != DBNull.Value)
 			{
-				pInstance.LinkTel =  Convert.ToString(pReader["LinkTel"]);
+				pInstance.VipID =  Convert.ToString(pReader["VipID"]);
 			}
-			if (pReader["CityID"] != DBNull.Value)
+			if (pReader["TotalAmount"] != DBNull.Value)
 			{
-				pInstance.CityID =  Convert.ToString(pReader["CityID"]);
-                var cityDao = new T_CityDAO(CurrentUserInfo);
-                var cityInfo = cityDao.GetByID(pInstance.CityID);
-                if (cityInfo != null)
-                {
-                    pInstance.Province = cityInfo.city1_name;
-                    pInstance.CityName = cityInfo.city2_name;
-                    pInstance.DistrictName = cityInfo.city3_name;
-                }
+				pInstance.TotalAmount =  Convert.ToDecimal(pReader["TotalAmount"]);
 			}
-			if (pReader["Address"] != DBNull.Value)
+			if (pReader["ActuallyPaid"] != DBNull.Value)
 			{
-				pInstance.Address =  Convert.ToString(pReader["Address"]);
+				pInstance.ActuallyPaid =  Convert.ToDecimal(pReader["ActuallyPaid"]);
 			}
-			if (pReader["IsDefault"] != DBNull.Value)
+			if (pReader["ReturnAmount"] != DBNull.Value)
 			{
-				pInstance.IsDefault =   Convert.ToInt32(pReader["IsDefault"]);
+				pInstance.ReturnAmount =  Convert.ToDecimal(pReader["ReturnAmount"]);
 			}
-			if (pReader["CreateBy"] != DBNull.Value)
+			if (pReader["PayPoints"] != DBNull.Value)
 			{
-				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
+				pInstance.PayPoints =  Convert.ToDecimal(pReader["PayPoints"]);
+			}
+			if (pReader["ReceivePoints"] != DBNull.Value)
+			{
+				pInstance.ReceivePoints =  Convert.ToDecimal(pReader["ReceivePoints"]);
+			}
+			if (pReader["PayerID"] != DBNull.Value)
+			{
+				pInstance.PayerID =  Convert.ToString(pReader["PayerID"]);
+			}
+			if (pReader["PayID"] != DBNull.Value)
+			{
+				pInstance.PayID =  Convert.ToString(pReader["PayID"]);
+			}
+			if (pReader["Status"] != DBNull.Value)
+			{
+				pInstance.Status =   Convert.ToInt32(pReader["Status"]);
+			}
+			if (pReader["CustomerID"] != DBNull.Value)
+			{
+				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
 			}
 			if (pReader["CreateTime"] != DBNull.Value)
 			{
 				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
 			}
-			if (pReader["LastUpdateBy"] != DBNull.Value)
+			if (pReader["CreateBy"] != DBNull.Value)
 			{
-				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
+				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
 			}
 			if (pReader["LastUpdateTime"] != DBNull.Value)
 			{
 				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
+			}
+			if (pReader["LastUpdateBy"] != DBNull.Value)
+			{
+				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
 			}
 			if (pReader["IsDelete"] != DBNull.Value)
 			{

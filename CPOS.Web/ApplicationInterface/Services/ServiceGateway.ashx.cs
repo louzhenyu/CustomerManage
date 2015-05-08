@@ -6,7 +6,6 @@ using System.Data;
 
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.BLL;
-using JIT.CPOS.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
@@ -532,77 +531,81 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
         protected string GetRechargeStrategy(string pRequest)
         {
             #region 原获取充值策略
-            //var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
-            //var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
-            //var rechargeBll = new RechargeStrategyBLL(loggingSessionInfo);
-            //var rd = new RechargeStrategyRD();
-
-            ////查询参数
-            //List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
-            //if (!string.IsNullOrEmpty(rp.CustomerID))
-            //    complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = rp.CustomerID });
-            ////排序参数
-            //List<OrderBy> lstOrder = new List<OrderBy> { };
-            //lstOrder.Add(new OrderBy() { FieldName = "RechargeAmount", Direction = OrderByDirections.Asc });
-            ////查询
-            //RechargeStrategyEntity[] rechargeList = rechargeBll.Query(complexCondition.ToArray(), lstOrder.ToArray());
-            //if (rechargeList.Count() == 0)//根据customerID查询不到，就根据null查询
-            //{
-            //    //查询参数
-            //    List<IWhereCondition> complex = new List<IWhereCondition> { };
-            //    complex.Add(new EqualsCondition() { FieldName = "CustomerID", Value = "" });
-            //    rechargeList = rechargeBll.Query(complex.ToArray(), lstOrder.ToArray());
-            //}
-            //List<RechargeStrategyInfo> lstRecharge = new List<RechargeStrategyInfo> { };
-            //lstRecharge.AddRange(rechargeList.Select(t => new RechargeStrategyInfo()
-            //{
-            //    RechargeStrategyId = t.RechargeStrategyId,
-            //    RechargeStrategyName = t.RechargeStrategyName,
-            //    RechargeStrategyDesc = t.RechargeStrategyDesc,
-            //    RechargeAmount = t.RechargeAmount,
-            //    GiftAmount = t.GiftAmount,
-            //    CustomerID = t.CustomerId
-            //}));
-            //rd.RechargeStrategyList = lstRecharge;
-            //var rsp = new SuccessResponse<IAPIResponseData>(rd);
-            //return rsp.ToJSON();
-            #endregion 
             var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
-           
+            var rechargeBll = new RechargeStrategyBLL(loggingSessionInfo);
             var rd = new RechargeStrategyRD();
-            var unitBll = new UnitBLL(loggingSessionInfo);
-            OnlineShoppingItemBLL itemService = new OnlineShoppingItemBLL(loggingSessionInfo);
-            //获取充值类商品信息
-            DataSet dsItem=  unitBll.GetItemBySortId(rp.CustomerID, 2);
-            if (dsItem.Tables[0].Rows.Count > 0)
+
+            //查询参数
+            List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+            if (!string.IsNullOrEmpty(rp.CustomerID))
+                complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = rp.CustomerID });
+            //排序参数
+            List<OrderBy> lstOrder = new List<OrderBy> { };
+            lstOrder.Add(new OrderBy() { FieldName = "RechargeAmount", Direction = OrderByDirections.Asc });
+            //查询
+            RechargeStrategyEntity[] rechargeList = rechargeBll.Query(complexCondition.ToArray(), lstOrder.ToArray());
+            if (rechargeList.Count() == 0)//根据customerID查询不到，就根据null查询
             {
-                string itemId = dsItem.Tables[0].Rows[0]["ItemId"].ToString();
-                var dsSkus = itemService.GetItemSkuList(itemId);
-                List<RechargeStrategyInfo> lstRecharge = new List<RechargeStrategyInfo> { };
-                RechargeStrategyInfo rechargeStrategy=null;
-                foreach (DataRow row in dsSkus.Tables[0].Rows)
-                {
-                    rechargeStrategy=new RechargeStrategyInfo ();
-                    rechargeStrategy.RechargeStrategyId = row["skuId"].ToString();
-                    rechargeStrategy.RechargeStrategyName = row["skuCode"].ToString();
-                    rechargeStrategy.RechargeStrategyDesc =string.Empty;
-                    rechargeStrategy.RechargeAmount =Convert.ToDouble(row["salesPrice"]).ToString("0.##");
-                    rechargeStrategy.GiftAmount =row["ReturnCash"] is DBNull?"0":Convert.ToDouble(row["ReturnCash"]).ToString("0.##");
-                    rechargeStrategy.CustomerID = rp.CustomerID;
-                    lstRecharge.Add(rechargeStrategy);
-                }
-                rd.RechargeStrategyList = lstRecharge;
-                var rsp = new SuccessResponse<IAPIResponseData>(rd);
-                return rsp.ToJSON();
+                //查询参数
+                List<IWhereCondition> complex = new List<IWhereCondition> { };
+                complex.Add(new EqualsCondition() { FieldName = "CustomerID", Value = "" });
+                rechargeList = rechargeBll.Query(complex.ToArray(), lstOrder.ToArray());
             }
-            else
+            List<RechargeStrategyInfo> lstRecharge = new List<RechargeStrategyInfo> { };
+            lstRecharge.AddRange(rechargeList.Select(t => new RechargeStrategyInfo()
             {
-                var rsp = new SuccessResponse<IAPIResponseData>();
-                rsp.ResultCode = 0;
-                rsp.Message = "没有配置充值类商品";
-                return rsp.ToJSON();
-            }
+                RechargeStrategyId = t.RechargeStrategyId.ToString(),
+                RechargeStrategyName = t.RechargeStrategyName,
+                RechargeStrategyDesc = t.RechargeStrategyDesc,
+                RechargeAmount = t.RechargeAmount,
+                GiftAmount = t.GiftAmount,
+                CustomerID = t.CustomerId
+            }));
+            rd.RechargeStrategyList = lstRecharge;
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+            #endregion 
+
+            #region 获取充值类商品信息
+            //var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
+            //var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+           
+            //var rd = new RechargeStrategyRD();
+            //var unitBll = new UnitBLL(loggingSessionInfo);
+            //OnlineShoppingItemBLL itemService = new OnlineShoppingItemBLL(loggingSessionInfo);
+            ////获取充值类商品信息
+            //DataSet dsItem=  unitBll.GetItemBySortId(rp.CustomerID, 2);
+            //if (dsItem.Tables[0].Rows.Count > 0)
+            //{
+            //    string itemId = dsItem.Tables[0].Rows[0]["ItemId"].ToString();
+            //    var dsSkus = itemService.GetItemSkuList(itemId);
+            //    List<RechargeStrategyInfo> lstRecharge = new List<RechargeStrategyInfo> { };
+            //    RechargeStrategyInfo rechargeStrategy=null;
+            //    foreach (DataRow row in dsSkus.Tables[0].Rows)
+            //    {
+            //        rechargeStrategy=new RechargeStrategyInfo ();
+            //        rechargeStrategy.RechargeStrategyId = row["skuId"].ToString();
+            //        rechargeStrategy.RechargeStrategyName = row["skuCode"].ToString();
+            //        rechargeStrategy.RechargeStrategyDesc =string.Empty;
+            //        rechargeStrategy.RechargeAmount =Convert.ToDouble(row["salesPrice"]).ToString("0.##");
+            //        rechargeStrategy.GiftAmount =row["ReturnCash"] is DBNull?"0":Convert.ToDouble(row["ReturnCash"]).ToString("0.##");
+            //        rechargeStrategy.CustomerID = rp.CustomerID;
+            //        lstRecharge.Add(rechargeStrategy);
+            //    }
+            //    rd.RechargeStrategyList = lstRecharge;
+            //    var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            //    return rsp.ToJSON();
+            //}
+            //else
+            //{
+            //    var rsp = new SuccessResponse<IAPIResponseData>();
+            //    rsp.ResultCode = 0;
+            //    rsp.Message = "没有配置充值类商品";
+            //    return rsp.ToJSON();
+            //}
+            #endregion
+
             //return "{\"ResultCode\":0,\"Message\":null,\"Data\":{\"RechargeStrategyList\":[{\"RechargeStrategyId\":\"DC7FD6AB116A4A42822B6C9FD35B6D9B\",\"RechargeStrategyName\":\"\u5145100\u5143\u900120\u5143\",\"RechargeStrategyDesc\":\"\u5145100\u5143\u900120\u5143\u54DF\",\"RechargeAmount\":\"100\",\"GiftAmount\":\"20\",\"CustomerID\":\"3906051a805c4192938d4fa307cb3b4e\"},{\"RechargeStrategyId\":\"DC7FD6AB116A4A42822B6C9FD35B6D9B\",\"RechargeStrategyName\":\"\u5145200\u5143\u900150\u5143\",\"RechargeStrategyDesc\":\"\u5145200\u5143\u900150\u5143\u54DF\",\"RechargeAmount\":\"200\",\"GiftAmount\":\"50\",\"CustomerID\":\"3906051a805c4192938d4fa307cb3b4e\"},{\"RechargeStrategyId\":\"DC7FD6AB116A4A42822B6C9FD35B6D9B\",\"RechargeStrategyName\":\"\u5145500\u5143\u9001200\u5143\",\"RechargeStrategyDesc\":\"\u5145500\u5143\u9001200\u5143\u54DF\",\"RechargeAmount\":\"500\",\"GiftAmount\":\"200\",\"CustomerID\":\"3906051a805c4192938d4fa307cb3b4e\"}]}}";
         }
         /// <summary>
@@ -991,8 +994,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
         public string RechargeStrategyId { get; set; }
         public string RechargeStrategyName { get; set; }
         public string RechargeStrategyDesc { get; set; }
-        public string RechargeAmount { get; set; }
-        public string GiftAmount { get; set; }
+        public decimal RechargeAmount { get; set; }
+        public decimal? GiftAmount { get; set; }
         public string CustomerID { get; set; }
     }
     /// <summary>

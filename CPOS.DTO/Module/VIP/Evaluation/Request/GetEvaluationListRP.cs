@@ -12,7 +12,7 @@ namespace JIT.CPOS.DTO.Module.VIP.Evaluation.Request
         /// <summary>
         /// 商品或者门店ID
         /// </summary>
-        public Guid? ObjectID { get; set; }
+        public string ObjectID { get; set; }
         /// <summary>
         /// 1-商品，2-门店
         /// </summary>
@@ -20,15 +20,16 @@ namespace JIT.CPOS.DTO.Module.VIP.Evaluation.Request
         /// <summary>
         /// 页大小，默认15
         /// </summary>
-        public int? PageSize { get; set; }
+        public int PageSize { get; set; }
         /// <summary>
         /// 页码，默认以0开始
         /// </summary>
-        public int? PageIndex { get; set; }
+        public int PageIndex { get; set; }
         /// <summary>
-        /// 会员ID
+        /// 评论等级 1=好评；2=中评；3=差评
         /// </summary>
-        public string MemberID { get; set; }
+        public int StarLevel { get; set; }
+
         #endregion
 
         public void Validate()

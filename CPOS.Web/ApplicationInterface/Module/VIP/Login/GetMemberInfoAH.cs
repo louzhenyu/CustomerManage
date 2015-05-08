@@ -61,6 +61,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             rd.MemberInfo.MemberBenefits = customerBasicSettingBll.GetMemberBenefits(pRequest.CustomerID);
 
 
+
             #region 获取注册表单的列明和值
 
             var vipEntity = vipLoginBLL.QueryByEntity(new VipEntity()
@@ -100,21 +101,36 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
 
             var unitBll = new UnitBLL(this.CurrentUserInfo);
-            Hashtable htPara = new Hashtable();
-            htPara["MemberID"] = UserID;
-            htPara["CustomerID"] = CurrentUserInfo.ClientID;
-            htPara["PageIndex"] = 1;
-            htPara["PageSize"] = 10;
-            DataSet dsMyAccount = unitBll.GetMyAccount(htPara);
+            //Hashtable htPara = new Hashtable();
+            //htPara["MemberID"] = UserID;
+            //htPara["CustomerID"] = CurrentUserInfo.ClientID;
+            //htPara["PageIndex"] = 1;
+            //htPara["PageSize"] = 10;
+            //DataSet dsMyAccount = unitBll.GetMyAccount(htPara);
 
-            if (dsMyAccount.Tables[0].Rows.Count > 0)
+            //if (dsMyAccount.Tables[0].Rows.Count > 0)
+            //{
+            //    //rd.AccountList = DataTableToObject.ConvertToList<AccountInfo>(dsMyAccount.Tables[0]);
+            //    //rd.MemberInfo.Balance = Convert.ToDecimal(dsMyAccount.Tables[0].Rows[0]["Total"].ToString());
+            //    //rd.TotalPageCount = int.Parse(dsMyAccount.Tables[0].Rows[0]["PageCount"].ToString());
+
+            //}
+            //else
+            //    rd.MemberInfo.Balance = 0;
+
+            //返现 add by Henry 2015-4-15
+            var vipAmountBll = new VipAmountBLL(CurrentUserInfo);
+            var vipAmountInfo = vipAmountBll.GetByID(UserID);
+            decimal returnAmount = 0;
+            decimal amount = 0;
+            if (vipAmountInfo != null)
             {
-                //rd.AccountList = DataTableToObject.ConvertToList<AccountInfo>(dsMyAccount.Tables[0]);
-                rd.MemberInfo.Balance = Convert.ToDecimal(dsMyAccount.Tables[0].Rows[0]["Total"].ToString());
-                //rd.TotalPageCount = int.Parse(dsMyAccount.Tables[0].Rows[0]["PageCount"].ToString());
+                returnAmount = vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value;
+                amount = vipAmountInfo.EndAmount == null ? 0 : vipAmountInfo.EndAmount.Value;
             }
-            else
-                rd.MemberInfo.Balance = 0;
+            rd.MemberInfo.ReturnAmount = returnAmount;
+            rd.MemberInfo.Balance = amount;
+
             #endregion
             return rd;
         }

@@ -2129,6 +2129,7 @@
     </Compile>
     <Compile Include="ApplicationInterface\Module\VIP\Attribute\GetAttributeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Attribute\SetAttributeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Evaluation\SetEvaluationItemAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\LoginOut\RemoveAndriodMessageBindAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\LoginOut\RemoveIOSMessageBindAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetEventPrizesAH.cs" />
@@ -3068,11 +3069,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55181/</IISUrl>
+          <IISUrl>http://localhost:1951/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

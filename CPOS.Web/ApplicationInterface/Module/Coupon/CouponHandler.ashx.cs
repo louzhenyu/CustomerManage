@@ -15,7 +15,6 @@ using JIT.CPOS.BS.Entity.Interface;
 using JIT.CPOS.BS.Entity.User;
 using JIT.CPOS.Common;
 using JIT.CPOS.DTO.Module.Order.Order.Response;
-using JIT.CPOS.Entity;
 using JIT.Utility.DataAccess.Query;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.Log;

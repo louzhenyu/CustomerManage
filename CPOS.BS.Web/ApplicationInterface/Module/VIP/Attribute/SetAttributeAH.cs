@@ -10,7 +10,6 @@ using JIT.CPOS.DTO.Module.VIP.Attribute.Response;
 using JIT.Utility.ExtensionMethod;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BLL;
-using JIT.CPOS.Entity;
 
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.Attribute
 {

@@ -12,6 +12,11 @@ namespace JIT.CPOS.DTO.Module.VIP.Evaluation.Response
         /// 评论总数
         /// </summary>
         public int Count { get; set; }
+        public int TotalPageCount { get; set; }
+        /// <summary>
+        /// 好评率
+        /// </summary>
+        public string GoodPer{get;set;}
         /// <summary>
         /// 评论信息列表
         /// </summary>
@@ -31,19 +36,27 @@ namespace JIT.CPOS.DTO.Module.VIP.Evaluation.Response
         /// <summary>
         /// 星级
         /// </summary>
-        public string StarLevel { get; set; }
+        public int? StarLevel { get; set; }
         /// <summary>
         /// 会员ID
         /// </summary>
-        public string MemberID { get; set; }
+        public string VipID { get; set; }
         /// <summary>
         /// 会员名称
         /// </summary>
-        public string MemberName { get; set; }
+        public string VipName { get; set; }
         /// <summary>
         /// 评论时间
         /// </summary>
-        public string EvaluationTime { get; set; }
+        public string CreateTime { get; set; }
+        /// <summary>
+        /// 是否匿名 1=不匿名；2=匿名
+        /// </summary>
+        public int? IsAnonymity { get; set; }
+        /// <summary>
+        /// 备注 可保存会员购买商品的sku属性，如 颜色：红色/尺寸：M
+        /// </summary>
+        public string Remark { get; set; }
 
     }
 }

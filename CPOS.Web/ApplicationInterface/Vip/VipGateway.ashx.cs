@@ -20,6 +20,7 @@ using JIT.CPOS.DTO.Module.VIP.Login.Response;
 using System.Configuration;
 using JIT.Utility.Log;
 using JIT.Utility.Web;
+using JIT.Utility.DataAccess.Query;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Vip
 {
@@ -49,13 +50,34 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 throw new APIException("缺少参数【skuIdAndQty】或参数值为空") { ErrorCode = 135 };
             }
 
+            #region 获取奖励配置 add by Henry 2015-4-13
+            var customerBasicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+            //所有商户配置
+            var settingList = customerBasicSettingBll.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = loggingSessionInfo.ClientID }, null);
+            //奖励类型 0=按订单；1=按商品
+            var rewardsType = settingList.Where(t => t.SettingCode == "RewardsType").FirstOrDefault().SettingValue;
+            //积分启用配置
+            CustomerBasicSettingEntity enableIntegralSetting = settingList.Where(t => t.SettingCode == "EnableIntegral").FirstOrDefault();
+            //积分使用上限 
+            CustomerBasicSettingEntity pointsRedeemUpLimit = settingList.Where(t => t.SettingCode == "PointsRedeemUpLimit").FirstOrDefault();
+            //返现启用配置
+            var enableRewardCashSetting = settingList.Where(t => t.SettingCode == "EnableRewardCash").FirstOrDefault();
+            //返现使用上限
+            var cashRedeemUpLimit = settingList.Where(t => t.SettingCode == "CashRedeemUpLimit").FirstOrDefault();
+
+            if (enableIntegralSetting != null)
+                rd.EnableIntegral = int.Parse(enableIntegralSetting.SettingValue);
+            if (enableRewardCashSetting != null)
+                rd.EnableRewardCash = int.Parse(enableRewardCashSetting.SettingValue);
+            #endregion
+
             //1.根据skuId和数量获取该商品的积分和金额
             string skuIdList = skuIdAndQty.Aggregate("",
                 (current, skuIdAndQtyInfo) =>
                     current +
                     (skuIdAndQtyInfo.SkuId + "," + skuIdAndQtyInfo.Qty.ToString(CultureInfo.InvariantCulture) + ";"));
 
-            var totalIntegral = bll.GetIntegralBySkuId(skuIdList);
+            ////应付金额
             var totalPayAmount = bll.GetTotalSaleAmountBySkuId(skuIdList);
             //3.获取积分与金额的兑换比例
             var integralAmountPre = bll.GetIntegralAmountPre(rp.CustomerID);
@@ -63,35 +85,59 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             {
                 integralAmountPre = (decimal)0.01;
             }
-
-            //2.获取会员的积分和账户余额
-            var vipIntegralbll = new VipIntegralBLL(loggingSessionInfo);
-
-            var vipIntegralEntity = vipIntegralbll.GetByID(rp.UserID);
-
-
-            if (vipIntegralEntity == null)
+            #region 启用积分
+            if (rd.EnableIntegral == 1)
             {
-                rd.Integral = 0;
-                rd.IntegralAmount = 0;
-                rd.IntegralDesc = "无积分可兑换";
+                //2.获取会员的积分和账户余额
+                var vipIntegralbll = new VipIntegralBLL(loggingSessionInfo);
+                var vipIntegralEntity = vipIntegralbll.GetByID(rp.UserID);
+
+                if (vipIntegralEntity == null)
+                {
+                    rd.Integral = 0;
+                    rd.IntegralAmount = 0;
+                    rd.IntegralDesc = "无积分可兑换";
+                }
+                else
+                {
+                    decimal validIntegral = vipIntegralEntity.ValidIntegral ?? 0;//会员积分
+
+                    decimal totalIntegral = 0;  //可使用积分                
+                    if (rewardsType == "1")     //按商品奖励
+                    {
+                        totalIntegral = bll.GetIntegralBySkuId(skuIdList);
+                    }
+                    else//按订单奖励
+                    {
+                        totalIntegral = totalPayAmount * (decimal.Parse(pointsRedeemUpLimit.SettingValue) / 100) / integralAmountPre;//可使用的积分
+                    }
+                    rd.Integral = validIntegral > totalIntegral ? totalIntegral : validIntegral;
+                    rd.IntegralAmount = rd.Integral * integralAmountPre;
+                    rd.IntegralDesc = "使用积分" + rd.Integral.ToString("0") + ",可兑换"
+                                      + rd.IntegralAmount.ToString("0.00") + "元";
+                }
             }
-            else
+            #endregion
+
+            #region 启用返现
+            if (rd.EnableRewardCash == 1)
             {
-                decimal validIntegral = vipIntegralEntity.ValidIntegral ?? 0;
-                rd.Integral = validIntegral > totalIntegral ? totalIntegral : validIntegral;
-
-                rd.IntegralAmount = rd.Integral * integralAmountPre;
-
-                rd.IntegralDesc = "使用积分" + rd.Integral.ToString("0") + ",可兑换"
-                                  + rd.IntegralAmount.ToString("0.00") + "元";
-
+                var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
+                var vipAmountInfo = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = rp.UserID }, null).FirstOrDefault();
+                if (vipAmountInfo != null)
+                {
+                    //累计返现金额
+                    decimal returnAmount = vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value;
+                    //订单可使用最大返现金额
+                    decimal returnAmountOrder = totalPayAmount * (decimal.Parse(cashRedeemUpLimit.SettingValue) / 100);
+                    rd.ReturnAmount = returnAmount > returnAmountOrder ? returnAmountOrder : returnAmount;
+                }
             }
+            #endregion
+            //账户余额
             var vipEndAmount = bll.GetVipEndAmount(rp.UserID);
-
             //rd.VipEndAmount = totalPayAmount > vipEndAmount ? vipEndAmount : totalPayAmount;
             rd.VipEndAmount = vipEndAmount;
-
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
 
             return rsp.ToJSON();
@@ -278,12 +324,24 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
-            
+
             var rd = new GetVipInfoRD();
             var bll = new VipBLL(loggingSessionInfo);
 
             //用户信息
-            var vipEntity = bll.GetByID(rp.UserID);
+            var vipEntity = new VipEntity();
+            if (string.IsNullOrEmpty(rp.UserID) && !string.IsNullOrEmpty(rp.OpenID))
+            {
+                vipEntity = bll.QueryByEntity(new VipEntity()
+                        {
+                            WeiXinUserId = rp.OpenID
+                        }, null)[0];
+            }
+            else
+            {
+                vipEntity = bll.GetByID(rp.UserID);
+            }
+
             if (vipEntity == null)
             {
                 throw new APIException("无效的会员ID【VipId】") { ErrorCode = 121 };
@@ -292,7 +350,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             {
                 rd.VipId = rp.UserID;
                 rd.Status = vipEntity.Status ?? 0;
-                rd.isStore = vipEntity.IsSotre??0;
+                rd.isStore = vipEntity.IsSotre ?? 0;
                 rd.HeadImgUrl = vipEntity.HeadImgUrl;
                 rd.VipName = vipEntity.VipName;
                 rd.UnitId = vipEntity.CouponInfo;
@@ -307,7 +365,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 rd.PasswordFlag = string.IsNullOrEmpty(vipAmountEntity.PayPassword) ? 0 : 1;
                 rd.EndAmount = vipAmountEntity.EndAmount;
             }
-            else {
+            else
+            {
                 rd.EndAmount = 0;
             }
 
@@ -388,64 +447,71 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     var couponFlag = rp.Parameters.CouponFlag;
                     var couponId = rp.Parameters.CouponId;
                     var integralFlag = rp.Parameters.IntegralFlag;
+                    var integral = rp.Parameters.Integral;
+                    var integralAmount = rp.Parameters.IntegralAmount;
+
                     var vipEndAmountFlag = rp.Parameters.VipEndAmountFlag;
                     var vipEndAmount = rp.Parameters.VipEndAmount;
 
+                    var returnAmountFlag = rp.Parameters.ReturnAmountFlag;  //是否使用返现金额（1=使用；0=不适用）
+                    var returnAmount = rp.Parameters.ReturnAmount;          //返现金额
 
                     if (integralFlag == 1)
                     {
                         var vipIntegralBll = new VipIntegralBLL(loggingSessionInfo);
 
 
+                        #region annotation by Henry 2015-4-15
                         //获取该订单可用的总积分
 
-                        var orderDetail = new TInoutDetailBLL(loggingSessionInfo);
+                        //var orderDetail = new TInoutDetailBLL(loggingSessionInfo);
 
-                        var orderDetailList = orderDetail.QueryByEntity(new TInoutDetailEntity()
-                        {
-                            order_id = orderId
-                        }, null);
+                        //var orderDetailList = orderDetail.QueryByEntity(new TInoutDetailEntity()
+                        //{
+                        //    order_id = orderId
+                        //}, null);
 
-                        if (orderDetailList == null || orderDetailList.Length == 0)
-                        {
-                            throw new APIException("该订单没有商品") { ErrorCode = 121 };
-                        }
-                        var str = orderDetailList.Aggregate("", (i, j) =>
-                        {
-                            i += string.Format("{0},{1};", j.SkuID, Convert.ToInt32(j.OrderQty));
-                            return i;
-                        });
+                        //if (orderDetailList == null || orderDetailList.Length == 0)
+                        //{
+                        //    throw new APIException("该订单没有商品") { ErrorCode = 121 };
+                        //}
+                        //var str = orderDetailList.Aggregate("", (i, j) =>
+                        //{
+                        //    i += string.Format("{0},{1};", j.SkuID, Convert.ToInt32(j.OrderQty));
+                        //    return i;
+                        //});
 
-                        var bll = new VipBLL(loggingSessionInfo);
+                        //var bll = new VipBLL(loggingSessionInfo);
 
-                        //判断该积分和vip个人积分的大小
-                        var vipIntegralEntity = vipIntegralBll.GetByID(rp.UserID);
+                        ////判断该积分和vip个人积分的大小
+                        //var vipIntegralEntity = vipIntegralBll.GetByID(rp.UserID);
 
-                        //商品可兑换的总积分
-                        var vipIntegral = bll.GetIntegralBySkuId(str);
-                        //个人的有效积分
-                        var validIntegral = vipIntegralEntity.ValidIntegral ?? 0;
+                        ////商品可兑换的总积分
+                        //var vipIntegral = bll.GetIntegralBySkuId(str);
+                        ////个人的有效积分
+                        //var validIntegral = vipIntegralEntity.ValidIntegral ?? 0;
 
-                        var integralPre = bll.GetIntegralAmountPre(rp.CustomerID);
+                        //var integralPre = bll.GetIntegralAmountPre(rp.CustomerID);
 
-                        if (integralPre == 0)
-                        {
-                            integralPre = 0.01M;
-                        }
+                        //if (integralPre == 0)
+                        //{
+                        //    integralPre = 0.01M;
+                        //}
 
+                        //var point = validIntegral > vipIntegral ? vipIntegral : validIntegral;
 
-                        var point = validIntegral > vipIntegral ? vipIntegral : validIntegral;
-
-                        discountAmount = discountAmount +
-                                         integralPre * point;
+                        //discountAmount = discountAmount +
+                        //                 integralPre * point;
 
                         //获取积分与金额的百分比
                         //获取积分金额
+                        #endregion
 
+                        discountAmount = discountAmount + integralAmount;
 
                         const int sourceId = 20; //消费
                         vipIntegralBll.ProcessPoint(sourceId, rp.CustomerID, rp.UserID, orderId, (SqlTransaction)tran,
-                            null, -point, null, rp.UserID);
+                            null, -integral, null, rp.UserID);
                     }
 
                     #endregion
@@ -528,101 +594,73 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
                     #endregion
 
-                    #region 余额修改
+                    #region 余额和返现修改
 
                     //会员金额变化明细表VipAmountDetail
                     //如果使用会员余额，向VipAmountDetail 插入一条数据 然后更新会员的可用余额，
-                    if (vipEndAmountFlag == 1)
+                    var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
+                    var vipAmountDetailBll = new VipAmountDetailBLL(loggingSessionInfo);
+                    var vipAmountEntity = vipAmountBll.GetByID(rp.UserID);
+                    if (vipAmountEntity != null)
                     {
-                        var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
-                        var vipAmountEntity = vipAmountBll.GetByID(rp.UserID);
-                        if (rp.ChannelId != "4")//自阿拉丁平台不执行判断 add by Henry 2014-10-15
-                        { 
-                            #region 判断该会员账户是否被冻结
-                            if (vipAmountEntity.IsLocking == 1)
+                        //if (rp.ChannelId != "4")//自阿拉丁平台不执行判断 add by Henry 2014-10-15
+                        //{
+                        #region 判断该会员账户是否被冻结
+                        if (vipAmountEntity.IsLocking == 1)
+                        {
+                            throw new APIException("账户已被冻结，请先解冻") { ErrorCode = 103 };
+                        }
+
+                        #endregion
+
+                        #region 判断该会员的账户余额是否大于本次使用的余额
+
+                        if (vipAmountEntity.EndAmount < vipEndAmount)
+                        {
+                            throw new APIException(string.Format("账户余额不足，当前余额为【{0}】", vipAmountEntity.EndAmount))
                             {
-                                throw new APIException("账户已被冻结，请先解冻") { ErrorCode = 103 };
-                            }
+                                ErrorCode = 103
+                            };
+                        }
 
-                            #endregion
+                        #endregion
 
-                            #region 判断该会员的账户余额是否大于本次使用的余额
-
-                            if (vipAmountEntity.EndAmount < vipEndAmount)
+                        //使用返现
+                        VipAmountDetailEntity vipReturnAmountDetailEntity = null;
+                        if (returnAmountFlag == 1)
+                        {
+                            vipAmountEntity.ReturnAmount = vipAmountEntity.ReturnAmount - returnAmount;
+                            vipAmountBll.Update(vipAmountEntity, tran);
+                            vipReturnAmountDetailEntity = new VipAmountDetailEntity
                             {
-                                throw new APIException(string.Format("账户余额不足，当前余额为【{0}】", vipAmountEntity.EndAmount))
-                                {
-                                    ErrorCode = 103
-                                };
-                            }
-
-                            #endregion
-
-                            #region Update VipAmount.EndAmount 
-
+                                VipAmountDetailId = Guid.NewGuid(),
+                                ObjectId = orderId,
+                                VipId = rp.UserID,
+                                Amount = returnAmount,
+                                AmountSourceId = "13"  //返现抵用
+                            };
+                            vipAmountDetailBll.Create(vipReturnAmountDetailEntity, tran);
+                            discountAmount = discountAmount + returnAmount;
+                        }
+                        //使用余额
+                        if (vipEndAmountFlag == 1)
+                        {
                             vipAmountEntity.EndAmount = vipAmountEntity.EndAmount - vipEndAmount;
                             vipAmountEntity.OutAmount = vipAmountEntity.OutAmount + vipEndAmount;
-
                             vipAmountBll.Update(vipAmountEntity, tran);
-
-                            #endregion
-                        }
-
-                        #region Insert VipAmountDetail
-
-                        var vipAmountDetailBll = new VipAmountDetailBLL(loggingSessionInfo);
-                        var vipAmountDetailEntity = new VipAmountDetailEntity
-                        {
-                            VipAmountDetailId = Guid.NewGuid(),
-                            ObjectId = orderId,
-                            VipId = rp.UserID,
-                            Amount =rp.ChannelId == "4" ? (vipEndAmount/0.01M):vipEndAmount,//如果來自阿拉丁平台，換算成阿拉幣 update by Henry 2014-10-14
-                            AmountSourceId = rp.ChannelId == "4" ? "11" : "1"  //如果来自阿拉丁平台，来源=阿拉币消费(11)；否来源=订单余额支付(1) update by Henry 2014-10-14
-                        };
-
-                        vipAmountDetailBll.Create(vipAmountDetailEntity, tran);
-
-                        #region 同步阿拉币更新记录到ALD add by Henry 2014-10-14
-                        if (rp.ChannelId == "4")
-                        {
-                            //判断是否是ALD的订单
-                            var orderInfo = inoutService.GetInoutInfoById(orderId);
-                            if (orderInfo.Field3 == "1")
+                            var vipAmountDetailEntity = new VipAmountDetailEntity
                             {
-                                var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
-                                var request = new JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDOrderRequest()
-                                {
-                                    Parameters =
-                                        new
-                                        {
-                                            MemberId = new Guid(rp.UserID),
-                                            Amount = vipEndAmount/0.01M,
-                                            AmountSourceId = "11",
-                                            ObjectId = orderId,
-                                            IsALD = 1
-                                        }
-                                };
-                                try
-                                {
-                                    var resstr = JIT.Utility.Web.HttpClient.GetQueryString(url, string.Format("Action=AddAmountDetail&ReqContent={0}", request.ToJSON()));
-                                    Loggers.Debug(new DebugLogInfo() { Message = "调用ALD更改状态接口:" + resstr });
-                                    var res = resstr.DeserializeJSONTo<JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDResponse>();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Loggers.Exception(new ExceptionLogInfo(ex));
-                                    throw new Exception("调用ALD平台失败:" + ex.Message);
-                                }
-                            }
-
+                                VipAmountDetailId = Guid.NewGuid(),
+                                ObjectId = orderId,
+                                VipId = rp.UserID,
+                                Amount = rp.ChannelId == "4" ? (vipEndAmount / 0.01M) : vipEndAmount,//如果來自阿拉丁平台，換算成阿拉幣 update by Henry 2014-10-14
+                                AmountSourceId = rp.ChannelId == "4" ? "11" : "1"  //如果来自阿拉丁平台，来源=阿拉币消费(11)；否来源=订单余额支付(1) update by Henry 2014-10-14
+                            };
+                            vipAmountDetailBll.Create(vipAmountDetailEntity, tran);
+                            discountAmount = discountAmount + vipEndAmount;
                         }
-                        #endregion
-
-                        discountAmount = discountAmount + vipEndAmount;
-
+                        //}
                     }
-                        #endregion
-
                     #endregion
 
                     var tInoutBll = new TInoutBLL(loggingSessionInfo);
@@ -669,8 +707,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     inoutExpandEntity.LastUpdateTime = DateTime.Now;
                     inoutExpandEntity.IsDelete = 0;
                     inoutExpandEntity.RecommandVip = rp.Parameters.RecommandVip;
-                    if (intoutExpandBll.GetByID(orderId)==null)
-                        //如果有数据就修改，没有数据就插入
+                    if (intoutExpandBll.GetByID(orderId) == null)
+                    //如果有数据就修改，没有数据就插入
                     {
                         intoutExpandBll.Create(inoutExpandEntity, tran);
                     }
@@ -684,8 +722,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
 
                     //【已付款】同步ald订单
-                    #region 更新阿拉丁订单状态                
-                    {                        
+                    #region 更新阿拉丁订单状态
+                    {
                         var orderbll = new InoutService(loggingSessionInfo);
                         var orderInfo = orderbll.GetInoutInfoById(orderId);
                         if (orderInfo.Field3 == "1")
@@ -749,7 +787,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
             return rsp.ToJSON();
         }
-
         #endregion
 
         #region 取消订单
@@ -1353,7 +1390,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
     #region Integral
     public class GetVipIntegralRD : IAPIResponseData
     {
-        //本次订单胡可用积分
+        /// <summary>
+        /// 启用积分;0=不启用；1=启用
+        /// </summary>
+        public int EnableIntegral { get; set; }
+        /// <summary>
+        /// 启用返现;0=不启用；1=启用
+        /// </summary>
+        public int EnableRewardCash { get; set; }
+        //可用积分
         public decimal Integral { get; set; }
         //描述
         public string IntegralDesc { get; set; }
@@ -1361,6 +1406,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         public decimal IntegralAmount { get; set; }
         //账户余额
         public decimal VipEndAmount { get; set; }
+        //可使用的返现
+        public decimal ReturnAmount { get; set; }
     }
 
     public class GetVipIntegralRP : IAPIRequestParameter
@@ -1459,6 +1506,71 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
     }
 
+    /// <summary>
+    /// 地址列表
+    /// </summary>
+    public class AddressInfo
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        public string VipAddressID { get; set; }
+        public string VipID { get; set; }
+        public string LinkMan { get; set; }
+        public string LinkTel { get; set; }
+        public string Province { get; set; }//省
+        public string CityID { get; set; }
+        public string CityName { get; set; }//市
+        public string DistrictName { get; set; }
+        public string Address { get; set; }
+        public int? isDefault { get; set; }
+    }
+
+    public class SetVipInfoRP : IAPIRequestParameter
+    {
+        public string VipID { get; set; }
+        /// <summary>
+        /// 状态
+        /// </summary>
+        public string Status { get; set; }
+
+        /// <summary>
+        /// 会员名（微信名）
+        /// </summary>
+        public string VipName { get; set; }
+
+        /// <summary>
+        /// 微信公众号ID
+        /// </summary>
+        public string WeiXin { get; set; }
+
+        /// <summary>
+        /// OpenID
+        /// </summary>
+        public string OpenID { get; set; }
+        /// <summary>
+        /// 性别
+        /// </summary>
+        public int Gender { get; set; }
+        /// <summary>
+        /// 手机
+        /// </summary>
+        public string Phone { get; set; }
+        /// <summary>
+        /// 地址
+        /// </summary>
+        public string Address { get; set; }
+
+        /// <summary>
+        /// 城市
+        /// </summary>
+        public string City { get; set; }
+
+        public void Validate()
+        {
+        }
+    }
+
     public class SetOrderStatusRP : IAPIRequestParameter
     {
         public string OrderId { get; set; }
@@ -1478,7 +1590,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 是否选用积分  1=是，0=否
         /// </summary>
         public int IntegralFlag { get; set; }
-
+        /// <summary>
+        /// 可使用积分
+        /// </summary>
+        public int Integral { get; set; }
+        /// <summary>
+        /// 可使用积分抵扣金额
+        /// </summary>
+        public decimal IntegralAmount { get; set; }
         /// <summary>
         /// 是否选用余额 1=是，0=否
         /// </summary>
@@ -1488,7 +1607,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 余额
         /// </summary>
         public decimal VipEndAmount { get; set; }
-
+        /// <summary>
+        /// 是否使用返现 1=是，0=否
+        /// </summary>
+        public int ReturnAmountFlag { get; set; }
+        /// <summary>
+        /// 返现金额
+        /// </summary>
+        public decimal ReturnAmount { get; set; }
         public string Remark { get; set; }
 
         //场景

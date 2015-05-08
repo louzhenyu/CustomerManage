@@ -134,6 +134,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.Mobile = orderList[0].Field6; //配送联系电话 
                 rd.OrderListInfo.DeliveryRemark = orderList[0].remark;
 
+                rd.OrderListInfo.IsEvaluation = orderList[0].IsEvaluation==null?0:orderList[0].IsEvaluation.Value;//评论
                 #endregion
             }
 
@@ -240,7 +241,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             var vipAmountDetailBll = new VipAmountDetailBLL(this.CurrentUserInfo);
             //使用的账户余额
             rd.OrderListInfo.VipEndAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, pRequest.UserID,1));
-            
+            //使用的返现金额
+            rd.OrderListInfo.ReturnAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, pRequest.UserID, 13));
             //使用阿拉币和阿拉币抵扣 add by Henry 2014-10-13
             if (pRequest.ChannelId == "4")//阿拉丁APP调用
             {

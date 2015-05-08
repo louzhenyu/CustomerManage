@@ -4,9 +4,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>配送方式</title>
     <link href="../styles/css/reset-pc.css" rel="stylesheet" type="text/css" />
-    <link href="../styles/css/common-layout.css" rel="stylesheet" type="text/css" />
-    <link href="../styles/css/alading/private.css" rel="stylesheet" type="text/css" />
-    <link href="../styles/css/alading/skin02.css" rel="stylesheet" type="text/css" />
     <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
     <link href="../static/css/artDialog.css" rel="stylesheet" type="text/css" />
     <link href="../static/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />

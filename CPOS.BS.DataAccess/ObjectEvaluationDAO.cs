@@ -26,9 +26,9 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
 using JIT.Utility.DataAccess.Query;
-using JIT.CPOS.Entity;
+using JIT.CPOS.BS.Entity;
 
-namespace JIT.CPOS.DataAccess
+namespace JIT.CPOS.BS.DataAccess
 {
 
     /// <summary>
@@ -44,37 +44,27 @@ namespace JIT.CPOS.DataAccess
         //pClientID是客户ID，pMemberID是指会员ID
         public ObjectEvaluationEntity[] GetByVIPAndObject(string pClientID,string pMemberID, string pObjectID, int page, int pagesize)
         {
-            StringBuilder sub = new StringBuilder();
-            if (!string.IsNullOrEmpty(pMemberID))
-                sub.AppendLine(string.Format(" and a.ClientID='{0}'", pClientID));
-            if (!string.IsNullOrEmpty(pMemberID))
-                sub.AppendLine(string.Format(" and a.MemberID='{0}'", pMemberID));
-            if (!string.IsNullOrEmpty(pObjectID))
-                sub.AppendLine(string.Format(" and a.objectid='{0}'", pObjectID));
-            List<ObjectEvaluationEntity> list = new List<ObjectEvaluationEntity> { };
-            StringBuilder sql = new StringBuilder(string.Format(@"select row_number() over(order by createtime desc) _row, a.*
-                                                                  from ObjectEvaluation a 
-                                                                  where a.isdelete=0 {0}", sub));//创建row_number
-            //下面用上面的sql来拼装
-            sql = new StringBuilder(string.Format("select * from ({0}) t where t._row>{1}*{2} and t.row<=({1}+1)*{2}", sql, page, pagesize));
-            sql.AppendLine(string.Format(@"select count(*) from from ObjectEvaluation a
-                                            where a.isdelete=0 
-                                            {0}", sub));//这一句话是计算总数量的
-            DataSet ds;
-            ds = this.SQLHelper.ExecuteDataset(sql.ToString());
-            var count = Convert.ToInt32(ds.Tables[1].Rows[0][0]);//第二个表里存的是总数量
-            using (var rd = ds.Tables[0].CreateDataReader())//用reader读取，速度快
-            {
-                while (rd.Read())
-                {
-                    ObjectEvaluationEntity m;//输出m
-                    this.Load(rd, out m);
-                    m.MemberName = rd["vipname"].ToString();
-                    m.Count = count;//每个里都赋值了属性
-                    list.Add(m);
-                }
-            }
-            return list.ToArray();
+            return null;
+        }
+
+        /// <summary>
+        /// 事务
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this.SQLHelper.CreateTransaction();
+        }
+        /// <summary>
+        /// 获取商品评论个数
+        /// </summary>
+        /// <param name="objectID"></param>
+        /// <param name="starLevel">评论等级</param>
+        /// <returns></returns>
+        public int GetEvaluationCount(string objectID, int starLevel)
+        {
+            string sql =string.Format("SELECT COUNT(1) FROM [ObjectEvaluation] WHERE [ObjectID]='{0}' AND StarLevel={1} AND IsDelete=0",objectID,starLevel);
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));  
         }
     }
 }

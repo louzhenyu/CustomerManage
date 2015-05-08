@@ -398,6 +398,7 @@
     <Compile Include="CodeGeneration\TUnitSortBLL.cs" />
     <Compile Include="CodeGeneration\TUnitUnitSortMappingBLL.cs" />
     <Compile Include="CodeGeneration\TUserThirdPartyMappingBLL.cs" />
+    <Compile Include="CodeGeneration\T_CityBLL.cs" />
     <Compile Include="CodeGeneration\t_customerBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
@@ -476,6 +477,7 @@
     <Compile Include="CodeGeneration\WiFiUserVisitBLL.cs" />
     <Compile Include="CodeGeneration\WiFiUserVisitDetailBLL.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\BankBLL.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\RechargeOrderBLL.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\VipBankBLL.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositApplyBLL.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositBLL.cs" />
@@ -903,6 +905,7 @@
     <Compile Include="TUnitSortBLL.cs" />
     <Compile Include="TUnitUnitSortMappingBLL.cs" />
     <Compile Include="TUserThirdPartyMappingBLL.cs" />
+    <Compile Include="T_CityBLL.cs" />
     <Compile Include="t_customerBLL.cs" />
     <Compile Include="UnitCommentBLL.cs" />
     <Compile Include="UserFeedbackBLL.cs" />
@@ -977,6 +980,7 @@
     <Compile Include="WiFiUserVisitBLL.cs" />
     <Compile Include="WiFiUserVisitDetailBLL.cs" />
     <Compile Include="WithdrawDeposit\BankBLL.cs" />
+    <Compile Include="WithdrawDeposit\RechargeOrderBLL.cs" />
     <Compile Include="WithdrawDeposit\VipBankBLL.cs" />
     <Compile Include="WithdrawDeposit\VipWithdrawDepositApplyBLL.cs" />
     <Compile Include="WithdrawDeposit\VipWithdrawDepositBLL.cs" />

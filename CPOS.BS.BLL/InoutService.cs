@@ -1778,8 +1778,8 @@ namespace JIT.CPOS.BS.BLL
                 }
 
 
-                //订单消息推送
-                OrderPushMessage(orderId, status);
+                //订单消息推送 update by Henry 2015-4-15 洗e客-商城不用推送商品订单
+                //OrderPushMessage(orderId, status);
 
                 return true;
             }

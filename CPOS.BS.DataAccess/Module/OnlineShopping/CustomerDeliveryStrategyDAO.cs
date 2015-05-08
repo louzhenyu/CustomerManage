@@ -53,20 +53,24 @@ namespace JIT.CPOS.BS.DataAccess
 //            string sql = @"select * from CustomerDeliveryStrategy where CustomerId=@CustomerId
 //                and  (@total_amount between AmountBegin  and AmountEnd)
 //                 and DeliveryId=@DeliveryId ";
+//            string sql = @"declare @deliveryCount int
+//select @deliveryCount=count(1) from CustomerDeliveryStrategy where CustomerId=@CustomerId
+//                and  (@total_amount between AmountBegin  and AmountEnd)
+//                 and DeliveryId=@DeliveryId and IsDelete=0
+//if(@deliveryCount!=0)
+//	  select * from CustomerDeliveryStrategy where CustomerId=@CustomerId
+//                and  (@total_amount between AmountBegin  and AmountEnd)
+//                 and DeliveryId=@DeliveryId and IsDelete=0
+//  else 
+//	     select * from CustomerDeliveryStrategy where 
+//	     (CustomerId='' or	CustomerId is null)
+//                and  (@total_amount between AmountBegin  and AmountEnd)
+//                 and DeliveryId=@DeliveryId and IsDelete=0
+//";
             string sql = @"declare @deliveryCount int
-select @deliveryCount=count(1) from CustomerDeliveryStrategy where CustomerId=@CustomerId
+                select * from CustomerDeliveryStrategy where CustomerId=@CustomerId
                 and  (@total_amount between AmountBegin  and AmountEnd)
-                 and DeliveryId=@DeliveryId and IsDelete=0
-if(@deliveryCount!=0)
-	  select * from CustomerDeliveryStrategy where CustomerId=@CustomerId
-                and  (@total_amount between AmountBegin  and AmountEnd)
-                 and DeliveryId=@DeliveryId and IsDelete=0
-  else 
-	     select * from CustomerDeliveryStrategy where 
-	     (CustomerId='' or	CustomerId is null)
-                and  (@total_amount between AmountBegin  and AmountEnd)
-                 and DeliveryId=@DeliveryId and IsDelete=0
-";
+                and DeliveryId=@DeliveryId and IsDelete=0 ";
             ls.Add(new SqlParameter("@CustomerId", CustomerId));
             ls.Add(new SqlParameter("@total_amount", total_amount));
             ls.Add(new SqlParameter("@DeliveryId", DeliveryId));

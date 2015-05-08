@@ -93,8 +93,10 @@ namespace JIT.CPOS.DTO.Module.VIP.Order.Response
         /// 佣金
         /// </summary>
         public decimal ReturnCash { get; set; }
-
-
+        /// <summary>
+        /// 是否评论0=未评论；1=已评论
+        /// </summary>
+        public int IsEvaluation { get; set; }
 
         
     }

@@ -22,6 +22,7 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         public string VipLevelName { get; set; }
         public string ImageUrl { get; set; }//String	会员卡图片URL
         public decimal Balance { get; set; }//decimal	余额
+        public decimal ReturnAmount { get; set; }//返现
         public decimal Integration { get; set; }//int	积分
         public int IntegrationUsed { get; set; }//int	已兑换积分
         public int UnfinishedOrdersCount { get; set; }//int	未完成订单数

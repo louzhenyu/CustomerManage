@@ -73,6 +73,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 case "GetMyVipList"://获取我的会员列表
                     rst = GetMyVipList(pRequest);
                     break;
+				case "SetRecharge"://充值
+                    rst = SetRecharge(pRequest);
+                    break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的Action方法。", pAction));
             }
@@ -653,9 +656,38 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             }).ToArray();
             #endregion
             return rsp.ToJSON();
-
         }
 
+
+ 		/// <summary>
+        /// 充值
+        /// </summary>
+        /// <param name="pRequest"></param>
+        /// <returns></returns>
+        private string SetRecharge(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<SetRechargeRP>>();
+            LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+
+            var rechargeOrderBll = new RechargeOrderBLL(loggingSessionInfo);  //提现申请记录BLL实例化
+            RechargeOrderEntity rechargeOrder = new RechargeOrderEntity();
+            rechargeOrder.OrderNo = DateTime.Now.ToString("yyyyMMddHHmmss");
+            rechargeOrder.OrderDesc = rp.Parameters.OrderDesc;
+            rechargeOrder.VipID = rp.UserID;
+            rechargeOrder.TotalAmount = rp.Parameters.Amount;
+            rechargeOrder.ActuallyPaid = rp.Parameters.Amount;
+            rechargeOrder.ReturnAmount = rp.Parameters.ReturnAmount;
+            rechargeOrder.PayerID = rp.Parameters.PayerID;
+            rechargeOrder.PayID = rp.Parameters.PayID;
+            rechargeOrder.Status = 0;
+            rechargeOrder.CustomerID = loggingSessionInfo.ClientID;
+
+            var rd = new SetRechargeRD();
+            rd.OrderID=rechargeOrderBll.CreateReturnID(rechargeOrder, null).ToString();
+            rd.Amount = rechargeOrder.TotalAmount.Value;
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
         #endregion
     }
     #region 请求/返回参数
@@ -962,6 +994,43 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
         public string BankName { get; set; }
         public decimal? Amount { get; set; }
         public int? Status { get; set; }
+    }
+    /// <summary>
+    /// 充值
+    /// </summary>
+    public class SetRechargeRP : IAPIRequestParameter
+    {
+        /// <summary>
+        /// 充值策略
+        /// </summary>
+        public string RechargeStrategyId { get; set; }
+        public string OrderDesc { get; set; }
+        /// <summary>
+        /// 充值金额
+        /// </summary>
+        public decimal Amount { get; set; }
+        /// <summary>
+        /// 返现金额
+        /// </summary>
+        public decimal ReturnAmount { get; set; }
+        /// <summary>
+        /// 支付方式
+        /// </summary>
+        public string PayID { get; set; }
+
+        public string PayerID { get; set; }
+        public void Validate()
+        {
+        }
+    }
+    /// <summary>
+    /// 返现返回OrderID
+    /// </summary>
+    public class SetRechargeRD : IAPIResponseData
+    {
+        public string OrderID { get; set; }
+        public decimal Amount { get; set; }
+
     }
     #endregion
 }

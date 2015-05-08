@@ -10,7 +10,6 @@ using JIT.CPOS.DTO.Module.VIP.Evaluation.Response;
 using JIT.Utility.ExtensionMethod;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BLL;
-using JIT.CPOS.Entity;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
 {
@@ -22,20 +21,21 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
 
         protected override SetEvaluationRD ProcessRequest(APIRequest<SetEvaluationRP> pRequest)
         {
-            SetEvaluationRD rd = new SetEvaluationRD();
-            SetEvaluationRP rp = pRequest.Parameters;
-            var bll = new ObjectEvaluationBLL(CurrentUserInfo);
-            var entity = new ObjectEvaluationEntity()
-            {
-                ClientID = pRequest.CustomerID,
-                MemberID = rp.MemberID,
-                ItemEvaluationID = Guid.NewGuid().ToString("N"),
-                ObjectID = rp.ObjectID,
-                Content = rp.Content,
-                Platform = rp.Platform
-            };
-            bll.Create(entity);
-            return rd;
+            //SetEvaluationRD rd = new SetEvaluationRD();
+            //SetEvaluationRP rp = pRequest.Parameters;
+            //var bll = new ObjectEvaluationBLL(CurrentUserInfo);
+            //var entity = new ObjectEvaluationEntity()
+            //{
+            //    ClientID = pRequest.CustomerID,
+            //    MemberID = rp.MemberID,
+            //    ItemEvaluationID = Guid.NewGuid().ToString("N"),
+            //    ObjectID = rp.ObjectID,
+            //    Content = rp.Content,
+            //    Platform = rp.Platform
+            //};
+            //bll.Create(entity);
+            //return rd;
+            return null;
         }
     }
 }

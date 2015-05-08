@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/2/28 17:54:09
+ * Create On	:2015-4-16 17:36:32
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -26,23 +26,25 @@ using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
+using JIT.CPOS.BS.DataAccess.Base;
 
-namespace JIT.CPOS.BLL
+namespace JIT.CPOS.BS.BLL
 {   
     /// <summary>
     /// 业务处理：  
     /// </summary>
-    public partial class ObjectEvaluationBLL
+    public partial class RechargeOrderBLL
     {
-        private LoggingSessionInfo CurrentUserInfo;
-        private ObjectEvaluationDAO _currentDAO;
+        private BasicUserInfo CurrentUserInfo;
+        private RechargeOrderDAO _currentDAO;
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public ObjectEvaluationBLL(LoggingSessionInfo pUserInfo)
+        public RechargeOrderBLL(LoggingSessionInfo pUserInfo)
         {
-            this._currentDAO = new ObjectEvaluationDAO(pUserInfo);
+            this._currentDAO = new RechargeOrderDAO(pUserInfo);
+            this.CurrentUserInfo = pUserInfo;
         }
         #endregion
         #region ICRUDable 成员
@@ -50,7 +52,7 @@ namespace JIT.CPOS.BLL
         /// 创建一个新实例
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Create(ObjectEvaluationEntity pEntity)
+        public void Create(RechargeOrderEntity pEntity)
         {
             _currentDAO.Create(pEntity);
         }
@@ -61,7 +63,7 @@ namespace JIT.CPOS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Create(ObjectEvaluationEntity pEntity, IDbTransaction pTran)
+        public void Create(RechargeOrderEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Create(pEntity,pTran);
         }
@@ -70,7 +72,7 @@ namespace JIT.CPOS.BLL
         /// 根据标识符获取实例
         /// </summary>
         /// <param name="pID">标识符的值</param>
-        public ObjectEvaluationEntity GetByID(object pID)
+        public RechargeOrderEntity GetByID(object pID)
         {
             return _currentDAO.GetByID(pID);
         }
@@ -79,7 +81,7 @@ namespace JIT.CPOS.BLL
         /// 获取所有实例
         /// </summary>
         /// <returns></returns>
-        public ObjectEvaluationEntity[] GetAll()
+        public RechargeOrderEntity[] GetAll()
         {
             return _currentDAO.GetAll();
         }
@@ -89,7 +91,7 @@ namespace JIT.CPOS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(ObjectEvaluationEntity pEntity , IDbTransaction pTran)
+        public void Update(RechargeOrderEntity pEntity , IDbTransaction pTran)
         {
             _currentDAO.Update(pEntity,pTran);
         }
@@ -99,7 +101,7 @@ namespace JIT.CPOS.BLL
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(ObjectEvaluationEntity pEntity )
+        public void Update(RechargeOrderEntity pEntity )
         {
             _currentDAO.Update(pEntity);
         }
@@ -108,7 +110,7 @@ namespace JIT.CPOS.BLL
         /// 删除
         /// </summary>
         /// <param name="pEntity"></param>
-        public void Delete(ObjectEvaluationEntity pEntity)
+        public void Delete(RechargeOrderEntity pEntity)
         {
             _currentDAO.Delete(pEntity);
         }
@@ -118,7 +120,7 @@ namespace JIT.CPOS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(ObjectEvaluationEntity pEntity, IDbTransaction pTran)
+        public void Delete(RechargeOrderEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Delete(pEntity,pTran);
         }
@@ -138,7 +140,7 @@ namespace JIT.CPOS.BLL
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(ObjectEvaluationEntity[] pEntities, IDbTransaction pTran)
+        public void Delete(RechargeOrderEntity[] pEntities, IDbTransaction pTran)
         {
             _currentDAO.Delete(pEntities,pTran);
         }
@@ -147,7 +149,7 @@ namespace JIT.CPOS.BLL
         /// 批量删除
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
-        public void Delete(ObjectEvaluationEntity[] pEntities)
+        public void Delete(RechargeOrderEntity[] pEntities)
         { 
             _currentDAO.Delete(pEntities);
         }
@@ -179,7 +181,7 @@ namespace JIT.CPOS.BLL
         /// <param name="pWhereConditions">筛选条件</param>
         /// <param name="pOrderBys">排序</param>
         /// <returns></returns>
-        public ObjectEvaluationEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        public RechargeOrderEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
            return _currentDAO.Query(pWhereConditions,pOrderBys);
         }
@@ -192,7 +194,7 @@ namespace JIT.CPOS.BLL
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<ObjectEvaluationEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<RechargeOrderEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
            return _currentDAO.PagedQuery(pWhereConditions,pOrderBys,pPageSize,pCurrentPageIndex);
         }
@@ -203,7 +205,7 @@ namespace JIT.CPOS.BLL
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public ObjectEvaluationEntity[] QueryByEntity(ObjectEvaluationEntity pQueryEntity, OrderBy[] pOrderBys)
+        public RechargeOrderEntity[] QueryByEntity(RechargeOrderEntity pQueryEntity, OrderBy[] pOrderBys)
         {
            return _currentDAO.QueryByEntity(pQueryEntity,pOrderBys);
         }
@@ -214,7 +216,7 @@ namespace JIT.CPOS.BLL
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public PagedQueryResult<ObjectEvaluationEntity> PagedQueryByEntity(ObjectEvaluationEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<RechargeOrderEntity> PagedQueryByEntity(RechargeOrderEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
            return _currentDAO.PagedQueryByEntity(pQueryEntity,pOrderBys,pPageSize,pCurrentPageIndex);
         }

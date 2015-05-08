@@ -260,6 +260,7 @@
     <Compile Include="CodeGeneration\TUnitSortEntity.cs" />
     <Compile Include="CodeGeneration\TUnitUnitSortMappingEntity.cs" />
     <Compile Include="CodeGeneration\TUserThirdPartyMappingEntity.cs" />
+    <Compile Include="CodeGeneration\T_CityEntity.cs" />
     <Compile Include="CodeGeneration\t_customerEntity.cs" />
     <Compile Include="CodeGeneration\T_InoutEntity.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailEntity.cs" />
@@ -285,6 +286,7 @@
     <Compile Include="CodeGeneration\WiFiUserVisitDetailEntity.cs" />
     <Compile Include="CodeGeneration\WiFiUserVisitEntity.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\BankEntity.cs" />
+    <Compile Include="CodeGeneration\WithdrawDeposit\RechargeOrderEntity.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\VipBankEntity.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositApplyEntity.cs" />
     <Compile Include="CodeGeneration\WithdrawDeposit\VipWithdrawDepositEntity.cs" />
@@ -903,6 +905,7 @@
     <Compile Include="TUnitUnitSortMappingEntity.cs" />
     <Compile Include="TUserThirdPartyMappingEntity.cs" />
     <Compile Include="TypeInfo.cs" />
+    <Compile Include="T_CityEntity.cs" />
     <Compile Include="t_customerEntity.cs" />
     <Compile Include="T_InoutEntity.cs" />
     <Compile Include="T_Inout_DetailEntity.cs" />
@@ -984,6 +987,7 @@
     <Compile Include="WiFiUserVisitDetailEntity.cs" />
     <Compile Include="WiFiUserVisitEntity.cs" />
     <Compile Include="WithdrawDeposit\BankEntity.cs" />
+    <Compile Include="WithdrawDeposit\RechargeOrderEntity.cs" />
     <Compile Include="WithdrawDeposit\VipBankEntity.cs" />
     <Compile Include="WithdrawDeposit\VipWithdrawDepositApplyEntity.cs" />
     <Compile Include="WithdrawDeposit\VipWithdrawDepositEntity.cs" />

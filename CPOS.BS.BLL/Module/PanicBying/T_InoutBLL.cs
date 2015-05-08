@@ -282,7 +282,7 @@ namespace JIT.CPOS.BS.BLL
                     orderinfo.TotalAmount = Convert.ToDecimal(item.actual_amount); //总金额
                     orderinfo.PaymentTypeCode = item.Payment_Type_Code;//支付方式
                     orderinfo.ReturnCash = item.ReturnCash == null ? 0.00m : Convert.ToDecimal(item.ReturnCash);//佣金
-
+                    orderinfo.IsEvaluation = item.IsEvaluation == null ? 0 : item.IsEvaluation.Value;//是否评论
                     #region 根据OrderInfo组织detail
 
                     var templist = detailEntitys.Where(t => t.order_id == item.order_id).ToArray();

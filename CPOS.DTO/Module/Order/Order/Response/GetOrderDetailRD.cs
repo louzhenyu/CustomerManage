@@ -54,6 +54,10 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public decimal UseIntegralToAmount { get; set; }
         public decimal CouponAmount { get; set; }
         public decimal VipEndAmount { get; set; }
+        /// <summary>
+        /// 使用的返现金额
+        /// </summary>
+        public decimal ReturnAmount { get; set; }
       
         //public string Consignee { get; set; }
         /// <summary>
@@ -169,6 +173,10 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// 是否是活动 1=团购商品；0=普通商品
         /// </summary>
         public int IsEvent { get; set; }
+        /// <summary>
+        /// 是否已评论 0=未评；2=已评
+        /// </summary>
+        public int IsEvaluation { get; set; }
     }
     public class OrderDetailEntity
     {

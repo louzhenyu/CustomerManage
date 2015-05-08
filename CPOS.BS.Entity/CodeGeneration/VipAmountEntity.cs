@@ -97,8 +97,15 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? IsLocking { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? TotalAmount { get; set; }
 
-        public decimal? TotalAmount { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? ReturnAmount { get; set; }
 
 
         #endregion

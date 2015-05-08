@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/2/28 17:54:09
+ * Create On	:2015-4-16 17:36:32
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,13 +25,13 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class ObjectEvaluationEntity : BaseEntity 
+    public partial class RechargeOrderEntity : BaseEntity 
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public ObjectEvaluationEntity()
+        public RechargeOrderEntity()
         {
         }
         #endregion     
@@ -40,17 +40,17 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String EvaluationID { get; set; }
-
-        /// <summary>
-        /// 商品ID或者门店ID
-        /// </summary>
-        public String ObjectID { get; set; }
+		public Guid? OrderID { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? Type { get; set; }
+		public String OrderNo { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String OrderDesc { get; set; }
 
 		/// <summary>
 		/// 
@@ -60,47 +60,47 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public Decimal? TotalAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? ActuallyPaid { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? ReturnAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? PayPoints { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? ReceivePoints { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String PayerID { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String PayID { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? Status { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public String CustomerID { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Content { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? StarLevel { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? StarLevel1 { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? StarLevel2 { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? StarLevel3 { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? StarLevel4 { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? StarLevel5 { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Platform { get; set; }
 
 		/// <summary>
 		/// 
@@ -115,32 +115,17 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String LastUpdateBy { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
 		public DateTime? LastUpdateTime { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
+		public String LastUpdateBy { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public Int32? IsDelete { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String OrderID { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Remark { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? IsAnonymity { get; set; }
 
 
         #endregion

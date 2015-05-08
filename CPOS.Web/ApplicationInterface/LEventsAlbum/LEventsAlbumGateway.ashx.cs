@@ -5,7 +5,6 @@ using System.Web;
 
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.BLL;
-using JIT.CPOS.Entity;
 using JIT.Utility.ExtensionMethod;
 using System.Data;
 using JIT.CPOS.BS.Entity;

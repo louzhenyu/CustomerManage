@@ -143,6 +143,7 @@ namespace JIT.CPOS.BS.BLL
                         BeginAmount = amount,
                         InAmount = amount,
                         EndAmount = amount,
+                        TotalAmount=amount,
                         IsLocking = 0
                     };
 
@@ -153,8 +154,9 @@ namespace JIT.CPOS.BS.BLL
                 }
                 else
                 {
-                    vipAmountEntity.EndAmount = vipAmountEntity.EndAmount + amount;
-                    vipAmountEntity.InAmount = vipAmountEntity.InAmount + amount;
+                    vipAmountEntity.EndAmount = (vipAmountEntity.EndAmount == null ? 0 : vipAmountEntity.EndAmount.Value) + amount;
+                    vipAmountEntity.InAmount = (vipAmountEntity.InAmount == null ? 0 : vipAmountEntity.InAmount.Value) + amount;
+                    vipAmountEntity.TotalAmount = (vipAmountEntity.TotalAmount == null ? 0 : vipAmountEntity.TotalAmount.Value) + amount;
 
                     vipAmountBll.Update(vipAmountEntity, tran);
                 }
@@ -225,9 +227,9 @@ namespace JIT.CPOS.BS.BLL
                 }
                 else
                 {
-                    vipAmountEntity.EndAmount = vipAmountEntity.EndAmount + amount;
-                    vipAmountEntity.InAmount = vipAmountEntity.InAmount + amount;
-                    vipAmountEntity.TotalAmount = vipAmountEntity.TotalAmount + amount;
+                    vipAmountEntity.EndAmount = (vipAmountEntity.EndAmount == null ? 0 : vipAmountEntity.EndAmount.Value) + amount;
+                    vipAmountEntity.InAmount = (vipAmountEntity.InAmount == null ? 0 : vipAmountEntity.InAmount.Value) + amount;
+                    vipAmountEntity.TotalAmount = (vipAmountEntity.TotalAmount == null ? 0 : vipAmountEntity.TotalAmount.Value) + amount;
 
                     vipAmountBll.Update(vipAmountEntity, tran);
                 }
@@ -256,6 +258,46 @@ namespace JIT.CPOS.BS.BLL
             }
 
             return b;
+        }
+
+            /// <summary>
+        /// 返现处理（通用方法）
+        /// </summary>
+        /// <param name="vipId"></param>
+        /// <param name="retuanAmount"></param>
+        /// <param name="orderId"></param>
+        /// <param name="amountSourceId"></param>
+        public void AddReturnAmount(string vipId, decimal returnAmount, string orderId, string amountSourceId, LoggingSessionInfo loggingSessionInfo)
+        {
+            var vipAmountDao = new VipAmountBLL(loggingSessionInfo);
+            var vipAmountDetailDao = new VipAmountDetailBLL(loggingSessionInfo);
+            var vipAmountInfo = vipAmountDao.GetByID(vipId);
+            if (vipAmountInfo == null)  //无账户数据
+            {
+                vipAmountInfo = new VipAmountEntity
+                {
+                    VipId = vipId,
+                    ReturnAmount = returnAmount,
+                    IsLocking = 0
+                };
+                vipAmountDao.Create(vipAmountInfo);
+            }
+            else
+            {
+                vipAmountInfo.ReturnAmount = (vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value) + returnAmount;
+                vipAmountDao.Update(vipAmountInfo);
+            }
+            //创建变更记录
+            var vipAmountDetailEntity = new VipAmountDetailEntity
+            {
+                AmountSourceId = amountSourceId,
+                Amount = returnAmount,
+                VipAmountDetailId = Guid.NewGuid(),
+                VipId = vipId,
+                ObjectId = orderId
+            };
+            vipAmountDetailDao.Create(vipAmountDetailEntity);
+
         }
     }
 }

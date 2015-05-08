@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/1/11 11:45:55
+ * Create On	:2015-4-11 11:18:23
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,26 +25,26 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
 {
     /// <summary>
     /// 数据访问：  
-    /// 表VipAddress的数据访问类     
+    /// 表T_City的数据访问类     
     /// 1.实现ICRUDable接口
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class VipAddressDAO : Base.BaseCPOSDAO, ICRUDable<VipAddressEntity>, IQueryable<VipAddressEntity>
+    public partial class T_CityDAO : Base.BaseCPOSDAO, ICRUDable<T_CityEntity>, IQueryable<T_CityEntity>
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public VipAddressDAO(LoggingSessionInfo pUserInfo)
+        public T_CityDAO(LoggingSessionInfo pUserInfo)
             : base(pUserInfo)
         {
         }
@@ -55,7 +55,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 创建一个新实例
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Create(VipAddressEntity pEntity)
+        public void Create(T_CityEntity pEntity)
         {
             this.Create(pEntity, null);
         }
@@ -65,68 +65,51 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Create(VipAddressEntity pEntity, IDbTransaction pTran)
+        public void Create(T_CityEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-
+            
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into [VipAddress](");
-            strSql.Append("[VIPID],[LinkMan],[LinkTel],[CityID],[Address],[IsDefault],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete])");
+            strSql.Append("insert into [T_City](");
+            strSql.Append("[city1_name],[city2_name],[city3_name],[city_code],[city_id])");
             strSql.Append(" values (");
-            strSql.Append("@VIPID,@LinkMan,@LinkTel,@CityID,@Address,@IsDefault,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete)");
-            strSql.AppendFormat("{0}select SCOPE_IDENTITY();", Environment.NewLine);
+            strSql.Append("@city1_name,@city2_name,@city3_name,@city_code,@city_id)");            
+
+			string pkString = pEntity.city_id;
 
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@VIPID",SqlDbType.NVarChar),
-					new SqlParameter("@LinkMan",SqlDbType.NVarChar),
-					new SqlParameter("@LinkTel",SqlDbType.NVarChar),
-					new SqlParameter("@CityID",SqlDbType.NVarChar),
-					new SqlParameter("@Address",SqlDbType.NVarChar),
-					new SqlParameter("@IsDefault",SqlDbType.Int),
-					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
-					new SqlParameter("@CreateTime",SqlDbType.DateTime),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
-					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@IsDelete",SqlDbType.Int)
+					new SqlParameter("@city1_name",SqlDbType.NVarChar),
+					new SqlParameter("@city2_name",SqlDbType.NVarChar),
+					new SqlParameter("@city3_name",SqlDbType.NVarChar),
+					new SqlParameter("@city_code",SqlDbType.NVarChar),
+					new SqlParameter("@city_id",SqlDbType.NVarChar)
             };
-            parameters[0].Value = pEntity.VIPID;
-            parameters[1].Value = pEntity.LinkMan;
-            parameters[2].Value = pEntity.LinkTel;
-            parameters[3].Value = pEntity.CityID;
-            parameters[4].Value = pEntity.Address;
-            parameters[5].Value = pEntity.IsDefault;
-            parameters[6].Value = pEntity.CreateBy;
-            parameters[7].Value = pEntity.CreateTime;
-            parameters[8].Value = pEntity.LastUpdateBy;
-            parameters[9].Value = pEntity.LastUpdateTime;
-            parameters[10].Value = pEntity.IsDelete;
+			parameters[0].Value = pEntity.city1_name;
+			parameters[1].Value = pEntity.city2_name;
+			parameters[2].Value = pEntity.city3_name;
+			parameters[3].Value = pEntity.city_code;
+			parameters[4].Value = pkString;
 
             //执行并将结果回写
-
-            object result;
+            int result;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteScalar((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteScalar(CommandType.Text, strSql.ToString(), parameters);
-
-            pEntity.VipAddressID = result.ToString();
+               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
+            pEntity.city_id = pkString;
         }
 
         /// <summary>
         /// 根据标识符获取实例
         /// </summary>
         /// <param name="pID">标识符的值</param>
-        public VipAddressEntity GetByID(object pID)
+        public T_CityEntity GetByID(object pID)
         {
             //参数检查
             if (pID == null)
@@ -134,9 +117,9 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipAddress] where VipAddressID='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [T_City] where city_id='{0}'  ", id.ToString());
             //读取数据
-            VipAddressEntity m = null;
+            T_CityEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
@@ -153,18 +136,18 @@ namespace JIT.CPOS.BS.DataAccess
         /// 获取所有实例
         /// </summary>
         /// <returns></returns>
-        public VipAddressEntity[] GetAll()
+        public T_CityEntity[] GetAll()
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipAddress] where isdelete=0");
+            sql.AppendFormat("select * from [T_City] where 1=1 ");
             //读取数据
-            List<VipAddressEntity> list = new List<VipAddressEntity>();
+            List<T_CityEntity> list = new List<T_CityEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    VipAddressEntity m;
+                    T_CityEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -178,66 +161,53 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(VipAddressEntity pEntity , IDbTransaction pTran)
+        public void Update(T_CityEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity,true,pTran);
+            Update(pEntity , pTran,true);
         }
-        public void Update(VipAddressEntity pEntity , bool pIsUpdateNullField, IDbTransaction pTran)
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(T_CityEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipAddressID==null)
+            if (pEntity.city_id == null)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
              //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update [VipAddress] set ");
-            if (pIsUpdateNullField || pEntity.VIPID!=null)
-                strSql.Append( "[VIPID]=@VIPID,");
-            if (pIsUpdateNullField || pEntity.LinkMan!=null)
-                strSql.Append( "[LinkMan]=@LinkMan,");
-            if (pIsUpdateNullField || pEntity.LinkTel!=null)
-                strSql.Append( "[LinkTel]=@LinkTel,");
-            if (pIsUpdateNullField || pEntity.CityID!=null)
-                strSql.Append( "[CityID]=@CityID,");
-            if (pIsUpdateNullField || pEntity.Address!=null)
-                strSql.Append( "[Address]=@Address,");
-            if (pIsUpdateNullField || pEntity.IsDefault!=null)
-                strSql.Append( "[IsDefault]=@IsDefault,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
-            if (strSql.ToString().EndsWith(","))
-                strSql.Remove(strSql.Length - 1, 1);
-            strSql.Append(" where VipAddressID=@VipAddressID ");
+            strSql.Append("update [T_City] set ");
+                        if (pIsUpdateNullField || pEntity.city1_name!=null)
+                strSql.Append( "[city1_name]=@city1_name,");
+            if (pIsUpdateNullField || pEntity.city2_name!=null)
+                strSql.Append( "[city2_name]=@city2_name,");
+            if (pIsUpdateNullField || pEntity.city3_name!=null)
+                strSql.Append( "[city3_name]=@city3_name,");
+            if (pIsUpdateNullField || pEntity.city_code!=null)
+                strSql.Append( "[city_code]=@city_code");
+            strSql.Append(" where city_id=@city_id ");
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@VIPID",SqlDbType.NVarChar),
-					new SqlParameter("@LinkMan",SqlDbType.NVarChar),
-					new SqlParameter("@LinkTel",SqlDbType.NVarChar),
-					new SqlParameter("@CityID",SqlDbType.NVarChar),
-					new SqlParameter("@Address",SqlDbType.NVarChar),
-					new SqlParameter("@IsDefault",SqlDbType.Int),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
-					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@VipAddressID",SqlDbType.NVarChar)
+					new SqlParameter("@city1_name",SqlDbType.NVarChar),
+					new SqlParameter("@city2_name",SqlDbType.NVarChar),
+					new SqlParameter("@city3_name",SqlDbType.NVarChar),
+					new SqlParameter("@city_code",SqlDbType.NVarChar),
+					new SqlParameter("@city_id",SqlDbType.NVarChar)
             };
-			parameters[0].Value = pEntity.VIPID;
-			parameters[1].Value = pEntity.LinkMan;
-			parameters[2].Value = pEntity.LinkTel;
-			parameters[3].Value = pEntity.CityID;
-			parameters[4].Value = pEntity.Address;
-			parameters[5].Value = pEntity.IsDefault;
-			parameters[6].Value = pEntity.LastUpdateBy;
-			parameters[7].Value = pEntity.LastUpdateTime;
-			parameters[8].Value = pEntity.VipAddressID;
+			parameters[0].Value = pEntity.city1_name;
+			parameters[1].Value = pEntity.city2_name;
+			parameters[2].Value = pEntity.city3_name;
+			parameters[3].Value = pEntity.city_code;
+			parameters[4].Value = pEntity.city_id;
 
             //执行语句
             int result = 0;
@@ -251,20 +221,16 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(VipAddressEntity pEntity )
+        public void Update(T_CityEntity pEntity )
         {
-            Update(pEntity ,true);
-        }
-        public void Update(VipAddressEntity pEntity ,bool pIsUpdateNullField )
-        {
-            this.Update(pEntity, pIsUpdateNullField, null);
+            this.Update(pEntity, null);
         }
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="pEntity"></param>
-        public void Delete(VipAddressEntity pEntity)
+        public void Delete(T_CityEntity pEntity)
         {
             this.Delete(pEntity, null);
         }
@@ -274,17 +240,17 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(VipAddressEntity pEntity, IDbTransaction pTran)
+        public void Delete(T_CityEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipAddressID==null)
+            if (pEntity.city_id == null)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.VipAddressID, pTran);           
+            this.Delete(pEntity.city_id, pTran);           
         }
 
         /// <summary>
@@ -298,12 +264,10 @@ namespace JIT.CPOS.BS.DataAccess
                 return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipAddress] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where VipAddressID=@VipAddressID;");
+            sql.AppendLine("update [T_City] set  where city_id=@city_id;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.VarChar,Value=Convert.ToString(CurrentUserInfo.UserID)},
-                new SqlParameter{ParameterName="@VipAddressID",SqlDbType=SqlDbType.VarChar,Value=pID}
+                new SqlParameter{ParameterName="@city_id",SqlDbType=SqlDbType.VarChar,Value=pID}
             };
             //执行语句
             int result = 0;
@@ -319,21 +283,21 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(VipAddressEntity[] pEntities, IDbTransaction pTran)
+        public void Delete(T_CityEntity[] pEntities, IDbTransaction pTran)
         {
             //整理主键值
             object[] entityIDs = new object[pEntities.Length];
             for (int i = 0; i < pEntities.Length; i++)
             {
-                var item = pEntities[i];
+                var pEntity = pEntities[i];
                 //参数校验
-                if (item == null)
+                if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.VipAddressID==null)
+                if (pEntity.city_id == null)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = item.VipAddressID;
+                entityIDs[i] = pEntity.city_id;
             }
             Delete(entityIDs, pTran);
         }
@@ -342,7 +306,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 批量删除
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
-        public void Delete(VipAddressEntity[] pEntities)
+        public void Delete(T_CityEntity[] pEntities)
         { 
             Delete(pEntities, null);
         }
@@ -372,7 +336,7 @@ namespace JIT.CPOS.BS.DataAccess
                 primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipAddress] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy='"+CurrentUserInfo.UserID+"',IsDelete=1 where VipAddressID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [T_City] set  where city_id in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
             int result = 0;   
             if (pTran == null)
@@ -389,11 +353,11 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pWhereConditions">筛选条件</param>
         /// <param name="pOrderBys">排序</param>
         /// <returns></returns>
-        public VipAddressEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        public T_CityEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipAddress] where isdelete=0 ");
+            sql.AppendFormat("select * from [T_City] where 1=1  ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -411,12 +375,12 @@ namespace JIT.CPOS.BS.DataAccess
                 sql.Remove(sql.Length - 1, 1);
             }
             //执行SQL
-            List<VipAddressEntity> list = new List<VipAddressEntity>();
+            List<T_CityEntity> list = new List<T_CityEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    VipAddressEntity m;
+                    T_CityEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -432,7 +396,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<VipAddressEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<T_CityEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             //组织SQL
             StringBuilder pagedSql = new StringBuilder();
@@ -452,11 +416,11 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
             {
-                pagedSql.AppendFormat(" [VipAddressID] desc"); //默认为主键值倒序
+                pagedSql.AppendFormat(" [city_id] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [VipAddress] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [T_City] where 1=1  ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [VipAddress] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [T_City] where 1=1  ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -473,13 +437,13 @@ namespace JIT.CPOS.BS.DataAccess
             //取指定页的数据
             pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
-            PagedQueryResult<VipAddressEntity> result = new PagedQueryResult<VipAddressEntity>();
-            List<VipAddressEntity> list = new List<VipAddressEntity>();
+            PagedQueryResult<T_CityEntity> result = new PagedQueryResult<T_CityEntity>();
+            List<T_CityEntity> list = new List<T_CityEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    VipAddressEntity m;
+                    T_CityEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -500,7 +464,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public VipAddressEntity[] QueryByEntity(VipAddressEntity pQueryEntity, OrderBy[] pOrderBys)
+        public T_CityEntity[] QueryByEntity(T_CityEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return Query(queryWhereCondition,  pOrderBys);            
@@ -512,7 +476,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public PagedQueryResult<VipAddressEntity> PagedQueryByEntity(VipAddressEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<T_CityEntity> PagedQueryByEntity(T_CityEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
@@ -525,34 +489,20 @@ namespace JIT.CPOS.BS.DataAccess
         /// 根据实体非Null属性生成查询条件。
         /// </summary>
         /// <returns></returns>
-        protected IWhereCondition[] GetWhereConditionByEntity(VipAddressEntity pQueryEntity)
+        protected IWhereCondition[] GetWhereConditionByEntity(T_CityEntity pQueryEntity)
         { 
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.VipAddressID!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipAddressID", Value = pQueryEntity.VipAddressID });
-            if (pQueryEntity.VIPID!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VIPID", Value = pQueryEntity.VIPID });
-            if (pQueryEntity.LinkMan!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LinkMan", Value = pQueryEntity.LinkMan });
-            if (pQueryEntity.LinkTel!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LinkTel", Value = pQueryEntity.LinkTel });
-            if (pQueryEntity.CityID!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CityID", Value = pQueryEntity.CityID });
-            if (pQueryEntity.Address!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Address", Value = pQueryEntity.Address });
-            if (pQueryEntity.IsDefault!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDefault", Value = pQueryEntity.IsDefault });
-            if (pQueryEntity.CreateBy!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.CreateTime!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.LastUpdateBy!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
-            if (pQueryEntity.LastUpdateTime!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.IsDelete!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.city_id!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "city_id", Value = pQueryEntity.city_id });
+            if (pQueryEntity.city1_name!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "city1_name", Value = pQueryEntity.city1_name });
+            if (pQueryEntity.city2_name!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "city2_name", Value = pQueryEntity.city2_name });
+            if (pQueryEntity.city3_name!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "city3_name", Value = pQueryEntity.city3_name });
+            if (pQueryEntity.city_code!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "city_code", Value = pQueryEntity.city_code });
 
             return lstWhereCondition.ToArray();
         }
@@ -561,68 +511,32 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(SqlDataReader pReader, out VipAddressEntity pInstance)
+        protected void Load(IDataReader pReader, out T_CityEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
-            pInstance = new VipAddressEntity();
+            pInstance = new T_CityEntity();
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["VipAddressID"] != DBNull.Value)
+			if (pReader["city_id"] != DBNull.Value)
 			{
-				pInstance.VipAddressID =  Convert.ToString(pReader["VipAddressID"]);
+				pInstance.city_id =  Convert.ToString(pReader["city_id"]);
 			}
-			if (pReader["VIPID"] != DBNull.Value)
+			if (pReader["city1_name"] != DBNull.Value)
 			{
-				pInstance.VIPID =  Convert.ToString(pReader["VIPID"]);
+				pInstance.city1_name =  Convert.ToString(pReader["city1_name"]);
 			}
-			if (pReader["LinkMan"] != DBNull.Value)
+			if (pReader["city2_name"] != DBNull.Value)
 			{
-				pInstance.LinkMan =  Convert.ToString(pReader["LinkMan"]);
+				pInstance.city2_name =  Convert.ToString(pReader["city2_name"]);
 			}
-			if (pReader["LinkTel"] != DBNull.Value)
+			if (pReader["city3_name"] != DBNull.Value)
 			{
-				pInstance.LinkTel =  Convert.ToString(pReader["LinkTel"]);
+				pInstance.city3_name =  Convert.ToString(pReader["city3_name"]);
 			}
-			if (pReader["CityID"] != DBNull.Value)
+			if (pReader["city_code"] != DBNull.Value)
 			{
-				pInstance.CityID =  Convert.ToString(pReader["CityID"]);
-                var cityDao = new T_CityDAO(CurrentUserInfo);
-                var cityInfo = cityDao.GetByID(pInstance.CityID);
-                if (cityInfo != null)
-                {
-                    pInstance.Province = cityInfo.city1_name;
-                    pInstance.CityName = cityInfo.city2_name;
-                    pInstance.DistrictName = cityInfo.city3_name;
-                }
-			}
-			if (pReader["Address"] != DBNull.Value)
-			{
-				pInstance.Address =  Convert.ToString(pReader["Address"]);
-			}
-			if (pReader["IsDefault"] != DBNull.Value)
-			{
-				pInstance.IsDefault =   Convert.ToInt32(pReader["IsDefault"]);
-			}
-			if (pReader["CreateBy"] != DBNull.Value)
-			{
-				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
-			}
-			if (pReader["CreateTime"] != DBNull.Value)
-			{
-				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
-			}
-			if (pReader["LastUpdateBy"] != DBNull.Value)
-			{
-				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
-			}
-			if (pReader["LastUpdateTime"] != DBNull.Value)
-			{
-				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
-			}
-			if (pReader["IsDelete"] != DBNull.Value)
-			{
-				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+				pInstance.city_code =  Convert.ToString(pReader["city_code"]);
 			}
 
         }

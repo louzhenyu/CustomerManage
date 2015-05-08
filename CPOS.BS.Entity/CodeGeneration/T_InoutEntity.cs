@@ -419,6 +419,7 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public decimal? ReturnCash { get; set; }
 
+		public Int32? IsEvaluation { get; set; }
         #endregion
 
     }

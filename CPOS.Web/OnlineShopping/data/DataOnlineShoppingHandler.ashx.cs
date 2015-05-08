@@ -442,6 +442,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 }
                 #endregion
+
+                var customerBasicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+                respData.content.DeliveryStrategyDesc = customerBasicSettingBll.GetSettingValueByCode("DeliveryStrategy");//获取配送费策略描述 add by Herny 2015-4-20
+
             }
             catch (Exception ex)
             {
@@ -679,6 +683,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public decimal discountRate { get; set; }    //Jermyn20140321折扣
 
             public decimal GG { get; set; } //返现
+            public string DeliveryStrategyDesc { get; set; }
         }
         public class getItemDetailRespContentDataImage
         {
@@ -1653,6 +1658,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                         }
                         respData.content.orderList.Add(orderItem);
                     }
+                    //}
                 }
             }
             catch (Exception ex)

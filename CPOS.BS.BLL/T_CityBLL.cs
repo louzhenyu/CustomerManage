@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/7/25 10:37:49
+ * Create On	:2015-4-11 11:18:23
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -16,23 +16,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Data;
+using System.Reflection;
 using JIT.Utility;
-using JIT.Utility.Entity;
+using JIT.Utility.ExtensionMethod;
+using JIT.Utility.DataAccess;
+using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 
-namespace JIT.CPOS.BS.Entity
+namespace JIT.CPOS.BS.BLL
 {
-
     /// <summary>
-    /// 实体：  
+    /// 业务处理：  
     /// </summary>
-    public partial class TUnitEntity : BaseEntity 
-    {
-        #region 属性集
-
-        public string Province { get; set; }
-        public string CityName { get; set; }
-        public string DistrictName { get; set; }
-        #endregion
+    public partial class T_CityBLL
+    {  
     }
 }

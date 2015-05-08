@@ -20,7 +20,7 @@ using System.Text;
 using JIT.Utility;
 using JIT.Utility.Entity;
 
-namespace JIT.CPOS.Entity
+namespace JIT.CPOS.BS.Entity
 {
 
     /// <summary>
@@ -32,7 +32,7 @@ namespace JIT.CPOS.Entity
         /// <summary>
         /// 会员名称
         /// </summary>
-        public string MemberName { get; set; }
+        public string VipName { get; set; }
         /// <summary>
         /// 点评统计
         /// </summary>
