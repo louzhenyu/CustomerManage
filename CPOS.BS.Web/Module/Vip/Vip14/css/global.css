@@ -10,7 +10,7 @@ select,input,button,textarea{font-size:100%;font-style:normal;font-weight:400;ve
 table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}legend{color:#000}sup{vertical-align:text-top}sub{vertical-align:text-bottom}iframe{display:block}li{list-style:none}img{vertical-align:middle}a img{vertical-align:top}textarea{resize:none}
 div,th,td{word-wrap:break-word;word-break:break-all}
 body,button,input,select,textarea{font:14px/1.5 Arial,Helvetica,sans-serif}
-body{text-align:left;color:#333;background:#fff;-webkit-user-select:none;}
+body{text-align:left;color:#333;-webkit-user-select:none;}
 input[type="radio"]{vertical-align:middle}
 input[type="checkbox"]{vertical-align:middle}
 label,input[type=button],input[type=submit],button,.button{cursor:pointer;border:none;outline:none;padding:0;margin:0;}

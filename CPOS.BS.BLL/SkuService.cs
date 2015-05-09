@@ -275,7 +275,8 @@ namespace JIT.CPOS.BS.BLL
                             return false;
                         }
                     }
-                    skuService.SetSkuInfo(itemInfo);
+                    string error="";
+                    skuService.SetSkuInfo(itemInfo, null, out error);
                 }
 
                 strError = "处理sku信息成功";

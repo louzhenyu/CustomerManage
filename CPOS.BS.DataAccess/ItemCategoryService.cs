@@ -112,13 +112,13 @@ namespace JIT.CPOS.BS.DataAccess
         /// 获取所有商品类别
         /// </summary>
         /// <returns></returns>
-        public DataSet GetItemCagegoryList(string status)
+        public DataSet GetItemCagegoryList(string status, string bat_id)
         {
             DataSet ds = new DataSet();
             StringBuilder sql = new StringBuilder();
             sql.AppendFormat(@" select a.Item_Category_Id 
                           ,a.Item_Category_Code 
-                          ,case when a.status <> 1 then '(已停用)' else '' end + a.Item_Category_Name Item_Category_Name
+                          ,case when a.status <> '1' then '(已停用)' else '' end + a.Item_Category_Name Item_Category_Name
                           ,a.Pyzjm 
                           ,a.Status 
                           ,a.Parent_Id 
@@ -127,15 +127,25 @@ namespace JIT.CPOS.BS.DataAccess
                           ,a.Modify_User_Id 
                           ,a.modify_time 
                           ,a.displayindex as DisplayIndex
-                          ,(select top 1 ImageUrl from objectimages where a.item_category_id = objectid order by create_time desc) as ImageUrl
+                          ,(select top 1 ImageUrl from objectimages where a.item_category_id = objectid and IsDelete=0 order by create_time desc) as ImageUrl
                           ,case when a.status = '1' then '正常' else '停用' end Status_Desc 
                           ,(select USER_NAME From T_User where T_User.user_id = a.create_user_id) Create_User_Name 
                           ,(select USER_NAME From T_User where T_User.user_id = a.modify_user_id) Modify_User_Name 
                           ,(select item_category_name From T_Item_Category where T_Item_Category.item_category_id = a.parent_id) Parent_Name
+,isnull((  select COUNT(1) from ItemCategoryMapping  c  where c.ItemCategoryId=a.item_category_id  and c.IsDelete=0),0) as PromotionItemCount
                           From t_item_category a where a.customerId = '{0}'", this.CurrentUserInfo.CurrentLoggingManager.Customer_Id);
 
             if (status != "")
-                sql.Append(" and a.status=" + status);
+                sql.Append(" and a.status='" + status + "'");
+
+            if (bat_id == "2")//代表是促销分组
+            {
+                sql.Append(" and ISNULL(a.bat_id,'')='2'");
+            }
+            else
+            {
+                sql.Append(" and ISNULL(a.bat_id,'')!='2'");
+            }
 
             sql.Append(" order by DisplayIndex ASC");
 
@@ -183,6 +193,7 @@ namespace JIT.CPOS.BS.DataAccess
                           + " ,a.Create_User_Id "
                           + " ,a.Create_Time "
                           + " ,a.Modify_User_Id "
+                           + " ,a.DisplayIndex "
                           + " ,a.modify_time "
                           + " ,case when a.status = '1' then '正常' else '停用' end Status_Desc "
                           + " ,(select USER_NAME From T_User where T_User.user_id = a.create_user_id) Create_User_Name "
@@ -251,6 +262,29 @@ namespace JIT.CPOS.BS.DataAccess
             this.SQLHelper.ExecuteNonQuery(sql);
             return true;
         }
+
+        #endregion
+
+
+
+        #region 修改顺序
+        /// <summary>
+        /// 修改顺序
+        /// </summary>
+        /// <param name="itemCategoryInfo"></param>
+        /// <returns></returns>
+        public bool SetItemCategoryDisplayIndex(ItemCategoryInfo itemCategoryInfo)
+        {
+            string sql = "update t_item_category "
+                       + " set DisplayIndex = '" + itemCategoryInfo.DisplayIndex + "' "
+                   
+                       + " ,Modify_Time = '" + itemCategoryInfo.Modify_Time + "' "
+                       + " ,Modify_User_Id =  '" + itemCategoryInfo.Modify_User_Id + "' "
+                       + " where item_category_id = '" + itemCategoryInfo.Item_Category_Id + "' ;";
+            this.SQLHelper.ExecuteNonQuery(sql);
+            return true;
+        }
+
         #endregion
 
         #region GetItemCategoryUsedInfo
@@ -295,7 +329,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
                         + " ,'" + itemCategoryInfo.Create_Time + "' create_time "
                         + " ,'" + itemCategoryInfo.Create_User_Id + "' modify_user_id "
                         + " ,'" + itemCategoryInfo.Create_Time + "' modify_time "
-                        + " ,null bat_id "
+                        + " ,'" + itemCategoryInfo.bat_id + "' bat_id " //" ,null bat_id "
                         + " ,'0' if_flag "
                         + " ,'" + this.CurrentUserInfo.CurrentUser.customer_id + "' CustomerID "
                         + " ,'" + itemCategoryInfo.DisplayIndex + "' DisplayIndex ";
@@ -318,7 +352,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
             if (itemCategoryInfo != null || itemCategoryInfo.Pyzjm != null)
                 sql += ",Pyzjm = '" + itemCategoryInfo.Pyzjm + "'";
 
-            if (itemCategoryInfo != null || itemCategoryInfo.DisplayIndex != null)
+            if (itemCategoryInfo != null && itemCategoryInfo.DisplayIndex != null)
                 sql += ",DisplayIndex = " + itemCategoryInfo.DisplayIndex + "";
 
             if (itemCategoryInfo != null || itemCategoryInfo.Status != null)
@@ -551,7 +585,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
 
 
         #region 根据ItemAreaId更新MHItemArea的数据
-        public void UpdateMHItemAreaData(string itemAreaList, string customerId,string _areaFlag)
+        public void UpdateMHItemAreaData(string itemAreaList, string customerId, string _areaFlag)
         {
             //把最后一位的标点符号去掉
             itemAreaList = itemAreaList.Substring(0, itemAreaList.Length - 1);
@@ -564,14 +598,14 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
         }
 
 
-        public void DeleteMHItemAreaData( string customerId, string _areaFlag)
+        public void DeleteMHItemAreaData(string customerId, string _areaFlag)
         {
             //把最后一位的标点符号去掉
-       //     itemAreaList = itemAreaList.Substring(0, itemAreaList.Length - 1);
+            //     itemAreaList = itemAreaList.Substring(0, itemAreaList.Length - 1);
             string userId = this.CurrentUserInfo.UserID;
             string sql = string.Format(@"update a set a.isdelete = 1 ,LastUpdateBy = '{1}',LastUpdateTime = getdate() 
                     from MHItemArea a,MobileHome b where  a.HomeId = b.HomeId  and b.customerId = '{0}' and areaFlag='{2}'"
-                ,  customerId, userId, _areaFlag);
+                , customerId, userId, _areaFlag);
             this.SQLHelper.ExecuteNonQuery(sql);
         }
         #endregion

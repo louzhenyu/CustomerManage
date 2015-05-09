@@ -4,13 +4,13 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
 .commonBtn{display:block;width:140px;height:40px;line-height:40px;text-align:center;font-size:14px;border-radius:5px;background:#fe7c24;color:#fff;}
 .commonBtn:hover{color:#f1f1f1;}
-.centreArea{min-width:1215px;min-height:587px;background:url(../images/topShadow.png) repeat-x 0 0;}
+.centreArea{min-width:1262px;min-height:587px;background:url(../../washCardManage/images/topShadow.png) repeat-x 0 0;}
 /*公共弹层*/
-.jui-dialog{position:absolute;top:50%;left:50%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
+.jui-dialog{position:absolute;top:25%;left:15%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
 .jui-dialog-tit{position:relative;padding-left:25px;height:55px;background:#f3f3f6;border-radius:6px 6px 0 0;color:#66666d;}
 .jui-dialog-tit h2,.jui-dialog-tit h3{font:bold 16px/55px "黑体";}
 .jui-dialog-close{position:absolute;top:12px;right:12px;width:30px;height:30px;background:url(../images/hintClose.png) no-repeat center center;}
-.jui-dialog .btnWrap{padding:35px 0;text-align:center;}
+.jui-dialog .btnWrap{padding-bottom:35px;text-align:center;}
 .jui-dialog .btnWrap a{display:inline-block;}
 .jui-dialog .titName{position:absolute;top:0;left:50%;margin-left:-225px;width:450px;line-height:55px;text-align:center;color:#333;}
 .jui-dialog .cancelBtn{margin-left:35px;background:#949ca7;}
@@ -24,7 +24,7 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}
 .commonSelectWrap .endTime .tit{width:15px;}
 .commonSelectWrap .endTime .selectBox{margin-left:22px;}
-.commonSelectWrap .selectBox{margin-left:125px;width:161px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../images/moreIcon.png) no-repeat 140px center;cursor:pointer;}
+.commonSelectWrap .selectBox{margin-left:5px;width:161px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../../washCardManage/images/moreIcon.png) no-repeat 96% center;cursor:pointer;}
 .commonSelectWrap .selectBox .text{display:block;width:150px;line-height:31px;text-indent:5px;}
 .commonSelectWrap .selectList{position:relative;display:none;top:10px;left:-1px;width:161px;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:100;}
 .commonSelectWrap .selectList p{line-height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
@@ -32,14 +32,16 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 /*.commonSelectWrap .selectBox:hover{position:relative;}*/
 /*.commonSelectWrap .selectList{display:block;}*/
 .commonSelectWrap .searchInput{display:block;float:left;width:161px;height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
-.commonSelectWrap .searchInput input{float:left;width:150px;height:29px;border:none;color:#666;}
+.commonSelectWrap .searchTime{display:block;float:left;width:161px;height:31px;margin-left:5px;font-family:Arial;}
+
+.commonSelectWrap .searchInput input{float:left;width:100%;height:29px;border:none;color:#666;}
 /*特殊的范围的输入框处理*/
 .commonSelectWrap .specialInput{display:block;float:left;width:100px;height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
 .commonSelectWrap .specialInput input{float:left;width:90px;height:29px;border:none;color:#666;}
 
 .moreQueryWrap{float:right;}
 .moreQueryWrap .queryBtn{width:100px;height:32px;line-height:32px;}
-.moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "宋体";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
+.moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "宋体";text-decoration:underline;background:url(../../washCardManage/images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
 
 /*头部 全查询*/
 .allQueryTermArea{
@@ -87,7 +89,7 @@ white-space: normal;}
 .tablehandle .importBtn{background:url(../images/importBtn.png) no-repeat 0 0;}
 .tablehandle .exportBtn{background:url(../images/exportBtn.png) no-repeat 0 0;}
 */
-.tablehandle .selectBox{position:relative;float:right;width:149px;height:25px;border:1px solid #b9b9b9;border-radius:2px;text-align:center;font:12px/25px "宋体";color:#666;background:#fff url(../images/moreIcon.png) no-repeat 90% center;cursor:pointer;}
+.tablehandle .selectBox{position:relative;float:right;width:149px;height:25px;border:1px solid #b9b9b9;border-radius:2px;text-align:center;font:12px/25px "宋体";color:#666;background:#fff url(../../washCardManage/images/moreIcon.png) no-repeat 90% center;cursor:pointer;}
 .tablehandle .selectBox.fl{float:left;width:72px;margin-right:20px;}
 .tablehandle .selectBox.filterIcon{background:#fff url(../images/filterIcon.png) no-repeat 95% center;cursor:pointer;}
 
@@ -100,13 +102,13 @@ white-space: normal;}
 .tablehandle .count span{font-weight:bold;color:#2d83cf;}
 
 .dataTable{width:100%;border:1px solid #d8d8d8;border-top:none;font:13px/39px "黑体";color:#4d4d4d;}
-.dataTable .selectListBox{background:url(../images/selectIcon02.png) no-repeat 80% center;cursor:pointer;}
+.dataTable .selectListBox{background:url(../../washCardManage/images/selectIcon02.png) no-repeat 80% center;cursor:pointer;}
 .dataTable .minSelectBox{display:none;position:absolute;top:32px;left:15px;width:80px;min-height:50px;border:1px solid #ccc;border-radius:3px;text-align:center;background:#f8f8f8;color:#666;}
 .dataTable .minSelectBox p{font-size:12px;font-weight:normal;line-height:25px;border-bottom:1px solid #ccc;}
 .dataTable .minArr{position:absolute;top:-5px;left:22px;display:block;width:10px;height:10px;background:url(../images/minArr.png) no-repeat 0 0;}
 .dataTable .selectListBox:hover{position:relative;}
 .dataTable .selectListBox:hover .minSelectBox{display:block;}
-.dataTable .seeIcon{background:url(../images/seeIcon02.png) no-repeat center center;cursor:pointer;}
+.dataTable .seeIcon{background:url(../../washCardManage/images/seeIcon02.png) no-repeat center center;cursor:pointer;}
 .dataTable .fontF{font-family:"Arial";}
 .dataTable .title{border-bottom:2px solid #fe7c23;}
 .dataTable .title th{font-weight:bold;*border-bottom:2px solid #fe7c23;text-align:center;min-width: 60px;}
@@ -118,9 +120,9 @@ white-space: normal;}
 
 .dataTable input{width:100px;height:26px;border:1px solid #ccc;color:#333;border-radius:2px;}
 .dataTable .checkBox{vertical-align:middle;cursor:pointer;}
-.dataTable .checkBox em{display:block;width:25px;height:25px;margin:0 auto;background:url(../images/radio1.png) no-repeat center center;}
-.dataTable .checkBox.on em{background:url(../images/radio2.png) no-repeat center center;}
-.dataTable .fontC{color:#2d83cf;font-family:"Arial";}
+.dataTable .checkBox em{display:block;width:25px;height:25px;margin:0 auto;background:url(../../washCardManage/images/radio1.png) no-repeat center center;}
+.dataTable .checkBox.on em{background:url(../../washCardManage/images/radio2.png) no-repeat center center;}
+.fontC{color:#2d83cf;font-family:"Arial";}
 
 
 
@@ -130,7 +132,7 @@ white-space: normal;}
 .jui-dialog-selectTag .promptContent{padding:30px;}
 .jui-dialog-selectTag .tagWrap{height:33px;margin-bottom:10px;}
 .jui-dialog-selectTag .tagWrap>*{float:left;margin-left:18px;}
-.jui-dialog-selectBox{position:relative;width:58px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../images/selectIcon02.png) no-repeat 40px center;cursor:pointer;}
+.jui-dialog-selectBox{position:relative;width:58px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../../washCardManage/images/selectIcon02.png) no-repeat 40px center;cursor:pointer;}
 .jui-dialog-selectBox .text{display:block;width:50px;line-height:31px;text-indent:5px;}
 .jui-dialog-selectBox .selectList{display:none;position:absolute;top:30px;left:-1px;width:100%;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:10;}
 .jui-dialog-selectBox .selectList p{line-height:31px;height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
@@ -179,7 +181,7 @@ overflow-y: scroll;}
 .vipDetailInfo .line{border-bottom:1px dashed #ededed;}
 .vipDetailInfo .itemBox{float:left;font-size:15px;}
 .vipDetailInfo .tit{float:left;width:108px;text-align:right;color:#999;}
-.vipDetailInfo .itemText{margin-left:108px;width:180px;color:#000;}
+.vipDetailInfo .itemText{margin-left:108px;width:180px;color:#000; white-space:nowrap}
 .vipDetailInfo .lab{float:left;}
 .vipDetailInfo .lab span{display:inline-block;margin-right:15px;font-size:14px;color:#fe7c23;}
 .vipDetailInfo .tagItem{line-height:31px; min-height:31px;}
@@ -198,7 +200,7 @@ overflow-y: scroll;}
 .subMenu li.on{background-color:#fff;}
 
 /*弹出-添加新会员*/
-.jui-dialog-addNewVip{width:696px;height:510px;top:40px;margin-left:-348px;}
+.jui-dialog-addNewVip{width:696px;top:40px;margin-left:-348px;}
 .jui-dialog-addNewVip .promptContent{height:290px;padding:20px 0;overflow-y:auto;}
 .jui-dialog-addNewVip .inputWrap{float:left;height:40px;margin-bottom:30px;font-size:15px;color:#333;}
 .jui-dialog-addNewVip .inputWrap .tit{float:left;width:105px;line-height:40px;text-align:right;}
@@ -230,3 +232,38 @@ overflow-y: scroll;}
 .baseInfoArea .commonSelectWrap{margin:0 10px 22px 0;}
 .baseInfoArea .btnWrap{clear:left;height:32px;}
 .baseInfoArea .saveBtn{float:right;width:64px;height:32px;line-height:32px;margin-right:65px;border-radius:3px;}
+
+
+.vipDetailInfo .button{color:#2d83cf;font-family:"Arial"; text-decoration:underline;}
+
+
+
+.jui-dialog-addNewVip{width:960px;min-height:320px;top:40px;margin-left:5%;}
+.jui-dialog-addNewVip .promptContent{padding:20px 0;height:auto; min-height:60px; text-align: center;}
+.jui-dialog-addNewVip .inputWrap{float:left;height:40px;margin-bottom:30px;font-size:15px;color:#333;}
+.jui-dialog-addNewVip .inputWrap .tit{float:left;width:105px;line-height:40px;text-align:right;}
+.jui-dialog-addNewVip .inputBox{margin-left:107px;width:216px;height:38px;border:1px solid #dbdcde;border-radius:4px;}
+.jui-dialog-addNewVip .inputBox input{width:90%;height:36px;border:none;background:none;}
+.jui-dialog-addNewVip .inputBox.long{width:540px;}
+.jui-dialog-addNewVip .commonBtn{font-size:16px;}
+.jui-dialog-addNewVip .cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
+.jui-dialog-addNewVip .areaListSelect {padding-top:15px; height:auto!important;min-height:30px;border-bottom:1px dashed #FE7C22; }
+.jui-dialog-addNewVip .areaList{padding-top:15px;  height:auto!important;max-height: 300px; min-height:30px; padding-bottom: 35px; width:90%; margin: 0 auto;}
+.jui-dialog-addNewVip .areaList .commonSelectWrap .searchInput  {border: none; text-align:left; }
+.jui-dialog-addNewVip .areaList .commonSelectWrap .fontC{ float: right;}
+.jui-dialog-addNewVip .commonSelectWrap{height: auto!important}
+.jui-dialog-addNewVip .commonSelectWrap .searchInput{width: 201px; overflow: auto;  height:auto!important;  max-height: 300px;line-height:32px;}
+.jui-dialog-addNewVip .commonSelectWrap .searchInput em{width: 280px;float: right;}
+.jui-dialog-addNewVip .commonSelectWrap .searchInput em b{ width: 40px;text-align: left;font-size: 14px;color: #4d4d4d; display: inline-block;}
+.jui-dialog-addNewVip .commonSelectWrap .searchInput em span{padding-left: 30px;}
+.jui-dialog-addNewVip .commonSelectWrap .selectBox{margin-left:5px;width:201px;height:31px;line-height:31px;}
+.jui-dialog-addNewVip .commonSelectWrap .selectBox .text{display:block;width:190px;line-height:31px;text-indent:5px;}
+.jui-dialog-addNewVip .commonSelectWrap .selectList{position:relative;display:none;top:10px;left:-1px;width:201px;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:100;}
+.jui-dialog-addNewVip .commonSelectWrap .selectList p{line-height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
+.jui-dialog-addNewVip .commonSelectWrap .selectList p:hover{background:#f1f1f1;}
+.gridTables .commonSelectWrap .searchInput{width:300px;  height:auto!important; height:80px; min-height:80px; }
+.gridTables .commonSelectWrap .searchInput textarea{ width: 100%; height: 100%}
+/*.gridTables .commonSelectWrap .grid{height: 120px;overflow: auto;}*/
+.jui-dialog-addNewVip .commonSelectWrap .searchInput p{ text-align: left; margin-left:3px;}
+.commonSelectWrap .borderNone{ border: 1px solid transparent; border-top-color:#ccc}
+.R{ float:right} .L{ float: left}  .txtCenter{ text-align: center}

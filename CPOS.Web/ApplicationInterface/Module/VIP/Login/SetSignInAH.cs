@@ -91,6 +91,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
             #endregion
             rd.UnitId = vipBll.GetUnitByUserId(rd.UserId);//获取会集店
+            TUnitBLL tUnitBLL = new TUnitBLL(currentUserInfo);
+            if (!string.IsNullOrEmpty(rd.UnitId))
+            {
+                rd.UnitName = tUnitBLL.GetByID(rd.UnitId).UnitName;
+            }
+            else
+            {
+                rd.UnitName = "";
+            }
+
 
             //app登陆用户权限 add by henry 2015-3-26
             var roleCodeList = vipBll.GetAppMenuByUserId(rd.UserId);

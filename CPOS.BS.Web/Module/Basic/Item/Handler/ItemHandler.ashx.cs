@@ -151,6 +151,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
             string item_category_id = FormatParamValue(Request("item_category_id"));
             string item_status = FormatParamValue(form.item_status);
             string item_can_redeem = FormatParamValue(form.item_can_redeem);
+            string SalesPromotion_id = FormatParamValue(Request("SalesPromotion_id"));
+
+
 
             int maxRowCount = PageSize;
             int startRowIndex = Utils.GetIntVal(Request("start"));
@@ -161,7 +164,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
                 key = Request("id").ToString().Trim();
             }
 
-            data = itemService.SearchItemList(item_code, item_name, item_category_id, item_status, item_can_redeem,
+            data = itemService.SearchItemList(item_code, item_name, item_category_id, item_status, item_can_redeem,SalesPromotion_id,
                 maxRowCount, startRowIndex);
 
             var jsonData = new JsonData();
@@ -192,6 +195,18 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
             }
 
             data = itemService.GetItemInfoById(CurrentUserInfo, key);
+
+            //图片信息
+            //根据实体条件查询实体
+            var imageService = new ObjectImagesBLL(CurrentUserInfo);
+            var itemObj = imageService.QueryByEntity(new ObjectImagesEntity() { ObjectId = key }, null);
+            if (itemObj != null && itemObj.Length > 0)
+            {
+                //itemObj竟然是个数组，把自动生成的产品二维码给过滤掉，不显示出来
+                itemObj = itemObj.Where<ObjectImagesEntity>(t => t.Description != "自动生成的产品二维码").ToArray<ObjectImagesEntity>();
+                data.ItemImageList = itemObj.OrderBy(item => item.DisplayIndex).ToList();
+            }
+
             WQRCodeManagerBLL wQRCodeManagerBLL = new WQRCodeManagerBLL(CurrentUserInfo);
             var entity = wQRCodeManagerBLL.QueryByEntity(new WQRCodeManagerEntity
             {

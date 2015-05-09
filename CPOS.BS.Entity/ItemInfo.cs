@@ -28,6 +28,9 @@ namespace JIT.CPOS.BS.Entity
         private string isItemCategory;
 
 
+
+
+
         //private IList<ItemPriceInfo> priceList = new List<ItemPriceInfo>();
         /// <summary>
         /// Id【保存必须】
@@ -196,7 +199,7 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public string Modify_Time
         {
-            get { return modifyTime; }
+            get { return modifyTime; }    //string.IsNullOrEmpty(modifyTime) ? "" : Convert.ToDateTime(modifyTime).ToShortDateString();
             set { modifyTime = value; }
         }
 
@@ -235,6 +238,11 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public IList<ItemPropInfo> ItemPropList { get; set; }
         /// <summary>
+        /// 商品sku名 (基础数据)
+        /// </summary>
+       // public T_ItemSkuPropEntity T_ItemSkuProp { get; set; }
+        public T_ItemSkuPropInfo T_ItemSkuProp { get; set; }
+        /// <summary>
         /// 商品价格集合
         /// </summary>
         public IList<ItemPriceInfo> ItemPriceList { get; set; }
@@ -250,6 +258,10 @@ namespace JIT.CPOS.BS.Entity
         /// sku集合
         /// </summary>
         public IList<SkuInfo> SkuList { get; set; }
+        /// <summary>
+        /// 促销分组集合
+        /// </summary>
+        public IList<ItemCategoryMappingEntity> SalesPromotionList { get; set; }
         /// <summary>
         /// 商品集合
         /// </summary>
@@ -326,6 +338,11 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         ///   add by donal 2014-10-11 18:25:31
         public string OperationType { get; set; }
+        //新加商品库存、销量、最小价格、促销分组
+        public string stock { get; set; }
+        public string SalesCount { get; set; }
+        public decimal minPrice { get; set; }
+        public string SalesPromotion { get; set; }
     }
 
     public class VwItemDetailEntity
@@ -387,5 +404,56 @@ namespace JIT.CPOS.BS.Entity
         public string BeginDate { get; set; }
         public string EndDate { get; set; }
         public int DayCount { get; set; }       
+    }
+
+
+    public class T_ItemSkuPropInfo {
+        public String ItemSkuPropID { get; set; }
+        public String Item_id { get; set; }
+        /// <summary>
+        /// 
+        public String prop_1_id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String prop_2_id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String prop_3_id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String prop_4_id { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String prop_5_id { get; set; }
+        /// 
+        /// </summary>
+      
+
+        /// <summary>
+        /// 
+        /// </summary>
+      
+
+
+        public String prop_1_name { get; set; }
+        public String prop_2_name { get; set; }
+        public String prop_3_name { get; set; }
+        public String prop_4_name { get; set; }
+        public String prop_5_name { get; set; }
+
+        public String prop_1_code { get; set; }
+        public String prop_2_code { get; set; }
+        public String prop_3_code { get; set; }
+        public String prop_4_code { get; set; }
+        public String prop_5_code { get; set; }
+
     }
 }

@@ -10,6 +10,8 @@ namespace JIT.CPOS.BS.Entity
     /// </summary>
     public class SkuPropInfo
     {
+
+        public string SkuValues { get; set; }
         /// <summary>
         /// sku与属性关系标识
         /// </summary>
@@ -31,7 +33,7 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public string prop_name { get; set; }
         /// <summary>
-        /// 属性明细的控制标识
+        /// 属性明细的控制标识 text,select,radio,checkbox......
         /// </summary>
         public string prop_input_flag { get; set; }
 
@@ -60,7 +62,7 @@ namespace JIT.CPOS.BS.Entity
         /// 客户标识
         /// </summary>
         public string CustomerId { get; set; }
-
+        public IList<PropInfo> Children { get; set; }//子节点
     }
 
     /// <summary>

@@ -213,6 +213,13 @@ namespace JIT.CPOS.BS.BLL
         }
         #endregion
 
+
+        public bool DeletePropByIds(string propIds, PropInfo propInfo )
+        {
+            return propService.DeletePropByIds(propIds, propInfo);
+        }
+ 
+
         #region 获取web业务系统的主界面图标 Jermyn20131202
         public string GetWebLogo()
         {

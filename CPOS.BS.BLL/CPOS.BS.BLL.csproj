@@ -402,6 +402,7 @@
     <Compile Include="CodeGeneration\t_customerBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
+    <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
     <Compile Include="CodeGeneration\T_UserBLL.cs" />
     <Compile Include="CodeGeneration\UnitCommentBLL.cs" />
     <Compile Include="CodeGeneration\UserDeptJobMappingBLL.cs" />
@@ -907,6 +908,7 @@
     <Compile Include="TUserThirdPartyMappingBLL.cs" />
     <Compile Include="T_CityBLL.cs" />
     <Compile Include="t_customerBLL.cs" />
+    <Compile Include="T_ItemSkuPropBLL.cs" />
     <Compile Include="UnitCommentBLL.cs" />
     <Compile Include="UserFeedbackBLL.cs" />
     <Compile Include="Utility\ClientBussinessDefined\DefindModuleCRUD.cs" />

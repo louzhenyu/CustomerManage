@@ -67,6 +67,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Prop.Handler
                 case "createIndex":
                     content = CreateIndex(pContext);
                     break;
+                  
             }
             pContext.Response.Write(content);
             pContext.Response.End();
@@ -252,6 +253,11 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Prop.Handler
             }
 
             obj = service.GetPropInfoById(key);
+            var SKUDomain = "SKU";
+            if (obj != null)
+            {
+                obj.Children = service.GetPropListByParentId(SKUDomain, obj.Prop_Id);
+            }
 
             var jsonData = new JsonData();
             jsonData.totalCount = obj == null ? "0" : "1";

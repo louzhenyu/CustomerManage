@@ -47,7 +47,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             switch (pAction)
             {
                 case "getDimensionalCode":
-                    rst = getDimensionalCode(pRequest);  //获取动态二维码
+                    rst = getDimensionalCode(pRequest);  //获取二维码(动态/静态)
                     break;
                 case "getDimensionalCodeByVipInfo":
                     rst = getDimensionalCodeByVipInfo(pRequest);  //根据动态二维码获取用户信息
@@ -558,7 +558,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                                             eventbll.Create(evententity);
                                                             #endregion
 
-                                                            JIT.CPOS.BS.BLL.WX.CommonBLL.SendWeixinMessage(message, "1", loggingSessionInfo, vipEntity);
+                                                            JIT.CPOS.BS.BLL.WX.CommonBLL.SendWeixinMessage(message, "1", loggingSessionInfo, vipEntity);//发送信息
                                                         }
                                                     }
                                                 }

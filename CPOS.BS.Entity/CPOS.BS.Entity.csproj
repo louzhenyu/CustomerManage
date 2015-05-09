@@ -264,6 +264,8 @@
     <Compile Include="CodeGeneration\t_customerEntity.cs" />
     <Compile Include="CodeGeneration\T_InoutEntity.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailEntity.cs" />
+    <Compile Include="CodeGeneration\T_ItemSkuPropEntity.cs" />
+   
     <Compile Include="CodeGeneration\T_UserEntity.cs" />
     <Compile Include="CodeGeneration\UnitCommentEntity.cs" />
     <Compile Include="CodeGeneration\UrlEntity.cs" />
@@ -909,6 +911,7 @@
     <Compile Include="t_customerEntity.cs" />
     <Compile Include="T_InoutEntity.cs" />
     <Compile Include="T_Inout_DetailEntity.cs" />
+    <Compile Include="T_ItemSkuPropEntity.cs" />
     <Compile Include="UnitAccountTermInfo.cs" />
     <Compile Include="UnitCommentEntity.cs" />
     <Compile Include="UnitInfo.cs" />
@@ -947,6 +950,7 @@
     <Compile Include="VipEntity.cs" />
     <Compile Include="VipExpandEntity.cs" />
     <Compile Include="VipExpandSinaWbEntity.cs" />
+   
     <Compile Include="VIPImageCommentEntity.cs" />
     <Compile Include="VipIntegralDetailEntity.cs" />
     <Compile Include="VipIntegralEntity.cs" />
@@ -978,6 +982,7 @@
     <Compile Include="VwVipPosOrderEntity.cs" />
     <Compile Include="WAnswerNewsPushEntity.cs" />
     <Compile Include="WApplicationInterfaceEntity.cs" />
+
     <Compile Include="WAttentionLogEntity.cs" />
     <Compile Include="WAutoReplyEntity.cs" />
     <Compile Include="WeiXinTypeEntity.cs" />

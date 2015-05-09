@@ -108,6 +108,46 @@ namespace JIT.CPOS.BS.BLL
 
         #endregion
 
+
+        #region 修改商品分类顺序 
+        /// <summary>
+        /// 设置商品类别状态
+        /// </summary>
+        /// <param name="loggingSessionInfo">登录model</param>
+        /// <param name="item_category_id">商品类别标识</param>
+        /// <param name="status">修改值</param>
+        /// <returns></returns>
+        public void SetItemCategoryDisplayIndex(LoggingSessionInfo loggingSessionInfo, string item_category_id, int displayindx )
+        {
+            string strResult = string.Empty;
+            try
+            {
+                #region 停用限制判断
+                //if (this.GetItemCategoryUsedInfo(item_category_id, out res) != 0)
+                //{
+                //    return;
+                //}
+                #endregion
+
+                //设置要改变的类别信息
+                ItemCategoryInfo itemCategoryInfo = new ItemCategoryInfo();
+                itemCategoryInfo.DisplayIndex = displayindx;
+                itemCategoryInfo.Item_Category_Id = item_category_id;
+                itemCategoryInfo.Modify_User_Id = loggingSessionInfo.CurrentUser.User_Id;
+                itemCategoryInfo.Modify_Time = GetCurrentDateTime(); //获取当前时间
+                //提交
+
+                itemCategoryService.SetItemCategoryDisplayIndex(itemCategoryInfo);
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
+
+        #endregion
+
+
         #region GetItemCategoryUsedInfo
         /// <summary>
         /// 获取商品分类使用情况
@@ -155,11 +195,11 @@ namespace JIT.CPOS.BS.BLL
         /// 获取所有的商品类别
         /// </summary>
         /// <returns></returns>
-        public IList<ItemCategoryInfo> GetItemCagegoryList(string status)
+        public IList<ItemCategoryInfo> GetItemCagegoryList(string status, string bat_id)
         {
             try
             {
-                DataSet ds = itemCategoryService.GetItemCagegoryList(status);
+                DataSet ds = itemCategoryService.GetItemCagegoryList(status, bat_id);
 
                 IList<ItemCategoryInfo> itemCategoryInfoList = new List<ItemCategoryInfo>();
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
@@ -263,6 +303,20 @@ namespace JIT.CPOS.BS.BLL
                 //处理是新建还是修改
                 if (itemCategoryInfo.Item_Category_Id == null || itemCategoryInfo.Item_Category_Id.Equals(""))
                 {
+                    //如果是新建，并且没有传值给DisplayIndex，就取他所在子类里最大的displayindex+1
+                    if (itemCategoryInfo.DisplayIndex == null || itemCategoryInfo.DisplayIndex == 0)
+                    {
+                        int displayindex = 0;
+                        //获取他的父类下的子分类的
+                        IList<ItemCategoryInfo> list = GetItemCategoryListByParentId(itemCategoryInfo.Parent_Id).OrderByDescending(p => p.DisplayIndex).ToList();
+                        if(list!=null && list.Count()!=0)
+                        {
+                           int oldDisplayIndex= list[0].DisplayIndex==null?0: (int)list[0].DisplayIndex;
+                            displayindex=oldDisplayIndex+1;
+                        }
+                        itemCategoryInfo.DisplayIndex=displayindex;
+                    }
+
                     itemCategoryInfo.Item_Category_Id = NewGuid();
                     //2.提交用户信息
                     if (!SetItemCategoryTableInfo(loggingSessionInfo, itemCategoryInfo))

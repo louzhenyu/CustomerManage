@@ -60,7 +60,7 @@
                         formatter: function () {
                             //console.log(this.value);
                             var date = new Date(this.value);
-                            return (date.getMonth()+1)+"."+date.getDate()
+                            return (date.getMonth()+1)+"."+date.getDate();
                         }
                     }
                 },

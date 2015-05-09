@@ -353,7 +353,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
             {
-                if (CheckProp(propInfo))
+                if (CheckProp(propInfo))//判断在同一个父类下面，是不是有这个属性代码了。
                 {
                     error = "属性代码已存在";
                     return false;
@@ -478,7 +478,20 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,modify_user_id='" + propInfo.Modify_User_Id + "' ";
             sql += " ,modify_time='" + propInfo.Modify_Time + "' ";
             sql += " where prop_id='" + propInfo.Prop_Id + "'";
+          
 
+            this.SQLHelper.ExecuteNonQuery(sql);
+            return true;
+        }
+
+        public bool DeletePropByIds(string propIds, PropInfo propInfo)
+        {
+            string sql = "update t_prop set ";
+            sql += " status='-1' ";
+            sql += " ,modify_user_id='" + propInfo.Modify_User_Id + "' ";
+            sql += " ,modify_time='" + propInfo.Modify_Time + "' ";
+            sql += " where parent_prop_id='" + propInfo.Prop_Id + "'";
+            sql += " and prop_id not in (" + propIds + ") ";
             this.SQLHelper.ExecuteNonQuery(sql);
             return true;
         }
@@ -501,5 +514,7 @@ namespace JIT.CPOS.BS.DataAccess
             return strLogo;
         }
         #endregion
+
+      
     }
 }

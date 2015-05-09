@@ -67,7 +67,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.UnitNew.Handler
         protected string GetAllItemCategories()
         {
             var bll = new ItemCategoryService(this.CurrentUserInfo);
-            var list = bll.GetItemCagegoryList("");
+            var list = bll.GetItemCagegoryList("", "");
             return list.ToJSON();
         }
 

@@ -11,6 +11,13 @@ namespace JIT.CPOS.BS.Entity
     /// </summary>
     public class ItemCategoryInfo
     {
+
+        
+             /// <summary>
+        /// 促销分组包含的商品数量
+        /// </summary>
+        public int PromotionItemCount { get; set; }
+            
         /// <summary>
         /// 商品类别标识【保存必须】
         /// </summary>
@@ -80,7 +87,7 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public IList<ItemCategoryInfo> ItemCategoryInfoList { get; set; }
         /// <summary>
-        /// 批次
+        /// 批次(这里做为区分促销分组2和商品分类的标识null或者1)
         /// </summary>
         public string bat_id { get; set; }
         /// <summary>

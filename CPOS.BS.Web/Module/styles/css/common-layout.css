@@ -1,7 +1,7 @@
 ﻿@charset "utf-8";
 /*common*/
 body{font:12px/1.5em "黑体","Microsoft YaHei";background:#fff;color:#4d4d4d;}
-input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"黑体";color:#a5a5a5;}
+input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"黑体";color:#a5a5a5;}
 .fontRed{font-family:"宋体";color:#f00;}
 .commonBtn{display:block;width:140px;height:40px;line-height:40px;text-align:center;font-size:14px;border-radius:5px;background:#007aff;color:#fff;}
 .commonBtn:hover{color:#fff;}
@@ -99,12 +99,13 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 /*头部的微信，设置信息，退出*/
 .commonHeader .qrBox{background:url(../images/qrIcon.png) no-repeat center center;}
 .commonHeader .handleWrap{float:right;height:100%;margin-right:70px;}
+.commonHeader .handleWrap .unitName{float: left; height: 20px; line-height: 60px; font-size: 12px; cursor: default;white-space: nowrap;}
 .commonHeader .qrBox{position:relative;float:left;width:50px;height:100%;cursor:pointer;z-index:999;}
-.commonHeader .setBox{position:relative;float:left;width:109px;height:100%;cursor:pointer;z-index:999;}
+.commonHeader .setBox{position:relative;float:left;height:100%;cursor:pointer;z-index:999;}
 .commonHeader .setBox p{line-height:60px;text-indent:25px;}
 .commonHeader .qrBox-tip{display:none;position:absolute;top:42px;left:-37px;width:129px;height:151px;background:url(../images/qr-tip-bg.png) no-repeat 0 0;}
 .commonHeader .qrBox-tip img{display:block;width:125px;height:125px;margin: 23px 0 0 3px;}
-.commonHeader .setBox-tip{display:none;position:absolute;top:42px;left:-62px;width:142px;height:116px;padding-top:35px;background:url(../images/set-tip-bg.png) no-repeat 0 0;}
+.commonHeader .setBox-tip{display:none;position:absolute;top:42px;width:142px;height:116px;padding-top:35px; border-bottom: solid #fe7c24 1px;border-radius: 7px; background:url(../images/set-tip-bg.png) no-repeat 0 0;}
 .commonHeader .setBox-tip a{display:block;line-height:30px;margin-bottom:5px;font-size:14px;text-align:center;color:#262626;}
 .commonHeader .setBox-tip a:hover{background:#c4c4c4;}
 .commonHeader .setBox-tip .safetyOutBtn{width:78px;height:27px;line-height:27px;margin:5px auto 0;}
@@ -112,7 +113,7 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 
 /*全局菜单*/
 .commonMenu{float:left;width:140px;min-height:587px;padding:27px 0 3px;}
-.commonMenu li{position:relative;width:150px;height:47px;margin-bottom:16px;}
+.commonMenu li{position:relative;height:47px;margin-bottom:16px;}
 .commonMenu li a{display:block;width:100%;height:47px;text-indent:16px;text-align:center;font:12px/47px "Microsoft YaHei";color:#333;z-index:6;}
 
 /******查询*****/

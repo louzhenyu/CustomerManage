@@ -51,5 +51,9 @@ namespace JIT.CPOS.BS.BLL
             }
             return itemCategoryInfoList;
         }
+        public bool DeleteByItemID(string itemID)
+        {
+            return _currentDAO.DeleteByItemID(itemID);
+        }
     }
 }

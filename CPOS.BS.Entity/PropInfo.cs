@@ -100,5 +100,6 @@ namespace JIT.CPOS.BS.Entity
         /// 客户标识
         /// </summary>
         public string CustomerId { get; set; }
+        public IList<PropInfo> Children { get; set; }//子节点
     }
 }

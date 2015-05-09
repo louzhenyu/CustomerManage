@@ -33,7 +33,7 @@ namespace JIT.CPOS.BS.BLL
         public IList<ItemPropInfo> GetItemPropListByItemId(string itemId)
         {
             DataSet ds = new DataSet();
-            ds = itemPropService.GetItemPropListByItemId(itemId);
+            ds = itemPropService.GetItemPropListByItemId(itemId,null);
             IList<ItemPropInfo> itemPropInfoList = new List<ItemPropInfo>();
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {

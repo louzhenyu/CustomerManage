@@ -617,6 +617,34 @@
     <Content Include="Module\College\News\NewsEdit.aspx" />
     <Content Include="Module\College\News\NewsList.aspx" />
     <Content Include="Module\College\News\NewsType.aspx" />
+    <Content Include="Module\commodity\Category.aspx" />
+    <Content Include="Module\commodity\commodityExit.aspx" />
+    <Content Include="Module\commodity\css\release.css" />
+    <Content Include="Module\commodity\css\style.css" />
+    <Content Include="Module\commodity\images\add.png" />
+    <Content Include="Module\commodity\images\add0rdel.png" />
+    <Content Include="Module\commodity\images\cxfzbtn.png" />
+    <Content Include="Module\commodity\images\del.png" />
+    <Content Include="Module\commodity\images\delete.png" />
+    <Content Include="Module\commodity\images\exit.png" />
+    <Content Include="Module\commodity\images\moreIcon.png" />
+    <Content Include="Module\commodity\images\radio1.png" />
+    <Content Include="Module\commodity\images\radio2.png" />
+    <Content Include="Module\commodity\images\topShadow.png" />
+    <Content Include="Module\commodity\images\upload.png" />
+    <Content Include="Module\commodity\images\uploadimg.png" />
+    <Content Include="Module\commodity\images\商品.png" />
+    <Content Include="Module\commodity\js\Category.js" />
+    <Content Include="Module\commodity\js\commodityExit.js" />
+    <Content Include="Module\commodity\js\main.js" />
+    <Content Include="Module\commodity\js\promotion.js" />
+    <Content Include="Module\commodity\js\queryList.js" />
+    <Content Include="Module\commodity\js\release.js" />
+    <Content Include="Module\commodity\js\specification.js" />
+    <Content Include="Module\commodity\promotion.aspx" />
+    <Content Include="Module\commodity\QueryList.aspx" />
+    <Content Include="Module\commodity\release.aspx" />
+    <Content Include="Module\commodity\specification.aspx" />
     <Content Include="Module\Coupon\AllBrowser.aspx" />
     <Content Include="Module\Coupon\CouponBind.aspx" />
     <Content Include="Module\Coupon\CouponBindLog.aspx" />
@@ -6001,6 +6029,12 @@
     <Compile Include="ApplicationInterface\Events\EventsGateway.ashx.cs">
       <DependentUpon>EventsGateway.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\Item\ItemHandler.ashx.cs">
+      <DependentUpon>ItemHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Module\Item\ItemNewHandler.ashx.cs">
+      <DependentUpon>ItemNewHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Module\WX\Customer\GetDisplaynoneAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\KeyWord\DeleteKeyWordAH.cs" />
     <Content Include="ApplicationInterface\Vip\VipGateway.ashx" />
@@ -6023,6 +6057,8 @@
     <Content Include="ApplicationInterface\Coupon\CouponEntry.ashx" />
     <Content Include="ApplicationInterface\Delivery\DeliveryEntry.ashx" />
     <Content Include="ApplicationInterface\Vip\WithdrawDepositGateway.ashx" />
+    <Content Include="ApplicationInterface\Module\Item\ItemHandler.ashx" />
+    <Content Include="ApplicationInterface\Module\Item\ItemNewHandler.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -6946,9 +6982,19 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\UnitServiceSoap\UnitService.wsdl" />
-    <Content Include="Web.config">
+    <Content Include="Web--minglong.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Web.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.WillieLocal.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationInterface\ActionHandlerFactory.cs" />

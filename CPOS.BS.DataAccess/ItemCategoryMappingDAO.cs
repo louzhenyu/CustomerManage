@@ -61,6 +61,32 @@ namespace JIT.CPOS.BS.DataAccess
             return ds;
 
         }
+
+
+
         #endregion
+
+        public bool DeleteByItemID(string itemID)
+        {
+            try
+            {
+                string sql = "update ItemCategoryMapping "
+                    + " set isdelete=1 "
+
+                   
+
+                    + " where ItemID = '" + itemID + "';";
+
+
+
+                this.SQLHelper.ExecuteNonQuery(sql);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
 }

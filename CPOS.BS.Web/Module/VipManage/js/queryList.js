@@ -258,7 +258,7 @@
                      return;
                 //动态的会员表单
                 that.loadData.getVipDyniform(function(data){
-                    
+
                     //高级查询配置
                     var html = bd.template("tpl_addVipForm", data);
                     $("#addNewVip").find(".promptContent").html(html);

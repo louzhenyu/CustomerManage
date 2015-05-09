@@ -14,7 +14,7 @@ namespace JIT.CPOS.BS.DataAccess
 {
     public class ItemPropService : Base.BaseCPOSDAO
     {
-         #region 构造函数
+        #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
@@ -32,10 +32,10 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="item_id"></param>
         /// <returns></returns>
-        public DataSet GetItemPropListByItemId(string item_id)
+        public DataSet GetItemPropListByItemId(string item_id, IDbTransaction pTran)
         {
             string sql = string.Format(@" 
-                           select a.* 
+                           select z.* 
                            From ( 
                            select a.item_property_id 
                            ,a.item_id 
@@ -57,10 +57,25 @@ namespace JIT.CPOS.BS.DataAccess
                            where 1=1 
                            and a.[status] = '1' 
                            and b.[status] = '1' 
-                           ) a 
-                           where 1=1 and a.item_id = isnull('{0}',a.item_id) order by a.PropertyCodeGroupDisplay,a.PropertyCodeDisplay", item_id);
+                           and a.item_id = '{0}'
+                           ) z
+                           where 1=1  order by z.PropertyCodeGroupDisplay,z.PropertyCodeDisplay", item_id);
+
+
+            //isnull('{0}',a.item_id)
             DataSet ds = new DataSet();
-            ds = this.SQLHelper.ExecuteDataset(sql);
+            //ds = this.SQLHelper.ExecuteDataset(sql);
+            if (pTran != null)
+            {
+                //this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), null);
+                ds = this.SQLHelper.ExecuteDataset((SqlTransaction)pTran, CommandType.Text, sql);
+            }
+            else
+            {
+             //   this.SQLHelper.ExecuteNonQuery(sql);
+               ds = this.SQLHelper.ExecuteDataset(sql);
+
+            }
             return ds;
         }
         #endregion
@@ -85,7 +100,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " order by b.display_index,a.display_index;";
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
-            return ds; 
+            return ds;
         }
         #endregion
 
@@ -148,7 +163,7 @@ namespace JIT.CPOS.BS.DataAccess
             string sql = "update t_item_property set status = '-1' ";
             sql = pService.GetIsNotNullUpdateSql(sql, "modify_user_id", itemInfo.Modify_User_Id);
             sql = pService.GetIsNotNullUpdateSql(sql, "modify_time", itemInfo.Modify_Time);
-            
+
             sql = sql + " where item_id = '" + itemInfo.Item_Id + "' ";
 
             #endregion
@@ -254,7 +269,7 @@ namespace JIT.CPOS.BS.DataAccess
                 i++;
 
             }
-          
+
             sql = sql + " ) P "
                     + " left join t_item_property  b "
                     + " on(P.item_property_id = b.item_property_id) "
@@ -278,5 +293,27 @@ namespace JIT.CPOS.BS.DataAccess
         }
 
         #endregion
+
+
+        public bool updateValue(string item_property_id, string prop_value, IDbTransaction pTran)
+        {
+            PublicService pService = new PublicService();
+
+            #region
+            string sql = "update t_item_property set prop_value = '"+prop_value+"' where item_property_id='"+item_property_id+"'" ;        
+
+            #endregion           
+
+            if (pTran != null)
+            {
+                this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), null);
+            }
+            else
+            {
+                this.SQLHelper.ExecuteNonQuery(sql);
+            }
+
+            return true;
+        }
     }
 }

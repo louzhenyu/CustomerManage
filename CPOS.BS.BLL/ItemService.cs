@@ -16,7 +16,7 @@ namespace JIT.CPOS.BS.BLL
     /// <summary>
     /// 商品服务
     /// </summary>
-    public class ItemService:BaseService
+    public class ItemService : BaseService
     {
         JIT.CPOS.BS.DataAccess.ItemService itemService = null;
         #region 构造函数
@@ -40,11 +40,11 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="maxRowCount">当前页数量</param>
         /// <param name="startRowIndex">开始数量</param>
         /// <returns></returns>
-        public ItemInfo SearchItemList(   string item_code
+        public ItemInfo SearchItemList(string item_code
                                         , string item_name
                                         , string item_category_id
                                         , string status
-                                        , string item_can_redeem
+                                        , string item_can_redeem,string SalesPromotion_id
                                         , int maxRowCount
                                         , int startRowIndex)
         {
@@ -62,6 +62,7 @@ namespace JIT.CPOS.BS.BLL
             _ht.Add("item_category_id", item_category_id);
             _ht.Add("status", status);
             _ht.Add("item_can_redeem", item_can_redeem);
+            _ht.Add("SalesPromotion_id", SalesPromotion_id);
 
             _ht.Add("StartRow", startRowIndex);
             _ht.Add("EndRow", startRowIndex + maxRowCount);
@@ -90,7 +91,7 @@ namespace JIT.CPOS.BS.BLL
         public IList<ItemInfo> GetItemAllList()
         {
             IList<ItemInfo> itemInfoList = new List<ItemInfo>();
-            
+
             DataSet ds = new DataSet();
             ds = itemService.GetItemAllList();
             if (ds != null && ds.Tables[0].Rows.Count > 0)
@@ -138,6 +139,14 @@ namespace JIT.CPOS.BS.BLL
             itemInfo.ItemUnitList = new ItemStoreMappingBLL(loggingSessionInfo).GetItemUnitListByItemId(item_id);
             //获取商品与分类关系
             itemInfo.ItemCategoryMappingList = new ItemCategoryMappingBLL(loggingSessionInfo).GetItemCategoryListByItemId(item_id);
+            itemInfo.SalesPromotionList = itemInfo.ItemCategoryMappingList;
+          
+            //对于新板块
+           // 商品sku名 (基础数据)
+            itemInfo.T_ItemSkuProp = new T_ItemSkuPropBLL(loggingSessionInfo).GetItemSkuPropByItemId(item_id);
+
+
+
             return itemInfo;
         }
         #endregion
@@ -205,7 +214,7 @@ namespace JIT.CPOS.BS.BLL
                         itemInfo.Modify_Time = GetCurrentDateTime();
                     }
 
-                    if (itemInfo.OperationType =="ADD")
+                    if (itemInfo.OperationType == "ADD")
                     {
                         //遍历删除sku相关价格(jifeng.cao 20140224)
                         IList<SkuInfo> skuList = new SkuService(loggingSessionInfo).GetSkuListByItemId(itemInfo.Item_Id);
@@ -220,12 +229,12 @@ namespace JIT.CPOS.BS.BLL
                                 }
                             }
                         }
-                    }                    
+                    }
 
                     //处理富文本编辑内容中的图片
                     ImageHandler(itemInfo);
-
-                    itemService.SetItemInfo(itemInfo, out strError);
+                    bool isOld = true;
+                    itemService.SetItemInfo(itemInfo, out strError, isOld);
                 }
                 strError = "保存成功!";
                 return true;
@@ -248,7 +257,7 @@ namespace JIT.CPOS.BS.BLL
         {
             try
             {
-                               
+
                 if (itemInfo.Create_User_Id == null || itemInfo.Create_User_Id.Equals(""))
                 {
                     itemInfo.Create_User_Id = loggingSessionInfo.CurrentUser.User_Id;
@@ -259,7 +268,7 @@ namespace JIT.CPOS.BS.BLL
                     itemInfo.Modify_User_Id = loggingSessionInfo.CurrentUser.User_Id;
                     itemInfo.Modify_Time = GetCurrentDateTime();
                 }
-                return  itemService.SetSkuInfo(itemInfo, out strError);        
+                return itemService.SetSkuInfo(itemInfo, out strError);
             }
             catch (Exception ex)
             {
@@ -279,7 +288,7 @@ namespace JIT.CPOS.BS.BLL
         {
             try
             {
-                int n = itemService.IsExistItemCode(item_code,item_id);
+                int n = itemService.IsExistItemCode(item_code, item_id);
                 return n > 0 ? false : true;
             }
             catch (Exception ex)
@@ -287,7 +296,7 @@ namespace JIT.CPOS.BS.BLL
                 throw (ex);
             }
         }
-        
+
 
         /// <summary>
         /// 设置商品主表信息
@@ -323,7 +332,7 @@ namespace JIT.CPOS.BS.BLL
             }
         }
 
-        
+
 
 
         #endregion
@@ -348,7 +357,8 @@ namespace JIT.CPOS.BS.BLL
                 }
                 return itemInfoList;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 throw (ex);
             }
         }
@@ -474,9 +484,9 @@ namespace JIT.CPOS.BS.BLL
             return itemService.GetItemSkuList(itemId);
         }
 
-        public DataSet GetItemSkuList(string itemId,string userId,string customerId,DateTime beginDate,DateTime endDate)
+        public DataSet GetItemSkuList(string itemId, string userId, string customerId, DateTime beginDate, DateTime endDate)
         {
-            return itemService.GetItemSkuList(itemId,userId,customerId,beginDate,endDate);
+            return itemService.GetItemSkuList(itemId, userId, customerId, beginDate, endDate);
         }
         /// <summary>
         /// 花间堂房价的数据
@@ -563,7 +573,7 @@ namespace JIT.CPOS.BS.BLL
                 itemDetailObj = DataTableToObject.ConvertToObject<VwItemDetailEntity>(ds.Tables[0].Rows[0]);
             }
             return itemDetailObj;
-        } 
+        }
         #endregion
 
         #region 列表获取
@@ -611,7 +621,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public DataSet GetItemProp2List(string itemId, string propDetailId)
         {
-            return itemService.GetItemProp2List(itemId,propDetailId);
+            return itemService.GetItemProp2List(itemId, propDetailId);
         }
         #endregion
 
@@ -748,7 +758,7 @@ namespace JIT.CPOS.BS.BLL
 
         public void UpdateMHCategoryAreaByGroupId(string customerId, int groupIdFrom, int groupIdTo)
         {
-            itemService.UpdateMHCategoryAreaByGroupId(customerId,groupIdFrom, groupIdTo);
+            itemService.UpdateMHCategoryAreaByGroupId(customerId, groupIdFrom, groupIdTo);
         }
 
 
@@ -791,7 +801,7 @@ namespace JIT.CPOS.BS.BLL
         }
         #endregion
 
-        public DataSet GetItemCommentByItemId(string customerId, string ItemId,  int pageIndex, int pageSize)
+        public DataSet GetItemCommentByItemId(string customerId, string ItemId, int pageIndex, int pageSize)
         {
             return itemService.GetItemCommentByItemId(customerId, ItemId,
                 pageIndex, pageSize);
@@ -801,6 +811,122 @@ namespace JIT.CPOS.BS.BLL
             return itemService.GetInoutOrderByItemId(customerId, ItemId,
                 pageIndex, pageSize);
         }
+
+
+        #region 新版本保存商品信息
+
+
+
+        /// <summary>
+        /// 设置商品信息（修改,新建）
+        /// </summary>
+        /// <param name="loggingSessionInfo"></param>
+        /// <param name="itemInfo">商品对象</param>
+        /// <param name="strError">错误信息</param>
+        /// <returns></returns>
+        public bool SetItemInfoNew(ItemInfo itemInfo, out string strError)
+        {
+
+            try
+            {
+                if (itemInfo.Item_Id == null || itemInfo.Item_Id.Equals(""))
+                {
+                    itemInfo.Item_Id = NewGuid();
+                }
+
+                if (itemInfo != null)
+                {
+                    itemInfo.Status = "1";
+                    itemInfo.Status_Desc = "正常";
+                    if (itemInfo.Create_User_Id == null || itemInfo.Create_User_Id.Equals(""))
+                    {
+                        itemInfo.Create_User_Id = loggingSessionInfo.CurrentUser.User_Id;
+                        itemInfo.Create_Time = GetCurrentDateTime();
+                    }
+                    if (itemInfo.Modify_User_Id == null || itemInfo.Modify_User_Id.Equals(""))
+                    {
+                        itemInfo.Modify_User_Id = loggingSessionInfo.CurrentUser.User_Id;
+                        itemInfo.Modify_Time = GetCurrentDateTime();
+                    }
+
+                    if (itemInfo.OperationType == "ADD")
+                    {
+                        //遍历删除sku相关价格(jifeng.cao 20140224)
+                        IList<SkuInfo> skuList = new SkuService(loggingSessionInfo).GetSkuListByItemId(itemInfo.Item_Id);
+                        if (skuList != null)
+                        {
+                            foreach (var skuInfo in skuList)
+                            {
+                                if (!new SkuPriceService(loggingSessionInfo).DeleteSkuPriceInfo(skuInfo))
+                                {
+                                    strError = "删除sku相关价格失败";
+                                    throw (new System.Exception(strError));
+                                }
+                            }
+                        }
+                    }
+
+                    //处理富文本编辑内容中的图片
+                    ImageHandler(itemInfo);
+                    //处理促销分组
+                    //先把之前的删除掉
+                    ItemCategoryMappingBLL itemCategoryMappingBLL = new ItemCategoryMappingBLL(loggingSessionInfo);
+                    itemCategoryMappingBLL.DeleteByItemID(itemInfo.Item_Id);
+                    //然后加新的                 ;
+                    foreach (var SalesPromotion in itemInfo.SalesPromotionList)
+                    {
+                        SalesPromotion.MappingId = Guid.NewGuid();
+                        SalesPromotion.ItemId = itemInfo.Item_Id;
+
+                     //   SalesPromotion.status = "1";
+                        SalesPromotion.IsDelete = 0;
+                        SalesPromotion.CreateBy = "";
+                        SalesPromotion.CreateTime = DateTime.Now;
+                        SalesPromotion.LastUpdateTime = DateTime.Now;
+                        SalesPromotion.LastUpdateBy = "";
+                        itemCategoryMappingBLL.Create(SalesPromotion);
+                    }
+                   
+
+                    //处理商品的sku基础数据属性
+                    T_ItemSkuPropBLL t_ItemSkuPropBLL = new T_ItemSkuPropBLL(loggingSessionInfo);
+                    //先删除之前的sku基础数据
+                    t_ItemSkuPropBLL.DeleteByItemID(itemInfo.Item_Id);
+                    //再添加新的
+                    if (itemInfo.T_ItemSkuProp != null)
+                    {
+                        T_ItemSkuPropEntity en = new T_ItemSkuPropEntity();
+                        en.ItemSku_prop_1_id = itemInfo.T_ItemSkuProp.prop_1_id;
+                        en.ItemSku_prop_2_id = itemInfo.T_ItemSkuProp.prop_2_id;
+                        en.ItemSku_prop_3_id = itemInfo.T_ItemSkuProp.prop_3_id;
+                        en.ItemSku_prop_4_id = itemInfo.T_ItemSkuProp.prop_4_id;
+                        en.ItemSku_prop_5_id = itemInfo.T_ItemSkuProp.prop_5_id;
+                        en.Item_id = itemInfo.Item_Id;
+                        en.ItemSkuPropID = Guid.NewGuid().ToString();//创建新的ID
+                        en.status = "1";
+                        en.IsDelete = 0;
+                        en.create_user_id = "";
+                        en.create_time = DateTime.Now;
+                        en.modify_time = DateTime.Now;
+                        en.modify_user_id = "";
+                        t_ItemSkuPropBLL.Create(en);
+                    }
+
+                    bool isOld = false;//是否旧版本
+                    itemService.SetItemInfo(itemInfo, out strError, isOld);//使用原来的保存商品的方法
+                }
+                strError = "保存成功!";
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+                    
+        }
+        #endregion
+
+        //更新上下架状态
 
     }
 }

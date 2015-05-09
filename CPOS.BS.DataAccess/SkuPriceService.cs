@@ -210,5 +210,26 @@ namespace JIT.CPOS.BS.DataAccess
                         ";
             return this.SQLHelper.ExecuteDataset(string.Format(sql, itemPriceTypeId, orderId));
         }
+
+
+
+        public DataSet GetSkuPriceByID(string sku_price_id, IDbTransaction pTran)
+        {
+            string sql = @"
+                        SELECT  *
+                        FROM    T_Sku_Price
+                        WHERE   sku_price_id = '{0}'  
+                        ";          
+            
+            if (pTran != null)
+            {
+                return this.SQLHelper.ExecuteDataset((SqlTransaction)pTran, CommandType.Text, string.Format(sql, sku_price_id), null);
+
+            }
+            else
+            {
+                return this.SQLHelper.ExecuteDataset(string.Format(sql, sku_price_id));
+            }
+        }
     }
 }

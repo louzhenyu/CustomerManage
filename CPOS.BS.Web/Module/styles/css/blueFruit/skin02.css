@@ -1,0 +1,137 @@
+.centreArea .commonMenu li {margin-bottom:0px;}
+.centreArea .commonMenu {border-right: 1px solid #ededed;}
+.centreArea .contentArea {border-left: none;}
+/*common*/
+.commonBtn{background:#fe7c24; cursor:pointer;}
+.commonTitle{border-left:4px solid #fe7c24;}
+.commonTitleBox .getBack{background:url(../../images/skin/bg02/getBack.png) no-repeat right center;}
+
+/*表格*/
+.tablehandle .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 90% center}
+.dataTable .title{border-bottom:2px solid #fe7c24;}
+.dataTable .title th{*border-bottom:2px solid #fe7c24;}
+.dataTable .title span{background:url(../../images/skin/bg02/selectIcon02.png) no-repeat right center;}
+.dataTable tr{border-bottom:1px solid #c9d7ec;}
+.dataTable tbody td{*border-bottom:1px solid #fedbc3;}
+.dataTable tbody tr:hover{background:#feebdd;}
+.dataTable tbody tr:hover .joinBtn{background:#fe7c24;}
+.dataTable .checkBox.on em{background:url(../../images/skin/bg02/radio2.png) no-repeat center center;}
+.dataTable .links{color:#fe7c24;}
+.dataTable .operateWrap .editIcon{background:url(../../images/skin/bg02/editIcon.png) no-repeat center center;}
+.dataTable .operateWrap .delIcon{background:url(../../images/skin/bg02/delIcon.png) no-repeat center center;}
+.dataTable .operateWrap .minusIcon{background:url(../../images/skin/bg02/minusIcon.png) no-repeat center center;}
+.dataTable .selectListBox span{color:#fe7c24;}
+/*复选框*/
+.checkBoxWrap label.on{background:url(../../images/skin/bg02/radio3.png) no-repeat left center;}
+/*表格的菜单*/
+.tableMenu a.on{border-bottom:3px solid #fe7c24;color:#fe7c24;}
+/*添加资讯*/
+.addInfoArea .classInput .selectBox{background: #fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 85px center;}
+.addInfoArea .radioBox.on em{background:url(../../images/skin/bg02/radio3.png) no-repeat center center;}
+.topIssuesInfo .getBack{background:url(../../images/skin/bg02/getBack.png) no-repeat right center;}
+/*弹框*/
+.commdialog .row .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 107px center;}
+/*头部的微信，设置信息，退出*/
+/*.commonHeader .setBox{background:url(../../images/skin/bg02/userIcon.png) no-repeat left center;}*/
+.commonMenu li:hover{border-top-right-radius:5px;border-bottom-right-radius:5px;background:#00acee;}
+.commonMenu li:hover a{color:#fff; text-decoration: none;}
+.commonSelectWrap .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 120px center;}
+.selectDateBox p{background:#fbfbfb url(../../images/skin/bg02/dateIcon.png) no-repeat 80px center;}
+.moreQueryWrap .more{background:url(../../images/skin/bg02/moreQuery.png) no-repeat right 4px;color:#2d83cf;}
+/*登录页*/
+.loginState em.on{background:url(../../images/skin/bg02/checkbox03.png) no-repeat 0px center;}
+
+
+/***公共的头部，导航，logo，信息***/
+.commonHeader{height:86px;background: #00acee; border-bottom-width:1px;}
+.commonHeader .handleWrap{ color: #fff;}
+.commonHeader .logoWrap{ margin-top:15px;}
+/*adminIcon 的margin-top是 右侧文件的line-height减去自身高度/2 所以两个必须是偶数防止不一致*/
+.commonHeader .adminIcon{margin-top: 14px; float: left; width:46px; margin-right:12px; height:32px;border-left: 1px solid #fff;background:url(../../images/blueFruit/Adminicon.png) no-repeat center right}
+.commonHeader .logo{background:url(../../images/blueFruit/logo.png) no-repeat 0 0;}
+.commonHeader .setBox p{background:url(../../images/blueFruit/jiantou.png) no-repeat center right; padding-right: 15px;}
+.commonNav li {  margin-right:18px; }
+.commonNav li a{color:#fff;}
+.commonNav li.on a{color:#fe7c24;}
+
+
+.commonNav .nav001 a{background:url(../../images/blueFruit/bg02/nav007.png) no-repeat 0 center;}
+.commonNav .nav002 a{background:url(../../images/blueFruit/bg02/nav001.png) no-repeat 0 center;}
+.commonNav .nav003 a{background:url(../../images/blueFruit/bg02/nav002.png) no-repeat 0 center;}
+.commonNav .nav004 a{background:url(../../images/blueFruit/bg02/nav003.png) no-repeat 0 center;}
+.commonNav .nav005 a{background:url(../../images/blueFruit/bg02/nav006.png) no-repeat 0 center;}
+.commonNav .nav006 a{background:url(../../images/blueFruit/bg02/nav008.png) no-repeat 0 center;}
+.commonNav .nav007 a{background:url(../../images/blueFruit/bg02/nav004.png) no-repeat 0 center;}
+.commonNav .nav008 a{background:url(../../images/blueFruit/bg02/nav005.png) no-repeat 0 center;}
+
+.commonNav .nav001.on a{background:url(../../images/blueFruit/bg02/on-nav007.png) no-repeat 0 center;}
+.commonNav .nav002.on a{background:url(../../images/blueFruit/bg02/on-nav001.png) no-repeat 0 center;}
+.commonNav .nav003.on a{background:url(../../images/blueFruit/bg02/on-nav002.png) no-repeat 0 center;}
+.commonNav .nav004.on a{background:url(../../images/blueFruit/bg02/on-nav003.png) no-repeat 0 center;}
+.commonNav .nav005.on a{background:url(../../images/blueFruit/bg02/on-nav006.png) no-repeat 0 center;}
+.commonNav .nav006.on a{background:url(../../images/blueFruit/bg02/on-nav008.png) no-repeat 0 center;}
+.commonNav .nav007.on a{background:url(../../images/blueFruit/bg02/on-nav004.png) no-repeat 0 center;}
+.commonNav .nav008.on a{background:url(../../images/blueFruit/bg02/on-nav005.png) no-repeat 0 center;}
+/*全局菜单*/
+.commonMenu li.on a{color:#00acee;}
+.commonMenu li.on:hover a{color:#fff;}
+
+/******查询*****/
+/*头部简单查询*/
+.queryTermArea{min-height:73px;padding:10px 20px 0 0px;border:1px solid #d8d8d8;background:#fbfbfb; margin-bottom:0px;}
+.queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; }
+.commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
+.commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}
+.commonSelectWrap .endTime .tit{width:15px;}
+.commonSelectWrap .endTime .selectBox{margin-left:22px;}
+.commonSelectWrap .selectBox{ float:left;margin-left:5px;width:161px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../images/moreIcon.png) no-repeat 96% center;cursor:pointer;}
+.commonSelectWrap .selectBox .text{display:block;width:150px;line-height:31px;text-indent:5px;}
+.commonSelectWrap .selectList{position:relative;display:none;top:10px;left:-1px;width:161px;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:100;}
+.commonSelectWrap .selectList p{line-height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
+.commonSelectWrap .selectList p:hover{background:#f1f1f1;}
+/*.commonSelectWrap .selectBox:hover{position:relative;}*/
+/*.commonSelectWrap .selectList{display:block;}*/
+.commonSelectWrap .searchInput{display:block;float:left;width:161px;height:31px;line-height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
+.commonSelectWrap .searchInput input{float:left;width:100%;height:29px;border:none;color:#666;}
+
+
+/*登录页*/
+.loginPage .name{background:url(../../images/blueFruit/bg02/loginLogo.png) no-repeat left center;}
+.loginFooterMenu .item01{background:url(../../images/blueFruit/bg02/item01.png) no-repeat center 50px;}
+.loginFooterMenu .item02{background:url(../../images/blueFruit/bg02/item02.png) no-repeat center 50px;}
+.loginFooterMenu .item03{background:url(../../images/blueFruit/bg02/item03.png) no-repeat center 50px;}
+.loginFooterMenu .item04{background:url(../../images/blueFruit/bg02/item04.png) no-repeat center 50px;}
+.loginFooterMenu .item05{background:url(../../images/blueFruit/bg02/item05.png) no-repeat center 50px;}
+
+
+/**********______easyui 样式重构部分 所有修改公共样式的都要在这里重写________*********/
+/*表格边框*/
+.datagrid-header td,
+.datagrid-body td,
+.datagrid-footer td {
+    border-color: #acdff2;
+}
+
+.datagrid-header{border-color:#55c8f4;}
+.datagrid{ border:1px solid #eee;}
+.imgTable .datagrid-header-row{ height: 50px;line-height: 50px;}
+.imgTable .datagrid-row {
+    height:100px;
+}
+.tree-folder {
+    /* background: url('images/tree_icons.png') no-repeat -208px 0; */
+    background: none;
+}
+.tree-folder-open {
+    /* background: url('images/tree_icons.png') no-repeat -224px 0; */
+    background: none;
+}
+.tree-file {
+    /* background: url('images/tree_icons.png') no-repeat -240px 0; */
+    background: none;
+}
+ .tree-folder, .tree-file{
+    width:0px;
+}
+.tree-indent{ width: 5px;}
+.tree-title{ font-size: 14px;}

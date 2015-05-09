@@ -26,12 +26,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.ItemCategory.Handler
         protected override void AjaxRequest(HttpContext pContext)
         {
             string content = "";
+       
             switch (pContext.Request.QueryString["method"])
             {
                 case "search_item_category":    //获取商品分类
                     content = GetItemCategoryListData();
                     break;
-                case "get_item_category_by_id": //根据ID获取商品分类信息
+                case "get_item_category_by_id": //根据ID获取商品分类信息****
                     content = GetItemCategoryByID();
                     break;
                 case "save_item_category":      //保存商品分类信息

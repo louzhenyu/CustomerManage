@@ -195,17 +195,126 @@ where 1=1   ");
         /// </summary>
         /// <param name="itemInfo"></param>
         /// <returns></returns>
-        public bool SetSkuInfo(ItemInfo itemInfo)
+        public bool SetSkuInfo(ItemInfo itemInfo, IDbTransaction pTran, out string strError)
         {
-            using (IDbTransaction tran = this.SQLHelper.CreateTransaction())
-            {
+           var skupriceService=  new SkuPriceService(loggingSessionInfo);
+            //using (IDbTransaction tran = this.SQLHelper.CreateTransaction())
+            //{
                 try
                 {
+
+
+
+
                     //修改sku下载标志
-                    UpdateSkuFlag(itemInfo, tran);
+                    UpdateSkuFlag(itemInfo, pTran);
 
                     if (itemInfo.SkuList != null)
                     {
+
+
+                        // T_Item_Price_Type
+                        var priceTypeService = new ItemPriceTypeService(loggingSessionInfo);
+                        var priceTypeList = priceTypeService.GetItemPriceTypeList();
+                        //
+                        var skustockTypeId = "";//库存id
+                        var skusalesCountTypeId = "";//销量id
+                        if (priceTypeList != null && priceTypeList.Tables.Count != 0)
+                        {
+                            var priceTypeTable = priceTypeList.Tables[0];
+                            foreach (DataRow row in priceTypeTable.Rows)
+                            {
+                                if (row["item_price_type_code"] != null && row["item_price_type_code"].ToString() == "库存")
+                                {
+                                    skustockTypeId = row["item_price_type_id"].ToString();
+                                }
+                                if (row["item_price_type_code"] != null && row["item_price_type_code"].ToString() == "销量")
+                                {
+                                    skusalesCountTypeId = row["item_price_type_id"].ToString();
+                                }
+                            }
+                        }
+                        //还要遍历看看商品的库存和销量
+                        var ItemStockPropId = "";//库存id
+                        var ItemsalesCountPropId = "";//销量id
+                        var propService = new PropService(loggingSessionInfo);
+                        //
+                        PropInfo pro1 = new PropInfo();
+                        pro1.Prop_Code = "Qty";
+                        pro1.Prop_Domain = "ITEM";
+                        pro1.Prop_Type = "2";
+                        var pro1DataSet = propService.GetWebProp(pro1, 0, 10);
+                        if (pro1DataSet != null && pro1DataSet.Tables.Count != 0)
+                        {
+                            var pro1Table = pro1DataSet.Tables[0];
+                            if (pro1Table.Rows.Count > 0)
+                            {
+                                ItemStockPropId = pro1Table.Rows[0]["prop_id"].ToString();
+                            }
+                        }
+
+                        //
+                        PropInfo pro2 = new PropInfo();
+                        pro2.Prop_Code = "SalesCount";
+                        pro2.Prop_Domain = "ITEM";
+                        pro2.Prop_Type = "2";
+                        var pro2DataSet = propService.GetWebProp(pro2, 0, 10);
+                        if (pro2DataSet != null && pro2DataSet.Tables.Count != 0)
+                        {
+                            var pro2Table = pro2DataSet.Tables[0];
+                            if (pro2Table.Rows.Count > 0)
+                            {
+                                ItemsalesCountPropId = pro2Table.Rows[0]["prop_id"].ToString();
+                            }
+                        }
+
+                        //商品的属性****
+                        ItemPropService itemPropService = new ItemPropService(loggingSessionInfo);
+                        var ds = itemPropService.GetItemPropListByItemId(itemInfo.Item_Id,pTran);//绑到事务里
+                        var stockItemProp = new ItemPropInfo();
+                        var SalesCountProp = new ItemPropInfo();
+                        if (ds != null && ds.Tables.Count != 0)
+                        {
+                            var dt = ds.Tables[0];
+                            var drs = dt.Select(" PropertyCodeId='" + ItemStockPropId + "'");//原来prop_id
+                            if (drs != null && drs.Length != 0)
+                            {
+                                var row=drs[0];
+                                stockItemProp.Item_Property_Id = row["item_property_id"].ToString();
+                                try
+                                {
+                                    stockItemProp.PropertyCodeValue = row["PropertyCodeValue"].ToString();//库存属性之
+                                    int temp = Convert.ToInt32(row["PropertyCodeValue"].ToString());
+                                }
+                                catch {
+                                    stockItemProp.PropertyCodeValue ="0";
+                                }
+                            }
+                            //
+                            var drs2 = dt.Select(" PropertyCodeId='" + ItemsalesCountPropId + "'");
+                            if (drs2 != null && drs2.Length != 0)
+                            {
+                                var row = drs2[0];
+                                SalesCountProp.Item_Property_Id = row["item_property_id"].ToString();
+                                try
+                                {
+                                    SalesCountProp.PropertyCodeValue = row["PropertyCodeValue"].ToString();
+                                    int temp = Convert.ToInt32(row["PropertyCodeValue"].ToString());//出异常时，就为0
+                                }
+                                catch
+                                {
+                                    SalesCountProp.PropertyCodeValue = "0";//销量属性
+                                }
+                            }
+
+                        }
+
+
+
+                        decimal stockCountTemp = 0;
+                        decimal salesCountTemp = 0;
+
+
                         foreach (SkuInfo skuInfo in itemInfo.SkuList)
                         {
                             if (skuInfo.item_id == null) skuInfo.item_id = itemInfo.Item_Id;
@@ -214,27 +323,63 @@ where 1=1   ");
                             if (skuInfo.modify_user_id == null || skuInfo.modify_user_id.Equals("")) skuInfo.modify_user_id = itemInfo.Create_User_Id;
                             if (skuInfo.create_time == null || skuInfo.create_time.Equals("")) skuInfo.create_time = GetCurrentDateTime();
                             if (skuInfo.create_user_id == null || skuInfo.create_user_id.Equals("")) skuInfo.create_user_id = itemInfo.Create_User_Id;
-                            UpdateSku(skuInfo, tran);//修改
-                            InsertSku(skuInfo, tran);//删除
+                            UpdateSku(skuInfo, pTran);//修改
+                            InsertSku(skuInfo, pTran);//删除
+
+
+
 
                             //处理sku相关价格信息(jifeng.cao 20140224)
                             foreach (SkuPriceInfo skuPriceInfo in skuInfo.sku_price_list)
                             {
                                 if (skuPriceInfo.sku_price != -1)
                                 {
+                                    decimal oldPrice = 0;
+                                    if (!string.IsNullOrEmpty(skuPriceInfo.sku_price_id))
+                                    {
+                                        var skuPriceInfoTemp = skupriceService.GetSkuPriceByID(skuPriceInfo.sku_price_id, pTran);
+                                        if (skuPriceInfoTemp != null && skuPriceInfoTemp.Tables.Count != 0 && skuPriceInfoTemp.Tables[0].Rows.Count!=0)
+                                        {
+                                            oldPrice=Convert.ToDecimal( skuPriceInfoTemp.Tables[0].Rows[0]["sku_price"]);
+                                        }
+                                    }
+
                                     if (skuPriceInfo.sku_id == null) skuPriceInfo.sku_id = skuInfo.sku_id;
-                                    if (skuPriceInfo.sku_price_id == null || skuPriceInfo.sku_price_id.Equals("")) skuPriceInfo.sku_price_id = NewGuid();
+                                    if (skuPriceInfo.sku_price_id == null || skuPriceInfo.sku_price_id.Equals("")) skuPriceInfo.sku_price_id = NewGuid();//如果是新建
                                     if (skuPriceInfo.modify_time == null || skuPriceInfo.modify_time.Equals("")) skuPriceInfo.modify_time = GetCurrentDateTime();
                                     if (skuPriceInfo.modify_user_id == null || skuPriceInfo.modify_user_id.Equals("")) skuPriceInfo.modify_user_id = skuInfo.create_user_id;
                                     if (skuPriceInfo.create_time == null || skuPriceInfo.create_time.Equals("")) skuPriceInfo.create_time = GetCurrentDateTime();
                                     if (skuPriceInfo.create_user_id == null || skuPriceInfo.create_user_id.Equals("")) skuPriceInfo.create_user_id = skuInfo.create_user_id;
-                                    new SkuPriceService(loggingSessionInfo).UpdateSkuPrice(skuPriceInfo, tran);//修改
-                                    new SkuPriceService(loggingSessionInfo).InsertSkuPrice(skuPriceInfo, tran);//删除
+                                    new SkuPriceService(loggingSessionInfo).UpdateSkuPrice(skuPriceInfo, pTran);//修改
+                                    new SkuPriceService(loggingSessionInfo).InsertSkuPrice(skuPriceInfo, pTran);//删除
+                                    // skuPriceInfo.item_price_type_name==
+                                    //skuPriceInfo
+                                    //判断如果是库存的,并且当前sku的price_type_type_id=获取到的库存类型的id，并且商品里有库存
+                                    if (skustockTypeId != "" && skuPriceInfo.item_price_type_id == skustockTypeId && ItemStockPropId != "")
+                                    {
+                                        //找出该商品对应的库存的属性
+                                        stockCountTemp += skuPriceInfo.sku_price - oldPrice;
+                                    }
+
+
+                                    //如果是销量的
+                                    if (skusalesCountTypeId != "" && skuPriceInfo.item_price_type_id == skusalesCountTypeId && ItemsalesCountPropId != "")
+                                    {
+                                        //找出该商品对应的库存的属性
+                                        salesCountTemp += skuPriceInfo.sku_price - oldPrice;
+                                    }
+
                                 }
                             }
 
                         }
+                        stockItemProp.PropertyCodeValue = (Convert.ToDecimal(stockItemProp.PropertyCodeValue) + stockCountTemp)+"";
+                        SalesCountProp.PropertyCodeValue = (Convert.ToDecimal(SalesCountProp.PropertyCodeValue) + salesCountTemp) + "";
+                        //更新数据
+                        itemPropService.updateValue(stockItemProp.Item_Property_Id, stockItemProp.PropertyCodeValue, pTran);
+                        itemPropService.updateValue(SalesCountProp.Item_Property_Id, SalesCountProp.PropertyCodeValue, pTran);
                     }
+                    //图片
 
                     if (itemInfo.SkuImageList != null && itemInfo.SkuImageList.Count > 0)
                     {
@@ -257,15 +402,18 @@ where 1=1   ");
                         }
                     }
 
-                    tran.Commit();
-                    return true;
+                //    tran.Commit();
+                    strError = "";
+                  return true;
                 }
                 catch (Exception ex)
                 {
-                    tran.Rollback();
-                    throw (ex);
+                    strError = "";
+                    return false;
+                    //tran.Rollback();
+                    //throw (ex);
                 }
-            }
+           // }
         }
         /// <summary>
         /// 更改下载标志
@@ -523,7 +671,7 @@ where 1=1   ");
                         AND a.ItemId = '{0}'
                         AND a.EventId = '{1}'
                         AND c.status ='1'";
-            return this.SQLHelper.ExecuteDataset(string.Format(sql,itemId,eventId));
+            return this.SQLHelper.ExecuteDataset(string.Format(sql, itemId, eventId));
         }
 
         #endregion

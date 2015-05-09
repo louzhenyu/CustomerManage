@@ -42,6 +42,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql = sql + "select "
                       + " a.item_id "
                       + " ,a.item_category_id "
+                      + ",(select top 1 ImageURL from objectimages b where b.ObjectId=a.item_id order by displayindex) as  Image_Url"
                       + " ,a.item_code "
                       + " ,a.item_name "
                       + " ,a.item_name_en "
@@ -58,7 +59,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,(select item_category_code from T_Item_Category x where x.item_category_id = a.item_category_id) item_category_code "
                       + " ,(select user_name from t_user x where x.user_id = a.create_user_id) create_user_name "
                       + " ,(select user_name from t_user x where x.user_id = a.modify_user_id) modify_user_name "
-                      + " ,case when a.status = '1' then '正常' else '删除' end status_desc "
+                      + " ,case when a.status = '1' then '上架' else '下架' end status_desc "
                       + " ,b.row_no "
                       + " ,@iCount icount "
                       + " ,a.ifgifts "
@@ -71,6 +72,18 @@ namespace JIT.CPOS.BS.DataAccess
                       + @",(   select case when prop_value=null or  prop_value='' then 'false' when GETDATE()>prop_value then 'true' else 'false' end  from  t_prop as tp
                            left join T_Item_Property  as tip on tip.prop_id=tp.prop_id and prop_code ='EndTime'
                            where  tp.prop_code ='EndTime' and item_id=a.item_id ) isPause"
+                      + @" ,(  select  prop_value  from  t_prop as tp
+                           left join T_Item_Property  as tip on tip.prop_id=tp.prop_id 
+                           where  tp.prop_code ='Qty' and item_id=a.item_id ) stock
+                           ,	(  select  prop_value  from  t_prop as tp
+                           left join T_Item_Property  as tip on tip.prop_id=tp.prop_id 
+                           where  tp.prop_code ='SalesCount' and item_id=a.item_id ) SalesCount
+                           ,
+                           (select min(sku_price) from T_Sku_Price x inner join t_sku y on x.sku_id=y.sku_id 
+                           where y.item_id=a.item_id   
+							and item_price_type_id=(select item_price_type_id from T_Item_Price_Type where item_Price_type_code='零售价')
+                           ) as minPrice
+                           ,dbo.GetSalesPromotion(a.item_id) as SalesPromotion"
                       + " From T_Item a "
                       + "inner join @TmpTable b "
                       + "on(a.Item_Id = b.Item_Id) "
@@ -107,6 +120,10 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
                 sql += " where 1=1 ";
+            if (_ht["SalesPromotion_id"].ToString() != "")
+            {
+                sql += " and exists (select * from ItemCategoryMapping cate where cate.ItemId=a.item_id and cate.isdelete=0 and cate.ItemCategoryId='" + _ht["SalesPromotion_id"].ToString() + "')";
+            }
 
             sql = pService.GetLinkSql(sql, "a.item_code", _ht["item_code"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.item_name", _ht["item_name"].ToString(), "%");
@@ -227,7 +244,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="itemInfo"></param>
         /// <param name="strError"></param>
         /// <returns></returns>
-        public bool SetItemInfo(ItemInfo itemInfo, out string strError)
+        public bool SetItemInfo(ItemInfo itemInfo, out string strError,bool isOld)
         {
             using (IDbTransaction tran = this.SQLHelper.CreateTransaction())
             {
@@ -258,8 +275,8 @@ namespace JIT.CPOS.BS.DataAccess
                             throw (new System.Exception(strError));
                         }
                     }
-                    //3 处理商品价格属性
-                    if (!new ItemPropService(loggingSessionInfo).SetItemPropInfo(itemInfo, tran, out strError))
+                    //3 处理商品属性
+                    if (!new ItemPropService(loggingSessionInfo).SetItemPropInfo(itemInfo, tran, out strError))//在事务里
                     {
                         throw (new System.Exception(strError));
                     }
@@ -269,10 +286,10 @@ namespace JIT.CPOS.BS.DataAccess
                         throw (new System.Exception(strError));
                     }
                     //5.处理sku
-                    if (itemInfo.OperationType=="ADD") 
+                    if ((isOld==false) || ( isOld  &&itemInfo.OperationType=="ADD")) //新版本或者旧版本状态下的添加模式
                     //只有再新增的情况下更新sku，因为修改时及时跟新 modify  by donal 2014-10-13 09:29:00
                     {
-                        if (!new SkuService(loggingSessionInfo).SetSkuInfo(itemInfo))
+                        if (!new SkuService(loggingSessionInfo).SetSkuInfo(itemInfo, tran, out strError))
                         {
                             strError = "处理SKU信息失败";
                             throw (new System.Exception(strError));
@@ -290,10 +307,12 @@ namespace JIT.CPOS.BS.DataAccess
                         throw (new System.Exception(strError));
                     }
                     //8.处理商品与分类关系
+                    /**
                     if (!new ItemPriceService(loggingSessionInfo).SetItemCategoryInfo(itemInfo, tran, out strError))
                     {
                         throw (new System.Exception(strError));
                     }
+                     * **/
                     tran.Commit();
                     strError = "成功";
                     return true;
@@ -1358,5 +1377,10 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(sql.ToString());
 
         }
+
+
+
+        //新版本保存商品信息
+
     }
 }

@@ -19,6 +19,9 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         public RoleCodeInfo[] RoleCodeList { get; set; }
         //用户汇集店ID
         public string UnitId { get; set; }
+           //用户汇集店ID
+        public string UnitName { get; set; }
+        
         /// <summary>
         /// app权限code数组
         /// </summary>

@@ -1050,6 +1050,7 @@
     <Content Include="ApplicationInterface\Services\ServiceGateway.ashx" />
     <Content Include="ApplicationInterface\Project\HuaAn\HuaAnRetCallbackHandler.ashx" />
     <Content Include="ApplicationInterface\Customer\CloudGateway.ashx" />
+    <Content Include="ApplicationInterface\AllWin\SellUser.ashx" />
     <None Include="HtmlApp\Demo\images\Thumbs.db" />
     <None Include="HtmlApp\LJ\images\Thumbs.db" />
     <Content Include="log4net.config">
@@ -2080,6 +2081,9 @@
       <DependentUpon>download.aspx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\ActionHandlerFactory.cs" />
+    <Compile Include="ApplicationInterface\AllWin\SellUser.ashx.cs">
+      <DependentUpon>SellUser.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\AppVersion\AppVersionGateway.ashx.cs">
       <DependentUpon>AppVersionGateway.ashx</DependentUpon>
     </Compile>

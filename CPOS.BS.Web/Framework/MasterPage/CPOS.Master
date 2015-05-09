@@ -33,17 +33,28 @@
         window.apiurl = apiurl;
 </script>
 
-   <link href="<%=StaticUrl+"/module/styles/css/reset-pc.css?v=0.4"%>"  rel="stylesheet" />
-    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.5"%>"  rel="stylesheet" />
-    <link href="<%=StaticUrl+"/module/styles/css/alading/skin02.css?v=0.5"%>" rel="stylesheet" />
+     <%--模板 公共样式strart--%>
+    <link href="<%=StaticUrl+"/module/styles/css/reset-pc.css?v=0.4"%>" rel="stylesheet"  />
+    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.5"%>" rel="stylesheet" />
+    <link href="<%=StaticUrl+"/module/static/css/easyui.css"%>" rel="stylesheet" type="text/css" />
+      <%--弹框--%>
+    <link href="<%=StaticUrl+"/module/static/css/artDialog.css"%>" rel="stylesheet" type="text/css" /> 
+    
+     <%--模板 公共样式end--%>
 
+      <%--模板 样式strart 切换模板样式只要更改/alading/skin02.css?v=0.5  alading qixin  college 只要三个模板 --%>
+    <link href="<%=StaticUrl+"/module/styles/css/blueFruit/skin02.css?v=0.5"%>" rel="stylesheet" />
+      <%--模板 样式End--%>
+    <%--mvc 样式strart--%>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="<%=StaticUrl+"/framework/css/reset.css"%>" rel="stylesheet" type="text/css" />
     <link href="<%=StaticUrl+"/framework/css/style.css"%>" rel="stylesheet" type="text/css" />
     <link href="<%=StaticUrl+"/framework/css/webcontrol.css"%>" rel="stylesheet" type="text/css" />
-    <!-- javaScript -->
+     <%--mvc 样式end--%>
+    <!-- javaScript ddd -->
     <%--<script type="text/javascript" src="/framework/javascript/Other/jquery-1.4.2.min.js"></script>--%>
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/AppConfig/lib/jquery-1.8.3.min.js" %>"></script>
+    <script type="text/javascript" src="<%=StaticUrl+"/Module/AppConfig/lib/jquery-1.8.3.min.js" %>"></script>
+       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/plugin/artDialog.js" %>"></script>
     <%--<script type="text/javascript" src="/framework/javascript/Other/menu.js"></script>--%>
     <!--[if IE 6]>
 <script type="text/javascript" src="js/png.js"></script>
@@ -62,7 +73,6 @@
     <script src="<%=StaticUrl+"/Framework/Javascript/Utility/JITPage.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/Button.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/Unit.js"%>" type="text/javascript"></script>
-
     <%--
     <script src="/Framework/javascript/Biz/SupplierUnit.js" type="text/javascript"></script>
     <script src="/Framework/javascript/Biz/OrderStatus.js" type="text/javascript"></script>
@@ -80,8 +90,8 @@
         <div class="allPage">
             <!-- 公共的头部，导航，logo，信息 -->
             <div class="commonHeader">
-                <div class="handleWrap">
-                   <%--未审核订单 <%
+            <div class="handleWrap">
+                <%--未审核订单 <%
                         bool haslink = false;
                         var level1 = from c in MenuList where c.Parent_Menu_Id == "--" select c;  //在这里取父节点为空的
                         foreach (var n in level1)
@@ -101,30 +111,28 @@
                             }
                         } 
             %>           --%>
-              <div style="float: left;height: 20px;line-height: 60px;font-size: 12px;cursor: default;white-space: nowrap;" id="unitName">
-                        
-             </div>
-                  <div class="qrBox">
-                        <div class="qrBox-tip">
-                            <img src="/module/styles/images/qrImg.jpg" />
-                        </div>
-                    </div>
-
-                    <div class="setBox">
-                    <p id="lblLoginUserName" runat="server">登陆用户</p>
-                        <div class="setBox-tip" style="border-bottom:2px solid #ccc;height:120px;border-radius:5px;">
-
-                           <%-- <a href="###">个人信息</a>
-                            <a href="###">系统通知(1)</a>--%>
-                            <%--    <a href="#" class="fl mr25 nava3" onclick="fnChangePwd()">修改密码</a>--%>
-                            <span class="commonBtn safetyOutBtn">
-                                <a href="#" onclick="fnChangePwd();" >修改密码</a>
-                            </span>
-                            <span class="commonBtn safetyOutBtn"><a href="/default.aspx?method=LogOut">安全退出</a>
-                            </span>
-                        </div>
+                <div class="adminIcon">
+                </div>
+                <div class="unitName" id="unitName">
+                </div>
+                <div class="qrBox" style="display: none">
+                    <div class="qrBox-tip">
+                        <img src="/module/styles/images/qrImg.jpg" />
                     </div>
                 </div>
+                <div class="setBox">
+                    <p id="lblLoginUserName" runat="server">
+                        登陆用户</p>
+                    <div class="setBox-tip">
+                        <%-- <a href="###">个人信息</a>
+                            <a href="###">系统通知(1)</a>--%>
+                        <%--    <a href="#" class="fl mr25 nava3" onclick="fnChangePwd()">修改密码</a>--%>
+                        <span class="commonBtn safetyOutBtn"><a href="#" onclick="fnChangePwd();">修改密码</a>
+                        </span><span class="commonBtn safetyOutBtn"><a href="/default.aspx?method=LogOut">安全退出</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
                 <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="LOGO">
                     <img id="img_logo" src="/module/styles/images/alading/logo.png" alt="LOGO" />
                         <%--<div class="arr"></div>--%>
@@ -183,25 +191,26 @@
             <!-- 中间区域-->
             <div class="centreArea">
                 <!-- 公共的菜单部分-->
-                <div class="commonMenu" id="leftMenu">
-                    <ul>
-                        <%
-                            //   var level2Menu = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
-                            var level2Menu = from c in MenuList where c.Parent_Menu_Id == PMenuID select c; ;//要从后台取出当前的PMenuID
-                            int j = 0;
-                            foreach (var m in level2Menu)
-                            {
-                                j++;
-                                var urlPath = m.Url_Path;
-                                var result = false;
-                                result = (urlPath.IndexOf("?") >= 0);
-                                Response.Write(string.Format("<li class=\"{3} \"><a style='text-align:left;'  id=\"{0}\" href=\"{1}\" title=\"{2}\">{2}</a></dt>",
-                                    m.Menu_Id, (result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID)), m.Menu_Name
-                                    , "menu" + (j.ToString().PadLeft(3, '0'))));
+                
+                 <div class="commonMenu" id="leftMenu">
+                <ul>
+                    <%
+                        //   var level2Menu = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
+                        var level2Menu = from c in MenuList where c.Parent_Menu_Id == PMenuID select c; ;//要从后台取出当前的PMenuID
+                        int j = 0;
+                        foreach (var m in level2Menu)
+                        {
+                            j++;
+                            var urlPath = m.Url_Path;
+                            var result = false;
+                            result = (urlPath.IndexOf("?") >= 0);
+                            Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\" class=\"{3}\" href=\"{1}\" title=\"{2}\">{2}</a></dt>",
+                                m.Menu_Id, (result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID)), m.Menu_Name
+                                , m.Icon_Path != "" ? m.Icon_Path : "icon", "menu" + (j.ToString().PadLeft(3, '0'))));
 
-                            }
-                        %>
-                        <%--<li class="menu001">
+                        }
+                    %>
+                    <%--<li class="menu001">
 						<a href="###">活动管理</a>
 					</li>
 					<li class="menu002 on">
@@ -225,8 +234,8 @@
 					<li class="menu008">
 						<a href="###">门店奖励</a>
 					</li>--%>
-                    </ul>
-                </div>
+                </ul>
+            </div>
                 <!-- 内容区域 -->
                 <div class="contentArea" style="padding: 20px;" id="contentArea">
                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

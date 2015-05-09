@@ -56,7 +56,8 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
         /// </summary>
         protected string ToggoleItemCategoryStatus()
         {
-            string res = "{success:false}";
+           // string res = "{success:false}";
+            var rsp = new ResponseData();
             string checkRes = "";
 
             var bll = new ItemCategoryService(this.CurrentUserInfo);
@@ -68,14 +69,17 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
 
                 if (!string.IsNullOrEmpty(checkRes))
                 {
-                    res = "{success:false,msg:\"" + checkRes + "\"}";
+                   // res = "{success:false,msg:\"" + checkRes + "\"}";
+                    rsp.success = false;
+                    rsp.msg = checkRes;
                 }
                 else
                 {
-                    res = "{success:true}";
+                   // res = "{success:true}";
+                    rsp.success = true;
                 }
             }
-            return res;
+            return rsp.ToJSON();
         }
 
         /// <summary>
@@ -120,7 +124,7 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
         protected string GetAllItemCategories()
         {
             var bll = new ItemCategoryService(this.CurrentUserInfo);
-            var list = bll.GetItemCagegoryList("");
+            var list = bll.GetItemCagegoryList("", "");
             return list.ToJSON();
         }
 
@@ -134,7 +138,7 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
             var rsp = new ResponseData();
             if (data != null)
             {
-                IList<ItemCategoryInfo> listdata = bll.GetItemCagegoryList("");//获取所有类别
+                IList<ItemCategoryInfo> listdata = bll.GetItemCagegoryList("", "");//获取所有类别
 
                 if (Searchtype(listdata, data.Item_Category_Id, data.Parent_Id))
                 {
@@ -162,6 +166,7 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                     rsp.msg = "上级分类不能为空";
                     return rsp.ToJSON();
                 }
+
                 data.Create_User_Id = CurrentUserInfo.CurrentUser.User_Id;
                 data.Create_Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 data.Create_User_Name = CurrentUserInfo.CurrentUser.User_Name;
