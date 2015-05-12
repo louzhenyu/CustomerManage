@@ -403,7 +403,8 @@ namespace JIT.CPOS.BS.DataAccess
                     if (!IsExistWarehouseCode(warehouseInfo.wh_code, warehouseInfo.warehouse_id, tran))
                     {
                         strError = "编码已经存在。";
-                        throw (new System.Exception(strError));
+                        //throw (new System.Exception(strError));
+                        return true;
                     }
                     //插入仓库
                     if (!SetWarehouseInsert(warehouseInfo, tran))

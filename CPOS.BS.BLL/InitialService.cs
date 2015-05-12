@@ -79,7 +79,7 @@ namespace JIT.CPOS.BS.BLL
             userInfo.User_Code = "admin";
             userInfo.User_Name = "管理员";
             userInfo.User_Gender = "1";
-            userInfo.User_Password = "jit15d!";
+            userInfo.User_Password = "888888";
             userInfo.User_Status = "1";
             userInfo.User_Status_Desc = "正常";
             userInfo.strDo = "Create";
@@ -238,8 +238,12 @@ namespace JIT.CPOS.BS.BLL
                 #endregion
 
                 #region 处理门店
-               
+
                 storeInfo.Id = unitShopInfo.Id;
+                if (string.IsNullOrEmpty(unitShopInfo.Id))
+                {
+                    storeInfo.Id = BaseService.NewGuidPub();
+                }
                 storeInfo.TypeId = "EB58F1B053694283B2B7610C9AAD2742";
                 storeInfo.Code = customerInfo.Code;
                 storeInfo.Name = customerInfo.Name;

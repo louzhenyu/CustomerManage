@@ -286,6 +286,7 @@ namespace JIT.CPOS.BS.BLL
 
                     }
                     utInfo.Id = ToStr(unitInfo.Id);
+                    utInfo.unit_id = unitInfo.Id;
                     utInfo.Code = ToStr(unitInfo.Code);
                     utInfo.Name = ToStr(unitInfo.Name);
                     utInfo.EnglishName = ToStr(unitInfo.EnglishName);

@@ -121,7 +121,7 @@ namespace JIT.CPOS.BS.Web.Login
             login_user.User_Password = null;
             //string go_url = "~/login/SelectRoleUnit.aspx?p=0";
             string go_url = "~/Default.aspx";
-            if (loggingSession.CurrentUserRole.RoleId == "860E69754D3B490F8A5B401DF3F66E15")
+            if (loggingSession.CurrentUserRole != null && loggingSession.CurrentUserRole.RoleId == "860E69754D3B490F8A5B401DF3F66E15")
             {
                 string eventId = string.Empty;
                 //switch (loggingSession.CurrentUserRole.UserId.Trim())

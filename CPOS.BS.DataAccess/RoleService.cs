@@ -52,7 +52,7 @@ namespace JIT.CPOS.BS.DataAccess
                     if (IsExistRoleCode(roleInfo.Role_Code, roleInfo.Role_Id))
                     {
                         strError = "角色号码已经存在。";
-                        throw (new System.Exception(strError));
+                        //throw (new System.Exception(strError));
                     }
                     //2.1更新角色信息
                     if (!SetRoleUpdate(roleInfo, tran))

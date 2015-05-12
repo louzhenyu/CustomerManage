@@ -468,7 +468,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
         {
             string sql = "select count(*) From t_unit where 1=1 and customer_id = '" + CurrentUserInfo.ClientID + "' and unit_code = '" + unit_code + "'";
 
-            if (!unit_id.Equals(""))
+            if (!string.IsNullOrEmpty(unit_id))
             {
                 sql = sql + " and unit_id != '" + unit_id + "' ";
             }

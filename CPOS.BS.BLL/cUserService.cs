@@ -252,12 +252,12 @@ namespace JIT.CPOS.BS.BLL
                     strDo = "Create";
                 }
                 //1 判断用户号码是否唯一
-                if (!IsExistUserCode( userInfo.User_Code, userInfo.User_Id))
-                {
-                    strError = "用户号码已经存在。";
-                    bReturn = false;
-                    return bReturn;
-                }
+                //if (!IsExistUserCode( userInfo.User_Code, userInfo.User_Id))
+                //{
+                //    strError = "用户号码已经存在。";
+                //    bReturn = false;
+                //    return bReturn;
+                //}
                 //2.提交用户信息至表单
                 if (strDo.Equals("Create"))
                 {
