@@ -283,7 +283,8 @@ where 1=1   ");
                                 stockItemProp.Item_Property_Id = row["item_property_id"].ToString();
                                 try
                                 {
-                                    stockItemProp.PropertyCodeValue = row["PropertyCodeValue"].ToString();//库存属性之
+                                    //stockItemProp.PropertyCodeValue = row["PropertyCodeValue"].ToString();//库存属性值,
+                                    stockItemProp.PropertyCodeValue ="0" ;//赋值为0的原因是，不让数据叠加
                                     int temp = Convert.ToInt32(row["PropertyCodeValue"].ToString());
                                 }
                                 catch {
@@ -298,7 +299,8 @@ where 1=1   ");
                                 SalesCountProp.Item_Property_Id = row["item_property_id"].ToString();
                                 try
                                 {
-                                    SalesCountProp.PropertyCodeValue = row["PropertyCodeValue"].ToString();
+                                   // SalesCountProp.PropertyCodeValue = row["PropertyCodeValue"].ToString();
+                                    SalesCountProp.PropertyCodeValue = "0";//赋值为0的原因是，不让数据叠加
                                     int temp = Convert.ToInt32(row["PropertyCodeValue"].ToString());//出异常时，就为0
                                 }
                                 catch
@@ -334,15 +336,16 @@ where 1=1   ");
                             {
                                 if (skuPriceInfo.sku_price != -1)
                                 {
-                                    decimal oldPrice = 0;
-                                    if (!string.IsNullOrEmpty(skuPriceInfo.sku_price_id))
-                                    {
-                                        var skuPriceInfoTemp = skupriceService.GetSkuPriceByID(skuPriceInfo.sku_price_id, pTran);
-                                        if (skuPriceInfoTemp != null && skuPriceInfoTemp.Tables.Count != 0 && skuPriceInfoTemp.Tables[0].Rows.Count!=0)
-                                        {
-                                            oldPrice=Convert.ToDecimal( skuPriceInfoTemp.Tables[0].Rows[0]["sku_price"]);
-                                        }
-                                    }
+                                    //不要取原来的数据了
+                                    //decimal oldPrice = 0;
+                                    //if (!string.IsNullOrEmpty(skuPriceInfo.sku_price_id))
+                                    //{
+                                    //    var skuPriceInfoTemp = skupriceService.GetSkuPriceByID(skuPriceInfo.sku_price_id, pTran);
+                                    //    if (skuPriceInfoTemp != null && skuPriceInfoTemp.Tables.Count != 0 && skuPriceInfoTemp.Tables[0].Rows.Count!=0)
+                                    //    {
+                                    //        oldPrice=Convert.ToDecimal( skuPriceInfoTemp.Tables[0].Rows[0]["sku_price"]);
+                                    //    }
+                                    //}
 
                                     if (skuPriceInfo.sku_id == null) skuPriceInfo.sku_id = skuInfo.sku_id;
                                     if (skuPriceInfo.sku_price_id == null || skuPriceInfo.sku_price_id.Equals("")) skuPriceInfo.sku_price_id = NewGuid();//如果是新建
@@ -358,7 +361,7 @@ where 1=1   ");
                                     if (skustockTypeId != "" && skuPriceInfo.item_price_type_id == skustockTypeId && ItemStockPropId != "")
                                     {
                                         //找出该商品对应的库存的属性
-                                        stockCountTemp += skuPriceInfo.sku_price - oldPrice;
+                                        stockCountTemp += skuPriceInfo.sku_price;// -oldPrice;//不用再删除之前的数据了
                                     }
 
 
@@ -366,7 +369,7 @@ where 1=1   ");
                                     if (skusalesCountTypeId != "" && skuPriceInfo.item_price_type_id == skusalesCountTypeId && ItemsalesCountPropId != "")
                                     {
                                         //找出该商品对应的库存的属性
-                                        salesCountTemp += skuPriceInfo.sku_price - oldPrice;
+                                        salesCountTemp += skuPriceInfo.sku_price; //- oldPrice;//不用再删除之前的数据
                                     }
 
                                 }
@@ -477,7 +480,8 @@ where 1=1   ");
                     + " ,barcode = '" + skuInfo.barcode + "'  "
                     + " ,modify_user_id = '" + skuInfo.create_user_id + "'  "
                     + " ,modify_time = '" + skuInfo.create_time + "'  "
-                    + " ,status = '1' "
+               + " ,status = '1' "
+                  + " ,bat_id ='" + skuInfo.bat_id + "'"
                     + " ,if_flag = '0' where sku_id = '" + skuInfo.sku_id + "'";
             if (pTran != null)
             {
@@ -504,7 +508,8 @@ where 1=1   ");
                     + " ,sku_prop_id3 "
                     + " ,sku_prop_id4 "
                     + " ,sku_prop_id5 "
-                    + " ,barcode "
+                       + " ,barcode "
+                    + " ,bat_id "
                     + " ,status "
                     + " ,create_user_id "
                     + " ,create_time "
@@ -519,7 +524,8 @@ where 1=1   ");
                     + ", '" + skuInfo.prop_4_detail_id + "' sku_prop_id4"
                     + ", '" + skuInfo.prop_5_detail_id + "' sku_prop_id5"
                     + ", '" + skuInfo.barcode + "' barcode"
-                    + ", '1' status"
+                         + ", '" + skuInfo.bat_id + "' bat_id"
+                  + ", '1' status"
                     + ", '" + skuInfo.create_user_id + "' create_user_id"
                     + ", '" + skuInfo.create_time + "' create_time"
                     + ", '" + skuInfo.create_user_id + "' modify_user_id"
@@ -542,7 +548,7 @@ where 1=1   ");
         private string GetSql(string sql)
         {
             sql = sql + "select sku_id "
-                      + " ,item_id "
+                      + " ,bat_id,item_id "
                       + " ,item_code "
                       + " ,prop_1_detail_id "
                       + " ,prop_1_detail_name "

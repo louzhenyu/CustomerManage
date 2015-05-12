@@ -174,14 +174,17 @@
                 debugger;
                 var index = 0;
                 if ($(this).data("issubMit")) {
-                    alert("商品添加提交中...");
-                    that.getAddData(); //获取添加商品的参数，
-                    that.loadData.addCommodity(function (data) {
-                        window.d.close();
-                        alert("添加商品成功");
 
+                   if( that.getAddData()) { //获取添加商品的参数，
+                       alert("商品修改提交中...");
+                       that.loadData.addCommodity(function (data) {
+                           debugger;
+                           window.d.close();
+                           var mid = JITMethod.getUrlParam("mid");
+                           location.href = "queryList.aspx?&mid=" + mid;
 
-                    });
+                       });
+                   }
 
 
                 } else {
@@ -248,7 +251,7 @@
                     var gridData = that.elems.skuTable.datagrid('getData'); //去缓存的数据
 
 
-                    gridData.rows[index].status = gridData.rows[index].status == "-1" ? "1" : "-1";
+                    gridData.rows[index].bat_id = gridData.rows[index].bat_id == "-1" ? "1" : "-1";
                     that.elems.skuTable.datagrid({ data: gridData });
                     for (var index = 0; index < gridData.rows.length; index++) {
                         that.elems.skuTable.datagrid('beginEdit', index);
@@ -282,10 +285,14 @@
                 var me = $(this);
                 debugger;
                 var item = me.parents(".mainpanl").data("item");
+                if (item.item_price_type_name.indexOf("(元)") != -1) {
+                    item.item_price_type_name = item.item_price_type_name.substring(0, item.item_price_type_name.indexOf("(元)"));
+                }
                 if (me.data("type") == "save") {
                     $("#countRepertory").html("0")
                     item.price = me.parents(".mainpanl").find("input").val();
                     that.getProData(item)
+
                     me.parents(".fontC").html(item.item_price_type_name);
                 } else if (me.data("type") == "cancel") {
                     $("#batch").find(".fontC").show();
@@ -300,21 +307,23 @@
         },
 
         //创建批量操作按钮
-        optionPriceList: function () {
-            var that = this;
+        optionPriceList:function(){
+            var that=this;
             $("#batch").find("#option").html("");
-            $.each(that.elems.allData.ItemPriceTypeList, function (index, Item) {
+            $.each(that.elems.allData.ItemPriceTypeList,function(index,Item){
 
-                if (Item.item_price_type_name != "销量") {
-                    var obj = { item_price_type_name: Item.item_price_type_name, item_price_type_id: Item.item_price_type_id };
-                    var html = "<div data-id={0} data-item={1} class='fontC'>{2}</div>".format(Item.item_price_type_id, JSON.stringify(obj), Item.item_price_type_name);
+                if(Item.item_price_type_name!="销量") {
+                    var obj={item_price_type_name:Item.item_price_type_name,item_price_type_id:Item.item_price_type_id};
+                    if(Item.item_price_type_name.indexOf("(元)")!=-1){
+                        Item.item_price_type_name=Item.item_price_type_name.substring(0,Item.item_price_type_name.indexOf("(元)"));
+                    }
+                    var html="<div data-id={0} data-item={1} class='fontC'>{2}</div>".format(Item.item_price_type_id,JSON.stringify(obj),Item.item_price_type_name);
                     $("#batch").find("#option").append(html)
                 }
 
             });
 
         },
-
         //初始化加载的页面数据
         loadDataPage: function () {
             var that = this, wd = 160, H = 32;
@@ -339,7 +348,7 @@
                                 width: wd,
                                 height: H,
                                 panelHeight: that.elems.panlH,
-                                //editable:true,
+                                lines:true,
                                 valueField: 'id',
                                 textField: 'text',
                                 data: data[1].children
@@ -383,6 +392,15 @@
                                         } else {
                                             that.elems.editLayer.find(".imglist").append("<img src='" + imgList[i].ImageURL + "'/>");
                                         }
+                                    }
+                                    if (imgList.length) {
+                                        that.elems.editLayer.find(".imgPanl").hover(function () {
+                                            if (that.elems.editLayer.find(".imglist img").length > 0) {
+                                                that.elems.editLayer.find(".btnPanel").fadeIn();
+                                            }
+                                        }, function () {
+                                            that.elems.editLayer.find(".btnPanel").fadeOut();
+                                        });
                                     }
                                 }
                                 //商品详情
@@ -484,7 +502,13 @@
 
                                     var filed = that.elems.priceFilde + i;
                                     if (Item.item_price_type_id == sku_price_list[j].item_price_type_id) {
-                                        dataInfo.data.SkuList[index][filed] = sku_price_list[j].sku_price;
+                                        if(isNaN(parseInt(sku_price_list[j].sku_price))||parseInt(sku_price_list[j].sku_price)<0){
+                                            dataInfo.data.SkuList[index][filed] =0 ;
+                                            dataInfo.data.SkuList[index].sku_price_list[j].sku_price=0;
+                                        }else{
+                                            dataInfo.data.SkuList[index][filed] = sku_price_list[j].sku_price;
+                                        }
+
                                     }
 
                                 });
@@ -808,10 +832,12 @@
                 {
                     field: that.elems.allData.barcode.filed, title: protitle, width: 80,
                     editor: {
-                        type: 'text',
+                        type: 'validatebox',
                         options: {
                             height: 31,
-                            width: 136
+                            width: 136,
+                            validType:'englishCheckSub'
+
                         }
                     }
 
@@ -878,28 +904,48 @@
                             }
                         );
 
-                    } else {
+                    } else if(Item.item_price_type_code == "销量") {
+                        table.options.columns[0].push(
+                            {
+                                field: filed,align:'center', title: Item.item_price_type_name, width: 60,
+                                formatter: function (value, row, rowindex) {
+                                    return row.sku_price_list[index].sku_price;
+                                }/* editor: {
+                                    type: 'numberbox',
+                                    options: {
+                                        min: 0,
+                                        precision: 0,
+                                        height: 31,
+                                        width: 136,
+                                        disabled:true
+                                        *//* prefix:'￥'*//*
+                                    }
+                                }*/
+                            }
+                        );
+                    }else{
                         table.options.columns[0].push(
                             {
                                 field: filed, title: Item.item_price_type_name, width: 60,
                                 formatter: function (value, row, rowindex) {
                                     return row.sku_price_list[index].sku_price;
                                 }, editor: {
-                                    type: 'numberbox',
-                                    options: {
-                                        min: 0,
-                                        precision: 0,
-                                        height: 31,
-                                        width: 136
-                                        /* prefix:'￥'*/
-                                    }
+                                type: 'numberbox',
+                                options: {
+                                    min: 0,
+                                    precision: 2,
+                                    height: 31,
+                                    width: 136
+
+                                    /* prefix:'￥'*/
                                 }
+                            }
                             }
                         );
                     }
-                    pricefiledList += '"{0}":"{1}",'.format(filed, "");
+                    pricefiledList += '"{0}":"{1}",'.format(filed, 0);
                     debugger;
-                    sku_price_listItem += str.format("", Item.item_price_type_id, Item.item_price_type_name);
+                    sku_price_listItem += str.format(0, Item.item_price_type_id, Item.item_price_type_name);
                 }
 
             });
@@ -920,7 +966,7 @@
                 var item = rowData[s];
                 if (item.length > 1) {
                     //item='{'+item+'}'+'"status":"1"';
-                    item += '"{0}":"{1}","{2}":"{3}",{4},{5}'.format("status", "1", that.elems.allData.barcode.filed, "", sku_price_list, pricefiledList);
+                    item += '"{0}":"{1}","{2}":"{3}",{4},{5}'.format("bat_id", "1", that.elems.allData.barcode.filed, "", sku_price_list, pricefiledList);
                     item = '{' + item + '}';
                 }
                 str += item + ",";
@@ -928,7 +974,7 @@
             }
             table.options.columns[0].push(
                 {
-                    field: "status", title: "操作", width: 40,
+                    field: "bat_id", title: "操作", width: 40,
                     formatter: function (value, row, rowindex) {
                         if (value == 1) {
                             return '<p class="fontC" data-index="' + rowindex + '">停用</p>';
@@ -1069,10 +1115,23 @@
         },
         //新增数据的整合
         getAddData: function () {
+            $("#countRepertory").html("0");
+
             debugger;
-            var that = this;
+            var that = this,isSubmit=true,errorIndex=-1;
+
+
             that.elems.skuTable.datagrid('acceptChanges');  //缓存修改过以后的数据
             var gridData = that.elems.skuTable.datagrid('getData'); //去缓存的数据
+
+            for (var index = 0; index < gridData.rows.length; index++) {
+                if(!that.elems.skuTable.datagrid('validateRow',index)){
+                    isSubmit= false;
+                    errorIndex=index;
+                    break;
+                }
+            }
+
             if (gridData && gridData.rows.length > 0) {
 
                 for (var rowIndex = 0; rowIndex < gridData.rows.length; rowIndex++) {
@@ -1080,7 +1139,6 @@
                     rowData = gridData.rows[rowIndex];
                     $.each(rowData, function (filedName, filedValue) {
                         if (filedName.indexOf(that.elems.priceFilde) != -1) {
-                            debugger;
                             var index = parseInt(filedName.substring(that.elems.priceFilde.length, filedName.length));
                             if (isNaN(parseInt(filedValue))) {
                                 filedValue = 0;
@@ -1091,12 +1149,12 @@
                         }
                     });
                 }
-                for (var index = 0; index < gridData.rows.length; index++) {
+                for(var index=0;index<gridData.rows.length;index++) {
                     that.elems.skuTable.datagrid('beginEdit', index);
                 }
                 that.loadData.addPram.SkuList = gridData.rows;
             } else {
-                that.loadData.addPram.SkuList = [{ status: "1", sku_price_list: []}];
+                that.loadData.addPram.SkuList = [{ bat_id: "1", sku_price_list: []}];
                 $("[data-flag='price']").each(function (index, dom) {
                     var me = $(this);
                     if (me.data("type") == 'price') {
@@ -1153,7 +1211,7 @@
                 obj.ImageURL = $(dom).attr("src");
                 that.loadData.addPram.ItemImageList.push(obj);
             });
-            var fields = $('#nav0_1').serializeArray()
+            var fields = $('#nav0_1').serializeArray();
 
             that.loadData.addPram.SalesPromotionList = []
             $.each(fields, function (i, field) {
@@ -1163,10 +1221,15 @@
                     if (field.value != "") {
                         that.loadData.addPram[field.name] = field.value; //提交的参数
                     }
-
                 }
-
             });
+            if(errorIndex!==-1){
+                var obj={index:errorIndex,field:that.elems.allData.barcode.filed};
+                var ed = that.elems.skuTable.datagrid('getEditor', obj);
+                $(ed.target).focus();
+
+            }
+            return isSubmit;
         },
 
 

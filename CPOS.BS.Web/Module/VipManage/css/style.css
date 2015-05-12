@@ -4,7 +4,7 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
 .commonBtn{display:block;width:140px;height:40px;line-height:40px;text-align:center;font-size:14px;border-radius:5px;background:#fe7c24;color:#fff;}
 .commonBtn:hover{color:#f1f1f1;}
-.centreArea{min-width:1262px;min-height:587px;background:url(../../washCardManage/images/topShadow.png) repeat-x 0 0;}
+.centreArea{min-width:1262px;min-height:587px;background:url(../images/topShadow.png) repeat-x 0 0;}
 /*公共弹层*/
 .jui-dialog{position:absolute;top:25%;left:15%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
 .jui-dialog-tit{position:relative;padding-left:25px;height:55px;background:#f3f3f6;border-radius:6px 6px 0 0;color:#66666d;}
@@ -24,7 +24,7 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}
 .commonSelectWrap .endTime .tit{width:15px;}
 .commonSelectWrap .endTime .selectBox{margin-left:22px;}
-.commonSelectWrap .selectBox{margin-left:5px;width:161px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../../washCardManage/images/moreIcon.png) no-repeat 96% center;cursor:pointer;}
+.commonSelectWrap .selectBox{margin-left:5px;width:161px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../images/moreIcon.png) no-repeat 96% center;cursor:pointer;}
 .commonSelectWrap .selectBox .text{display:block;width:150px;line-height:31px;text-indent:5px;}
 .commonSelectWrap .selectList{position:relative;display:none;top:10px;left:-1px;width:161px;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:100;}
 .commonSelectWrap .selectList p{line-height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
@@ -41,7 +41,7 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 
 .moreQueryWrap{float:right;}
 .moreQueryWrap .queryBtn{width:100px;height:32px;line-height:32px;}
-.moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "宋体";text-decoration:underline;background:url(../../washCardManage/images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
+.moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "宋体";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
 
 /*头部 全查询*/
 .allQueryTermArea{
@@ -89,7 +89,7 @@ white-space: normal;}
 .tablehandle .importBtn{background:url(../images/importBtn.png) no-repeat 0 0;}
 .tablehandle .exportBtn{background:url(../images/exportBtn.png) no-repeat 0 0;}
 */
-.tablehandle .selectBox{position:relative;float:right;width:149px;height:25px;border:1px solid #b9b9b9;border-radius:2px;text-align:center;font:12px/25px "宋体";color:#666;background:#fff url(../../washCardManage/images/moreIcon.png) no-repeat 90% center;cursor:pointer;}
+.tablehandle .selectBox{position:relative;float:right;width:149px;height:25px;border:1px solid #b9b9b9;border-radius:2px;text-align:center;font:12px/25px "宋体";color:#666;background:#fff url(../images/moreIcon.png) no-repeat 90% center;cursor:pointer;}
 .tablehandle .selectBox.fl{float:left;width:72px;margin-right:20px;}
 .tablehandle .selectBox.filterIcon{background:#fff url(../images/filterIcon.png) no-repeat 95% center;cursor:pointer;}
 
@@ -102,13 +102,13 @@ white-space: normal;}
 .tablehandle .count span{font-weight:bold;color:#2d83cf;}
 
 .dataTable{width:100%;border:1px solid #d8d8d8;border-top:none;font:13px/39px "黑体";color:#4d4d4d;}
-.dataTable .selectListBox{background:url(../../washCardManage/images/selectIcon02.png) no-repeat 80% center;cursor:pointer;}
+.dataTable .selectListBox{background:url(../images/selectIcon02.png) no-repeat 80% center;cursor:pointer;}
 .dataTable .minSelectBox{display:none;position:absolute;top:32px;left:15px;width:80px;min-height:50px;border:1px solid #ccc;border-radius:3px;text-align:center;background:#f8f8f8;color:#666;}
 .dataTable .minSelectBox p{font-size:12px;font-weight:normal;line-height:25px;border-bottom:1px solid #ccc;}
 .dataTable .minArr{position:absolute;top:-5px;left:22px;display:block;width:10px;height:10px;background:url(../images/minArr.png) no-repeat 0 0;}
 .dataTable .selectListBox:hover{position:relative;}
 .dataTable .selectListBox:hover .minSelectBox{display:block;}
-.dataTable .seeIcon{background:url(../../washCardManage/images/seeIcon02.png) no-repeat center center;cursor:pointer;}
+.dataTable .seeIcon{background:url(../images/seeIcon02.png) no-repeat center center;cursor:pointer;}
 .dataTable .fontF{font-family:"Arial";}
 .dataTable .title{border-bottom:2px solid #fe7c23;}
 .dataTable .title th{font-weight:bold;*border-bottom:2px solid #fe7c23;text-align:center;min-width: 60px;}
@@ -120,8 +120,8 @@ white-space: normal;}
 
 .dataTable input{width:100px;height:26px;border:1px solid #ccc;color:#333;border-radius:2px;}
 .dataTable .checkBox{vertical-align:middle;cursor:pointer;}
-.dataTable .checkBox em{display:block;width:25px;height:25px;margin:0 auto;background:url(../../washCardManage/images/radio1.png) no-repeat center center;}
-.dataTable .checkBox.on em{background:url(../../washCardManage/images/radio2.png) no-repeat center center;}
+.dataTable .checkBox em{display:block;width:25px;height:25px;margin:0 auto;background:url(../images/radio1.png) no-repeat center center;}
+.dataTable .checkBox.on em{background:url(../images/radio2.png) no-repeat center center;}
 .fontC{color:#2d83cf;font-family:"Arial";}
 
 
@@ -132,7 +132,7 @@ white-space: normal;}
 .jui-dialog-selectTag .promptContent{padding:30px;}
 .jui-dialog-selectTag .tagWrap{height:33px;margin-bottom:10px;}
 .jui-dialog-selectTag .tagWrap>*{float:left;margin-left:18px;}
-.jui-dialog-selectBox{position:relative;width:58px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../../washCardManage/images/selectIcon02.png) no-repeat 40px center;cursor:pointer;}
+.jui-dialog-selectBox{position:relative;width:58px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../images/selectIcon02.png) no-repeat 40px center;cursor:pointer;}
 .jui-dialog-selectBox .text{display:block;width:50px;line-height:31px;text-indent:5px;}
 .jui-dialog-selectBox .selectList{display:none;position:absolute;top:30px;left:-1px;width:100%;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:10;}
 .jui-dialog-selectBox .selectList p{line-height:31px;height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}

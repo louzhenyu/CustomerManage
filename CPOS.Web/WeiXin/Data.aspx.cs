@@ -157,13 +157,13 @@ namespace JIT.CPOS.Web.WeiXin
                     vipQueryInfo.WeiXin = WeiXin;
                     try
                     {
-                        if (IsShow.Equals("1")) //取消关注不要修改vip表
+                        if (IsShow.Equals("1")) //关注，取消关注不要修改vip表
                         {
                             vipInfo.WeiXinUserId = OpenID;
                             vipInfo.City = City;
                             if (Gender != string.Empty) vipInfo.Gender = Convert.ToInt32(Gender);
                             vipInfo.VipName = VipName;
-                            vipInfo.CouponInfo = qrcode;
+                            //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用
                             vipInfo.WeiXin = WeiXin;
                             vipInfo.VipSourceId = "3";//是否需要把这个去掉，因为VipSourceId=13也会走到这里
                             vipInfo.HeadImgUrl = headimgurl;

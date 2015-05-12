@@ -35,6 +35,7 @@
 .panel-header, .panel-body {
     border: none;
 }
+.rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left;}
 /*上传图片样式*/
 .commonSelectWrap .handleLayer{ display: block;float: left;margin-left: 5px}
 .handleLayer .jsAreaItem{width:385px; position: relative;}
@@ -64,5 +65,5 @@
 .list .optBtn .del{ background:url(../images/del.png) no-repeat 0 0; background-size:16px 16px; cursor:pointer}
 #Children{border: none; max-height: 258px; height: auto;overflow-x: auto;width: 248px;}
 #Children input{ border: 1px solid #ccc; width: 160px;}
-#Children .add{ background:none; color: #00acee;}
+#Children .add{ background:none; color: #00acee; font-size: 15px;}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}

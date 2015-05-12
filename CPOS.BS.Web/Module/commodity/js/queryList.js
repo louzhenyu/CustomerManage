@@ -298,7 +298,7 @@
                     },
                     {field : 'Item_Name',title : '商品名称',width:125,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-                            var long=12;
+                            var long=40;
                             if(value&&value.length>long){
                                 return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
                             }else{

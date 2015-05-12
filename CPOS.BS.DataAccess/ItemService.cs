@@ -42,7 +42,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql = sql + "select "
                       + " a.item_id "
                       + " ,a.item_category_id "
-                      + ",(select top 1 ImageURL from objectimages b where b.ObjectId=a.item_id order by displayindex) as  Image_Url"
+                      + ",(select top 1 ImageURL from objectimages b where b.ObjectId=a.item_id and isdelete=0 order by displayindex ) as  Image_Url"
                       + " ,a.item_code "
                       + " ,a.item_name "
                       + " ,a.item_name_en "
@@ -71,16 +71,16 @@ namespace JIT.CPOS.BS.DataAccess
                       + ",(  select case when COUNT(1)>0 then 'true' else 'false' end from  T_Item_Category where item_category_id=a.item_category_id and status='-1') isItemCategory"
                       + @",(   select case when prop_value=null or  prop_value='' then 'false' when GETDATE()>prop_value then 'true' else 'false' end  from  t_prop as tp
                            left join T_Item_Property  as tip on tip.prop_id=tp.prop_id and prop_code ='EndTime'
-                           where  tp.prop_code ='EndTime' and item_id=a.item_id ) isPause"
+                           where  tp.prop_code ='EndTime' and item_id=a.item_id and tip.status=1) isPause"
                       + @" ,(  select  prop_value  from  t_prop as tp
                            left join T_Item_Property  as tip on tip.prop_id=tp.prop_id 
-                           where  tp.prop_code ='Qty' and item_id=a.item_id ) stock
+                           where  tp.prop_code ='Qty' and item_id=a.item_id and tip.status=1 ) stock
                            ,	(  select  prop_value  from  t_prop as tp
                            left join T_Item_Property  as tip on tip.prop_id=tp.prop_id 
                            where  tp.prop_code ='SalesCount' and item_id=a.item_id ) SalesCount
                            ,
                            (select min(sku_price) from T_Sku_Price x inner join t_sku y on x.sku_id=y.sku_id 
-                           where y.item_id=a.item_id   
+                           where y.item_id=a.item_id   and  x.status=1
 							and item_price_type_id=(select item_price_type_id from T_Item_Price_Type where item_Price_type_code='零售价')
                            ) as minPrice
                            ,dbo.GetSalesPromotion(a.item_id) as SalesPromotion"

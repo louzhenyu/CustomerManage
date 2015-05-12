@@ -196,7 +196,7 @@
                     width: that.elems.width,
                     height: that.elems.height,
                     panelHeight: that.elems.panlH,
-                    //editable:true,
+                    lines:true,
                     valueField: 'id',
                     textField: 'text',
                     data: that.elems.categoryList

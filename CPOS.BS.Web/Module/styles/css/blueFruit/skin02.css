@@ -43,7 +43,7 @@
 
 
 /***公共的头部，导航，logo，信息***/
-.commonHeader{height:86px;background: #00acee; border-bottom-width:1px;}
+.commonHeader{height:86px;background: #00acee; border-bottom-width:1px;min-width:1170px;}
 .commonHeader .handleWrap{ color: #fff;}
 .commonHeader .logoWrap{ margin-top:15px;}
 /*adminIcon 的margin-top是 右侧文件的line-height减去自身高度/2 所以两个必须是偶数防止不一致*/
@@ -52,7 +52,7 @@
 .commonHeader .setBox p{background:url(../../images/blueFruit/jiantou.png) no-repeat center right; padding-right: 15px;}
 .commonNav li {  margin-right:18px; }
 .commonNav li a{color:#fff;}
-.commonNav li.on a{color:#fe7c24;}
+.commonNav li.on a{/*color:#fe7c24;*/}
 
 
 .commonNav .nav001 a{background:url(../../images/blueFruit/bg02/nav007.png) no-repeat 0 center;}
@@ -133,5 +133,5 @@
  .tree-folder, .tree-file{
     width:0px;
 }
-.tree-indent{ width: 5px;}
+.tree-indent{ width: 16px;}
 .tree-title{ font-size: 14px;}

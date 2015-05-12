@@ -101,7 +101,7 @@
                     width: wd,
                     height: H,
                     panelHeight: that.elems.panlH,
-                    //editable:true,
+                    lines:true,
                     valueField: 'id',
                     textField: 'text',
                     data:data[1].children
@@ -116,7 +116,7 @@
                     width: wd,
                     height: H,
                     panelHeight: that.elems.panlH,
-                   // editable:true,
+
                     animate:true,
                     multiple:true,
                     valueField: 'id',
@@ -171,14 +171,21 @@
                 debugger;
                 var index=0;
                  if($(this).data("issubMit")){
-                     alert("商品添加提交中...");
-                     that.getAddData(); //获取添加商品的参数，
-                     that.loadData.addCommodity(function(data){
-                         window.d.close();
-                         alert("添加商品成功");
+
+                   if (that.getAddData()) { //获取添加商品的参数，
+                       alert("商品添加提交中...");
+                       that.loadData.addCommodity(function (data) {
+                           window.d.close();
+                           $.messager.confirm("商品操作提示", "商品已添加成功,确定要继续添加商品吗？", function (r) {
+                               if (!r) {
+                                   var mid = JITMethod.getUrlParam("mid");
+                                   location.href = "queryList.aspx?Item_Id=" + rowData.Item_Id + "&mid=" + mid;
+                               }
+                           });
 
 
-                     });
+                       });
+                   }
 
 
                  }else{
@@ -234,7 +241,7 @@
                    var gridData = that.elems.skuTable.datagrid('getData');//去缓存的数据
 
 
-                   gridData.rows[index].status = gridData.rows[index].status == "-1" ? "1" : "-1";
+                   gridData.rows[index].bat_id = gridData.rows[index].bat_id == "-1" ? "1" : "-1";
                    that.elems.skuTable.datagrid({data: gridData});
                    for (var index = 0; index < gridData.rows.length; index++) {
                        that.elems.skuTable.datagrid('beginEdit', index);
@@ -254,6 +261,7 @@
                 var data={};
 
                 data.name=me.data("item").item_price_type_name;
+                debugger;
                 if(data.name.indexOf("(元)")!=-1){
                     data.name=data.name.substring(0,data.name.indexOf("(元)"));
                 }
@@ -268,10 +276,13 @@
                 var me=$(this);
                 debugger;
                 var item=me.parents(".mainpanl").data("item");
+                if (item.item_price_type_name.indexOf("(元)") != -1) {
+                    item.item_price_type_name = item.item_price_type_name.substring(0, item.item_price_type_name.indexOf("(元)"));
+                }
                 if(me.data("type")=="save"){
                     $("#countRepertory").html("0")
                     item.price=me.parents(".mainpanl").find("input").val();
-                    that.getProData(item)
+                    that.getProData(item);
                     me.parents(".fontC").html(item.item_price_type_name);
                 }else if(me.data("type")=="cancel"){
                     $("#batch").find(".fontC").show();
@@ -293,6 +304,9 @@
 
                 if(Item.item_price_type_name!="销量") {
                     var obj={item_price_type_name:Item.item_price_type_name,item_price_type_id:Item.item_price_type_id};
+                    if(Item.item_price_type_name.indexOf("(元)")!=-1){
+                     Item.item_price_type_name=Item.item_price_type_name.substring(0,Item.item_price_type_name.indexOf("(元)"));
+                    }
                     var html="<div data-id={0} data-item={1} class='fontC'>{2}</div>".format(Item.item_price_type_id,JSON.stringify(obj),Item.item_price_type_name);
                     $("#batch").find("#option").append(html)
                 }
@@ -616,12 +630,14 @@
             var protitle= that.elems.allData.barcode.title;
             table.options.columns[0].push(
                 {
-                    field: that.elems.allData.barcode.filed,title:protitle,width:80,
+                    field: that.elems.allData.barcode.filed, title: protitle, width: 80,
                     editor: {
-                        type: 'text',
+                        type: 'validatebox',
                         options: {
-                            height:31,
-                            width:136
+                            height: 31,
+                            width: 136,
+                            validType:'englishCheckSub'
+
                         }
                     }
 
@@ -688,6 +704,9 @@
                                 }
                             );
 
+                        } else if(Item.item_price_type_code == "销量") {
+                            //预留此处，防止销量做处理
+
                         }else{
                             table.options.columns[0].push(
                                 {
@@ -698,18 +717,19 @@
                                     type: 'numberbox',
                                     options: {
                                         min: 0,
-                                        precision: 0,
+                                        precision:2,
                                         height: 31,
                                         width: 136
+
                                         /* prefix:'￥'*/
                                     }
                                 }
                                 }
                             );
                         }
-                       pricefiledList+='"{0}":"{1}",'.format(filed,"");
+                       pricefiledList+='"{0}":"{1}",'.format(filed,0);
                             debugger;
-                       sku_price_listItem+= str.format("",Item.item_price_type_id,Item.item_price_type_name);
+                       sku_price_listItem+= str.format(0,Item.item_price_type_id,Item.item_price_type_name);
                    }
 
                });
@@ -729,8 +749,8 @@
            for(var s=0;s<rowData.length; s++){
                var item=rowData[s];
                 if(item.length>1){
-                    //item='{'+item+'}'+'"status":"1"';
-                    item+='"{0}":"{1}","{2}":"{3}",{4},{5}'.format("status","1", that.elems.allData.barcode.filed,"",sku_price_list,pricefiledList);
+                    //item='{'+item+'}'+'"bat_id":"1"';
+                    item+='"{0}":"{1}","{2}":"{3}","{4}":"{5}",{6},{7}'.format("status","1","bat_id","1", that.elems.allData.barcode.filed,"",sku_price_list,pricefiledList);
                     item='{'+item+'}';
                 }
                 str+=item+",";
@@ -738,7 +758,7 @@
             }
             table.options.columns[0].push(
                 {
-                    field: "status",title:"操作",width:40,
+                    field: "bat_id",title:"操作",width:40,
                     formatter: function (value,row,rowindex) {
                         if(value==1){
                             return '<p class="fontC" data-index="'+rowindex+'">停用</p>';
@@ -875,105 +895,124 @@
 
 
          },
-         //新增数据的整合
-        getAddData:function(){
+        //新增数据的整合
+        getAddData: function () {
+            $("#countRepertory").html("0");
+
             debugger;
-            var that=this;
-             that.elems.skuTable.datagrid('acceptChanges');  //缓存修改过以后的数据
-             var gridData=that.elems.skuTable.datagrid('getData');//去缓存的数据
-             if(gridData&&gridData.rows.length>0) {
-
-                 for (var rowIndex = 0; rowIndex < gridData.rows.length; rowIndex++) {
-                     //每次绑定初始化数据需要对 价格相关字段做特殊处理；
-                     rowData = gridData.rows[rowIndex];
-                     $.each(rowData, function (filedName, filedValue) {
-                         if (filedName.indexOf(that.elems.priceFilde) != -1) {
-                             debugger;
-                             var index = parseInt(filedName.substring(that.elems.priceFilde.length, filedName.length));
-                             if(isNaN(parseInt(filedValue))){
-                                 filedValue=0;
-                             }
-                             gridData.rows[rowIndex].sku_price_list[index].price = filedValue;
-                             gridData.rows[rowIndex].sku_price_list[index].sku_price = filedValue;
-                             console.log(filedValue);
-                         }
-                     });
-                 }
-                 for(var index=0;index<gridData.rows.length;index++) {
-                     that.elems.skuTable.datagrid('beginEdit', index);
-                 }
-                 that.loadData.addPram.SkuList=gridData.rows;
-             }else{
-                 that.loadData.addPram.SkuList=[{status:"1",sku_price_list:[]}];
-                 $("[data-flag='price']").each(function(index,dom) {
-                     var me = $(this);
-                     if(me.data("type")=='price'){
-                         var obj=me.data("flaginfo");
-                         debugger;
-                         obj.sku_price=me.val();
-                         that.loadData.addPram.SkuList[0].sku_price_list.push(obj)
+            var that = this,isSubmit=true,errorIndex=-1;
 
 
-                     }else{
-                         that.loadData.addPram.SkuList[0].barcode=me.val();
-                         console.log("商品编码"+me.val());
-                     }
-                 });
-             }
+            that.elems.skuTable.datagrid('acceptChanges');  //缓存修改过以后的数据
+            var gridData = that.elems.skuTable.datagrid('getData'); //去缓存的数据
+
+            for (var index = 0; index < gridData.rows.length; index++) {
+                if(!that.elems.skuTable.datagrid('validateRow',index)){
+                    isSubmit= false;
+                    errorIndex=index;
+                    break;
+                }
+            }
+
+            if (gridData && gridData.rows.length > 0) {
+
+                for (var rowIndex = 0; rowIndex < gridData.rows.length; rowIndex++) {
+                    //每次绑定初始化数据需要对 价格相关字段做特殊处理；
+                    rowData = gridData.rows[rowIndex];
+                    $.each(rowData, function (filedName, filedValue) {
+                        if (filedName.indexOf(that.elems.priceFilde) != -1) {
+                            var index = parseInt(filedName.substring(that.elems.priceFilde.length, filedName.length));
+                            if (isNaN(parseInt(filedValue))) {
+                                filedValue = 0;
+                            }
+                            gridData.rows[rowIndex].sku_price_list[index].price = filedValue;
+                            gridData.rows[rowIndex].sku_price_list[index].sku_price = filedValue;
+
+                        }
+                    });
+                }
+                for(var index=0;index<gridData.rows.length;index++) {
+                    that.elems.skuTable.datagrid('beginEdit', index);
+                }
+                debugger;
+                that.loadData.addPram.SkuList = gridData.rows;
+            } else {
+                that.loadData.addPram.SkuList = [{ bat_id: "1", sku_price_list: []}];
+                $("[data-flag='price']").each(function (index, dom) {
+                    var me = $(this);
+                    if (me.data("type") == 'price') {
+                        var obj = me.data("flaginfo");
+                        debugger;
+                        obj.sku_price = me.val();
+                        that.loadData.addPram.SkuList[0].sku_price_list.push(obj)
+
+
+                    } else {
+                        that.loadData.addPram.SkuList[0].barcode = me.val();
+                        console.log("商品编码" + me.val());
+                    }
+                });
+            }
 
 
 
 
 
             //图片列表信息获取ItemImageList
-            that.loadData.addPram.ItemImageList=[];
+            that.loadData.addPram.ItemImageList = [];
 
-          /*1.6	ItemPropList   商品与属性关系集合数组里的对象数据
-           //PropertyCodeId
-            PropertyDetailId
-            PropertyCodeValue
-            IsEditor*/
-            that.loadData.addPram.ItemPropList=[];
-            $("[data-flag='details']").each(function(index,dom){
-                var me=$(this),flagInfo= me.data("flaginfo");
-                var obj={PropertyCodeId:flagInfo.Prop_Id,PropertyDetailId:"",PropertyCodeValue:"",IsEditor:false};
+            /*1.6	ItemPropList   商品与属性关系集合数组里的对象数据
+             //PropertyCodeId
+             PropertyDetailId
+             PropertyCodeValue
+             IsEditor*/
+            that.loadData.addPram.ItemPropList = [];
+            $("[data-flag='details']").each(function (index, dom) {
+                var me = $(this);
+                var me = $(this), flagInfo = me.data("flaginfo");
+                var obj = { PropertyCodeId: flagInfo.Prop_Id, PropertyDetailId: "", PropertyCodeValue: "", IsEditor: false };
 
-                 if(me.data("type")=="text"){
+                if (me.data("type") == "text") {
 
-                     obj.DisplayIndex=index;
-                     obj.ImageURL=$(dom).attr("src");
-                     obj.PropertyCodeValue=$(this).val();
-                     console.log($(this).val());
-                     that.loadData.addPram.ItemPropList.push(obj);
-                 }else if(me.data("type")=="htmltextarea"){
-                     obj.DisplayIndex=index;
-                     obj.ImageURL=$(dom).attr("src");
-                     obj.IsEditor=true;
-                     obj.PropertyCodeValue=that.elems.editor .html();
-                     that.loadData.addPram.ItemPropList.push(obj);
+                    obj.DisplayIndex = index;
+                    obj.ImageURL = $(dom).attr("src");
+                    obj.PropertyCodeValue = $(this).val();
+                    console.log($(this).val());
+                    that.loadData.addPram.ItemPropList.push(obj);
+                } else if (me.data("type") == "htmltextarea") {
+                    obj.DisplayIndex = index;
+                    obj.ImageURL = $(dom).attr("src");
+                    obj.IsEditor = true;
+                    obj.PropertyCodeValue = that.elems.editor.html();
+                    that.loadData.addPram.ItemPropList.push(obj);
                 }
             });
 
-             that.elems.editLayer.find(".imglist img").each(function(index,dom){
-                 var obj={ImageId:"",ObjectId:"",ImageURL:"",DisplayIndex:"",Title:"",Description:""};
-                 obj.DisplayIndex=index;
-                 obj.ImageURL=$(dom).attr("src");
-                 that.loadData.addPram.ItemImageList.push(obj);
-             });
-            var fields = $('#nav0_1').serializeArray()
+            that.elems.editLayer.find(".imglist img").each(function (index, dom) {
+                var obj = { ImageId: "", ObjectId: "", ImageURL: "", DisplayIndex: "", Title: "", Description: "" };
+                obj.DisplayIndex = index;
+                obj.ImageURL = $(dom).attr("src");
+                that.loadData.addPram.ItemImageList.push(obj);
+            });
+            var fields = $('#nav0_1').serializeArray();
 
-               that.loadData.addPram.SalesPromotionList=[]
-            $.each(fields, function(i, field) {
-                if(field.name=="ItemCategoryId"){
-                    that.loadData.addPram.SalesPromotionList.push({ItemCategoryId:field.value})
+            that.loadData.addPram.SalesPromotionList = []
+            $.each(fields, function (i, field) {
+                if (field.name == "ItemCategoryId") {
+                    that.loadData.addPram.SalesPromotionList.push({ ItemCategoryId: field.value })
                 } else {
                     if (field.value != "") {
                         that.loadData.addPram[field.name] = field.value; //提交的参数
                     }
-
                 }
-
             });
+            if(errorIndex!==-1){
+                var obj={index:errorIndex,field:that.elems.allData.barcode.filed};
+                var ed = that.elems.skuTable.datagrid('getEditor', obj);
+                $(ed.target).focus();
+
+            }
+            return isSubmit;
         },
 
 

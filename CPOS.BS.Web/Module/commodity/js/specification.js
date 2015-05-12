@@ -217,7 +217,7 @@
 
                 columns : [[
 
-                    {field : 'prop_name',title : '规格名称',width:100,align:'center',resizable:false,
+                    {field : 'prop_name',title : '规格名称',width:100,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=12;
                             if(value&&value.length>long){
@@ -227,7 +227,7 @@
                             }
                         }
                     },
-                    {field : 'SkuValues',title : '规格值',width:220,align:'center',resizable:false,
+                    {field : 'SkuValues',title : '规格值',width:220,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=52;
                             if(value&&value.length>long){
@@ -384,7 +384,9 @@
                             var me=$(this),name,id;
                             name=me.find("[name='Prop_Name']").val();
                             id=me.find("[name='Prop_Id']").val();
-                            prams.data.SkuProp.Children.push({"Prop_Id":id,"Prop_Name":name})
+                            if(name!=""){
+                                prams.data.SkuProp.Children.push({"Prop_Id": id, "Prop_Name": name})
+                            }
                         });
                          debugger;
                         prams.data.action="SaveSku";
@@ -398,7 +400,7 @@
                                 if(filed.name=="prop_id"){
                                     prams.data.SkuProp.Prop_Id=filed.value
                                 }
-                                if(filed.name=="Prop_Name")
+                                if(filed.name=="Prop_Name"&&filed.value!="") //规格值的项
                                 {
                                     prams.data.SkuProp.Children.push({"Prop_Id":"","Prop_Name":filed.value})
                                 }

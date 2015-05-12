@@ -20,7 +20,7 @@
 .handleLayer .wrapPic{float:left;width: 252px;position: relative;}
 .handleLayer .wrapPic .imglist{ width: 50px; }
 .handleLayer .wrapPic .imglist img{ height: 50px;width:50px;border:1px solid #cfcedc; margin-bottom: 8px;}
-.handleLayer .wrapPic .imglist img.on{ border: 3px solid #000;}
+.handleLayer .wrapPic .imglist img.on{ border: 3px solid #00acee;}
 .handleLayer .wrapPic .size{display:block;width:50%;margin:15% auto;}
 .handleLayer .wrapPic .imgPanl{width: 182px;height: 182px;border:1px solid #cfcedc;background:#dde0e9;color:#333;overflow:hidden;position: absolute; top: 0;right: 0;}
 .handleLayer .wrapPic .imgPanl img{width:100%;}
@@ -35,7 +35,7 @@
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
 .handleLayer  .txt{float: right;position: absolute;right: 18px;top: 165px;}
 #info{ width: 100%; height: 400px; }
-.textList{ width: 100%; min-height:33px;clear: both;}
+.textList{ width: 100%;clear: both;}
 .textList .commonSelectWrap{margin: 10px 10px 10px 0; }
 .textList .commonSelectWrap .searchInput { width: auto;}
 #dataState,.textList{ display:inline-block;}
@@ -88,6 +88,6 @@ p.fontC{ width: 100%; text-align: center;}
     font-size: 12px;
     line-height: 28px;
 }
-#batch .commonBtn{width: 50px;margin:0 auto;margin-left: 15px; height: 35px;float: left;font-size: 15px; background: none; color: #00acee;}
+#batch .commonBtn{width: 35px;margin:0 auto;margin-left: 8px; height: 35px;float: left;font-size: 15px; background: none; color: #00acee;}
 #batch .borderNone{ border: 1px solid  transparent; width:auto;}
 #batch .fontC{margin-right: 15px;cursor: pointer;}

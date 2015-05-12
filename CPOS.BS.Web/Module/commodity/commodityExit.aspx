@@ -47,7 +47,7 @@
                       <div class="commonSelectWrap">
                           <em class="tit"><span style="color: red;position: relative;top: 3px;">*</span>促销分组：</em>
                           <label class="searchInput">
-                            <input data-text="促销分组" id="ItemCategoryId" data-options="required:true"  data-flag="ItemCategoryId" name="ItemCategoryId" type="text" value="">
+                            <input data-text="促销分组" id="ItemCategoryId"  data-flag="ItemCategoryId" name="ItemCategoryId" type="text" value="">
                           </label>
                       </div>
                     </div>
@@ -280,7 +280,13 @@
                                         <div class="commonSelectWrap load">
                                             <em class="tit"><#=item.item_price_type_name#>:</em>
                                             <label class="searchInput " style="border: none">
-                                              <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" data-flag="price" name="price" type="text" value="">
+                                           <# if(item.item_price_type_code=="销量"){ #>
+                                                <input data-text="<#=item.item_price_type_name#>" data-type="price"  data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,height:32,disabled:true" data-flag="price" name="price" type="text" value="0">
+                                           <# }else{  #>
+                                               <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" data-flag="price" name="price" type="text" value="">
+
+                                           <# }#>
+
                                             </label>
                        </div>
                   <#}#>
