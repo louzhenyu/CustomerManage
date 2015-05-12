@@ -121,6 +121,7 @@
                     width:wd,
                     height:H,
                     editable:true,
+                    lines:true,
                     panelHeight:that.elems.panlH,
                     valueField: 'id',
                     textField: 'text',
@@ -298,7 +299,7 @@
                     },
                     {field : 'Item_Name',title : '商品名称',width:125,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-                            var long=40;
+                            var long=56;
                             if(value&&value.length>long){
                                 return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
                             }else{
@@ -307,16 +308,31 @@
                         }
                     },
                     {field : 'minPrice',title : '价格(元)',width:58,resizable:false,align:'center'},
-                    {field : 'stock',title : '库存',width:58,align:'center',resizable:false},
-                    {field : 'SalesCount',title : '销量',width:60,align:'center',resizable:false},
+                    {field : 'stock',title : '库存',width:58,align:'center',resizable:false,
+                        formatter:function(value,row,index){
+                           if(isNaN(parseInt(value))){
+                             return 0;
+                           }else{
+                              return parseInt(value);
+                           }
+                        }
+                    },
+                    {field : 'SalesCount',title : '销量',width:60,align:'center',resizable:false,
+                        formatter:function(value,row,index){
+                            if(isNaN(parseInt(value))){
+                                return 0;
+                            }else{
+                                return parseInt(value);
+                            }
+                        }},
                     {field : 'SalesPromotion',title : '促销分组',width:120,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                             var long=18;
                             var html=""
                             if(value&&value.length>long){
-                                html=  '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                html=  '<div class="rowTextnew" title="'+value+'">'+value.substring(0,long)+'...</div>'
                             }else{
-                                 html='<div class="rowText">'+value+'</div>'
+                                 html='<div class="rowTextnew">'+value+'</div>'
                             }
 
                             return  html

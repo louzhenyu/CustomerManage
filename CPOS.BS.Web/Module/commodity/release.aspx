@@ -27,27 +27,27 @@
                    <div class="panelDiv" id="nav01" data-index="0">
                     <div class="left">
                       <div class="commonSelectWrap">
-                          <em class="tit"><span style="color: red;position: relative;top: 3px;">*</span>商品名称：</em>
+                          <em class="tit"><span style="color: red;position: relative">*</span>商品名称：</em>
                           <label class="searchInput" style="width: 373px;">
                             <input data-text="商品名称" data-flag="Item_Name" class="easyui-validatebox" data-options="required:true" name="Item_Name" type="text" value="">
                           </label>
                       </div>
                       <div class="commonSelectWrap">
-                          <em class="tit"><span style="color: red;position: relative;top: 3px;">*</span>商品编码：</em>
+                          <em class="tit"><span style="color: red;position: relative;">*</span>商品编码：</em>
                           <label class="searchInput">
                             <input data-text="商品编码" data-flag="Item_Code" class="easyui-validatebox" data-options="required:true" name="Item_Code" type="text" value="">
                           </label>
                       </div>
                       <div class="commonSelectWrap">
-                          <em class="tit"><span style="color: red;position: relative;top: 3px;">*</span>商品分类：</em>
+                          <em class="tit"><span style="color: red;position: relative;">*</span>商品分类：</em>
                           <label class="searchInput">
                             <input data-text="商品分类" id="Category" data-options="required:true" data-flag="Item_Category_Id" name="Item_Category_Id" type="text" value="">
                           </label>
                       </div>
                       <div class="commonSelectWrap">
-                          <em class="tit"><span style="color: red;position: relative;top: 3px;">*</span>促销分组：</em>
+                          <em class="tit">促销分组：</em>
                           <label class="searchInput">
-                            <input data-text="促销分组" id="ItemCategoryId"  data-flag="ItemCategoryId" name="ItemCategoryId" type="text" value="">
+                            <input data-text="促销分组" id="ItemCategoryId"    data-flag="ItemCategoryId" name="ItemCategoryId" type="text" value="">
                           </label>
                       </div>
                     </div>
@@ -278,18 +278,13 @@
       <#var subRoot=Data.ItemPriceTypeList;subRoot=subRoot?subRoot:[];#>
           <#for(var i=0,length=subRoot.length;i<length;i++){ var item=subRoot[i];#>
                   <#if(1==1){#>
- <div class="commonSelectWrap load">
+
+                                        <div class="commonSelectWrap load">
                                             <em class="tit"><#=item.item_price_type_name#>:</em>
                                             <label class="searchInput " style="border: none">
-                                           <# if(item.item_price_type_code=="销量"){ #>
-
-                                           <# }else{  #>
-                                               <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" data-flag="price" name="price" type="text" value="">
-
-                                           <# }#>
-
+                                              <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" data-flag="price" name="price" type="text" value="">
                                             </label>
-                                            </div>
+                       </div>
                   <#}#>
 
 
