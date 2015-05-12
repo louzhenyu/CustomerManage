@@ -362,6 +362,12 @@ namespace JIT.CPOS.BS.BLL
                 grouporder3.OrderCount = int.Parse(ds.Tables[0].Rows[0]["RowRnt3"].ToString());
                 Grouplist.Add(grouporder3);
 
+                //未评论订单个数
+                var noEvaluationCount = new JIT.CPOS.DTO.Module.VIP.Order.Response.GroupingOrderCount();
+                noEvaluationCount.GroupingType = 6;
+                noEvaluationCount.OrderCount = int.Parse(ds.Tables[0].Rows[0]["NoEvaluationCount"].ToString());
+                Grouplist.Add(noEvaluationCount);
+
                 //已付款且门店自提 Add by Henry 2014-12-18
                 if (ChannelId == "6")
                 {
