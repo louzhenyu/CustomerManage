@@ -55,7 +55,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             //所有商户配置
             var settingList = customerBasicSettingBll.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = loggingSessionInfo.ClientID }, null);
             //奖励类型 0=按订单；1=按商品
-            var rewardsType = settingList.Where(t => t.SettingCode == "RewardsType").FirstOrDefault().SettingValue;
+            int rewardsType = 0;
+            var rewardsTypeSetting = settingList.Where(t => t.SettingCode == "RewardsType").FirstOrDefault();
             //积分启用配置
             CustomerBasicSettingEntity enableIntegralSetting = settingList.Where(t => t.SettingCode == "EnableIntegral").FirstOrDefault();
             //积分使用上限 
@@ -65,6 +66,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             //返现使用上限
             var cashRedeemUpLimit = settingList.Where(t => t.SettingCode == "CashRedeemUpLimit").FirstOrDefault();
 
+            if (rewardsTypeSetting != null)
+                rewardsType = int.Parse(rewardsTypeSetting.SettingValue);
             if (enableIntegralSetting != null)
                 rd.EnableIntegral = int.Parse(enableIntegralSetting.SettingValue);
             if (enableRewardCashSetting != null)
@@ -103,7 +106,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     decimal validIntegral = vipIntegralEntity.ValidIntegral ?? 0;//会员积分
 
                     decimal totalIntegral = 0;  //可使用积分                
-                    if (rewardsType == "1")     //按商品奖励
+                    if (rewardsType == 1)       //按商品奖励
                     {
                         totalIntegral = bll.GetIntegralBySkuId(skuIdList);
                     }
