@@ -1167,7 +1167,7 @@
                 //上传的文件类型
                 fieldName: 'imgFile',
                 //注意后面的参数，dir表示文件类型，width表示缩略图的宽，height表示高
-                url: '/Framework/Javascript/Other/kindeditor/asp.net/upload_homepage_json.ashx?dir=image&width=600',
+                url: '/Framework/Javascript/Other/kindeditor/asp.net/upload_homepage_json.ashx?dir=image&width=640',
                 afterUpload: function (data) {
                     if (data.error === 0) {
                         if (callback) {
