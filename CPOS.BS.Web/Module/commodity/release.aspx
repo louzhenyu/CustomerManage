@@ -92,7 +92,7 @@
                         <div class="commonSelectWrap">
                           <em class="tit">商品条码：</em>
                           <label class="searchInput">
-                            <input data-text="商品条码" data-flag="price" name="barcode" class="easyui-validatebox" type="text" value="">
+                            <input data-text="商品条码" data-flag="price" name="barcode" class="easyui-validatebox" data-options="validType:'englishCheckSub'" type="text" value="">
                           </label>
                       </div>
                         <div class="textList" id="textList">
@@ -277,16 +277,28 @@
   <script id="tpl_commoditySellForm" type="text/html">
       <#var subRoot=Data.ItemPriceTypeList;subRoot=subRoot?subRoot:[];#>
           <#for(var i=0,length=subRoot.length;i<length;i++){ var item=subRoot[i];#>
-                  <#if(1==1){#>
+                  <#if(item.item_price_type_code=="销量"){#>
+           <div class="commonSelectWrap load" style="display: none">
+                                                                                   <em class="tit"><#=item.item_price_type_name#>:</em>
+                                                                                   <label class="searchInput " style="border: none">
+                                                                                     <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:70,height:32,disabled:true" data-flag="price" name="price" type="text" value="">
+                                                                                   </label>
+                                                              </div>
 
-                                        <div class="commonSelectWrap load">
-                                            <em class="tit"><#=item.item_price_type_name#>:</em>
-                                            <label class="searchInput " style="border: none">
-                                              <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" data-flag="price" name="price" type="text" value="">
-                                            </label>
-                       </div>
-                  <#}#>
+                  <#}else{#>
 
+                                                          <div class="commonSelectWrap load">
+                                                              <em class="tit"><#=item.item_price_type_name#>:</em>
+                                                              <label class="searchInput " style="border: none">
+                                                              <#if(item.item_price_type_code=="库存"){#>
+                                                                <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" data-flag="price" name="price" type="text" value="">
+                                                            <#}else{#>
+                                                             <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:2,width:160,height:32" data-flag="price" name="price" type="text" value="">
+
+                                                            <#}#>
+                                                              </label>
+                                                           </div>
+                                    <#}#>
 
 
 

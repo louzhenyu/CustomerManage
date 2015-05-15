@@ -42,7 +42,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql = sql + "select "
                       + " a.item_id "
                       + " ,a.item_category_id "
-                      + ",(select top 1 ImageURL from objectimages b where b.ObjectId=a.item_id and isdelete=0 order by displayindex ) as  Image_Url"
+                      + ",(select top 1 ImageURL from objectimages b where b.ObjectId=a.item_id  and isdelete=0 order by displayindex) as  Image_Url"
                       + " ,a.item_code "
                       + " ,a.item_name "
                       + " ,a.item_name_en "
@@ -88,7 +88,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + "inner join @TmpTable b "
                       + "on(a.Item_Id = b.Item_Id) "
                       + "where 1=1 "
-                      + "and b.row_no  > '" + _ht["StartRow"].ToString() + "' and  b.row_no <= '" + _ht["EndRow"] + "' order by a.item_code ";
+                      + "and b.row_no  > '" + _ht["StartRow"].ToString() + "' and  b.row_no <= '" + _ht["EndRow"] + "' order by a.modify_time ";//item_code
             #endregion
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
@@ -108,7 +108,7 @@ namespace JIT.CPOS.BS.DataAccess
                      + " ); "
                      + " Declare @iCount int; "
                      + " insert into @TmpTable(item_id,row_no) "
-                     + " select x.item_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.item_code), a.item_id "
+                     + " select x.item_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.modify_time), a.item_id "   //item_code
                      + " from t_item a";
 
             if (_ht["item_can_redeem"].ToString() != "")

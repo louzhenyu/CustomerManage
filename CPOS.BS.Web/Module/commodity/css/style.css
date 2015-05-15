@@ -3,7 +3,7 @@
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
 .tableWrap{ margin-top: 40px;}
 .optionBtn{height:65px; padding-top: 20px; background: #f1f1f1; border: solid  1px #eee; border-bottom:none;}
-.optionBtn .commonBtn{ width:72px; background: #00acee;line-height: 32px; height:32px; float: left; margin-left: 12px;}
+.optionBtn .commonBtn{ width:72px; background: #00acee;line-height: 32px; height:32px; float: left; margin-left: 20px;}
 .optionBtn .sales{ width: 132px;}
 .optionBtn .sales img{margin-top: -6px;}
 .moreQueryWrap{ float: left;margin-top: 12px;}

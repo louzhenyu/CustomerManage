@@ -78,7 +78,7 @@
 
 /******查询*****/
 /*头部简单查询*/
-.queryTermArea{min-height:73px;padding:10px 20px 0 0px;border:1px solid #d8d8d8;background:#fbfbfb; margin-bottom:0px;}
+.queryTermArea{min-height:73px;padding:10px 20px 0 0px;border:1px solid #ccc;background:#fbfbfb; margin-bottom:0px;}
 .queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; }
 .commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
 .commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}

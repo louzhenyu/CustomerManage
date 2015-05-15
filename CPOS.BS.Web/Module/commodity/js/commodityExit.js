@@ -176,7 +176,7 @@
                 if ($(this).data("issubMit")) {
 
                    if( that.getAddData()) { //获取添加商品的参数，
-                       alert("商品修改提交中...");
+                       alert("商品修改提交中...",true);    // 不自动消失 true；
                        that.loadData.addCommodity(function (data) {
                            debugger;
                            window.d.close();
@@ -614,8 +614,8 @@
             }).delegate(".addSKU", "click", function () {  //添加sku分类事件
                 $("#dataState").fadeOut(10);
                 var long = that.elems.sku.find(".skuList").length;
-                if (long >= 3) {
-                    alert("最多只能添加3个规格");
+                if (long >= 2) {
+                    alert("最多只能添加2个规格");
                     return;
                 }
                 var html = bd.template("tpl_AddPro");
@@ -1161,10 +1161,17 @@
                         var obj = me.data("flaginfo");
                         debugger;
                         obj.sku_price = me.val();
+                        if (isNaN(parseInt(me.val()))||parseInt(me.val())<0) {
+                            obj.sku_price = 0;
+                        }
                         that.loadData.addPram.SkuList[0].sku_price_list.push(obj)
 
 
                     } else {
+                        if(!me.validatebox("isValid")){
+                            me.focus();
+                            isSubmit=false
+                        }
                         that.loadData.addPram.SkuList[0].barcode = me.val();
                         console.log("商品编码" + me.val());
                     }
