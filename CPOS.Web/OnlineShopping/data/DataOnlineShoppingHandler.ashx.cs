@@ -655,6 +655,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public int isShoppingCart { get; set; }  //是否已经加入购物车（1=已加入，0=未加入）
             public string prop1Name { get; set; }   //属性1名称
             public string prop2Name { get; set; }   //属性2名称
+            public string prop3Name { get; set; }   //属性3名称
             public string isProp2 { get; set; }     //是否有属性2；1=有，0=无
             public string itemCategoryId { get; set; }
             public string itemCategoryName { get; set; }

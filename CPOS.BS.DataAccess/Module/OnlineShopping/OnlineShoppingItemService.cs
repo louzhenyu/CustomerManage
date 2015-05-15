@@ -224,6 +224,7 @@ SELECT itemId = a.item_id
 ,isShoppingCart = (SELECT isnull(count(*),0) FROM dbo.ShoppingCart b WHERE b.isdelete='0' and b.qty>0 and b.skuId = a.skuId AND b.vipid = '{0}')
 ,prop1Name=a.Prop1Name
 ,prop2Name=a.Prop2Name
+,prop3Name=a.Prop3Name
 ,itemCategoryId=a.item_category_id
 ,itemCategoryName=a.ItemCategoryName
 ,isProp2= case when a.Prop2Name is null or a.Prop2Name = '' then '0' else '1' end 

@@ -183,15 +183,32 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             //所有商户配置
             var settingList = customerBasicSettingBll.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = this.CurrentUserInfo.ClientID }, null);
             //奖励类型 0=按订单；1=按商品
-            var rewardsType = settingList.Where(t => t.SettingCode == "RewardsType").FirstOrDefault().SettingValue;
+            var rewardsTypeSetting = settingList.Where(t => t.SettingCode == "RewardsType").FirstOrDefault();
             //积分启用配置
-            var enableIntegral = settingList.Where(t => t.SettingCode == "EnableIntegral").FirstOrDefault().SettingValue;
+            var enableIntegralSetting = settingList.Where(t => t.SettingCode == "EnableIntegral").FirstOrDefault();
             //返现启用配置
-            var enableRewardCash = settingList.Where(t => t.SettingCode == "EnableRewardCash").FirstOrDefault().SettingValue;
+            var enableRewardCashSetting = settingList.Where(t => t.SettingCode == "EnableRewardCash").FirstOrDefault();
             //返回积分比例
-            var rewardPointsPer = settingList.Where(t => t.SettingCode == "RewardPointsPer").FirstOrDefault().SettingValue;
+            var rewardPointsPerSetting = settingList.Where(t => t.SettingCode == "RewardPointsPer").FirstOrDefault();
             //返现比例
-            var rewardCashPer = settingList.Where(t => t.SettingCode == "RewardCashPer").FirstOrDefault().SettingValue;
+            var rewardCashPerSetting = settingList.Where(t => t.SettingCode == "RewardCashPer").FirstOrDefault();
+
+            int rewardsType = 0;
+            int enableIntegral = 0;
+            int enableRewardCash = 0;
+            decimal rewardPointsPer=0;
+            decimal rewardCashPer = 0;
+
+            if (rewardsTypeSetting!=null)
+                rewardsType = int.Parse(rewardsTypeSetting.SettingValue);
+            if (enableIntegralSetting != null)
+                enableIntegral = int.Parse(enableIntegralSetting.SettingValue);
+            if (enableRewardCashSetting != null)
+                enableRewardCash = int.Parse(enableRewardCashSetting.SettingValue);
+            if (rewardPointsPerSetting != null)
+                rewardPointsPer = decimal.Parse(rewardPointsPerSetting.SettingValue);
+            if(rewardCashPerSetting!=null)
+                rewardCashPer = decimal.Parse(rewardCashPerSetting.SettingValue);
 
             //3.获取积分与金额的兑换比例
             var vipBll = new VipBLL(this.CurrentUserInfo);
@@ -201,11 +218,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             #endregion
 
             #region 返积分 update by Henry 2015-4-17
-            if (enableIntegral == "1")
+            if (enableIntegral == 1)
             {
                 var vipIntegralBll = new VipIntegralBLL(this.CurrentUserInfo);
                 var vipIntegralDetailBll = new VipIntegralDetailBLL(this.CurrentUserInfo);
-                if (rewardsType == "1")//按商品
+                if (rewardsType == 1)//按商品
                 {
                     const int sourceId = 21;//返现
                     vipIntegralBll.ProcessPoint(sourceId, CurrentUserInfo.ClientID, userId, orderId, tran, null,
@@ -213,7 +230,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 }
                 else//按订单
                 {
-                    decimal points = actualAmount * (decimal.Parse(rewardPointsPer) / 100) / integralAmountPre;
+                    decimal points = actualAmount * (rewardPointsPer / 100) / integralAmountPre;
                     var vipIntegral = vipIntegralBll.GetByID(userId);
                     if (vipIntegral == null)
                     {
@@ -245,7 +262,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
             #region 返现
 
-            if (enableRewardCash == "1")
+            if (enableRewardCash == 1)
             {
                 //1.Get All Order.skuId and Order.Qty 
 
@@ -268,13 +285,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
                 var bll = new VipBLL(CurrentUserInfo);
                 decimal totalReturnAmount = 0;//返现总金额
-                if (rewardsType == "1")//按商品
+                if (rewardsType == 1)//按商品
                 {
                     totalReturnAmount = bll.GetTotalReturnAmountBySkuId(str, tran);
                 }
                 else//按订单
                 {
-                    totalReturnAmount = actualAmount * (decimal.Parse(rewardCashPer)/100);
+                    totalReturnAmount = actualAmount * (rewardCashPer/100);
                 }
                 if (totalReturnAmount > 0)
                 {
