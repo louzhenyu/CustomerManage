@@ -80,6 +80,22 @@
         }
         return list;
     };
+
+    util.list2obj = function(list,key){
+        var obj = {};
+        for(var i=0;i<list.length;i++){
+            var idata = list[i];
+            obj[idata[key]] = idata;
+        }
+        return obj;
+    };
+    util.obj2list = function(obj){
+        var list = [];
+        for(var i in obj){
+            list.push(obj[i]);
+        }
+        return list;
+    };
     util.getUrlParam=function(key){
 		var urlstr = window.location.href.split("?"),
             params = {};
