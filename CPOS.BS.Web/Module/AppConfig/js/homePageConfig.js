@@ -152,7 +152,7 @@
         },
         categoryLayerEvent: function () {
             // 分类弹层 事件委托
-            this.ele.categoryLayer.delegate(".SearchBtn", "click", function () {
+            this.ele.categoryLayer.delegate(".searchBtn", "click", function () {
                 self.categoryLayer.loadDate($(this).siblings().children().val());
 
             }).delegate(".closePopupLayer", "click", function (e) {
@@ -175,7 +175,7 @@
                 $(this).parents(".popupLayer").hide();
                 self.mask.hide();
 
-            }).delegate(".SearchBtn", "click", function () {
+            }).delegate(".searchBtn", "click", function () {
                 self.productLayer.loadDate($(this).siblings().children("select").val(), $(this).siblings().children("input").val());
 
             }).delegate(".productItem", "click", function (e) {
@@ -675,7 +675,7 @@
                 self.saveSeconKill();
             }).delegate(".jsSaveNavBtn","click",function(){
                 self.SaveNav();
-            }).delegate(".jsSaveSearchBtn","click",function(){
+            }).delegate(".jsSavesearchBtn","click",function(){
                       self.saveSearch();
             }).delegate(".jsSaveCategoryBtn", "click", function (e) {
                 //保存C区信息

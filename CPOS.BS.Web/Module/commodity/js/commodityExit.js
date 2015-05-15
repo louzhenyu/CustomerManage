@@ -1132,7 +1132,7 @@
                 }
             }
 
-            if (gridData && gridData.rows.length > 0) {
+            if (gridData && gridData.rows.length > 0&&$("#dataState").is(':hidden')) {
 
                 for (var rowIndex = 0; rowIndex < gridData.rows.length; rowIndex++) {
                     //每次绑定初始化数据需要对 价格相关字段做特殊处理；
@@ -1152,8 +1152,9 @@
                 for(var index=0;index<gridData.rows.length;index++) {
                     that.elems.skuTable.datagrid('beginEdit', index);
                 }
+                debugger;
                 that.loadData.addPram.SkuList = gridData.rows;
-            } else {
+            } else if(!$("#dataState").is(':hidden')) {
                 that.loadData.addPram.SkuList = [{ bat_id: "1", sku_price_list: []}];
                 $("[data-flag='price']").each(function (index, dom) {
                     var me = $(this);
@@ -1176,8 +1177,10 @@
                         console.log("商品编码" + me.val());
                     }
                 });
+            }else{
+                isSubmit= false;
+                alert("至少一组规格值");
             }
-
 
 
 
