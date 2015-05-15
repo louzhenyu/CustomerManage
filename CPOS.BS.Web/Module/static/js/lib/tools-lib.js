@@ -1,20 +1,5 @@
 ﻿; (function ($) {
     var util={};
-    window.alert = function (content, autoHide) {
-        var d = dialog({
-            title: '提示',
-            cancelValue: '关闭',
-            skin: "black",
-            content: content
-        });
-        window.d = d;
-        d.showModal();
-        if (autoHide) {
-            setTimeout(function () {
-                window.d.close();
-            }, 2000);
-        }
-    };
     //日期时间的格式化
     Date.prototype.format =function(format)
     {

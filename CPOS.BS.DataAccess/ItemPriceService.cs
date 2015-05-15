@@ -357,7 +357,7 @@ namespace JIT.CPOS.BS.DataAccess
                 if (i != 0) { sql = sql + " union all "; }
                 sql = sql + "select '" + itemInfo.Item_Id + "' ObjectId "
                           + ",'" + itemImageInfo.ImageURL + "' ImageURL "
-                          + ",'" + itemImageInfo.DisplayIndex + "' DisplayIndex "
+                          + ",'" + (itemImageInfo.DisplayIndex + 1) + "' DisplayIndex "//让DisplayIndex+1了
                           + ",'" + itemImageInfo.Title + "' Title "
                           + ",'" + itemImageInfo.Description + "' Description "
                           + ",'" + itemImageInfo.ImageId + "' ImageId "
@@ -426,7 +426,7 @@ namespace JIT.CPOS.BS.DataAccess
                           + ",'" + itemInfo.Create_User_Id + "' CreateBy "
                           + ",'" + itemInfo.Create_Time + "' CreateTime "
                           + ",'" + itemImageInfo.ImageURL + "' ImageURL "
-                          + ",'" + itemImageInfo.DisplayIndex + "' DisplayIndex "
+                          + ",'" + (itemImageInfo.DisplayIndex+1) + "' DisplayIndex "
                           + ",'" + itemImageInfo.ImageId + "' ImageId "
                           + ",'0' IsDelete "
                           + ",'" + itemImageInfo.Title + "' Title "
