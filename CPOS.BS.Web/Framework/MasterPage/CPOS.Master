@@ -304,6 +304,22 @@
         <div class="session1" style="display:none"/>
         <script type="text/javascript">
             $(function () {
+            window.alert = function (content, autoHide) {
+                var d = dialog({
+                    title: '提示',
+                    cancelValue: '关闭',
+                    skin: "black",
+                    content: content
+                });
+                window.d = d;
+                d.showModal();
+                if (!autoHide) {
+                    setTimeout(function () {
+                        window.d.close();
+                    }, 2000);
+                }
+
+            };
                 window.clientID = '<%=CustomerID%>';
                 window.adminUserID = '<%=adminUserID%>';
                 window.UnitName = '<%=UnitName%>';
