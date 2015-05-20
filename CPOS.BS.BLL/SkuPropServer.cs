@@ -84,6 +84,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return skuPropService.ISCheckSkuProp(propId);
         }
+        public bool ISCheckSkuProp2(string propId)
+        {
+            return skuPropService.ISCheckSkuProp2(propId);
+        }
         #endregion
 
     }

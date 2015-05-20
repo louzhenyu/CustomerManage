@@ -119,10 +119,44 @@ namespace JIT.CPOS.BS.DataAccess
         #endregion
 
         #region MyRegion
+        /// <summary>
+        /// 判断商品属性里是否引用
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public bool ISCheckSkuProp(string Id)
         {
-            string str = "select count(1) from T_ITEM_PROPERTY where prop_id='" + Id + "' ";
+            string str = "select count(1) from T_ITEM_PROPERTY where prop_id='" + Id + "' ";//除了要判断
             int i = (int)this.SQLHelper.ExecuteScalar(str);
+        
+
+
+            if (i > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 判断sku是否引用
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public bool ISCheckSkuProp2(string Id)
+        {
+            List<SqlParameter> ls = new List<SqlParameter>();
+            string str = @"       select count(1) from T_SKU where 
+       sku_prop_id1 in (select prop_id from T_Prop where parent_prop_id=@prop_id )
+         or   sku_prop_id2 in (select prop_id from T_Prop where parent_prop_id=@prop_id )
+            or   sku_prop_id3 in (select prop_id from T_Prop where parent_prop_id=@prop_id )
+                or   sku_prop_id4 in (select prop_id from T_Prop where parent_prop_id=@prop_id )
+                         or   sku_prop_id5 in (select prop_id from T_Prop where parent_prop_id=@prop_id ) ";//除了要判断
+            ls.Add(new SqlParameter("@prop_id", Id));
+            int i = (int)this.SQLHelper.ExecuteScalar(CommandType.Text, str,ls.ToArray());
+
+
+
             if (i > 0)
             {
                 return true;

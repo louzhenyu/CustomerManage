@@ -473,7 +473,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Prop.Handler
             if (key == null || key.Trim().Length == 0)
             {
                 responseData.success = false;
-                responseData.msg = "ID不能为空";
+                responseData.msg = "ID不能为空";                
                 return responseData.ToJSON();
             }
 
@@ -489,6 +489,14 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Prop.Handler
                     {
                         responseData.success = false;
                         responseData.msg = "属性已被引用";
+                        return responseData.ToJSON();
+
+
+                    }
+                    if (skuPropServer.ISCheckSkuProp2(id))
+                    {
+                        responseData.success = false;
+                        responseData.msg = "规格已被引用";
                         return responseData.ToJSON();
 
 

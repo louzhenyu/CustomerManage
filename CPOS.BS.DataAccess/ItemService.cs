@@ -88,7 +88,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + "inner join @TmpTable b "
                       + "on(a.Item_Id = b.Item_Id) "
                       + "where 1=1 "
-                      + "and b.row_no  > '" + _ht["StartRow"].ToString() + "' and  b.row_no <= '" + _ht["EndRow"] + "' order by a.modify_time ";//item_code
+                      + "and b.row_no  > '" + _ht["StartRow"].ToString() + "' and  b.row_no <= '" + _ht["EndRow"] + "' order by a.modify_time desc";//item_code
             #endregion
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
@@ -108,7 +108,7 @@ namespace JIT.CPOS.BS.DataAccess
                      + " ); "
                      + " Declare @iCount int; "
                      + " insert into @TmpTable(item_id,row_no) "
-                     + " select x.item_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.modify_time), a.item_id "   //item_code
+                     + " select x.item_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.modify_time desc), a.item_id "   //item_code
                      + " from t_item a";
 
             if (_ht["item_can_redeem"].ToString() != "")
