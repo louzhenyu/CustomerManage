@@ -416,13 +416,14 @@
                          url: prams.url,
                          data:prams.data,
                          success: function (data) {
+                            debugger;
                              if (data.success) {
                                  if (callback) {
                                      callback(data);
                                  }
 
                              } else {
-                                 $.messager.alert("提示",data.Message);
+                                 alert(data.msg);
                              }
                          }
                      });

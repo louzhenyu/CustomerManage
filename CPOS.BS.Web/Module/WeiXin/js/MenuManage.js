@@ -76,6 +76,8 @@
                 saveData: $("#btnSaveData"),
                 //标题
                 weixinAccount: $("#weixinAccount"),
+                weixinList:$("#weixinList"),
+
                 //微信号
                 accountSelect: $("#weixinAccount .selectBox"),
                 imageCategory: $("#imageCategory"),
@@ -363,7 +365,7 @@
 
             },
             //所有的数据请求默认加载数据    
-            fillContent: function () {
+            fillContent: function (applicationId) {
 
                 var that = this;
                 //填充微信账号
@@ -376,7 +378,11 @@
                     var html = bd.template("accountTmpl", obj);
                     that.elems.accountSelect.html(html);
                     //把applicationId保存起来
-                    that.applicationId = data.Data.AccountList[0].ApplicationId;
+                    if(!applicationId) {
+                        that.applicationId = data.Data.AccountList[0].ApplicationId;
+                    }else{
+                        that.applicationId =applicationId;
+                    }
                     //获得微信菜单列表
                     that.loadData.getMenuList(function (data) {
                         debugger;
@@ -582,6 +588,7 @@
                 //事件
                 initEvent: function () {
                     var that = this;
+
                     //鼠标移动上去的效果
                     page.elems.chooseEventsDiv.delegate("tr", "mouseover", function (e) {
                         $(this).addClass("on");
@@ -953,6 +960,37 @@
                 var that = this;
                 //拖拽排序
                 that.elems.imageContentDiv.find(".list").sortable({ opacity: 0.7, cursor: 'move', update: function () { }
+                });
+                that.elems.weixinAccount.delegate(".selectBox","change",function(e){
+
+                    var me=$(this);
+                    if(me.val()) {
+                        that.applicationId = me.val();
+
+                        that.loadData.getMenuList(function (data) {
+                            debugger;
+                            var obj =
+                            {
+                                itemList: data.Data.MenuList
+                            }
+                            //obj.itemList = list;
+                            var html = bd.template("menuTmpl", obj);
+                            that.elems.menuArea.html(html);
+                            //让当前的状态进行保存
+                            if (that.statusDomobj) {
+                                var menuJson = JSON.parse(that.statusDomobj.attr("data-menu"));
+                                var menuId = menuJson.MenuId;
+                                //显示当前的一级菜单
+                                that.elems.menuContent.html(that.menuName ? that.menuName : menuJson.Name);
+                                $("#" + menuId).addClass("on").siblings().removeClass("on");
+                            } else {
+                                //显示当前的一级菜单
+                                that.elems.menuContent.html(data.Data.MenuList[0].Name);
+                            }
+                            that.elems.unionCategory.removeClass("hide").addClass("show");
+                            that.elems.linkUrl.removeClass("hide").addClass("show");
+                        });
+                    }
                 });
                 //发布菜单
                 this.elems.publishMenu.click(function () {

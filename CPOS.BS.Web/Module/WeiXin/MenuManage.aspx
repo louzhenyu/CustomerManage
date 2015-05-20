@@ -76,7 +76,7 @@
 <div class="weChatMenuManage" >
 	<div class="commonTitleWrap" id="weixinAccount">
     	<h2>微信账号</h2>
-        <select class="selectBox">
+        <select class="selectBox" id="weixinList">
             
         </select>
         <span id="publishMenu" class="releaseBtn">发布</span>
