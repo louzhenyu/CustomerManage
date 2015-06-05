@@ -155,32 +155,35 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             var rp = pRequest.DeserializeJSONTo<APIRequest<GetVipIntegralRP>>();
 
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
-
+            var bll = new VipBLL(loggingSessionInfo);
             var skuIdAndQty = rp.Parameters.SkuIdAndQtyList;
 
-            if (skuIdAndQty == null)
+            //if (skuIdAndQty == null)
+            //{
+            //    throw new APIException("缺少参数【skuIdAndQty】或参数值为空") { ErrorCode = 135 };
+            //}
+            decimal totalPayAmount = 0;
+            if (skuIdAndQty != null)
             {
-                throw new APIException("缺少参数【skuIdAndQty】或参数值为空") { ErrorCode = 135 };
+                //1.根据skuId和数量获取该商品的积分和金额
+                string skuIdList = skuIdAndQty.Aggregate("",
+                    (current, skuIdAndQtyInfo) =>
+                        current + (skuIdAndQtyInfo.SkuId + ","
+                                   + skuIdAndQtyInfo.Qty.ToString(CultureInfo.InvariantCulture) + ";"));
+                //应付金额
+                totalPayAmount = bll.GetTotalSaleAmountBySkuId(skuIdList);
             }
-            //1.根据skuId和数量获取该商品的积分和金额
-            string skuIdList = skuIdAndQty.Aggregate("",
-                (current, skuIdAndQtyInfo) =>
-                    current + (skuIdAndQtyInfo.SkuId + ","
-                               + skuIdAndQtyInfo.Qty.ToString(CultureInfo.InvariantCulture) + ";"));
-
-            var bll = new VipBLL(loggingSessionInfo);
-            //应付金额
-            var totalPayAmount = bll.GetTotalSaleAmountBySkuId(skuIdList);
             var rd = new GetVipCouponRD();
-
-            var ds = bll.GetVipCouponDataSet(rp.UserID, totalPayAmount);
+            var ds = bll.GetVipCouponDataSet(rp.UserID, totalPayAmount, rp.Parameters.UsableRange, rp.Parameters.ObjectID,rp.Parameters.Type);
 
             if (ds.Tables[0].Rows.Count > 0)
             {
                 var temp = ds.Tables[0].AsEnumerable().Select(t => new CouponInfo()
                 {
                     CouponId = t["CouponID"].ToString(),
+                    CouponCode=t["CouponCode"].ToString(),
                     CouponAmount = Convert.ToDecimal(t["parValue"]),
+                    CouponName = t["CoupnName"].ToString(),
                     CouponDesc = t["CouponDesc"].ToString(),
                     DisplayIndex = Convert.ToInt32(t["displayIndex"]),
                     EnableFlag = Convert.ToInt32(t["EnableFlag"]),
@@ -1418,6 +1421,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
     {
         public SkuIdAndQtyInfo[] SkuIdAndQtyList { get; set; }
 
+        /// <summary>
+        /// 优惠券适用范围(1=购物券；2=服务券)
+        /// </summary>
+        public int UsableRange { get; set; }
+        /// <summary>
+        /// 优惠券使用门店/分销商ID
+        /// </summary>
+        public string ObjectID { get; set; }
+        /// <summary>
+        /// 是否是抵用券（0=包含抵用券；1=不包含抵用券）
+        /// </summary>
+        public int Type { get; set; }
         public void Validate()
         {
         }
@@ -1440,6 +1455,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
     {
         //优惠券主键标识
         public string CouponId { get; set; }
+        /// <summary>
+        /// 编码
+        /// </summary>
+        public string CouponCode { get; set; }
+        //优惠券名称
+        public string CouponName { get; set; }
         //优惠券描述
         public string CouponDesc { get; set; }
         public string StartDate { get; set; }

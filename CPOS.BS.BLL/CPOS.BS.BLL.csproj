@@ -139,6 +139,7 @@
     <Compile Include="CodeGeneration\CouponBLL.cs" />
     <Compile Include="CodeGeneration\CouponSourceBLL.cs" />
     <Compile Include="CodeGeneration\CouponTypeBLL.cs" />
+    <Compile Include="CodeGeneration\Coupon\CouponTypeUnitMappingBLL.cs" />
     <Compile Include="CodeGeneration\Coupon\CouponUseBLL.cs" />
     <Compile Include="CodeGeneration\CSConversationBLL.cs" />
     <Compile Include="CodeGeneration\CSMessageBLL.cs" />
@@ -437,6 +438,7 @@
     <Compile Include="CodeGeneration\VipOrderSubRunObjectMappingBLL.cs" />
     <Compile Include="CodeGeneration\VipPropertyBLL.cs" />
     <Compile Include="CodeGeneration\VIPRoleMappingBLL.cs" />
+    <Compile Include="CodeGeneration\VipServicesLogBLL.cs" />
     <Compile Include="CodeGeneration\VipShowLogBLL.cs" />
     <Compile Include="CodeGeneration\VipSnapshotBLL.cs" />
     <Compile Include="CodeGeneration\VipStoreBLL.cs" />
@@ -542,6 +544,7 @@
     <Compile Include="CouponBLL.cs" />
     <Compile Include="CouponSourceBLL.cs" />
     <Compile Include="CouponTypeBLL.cs" />
+    <Compile Include="Coupon\CouponTypeUnitMappingBLL.cs" />
     <Compile Include="Coupon\CouponUseBLL.cs" />
     <Compile Include="CSConversationBLL.cs" />
     <Compile Include="CS\CSInvokeMessageBLL.cs" />
@@ -947,6 +950,7 @@
     <Compile Include="VipLogBLL.cs" />
     <Compile Include="VipOrderSubRunObjectMappingBLL.cs" />
     <Compile Include="VipPropertyBLL.cs" />
+    <Compile Include="VipServicesLogBLL.cs" />
     <Compile Include="VipShowLogBLL.cs" />
     <Compile Include="VipSnapshotBLL.cs" />
     <Compile Include="VipStoreBLL.cs" />

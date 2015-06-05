@@ -1013,7 +1013,7 @@ namespace JIT.CPOS.BS.DataAccess
                                     LEFT JOIN T_Role r ON l.role_id=r.role_id
                                     WHERE l.user_id='{0}'
                                     and l.default_flag=1 ", userId);
-                                   // AND r.role_code in ('CustomerOrders','CustomerService')", userId);
+            // AND r.role_code in ('CustomerOrders','CustomerService')", userId);
             object obj = SQLHelper.ExecuteScalar(sql);
             string ret = string.Empty;
             if (obj != null)
@@ -1727,27 +1727,73 @@ select @ReturnValue", pCustomerID);
             }
         }
 
-        //获取会员优惠券集合
-        public DataSet GetVipCouponDataSet(string vipId, decimal totalPayAmount)
+        /// <summary>
+        /// 获取会员优惠券集合
+        /// </summary>
+        /// <param name="vipId">会员ID</param>
+        /// <param name="totalPayAmount">支付金额</param>
+        /// <param name="usableRange">适用范围(1=购物券；2=服务券)</param>
+        /// <param name="objectID">优惠券使用门店/分销商ID</param>
+        /// <param name="type">是否包含抵用券（0=包含抵用券；1=不包含抵用券）</param>
+        /// <returns></returns>
+        public DataSet GetVipCouponDataSet(string vipId, decimal totalPayAmount, int usableRange, string objectID,int type)
         {
-            var paras = new List<SqlParameter>
-            {
-                new SqlParameter() { ParameterName = "@pVipId", Value = vipId } ,
-                new SqlParameter(){ParameterName = "@pTotalPayAmount",Value = totalPayAmount}
-            
-            };
+            //var paras = new List<SqlParameter>
+            //{
+            //    new SqlParameter() { ParameterName = "@pVipId", Value = vipId } ,
+            //    new SqlParameter(){ParameterName = "@pTotalPayAmount",Value = totalPayAmount}
+
+            //};
 
             var sql = new StringBuilder();
-            sql.Append("select displayIndex = ROW_NUMBER() over (order by enableFlag,parValue desc), * from (");
-            sql.Append(" select a.CouponID,a.CouponDesc,convert(nvarchar(10),a.BeginDate,121) BeginDate,convert(nvarchar(10),a.EndDate,121) EndDate,b.ParValue , ");
-            sql.Append(" ValidDateDesc = '有效期：' + convert(nvarchar(10),a.BeginDate,121) +'--' +convert(nvarchar(10),a.EndDate,121), ");
-            sql.Append(" EnableFlag = case when b.ConditionValue<= @pTotalPayAmount then 1 else  0 end from Coupon a,CouponType b,VipCouponMapping c");
-            sql.Append(" where  CONVERT(nvarchar(200), a.CouponTypeID) = CONVERT(nvarchar(200), b.CouponTypeID)");   //将CouponType表主键GUID转换为字符串再进行比较
-            sql.Append(" and c.CouponID = a.CouponID");
-            sql.Append(" and a.Status = 0 and a.IsDelete = 0");
-            sql.Append(" and EndDate>GETDATE()");
-            sql.Append(" and c.VIPID = @pVipId");
-            sql.Append(" and c.IsDelete = 0) t");
+            //sql.Append("select displayIndex = ROW_NUMBER() over (order by enableFlag,parValue desc), * from (");
+            //sql.Append(" select a.CouponID,a.CouponDesc,convert(nvarchar(10),a.BeginDate,121) BeginDate,convert(nvarchar(10),a.EndDate,121) EndDate,b.ParValue , ");
+            //sql.Append(" ValidDateDesc = '有效期：' + convert(nvarchar(10),a.BeginDate,121) +'--' +convert(nvarchar(10),a.EndDate,121), ");
+            //sql.Append(" EnableFlag = case when b.ConditionValue<= @pTotalPayAmount then 1 else  0 end from Coupon a,CouponType b,VipCouponMapping c");
+            //sql.Append(" where  CONVERT(nvarchar(200), a.CouponTypeID) = CONVERT(nvarchar(200), b.CouponTypeID)");   //将CouponType表主键GUID转换为字符串再进行比较
+            //sql.Append(" and c.CouponID = a.CouponID");
+            //sql.Append(" and a.Status = 0 and a.IsDelete = 0");
+            //sql.Append(" and EndDate>GETDATE()");
+            //sql.Append(" and c.VIPID = @pVipId");
+            //sql.Append(" and c.IsDelete = 0) t");
+
+            sql.Append(" SELECT  displayIndex = ROW_NUMBER() OVER ( ORDER BY enableFlag, parValue DESC ) ,* ");
+            sql.Append(" FROM    ( SELECT    a.CouponID , ");
+            sql.Append(" a.CouponCode , ");
+            sql.Append(" a.CoupnName , ");
+            sql.Append(" a.CouponDesc , ");
+            sql.Append(" CONVERT(NVARCHAR(10), a.BeginDate, 121) BeginDate , ");
+            sql.Append(" CONVERT(NVARCHAR(10), a.EndDate, 121) EndDate , ");
+            sql.Append(" b.ParValue , ");
+            sql.Append(" ValidDateDesc = '有效期：' ");
+            sql.Append(" + CONVERT(NVARCHAR(10), a.BeginDate, 121) + '--' ");
+            sql.Append(" + CONVERT(NVARCHAR(10), a.EndDate, 121) , ");
+            sql.Append(" EnableFlag = CASE WHEN b.ConditionValue <= @pTotalPayAmount ");
+            sql.Append(" THEN 1 ");
+            sql.Append(" ELSE 0 ");
+            sql.Append(" END ");
+            sql.Append(" FROM Coupon a ");
+            sql.Append(" INNER JOIN CouponType b ON CONVERT(NVARCHAR(200), a.CouponTypeID) = CONVERT(NVARCHAR(200), b.CouponTypeID) ");
+            sql.Append(" INNER JOIN VipCouponMapping c ON c.CouponID = a.CouponID ");
+            sql.Append(" LEFT JOIN dbo.CouponTypeUnitMapping d ON d.CouponTypeID = b.CouponTypeID ");
+            sql.Append(" WHERE     a.Status = 0 ");
+            sql.Append(" AND a.IsDelete = 0 ");
+            sql.Append(" AND EndDate > GETDATE() ");
+            sql.Append(" AND c.VIPID = @pVipId ");
+            sql.Append(" AND c.IsDelete = 0 ");
+            sql.Append(" AND b.UsableRange = @UsableRange ");
+            sql.Append(" AND ( b.SuitableForStore = 1 OR d.ObjectID = @ObjectID  )");
+            if (type > 0)
+            {
+                sql.Append(" AND b.ParValue>0 ");
+            }
+            sql.Append(" ) t");
+
+            var paras = new List<SqlParameter> { };
+            paras.Add(new SqlParameter() { ParameterName = "@pVipId", Value = vipId });
+            paras.Add(new SqlParameter() { ParameterName = "@pTotalPayAmount", Value = totalPayAmount });
+            paras.Add(new SqlParameter() { ParameterName = "@UsableRange", Value = usableRange });
+            paras.Add(new SqlParameter() { ParameterName = "@ObjectID", Value = objectID });
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
         }

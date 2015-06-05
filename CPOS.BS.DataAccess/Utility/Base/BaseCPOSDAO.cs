@@ -23,6 +23,7 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
 using JIT.CPOS.BS.Entity;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.BS.DataAccess.Base
 {
@@ -162,6 +163,15 @@ namespace JIT.CPOS.BS.DataAccess.Base
         protected string NewGuid()
         {
             return System.Guid.NewGuid().ToString().Replace("-", "");
+        }
+
+        /// <summary>
+        /// 事务
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this.SQLHelper.CreateTransaction();
         }
         #endregion
     }

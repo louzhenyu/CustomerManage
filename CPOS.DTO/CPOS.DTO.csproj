@@ -70,6 +70,12 @@
     <Compile Include="Module\AppConfig\HomePageConfig\Response\HomePageConfigRD.cs" />
     <Compile Include="Module\AppConfig\HomePageConfig\Response\SetEventAdRD.cs" />
     <Compile Include="Module\AppConfig\HomePageConfig\Response\SetEventItemRD.cs" />
+    <Compile Include="Module\Basic\Customer\Request\SetRewardsSettingRP.cs" />
+    <Compile Include="Module\Basic\Customer\Request\SetSalesSettingRP.cs" />
+    <Compile Include="Module\Marketing\Coupon\Request\DelCouponRP.cs" />
+    <Compile Include="Module\Marketing\Coupon\Request\GetCouponTypeListRP.cs" />
+    <Compile Include="Module\Marketing\Coupon\Request\SetCouponRP.cs" />
+    <Compile Include="Module\Marketing\Coupon\Response\GetCouponTypeListRD.cs" />
     <Compile Include="Module\VIP\Attribute\Request\GetAttributeListRP.cs" />
     <Compile Include="Module\VIP\Attribute\Request\SetAttributeRP.cs" />
     <Compile Include="Module\VIP\Attribute\Response\GetAttributeListRD.cs" />
@@ -145,6 +151,10 @@
     <Compile Include="Module\VIP\Register\Response\GetRegisterFormItemsRD.cs" />
     <Compile Include="Module\VIP\Register\Response\MergeVipInfoRD.cs" />
     <Compile Include="Module\VIP\Register\Response\SetRegisterFormItemsRD.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Request\GetVipServicesLogListRP.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Request\SetVipServicesLogRP.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Response\GetVipServicesLogDetailRD.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Response\GetVipServicesLogListRD.cs" />
     <Compile Include="Module\VIP\VipListNum\Request\GetVipListNumRP.cs" />
     <Compile Include="Module\VIP\VipListNum\Response\GetVipListNumRD.cs" />
     <Compile Include="Module\VIP\VipList\Request\GetMyVipListRP.cs" />
@@ -258,6 +268,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Module\Basic\Customer\Response\" />
     <Folder Include="Module\HtmlApp\Config\Request\" />
     <Folder Include="Product\Eclub\Module\" />
   </ItemGroup>

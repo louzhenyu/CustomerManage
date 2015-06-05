@@ -69,5 +69,96 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(sql);
         }
         #endregion
+
+        /// <summary>
+        /// 在事务内创建一个新实例
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public Guid CreateReturnID(CouponTypeEntity pEntity, IDbTransaction pTran)
+        {
+            //参数校验
+            if (pEntity == null)
+                throw new ArgumentNullException("pEntity");
+
+            //初始化固定字段
+            pEntity.IsDelete = 0;
+            pEntity.CreateTime = DateTime.Now;
+            pEntity.LastUpdateTime = pEntity.CreateTime;
+            pEntity.CreateBy = CurrentUserInfo.UserID;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+
+
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("insert into [CouponType](");
+            strSql.Append("[CouponTypeName],[ParValue],[Discount],[ConditionValue],[IsRepeatable],[IsMixable],[CouponSourceID],[ValidPeriod],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[IssuedQty],[IsVoucher],[UsableRange],[ServiceLife],[SuitableForStore],[BeginTime],[EndTime],[CouponTypeDesc],[CouponTypeID])");
+            strSql.Append(" values (");
+            strSql.Append("@CouponTypeName,@ParValue,@Discount,@ConditionValue,@IsRepeatable,@IsMixable,@CouponSourceID,@ValidPeriod,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@IssuedQty,@IsVoucher,@UsableRange,@ServiceLife,@SuitableForStore,@BeginTime,@EndTime,@CouponTypeDesc,@CouponTypeID)");
+
+            Guid? pkGuid;
+            if (pEntity.CouponTypeID == null)
+                pkGuid = Guid.NewGuid();
+            else
+                pkGuid = pEntity.CouponTypeID;
+
+            SqlParameter[] parameters = 
+            {
+					new SqlParameter("@CouponTypeName",SqlDbType.NVarChar),
+					new SqlParameter("@ParValue",SqlDbType.Decimal),
+					new SqlParameter("@Discount",SqlDbType.Decimal),
+					new SqlParameter("@ConditionValue",SqlDbType.Decimal),
+					new SqlParameter("@IsRepeatable",SqlDbType.Int),
+					new SqlParameter("@IsMixable",SqlDbType.Int),
+					new SqlParameter("@CouponSourceID",SqlDbType.NVarChar),
+					new SqlParameter("@ValidPeriod",SqlDbType.Int),
+					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@CreateTime",SqlDbType.DateTime),
+					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
+					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
+					new SqlParameter("@IssuedQty",SqlDbType.Int),
+					new SqlParameter("@IsVoucher",SqlDbType.Int),
+					new SqlParameter("@UsableRange",SqlDbType.Int),
+					new SqlParameter("@ServiceLife",SqlDbType.Int),
+					new SqlParameter("@SuitableForStore",SqlDbType.Int),
+					new SqlParameter("@BeginTime",SqlDbType.DateTime),
+					new SqlParameter("@EndTime",SqlDbType.DateTime),
+					new SqlParameter("@CouponTypeDesc",SqlDbType.NVarChar),
+					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier)
+            };
+            parameters[0].Value = pEntity.CouponTypeName;
+            parameters[1].Value = pEntity.ParValue;
+            parameters[2].Value = pEntity.Discount;
+            parameters[3].Value = pEntity.ConditionValue;
+            parameters[4].Value = pEntity.IsRepeatable;
+            parameters[5].Value = pEntity.IsMixable;
+            parameters[6].Value = pEntity.CouponSourceID;
+            parameters[7].Value = pEntity.ValidPeriod;
+            parameters[8].Value = pEntity.LastUpdateTime;
+            parameters[9].Value = pEntity.LastUpdateBy;
+            parameters[10].Value = pEntity.CreateTime;
+            parameters[11].Value = pEntity.CreateBy;
+            parameters[12].Value = pEntity.IsDelete;
+            parameters[13].Value = pEntity.CustomerId;
+            parameters[14].Value = pEntity.IssuedQty;
+            parameters[15].Value = pEntity.IsVoucher;
+            parameters[16].Value = pEntity.UsableRange;
+            parameters[17].Value = pEntity.ServiceLife;
+            parameters[18].Value = pEntity.SuitableForStore;
+            parameters[19].Value = pEntity.BeginTime;
+            parameters[20].Value = pEntity.EndTime;
+            parameters[21].Value = pEntity.CouponTypeDesc;
+            parameters[22].Value = pkGuid;
+
+            //执行并将结果回写
+            int result;
+            if (pTran != null)
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+            else
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
+            pEntity.CouponTypeID = pkGuid;
+            return pkGuid.Value;
+        }
     }
 }

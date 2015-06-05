@@ -31,6 +31,7 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// <summary>
         /// 成交时间
         /// </summary>
+        public string CarrierID { get; set; }
         public string CarrierName { get; set; }
         /// <summary>
         /// 收货时间

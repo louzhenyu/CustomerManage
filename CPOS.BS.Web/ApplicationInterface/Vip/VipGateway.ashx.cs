@@ -1115,6 +1115,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         /// ASC / DESC
         /// </summary>
         public string OrderType { get; set; }
+        /// <summary>
+        /// 适用范围：1=购物券2=服务券
+        /// </summary>
+        public int UsableRange { get; set; }
+        /// <summary>
+        /// 使用此券的门店
+        /// </summary>
+        public string ObjectID { get; set; }
+      
         public void Validate()
         {
         }

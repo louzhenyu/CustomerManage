@@ -1138,6 +1138,7 @@
     <Content Include="Module\VipManage\css\reset-pc.css" />
     <Content Include="Module\VipManage\css\style.css" />
     <Content Include="Module\VipManage\huiyuan.html" />
+    <Content Include="Module\VipManage\images\add.png" />
     <Content Include="Module\VipManage\images\addBtn02.png" />
     <Content Include="Module\VipManage\images\addIcon001.png" />
     <Content Include="Module\VipManage\images\addNewBtn.png" />
@@ -1149,9 +1150,11 @@
     <Content Include="Module\VipManage\images\checkBox002.png" />
     <Content Include="Module\VipManage\images\commonBtnBg.png" />
     <Content Include="Module\VipManage\images\createIcon.png" />
+    <Content Include="Module\VipManage\images\delete.png" />
     <Content Include="Module\VipManage\images\downTmplBtn.png" />
     <Content Include="Module\VipManage\images\enrollIcon.png" />
     <Content Include="Module\VipManage\images\enrollIcon2.png" />
+    <Content Include="Module\VipManage\images\exit.png" />
     <Content Include="Module\VipManage\images\exportBtn.png" />
     <Content Include="Module\VipManage\images\filterIcon.png" />
     <Content Include="Module\VipManage\images\h-menu001.png" />
@@ -6029,11 +6032,19 @@
     <Compile Include="ApplicationInterface\Events\EventsGateway.ashx.cs">
       <DependentUpon>EventsGateway.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\Basic\Customer\SetRewardsSettingAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Basic\Customer\SetSalesSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Item\ItemHandler.ashx.cs">
       <DependentUpon>ItemHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\Module\Item\ItemNewHandler.ashx.cs">
       <DependentUpon>ItemNewHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Module\Marketing\Coupon\DelCouponTypeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Marketing\Coupon\GetCouponTypeListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Marketing\Coupon\SetCouponAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\ServicesLog\GetVipServicesLogDetailAH.cs">
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="ApplicationInterface\Module\WX\Customer\GetDisplaynoneAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\KeyWord\DeleteKeyWordAH.cs" />
@@ -7083,6 +7094,9 @@
     <Compile Include="ApplicationInterface\Product\QiXinManage\QiXinManageModel.cs" />
     <Compile Include="ApplicationInterface\Product\QiXinManage\UploadFileHandler.cs" />
     <Compile Include="ApplicationInterface\Product\QiXinManage\YTXManager.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\ServicesLog\DelVipServicesLogAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\ServicesLog\GetVipServicesLogListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\ServicesLog\SetVipServicesLogAH.cs" />
     <Compile Include="ApplicationInterface\Util\ExtensionMethods\APIRequestExtensionMethods.cs" />
     <Compile Include="ApplicationInterface\Util\ExtensionMethods\StringExtensionMethods.cs" />
     <Compile Include="ApplicationInterface\Util\SMS\SMSHelper.cs" />
@@ -8195,12 +8209,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>2330</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost:2332/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

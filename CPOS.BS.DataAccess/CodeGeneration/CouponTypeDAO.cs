@@ -25,8 +25,8 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
@@ -70,21 +70,26 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            
+
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
             pEntity.IsDelete = 0;
+            pEntity.CreateTime = DateTime.Now;
+            pEntity.LastUpdateTime = pEntity.CreateTime;
+            pEntity.CreateBy = CurrentUserInfo.UserID;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [CouponType](");
-            strSql.Append("[CouponTypeName],[ParValue],[Discount],[ConditionValue],[IsRepeatable],[IsMixable],[CouponSourceID],[ValidPeriod],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CouponTypeID])");
+            strSql.Append("[CouponTypeName],[ParValue],[Discount],[ConditionValue],[IsRepeatable],[IsMixable],[CouponSourceID],[ValidPeriod],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[IssuedQty],[IsVoucher],[UsableRange],[ServiceLife],[SuitableForStore],[BeginTime],[EndTime],[CouponTypeDesc],[CouponTypeID])");
             strSql.Append(" values (");
-            strSql.Append("@CouponTypeName,@ParValue,@Discount,@ConditionValue,@IsRepeatable,@IsMixable,@CouponSourceID,@ValidPeriod,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CouponTypeID)");            
+            strSql.Append("@CouponTypeName,@ParValue,@Discount,@ConditionValue,@IsRepeatable,@IsMixable,@CouponSourceID,@ValidPeriod,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@IssuedQty,@IsVoucher,@UsableRange,@ServiceLife,@SuitableForStore,@BeginTime,@EndTime,@CouponTypeDesc,@CouponTypeID)");
 
-			string pkString = pEntity.CouponTypeID;
+            Guid? pkGuid;
+            if (pEntity.CouponTypeID == null)
+                pkGuid = Guid.NewGuid();
+            else
+                pkGuid = pEntity.CouponTypeID;
 
             SqlParameter[] parameters = 
             {
@@ -101,30 +106,48 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@CouponTypeID",SqlDbType.NVarChar)
+					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
+					new SqlParameter("@IssuedQty",SqlDbType.Int),
+					new SqlParameter("@IsVoucher",SqlDbType.Int),
+					new SqlParameter("@UsableRange",SqlDbType.Int),
+					new SqlParameter("@ServiceLife",SqlDbType.Int),
+					new SqlParameter("@SuitableForStore",SqlDbType.Int),
+					new SqlParameter("@BeginTime",SqlDbType.DateTime),
+					new SqlParameter("@EndTime",SqlDbType.DateTime),
+					new SqlParameter("@CouponTypeDesc",SqlDbType.NVarChar),
+					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.CouponTypeName;
-			parameters[1].Value = pEntity.ParValue;
-			parameters[2].Value = pEntity.Discount;
-			parameters[3].Value = pEntity.ConditionValue;
-			parameters[4].Value = pEntity.IsRepeatable;
-			parameters[5].Value = pEntity.IsMixable;
-			parameters[6].Value = pEntity.CouponSourceID;
-			parameters[7].Value = pEntity.ValidPeriod;
-			parameters[8].Value = pEntity.LastUpdateTime;
-			parameters[9].Value = pEntity.LastUpdateBy;
-			parameters[10].Value = pEntity.CreateTime;
-			parameters[11].Value = pEntity.CreateBy;
-			parameters[12].Value = pEntity.IsDelete;
-			parameters[13].Value = pkString;
+            parameters[0].Value = pEntity.CouponTypeName;
+            parameters[1].Value = pEntity.ParValue;
+            parameters[2].Value = pEntity.Discount;
+            parameters[3].Value = pEntity.ConditionValue;
+            parameters[4].Value = pEntity.IsRepeatable;
+            parameters[5].Value = pEntity.IsMixable;
+            parameters[6].Value = pEntity.CouponSourceID;
+            parameters[7].Value = pEntity.ValidPeriod;
+            parameters[8].Value = pEntity.LastUpdateTime;
+            parameters[9].Value = pEntity.LastUpdateBy;
+            parameters[10].Value = pEntity.CreateTime;
+            parameters[11].Value = pEntity.CreateBy;
+            parameters[12].Value = pEntity.IsDelete;
+            parameters[13].Value = pEntity.CustomerId;
+            parameters[14].Value = pEntity.IssuedQty;
+            parameters[15].Value = pEntity.IsVoucher;
+            parameters[16].Value = pEntity.UsableRange;
+            parameters[17].Value = pEntity.ServiceLife;
+            parameters[18].Value = pEntity.SuitableForStore;
+            parameters[19].Value = pEntity.BeginTime;
+            parameters[20].Value = pEntity.EndTime;
+            parameters[21].Value = pEntity.CouponTypeDesc;
+            parameters[22].Value = pkGuid;
 
             //执行并将结果回写
             int result;
             if (pTran != null)
-               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
-            pEntity.CouponTypeID = pkString;
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
+            pEntity.CouponTypeID = pkGuid;
         }
 
         /// <summary>
@@ -139,7 +162,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [CouponType] where CouponTypeID='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [CouponType] where CouponTypeID='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             CouponTypeEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -162,7 +185,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [CouponType] where isdelete=0");
+            sql.AppendFormat("select * from [CouponType] where 1=1  and isdelete=0");
             //读取数据
             List<CouponTypeEntity> list = new List<CouponTypeEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -183,48 +206,71 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(CouponTypeEntity pEntity , IDbTransaction pTran)
+        public void Update(CouponTypeEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity,true,pTran);
+            Update(pEntity, pTran, true);
         }
-        public void Update(CouponTypeEntity pEntity , bool pIsUpdateNullField, IDbTransaction pTran)
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(CouponTypeEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.CouponTypeID==null)
+            if (!pEntity.CouponTypeID.HasValue)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
-             //初始化固定字段
+            //初始化固定字段
             pEntity.LastUpdateTime = DateTime.Now;
             pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [CouponType] set ");
-            if (pIsUpdateNullField || pEntity.CouponTypeName!=null)
-                strSql.Append( "[CouponTypeName]=@CouponTypeName,");
-            if (pIsUpdateNullField || pEntity.ParValue!=null)
-                strSql.Append( "[ParValue]=@ParValue,");
-            if (pIsUpdateNullField || pEntity.Discount!=null)
-                strSql.Append( "[Discount]=@Discount,");
-            if (pIsUpdateNullField || pEntity.ConditionValue!=null)
-                strSql.Append( "[ConditionValue]=@ConditionValue,");
-            if (pIsUpdateNullField || pEntity.IsRepeatable!=null)
-                strSql.Append( "[IsRepeatable]=@IsRepeatable,");
-            if (pIsUpdateNullField || pEntity.IsMixable!=null)
-                strSql.Append( "[IsMixable]=@IsMixable,");
-            if (pIsUpdateNullField || pEntity.CouponSourceID!=null)
-                strSql.Append( "[CouponSourceID]=@CouponSourceID,");
-            if (pIsUpdateNullField || pEntity.ValidPeriod!=null)
-                strSql.Append( "[ValidPeriod]=@ValidPeriod,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
-            if (strSql.ToString().EndsWith(","))
-                strSql.Remove(strSql.Length - 1, 1);
+            if (pIsUpdateNullField || pEntity.CouponTypeName != null)
+                strSql.Append("[CouponTypeName]=@CouponTypeName,");
+            if (pIsUpdateNullField || pEntity.ParValue != null)
+                strSql.Append("[ParValue]=@ParValue,");
+            if (pIsUpdateNullField || pEntity.Discount != null)
+                strSql.Append("[Discount]=@Discount,");
+            if (pIsUpdateNullField || pEntity.ConditionValue != null)
+                strSql.Append("[ConditionValue]=@ConditionValue,");
+            if (pIsUpdateNullField || pEntity.IsRepeatable != null)
+                strSql.Append("[IsRepeatable]=@IsRepeatable,");
+            if (pIsUpdateNullField || pEntity.IsMixable != null)
+                strSql.Append("[IsMixable]=@IsMixable,");
+            if (pIsUpdateNullField || pEntity.CouponSourceID != null)
+                strSql.Append("[CouponSourceID]=@CouponSourceID,");
+            if (pIsUpdateNullField || pEntity.ValidPeriod != null)
+                strSql.Append("[ValidPeriod]=@ValidPeriod,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
+                strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy != null)
+                strSql.Append("[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.CustomerId != null)
+                strSql.Append("[CustomerId]=@CustomerId,");
+            if (pIsUpdateNullField || pEntity.IssuedQty != null)
+                strSql.Append("[IssuedQty]=@IssuedQty,");
+            if (pIsUpdateNullField || pEntity.IsVoucher != null)
+                strSql.Append("[IsVoucher]=@IsVoucher,");
+            if (pIsUpdateNullField || pEntity.UsableRange != null)
+                strSql.Append("[UsableRange]=@UsableRange,");
+            if (pIsUpdateNullField || pEntity.ServiceLife != null)
+                strSql.Append("[ServiceLife]=@ServiceLife,");
+            if (pIsUpdateNullField || pEntity.SuitableForStore != null)
+                strSql.Append("[SuitableForStore]=@SuitableForStore,");
+            if (pIsUpdateNullField || pEntity.BeginTime != null)
+                strSql.Append("[BeginTime]=@BeginTime,");
+            if (pIsUpdateNullField || pEntity.EndTime != null)
+                strSql.Append("[EndTime]=@EndTime,");
+            if (pIsUpdateNullField || pEntity.CouponTypeDesc != null)
+                strSql.Append("[CouponTypeDesc]=@CouponTypeDesc");
             strSql.Append(" where CouponTypeID=@CouponTypeID ");
             SqlParameter[] parameters = 
             {
@@ -238,19 +284,37 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@ValidPeriod",SqlDbType.Int),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
-					new SqlParameter("@CouponTypeID",SqlDbType.NVarChar)
+					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
+					new SqlParameter("@IssuedQty",SqlDbType.Int),
+					new SqlParameter("@IsVoucher",SqlDbType.Int),
+					new SqlParameter("@UsableRange",SqlDbType.Int),
+					new SqlParameter("@ServiceLife",SqlDbType.Int),
+					new SqlParameter("@SuitableForStore",SqlDbType.Int),
+					new SqlParameter("@BeginTime",SqlDbType.DateTime),
+					new SqlParameter("@EndTime",SqlDbType.DateTime),
+					new SqlParameter("@CouponTypeDesc",SqlDbType.NVarChar),
+					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.CouponTypeName;
-			parameters[1].Value = pEntity.ParValue;
-			parameters[2].Value = pEntity.Discount;
-			parameters[3].Value = pEntity.ConditionValue;
-			parameters[4].Value = pEntity.IsRepeatable;
-			parameters[5].Value = pEntity.IsMixable;
-			parameters[6].Value = pEntity.CouponSourceID;
-			parameters[7].Value = pEntity.ValidPeriod;
-			parameters[8].Value = pEntity.LastUpdateTime;
-			parameters[9].Value = pEntity.LastUpdateBy;
-			parameters[10].Value = pEntity.CouponTypeID;
+            parameters[0].Value = pEntity.CouponTypeName;
+            parameters[1].Value = pEntity.ParValue;
+            parameters[2].Value = pEntity.Discount;
+            parameters[3].Value = pEntity.ConditionValue;
+            parameters[4].Value = pEntity.IsRepeatable;
+            parameters[5].Value = pEntity.IsMixable;
+            parameters[6].Value = pEntity.CouponSourceID;
+            parameters[7].Value = pEntity.ValidPeriod;
+            parameters[8].Value = pEntity.LastUpdateTime;
+            parameters[9].Value = pEntity.LastUpdateBy;
+            parameters[10].Value = pEntity.CustomerId;
+            parameters[11].Value = pEntity.IssuedQty;
+            parameters[12].Value = pEntity.IsVoucher;
+            parameters[13].Value = pEntity.UsableRange;
+            parameters[14].Value = pEntity.ServiceLife;
+            parameters[15].Value = pEntity.SuitableForStore;
+            parameters[16].Value = pEntity.BeginTime;
+            parameters[17].Value = pEntity.EndTime;
+            parameters[18].Value = pEntity.CouponTypeDesc;
+            parameters[19].Value = pEntity.CouponTypeID;
 
             //执行语句
             int result = 0;
@@ -264,13 +328,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(CouponTypeEntity pEntity )
+        public void Update(CouponTypeEntity pEntity)
         {
-            Update(pEntity ,true);
-        }
-        public void Update(CouponTypeEntity pEntity ,bool pIsUpdateNullField )
-        {
-            this.Update(pEntity, pIsUpdateNullField, null);
+            this.Update(pEntity, null);
         }
 
         /// <summary>
@@ -292,12 +352,12 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.CouponTypeID==null)
+            if (!pEntity.CouponTypeID.HasValue)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.CouponTypeID, pTran);           
+            this.Delete(pEntity.CouponTypeID.Value, pTran);
         }
 
         /// <summary>
@@ -308,23 +368,21 @@ namespace JIT.CPOS.BS.DataAccess
         public void Delete(object pID, IDbTransaction pTran)
         {
             if (pID == null)
-                return ;   
+                return;
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [CouponType] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where CouponTypeID=@CouponTypeID;");
+            sql.AppendLine("update [CouponType] set  isdelete=1 where CouponTypeID=@CouponTypeID;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.Int,Value=Convert.ToInt32(CurrentUserInfo.UserID)},
-                new SqlParameter{ParameterName="@CouponTypeID",SqlDbType=SqlDbType.VarChar,Value=pID}
+                new SqlParameter{ParameterName="@CouponTypeID",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
             };
             //执行语句
             int result = 0;
             if (pTran != null)
-                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
-            return ;
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+            return;
         }
 
         /// <summary>
@@ -338,15 +396,15 @@ namespace JIT.CPOS.BS.DataAccess
             object[] entityIDs = new object[pEntities.Length];
             for (int i = 0; i < pEntities.Length; i++)
             {
-                var item = pEntities[i];
+                var pEntity = pEntities[i];
                 //参数校验
-                if (item == null)
+                if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.CouponTypeID==null)
+                if (!pEntity.CouponTypeID.HasValue)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = item.CouponTypeID;
+                entityIDs[i] = pEntity.CouponTypeID;
             }
             Delete(entityIDs, pTran);
         }
@@ -356,7 +414,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(CouponTypeEntity[] pEntities)
-        { 
+        {
             Delete(pEntities, null);
         }
 
@@ -366,7 +424,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pIDs">标识符值数组</param>
         public void Delete(object[] pIDs)
         {
-            Delete(pIDs,null);
+            Delete(pIDs, null);
         }
 
         /// <summary>
@@ -374,24 +432,24 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran) 
+        public void Delete(object[] pIDs, IDbTransaction pTran)
         {
-            if (pIDs == null || pIDs.Length==0)
-                return ;
+            if (pIDs == null || pIDs.Length == 0)
+                return;
             //组织参数化SQL
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("'{0}',",item.ToString());
+                primaryKeys.AppendFormat("'{0}',", item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [CouponType] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy="+CurrentUserInfo.UserID+",IsDelete=1 where CouponTypeID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [CouponType] set  isdelete=1 where CouponTypeID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
-            int result = 0;   
+            int result = 0;
             if (pTran == null)
                 result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
         }
         #endregion
 
@@ -406,7 +464,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [CouponType] where isdelete=0 ");
+            sql.AppendFormat("select * from [CouponType] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -456,7 +514,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pOrderBys)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
                     }
@@ -467,15 +525,15 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [CouponTypeID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [CouponType] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [CouponType] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [CouponType] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [CouponType] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
                         totalCountSql.AppendFormat(" and {0}", item.GetExpression());
@@ -484,7 +542,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
-            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
             PagedQueryResult<CouponTypeEntity> result = new PagedQueryResult<CouponTypeEntity>();
             List<CouponTypeEntity> list = new List<CouponTypeEntity>();
@@ -516,7 +574,7 @@ namespace JIT.CPOS.BS.DataAccess
         public CouponTypeEntity[] QueryByEntity(CouponTypeEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
-            return Query(queryWhereCondition,  pOrderBys);            
+            return Query(queryWhereCondition, pOrderBys);
         }
 
         /// <summary>
@@ -527,7 +585,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<CouponTypeEntity> PagedQueryByEntity(CouponTypeEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
+            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
@@ -539,37 +597,55 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <returns></returns>
         protected IWhereCondition[] GetWhereConditionByEntity(CouponTypeEntity pQueryEntity)
-        { 
+        {
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.CouponTypeID!=null)
+            if (pQueryEntity.CouponTypeID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponTypeID", Value = pQueryEntity.CouponTypeID });
-            if (pQueryEntity.CouponTypeName!=null)
+            if (pQueryEntity.CouponTypeName != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponTypeName", Value = pQueryEntity.CouponTypeName });
-            if (pQueryEntity.ParValue!=null)
+            if (pQueryEntity.ParValue != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ParValue", Value = pQueryEntity.ParValue });
-            if (pQueryEntity.Discount!=null)
+            if (pQueryEntity.Discount != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Discount", Value = pQueryEntity.Discount });
-            if (pQueryEntity.ConditionValue!=null)
+            if (pQueryEntity.ConditionValue != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ConditionValue", Value = pQueryEntity.ConditionValue });
-            if (pQueryEntity.IsRepeatable!=null)
+            if (pQueryEntity.IsRepeatable != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsRepeatable", Value = pQueryEntity.IsRepeatable });
-            if (pQueryEntity.IsMixable!=null)
+            if (pQueryEntity.IsMixable != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsMixable", Value = pQueryEntity.IsMixable });
-            if (pQueryEntity.CouponSourceID!=null)
+            if (pQueryEntity.CouponSourceID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponSourceID", Value = pQueryEntity.CouponSourceID });
-            if (pQueryEntity.ValidPeriod!=null)
+            if (pQueryEntity.ValidPeriod != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ValidPeriod", Value = pQueryEntity.ValidPeriod });
-            if (pQueryEntity.LastUpdateTime!=null)
+            if (pQueryEntity.LastUpdateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.LastUpdateBy!=null)
+            if (pQueryEntity.LastUpdateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
-            if (pQueryEntity.CreateTime!=null)
+            if (pQueryEntity.CreateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.CreateBy!=null)
+            if (pQueryEntity.CreateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.IsDelete!=null)
+            if (pQueryEntity.IsDelete != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.CustomerId != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
+            if (pQueryEntity.IssuedQty != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IssuedQty", Value = pQueryEntity.IssuedQty });
+            if (pQueryEntity.IsVoucher != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsVoucher", Value = pQueryEntity.IsVoucher });
+            if (pQueryEntity.UsableRange != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "UsableRange", Value = pQueryEntity.UsableRange });
+            if (pQueryEntity.ServiceLife != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ServiceLife", Value = pQueryEntity.ServiceLife });
+            if (pQueryEntity.SuitableForStore != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SuitableForStore", Value = pQueryEntity.SuitableForStore });
+            if (pQueryEntity.BeginTime != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BeginTime", Value = pQueryEntity.BeginTime });
+            if (pQueryEntity.EndTime != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EndTime", Value = pQueryEntity.EndTime });
+            if (pQueryEntity.CouponTypeDesc != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponTypeDesc", Value = pQueryEntity.CouponTypeDesc });
 
             return lstWhereCondition.ToArray();
         }
@@ -578,69 +654,120 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(SqlDataReader pReader, out CouponTypeEntity pInstance)
+        protected void Load(IDataReader pReader, out CouponTypeEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
             pInstance = new CouponTypeEntity();
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["CouponTypeID"] != DBNull.Value)
-			{
-				pInstance.CouponTypeID =  Convert.ToString(pReader["CouponTypeID"]);
-			}
-			if (pReader["CouponTypeName"] != DBNull.Value)
-			{
-				pInstance.CouponTypeName =  Convert.ToString(pReader["CouponTypeName"]);
-			}
-			if (pReader["ParValue"] != DBNull.Value)
-			{
-				pInstance.ParValue =  Convert.ToDecimal(pReader["ParValue"]);
-			}
-			if (pReader["Discount"] != DBNull.Value)
-			{
-				pInstance.Discount =  Convert.ToDecimal(pReader["Discount"]);
-			}
-			if (pReader["ConditionValue"] != DBNull.Value)
-			{
-				pInstance.ConditionValue =  Convert.ToDecimal(pReader["ConditionValue"]);
-			}
-			if (pReader["IsRepeatable"] != DBNull.Value)
-			{
-				pInstance.IsRepeatable =   Convert.ToInt32(pReader["IsRepeatable"]);
-			}
-			if (pReader["IsMixable"] != DBNull.Value)
-			{
-				pInstance.IsMixable =   Convert.ToInt32(pReader["IsMixable"]);
-			}
-			if (pReader["CouponSourceID"] != DBNull.Value)
-			{
-				pInstance.CouponSourceID =  Convert.ToString(pReader["CouponSourceID"]);
-			}
-			if (pReader["ValidPeriod"] != DBNull.Value)
-			{
-				pInstance.ValidPeriod =   Convert.ToInt32(pReader["ValidPeriod"]);
-			}
-			if (pReader["LastUpdateTime"] != DBNull.Value)
-			{
-				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
-			}
-			if (pReader["LastUpdateBy"] != DBNull.Value)
-			{
-				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
-			}
-			if (pReader["CreateTime"] != DBNull.Value)
-			{
-				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
-			}
-			if (pReader["CreateBy"] != DBNull.Value)
-			{
-				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
-			}
-			if (pReader["IsDelete"] != DBNull.Value)
-			{
-				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
-			}
+            if (pReader["CouponTypeID"] != DBNull.Value)
+            {
+                pInstance.CouponTypeID = (Guid)pReader["CouponTypeID"];
+            }
+            if (pReader["CouponTypeName"] != DBNull.Value)
+            {
+                pInstance.CouponTypeName = Convert.ToString(pReader["CouponTypeName"]);
+            }
+            if (pReader["ParValue"] != DBNull.Value)
+            {
+                pInstance.ParValue = Convert.ToDecimal(pReader["ParValue"]);
+            }
+            else
+            {
+                pInstance.ParValue = 0;
+            }
+            if (pReader["Discount"] != DBNull.Value)
+            {
+                pInstance.Discount = Convert.ToDecimal(pReader["Discount"]);
+            }
+            if (pReader["ConditionValue"] != DBNull.Value)
+            {
+                pInstance.ConditionValue = Convert.ToDecimal(pReader["ConditionValue"]);
+            }
+            if (pReader["IsRepeatable"] != DBNull.Value)
+            {
+                pInstance.IsRepeatable = Convert.ToInt32(pReader["IsRepeatable"]);
+            }
+            if (pReader["IsMixable"] != DBNull.Value)
+            {
+                pInstance.IsMixable = Convert.ToInt32(pReader["IsMixable"]);
+            }
+            if (pReader["CouponSourceID"] != DBNull.Value)
+            {
+                pInstance.CouponSourceID = Convert.ToString(pReader["CouponSourceID"]);
+            }
+            if (pReader["ValidPeriod"] != DBNull.Value)
+            {
+                pInstance.ValidPeriod = Convert.ToInt32(pReader["ValidPeriod"]);
+            }
+            if (pReader["LastUpdateTime"] != DBNull.Value)
+            {
+                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
+            }
+            if (pReader["LastUpdateBy"] != DBNull.Value)
+            {
+                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
+            }
+            if (pReader["CreateTime"] != DBNull.Value)
+            {
+                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
+            }
+            if (pReader["CreateBy"] != DBNull.Value)
+            {
+                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
+            }
+            if (pReader["IsDelete"] != DBNull.Value)
+            {
+                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
+            }
+            if (pReader["CustomerId"] != DBNull.Value)
+            {
+                pInstance.CustomerId = Convert.ToString(pReader["CustomerId"]);
+            }
+            if (pReader["IssuedQty"] != DBNull.Value)
+            {
+                pInstance.IssuedQty = Convert.ToInt32(pReader["IssuedQty"]);
+            }
+            else
+            {
+                pInstance.IssuedQty = 0;
+            }
+            if (pReader["IsVoucher"] != DBNull.Value)
+            {
+                pInstance.IsVoucher = Convert.ToInt32(pReader["IsVoucher"]);
+            }else
+            {
+                pInstance.IsVoucher =0;
+            }
+            if (pReader["UsableRange"] != DBNull.Value)
+            {
+                pInstance.UsableRange = Convert.ToInt32(pReader["UsableRange"]);
+            }
+            if (pReader["ServiceLife"] != DBNull.Value)
+            {
+                pInstance.ServiceLife = Convert.ToInt32(pReader["ServiceLife"]);
+            }
+            else
+            {
+                pInstance.ServiceLife = 0;
+            }
+            if (pReader["SuitableForStore"] != DBNull.Value)
+            {
+                pInstance.SuitableForStore = Convert.ToInt32(pReader["SuitableForStore"]);
+            }
+            if (pReader["BeginTime"] != DBNull.Value)
+            {
+                pInstance.BeginTime = Convert.ToDateTime(pReader["BeginTime"]);
+            }
+            if (pReader["EndTime"] != DBNull.Value)
+            {
+                pInstance.EndTime = Convert.ToDateTime(pReader["EndTime"]);
+            }
+            if (pReader["CouponTypeDesc"] != DBNull.Value)
+            {
+                pInstance.CouponTypeDesc = Convert.ToString(pReader["CouponTypeDesc"]);
+            }
 
         }
         #endregion

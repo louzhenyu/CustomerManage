@@ -72,6 +72,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
             if (carrierDs.Tables[0].Rows.Count > 0)
             {
+                rd.OrderListInfo.CarrierID = carrierId;
                 rd.OrderListInfo.CarrierName = carrierDs.Tables[0].Rows[0]["unit_name"].ToString();
             }
 

@@ -32,6 +32,7 @@ using JIT.CPOS.BS.DataAccess.Base;
 using JIT.Utility.Log;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.Entity.Interface;
+using System.Collections;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -763,8 +764,15 @@ namespace JIT.CPOS.BS.BLL
         }
         #endregion
 
-
-
+        /// <summary>
+        /// 批量生成优惠券
+        /// </summary>
+        /// <param name="htCouponInfo"></param>
+        /// <returns></returns>
+        public void GenerateCoupon(Hashtable htCouponInfo)
+        {
+           this._currentDAO.GenerateCoupon(htCouponInfo);
+        }
     }
 
 

@@ -113,6 +113,7 @@
     <Compile Include="CodeGeneration\ClientBussinessDefinedEntity.cs" />
     <Compile Include="CodeGeneration\CouponSourceEntity.cs" />
     <Compile Include="CodeGeneration\CouponTypeEntity.cs" />
+    <Compile Include="CodeGeneration\Coupon\CouponTypeUnitMappingEntity.cs" />
     <Compile Include="CodeGeneration\Coupon\CouponUseEntity.cs" />
     <Compile Include="CodeGeneration\CSConversationEntity.cs" />
     <Compile Include="CodeGeneration\CSMessageEntity.cs" />
@@ -265,7 +266,6 @@
     <Compile Include="CodeGeneration\T_InoutEntity.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailEntity.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropEntity.cs" />
-   
     <Compile Include="CodeGeneration\T_UserEntity.cs" />
     <Compile Include="CodeGeneration\UnitCommentEntity.cs" />
     <Compile Include="CodeGeneration\UrlEntity.cs" />
@@ -279,6 +279,7 @@
     <Compile Include="CodeGeneration\VipLogEntity.cs" />
     <Compile Include="CodeGeneration\VipOrderSubRunObjectMappingEntity.cs" />
     <Compile Include="CodeGeneration\VIPRoleMappingEntity.cs" />
+    <Compile Include="CodeGeneration\VipServicesLogEntity.cs" />
     <Compile Include="CodeGeneration\VipSnapshotEntity.cs" />
     <Compile Include="CodeGeneration\VipStoreEntity.cs" />
     <Compile Include="CodeGeneration\VipVipMappingEntity.cs" />
@@ -325,6 +326,7 @@
     <Compile Include="CodeGeneration\WXSalesPushLogEntity.cs" />
     <Compile Include="CouponSourceEntity.cs" />
     <Compile Include="CouponTypeEntity.cs" />
+    <Compile Include="Coupon\CouponTypeUnitMappingEntity.cs" />
     <Compile Include="Coupon\CouponUseEntity.cs" />
     <Compile Include="CSConversationEntity.cs" />
     <Compile Include="CSMessageEntity.cs" />
@@ -950,7 +952,6 @@
     <Compile Include="VipEntity.cs" />
     <Compile Include="VipExpandEntity.cs" />
     <Compile Include="VipExpandSinaWbEntity.cs" />
-   
     <Compile Include="VIPImageCommentEntity.cs" />
     <Compile Include="VipIntegralDetailEntity.cs" />
     <Compile Include="VipIntegralEntity.cs" />
@@ -958,6 +959,7 @@
     <Compile Include="VipOrderSubRunObjectMappingEntity.cs" />
     <Compile Include="VipPropertyEntity.cs" />
     <Compile Include="VipSearchEntity.cs" />
+    <Compile Include="VipServicesLogEntity.cs" />
     <Compile Include="VipShowLogEntity.cs" />
     <Compile Include="VipStoreEntity.cs" />
     <Compile Include="VipTagsMappingEntity.cs" />
@@ -982,7 +984,6 @@
     <Compile Include="VwVipPosOrderEntity.cs" />
     <Compile Include="WAnswerNewsPushEntity.cs" />
     <Compile Include="WApplicationInterfaceEntity.cs" />
-
     <Compile Include="WAttentionLogEntity.cs" />
     <Compile Include="WAutoReplyEntity.cs" />
     <Compile Include="WeiXinTypeEntity.cs" />
@@ -1048,6 +1049,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Module\VIP\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CodeGeneration\ObjectEvaluationEntity.bak" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

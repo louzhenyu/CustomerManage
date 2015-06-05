@@ -117,12 +117,14 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public DataSet GetCouponList(Hashtable hsPara)
         {
-            var parm = new SqlParameter[5];
+            var parm = new SqlParameter[7];
             parm[0] = new SqlParameter("@VipID", System.Data.SqlDbType.NVarChar) { Value = hsPara["MemberID"] };
             parm[1] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = hsPara["CustomerID"] };
             parm[2] = new SqlParameter("@Status", System.Data.SqlDbType.NVarChar) { Value = hsPara["Status"] };
             parm[3] = new SqlParameter("@PageSize", System.Data.SqlDbType.NVarChar) { Value = hsPara["PageSize"] };
             parm[4] = new SqlParameter("@PageIndex", System.Data.SqlDbType.NVarChar) { Value = hsPara["PageIndex"] };
+            parm[5] = new SqlParameter("@UsableRange", System.Data.SqlDbType.Int) { Value =(hsPara["UsableRange"]) };
+            parm[6] = new SqlParameter("@ObjectID", System.Data.SqlDbType.NVarChar) { Value = hsPara["ObjectID"] };
 
             Loggers.Debug(new DebugLogInfo()
             {

@@ -103,6 +103,7 @@
     <Compile Include="CodeGeneration\CouponDAO.cs" />
     <Compile Include="CodeGeneration\CouponSourceDAO.cs" />
     <Compile Include="CodeGeneration\CouponTypeDAO.cs" />
+    <Compile Include="CodeGeneration\Coupon\CouponTypeUnitMappingDAO.cs" />
     <Compile Include="CodeGeneration\Coupon\CouponUseDAO.cs" />
     <Compile Include="CodeGeneration\CSConversationDAO.cs" />
     <Compile Include="CodeGeneration\CSMessageDAO.cs" />
@@ -369,7 +370,6 @@
     <Compile Include="CodeGeneration\T_InoutDAO.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailDAO.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropDAO.cs" />
-
     <Compile Include="CodeGeneration\T_UserDAO.cs" />
     <Compile Include="CodeGeneration\UnitCommentDAO.cs" />
     <Compile Include="CodeGeneration\UrlDAO.cs" />
@@ -405,6 +405,7 @@
     <Compile Include="CodeGeneration\VipOrderSubRunObjectMappingDAO.cs" />
     <Compile Include="CodeGeneration\VipPropertyDAO.cs" />
     <Compile Include="CodeGeneration\VIPRoleMappingDAO.cs" />
+    <Compile Include="CodeGeneration\VipServicesLogDAO.cs" />
     <Compile Include="CodeGeneration\VipShowLogDAO.cs" />
     <Compile Include="CodeGeneration\VipSnapshotDAO.cs" />
     <Compile Include="CodeGeneration\VipStoreDAO.cs" />
@@ -510,6 +511,7 @@
     <Compile Include="CouponDAO.cs" />
     <Compile Include="CouponSourceDAO.cs" />
     <Compile Include="CouponTypeDAO.cs" />
+    <Compile Include="Coupon\CouponTypeUnitMappingDAO.cs" />
     <Compile Include="Coupon\CouponUseDAO.cs" />
     <Compile Include="CSConversationDAO.cs" />
     <Compile Include="CSMessageDAO.cs" />
@@ -868,6 +870,7 @@
     <Compile Include="VipLogDAO.cs" />
     <Compile Include="VipOrderSubRunObjectMappingDAO.cs" />
     <Compile Include="VipPropertyDAO.cs" />
+    <Compile Include="VipServicesLogDAO.cs" />
     <Compile Include="VipShowLogDAO.cs" />
     <Compile Include="VipSnapshotDAO.cs" />
     <Compile Include="VipStoreDAO.cs" />

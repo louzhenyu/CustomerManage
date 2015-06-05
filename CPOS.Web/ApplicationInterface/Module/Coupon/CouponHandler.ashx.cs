@@ -188,6 +188,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, reqObj.userId);
                 var couponUseBll = new CouponUseBLL(loggingSessionInfo);          //优惠券使用BLL实例化
                 var vcmBll = new VipCouponMappingBLL(loggingSessionInfo);                //优惠券BLL实例化
+                var couponTypeBll = new CouponTypeBLL(loggingSessionInfo);      //优惠券类型
+                var mappingBll = new CouponTypeUnitMappingBLL(loggingSessionInfo);       //优惠券和门店映射
                 //var vcmEntity = new VipCouponMappingEntity();
                 CouponBLL bll = new CouponBLL(loggingSessionInfo);
 
@@ -195,7 +197,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                     wheresOrderNo.Add(new EqualsCondition() { FieldName = "CouponID", Value = reqObj.Parameters.cuponID });
                     var resultCouponVipID = vcmBll.Query(wheresOrderNo.ToArray(), null);
 
-                //couponEntity = couponBll.GetByID(reqObj.Parameters.cuponID);
+                //判断是否有权限核销优惠券
+                var couponEntity = bll.GetByID(reqObj.Parameters.cuponID);
+                if (couponEntity != null)
+                {
+                    var couponTypeInfo = couponTypeBll.GetByID(couponEntity.CouponTypeID);
+                    if (couponTypeInfo != null)
+                    {
+                        if (couponTypeInfo.SuitableForStore == 2)
+                        {
+                            var couponTypeUnitMapping = mappingBll.QueryByEntity(new CouponTypeUnitMappingEntity() { CouponTypeID = new Guid(couponEntity.CouponTypeID.ToString()), ObjectID = reqObj.Parameters.doorID }, null).FirstOrDefault();
+
+                            if (couponTypeUnitMapping == null)
+                            {
+                                respData.ResultCode = "104";
+                                respData.Message = "请到指定门店使用";
+                                return respData.ToJSON();
+                            }
+                        }
+                    }
+                }
                 int res = bll.BestowCoupon(reqObj.Parameters.cuponID, reqObj.Parameters.doorID);
                 if (res > 0)
                 {
@@ -227,9 +248,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 respData.ResultCode = "103";
                 respData.Message = "数据库操作失败";
             }
-
             return respData.ToJSON();
-
         }
         #endregion
 

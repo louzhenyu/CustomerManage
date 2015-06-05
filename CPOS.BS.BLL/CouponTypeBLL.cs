@@ -26,6 +26,7 @@ using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -51,5 +52,23 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetCouponTypeList();
         }
         #endregion
+
+        /// <summary>
+        /// 事务
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
+        }
+        /// <summary>
+        /// 在事务内创建一个新实例
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public Guid CreateReturnID(CouponTypeEntity pEntity, IDbTransaction pTran)
+        {
+            return this._currentDAO.CreateReturnID(pEntity, pTran);
+        }
     }
 }

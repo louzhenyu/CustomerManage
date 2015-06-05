@@ -1151,10 +1151,18 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetVipEndAmount(vipId);
         }
-
-        public DataSet GetVipCouponDataSet(string vipId, decimal totalPayAmount)
+        /// <summary>
+        /// 获取会员优惠券集合
+        /// </summary>
+        /// <param name="vipId">会员ID</param>
+        /// <param name="totalPayAmount">支付金额</param>
+        /// <param name="usableRange">适用范围(1=购物券；2=服务券)</param>
+        /// <param name="objectID">优惠券使用门店/分销商ID</param>
+        /// <param name="type">是否包含抵用券（0=包含抵用券；1=不包含抵用券）</param>
+        /// <returns></returns>
+        public DataSet GetVipCouponDataSet(string vipId, decimal totalPayAmount,int usableRange,string objectID,int type)
         {
-            return this._currentDAO.GetVipCouponDataSet(vipId, totalPayAmount);
+            return this._currentDAO.GetVipCouponDataSet(vipId, totalPayAmount,usableRange,objectID,type);
         }
 
         public void ProcSetCancelOrder(string customerId, string orderId, string vipId)

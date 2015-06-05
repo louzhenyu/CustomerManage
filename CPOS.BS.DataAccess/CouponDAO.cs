@@ -28,6 +28,7 @@ using JIT.Utility.Log;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.DataAccess.Base;
+using System.Collections;
 
 namespace JIT.CPOS.BS.DataAccess
 {
@@ -237,7 +238,7 @@ namespace JIT.CPOS.BS.DataAccess
         #endregion
 
         #region 推荐新人奖励
-        public void RecommenderPrize(string VipID,string EventId)
+        public void RecommenderPrize(string VipID, string EventId)
         {
             string sql = "RecommenderPrize";
 
@@ -245,7 +246,7 @@ namespace JIT.CPOS.BS.DataAccess
             sqlParameter.Add(new SqlParameter("@CustomerID", CurrentUserInfo.ClientID));
             sqlParameter.Add(new SqlParameter("@VipID", VipID));
             sqlParameter.Add(new SqlParameter("@EventId", EventId));
-            Loggers.Debug(new DebugLogInfo() { Message = "RecommenderPrize '" + CurrentUserInfo.ClientID + "','" + VipID + "'"});
+            Loggers.Debug(new DebugLogInfo() { Message = "RecommenderPrize '" + CurrentUserInfo.ClientID + "','" + VipID + "'" });
 
             this.SQLHelper.ExecuteScalar(CommandType.StoredProcedure, sql, sqlParameter.ToArray());
         }
@@ -391,7 +392,7 @@ namespace JIT.CPOS.BS.DataAccess
             LEFT JOIN CouponSource c ON b.CouponSourceID = c.CouponSourceID 
             INNER JOIN dbo.VipCouponMapping d ON a.CouponID = d.CouponID 
             LEFT JOIN couponUse u on  a.CouponID=u.CouponID 
-            WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0
+            WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0 AND a.Status=0
             AND NOT EXISTS(SELECT 1 FROM TOrderCouponMapping t WHERE t.IsDelete = 0 AND t.CouponId = a.CouponId) 
             AND d.VIPID = '{0}'
             ", vipID);
@@ -464,27 +465,27 @@ namespace JIT.CPOS.BS.DataAccess
         public string GetCouponByItemId(string itemId)
         {
             string couponId = string.Empty;
-            string sql =string.Format(@"SELECT top 1 c.CouponID FROM Coupon c
+            string sql = string.Format(@"SELECT top 1 c.CouponID FROM Coupon c
                             inner join ItemCouponTypeMapping ictm on c.CouponTypeID=ictm.CouponTypeId
                             inner join CouponType CT on c.CouponTypeID=CT.CouponTypeID
                             LEFT JOIN VipCouponMapping vcm 
                             ON c.CouponID=vcm.CouponID 
                             where vcm.CouponID IS NULL and ictm.ItemId='{0}'
                             and c.BeginDate<=GETDATE() and c.EndDate>=GETDATE()
-                            order by c.EndDate ASC",itemId);
-            DataSet ds= SQLHelper.ExecuteDataset(sql);
+                            order by c.EndDate ASC", itemId);
+            DataSet ds = SQLHelper.ExecuteDataset(sql);
             if (ds.Tables[0].Rows.Count > 0)
             {
                 couponId = ds.Tables[0].Rows[0]["CouponID"].ToString();
             }
-                return couponId;
+            return couponId;
         }
 
         #region 批量生成优惠券
         public string GenerateCoupon(string couponTypeID, string couponName, DateTime? beginTime, string endTime, string description, string qty)
         {
             string sql = "GenerateCoupon";
-            
+
             List<SqlParameter> sqlParameter = new List<SqlParameter>();
             sqlParameter.Add(new SqlParameter("@CustomerID", CurrentUserInfo.ClientID));
             sqlParameter.Add(new SqlParameter("@UserID", CurrentUserInfo.UserID));
@@ -500,7 +501,7 @@ namespace JIT.CPOS.BS.DataAccess
         #endregion
 
         #region 管理优惠券列表
-        public DataSet ManageCouponPagedSearch(string couponTypeID, string couponName, string couponUseStatus, string couponStatus, string beginTime, string endTime, string couponCode,string comment,string useTime,string createByName, string useEndTime, int pageIndex, int pageSize)
+        public DataSet ManageCouponPagedSearch(string couponTypeID, string couponName, string couponUseStatus, string couponStatus, string beginTime, string endTime, string couponCode, string comment, string useTime, string createByName, string useEndTime, int pageIndex, int pageSize)
         {
             DataSet dataSet = new DataSet();
 
@@ -545,7 +546,7 @@ namespace JIT.CPOS.BS.DataAccess
             sqlParameter.Add(new SqlParameter("@PageSize", pageSize));
 
             dataSet = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, sql, sqlParameter.ToArray());
-            
+
             return dataSet;
         }
         #endregion
@@ -588,5 +589,28 @@ namespace JIT.CPOS.BS.DataAccess
             return dataSet;
         }
         #endregion
+
+        /// <summary>
+        /// 批量生成优惠券
+        /// </summary>
+        /// <param name="htCouponInfo"></param>
+        /// <returns></returns>
+        public void GenerateCoupon(Hashtable htCouponInfo)
+        {
+            string sql = "ProcGenerateCoupon";
+
+            List<SqlParameter> sqlParameter = new List<SqlParameter>();
+            sqlParameter.Add(new SqlParameter("@CustomerID", CurrentUserInfo.ClientID));
+            sqlParameter.Add(new SqlParameter("@UserID", CurrentUserInfo.UserID));
+            sqlParameter.Add(new SqlParameter("@CouponTypeID", htCouponInfo["CouponTypeID"]));
+            sqlParameter.Add(new SqlParameter("@CouponName", htCouponInfo["CouponName"]));
+            sqlParameter.Add(new SqlParameter("@CouponDesc", htCouponInfo["CouponDesc"]));
+            sqlParameter.Add(new SqlParameter("@BeginDate", htCouponInfo["BeginTime"]));
+            sqlParameter.Add(new SqlParameter("@EndDate", htCouponInfo["EndTime"]));
+            sqlParameter.Add(new SqlParameter("@IssuedQty", htCouponInfo["IssuedQty"]));
+
+            this.SQLHelper.ExecuteScalar(CommandType.StoredProcedure, sql, sqlParameter.ToArray());
+        }
+
     }
 }

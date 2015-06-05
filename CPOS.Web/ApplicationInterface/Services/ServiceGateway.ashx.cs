@@ -400,6 +400,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
             htPara["Status"] = rp.Parameters.Status;
             htPara["PageIndex"] = rp.Parameters.PageIndex + 1;
             htPara["PageSize"] = rp.Parameters.PageSize;
+            htPara["UsableRange"] = rp.Parameters.UsableRange;//适用范围：1=购物券2=服务券
+            htPara["ObjectID"] = rp.Parameters.ObjectID == null ? "" : rp.Parameters.ObjectID ;//使用的门店
             DataSet dsCoupon = unitBll.GetCouponList(htPara);
 
             if (dsCoupon.Tables[0].Rows.Count > 0)
@@ -893,6 +895,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
         /// 指定优惠券状态（0：未用，1：已使用，2：已过期）[非比填]
         /// </summary>
         public int Status { get; set; }
+
+        public int UsableRange{get;set;}//适用范围：1=购物券2=服务券
+        public string ObjectID { get; set; }//使用的门店
         public void Validate()
         {
             //if (string.IsNullOrEmpty(MemberID))
