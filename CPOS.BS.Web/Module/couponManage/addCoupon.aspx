@@ -73,12 +73,12 @@
                 </div> <!--panlDivEnd-->
                 <div class="panlDiv panltext">
                 <div class="commonSelectWrap">
-                    <div class="tit"><div class="checkBox on" data-flag="ConditionValue" ><em></em><span>使用限制:</span></div></div>
+                    <div class="tit"><div class="checkBox" data-flag="ConditionValue" ><em></em><span>使用限制:</span></div></div>
 
                 </div>
                <div class="commonSelectWrap">
                          <div class="searchInput bordernone whauto pl_45">
-                             <div class="linetext">购买商品满<input id="ConditionValue" name="ConditionValue" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" /><span>元 可使用</span></div>
+                             <div class="linetext">购买商品满<input id="ConditionValue" name="ConditionValue" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" value="0" /><span>元 可使用</span></div>
                          </div>
                 </div>
 

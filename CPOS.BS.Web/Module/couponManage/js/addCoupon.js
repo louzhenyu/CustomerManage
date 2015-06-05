@@ -148,12 +148,13 @@
                     $('#ConditionValue').siblings(".textbox.numberbox").css({"background":"#fff"});
                 }else if(me.data("flag")=="ConditionValue"){
                     $('#ConditionValue').numberbox({
-                        max: 0,
+                      /*  max: 0,*/
                         disabled: true
                     });
                     $('#ConditionValue').siblings(".textbox.numberbox").css({"background":"#efefef"});
                 }
             });
+            that.elems.sectionPage.find(".checkBox").trigger("click").trigger("click");
             that.elems.Tooltip.delegate(".commonBtn","click",function(e){
                   debugger;
                 var  type= $(this).data("flag");

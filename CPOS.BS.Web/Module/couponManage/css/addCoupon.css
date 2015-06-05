@@ -16,7 +16,7 @@
 .panlDiv .commonSelectWrap .searchInput .line{ height: 46px;}
 .panlDiv .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
 .panlDiv .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
-.panlDiv .commonSelectWrap .searchInput .linetext span{  margin-left:15px; }
+.panlDiv .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
 .panlDiv .commonSelectWrap .tit .checkBox{float: right}
 .pl_45{padding-left:45px;}
 /*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */

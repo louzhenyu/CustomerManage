@@ -18,7 +18,7 @@
 .delete{background-image:url(../images/delete.png)}
 .exit{background-image:url(../images/exit.png)}
 .add  {background-image:url(../images/add.png)}
-.tableWrapTextBtn   {height: 80px;}
+.tableWrapTextBtn   {height: 120px;padding-top: 35px;padding-left: 25px;}
 
 
 
