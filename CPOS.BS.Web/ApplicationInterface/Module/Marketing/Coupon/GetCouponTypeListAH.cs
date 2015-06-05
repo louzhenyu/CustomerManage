@@ -25,7 +25,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
             complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
             if (!string.IsNullOrEmpty(para.CouponTypeName))
-                complexCondition.Add(new LikeCondition() { FieldName = "CouponTypeName", Value = para.CouponTypeName + "%" });
+                complexCondition.Add(new LikeCondition() { FieldName = "CouponTypeName", Value = "%"+para.CouponTypeName + "%" });
             if (!string.IsNullOrEmpty(para.ParValue))
                 complexCondition.Add(new LikeCondition() { FieldName = "ParValue", Value = para.ParValue.ToString() });
             //排序参数
