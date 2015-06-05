@@ -6,15 +6,14 @@
     <title>社会化销售</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="<%=StaticUrl+"/module/integralCashback/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-    <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/integralCashback/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/socializeConfig.js?ver=0.3">
+        <div class="allPage" id="section" data-js="js/socializeConfig.js?ver=0.6">
              <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
                   <div class="listBtn" data-show="nav01" data-hide="nav02"  data-socialsalestype="0"> 订单   <div class="on"></div></div>
-                  <div class="listBtn" data-show="nav02" data-hide="nav01" data-socialsalestype="1"> 商品 <div class="on"></div></div>
+                 <!-- <div class="listBtn" data-show="nav02" data-hide="nav01" data-socialsalestype="1"> 商品 <div class="on"></div></div>-->
             </div>
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">

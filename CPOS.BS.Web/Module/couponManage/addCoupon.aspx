@@ -33,10 +33,10 @@
                         <textarea name="CouponTypeDesc" class="easyui-validatebox" data-options="required:true,validType:'length[3,100]'"></textarea>
                     </label>
                </div>
-                <div class="commonSelectWrap">
+                <div class="commonSelectWrap panltext">
                     <em class="tit">优惠券面值：</em>
                         <label class="searchInput bordernone">
-                             <input id="ParValue" data-text="优惠券面值" class="easyui-numberbox" data-options="min:0,precision:2,required:true,min:0.01,width:160,height:32" value="0" data-flag="ParValue" name="ParValue" type="text" >
+                             <input id="ParValue" data-text="优惠券面值" class="easyui-numberbox" data-options="min:0,precision:2,required:true,min:0,width:160,height:32" value="0" data-flag="ParValue" name="ParValue" type="text" >
                         </label>
                 </div>
                 <div class="commonSelectWrap">

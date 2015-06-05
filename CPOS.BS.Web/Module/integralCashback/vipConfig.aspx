@@ -6,15 +6,14 @@
     <title>会员积分返现配置</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="<%=StaticUrl+"/module/integralCashback/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-    <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/integralCashback/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
         <div class="allPage" id="section" data-js="js/vipConfig.js?ver=0.3">
               <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
                              <div class="listBtn" data-show="nav01" data-hide="nav02"  data-rewardstype="0"> 订单   <div class="on"></div></div>
-                             <div class="listBtn" data-show="nav02" data-hide="nav01"  data-rewardstype="1"> 商品 <div class="on"></div></div>
+                          <!--   <div class="listBtn" data-show="nav02" data-hide="nav01"  data-rewardstype="1"> 商品 <div class="on"></div></div>-->
                        </div>
                        <!-- 内容区域 -->
                        <div class="contentArea_vipquery">
@@ -23,7 +22,7 @@
            <form id="optionForm">
                           <div class="lineT">
                              <div class="nav01">
-                              <div class="radio" data-flag="EnableIntegral" data-name="r1"><em></em> <span>积分 </span></div>
+                              <div class="checkBox" data-flag="EnableIntegral" data-name="r1"><em></em> <span>积分 </span></div>
                                 <div class="rowRline">
                                         <div class="linetext"><em class="txt">获得积分按金额比列计算：</em> <input type="text" value="" name="RewardPointsPer" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>
                                 </div>
@@ -48,7 +47,7 @@
 
                           <div class="lineT">
                               <div class="nav01">
-                              <div class="radio on" data-flag="EnableRewardCash" data-name="r1"><em></em> <span>返现 </span></div>
+                              <div class="checkBox" data-flag="EnableRewardCash" data-name="r1"><em></em> <span>返现 </span></div>
 
                                 <div class="rowRline">
                                         <div class="linetext"><em class="txt">  获得积分按金额比列计算：</em>  <input type="text" class="easyui-numberbox"  data-options="min:0,precision:0" value="" name="RewardCashPer"> % </div>

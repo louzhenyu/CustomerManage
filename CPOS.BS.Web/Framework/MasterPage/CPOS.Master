@@ -38,6 +38,8 @@
      <link href="<%=StaticUrl+"/module/static/css/easyui.css"%>" rel="stylesheet" type="text/css" />   
        <%--分页--%>
      <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
+          <%--时间控件--%>
+      <link href="<%=StaticUrl+"/module/static/css/jquery.datetimepicker.css"%>" rel="stylesheet" type="text/css" />
       <%--弹框--%>
     <link href="<%=StaticUrl+"/module/static/css/artDialog.css"%>" rel="stylesheet" type="text/css" /> 
     <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.5"%>" rel="stylesheet" />

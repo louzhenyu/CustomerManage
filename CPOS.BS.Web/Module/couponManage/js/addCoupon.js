@@ -189,7 +189,7 @@
                 onChange:function(newValue, oldValue){
                     if(newValue=="0"){
                         that.elems.listTable.datagrid({
-                            title:"已选分门店",
+                            title:"已选门店",
                             data:[]
                         })
                     }
@@ -204,11 +204,11 @@
                 "id":0,
                     "text":"门店"
 
-            },{
+            }/*,{
                 "id":1,
                  "text":"分销商"
 
-            }]
+            }*/]
             });
             that.loadData.get_unit_tree(function(data) {
                 debugger;
@@ -671,7 +671,13 @@
                     if(field.value!=="") {
                         prams.data[field.name] = field.value;
                     }
-                });
+                })
+
+                if(prams.data["ParValue"]==="0.00"||prams.data["ParValue"]==="0"){
+                   $.messager.alert("错误提示","优惠券面值必须大于零");
+                    return false;
+                }
+
 
 
                 $.util.ajax({

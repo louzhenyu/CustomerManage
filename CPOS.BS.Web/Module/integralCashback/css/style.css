@@ -10,6 +10,7 @@
 .lineT{ display: block;border-bottom: 1px solid #d8d8d8; padding-bottom: 30px; margin-bottom: 30px;}
 
 .lineT .rowRline{ padding-left: 18px; padding-top:15px; width: 100%; }
+.lineT .rowRline input{ background: transparent;}
 .lineT .rowRline .radio{ float:left;}
 .lineT .rowRline .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666;}
 .lineT .rowRline .linetext em.txt{ width: 14.3%;min-width: 183px; text-align: right; display: inline-block}

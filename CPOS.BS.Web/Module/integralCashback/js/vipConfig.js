@@ -22,7 +22,7 @@
             });
 
             var that = this;
-            that.elems.sectionPage.delegate(".radio","click",function(e){
+          /*  that.elems.sectionPage.delegate(".radio","click",function(e){
 
                var me= $(this), name= me.data("name");
                 me.toggleClass("on");
@@ -35,20 +35,39 @@
                         disabled:true
                         //required: false
                     });
-
+                    $(selector).siblings().find(".textbox.numberbox").css({"background":"#efefef"});
                     me.siblings().find(".easyui-numberbox").numberbox({
                         disabled:false
                         //required: true
                     });
+                    me.siblings().find(".textbox.numberbox").css({"background":"#fff"});
+                    $.util.stopBubble(e);
                 }
                 $.util.stopBubble(e);
 
 
-            });
+            });*/
             //that.elems.sectionPage.find(".radio").eq(0).trigger("click");
             that.elems.sectionPage.delegate(".checkBox","click",function(e){
-                var me= $(this);
+                var me= $(this)
                 me.toggleClass("on");
+                debugger;
+
+                 if(!me.hasClass("on")) {
+                  /*   me.siblings().find(".easyui-numberbox").numberbox({
+                         disabled: true
+                         //required: false
+                     });*/
+                     me.siblings().find(".textbox.numberbox").css({"background": "#efefef"});
+                 }else{
+
+                   /* me.siblings().find(".easyui-numberbox").numberbox({
+                        disabled:false
+                        //required: true
+                    });*/
+                    me.siblings().find(".textbox.numberbox").css({"background":"#fff"});
+
+                }
                 $.util.stopBubble(e);
             });
             that.elems.simpleQueryDiv.delegate(".listBtn","click",function(){
@@ -104,11 +123,16 @@
                            if (configData[i].SettingCode == "EnableIntegral") {
                                if (configData[i].SettingValue == 1) {
                                    $("[data-flag='EnableIntegral']").trigger("click");
+                               } else{
+                                   $("[data-flag='EnableRewardCash']").trigger("click").trigger("click");
                                }
                            }
+                           debugger;
                            if (configData[i].SettingCode == "EnableRewardCash") {
                                if (configData[i].SettingValue == 1) {
                                    $("[data-flag='EnableRewardCash']").trigger("click");
+                               } else{
+                                   $("[data-flag='EnableRewardCash']").trigger("click").trigger("click");
                                }
                            }
                            if (configData[i].SettingCode == "RewardsType") {
@@ -168,8 +192,8 @@
                         }
                     });
 
-                    if ($("[data-flag].radio.on").length > 0) {
-                        $("[data-flag].radio").each(function () {
+                    if ($("[data-flag].checkBox.on").length > 0) {
+                        $("[data-flag].checkBox").each(function () {
                             var name = $(this).data("flag");
                             if ($(this).hasClass('on')) {
                                 prams.data[name] = 1;

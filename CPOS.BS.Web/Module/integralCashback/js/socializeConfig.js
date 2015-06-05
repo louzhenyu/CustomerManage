@@ -29,6 +29,16 @@
                     $(selector).removeClass("on");
                     me.addClass("on");
                 }
+                $(selector).siblings().find(".easyui-numberbox").numberbox({
+                    disabled:true
+                    //required: false
+                });
+                $(selector).siblings().find(".textbox.numberbox").css({"background":"#efefef"});
+                me.siblings().find(".easyui-numberbox").numberbox({
+                    disabled:false
+                    //required: true
+                });
+                me.siblings().find(".textbox.numberbox").css({"background":"#fff"});
                 $.util.stopBubble(e);
             });
 
@@ -36,6 +46,16 @@
                 var me= $(this);
                 me.toggleClass("on");
                 $.util.stopBubble(e);
+
+                if(!me.hasClass("on")) {
+                    me.siblings().find(".textbox.numberbox").css({"background": "#efefef"});
+                }else{
+                    me.siblings().find(".textbox.numberbox").css({"background":"#fff"});
+
+                }
+                $.util.stopBubble(e);
+
+
             });
             that.elems.simpleQueryDiv.delegate(".listBtn","click",function(){
                 var me=$(this);
@@ -88,16 +108,16 @@
 
                         if (configData[i].SettingCode == "EnableEmployeeSales") {
                             if (configData[i].SettingValue == 1) {
-                                $("[data-flag='EnableEmployeeSales']").addClass("on");
+                                $("[data-flag='EnableEmployeeSales']").trigger("click");
                             }else{
-                                $("[data-flag='EnableEmployeeSales']").removeClass("on");
+                                $("[data-flag='EnableEmployeeSales']").trigger("click").trigger("click");
                             }
                         }
                         if (configData[i].SettingCode == "EnableVipSales") {
                             if (configData[i].SettingValue == 1) {
-                                $("[data-flag='EnableVipSales']").addClass("on");
+                                $("[data-flag='EnableVipSales']").trigger("click");
                             }else{
-                                $("[data-flag='EnableVipSales']").removeClass("on");
+                                $("[data-flag='EnableVipSales']").trigger("click").trigger("click");
                             }
                         }
                         if (configData[i].SettingCode == "SocialSalesType") {
