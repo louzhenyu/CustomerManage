@@ -14,10 +14,7 @@
         <link href="<%=StaticUrl+"/module/static/css/zTreeStyle/zTreeStyle.css"%>" rel="stylesheet" type="text/css" />
         <%--<link href="../static/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css" />--%>
         <style type="text/css">
-            .commonTitle{height:16px;line-height:16px;margin:15px 0 5px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;margin-bottom: 20px;}
-            .commonSelectWrap .selectBox {
-                margin-left:0px;
-            }
+
             .commonSelectWrap input {
                 border:1px solid #ccc;
             }
@@ -129,6 +126,9 @@
         </div>
     </div>
 </div>
+
+
+
 <!-- 弹层,遮罩 -->
 <div class="ui-pc-mask" id="ui-mask" style="display:none;"></div>
 <!--弹层,添加新会员-->
@@ -265,23 +265,27 @@
                 <div class="commonSelectWrap">
                     <em class="tit"><#=item.ColumnDesc#>：</em>
                     <label class="searchInput"><input data-flag data-forminfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo"  type="text" value=""></label>
-                    <ul id="ztree<#=Math.floor(Math.random()*9999999999+1)#>"  data-forminfo="<#=JSON.stringify(item.Fn[0].Tree)#>" class="ztree" style="display:none;position: absolute;left: 120px;background:#FFF;margin-top: 31px;width:173px;z-index:100;"></ul>
+                    <ul id="ztree<#=Math.floor(Math.random()*9999999999+1)#>"  data-forminfo="<#=JSON.stringify(item.Fn[0].Tree)#>" class="ztree" style="display:none;position: absolute;left: 120px;background:#F3F3F3;margin-top: 31px;z-index:100;max-height:250px;overflow-x: hidden;  overflow-y: auto; "></ul>
                 </div>
             <#}#>
             <#if(item.DisplayType==2){#>
                     <div class="commonSelectWrap">
                         <em class="tit"><#=item.ColumnDesc#>：</em>
-                        <label style="margin-left: 5px;"><input data-order="left" style="width:75px;text-indent:0px;padding: 0px;" data-formInfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo" type="text"  data-flag=save value=""></label>
+                        <div class="searchTime">
+                        <label><input data-order="left" style="width:75px;text-indent:0px;padding: 0px;" data-formInfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo" type="text"  data-flag=save value=""></label>
                        <label>-</label>
                         <label><input data-order="right" style="width:75px;text-indent:0px;padding: 0px;float:none" data-formInfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo" type="text"  data-flag=save value=""></label>
+                      </div>
                     </div>
                 <#}#>
             <#if(item.DisplayType==6){#>
                 <div class="commonSelectWrap">
                     <em class="tit"><#=item.ColumnDesc#>：</em>
-                    <label style="margin-left: 5px;"><input data-order="left" data-flag style="width:75px;text-indent:0px;padding: 0px;" class="datepicker" data-forminfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo" type="text" value=""></label>
+                    <div class="searchTime">
+                    <label ><input data-order="left" data-flag style="width:75px;text-indent:0px;padding: 0px;" class="datepicker" data-forminfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo" type="text" value=""></label>
                     <label>-</label>
                     <label><input data-flag data-order="right" style="width:75px;text-indent:0px;padding: 0px;float:none"  class="datepicker" data-forminfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="vipinfo" type="text" value=""></label>
+                   </div>
                 </div>
             <#}#>
         <#}#>
@@ -531,10 +535,9 @@
     <#}#>
 <#}#>
 </script>
-<!--
 
 
-->
+
 <!--动态标签拼接-->
 <script id="tpl_lables" type="text/html">
 <#for(var i=0,length=list.length;i<length;i++){ var item=list[i];#>

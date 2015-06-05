@@ -26,7 +26,7 @@
                     <div id='span_panel' style="float:left"></div>
                     
                     <div id='btn_panel' style=" float:left; width:220px;"></div>
-                    <span style="clear:both; height:1px; overflow:hidden; display:block"></span>
+                    <span style="clear:both; height:1px; overflow:hidden; display:block"> </span>
                 </div>
             </div>
             <div class="art-titbutton">

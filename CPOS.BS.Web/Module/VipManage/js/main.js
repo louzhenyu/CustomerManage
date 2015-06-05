@@ -49,6 +49,7 @@ require.config({
         template: '/Module/static/js/lib/bdTemplate',
         pagination: '/Module/static/js/plugin/jquery.jqpagination',
         json2: '/Module/static/js/plugin/json2',
+        easyui: '/Module/static/js/lib/jquery.easyui.min',
         datatables: '/Module/static/js/plugin/jquery.dataTables.min',
         datepicker: '/Module/static/js/plugin/datepicker',
         md5: '/Module/static/js/lib/MD5',

@@ -254,7 +254,7 @@
        debugger;
         var _param;
 
-        if(param.url.indexOf('Handler.ashx')!=-1){
+        if(param.url.indexOf('Handler.ashx')!=-1||param.url.indexOf('Hander.ashx')!=-1){
 
             _param = util.oldBuildAjaxParams(param);
         }

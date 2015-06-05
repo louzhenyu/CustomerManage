@@ -5,18 +5,8 @@
 <meta charset="UTF-8" />
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="css/reset-pc.css" rel="stylesheet" type="text/css" />
         <link href="css/style.css?v=0.4" rel="stylesheet" type="text/css" />
-        <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
-        <link href="../static/css/artDialog.css" rel="stylesheet" type="text/css" />
-        <link href="../static/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
-        <link href="../static/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css" />
-        <style>
-            .commonTitle{height:16px;line-height:16px;margin:15px 0 5px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;}
-                .commonSelectWrap .selectBox {
-                margin-left:0px;
-            }
-             </style>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -88,6 +78,15 @@
                 <li data-id="nav08" class="nav08">变更记录</li>
             </ul>
         </div>
+         <div id="nav07" style="display:none;">
+                    <div class="tableHandleBox">
+                       <!-- <span class="commonBtn export">全部导出</span>-->
+                         <span class="commonBtn addICon L">新增客服记录</span>
+                    </div>
+                    <table class="dataTable" id="servicesLog" style="display:inline-table;">
+                    </table>
+
+                </div>
         <div id="nav08" style="display:none;">
             <div class="tableHandleBox">
                 <span class="commonBtn export">全部导出</span>
@@ -413,8 +412,74 @@
         </div>
         <!--表格操作按钮-->
     </div>
+    <!---easy ui  弹框---->
+      <div style="display: none">
+          <div id="win" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
+          		<div class="easyui-layout" data-options="fit:true" id="panlconent">
+
+          			<div data-options="region:'center'" style="padding:10px;">
+          				指定的模板添加内容
+          			</div>
+          			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
+          				<a class="easyui-linkbutton commonBtn saveBtn" >确定</a>
+          				<a class="easyui-linkbutton commonBtn cancelBtn"  href="javascript:void(0)" onclick="javascript:$('#win').window('close')" >取消</a>
+          			</div>
+          		</div>
+
+          	</div>
+          </div>
 </div>
 <!--百度模板渲染模板 数据部分-->
+<!--//新增客服界面-->
+<script id="tpl_addCustomer" type="text/html">
+    <form id="optionform">
+     <input name="ServicesLogID" type="text" style="display: none" title="编辑时候保存id">
+               <div class="commonSelectWrap">
+                     <em class="tit">服务时间：</em>
+                    <div class="searchInput bonone">
+                       <input type="text" class="easyui-datetimebox" name="ServicesTime" data-options="width:160,height:32,showSeconds:false" />
+                   </div>
+               </div>
+
+           <div class="commonSelectWrap"style="width: 628px">
+                 <em class="tit">服务方式：</em>
+                <div class="searchInput" style="width: 500px; border: none">
+                    <div class="radio L on" data-name="r1"><em></em> <span> 到店</span></div>
+                    <div class="radio L" data-name="r1"><em></em> <span> 电话</span></div>
+                    <div class="radio L" data-name="r1"><em></em> <span> 微信</span></div>
+                    <div class="radio L out" data-name="r1"><em></em> <span> 其他</span></div>
+                    <input type="text" class="easyui-validatebox L" name="ServicesMode"  style="border:1px solid #ccc;width:160px;height:32px "  />
+               </div>
+           </div>
+ <!--            <div class="commonSelectWrap">
+                                <em class="tit">服务门店：</em>
+                               <div class="searchInput bonone">
+                                  <input type="text" class="easyui-combobox" name="UnitID" data-options="width:160,height:32" />
+                              </div>
+                          </div>
+             <div class="commonSelectWrap">
+                                <em class="tit">服务类型：</em>
+                               <div class="searchInput bonone">
+                                  <input type="text" class="easyui-combobox" name="ServicesType" data-options="width:160,height:32" />
+                              </div>
+                          </div>
+             <div class="commonSelectWrap">
+                                <em class="tit">服务时长：</em>
+                               <div class="searchInput bonone">
+                                  <input type="text" class="easyui-numberbox" name="Duration" data-options="width:160,height:32,min:0,precision:2,max:48" />
+                              </div>
+                          </div>-->
+              <div class="commonSelectWrap">
+                 <em class="tit">服务内容：</em>
+                <div class="searchInput remark" >
+                   <textarea type="text" name="Content" class="easyui-validatebox" data-options="validType:'maxLength[500]'"> </textarea>
+               </div>
+           </div>
+
+
+     </form>
+</script>
+
 <script id="tpl_content" type="text/html">
 <#for(var i=0,length=list.length;i<length;i++){ var item=list[i]; #>
         <tr>

@@ -1,0 +1,367 @@
+@charset "utf-8";
+/*common*/
+.commonBtn{background:#fc7a52; cursor:pointer;}
+.commonTitle{border-left:4px solid #fe7c24;}
+.commonTitleBox .getBack{background:url(../../images/skin/bg02/getBack.png) no-repeat right center;}
+
+/*表格*/
+.tablehandle .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 90% center}
+.dataTable .title{border-bottom:2px solid #fe7c24;}
+.dataTable .title th{*border-bottom:2px solid #fe7c24;}
+.dataTable .title span{background:url(../../images/skin/bg02/selectIcon02.png) no-repeat right center;}
+.dataTable tr{border-bottom:1px solid #c9d7ec;}
+.dataTable tbody td{*border-bottom:1px solid #fedbc3;}
+.dataTable tbody tr:hover{background:#feebdd;}
+.dataTable tbody tr:hover .joinBtn{background:#fe7c24;}
+.dataTable .checkBox.on em{background:url(../../images/skin/bg02/radio2.png) no-repeat center center;}
+.dataTable .links{color:#fe7c24;}
+.dataTable .operateWrap .editIcon{background:url(../../images/skin/bg02/editIcon.png) no-repeat center center;}
+.dataTable .operateWrap .delIcon{background:url(../../images/skin/bg02/delIcon.png) no-repeat center center;}
+.dataTable .operateWrap .minusIcon{background:url(../../images/skin/bg02/minusIcon.png) no-repeat center center;}
+.dataTable .selectListBox span{color:#fe7c24;}
+/*复选框*/
+.checkBoxWrap label.on{background:url(../../images/skin/bg02/radio3.png) no-repeat left center;}
+
+/*表格的菜单*/
+.tableMenu a.on{border-bottom:3px solid #fe7c24;color:#fe7c24;}
+/*添加资讯*/
+.addInfoArea .classInput .selectBox{background: #fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 85px center;}
+.addInfoArea .radioBox.on em{background:url(../../images/skin/bg02/radio3.png) no-repeat center center;}
+.topIssuesInfo .getBack{background:url(../../images/skin/bg02/getBack.png) no-repeat right center;}
+/*弹框*/
+.commdialog .row .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 107px center;}
+/*头部的微信，设置信息，退出*/
+.commonSelectWrap .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 120px center;}
+.selectDateBox p{background:#fbfbfb url(../../images/skin/bg02/dateIcon.png) no-repeat 80px center;}
+.moreQueryWrap .more{background:url(../../images/skin/bg02/moreQuery.png) no-repeat right 4px;color:#2d83cf;}
+
+
+/***公共的头部，导航，logo，信息***/
+.commonHeader{height:68px;background: #07c8cf; border-bottom-width:0px;}
+.commonHeader .handleWrap{ color: #fff; font-size: 16px;}
+
+/*adminIcon 的margin-top是 右侧文件的line-height减去自身高度/2 所以两个必须是偶数防止不一致*/
+.commonHeader .logo{background:url(../../images/blueFruit/logo.png) no-repeat 0 0;}
+.commonHeader .setBox p{background:url(../../images/newTemplate/jiantou.png) no-repeat center right; font-size: 14px; padding-right: 50px; line-height: 67px; font-size: 14px; text-indent:0.5em;}
+.commonHeader .setBox p b{font-size: 16px; float: left;  font-weight: 500;}
+.commonHeader .setBox-tip{top:67px; padding-top:10px; background: url(../../images/newTemplate/set-tip-bg.png)no-repeat 0 0;  right: 0px; border-bottom:1px solid #07c8cf;width: 120px; height: 88px; }
+.commonHeader .setBox-tip .safetyOutBtn{border-radius:0px; width: 90px; height: 38px; border-bottom: 1px solid #e3e3e3; padding:0; margin:0; line-height: 38px; background: none; margin:0 auto; }
+.commonHeader .setBox-tip .safetyOutBtn:nth-child(2){border-bottom:none}
+.commonHeader .setBox-tip a{ color: #969696; line-height: 38px; font-size: 12px;}
+.commonHeader .setBox-tip a:hover { background:none; color: #07c8cf}
+
+
+
+.commonHeader .handleWrap .unitName{ line-height: 67px; height: 67px;}
+.commonHeader .logoWrap{float:left;max-width:214px; width:13.93229166666667%;height:68px; line-height: 68px;}
+.commonHeader .logoWrap img{  width:92%;margin-left: 12px; margin-top:9px;  max-width: 180px;}
+/****头部，导航****/
+.commonNav { padding-left: 18px;}
+.commonNav li {padding: 0 18px; text-indent:0px; display: block; height: 67px; line-height: 67px; text-align:left; margin:0 auto; }
+.commonNav li a{color:#fff;height: 67px; line-height: 67px; font-size: 16px;letter-spacing:2px;}
+.commonNav li:hover{ background: #06adb3;}
+.commonNav li.on{background: #06989d;}
+
+
+
+
+/*全局菜单*/
+.commonMenu{ width:13.93229166666667%;max-width:187px;}
+.commonMenu li{ height: 44px; padding-left: 17.28971962616822%;}
+.commonMenu li a{ height: 44px; text-align: left; padding-left:21%; text-indent:0; font:14px/44px "Microsoft YaHei";color:#a2b7be;z-index:6;}
+.commonMenu li:hover{border-top-right-radius:5px;border-bottom-right-radius:5px;background:none;}
+.commonMenu li:hover a{ text-decoration: none;}
+.commonMenu li.on a{color:#a2b7be;}
+.commonMenu li.on:hover a{color:#a2b7be;}
+/*全局菜单 icon 设置 默认一组*/
+.commonMenu li a{    position: relative;}  /**调节图标背景大小的***/
+.commonMenu li a em{background-position: left center; background-repeat: no-repeat; background-image: url("../../images/newTemplate/iconList.png");  width: 44px; height: 44px;display: block;position: absolute;left:-12%;}
+.commonMenu li a em.icon{ background-image: url("../../images/icon.png"); }
+.commonMenu li.on a em.icon{ background-image: url("../../images/iconhover.png");}
+/*全局菜单 icon设置 list集合*/
+
+/**图标同一排每个 图标直接的切换都是background-position: xpx ypx  x-100  纵向 y- 每一个**/
+/*新商品管理*/
+.commonMenu li a em.commodity_querylist{ background-position: -156px -56px }
+.commonMenu li.on a em.commodity_querylist{background-position: -56px -56px;}
+
+.commonMenu li a em.commodity_release{ background-position: -356px -56px }
+.commonMenu li.on a em.commodity_release{background-position: -256px -56px;}
+
+.commonMenu li a em.commodity_specification{ background-position: -556px -56px }
+.commonMenu li.on a em.commodity_specification{background-position: -456px -56px;}
+
+.commonMenu li a em.commodity_Category{ background-position: -756px -56px }
+.commonMenu li.on a em.commodity_Category{background-position: -656px -56px;}
+
+.commonMenu li a em.commodity_promotion{ background-position: -956px -56px }
+.commonMenu li.on a em.commodity_promotion{background-position: -856px -56px}
+
+/*门店管理*/
+.commonMenu li a em.basic_unit_Unit{ background-position: -156px -156px }
+.commonMenu li.on a em.basic_unit_Unit{background-position: -56px -156px}
+/*微商城首页配置*/
+.commonMenu li a em.AppConfig_HomepageConfig{ background-position: -356px -156px }
+.commonMenu li.on a em.AppConfig_HomepageConfig{background-position: -256px -156px}
+/*订单管理*/
+.commonMenu li a em.Order_InoutOrders_PosOrder3{ background-position: -156px -256px }
+.commonMenu li.on a em.Order_InoutOrders_PosOrder3{background-position: -56px -256px}
+/*会员管理*/
+.commonMenu li a em.vipmanage_querylist{ background-position: -156px -356px }
+.commonMenu li.on a em.vipmanage_querylist{background-position: -56px -356px}
+/*团购管理*/
+.commonMenu li a em.GroupBuy_GroupList{ background-position: -356px -356px }
+.commonMenu li.on a em.GroupBuy_GroupList{background-position: -256px -356px}
+/*抢购管理*/
+.commonMenu li a em.GroupBuy_GroupList_type2{ background-position: -556px -356px }
+.commonMenu li.on a em.GroupBuy_GroupList_type2{background-position: -456px -356px}
+/*热销管理*/
+.commonMenu li a em.GroupBuy_GroupList_type3{ background-position: -756px -356px }
+.commonMenu li.on a em.GroupBuy_GroupList_type3{background-position: -656px -356px}
+
+
+/*微信菜单管理*/
+.commonMenu li a em.WeiXin_MenuManage{ background-position: -156px -456px }
+.commonMenu li.on a em.WeiXin_MenuManage{background-position: -56px -456px;}
+/*图文素材*/
+.commonMenu li a em.WMaterialText_WMaterialText{ background-position: -356px -456px }
+.commonMenu li.on a em.WMaterialText_WMaterialText{background-position: -256px -456px;}
+/*微信墙*/
+.commonMenu li a em.wai_wxwall_index{ background-position: -556px -456px }
+.commonMenu li.on a em.wai_wxwall_index{background-position: -456px -456px;}
+/*内容管理*/
+.commonMenu li a em.WApplication_WModel{ background-position: -756px -456px }
+.commonMenu li.on a em.WApplication_WModel{background-position: -656px -456px;}
+/*微信关注回复*/
+.commonMenu li a em.WeiXin_FollowKeyWords{ background-position: -956px -456px }
+.commonMenu li.on a em.WeiXin_FollowKeyWords{background-position: -856px -456px;}
+/*微信默认回复 */
+.commonMenu li a em.WeiXin_DefaultKeyWords{ background-position: -156px -556px }
+.commonMenu li.on a em.WeiXin_DefaultKeyWords{background-position: -56px -556px;}
+/*关键字回复管理 */
+.commonMenu li a em.WeiXin_KeyWords{ background-position: -356px -556px }
+.commonMenu li.on a em.WeiXin_KeyWords{background-position: -256px -556px;}
+/*分类管理 */
+.commonMenu li a em.WApplication_WModelList{ background-position: -556px -556px }
+.commonMenu li.on a em.WApplication_WModelList{background-position: -456px -556px;}
+
+/*表单管理 */
+.commonMenu li a em.DynamicForm_formList{ background-position: -156px -656px }
+.commonMenu li.on a em.DynamicForm_formList{background-position: -56px -656px;}
+
+/*用户管理 */
+.commonMenu li a em.basic_user_User{ background-position: -356px -656px }
+.commonMenu li.on a em.basic_user_User{background-position: -256px -656px;}
+
+/*角色管理 */
+.commonMenu li a em.basic_role_Role{ background-position: -556px -656px }
+.commonMenu li.on a em.basic_role_Role{background-position: -456px -656px;}
+
+
+/*用户数据基础配置 */
+.commonMenu li a em.CustomerBasicSetting_CustomerBasicSetting{ background-position: -756px -656px }
+.commonMenu li.on a em.CustomerBasicSetting_CustomerBasicSetting{background-position: -656px -656px;}
+
+
+/*微信接口配置 */
+.commonMenu li a em.WApplication_WApplication{ background-position: -956px -656px }
+.commonMenu li.on a em.WApplication_WApplication{background-position: -856px -656px;}
+
+
+/*渠道/门店配置 */
+.commonMenu li a em.basic_unit_Unit1{ background-position: -156px -756px }
+.commonMenu li.on a em.basic_unit_Unit1{background-position: -56px -756px;}
+
+/*客户wap页面配置 */
+.commonMenu li a em.CustomerPageConfig_PageList{ background-position: -356px -756px }
+.commonMenu li.on a em.CustomerPageConfig_PageList{background-position: -256px -756px;}
+
+/*配送方式设置 */
+.commonMenu li a em.dispatching_dispatchingList{ background-position: -556px -756px }
+.commonMenu li.on a em.dispatching_dispatchingList{background-position: -456px -756px;}
+
+/*支付方式配置 */
+.commonMenu li a em.PayMent_PayMentList{ background-position: -756px -756px }
+.commonMenu li.on a em.PayMent_PayMentList{background-position: -656px -756px;}
+
+
+/*菜单管理 */
+.commonMenu li a em.basic_menu_menu{ background-position: -956px -756px }
+.commonMenu li.on a em.basic_menu_menu{background-position: -856px -756px;}
+
+/*活动类别管理 */
+.commonMenu li a em.WEvents_EventsType{ background-position: -156px -856px }
+.commonMenu li.on a em.WEvents_EventsType{background-position: -56px -856px;}
+
+
+/*资讯类别 */
+.commonMenu li a em.LNewsType_LNewsType{ background-position: -356px -856px }
+.commonMenu li.on a em.LNewsType_LNewsType{background-position: -256px -856px;}
+
+/*活动管理 */
+.commonMenu li a em.WEvents_Events{ background-position: -556px -856px }
+.commonMenu li.on a em.WEvents_Events{background-position: -456px -856px;}
+/*咨询列表 */
+.commonMenu li a em.LNews_News{ background-position: -756px -856px }
+.commonMenu li.on a em.LNews_News{background-position: -656px -856px;}
+
+/**右侧布局***/
+
+.contentArea{ padding-bottom: 30px; }
+
+
+
+/******查询*****/
+/*头部简单查询*/
+
+.queryTermArea{min-height:73px;padding:10px 20px 30px 0;background:#ebf1f4; margin-bottom:0px; border: none;}
+.queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; }
+.commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
+.commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}
+.commonSelectWrap .endTime .tit{width:15px;}
+.commonSelectWrap .endTime .selectBox{margin-left:22px;}
+.commonSelectWrap .selectBox{ float:left;margin-left:5px;width:161px;height:34px;line-height:34px;font-family:Arial;border:1px solid #d0d5d8;border-radius:2px;background:none;}
+.commonSelectWrap .selectBox .text{display:block;width:150px;line-height:34px;text-indent:5px;}
+.commonSelectWrap .selectList{position:relative;display:none;top:10px;left:-1px;width:161px;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:100;}
+.commonSelectWrap .selectList p{line-height:33px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
+.commonSelectWrap .selectList p:hover{background:#f1f1f1;}
+/*.commonSelectWrap .selectBox:hover{position:relative;}*/
+/*.commonSelectWrap .selectList{display:block;}*/
+.commonSelectWrap .searchInput{display:block;float:left;width:161px;height:34px;line-height:34px;margin-left:5px;font-family:Arial;border:1px solid #d0d5d8;border-radius:2px;}
+.commonSelectWrap .searchInput input{float:left;width:100%;height:100%;border:none;color:#666;}
+.commonSelectWrap .searchInput textarea{white-space: normal; line-height:22px;float:left;width:100%;height:100%;border:none;color:#666; padding-left: 3px;}
+.commonSelectWrap input{ height:32px; color: #07c8cf;}
+
+/*登录页*/
+.loginPage .name{background:url(../../images/blueFruit/bg02/loginLogo.png) no-repeat left center;}
+.loginFooterMenu .item01{background:url(../../images/blueFruit/bg02/item01.png) no-repeat center 50px;}
+.loginFooterMenu .item02{background:url(../../images/blueFruit/bg02/item02.png) no-repeat center 50px;}
+.loginFooterMenu .item03{background:url(../../images/blueFruit/bg02/item03.png) no-repeat center 50px;}
+.loginFooterMenu .item04{background:url(../../images/blueFruit/bg02/item04.png) no-repeat center 50px;}
+.loginFooterMenu .item05{background:url(../../images/blueFruit/bg02/item05.png) no-repeat center 50px;}
+
+
+/**********______easyui 样式重构部分 所有修改公共样式的都要在这里重写________*********/
+
+.panel-title{ height: 40px; line-height: 40px;}
+.panel-header {background-color: #f3f3f6;}
+/*表格边框*/
+.datagrid-header td,
+.datagrid-body td,
+.datagrid-footer td {
+    border-color: #7fe5e5;
+}
+.easyui-layout.panel-header,.easyui-layout .panel-body{ border: none;}
+/*列表的checkbox 重构*/
+.datagrid-header-check.on,
+.datagrid-row-selected .datagrid-cell-check {
+    background-image:url("../../images/newTemplate/checkon.png")
+}
+.datagrid-header-check,
+.datagrid-cell-check {
+    padding: 0;
+    width: 54px;
+    height: 20px;
+    font-size: 1px;
+    text-align: center;
+    overflow: hidden;
+    background:url("../../images/newTemplate/check.png") center center no-repeat;
+}
+/* 只是点击框就要启用 且 下面input的大小和其一致 .datagrid-header-check{display:block;width: 20px;height: 20px;margin: 0 16px;}*//*大小和背景图片大小一致 防止点图片以外的位置也变成选中状态*/
+.datagrid-header-check input, .datagrid-cell-check input{
+    width: 54px; height: 20px;
+    opacity: 0;
+    filter:alpha(opacity=0); //IE系列识别
+    -moz-opacity:0; //火狐私有
+}
+
+.datagrid-header .datagrid-cell span{ font:14px/1.5em "黑体","Microsoft YaHei"; text-align: center; color: #4d4d4d;font-weight: 600; }
+.datagrid-header{border-color:#00cccc;}
+.datagrid{ border:1px solid #eee;}
+.datagrid-row-alt{ background-color: #f2fcfc;}/*奇偶不同*/
+.datagrid-row-over{background-color: #b2f0f0;} /*鼠标停靠*/
+.datagrid-row-selected{background-color: #b2f0f0;}
+.imgTable .datagrid-row-checked {background:none;}
+.imgTable .datagrid-header-row{ height: 50px;line-height: 50px;}
+.imgTable .datagrid-row {
+    height:90px;
+}
+.tree-node{ text-align: left;}
+.tree-folder {
+    /* background: url('images/tree_icons.png') no-repeat -208px 0; */
+    background: none;
+}
+.tree-folder-open {
+    /* background: url('images/tree_icons.png') no-repeat -224px 0; */
+    background: none;
+}
+.tree-file {
+    /* background: url('images/tree_icons.png') no-repeat -240px 0; */
+    background: none;
+}
+ .tree-folder, .tree-file{
+    width:0px;
+}
+.tree-indent{ width: 16px;}
+.tree-title{ font-size: 14px; color: #666}
+.tree-node-selected{color: #07c8cf; background:none;}
+.tree-node-selected .tree-title{ color: #07c8cf;}
+.tree-node-hover {background: #07c8cf;}
+.tree-node-hover  .tree-title{  color: #fff;}
+
+/*下拉框的改造*/
+
+.textbox .textbox-text {color: #666666}
+.combo-arrow {
+
+
+    background: url('../../images/newTemplate/moreIcon.png') no-repeat center center;
+}
+.combobox-item{ color:#666;}
+.combobox-item-selected{ color: #07c8cf; background:none;}
+.combobox-item-hover {
+    color: #fff; background-color: #07c8cf;
+}
+
+
+/*linkBtn*/
+.l-btn{color: #fff;}
+.messager-button .l-btn {color: #000;}
+/*底部分页的重写*/
+#kkpager_gopage_wrap{ border:solid 1px #00cccc; height: 23px; line-height: 23px;}
+#kkpager_btn_go{ background:#fff; color: #fff;height: 24px;margin-top: -1px; margin-left: -1px; background: url("../../images/newTemplate/pagebtn.png") no-repeat;}
+#kkpager{
+    clear:both;
+    height:30px;
+    line-height: 23px;
+    margin-top:20px;
+    color:#323232;
+    font-size:12px;
+    text-align: right;
+    padding-right: 65px;
+}
+#kkpager span.normalsize{ color:#323232;}
+#kkpager span.disabled,#kkpager a {border: none; color: #969696;}
+#kkpager a:hover {border: none; background: none; color: #00cccc}
+#kkpager span.curr {color: #00cccc; font-size: 14px; font-weight:600; border: none; background: none;}
+
+
+.commonSelectWrap .searchInput.bordernone{ border-color: transparent;}
+
+.checkBox{
+    height: 22px; line-height: 22px;
+}
+.checkBox em{  height: 22px; width: 22px;  background:url("../../images/newTemplate/check.png") center center no-repeat; float: left;}
+.checkBox.on em{background: url("../../images/newTemplate/checkon.png") no-repeat;}
+.checkBox  span{ color: #666; padding-left: 10px; margin-left: 25px; display: block; text-align: left;}
+
+
+
+
+.radio{height: 28px; line-height: 28px;  }
+.radio  span{ float: left; color: #666; padding-left: 10px; white-space:normal;padding-right: 40px;}
+.radio em{  height: 28px;   width: 28px; background: url("../../images/newTemplate/radio.png") center center no-repeat; float: left;  background-size: 28px 28px;}
+.radio.on em{ background-image: url("../../images/newTemplate/radioOn.png")}
+.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
+
+.submitBtn{ border-radius: 40px; margin: 0 auto; font-size: 16px; margin-top: 35px;}

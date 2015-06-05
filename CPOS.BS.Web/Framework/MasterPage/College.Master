@@ -41,9 +41,9 @@
 			</div>
 		</div>
         <!-- 中间区域-->
-        <div class="centreArea">
+        <div class="centreArea" id="centreArea">
             <!-- 公共的菜单部分-->
-            <div class="commonMenu">
+            <div class="commonMenu" id="leftMenu">
                 <ul>
                     <!--<li class="menu001"><a href="###">微官网</a></li>-->
                     <li class="menu002" id="li_news" runat="server"><a href="/Module/College/News/NewsList.aspx">微资讯</a></li>

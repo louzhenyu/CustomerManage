@@ -35,6 +35,8 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .commonSelectWrap .searchTime{display:block;float:left;width:161px;height:31px;margin-left:5px;font-family:Arial;}
 
 .commonSelectWrap .searchInput input{float:left;width:100%;height:29px;border:none;color:#666;}
+.commonSelectWrap .searchInput.remark{ width: 460px; height:80px;}
+.commonSelectWrap .searchInput.remark textarea{ width:100%; height: 100%; line-height: 20px;white-space: normal;}
 /*特殊的范围的输入框处理*/
 .commonSelectWrap .specialInput{display:block;float:left;width:100px;height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
 .commonSelectWrap .specialInput input{float:left;width:90px;height:29px;border:none;color:#666;}
@@ -80,7 +82,7 @@ white-space: normal;}
 .allQueryTermArea .drawBtn{display:block;position:absolute;left:50%;bottom:-29px;margin-left:-49px;width:98px;height:28px;line-height:31px;text-indent:33px;border:1px solid #ccc;border-top:none;border-radius:0 0 4px 4px;background:#fbfbfb url(../images/arr02.png) no-repeat 60px center;color:#3f97fe;}
 
 /*表格*/
-.tableHandleBox{padding:12px 0;text-align:right;}
+.tableHandleBox{padding:12px 0;text-align:right;width: 100%; height: 58px;}
 .tableHandleBox span{display:inline-block;width:100px;height:32px;line-height:32px;margin-left:10px;border-radius:3px;cursor:pointer;}
 .tableWrap{min-height:300px;}
 .tablehandle{height:44px;padding:9px;border:1px solid #d8d8d8;background:#f5f5f5;}
@@ -122,9 +124,13 @@ white-space: normal;}
 .dataTable .checkBox{vertical-align:middle;cursor:pointer;}
 .dataTable .checkBox em{display:block;width:25px;height:25px;margin:0 auto;background:url(../images/radio1.png) no-repeat center center;}
 .dataTable .checkBox.on em{background:url(../images/radio2.png) no-repeat center center;}
-.fontC{color:#2d83cf;font-family:"Arial";}
 
-
+.btnWrap{padding:35px 0;text-align:center;}
+.btnWrap a{display:inline-block;}
+.cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
+.cancelBtn,.saveBtn{border-radius:38px;}
+.cancelBtn:hover{background:transparent;color: #fe7c24}
+.radio span{ padding-right: 10px;}
 
 .commonTitle{height:16px;line-height:16px;margin:0 0 15px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;}
 /* 弹层-标签弹层*/
@@ -266,4 +272,14 @@ overflow-y: scroll;}
 /*.gridTables .commonSelectWrap .grid{height: 120px;overflow: auto;}*/
 .jui-dialog-addNewVip .commonSelectWrap .searchInput p{ text-align: left; margin-left:3px;}
 .commonSelectWrap .borderNone{ border: 1px solid transparent; border-top-color:#ccc}
+.commonSelectWrap .bonone{ border: 1px solid transparent;}
 .R{ float:right} .L{ float: left}  .txtCenter{ text-align: center}
+
+ .fontC{ width: 27px; height: 27px; background: center center no-repeat; margin:0 auto}
+ .delete{background-image:url(../images/delete.png)}
+.exit{background-image:url(../images/exit.png)}
+.add  {background-image:url(../images/add.png)}
+
+
+
+.spinner input{ height: 22px;}

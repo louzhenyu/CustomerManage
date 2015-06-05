@@ -1,7 +1,7 @@
-
+@charset "utf-8";
 
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.queryTermArea{ border-radius:8px 8px 0 0; padding:0px; }
+.queryTermArea{ background:none; padding:0px; }
 .title{ height: 57px; background:#f2f2f2; border-bottom:1px solid #d8d8d8;border-radius:8px 8px 0 0; }
 .title li{cursor: pointer;  width:268px; height: 56px; line-height: 56px;  float:left; text-align:center; font-size: 17px; font-weight:600; color:#3d3e40;  border-right:1px solid #d8d8d8; }
 .title li.on{ background:#fff;}
@@ -50,7 +50,7 @@
 .skuList .btn{cursor: pointer; min-width: 35px; height: 35px; padding:0 8px; border: 1px solid #ccc; position: relative; float: left; margin-right:30px; line-height: 35px; color: #999; font-size: 15px;}
 .skuList .btn .icon{ top: -12px; right: -12px;}
 .skuList .btn:last-of-type
-{/*æœ€åŽä¸€ä¸ªå…ƒç´ çš„é—´è·å˜å°*/
+{
     margin-right: 12px;
 }
 .fontC{color: #00acee; line-height: 35px; height: 35px;float: left;font-size: 15px; cursor: pointer;}

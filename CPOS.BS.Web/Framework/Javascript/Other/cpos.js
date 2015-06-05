@@ -29,18 +29,23 @@ function SetLogoInfo() {
         success: function (response) {
             var data = Ext.decode(response.responseText);
             var logo = $('#img_logo');
-           
+            debugger;
             logo.attr('alt', data.data.loadInfo.customerName);
             logo.closest('a').attr('title', data.data.loadInfo.customerName);
 
-            $('#unitName').html(window.UnitShortName ? window.UnitShortName : window.UnitName).attr("title", window.UnitName + "(" + window.RoleName + ")") //title是全称html是简写名;        
+            $('#unitName').html(data.data.loadInfo.customerName); //title是全称html是简写名;        
+
+            var str = $("#lblLoginUserName").html();
+            var UnitName = window.UnitShortName ? window.UnitShortName : window.UnitName;
+            UnitName = UnitName.length > 8 ? UnitName.substring(0, 8) + "..." : UnitName;
+            $("#lblLoginUserName").html("<b>|</b>" + UnitName + "&nbsp;&nbsp;&nbsp;" + str).attr("title", window.UnitName + "(" + window.RoleName + ")");
             if (data.data.requset != null) {
                 for (var i = 0; i < data.data.requset.length; i++) {
                     var code = data.data.requset[i].SettingCode;
                     if (code == 'WebLogo') {
-                        var val = data.data.requset[i].SettingValue;
+                        var val = ''; //data.data.requset[i].SettingValue;
                         if (val == '') break;
-                        logo.attr('src', val).css({'margin-top':'auto','max-width':'139px','max-height':'62px'});
+                        logo.attr('src', val).css({ 'margin-top': 'auto', 'max-width': '179px', 'max-height': '50px' });
                         break;
                     }
                 }
@@ -50,6 +55,15 @@ function SetLogoInfo() {
 }
 $(function () {
     SetLogoInfo();
+
+    $("#section").delegate(".datagrid-header-check", "mousedown", function (e) {
+        $(this).toggleClass("on");
+        return false;
+    });
+    var width = $("#leftMenu").outerWidth();
+    $("#contentArea").css({"margin-left":width+"px"})
+
+
 });
 
 //{"order_no":"","vip_no":"","sales_unit_id":"","order_date_begin":"","order_date_end":"","data_from_id":null,"DeliveryId":null,"ModifyTime_begin":"","ModifyTime_end":""}

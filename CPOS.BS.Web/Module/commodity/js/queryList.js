@@ -267,7 +267,9 @@
                 frozenColumns:[[
                     {
                         field : 'ck',
-                        width:22,
+                        width:70,
+                        title:'全选',
+                        align:'center',
                         checkbox : true
                     }//显示复选框
                     /*  {field : 'OrderNo',title : '订单号',width:96,align:'center',resizable:false},

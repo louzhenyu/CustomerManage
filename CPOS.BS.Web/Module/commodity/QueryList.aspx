@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/commodity/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-    <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -62,12 +62,12 @@
                 </div>
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
-                 <div class="commonBtn " data-flag="putaway">&#8593;  上架</div>
-                 <div class="commonBtn" data-flag="soldOut">&#8595; 下架</div>
-                 <div class="commonBtn sales" data-flag="salesTooltip" id="sales"> <img src="images/cxfzbtn.png" width="21" height="21" >更改促销分组</div>
+                 <div class="commonBtn " data-flag="putaway"><img src="images/jiatous.png"  >  上架</div>
+                 <div class="commonBtn" data-flag="soldOut"><img src="images/jiatoux.png"  >   下架</div>
+                 <div class="commonBtn sales" data-flag="salesTooltip" id="sales"> <img src="images/cxfzbtn.png"  >更改促销分组</div>
                  <div style="display: none">
                         <div id="Tooltip">
-                                <div class="treeNode"></div>
+                               <div class="treeNode"></div>
 
                               <div class="btnList">
                                 <div class="commonBtn opts l"  data-flag="sales"> 确定 </div>
@@ -81,7 +81,7 @@
                    <div class="imgTable"> <table class="dataTable" id="gridTable"></table>  </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
-                        <div id="kkpager" style="text-align: center;">
+                        <div id="kkpager" >
                         </div>
                     </div>
                 </div>
@@ -136,12 +136,7 @@
                <div class="commonSelectWrap">
                              <em class="tit">纸质优惠券抵扣:</em>
                              <div class="searchInput" >
-                                    <input id="Deduction" class="easyui-numberbox" name="Deduction" value="" data-options="width:160,height:32,precision:0,groupSeparator:','" /><span style="
-    float: right;
-    margin-right: -24px;
-    margin-top: -30px;
-    font-size: 14px;
-">元</span>
+                                    <input id="Deduction" class="easyui-numberbox" name="Deduction" value="" data-options="width:160,height:32,precision:0,groupSeparator:','" /><span style="float: right; margin-right: -24px;margin-top: -30px;font-size: 14px;">元</span>
                             </div>
                             </div>
                <div class="commonSelectWrap">

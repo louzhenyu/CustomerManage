@@ -34,17 +34,20 @@
         window.apiurl = apiurl;
 </script>
 
-     <%--模板 公共样式strart--%>
-    <link href="<%=StaticUrl+"/module/styles/css/reset-pc.css?v=0.4"%>" rel="stylesheet"  />
-    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.5"%>" rel="stylesheet" />
-    <link href="<%=StaticUrl+"/module/static/css/easyui.css"%>" rel="stylesheet" type="text/css" />
+     <%--模板 公共样式strart--%>   
+     <link href="<%=StaticUrl+"/module/static/css/easyui.css"%>" rel="stylesheet" type="text/css" />   
+       <%--分页--%>
+     <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
       <%--弹框--%>
     <link href="<%=StaticUrl+"/module/static/css/artDialog.css"%>" rel="stylesheet" type="text/css" /> 
+    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.5"%>" rel="stylesheet" />
+ 
+ 
     
      <%--模板 公共样式end--%>
 
       <%--模板 样式strart 切换模板样式只要更改/alading/skin02.css?v=0.5  alading qixin  college 只要三个模板 --%>
-    <link href="<%=StaticUrl+"/module/styles/css/blueFruit/skin02.css?v=0.5"%>" rel="stylesheet" />
+    <link href="<%=StaticUrl+"/module/styles/css/newTemplate/skin02.css?v=0.1"%>" rel="stylesheet" />
       <%--模板 样式End--%>
     <%--mvc 样式strart--%>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -82,7 +85,7 @@
 
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/Window.js"%>" type="text/javascript"></script>
     <link href="<%=StaticUrl+"/Framework/Css/cpos.css"%>" rel="stylesheet" type="text/css" />
-    <script src="<%=StaticUrl+"/Framework/javascript/Other/cpos.js?v=0.2"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Framework/javascript/Other/cpos.js?v=0.4"%>" type="text/javascript"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 
 </head>
@@ -135,7 +138,7 @@
                 </div>
             </div>
                 <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="LOGO">
-                    <img id="img_logo" src="/module/styles/images/alading/logo.png" alt="LOGO" />
+                    <img id="img_logo" src="/module/styles/images/newTemplate/logo.png" alt="LOGO" />
                         <%--<div class="arr"></div>--%>
                 </a>
                 <div class="commonNav">
@@ -205,7 +208,7 @@
                             var urlPath = m.Url_Path;
                             var result = false;
                             result = (urlPath.IndexOf("?") >= 0);
-                            Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\" class=\"{3}\" href=\"{1}\" title=\"{2}\">{2}</a></dt>",
+                            Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\"  href=\"{1}\" title=\"{2}\"><em class=\"{3}\"></em>{2}</a></dt>",
                                 m.Menu_Id, (result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID)), m.Menu_Name
                                 , m.Icon_Path != "" ? m.Icon_Path : "icon", "menu" + (j.ToString().PadLeft(3, '0'))));
 
@@ -238,7 +241,7 @@
                 </ul>
             </div>
                 <!-- 内容区域 -->
-                <div class="contentArea" style="padding: 20px;" id="contentArea">
+                <div class="contentArea" id="contentArea">
                     <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
                     </asp:ContentPlaceHolder>
                 </div>
@@ -300,27 +303,29 @@
     </form>
 
 <!-- Piwik Image Tracker-->
-<img src="http://tj.chainclouds.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" />
+<%--<img src="http://tj.chainclouds.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" />--%>
 <!-- End Piwik -->
         <div class="session1" style="display:none"/>
         <script type="text/javascript">
             $(function () {
-            window.alert = function (content, autoHide) {
-                var d = dialog({
-                    title: '提示',
-                    cancelValue: '关闭',
-                    skin: "black",
-                    content: content
-                });
-                window.d = d;
-                d.showModal();
-                if (!autoHide) {
-                    setTimeout(function () {
-                        window.d.close();
-                    }, 2000);
-                }
+                window.alert = function (content, autoHide) {
+                    var d = dialog({
+                        title: '提示',
+                        cancelValue: '关闭',
+                        skin: "black",
+                        content: content
+                    });
+                    window.d = d;
+                    d.showModal();
+                    if (!autoHide) {
+                        setTimeout(function () {
+                            window.d.close();
+                        }, 2000);
+                    }
 
-            };
+                };
+
+
                 window.clientID = '<%=CustomerID%>';
                 window.adminUserID = '<%=adminUserID%>';
                 window.UnitName = '<%=UnitName%>';

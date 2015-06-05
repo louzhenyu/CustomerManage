@@ -37,9 +37,9 @@
             totalPageBeforeText: '共',
             totalPageAfterText: '页',
             totalRecordsAfterText: '条数据',
-            gopageBeforeText: '转到',
+            gopageBeforeText: '跳转到',
             gopageButtonOkText: '确定',
-            gopageAfterText: '页',
+            gopageAfterText: '',
             buttonTipBeforeText: '第',
             buttonTipAfterText: '页'
         },
@@ -73,7 +73,7 @@
             $('#' + this.gopageTextboxId).attr('hideFocus', true);
             btnGo.show();
             btnGo.css('left', '0px');
-            $('#' + this.gopageWrapId).css('border-color', '#6694E3');
+            //$('#' + this.gopageWrapId).css('border-color', '#6694E3');
             btnGo.animate({ left: '+=44' }, 50, function () {
                 //$('#'+this.gopageWrapId).css('width','88px');
             });
@@ -88,7 +88,7 @@
                 }, 100, function () {
                     btnGo.css('left', '0px');
                     btnGo.hide();
-                    $('#' + _this.gopageWrapId).css('border-color', '#DFDFDF');
+                    //$('#' + _this.gopageWrapId).css('border-color', '#DFDFDF');
                 });
             }, 400);
         },

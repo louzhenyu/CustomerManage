@@ -44,7 +44,7 @@
 #kkpager_gopage_wrap{
 	display:inline-block;
 	width:44px;
-	height:18px;
+	height:20px;
 	border:1px solid #DFDFDF;
 	margin:0px 1px;
 	padding:0px;
@@ -70,6 +70,7 @@
 #kkpager_btn_go_input{
 	width:42px;
 	height:16px;
+    line-height: 20px;
 	text-align:center;
 	border:0px;
 	position:absolute;
