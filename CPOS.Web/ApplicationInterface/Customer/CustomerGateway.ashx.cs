@@ -166,6 +166,31 @@ namespace JIT.CPOS.Web.ApplicationInterface
             };
             return new SuccessResponse<IAPIResponseData>(config).ToJSON();
         }
+        /// <summary>
+        /// 获取微信统一凭证接口
+        /// </summary>
+        /// <returns></returns>
+        public string GetAccessToken(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            var appService = new WApplicationInterfaceBLL(loggingSessionInfo);
+
+
+            var appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = rp.CustomerID }, null)[0];
+
+            var tempAccessToke = new CommonBLL().GetAccessTokenByCache(appEntity.AppID, appEntity.AppSecret, loggingSessionInfo);
+            //重新取一次
+            appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = rp.CustomerID }, null)[0];
+
+            WxAccessToken accessToken = new WxAccessToken()
+            {
+                access_token = tempAccessToke.access_token,//appEntity.RequestToken,
+                expires_in = tempAccessToke.expires_in,
+                ExpirationTime = appEntity.ExpirationTime.ToString()
+            };
+            return new SuccessResponse<IAPIResponseData>(accessToken).ToJSON();
+        }
         protected override string ProcessAction(string pType, string pAction, string pRequest)
         {
             string rst;
@@ -179,6 +204,9 @@ namespace JIT.CPOS.Web.ApplicationInterface
                     break;
                 case "getJsApiConfig":
                     rst = this.getJsApiConfig(pRequest);
+                    break;
+                case "GetAccessToken":
+                    rst = this.GetAccessToken(pRequest);
                     break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
@@ -224,7 +252,6 @@ namespace JIT.CPOS.Web.ApplicationInterface
     }
 
 
-
     public class WeiXinConfigRq : IAPIRequestParameter
     {
         public bool debug { get; set; }
@@ -243,5 +270,14 @@ namespace JIT.CPOS.Web.ApplicationInterface
         public string nonceStr { get; set; }
         public string signature { get; set; }
         public List<string> jsApiList { get; set; }
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    public class WxAccessToken : IAPIResponseData
+    {
+        public string access_token { get; set; }
+        public string expires_in { get; set; }
+        public string ExpirationTime { get; set; }
     }
 }
