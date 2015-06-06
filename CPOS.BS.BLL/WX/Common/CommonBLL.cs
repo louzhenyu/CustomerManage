@@ -961,6 +961,23 @@ namespace JIT.CPOS.BS.BLL.WX
 
                 var qrcode = data.DeserializeJSONTo<QrCodeEntity>();
 
+                #region 处理第三方使用token，没有更改过期时间问题
+                if (qrcode.errcode == "40001")
+                {
+                    var wAppInteBLL = new WApplicationInterfaceBLL(loggingSessionInfo);
+                    var wAppInteInfo = wAppInteBLL.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+                    if (wAppInteInfo != null)
+                    {
+                        //修改过期时间
+                        wAppInteInfo.ExpirationTime = DateTime.Now.AddSeconds(-10);
+                        wAppInteBLL.Update(wAppInteInfo);
+                        //重新调用接口
+                        data = GetRemoteData(uri, method, content);
+                        qrcode = data.DeserializeJSONTo<QrCodeEntity>();
+                    }
+                }
+                #endregion
+
                 BaseService.WriteLogWeixin("获取二维码图片返回值：" + data);
 
                 if (string.IsNullOrEmpty(qrcode.errcode))
