@@ -124,7 +124,7 @@
                                if (configData[i].SettingValue == 1) {
                                    $("[data-flag='EnableIntegral']").trigger("click");
                                } else{
-                                   $("[data-flag='EnableRewardCash']").trigger("click").trigger("click");
+                                   $("[data-flag='EnableIntegral']").trigger("click").trigger("click");
                                }
                            }
                            debugger;
