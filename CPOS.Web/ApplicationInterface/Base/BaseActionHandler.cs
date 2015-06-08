@@ -76,7 +76,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Base
             {
                 if (this._currentUserInfo == null && this.APIRequest!=null)
                 {
-                    this._currentUserInfo = Default.GetBSLoggingSession(this.APIRequest.CustomerID, "1");
+                    //this._currentUserInfo = Default.GetBSLoggingSession(this.APIRequest.CustomerID, "1");
+                    this._currentUserInfo = Default.GetBSLoggingSession(this.APIRequest.CustomerID, this.APIRequest.UserID);    //update by Henry 2015-6-8
                 }
                 return this._currentUserInfo;
             }

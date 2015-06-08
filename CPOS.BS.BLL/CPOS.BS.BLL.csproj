@@ -200,6 +200,10 @@
     <Compile Include="CodeGeneration\EventStatsBLL.cs" />
     <Compile Include="CodeGeneration\EventStatsDetailBLL.cs" />
     <Compile Include="CodeGeneration\EventVipBLL.cs" />
+    <Compile Include="CodeGeneration\Extension\X_QuestionBLL.cs" />
+    <Compile Include="CodeGeneration\Extension\X_VipActivityApplyBLL.cs" />
+    <Compile Include="CodeGeneration\Extension\X_VipPointMarkBLL.cs" />
+    <Compile Include="CodeGeneration\Extension\X_VipPointMarkDetailBLL.cs" />
     <Compile Include="CodeGeneration\FStaffBLL.cs" />
     <Compile Include="CodeGeneration\GLDeviceInstallItemBLL.cs" />
     <Compile Include="CodeGeneration\GLProductOrderBLL.cs" />
@@ -628,6 +632,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EveryoneSales\EveryoneSalesBLL.cs" />
+    <Compile Include="Extension\X_QuestionBLL.cs" />
+    <Compile Include="Extension\X_VipActivityApplyBLL.cs" />
+    <Compile Include="Extension\X_VipPointMarkBLL.cs" />
+    <Compile Include="Extension\X_VipPointMarkDetailBLL.cs" />
     <Compile Include="FStaffBLL.cs" />
     <Compile Include="GetResponseParams.cs" />
     <Compile Include="GOrderBLL.cs" />

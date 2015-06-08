@@ -164,6 +164,10 @@
     <Compile Include="CodeGeneration\EventStatsDAO.cs" />
     <Compile Include="CodeGeneration\EventStatsDetailDAO.cs" />
     <Compile Include="CodeGeneration\EventVipDAO.cs" />
+    <Compile Include="CodeGeneration\Extension\X_QuestionDAO.cs" />
+    <Compile Include="CodeGeneration\Extension\X_VipActivityApplyDAO.cs" />
+    <Compile Include="CodeGeneration\Extension\X_VipPointMarkDAO.cs" />
+    <Compile Include="CodeGeneration\Extension\X_VipPointMarkDetailDAO.cs" />
     <Compile Include="CodeGeneration\FStaffDAO.cs" />
     <Compile Include="CodeGeneration\GLDeviceInstallItemDAO.cs" />
     <Compile Include="CodeGeneration\GLProductOrderDAO.cs" />
@@ -571,6 +575,10 @@
     <Compile Include="EScaleDAO.cs" />
     <Compile Include="EventVipDAO.cs" />
     <Compile Include="EveryoneSales\EveryoneSalesDAO.cs" />
+    <Compile Include="Extension\X_QuestionDAO.cs" />
+    <Compile Include="Extension\X_VipActivityApplyDAO.cs" />
+    <Compile Include="Extension\X_VipPointMarkDAO.cs" />
+    <Compile Include="Extension\X_VipPointMarkDetailDAO.cs" />
     <Compile Include="FStaffDAO.cs" />
     <Compile Include="GOrderDAO.cs" />
     <Compile Include="HotelDynamicPriceDAO.cs" />

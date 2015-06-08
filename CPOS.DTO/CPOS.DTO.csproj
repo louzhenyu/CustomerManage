@@ -72,6 +72,11 @@
     <Compile Include="Module\AppConfig\HomePageConfig\Response\SetEventItemRD.cs" />
     <Compile Include="Module\Basic\Customer\Request\SetRewardsSettingRP.cs" />
     <Compile Include="Module\Basic\Customer\Request\SetSalesSettingRP.cs" />
+    <Compile Include="Module\Extension\ActivityApply\Response\GetActivityApplyRD.cs" />
+    <Compile Include="Module\Extension\PointMark\Request\SetVipPointMarkRP.cs" />
+    <Compile Include="Module\Extension\PointMark\Response\GetVipPointMarkRD.cs" />
+    <Compile Include="Module\Extension\Question\Request\GetQuestionListRP.cs" />
+    <Compile Include="Module\Extension\Question\Response\GetQuestionListRD.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\DelCouponRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\GetCouponTypeListRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\SetCouponRP.cs" />
@@ -269,6 +274,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Module\Basic\Customer\Response\" />
+    <Folder Include="Module\Extension\ActivityApply\Request\" />
     <Folder Include="Module\HtmlApp\Config\Request\" />
     <Folder Include="Product\Eclub\Module\" />
   </ItemGroup>

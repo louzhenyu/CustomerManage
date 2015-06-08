@@ -498,6 +498,12 @@
     <Content Include="Images\bg2.png" />
     <Content Include="Images\btn1.png" />
     <Content Include="Images\btn2.png" />
+    <Content Include="Images\mingLong\question1\a1.png" />
+    <Content Include="Images\mingLong\question1\a2.png" />
+    <Content Include="Images\mingLong\question1\b1.png" />
+    <Content Include="Images\mingLong\question1\b2.png" />
+    <Content Include="Images\mingLong\question1\topicBanner01.jpg" />
+    <Content Include="Images\mingLong\question1\topicBanner02.jpg" />
     <Content Include="Images\msg_vip.jpg" />
     <Content Include="Interface\Data\BaseData.aspx" />
     <Content Include="Interface\Data\CustomerData.aspx" />
@@ -2127,6 +2133,12 @@
       <DependentUpon>CouponHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\GetActivityApplyAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\SetActivityApplyAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Extension\PointMark\DelVipPointMarkAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Extension\PointMark\GetVipPointMarkAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Extension\PointMark\SetVipPointMarkAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Extension\Question\GetQuestionListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Test\Test\TestAH.cs" />
     <Compile Include="ApplicationInterface\Module\UnitAndItem\Item\Item.ashx.cs">
       <DependentUpon>Item.ashx</DependentUpon>
