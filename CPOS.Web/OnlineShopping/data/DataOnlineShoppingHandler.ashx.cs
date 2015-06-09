@@ -213,6 +213,19 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             {
                 get { return ImagePathUtil.GetImagePathStr(this.imageurl, "240"); }  //请求图片缩略图 
                 set { this.imageurl = value; }
+            }
+
+            private string imageurl2;
+            public string imageUrl2
+            {
+                get { return ImagePathUtil.GetImagePathStr(this.imageurl2, "240"); }  //请求图片缩略图 
+                set { this.imageurl2 = value; }
+            }
+            private string imageurl3;
+            public string imageUrl3
+            {
+                get { return ImagePathUtil.GetImagePathStr(this.imageurl3, "240"); }  //请求图片缩略图 
+                set { this.imageurl3 = value; }
             } 
             public string TargetUrl { get; set; }
 
@@ -228,6 +241,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string itemCategoryName { get; set; } //类别名称 Jermyn20131008
             public int salesPersonCount { get; set; }    //已购买人数量
             public int isShoppingCart { get; set; }      //是否已经加入购物车（1=已加入，0=未加入）
+            public string prop_2_detail_name { get; set; }      //商品颜色
+            public string sku_prop_id3 { get; set; }      //商品规格（暂作为材质使用）
             public string skuId { get; set; }
             public string itemTypeDesc { get; set; } // 菜品特殊分类
             public string itemSortDesc { get; set; } // 菜品排行
