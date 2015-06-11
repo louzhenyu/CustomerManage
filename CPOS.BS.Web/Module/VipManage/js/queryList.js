@@ -793,17 +793,23 @@
                 var obj = {}, obj2 = {}, item = bodyList[i];
                 for (var key in headerObj) {
                     obj[key] = item[key];
+                    if(key=="CreateTime"){
+                        obj[key] =new Date(item[key]).format("yyyy-mm-dd");
+                    }
                 }
                 //把没有这个key的 给取出来
                 for (var key2 in item) {
                     if (!headerObj.hasOwnProperty(key2)) {
                         obj2[key2] = item[key2];
+                        if(key2=="CreateTime"){
+                            obj2[key2] =new Date(item[key2]).format("yyyy-mm-dd");
+                        }
                     }
                 }
                 otherItems.push(obj2);
                 finalList.push(obj);
             }
-
+              debugger;
             var myMid = JITMethod.getUrlParam("mid");
             $("#content").html(bd.template("tpl_content", { list: { finalList: finalList, otherItems: otherItems }, mid: myMid }));
             //设置所有匹配的记录数
