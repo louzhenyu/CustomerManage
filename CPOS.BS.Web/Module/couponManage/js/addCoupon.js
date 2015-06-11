@@ -238,7 +238,7 @@
                 onShow: function(){
                     var str= $("#applicationType").combobox("getValue");
                     if(str==0) {
-                        $(this).tooltip('tip').css({"width":"160" });
+                        $(this).tooltip('tip').css({"width":"222" });
                         var nodes = $("#Tooltip").find(".treeNode").tree('getChecked');
                         $.each(nodes, function () {
                             var me = this;

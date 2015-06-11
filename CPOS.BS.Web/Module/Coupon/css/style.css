@@ -17,10 +17,7 @@ label{display:block;float:left;}
 .commonSelBox .selPulldown span{display:block;height:32px;line-height:32px;text-align:center;font-size:14px;color:#4d4d4d;}
 .commonSelBox .selPulldown span:hover{background:#5fafe4;color:#fff;}
 .commonSelBox:hover .selPulldown{display:block;}
-.contentArea {
-    margin-left:0px;
-    float: left;
-}
+
 
 /*内容区域*/
 .contentArea_coupon{padding:28px;}

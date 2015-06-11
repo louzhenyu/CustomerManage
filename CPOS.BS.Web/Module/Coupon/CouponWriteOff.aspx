@@ -5,7 +5,7 @@
     <title>优惠券核销</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="css/global.css" rel="stylesheet" type="text/css" />
-    <link href="css/style.css?v=0.2" rel="stylesheet" type="text/css" />
+    <link href="css/style.css?v=0.4" rel="stylesheet" type="text/css" />
     <link href="css/jit-card.css" rel="stylesheet" type="text/css" />
     <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
 </asp:Content>
@@ -14,15 +14,17 @@
         <span class="packup"></span>
         <div class="commonNav_coupon">
             <a href="javascript:;" class="on">优惠券核销</a> 
-            <%-- <a href="javascript:void(0)" onclick='AddMid("couponWriteOffLog.aspx")'>使用记录</a>--%>
+            <%-- <a href="javascript:void(0)" onclick='AddMid("couponWriteO
+            ffLog.aspx")'>使用记录</a>--%>
         </div>
         <div class="contentArea_coupon">
             <div class="commonTitWrap">
                 <span>优惠券核销</span>
             </div>
+
             <div class="mana-card">
                 <div class="mana-card-t">
-                    <ul class="clearfix">
+                    <ul>
                         <li>
                             <input type="text" id="name" placeholder="手机号/身份证/会员名" style="width: 190px" />
                         </li>
