@@ -125,20 +125,7 @@ namespace JIT.CPOS.BS.DataAccess
                 pAPPChannelID = "5";
             }
 
-            //注释，不根据渠道过滤
-//            string sql =string.Format(@"
-//            SELECT paymentTypeId = a.Payment_Type_Id 
-//            , paymentTypeName  = a.Payment_Type_Name 
-//            , displayIndex = ROW_NUMBER() OVER(ORDER BY a.Payment_Type_Name) 
-//            ,paymentTypeCode = Payment_Type_Code,LogoURL 
-//            FROM dbo.T_Payment_Type a 
-//            INNER JOIN dbo.TPaymentTypeCustomerMapping b ON a.Payment_Type_Id = b.PaymentTypeID 
-//            join SysASCAndPaymentTypeMapping  c on a.Payment_Type_Id=c.PaymentTypeId
-//            WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND c.IsDelete = 0 
-//            AND b.CustomerId = '{0}' AND c.APPChannelID={1}
-//",customerId,pAPPChannelID);
-
-            string sql = string.Format(@"
+            string sql =string.Format(@"
             SELECT paymentTypeId = a.Payment_Type_Id 
             , paymentTypeName  = a.Payment_Type_Name 
             , displayIndex = ROW_NUMBER() OVER(ORDER BY a.Payment_Type_Name) 
@@ -147,8 +134,8 @@ namespace JIT.CPOS.BS.DataAccess
             INNER JOIN dbo.TPaymentTypeCustomerMapping b ON a.Payment_Type_Id = b.PaymentTypeID 
             join SysASCAndPaymentTypeMapping  c on a.Payment_Type_Id=c.PaymentTypeId
             WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND c.IsDelete = 0 
-            AND b.CustomerId = '{0}'
-", customerId);
+            AND b.CustomerId = '{0}' AND c.APPChannelID={1}
+",customerId,pAPPChannelID);
 
             return this.SQLHelper.ExecuteDataset(sql);
         }
