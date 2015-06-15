@@ -794,7 +794,7 @@
                 for (var key in headerObj) {
                     obj[key] = item[key];
                     if(key=="CreateTime"){
-                        obj[key] =new Date(item[key]).format("yyyy-mm-dd");
+                        obj[key] =new Date(item[key]).format("yyyy-MM-dd");
                     }
                 }
                 //把没有这个key的 给取出来
@@ -802,7 +802,7 @@
                     if (!headerObj.hasOwnProperty(key2)) {
                         obj2[key2] = item[key2];
                         if(key2=="CreateTime"){
-                            obj2[key2] =new Date(item[key2]).format("yyyy-mm-dd");
+                            obj2[key2] =new Date(item[key2]).format("yyyy-MM-dd");
                         }
                     }
                 }
