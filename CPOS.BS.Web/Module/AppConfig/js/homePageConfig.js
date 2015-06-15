@@ -675,8 +675,8 @@
                 self.saveSeconKill();
             }).delegate(".jsSaveNavBtn","click",function(){
                 self.SaveNav();
-            }).delegate(".jsSavesearchBtn","click",function(){
-                      self.saveSearch();
+            }).delegate(".jsSaveSearchBtn","click",function(){
+              self.saveSearch();
             }).delegate(".jsSaveCategoryBtn", "click", function (e) {
                 //保存C区信息
                 self.saveCategory();

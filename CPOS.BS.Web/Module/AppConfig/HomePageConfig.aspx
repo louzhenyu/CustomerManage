@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<%=StaticUrl+"/module/AppConfig/css/style.css"%>" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="section" data-js="js/homePageConfig" class="section m10">
+    <div id="section" data-js="js/homePageConfig.js?ver=0.3" class="section m10">
 
         <div class="showContentWrap clearfix">
 	        <div class="collectionlist showLayer" >
