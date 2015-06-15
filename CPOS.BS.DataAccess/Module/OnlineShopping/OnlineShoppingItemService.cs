@@ -38,8 +38,10 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <param name="isKeep">true 已收藏列表， false 所有列表</param>
+        /// <param name="isStore"></param>
+        /// <param name="socialSalesType">类型(0=按订单；1=按商品)</param>
         /// <returns></returns>
-        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore)
+        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType)
         {
             //page = page < 0 ? 0 : page;
             page = page <= 0 ? 0 : page;
@@ -60,19 +62,11 @@ namespace JIT.CPOS.BS.DataAccess
              */
 
             StringBuilder dbdSql = new StringBuilder();
-            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy,ChannelId,isStore));
+            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy, ChannelId, socialSalesType,isStore));
             dbdSql.Append(" select * From #tmp a where 1=1 ");
 
-            //if (ChannelId=="6")
-            //{
-            //    dbdSql.Append(" and a.EveryoneSalesPrice !=0 ");
-            //}
             dbdSql.Append(string.Format(@" and a.displayIndex between '{0}' and '{1}' order by a.displayindex;", beginSize, endSize));
-            dbdSql.Append("select count(*) count From #tmp a where ");
-            //if (ChannelId=="6")
-            //{
-            //    dbdSql.Append(" a.EveryoneSalesPrice !=0 and ");
-            //}            
+            dbdSql.Append("select count(*) count From #tmp a where ");        
             dbdSql.Append("a.UnixLocalTime BETWEEN a.UnixBeginTime AND a.UnixEndTime; drop table #tmp;");                     
 
             DataSet ds = new DataSet();
@@ -88,7 +82,21 @@ namespace JIT.CPOS.BS.DataAccess
         //    return obj == null || obj == DBNull.Value ? 0 : Convert.ToInt32(obj);
         //}
 
-        public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId, string isGroupBy, string channelId, int isStore = 0)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="itemName"></param>
+        /// <param name="itemTypeId"></param>
+        /// <param name="isKeep"></param>
+        /// <param name="isExchange"></param>
+        /// <param name="storeId"></param>
+        /// <param name="isGroupBy"></param>
+        /// <param name="channelId"></param>
+        /// <param name="isStore"></param>
+        /// <param name="socialSalesType">类型(0=按订单；1=按商品)</param>
+        /// <returns></returns>
+        public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId, string isGroupBy, string channelId,int socialSalesType,int isStore = 0)
         {
 
             string sql = @"SELECT   displayIndex = Row_number() over(order by isnull(t.ItemDisplayIndex,0),t.BeginTime DESC) ,* 
@@ -188,7 +196,8 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sql += " AND a.PTypeId = '2' "; //团购商品
             }
-            if (channelId == "6")
+            //员工销售/会员创客时，并且按商品设置时执行
+            if ((channelId == "6" || channelId == "10") && socialSalesType==1)
             {
                 sql += " AND a.EveryoneSalesPrice != 0 ";
             }

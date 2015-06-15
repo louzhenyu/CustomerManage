@@ -20,6 +20,7 @@ using System.IO;
 using JIT.Utility.Web;
 using JIT.CPOS.Web.SendSMSService;
 using JIT.Utility.Notification;
+using System.Collections;
 
 namespace JIT.CPOS.Web.OnlineShopping.data
 {
@@ -102,7 +103,12 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 OnlineShoppingItemBLL itemService = new OnlineShoppingItemBLL(loggingSessionInfo);
 
                 sw = new Stopwatch(); sw.Start();
-                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId,reqObj.special.isStore);
+
+
+                var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+                Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置
+
+                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId, reqObj.special.isStore,int.Parse(htSetting["socialSalesType"].ToString()));
                 sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取所有藏商品列表，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
 
                 if (dsItems != null && dsItems.Tables.Count > 0 && dsItems.Tables[0].Rows.Count > 0)
@@ -163,11 +169,30 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             }
                         }
 
-                        //如果渠道是人人销售，当前价格取人人销售价
-                        if (reqObj.common.channelId == "6")
+                        //--如果渠道是人人销售，当前价格取人人销售价
+                        if (int.Parse(htSetting["socialSalesType"].ToString()) == 0)
                         {
-                            item.salesPrice = item.EveryoneSalesPrice;
+                            if (reqObj.common.channelId == "6")//微信小店
+                            {
+                                if (int.Parse(htSetting["enableVipSales"].ToString()) > 0)//启用会员小店
+                                {
+                                    item.salesPrice = item.salesPrice * (decimal.Parse(htSetting["vDistributionPricePer"].ToString()) / 100);
+                                    item.ReturnAmount = item.salesPrice * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100);
+                                }
+                            }
+                            else if (reqObj.common.channelId == "10")//员工小店
+                            {
+                                if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
+                                {
+                                    item.salesPrice = item.salesPrice * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100);
+                                    item.ReturnAmount = item.salesPrice * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100);
+                                }
+                            }
+
                         }
+                        else //商品人人销售价格
+                            item.salesPrice = item.EveryoneSalesPrice;
+
                     }
                 }
 
@@ -402,11 +427,36 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                     //TO DO 人人销售渠道取人人价 add by donal 2014-9-22 17:26:07
                     //PS 现在判断放在循环外 如果以后有其他循环逻辑 判断可以放在循环内
-                    if (reqObj.common.channelId == "6")
+
+
+                    var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+                    Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置
+
+                    if (reqObj.common.channelId == "6" || reqObj.common.channelId == "10")
                     {
                         foreach (var item in respData.content.skuList)
                         {
-                            item.salesPrice = item.EveryoneSalesPrice;
+                            //--如果渠道是人人销售，当前价格取人人销售价
+                            if (int.Parse(htSetting["socialSalesType"].ToString()) == 0)
+                            {
+                                if (reqObj.common.channelId == "6")//微信小店
+                                {
+                                    if (int.Parse(htSetting["enableVipSales"].ToString()) > 0)//启用会员小店
+                                    {
+                                        item.salesPrice = item.salesPrice * (decimal.Parse(htSetting["vDistributionPricePer"].ToString()) / 100);
+                                    }
+                                }
+                                else if (reqObj.common.channelId == "10")//员工小店
+                                {
+                                    if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
+                                    {
+                                        item.salesPrice = item.salesPrice * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100);
+                                    }
+                                }
+
+                            }
+                            else //商品人人销售价格
+                                item.salesPrice = item.EveryoneSalesPrice;
                         }
                     }
 
@@ -712,7 +762,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             {
                 get { return ImagePathUtil.GetImagePathStr(this.imageUrl, "480"); }  //请求图片缩略图 
                 set { this.imageUrl = value; }
-            } 
+            }
         }
         public class getItemDetailRespContentDataSku
         {
@@ -2277,14 +2327,42 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 decimal TotalAmount = 0.00m;
                 decimal TotalReturnCash = 0.00m;
 
+                var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+                Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置
+
                 foreach (var item in reqObj.special.orderDetailList)
                 {
                     var skuprice = skuPriceList.Where(m => m.sku_id == item.skuId).FirstOrDefault();
                     if (skuprice != null)
                     {
                         item.salesPrice = skuprice.price.ToString();
-                        if (reqObj.common.channelId == "6")
+                        //if (reqObj.common.channelId == "6")
+                        //{
+                        //    item.salesPrice = skuprice.EveryoneSalesPrice.ToString("f2");
+                        //    item.ReturnCash = skuprice.ReturnCash.ToString("f2");
+                        //}
+                        if (int.Parse(htSetting["socialSalesType"].ToString()) == 0)
                         {
+                            if (reqObj.common.channelId == "6")//微信小店
+                            {
+                                if (int.Parse(htSetting["enableVipSales"].ToString()) > 0)//启用会员小店
+                                {
+                                    item.salesPrice = (decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vDistributionPricePer"].ToString()) / 100)).ToString();
+                                    item.ReturnCash = (decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100)).ToString();
+                                }
+                            }
+                            else if (reqObj.common.channelId == "10")//员工小店
+                            {
+                                if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
+                                {
+                                    item.salesPrice = (decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100)).ToString();
+                                    item.ReturnCash = (decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100)).ToString();
+                                }
+                            }
+
+                        }
+                        else
+                        { //商品人人销售价格
                             item.salesPrice = skuprice.EveryoneSalesPrice.ToString("f2");
                             item.ReturnCash = skuprice.ReturnCash.ToString("f2");
                         }
@@ -2333,7 +2411,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 orderInfo.ChannelId = reqObj.common.channelId; //渠道 add by donal 2014-9-28 14:32:05
 
                 //如果是【人人销售/我的小店】销售人为空，销售人就是他自己
-                if (orderInfo.ChannelId == "6" && string.IsNullOrWhiteSpace(orderInfo.SalesUser))
+                if ((orderInfo.ChannelId == "6" || orderInfo.ChannelId == "10") && string.IsNullOrWhiteSpace(orderInfo.SalesUser))
                 {
                     orderInfo.SalesUser = reqObj.common.userId;
                 }
@@ -2436,7 +2514,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 #region 更新发货门店
                 //人人销售分配发货门店 add by Henry 2014-11-27
-                if (reqObj.common.channelId == "6")
+                if (reqObj.common.channelId == "6" || reqObj.common.channelId == "11" || reqObj.common.channelId == "10")
                 {
                     TInoutBLL inoutBll = new TInoutBLL(loggingSessionInfo);
                     TUnitBLL unitBll = new TUnitBLL(loggingSessionInfo);
@@ -2448,14 +2526,14 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                         //判断会员会集店是否是当前卖家的
                         if (!string.IsNullOrEmpty(vipInfo.CouponInfo))
                         {
-                            var unitEntity= unitBll.GetByID(vipInfo.CouponInfo);
+                            var unitEntity = unitBll.GetByID(vipInfo.CouponInfo);
                             if (unitEntity != null)
                             {
                                 if (unitEntity.CustomerID == loggingSessionInfo.ClientID)
                                 {
                                     unit = vipInfo.CouponInfo;
                                     inoutEntity.SalesUnitID = unit; //消费门店
-                                    inoutEntity.UnitID= unit;       //配送门店
+                                    inoutEntity.UnitID = unit;       //配送门店
                                 }
                             }
                         }
@@ -2480,164 +2558,164 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 #endregion
 
-                
+
 
                 //如果是送货到家，根据订单和用户ID来给总金额和实际支付金额加上运费
                 TOrderCustomerDeliveryStrategyMappingBLL tOrderCustomerDeliveryStrategyMappingBLL = new TOrderCustomerDeliveryStrategyMappingBLL(loggingSessionInfo);
                 tOrderCustomerDeliveryStrategyMappingBLL.UpdateOrderAddDeliveryAmount(orderInfo.OrderId, customerId);
 
                 #region 判断是否是阿拉丁平台的订单,如果是则向阿拉丁同步订单
-                if (reqObj.common.isALD == "1")
-                {
+                //if (reqObj.common.isALD == "1")
+                //{
 
-                    //因为配送费用逻辑后，订单的费用有改变。所以重新查总金额和实际支付金额
-                    T_InoutBLL inoutBll = new T_InoutBLL(loggingSessionInfo);
-                    T_InoutEntity inoutEntiy = inoutBll.QueryByEntity(
-                            new T_InoutEntity()
-                            {
-                                order_id = orderInfo.OrderId
-                            }
-                            , null
-                        ).OrderByDescending(m => m.create_time)
-                        .FirstOrDefault();
+                //    //因为配送费用逻辑后，订单的费用有改变。所以重新查总金额和实际支付金额
+                //    T_InoutBLL inoutBll = new T_InoutBLL(loggingSessionInfo);
+                //    T_InoutEntity inoutEntiy = inoutBll.QueryByEntity(
+                //            new T_InoutEntity()
+                //            {
+                //                order_id = orderInfo.OrderId
+                //            }
+                //            , null
+                //        ).OrderByDescending(m => m.create_time)
+                //        .FirstOrDefault();
 
 
 
-                    //同步阿拉丁平台的用户信息   qianzhi   2014-03-19
-                    new VipBLL(loggingSessionInfo).SyncAladingUserInfo(reqObj.common.userId, reqObj.common.customerId);
+                //    //同步阿拉丁平台的用户信息   qianzhi   2014-03-19
+                //    new VipBLL(loggingSessionInfo).SyncAladingUserInfo(reqObj.common.userId, reqObj.common.customerId);
 
-                    var store = unitServer.GetUnitById(orderInfo.StoreId);
-                    if (bReturn)
-                    {//o2o下单成功后,将订单同时发送给ALD
-                        ALDOrder aldOrder = new ALDOrder();
-                        aldOrder.SourceOrdersID = orderInfo.OrderId;
-                        aldOrder.SourceOrdersNO = orderInfo.OrderCode;
-                        aldOrder.SourceOrderDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        aldOrder.SourceStoreID = orderInfo.StoreId;
-                        aldOrder.SourceStoreName = store != null ? store.Name : "阿拉丁";
-                        aldOrder.SourceStoreAddress = store.Address;
-                        aldOrder.SourceStoreTel = store.Telephone;
-                        aldOrder.DataDeployName = unitServer.GetCustomerDataDeploy(orderInfo.CustomerId);
-                        aldOrder.SourceClientID = orderInfo.CustomerId;
-                        aldOrder.Status = orderInfo.Status;
-                        aldOrder.Remark = orderInfo.Remark;
-                        aldOrder.DeliverType = orderInfo.DeliveryId;
-                        aldOrder.ConsigneeAddress = orderInfo.DeliveryAddress;
-                        aldOrder.ConsigneePhoneNO = orderInfo.Mobile;
-                        aldOrder.ConsigneeName = orderInfo.username;
-                        aldOrder.OrderTotalAmount = inoutEntiy.total_amount;
-                        aldOrder.OrderFactAmount = inoutEntiy.actual_amount;
-                        aldOrder.OrderItemTotalCount = itemTotalQty;
-                        aldOrder.MemberID = new Guid(reqObj.common.userId);
+                //    var store = unitServer.GetUnitById(orderInfo.StoreId);
+                //    if (bReturn)
+                //    {//o2o下单成功后,将订单同时发送给ALD
+                //        ALDOrder aldOrder = new ALDOrder();
+                //        aldOrder.SourceOrdersID = orderInfo.OrderId;
+                //        aldOrder.SourceOrdersNO = orderInfo.OrderCode;
+                //        aldOrder.SourceOrderDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                //        aldOrder.SourceStoreID = orderInfo.StoreId;
+                //        aldOrder.SourceStoreName = store != null ? store.Name : "阿拉丁";
+                //        aldOrder.SourceStoreAddress = store.Address;
+                //        aldOrder.SourceStoreTel = store.Telephone;
+                //        aldOrder.DataDeployName = unitServer.GetCustomerDataDeploy(orderInfo.CustomerId);
+                //        aldOrder.SourceClientID = orderInfo.CustomerId;
+                //        aldOrder.Status = orderInfo.Status;
+                //        aldOrder.Remark = orderInfo.Remark;
+                //        aldOrder.DeliverType = orderInfo.DeliveryId;
+                //        aldOrder.ConsigneeAddress = orderInfo.DeliveryAddress;
+                //        aldOrder.ConsigneePhoneNO = orderInfo.Mobile;
+                //        aldOrder.ConsigneeName = orderInfo.username;
+                //        aldOrder.OrderTotalAmount = inoutEntiy.total_amount;
+                //        aldOrder.OrderFactAmount = inoutEntiy.actual_amount;
+                //        aldOrder.OrderItemTotalCount = itemTotalQty;
+                //        aldOrder.MemberID = new Guid(reqObj.common.userId);
 
-                        //订单明细
-                        aldOrder.OrderDetails = new List<ALDOrderDetail>();
-                        if (orderInfo.OrderDetailInfoList != null && orderInfo.OrderDetailInfoList.Count > 0)
-                        {
-                            List<string> skuIDs = new List<string>();
-                            foreach (var detail in orderInfo.OrderDetailInfoList)
-                            {
-                                var aldOrderDetail = new ALDOrderDetail();
-                                aldOrderDetail.SourceSKUID = detail.sku_id;
-                                aldOrderDetail.Quantity = Convert.ToInt32(detail.order_qty);
-                                aldOrderDetail.Price = detail.std_price;
-                                aldOrder.OrderDetails.Add(aldOrderDetail);
-                                //
-                                skuIDs.Add(detail.sku_id);
-                            }
-                            //根据SKU查找订单商品项的SKU详细信息：商品名称、商品图片、规格 etc..
-                            var skuService = new SkuService(loggingSessionInfo);
-                            var skuInfos = skuService.GetSKUAndItemBySKUIDs(skuIDs.ToArray());
-                            foreach (var detail in aldOrder.OrderDetails)
-                            {
-                                foreach (DataRow dr in skuInfos.Rows)
-                                {
-                                    if (dr["sku_id"] != DBNull.Value && Convert.ToString(dr["sku_id"]).ToLower() == detail.SourceSKUID.ToLower())
-                                    {
-                                        if (dr["item_id"] != DBNull.Value)
-                                        {
-                                            detail.SourceItemID = Convert.ToString(dr["item_id"]);
-                                        }
-                                        if (dr["item_name"] != DBNull.Value)
-                                        {
-                                            detail.SourceItemName = Convert.ToString(dr["item_name"]);
-                                        }
-                                        if (dr["imageurl"] != DBNull.Value)
-                                        {
-                                            detail.SourceItemImageUrl = Convert.ToString(dr["imageurl"]);
-                                        }
-                                        if (dr["prop_1_detail_name"] != DBNull.Value)
-                                        {
-                                            detail.SourceSKUProp1 = Convert.ToString(dr["prop_1_name"]) + ":" + Convert.ToString(dr["prop_1_detail_name"]);
-                                            if (detail.SourceSKUProp1 == ":")
-                                            {
-                                                detail.SourceSKUProp1 = "";
-                                            }
-                                        }
-                                        if (dr["prop_2_detail_name"] != DBNull.Value)
-                                        {
-                                            detail.SourceSKUProp2 = Convert.ToString(dr["prop_2_name"]) + ":" + Convert.ToString(dr["prop_2_detail_name"]);
-                                            if (detail.SourceSKUProp2 == ":")
-                                            {
-                                                detail.SourceSKUProp2 = "";
-                                            }
-                                        }
-                                        if (dr["prop_3_detail_name"] != DBNull.Value)
-                                        {
-                                            detail.SourceSKUProp3 = Convert.ToString(dr["prop_3_name"]) + ":" + Convert.ToString(dr["prop_3_detail_name"]);
-                                            if (detail.SourceSKUProp3 == ":")
-                                            {
-                                                detail.SourceSKUProp3 = "";
-                                            }
-                                        }
-                                        if (dr["prop_4_detail_name"] != DBNull.Value)
-                                        {
-                                            detail.SourceSKUProp4 = Convert.ToString(dr["prop_4_name"]) + ":" + Convert.ToString(dr["prop_4_detail_name"]);
-                                            if (detail.SourceSKUProp4 == ":")
-                                            {
-                                                detail.SourceSKUProp4 = "";
-                                            }
-                                        }
-                                        break;
-                                    }
-                                }
-                            }
-                            //向阿拉丁提交订单
-                            ALDOrderRequest aldRequest = new ALDOrderRequest();
-                            aldRequest.BusinessZoneID = 1;
+                //        //订单明细
+                //        aldOrder.OrderDetails = new List<ALDOrderDetail>();
+                //        if (orderInfo.OrderDetailInfoList != null && orderInfo.OrderDetailInfoList.Count > 0)
+                //        {
+                //            List<string> skuIDs = new List<string>();
+                //            foreach (var detail in orderInfo.OrderDetailInfoList)
+                //            {
+                //                var aldOrderDetail = new ALDOrderDetail();
+                //                aldOrderDetail.SourceSKUID = detail.sku_id;
+                //                aldOrderDetail.Quantity = Convert.ToInt32(detail.order_qty);
+                //                aldOrderDetail.Price = detail.std_price;
+                //                aldOrder.OrderDetails.Add(aldOrderDetail);
+                //                //
+                //                skuIDs.Add(detail.sku_id);
+                //            }
+                //            //根据SKU查找订单商品项的SKU详细信息：商品名称、商品图片、规格 etc..
+                //            var skuService = new SkuService(loggingSessionInfo);
+                //            var skuInfos = skuService.GetSKUAndItemBySKUIDs(skuIDs.ToArray());
+                //            foreach (var detail in aldOrder.OrderDetails)
+                //            {
+                //                foreach (DataRow dr in skuInfos.Rows)
+                //                {
+                //                    if (dr["sku_id"] != DBNull.Value && Convert.ToString(dr["sku_id"]).ToLower() == detail.SourceSKUID.ToLower())
+                //                    {
+                //                        if (dr["item_id"] != DBNull.Value)
+                //                        {
+                //                            detail.SourceItemID = Convert.ToString(dr["item_id"]);
+                //                        }
+                //                        if (dr["item_name"] != DBNull.Value)
+                //                        {
+                //                            detail.SourceItemName = Convert.ToString(dr["item_name"]);
+                //                        }
+                //                        if (dr["imageurl"] != DBNull.Value)
+                //                        {
+                //                            detail.SourceItemImageUrl = Convert.ToString(dr["imageurl"]);
+                //                        }
+                //                        if (dr["prop_1_detail_name"] != DBNull.Value)
+                //                        {
+                //                            detail.SourceSKUProp1 = Convert.ToString(dr["prop_1_name"]) + ":" + Convert.ToString(dr["prop_1_detail_name"]);
+                //                            if (detail.SourceSKUProp1 == ":")
+                //                            {
+                //                                detail.SourceSKUProp1 = "";
+                //                            }
+                //                        }
+                //                        if (dr["prop_2_detail_name"] != DBNull.Value)
+                //                        {
+                //                            detail.SourceSKUProp2 = Convert.ToString(dr["prop_2_name"]) + ":" + Convert.ToString(dr["prop_2_detail_name"]);
+                //                            if (detail.SourceSKUProp2 == ":")
+                //                            {
+                //                                detail.SourceSKUProp2 = "";
+                //                            }
+                //                        }
+                //                        if (dr["prop_3_detail_name"] != DBNull.Value)
+                //                        {
+                //                            detail.SourceSKUProp3 = Convert.ToString(dr["prop_3_name"]) + ":" + Convert.ToString(dr["prop_3_detail_name"]);
+                //                            if (detail.SourceSKUProp3 == ":")
+                //                            {
+                //                                detail.SourceSKUProp3 = "";
+                //                            }
+                //                        }
+                //                        if (dr["prop_4_detail_name"] != DBNull.Value)
+                //                        {
+                //                            detail.SourceSKUProp4 = Convert.ToString(dr["prop_4_name"]) + ":" + Convert.ToString(dr["prop_4_detail_name"]);
+                //                            if (detail.SourceSKUProp4 == ":")
+                //                            {
+                //                                detail.SourceSKUProp4 = "";
+                //                            }
+                //                        }
+                //                        break;
+                //                    }
+                //                }
+                //            }
+                //            //向阿拉丁提交订单
+                //            ALDOrderRequest aldRequest = new ALDOrderRequest();
+                //            aldRequest.BusinessZoneID = 1;
 
-                            if (!string.IsNullOrWhiteSpace(reqObj.common.locale))
-                            {
-                                switch (reqObj.common.locale.ToLower())
-                                {
-                                    case "zh":
-                                        aldRequest.Locale = 1;
-                                        break;
-                                }
-                            }
-                            else
-                            {
-                                aldRequest.Locale = 1;
-                            }
-                            aldRequest.UserID = new Guid(reqObj.common.userId);
-                            aldRequest.Parameters = aldOrder;
+                //            if (!string.IsNullOrWhiteSpace(reqObj.common.locale))
+                //            {
+                //                switch (reqObj.common.locale.ToLower())
+                //                {
+                //                    case "zh":
+                //                        aldRequest.Locale = 1;
+                //                        break;
+                //                }
+                //            }
+                //            else
+                //            {
+                //                aldRequest.Locale = 1;
+                //            }
+                //            aldRequest.UserID = new Guid(reqObj.common.userId);
+                //            aldRequest.Parameters = aldOrder;
 
-                            var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
-                            if (string.IsNullOrEmpty(url))
-                                throw new Exception("未配置阿拉丁平台接口URL:ALDGatewayURL");
-                            var postContent = string.Format("Action=TransportOrders&ReqContent={0}", aldRequest.ToJSON());
-                            var strAldRsp = HttpWebClient.DoHttpRequest(url, postContent);
-                            var aldRsp = strAldRsp.DeserializeJSONTo<ALDResponse>();
-                            if (aldRsp == null || aldRsp.IsSuccess() == false)
-                            {
-                                respData.code = "114";
-                                respData.description = string.Format("向阿拉丁提交订单失败[{0}].", aldRsp != null ? aldRsp.Message : string.Empty);
-                                content = respData.ToJSON();
-                                return content;
-                            }
-                        }
-                    }
-                }
+                //            var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
+                //            if (string.IsNullOrEmpty(url))
+                //                throw new Exception("未配置阿拉丁平台接口URL:ALDGatewayURL");
+                //            var postContent = string.Format("Action=TransportOrders&ReqContent={0}", aldRequest.ToJSON());
+                //            var strAldRsp = HttpWebClient.DoHttpRequest(url, postContent);
+                //            var aldRsp = strAldRsp.DeserializeJSONTo<ALDResponse>();
+                //            if (aldRsp == null || aldRsp.IsSuccess() == false)
+                //            {
+                //                respData.code = "114";
+                //                respData.description = string.Format("向阿拉丁提交订单失败[{0}].", aldRsp != null ? aldRsp.Message : string.Empty);
+                //                content = respData.ToJSON();
+                //                return content;
+                //            }
+                //        }
+                //    }
+                //}
 
                 #endregion
 

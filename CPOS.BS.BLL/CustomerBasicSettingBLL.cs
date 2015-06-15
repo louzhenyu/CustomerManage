@@ -26,6 +26,7 @@ using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
+using System.Collections;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -194,6 +195,111 @@ namespace JIT.CPOS.BS.BLL
                 result = setting[0].SettingValue;
             }
             return result;
+        }
+        /// <summary>
+        /// 获取社会化销售配置和积分返现配置
+        /// </summary>
+        /// <param name="salesPrice"></param>
+        /// <param name="channelId"></param>
+        /// <returns></returns>
+        public Hashtable GetSocialSetting()
+        {
+            //所有商户配置
+            var settingList =this._currentDAO.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = this.CurrentUserInfo.ClientID }, null);
+
+            #region 社会化销售配置
+            //社会化销售设置类型 0=按订单；1=按商品
+            int socialSalesType = 0;
+            var socialSalesTypeSetting = settingList.Where(t => t.SettingCode == "SocialSalesType").FirstOrDefault();
+            //启用员工分销设置(0=不启用；1=启用)
+            int enableEmployeeSales = 0;
+            CustomerBasicSettingEntity enableEmployeeSalesSetting = settingList.Where(t => t.SettingCode == "EnableEmployeeSales").FirstOrDefault();
+            //员工的商品分销价比例 
+            decimal eDistributionPricePer = 0;
+            CustomerBasicSettingEntity EDistributionPricePerSetting = settingList.Where(t => t.SettingCode == "EDistributionPricePer").FirstOrDefault();
+            //启用会员分销设置(0=不启用；1=启用)
+            int enableVipSales = 0;
+            var EnableVipSalesSetting = settingList.Where(t => t.SettingCode == "EnableVipSales").FirstOrDefault();
+            //会员的商品分销价比例
+            decimal vDistributionPricePer = 0;
+            var VDistributionPricePerSetting = settingList.Where(t => t.SettingCode == "VDistributionPricePer").FirstOrDefault();
+            //员工的订单金额提成比例
+            decimal eOrderCommissionPer = 0;
+            var eOrderCommissionPerSetting = settingList.Where(t => t.SettingCode == "EOrderCommissionPer").FirstOrDefault();
+            //会员的订单金额提成比例
+            decimal vOrderCommissionPer = 0;
+            var vOrderCommissionPerSetting = settingList.Where(t => t.SettingCode == "VOrderCommissionPer").FirstOrDefault();
+
+            if (socialSalesTypeSetting != null)
+                socialSalesType = int.Parse(socialSalesTypeSetting.SettingValue);
+
+            if (enableEmployeeSalesSetting != null)
+                enableEmployeeSales = int.Parse(enableEmployeeSalesSetting.SettingValue);
+
+            if (EDistributionPricePerSetting != null)
+                eDistributionPricePer = decimal.Parse(EDistributionPricePerSetting.SettingValue);
+
+            if (EnableVipSalesSetting != null)
+                enableVipSales = int.Parse(EnableVipSalesSetting.SettingValue);
+
+            if (VDistributionPricePerSetting != null)
+                vDistributionPricePer = decimal.Parse(VDistributionPricePerSetting.SettingValue);
+
+            if (eOrderCommissionPerSetting != null)
+                eOrderCommissionPer = decimal.Parse(eOrderCommissionPerSetting.SettingValue);
+            if (vOrderCommissionPerSetting != null)
+                vOrderCommissionPer = decimal.Parse(vOrderCommissionPerSetting.SettingValue);
+            #endregion
+
+            #region 积分返现配置
+            //奖励类型 0=按订单；1=按商品
+            var rewardsTypeSetting = settingList.Where(t => t.SettingCode == "RewardsType").FirstOrDefault();
+            //积分启用配置
+            var enableIntegralSetting = settingList.Where(t => t.SettingCode == "EnableIntegral").FirstOrDefault();
+            //返现启用配置
+            var enableRewardCashSetting = settingList.Where(t => t.SettingCode == "EnableRewardCash").FirstOrDefault();
+            //返回积分比例
+            var rewardPointsPerSetting = settingList.Where(t => t.SettingCode == "RewardPointsPer").FirstOrDefault();
+            //返现比例
+            var rewardCashPerSetting = settingList.Where(t => t.SettingCode == "RewardCashPer").FirstOrDefault();
+
+            int rewardsType = 0;
+            int enableIntegral = 0;
+            int enableRewardCash = 0;
+            decimal rewardPointsPer = 0;
+            decimal rewardCashPer = 0;
+
+            if (rewardsTypeSetting != null)
+                rewardsType = int.Parse(rewardsTypeSetting.SettingValue);
+            if (enableIntegralSetting != null)
+                enableIntegral = int.Parse(enableIntegralSetting.SettingValue);
+            if (enableRewardCashSetting != null)
+                enableRewardCash = int.Parse(enableRewardCashSetting.SettingValue);
+            if (rewardPointsPerSetting != null)
+                rewardPointsPer = decimal.Parse(rewardPointsPerSetting.SettingValue);
+            if (rewardCashPerSetting != null)
+                rewardCashPer = decimal.Parse(rewardCashPerSetting.SettingValue);
+            #endregion
+
+
+            Hashtable htSetting = new Hashtable();
+            htSetting["socialSalesType"] = socialSalesType;
+            htSetting["enableEmployeeSales"] = enableEmployeeSales;
+            htSetting["eDistributionPricePer"] = eDistributionPricePer;
+            htSetting["enableVipSales"] = enableVipSales;
+            htSetting["vDistributionPricePer"] = vDistributionPricePer;
+            htSetting["eOrderCommissionPer"] = eOrderCommissionPer;
+            htSetting["vOrderCommissionPer"] = vOrderCommissionPer;
+
+            htSetting["rewardsType"] = rewardsType;
+            htSetting["enableIntegral"] = enableIntegral;
+            htSetting["enableRewardCash"] = enableRewardCash;
+            htSetting["rewardPointsPer"] = rewardPointsPer;
+            htSetting["rewardCashPer"] = rewardCashPer;
+
+
+
+            return htSetting;
         }
     }
 }
