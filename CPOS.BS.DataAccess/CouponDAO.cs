@@ -611,6 +611,20 @@ namespace JIT.CPOS.BS.DataAccess
 
             this.SQLHelper.ExecuteScalar(CommandType.StoredProcedure, sql, sqlParameter.ToArray());
         }
-
+        /// <summary>
+        /// 根据优惠券类型获取可用的优惠券ID
+        /// </summary>
+        /// <param name="couponTypeID"></param>
+        /// <returns></returns>
+        public string GetUsableCouponID(string couponTypeID) 
+        {
+            string sql = string.Format(@"
+             SELECT c.CouponID FROM Coupon c 
+		     INNER JOIN CouponType ct ON ct.CouponTypeID=c.couponTypeID
+		     LEFT JOIN VipCouponMapping vcm ON vcm.CouponID=c.CouponID
+		     WHERE c.couponTypeID='{0}' AND vcm.VipCouponMapping IS NULL
+		     AND c.isdelete=0",couponTypeID);
+            return this.SQLHelper.ExecuteScalar(sql.ToString()).ToString();
+        }
     }
 }

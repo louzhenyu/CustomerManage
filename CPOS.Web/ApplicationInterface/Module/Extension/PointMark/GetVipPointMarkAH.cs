@@ -26,7 +26,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Extension.PointMark
 
             DateTime dtNow = DateTime.Now;  //当前时间
             DateTime startWeek = dtNow.AddDays(1 - Convert.ToInt32(dtNow.DayOfWeek.ToString("d"))).Date;  //本周周一
-            DateTime endWeek = startWeek.AddDays(6);  //本周周日
+            DateTime endWeek = startWeek.AddDays(7);  //本周周日
 
 
             string pointMarkId = string.Empty;

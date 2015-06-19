@@ -200,6 +200,9 @@
     <Compile Include="CodeGeneration\EventStatsBLL.cs" />
     <Compile Include="CodeGeneration\EventStatsDetailBLL.cs" />
     <Compile Include="CodeGeneration\EventVipBLL.cs" />
+    <Compile Include="CodeGeneration\Extension\X_ActivityBLL.cs" />
+    <Compile Include="CodeGeneration\Extension\X_ActivityJoinBLL.cs" />
+    <Compile Include="CodeGeneration\Extension\X_ActivityPrizesBLL.cs" />
     <Compile Include="CodeGeneration\Extension\X_QuestionBLL.cs" />
     <Compile Include="CodeGeneration\Extension\X_VipActivityApplyBLL.cs" />
     <Compile Include="CodeGeneration\Extension\X_VipPointMarkBLL.cs" />
@@ -632,6 +635,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="EveryoneSales\EveryoneSalesBLL.cs" />
+    <Compile Include="Extension\X_ActivityBLL.cs" />
+    <Compile Include="Extension\X_ActivityJoinBLL.cs" />
+    <Compile Include="Extension\X_ActivityPrizesBLL.cs" />
     <Compile Include="Extension\X_QuestionBLL.cs" />
     <Compile Include="Extension\X_VipActivityApplyBLL.cs" />
     <Compile Include="Extension\X_VipPointMarkBLL.cs" />

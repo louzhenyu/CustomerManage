@@ -73,6 +73,9 @@
     <Compile Include="Module\Basic\Customer\Request\SetRewardsSettingRP.cs" />
     <Compile Include="Module\Basic\Customer\Request\SetSalesSettingRP.cs" />
     <Compile Include="Module\Extension\ActivityApply\Response\GetActivityApplyRD.cs" />
+    <Compile Include="Module\Extension\LuckDraw\Request\ExchangeCouponRP.cs" />
+    <Compile Include="Module\Extension\LuckDraw\Response\GetActivityPrizesRD.cs" />
+    <Compile Include="Module\Extension\LuckDraw\Response\LuckDrawRD.cs" />
     <Compile Include="Module\Extension\PointMark\Request\SetVipPointMarkRP.cs" />
     <Compile Include="Module\Extension\PointMark\Response\GetVipPointMarkRD.cs" />
     <Compile Include="Module\Extension\Question\Request\GetQuestionListRP.cs" />

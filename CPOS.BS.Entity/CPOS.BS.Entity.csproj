@@ -155,6 +155,9 @@
     <Compile Include="CodeGeneration\EventStatsDetailEntity.cs" />
     <Compile Include="CodeGeneration\EventStatsEntity.cs" />
     <Compile Include="CodeGeneration\EventVipEntity.cs" />
+    <Compile Include="CodeGeneration\Extension\X_ActivityEntity.cs" />
+    <Compile Include="CodeGeneration\Extension\X_ActivityJoinEntity.cs" />
+    <Compile Include="CodeGeneration\Extension\X_ActivityPrizesEntity.cs" />
     <Compile Include="CodeGeneration\Extension\X_QuestionEntity.cs" />
     <Compile Include="CodeGeneration\Extension\X_VipActivityApplyEntity.cs" />
     <Compile Include="CodeGeneration\Extension\X_VipPointMarkDetailEntity.cs" />
@@ -381,6 +384,9 @@
     <Compile Include="Eliya\Province.cs" />
     <Compile Include="Eliya\StoreInfo.cs" />
     <Compile Include="EventVipEntity.cs" />
+    <Compile Include="Extension\X_ActivityEntity.cs" />
+    <Compile Include="Extension\X_ActivityJoinEntity.cs" />
+    <Compile Include="Extension\X_ActivityPrizesEntity.cs" />
     <Compile Include="Extension\X_QuestionEntity.cs" />
     <Compile Include="Extension\X_VipActivityApplyEntity.cs" />
     <Compile Include="Extension\X_VipPointMarkDetailEntity.cs" />

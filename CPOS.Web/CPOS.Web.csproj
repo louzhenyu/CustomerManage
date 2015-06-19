@@ -2147,6 +2147,9 @@
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\GetActivityApplyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\SetActivityApplyAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Extension\LuckDraw\ExchangeCouponAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Extension\LuckDraw\GetActivityPrizesAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Extension\LuckDraw\LuckDrawAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\PointMark\DelVipPointMarkAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\PointMark\GetVipPointMarkAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\PointMark\SetVipPointMarkAH.cs" />

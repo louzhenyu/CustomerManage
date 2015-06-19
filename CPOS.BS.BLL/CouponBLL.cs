@@ -773,6 +773,15 @@ namespace JIT.CPOS.BS.BLL
         {
            this._currentDAO.GenerateCoupon(htCouponInfo);
         }
+        /// <summary>
+        /// 根据优惠券类型获取可用的优惠券ID
+        /// </summary>
+        /// <param name="couponTypeID"></param>
+        /// <returns></returns>
+        public string GetUsableCouponID(string couponTypeID)
+        {
+            return this._currentDAO.GetUsableCouponID(couponTypeID);
+        }
     }
 
 
