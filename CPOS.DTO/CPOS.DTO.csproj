@@ -72,6 +72,7 @@
     <Compile Include="Module\AppConfig\HomePageConfig\Response\SetEventItemRD.cs" />
     <Compile Include="Module\Basic\Customer\Request\SetRewardsSettingRP.cs" />
     <Compile Include="Module\Basic\Customer\Request\SetSalesSettingRP.cs" />
+    <Compile Include="Module\Extension\ActivityApply\Request\SetActivityApplyRP.cs" />
     <Compile Include="Module\Extension\ActivityApply\Response\GetActivityApplyRD.cs" />
     <Compile Include="Module\Extension\LuckDraw\Request\ExchangeCouponRP.cs" />
     <Compile Include="Module\Extension\LuckDraw\Response\GetActivityPrizesRD.cs" />
@@ -277,7 +278,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Module\Basic\Customer\Response\" />
-    <Folder Include="Module\Extension\ActivityApply\Request\" />
     <Folder Include="Module\HtmlApp\Config\Request\" />
     <Folder Include="Product\Eclub\Module\" />
   </ItemGroup>

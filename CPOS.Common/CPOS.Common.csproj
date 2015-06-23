@@ -74,6 +74,7 @@
     <Compile Include="CommonCompress.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="AppType.cs" />
+    <Compile Include="DateTimeHelper.cs" />
     <Compile Include="DownloadImage.cs" />
     <Compile Include="ImagePathUtil.cs" />
     <Compile Include="JsonHelper.cs" />

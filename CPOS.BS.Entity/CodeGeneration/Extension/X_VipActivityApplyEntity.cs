@@ -77,6 +77,31 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? IsDelete { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public String Nickname { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String Territory { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? Age { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String Phone { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String LikeTea { get; set; }
+
 
         #endregion
 

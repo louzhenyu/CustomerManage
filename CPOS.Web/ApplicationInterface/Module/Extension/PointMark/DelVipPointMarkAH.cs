@@ -1,4 +1,5 @@
-﻿using JIT.CPOS.BS.BLL;
+﻿using CPOS.Common;
+using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.Web.ApplicationInterface.Base;
@@ -19,8 +20,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Extension.PointMark
             var pointMarkBLL = new X_VipPointMarkBLL(CurrentUserInfo);
             var pointMarkDetailBLL = new X_VipPointMarkDetailBLL(CurrentUserInfo);
             DateTime dtNow = DateTime.Now;  //当前时间
-            DateTime startWeek = dtNow.AddDays(1 - Convert.ToInt32(dtNow.DayOfWeek.ToString("d"))).Date;  //本周周一
-            DateTime endWeek = startWeek.AddDays(7);  //本周周日
+            DateTime startWeek = DateTimeHelper.GetMondayDate(dtNow).Date;  //本周周一
+            DateTime endWeek = DateTimeHelper.GetSundayDate(dtNow).AddDays(1).Date;   //本周周日
 
             var pointMarkDeail = pointMarkDetailBLL.GetPointMarkByWeek(CurrentUserInfo.UserID, startWeek, endWeek);
             if (pointMarkDeail != null)

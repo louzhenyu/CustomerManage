@@ -1,4 +1,5 @@
-﻿using JIT.CPOS.BS.BLL;
+﻿using CPOS.Common;
+using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.DTO.Module.Extension.LuckDraw.Response;
@@ -23,8 +24,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Extension.LuckDraw
             var vipPointBLL = new X_VipPointMarkBLL(CurrentUserInfo);
             var activityJoinBLL = new X_ActivityJoinBLL(CurrentUserInfo);
             DateTime dtNow = DateTime.Now;      //当前时间
-            DateTime startWeekTime = dtNow.AddDays(1 - Convert.ToInt32(dtNow.DayOfWeek.ToString("d"))).Date;  //本周周一
-            DateTime endWeekTime = startWeekTime.AddDays(7); //本周周日
+            DateTime startWeekTime = DateTimeHelper.GetMondayDate(dtNow).Date;  //本周周一
+            DateTime endWeekTime = DateTimeHelper.GetSundayDate(dtNow).AddDays(1).Date;   //本周周日
 
             int point = 0;      //用户当前积点
             int joinLimit = 0;  //每周参与次数限制
@@ -84,33 +85,41 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Extension.LuckDraw
             {
                 //判断该奖品是否已兑完
                 if (activityPrizesInfo.RemainingQty <= 0)
+                {
                     rd.Flag = 2;    //未中奖
+                    rd.DisplayIndex = 4;
+                }
                 //判断本周奖品是否已抽完
                 int weekCount = activityJoinBLL.GetPrizesCountByWeek(activityPrizesInfo.PrizesID.Value, startWeekTime, endWeekTime);
                 if (activityPrizesInfo.WeekCount <= weekCount)
+                {
                     rd.Flag = 2;    //未中奖
+                    rd.DisplayIndex = 4;
+                }
                 //判断积点是否足够兑奖，不够则为不中
                 if (point < activityPrizesInfo.UsePoint)
+                {
                     rd.Flag = 2;    //未中奖
-
+                    rd.DisplayIndex = 4;
+                }
                 if (rd.Flag == 0)   //中奖
                 {
                     rd.Flag = 1;    //中奖
                     rd.PrizesID = activityPrizesInfo.PrizesID;
                     rd.PrizesName = activityPrizesInfo.PrizesName;
                     rd.DisplayIndex = activityPrizesInfo.DisplayIndex;  //显示序号
-
-                    var activityJoinInfoNew = new X_ActivityJoinEntity()
-                    {
-                        VipID = pRequest.UserID,
-                        ActivityID = activityInfo.ActivityID,
-                        IsWinPrice = rd.Flag == 1 ? 1 : 2,
-                        PrizesID = activityPrizesInfo.PrizesID,
-                        IsExchange = 2,
-                        CustomerID = this.CurrentUserInfo.ClientID
-                    };
-                    activityJoinBLL.Create(activityJoinInfoNew);
                 }
+
+                var activityJoinInfoNew = new X_ActivityJoinEntity()
+                {
+                    VipID = pRequest.UserID,
+                    ActivityID = activityInfo.ActivityID,
+                    IsWinPrice = rd.Flag == 1 ? 1 : 2,
+                    PrizesID = activityPrizesInfo.PrizesID,
+                    IsExchange = 2,
+                    CustomerID = this.CurrentUserInfo.ClientID
+                };
+                activityJoinBLL.Create(activityJoinInfoNew);
             }
             #endregion
 

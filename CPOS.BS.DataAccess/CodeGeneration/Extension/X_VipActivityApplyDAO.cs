@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [X_VipActivityApply](");
-            strSql.Append("[VipID],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[ApplyID])");
+            strSql.Append("[VipID],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[Nickname],[Territory],[Age],[Phone],[LikeTea],[ApplyID])");
             strSql.Append(" values (");
-            strSql.Append("@VipID,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@ApplyID)");            
+            strSql.Append("@VipID,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@Nickname,@Territory,@Age,@Phone,@LikeTea,@ApplyID)");            
 
 			Guid? pkGuid;
 			if (pEntity.ApplyID == null)
@@ -100,6 +100,11 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@Nickname",SqlDbType.NVarChar),
+					new SqlParameter("@Territory",SqlDbType.NVarChar),
+					new SqlParameter("@Age",SqlDbType.Int),
+					new SqlParameter("@Phone",SqlDbType.NVarChar),
+					new SqlParameter("@LikeTea",SqlDbType.NVarChar),
 					new SqlParameter("@ApplyID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.VipID;
@@ -109,7 +114,12 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[4].Value = pEntity.LastUpdateTime;
 			parameters[5].Value = pEntity.LastUpdateBy;
 			parameters[6].Value = pEntity.IsDelete;
-			parameters[7].Value = pkGuid;
+			parameters[7].Value = pEntity.Nickname;
+			parameters[8].Value = pEntity.Territory;
+			parameters[9].Value = pEntity.Age;
+			parameters[10].Value = pEntity.Phone;
+			parameters[11].Value = pEntity.LikeTea;
+			parameters[12].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -210,7 +220,17 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.Nickname!=null)
+                strSql.Append( "[Nickname]=@Nickname,");
+            if (pIsUpdateNullField || pEntity.Territory!=null)
+                strSql.Append( "[Territory]=@Territory,");
+            if (pIsUpdateNullField || pEntity.Age!=null)
+                strSql.Append( "[Age]=@Age,");
+            if (pIsUpdateNullField || pEntity.Phone!=null)
+                strSql.Append( "[Phone]=@Phone,");
+            if (pIsUpdateNullField || pEntity.LikeTea!=null)
+                strSql.Append( "[LikeTea]=@LikeTea");
             strSql.Append(" where ApplyID=@ApplyID ");
             SqlParameter[] parameters = 
             {
@@ -218,13 +238,23 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@Nickname",SqlDbType.NVarChar),
+					new SqlParameter("@Territory",SqlDbType.NVarChar),
+					new SqlParameter("@Age",SqlDbType.Int),
+					new SqlParameter("@Phone",SqlDbType.NVarChar),
+					new SqlParameter("@LikeTea",SqlDbType.NVarChar),
 					new SqlParameter("@ApplyID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.VipID;
 			parameters[1].Value = pEntity.CustomerID;
 			parameters[2].Value = pEntity.LastUpdateTime;
 			parameters[3].Value = pEntity.LastUpdateBy;
-			parameters[4].Value = pEntity.ApplyID;
+			parameters[4].Value = pEntity.Nickname;
+			parameters[5].Value = pEntity.Territory;
+			parameters[6].Value = pEntity.Age;
+			parameters[7].Value = pEntity.Phone;
+			parameters[8].Value = pEntity.LikeTea;
+			parameters[9].Value = pEntity.ApplyID;
 
             //执行语句
             int result = 0;
@@ -526,6 +556,16 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.Nickname!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Nickname", Value = pQueryEntity.Nickname });
+            if (pQueryEntity.Territory!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Territory", Value = pQueryEntity.Territory });
+            if (pQueryEntity.Age!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Age", Value = pQueryEntity.Age });
+            if (pQueryEntity.Phone!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Phone", Value = pQueryEntity.Phone });
+            if (pQueryEntity.LikeTea!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LikeTea", Value = pQueryEntity.LikeTea });
 
             return lstWhereCondition.ToArray();
         }
@@ -572,6 +612,26 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["Nickname"] != DBNull.Value)
+			{
+				pInstance.Nickname =  Convert.ToString(pReader["Nickname"]);
+			}
+			if (pReader["Territory"] != DBNull.Value)
+			{
+				pInstance.Territory =  Convert.ToString(pReader["Territory"]);
+			}
+			if (pReader["Age"] != DBNull.Value)
+			{
+				pInstance.Age =   Convert.ToInt32(pReader["Age"]);
+			}
+			if (pReader["Phone"] != DBNull.Value)
+			{
+				pInstance.Phone =  Convert.ToString(pReader["Phone"]);
+			}
+			if (pReader["LikeTea"] != DBNull.Value)
+			{
+				pInstance.LikeTea =  Convert.ToString(pReader["LikeTea"]);
 			}
 
         }

@@ -53,7 +53,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [X_VipPointMarkDetail] where VipID='{0}' and CreateTime>'{1}' and CreateTime<'{2}' and isdelete=0 ", vipId, startWeek, endWeek);
+            sql.AppendFormat("select * from [X_VipPointMarkDetail] where VipID='{0}' and CreateTime>'{1}' and CreateTime<'{2}' and Source=1 and isdelete=0 ", vipId, startWeek, endWeek);
             //读取数据
             X_VipPointMarkDetailEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
