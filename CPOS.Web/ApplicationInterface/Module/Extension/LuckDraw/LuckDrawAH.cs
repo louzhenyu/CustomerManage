@@ -23,6 +23,19 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Extension.LuckDraw
             var activityPrizesBLL = new X_ActivityPrizesBLL(CurrentUserInfo);
             var vipPointBLL = new X_VipPointMarkBLL(CurrentUserInfo);
             var activityJoinBLL = new X_ActivityJoinBLL(CurrentUserInfo);
+
+
+            var vipActivityApplyBLL = new X_VipActivityApplyBLL(CurrentUserInfo);
+
+            X_VipActivityApplyEntity vipActivityApply = null;
+            vipActivityApply = vipActivityApplyBLL.QueryByEntity(new X_VipActivityApplyEntity() { VipID = CurrentUserInfo.UserID }, null).FirstOrDefault();
+            //判断是否报名
+            if (vipActivityApply == null)
+            {
+                rd.Flag = 6;//未报名
+                return rd;
+            }
+
             DateTime dtNow = DateTime.Now;      //当前时间
             DateTime startWeekTime = DateTimeHelper.GetMondayDate(dtNow).Date;  //本周周一
             DateTime endWeekTime = DateTimeHelper.GetSundayDate(dtNow).AddDays(1).Date;   //本周周日
