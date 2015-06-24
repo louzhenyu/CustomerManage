@@ -50,6 +50,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             switch (pAction)
             {
 
+
                 case "GetRewards"://本月奖励金额、发展会员奖励、会员消费奖励接口
                     rst = this.GetRewards(pRequest);
                     break;
