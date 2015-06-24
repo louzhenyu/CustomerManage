@@ -28,7 +28,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
     public class EveryoneGetway : BaseGateway
     {
         #region 错误码
-        private const int ERROR_USERID_NOTNULL=801;        //USerID不能为空
+        private const int ERROR_USERID_NOTNULL = 801;        //USerID不能为空
         private const int ERROR_WDAMOUNT_TOOBIG = 802;     //日累计提现金额等能大于设置金额
         private const int ERROR_WDAMOUNT_NOTWDTIME = 803;  //超出提现次数限制
         #endregion
@@ -310,7 +310,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             var wdApplyBll = new VipWithdrawDepositApplyBLL(loggingSessionInfo);    //提现申请BLL实例化
             var wdBasicInfo = new WDBasiciInfoRD();
 
-            if (string.IsNullOrEmpty(rp.UserID))
+            if (string.IsNullOrEmpty(rp.UserID))  //用UserID，在微信上市会员，在app上是店员，要加上分销商，以便兼容分销商****
             {
                 var rst = new SuccessResponse<EmptyRD>();
                 rst.ResultCode = ERROR_USERID_NOTNULL;
@@ -322,9 +322,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
 
             //每天可提现次数
             string wdTime = basicSettingBll.GetSettingValueByCode("WithdrawDepositTime");
+            //今天可提现的次数
             wdBasicInfo.WDTime = string.IsNullOrEmpty(wdTime) == true ? 1 - wdApplyToday.Length : int.Parse(wdTime) - wdApplyToday.Length;
 
-            //日累计提现金额
+            //日累计提现金额（每个商户都不一样）
             var wdAmountInfo = basicSettingBll.QueryByEntity(new CustomerBasicSettingEntity() { SettingCode = "WithdrawDepositAmount", CustomerID = loggingSessionInfo.ClientID }, null).FirstOrDefault();
             if (wdAmountInfo != null)
             {
@@ -338,7 +339,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 wdBasicInfo.VipBankID = vipBankInfo.VipBankID;
                 wdBasicInfo.CardNo = vipBankInfo.CardNo;
                 wdBasicInfo.AccountName = vipBankInfo.AccountName;
-                var bankInfo = bankBll.GetByID(vipBankInfo.BankID);
+                var bankInfo = bankBll.GetByID(vipBankInfo.BankID);//根据会员银行卡标识，获取银行信息
                 if (bankInfo != null)
                 {
                     wdBasicInfo.BankName = bankInfo.BankName;
@@ -346,7 +347,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 }
             }
             //获取可提现金额
-            var vipWD = vipWDBll.QueryByEntity(new VipWithdrawDepositEntity() { VIPID = rp.UserID }, null).FirstOrDefault();
+            var vipWD = vipWDBll.QueryByEntity(new VipWithdrawDepositEntity() { VIPID = rp.UserID }, null).FirstOrDefault();  //可体现金额
             if (vipWD != null)
             {
                 wdBasicInfo.WDCurrentAmount = vipWD.EndAmount;
@@ -499,29 +500,37 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 {
                     //提现主表去除提现
                     var vipWDInfo = vipWDBll.QueryByEntity(new VipWithdrawDepositEntity() { VIPID = rp.UserID }, null).FirstOrDefault();
-                    if (vipWDInfo.EndAmount < rp.Parameters.Amount)
+                    if (vipWDInfo != null)
                     {
+                        if (vipWDInfo.EndAmount < rp.Parameters.Amount)
+                        {
+                            rsp.ResultCode = ERROR_WDAMOUNT_TOOBIG;
+                            rsp.Message = "提现金额不能大于可提现金额";
+                            return rsp.ToJSON();
+                        }
+                        vipWDInfo.OutAmount = vipWDInfo.OutAmount + rp.Parameters.Amount;   //期中提现金额
+                        vipWDInfo.EndAmount = vipWDInfo.EndAmount - rp.Parameters.Amount;    //期末金额修改
+                        vipWDBll.Update(vipWDInfo, pTran);//修改
+
+                        //提现申请保存
+                        string withdrawNo = unitExpandBll.GetUnitOrderNo(loggingSessionInfo, rp.CustomerID);
+                        VipWithdrawDepositApplyEntity entity = new VipWithdrawDepositApplyEntity
+                        {
+                            VipID = rp.UserID,
+                            WithdrawNo = DateTime.Now.ToString("yyyyMMddhhmmss") + withdrawNo,
+                            Amount = rp.Parameters.Amount,
+                            Status = 0,
+                            ApplyDate = DateTime.Now,
+                            VipBankID = rp.Parameters.VipBankID,
+                            CustomerID = rp.CustomerID
+                        };
+                        wdApplyBll.Create(entity, pTran);
+                    }
+                    else {
                         rsp.ResultCode = ERROR_WDAMOUNT_TOOBIG;
-                        rsp.Message = "提现金额不能大于可提现金额";
+                        rsp.Message = "没有可提现金额";
                         return rsp.ToJSON();
                     }
-                    vipWDInfo.OutAmount = vipWDInfo.OutAmount + rp.Parameters.Amount;   //期中提现金额
-                    vipWDInfo.EndAmount = vipWDInfo.EndAmount - rp.Parameters.Amount;    //期末金额修改
-                    vipWDBll.Update(vipWDInfo,pTran);//修改
-
-                    //提现申请保存
-                    string withdrawNo = unitExpandBll.GetUnitOrderNo(loggingSessionInfo, rp.CustomerID);
-                    VipWithdrawDepositApplyEntity entity = new VipWithdrawDepositApplyEntity
-                    {
-                        VipID = rp.UserID,
-                        WithdrawNo = DateTime.Now.ToString("yyyyMMddhhmmss") + withdrawNo,
-                        Amount = rp.Parameters.Amount,
-                        Status = 0,
-                        ApplyDate = DateTime.Now,
-                        VipBankID = rp.Parameters.VipBankID,
-                        CustomerID = rp.CustomerID
-                    };
-                    wdApplyBll.Create(entity,pTran);
                     pTran.Commit();//提交事物
                 }
                 catch (Exception ex)
@@ -659,7 +668,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
         }
 
 
- 		/// <summary>
+        /// <summary>
         /// 充值
         /// </summary>
         /// <param name="pRequest"></param>
@@ -683,7 +692,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             rechargeOrder.CustomerID = loggingSessionInfo.ClientID;
 
             var rd = new SetRechargeRD();
-            rd.OrderID=rechargeOrderBll.CreateReturnID(rechargeOrder, null).ToString();
+            rd.OrderID = rechargeOrderBll.CreateReturnID(rechargeOrder, null).ToString();
             rd.Amount = rechargeOrder.TotalAmount.Value;
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();

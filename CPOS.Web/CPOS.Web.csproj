@@ -267,6 +267,12 @@
     <Content Include="Interface\Images\btn1.png" />
     <Content Include="Interface\Images\btn2.png" />
     <Content Include="Interface\Images\msg_vip.jpg" />
+    <Content Include="HeadImage\qrcodeBack.png" />
+    <Content Include="Interface\Images\bg.png" />
+    <Content Include="Interface\Images\bg2.png" />
+    <Content Include="Interface\Images\btn1.png" />
+    <Content Include="Interface\Images\btn2.png" />
+    <Content Include="Interface\Images\msg_vip.jpg" />
     <Content Include="HtmlApp\Demo\html\WQuestion.html" />
     <Content Include="HtmlApp\Demo\images\icon_gift.png" />
     <Content Include="HtmlApp\Demo\images\sprites.png" />
@@ -1075,6 +1081,8 @@
     <Content Include="ApplicationInterface\Project\HuaAn\HuaAnRetCallbackHandler.ashx" />
     <Content Include="ApplicationInterface\Customer\CloudGateway.ashx" />
     <Content Include="ApplicationInterface\AllWin\SellUser.ashx" />
+    <Content Include="ApplicationInterface\EveryoneSale\EveryoneGetway.ashx" />
+    <Content Include="ApplicationInterface\Washing\OrderGateway.ashx" />
     <None Include="HtmlApp\Demo\images\Thumbs.db" />
     <None Include="HtmlApp\LJ\images\Thumbs.db" />
     <Content Include="log4net.config">
@@ -2416,6 +2424,9 @@
     </Compile>
     <Compile Include="ApplicationInterface\Vip\VipGateway.ashx.cs">
       <DependentUpon>VipGateway.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Washing\OrderGateway.ashx.cs">
+      <DependentUpon>OrderGateway.ashx</DependentUpon>
     </Compile>
     <Compile Include="Base\PageBase\JITAjaxHandler.cs" />
     <Compile Include="Base\XML\XmlManager.cs" />

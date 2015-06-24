@@ -39,6 +39,7 @@
 /***公共的头部，导航，logo，信息***/
 .commonHeader{height:68px;background: #07c8cf; border-bottom-width:0px;}
 .commonHeader .handleWrap{ color: #fff; font-size: 16px;}
+.fontC{ color: #07c8cf;}
 
 /*adminIcon 的margin-top是 右侧文件的line-height减去自身高度/2 所以两个必须是偶数防止不一致*/
 .commonHeader .logo{background:url(../../images/blueFruit/logo.png) no-repeat 0 0;}
@@ -365,3 +366,13 @@
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 
 .submitBtn{ border-radius: 40px; margin: 0 auto; font-size: 16px; margin-top: 35px;}
+
+.btnWrap{padding:35px 0;text-align:center;}
+.btnWrap a{display:inline-block;}
+.cancelBtn,.saveBtn{border-radius:38px;color: #fff;}
+.cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
+
+.cancelBtn:hover{background:transparent;color: #fe7c24}
+.panel-header, .panel-body {
+    border: none;
+}

@@ -154,7 +154,7 @@ namespace JIT.CPOS.Web.WX
 
             #endregion
 
-            weixin.ResponseMsg();
+            weixin.ResponseMsg();//根据消息类型，回应事件。有文本消息、图片消息、多客服、地理位置、事件
         }
 
         #endregion

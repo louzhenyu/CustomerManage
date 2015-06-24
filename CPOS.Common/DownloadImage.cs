@@ -9,6 +9,7 @@ using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Globalization;
 using System.IO;
+using System.Drawing;
 
 namespace JIT.CPOS.Common
 {
@@ -52,6 +53,7 @@ namespace JIT.CPOS.Common
                 var filePath = dirPath + newFileName;
                 host += newFileName;
                 webClient.DownloadFile(address, filePath);
+                
 
 
                 return host;
@@ -63,5 +65,10 @@ namespace JIT.CPOS.Common
             }
         }
         #endregion
+
+
+
+
+       
     }
 }

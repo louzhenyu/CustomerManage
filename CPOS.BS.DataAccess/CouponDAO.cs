@@ -428,7 +428,9 @@ namespace JIT.CPOS.BS.DataAccess
                                  left join  Vip f on d.VIPID=f.VIPID
                                  WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0
                                  and a.CouponID='{0}' ", couponID);
-            strb.AppendFormat(" and a.CustomerID='{0}'", CurrentUserInfo.CurrentLoggingManager.Customer_Id);
+            //strb.AppendFormat(" and a.CustomerID='{0}'", CurrentUserInfo.CurrentLoggingManager.Customer_Id);//考虑一下，暂时不要？因为洗衣客培训环境里用的是是正式环境的券。
+            //上面加上商户的这个，在洗衣项目里暂时去掉，在连锁云掌柜这个项目里要加上******！！！
+
 
             //if (!string.IsNullOrEmpty(userID) && userID != "-1")
             //{

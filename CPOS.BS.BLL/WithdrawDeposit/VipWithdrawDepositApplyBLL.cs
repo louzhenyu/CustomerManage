@@ -59,8 +59,10 @@ namespace JIT.CPOS.BS.BLL
         {
             if (isVip == 1)//会员
                 return this._currentDAO.PagedQueryByVipName(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
-            else//店员
+            else if (isVip == 2)//店员
                 return this._currentDAO.PagedQueryByUserName(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
+            else // (isVip ==3)//分销商
+                return this._currentDAO.PagedQueryByRetailName(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
         }
     }
 }

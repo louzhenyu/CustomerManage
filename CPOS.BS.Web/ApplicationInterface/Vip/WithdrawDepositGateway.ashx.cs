@@ -55,23 +55,27 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
 
             //查询参数
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
-            if (!string.IsNullOrEmpty(rp.Parameters.WithdrawNo))
-                complexCondition.Add(new LikeCondition() { FieldName = "a.WithdrawNo", Value = rp.Parameters.WithdrawNo });
+            if (!string.IsNullOrEmpty(rp.Parameters.WithdrawNo))  //提现申请编号
+                complexCondition.Add(new LikeCondition() { FieldName = "a.WithdrawNo", Value = "%" + rp.Parameters.WithdrawNo + "%" });
+
+            //下面要加上对分销商的兼容性*****
             if (!string.IsNullOrEmpty(rp.Parameters.VipName))
             {
                 if (rp.Parameters.IsVip == 1)//会员
-                    complexCondition.Add(new LikeCondition() { FieldName = "v.VipName", Value = rp.Parameters.VipName });
-                else//店员
-                    complexCondition.Add(new LikeCondition() { FieldName = "u.user_name", Value = rp.Parameters.VipName });
+                    complexCondition.Add(new LikeCondition() { FieldName = "v.VipName", Value = "%" + rp.Parameters.VipName + "%" });
+                else if (rp.Parameters.IsVip == 2)//店员
+                    complexCondition.Add(new LikeCondition() { FieldName = "u.user_name", Value = "%" + rp.Parameters.VipName + "%" });
+                else if (rp.Parameters.IsVip == 3)//分销商
+                    complexCondition.Add(new LikeCondition() { FieldName = "u.RetailTraderName", Value = "%" + rp.Parameters.VipName + "%" });
             }
-            if (!string.IsNullOrEmpty(rp.Parameters.Status))
+            if (!string.IsNullOrEmpty(rp.Parameters.Status))//判断状态
                 complexCondition.Add(new EqualsCondition() { FieldName = "a.Status", Value = rp.Parameters.Status });
             complexCondition.Add(new EqualsCondition() { FieldName = "a.CustomerID", Value = loggingSessionInfo.ClientID });
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "a.ApplyDate", Direction = OrderByDirections.Desc });
-
-            var wdApplyList = vipWDApplyBll.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), rp.Parameters.PageSize, rp.Parameters.PageIndex+1, rp.Parameters.IsVip);
+            //根据rp.Parameters.IsVip查询不同的数据源
+            var wdApplyList = vipWDApplyBll.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), rp.Parameters.PageSize, rp.Parameters.PageIndex + 1, rp.Parameters.IsVip);
 
             var rd = new WDManageInfoRD();
             rd.TotalPageCount = wdApplyList.PageCount;
@@ -108,7 +112,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                                 vipWDApplyEntity.ConfirmDate = DateTime.Now;
                                 break;
                             case 2://已完成
-                                vipWDApplyEntity.Status = 1;
+                                vipWDApplyEntity.Status = 2;
                                 vipWDApplyEntity.CompleteDate = DateTime.Now;
                                 break;
                         }
@@ -153,7 +157,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
     /// </summary>
     public class WDManageInfoRD : IAPIResponseData
     {
-        public int TotalPageCount{get;set;}
+        public int TotalPageCount { get; set; }
         public WDManageInfo[] WithdrawDepositList { get; set; }
     }
     /// <summary>
@@ -179,9 +183,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
     /// <summary>
     /// 提现确认/完成操作参数
     /// </summary>
-    public class UpdateWDApplyRP:IAPIRequestParameter{
-         public string ApplyID { set; get; }
-         public int Status { set; get; }
+    public class UpdateWDApplyRP : IAPIRequestParameter
+    {
+        public string ApplyID { set; get; }
+        public int Status { set; get; }
         public void Validate()
         {
             throw new NotImplementedException();

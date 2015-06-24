@@ -32,6 +32,8 @@ using JIT.CPOS.Web.OnlineShopping.data;
 using JIT.Utility.DataAccess.Query;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.Log;
+using System.Drawing;
+using System.Globalization;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Stores
 {
@@ -63,7 +65,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             }
             return rst;
         }
-        #region 获取动态二维码
+        #region 获取动态/静态二维码
         public string getDimensionalCode(string pRequest)
         {
             string content = string.Empty;
@@ -97,10 +99,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 }
                 var rpVipDCode = 0;                 //临时二维码
                 var iResult = ro.Next(iDown, iUp);  //随机数
+
+                string objectid = string.IsNullOrEmpty(RP.Parameters.ObjectID) ? RP.UserID : RP.Parameters.ObjectID;
                 if (RP.Parameters.VipDCode == 9)    //永久二维码
                 {
                     var userQrCodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
-                    var userQrCode = userQrCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ObjectId = RP.UserID }, null);
+                    var userQrCode = userQrCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ObjectId = objectid }, null);
 
                     if (userQrCode != null && userQrCode.Length > 0)
                     {
@@ -113,10 +117,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     iResult = new WQRCodeManagerBLL(loggingSessionInfo).GetMaxWQRCod() + 1;
                     rpVipDCode = 1;                 //永久
                 }
-                
+
 
                 #region 获取微信帐号
-
                 WApplicationInterfaceBLL server = new WApplicationInterfaceBLL(loggingSessionInfo);
                 var wxObj = server.QueryByEntity(new WApplicationInterfaceEntity
                 {
@@ -142,17 +145,24 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         CPOS.Common.DownloadImage downloadServer = new DownloadImage();
                         string downloadImageUrl = ConfigurationManager.AppSettings["website_WWW"];
                         imageUrl = downloadServer.DownloadFile(imageUrl, downloadImageUrl);
+                        //如果名称不为空，就把图片放在一定的背景下面
+                        if (!string.IsNullOrEmpty(RP.Parameters.RetailTraderName))
+                        {
+                            imageUrl = CombinImage(@"http://api.dev.51xiyike.com/HeadImage/qrcodeBack.jpg", imageUrl, RP.Parameters.RetailTraderName + "合作二维码");
+                        }
+
+
                     }
                 }
 
                 #endregion
 
-                
+
                 if (RP.Parameters.VipDCode == 9 && !string.IsNullOrEmpty(imageUrl))    //永久二维码
                 {
                     #region 创建店员永久二维码匹配表
                     var userQrTypeBll = new WQRCodeTypeBLL(loggingSessionInfo);
-                    var userQrType = userQrTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = "UserQrCode" }, null);
+                    var userQrType = userQrTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = RP.Parameters.TypeCode }, null);//"UserQrCode"
                     if (userQrType != null && userQrType.Length > 0)
                     {
                         var userQrcodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
@@ -164,7 +174,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         userQrCode.ImageUrl = imageUrl;
                         userQrCode.ApplicationId = wxObj[0].ApplicationId;
                         //objectId 为店员ID
-                        userQrCode.ObjectId = RP.UserID;
+                        userQrCode.ObjectId = objectid;
                         userQrcodeBll.Create(userQrCode);
                     }
                     #endregion
@@ -185,7 +195,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     vipDCodeServer.Create(info);
                     #endregion
                 }
-                
+
 
                 RD.imageUrl = imageUrl;
                 if (RP.Parameters.VipDCode == 9)
@@ -197,13 +207,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             {
                 Loggers.Debug(new DebugLogInfo()
                 {
-                    Message = string.Format("获取二维码出错:{0}",ex.Message)
+                    Message = string.Format("获取二维码出错:{0}", ex.Message)
                 });
                 rsp.ResultCode = 303;
                 rsp.Message = "数据库操作错误";
 
             }
-            
+
             content = rsp.ToJSON();
 
             Loggers.Debug(new DebugLogInfo()
@@ -233,6 +243,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             /// 二维码类型
             /// </summary>
             public int VipDCode { get; set; } // add by donal 2014-9-22 09:57:46
+
+            public string TypeCode { get; set; }
+            public string ObjectID { get; set; }
+            public string RetailTraderName { get; set; }//分销商名称
+
+
             public void Validate()
             {
 
@@ -283,15 +299,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 string status = string.Empty;
                 string vipId = string.Empty;
                 string openId = string.Empty;
-
-                
-                
-
                 if (info == null || info.DCodeId == null)
                 {
                     rsp.ResultCode = 303;
                     rsp.Message = "不存在对应的记录";
-                    return rsp.ToJSON();
+                    return rsp.ToJSON().ToString();
                 }
                 else
                 {
@@ -318,20 +330,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 temp.openId = openId;
                 RD.content = temp;
                 rsp = new SuccessResponse<IAPIResponseData>(RD);
-                if ((RP.Parameters.special.Mode == null || (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && RP.Parameters.special.Mode.Equals("Inbound"))) && !string.IsNullOrEmpty(info.VipId))
-                {
-                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
-                    var vipInfo = vipBll.GetByID(info.VipId);
-                    if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
-                    {
-                        rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
-                    }
-                    if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
-                    {
-                        rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
-                    }
-                }
-                
+                content = rsp.ToJSON();
                 #endregion
             }
             catch (Exception ex)
@@ -344,7 +343,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             {
                 Message = string.Format("setSignUp content: {0}", temp)
             });
-            return rsp.ToJSON();
+            return content;
         }
         public class getPollRespData : IAPIResponseData
         {
@@ -372,7 +371,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
         {
             public string unitId { get; set; }
             public string paraTmp { get; set; }
-            public string Mode { get; set; }
         }
         #endregion
 
@@ -615,9 +613,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             public string DcodeId { get; set; }
             public string Isscan { get; set; }  //是否扫描 0.不扫描。1.扫描
             public string VipId { get; set; }
-            public string OffOrderNo{ get; set; }
+            public string OffOrderNo { get; set; }
             public string remark { get; set; }
-            
+
             public void Validate()
             {
                 if (string.IsNullOrWhiteSpace(this.Isscan))
@@ -634,5 +632,86 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             }
         }
         #endregion
+
+
+
+        public static string CombinImage(string imgBack, string destImg, string strData)
+        {
+            //1、上面的图片部分
+            HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(destImg);
+            WebResponse response_qrcode = null;
+            Stream qrcode_stream = null;
+            response_qrcode = request_qrcode.GetResponse();
+            qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
+
+
+            Bitmap _bmpQrcode1 = new Bitmap(qrcode_stream);//把流转换成Bitmap
+            Bitmap _bmpQrcode = new Bitmap(_bmpQrcode1, 327, 327);//缩放图片           
+            //把二维码由八位的格式转为24位的
+            Bitmap bmpQrcode = new Bitmap(_bmpQrcode.Width, _bmpQrcode.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb); //并用上面图片的尺寸做了一个位图
+            //用上面空的位图生成了一个空的画板
+            Graphics g3 = Graphics.FromImage(bmpQrcode);
+            g3.DrawImageUnscaled(_bmpQrcode, 0, 0);//把原来的图片画了上去
+
+
+            //2、背景部分
+            HttpWebRequest request_backgroup = (HttpWebRequest)WebRequest.Create(imgBack);
+            WebResponse response_keleyi = null;
+            Stream backgroup_stream = null;
+            response_keleyi = request_backgroup.GetResponse();
+            backgroup_stream = response_keleyi.GetResponseStream();//把背景图片转换成流
+
+            Bitmap bmp = new Bitmap(backgroup_stream);
+            Graphics g = Graphics.FromImage(bmp);//生成背景图片的画板
+
+            //3、画上文字
+            //  String str = "文峰美容";
+            Font font = new Font("黑体", 25);
+            SolidBrush sbrush = new SolidBrush(Color.White);
+            SizeF sizeText = g.MeasureString(strData, font);
+
+            g.DrawString(strData, font, sbrush, (bmp.Width - sizeText.Width) / 2, 490);
+
+
+            // g.DrawString(str, font, sbrush, new PointF(82, 490));
+
+
+            g.DrawImage(bmp, 0, 0, bmp.Width, bmp.Height);//又把背景图片的位图画在了背景画布上。必须要这个，否则无法处理阴影
+
+            //4.合并图片
+            g.DrawImage(bmpQrcode, 130, 118, bmpQrcode.Width, bmpQrcode.Height);
+
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            System.Drawing.Image newImg = Image.FromStream(ms);//生成的新的图片
+            //把新图片保存下来
+            string DownloadUrl = ConfigurationManager.AppSettings["website_WWW"];
+            string host = DownloadUrl + "/HeadImage/";
+            //创建下载根文件夹
+            //var dirPath = @"C:\DownloadFile\";
+            var dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "HeadImage\\";
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+            //根据年月日创建下载子文件夹
+            var ymd = DateTime.Now.ToString("yyyyMMdd", DateTimeFormatInfo.InvariantInfo);
+            dirPath += ymd + @"\";
+            host += ymd + "/";
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+
+            //下载到本地文件
+            var fileExt = Path.GetExtension(destImg).ToLower();
+            var newFileName = DateTime.Now.ToString("yyyyMMddHHmmss_ffff", DateTimeFormatInfo.InvariantInfo) + ".jpg";//+ fileExt;
+            var filePath = dirPath + newFileName;
+            host += newFileName;
+
+            newImg.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            return host;
+        }
     }
 }

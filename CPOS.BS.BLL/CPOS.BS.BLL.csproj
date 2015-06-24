@@ -93,6 +93,8 @@
     <Compile Include="AlipayWapTrade\AlipayService.cs" />
     <Compile Include="AlipayWapTrade\AlipaySubmit.cs" />
     <Compile Include="AlipayWapTrade\RSA.cs" />
+    <Compile Include="AllWin\RetailTraderBLL.cs" />
+    <Compile Include="AllWin\SysRetailRewardRuleBLL.cs" />
     <Compile Include="AlumniDetailBLL.cs" />
     <Compile Include="AlumniListBLL.cs" />
     <Compile Include="AParaObjectBLL.cs" />
@@ -120,6 +122,8 @@
     <Compile Include="CodeGeneration\AdvertisementBLL.cs" />
     <Compile Include="CodeGeneration\AlipayRoyaltyBLL.cs" />
     <Compile Include="CodeGeneration\AlipayWapTradeResponseBLL.cs" />
+    <Compile Include="CodeGeneration\AllWin\RetailTraderBLL.cs" />
+    <Compile Include="CodeGeneration\AllWin\SysRetailRewardRuleBLL.cs" />
     <Compile Include="CodeGeneration\AParaObjectBLL.cs" />
     <Compile Include="CodeGeneration\APPDownloadBLL.cs" />
     <Compile Include="CodeGeneration\APPUpgradeBLL.cs" />

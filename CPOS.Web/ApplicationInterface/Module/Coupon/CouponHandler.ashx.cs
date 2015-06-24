@@ -142,7 +142,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
                     respData.couponDetail = DataTableToObject.ConvertToObject<CouponEntity>(ds.Tables[0].Rows[0]);
-                    respData.couponDetail.QRUrl = GeneratedQR(reqObj.Parameters.cuponID);
+                    respData.couponDetail.QRUrl = GeneratedQR(reqObj.Parameters.cuponID); //生成这优惠券的二维码
                 }else
                 {
                     respData.ResultCode = "103";
@@ -204,21 +204,47 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                     var couponTypeInfo = couponTypeBll.GetByID(couponEntity.CouponTypeID);
                     if (couponTypeInfo != null)
                     {
-                        if (couponTypeInfo.SuitableForStore == 2)
+                        if (couponTypeInfo.SuitableForStore == 2)//下面的doorid传的是门店的id，如果等于1所有门店都能用，如果等于3所有分销商都能用 
                         {
                             var couponTypeUnitMapping = mappingBll.QueryByEntity(new CouponTypeUnitMappingEntity() { CouponTypeID = new Guid(couponEntity.CouponTypeID.ToString()), ObjectID = reqObj.Parameters.doorID }, null).FirstOrDefault();
 
                             if (couponTypeUnitMapping == null)
                             {
                                 respData.ResultCode = "104";
+                                respData.Message = "请到指定门店/分销商使用";
+                                return respData.ToJSON();
+                            }
+                        }
+                        if (couponTypeInfo.SuitableForStore == 3)//下面的doorid传的是门店的id，如果等于1所有门店都能用，如果等于3所有分销商都能用 
+                        { 
+                            //doorid必须是获取，分销商如果没数据，就报错。
+                            RetailTraderBLL _RetailTraderBLL = new RetailTraderBLL(loggingSessionInfo);
+                            RetailTraderEntity en = _RetailTraderBLL.GetByID(reqObj.Parameters.doorID);
+                            if (en == null)
+                            {
+                                respData.ResultCode = "104";
+                                respData.Message = "请到指定分销商使用";
+                                return respData.ToJSON();
+                            }
+
+                        }
+                        if (couponTypeInfo.SuitableForStore == 1)//下面的doorid传的是门店的id，如果等于1所有门店都能用，如果等于3所有分销商都能用 
+                        {
+                            //doorid必须是获取，门店如果没有数据，就报错。
+                            TUnitBLL _TUnitBLL = new TUnitBLL(loggingSessionInfo);
+                            TUnitEntity en = _TUnitBLL.GetByID(reqObj.Parameters.doorID);
+                            if (en == null)
+                            {
+                                respData.ResultCode = "104";
                                 respData.Message = "请到指定门店使用";
                                 return respData.ToJSON();
                             }
                         }
+
                     }
                 }
                 int res = bll.BestowCoupon(reqObj.Parameters.cuponID, reqObj.Parameters.doorID);
-                if (res > 0)
+                if (res > 0) //如果没有影响一行，所以Coupon表里这条记录的status=1了，不能被使用了。
                 {
                 #region 优惠券使用记录
                     var couponUseEntity = new CouponUseEntity()

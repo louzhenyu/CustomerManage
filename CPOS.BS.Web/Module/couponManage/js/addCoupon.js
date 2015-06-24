@@ -205,11 +205,11 @@
                 "id":0,
                     "text":"门店"
 
-            }/*,{
+            },{
                 "id":1,
                  "text":"分销商"
 
-            }*/]
+            } ]
             });
             that.loadData.get_unit_tree(function(data) {
                 debugger;

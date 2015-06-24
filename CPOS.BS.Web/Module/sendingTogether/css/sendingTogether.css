@@ -1,0 +1,44 @@
+.commonTitle{height:16px;line-height:16px;margin:15px 0 5px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;margin-bottom: 20px;}
+.commonSelectWrap .selectBox {
+ border: none
+}
+.commonSelectWrap input {
+    border:1px solid #ccc;
+}
+
+
+.queryTermArea{min-height:65px;padding:16px 20px 0 0px;}
+.queryTermArea .queryBtn{float:left; width:70px; height: 28px;line-height: 28px;margin-top: 10px;}
+.queryTermArea .commonSelectWrap{margin-right:10px;}
+.commonSelectWrap .selectList{top:3px;border-top:2px solid #fe7c24;}
+.commonSelectWrap .selectList p:hover{color:#fe7c24;}
+
+.tableHandleBox{text-align:left;}
+.tableHandleBox .exportBtn{float:right;margin-right:10px;}
+.tableHandleBox .affirmBtn{float:left;}
+.tableHandleBox .finishBtn{}
+
+.bordernone{border: none;}
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+
+
+/* distributr*/
+.panlDiv{border-bottom: 1px solid #d0d5d8;width: 100%; float: left; padding: 5px 25px;}
+.panlDiv .title{ line-height:28px;font-size: 14px;}
+.panlDiv .radio{float: left; margin-right: 45px;}
+.panlDiv .commonSelectWrap{ display: block;  margin-right:45px; line-height: 33px}
+.panlDiv .commonSelectWrap .searchInput{ margin-right: 8px; border:none;}
+.panlDiv .commonSelectWrap .tit{ width: auto;}
+.panlDiv .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.panlDiv .commonSelectWrap .searchInput .line{ height: 46px;}
+.panlDiv .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.panlDiv .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.panlDiv .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.panlDiv .commonSelectWrap .tit .checkBox{float: right}
+.pl_45{padding-left:45px;}
+/*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
+.panlDiv   .explain{ color: #fc7a52; font-size: 12px;}
+.panlDiv .lineH30{ line-height: 30px; white-space: nowrap;}
+.
+
+

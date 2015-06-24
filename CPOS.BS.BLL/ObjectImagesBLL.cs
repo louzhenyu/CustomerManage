@@ -157,5 +157,12 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+
+        #region 根据对象ID删除图片
+        public int DeleteByObjectID(string objectID)
+        {
+            return _currentDAO.DeleteByObjectID(objectID);
+        }
+        #endregion
     }
 }

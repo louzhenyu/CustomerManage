@@ -76,6 +76,8 @@
     <Compile Include="Advertise\AdvertiseOrderUnitInfo.cs" />
     <Compile Include="AlipayRoyaltyEntity.cs" />
     <Compile Include="AlipayWapTradeResponseEntity.cs" />
+    <Compile Include="AllWin\RetailTraderEntity.cs" />
+    <Compile Include="AllWin\SysRetailRewardRuleEntity.cs" />
     <Compile Include="AlumniDetailEntity.cs" />
     <Compile Include="AParaObjectEntity.cs" />
     <Compile Include="APPDownloadEntity.cs" />
@@ -101,6 +103,8 @@
     <Compile Include="CCInfo.cs" />
     <Compile Include="ClientBussinessDefinedEntity.cs" />
     <Compile Include="CodeGeneration\AdvertisementEntity.cs" />
+    <Compile Include="CodeGeneration\AllWin\RetailTraderEntity.cs" />
+    <Compile Include="CodeGeneration\AllWin\SysRetailRewardRuleEntity.cs" />
     <Compile Include="CodeGeneration\AParaObjectEntity.cs" />
     <Compile Include="CodeGeneration\APPUpgradeEntity.cs" />
     <Compile Include="CodeGeneration\APPVersionDownloadVIPLogEntity.cs" />

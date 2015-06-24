@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+
+
+.listBtn{ width: 170px; height: 50px; float: left;cursor: pointer; text-align: center; line-height: 23px; color: #666; font-size: 16px; background: #fff; position: relative; margin-left: 50px; border:1px solid #e1e1e1 }
+.listBtn .on{ background:url("../images/duihao.png") no-repeat; width: 18px; height: 18px; position:absolute; right: 0; bottom: 0;display: none}
+
+.listBtn.show{ border-color: #07c8cf}
+.listBtn.show .on{ display: block;}
+
+
+.panlDiv{border-bottom: 1px solid #d0d5d8;width: 100%; float: left; padding: 5px 0}
+.panlDiv .title{ line-height: 50px;font-size: 16px;}
+.panlDiv .commonSelectWrap{ display: block;  margin-right:45px; line-height: 33px}
+.panlDiv .commonSelectWrap .searchInput{ margin-right: 8px; border:none;}
+.panlDiv .commonSelectWrap .tit{ width: auto;}
+.panlDiv .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.panlDiv .commonSelectWrap .searchInput .line{ height: 46px;}
+.panlDiv .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.panlDiv .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.panlDiv .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.panlDiv .commonSelectWrap .tit .checkBox{float: right}
+.pl_45{padding-left:45px;}
+/*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
+.panlDiv   .explain{ color: #fc7a52; font-size: 14px;}
+.panlDiv .lineH30{ line-height: 30px;}
+
+.Wrap{ display: none;}
+
+
+.bordernone{ border: none;}
+
+.panlDiv .datagrid-header-row{ display: none}

@@ -57,11 +57,49 @@ $(function () {
     SetLogoInfo();
 
     $("#section").delegate(".datagrid-header-check", "mousedown", function (e) {
-        $(this).toggleClass("on");
+        var dom = $(this);
+        if (!dom.find("input").get(0).checked) {
+            $(this).addClass("on");
+        } else {
+            $(this).removeClass("on");
+        }
+        return false;
+    }).delegate(".datagrid-cell-check", "mousedown", function (e) {
+        var dom = $(this);
+        var nondes = dom.parents(".datagrid-body-inner").find(".datagrid-cell-check input");
+        //验证是否是全选
+        var isSeletAll=true;
+        for (var i = 0; i < nondes.length; i++) {
+            if (!nondes.get(i).checked&&nondes.get(i)!==dom.find("input").get(0)) { //排除当前的
+                isSeletAll=false;
+
+                break;
+            }
+        }
+        if(isSeletAll) {    //其他都是选中状态
+            if (dom.find("input").get(0).checked) { //如果当前的是选中装态。
+                isSeletAll = false;
+            }
+        }
+
+        if(isSeletAll){
+          var allCheckBox=dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").addClass("on")
+            allCheckBox.find("input").get(0).checked=true;
+        } else{
+            var allCheckBox=dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").removeClass("on")
+            allCheckBox.find("input").get(0).checked=true;
+        }
+
+
+
         return false;
     });
+
+
+
+
     var width = $("#leftMenu").outerWidth();
-    $("#contentArea").css({"margin-left":width+"px"})
+    $("#contentArea").css({ "margin-left": width + "px" })
 
 
 });

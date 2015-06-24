@@ -214,5 +214,15 @@ namespace JIT.CPOS.BS.DataAccess
         }
 
         #endregion
+
+        #region 根据对象ID删除图片
+        public int DeleteByObjectID(string objectID)
+        {
+            List<SqlParameter> ls = new List<SqlParameter>();
+            ls.Add(new SqlParameter("@ObjectId", objectID));
+            string sql = " update  ObjectImages set isdelete=1 where ObjectId=@ObjectId";
+            return this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql, ls.ToArray());
+        }
+        #endregion
     }
 }

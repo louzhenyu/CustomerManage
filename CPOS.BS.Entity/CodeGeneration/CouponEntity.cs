@@ -56,12 +56,18 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 
         /// </summary>
-        public DateTime? BeginDate { get; set; }
+        public DateTime?  BeginDate { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public DateTime? EndDate { get; set; }
+
+
+        public string BeginDate2 { get { return BeginDate == null ? "" : ((DateTime)BeginDate).ToString("yyyy-MM-dd"); } }
+
+
+        public string EndDate2 { get { return EndDate == null ? "" : ((DateTime)EndDate).ToString("yyyy-MM-dd"); } }
 
         /// <summary>
         /// 

@@ -6012,7 +6012,12 @@
     <Content Include="Framework\Javascript\Biz\Handler\CitySelectTreeHandler1.ashx" />
     <Content Include="Framework\Javascript\Other\kindeditor\asp.net\upload_homepage_json.ashx" />
     <Content Include="ApplicationInterface\Gateway.ashx" />
+    <Compile Include="ApplicationInterface\AllWin\SysRetailRewardRule.ashx.cs">
+      <DependentUpon>SysRetailRewardRule.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\BaseGateway.cs" />
+    <Compile Include="ApplicationInterface\Base\BaseActionHandler.cs" />
+    <Compile Include="ApplicationInterface\Base\IActionHandler.cs" />
     <Compile Include="ApplicationInterface\Base\IRequestHandler.cs" />
     <Compile Include="ApplicationInterface\Base\IRequestHandlerData.cs" />
     <Compile Include="ApplicationInterface\Base\ProcessXml.cs" />
@@ -6070,6 +6075,7 @@
     <Content Include="ApplicationInterface\Vip\WithdrawDepositGateway.ashx" />
     <Content Include="ApplicationInterface\Module\Item\ItemHandler.ashx" />
     <Content Include="ApplicationInterface\Module\Item\ItemNewHandler.ashx" />
+    <Content Include="ApplicationInterface\AllWin\SysRetailRewardRule.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -7009,8 +7015,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationInterface\ActionHandlerFactory.cs" />
-    <Compile Include="ApplicationInterface\Base\BaseActionHandler.cs" />
-    <Compile Include="ApplicationInterface\Base\IActionHandler.cs" />
     <Compile Include="ApplicationInterface\Gateway.ashx.cs">
       <DependentUpon>Gateway.ashx</DependentUpon>
     </Compile>

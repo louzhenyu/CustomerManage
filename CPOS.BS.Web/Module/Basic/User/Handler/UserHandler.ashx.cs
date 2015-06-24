@@ -174,6 +174,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         /// </summary>
         public string SaveUserData()
         {
+
             var userService = new cUserService(CurrentUserInfo);
             UserInfo user = new UserInfo();
             string content = string.Empty;

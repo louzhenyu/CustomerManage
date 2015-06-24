@@ -83,8 +83,8 @@ namespace JIT.CPOS.Web.ApplicationInterface
             var currVer = new Version(rp.Parameters.CurrentVersionNo);
             var updateVer = new Version(entity.VersionNoUpdate);
             var lowestVer = new Version(entity.VersionNoLowest);
-            result.IsNewVersion = currVer < updateVer ? 1 : 0;
-            result.IsSkip = currVer < lowestVer ? 0 : 1;
+            result.IsNewVersion = currVer < updateVer ? 1 : 0;  //如果小于数据库里的当前版本，就需要更新
+            result.IsSkip = currVer < lowestVer ? 0 : 1;  //如果小于数据库里的最小版本，就需要跳过?IsSkip=1，表示非强制更新
             var rsp = new SuccessResponse<IAPIResponseData>(result);
             return rsp.ToJSON();
         }

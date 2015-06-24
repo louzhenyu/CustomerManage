@@ -76,8 +76,11 @@
     <Compile Include="AppType.cs" />
     <Compile Include="DateTimeHelper.cs" />
     <Compile Include="DownloadImage.cs" />
+    <Compile Include="FileType.cs" />
     <Compile Include="ImagePathUtil.cs" />
+    <Compile Include="IOUtil.cs" />
     <Compile Include="JsonHelper.cs" />
+    <Compile Include="StringUtil.cs" />
     <Compile Include="TaskCode.cs" />
     <Compile Include="PackageTypeMethod.cs" />
     <Compile Include="LogMethod.cs" />

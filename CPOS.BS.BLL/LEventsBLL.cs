@@ -968,6 +968,30 @@ namespace JIT.CPOS.BS.BLL
                                 }
                                 #endregion
                                 break;
+                            case "retailqrcode"://分销商信息
+                                #region 绑定分销商数据
+                                VipBLL vipBll2 = new VipBLL(loggingSessionInfo);
+
+                                var vipEntity2 = vipBll2.QueryByEntity(new VipEntity()
+                                {
+                                    WeiXinUserId = openId
+                                }, null).FirstOrDefault();
+                                if (vipEntity2 != null && (string.IsNullOrEmpty(vipEntity2.CouponInfo) || vipEntity2.CouponInfo.Length != 32))
+                                {
+                                    RetailTraderBLL retailTraderBLL = new RetailTraderBLL(loggingSessionInfo);
+
+                                    var RetailTraderInfo = retailTraderBLL.GetByID(qrCodeEntity.ObjectId);  //根据分销商ID获取所属的门店信息和销售员信息
+                                    vipEntity2.CouponInfo = RetailTraderInfo.UnitID;//会籍店ID
+                                    // vipEntity2.SetoffUserId = qrCodeEntity.ObjectId;//店员ID（上线）
+                                    vipEntity2.Col20 = qrCodeEntity.ObjectId;//会籍店ID
+                                    vipBll2.Update(vipEntity2);
+
+                                }
+
+                                //给分销商和销售员奖励
+
+                                #endregion
+                                break;
                             default:
                                 break;
                         }

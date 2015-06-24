@@ -60,6 +60,8 @@
     <Compile Include="AdvertisementDAO.cs" />
     <Compile Include="AlipayRoyaltyDAO.cs" />
     <Compile Include="AlipayWapTradeResponseDAO.cs" />
+    <Compile Include="AllWin\RetailTraderDAO.cs" />
+    <Compile Include="AllWin\SysRetailRewardRuleDAO.cs" />
     <Compile Include="AlumniDetailDAO.cs" />
     <Compile Include="AlumniListDAO.cs" />
     <Compile Include="AParaObjectDAO.cs" />
@@ -84,6 +86,8 @@
     <Compile Include="CodeGeneration\AdvertisementDAO.cs" />
     <Compile Include="CodeGeneration\AlipayRoyaltyDAO.cs" />
     <Compile Include="CodeGeneration\AlipayWapTradeResponseDAO.cs" />
+    <Compile Include="CodeGeneration\AllWin\RetailTraderDAO.cs" />
+    <Compile Include="CodeGeneration\AllWin\SysRetailRewardRuleDAO.cs" />
     <Compile Include="CodeGeneration\AParaObjectDAO.cs" />
     <Compile Include="CodeGeneration\APPDownloadDAO.cs" />
     <Compile Include="CodeGeneration\APPUpgradeDAO.cs" />

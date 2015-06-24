@@ -1514,7 +1514,7 @@ select @ReturnValue", pCustomerID);
 
             sql.Append("select isnull(COUNT(1),0) as num from VipCouponMapping a,Coupon b");
             sql.Append(" where a.CouponID = b.CouponID and a.IsDelete =0 and b.status = 0  ");
-            sql.AppendFormat(" and b.IsDelete = 0 and a.vipId = '{0}' ", vipId);
+            sql.AppendFormat(" and b.IsDelete = 0 and a.vipId = '{0}' and  EndDate > GETDATE() ", vipId);//没有被使用，并且没有过期
 
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql.ToString()));
         }
