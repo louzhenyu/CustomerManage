@@ -79,6 +79,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
 
             var rd = new WDManageInfoRD();
             rd.TotalPageCount = wdApplyList.PageCount;
+            rd.TotalCount = wdApplyList.RowCount;
             rd.WithdrawDepositList = wdApplyList.Entities.Select(t => new WDManageInfo() { ApplyID = t.ApplyID, WithdrawNo = t.WithdrawNo, ApplyDate = t.ApplyDate, VipName = t.VipName, VipId = t.VipID, Amount = t.Amount, Status = t.Status, CompleteDate = t.CompleteDate }).ToArray();
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -158,6 +159,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
     public class WDManageInfoRD : IAPIResponseData
     {
         public int TotalPageCount { get; set; }
+        public int TotalCount { get; set; }
         public WDManageInfo[] WithdrawDepositList { get; set; }
     }
     /// <summary>

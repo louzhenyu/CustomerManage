@@ -123,7 +123,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [ApplyID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,a.*,v.VipName FROM VipWithdrawDepositApply a INNER JOIN dbo.Vip v ON v.VIPID=a.VipID where 1=1  and a.isdelete=0 ");
+            pagedSql.AppendFormat(@") as ___rn,a.*,v.VipName,CardNo,BankName FROM VipWithdrawDepositApply a INNER JOIN dbo.Vip v ON v.VIPID=a.VipID
+                              left join VipBank d on a.vipbankid=d.vipbankid 
+                                left  join bank e on d.bankid=e.bankid where 1=1  and a.isdelete=0 ");
             //总记录数SQL
             totalCountSql.AppendFormat("select count(1)  FROM VipWithdrawDepositApply a INNER JOIN dbo.Vip v ON v.VIPID=a.VipID where 1=1  and a.isdelete=0 ");
             //过滤条件
@@ -197,7 +199,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [ApplyID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,a.*,u.user_name FROM VipWithdrawDepositApply a INNER JOIN dbo.T_User u ON u.user_id=a.VipID where 1=1  and a.isdelete=0 ");
+            pagedSql.AppendFormat(@") as ___rn,a.*,u.user_name,CardNo,BankName FROM VipWithdrawDepositApply a INNER JOIN dbo.T_User u ON u.user_id=a.VipID
+                               left join VipBank d on a.vipbankid=d.vipbankid 
+                                left  join bank e on d.bankid=e.bankid where 1=1  and a.isdelete=0  ");
             //总记录数SQL
             totalCountSql.AppendFormat("select count(1)  FROM VipWithdrawDepositApply a INNER JOIN dbo.T_User u ON  u.user_id=a.VipID where 1=1  and a.isdelete=0 ");
             //过滤条件
@@ -273,7 +277,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [ApplyID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,a.*,u.RetailTraderName FROM VipWithdrawDepositApply a INNER JOIN dbo.RetailTrader u ON u.RetailTraderID=a.VipID where 1=1  and a.isdelete=0 ");
+            pagedSql.AppendFormat(@") as ___rn,a.*,u.RetailTraderName,CardNo,BankName FROM VipWithdrawDepositApply a INNER JOIN dbo.RetailTrader u ON u.RetailTraderID=a.VipID 
+                             left join VipBank d on a.vipbankid=d.vipbankid 
+                                left  join bank e on d.bankid=e.bankid where 1=1  and a.isdelete=0  ");
             //总记录数SQL
             totalCountSql.AppendFormat("select count(1)  FROM VipWithdrawDepositApply a INNER JOIN dbo.RetailTrader u ON  u.RetailTraderID=a.VipID where 1=1  and a.isdelete=0 ");
             //过滤条件

@@ -729,7 +729,7 @@ select RetailTraderID  into #TempTable	 from  #TmpTBL L , #UnitSET R where L.IsD
             sql += @"select * from ( select  ROW_NUMBER()over(order by {0} {3}) _row,a.*
         ,(select  unit_name from t_unit x where x.unit_id=a.UnitID) UnitName
 		,(select  user_name from T_User y where y.user_id=a.SellUserID) UserName
-		,(select  ImageURL from ObjectImages z where z.ObjectId=convert(nvarchar(50), a.RetailTraderID) and z.IsDelete=0) ImageURL
+		,(select top 1 ImageURL from ObjectImages z where z.ObjectId=convert(nvarchar(50), a.RetailTraderID) and z.IsDelete=0) ImageURL
      ,isnull((select COUNT(1) from vip where Col20=a.RetailTraderID),0) as VipCount 
     ,(case status when '1' then '正常' else '停用' end)   StatusDesc
 ,( case CooperateType when 'OneWay' then '单向集客' else '互相集客' end ) CooperateTypeDesc

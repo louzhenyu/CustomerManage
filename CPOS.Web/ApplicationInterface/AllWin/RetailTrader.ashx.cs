@@ -213,6 +213,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
                 rd.MonthRewardList.Add(temp);
 
             }
+            rd.MonthRewardList.Reverse();//按照日期倒序
             return rsp.ToJSON();
         }
 

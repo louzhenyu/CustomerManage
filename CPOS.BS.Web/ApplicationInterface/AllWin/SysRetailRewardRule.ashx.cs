@@ -186,6 +186,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                 en.IsDelete=0;
                 //获取奖励模板
                 ds = bll.QueryByEntity(en, null);
+                //如果该分销商没有奖励规则，就取他所属的合作类型的奖励模板的数据
+                if (ds == null || ds.Count() <= 0)
+                {
+                    SysRetailRewardRuleEntity en2 = new SysRetailRewardRuleEntity();
+                    en2.IsTemplate = 1;
+                    en2.CooperateType = rp.Parameters.CooperateType;
+                    en2.IsDelete = 0;
+                    //获取奖励模板
+                    ds = bll.QueryByEntity(en2, null);
+                }
+
             }
 
 
