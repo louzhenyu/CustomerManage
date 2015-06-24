@@ -28,7 +28,6 @@ using System.Text;
 namespace JIT.CPOS.Web.ApplicationInterface.AllWin
 {
 
-
     /// <summary>
     /// SellUser 的摘要说明
     /// </summary>
@@ -196,7 +195,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
 
 
 
-
         #region  分销商登陆
         public string GetRetailTraderByID(string pRequest)
         {
@@ -209,6 +207,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
             var bll = new RetailTraderBLL(loggingSessionInfo);
             var rd = new SaveRetailTraderRD();
+
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             //获取分销商的信息，包括头像等loggingSessionInfo.ClientID
             var ds = bll.getRetailTraderInfoByLogin("", rp.Parameters.RetailTraderID, loggingSessionInfo.ClientID);
