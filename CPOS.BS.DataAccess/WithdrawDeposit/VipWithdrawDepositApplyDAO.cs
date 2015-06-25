@@ -123,7 +123,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [ApplyID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(@") as ___rn,a.*,v.VipName,CardNo,BankName FROM VipWithdrawDepositApply a INNER JOIN dbo.Vip v ON v.VIPID=a.VipID
+            pagedSql.AppendFormat(@") as ___rn,a.*,v.VipName,CardNo,BankName,AccountName FROM VipWithdrawDepositApply a INNER JOIN dbo.Vip v ON v.VIPID=a.VipID
                               left join VipBank d on a.vipbankid=d.vipbankid 
                                 left  join bank e on d.bankid=e.bankid where 1=1  and a.isdelete=0 ");
             //总记录数SQL
@@ -199,7 +199,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [ApplyID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(@") as ___rn,a.*,u.user_name,CardNo,BankName FROM VipWithdrawDepositApply a INNER JOIN dbo.T_User u ON u.user_id=a.VipID
+            pagedSql.AppendFormat(@") as ___rn,a.*,u.user_name,CardNo,BankName,AccountName FROM VipWithdrawDepositApply a INNER JOIN dbo.T_User u ON u.user_id=a.VipID
                                left join VipBank d on a.vipbankid=d.vipbankid 
                                 left  join bank e on d.bankid=e.bankid where 1=1  and a.isdelete=0  ");
             //总记录数SQL
@@ -277,7 +277,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [ApplyID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(@") as ___rn,a.*,u.RetailTraderName,CardNo,BankName FROM VipWithdrawDepositApply a INNER JOIN dbo.RetailTrader u ON u.RetailTraderID=a.VipID 
+            pagedSql.AppendFormat(@") as ___rn,a.*,u.RetailTraderName,CardNo,BankName,AccountName FROM VipWithdrawDepositApply a INNER JOIN dbo.RetailTrader u ON u.RetailTraderID=a.VipID 
                              left join VipBank d on a.vipbankid=d.vipbankid 
                                 left  join bank e on d.bankid=e.bankid where 1=1  and a.isdelete=0  ");
             //总记录数SQL

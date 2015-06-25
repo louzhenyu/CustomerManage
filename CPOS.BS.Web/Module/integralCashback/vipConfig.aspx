@@ -30,7 +30,7 @@
                                         <div class="linetext"><em class="txt">每单赠送积分上限:</em> <input type="text" name="PointsOrderUpLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分  <em class="explain">（0或空代表不限制）</em></div>
                                  </div>
                                 <div class="rowRline">
-                                        <div class="linetext"><em class="txt">积分最低使用限制：</em> <input type="text" name="PointsRedeemLowestLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分 <em class="explain">（积分数未达到此限制不允许抵扣，0或代表不限制）</em></div>
+                                        <div class="linetext"><em class="txt">积分最低使用限制：</em> <input type="text" name="PointsRedeemLowestLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分 <em class="explain">（积分数未达到此限制不允许抵扣，0或空代表不限制）</em></div>
                                  </div>
                                 <div class="rowRline">
                                         <div class="linetext"><em class="txt"> 按金额比例设置积分抵扣上限:</em> <input type="text" value="" name="PointsRedeemUpLimit" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>
@@ -56,7 +56,7 @@
                                         <div class="linetext"><em class="txt">  每单赠送返现上限:：</em> <input type="text" name="CashOrderUpLimit" class="easyui-numberbox"  data-options="min:0,precision:2" value="">元  <em class="explain">（0或空代表不限制）</em></div>
                                  </div>
                                 <div class="rowRline">
-                                        <div class="linetext"><em class="txt"> 返现最低使用限制：</em> <input type="text" name="CashRedeemLowestLimit" class="easyui-numberbox"  data-options="min:0,precision:2"  value=""> 元 <em class="explain">（返现数未达到此限制不允许抵扣，0或代表不限制）</em></div>
+                                        <div class="linetext"><em class="txt"> 返现最低使用限制：</em> <input type="text" name="CashRedeemLowestLimit" class="easyui-numberbox"  data-options="min:0,precision:2"  value=""> 元 <em class="explain">（返现数未达到此限制不允许抵扣，0或空代表不限制）</em></div>
                                  </div>
                                 <div class="rowRline">
                                         <div class="linetext"> <em class="txt"> 按金额比例设置返现抵扣上限：</em>  <input type="text" value="" name="CashRedeemUpLimit" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>

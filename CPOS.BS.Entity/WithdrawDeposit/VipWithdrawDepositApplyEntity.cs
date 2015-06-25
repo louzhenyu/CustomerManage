@@ -41,6 +41,7 @@ namespace JIT.CPOS.BS.Entity
         /// 会员/店员名称
         /// </summary>
         public string VipName { get; set; }
+        public string AccountName { get; set; }
 
         #endregion
     }

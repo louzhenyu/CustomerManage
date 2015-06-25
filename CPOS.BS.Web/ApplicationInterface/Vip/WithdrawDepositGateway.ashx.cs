@@ -80,7 +80,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var rd = new WDManageInfoRD();
             rd.TotalPageCount = wdApplyList.PageCount;
             rd.TotalCount = wdApplyList.RowCount;
-            rd.WithdrawDepositList = wdApplyList.Entities.Select(t => new WDManageInfo() { ApplyID = t.ApplyID, WithdrawNo = t.WithdrawNo, ApplyDate = t.ApplyDate, VipName = t.VipName, VipId = t.VipID, Amount = t.Amount, Status = t.Status, CompleteDate = t.CompleteDate,BankName=t.BankName,CardNo=t.CardNo }).ToArray();
+            rd.WithdrawDepositList = wdApplyList.Entities.Select(t => new WDManageInfo() { AccountName=t.AccountName, ApplyID = t.ApplyID, WithdrawNo = t.WithdrawNo, ApplyDate = t.ApplyDate, VipName = t.VipName, VipId = t.VipID, Amount = t.Amount, Status = t.Status, CompleteDate = t.CompleteDate,BankName=t.BankName,CardNo=t.CardNo }).ToArray();
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
@@ -184,6 +184,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
 
         public string BankName { get; set; }
         public string CardNo { get; set; }
+        public string AccountName { get; set; }
     }
     /// <summary>
     /// 提现确认/完成操作参数

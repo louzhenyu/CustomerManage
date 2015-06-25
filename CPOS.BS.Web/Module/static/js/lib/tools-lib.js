@@ -246,6 +246,17 @@
 
         param.url = _param.url;
        _param.url = _param.url + '?&method=' + method;
+       if(param.data.QueryStringData){
+
+         var query=param.data.QueryStringData;
+           var querystring=""
+           $.each(query,function(name,val){
+               querystring+="&{0}={1}".format(name,val);
+           });
+           console.log(querystring);
+           _param.url += querystring;
+       }
+
        return _param;
 
 
