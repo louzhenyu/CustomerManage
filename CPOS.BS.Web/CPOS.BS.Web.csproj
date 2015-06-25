@@ -6012,6 +6012,9 @@
     <Content Include="Framework\Javascript\Biz\Handler\CitySelectTreeHandler1.ashx" />
     <Content Include="Framework\Javascript\Other\kindeditor\asp.net\upload_homepage_json.ashx" />
     <Content Include="ApplicationInterface\Gateway.ashx" />
+    <Compile Include="ApplicationInterface\AllWin\RetailTrader.ashx.cs">
+      <DependentUpon>RetailTrader.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\AllWin\SysRetailRewardRule.ashx.cs">
       <DependentUpon>SysRetailRewardRule.ashx</DependentUpon>
     </Compile>
@@ -6077,6 +6080,7 @@
     <Content Include="ApplicationInterface\Module\Item\ItemNewHandler.ashx" />
     <Content Include="ApplicationInterface\AllWin\SysRetailRewardRule.ashx" />
     <Content Include="ApplicationInterface\Vip\VipTags.ashx" />
+    <Content Include="ApplicationInterface\AllWin\RetailTrader.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
