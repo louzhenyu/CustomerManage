@@ -119,15 +119,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             var bll = new RetailTraderBLL(loggingSessionInfo);
             var rd = new SaveRetailTraderRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
-            //
-            var ds = bll.getRetailTraderInfoByLogin(rp.Parameters.RetailTraderInfo.RetailTraderLogin, "", loggingSessionInfo.ClientID);
+            //判断登陆名是否有重复的，要从ap库里取
+            var ds = bll.getRetailTraderInfoByLogin2(rp.Parameters.RetailTraderInfo.RetailTraderLogin, "", loggingSessionInfo.ClientID);
             var retailTraderInfo = new RetailTraderInfo();
             //判断账号是否存在
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
                 var tempDt = ds.Tables[0];
                 retailTraderInfo = DataTableToObject.ConvertToObject<RetailTraderInfo>(tempDt.Rows[0]);//直接根据所需要的字段反序列化
-                if (retailTraderInfo.RetailTraderID != rp.Parameters.RetailTraderInfo.RetailTraderID)
+                if (retailTraderInfo.RetailTraderID != rp.Parameters.RetailTraderInfo.RetailTraderID)//如果取出来的实体的id和传过来的参数的id不一样，说明不是同一个实体
                 {
                     rsp.Message = "该登陆账号已经存在，不能重复使用";
                     rsp.ResultCode = 137;
@@ -170,12 +170,23 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             if (rp.Parameters.RetailTraderInfo.RetailTraderID == null || rp.Parameters.RetailTraderInfo.RetailTraderID.ToString() == "")
             {
                 bll.Create(en);
-                rp.Parameters.RetailTraderInfo.RetailTraderID = en.RetailTraderID;//为了返回数据时使用
+              //  rp.Parameters.RetailTraderInfo.RetailTraderID = en.RetailTraderID;//为了返回数据时使用
             }
             else
             {
                 bll.Update(en, null, false);//不更新空值的字段
             }
+            //另外要保存到ap库里，这样才能登陆时从ap库里统一取出分销商信息，和对应的customerid
+            if (rp.Parameters.RetailTraderInfo.RetailTraderID == null || rp.Parameters.RetailTraderInfo.RetailTraderID.ToString() == "")
+            {
+                bll.Create2Ap(en);//ap库里的RetailTraderID和商户里的RetailTraderID是一样的
+               rp.Parameters.RetailTraderInfo.RetailTraderID = en.RetailTraderID;//为了返回数据时使用,到这里才赋值***
+            }
+            else
+            {
+                bll.Update2Ap(en, null, false);//不更新空值的字段
+            }
+
             //如果IsNewHeadImg为1时，即上传图片时，则删除之前的关联图片（逻辑删除）
             if (rp.Parameters.IsNewHeadImg == 1)
             {
@@ -307,11 +318,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<RetailTraderLoginRP>>();
 
-            string customerCode = rp.Parameters.CustomerCode;
-            if (string.IsNullOrEmpty(customerCode))
-            {
-                throw new APIException("客户代码不能为空") { ErrorCode = 135 };
-            }
+            //string customerCode = rp.Parameters.CustomerCode;
+            //if (string.IsNullOrEmpty(customerCode))
+            //{
+            //    throw new APIException("客户代码不能为空") { ErrorCode = 135 };
+            //}
 
             if (rp.Parameters.RetailTraderLogin == null)
             {
@@ -321,25 +332,50 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             {
                 throw new APIException("缺少参数【RetailTraderPass】或参数值为空") { ErrorCode = 135 };
             }
+           // var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+
+            //WMenuBLL menuServer = new WMenuBLL(Default.GetAPLoggingSession(""));
+            //string customerId = menuServer.GetCustomerIDByCustomerCode(customerCode);
+
+            //if (string.IsNullOrEmpty(customerId))
+            //{
+            //    throw new APIException("客户代码对应的客户不存在") { ErrorCode = Error_CustomerCode_NotExist };
+            //}
 
 
-            WMenuBLL menuServer = new WMenuBLL(Default.GetAPLoggingSession(""));
-            string customerId = menuServer.GetCustomerIDByCustomerCode(customerCode);
+            var bll2 = new RetailTraderBLL(Default.GetAPLoggingSession(""));//用空的登陆信息去查
 
-            if (string.IsNullOrEmpty(customerId))
+            var ds = bll2.getRetailTraderInfoByLogin2(rp.Parameters.RetailTraderLogin, "", "");
+            var retailTraderInfo = new RetailTraderInfo();
+
+
+            var rd = new SaveRetailTraderRD();
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            string customerId = "";
+            //判断账号是否存在
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
-                throw new APIException("客户代码对应的客户不存在") { ErrorCode = Error_CustomerCode_NotExist };
+                var tempDt = ds.Tables[0];
+                retailTraderInfo = DataTableToObject.ConvertToObject<RetailTraderInfo>(tempDt.Rows[0]);//直接根据所需要的字段反序列化
+              
+                customerId = retailTraderInfo.CustomerId;
+            }    else
+            {
+                rsp.Message = "登陆名不存在";
+                rsp.ResultCode = 136;
+                return rsp.ToJSON();
             }
+
+        
 
             var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
             var bll = new RetailTraderBLL(loggingSessionInfo);
 
 
-            var rd = new SaveRetailTraderRD();
-            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+           
             //获取分销商的信息，包括头像等loggingSessionInfo.ClientID
-            var ds = bll.getRetailTraderInfoByLogin(rp.Parameters.RetailTraderLogin, "", loggingSessionInfo.ClientID);
-            var retailTraderInfo = new RetailTraderInfo();
+            ds = bll.getRetailTraderInfoByLogin(rp.Parameters.RetailTraderLogin, "", loggingSessionInfo.ClientID);
+            retailTraderInfo = new RetailTraderInfo();
             //判断账号是否存在
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {

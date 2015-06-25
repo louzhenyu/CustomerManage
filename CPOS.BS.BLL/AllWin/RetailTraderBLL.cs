@@ -33,6 +33,19 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class RetailTraderBLL
     {
+        /// <summary>
+        /// 创建一个新实例到ap库
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        public void Create2Ap(RetailTraderEntity pEntity)
+        {
+            _currentDAO.Create2Ap(pEntity,null);//没用事务
+        }
+        public void Update2Ap(RetailTraderEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
+        {
+            _currentDAO.Update2Ap(pEntity, pTran, pIsUpdateNullField);
+        }
+
 
         public int getMaxRetailTraderCode(string CustomerID)
         {
@@ -41,6 +54,12 @@ namespace JIT.CPOS.BS.BLL
         public DataSet getRetailTraderInfoByLogin(string LoginName, string RetailTraderID, string CustomerID)
         {
             return this._currentDAO.getRetailTraderInfoByLogin(LoginName, RetailTraderID, CustomerID);
+        }
+
+        //从ap库里取信息，用于统一保存分销商信息和登陆时取customerID
+        public DataSet getRetailTraderInfoByLogin2(string LoginName, string RetailTraderID, string CustomerID)
+        {
+            return this._currentDAO.getRetailTraderInfoByLogin2(LoginName, RetailTraderID, CustomerID);
         }
 
         public DataSet GetRetailTradersBySellUser(string RetailTraderName, string UserID, string CustomerID)

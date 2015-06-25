@@ -28,9 +28,13 @@ using JIT.Utility.Log;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
+using System.Configuration;
 
 namespace JIT.CPOS.BS.DataAccess
 {
+
+
+
 
     /// <summary>
     /// 数据访问： 分销商包含门店和个人 
@@ -42,6 +46,200 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class RetailTraderDAO : Base.BaseCPOSDAO, ICRUDable<RetailTraderEntity>, IQueryable<RetailTraderEntity>
     {
+
+        /// <summary>
+        /// 在事务内创建一个新实例
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Create2Ap(RetailTraderEntity pEntity, IDbTransaction pTran)
+        {
+            //参数校验
+            if (pEntity == null)
+                throw new ArgumentNullException("pEntity");
+
+            //初始化固定字段
+            pEntity.IsDelete = 0;
+            pEntity.CreateTime = DateTime.Now;
+            pEntity.LastUpdateTime = pEntity.CreateTime;
+            pEntity.CreateBy = CurrentUserInfo.UserID;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+
+
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("insert into [RetailTrader](");
+            strSql.Append("[RetailTraderCode],[RetailTraderName],[RetailTraderLogin],[RetailTraderPass],[RetailTraderType],[RetailTraderMan],[RetailTraderPhone],[RetailTraderAddress],[CooperateType],[SellUserID],[UnitID],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[Status],[RetailTraderID])");
+            strSql.Append(" values (");
+            strSql.Append("@RetailTraderCode,@RetailTraderName,@RetailTraderLogin,@RetailTraderPass,@RetailTraderType,@RetailTraderMan,@RetailTraderPhone,@RetailTraderAddress,@CooperateType,@SellUserID,@UnitID,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@Status,@RetailTraderID)");
+
+            string pkString = pEntity.RetailTraderID;
+
+            SqlParameter[] parameters = 
+            {
+					new SqlParameter("@RetailTraderCode",SqlDbType.Int),
+					new SqlParameter("@RetailTraderName",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderLogin",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderPass",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderType",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderMan",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderPhone",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderAddress",SqlDbType.NVarChar),
+					new SqlParameter("@CooperateType",SqlDbType.NVarChar),
+					new SqlParameter("@SellUserID",SqlDbType.NVarChar),
+					new SqlParameter("@UnitID",SqlDbType.NVarChar),
+					new SqlParameter("@CreateTime",SqlDbType.DateTime),
+					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
+					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
+					new SqlParameter("@Status",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderID",SqlDbType.NVarChar)
+            };
+            parameters[0].Value = pEntity.RetailTraderCode;
+            parameters[1].Value = pEntity.RetailTraderName;
+            parameters[2].Value = pEntity.RetailTraderLogin;
+            parameters[3].Value = pEntity.RetailTraderPass;
+            parameters[4].Value = pEntity.RetailTraderType;
+            parameters[5].Value = pEntity.RetailTraderMan;
+            parameters[6].Value = pEntity.RetailTraderPhone;
+            parameters[7].Value = pEntity.RetailTraderAddress;
+            parameters[8].Value = pEntity.CooperateType;
+            parameters[9].Value = pEntity.SellUserID;
+            parameters[10].Value = pEntity.UnitID;
+            parameters[11].Value = pEntity.CreateTime;
+            parameters[12].Value = pEntity.CreateBy;
+            parameters[13].Value = pEntity.LastUpdateBy;
+            parameters[14].Value = pEntity.LastUpdateTime;
+            parameters[15].Value = pEntity.IsDelete;
+            parameters[16].Value = pEntity.CustomerId;
+            parameters[17].Value = pEntity.Status;
+            parameters[18].Value = pkString;
+
+
+            string conn = ConfigurationManager.AppSettings["APConn"];
+            DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
+            //var result = sqlHelper.ExecuteScalar(sql);
+            //return result == null || result == DBNull.Value ? string.Empty : result.ToString();
+
+            //执行并将结果回写
+            int result;
+            if (pTran != null)
+                result = sqlHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+            else
+                result = sqlHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
+            pEntity.RetailTraderID = pkString;
+        }
+
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update2Ap(RetailTraderEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
+        {
+            //参数校验
+            if (pEntity == null)
+                throw new ArgumentNullException("pEntity");
+            if (pEntity.RetailTraderID == null)
+            {
+                throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
+            }
+            //初始化固定字段
+            pEntity.LastUpdateTime = DateTime.Now;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+
+
+            //组织参数化SQL
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("update [RetailTrader] set ");
+            if (pIsUpdateNullField || pEntity.RetailTraderCode != null)
+                strSql.Append("[RetailTraderCode]=@RetailTraderCode,");
+            if (pIsUpdateNullField || pEntity.RetailTraderName != null)
+                strSql.Append("[RetailTraderName]=@RetailTraderName,");
+            if (pIsUpdateNullField || pEntity.RetailTraderLogin != null)
+                strSql.Append("[RetailTraderLogin]=@RetailTraderLogin,");
+            if (pIsUpdateNullField || pEntity.RetailTraderPass != null)
+                strSql.Append("[RetailTraderPass]=@RetailTraderPass,");
+            if (pIsUpdateNullField || pEntity.RetailTraderType != null)
+                strSql.Append("[RetailTraderType]=@RetailTraderType,");
+            if (pIsUpdateNullField || pEntity.RetailTraderMan != null)
+                strSql.Append("[RetailTraderMan]=@RetailTraderMan,");
+            if (pIsUpdateNullField || pEntity.RetailTraderPhone != null)
+                strSql.Append("[RetailTraderPhone]=@RetailTraderPhone,");
+            if (pIsUpdateNullField || pEntity.RetailTraderAddress != null)
+                strSql.Append("[RetailTraderAddress]=@RetailTraderAddress,");
+            if (pIsUpdateNullField || pEntity.CooperateType != null)
+                strSql.Append("[CooperateType]=@CooperateType,");
+            if (pIsUpdateNullField || pEntity.SellUserID != null)
+                strSql.Append("[SellUserID]=@SellUserID,");
+            if (pIsUpdateNullField || pEntity.UnitID != null)
+                strSql.Append("[UnitID]=@UnitID,");
+
+            if (pIsUpdateNullField || pEntity.CustomerId != null)
+                strSql.Append("[CustomerId]=@CustomerId,");
+            if (pIsUpdateNullField || pEntity.Status != null)
+                strSql.Append("[Status]=@Status,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy != null)
+                strSql.Append("[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
+                strSql.Append("[LastUpdateTime]=@LastUpdateTime");
+
+            strSql.Append(" where RetailTraderID=@RetailTraderID ");
+            SqlParameter[] parameters = 
+            {
+					new SqlParameter("@RetailTraderCode",SqlDbType.Int),
+					new SqlParameter("@RetailTraderName",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderLogin",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderPass",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderType",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderMan",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderPhone",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderAddress",SqlDbType.NVarChar),
+					new SqlParameter("@CooperateType",SqlDbType.NVarChar),
+					new SqlParameter("@SellUserID",SqlDbType.NVarChar),
+					new SqlParameter("@UnitID",SqlDbType.NVarChar),
+					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
+					new SqlParameter("@Status",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderID",SqlDbType.NVarChar)
+            };
+            parameters[0].Value = pEntity.RetailTraderCode;
+            parameters[1].Value = pEntity.RetailTraderName;
+            parameters[2].Value = pEntity.RetailTraderLogin;
+            parameters[3].Value = pEntity.RetailTraderPass;
+            parameters[4].Value = pEntity.RetailTraderType;
+            parameters[5].Value = pEntity.RetailTraderMan;
+            parameters[6].Value = pEntity.RetailTraderPhone;
+            parameters[7].Value = pEntity.RetailTraderAddress;
+            parameters[8].Value = pEntity.CooperateType;
+            parameters[9].Value = pEntity.SellUserID;
+            parameters[10].Value = pEntity.UnitID;
+            parameters[11].Value = pEntity.LastUpdateBy;
+            parameters[12].Value = pEntity.LastUpdateTime;
+            parameters[13].Value = pEntity.CustomerId;
+            parameters[14].Value = pEntity.Status;
+            parameters[15].Value = pEntity.RetailTraderID;
+
+            string conn = ConfigurationManager.AppSettings["APConn"];
+            DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
+            //执行语句
+            //int result = 0;
+            //if (pTran != null)
+            //    result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+            //else
+            //    result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
+            //执行并将结果回写
+            int result;
+            if (pTran != null)
+                result = sqlHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+            else
+                result = sqlHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
+          //  pEntity.RetailTraderID = pkString;
+        }
+
         public int getMaxRetailTraderCode(string CustomerID)
         {
             List<SqlParameter> ls = new List<SqlParameter>();
@@ -76,6 +274,32 @@ namespace JIT.CPOS.BS.DataAccess
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());    //计算总行数
             return ds;
         }
+        public DataSet getRetailTraderInfoByLogin2(string LoginName, string RetailTraderID, string CustomerID)
+        {
+            List<SqlParameter> ls = new List<SqlParameter>();
+           // ls.Add(new SqlParameter("@CustomerId", CustomerID));
+
+            string sql = @"select *
+                                    from RetailTrader a where 1=1  ";//and a.CustomerId=@CustomerId
+            if (!string.IsNullOrEmpty(LoginName))
+            {
+                ls.Add(new SqlParameter("@LoginName", LoginName));
+                sql += " and a.RetailTraderLogin=@LoginName";
+            }
+
+            if (!string.IsNullOrEmpty(RetailTraderID))
+            {
+                ls.Add(new SqlParameter("@RetailTraderID", RetailTraderID));
+                sql += " and a.RetailTraderID=@RetailTraderID";
+            }
+            //DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());    //计算总行数          
+            string conn = ConfigurationManager.AppSettings["APConn"];
+            DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
+            DataSet ds = sqlHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());
+           return ds;
+        }
+
+
 
         public DataSet GetRetailTradersBySellUser(string RetailTraderName, string UserID, string CustomerID)
         {
