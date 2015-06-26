@@ -156,6 +156,14 @@ namespace JIT.CPOS.BS.DataAccess
                     {
                         m.VipName = Convert.ToString(rdr["VipName"]);
                     }
+                    if (rdr["CardNo"] != DBNull.Value)
+                    {
+                        m.CardNo = Convert.ToString(rdr["CardNo"]);
+                    }
+                    if (rdr["AccountName"] != DBNull.Value)
+                    {
+                        m.AccountName = Convert.ToString(rdr["AccountName"]);
+                    }
                     list.Add(m);
                 }
             }
@@ -231,6 +239,14 @@ namespace JIT.CPOS.BS.DataAccess
                     if (rdr["user_name"] != DBNull.Value)
                     {
                         m.VipName = Convert.ToString(rdr["user_name"]);
+                    }
+                    if (rdr["CardNo"] != DBNull.Value)
+                    {
+                        m.CardNo = Convert.ToString(rdr["CardNo"]);
+                    }
+                    if (rdr["AccountName"] != DBNull.Value)
+                    {
+                        m.AccountName = Convert.ToString(rdr["AccountName"]);
                     }
                     list.Add(m);
                 }
@@ -309,6 +325,14 @@ namespace JIT.CPOS.BS.DataAccess
                     if (rdr["RetailTraderName"] != DBNull.Value)
                     {
                         m.VipName = Convert.ToString(rdr["RetailTraderName"]);
+                    }
+                    if (rdr["CardNo"] != DBNull.Value)
+                    {
+                        m.CardNo = Convert.ToString(rdr["CardNo"]);
+                    }
+                    if (rdr["AccountName"] != DBNull.Value)
+                    {
+                        m.AccountName = Convert.ToString(rdr["AccountName"]);
                     }
                     list.Add(m);
                 }
