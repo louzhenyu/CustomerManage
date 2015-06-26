@@ -394,10 +394,13 @@
 
 
                 that.loadData.get_unit_tree(function(datas) {
-                    var data=[{}];
+                    var data=[{},{}];
                     data[0]["id"]=window.UnitID;
                     data[0]["text"]=window.UnitName;
                     data[0].children=datas;
+                    data[1]["id"]="";
+                    data[1]["text"]="请选择门店";
+                    data[1].children=[];
                     that.unitTree=data;
                     $("#unitTree").combotree({
                         panelWidth:220,
@@ -513,7 +516,7 @@
                 RetailTraderAddress:"" ,   //分销商地址
                 RetailTraderMan:"" ,   //联系人
                 Status:"" ,  //状态
-                UnitID:window.UnitID
+                UnitID:''
             },
             getUitTree:{
                 node:window.UnitID
