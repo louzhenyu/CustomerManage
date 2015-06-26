@@ -243,6 +243,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             en.IsTemplate = 0;
             en.CooperateType = retailTraderInfo.CooperateType;
             en.RetailTraderID = rp.Parameters.RetailTraderID;
+            en.CustomerId = rp.CustomerID;
             en.IsDelete = 0;
             //获取奖励模板
             ruleList = _SysRetailRewardRuleBLL.QueryByEntity(en, null);
@@ -255,6 +256,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
                 en2.IsTemplate = 1;
                 en2.CooperateType = retailTraderInfo.CooperateType;
                 en2.IsDelete = 0;
+                en2.CustomerId = rp.CustomerID;//加上这个，否则多个客户的奖励规则一起取了
                 //获取奖励模板
                 ruleList = _SysRetailRewardRuleBLL.QueryByEntity(en2, null);//这里不能用en了，用en会包含之前的RetailTraderID属性了
             }
