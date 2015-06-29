@@ -123,6 +123,8 @@
                         if (configData[i].SettingCode == "SocialSalesType") {
                             var selectr = "[data-socialsalestype='" + configData[i].SettingValue + "']";
                             $(selectr).trigger("click");
+                        }else{
+                            $("[data-socialsalestype='0']").trigger("click");
                         }
                     }
                     //EnableIntegral 积分  // EnableRewardCash 返现
