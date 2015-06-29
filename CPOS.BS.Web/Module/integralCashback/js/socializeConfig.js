@@ -21,7 +21,7 @@
                 height:32
             });
             var that = this;
-            that.elems.sectionPage.delegate(".radio","click",function(e){
+        /*    that.elems.sectionPage.delegate(".radio","click",function(e){
                var me= $(this), name= me.data("name");
                 me.toggleClass("on");
                 if(name){
@@ -40,7 +40,7 @@
                 });
                 me.siblings().find(".textbox.numberbox").css({"background":"#fff"});
                 $.util.stopBubble(e);
-            });
+            });*/
 
             that.elems.sectionPage.delegate(".checkBox","click",function(e){
                 var me= $(this);
@@ -49,9 +49,16 @@
 
                 if(!me.hasClass("on")) {
                     me.siblings().find(".textbox.numberbox").css({"background": "#efefef"});
+                    me.siblings().find(".easyui-numberbox").numberbox({
+                        disabled:true
+                        //required: true
+                    });
                 }else{
                     me.siblings().find(".textbox.numberbox").css({"background":"#fff"});
-
+                    me.siblings().find(".easyui-numberbox").numberbox({
+                        disabled:false
+                        //required: true
+                    });
                 }
                 $.util.stopBubble(e);
 
@@ -104,8 +111,8 @@
                                 loadData[fileds[j].name]=configData[i].SettingValue;
                             }
                         }
-
-
+                        $("[data-flag='EnableEmployeeSales']").trigger("click").trigger("click");
+                        $("[data-flag='EnableVipSales']").trigger("click").trigger("click");
                         if (configData[i].SettingCode == "EnableEmployeeSales") {
                             if (configData[i].SettingValue == 1) {
                                 $("[data-flag='EnableEmployeeSales']").trigger("click");

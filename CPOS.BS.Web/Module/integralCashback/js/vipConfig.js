@@ -54,17 +54,17 @@
                 debugger;
 
                  if(!me.hasClass("on")) {
-                  /*   me.siblings().find(".easyui-numberbox").numberbox({
+                     me.siblings().find(".easyui-numberbox").numberbox({
                          disabled: true
                          //required: false
-                     });*/
+                     });
                      me.siblings().find(".textbox.numberbox").css({"background": "#efefef"});
                  }else{
 
-                   /* me.siblings().find(".easyui-numberbox").numberbox({
+                    me.siblings().find(".easyui-numberbox").numberbox({
                         disabled:false
                         //required: true
-                    });*/
+                    });
                     me.siblings().find(".textbox.numberbox").css({"background":"#fff"});
 
                 }
@@ -119,7 +119,8 @@
                                }
                            }
 
-
+                           $("[data-flag='EnableIntegral']").trigger("click").trigger("click");
+                           $("[data-flag='EnableRewardCash']").trigger("click").trigger("click");
                            if (configData[i].SettingCode == "EnableIntegral") {
                                if (configData[i].SettingValue == 1) {
                                    $("[data-flag='EnableIntegral']").trigger("click");
