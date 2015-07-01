@@ -2447,7 +2447,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 }
 
             }
-            return res.ToJSON();
+            return res;
         }
         #endregion
 
