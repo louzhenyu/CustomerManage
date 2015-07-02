@@ -130,7 +130,7 @@ namespace JIT.CPOS.BS.Web.Framework.Upload
             var fileName = Common.Utils.NewGuid();
             var fileFullName = fileName + extension;
             var fileLocation = string.Format("{0}/{1}", savepath, fileFullName);
-            postedFile.SaveAs(fileLocation);
+            postedFile.SaveAs(fileLocation);//保存原图
 
             string targetDir = "image/" + Utils.GetTodayString();
             System.Drawing.Image originalImage = System.Drawing.Image.FromFile(fileLocation);
@@ -179,6 +179,26 @@ namespace JIT.CPOS.BS.Web.Framework.Upload
             if (true)
             {
                 int thumbWidth = 480;
+                var thumbFullName = fileName + "_" + thumbWidth.ToString() + extension;
+                var thumbLocation = string.Format("{0}/{1}_{2}{3}", savepath, fileName, thumbWidth, extension);
+                if (MakeThumbnail(originalImage, thumbLocation, thumbWidth, thumbWidth, "W"))
+                {
+                    var thumbImage = new FileInfo(thumbLocation);
+                    string thumbUrl = host + folderPath + thumbFullName;
+                    thumbUrl = getFtpUrl(thumbImage, thumbUrl, targetDir);//上传到ftp
+                    respObj.thumbs.Add(new FileData()
+                    {
+                        url = thumbUrl,
+                        name = thumbFullName,
+                        extension = extension,
+                        size = thumbImage.Length,
+                        type = thumbWidth.ToString()
+                    });
+                }
+            }
+            if (true)//商品详情里用的图片
+            {
+                int thumbWidth = 640;
                 var thumbFullName = fileName + "_" + thumbWidth.ToString() + extension;
                 var thumbLocation = string.Format("{0}/{1}_{2}{3}", savepath, fileName, thumbWidth, extension);
                 if (MakeThumbnail(originalImage, thumbLocation, thumbWidth, thumbWidth, "W"))

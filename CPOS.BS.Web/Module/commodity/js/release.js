@@ -1140,9 +1140,9 @@
 
                   //上传图片并显示
             self.uploadImg(e, function (ele, data) {
-                    $(ele).parent().siblings(".imgPanl").find("img").attr("src",data.url);
+                    $(ele).parent().siblings(".imgPanl").find("img").attr("src",data.file.url);
                     $(ele).parent().siblings(".imglist").find("img").removeClass("on");
-                    $(ele).parent().siblings(".imglist").append('<img class="on" src="' + data.url + '" />');
+                    $(ele).parent().siblings(".imglist").append('<img class="on" src="' + data.file.url+ '" />');
                     self.elems.editLayer.find(".imgPanl").hover(function(){
                         if(self.elems.editLayer.find(".imglist img").length>0){
                             self.elems.editLayer.find(".btnPanel").fadeIn();
@@ -1159,12 +1159,12 @@
                 button: btn,
                 width:50,
                 //上传的文件类型
-                fieldName: 'imgFile',
-                isShow:true,
+                fieldName: 'file',
                 //注意后面的参数，dir表示文件类型，width表示缩略图的宽，height表示高
-                url: '/Framework/Javascript/Other/kindeditor/asp.net/upload_homepage_json.ashx?dir=image&width=600',
+                url: '/Framework/Upload/UploadFile.ashx?method=image',
                 afterUpload: function (data) {
-                    if (data.error === 0) {
+                    debugger;
+                    if (data.success) {
                         if (callback) {
                             debugger  ;
                             callback(btn, data);
@@ -1175,8 +1175,8 @@
 
                         //取原图地址
                         //var url = KE.formatUrl(data.url, 'absolute');
-                    } else {
-                        alert(data.message);
+                    } else{
+                        alert(data.msg);
                     }
                 },
                 afterError: function (str) {

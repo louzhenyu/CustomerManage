@@ -760,7 +760,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             private string imageUrl;
             public string imageURL
             {
-                get { return ImagePathUtil.GetImagePathStr(this.imageUrl, "480"); }  //请求图片缩略图 
+                get { return ImagePathUtil.GetImagePathStr(this.imageUrl, "640"); }  //请求图片缩略图 
                 set { this.imageUrl = value; }
             }
         }

@@ -99,7 +99,7 @@ public class UploadHomePage : IHttpHandler
         //文件保存的物理里地址
         String filePath = dirPath + newFileName;
         //保存文件
-        imgFile.SaveAs(filePath);
+        imgFile.SaveAs(filePath);//保存图片
         //文件相对地址
         String fileUrl = saveUrl + newFileName;
         //设置返回信息，返回值是以JSON数组形式返回的，即前面是key,后面是value
