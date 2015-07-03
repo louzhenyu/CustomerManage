@@ -260,14 +260,33 @@ namespace JIT.CPOS.BS.BLL
             var enableRewardCashSetting = settingList.Where(t => t.SettingCode == "EnableRewardCash").FirstOrDefault();
             //返回积分比例
             var rewardPointsPerSetting = settingList.Where(t => t.SettingCode == "RewardPointsPer").FirstOrDefault();
+            //积分最低使用限制
+            var pointsRedeemLowestLimitSetting = settingList.Where(t => t.SettingCode == "PointsRedeemLowestLimit").FirstOrDefault();
+            //每单赠送积分上限
+            var pointsOrderUpLimitSetting = settingList.Where(t => t.SettingCode == "PointsOrderUpLimit").FirstOrDefault();
             //返现比例
             var rewardCashPerSetting = settingList.Where(t => t.SettingCode == "RewardCashPer").FirstOrDefault();
+            //返现最低使用限制
+            var cashRedeemLowestLimitSetting = settingList.Where(t => t.SettingCode == "CashRedeemLowestLimit").FirstOrDefault();
+            //每单返现上限
+            var cashOrderUpLimitSetting = settingList.Where(t => t.SettingCode == "CashOrderUpLimit").FirstOrDefault();
+            //积分使用上限比例
+            var pointsRedeemUpLimitSetting = settingList.Where(t => t.SettingCode == "PointsRedeemUpLimit").FirstOrDefault();
+            //返现使用上限比例
+            var cashRedeemUpLimitSetting = settingList.Where(t => t.SettingCode == "CashRedeemUpLimit").FirstOrDefault();
 
             int rewardsType = 0;
             int enableIntegral = 0;
             int enableRewardCash = 0;
             decimal rewardPointsPer = 0;
             decimal rewardCashPer = 0;
+            decimal pointsRedeemLowestLimit = 0;
+            decimal cashRedeemLowestLimit = 0;
+            int pointsOrderUpLimit = 0;
+            decimal cashOrderUpLimit = 0;
+            decimal pointsRedeemUpLimit = 0;
+            decimal cashRedeemUpLimit = 0;
+
 
             if (rewardsTypeSetting != null)
                 rewardsType = int.Parse(rewardsTypeSetting.SettingValue);
@@ -279,6 +298,19 @@ namespace JIT.CPOS.BS.BLL
                 rewardPointsPer = decimal.Parse(rewardPointsPerSetting.SettingValue);
             if (rewardCashPerSetting != null)
                 rewardCashPer = decimal.Parse(rewardCashPerSetting.SettingValue);
+            if (pointsRedeemLowestLimitSetting != null)
+                pointsRedeemLowestLimit = decimal.Parse(pointsRedeemLowestLimitSetting.SettingValue);
+            if (cashRedeemLowestLimitSetting != null)
+                cashRedeemLowestLimit = decimal.Parse(cashRedeemLowestLimitSetting.SettingValue);
+            if (pointsOrderUpLimitSetting != null)
+                pointsOrderUpLimit = int.Parse(pointsOrderUpLimitSetting.SettingValue);
+            if (cashOrderUpLimitSetting != null)
+                cashOrderUpLimit = decimal.Parse(cashOrderUpLimitSetting.SettingValue);
+            if (pointsRedeemUpLimitSetting != null)
+                pointsRedeemUpLimit = decimal.Parse(pointsRedeemUpLimitSetting.SettingValue);
+            if (cashRedeemUpLimitSetting != null)
+                cashRedeemUpLimit = decimal.Parse(cashRedeemUpLimitSetting.SettingValue);
+
             #endregion
 
 
@@ -296,9 +328,14 @@ namespace JIT.CPOS.BS.BLL
             htSetting["enableRewardCash"] = enableRewardCash;
             htSetting["rewardPointsPer"] = rewardPointsPer;
             htSetting["rewardCashPer"] = rewardCashPer;
+            htSetting["pointsRedeemLowestLimit"] = pointsRedeemLowestLimit;
+            htSetting["cashRedeemLowestLimit"] = cashRedeemLowestLimit;
 
+            htSetting["pointsOrderUpLimit"] = pointsOrderUpLimit;
+            htSetting["cashOrderUpLimit"] = cashOrderUpLimit;
 
-
+            htSetting["pointsRedeemUpLimit"] = pointsRedeemUpLimit;
+            htSetting["cashRedeemUpLimit"] = cashRedeemUpLimit;
             return htSetting;
         }
     }

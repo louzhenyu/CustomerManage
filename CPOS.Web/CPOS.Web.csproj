@@ -3055,6 +3055,7 @@
     <Folder Include="ApplicationInterface\NwEvents\" />
     <Folder Include="Css\" />
     <Folder Include="EMBA\" />
+    <Folder Include="Images\mingLong\question4\" />
     <Folder Include="Lj\qrcode_images\" />
     <Folder Include="OnlineClothing\boot\js\" />
     <Folder Include="qrcode_images\" />

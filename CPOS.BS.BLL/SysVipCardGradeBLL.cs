@@ -45,5 +45,36 @@ namespace JIT.CPOS.BS.BLL
             return _currentDAO.GetVipLevelCount(levelId);
         }
         #endregion
+        /// <summary>
+        /// 获取会员折扣
+        /// </summary>
+        /// <returns></returns>
+        public decimal GetVipDiscount()
+        {
+            decimal vipDiscount = 1;    //会员折扣
+            //判断是否启用会员折扣
+            var basicSettingBLL = new CustomerBasicSettingBLL(CurrentUserInfo);
+            var vipBLL = new VipBLL(CurrentUserInfo);
+            var sysVipCardGradeBLL = new SysVipCardGradeBLL(CurrentUserInfo);
+            string vipDiscountSetting = basicSettingBLL.GetSettingValueByCode("VipCardGradeSalesPreferentia");
+            if (!string.IsNullOrEmpty(vipDiscountSetting))
+            {
+                if (int.Parse(vipDiscountSetting) > 0)//启用
+                {
+                    var vipInfo = vipBLL.GetByID(CurrentUserInfo.UserID);
+                    if (vipInfo != null)
+                    {
+                        if (vipInfo.VipLevel>0)
+                        {
+                            //获取会员等级折扣
+                            var sysVipCardGradeInfo = sysVipCardGradeBLL.GetByID(vipInfo.VipLevel);
+                            if (sysVipCardGradeInfo != null)
+                                vipDiscount = sysVipCardGradeInfo.SalesPreferentiaAmount.Value;
+                        }
+                    }
+                }
+            }
+            return vipDiscount;
+        }
     }
 }

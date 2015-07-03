@@ -20,5 +20,6 @@ namespace JIT.CPOS.DTO.Module.Basic.Customer.Request
         public double VDistributionPricePer { get; set; }
         public double VOrderCommissionPer { get; set; }
 
+        public double GetVipUserOrderPer { get; set; }
     }
 }

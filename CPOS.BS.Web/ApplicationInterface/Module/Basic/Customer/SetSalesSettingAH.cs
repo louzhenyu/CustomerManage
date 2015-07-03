@@ -58,6 +58,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                 SettingCode = "VOrderCommissionPer",
                 SettingValue = para.VOrderCommissionPer.ToString()
             });
+            list.Add(new CustomerBasicSettingEntity()
+            {
+                SettingCode = "GetVipUserOrderPer",
+                SettingValue = para.GetVipUserOrderPer.ToString()
+            });
             int i = customerBasicSettingBLL.SaveustomerBasicrInfo(list);
 
             return rd;

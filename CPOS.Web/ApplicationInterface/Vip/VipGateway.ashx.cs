@@ -21,6 +21,7 @@ using System.Configuration;
 using JIT.Utility.Log;
 using JIT.Utility.Web;
 using JIT.Utility.DataAccess.Query;
+using System.Collections;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Vip
 {
@@ -39,7 +40,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<GetVipIntegralRP>>();
 
-            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
 
             var rd = new GetVipIntegralRD();
             var bll = new VipBLL(loggingSessionInfo);
@@ -49,30 +50,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             {
                 throw new APIException("缺少参数【skuIdAndQty】或参数值为空") { ErrorCode = 135 };
             }
+            //获取社会化销售配置和积分返现配置
+            var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+            Hashtable htSetting = basicSettingBll.GetSocialSetting();
 
-            #region 获取奖励配置 add by Henry 2015-4-13
-            var customerBasicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
-            //所有商户配置
-            var settingList = customerBasicSettingBll.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = loggingSessionInfo.ClientID }, null);
-            //奖励类型 0=按订单；1=按商品
-            int rewardsType = 0;
-            var rewardsTypeSetting = settingList.Where(t => t.SettingCode == "RewardsType").FirstOrDefault();
-            //积分启用配置
-            CustomerBasicSettingEntity enableIntegralSetting = settingList.Where(t => t.SettingCode == "EnableIntegral").FirstOrDefault();
-            //积分使用上限 
-            CustomerBasicSettingEntity pointsRedeemUpLimit = settingList.Where(t => t.SettingCode == "PointsRedeemUpLimit").FirstOrDefault();
-            //返现启用配置
-            var enableRewardCashSetting = settingList.Where(t => t.SettingCode == "EnableRewardCash").FirstOrDefault();
-            //返现使用上限
-            var cashRedeemUpLimit = settingList.Where(t => t.SettingCode == "CashRedeemUpLimit").FirstOrDefault();
-
-            if (rewardsTypeSetting != null)
-                rewardsType = int.Parse(rewardsTypeSetting.SettingValue);
-            if (enableIntegralSetting != null)
-                rd.EnableIntegral = int.Parse(enableIntegralSetting.SettingValue);
-            if (enableRewardCashSetting != null)
-                rd.EnableRewardCash = int.Parse(enableRewardCashSetting.SettingValue);
-            #endregion
+            rd.EnableIntegral = int.Parse(htSetting["enableIntegral"].ToString());
+            rd.EnableRewardCash = int.Parse(htSetting["enableRewardCash"].ToString());
 
             //1.根据skuId和数量获取该商品的积分和金额
             string skuIdList = skuIdAndQty.Aggregate("",
@@ -105,19 +88,21 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 {
                     decimal validIntegral = vipIntegralEntity.ValidIntegral ?? 0;//会员积分
 
-                    decimal totalIntegral = 0;  //可使用积分                
-                    if (rewardsType == 1)       //按商品奖励
+                    int totalIntegral = 0;      //可使用积分(取整)                
+                    if (int.Parse(htSetting["rewardsType"].ToString()) == 1)       //按商品奖励
                     {
-                        totalIntegral = bll.GetIntegralBySkuId(skuIdList);
+                        totalIntegral = (int)Math.Round(bll.GetIntegralBySkuId(skuIdList), 1);
                     }
                     else//按订单奖励
                     {
-                        totalIntegral = totalPayAmount * (decimal.Parse(pointsRedeemUpLimit.SettingValue) / 100) / integralAmountPre;//可使用的积分
+                        totalIntegral = (int)Math.Round(totalPayAmount * (decimal.Parse(htSetting["pointsRedeemUpLimit"].ToString()) / 100) / integralAmountPre, 1); ;//可使用的积分
                     }
                     rd.Integral = validIntegral > totalIntegral ? totalIntegral : validIntegral;
+
                     rd.IntegralAmount = rd.Integral * integralAmountPre;
                     rd.IntegralDesc = "使用积分" + rd.Integral.ToString("0") + ",可兑换"
                                       + rd.IntegralAmount.ToString("0.00") + "元";
+                    rd.PointsRedeemLowestLimit = int.Parse(htSetting["pointsRedeemLowestLimit"].ToString());
                 }
             }
             #endregion
@@ -132,8 +117,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     //累计返现金额
                     decimal returnAmount = vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value;
                     //订单可使用最大返现金额
-                    decimal returnAmountOrder = totalPayAmount * (decimal.Parse(cashRedeemUpLimit.SettingValue) / 100);
+                    decimal returnAmountOrder = totalPayAmount * (decimal.Parse(htSetting["cashRedeemUpLimit"].ToString()) / 100);
                     rd.ReturnAmount = returnAmount > returnAmountOrder ? returnAmountOrder : returnAmount;
+                    rd.CashRedeemLowestLimit = decimal.Parse(htSetting["cashRedeemLowestLimit"].ToString());
                 }
             }
             #endregion
@@ -141,6 +127,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             var vipEndAmount = bll.GetVipEndAmount(rp.UserID);
             //rd.VipEndAmount = totalPayAmount > vipEndAmount ? vipEndAmount : totalPayAmount;
             rd.VipEndAmount = vipEndAmount;
+
+            //获取会员折扣
+            var sysVipCardGradeBLL = new SysVipCardGradeBLL(loggingSessionInfo);
+            decimal vipDiscount = sysVipCardGradeBLL.GetVipDiscount();
+            rd.VipDiscount = vipDiscount;
+
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
 
             return rsp.ToJSON();
@@ -174,14 +166,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 totalPayAmount = bll.GetTotalSaleAmountBySkuId(skuIdList);
             }
             var rd = new GetVipCouponRD();
-            var ds = bll.GetVipCouponDataSet(rp.UserID, totalPayAmount, rp.Parameters.UsableRange, rp.Parameters.ObjectID,rp.Parameters.Type);
+            var ds = bll.GetVipCouponDataSet(rp.UserID, totalPayAmount, rp.Parameters.UsableRange, rp.Parameters.ObjectID, rp.Parameters.Type);
 
             if (ds.Tables[0].Rows.Count > 0)
             {
                 var temp = ds.Tables[0].AsEnumerable().Select(t => new CouponInfo()
                 {
                     CouponId = t["CouponID"].ToString(),
-                    CouponCode=t["CouponCode"].ToString(),
+                    CouponCode = t["CouponCode"].ToString(),
                     CouponAmount = Convert.ToDecimal(t["parValue"]),
                     CouponName = t["CoupnName"].ToString(),
                     CouponDesc = t["CouponDesc"].ToString(),
@@ -408,9 +400,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         public string SetOrderStatus(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<SetOrderStatusRP>>();
-            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
 
             decimal discountAmount = 0;
+
+            //会员折扣
+            var sysVipCardGradeBLL = new SysVipCardGradeBLL(loggingSessionInfo);
+            decimal vipDiscount = sysVipCardGradeBLL.GetVipDiscount();
 
             #region 原订单提交接口，没有关于阿拉丁的部分
 
@@ -678,6 +674,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     {
                         throw new APIException("此订单Id无效") { ErrorCode = 103 };
                     }
+
+                    #region 会员折扣
+                    if (vipDiscount > 0)
+                    {
+                        discountAmount = discountAmount + (tInoutEntity.TotalAmount.Value - (tInoutEntity.TotalAmount.Value * vipDiscount));
+                        tInoutEntity.DiscountRate = vipDiscount * 100;
+                    }
+                    #endregion
                     //tInoutEntity.ActualAmount = 1;
 
                     //根据订单得到应付金额 
@@ -730,43 +734,41 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
                     //【已付款】同步ald订单
                     #region 更新阿拉丁订单状态
-                    {
-                        var orderbll = new InoutService(loggingSessionInfo);
-                        var orderInfo = orderbll.GetInoutInfoById(orderId);
-                        if (orderInfo.Field3 == "1")
-                        {
-                            Loggers.Debug(new DebugLogInfo() { Message = string.Format("更新O2OMarketing订单状态成功[OrderID={0}].", orderId) });
-                            //更新阿拉丁的订单状态
-                            JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatus aldChangeOrder = new JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatus();
-                            if (string.IsNullOrEmpty(orderInfo.vip_no))
-                                throw new Exception("会员ID不能为空,OrderID:" + orderId);
-                            aldChangeOrder.MemberID = new Guid(orderInfo.vip_no);
-                            aldChangeOrder.SourceOrdersID = orderId;
-                            aldChangeOrder.Status = int.Parse(orderInfo.status);
-                            if (tInoutEntity.ActualAmount == 0)
-                            {
-                                aldChangeOrder.IsPaid = true;
-                            }
-                            JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatusRequest aldRequest = new JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatusRequest();
-                            aldRequest.BusinessZoneID = 1;//写死
-                            aldRequest.Locale = 1;
+                    //{
+                    //    var orderbll = new InoutService(loggingSessionInfo);
+                    //    var orderInfo = orderbll.GetInoutInfoById(orderId);
+                    //    if (orderInfo.Field3 == "1")
+                    //    {
+                    //        Loggers.Debug(new DebugLogInfo() { Message = string.Format("更新O2OMarketing订单状态成功[OrderID={0}].", orderId) });
+                    //        //更新阿拉丁的订单状态
+                    //        JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatus aldChangeOrder = new JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatus();
+                    //        if (string.IsNullOrEmpty(orderInfo.vip_no))
+                    //            throw new Exception("会员ID不能为空,OrderID:" + orderId);
+                    //        aldChangeOrder.MemberID = new Guid(orderInfo.vip_no);
+                    //        aldChangeOrder.SourceOrdersID = orderId;
+                    //        aldChangeOrder.Status = int.Parse(orderInfo.status);
+                    //        if (tInoutEntity.ActualAmount == 0)
+                    //        {
+                    //            aldChangeOrder.IsPaid = true;
+                    //        }
+                    //        JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatusRequest aldRequest = new JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDChangeOrderStatusRequest();
+                    //        aldRequest.BusinessZoneID = 1;//写死
+                    //        aldRequest.Locale = 1;
 
-                            aldRequest.UserID = new Guid(orderInfo.vip_no);
-                            aldRequest.Parameters = aldChangeOrder;
-                            var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
-                            var postContent = string.Format("Action=ChangeOrderStatus&ReqContent={0}", aldRequest.ToJSON());
-                            Loggers.Debug(new DebugLogInfo() { Message = "通知ALD更改状态:" + postContent });
-                            var strAldRsp = HttpWebClient.DoHttpRequest(url, postContent);
-                            var aldRsp = strAldRsp.DeserializeJSONTo<JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDResponse>();
-                            if (!aldRsp.IsSuccess())
-                            {
-                                Loggers.Debug(new DebugLogInfo() { Message = string.Format("更新阿拉丁订单状态失败[Request ={0}][Response={1}]", aldRequest.ToJSON(), strAldRsp) });
-                            }
-                        }
-                    }
+                    //        aldRequest.UserID = new Guid(orderInfo.vip_no);
+                    //        aldRequest.Parameters = aldChangeOrder;
+                    //        var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
+                    //        var postContent = string.Format("Action=ChangeOrderStatus&ReqContent={0}", aldRequest.ToJSON());
+                    //        Loggers.Debug(new DebugLogInfo() { Message = "通知ALD更改状态:" + postContent });
+                    //        var strAldRsp = HttpWebClient.DoHttpRequest(url, postContent);
+                    //        var aldRsp = strAldRsp.DeserializeJSONTo<JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDResponse>();
+                    //        if (!aldRsp.IsSuccess())
+                    //        {
+                    //            Loggers.Debug(new DebugLogInfo() { Message = string.Format("更新阿拉丁订单状态失败[Request ={0}][Response={1}]", aldRequest.ToJSON(), strAldRsp) });
+                    //        }
+                    //    }
+                    //}
                     #endregion
-
-
 
                     //根据传的订单ID和customerID来先取出当前的status，如果是100的话就更新total_amount
                     //orderId,  var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
@@ -823,43 +825,43 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             //}
 
             #region 订单状态更新到同步到ALD copy by Henry 2014-09-29
-            InoutService inoutService = new InoutService(loggingSessionInfo);
+            //InoutService inoutService = new InoutService(loggingSessionInfo);
             //判断是否是ALD的订单
-            var orderInfo = inoutService.GetInoutInfoById(orderId);
-            if (orderInfo.Field3 == "1")
-            {
-                var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
-                var request = new JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDOrderRequest()
-                {
-                    Parameters =
-                        new
-                        {
-                            SourceOrdersID = orderId,
-                            Status = orderInfo.status,
-                            MemberID = rp.UserID
-                        }
-                };
-                try
-                {
-                    var resstr = JIT.Utility.Web.HttpClient.GetQueryString(url,
-                        string.Format("Action=ChangeOrderStatus&ReqContent={0}", request.ToJSON()));
-                    Loggers.Debug(new DebugLogInfo() { Message = "调用ALD更改状态接口:" + resstr });
-                    var res =
-                        resstr
-                            .DeserializeJSONTo
-                            <JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDResponse>();
-                    //if (!res.IsSuccess())
-                    //{
-                    //    respdata.code = "105";
-                    //    respdata.description = res.message;
-                    //}
-                }
-                catch (Exception ex)
-                {
-                    Loggers.Exception(new ExceptionLogInfo(ex));
-                    throw new Exception("调用ALD平台失败:" + ex.Message);
-                }
-            }
+            //var orderInfo = inoutService.GetInoutInfoById(orderId);
+            //if (orderInfo.Field3 == "1")
+            //{
+            //    var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
+            //    var request = new JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDOrderRequest()
+            //    {
+            //        Parameters =
+            //            new
+            //            {
+            //                SourceOrdersID = orderId,
+            //                Status = orderInfo.status,
+            //                MemberID = rp.UserID
+            //            }
+            //    };
+            //    try
+            //    {
+            //        var resstr = JIT.Utility.Web.HttpClient.GetQueryString(url,
+            //            string.Format("Action=ChangeOrderStatus&ReqContent={0}", request.ToJSON()));
+            //        Loggers.Debug(new DebugLogInfo() { Message = "调用ALD更改状态接口:" + resstr });
+            //        var res =
+            //            resstr
+            //                .DeserializeJSONTo
+            //                <JIT.CPOS.Web.OnlineShopping.data.DataOnlineShoppingHandler.ALDResponse>();
+            //        //if (!res.IsSuccess())
+            //        //{
+            //        //    respdata.code = "105";
+            //        //    respdata.description = res.message;
+            //        //}
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Loggers.Exception(new ExceptionLogInfo(ex));
+            //        throw new Exception("调用ALD平台失败:" + ex.Message);
+            //    }
+            //}
             #endregion
 
             var rd = new EmptyResponseData();
@@ -1415,6 +1417,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         public decimal VipEndAmount { get; set; }
         //可使用的返现
         public decimal ReturnAmount { get; set; }
+        //积分最低使用限制
+        public int PointsRedeemLowestLimit { get; set; }
+        //返现最低使用限制
+        public decimal CashRedeemLowestLimit { get; set; }
+        //会员折扣
+        public decimal VipDiscount { get; set; }
     }
 
     public class GetVipIntegralRP : IAPIRequestParameter

@@ -1448,7 +1448,7 @@ namespace JIT.CPOS.Web.WeiXin
                             {
 
                                 //给集客员工奖励
-                                subBll.setJiKeGift(vipDCodeInfo.CreateBy, vipId);
+                                //subBll.setJiKeGift(vipDCodeInfo.CreateBy, vipId);
 
                                 //设置集客员工与会集店关系****
                                 dynamic ob = subBll.SetVipOrderSubRun(customerIdUnoin, vipId, 3, vipDCodeInfo.UnitId);

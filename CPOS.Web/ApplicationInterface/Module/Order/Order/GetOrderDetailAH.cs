@@ -205,7 +205,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                                 PropDetailName5 = tt["prop_5_detail_name"].ToString()
                             }).FirstOrDefault(),
                     SalesPrice = Convert.ToDecimal(t["enter_price"]),
-                    DiscountRate = Convert.ToDecimal(t["discount_rate"]),
+                    //DiscountRate = Convert.ToDecimal(t["discount_rate"]),
+                    DiscountRate = Convert.ToDecimal(t["order_discount_rate"]),
                     ItemCategoryName = t["itemCategoryName"].ToString(),
                     BeginDate = t["Field1"].ToString(),
                     EndDate = t["Field2"].ToString(),

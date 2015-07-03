@@ -736,8 +736,8 @@ namespace JIT.CPOS.BS.DataAccess
             
             sql += " ,VipLevelName =  case when  dbo.Fn_GetVipDiscountRate('" + userId + "','" + customerId + "') <> 1 then dbo.Fn_GetVipLevelName('" + userId + "','" + customerId + "') else  '' end ";
             //会员价
-            sql += " ,salesPrice = case when dbo.Fn_GetVipDiscountRate('" + userId + "','" + customerId + "') <> 1 then a.Price * dbo.Fn_GetVipDiscountRate('" + userId + "','" + customerId + "') else a.salesPrice end ";
-
+            //sql += " ,salesPrice = case when dbo.Fn_GetVipDiscountRate('" + userId + "','" + customerId + "') <> 1 then a.Price * dbo.Fn_GetVipDiscountRate('" + userId + "','" + customerId + "') else a.salesPrice end ";
+            sql += " ,a.salesPrice ";
             sql += " ,discountRate = a.DiscountRate ";
             sql += " ,integral = a.Integral ";
             sql += ",EveryoneSalesPrice = a.everyonesalesprice";
