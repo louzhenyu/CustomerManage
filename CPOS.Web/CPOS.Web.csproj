@@ -262,6 +262,18 @@
     <Content Include="Images\mingLong\question3\b2.png" />
     <Content Include="Images\mingLong\question3\topic01.jpg" />
     <Content Include="Images\mingLong\question3\topic02.jpg" />
+    <Content Include="Images\mingLong\question4\a1.png" />
+    <Content Include="Images\mingLong\question4\a2.png" />
+    <Content Include="Images\mingLong\question4\b1.png" />
+    <Content Include="Images\mingLong\question4\b2.png" />
+    <Content Include="Images\mingLong\question4\topic01.jpg" />
+    <Content Include="Images\mingLong\question4\topic02.jpg" />
+    <Content Include="Images\mingLong\question5\a1.png" />
+    <Content Include="Images\mingLong\question5\a2.png" />
+    <Content Include="Images\mingLong\question5\b1.png" />
+    <Content Include="Images\mingLong\question5\b2.png" />
+    <Content Include="Images\mingLong\question5\topic01.jpg" />
+    <Content Include="Images\mingLong\question5\topic02.jpg" />
     <Content Include="Interface\Images\bg.png" />
     <Content Include="Interface\Images\bg2.png" />
     <Content Include="Interface\Images\btn1.png" />
@@ -3055,7 +3067,6 @@
     <Folder Include="ApplicationInterface\NwEvents\" />
     <Folder Include="Css\" />
     <Folder Include="EMBA\" />
-    <Folder Include="Images\mingLong\question4\" />
     <Folder Include="Lj\qrcode_images\" />
     <Folder Include="OnlineClothing\boot\js\" />
     <Folder Include="qrcode_images\" />
