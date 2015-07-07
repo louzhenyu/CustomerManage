@@ -116,7 +116,7 @@
             $('#item_status').combobox("setValue",1);
              // 分类
             that.loadData.getClassify(function(data) {
-                data[0].children.push({id:0,text:"全部"});
+                data[0].children.push({id:0,text:"请选择"});
                 $('#item_category_id').combotree({
                     width:wd,
                     height:H,
@@ -138,7 +138,7 @@
                     data:data
 
                 });
-                data.push({id:0,text:"全部"});
+                data.push({id:0,text:"请选择"});
                 $('#SalesPromotion_id').combobox({
                     width: wd,
                     height: H,

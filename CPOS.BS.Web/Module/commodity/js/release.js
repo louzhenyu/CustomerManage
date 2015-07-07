@@ -106,7 +106,7 @@
                     textField: 'text',
                     data:data[1].children
                 });
-                $('#Category').combotree('setValue',0);
+                $('#Category').combotree('setText',"请选择");
             });
             // 获取促销分组
              that.loadData.getClassifySeach.bat_id="2"; //促销分组  1代表分类
