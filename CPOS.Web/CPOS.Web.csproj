@@ -3068,6 +3068,7 @@
   <ItemGroup>
     <Folder Include="ApplicationInterface\BuyFood\" />
     <Folder Include="ApplicationInterface\Demo\" />
+    <Folder Include="ApplicationInterface\Module\NewAppContent\" />
     <Folder Include="ApplicationInterface\Module\VIP\VipDetail\" />
     <Folder Include="ApplicationInterface\Module\WX\Model\" />
     <Folder Include="ApplicationInterface\NwEvents\" />

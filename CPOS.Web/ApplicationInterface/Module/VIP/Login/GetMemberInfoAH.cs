@@ -51,7 +51,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             rd.MemberInfo.ImageUrl = VipLoginInfo.HeadImgUrl;//会员头像  add by Henry 2014-12-5
             rd.MemberInfo.VipRealName = VipLoginInfo.VipRealName;
             rd.MemberInfo.VipNo = VipLoginInfo.VipCode;
-            rd.MemberInfo.Integration = VipLoginInfo.Integration ?? 0;
+            rd.MemberInfo.Integration = VipLoginInfo.Integration ?? 0;//会员积分
+            //会员等级
             rd.MemberInfo.VipLevelName = string.IsNullOrEmpty(vipLoginBLL.GetVipLeave(UserID)) ? null : vipLoginBLL.GetVipLeave(UserID);
 
             rd.MemberInfo.Status = VipLoginInfo.Status.HasValue?VipLoginInfo.Status.Value:1;
@@ -61,6 +62,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             rd.MemberInfo.MemberBenefits = customerBasicSettingBll.GetMemberBenefits(pRequest.CustomerID);
 
 
+
+            //获取标签信息
+            TagsBLL TagsBLL = new TagsBLL(base.CurrentUserInfo);
+         
+
+            var dsIdentity = TagsBLL.GetVipTagsList("", UserID);//“车主标签”  传7
+            if (dsIdentity != null && dsIdentity.Tables.Count > 0 && dsIdentity.Tables[0].Rows.Count > 0)
+            {
+                rd.IdentityTagsList = DataTableToObject.ConvertToList<TagsInfo>(dsIdentity.Tables[0]).ToArray(); //“年龄段”  传8
+            }
+       
 
             #region 获取注册表单的列明和值
 
@@ -128,10 +140,36 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                 returnAmount = vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value;
                 amount = vipAmountInfo.EndAmount == null ? 0 : vipAmountInfo.EndAmount.Value;
             }
-            rd.MemberInfo.ReturnAmount = returnAmount;
-            rd.MemberInfo.Balance = amount;
+            rd.MemberInfo.ReturnAmount = returnAmount;//返现
+            rd.MemberInfo.Balance = amount;//余额
 
             #endregion
+
+
+            //获取订单的日期和订单的里的商品名称、商品单价、商品数量
+            //先获取订单列表，再获取订单详细信息
+            int? pageSize = 3;//rp.Parameters.PageSize;,只取三条记录
+            int? pageIndex = 1; //rp.Parameters.PageIndex;
+            string OrderBy="";
+            string OrderType="";
+            T_InoutBLL T_InoutBLL=new T_InoutBLL(CurrentUserInfo);
+            InoutService InoutService=new InoutService(CurrentUserInfo);
+            //只取状态为700的
+            //根据订单列表取订单详情
+            DataSet dsOrder = T_InoutBLL.GetOrdersByVipID(rd.MemberInfo.VipID, pageIndex ?? 1, pageSize ?? 15, OrderBy, OrderType);//获取会员信息            
+            if (dsOrder != null && dsOrder.Tables.Count != 0 && dsOrder.Tables[0].Rows.Count != 0)
+            {
+                List<JIT.CPOS.DTO.Module.VIP.Login.Response.OrderInfo> orderList = DataTableToObject.ConvertToList<JIT.CPOS.DTO.Module.VIP.Login.Response.OrderInfo>(dsOrder.Tables[1]);
+                foreach (JIT.CPOS.DTO.Module.VIP.Login.Response.OrderInfo oi in orderList)
+                {
+                    IList<InoutDetailInfo> detailList = InoutService.GetInoutDetailInfoByOrderId(oi.order_id);
+                    oi.DetailList = detailList;
+                }
+                rd.OrderList = orderList;
+            }
+ 
+            
+
             return rd;
         }
     }

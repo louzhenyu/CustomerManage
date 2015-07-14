@@ -129,5 +129,61 @@ namespace JIT.CPOS.BS.DataAccess
         }
 
         #endregion
+
+        public DataSet GetVipTagsList(string TypeId, string VipID)
+        {
+
+            List<SqlParameter> ls = new List<SqlParameter>();
+ 
+            ls.Add(new SqlParameter("@VipID", VipID));
+
+            var sql = @"select b.TypeId,b.TypeName,a.* from	  Tags a 
+        left join TagsType b  on a.typeid=b.typeid
+        inner join  VipTagsMapping c 
+        on c.TagsId=a.TagsId        
+where  c.vipID=@VipID
+and c.isdelete=0
+and a.isdelete=0
+             ";
+            if (!string.IsNullOrEmpty(TypeId) && TypeId != "")
+            {
+                sql += " and a.TypeId=@TypeId ";
+                ls.Add(new SqlParameter("@TypeId", TypeId));
+            }
+
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), ls.ToArray());
+        }
+
+
+
+        public DataSet GetTagsList(string TypeId,  string CustomerId)
+        {
+
+            List<SqlParameter> ls = new List<SqlParameter>();
+            ls.Add(new SqlParameter("@TypeId", TypeId));
+            ls.Add(new SqlParameter("@CustomerId", CustomerId));
+
+            var sql = @"select b.TypeId,b.TypeName,a.* from	  Tags a inner join TagsType b 
+on a.typeid=b.typeid
+where a.TypeId=@TypeId
+and a.customerid=@CustomerId
+and a.isDelete=0
+
+             ";
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), ls.ToArray());
+       
+        }
+
+        public bool DeleteByIds(string propIds, TagsTypeEntity TagsTypeEn)
+        {
+            string sql = "update Tags set ";
+            sql += " isdelete=1 ";
+            sql += " ,LastUpdateBy='" + TagsTypeEn.LastUpdateBy + "' ";
+            sql += " ,LastUpdateTime='" + TagsTypeEn.LastUpdateTime + "' ";
+            sql += " where TypeId='" + TagsTypeEn.TypeId + "'";
+            sql += " and TagsId not in (" + propIds + ") ";
+            this.SQLHelper.ExecuteNonQuery(sql);
+            return true;
+        }
     }
 }

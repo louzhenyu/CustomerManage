@@ -70,5 +70,24 @@ namespace JIT.CPOS.BS.BLL
             return _currentDAO.setCopyTag(CustomerId);
         }
         #endregion
+
+        public DataSet GetVipTagsList(string TypeId, string vipid)
+        {
+            return this._currentDAO.GetVipTagsList(TypeId, vipid);
+        }
+        public DataSet GetTagsList(string TypeId, string CustomerId)
+        {
+            return this._currentDAO.GetTagsList(TypeId, CustomerId);
+        }
+        /// <summary>
+        /// 根据id删除信息
+        /// </summary>
+        /// <param name="propIds"></param>
+        /// <param name="propInfo"></param>
+        /// <returns></returns>
+        public bool DeleteByIds(string propIds, TagsTypeEntity TagsTypeEn)
+        {
+            return this._currentDAO.DeleteByIds(propIds, TagsTypeEn);
+        }
     }
 }
