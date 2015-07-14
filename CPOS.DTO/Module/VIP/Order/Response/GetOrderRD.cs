@@ -58,6 +58,10 @@ namespace JIT.CPOS.DTO.Module.VIP.Order.Response
         /// </summary>
         public int DeliveryTypeID { get; set; }
         /// <summary>
+        /// 提货门店
+        /// </summary>
+        public string purchase_unit_id { get; set; }
+        /// <summary>
         /// 下单时间。注意：订单表的Order_date时间没有时分秒。因此此字段取的是Create_time的值,由于有时间转化出现T的情况。改为string
         /// </summary>
         public string OrderDate { get; set; }

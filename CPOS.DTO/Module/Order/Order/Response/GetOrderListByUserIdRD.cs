@@ -54,5 +54,14 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// 订单商品项
         /// </summary>
         //public OrderDetailInfo[] OrderDetails { get; set; }
+
+        //分销商名称
+        public string RetailTraderName { get; set; }
+        //服务人员（sales_user）
+        public string ServiceMan { get; set; }
+        //集客收益(包含他作为集客员工的收益、还有他下面的分销商的会员带来的收益)
+        public decimal CollectIncome { get; set; }
+        public string create_time { get; set; }
+        
     }
 }

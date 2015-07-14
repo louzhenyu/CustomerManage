@@ -20,6 +20,12 @@ namespace JIT.CPOS.DTO.Module.VIP.Order.Request
         /// 页码。为空则默认为0
         /// </summary>
         public int PageIndex { get; set; }
+
+                /// <summary>
+        /// 页码。为空则默认为0
+        /// </summary>
+        public string UnitID { get; set; }
+        
         /// <summary>
         /// 每页记录数。为空则为15
         /// </summary>

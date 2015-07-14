@@ -397,6 +397,16 @@ namespace JIT.CPOS.BS.BLL
             return unitInfoList;
         }
 
+        public IList<UnitInfo> GetUnitByUser(string CustomerID, string loginUserID)
+        {
+            IList<UnitInfo> unitInfoList = new List<UnitInfo>();
+            DataSet ds = unitService.GetUnitByUser(CustomerID, loginUserID);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                unitInfoList = DataTableToObject.ConvertToList<UnitInfo>(ds.Tables[0]);
+            }
+            return unitInfoList;
+        }
         #endregion
 
         #region 单位查询

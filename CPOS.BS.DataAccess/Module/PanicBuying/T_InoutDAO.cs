@@ -183,10 +183,10 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetOrderByGroupingType(string vipno, int PageIndex, int PageSize, string customer_id, int groupingType)
         {
             var parm = new SqlParameter[5];
-            parm[0] = new SqlParameter("@VipID", System.Data.SqlDbType.NVarChar) { Value =vipno };
-            parm[1] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value =customer_id };
-            parm[2] = new SqlParameter("@GroupingType", System.Data.SqlDbType.Int) { Value =groupingType };
-            parm[3] = new SqlParameter("@PageIndex", System.Data.SqlDbType.Int) { Value =PageIndex+1 };
+            parm[0] = new SqlParameter("@VipID", System.Data.SqlDbType.NVarChar) { Value = vipno };
+            parm[1] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = customer_id };
+            parm[2] = new SqlParameter("@GroupingType", System.Data.SqlDbType.Int) { Value = groupingType };
+            parm[3] = new SqlParameter("@PageIndex", System.Data.SqlDbType.Int) { Value = PageIndex + 1 };
             parm[4] = new SqlParameter("@PageSize", System.Data.SqlDbType.Int) { Value = PageSize };
 
             Loggers.Debug(new DebugLogInfo()
@@ -253,7 +253,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pPageSize">页显示条数</param>
         /// <param name="pPageIndex">当前页码</param>
         /// <returns></returns>
-        public DataSet GetOrderList(int[] pOrderStatuses, string pOrderID,int pPageSize, int pPageIndex)
+        public DataSet GetOrderList(int[] pOrderStatuses, string pOrderID, int pPageSize, int pPageIndex)
         {
             StringBuilder sbStrWhere = new StringBuilder();
             StringBuilder sbSQL = new StringBuilder();
@@ -271,7 +271,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sbStrWhere.AppendFormat(" and order_id ='{0}'", pOrderID);
             }
-            sbSQL.AppendFormat("select * from (select row_number()over(order by customer_id) _row,* from T_Inout where 1=1 and customer_id='{0}'  " + sbStrWhere + ") t where t._row>{1}*{2} and t._row<=({1}+1)*{2}",CurrentUserInfo.ClientID,
+            sbSQL.AppendFormat("select * from (select row_number()over(order by customer_id) _row,* from T_Inout where 1=1 and customer_id='{0}'  " + sbStrWhere + ") t where t._row>{1}*{2} and t._row<=({1}+1)*{2}", CurrentUserInfo.ClientID,
                  (Convert.ToInt32(pPageIndex) - 1) < 0 ? 0 : (Convert.ToInt32(pPageIndex)), pPageSize);
             ds = this.SQLHelper.ExecuteDataset(sbSQL.ToString());
             return ds;
@@ -299,12 +299,13 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
         }
         #endregion
-        public DataSet GetOrdersList(string orderId, string userId,string orderStatusList,string orderNo, string customerId, int pageSize, int pageIndex)
+        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList, string orderNo, string customerId
+            , int pageSize, int pageIndex, string OrderChannelID)
         {
             List<SqlParameter> paras = new List<SqlParameter> { };
             paras.Add(new SqlParameter() { ParameterName = "@pCustomerId", Value = customerId });
             paras.Add(new SqlParameter() { ParameterName = "@pUserId", Value = userId });
-      //      paras.Add(new SqlParameter() { ParameterName = "@pOrderId", Value = orderId });
+            //      paras.Add(new SqlParameter() { ParameterName = "@pOrderId", Value = orderId });
             paras.Add(new SqlParameter() { ParameterName = "@pPageSize", Value = pageSize });
             paras.Add(new SqlParameter() { ParameterName = "@pPageIndex", Value = pageIndex });
             paras.Add(new SqlParameter() { ParameterName = "@pOrderNo", Value = orderNo });
@@ -321,6 +322,19 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sqlWhere += " and a.order_no like '%" + orderNo + "%'";
             }
+            //订单来源
+            if (!string.IsNullOrEmpty(OrderChannelID) && OrderChannelID != "-1")
+            {
+                if (OrderChannelID == "19")
+                {
+                    sqlWhere += " and  col20 in (select retailtraderID from retailtrader  where CustomerID=@pCustomerId ) ";
+                }
+                else
+                {
+                    sqlWhere += " and a.data_from_id = '" + OrderChannelID + "'";
+                }
+            }
+
             StringBuilder sql = new StringBuilder();
 
             sql.Append(" create table #tmp(unit_id nvarchar(2000))");
@@ -331,12 +345,145 @@ namespace JIT.CPOS.BS.DataAccess
             sql.Append(" select * from (");
             sql.Append(" select row_number() over(order by a.create_time desc) _row,");
             sql.Append(" a.order_id,a.order_no,isnull(a.Field8,'0') as DeliveryTypeId,a.create_time OrderDate,");
-            sql.Append(" a.status_desc OrderStatusDesc,c.vipName,");
-            sql.Append(" a.status OrderStatus,isnull(a.total_qty,0) TotalQty,isnull(a.total_retail,0) TotalAmount");
+            sql.Append(" a.status_desc OrderStatusDesc,c.vipName as VipName,create_time,");
+            sql.Append(" a.status OrderStatus,isnull(a.total_qty,0) TotalQty,isnull(a.total_retail,0) TotalAmount,total_amount");//total_retail是商品零售价，total_amount才是总额
+            sql.Append(@",ISNULL((select RetailTraderName from RetailTrader  where RetailTraderID=c.Col20),'') as RetailTraderName
+,ISNULL((select user_name from T_User  where user_id=a.sales_user),'') as ServiceMan
+,ISNULL((select top 1 Amount from VipAmountDetail where ObjectId=a.order_id and VipId= c.SetoffUserId and AmountSourceId='10'),0)
++   -----OBJECT_ID是订单号，vipID是获取收益的人(集客员工),防止出现脏数据才用了top 1的方式
+ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
+as CollectIncome");
             sql.Append(" from t_inout a inner join #tmp b");
             sql.Append(" on a.sales_unit_id = b.unit_id ");
             sql.Append(" left join vip c on a.vip_no = c.vipId");
-            sql.AppendFormat(" where a.status not in( '-1' , '700','800') and field7 <> 0 and field7<>-99 and (isnull('{0}','')='' or order_id like '%{0}%' )", orderId);
+            sql.AppendFormat(" where a.status not in( '-1' ) and field7 <> 0 and field7<>-99 and (isnull('{0}','')='' or order_id like '%{0}%' )", orderId);
+            //, '700','800'
+            sql.AppendFormat("  {0}", sqlWhere);
+            sql.Append(" ) t where t._row>@pPageIndex*@pPageSize and t._row<=(@pPageIndex+1)*@pPageSize");
+
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
+
+        }
+
+
+
+        public DataSet GetServiceOrderList(string order_no, string OrderChannelID, string userId, string customerId, int? pageSize, int? pageIndex)
+        {
+            List<SqlParameter> paras = new List<SqlParameter> { };
+            paras.Add(new SqlParameter() { ParameterName = "@pCustomerId", Value = customerId });
+            paras.Add(new SqlParameter() { ParameterName = "@pUserId", Value = userId });
+            //      paras.Add(new SqlParameter() { ParameterName = "@pOrderId", Value = orderId });
+            paras.Add(new SqlParameter() { ParameterName = "@pPageSize", Value = pageSize });
+            paras.Add(new SqlParameter() { ParameterName = "@pPageIndex", Value = pageIndex });
+            paras.Add(new SqlParameter() { ParameterName = "@pOrderNo", Value = order_no });
+            string sqlWhere = " and 1 = 1 and a.create_time is not null";//时间不能为空
+            sqlWhere += "  and sales_user=@pUserId and customer_id=@pCustomerId ";//当前登录帐户销售的
+
+            if (!string.IsNullOrEmpty(order_no))
+            {
+                sqlWhere += " and a.order_no like '%" + order_no + "%'";
+            }
+            //订单来源
+            if (!string.IsNullOrEmpty(OrderChannelID) && OrderChannelID != "-1")
+            {
+                if (OrderChannelID == "19")
+                {
+                    sqlWhere += " and  col20 in (select retailtraderID from retailtrader  where CustomerID=@pCustomerId ) ";
+                }
+                else
+                {
+                    sqlWhere += " and a.data_from_id = '" + OrderChannelID + "'";
+                }
+            }
+
+            StringBuilder sql = new StringBuilder();
+
+            //sql.Append(" create table #tmp(unit_id nvarchar(2000))");
+            //sql.Append(" insert into #tmp");
+            //sql.Append(" select distinct a.unit_id  from vw_unit_level a inner join T_User_Role b");
+            //sql.Append(" on a.path_unit_id like '%' +b.unit_id + '%' and (isnull(@pUserId,'') = '' or b.user_id = @pUserId) and a.customer_id = @pCustomerId");
+
+            sql.Append(" select * from (");
+            sql.Append(" select row_number() over(order by a.create_time desc) _row,");
+            sql.Append(" a.order_id as OrderID,a.order_no as OrderNO,isnull(a.Field8,'0') as DeliveryTypeId,a.create_time OrderDate,create_time,");
+            sql.Append(" a.status_desc OrderStatusDesc,c.vipName  as VipName,");
+            sql.Append(" a.status OrderStatus,isnull(a.total_qty,0) TotalQty,isnull(a.total_retail,0) TotalAmount");
+            sql.Append(@",ISNULL((select RetailTraderName from RetailTrader  where RetailTraderID=c.Col20),'') as RetailTraderName
+,ISNULL((select user_name from T_User  where user_id=a.sales_user),'') as ServiceMan
+,ISNULL((select top 1 Amount from VipAmountDetail where ObjectId=a.order_id and VipId= c.SetoffUserId and AmountSourceId='10'),0)
++   -----OBJECT_ID是订单号，vipID是获取收益的人(集客员工),防止出现脏数据才用了top 1的方式
+ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
+as CollectIncome");
+            sql.Append(" from t_inout a ");
+          //  sql.Append("inner join #tmp bon a.sales_unit_id = b.unit_id ");
+            sql.Append(" left join vip c on a.vip_no = c.vipId");
+            sql.AppendFormat(" where a.status not in( '-1') and field7 <> 0 and field7<>-99 ");
+            //and (isnull('{0}','')='' or order_id like '%{0}%' ),, orderId
+            // //a.status not in( '-1' , '700','800') and
+            sql.AppendFormat("  {0}", sqlWhere);
+            sql.Append(" ) t where t._row>@pPageIndex*@pPageSize and t._row<=(@pPageIndex+1)*@pPageSize");
+
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
+
+        }
+
+
+        public DataSet GetCollectOrderList(string order_no, string OrderChannelID, string userId, string customerId, int? pageSize, int? pageIndex)
+        {
+            List<SqlParameter> paras = new List<SqlParameter> { };
+            paras.Add(new SqlParameter() { ParameterName = "@pCustomerId", Value = customerId });
+            paras.Add(new SqlParameter() { ParameterName = "@pUserId", Value = userId });
+            //      paras.Add(new SqlParameter() { ParameterName = "@pOrderId", Value = orderId });
+            paras.Add(new SqlParameter() { ParameterName = "@pPageSize", Value = pageSize });
+            paras.Add(new SqlParameter() { ParameterName = "@pPageIndex", Value = pageIndex });
+            paras.Add(new SqlParameter() { ParameterName = "@pOrderNo", Value = order_no });
+            string sqlWhere = " and 1 = 1 and a.create_time is not null";//时间不能为空
+            sqlWhere += "  and customer_id=@pCustomerId ";
+            //是集客的
+            sqlWhere += @"and (SetoffUserId=@pUserId    ---是该会员的集客员工
+                                    or Col20 in (select retailtraderid from retailtrader where SellUserID=@pUserId ) )";
+
+            if (!string.IsNullOrEmpty(order_no))
+            {
+                sqlWhere += " and a.order_no like '%" + order_no + "%'";
+            }
+            //订单来源
+            if (!string.IsNullOrEmpty(OrderChannelID) && OrderChannelID != "-1")
+            {
+                if (OrderChannelID == "19")
+                {
+                    sqlWhere += " and  col20 in (select retailtraderID from retailtrader  where CustomerID=@pCustomerId ) ";
+                }
+                else
+                {
+                    sqlWhere += " and a.data_from_id = '" + OrderChannelID + "'";
+                }
+            }
+
+            StringBuilder sql = new StringBuilder();
+
+            //sql.Append(" create table #tmp(unit_id nvarchar(2000))");
+            //sql.Append(" insert into #tmp");
+            //sql.Append(" select distinct a.unit_id  from vw_unit_level a inner join T_User_Role b");
+            //sql.Append(" on a.path_unit_id like '%' +b.unit_id + '%' and (isnull(@pUserId,'') = '' or b.user_id = @pUserId) and a.customer_id = @pCustomerId");
+
+            sql.Append(" select * from (");
+            sql.Append(" select row_number() over(order by a.create_time desc) _row,");
+            sql.Append("a.order_id as OrderID,a.order_no as OrderNO,isnull(a.Field8,'0') as DeliveryTypeId,a.create_time OrderDate,create_time,");
+            sql.Append(" a.status_desc OrderStatusDesc,c.vipName as VipName,");
+            sql.Append(" a.status OrderStatus,isnull(a.total_qty,0) TotalQty,isnull(a.total_retail,0) TotalAmount");
+            sql.Append(@",ISNULL((select RetailTraderName from RetailTrader  where RetailTraderID=c.Col20),'') as RetailTraderName
+,ISNULL((select user_name from T_User  where user_id=a.sales_user),'') as ServiceMan
+,ISNULL((select top 1 Amount from VipAmountDetail where ObjectId=a.order_id and VipId= c.SetoffUserId and AmountSourceId='10'),0)
++   -----OBJECT_ID是订单号，vipID是获取收益的人(集客员工),防止出现脏数据才用了top 1的方式
+ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
+as CollectIncome");
+            sql.Append(" from t_inout a ");
+          //  sql.Append("inner join #tmp bon a.sales_unit_id = b.unit_id ");
+            sql.Append(" left join vip c on a.vip_no = c.vipId");
+            sql.AppendFormat(" where a.status not in( '-1' ) and field7 <> 0 and field7<>-99 ");
+            //and (isnull('{0}','')='' or order_id like '%{0}%' ),, orderId
+            //a.status not in( '-1' , '700','800') and
             sql.AppendFormat("  {0}", sqlWhere);
             sql.Append(" ) t where t._row>@pPageIndex*@pPageSize and t._row<=(@pPageIndex+1)*@pPageSize");
 
@@ -365,7 +512,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             var sql = "select isnull(paymentcenter_id,0) from T_Inout where order_id = '" + orderId + "'";
             var result = this.SQLHelper.ExecuteScalar(sql.ToString());
-            if (result == null || string.IsNullOrEmpty(result.ToString()) || result.ToString()=="")
+            if (result == null || string.IsNullOrEmpty(result.ToString()) || result.ToString() == "")
             {
                 return "0";
             }
@@ -396,5 +543,36 @@ namespace JIT.CPOS.BS.DataAccess
         }
 
         #endregion
+
+        public DataSet GetOrdersByVipID(string vipID, int pageIndex, int pageSize, string OrderBy, string sortType)
+        {
+            if (string.IsNullOrEmpty(OrderBy))
+                OrderBy = "a.create_time";
+            if (string.IsNullOrEmpty(sortType))
+                sortType = "DESC";
+            var sqlCon = "";
+            List<SqlParameter> ls = new List<SqlParameter>();
+            ls.Add(new SqlParameter("@VipID",vipID));
+            //Loggers.Debug(new DebugLogInfo()
+            //{
+            //    Message = parm.ToJSON()
+            //});
+          
+
+            var sql = @" 
+select * from t_inout where vip_no=@VipID and [status]='700'
+   {4}
+                 ";  //总数据的表tab[0]
+            sql = sql + @"select * from ( select ROW_NUMBER()over(order by {0} {3}) _row,a.*
+                                    from t_inout a 
+                                 WHERE 1 = 1 and vip_no=@VipID and [status]='700'
+   {4}  
+                                ) t
+                                    where t._row>{1}*{2} and t._row<=({1}+1)*{2}
+";
+
+            sql = string.Format(sql, OrderBy, pageIndex - 1, pageSize, sortType, sqlCon);
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), ls.ToArray());
+        }
     }
 }

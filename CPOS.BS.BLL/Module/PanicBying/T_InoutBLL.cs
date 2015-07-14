@@ -275,6 +275,7 @@ namespace JIT.CPOS.BS.BLL
                     orderinfo.OrderNO = item.order_no; //订单编码
                     orderinfo.DeliveryTypeID = Convert.ToInt32(string.IsNullOrEmpty(item.Field8) ? "0" : item.Field8);
                     //配送方式类别ID，1.送货上门。2.到店自取
+                    orderinfo.purchase_unit_id = item.purchase_unit_id; //提货门店
                     orderinfo.OrderDate = item.create_time; //在订单表中的下单时间没有时分秒。所以取create_time
                     orderinfo.OrderStatusDesc = item.status_desc; //订单状态描述
                     orderinfo.OrderStatus = Convert.ToInt32(item.status); //订单状态
@@ -502,11 +503,24 @@ namespace JIT.CPOS.BS.BLL
             }
             return RD;
         }
-
+        //根据状态获取订单信息
         public DataSet GetOrdersList(string orderId, string userId, string orderStatusList, string orderNo,
-            string customerId, int? pageSize, int? pageIndex)
+            string customerId, int? pageSize, int? pageIndex, string OrderChannelID)
         {
             return this._currentDAO.GetOrdersList(orderId, userId, orderStatusList, orderNo, customerId, pageSize ?? 0,
+                pageIndex ?? 15, OrderChannelID);
+        }
+        //获取销售（服务）订单
+        public DataSet GetServiceOrderList(string order_no, string OrderChannelID, string userId, string customerId, int? pageSize, int? pageIndex)
+        {
+            return this._currentDAO.GetServiceOrderList(order_no, OrderChannelID, userId, customerId, pageSize ?? 0,
+                pageIndex ?? 15);
+        }
+        
+        //获取集客订单
+        public DataSet GetCollectOrderList(string order_no, string OrderChannelID, string userId, string customerId, int? pageSize, int? pageIndex)
+        {
+            return this._currentDAO.GetCollectOrderList(order_no, OrderChannelID, userId, customerId, pageSize ?? 0,
                 pageIndex ?? 15);
         }
 
@@ -691,6 +705,11 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+
+        public DataSet GetOrdersByVipID(string vipID, int pageIndex, int pageSize, string OrderBy, string sortType)
+        {
+            return this._currentDAO.GetOrdersByVipID(vipID,pageIndex, pageSize, OrderBy, sortType);
+        }
     }
 
     public class WxDeliverInfo

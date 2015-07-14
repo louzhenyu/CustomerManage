@@ -47,6 +47,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Order
             //        break;
             //}
             rd = orderBll.GetOrder(vipno, pageindex, PageSize, customer_id, pRequest.Parameters.GroupingType, ChannelId, UserId);
+            if (!string.IsNullOrEmpty(pRequest.Parameters.UnitID))
+            {
+                rd.Orders = rd.Orders.Where(p => p.purchase_unit_id == pRequest.Parameters.UnitID).ToArray();
+            }
             return rd;
         }
     }

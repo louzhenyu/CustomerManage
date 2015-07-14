@@ -418,15 +418,15 @@
         }).delegate(".selectList","mouseleave",function(e){    //鼠标从下拉内容移出的事件
             $(this).hide();
             util.stopBubble(e);
-        }).delegate(".selectList","mouseenter",function(e){    //鼠标从下拉内容移出的事件
+        }).delegate(".selectList","mouseenter",function(e){    //鼠标从下拉内容 移入事件
             $(this).show();
             clearTimeout(util.the_timeout);
             util.stopBubble(e);
-        }).delegate(".selectBox span","mouseleave",function(e){    //鼠标从下拉内容移出的事件
+        }).delegate(".selectBox span","mouseleave",function(e){    //鼠标从下拉控件输入框移出的事件
             var selList=$(this).parent().find(".selectList");
             util.the_timeout = setTimeout(function(){
                 selList.hide();
-            },500);
+            },1600);
             util.stopBubble(e);
         });
 

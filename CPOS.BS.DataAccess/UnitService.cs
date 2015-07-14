@@ -159,6 +159,41 @@ namespace JIT.CPOS.BS.DataAccess
 
         #endregion
 
+    
+        /// <summary>
+        /// 获取某个用户权限下的门店数据
+        /// </summary>
+        /// <param name="unitId"></param>
+        /// <returns></returns>
+        public DataSet GetUnitByUser(string CustomerID,string loginUserID)
+        { 
+            DataSet ds = new DataSet();
+            string sql = "";          
+            List<SqlParameter> ls = new List<SqlParameter>();
+            ls.Add(new SqlParameter("@CustomerId", CustomerID));
+            ls.Add(new SqlParameter("@loginUserID", loginUserID));
+
+
+            sql = @"----在这里要把用户的权限能看到的数据加上
+DECLARE @AllUnit NVARCHAR(200)
+
+CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
+ INSERT #UnitSET (UnitID)                  
+   SELECT DISTINCT R.UnitID                   
+   FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  (@CustomerId,UR.unit_id,205)  R                  
+   WHERE user_id=@loginUserID          ---根据账户的角色去查角色对应的  unit_id
+
+
+";
+
+             sql = GetSql(sql)
+                + " inner join #UnitSET  d on(a.unit_id = d.unitid)  where  1=1 and a.status = '1'  order by a.unit_code ";
+
+
+               sql += @" drop table #UnitSET                ";
+            ds = this.SQLHelper.ExecuteDataset(CommandType.Text,  sql,ls.ToArray());
+            return ds;
+        }
         #region MyRegion
         public bool GetSonUntil(string unitId)
         {
@@ -268,7 +303,7 @@ namespace JIT.CPOS.BS.DataAccess
             ls.Add(new SqlParameter("@CustomerId", CustomerID));
             string sql = SearchPublicSql(_ht);
             sql = sql + " select @iCount; ";//
-            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text, sql,ls.ToArray()));
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text, sql, ls.ToArray()));
         }
         public DataSet SearchList(Hashtable _ht, string UserID, string CustomerID)
         {
@@ -346,15 +381,15 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
    FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  (@CustomerId,UR.unit_id,205)  R                  
    WHERE user_id=@UserID          ---根据账户的角色去查角色对应的  所有门店unit_id
 ";
-            
-           sql += "Declare @TmpTable Table "
-                     + " (unit_id nvarchar(100) "
-                     + " ,row_no int "
-                     + " ); "
-                     + " Declare @iCount int; "
-                     + " insert into @TmpTable(unit_id,row_no) "
-                     + " select x.unit_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.unit_code),unit_id "
-                     + @" from t_unit a inner join  #UnitSET R  on a.unit_id=R.unitID  where 1=1 ";
+
+            sql += "Declare @TmpTable Table "
+                      + " (unit_id nvarchar(100) "
+                      + " ,row_no int "
+                      + " ); "
+                      + " Declare @iCount int; "
+                      + " insert into @TmpTable(unit_id,row_no) "
+                      + " select x.unit_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.unit_code),unit_id "
+                      + @" from t_unit a inner join  #UnitSET R  on a.unit_id=R.unitID  where 1=1 ";
             sql = pService.GetLinkSql(sql, "a.unit_code", _ht["unit_code"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.customer_id", _ht["CustomerId"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.unit_name", _ht["unit_name"].ToString(), "%");
@@ -908,19 +943,20 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                 if (!string.IsNullOrEmpty(Position))//坐标不为''
                 {
                     string[] pos = Position.Split(',');
-                    
+
                     string lng = pos[0].Trim();  //经度
                     string lat = pos[1].Trim();  //纬度
                     if (lng == "undefined" || lat == "undefined")
-                    {                       
+                    {
                         strdistance = (string.Format(" ,(0) as Distance ", lng, lat));
                         //try
                         //{
                         //    throw new Exception("无法获取到经纬度信息！");
                         //}
                         //catch { }
-                    }else
-                    strdistance = (string.Format(" ,(GEOGRAPHY::STGeomFromText('POINT('+isnull(a.longitude,0)+' '+isnull(a.dimension,0)+')',4326).STDistance(GEOGRAPHY::STGeomFromText('POINT({0} {1})',4326))) as Distance ", lng, lat));
+                    }
+                    else
+                        strdistance = (string.Format(" ,(GEOGRAPHY::STGeomFromText('POINT('+isnull(a.longitude,0)+' '+isnull(a.dimension,0)+')',4326).STDistance(GEOGRAPHY::STGeomFromText('POINT({0} {1})',4326))) as Distance ", lng, lat));
                     temp.AppendFormat(" and LTRIM(a.longitude)<>'' and LTRIM(a.dimension)<>'' ");
                 }
             }

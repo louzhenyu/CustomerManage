@@ -46,6 +46,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             string OrderID = pRequest.Parameters.OrderID; //订单ID
             string ActionCode = pRequest.Parameters.ActionCode;//订单操作码(当前订单状态码作为操作码)
             string ActionParameter = pRequest.Parameters.ActionParameter;//订单操作参数，可为空
+            string DeliverCompany = pRequest.Parameters.DeliverCompany;//快递公司
+            string DeliverOrder = pRequest.Parameters.DeliverOrder;//快递单号
 
             var tran = _TInoutbll.GetTran();
             using (tran.Connection)//事物
@@ -61,7 +63,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
                     #region
 
-                    if (entity.status == ActionCode)
+                    if (entity.status == ActionCode)//如果状态以及国内是要提交的状态了，就不要再提交了
                     {
                         return rd;
                     }
@@ -76,6 +78,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     entity.Field10 = GetStatusDesc(ActionCode);     //Field10=status_desc状态描述
                     entity.modify_time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");  //修改时间
                     entity.modify_user_id = CurrentUserInfo.UserID; //修改人
+                    if ( ActionCode =="600" || !string.IsNullOrEmpty(DeliverOrder) || !string.IsNullOrEmpty(DeliverCompany))
+                    {
+                        entity.Field9 = DateTime.Now.ToSQLFormatString();
+                        entity.Field2 = DeliverOrder;//快递单号
+                        entity.carrier_id = DeliverCompany;//快递单号
+                        //更新订单配送商及配送单号
+                    } 
+
                     _TInoutbll.Update(entity, tran);                      //用事物更新订单表(T_Inout)
                     #endregion
                     #region 2.根据订单ID更新订单日志表中数据

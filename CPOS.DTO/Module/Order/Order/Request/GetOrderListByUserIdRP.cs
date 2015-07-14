@@ -25,7 +25,7 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Request
         public int PageSize { get; set; }
 
         public OrderStatusInfo[] OrderStatus { get; set; }
-
+        public string OrderChannelID { get; set; }
         /// <summary>
         /// 页码，默认0
         /// </summary>

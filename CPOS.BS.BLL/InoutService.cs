@@ -2471,11 +2471,11 @@ namespace JIT.CPOS.BS.BLL
                                          , string unitId
                                          , string vipId
                                          , string dataFromId
-                                         , string amount, string OffOrderNo, string remark)
+                                         , string amount, string OffOrderNo, string remark, string UserID)
         {
             DataTable dt = new DataTable();
             DataSet ds = new DataSet();
-            string str = inoutService.SetVirtualOrderInfo(orderId, customerId, unitId, vipId, dataFromId, amount, OffOrderNo, remark);
+            string str = inoutService.SetVirtualOrderInfo(orderId, customerId, unitId, vipId, dataFromId, amount, OffOrderNo, remark, UserID);
             return str;
         }
         #endregion

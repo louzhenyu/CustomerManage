@@ -698,6 +698,132 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             return rsp.ToJSON();
         }
         #endregion
+
+
+        /// <summary>
+        /// 获取订单来源渠道
+        /// </summary>
+        private string GetOrderChannelList(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
+            LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            //var vipBankBll = new VipBankBLL(loggingSessionInfo);   //银行卡BLL实例化
+            //DataSet dsVipBank = vipBankBll.GetVipBankList(rp.UserID);//获取我的银行卡列表
+            var rd = new OrderChannelRD();
+            rd.OrderChannelList = new List<OrderChannel>();
+            rd.OrderChannelList.Add(new OrderChannel("3", "云店订单"));
+          //  rd.OrderChannelList.Add(new OrderChannel("16", "会员小店订单"));
+        rd.OrderChannelList.Add(new OrderChannel("17", "员工小店订单"));
+            rd.OrderChannelList.Add(new OrderChannel("18", "门店订单"));
+            rd.OrderChannelList.Add(new OrderChannel("19", "分销商订单"));
+
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
+
+
+        /// <summary>
+        /// 销售（服务）订单
+        /// </summary>
+        public string GetServiceOrderList(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<ServiceOrderRP>>();
+            string userId = rp.UserID;
+            string customerId = rp.CustomerID;
+            int pageSize = rp.Parameters.PageSize;
+            int pageIndex = rp.Parameters.PageIndex;
+            string order_no = rp.Parameters.order_no;
+            string OrderChannelID = rp.Parameters.OrderChannelID;
+
+            LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            T_InoutBLL bll = new T_InoutBLL(loggingSessionInfo);
+            var ds = bll.GetServiceOrderList(order_no, OrderChannelID, userId, customerId, pageSize, pageIndex);
+
+            List<ServiceOrderGroup> orderGroupList = new List<ServiceOrderGroup>();
+            var ServiceOrderList = new List<ServiceOrderDetail>();
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+               ServiceOrderList = DataTableToObject.ConvertToList<ServiceOrderDetail>(ds.Tables[0]);
+                //foreach (ServiceOrderDetail _orderDetail in ServiceOrderList)
+                //{
+                //    int i=0;
+                //    for( i=0;i<orderGroupList.Count;i++)
+                //    {
+                //        if (orderGroupList[i].create_time == _orderDetail.create_time)
+                //        {
+                //            orderGroupList[i].OrderGroup.Add(_orderDetail);
+                //        }
+                //    }
+                //    if (i >= orderGroupList.Count || orderGroupList.Count==0)
+                //    {
+                //        ServiceOrderGroup _ServiceOrderGroup = new ServiceOrderGroup();
+                //        _ServiceOrderGroup.create_time = _orderDetail.create_time;
+                //        _ServiceOrderGroup.OrderGroup = new List<ServiceOrderDetail>();//必须要实例化里面的集合
+                //        _ServiceOrderGroup.OrderGroup.Add(_orderDetail);
+                //        orderGroupList.Add(_ServiceOrderGroup);//添加到数组里
+                //    }
+                //}
+            }
+
+            var rd = new ServiceOrderRD();
+         //   rd.OrderGroupList = orderGroupList;
+            rd.ServiceOrderList = ServiceOrderList;
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
+
+
+        
+            
+        /// <summary>
+        /// 销售（服务）订单
+        /// </summary>
+        public string GetCollectOrderList(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<ServiceOrderRP>>();
+            string userId = rp.UserID;
+            string customerId = rp.CustomerID;
+            int pageSize = rp.Parameters.PageSize;
+            int pageIndex = rp.Parameters.PageIndex;
+            string order_no = rp.Parameters.order_no;
+            string OrderChannelID = rp.Parameters.OrderChannelID;
+
+            LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            T_InoutBLL bll = new T_InoutBLL(loggingSessionInfo);
+            var ds = bll.GetCollectOrderList(order_no, OrderChannelID, userId, customerId, pageSize, pageIndex);
+              var ServiceOrderList = new List<ServiceOrderDetail>();
+            List<ServiceOrderGroup> orderGroupList = new List<ServiceOrderGroup>();
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                ServiceOrderList = DataTableToObject.ConvertToList<ServiceOrderDetail>(ds.Tables[0]);
+                //foreach (ServiceOrderDetail _orderDetail in ServiceOrderList)
+                //{
+                //    int i=0;
+                //    for( i=0;i<orderGroupList.Count;i++)
+                //    {
+                //        if (orderGroupList[i].create_time == _orderDetail.create_time)
+                //        {
+                //            orderGroupList[i].OrderGroup.Add(_orderDetail);
+                //        }
+                //    }
+                //    if(i>=orderGroupList.Count)
+                //    {
+                //        ServiceOrderGroup _ServiceOrderGroup = new ServiceOrderGroup();
+                //        _ServiceOrderGroup.create_time = _orderDetail.create_time;
+                //        _ServiceOrderGroup.OrderGroup = new List<ServiceOrderDetail>();
+                //        _ServiceOrderGroup.OrderGroup.Add(_orderDetail);
+                //        orderGroupList.Add(_ServiceOrderGroup);//添加到数组里
+                //    }
+                //}
+            }
+
+            var rd = new ServiceOrderRD();
+           // rd.OrderGroupList = orderGroupList;
+            rd.ServiceOrderList = ServiceOrderList;
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
+
     }
     #region 请求/返回参数
 
@@ -1041,5 +1167,95 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
         public decimal Amount { get; set; }
 
     }
+
+
+    public class OrderChannelRD : IAPIResponseData
+    {
+        public List<OrderChannel> OrderChannelList { get; set; }
+    }
+
+    /// <summary>
+    /// 银行卡信息
+    /// </summary>
+    public class OrderChannel
+    {
+        public string VipSourceID { get; set; }
+        public string VipSourceName { get; set; }
+        public OrderChannel(string _VipSourceID, string _VipSourceName)
+        {
+            this.VipSourceID = _VipSourceID;
+            this.VipSourceName = _VipSourceName;
+        }
+
+    }
+
+
+    public class ServiceOrderRP : IAPIRequestParameter
+    {
+        public string order_no { get; set; }
+        public string OrderChannelID { get; set; }
+        /// <summary>
+        /// 每页记录数，默认15
+        /// </summary>
+        public int PageSize { get; set; }
+        /// <summary>
+        /// 页码，默认0
+        /// </summary>
+        public int PageIndex { get; set; }
+        public void Validate()
+        {
+        }
+    }
+
+    public class ServiceOrderRD : IAPIResponseData
+    {
+        //   public List<ServiceOrderGroup> OrderGroupList { get; set; }
+
+        // public decimal Amount { get; set; }
+        //订单信息列表
+        public List<ServiceOrderDetail> ServiceOrderList { get; set; }
+
+    }
+    public class ServiceOrderGroup
+    {
+        public string create_time { get; set; }
+        public List<ServiceOrderDetail> OrderGroup { get; set; }
+    }
+    public class ServiceOrderDetail
+    {
+        public string OrderID { get; set; }
+        public string OrderNO { get; set; }
+        public string DeliveryTypeId { get; set; }
+        public string OrderDate { get; set; }
+        public string VipName { get; set; }
+        public string OrderStatus { get; set; }
+
+        public string OrderStatusDesc { get; set; }
+
+
+        public decimal TotalAmount { get; set; }
+        public decimal TotalQty { get; set; }
+        private string _create_time;
+        public string create_time
+        {
+            get
+            {
+                return string.IsNullOrEmpty(this._create_time) ? "" : Convert.ToDateTime(_create_time).ToString("yyyy-MM-dd");
+            }
+            set
+            {
+                _create_time = value;
+            }
+        }
+
+        //分销商名称
+        public string RetailTraderName { get; set; }
+        //服务人员（sales_user）
+        public string ServiceMan { get; set; }
+        //集客收益(包含他作为集客员工的收益、还有他下面的分销商的会员带来的收益)
+        public decimal CollectIncome { get; set; }
+
+    }
+
     #endregion
 }

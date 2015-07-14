@@ -40,6 +40,7 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
 
             string typeCode = "总部";
             UnitService unitService = new UnitService(new SessionManager().CurrentUserLoginInfo);
+            LoggingSessionInfo loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             IList<UnitInfo> units;
 
             string key = string.Empty;
@@ -48,9 +49,11 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
 
             var userUnitId = new SessionManager().CurrentUserLoginInfo.CurrentUserRole.UnitId;
 
-            if (key == null || key == "-1" || key == "root" || key.Length == 0)
+            if (key == null || key == "-1" || key == "root" || key.Length == 0) //如果父节点为空，就取总部的数据
             {
-                units = unitService.GetUnitInfoListByTypeCode(typeCode);
+               // units = unitService.GetUnitInfoListByTypeCode(typeCode);//这是原来的方法，就是extjs里只取根节点的方法，
+                //现在需要根据用户的userID和customerID来取他权限下面的角色
+                units = unitService.GetUnitByUser(loggingSessionInfo.ClientID, loggingSessionInfo.UserID);//获取当前登录人的门店
             }
             else
             {
@@ -60,8 +63,23 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
             foreach (var item in units)
             {
                 nodes.Add(item.Id, item.Name, item.Parent_Unit_Id, false);
+              //  AddChildNodes(nodes, item.Id);  //把子节点也添加进来
             }
             return nodes;
+        }
+
+
+        public void AddChildNodes(TreeNodes nodes,string ParentID)
+        {
+            UnitService unitService = new UnitService(new SessionManager().CurrentUserLoginInfo);
+            IList<UnitInfo> units;
+            units = unitService.GetSubUnitsByDefaultRelationMode(ParentID);
+            foreach (var item in units)
+            {
+                nodes.Add(item.Id, item.Name, item.Parent_Unit_Id, false);
+                AddChildNodes(nodes, item.Id);
+            }
+
         }
 
         ///// <summary>

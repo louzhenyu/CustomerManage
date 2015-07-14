@@ -2227,11 +2227,11 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                                          , string unitId
                                          , string vipId
                                          , string dataFromId
-                                         , string amount, string OffOrderNo,string remark)
+                                         , string amount, string OffOrderNo,string remark,string UserID)
         {
             DataSet ds = new DataSet();
 
-            SqlParameter[] Parm = new SqlParameter[8];
+            SqlParameter[] Parm = new SqlParameter[9];
             Parm[0] = new SqlParameter("@OrderID ", System.Data.SqlDbType.NVarChar, 100);
             Parm[0].Value = orderId;
             Parm[1] = new SqlParameter("@OrderAmt", System.Data.SqlDbType.Decimal, 10);
@@ -2249,6 +2249,8 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
             Parm[6].Value = OffOrderNo;
             Parm[7] = new SqlParameter("@remark", System.Data.SqlDbType.NVarChar, 500);
             Parm[7].Value = remark;
+            Parm[8] = new SqlParameter("@UserID", System.Data.SqlDbType.NVarChar, 500);
+            Parm[8].Value = UserID;
 
             ds = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "GenerateVirtualOrder", Parm);
             if (ds == null || ds.Tables[0] == null || ds.Tables[0].Rows.Count == 0)

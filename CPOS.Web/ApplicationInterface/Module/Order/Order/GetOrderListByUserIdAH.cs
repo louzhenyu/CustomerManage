@@ -39,7 +39,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
 
             T_InoutBLL bll = new T_InoutBLL(this.CurrentUserInfo);
-            var ds = bll.GetOrdersList(orderId, userId,orderStatusList,orderNo, customerId, pageSize, pageIndex);
+            var ds = bll.GetOrdersList(orderId, userId,orderStatusList,orderNo, customerId, pageSize, pageIndex,pRequest.Parameters.OrderChannelID);
 
             var tmp = ds.Tables[0].AsEnumerable().Select(t => new OrdersInfo()
             {
@@ -50,11 +50,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 VipName = Convert.ToString(t["vipName"]),
                 OrderStatusDesc = Convert.ToString(t["OrderStatusDesc"]),
                 OrderStatus = Convert.ToInt32(Utils.GetIntVal(FormatParamValue(t["OrderStatus"].ToString()))),
-                TotalAmount = Convert.ToDecimal(t["TotalAmount"]),
-                TotalQty = Convert.ToDecimal(t["TotalQty"])
-                
+              //  TotalAmount = Convert.ToDecimal(t["TotalAmount"]),
+                TotalAmount = Convert.ToDecimal(t["total_amount"]),       
+                TotalQty = Convert.ToDecimal(t["TotalQty"]),
+                           RetailTraderName = Convert.ToString(t["RetailTraderName"]),
+                              ServiceMan = Convert.ToString(t["ServiceMan"]),
+                                CollectIncome = Convert.ToDecimal(t["CollectIncome"])
             });
 
+       
             rd.OrderList = tmp.ToArray();            
 
             return rd;

@@ -446,10 +446,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                             var result = server.SetVirtualOrderInfo(ToStr(RP.Parameters.orderId)
                                                           , ToStr(RP.CustomerID)
                                                           , ToStr(unitId)
-                                                          , ToStr(RP.UserID)
+                                                          , ToStr(RP.Parameters.VipId)
                                                           , ToStr(RP.Parameters.dataFromId)
                                                           , ToStr(RP.Parameters.amount)
-                                                          , ToStr(RP.Parameters.OffOrderNo), ToStr(RP.Parameters.remark));
+                                                          , ToStr(RP.Parameters.OffOrderNo), ToStr(RP.Parameters.remark), ToStr(RP.UserID));
                             if (result.Equals("1"))
                             {
                                 VipDCodeBLL bll = new VipDCodeBLL(loggingSessionInfo);

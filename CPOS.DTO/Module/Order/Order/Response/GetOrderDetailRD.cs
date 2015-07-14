@@ -13,6 +13,8 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
     public class OrderListInfo
     {
         #region 订单信息
+
+        public decimal discount_rate { get; set; }
         public string OrderID { get; set; }
         public string OrderCode { get; set; }
         public string OrderDate { get; set; }

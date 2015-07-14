@@ -120,16 +120,16 @@ namespace JIT.CPOS.BS.Web.Framework.Upload
                 return;
             }
             string folderPath = "Framework/Upload/Image/" + Utils.GetTodayString() + "/";
-            string savepath = HttpContext.Current.Server.MapPath("~/" + folderPath);
+            string savepath = HttpContext.Current.Server.MapPath("~/" + folderPath);//http://bs.dev.chainclouds.com/
             var extension = Path.GetExtension(postedFile.FileName).ToLower();
             if (!Directory.Exists(savepath)) Directory.CreateDirectory(savepath);
 
             var host = ConfigurationManager.AppSettings["host"];
             if (!host.EndsWith("/")) host += "/";
 
-            var fileName = Common.Utils.NewGuid();
+            var fileName = Common.Utils.NewGuid();//文件名用guid来取
             var fileFullName = fileName + extension;
-            var fileLocation = string.Format("{0}/{1}", savepath, fileFullName);
+            var fileLocation = string.Format("{0}/{1}", savepath, fileFullName);//把文件夹路径和图片名称放在一起
             postedFile.SaveAs(fileLocation);//保存原图
 
             string targetDir = "image/" + Utils.GetTodayString();
@@ -143,7 +143,7 @@ namespace JIT.CPOS.BS.Web.Framework.Upload
                 var thumbLocation = string.Format("{0}/{1}_{2}{3}", savepath, fileName, thumbWidth, extension);
                 if (MakeThumbnail(originalImage, thumbLocation, thumbWidth, thumbWidth, "W"))
                 {
-                    var thumbImage = new FileInfo(thumbLocation);
+                    var thumbImage = new FileInfo(thumbLocation);//根据地址获取生成的缩略图
                     string thumbUrl = host + folderPath + thumbFullName;
                     thumbUrl = getFtpUrl(thumbImage, thumbUrl, targetDir);//上传到ftp
                     respObj.thumbs.Add(new FileData()

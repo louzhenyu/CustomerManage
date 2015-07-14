@@ -98,6 +98,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
             if (orderList.Count() > 0)
             {
+                rd.OrderListInfo.discount_rate = orderList[0].discount_rate??100;//订单折扣
                 rd.OrderListInfo.OrderID = orderList[0].order_id;
                 rd.OrderListInfo.OrderCode = orderList[0].order_no;
                 rd.OrderListInfo.OrderDate = orderList[0].order_date;
@@ -123,7 +124,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.PaymentTypeName = orderList[0].Payment_Type_Name;
 
                 var deliveryBll = new TOrderCustomerDeliveryStrategyMappingBLL(this.CurrentUserInfo);
-                rd.OrderListInfo.DeliveryAmount = deliveryBll.GetDeliverAmount(orderId);//配送费 add by henry
+                rd.OrderListInfo.DeliveryAmount = deliveryBll.GetDeliverAmount(orderId);//配送费 add by henry***
                 
                 if (!string.IsNullOrEmpty(orderList[0].Field15) && orderList[0].Field15 != "0") //是否是团购商品 add by Henry 2014-12-22
                     rd.OrderListInfo.IsEvent = 1;   //团购商品
