@@ -4,7 +4,7 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
 .commonBtn{display:block;width:140px;height:40px;line-height:40px;text-align:center;font-size:14px;border-radius:5px;background:#fe7c24;color:#fff;}
 .commonBtn:hover{color:#f1f1f1;}
-.centreArea{min-width:1262px;min-height:587px;background:url(../images/topShadow.png) repeat-x 0 0;}
+.centreArea{min-height:587px;background:url(../images/topShadow.png) repeat-x 0 0;}
 /*公共弹层*/
 .jui-dialog{position:absolute;top:25%;left:15%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
 .jui-dialog-tit{position:relative;padding-left:25px;height:55px;background:#f3f3f6;border-radius:6px 6px 0 0;color:#66666d;}
@@ -20,7 +20,7 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 /*头部简单 查询*/
 .queryTermArea{min-height:73px;padding:10px 20px 0 0px;border:1px solid #d8d8d8;background:#fbfbfb; margin-bottom:0px;}
 .queryTermArea .item{margin-bottom:4px;white-space:nowrap;}
-.commonSelectWrap{float:left;height:33px;margin-right:10px;margin-bottom:10px;position:relative;}
+.queryTermArea .commonSelectWrap{float:left;height:33px;margin-right:10px;margin-bottom:10px;position:relative;}
 .commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}
 .commonSelectWrap .endTime .tit{width:15px;}
 .commonSelectWrap .endTime .selectBox{margin-left:22px;}
@@ -194,7 +194,7 @@ overflow-y: scroll;}
 
 /*菜单*/
 .subMenu{height:62px;margin-top:5px;padding-left:40px;background:#eee;}
-.subMenu li{float:left;width:91px;height:59px;margin:3px 22px 0 0;text-align:center;line-height:98px;color:#999;cursor:pointer;}
+.subMenu li{float:left;width:auto;height:59px; padding:0 8px;margin:3px 22px 0 0;text-align:center;line-height:98px;color:#999;cursor:pointer;}
 .subMenu .nav01{background:url(../images/nav01.png) no-repeat center 4px;}
 .subMenu .nav02{background:url(../images/nav02.png) no-repeat center 4px;}
 .subMenu .nav03{background:url(../images/nav03.png) no-repeat center 4px;}
@@ -203,6 +203,7 @@ overflow-y: scroll;}
 .subMenu .nav06{background:url(../images/nav06.png) no-repeat center 4px;}
 .subMenu .nav07{background:url(../images/nav07.png) no-repeat center 9px;}
 .subMenu .nav08{background:url(../images/nav08.png) no-repeat center 4px;}
+.subMenu .nav09{background:url(../images/nav09.png) no-repeat center 10px;}
 .subMenu li.on{background-color:#fff;}
 
 /*弹出-添加新会员*/
@@ -275,11 +276,30 @@ overflow-y: scroll;}
 .commonSelectWrap .bonone{ border: 1px solid transparent;}
 .R{ float:right} .L{ float: left}  .txtCenter{ text-align: center}
 
- .fontC{ width: 27px; height: 27px; background: center center no-repeat; margin:0 auto}
- .delete{background-image:url(../images/delete.png)}
+.fontC{ height: 27px; background: center center no-repeat; margin:0 auto}
+.delete{background-image:url(../images/delete.png)}
 .exit{background-image:url(../images/exit.png)}
 .add  {background-image:url(../images/add.png)}
 
-
-
+.panlnav09{ width: 100%; padding-top: 35px; padding-left: 35px;}
+.panlnav09 p{ font-size: 16px; line-height: 36px; color: #666; height: 36px;  float: left; width: 100%;}
+.tagbtnList{float: left; padding-bottom: 15px; padding-top:15px}
+ .tagbtn{cursor: pointer; margin-bottom: 15px; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #07c8cf; position: relative; float: left; margin-right:30px; line-height: 32px; color: #07c8cf; font-size: 14px; }
+ .tagbtn{ float: left;}
+.tagbtn .icon{display: none}
+ .tagbtn .icon{background: url("../images/delicon.png")no-repeat; width: 30px; height: 30px; top: -19px; right:-19px; position: absolute;}
+.bgtext.tagbtn  { background-color: #07c8cf; color: #fff;}
+.panltaglist{ float: left;}
+.groupTag{ float: left;border-left: 1px solid #d0d5d8;}
+.groupTag li{cursor: pointer; width: 120px; text-align: center; border: 1px solid #d0d5d8; border-bottom-width:0;border-left-width:0;height: 28px; line-height: 28px; float: left;}
+.groupTag li.on{ color: #07c8cf;}
+.panltaglist .fontC{ cursor: pointer; float: left; font-size: 14px; line-height: 36px; width: 86px; text-align: center;}
 .spinner input{ height: 22px;}
+.groupTaglist{  padding-left:35px;float: left; border:1px solid #d0d5d8; width: 100%;min-height:70px; padding-top: 22px;}
+
+.btnList{float:left; margin-top: 35px; text-align: center; width: 100%;}
+.btnList .commonBtn{ width:80px; height: 32px; line-height: 32px; margin:0 auto; }
+
+.textbtn{ display: inline-block; float: left;}
+.textbtn .saveTagBtn{ background-color: #07c8cf; color: #fff;}
+.textbtn  input{ float: left;}
