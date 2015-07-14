@@ -76,6 +76,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
 				case "SetRecharge"://充值
                     rst = SetRecharge(pRequest);
                     break;
+                case "GetOrderChannelList":      //获取我的银行卡
+                    rst = GetOrderChannelList(pRequest);
+                    break;
+                case "GetServiceOrderList":      //获取我的银行卡
+                    rst = GetServiceOrderList(pRequest);
+                    break;
+                case "GetCollectOrderList":      //获取我的银行卡
+                    rst = GetCollectOrderList(pRequest);
+                    break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的Action方法。", pAction));
             }
