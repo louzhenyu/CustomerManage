@@ -51,5 +51,29 @@ namespace JIT.CPOS.BS.DataAccess
             //·µ»Ø½á¹û
             return ds;
         }
+
+        public bool DeleteByVipID(string VipID)
+        {
+            try
+            {
+                string sql = "update viptagsmapping "
+                    + " set isdelete=1 "
+
+
+
+                    + " where VipID = '" + VipID + "';";
+
+
+
+                this.SQLHelper.ExecuteNonQuery(sql);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
     }
 }

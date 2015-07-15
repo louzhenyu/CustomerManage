@@ -39,5 +39,10 @@ namespace JIT.CPOS.BS.BLL
            DataSet ds =_currentDAO.GetList(qEntity);
            return DataTableToObject.ConvertToList<TagsEntity>(ds.Tables[0]);
         }
+
+        public bool DeleteByVipID(string itemID)
+        {
+            return _currentDAO.DeleteByVipID(itemID);
+        }
     }
 }

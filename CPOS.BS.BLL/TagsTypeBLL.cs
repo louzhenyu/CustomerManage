@@ -64,5 +64,19 @@ namespace JIT.CPOS.BS.BLL
             return _currentDAO.GetListCount(entity);
         }
         #endregion
+
+        public DataSet GetAll2(int pageIndex, int pageSize, string OrderBy, string sortType)
+        {
+            return _currentDAO.GetAll2(pageIndex, pageSize, OrderBy, sortType);
+        }
+
+        public DataSet HasUse(string TypeId)
+        {
+            return _currentDAO.HasUse(TypeId);
+        }
+        public void DeleteTagsType(string TypeId)
+        {
+             _currentDAO.DeleteTagsType(TypeId);
+        }
     }
 }
