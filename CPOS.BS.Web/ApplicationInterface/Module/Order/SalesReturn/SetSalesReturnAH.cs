@@ -159,7 +159,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                     else if (inoutDetail.actual_amount - inoutDetail.DeliveryAmount + inoutDetail.VipEndAmount >= salesReturnEntity.ConfirmAmount) 
                                     {
                                         refundEntity.ActualRefundAmount = inoutDetail.actual_amount - inoutDetail.DeliveryAmount;  //实付金额
-                                        refundEntity.Amount = salesReturnEntity.ConfirmAmount - inoutDetail.actual_amount;  //退回余额
+                                        //refundEntity.Amount = salesReturnEntity.ConfirmAmount - inoutDetail.actual_amount;  //退回余额
+                                        refundEntity.Amount = salesReturnEntity.ConfirmAmount - refundEntity.ActualRefundAmount;  //退回余额
                                     }
                                     //订单实付金额-运费+余额抵扣+积分抵扣 >= 应退金额
                                     else if (inoutDetail.actual_amount - inoutDetail.DeliveryAmount + inoutDetail.VipEndAmount + inoutDetail.IntegralAmount >= salesReturnEntity.ConfirmAmount) 
