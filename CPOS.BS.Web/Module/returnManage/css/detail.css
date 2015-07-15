@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
+.commonSelectWrap .selectBox{ border: 1px solid transparent;}
+
+.optionBtn{padding-top: 20px;  border: solid  1px #eee; border-bottom:none;}
+.optionBtn .commonBtn{ width:99px; background: #00cccc;line-height: 32px; height:32px; float: left; margin-left:20px; padding:0 12px;}
+.optionBtn  p{ padding-left: 55px; color: #07c8cf; font-size: 16px;}
+.queryTermArea{border-bottom:1px solid #07c8cf;padding-left: 0; padding-right:0}
+.moreQueryWrap{ float: left;margin-top: 12px;}
+.moreQueryWrap .queryBtn{ width: 58px;}
+.rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left; color: #999;}
+.rowText p{ color: #666;}
+.imgTable .datagrid-row-checked {background-color:#b2f0f0;}
+.imgTable .datagrid-row  img{ float: left;margin-right: 10px;}
+.rowStatusStyle{color: #fc7a52;}
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+.commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.commonSelectWrap .searchInput .line{ height: 46px;}
+.commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+
+.panlDiv .commonSelectWrap .searchInput{ border-width:0;}
+
+.forminput .commonSelectWrap .searchInput{ border-width:1px;}
+
+.forminput .commonSelectWrap .bordrnone.searchInput{ border-width:0;}
+.panlDiv{ display: block;  border-bottom: 1px solid #d0d5d8; padding-top:5px; padding-bottom: 5px; position: relative;margin-left: 35px; }
+.panlDiv .title{ color: #666666; font-size: 16px; line-height: 43px;}
+.panlDiv .panlText{ display: inline-block; width: 100%}
+.panlDiv .panlL{ float: left; width: auto;}
+.panlDiv .panlR{float: left; margin-left: 65px;}
+.panlDiv .panlL .commonSelectWrap{ display: block; float: none;}
+
+.fontC{width: 56px; text-align: left; float: left;}
+.updateBtn{ float: right; width: 160px; margin-right: 65px;}
+.updateBtn .commonBtn { width: 58px; margin-right:12px; float: left; height: 28px; line-height: 28px; display: none}
+
+.commonSelectWrap .wh80{ width: 80px;}
+.commonSelectWrap .wh30{ width: 80px;}
+.optionForm{ display: none;}
+.fontColor{float: left; color: #fc7a52;width: 100%;padding-left: 120px;}
+.commonBtn.icon{width: auto; padding-left: 28px; padding-right:15px;}
+.commonBtn.icon{ background-image: url("../images/icon.png"); background-repeat: no-repeat;background-position: 6px center; }
+.commonBtn.icon.close{ background-image: url("../images/close.png"); background-color: #fc7a52;}
+.textColor{color:#fc7a52;}
+
+.panlDiv  .showItem, .panlDiv .hideItem{ display: none}
+.textlist .searchInput{ display:flex;}
+.textlist .searchInput em{ float: left; width: 60px;}
+.textlist .searchInput input{ float: left; width: 30%}

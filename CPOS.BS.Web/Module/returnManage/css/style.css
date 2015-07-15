@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
+.commonSelectWrap .selectBox{ border: 1px solid transparent;}
+.optionBtn{ padding-top:25px; background: #fff; border: solid  1px #eee; border-bottom:none; float: left; width: 100%}
+.optionBtn ul{ width: 100%; height: 65px; float: left;}
+.optionBtn li{cursor: pointer; font-size: 15px; color: #999; float: left; padding-left: 35px; float: left; line-height:64px; }
+.optionBtn li.on{color: #07c8cf}
+.optionBtn li.on em{border-bottom: 2px #07c8cf solid;}
+.moreQueryWrap{ float: left;margin-top: 12px;}
+.rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left; color: #999;}
+.rowText p{ color: #666;}
+.imgTable .datagrid-row-checked {background-color:#b2f0f0;}
+.imgTable .datagrid-row  img{ float: left;margin-right: 10px;}
+.rowStatusStyle{color: #fc7a52;}
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+
+.optionBtn .commonBtn{background: no-repeat 8px center #00cccc;  float: left; margin-left: 35px;}
+.optionBtn .commonBtn.icon{ background-image: url("../images/icon.png");}
+
