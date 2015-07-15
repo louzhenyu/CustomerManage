@@ -39,6 +39,8 @@
             content: $("#content"),     //交易记录表格数据
             pointTable: $('#tblPoint'),   //积分明细
             amountTable: $('#tblAmount'),
+            vipTagList: $('#tagList'),//会员标签
+            groupTagList:$('#groupTagList'),//可选择的会员标签
             onlineTable: $('#tblOnline'),
             logsTable:$('#tblLogs'),
             servicesLog:$('#servicesLog'),
@@ -58,7 +60,7 @@
             this.initEvent();
         },
         hidePanels: function () {
-            $('#nav01,#nav02,#nav03,#nav04,#nav05,#nav06,#nav07,#nav08').hide();
+            $('#nav01,#nav02,#nav03,#nav04,#nav05,#nav06,#nav07,#nav08,#nav09').hide();
         },
         //没有数据的table提示
         showTableTips: function (jqObj, tips) {
@@ -193,6 +195,146 @@
                 });
                 that.stopBubble(e);
             });
+              ///标签事件的绑定和操作
+            $('#nav09').delegate(".icon", "click", function () {   //删除操作按钮操作
+
+                var me = $(this);
+                me.parent().remove();
+                debugger
+
+                $("#groupTagList").find(".tagbtn").removeClass("bgtext");
+                $("#tagList").find(".tagbtn").each(function(){
+                    var tagLitNode=$(this);
+                    $("#groupTagList").find(".tagbtn").each(function(){
+                            var groupTagListNode=$(this);
+                              if(groupTagListNode.data("tagid")==tagLitNode.data("tagid")){
+                                  groupTagListNode.addClass("bgtext")
+                              }
+
+                    });
+                });
+
+
+            }).delegate(".tagbtn", "mouseenter", function () {  //停靠显示和隐藏删除按钮
+                $(this).find(".icon").show(0)
+            }).delegate(".tagbtn", "mouseleave", function () {
+                $(this).find(".icon").hide(0)
+            }).delegate(".tagbtn", "click", function () {
+                var node=$(this);
+                var obj={}
+
+                    if (node.parents(".groupTaglist").length > 0) {
+                        if(node.data("flag")&&node.data("flag")=='add'){ //添加按钮添加
+                            if($("#TagsName").val().trim()) {
+                                obj = {id: "", name: $("#TagsName").val().trim()}
+                            }else{
+                                return false;
+                            }
+
+                        }else {
+                            obj = {id: node.data("tagid"), name: node.html()}
+                            $(this).addClass("bgtext");
+                        }
+                        var domNode = $('<div class="tagbtn" data-tagid="123"></div>').html(obj.name).data("tagid", obj.id).data("tagname",obj.name);
+                        domNode.append('<em class="icon"></em>');
+                        console.log(domNode.data("tagid"));
+                        var isAdd=true
+                       $("#tagList").find(".tagbtn").each(function(){
+                            var tagLitNode=$(this);
+                            if(tagLitNode.data("tagname")==obj.name){
+                                $.messager.alert("提示","已经添加不可重复");
+                                isAdd=false;
+                            }
+
+                        });
+                        if(isAdd) {
+                            $("#tagList").append(domNode);
+                        }
+                    }
+
+
+            }).delegate("li","click",function(){
+                $(this).parent().find("li").removeClass("on");
+                $(this).addClass("on");
+
+
+                var typeId=$(this).data("tagid"),list=[];
+                $.each(that.elems.TagTypesAndTags,function(index,filed){
+                         if(typeId==filed.TypeId){
+                             debugger;
+                             list=filed.TagsList?filed.TagsList:[];
+                             return false;
+                         }
+
+                });
+
+                if (list.length) {
+                    list = list ? list : [];
+                    var html = bd.template('groupTagBtn', { list:list });
+                    that.elems.groupTagList.html(html);
+                    $("#groupTagList").find(".tagbtn").removeClass("bgtext");
+                    $("#tagList").find(".tagbtn").each(function(){
+                        var tagLitNode=$(this);
+                        $("#groupTagList").find(".tagbtn").each(function(){
+                            var groupTagListNode=$(this);
+                            if(groupTagListNode.data("tagid")==tagLitNode.data("tagid")){
+                                groupTagListNode.addClass("bgtext")
+                            }
+
+                        });
+                    });
+
+                } else{
+                    that.elems.groupTagList.html("该标签分类无值");
+                }
+
+            }).delegate(".fontC","click",function(){
+                debugger;
+                that.loadData.args.vipTagList.PageIndex+=1;
+                that.loadData.getTagTypeAndTags(function(data){
+                    var list = data.Data.TagTypesAndTags;
+                    if(that.loadData.args.vipTagList.PageIndex>=data.Data.TotalPages){
+                        that.loadData.args.vipTagList.PageIndex=0;
+                    }
+                    that.elems.TagTypesAndTags=data.Data.TagTypesAndTags;
+                    list = list ? list : [];
+
+                    if (list.length) {
+                        var html = bd.template('tagTypeList', { list: list });
+                        $("ul.groupTag").html(html);
+                        $("ul.groupTag li").eq(0).trigger("click")
+                    }
+
+                });
+            }).delegate(".commonBtn","click",function(e){
+                that.loadData.args.vipTagList.IdentityTagsList=[];
+                $("#tagList").find(".tagbtn").each(function(){
+                    var tagLitNode=$(this);
+                    var obj={TagsId:tagLitNode.data("tagid"),TagsName:tagLitNode.data("tagname")}
+                    that.loadData.args.vipTagList.IdentityTagsList.push(obj);
+
+                });
+                that.loadData.setVipTags(function(data){
+                    alert("保存成功");
+                    that.loadVipDetail();
+                    that.loadData.GetVipDetail(function (data) {
+                        debugger;
+                        var list = data.Data.VipTags;
+                        list = list ? list : [];
+                        if (list.length) {
+                            var html = bd.template('tagListBtn', { list: list });
+                            that.elems.vipTagList.html(html);
+                        }
+                    });
+                });
+
+                $.Unit.stopBubble(e);
+            });
+
+
+
+
+
             //保存客服记录
             $('#win').delegate('.saveBtn', 'click', function (e) {
                if($("#optionform").form("validate")) {
@@ -309,6 +451,52 @@
                 }
             //    debugger;
                 switch (panelId) {
+                    // 会员标签加载
+                    case 'nav09':
+                        //that.loadData.args.VipId='928e7a79db0f4d8cbd935064e83026ad';
+                        that.loadData.GetVipDetail(function (data) {
+                            debugger;
+                            var list = data.Data.VipTags;
+                            list = list ? list : [];
+                            if (list.length) {
+                                var html = bd.template('tagListBtn', { list: list });
+                                that.elems.vipTagList.html(html);
+                            }
+                            that.loadData.getTagTypeAndTags(function(data){
+                                var list = data.Data.TagTypesAndTags;
+                                that.elems.TagTypesAndTags=data.Data.TagTypesAndTags;
+                                list = list ? list : [];
+                                /*  if (list.length) {
+                                    list = list ? list : [];
+                                    var html = bd.template('groupTagBtn', { list:list });
+                                    $("ul.groupTag li").eq(0);
+                                    that.elems.groupTagList.html(html);
+                                    $("#groupTagList").find(".tagbtn").removeClass("bgtext");
+                                    $("#tagList").find(".tagbtn").each(function(){
+                                        var tagLitNode=$(this);
+                                        $("#groupTagList").find(".tagbtn").each(function(){
+                                            var groupTagListNode=$(this);
+                                            if(groupTagListNode.data("tagid")==tagLitNode.data("tagid")){
+                                                groupTagListNode.addClass("bgtext")
+                                            }
+
+                                        });
+                                    });
+
+                                }
+*/
+
+                                if (list.length) {
+                                    var html = bd.template('tagTypeList', { list: list });
+                                    $("ul.groupTag").html(html);
+                                    $("ul.groupTag li").eq(0).trigger("click")
+                                }
+
+                            });
+                        });
+
+                        break;
+
                     case 'nav02':  //交易记录
                         that.loadData.getVipOrderList(function (data) {
                             var list = data.Data.VipOrderList;
@@ -731,6 +919,8 @@
                         }
                     });
                     break;
+
+
                 //交易记录                        
                 case "nav02":
                     this.loadData.args.order.PageIndex = currentPage;
@@ -899,7 +1089,79 @@
                     TotalPages: 0,
                     TotalCount: 0,
                     OrderType:'DESC'
+                },
+                //上线与下线
+                vipTagList:
+                {
+                    PageIndex: 1,
+                    PageSize: 3,
+                    TotalPages: 0,
+                    IdentityTagsList:[],
+                    TotalCount: 0
                 }
+
+            },
+            setVipTags:function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Vip/VipTags.ashx",
+                    data: {
+                        action: 'SetVipTags',
+                        VipId: this.args.VipId,
+                        IdentityTagsList:this.args.vipTagList.IdentityTagsList
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback) {
+                                callback(data);
+                            }
+
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            // 获取系统已有的标签
+            getTagTypeAndTags: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Vip/VipTags.ashx",
+                    data:{
+                        action:"GetTagTypeAndTags",
+                        PageIndex: this.args.vipTagList.PageIndex,
+                        PageSize: this.args.vipTagList.PageSize
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback)
+                                callback(data);
+                        }
+                        else {
+                            alert("加载异常请联系管理员");
+                        }
+                    }
+                });
+            },
+
+            //获取会员已添加的标签
+            GetVipDetail: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Vip/VipGateway.ashx",
+                    data: {
+                        action: 'GetVipDetail',
+                        VipId: this.args.VipId,
+
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback) {
+                                callback(data);
+                            }
+
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
             },
             //获取会员操作日志
             getVipLogs: function (callback) {
