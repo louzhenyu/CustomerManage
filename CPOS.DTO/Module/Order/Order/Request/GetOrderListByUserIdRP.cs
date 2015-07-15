@@ -20,6 +20,10 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Request
         /// </summary>
         public string OrderNo { get; set; }
         /// <summary>
+        /// 是否已付款 0=未付；1=已付。
+        /// </summary>
+        public string IsPayment { get; set; }
+        /// <summary>
         /// 每页记录数，默认15
         /// </summary>
         public int PageSize { get; set; }

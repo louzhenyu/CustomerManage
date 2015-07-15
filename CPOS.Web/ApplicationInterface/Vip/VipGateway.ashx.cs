@@ -808,6 +808,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             var orderId = rp.Parameters.OrderId;
 
             var vipBll = new VipBLL(loggingSessionInfo);
+            var inoutBll = new T_InoutBLL(loggingSessionInfo);
+            var refundOrderBll= new T_RefundOrderBLL(loggingSessionInfo);
 
 
             vipBll.ProcSetCancelOrder(rp.CustomerID, orderId, rp.UserID);
@@ -862,6 +864,33 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             //        throw new Exception("调用ALD平台失败:" + ex.Message);
             //    }
             //}
+            #endregion
+
+            #region 处理退款业务
+            var inoutInfo = inoutBll.GetInoutInfo(orderId,loggingSessionInfo);
+            if (inoutInfo != null)
+            {
+                if(inoutInfo.Field1=="1")//已付款
+                {
+                    T_RefundOrderEntity refundOrderEntity = new T_RefundOrderEntity()
+                    {
+                        RefundNo=DateTime.Now.ToString("yyyyMMddhhmmfff"),
+                        VipID=inoutInfo.vip_no,
+                        OrderID=inoutInfo.order_id,
+                        UnitID=inoutInfo.unit_id,
+                        PayOrderID=inoutInfo.paymentcenter_id,
+                        RefundAmount=inoutInfo.total_amount,
+                        ConfirmAmount=inoutInfo.total_amount,
+                        ActualRefundAmount=inoutInfo.actual_amount,
+                        Points=inoutInfo.pay_points==null?0:Convert.ToInt32(inoutInfo.pay_points),
+                        ReturnAmount=inoutInfo.ReturnAmount,
+                        Amount=inoutInfo.VipEndAmount,
+                        Status=1,//待退款
+                        CustomerID=loggingSessionInfo.ClientID
+                    };
+                    refundOrderBll.Create(refundOrderEntity);
+                }
+            }
             #endregion
 
             var rd = new EmptyResponseData();

@@ -260,7 +260,7 @@ namespace JIT.CPOS.BS.BLL
             return b;
         }
 
-            /// <summary>
+        /// <summary>
         /// 返现处理（通用方法）
         /// </summary>
         /// <param name="vipId"></param>
@@ -297,6 +297,46 @@ namespace JIT.CPOS.BS.BLL
                 ObjectId = orderId
             };
             vipAmountDetailDao.Create(vipAmountDetailEntity);
+
+        }
+        /// <summary>
+        /// 返现处理（通用方法-增加事务）
+        /// </summary>
+        /// <param name="vipId"></param>
+        /// <param name="retuanAmount"></param>
+        /// <param name="tran">事务</param>
+        /// <param name="orderId"></param>
+        /// <param name="amountSourceId"></param>
+        public void AddReturnAmount(string vipId, decimal returnAmount, System.Data.SqlClient.SqlTransaction tran,string orderId, string amountSourceId, LoggingSessionInfo loggingSessionInfo)
+        {
+            var vipAmountDao = new VipAmountBLL(loggingSessionInfo);
+            var vipAmountDetailDao = new VipAmountDetailBLL(loggingSessionInfo);
+            var vipAmountInfo = vipAmountDao.GetByID(vipId);
+            if (vipAmountInfo == null)  //无账户数据
+            {
+                vipAmountInfo = new VipAmountEntity
+                {
+                    VipId = vipId,
+                    ReturnAmount = returnAmount,
+                    IsLocking = 0
+                };
+                vipAmountDao.Create(vipAmountInfo,tran);
+            }
+            else
+            {
+                vipAmountInfo.ReturnAmount = (vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value) + returnAmount;
+                vipAmountDao.Update(vipAmountInfo);
+            }
+            //创建变更记录
+            var vipAmountDetailEntity = new VipAmountDetailEntity
+            {
+                AmountSourceId = amountSourceId,
+                Amount = returnAmount,
+                VipAmountDetailId = Guid.NewGuid(),
+                VipId = vipId,
+                ObjectId = orderId
+            };
+            vipAmountDetailDao.Create(vipAmountDetailEntity,tran);
 
         }
     }

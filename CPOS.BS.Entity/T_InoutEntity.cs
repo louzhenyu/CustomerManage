@@ -29,7 +29,26 @@ namespace JIT.CPOS.BS.Entity
     public partial class T_InoutEntity : BaseEntity 
     {
         #region  Ù–‘ºØ
-
+        /// <summary>
+        /// ”‡∂Óµ÷ø€
+        /// </summary>
+        public decimal VipEndAmount { get; set; }
+        /// <summary>
+        /// ∑µœ÷µ÷ø€
+        /// </summary>
+        public decimal ReturnAmount { get; set; }
+        /// <summary>
+        /// ª˝∑÷µ÷ø€
+        /// </summary>
+        public decimal IntegralAmount { get; set; }
+        /// <summary>
+        /// ”≈ª›»Øµ÷ø€
+        /// </summary>
+        public decimal CouponAmount { get; set; }
+        /// <summary>
+        /// ‘À∑—
+        /// </summary>
+        public decimal DeliveryAmount { get; set; }
         #endregion
     }
 }

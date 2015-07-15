@@ -364,6 +364,9 @@
     <Compile Include="CodeGeneration\RouteCycleMappingBLL.cs" />
     <Compile Include="CodeGeneration\RoutePOPMappingBLL.cs" />
     <Compile Include="CodeGeneration\RouteUserMappingBLL.cs" />
+    <Compile Include="CodeGeneration\SalesReturn\T_RefundOrderBLL.cs" />
+    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnBLL.cs" />
+    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnHistoryBLL.cs" />
     <Compile Include="CodeGeneration\SeatOrderBLL.cs" />
     <Compile Include="CodeGeneration\ShoppingCartBLL.cs" />
     <Compile Include="CodeGeneration\ShopProductBLL.cs" />
@@ -417,6 +420,7 @@
     <Compile Include="CodeGeneration\t_customerBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
+    <Compile Include="CodeGeneration\T_ItemBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
     <Compile Include="CodeGeneration\T_UserBLL.cs" />
     <Compile Include="CodeGeneration\UnitCommentBLL.cs" />
@@ -880,6 +884,9 @@
     <Compile Include="ReservationWorkCalendarBLL.cs" />
     <Compile Include="RoleMenuService.cs" />
     <Compile Include="RoleService.cs" />
+    <Compile Include="SalesReturn\T_RefundOrderBLL.cs" />
+    <Compile Include="SalesReturn\T_SalesReturnBLL.cs" />
+    <Compile Include="SalesReturn\T_SalesReturnHistoryBLL.cs" />
     <Compile Include="SeatOrderBLL.cs" />
     <Compile Include="CS\SendMarketingMessageBLL.cs" />
     <Compile Include="Services\RechargeStrategyBLL.cs" />
@@ -935,6 +942,7 @@
     <Compile Include="TUserThirdPartyMappingBLL.cs" />
     <Compile Include="T_CityBLL.cs" />
     <Compile Include="t_customerBLL.cs" />
+    <Compile Include="T_ItemBLL.cs" />
     <Compile Include="T_ItemSkuPropBLL.cs" />
     <Compile Include="UnitCommentBLL.cs" />
     <Compile Include="UserFeedbackBLL.cs" />

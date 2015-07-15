@@ -222,5 +222,42 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+        /// <summary>
+        /// 获取主订单信息
+        /// </summary>
+        /// <returns></returns>
+        public T_InoutEntity GetInoutInfo(string orderId, LoggingSessionInfo pUserInfo)
+        {
+            var inoutInfo = this._currentDAO.GetByID(orderId);
+            if (inoutInfo != null)
+            {
+                var vipIntegralDetailBll = new VipIntegralDetailBLL(pUserInfo);
+                var vipBll = new VipBLL(pUserInfo);
+                var tOrderCouponMappingBll = new TOrderCouponMappingBLL(pUserInfo);
+                var vipAmountDetailBll = new VipAmountDetailBLL(pUserInfo);
+                var deliveryBll = new TOrderCustomerDeliveryStrategyMappingBLL(pUserInfo);
+                //使用积分
+                inoutInfo.pay_points = Math.Abs(vipIntegralDetailBll.GetVipIntegralByOrder(orderId,inoutInfo.vip_no));
+                if (inoutInfo.pay_points > 0)
+                {
+                    decimal integralAmountPre = vipBll.GetIntegralAmountPre(pUserInfo.ClientID);//获取积分金额比例
+                    //积分抵扣
+                    inoutInfo.IntegralAmount = inoutInfo.pay_points.Value * (integralAmountPre > 0 ? integralAmountPre : 0.01M);
+                }
+                else
+                    inoutInfo.IntegralAmount = 0;//积分抵扣
+                //优惠券抵扣
+                var couponParValue = tOrderCouponMappingBll.GetCouponParValue(orderId);
+                inoutInfo.CouponAmount = couponParValue;
+
+                //使用的账户余额
+                inoutInfo.VipEndAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId,inoutInfo.vip_no, 1));
+                //使用的返现金额
+                inoutInfo.ReturnAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, inoutInfo.vip_no, 13));
+                //配送费 
+                inoutInfo.DeliveryAmount = deliveryBll.GetDeliverAmount(orderId);
+            }
+            return inoutInfo;
+        }
     }
 }

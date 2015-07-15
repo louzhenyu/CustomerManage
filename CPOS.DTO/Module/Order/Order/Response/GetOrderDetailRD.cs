@@ -197,6 +197,10 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public string BeginDate { get; set; }
         public string EndDate { get; set; }
         public int DayCount { get; set; }
+        /// <summary>
+        /// 退换货状态 0=可申请退换货；0<不可申请退换货
+        /// </summary>
+        public int SalesReturnFlag { get; set; }
     }
     public class OrderDetailImage
     {

@@ -6051,6 +6051,12 @@
     <Compile Include="ApplicationInterface\Module\Marketing\Coupon\DelCouponTypeAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Coupon\GetCouponTypeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Coupon\SetCouponAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetRefundOrderDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetRefundOrderListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\SetRefundOrderAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\SetSalesReturnAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\ServicesLog\GetVipServicesLogDetailAH.cs">
       <SubType>Code</SubType>
     </Compile>

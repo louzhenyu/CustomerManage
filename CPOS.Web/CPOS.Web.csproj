@@ -2190,6 +2190,9 @@
     <Compile Include="ApplicationInterface\Module\Extension\PointMark\GetVipPointMarkAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\PointMark\SetVipPointMarkAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\Question\GetQuestionListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\SetSalesReturnAH.cs" />
     <Compile Include="ApplicationInterface\Module\Test\Test\TestAH.cs" />
     <Compile Include="ApplicationInterface\Module\UnitAndItem\Item\Item.ashx.cs">
       <DependentUpon>Item.ashx</DependentUpon>

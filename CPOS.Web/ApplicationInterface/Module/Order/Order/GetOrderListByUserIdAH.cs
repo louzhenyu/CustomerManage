@@ -22,6 +22,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             string customerId = this.CurrentUserInfo.ClientID;
             int pageSize = pRequest.Parameters.PageSize;
             int pageIndex = pRequest.Parameters.PageIndex;
+            string isPayment = pRequest.Parameters.IsPayment;
 
             string orderNo = pRequest.Parameters.OrderNo;
 
@@ -39,7 +40,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
 
             T_InoutBLL bll = new T_InoutBLL(this.CurrentUserInfo);
-            var ds = bll.GetOrdersList(orderId, userId,orderStatusList,orderNo, customerId, pageSize, pageIndex,pRequest.Parameters.OrderChannelID);
+            var ds = bll.GetOrdersList(orderId, userId, orderStatusList, isPayment,orderNo, customerId, pageSize, pageIndex, pRequest.Parameters.OrderChannelID);
 
             var tmp = ds.Tables[0].AsEnumerable().Select(t => new OrdersInfo()
             {

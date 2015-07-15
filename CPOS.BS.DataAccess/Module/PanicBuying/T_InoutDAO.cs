@@ -299,7 +299,7 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
         }
         #endregion
-        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList, string orderNo, string customerId
+        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList,string isPayment, string orderNo, string customerId
             , int pageSize, int pageIndex, string OrderChannelID)
         {
             List<SqlParameter> paras = new List<SqlParameter> { };
@@ -317,6 +317,10 @@ namespace JIT.CPOS.BS.DataAccess
             else
             {
                 sqlWhere = "and a.status in (" + orderStatusList + ")";
+            }
+            if (!string.IsNullOrEmpty(isPayment))
+            {
+                sqlWhere = " and a.Field1 =" + isPayment;
             }
             if (!string.IsNullOrEmpty(orderNo))
             {

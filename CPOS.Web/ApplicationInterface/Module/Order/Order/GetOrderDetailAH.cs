@@ -58,6 +58,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             #region 获取门店信息
 
             string storeId = orderList[0].sales_unit_id;
+            if (!string.IsNullOrEmpty(orderList[0].purchase_unit_id))//如果有发货门店，则显示发货门店信息
+                storeId = orderList[0].purchase_unit_id;
             TInoutBLL tInoutBll = new TInoutBLL(this.CurrentUserInfo);
             //string storeName = tInoutBll.GetStoreName(storeId);
             DataSet storeDs = tInoutBll.GetStoreInfo(storeId);
@@ -147,6 +149,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
 
             T_Inout_DetailBLL orderDetailBll = new T_Inout_DetailBLL(this.CurrentUserInfo);
+            //退换货Bll实例化
+            T_SalesReturnBLL salesReturnBll = new T_SalesReturnBLL(this.CurrentUserInfo);
 
             var orderDetailList = orderDetailBll.QueryByEntity(new T_Inout_DetailEntity()
             {
@@ -186,6 +190,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     ItemID = t["item_id"].ToString(),
                     ItemName = t["item_name"].ToString(),
                     SkuID = t["sku_id"].ToString(),
+                    SalesReturnFlag=salesReturnBll.CheckSalesReturn(orderId, t["sku_id"].ToString()),//是否可申请退换货
                     //GG = t["prop_1_detail_name"].ToString()+t["prop_2_detail_name"].ToString()+t["prop_3_detail_name"].ToString()
                     //+t["prop_4_detail_name"].ToString()+t["prop_5_detail_name"].ToString(),
                     

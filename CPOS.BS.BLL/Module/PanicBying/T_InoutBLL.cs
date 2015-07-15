@@ -504,10 +504,10 @@ namespace JIT.CPOS.BS.BLL
             return RD;
         }
         //根据状态获取订单信息
-        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList, string orderNo,
+        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList,string isPayment, string orderNo,
             string customerId, int? pageSize, int? pageIndex, string OrderChannelID)
         {
-            return this._currentDAO.GetOrdersList(orderId, userId, orderStatusList, orderNo, customerId, pageSize ?? 0,
+            return this._currentDAO.GetOrdersList(orderId, userId, orderStatusList,isPayment, orderNo, customerId, pageSize ?? 0,
                 pageIndex ?? 15, OrderChannelID);
         }
         //获取销售（服务）订单

@@ -191,6 +191,78 @@ namespace JIT.CPOS.Web.ApplicationInterface
             };
             return new SuccessResponse<IAPIResponseData>(accessToken).ToJSON();
         }
+
+        #region 和后台首页相同的统计
+
+        public string GetVipTotal(string pRequest)
+        {
+            //var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
+            //var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+
+            //var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+
+            var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+
+            var rd = new GetVipTotalRD();
+            var vipBll = new VipBLL(loggingSessionInfo);
+
+            var ds = vipBll.VipLandingPage(loggingSessionInfo.ClientID);
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                var temp = ds.Tables[0].AsEnumerable().Select(t => new ThatDayAndMonthVipInfo
+                {
+                    TodayVipCount = Convert.ToInt32(t["NewMemberCountToday"]),//今天新增vip
+                    AddRatioByDay = t["NewMemberPercentByDay"].ToString(),
+                    MonthVipCount = Convert.ToInt32(t["NewMemberCountThisMonth"]),
+                    AddRatioByMonth = t["NewMemberPercentByMonth"].ToString(),
+                    CashOnDeliveryCount = Convert.ToInt32(t["CashOnDeliveryCount"]),
+                    OffShelfCount = Convert.ToInt32(t["OffShelfCount"]),
+                    OnlineUnitCount = Convert.ToInt32(t["OnlineUnitCount"]),
+                    PaidNotSentCount = Convert.ToInt32(t["PaidNotSentCount"]),
+                    SentCount = Convert.ToInt32(t["SentCount"]),
+                    UpShelfCount = Convert.ToInt32(t["UpShelfCount"])
+                }).FirstOrDefault();
+                rd.VipInfo = temp;
+            }
+            if (ds.Tables[1].Rows.Count > 0)
+            {
+                var tmp = ds.Tables[1].AsEnumerable().Select(t => new AttentionVipInfo
+                {
+                    Date = Convert.ToDateTime(t["PDate"]).ToShortDateString(),// t["PDate"].ToString(),
+                    CumulativeNo = Convert.ToInt32(t["VipNumber"])
+
+                });
+
+                rd.AttentionVipList = tmp.ToArray();
+            }
+            //if (ds.Tables[2].Rows.Count > 0)
+            //{
+            //    var eventList = ds.Tables[2].AsEnumerable().Select(t => new EventAnalysisInfo
+            //    {
+            //        //EventID,Title,EventPeriod,QRCodeVipAmount,SaleAmount,TransferAmount,
+            //        //RecommendedAmount,RegisteredAmount,PurchasedAmount
+
+            //        EventId = t["EventID"].ToString(),
+            //        Title = t["Title"].ToString(),
+            //        EventTime = t["EventPeriod"].ToString(),
+            //        DecodeNo = Convert.ToInt32(t["QRCodeVipAmount"]),
+            //        VipNo = Convert.ToInt32(t["RegisteredAmount"]),
+            //        ForwardingNo = Convert.ToInt32(t["TransferAmount"]),
+            //        ForwardingSignNo = Convert.ToInt32(t["RecommendedAmount"]),
+            //        SalesVipNo = Convert.ToInt32(t["PurchasedAmount"]),
+            //        SalesNo = Convert.ToInt32(t["SaleAmount"]),
+            //    });
+
+            //    rd.EventAnalysisList = eventList.ToArray();
+            //}
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+
+            return rsp.ToJSON();
+        }
+
+        #endregion
         protected override string ProcessAction(string pType, string pAction, string pRequest)
         {
             string rst;
@@ -207,6 +279,9 @@ namespace JIT.CPOS.Web.ApplicationInterface
                     break;
                 case "GetAccessToken":
                     rst = this.GetAccessToken(pRequest);
+                    break;
+                case "GetVipTotal":
+                    rst = this.GetVipTotal(pRequest);
                     break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
@@ -280,4 +355,87 @@ namespace JIT.CPOS.Web.ApplicationInterface
         public string expires_in { get; set; }
         public string ExpirationTime { get; set; }
     }
+
+    #region 和后台首页相同的统计
+
+    public class GetVipTotalRD : IAPIResponseData
+    {
+        public ThatDayAndMonthVipInfo VipInfo { get; set; }
+        public AttentionVipInfo[] AttentionVipList { get; set; }
+        public EventAnalysisInfo[] EventAnalysisList { get; set; }
+    }
+    public class ThatDayAndMonthVipInfo
+    {
+        /// <summary>
+        /// 当天新增会员数,为空则为0
+        /// </summary>
+        public int TodayVipCount { get; set; }
+        /// <summary>
+        /// 新增比率
+        /// </summary>
+        public string AddRatioByDay { get; set; }
+
+        /// <summary>
+        /// 当月新增会员数,为空则为0
+        /// </summary>
+        public int MonthVipCount { get; set; }
+        /// <summary>
+        /// 新增比率
+        /// </summary>
+        public string AddRatioByMonth { get; set; }
+        /// <summary>
+        /// 当日已发货订单数
+        /// </summary>
+        public int SentCount { get; set; }
+        /// <summary>
+        /// 已支付待发货订单数
+        /// </summary>
+        public int PaidNotSentCount { get; set; }
+        /// <summary>
+        /// 货到付款待发货订单数
+        /// </summary>
+        public int CashOnDeliveryCount { get; set; }
+        /// <summary>
+        /// 上架商品数
+        /// </summary>
+        public int UpShelfCount { get; set; }
+        /// <summary>
+        /// 下架商品数
+        /// </summary>
+        public int OffShelfCount { get; set; }
+        /// <summary>
+        /// 上线门店数
+        /// </summary>
+        public int OnlineUnitCount { get; set; }
+    }
+    public class AttentionVipInfo
+    {
+        public int DisplayIndex { get; set; }
+        public string Date { get; set; }
+        //每天数量
+        public int CumulativeNo { get; set; }
+    }
+    public class EventAnalysisInfo
+    {
+        public string EventId { get; set; }
+        public int DisplayIndex { get; set; }
+        public string Title { get; set; }
+        //活动时间
+        public string EventTime { get; set; }
+        //扫描参与
+        public int DecodeNo { get; set; }
+        //转发数
+        public int ForwardingNo { get; set; }
+        //转发带来参与者
+        public int ForwardingSignNo { get; set; }
+        //会员数
+        public int VipNo { get; set; }
+        //有购买会员数
+        public int SalesVipNo { get; set; }
+        //销售数
+        public int SalesNo { get; set; }
+
+    }
+
+    #endregion
 }

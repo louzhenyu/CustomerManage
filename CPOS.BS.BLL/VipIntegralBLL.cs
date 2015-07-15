@@ -387,5 +387,76 @@ namespace JIT.CPOS.BS.BLL
             #endregion
 
         }
+
+        /// <summary>
+        /// 积分变更
+        /// </summary>
+        /// <param name="vipId"></param>
+        /// <param name="points"></param>
+        /// <param name="tran"></param>
+        /// <param name="type"></param>
+        /// <param name="objectId"></param>
+        /// <param name="loggingSessionInfo"></param>
+        /// <returns></returns>
+        public bool AddIntegral(string vipId,int points, System.Data.SqlClient.SqlTransaction tran, string type, string objectId, LoggingSessionInfo loggingSessionInfo)
+        {
+            bool b = false;
+            //更新个人账户的可使用余额 
+            try
+            {
+                var vipBLL = new VipBLL(loggingSessionInfo);
+                var vipIntegralBLL = new VipIntegralBLL(loggingSessionInfo);
+                var vipIntegralDetailBLL = new VipIntegralDetailBLL(loggingSessionInfo);
+                var vipInfo = vipBLL.GetByID(vipId);
+                var vipIntegralInfo = vipIntegralBLL.GetByID(vipId);
+                //修改会员信息剩余积分
+                if (vipInfo != null)
+                {
+                    vipInfo.Integration=vipInfo.Integration==null?0:(vipInfo.Integration.Value+points);
+                    vipBLL.Update(vipInfo, tran);
+                }
+                //创建会员积分记录信息
+                if (vipIntegralInfo == null)
+                {
+                    vipIntegralInfo = new VipIntegralEntity
+                    {
+                        VipID=vipId,
+                        BeginIntegral=points,
+                        InIntegral=points,
+                        EndIntegral=points,
+                        ValidIntegral=points
+                    };
+                    vipIntegralBLL.Create(vipIntegralInfo, tran);
+                }
+                else//修改会员积分记录信息
+                {
+                    vipIntegralInfo.EndIntegral = (vipIntegralInfo.EndIntegral == null ? 0 : vipIntegralInfo.EndIntegral.Value) + points;
+                    vipIntegralInfo.ValidIntegral = (vipIntegralInfo.ValidIntegral == null ? 0 : vipIntegralInfo.ValidIntegral.Value) + points;
+                    if (points > 0)
+                        vipIntegralInfo.InIntegral = (vipIntegralInfo.InIntegral == null ? 0 : vipIntegralInfo.InIntegral.Value) + points;
+                    else
+                        vipIntegralInfo.OutIntegral = (vipIntegralInfo.OutIntegral == null ? 0 : vipIntegralInfo.OutIntegral.Value) + points;
+                    vipIntegralBLL.Update(vipIntegralInfo, tran);
+                }
+                //增加记录
+                VipIntegralDetailEntity detail = new VipIntegralDetailEntity() { };
+                detail.VipIntegralDetailID = Guid.NewGuid().ToString();
+                detail.VIPID = vipId;
+                detail.ObjectId = objectId;
+                detail.Integral = points;
+                detail.IntegralSourceID = type;
+                vipIntegralDetailBLL.Create(detail,tran);
+            }
+            catch (Exception ex)
+            {
+                throw new APIException(ex.ToString()) { ErrorCode = 121 };
+            }
+            finally
+            {
+                b = true;
+            }
+
+            return b;
+        }
     }
 }

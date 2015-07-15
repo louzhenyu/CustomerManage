@@ -85,6 +85,15 @@
     <Compile Include="Module\Marketing\Coupon\Request\GetCouponTypeListRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\SetCouponRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Response\GetCouponTypeListRD.cs" />
+    <Compile Include="Module\Order\SalesReturn\Request\GetRefundOrderDetailRP.cs" />
+    <Compile Include="Module\Order\SalesReturn\Request\GetRefundOrderListRP.cs" />
+    <Compile Include="Module\Order\SalesReturn\Request\GetSalesReturnDetailRP.cs" />
+    <Compile Include="Module\Order\SalesReturn\Request\GetSalesReturnListRP.cs" />
+    <Compile Include="Module\Order\SalesReturn\Request\SetSalesReturnRP.cs" />
+    <Compile Include="Module\Order\SalesReturn\Response\GetRefundOrderDetailRD.cs" />
+    <Compile Include="Module\Order\SalesReturn\Response\GetRefundOrderListRD.cs" />
+    <Compile Include="Module\Order\SalesReturn\Response\GetSalesReturnDetailRD.cs" />
+    <Compile Include="Module\Order\SalesReturn\Response\GetSalesReturnListRD.cs" />
     <Compile Include="Module\VIP\Attribute\Request\GetAttributeListRP.cs" />
     <Compile Include="Module\VIP\Attribute\Request\SetAttributeRP.cs" />
     <Compile Include="Module\VIP\Attribute\Response\GetAttributeListRD.cs" />

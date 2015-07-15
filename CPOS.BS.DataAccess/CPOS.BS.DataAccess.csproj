@@ -330,6 +330,9 @@
     <Compile Include="CodeGeneration\RouteDAO.cs" />
     <Compile Include="CodeGeneration\RoutePOPMappingDAO.cs" />
     <Compile Include="CodeGeneration\RouteUserMappingDAO.cs" />
+    <Compile Include="CodeGeneration\SalesReturn\T_RefundOrderDAO.cs" />
+    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnDAO.cs" />
+    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnHistoryDAO.cs" />
     <Compile Include="CodeGeneration\SeatOrderDAO.cs" />
     <Compile Include="CodeGeneration\ShoppingCartDAO.cs" />
     <Compile Include="CodeGeneration\ShopProductDAO.cs" />
@@ -383,6 +386,7 @@
     <Compile Include="CodeGeneration\t_customerDAO.cs" />
     <Compile Include="CodeGeneration\T_InoutDAO.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailDAO.cs" />
+    <Compile Include="CodeGeneration\T_ItemDAO.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropDAO.cs" />
     <Compile Include="CodeGeneration\T_UserDAO.cs" />
     <Compile Include="CodeGeneration\UnitCommentDAO.cs" />
@@ -751,6 +755,9 @@
     <Compile Include="Project\PG\PowerHourDAO.cs" />
     <Compile Include="Project\PG\PowerHourInviteDAO.cs" />
     <Compile Include="Project\PG\PowerHourRemarkDAO.cs" />
+    <Compile Include="SalesReturn\T_RefundOrderDAO.cs" />
+    <Compile Include="SalesReturn\T_SalesReturnDAO.cs" />
+    <Compile Include="SalesReturn\T_SalesReturnHistoryDAO.cs" />
     <Compile Include="Services\RechargeStrategyDAO.cs" />
     <Compile Include="Services\SysVocationDAO.cs" />
     <Compile Include="Services\UnitDAO.cs" />
@@ -849,6 +856,7 @@
     <Compile Include="TypeService.cs" />
     <Compile Include="T_CityDAO.cs" />
     <Compile Include="t_customerDAO.cs" />
+    <Compile Include="T_ItemDAO.cs" />
     <Compile Include="T_ItemSkuPropDAO.cs" />
     <Compile Include="UnitCommentDAO.cs" />
     <Compile Include="UnitService.cs" />
