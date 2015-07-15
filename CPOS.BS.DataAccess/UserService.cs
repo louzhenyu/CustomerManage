@@ -128,6 +128,88 @@ namespace JIT.CPOS.BS.DataAccess
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
+
+
+
+        public DataSet GetUserList(int pageIndex, int pageSize, string OrderBy, string sortType, string UserID, string CustomerID,string PhoneList,string UnitID)
+        {
+            if (string.IsNullOrEmpty(OrderBy))
+                OrderBy = "a.CREATE_TIME";
+            if (string.IsNullOrEmpty(sortType))
+                sortType = "DESC";
+            var sqlCon = "";
+            //if (!string.IsNullOrEmpty(CustomerID))
+            //{
+            //    sqlCon += " and a.customer_id = '" + CustomerID + "'";
+            //}
+            if (!string.IsNullOrEmpty(PhoneList))
+            {
+                sqlCon += " and a.user_telephone in (" + PhoneList + ")";
+            }
+                       List<SqlParameter> ls = new List<SqlParameter>();
+            if (!string.IsNullOrEmpty(UnitID))
+            {
+                //and操作，如果前面已经是false了，后面的判断就不执行了
+                sqlCon += " and exists (select 1 from T_User_Role g  where g.unit_id=@UnitID and g.user_id=a.user_id)";//两个月内到期的，即当前日期加上两个月就大于过期日的
+                ls.Add(new SqlParameter("@UnitID", UnitID));
+            }
+
+            //if (!string.IsNullOrEmpty(ContinueExpensesStatus))//支付状态
+            //{
+            //    sqlCon += " and (case  when a.haspay=0 then '未付款' when haspay=1 then '已付款' end)= '" + PayStatus + "'";
+
+            //}
+ 
+            ls.Add(new SqlParameter("@loginUserID", UserID));
+            ls.Add(new SqlParameter("@CustomerId", CustomerID));
+
+            string sql = @"----在这里要把用户的权限能看到的数据加上
+DECLARE @AllUnit NVARCHAR(200)
+
+CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
+ INSERT #UnitSET (UnitID)                  
+   SELECT DISTINCT R.UnitID                   
+   FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  (@CustomerId,UR.unit_id,205)  R                  
+   WHERE user_id=@loginUserID          ---根据账户的角色去查角色对应的  unit_id
+
+   SELECT @AllUnit=unit_id FROM t_unit WHERE customer_id=@CustomerId  AND type_id='2F35F85CF7FF4DF087188A7FB05DED1D'
+   ----上面查找了该客户@CustomerId 下总店的unit_id  
+
+    SELECT distinct x.user_id,y.unit_id INTO #TmpTBL FROM  t_user x inner join T_User_Role y  on x.user_id=y.user_id where  default_flag=1 and x.customer_id=@CustomerId  AND ISNULL(x.customer_id,'')!=''  -----	 不要没有CustomerId的
+   UPDATE #TmpTBL SET Unit_id=@AllUnit WHERE ISNULL(Unit_id,'')=''----把CouponInfo为空的，门店变为总部  
+----取出这个数据做为会员表的代替
+select user_id  into #TempTable	 from  #TmpTBL L , #UnitSET R where 
+	 L.Unit_ID=R.UnitID    ----只取出改账号能看到的员工信息
+
+";
+           
+
+            //办卡人是vip本身
+            sql += @" 
+select a.*  from t_user a
+ inner join #TempTable f on a.user_id=f.user_id
+                                 WHERE 1 = 1
+   {4}
+                and  a.customer_id=@CustomerId  ";                  //总数据的表tab[0]
+            sql += @"select * from ( select  ROW_NUMBER()over(order by {0} {3}) _row,a.*
+        , user_telephone Phone
+      ,isnull( (select top 1 h.unit_name from T_User_Role g inner join t_unit h on  g.unit_id=h.unit_id where g.user_id=a.user_id order by default_flag desc ),'') UnitName
+                                    from T_User a 
+ inner join #TempTable f on a.user_id=f.user_id
+
+where a.customer_id=@CustomerId    {4} ";
+
+
+            sql += @") t
+                                    where t._row>{1}*{2} and t._row<=({1}+1)*{2}";
+            //使用完临时表，要删除
+            sql += @" drop table #UnitSET
+                  drop table #TmpTBL
+                  drop table #TempTable";
+            sql = string.Format(sql, OrderBy, pageIndex - 1, pageSize, sortType, sqlCon);
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), ls.ToArray());
+        }
+
         /// <summary>
         /// 获取查询地公共部分
         /// </summary>

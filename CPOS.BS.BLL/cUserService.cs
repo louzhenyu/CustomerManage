@@ -108,6 +108,11 @@ namespace JIT.CPOS.BS.BLL
 
             return userInfo;
         }
+
+        public DataSet GetUserList(int pageIndex, int pageSize, string OrderBy, string sortType, string UserID, string CustomerID,string PhoneList,string UnitID)
+        {
+            return userService.GetUserList(pageIndex, pageSize, OrderBy, sortType, UserID, CustomerID, PhoneList, UnitID);
+        }
         /// <summary>
         /// 获取用户登陆密码
         /// </summary>

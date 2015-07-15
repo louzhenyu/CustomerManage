@@ -6080,7 +6080,7 @@
     <Content Include="ApplicationInterface\Module\Item\ItemNewHandler.ashx" />
     <Content Include="ApplicationInterface\AllWin\SysRetailRewardRule.ashx" />
     <Content Include="ApplicationInterface\Vip\VipTags.ashx" />
-    <Content Include="ApplicationInterface\AllWin\RetailTrader.ashx" />
+    <Content Include="ApplicationInterface\Vip\InnerGoupNews.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -7117,6 +7117,9 @@
     <Compile Include="ApplicationInterface\Module\VIP\MobileModule\GetFormsAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\MobileModule\GetMobileBunessDefinedAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\MobileModule\ReNameFormAH.cs" />
+    <Compile Include="ApplicationInterface\Vip\InnerGoupNews.ashx.cs">
+      <DependentUpon>InnerGoupNews.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Vip\VipGateway.ashx.cs">
       <DependentUpon>VipGateway.ashx</DependentUpon>
     </Compile>

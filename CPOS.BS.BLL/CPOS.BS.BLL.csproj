@@ -269,6 +269,9 @@
     <Compile Include="CodeGeneration\MobileHomeBLL.cs" />
     <Compile Include="CodeGeneration\MobileModuleBLL.cs" />
     <Compile Include="CodeGeneration\MobileModuleObjectMappingBLL.cs" />
+    <Compile Include="CodeGeneration\NewApp\InnerGroupNewsBLL.cs" />
+    <Compile Include="CodeGeneration\NewApp\NewsUserMappingBLL.cs" />
+    <Compile Include="CodeGeneration\NewApp\T_DeptBLL.cs" />
     <Compile Include="CodeGeneration\ObjectEvaluationBLL.cs" />
     <Compile Include="CodeGeneration\ItemKeepBLL.cs" />
     <Compile Include="CodeGeneration\ItemKnowledgeBLL.cs" />
@@ -705,6 +708,9 @@
     <Compile Include="Module\VIP\VIPImport\VIPImportTransformer.cs" />
     <Compile Include="Module\WEventsData\WLEventsBLL.cs" />
     <Compile Include="Module\XieHuiBao\XieHuiBaoBLL.cs" />
+    <Compile Include="NewApp\InnerGroupNewsBLL.cs" />
+    <Compile Include="NewApp\NewsUserMappingBLL.cs" />
+    <Compile Include="NewApp\T_DeptBLL.cs" />
     <Compile Include="ObjectEvaluationBLL.cs" />
     <Compile Include="ItemKeepBLL.cs" />
     <Compile Include="ItemKnowledgeBLL.cs" />

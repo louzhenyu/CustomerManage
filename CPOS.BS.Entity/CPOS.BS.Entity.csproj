@@ -218,6 +218,9 @@
     <Compile Include="CodeGeneration\MobileHomeEntity.cs" />
     <Compile Include="CodeGeneration\MobileModuleEntity.cs" />
     <Compile Include="CodeGeneration\MobileModuleObjectMappingEntity.cs" />
+    <Compile Include="CodeGeneration\NewApp\InnerGroupNewsEntity.cs" />
+    <Compile Include="CodeGeneration\NewApp\NewsUserMappingEntity.cs" />
+    <Compile Include="CodeGeneration\NewApp\T_DeptEntity.cs" />
     <Compile Include="CodeGeneration\ObjectEvaluationEntity.cs" />
     <Compile Include="CodeGeneration\LEventsAlbumEntity.cs" />
     <Compile Include="CodeGeneration\LEventsAlbumPhotoEntity.cs" />
@@ -435,6 +438,9 @@
     <Compile Include="Module\AppConfig\MHCategoryAreaEntity.cs" />
     <Compile Include="Module\AppConfig\MHItemAreaEntity.cs" />
     <Compile Include="Module\AppConfig\MobileHomeEntity.cs" />
+    <Compile Include="NewApp\InnerGroupNewsEntity.cs" />
+    <Compile Include="NewApp\NewsUserMappingEntity.cs" />
+    <Compile Include="NewApp\T_DeptEntity.cs" />
     <Compile Include="ObjectEvaluationEntity.cs" />
     <Compile Include="LEventsAlbumEntity.cs" />
     <Compile Include="LEventsAlbumPhotoEntity.cs" />

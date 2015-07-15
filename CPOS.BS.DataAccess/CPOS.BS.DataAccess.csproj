@@ -230,6 +230,9 @@
     <Compile Include="CodeGeneration\MobileHomeDAO.cs" />
     <Compile Include="CodeGeneration\MobileModuleDAO.cs" />
     <Compile Include="CodeGeneration\MobileModuleObjectMappingDAO.cs" />
+    <Compile Include="CodeGeneration\NewApp\InnerGroupNewsDAO.cs" />
+    <Compile Include="CodeGeneration\NewApp\NewsUserMappingDAO.cs" />
+    <Compile Include="CodeGeneration\NewApp\T_DeptDAO.cs" />
     <Compile Include="CodeGeneration\ObjectEvaluationDAO.cs" />
     <Compile Include="CodeGeneration\ItemKeepDAO.cs" />
     <Compile Include="CodeGeneration\ItemKnowledgeDAO.cs">
@@ -640,6 +643,9 @@
     <Compile Include="Module\PanicBuying\T_Inout_DetailDAO.cs" />
     <Compile Include="Module\WEventsData\WLEventsDAO.cs" />
     <Compile Include="Module\XieHuiBao\XieHuiBaoDAO.cs" />
+    <Compile Include="NewApp\InnerGroupNewsDAO.cs" />
+    <Compile Include="NewApp\NewsUserMappingDAO.cs" />
+    <Compile Include="NewApp\T_DeptDAO.cs" />
     <Compile Include="ObjectEvaluationDAO.cs" />
     <Compile Include="ItemKeepDAO.cs" />
     <Compile Include="ItemKnowledgeDAO.cs" />
