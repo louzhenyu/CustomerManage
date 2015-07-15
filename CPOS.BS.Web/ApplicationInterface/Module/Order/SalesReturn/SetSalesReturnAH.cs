@@ -193,9 +193,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                 //退货返回余额
                                 if(refundEntity.Amount>0)
                                     vipAmountBLL.AddVipEndAmount(refundEntity.VipID,refundEntity.Amount.Value,pTran,"21",refundEntity.RefundID.ToString(),loggingSessionInfo);
-                                //退货返回返现
-                                if (refundEntity.ReturnAmount > 0)
-                                    vipAmountBLL.AddReturnAmount(refundEntity.VipID, refundEntity.ReturnAmount.Value, pTran, "22", refundEntity.RefundID.ToString(), loggingSessionInfo);
+                                //退货返回返现-暂时先去掉事务
+                                //if (refundEntity.ReturnAmount > 0)
+                                    //vipAmountBLL.AddReturnAmount(refundEntity.VipID, refundEntity.ReturnAmount.Value, "22", refundEntity.RefundID.ToString(), loggingSessionInfo);
                                 //退货返回积分
                                 if (refundEntity.Points > 0)
                                     vipIntegralBLL.AddIntegral(refundEntity.VipID, refundEntity.Points.Value, pTran, "26", refundEntity.RefundID.ToString(), loggingSessionInfo);
