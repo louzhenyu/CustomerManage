@@ -178,7 +178,8 @@ namespace JIT.CPOS.BS.BLL
                 vipamountDetailBll.Create(vipAmountDetailEntity, tran);
             }
             catch (Exception ex)
-            {                
+            {
+                tran.Rollback();
                 throw new APIException(ex.ToString()) { ErrorCode = 121 };
             }
             finally
@@ -254,11 +255,72 @@ namespace JIT.CPOS.BS.BLL
             }
             catch (Exception ex)
             {
+                tran.Rollback();
                 throw new APIException(ex.ToString()) { ErrorCode = 121 };
             }
 
             return b;
         }
+        public bool AddVipEndAmount(string userId, decimal amount, string type, string objectId, LoggingSessionInfo loggingSessionInfo)
+        {
+            bool b = false;
+            //更新个人账户的可使用余额 
+            try
+            {
+                var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
+
+                var vipAmountEntity = vipAmountBll.GetByID(userId);
+
+                if (vipAmountEntity == null)
+                {
+                    vipAmountEntity = new VipAmountEntity
+                    {
+                        VipId = userId,
+                        BeginAmount = amount,
+                        InAmount = amount,
+                        EndAmount = amount,
+                        TotalAmount = amount,
+                        IsLocking = 0
+                    };
+
+                    vipAmountBll.Create(vipAmountEntity);
+
+
+                    // throw new APIException("您尚未开通付款账户") { ErrorCode = 121 };
+                }
+                else
+                {
+                    vipAmountEntity.EndAmount = (vipAmountEntity.EndAmount == null ? 0 : vipAmountEntity.EndAmount.Value) + amount;
+                    vipAmountEntity.InAmount = (vipAmountEntity.InAmount == null ? 0 : vipAmountEntity.InAmount.Value) + amount;
+                    vipAmountEntity.TotalAmount = (vipAmountEntity.TotalAmount == null ? 0 : vipAmountEntity.TotalAmount.Value) + amount;
+
+                    vipAmountBll.Update(vipAmountEntity);
+                }
+
+
+                //Insert VipAmountDetail
+
+                var vipamountDetailBll = new VipAmountDetailBLL(loggingSessionInfo);
+
+                var vipAmountDetailEntity = new VipAmountDetailEntity
+                {
+                    AmountSourceId = type,
+                    Amount = amount,
+                    VipAmountDetailId = Guid.NewGuid(),
+                    VipId = userId,
+                    ObjectId = objectId
+                };
+
+                vipamountDetailBll.Create(vipAmountDetailEntity);
+            }
+            catch (Exception ex)
+            {
+                throw new APIException(ex.ToString()) { ErrorCode = 121 };
+            }
+
+            return b;
+        }
+
 
         /// <summary>
         /// 返现处理（通用方法）
@@ -312,32 +374,41 @@ namespace JIT.CPOS.BS.BLL
             var vipAmountDao = new VipAmountBLL(loggingSessionInfo);
             var vipAmountDetailDao = new VipAmountDetailBLL(loggingSessionInfo);
             var vipAmountInfo = vipAmountDao.GetByID(vipId);
-            if (vipAmountInfo == null)  //无账户数据
+            try
             {
-                vipAmountInfo = new VipAmountEntity
+                if (vipAmountInfo == null)  //无账户数据
                 {
+                    vipAmountInfo = new VipAmountEntity
+                    {
+                        VipId = vipId,
+                        ReturnAmount = returnAmount,
+                        IsLocking = 0
+                    };
+                    vipAmountDao.Create(vipAmountInfo, tran);
+                }
+                else
+                {
+                    vipAmountInfo.ReturnAmount = (vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value) + returnAmount;
+                    vipAmountDao.Update(vipAmountInfo);
+                }
+                //创建变更记录
+                var vipAmountDetailEntity = new VipAmountDetailEntity
+                {
+                    AmountSourceId = amountSourceId,
+                    Amount = returnAmount,
+                    VipAmountDetailId = Guid.NewGuid(),
                     VipId = vipId,
-                    ReturnAmount = returnAmount,
-                    IsLocking = 0
+                    ObjectId = orderId
                 };
-                vipAmountDao.Create(vipAmountInfo,tran);
+                vipAmountDetailDao.Create(vipAmountDetailEntity, tran);
+                tran.Commit();
             }
-            else
+            catch (Exception ex)
             {
-                vipAmountInfo.ReturnAmount = (vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value) + returnAmount;
-                vipAmountDao.Update(vipAmountInfo);
+                tran.Rollback();
+                throw new APIException(ex.ToString()) { ErrorCode = 121 };
             }
-            //创建变更记录
-            var vipAmountDetailEntity = new VipAmountDetailEntity
-            {
-                AmountSourceId = amountSourceId,
-                Amount = returnAmount,
-                VipAmountDetailId = Guid.NewGuid(),
-                VipId = vipId,
-                ObjectId = orderId
-            };
-            vipAmountDetailDao.Create(vipAmountDetailEntity,tran);
-
         }
+        
     }
 }

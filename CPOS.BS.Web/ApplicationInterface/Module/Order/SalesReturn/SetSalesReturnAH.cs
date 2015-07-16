@@ -190,12 +190,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                 refundEntity.CustomerID = loggingSessionInfo.ClientID;
                                 refundOrderBLL.Create(refundEntity, pTran);
 
-                                //退货返回余额
+                                //退货返回余额-事务和返现冲突，暂不用
                                 if(refundEntity.Amount>0)
-                                    vipAmountBLL.AddVipEndAmount(refundEntity.VipID,refundEntity.Amount.Value,pTran,"21",refundEntity.RefundID.ToString(),loggingSessionInfo);
-                                //退货返回返现-暂时先去掉事务
-                                //if (refundEntity.ReturnAmount > 0)
-                                    //vipAmountBLL.AddReturnAmount(refundEntity.VipID, refundEntity.ReturnAmount.Value, "22", refundEntity.RefundID.ToString(), loggingSessionInfo);
+                                    vipAmountBLL.AddVipEndAmount(refundEntity.VipID,refundEntity.Amount.Value,"21",refundEntity.RefundID.ToString(),loggingSessionInfo);
+                                //退货返回返现-事务和余额冲突，暂不用
+                                if (refundEntity.ReturnAmount > 0)
+                                    vipAmountBLL.AddReturnAmount(refundEntity.VipID, refundEntity.ReturnAmount.Value, "22", refundEntity.RefundID.ToString(), loggingSessionInfo);
                                 //退货返回积分
                                 if (refundEntity.Points > 0)
                                     vipIntegralBLL.AddIntegral(refundEntity.VipID, refundEntity.Points.Value, pTran, "26", refundEntity.RefundID.ToString(), loggingSessionInfo);
