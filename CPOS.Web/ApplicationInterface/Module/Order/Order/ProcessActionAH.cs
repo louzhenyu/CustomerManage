@@ -184,6 +184,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 {
                     decimal points =(int)Math.Round(actualAmount * (decimal.Parse(htSetting["rewardPointsPer"].ToString()) / 100) / integralAmountPre,1);
                     var vipIntegral = vipIntegralBll.GetByID(userId);
+                    ////修改会员信息中的积分
+                    var vipInfo = vipBll.GetByID(userId);
+                    if (vipInfo != null)
+                    {
+                        vipInfo.Integration = vipInfo.Integration == null ? 0 : vipInfo.Integration.Value + points;
+                        vipBll.Update(vipInfo);
+                    }
+                    //修改会员信息表中的积分
                     if (vipIntegral == null)
                     {
                         VipIntegralEntity vipIntegralEntity = new VipIntegralEntity() { };
