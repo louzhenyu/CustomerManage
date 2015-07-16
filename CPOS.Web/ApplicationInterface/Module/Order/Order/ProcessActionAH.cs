@@ -182,7 +182,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 }
                 else//按订单
                 {
-                    decimal points = actualAmount * (decimal.Parse(htSetting["rewardPointsPer"].ToString()) / 100) / integralAmountPre;
+                    decimal points =(int)Math.Round(actualAmount * (decimal.Parse(htSetting["rewardPointsPer"].ToString()) / 100) / integralAmountPre,1);
                     var vipIntegral = vipIntegralBll.GetByID(userId);
                     if (vipIntegral == null)
                     {
