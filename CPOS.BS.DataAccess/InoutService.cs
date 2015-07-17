@@ -655,14 +655,14 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                         + " ,a.Field7 "
                         + " ,a.Field8 "
                         + " ,a.Field9 "
-                        + " ,a.Field10 "
+                        + " ,a.Field10,SalesPrice "
                         + ",(SELECT y.item_category_name  FROM dbo.T_Item x INNER JOIN dbo.T_Item_Category y ON(x.item_category_id = y.item_category_id) WHERE x.item_id = b.item_id ) itemCategoryName "
                         + " ,isnull(datediff(day,a.Field1,a.Field2),0) DayCount "
                       + " From t_inout_detail a "
                       + " left join vw_sku b "
                       + " on(a.sku_id = b.sku_id) "
                       + " inner join t_inout c "
-                      + " on(a.order_id = c.order_id) where a.order_id= '" + orderId + "' order by b.item_code";
+                      + @" on(a.order_id = c.order_id)  inner join vw_item_detail d on d.item_id=b.item_id  where a.order_id= '" + orderId + "' order by b.item_code";
             #endregion
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
