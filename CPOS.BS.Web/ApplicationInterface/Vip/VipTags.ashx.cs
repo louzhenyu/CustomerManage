@@ -143,7 +143,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                     }
                 }
                 //删除不在这个里面的
-                TagsBLL.DeleteByIds(propIds, TagsTypeEn);
+                if (!string.IsNullOrEmpty(propIds))
+                {
+                    TagsBLL.DeleteByIds(propIds, TagsTypeEn);
+                }
             }
 
 
