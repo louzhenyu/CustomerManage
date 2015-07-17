@@ -230,6 +230,7 @@
     <Compile Include="CodeGeneration\MobileHomeDAO.cs" />
     <Compile Include="CodeGeneration\MobileModuleDAO.cs" />
     <Compile Include="CodeGeneration\MobileModuleObjectMappingDAO.cs" />
+    <Compile Include="CodeGeneration\NewApp\AgentCustomerDAO.cs" />
     <Compile Include="CodeGeneration\NewApp\InnerGroupNewsDAO.cs" />
     <Compile Include="CodeGeneration\NewApp\NewsUserMappingDAO.cs" />
     <Compile Include="CodeGeneration\NewApp\T_DeptDAO.cs" />
@@ -647,6 +648,7 @@
     <Compile Include="Module\PanicBuying\T_Inout_DetailDAO.cs" />
     <Compile Include="Module\WEventsData\WLEventsDAO.cs" />
     <Compile Include="Module\XieHuiBao\XieHuiBaoDAO.cs" />
+    <Compile Include="NewApp\AgentCustomerDAO.cs" />
     <Compile Include="NewApp\InnerGroupNewsDAO.cs" />
     <Compile Include="NewApp\NewsUserMappingDAO.cs" />
     <Compile Include="NewApp\T_DeptDAO.cs" />

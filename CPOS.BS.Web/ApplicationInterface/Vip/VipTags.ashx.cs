@@ -71,19 +71,19 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             {
                 throw new APIException("没有找到对应的标签类型") { ErrorCode = 135 };
             }
-           var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
             //查看标签是否已经被使用
-          DataSet ds= TagsTypeBLL.HasUse(TypeId);
-          if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            DataSet ds = TagsTypeBLL.HasUse(TypeId);
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
-                   rsp.ResultCode = 310;
-                        rsp.Message = "该标签类型下面的标签已经被使用";
-                        return rsp.ToJSON();
+                rsp.ResultCode = 310;
+                rsp.Message = "该标签类型下面的标签已经被使用";
+                return rsp.ToJSON();
             }
 
             //虚拟删除标签类型和下面的标签
-          TagsTypeBLL.DeleteTagsType(TypeId);
-          
+            TagsTypeBLL.DeleteTagsType(TypeId);
+
 
             return rsp.ToJSON();
         }

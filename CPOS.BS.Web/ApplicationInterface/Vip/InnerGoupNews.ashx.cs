@@ -227,7 +227,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
-                rd.InnerGroupNewsList = DataTableToObject.ConvertToList<InnerGroupNewsInfo>(ds.Tables[0]);//直接根据所需要的字段反序列化
+                rd.InnerGroupNewsList = DataTableToObject.ConvertToList<InnerGroupNewsInfo>(ds.Tables[1]);//直接根据所需要的字段反序列化
                 rd.TotalCount = ds.Tables[0].Rows.Count;
                 rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(ds.Tables[0].Rows.Count * 1.00 / (pageSize ?? 15) * 1.00)));
             }
@@ -342,8 +342,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         public string spanNowStr { get; set; }
         public string DeptID { get; set; }
         public string DeptName { get; set; }
-        public string NewsUserCount { get; set; }
-        public string ReadUserCount { get; set; }
+        public int NewsUserCount { get; set; }
+        public int ReadUserCount { get; set; }
+        public string CreateByName { get; set; }
+        
 
     }
 

@@ -46,6 +46,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
                 case "GetGroupNewsByID":  //更改促销分组
                     rst = GetGroupNewsByID(pRequest);
                     break;
+                
                     
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的Action方法。", pAction));
@@ -236,8 +237,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
-                rd.InnerGroupNewsList = DataTableToObject.ConvertToList<InnerGroupNewsInfo>(ds.Tables[0]);//直接根据所需要的字段反序列化
-                rd.TotalCount = ds.Tables[0].Rows.Count;
+                rd.InnerGroupNewsList = DataTableToObject.ConvertToList<InnerGroupNewsInfo>(ds.Tables[1]);//直接根据所需要的字段反序列化
+                rd.TotalCount = ds.Tables[1].Rows.Count;
                 rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(ds.Tables[0].Rows.Count * 1.00 / (pageSize ?? 15) * 1.00)));
             }
 
@@ -271,7 +272,56 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
         }
 
 
- 
+        #region  保存产品试用或渠道代理信息
+        public string SaveAgentCustomer(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<SaveAgentCustomerRP>>();
+            LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            var rd = new SetVipTagsRD();//返回值
+
+            if (rp.Parameters.AgentCustomerInfo==null)
+            {
+                throw new APIException("缺少参数【AgentCustomerInfo】或参数值为空") { ErrorCode = 135 };
+            }
+
+            if (string.IsNullOrEmpty(rp.Parameters.AgentCustomerInfo.AgentName))
+            {
+                throw new APIException("缺少参数【AgentName】或参数值为空") { ErrorCode = 135 };
+            }
+
+
+            AgentCustomerBLL _AgentCustomerBLL = new AgentCustomerBLL(loggingSessionInfo);
+
+
+            var AgentCustomerInfo = rp.Parameters.AgentCustomerInfo;
+                //如果该标签的id为空//创建一条记录
+            if (string.IsNullOrEmpty(AgentCustomerInfo.AgentID))
+            {
+                //TagsEntity en = new TagsEntity();
+                AgentCustomerInfo.AgentID = Guid.NewGuid().ToString();
+                AgentCustomerInfo.CreateTime = DateTime.Now;
+                AgentCustomerInfo.CreateBy = rp.UserID;
+                AgentCustomerInfo.LastUpdateTime = DateTime.Now;
+                AgentCustomerInfo.LastUpdateBy = rp.UserID;
+                AgentCustomerInfo.IsDelete = 0;
+                AgentCustomerInfo.CustomerID = rp.CustomerID;
+                _AgentCustomerBLL.Create(AgentCustomerInfo);
+            }
+            else {
+             
+                AgentCustomerInfo.LastUpdateTime = DateTime.Now;
+                AgentCustomerInfo.LastUpdateBy = rp.UserID;
+                AgentCustomerInfo.IsDelete = 0;
+                AgentCustomerInfo.CustomerID = rp.CustomerID;
+                _AgentCustomerBLL.Update(AgentCustomerInfo, null, false);
+            }
+
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
+        #endregion
+
+
 
     }
 
@@ -337,6 +387,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
     }
 
 
+  
+
+
 
     public class GetTUnitRP : IAPIRequestParameter
     {
@@ -389,11 +442,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
         public string CreateTimeStr { get; set; }
         public string CreateBy { get; set; }
         public int spanNow { get; set; }
-        public int spanNowStr { get; set; }
+        public string spanNowStr { get; set; }
         public string DeptID { get; set; }
         public string DeptName { get; set; }
-        public string NewsUserCount { get; set; }
-        public string ReadUserCount { get; set; }
+        public int NewsUserCount { get; set; }
+        public int ReadUserCount { get; set; }
 
     }
 

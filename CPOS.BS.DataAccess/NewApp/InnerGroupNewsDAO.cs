@@ -54,7 +54,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sqlCon += " and a.CustomerID = '" + CustomerID + "'";
             }
-            if (!string.IsNullOrEmpty(DeptID))
+            if (!string.IsNullOrEmpty(DeptID) && DeptID!="-1")
             {
                 sqlCon += " and a.DeptID = '" + DeptID + "'";
             }
@@ -84,8 +84,9 @@ select a.*  from InnerGroupNews a
             sql = sql + @"select * from ( select ROW_NUMBER()over(order by {0} {3}) _row,a.*,b.DeptName
                                     , isnull(( select count(1) from newsusermapping where groupnewsid=a.GroupNewsID and isdelete=0 ),0)  as NewsUserCount
                                     , isnull(( select count(1) from newsusermapping where groupnewsid=a.GroupNewsID and isdelete=0 and hasread=1 ),0)  as ReadUserCount
-                                    , CONVERT(varchar(50),GETDATE(),23) CreateTimeStr
-                                    , CONVERT(varchar(100), GETDATE(), 120) spanNowStr
+                                    , CONVERT(varchar(50),a.CreateTime,23) CreateTimeStr
+                                    , CONVERT(varchar(100), a.CreateTime, 120) spanNowStr
+                                    ,isnull((select user_name from t_user where user_id=a.CreateBy  ),'') CreateByName
                                     from InnerGroupNews a left join T_dept a on a.deptID=b.deptID 
                                  WHERE 1 = 1 AND    a.isdelete = 0 
    {4}  
