@@ -14,6 +14,10 @@ namespace JIT.CPOS.BS.Entity
     public class InoutDetailInfo
     {
         /// <summary>
+        /// 销售价格
+        /// </summary>
+        //public decimal SalesPrice { get; set; }
+        /// <summary>
         /// 标识(必须)
         /// </summary>
         public string order_detail_id { get; set; }
@@ -198,5 +202,8 @@ namespace JIT.CPOS.BS.Entity
 
 
         public decimal ReturnCash { get; set; } // add by donal 2014-12-9 10:42:33
+
+
+        public decimal SalesPrice { get; set; }//销售价格
     }
 }
