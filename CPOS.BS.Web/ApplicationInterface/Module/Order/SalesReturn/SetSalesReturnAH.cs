@@ -195,7 +195,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                     vipAmountBLL.AddVipEndAmount(refundEntity.VipID,refundEntity.Amount.Value,"21",refundEntity.RefundID.ToString(),loggingSessionInfo);
                                 //退货返回返现-事务和余额冲突，暂不用
                                 if (refundEntity.ReturnAmount > 0)
-                                    vipAmountBLL.AddReturnAmount(refundEntity.VipID, refundEntity.ReturnAmount.Value, "22", refundEntity.RefundID.ToString(), loggingSessionInfo);
+                                    vipAmountBLL.AddReturnAmount(refundEntity.VipID, refundEntity.ReturnAmount.Value, refundEntity.RefundID.ToString(),"22", loggingSessionInfo);
                                 //退货返回积分
                                 if (refundEntity.Points > 0)
                                     vipIntegralBLL.AddIntegral(refundEntity.VipID, refundEntity.Points.Value, pTran, "26", refundEntity.RefundID.ToString(), loggingSessionInfo);
