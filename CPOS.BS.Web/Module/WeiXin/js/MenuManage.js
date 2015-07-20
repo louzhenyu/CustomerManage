@@ -201,10 +201,16 @@
                 //未加载过  加载模块
                 if (isLoad == "false") {
                     that.loadData.getSystemModule(function (data) {
+
+                        $.each(data.Data.SysModuleList,function(index,filed){
+                            data.Data.SysModuleList[index].ModuleName=filed.ModuleName.trim();
+
+                        })
                         var obj =
                         {
-                            itemList: data.Data.SysModuleList
+                            itemList:data.Data.SysModuleList
                         }
+
                         var html = bd.template("moduleTmpl", obj);
                         that.elems.moduleSelect.html(html);
 
@@ -808,6 +814,7 @@
             },
             //根据类型让关联项的内容动态切换
             showElements: function (menuInfo) {
+                debugger;
                 var unionTypeId = 0, flag = false;
                 //事件选择触发
                 if (typeof menuInfo == 'number') {
