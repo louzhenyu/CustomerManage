@@ -138,9 +138,9 @@
                 ]],*/
                 columns : [[
 
-                    {field : 'Title',title : '标题',width:321,align:'center',resizable:false},
+                    {field : 'Title',title : '标题',width:165,align:'center',resizable:false},
                     {field : 'CreateByName',title : '操作人',width:100,align:'center',resizable:false},
-                    {field: 'NewsUserCount', title: '状态', width: 261, align: 'left', resizable: false,
+                    {field: 'NewsUserCount', title: '发送状态', width: 120, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                            /* NewsUserCount	int	送达人数
                             ReadUserCount	int	阅读人数*/
@@ -156,8 +156,8 @@
                     },
 
 
-                    {field : 'CreateTimeStr',title : '日期',width:211,align:'center',resizable:false},
-                    {field : '',title : '删除',width:100,align:'right',resizable:false,
+                    {field : 'CreateTimeStr',title : '发送日期',width:120,align:'left',resizable:false},
+                    {field : '',title : '删除',width:80,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
                         }
@@ -172,8 +172,8 @@
                     }else{
                         that.elems.dataMessage.show();
                     }
-                },
-                onClickRow:function(rowindex,rowData){
+                }
+                /*onClickRow:function(rowindex,rowData){
                       debugger;
                      if(that.elems.click) {
                          that.elems.click = true;
@@ -189,7 +189,7 @@
                      }else{
                      that.elems.click=true;
                      }
-                }
+                }*/
 
             });
 
