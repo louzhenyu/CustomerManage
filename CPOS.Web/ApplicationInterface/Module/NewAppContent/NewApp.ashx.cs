@@ -46,8 +46,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
                 case "GetGroupNewsByID":  //更改促销分组
                     rst = GetGroupNewsByID(pRequest);
                     break;
-                
-                    
+
+
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的Action方法。", pAction));
             }
@@ -63,7 +63,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
             string userId = rp.UserID;
             string customerId = rp.CustomerID;
             LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
-         //   var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            //   var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
 
             T_DeptBLL T_DeptBLL = new T_DeptBLL(loggingSessionInfo);
 
@@ -73,7 +73,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
             T_DeptEntity.IsDelete = 0;
             //T_DeptEntity.ShowInApp=1;后台全部显示出来？
             IList<T_DeptEntity> T_DeptList = T_DeptBLL.QueryByEntity(T_DeptEntity, null);
-            rd.DeptList = T_DeptList.Where(p=>p.ShowInApp==1).ToList();
+            rd.DeptList = T_DeptList.Where(p => p.ShowInApp == 1).ToList();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
@@ -85,11 +85,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
         private string GetTUnit(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<GetTUnitRP>>();//不需要参数
-          //  var type = HttpContext.Current.Request.Params["Type"];
+            //  var type = HttpContext.Current.Request.Params["Type"];
             LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
             var rd = new GetTUnitRD();
             var result = new UnitService(loggingSessionInfo).GetUnitInfoListByTypeCode(rp.Parameters.Type);
-            List<Unit_Info> ls=new  List<Unit_Info>();
+            List<Unit_Info> ls = new List<Unit_Info>();
             foreach (UnitInfo item in result)
             {
                 Unit_Info en = new Unit_Info();
@@ -117,7 +117,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
             var pageSize = rp.Parameters.PageSize;
             var pageIndex = rp.Parameters.PageIndex;
 
-             LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
             //var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             TagsTypeBLL bll = new TagsTypeBLL(loggingSessionInfo);
 
@@ -176,7 +176,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
             //   itemCategoryMappingBLL.DeleteByItemID(rp.Parameters.VIPID);
             _VipTagsMappingBLL.DeleteByVipID(rp.Parameters.VIPID);
             //这里不应该删除之前的促销分组，而应该根据商品的id和促销分组的id找一找，如果有isdelete=0的，就不要加，没有就加
-            
+
             foreach (var tagsInfo in rp.Parameters.IdentityTagsList)
             {
                 //如果该标签的id为空//创建一条记录
@@ -192,7 +192,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
                     en.LastUpdateBy = rp.UserID;
                     en.IsDelete = 0;
                     en.CustomerId = rp.CustomerID;
-                  //  en.TypeId
+                    //  en.TypeId
                     _TagsBLL.Create(en);
                     tagsInfo.TagsId = en.TagsId;//
                 }
@@ -228,12 +228,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
             var pageSize = rp.Parameters.PageSize;
             var pageIndex = rp.Parameters.PageIndex;
 
-          LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
-           // var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            // var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             InnerGroupNewsBLL bll = new InnerGroupNewsBLL(loggingSessionInfo);
 
             var rd = new GetInnerGroupNewsListRD();
-            var ds = bll.GetInnerGroupNewsList(pageIndex ?? 1, pageSize ?? 15, rp.Parameters.OrderBy, rp.Parameters.OrderType, rp.UserID, loggingSessionInfo.ClientID,rp.Parameters.DeptID);
+            var ds = bll.GetInnerGroupNewsList(pageIndex ?? 1, pageSize ?? 15, rp.Parameters.OrderBy, rp.Parameters.OrderType, rp.UserID, loggingSessionInfo.ClientID, rp.Parameters.DeptID);
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
@@ -263,8 +263,34 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
             InnerGroupNewsBLL bll = new InnerGroupNewsBLL(loggingSessionInfo);
 
             var rd = new GetGroupNewsByIDRD();
-            var ds = bll.GetByID(rp.Parameters.GroupNewsID);
+            var ds = bll.GetByID(rp.Parameters.GroupNewsID);   //
+            if (ds != null && !string.IsNullOrEmpty(ds.CreateBy))
+            {
+                //t_user从取创建用户
+                T_UserBLL bll2 = new T_UserBLL(loggingSessionInfo);
+                //更新为已读
+                T_UserEntity t_user = bll2.GetByID(ds.CreateBy);
+                if (t_user != null)
+                { 
+                   ds.CreateBy=t_user.user_name;
+                }else{
+                    ds.CreateBy = "";
+                }
+                //把该条信息设置为已经读过
 
+                NewsUserMappingBLL bll3 = new NewsUserMappingBLL(loggingSessionInfo);
+                NewsUserMappingEntity en = new NewsUserMappingEntity();
+                en.UserID = rp.UserID;
+                en.GroupNewsID = rp.Parameters.GroupNewsID;
+                NewsUserMappingEntity[] lsen= bll3.QueryByEntity(en,null);
+                if (lsen != null && lsen.Length!=0)
+                {
+                    en = lsen[0];
+                    en.HasRead = 1;
+                    bll3.Update(en,null);
+                }
+            }
+            
             rd.InnerGroupNewsInfo = ds;
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -279,7 +305,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
             LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
             var rd = new SetVipTagsRD();//返回值
 
-            if (rp.Parameters.AgentCustomerInfo==null)
+            if (rp.Parameters.AgentCustomerInfo == null)
             {
                 throw new APIException("缺少参数【AgentCustomerInfo】或参数值为空") { ErrorCode = 135 };
             }
@@ -294,7 +320,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
 
 
             var AgentCustomerInfo = rp.Parameters.AgentCustomerInfo;
-                //如果该标签的id为空//创建一条记录
+            //如果该标签的id为空//创建一条记录
             if (string.IsNullOrEmpty(AgentCustomerInfo.AgentID))
             {
                 //TagsEntity en = new TagsEntity();
@@ -307,8 +333,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
                 AgentCustomerInfo.CustomerID = rp.CustomerID;
                 _AgentCustomerBLL.Create(AgentCustomerInfo);
             }
-            else {
-             
+            else
+            {
+
                 AgentCustomerInfo.LastUpdateTime = DateTime.Now;
                 AgentCustomerInfo.LastUpdateBy = rp.UserID;
                 AgentCustomerInfo.IsDelete = 0;
@@ -387,7 +414,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
     }
 
 
-  
+
 
 
 
@@ -398,13 +425,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
         public string Type { get; set; }
         public int page { get; set; }
         public int start { get; set; }
-        public int      limit { get; set; }
+        public int limit { get; set; }
 
 
         public void Validate()
         {
         }
-        
+
 
 
 
@@ -487,8 +514,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
     }
     public class GetGroupNewsByIDRD : IAPIResponseData
     {
-        public InnerGroupNewsEntity  InnerGroupNewsInfo { get; set; }
-      
+        public InnerGroupNewsEntity InnerGroupNewsInfo { get; set; }
+
     }
 
 }

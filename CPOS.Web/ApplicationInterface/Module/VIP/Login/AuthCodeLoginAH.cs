@@ -98,7 +98,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                         #region 根据手机号查找下,看下是否存在同样手机号的VIP记录
                         {
                             List<IWhereCondition> wheres = new List<IWhereCondition>();
-                            wheres.Add(new MoreThanCondition() { FieldName = "status", Value = 0, IncludeEquals = false });
+                            wheres.Add(new MoreThanCondition() { FieldName = "status", Value = 0, IncludeEquals = false });//潜在或者正式会员
                             wheres.Add(new EqualsCondition() { FieldName = "phone", Value = pRequest.Parameters.Mobile });
                             wheres.Add(new EqualsCondition() { FieldName = "clientid", Value = pRequest.CustomerID });
                             var result = bll.Query(wheres.ToArray(), null);
