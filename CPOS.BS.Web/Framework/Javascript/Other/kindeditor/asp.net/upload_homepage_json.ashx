@@ -62,7 +62,8 @@ public class UploadHomePage : IHttpHandler
         Hashtable extTable = new Hashtable();
         extTable.Add("image", "gif,jpg,jpeg,png,bmp");
         extTable.Add("flash", "swf,flv");
-        extTable.Add("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
+        // extTable.Add("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
+        extTable.Add("media", "mp4");
         extTable.Add("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
 
         //最大文件大小
@@ -90,7 +91,7 @@ public class UploadHomePage : IHttpHandler
 
         if (String.IsNullOrEmpty(fileExt) || Array.IndexOf(((String)extTable[dirName]).Split(','), fileExt.Substring(1).ToLower()) == -1)
         {
-            showError("上传文件扩展名是不允许的扩展名。n只允许" + ((String)extTable[dirName]) + "格式。");
+            showError("上传文件扩展名是不允许的扩展名。只允许" + ((String)extTable[dirName]) + "格式。");
         }
 
 
@@ -131,7 +132,7 @@ public class UploadHomePage : IHttpHandler
                 //如果原图的尺寸比缩略图要求的尺寸小,则不进行任何处理
                 if (ow <= width)
                 {
-                     smillUrl = fileUrl;
+                    smillUrl = fileUrl;
                     //返回缩略图的地址
                     hash["thumUrl"] = host + smillUrl;
                     Loggers.Debug(new DebugLogInfo() { Message = "ProcessRequest" + " hash[\"thumUrl\"]: " + host + smillUrl });
@@ -141,7 +142,7 @@ public class UploadHomePage : IHttpHandler
                     //生成缩略图
                     if (MakeThumbnail(filePath, thumbfilePath, width, height, "W"))
                     {
-                       smillUrl = saveUrl + "Thumb" + newFileName;
+                        smillUrl = saveUrl + "Thumb" + newFileName;
                         hash["thumUrl"] = host + smillUrl;
                     }
                     else
@@ -153,28 +154,31 @@ public class UploadHomePage : IHttpHandler
         }
         //这里上传ftp，把前面传到本地的图片和缩略图传到ftp上去。
         #region
-        string ftpHostname = ConfigurationManager.AppSettings["FtpUrl"].ToString();
-        string ftpUser = ConfigurationManager.AppSettings["FtpUser"].ToString();
-        string ftpPass = ConfigurationManager.AppSettings["FtpPassword"].ToString();
-     
-        FileInfo fileInfo = new FileInfo(filePath);   //原图片
-        FileInfo fileInfothumb = new FileInfo(thumbfilePath);//缩略图
-        if (!string.IsNullOrEmpty(ftpHostname))
+        if (String.IsNullOrEmpty(fileExt) || Array.IndexOf(((String)extTable[dirName]).Split(','), fileExt.Substring(1).ToLower()) == -1)
         {
-            try
+            string ftpHostname = ConfigurationManager.AppSettings["FtpUrl"].ToString();
+            string ftpUser = ConfigurationManager.AppSettings["FtpUser"].ToString();
+            string ftpPass = ConfigurationManager.AppSettings["FtpPassword"].ToString();
+
+            FileInfo fileInfo = new FileInfo(filePath);   //原图片
+            FileInfo fileInfothumb = new FileInfo(thumbfilePath);//缩略图
+            if (!string.IsNullOrEmpty(ftpHostname))
             {
-                //按日期建文件夹
-                string ftpMappingimg = FtpMapping.UploadFile(fileInfo, dirName + "/" + ymd, ftpHostname, ftpUser, ftpPass);
-                hash["url"] = ftpMappingimg;
-                //上传缩略图
-                string ftpMappingthumb = FtpMapping.UploadFile(fileInfothumb, dirName + "/" + ymd, ftpHostname, ftpUser, ftpPass);
-                hash["thumUrl"] = ftpMappingthumb;
-            }
-            catch(Exception ex)
-            {
-                hash["url"] = host + fileUrl;
-                hash["thumUrl"] = host + smillUrl;
-                Loggers.Debug(new DebugLogInfo() { Message = ex.Message });
+                try
+                {
+                    //按日期建文件夹
+                    string ftpMappingimg = FtpMapping.UploadFile(fileInfo, dirName + "/" + ymd, ftpHostname, ftpUser, ftpPass);
+                    hash["url"] = ftpMappingimg;
+                    //上传缩略图
+                    string ftpMappingthumb = FtpMapping.UploadFile(fileInfothumb, dirName + "/" + ymd, ftpHostname, ftpUser, ftpPass);
+                    hash["thumUrl"] = ftpMappingthumb;
+                }
+                catch (Exception ex)
+                {
+                    hash["url"] = host + fileUrl;
+                    hash["thumUrl"] = host + smillUrl;
+                    Loggers.Debug(new DebugLogInfo() { Message = ex.Message });
+                }
             }
         }
         #endregion

@@ -58,7 +58,7 @@ KindEditor.plugin('media', function(K) {
 							width = widthBox.val(),
 							height = heightBox.val();
 						if (url == 'http://' || K.invalidUrl(url)) {
-							alert(self.lang('invalidUrl'));
+                            alert(self.lang('invalidUrl'));
 							urlBox[0].focus();
 							return;
 						}

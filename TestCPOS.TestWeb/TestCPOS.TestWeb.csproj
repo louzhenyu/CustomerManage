@@ -85,10 +85,6 @@
       <Project>{E90B49C0-4C8E-42EC-88EF-DACCFD56F2B5}</Project>
       <Name>CPOS.DTO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CPOS.Web\CPOS.Web.csproj">
-      <Project>{F86DB71F-262E-466D-9701-07BC84ACDF88}</Project>
-      <Name>CPOS.Web</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Release\" />

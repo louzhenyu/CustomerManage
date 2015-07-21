@@ -204,7 +204,7 @@ var K = {
 };
 var _INLINE_TAG_MAP = _toMap('a,abbr,acronym,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,img,input,ins,kbd,label,map,q,s,samp,select,small,span,strike,strong,sub,sup,textarea,tt,u,var'),
 	_BLOCK_TAG_MAP = _toMap('address,applet,blockquote,body,center,dd,dir,div,dl,dt,fieldset,form,frameset,h1,h2,h3,h4,h5,h6,head,hr,html,iframe,ins,isindex,li,map,menu,meta,noframes,noscript,object,ol,p,pre,script,style,table,tbody,td,tfoot,th,thead,title,tr,ul'),
-	_SINGLE_TAG_MAP = _toMap('area,base,basefont,br,col,frame,hr,img,input,isindex,link,meta,param,embed'),
+	_SINGLE_TAG_MAP = _toMap('area,base,basefont,br,col,frame,hr,img,input,isindex,link,meta,param,embed,video '),
 	_STYLE_TAG_MAP = _toMap('b,basefont,big,del,em,font,i,s,small,span,strike,strong,sub,sup,u'),
 	_CONTROL_TAG_MAP = _toMap('img,table,input,textarea,button'),
 	_PRE_TAG_MAP = _toMap('pre,style,script'),
@@ -251,7 +251,7 @@ K.options = {
 	minWidth : 650,
 	minHeight : 100,
 	minChangeSize : 50,
-	zIndex : 811213,
+	zIndex : 213,
 	items : [
 		'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'code', 'cut', 'copy', 'paste',
 		'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
@@ -294,7 +294,8 @@ K.options = {
 		],
 		a : ['id', 'class', 'href', 'target', 'name'],
 		embed : ['id', 'class', 'src', 'width', 'height', 'type', 'loop', 'autostart', 'quality', '.width', '.height', 'align', 'allowscriptaccess'],
-		img : ['id', 'class', 'src', 'width', 'height', 'border', 'alt', 'title', 'align', '.width', '.height', '.border'],
+        video: ['id', 'class', 'src', 'width', 'height', 'controls', 'loop', 'autoplay', 'preload', '.width', '.height'],
+        img : ['id', 'class', 'src', 'width', 'height', 'border', 'alt', 'title', 'align', '.width', '.height', '.border'],
 		'p,ol,ul,li,blockquote,h1,h2,h3,h4,h5,h6' : [
 			'id', 'class', 'align', '.text-align', '.color', '.background-color', '.font-size', '.font-family', '.background',
 			'.font-weight', '.font-style', '.text-decoration', '.vertical-align', '.text-indent', '.margin-left'
@@ -907,17 +908,17 @@ function _mediaAttrs(srcTag) {
 	return _getAttrList(unescape(srcTag));
 }
 function _mediaEmbed(attrs) {
-	var html = '<embed ';
+	var html = '<video controls="controls" ';
 	_each(attrs, function(key, val) {
 		html += key + '="' + val + '" ';
 	});
-	html += '/>';
+	html += '></video>';
 	return html;
 }
 function _mediaImg(blankPath, attrs) {
 	var width = attrs.width,
-		height = attrs.height,
-		type = attrs.type || _mediaType(attrs.src),
+		height = attrs.height;
+		//type = attrs.type || _mediaType(attrs.src),
 		srcTag = _mediaEmbed(attrs),
 		style = '';
 	if (width > 0) {
@@ -926,12 +927,12 @@ function _mediaImg(blankPath, attrs) {
 	if (height > 0) {
 		style += 'height:' + height + 'px;';
 	}
-	var html = '<img class="' + _mediaClass(type) + '" src="' + blankPath + '" ';
+	/*var html = '<img class="' + _mediaClass(type) + '" src="' + blankPath + '" ';
 	if (style !== '') {
 		html += 'style="' + style + '" ';
 	}
-	html += 'data-ke-tag="' + escape(srcTag) + '" alt="" />';
-	return html;
+	html += 'data-ke-tag="' + escape(srcTag) + '" alt="" />';*/
+	return srcTag;
 }
 function _tmpl(str, data) {
 	var fn = new Function("obj",
@@ -3951,7 +3952,7 @@ function KMenu(options) {
 _extend(KMenu, KWidget, {
 	init : function(options) {
 		var self = this;
-		options.z = options.z || 811213;
+		options.z = options.z || 213;
 		KMenu.parent.init.call(self, options);
 		self.centerLineMode = _undef(options.centerLineMode, true);
 		self.div.addClass('ke-menu').bind('click,mousedown', function(e){
@@ -4032,7 +4033,7 @@ function KColorPicker(options) {
 _extend(KColorPicker, KWidget, {
 	init : function(options) {
 		var self = this;
-		options.z = options.z || 811213;
+		options.z = options.z || 213;
 		KColorPicker.parent.init.call(self, options);
 		var colors = options.colors || [
 			['#E53333', '#E56600', '#FF9900', '#64451D', '#DFC5A4', '#FFE500'],
@@ -4209,7 +4210,7 @@ _extend(KDialog, KWidget, {
 	init : function(options) {
 		var self = this;
 		var shadowMode = _undef(options.shadowMode, true);
-		options.z = options.z || 811213;
+		options.z = options.z || 213;
 		options.shadowMode = false;
 		options.autoScroll = _undef(options.autoScroll, true);
 		KDialog.parent.init.call(self, options);
@@ -5848,7 +5849,7 @@ _plugin('core', function(K) {
 				return full;
 			});
 		}
-		return html.replace(/<embed[^>]*type="([^"]+)"[^>]*>(?:<\/embed>)?/ig, function(full) {
+		return html.replace(/<video[^>]*type="([^"]+)"[^>]*>(?:<\/video>)?/ig, function(full) {
 			var attrs = _getAttrList(full);
 			attrs.src = _undef(attrs.src, '');
 			attrs.width = _undef(attrs.width, 0);

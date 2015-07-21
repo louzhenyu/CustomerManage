@@ -50,14 +50,10 @@
   <ItemGroup>
     <Compile Include="ApplicationInterface\TestAPI.cs" />
     <Compile Include="CustomerService\TestAPI.cs" />
-    <Compile Include="Event\TestAPI.cs" />
     <Compile Include="HomePage\TestAPI.cs" />
     <Compile Include="Interface\TestAPI.cs" />
-    <Compile Include="lj\TestAPI.cs" />
     <Compile Include="Pay\TestAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="shoppingonline\TestAPI.cs" />
-    <Compile Include="shoppingonline\TestWeiXinPayGateway.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
@@ -72,10 +68,6 @@
       <Project>{E90B49C0-4C8E-42EC-88EF-DACCFD56F2B5}</Project>
       <Name>CPOS.DTO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CPOS.Web\CPOS.Web.csproj">
-      <Project>{F86DB71F-262E-466D-9701-07BC84ACDF88}</Project>
-      <Name>CPOS.Web</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -84,6 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Event\" />
+    <Folder Include="lj\" />
+    <Folder Include="shoppingonline\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

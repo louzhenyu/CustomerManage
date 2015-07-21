@@ -69,9 +69,10 @@ KindEditor.plugin('flash', function(K) {
 						var html = K.mediaImg(self.themesPath + 'common/blank.gif', {
 								src : url,
 								type : K.mediaType('.swf'),
-								width : width,
+                                loop  :loop,
+                                width : width,
 								height : height,
-								quality : 'high'
+                                preload : 'auto'
 							});
 						self.insertHtml(html).hideDialog().focus();
 					}
@@ -143,6 +144,7 @@ KindEditor.plugin('flash', function(K) {
 
 			var img = self.plugin.getSelectedFlash();
 			if (img) {
+                debugger
 				var attrs = K.mediaAttrs(img.attr('data-ke-tag'));
 				urlBox.val(attrs.src);
 				widthBox.val(K.removeUnit(img.css('width')) || attrs.width || 0);

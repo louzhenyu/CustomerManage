@@ -73,7 +73,7 @@
     	<div class="commonSelectWrap">
             <em class="tit">账号类型</em>
             <div class="radioWrap">
-            	<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>
+            	<!--<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>-->
                 <p class="radioBox" data-value='busine'>启用商家账号</p>
                 <p class="radioBox" data-radio="disable" data-value="unalading">停用</p>
             </div>
@@ -115,7 +115,7 @@
     	<div class="commonSelectWrap">
             <em class="tit">账号类型</em>
             <div class="radioWrap">
-            	<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>
+            	<!--<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>-->
                 <p class="radioBox" data-value='busine'>启用商家账号</p>
                 <p class="radioBox" data-radio="disable" data-value="unalading">停用</p>
             </div>
@@ -150,7 +150,7 @@
     	<div class="commonSelectWrap">
             <em class="tit">账号类型</em>
             <div class="radioWrap">
-            	<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>
+            	<!--<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>-->
                 <p class="radioBox" data-value='busine'>启用商家账号</p>
                 <p class="radioBox" data-radio="disable" data-value="unalading">停用</p>
             </div>
@@ -198,7 +198,7 @@
     	<div class="commonSelectWrap">
             <em class="tit">账号类型</em>
             <div class="radioWrap">
-            	<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>
+            	<!--<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>-->
                 <p class="radioBox" data-value='busine'>启用商家账号</p>
                 <p class="radioBox" data-radio="disable" data-value="unalading">停用</p>
             </div>
@@ -247,7 +247,7 @@
     	<div class="commonSelectWrap">
             <em class="tit">账号类型</em>
             <div class="radioWrap">
-            	<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>
+            	<!--<p class="radioBox" data-radio="disable" data-value='alading'>启用阿拉丁账号</p>-->
                 <p class="radioBox" data-value='busine'>启用商家账号</p>
                 <p class="radioBox" data-radio="disable" data-value="unalading">停用</p>
             </div>
