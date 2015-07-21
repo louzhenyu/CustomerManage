@@ -145,7 +145,7 @@
                            /* NewsUserCount	int	送达人数
                             ReadUserCount	int	阅读人数*/
                            if(value) {
-                               var str =(row.ReadUserCount / row.NewsUserCount).toFixed(4) * 100;
+                               var str =(row.ReadUserCount / row.NewsUserCount * 100).toFixed(2);
                                return "<p>送达人数:" + value + "</p><p>阅读率" + str + "%</p>";
                            }
                           else {
