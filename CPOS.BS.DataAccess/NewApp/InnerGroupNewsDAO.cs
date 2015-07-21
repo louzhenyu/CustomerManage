@@ -87,7 +87,7 @@ select a.*  from InnerGroupNews a
                                     , CONVERT(varchar(50),a.CreateTime,23) CreateTimeStr
                                     , CONVERT(varchar(100), a.CreateTime, 120) spanNowStr
                                     ,isnull((select user_name from t_user where user_id=a.CreateBy  ),'') CreateByName
-                                    from InnerGroupNews a left join T_dept a on a.deptID=b.deptID 
+                                    from InnerGroupNews a left join T_dept b on a.deptID=b.deptID 
                                  WHERE 1 = 1 AND    a.isdelete = 0 
    {4}  
                                 ) t
