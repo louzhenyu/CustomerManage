@@ -26,6 +26,9 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         /// app权限code数组
         /// </summary>
         public List<Menu> MenuCodeList { get; set; }
+
+        //头像信息
+        public string HeadImg { get; set; }
     }
 
     public class RoleCodeInfo

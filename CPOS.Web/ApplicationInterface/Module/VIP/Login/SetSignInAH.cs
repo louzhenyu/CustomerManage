@@ -8,6 +8,7 @@ using JIT.CPOS.DTO.Module.VIP.Login.Request;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.BLL;
 using System.Data;
+using JIT.CPOS.BS.Entity;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 {
@@ -111,6 +112,20 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
             rd.RoleCodeList = tmp.ToArray();
             rd.CustomerName = currentUserInfo.ClientName;
+
+
+            //销售员头像
+            ObjectImagesBLL _ObjectImagesBLL = new ObjectImagesBLL(currentUserInfo);
+            ObjectImagesEntity en = new ObjectImagesEntity();
+            en.ObjectId = rd.UserId;//根据获取的用户ID
+            List<ObjectImagesEntity> ImgList = _ObjectImagesBLL.QueryByEntity(en, null).OrderByDescending(p => p.CreateTime).ToList();
+            if (ImgList != null && ImgList.Count != 0)
+            {
+                // string fileDNS = customerBasicSettingBll.GetSettingValueByCode("FileDNS"); ;//http://182.254.156.57:811
+                rd.HeadImg = ImgList[0].ImageURL;
+            }
+
+
             return rd;
         }
     }
