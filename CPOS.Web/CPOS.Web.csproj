@@ -286,6 +286,12 @@
     <Content Include="Images\mingLong\question7\b2.png" />
     <Content Include="Images\mingLong\question7\topic01.jpg" />
     <Content Include="Images\mingLong\question7\topic02.jpg" />
+    <Content Include="Images\mingLong\question8\a1.png" />
+    <Content Include="Images\mingLong\question8\a2.png" />
+    <Content Include="Images\mingLong\question8\b1.png" />
+    <Content Include="Images\mingLong\question8\b2.png" />
+    <Content Include="Images\mingLong\question8\topic01.jpg" />
+    <Content Include="Images\mingLong\question8\topic02.jpg" />
     <Content Include="Interface\Images\bg.png" />
     <Content Include="Interface\Images\bg2.png" />
     <Content Include="Interface\Images\btn1.png" />
