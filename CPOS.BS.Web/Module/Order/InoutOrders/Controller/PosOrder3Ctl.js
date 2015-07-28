@@ -28,7 +28,7 @@ Ext.onReady(function () {
 
     //页面加载
     JITPage.HandlerUrl.setValue("Handler/Inout3Handler.ashx?mid=" + __mid);
-
+    debugger;
     //查询
     fnSearch();
     //  Ext.getCmp("txtSalesUnitId").addCls("txtDisable2");

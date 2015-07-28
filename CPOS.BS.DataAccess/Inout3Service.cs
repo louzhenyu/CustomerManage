@@ -421,8 +421,14 @@ namespace JIT.CPOS.BS.DataAccess
                       + " from t_inout a ";
             if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
             {
-                sql += " inner join vw_unit_level b on ((a.purchase_unit_id=b.unit_id or a.sales_unit_id=b.unit_id) and b.customer_id='" + orderSearchInfo.customer_id + "') ";
+                sql += " inner join (select * from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' ) b on   ((a.purchase_unit_id=b.unit_id or a.sales_unit_id=b.unit_id) and b.customer_id='" + orderSearchInfo.customer_id + "') ";
             }
+            //改变这句话****  ,把模糊查询的放在了上面，在表连接之前先进行查询
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " and b.path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' ";
+            //}
+
             sql += "  where 1=1 and a.status != '-1' and a.Field7 != '-99'";
 
             //判断是否有付款状态条件(jifeng.cao 20140320)
@@ -439,9 +445,9 @@ namespace JIT.CPOS.BS.DataAccess
             }
 
             sql = pService.GetLinkSql(sql, "a.order_id", orderSearchInfo.order_id, "%");
-            sql = pService.GetLinkSql(sql, "a.customer_id", orderSearchInfo.customer_id, "%");
+            sql = pService.GetLinkSql(sql, "a.customer_id", orderSearchInfo.customer_id, "=");//原来是%
             sql = pService.GetLinkSql(sql, "a.order_no", orderSearchInfo.order_no, "%");
-            sql = pService.GetLinkSql(sql, "a.order_type_id", orderSearchInfo.order_type_id, "%");
+            sql = pService.GetLinkSql(sql, "a.order_type_id", orderSearchInfo.order_type_id, "=");//原来是%
             //sql = pService.GetLinkSql(sql, "a.order_reason_id", orderSearchInfo.order_reason_id, "%");
             sql = pService.GetLinkSql(sql, "a.unit_id", orderSearchInfo.unit_id, "=");
             if (!string.IsNullOrEmpty(orderSearchInfo.order_date_begin))//判断是否为空
@@ -497,11 +503,11 @@ namespace JIT.CPOS.BS.DataAccess
                 }
             }
             #endregion
-
-            if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
-            {
-                sql += " and b.path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' ";
-            }
+            //改变这句话****
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " and b.path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' ";
+            //}
 
             //Jermyn20130905 订单配送状态
             if (IsStatus == 1)

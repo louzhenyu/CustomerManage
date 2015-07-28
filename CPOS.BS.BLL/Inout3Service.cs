@@ -166,7 +166,7 @@ namespace JIT.CPOS.BS.BLL
                                        , string DeliveryDateEnd    //
                                        , string CancelDateBegin
                                        , string CancelDateEnd, string order_id, string vipId,
-            string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)
+            string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
         {
             InoutInfo inoutInfo = new InoutInfo();
             OrderSearchInfo orderSearchInfo = new OrderSearchInfo();

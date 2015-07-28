@@ -33,6 +33,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
         protected override void AjaxRequest(HttpContext pContext)
         {
             string content = "";
+            string method = pContext.Request.QueryString["method"];
             switch (pContext.Request.QueryString["method"])
             {
                 case "PrintDelivery":
@@ -48,6 +49,9 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 case "PosOrder_lj": //GetPosOrder3Data()  订单查询
                     content = GetPosOrder3Data();
                     break;
+                case "GetPosOrderTotalCount_lj": //统计数量
+                    content = GetPosOrder3TotalCount();
+                    break;
 
                 case "Export":  //导出数据
                     Export(pContext);
@@ -61,9 +65,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                     content = GetPosOrderTotalCount();
                     break;
 
-                case "GetPosOrderTotalCount_lj": //统计数量
-                    content = GetPosOrder3TotalCount();
-                    break;
+          
                 case "SetUnit":
                     content = SetUnit();
                     break;
