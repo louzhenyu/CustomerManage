@@ -14,7 +14,7 @@
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/Options.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/VipSource.js"%>" type="text/javascript"></script>
 
-    <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Controller/PosOrder3Ctl.js?v=0.3"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Controller/PosOrder3Ctl.js?v=0.38"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Model/InoutOrderEntity.js?v=0.3"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Order/InoutOrders/Store/SalesOutOrderVMStore.js?v=0.3"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Order/InoutOrders/View/PosOrder3View.js?v=0.3"%>" type="text/javascript"></script>

@@ -29,7 +29,7 @@ function SetLogoInfo() {
         success: function (response) {
             var data = Ext.decode(response.responseText);
             var logo = $('#img_logo');
-            debugger;
+          //  debugger;
             logo.attr('alt', data.data.loadInfo.customerName);
             logo.closest('a').attr('title', data.data.loadInfo.customerName);
 

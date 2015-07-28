@@ -28,7 +28,7 @@ Ext.onReady(function () {
 
     //页面加载
     JITPage.HandlerUrl.setValue("Handler/Inout3Handler.ashx?mid=" + __mid);
-    debugger;
+   // debugger;
     //查询
     fnSearch();
     //  Ext.getCmp("txtSalesUnitId").addCls("txtDisable2");
@@ -89,12 +89,13 @@ function fnGridSearch(value) {
         , sales_unit_id: Ext.getCmp("txtSalesUnit").jitGetValue()
         , Field7: value
     };
-
-    Ext.getCmp("pageBar0").moveFirst();
-
+   // debugger;
+  //  Ext.getCmp("pageBar0").moveFirst();
+   // debugger;
     Ext.getStore(storeId).load({  //store装载
         params: {},
         callback: function (d) {
+           // debugger;
             fnLoadTotalCount();
         }
     });
