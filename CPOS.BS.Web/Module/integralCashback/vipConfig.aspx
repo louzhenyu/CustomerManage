@@ -24,7 +24,7 @@
                              <div class="nav01">
                               <div class="checkBox" data-flag="EnableIntegral" data-name="r1"><em></em> <span>积分 </span></div>
                                 <div class="rowRline">
-                                        <div class="linetext"><em class="txt">获得积分按金额比列计算：</em> <input type="text" value="" name="RewardPointsPer" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>
+                                        <div class="linetext"><em class="txt">获得积分按金额比例计算：</em> <input type="text" value="" name="RewardPointsPer" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>
                                 </div>
                                 <div class="rowRline">
                                         <div class="linetext"><em class="txt">每单赠送积分上限:</em> <input type="text" name="PointsOrderUpLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分  <em class="explain">（0或空代表不限制）</em></div>
@@ -50,8 +50,7 @@
                               <div class="checkBox" data-flag="EnableRewardCash" data-name="r1"><em></em> <span>返现 </span></div>
 
                                 <div class="rowRline">
-                                        
-                                        <div class="linetext"><em class="txt">  获得返现按金额比例计算：</em>  <input type="text" class="easyui-numberbox"  data-options="min:0,precision:0" value="" name="RewardCashPer"> % </div>
+                                        <div class="linetext"><em class="txt">  获得按金额比例计算：</em>  <input type="text" class="easyui-numberbox"  data-options="min:0,precision:0" value="" name="RewardCashPer"> % </div>
                                 </div>
                                 <div class="rowRline">
                                         <div class="linetext"><em class="txt">  每单赠送返现上限:：</em> <input type="text" name="CashOrderUpLimit" class="easyui-numberbox"  data-options="min:0,precision:2" value="">元  <em class="explain">（0或空代表不限制）</em></div>

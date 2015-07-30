@@ -111,7 +111,7 @@
 
                             </div><!--panlDivEnd-->
                             <div class="panlDiv">
-                            <p  class="title">会员首笔消费奖励比列，按每笔成交总额</p>
+                            <p  class="title">会员首笔消费奖励比例，按每笔成交总额</p>
                             <div class="commonSelectWrap">
                                 <em class="tit">销售员：</em>
                                     <label class="searchInput" >
@@ -128,7 +128,7 @@
 
                             </div><!--panlDivEnd-->
                             <div class="panlDiv ">
-                            <p  class="title lineH30">会员3个月内消费奖励比列，按每笔成交总额</p>
+                            <p  class="title lineH30">会员3个月内消费奖励比例，按每笔成交总额</p>
                             <p  class="title explain lineH30">(说明：设置“会员首笔消费奖励后”，此项设置不包括首笔的奖励规则；如不设置则此项设置包括首笔奖励规则)</p>
                             <div class="commonSelectWrap">
                                 <em class="tit">销售员：</em>
@@ -167,7 +167,7 @@
 
                             </div><!--panlDivEnd-->
                             <div class="panlDiv">
-                            <p  class="title">会员首笔消费奖励比列，按每笔成交总额</p>
+                            <p  class="title">会员首笔消费奖励比例，按每笔成交总额</p>
                             <div class="commonSelectWrap">
                                 <em class="tit">销售员：</em>
                                     <label class="searchInput" >
@@ -184,7 +184,7 @@
 
                             </div><!--panlDivEnd-->
                             <div class="panlDiv ">
-                            <p  class="title lineH30">会员3个月内消费奖励比列，按每笔成交总额</p>
+                            <p  class="title lineH30">会员3个月内消费奖励比例，按每笔成交总额</p>
                             <p  class="title explain lineH30">(说明：设置“会员首笔消费奖励后”，此项设置不包括首笔的奖励规则；如不设置则此项设置包括首笔奖励规则)</p>
                             <div class="commonSelectWrap">
                                 <em class="tit">销售员：</em>
