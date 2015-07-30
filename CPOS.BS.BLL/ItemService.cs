@@ -234,7 +234,7 @@ namespace JIT.CPOS.BS.BLL
                     //处理富文本编辑内容中的图片
                     ImageHandler(itemInfo);
                     bool isOld = true;
-                    itemService.SetItemInfo(itemInfo, out strError, isOld);
+                    itemService.SetItemInfo(itemInfo, out strError, isOld, loggingSessionInfo.ClientID);
                 }
                 strError = "保存成功!";
                 return true;
@@ -288,7 +288,7 @@ namespace JIT.CPOS.BS.BLL
         {
             try
             {
-                int n = itemService.IsExistItemCode(item_code, item_id);
+                int n = itemService.IsExistItemCode(item_code, item_id, loggingSessionInfo.ClientID);
                 return n > 0 ? false : true;
             }
             catch (Exception ex)
@@ -913,7 +913,7 @@ namespace JIT.CPOS.BS.BLL
                     }
 
                     bool isOld = false;//是否旧版本
-                    itemService.SetItemInfo(itemInfo, out strError, isOld);//使用原来的保存商品的方法
+                    itemService.SetItemInfo(itemInfo, out strError, isOld, loggingSessionInfo.ClientID);//使用原来的保存商品的方法
                 }
                 strError = "保存成功!";
                 return true;

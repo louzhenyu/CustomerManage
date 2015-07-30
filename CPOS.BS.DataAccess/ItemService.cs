@@ -244,7 +244,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="itemInfo"></param>
         /// <param name="strError"></param>
         /// <returns></returns>
-        public bool SetItemInfo(ItemInfo itemInfo, out string strError,bool isOld)
+        public bool SetItemInfo(ItemInfo itemInfo, out string strError,bool isOld,string CustomerID)
         {
             using (IDbTransaction tran = this.SQLHelper.CreateTransaction())
             {
@@ -252,7 +252,7 @@ namespace JIT.CPOS.BS.DataAccess
                 {
                     DataSet ds = GetItemById(itemInfo.Item_Id);
                     //1.判断号码唯一
-                    if (IsExistItemCode(itemInfo.Item_Code, itemInfo.Item_Id) == 1)
+                    if (IsExistItemCode(itemInfo.Item_Code, itemInfo.Item_Id, CustomerID) == 1)
                     {
                         strError = "商品类别号码已经存在。";
                         throw (new System.Exception(strError));
@@ -386,9 +386,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="item_code"></param>
         /// <param name="item_id"></param>
         /// <returns></returns>
-        public int IsExistItemCode(string item_code, string item_id)
+        public int IsExistItemCode(string item_code, string item_id,string CustomerID)
         {
-            string sql = "select count(*) From t_item where 1=1 and item_code = '" + item_code + "'";
+            string sql = "select count(*) From t_item where 1=1 and CustomerId= '" + CustomerID + "' and item_code = '" + item_code + "'";
 
             if (!item_id.Equals(""))
             {
