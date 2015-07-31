@@ -728,7 +728,7 @@ namespace JIT.CPOS.BS.DataAccess
             if (pQueryEntity.IfFlag != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IfFlag", Value = pQueryEntity.IfFlag });
             if (pQueryEntity.CustomerID != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Customer_ID", Value = pQueryEntity.CustomerID });
             if (pQueryEntity.Longitude != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Longitude", Value = pQueryEntity.Longitude });
             if (pQueryEntity.Dimension != null)

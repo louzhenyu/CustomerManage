@@ -777,7 +777,8 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //×éÖ¯SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select p.Payment_Type_Code,p.Payment_Type_Name,t.*  from [T_Inout] t  left join T_Payment_Type p on t.pay_id=p.Payment_Type_Id where 1=1  and t.status<>'-1' ");
+            //sql.AppendFormat("select p.Payment_Type_Code,p.Payment_Type_Name,t.*  from [T_Inout] t  left join T_Payment_Type p on t.pay_id=p.Payment_Type_Id where 1=1  and t.status<>'-1' ");
+            sql.AppendFormat("select *  from [T_Inout] t  where 1=1  ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)

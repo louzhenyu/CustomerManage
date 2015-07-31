@@ -402,6 +402,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
         {
             public string unitId { get; set; }
             public string paraTmp { get; set; }
+            public string Mode { get; set; }
         }
         #endregion
 
