@@ -478,7 +478,7 @@ as CollectIncome");
             sql.Append(" a.status OrderStatus,isnull(a.total_qty,0) TotalQty,isnull(a.total_retail,0) TotalAmount");
             sql.Append(@",ISNULL((select RetailTraderName from RetailTrader  where RetailTraderID=c.Col20),'') as RetailTraderName
 ,ISNULL((select user_name from T_User  where user_id=a.sales_user),'') as ServiceMan
-,ISNULL((select top 1 Amount from VipAmountDetail where ObjectId=a.order_id and VipId= c.SetoffUserId and AmountSourceId='10'),0)
+,ISNULL((select top 1 Amount from VipAmountDetail where ObjectId=a.order_id and VipId= c.SetoffUserId and AmountSourceId in ('10','20')),0)
 +   -----OBJECT_ID是订单号，vipID是获取收益的人(集客员工),防止出现脏数据才用了top 1的方式
 ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
 as CollectIncome");

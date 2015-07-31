@@ -330,6 +330,37 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 temp.openId = openId;
                 RD.content = temp;
                 rsp = new SuccessResponse<IAPIResponseData>(RD);
+                if ((RP.Parameters.special.Mode == null || (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && RP.Parameters.special.Mode.Equals("Inbound"))) && !string.IsNullOrEmpty(info.VipId))
+                {
+                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                    var vipInfo = vipBll.GetByID(info.VipId);
+
+#region 总部会员可以被门店集客
+                    var unitBll = new t_unitBLL(loggingSessionInfo);
+                    UnitService unitServer = new UnitService(loggingSessionInfo);
+                    var tempUnit = unitBll.GetByID(vipInfo.CouponInfo);
+                    if (tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
+                    {
+                        var tt = vipBll.GetUnitByUserId(RP.UserID);//获取会集店
+                        if (!string.IsNullOrEmpty(tt))
+                        {
+                            vipInfo.CouponInfo = tt;//设为门店
+                            vipInfo.SetoffUserId = RP.UserID;//设为门店员工
+                            vipInfo.Col21 = DateTime.Now.ToString();//集客时间
+                            vipBll.Update(vipInfo);
+                        }
+                        
+                    }
+#endregion
+                    if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
+                    {
+                        rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
+                    }
+                    if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
+                    {
+                        rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
+                    }
+                }
                 content = rsp.ToJSON();
                 #endregion
             }
