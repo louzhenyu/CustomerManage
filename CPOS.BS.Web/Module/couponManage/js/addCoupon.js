@@ -214,9 +214,9 @@
             that.loadData.get_unit_tree(function(data) {
                 debugger;
                 that.loadData.getUitTree.node=data[0].id;
-                    that.loadData.get_unit_tree(function(datas) {
+                   /* that.loadData.get_unit_tree(function(datas) {
                         debugger;
-                        data[0].children=datas;
+                        data[0].children=datas;*/
                         that.unitTree=data;
                         $("#Tooltip").find(".treeNode").tree({
                             // animate:true
@@ -228,7 +228,7 @@
                             data: data
 
                         });
-                    })
+                  /*  })*/
             });
             $('#addUnit').tooltip({
                 content: function(){
@@ -576,10 +576,10 @@
                     url: "/Framework/Javascript/Biz/Handler/UnitSelectTreeHandler.ashx?method=get_unit_tree&parent_id=&_dc=1433225205961&node="+this.getUitTree.node+"&multiSelect=false&isSelectLeafOnly=false&isAddPleaseSelectItem=false&pleaseSelectText=--%E8%AF%B7%E9%80%89%E6%8B%A9--&pleaseSelectID=-2",
                     success: function (data) {
                         debugger;
-                        data=JSON.parse(data);
-                        if (data&&data.length>0) {
+                        var datas=JSON.parse(data);
+                        if (datas&&datas.length>0) {
                             if (callback) {
-                                callback(data);
+                                callback(datas);
                             }
 
                         } else {
