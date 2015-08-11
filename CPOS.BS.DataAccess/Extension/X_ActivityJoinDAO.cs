@@ -77,7 +77,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //×éÖ¯SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select count(*) from [X_ActivityJoin] where PrizesID='{0}' and CreateTime>'{1}' and CreateTime<'{2}' and isdelete=0 ", prizesId, startWeekTime, endWeekTime);
+            sql.AppendFormat("select count(*) from [X_ActivityJoin] where PrizesID='{0}' and CreateTime>'{1}' and CreateTime<'{2}' AND iswinprice=1 AND isexchange=1 and isdelete=0 ", prizesId, startWeekTime, endWeekTime);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql.ToString()));
         }
 
