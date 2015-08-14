@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-7-17 11:24:52
+ * Create On	:2015-8-14 11:23:51
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [AgentCustomer](");
-            strSql.Append("[AgentName],[AgentPhone],[AgentMail],[AgentPost],[CompanyName],[CompanyScale],[StoreNumber],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerID],[TryOrAgent],[AgentID])");
+            strSql.Append("[AgentName],[AgentPhone],[AgentMail],[AgentPost],[CompanyName],[CompanyScale],[StoreNumber],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerID],[TryOrAgent],[FromSource],[AgentID])");
             strSql.Append(" values (");
-            strSql.Append("@AgentName,@AgentPhone,@AgentMail,@AgentPost,@CompanyName,@CompanyScale,@StoreNumber,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerID,@TryOrAgent,@AgentID)");            
+            strSql.Append("@AgentName,@AgentPhone,@AgentMail,@AgentPost,@CompanyName,@CompanyScale,@StoreNumber,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerID,@TryOrAgent,@FromSource,@AgentID)");            
 
 			string pkString = pEntity.AgentID;
 
@@ -103,6 +103,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@TryOrAgent",SqlDbType.Int),
+					new SqlParameter("@FromSource",SqlDbType.NVarChar),
 					new SqlParameter("@AgentID",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.AgentName;
@@ -119,7 +120,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[11].Value = pEntity.IsDelete;
 			parameters[12].Value = pEntity.CustomerID;
 			parameters[13].Value = pEntity.TryOrAgent;
-			parameters[14].Value = pkString;
+			parameters[14].Value = pEntity.FromSource;
+			parameters[15].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -234,7 +236,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.CustomerID!=null)
                 strSql.Append( "[CustomerID]=@CustomerID,");
             if (pIsUpdateNullField || pEntity.TryOrAgent!=null)
-                strSql.Append( "[TryOrAgent]=@TryOrAgent");
+                strSql.Append( "[TryOrAgent]=@TryOrAgent,");
+            if (pIsUpdateNullField || pEntity.FromSource!=null)
+                strSql.Append( "[FromSource]=@FromSource");
             strSql.Append(" where AgentID=@AgentID ");
             SqlParameter[] parameters = 
             {
@@ -249,6 +253,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@TryOrAgent",SqlDbType.Int),
+					new SqlParameter("@FromSource",SqlDbType.NVarChar),
 					new SqlParameter("@AgentID",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.AgentName;
@@ -262,7 +267,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[8].Value = pEntity.LastUpdateTime;
 			parameters[9].Value = pEntity.CustomerID;
 			parameters[10].Value = pEntity.TryOrAgent;
-			parameters[11].Value = pEntity.AgentID;
+			parameters[11].Value = pEntity.FromSource;
+			parameters[12].Value = pEntity.AgentID;
 
             //执行语句
             int result = 0;
@@ -578,6 +584,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
             if (pQueryEntity.TryOrAgent!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "TryOrAgent", Value = pQueryEntity.TryOrAgent });
+            if (pQueryEntity.FromSource!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "FromSource", Value = pQueryEntity.FromSource });
 
             return lstWhereCondition.ToArray();
         }
@@ -652,6 +660,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["TryOrAgent"] != DBNull.Value)
 			{
 				pInstance.TryOrAgent =   Convert.ToInt32(pReader["TryOrAgent"]);
+			}
+			if (pReader["FromSource"] != DBNull.Value)
+			{
+				pInstance.FromSource =  Convert.ToString(pReader["FromSource"]);
 			}
 
         }

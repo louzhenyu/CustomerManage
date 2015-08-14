@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-7-17 11:24:51
+ * Create On	:2015-8-14 11:23:51
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -111,6 +111,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? TryOrAgent { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String FromSource { get; set; }
 
 
         #endregion

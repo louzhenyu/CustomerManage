@@ -62,6 +62,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.NewAppContent
 
 
             var AgentCustomerInfo = rp.Parameters.AgentCustomerInfo;
+            if (string.IsNullOrEmpty(AgentCustomerInfo.FromSource))//如果没有标识来源，则默认为微信
+            {
+                AgentCustomerInfo.FromSource = "WeiXin";
+            }
+
             //如果该标签的id为空//创建一条记录
             if (string.IsNullOrEmpty(AgentCustomerInfo.AgentID))
             {
