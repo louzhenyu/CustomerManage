@@ -343,7 +343,7 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 行号
         /// </summary>
-        public int Row_No { get; set; }
+        public Int64 Row_No { get; set; }
         /// <summary>
         /// 总记录数
         /// </summary>

@@ -615,13 +615,15 @@ namespace JIT.CPOS.BS.BLL
                 InoutInfo inoutInfo = new InoutInfo();
                 inoutInfo.StatusManagerList = new List<StatusManager>();
 
+                //获取不同状态订单数量
                 #region 获取POS小票的不同单据数量 Jermyn20130906
                 if (orderSearchInfo != null
                     && orderSearchInfo.order_reason_id.Equals("2F6891A2194A4BBAB6F17B4C99A6C6F5")
                     && orderSearchInfo.order_type_id.Equals("1F0A100C42484454BAEA211D4C14B80F"))
                 {
                     DataSet ds1 = null;
-                    ds1 = inoutService.SearchStatusTypeCount_lj(orderSearchInfo);
+                   // ds1 = inoutService.SearchStatusTypeCount_lj(orderSearchInfo);
+                    ds1 = inoutService.SearchStatusTypeCount_lj2(orderSearchInfo);//按照优化后的
                     if (ds1 != null && ds1.Tables[0] != null && ds1.Tables[0].Rows.Count > 0)
                     {
                         //foreach (DataRow dr in ds1.Tables[0].Rows)
@@ -663,10 +665,14 @@ namespace JIT.CPOS.BS.BLL
                     }
                 }
                 #endregion
-                int iCount = inoutService.SearchInoutCount(orderSearchInfo);//cSqlMapper.Instance(loggingSessionInfo.CurrentLoggingManager).QueryForObject<int>("Inout.SearchCount", orderSearchInfo);
+                //获取总数量
+               // int iCount = inoutService.SearchInoutCount(orderSearchInfo);//cSqlMapper.Instance(loggingSessionInfo.CurrentLoggingManager).QueryForObject<int>("Inout.SearchCount", orderSearchInfo);
+                int iCount = inoutService.SearchInoutCount2(orderSearchInfo);
                 IList<InoutInfo> inoutInfoList = new List<InoutInfo>();
                 DataSet ds = new DataSet();
-                ds = inoutService.SearchInoutInfo_lj(orderSearchInfo);  //这里真正查数据
+                //获取订单列表
+              //  ds = inoutService.SearchInoutInfo_lj(orderSearchInfo);  //这里真正查数据
+                ds = inoutService.SearchInoutInfo_lj2(orderSearchInfo); 
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
                     inoutInfoList = DataTableToObject.ConvertToList<InoutInfo>(ds.Tables[0]);
