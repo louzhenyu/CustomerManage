@@ -38,7 +38,7 @@ namespace JIT.CPOS.BS.DataAccess
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
 
-       
+
         /// <summary>
         /// 查询各个状态的数量 Jermyn20130906
         /// </summary>
@@ -103,11 +103,21 @@ namespace JIT.CPOS.BS.DataAccess
 
             string sql = "";
             //先把需要全表扫描的数据查出来，后面就不需要查了
-            if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
-            {
-                sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
-                    + orderSearchInfo.customer_id + "' ";
-            }
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
+            //        + orderSearchInfo.customer_id + "' ";
+            //}
+
+            sql += string.Format(@"DECLARE @AllUnit NVARCHAR(200)
+
+                CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
+                 INSERT #UnitSET (UnitID)                  
+                   SELECT DISTINCT R.UnitID                   
+                   FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  ('{0}',UR.unit_id,205)  R                  
+                   WHERE user_id='{1}'       ---根据账户的角色去查角色对应的  所有门店unit_id
+   ", CurrentUserInfo.CurrentLoggingManager.Customer_Id, CurrentUserInfo.UserID);
+
             sql += " select count(1) from ( " + sqlTemp + " ) y";
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
@@ -122,16 +132,26 @@ namespace JIT.CPOS.BS.DataAccess
             string sqlTemp = GetSearchPublicSql2(orderSearchInfo, 0);
             string sql = "";
             //先把需要全表扫描的数据查出来，后面就不需要查了
-            if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
-            {
-                sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
-                    + orderSearchInfo.customer_id + "' ";
-            }
-          sql += string.Format(@"SELECT x.StatusType,x.OptionText StatusTypeName,ISNULL(y.StatusCount,0) StatusCount FROM ( 
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
+            //        + orderSearchInfo.customer_id + "' ";
+            //}
+
+            sql +=string.Format( @"DECLARE @AllUnit NVARCHAR(200)
+
+                CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
+                 INSERT #UnitSET (UnitID)                  
+                   SELECT DISTINCT R.UnitID                   
+                   FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  ('{0}',UR.unit_id,205)  R                  
+                   WHERE user_id='{1}'          ---根据账户的角色去查角色对应的  所有门店unit_id
+   ", CurrentUserInfo.CurrentLoggingManager.Customer_Id, CurrentUserInfo.UserID);
+
+            sql += string.Format(@"SELECT x.StatusType,x.OptionText StatusTypeName,ISNULL(y.StatusCount,0) StatusCount FROM ( 
                   select OptionValue as StatusType,OptionText From Options where OptionName ='TInOutStatus' and CustomerID='{0}' and isdelete=0               
                   ) x LEFT JOIN (
                   SELECT isnull(a.Field7,-99) StatusType,COUNT(*) StatusCount FROM dbo.T_Inout a 
-                  INNER JOIN ( " + sqlTemp+@" ) b on(a.order_id = b.order_id) 
+                  INNER JOIN ( " + sqlTemp + @" ) b on(a.order_id = b.order_id) 
                   WHERE a.Field7 IS NOT NULL AND a.Field7 <> '' 
                   GROUP BY a.Field7 ) y ON(x.StatusType = y.StatusType) ", CurrentUserInfo.CurrentLoggingManager.Customer_Id);
 
@@ -159,7 +179,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="orderList"></param>
         /// <param name="unitID"></param>
         /// <returns></returns>
-        public int SetOrderUnit(string orderList,string unitID)
+        public int SetOrderUnit(string orderList, string unitID)
         {
             string sql = string.Format("UPDATE T_Inout SET sales_unit_id='{0}' WHERE order_no IN ({1})", unitID, orderList);
             return SQLHelper.ExecuteNonQuery(sql);
@@ -182,7 +202,7 @@ namespace JIT.CPOS.BS.DataAccess
                 and a.order_type_id like  '%{1}%' 
                 and a.red_flag = '1' and b.path_unit_id like '%{2}%'
                 and a.Field7='100' and a.status<>'-1'  
-                ) x",orderSearchInfo.customer_id,orderSearchInfo.order_type_id,orderSearchInfo.path_unit_id);
+                ) x", orderSearchInfo.customer_id, orderSearchInfo.order_type_id, orderSearchInfo.path_unit_id);
 
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
@@ -430,12 +450,12 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field20 "
                         + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"
                         + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.Field11 ) DefrayTypeName "
-                        //有一个客户，时间里含有.却没有带毫秒
+                //有一个客户，时间里含有.却没有带毫秒
                         + @" ,dbo.Datetotimestamp(replace(case when a.modify_time like '%.' then REPLACE(a.modify_time,'.','') 
                                         when a.modify_time IS null then '1975/01/01' else a.modify_time end ,'.000','')) timestamp "
-                        //返的积分，是21
+                //返的积分，是21
                         + @",isnull((SELECT SUM(ABS(Integral)) FROM dbo.VipIntegralDetail	 WHERE IntegralSourceID=21 AND ObjectId=a.order_id ),0) as IntegralBack"
-                        //返回的现金，是用的2
+                //返回的现金，是用的2
                         + @",isnull((SELECT  ISNULL(SUM(Amount),0) FROM dbo.VipAmountDetail	WHERE AmountSourceId=2  AND ObjectId=a.order_id),0) as AmountBack"
                       + " From T_Inout a "
                       + " inner join @TmpTable b "
@@ -466,12 +486,22 @@ namespace JIT.CPOS.BS.DataAccess
             #region
             string sql = "";
             //先把需要全表扫描的数据查出来，后面就不需要查了
-            if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
-            {
-                sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
-                    + orderSearchInfo.customer_id + "' ";
-            }
-            sql +=  "select distinct a.customer_id,a.order_id "
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
+            //        + orderSearchInfo.customer_id + "' ";
+            //}
+
+            sql += string.Format(@"DECLARE @AllUnit NVARCHAR(200)
+
+                CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
+                 INSERT #UnitSET (UnitID)                  
+                   SELECT DISTINCT R.UnitID                   
+                   FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  ('{0}',UR.unit_id,205)  R                  
+                   WHERE user_id='{1}'       ---根据账户的角色去查角色对应的  所有门店unit_id
+   ", CurrentUserInfo.CurrentLoggingManager.Customer_Id, CurrentUserInfo.UserID);
+
+            sql += "select distinct a.customer_id,a.order_id "
                       + " ,a.order_no "
                       + " ,a.order_type_id "
                       + " ,a.order_reason_id "
@@ -542,7 +572,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,(select wh_name From t_warehouse where warehouse_id = a.sales_warehouse_id) sales_warehouse_name "
                       + " ,(select wh_name From t_warehouse where warehouse_id = a.purchase_warehouse_id) purchase_warehouse_name "
                       + " ,b.row_no "
-                 //     + " ,@iCount icount "
+                //     + " ,@iCount icount "
                     + " ,0 icount "
                       + " ,a.Field1 "
                         + " ,a.Field2 "
@@ -619,193 +649,6 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,create_time  "
                       + " ,order_no  "
                       + " ,order_id ,modify_time "
-                      + " from t_inout a ";
-            if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
-            {
-                sql += " inner join (select * from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' ) b on   ((a.purchase_unit_id=b.unit_id or a.sales_unit_id=b.unit_id) and b.customer_id='" + orderSearchInfo.customer_id + "') ";
-            }
-            //改变这句话****  ,把模糊查询的放在了上面，在表连接之前先进行查询
-            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
-            //{
-            //    sql += " and b.path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' ";
-            //}
-
-            sql += "  where 1=1 and a.status != '-1' and a.Field7 != '-99'";
-
-            //判断是否有付款状态条件(jifeng.cao 20140320)
-            if (!string.IsNullOrEmpty(orderSearchInfo.PayStatus))
-            {
-                if (orderSearchInfo.PayStatus == "1")
-                {
-                    sql += " and a.Field1 = '1' ";
-                }
-                else
-                {
-                    sql += " and a.Field1 != '1' ";
-                }
-            }
-
-            sql = pService.GetLinkSql(sql, "a.order_id", orderSearchInfo.order_id, "%");
-            sql = pService.GetLinkSql(sql, "a.customer_id", orderSearchInfo.customer_id, "=");//原来是%
-            sql = pService.GetLinkSql(sql, "a.order_no", orderSearchInfo.order_no, "%");
-            sql = pService.GetLinkSql(sql, "a.order_type_id", orderSearchInfo.order_type_id, "=");//原来是%
-            //sql = pService.GetLinkSql(sql, "a.order_reason_id", orderSearchInfo.order_reason_id, "%");
-            sql = pService.GetLinkSql(sql, "a.unit_id", orderSearchInfo.unit_id, "=");
-            if (!string.IsNullOrEmpty(orderSearchInfo.order_date_begin))//判断是否为空
-            {
-             sql = pService.GetLinkSql(sql, "a.order_date", orderSearchInfo.order_date_begin, ">=");  //订单开始日期
-            }
-            if (!string.IsNullOrEmpty(orderSearchInfo.order_date_end))
-            {
-                sql = pService.GetLinkSql(sql, "a.order_date", orderSearchInfo.order_date_end, "<=");  //订单开始日期
-            }
-            if (!string.IsNullOrEmpty(orderSearchInfo.complete_date_begin))
-            {
-                sql = pService.GetLinkSql(sql, "a.complete_date", orderSearchInfo.complete_date_begin, ">=");
-            }
-            if (!string.IsNullOrEmpty(orderSearchInfo.complete_date_end))
-            {
-                sql = pService.GetLinkSql(sql, "a.complete_date", orderSearchInfo.complete_date_end, "<=");
-            }
-            sql = pService.GetLinkSql(sql, "a.status", orderSearchInfo.status, "=");
-            sql = pService.GetLinkSql(sql, "a.warehouse_id", orderSearchInfo.warehouse_id, "=");
-            sql = pService.GetLinkSql(sql, "a.ref_order_no", orderSearchInfo.ref_order_no, "%");
-            sql = pService.GetLinkSql(sql, "a.data_from_id", orderSearchInfo.data_from_id, "=");
-            sql = pService.GetLinkSql(sql, "a.sales_unit_id", orderSearchInfo.sales_unit_id, "=");
-            sql = pService.GetLinkSql(sql, "a.purchase_unit_id", orderSearchInfo.purchase_unit_id, "=");
-            sql = pService.GetLinkSql(sql, "a.red_flag", orderSearchInfo.red_flag, "=");
-            sql = pService.GetLinkSql(sql, "a.purchase_warehouse_id", orderSearchInfo.purchase_warehouse_id, "=");
-            sql = pService.GetLinkSql(sql, "a.sales_warehouse_id", orderSearchInfo.sales_warehouse_id, "=");
-            // sql = pService.GetLinkSql(sql, "a.vip_no", orderSearchInfo.vip_no, "=");
-            if (string.IsNullOrEmpty(orderSearchInfo.data_from_id))
-            {
-                sql = pService.GetLinkSql(sql, "a.data_from_name", orderSearchInfo.data_from_id, "=");
-            }
-          
-            //发货时间
-            if (!string.IsNullOrEmpty(orderSearchInfo.DeliveryDateBegin))
-            {
-                sql = pService.GetLinkSql(sql, "a.send_time", orderSearchInfo.DeliveryDateBegin, ">=");
-            }
-            if (!string.IsNullOrEmpty(orderSearchInfo.DeliveryDateEnd))
-            {
-                sql = pService.GetLinkSql(sql, "a.send_time", orderSearchInfo.DeliveryDateEnd, "<=");
-            }
-            #region 取消时间
-            if (orderSearchInfo.DeliveryStatus != null && orderSearchInfo.DeliveryStatus.Equals("0"))
-            {
-                if (!string.IsNullOrEmpty(orderSearchInfo.CancelDateBegin))   //时间
-                {
-                    sql = pService.GetLinkSql(sql, "a.modify_time", orderSearchInfo.CancelDateBegin, ">=");
-                }
-                if (!string.IsNullOrEmpty(orderSearchInfo.CancelDateEnd))
-                {
-                    sql = pService.GetLinkSql(sql, "a.modify_time", orderSearchInfo.CancelDateEnd, "<=");
-                }
-            }
-            #endregion
-            //改变这句话****
-            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
-            //{
-            //    sql += " and b.path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' ";
-            //}
-
-            //Jermyn20130905 订单配送状态
-            if (IsStatus == 1)
-            {
-                if ((!string.IsNullOrEmpty(orderSearchInfo.DeliveryStatus)) && orderSearchInfo.DeliveryStatus != "0")
-                {                    
-                    if (orderSearchInfo.DeliveryStatus == "1234567890")
-                        //未分配门店
-                    {
-                        sql += " AND( a.sales_unit_id = '' OR  a.sales_unit_id is null) AND a.Field7 NOT IN ('600','700','800','900') ";
-                    }
-                    else
-                    {
-                        sql = pService.GetLinkSql(sql, "a.Field7", orderSearchInfo.DeliveryStatus, "=");
-                    }                    
-                }
-                else {
-                    sql += " and isnull(a.Field7,'')!='' and a.Field7!='0' ";
-                }
-            }
-            sql = pService.GetLinkSql(sql, "a.Field8", orderSearchInfo.DeliveryId, "=");
-            sql = pService.GetLinkSql(sql, "a.Field11", orderSearchInfo.DefrayTypeId, "=");
-
-            if (orderSearchInfo.timestamp != null && orderSearchInfo.timestamp.Length > 0)
-            {
-                sql += string.Format(" and (a.modify_time < (SELECT dbo.TimestampToDate('{0}')) )", orderSearchInfo.timestamp);
-            }
-            if (!string.IsNullOrEmpty(orderSearchInfo.vip_no)) {  sql += string.Format(@" 
-            and  a.vip_no in(select VIPID from VIP where (VipName like'%" + orderSearchInfo.vip_no + "%' or WeiXin like '%" + orderSearchInfo.vip_no + "%' or Phone like '%" + orderSearchInfo.vip_no + "%') and IsDelete=0)");
-            }
-
-            if (orderSearchInfo.item_name != null && !orderSearchInfo.item_name.Equals(""))
-            {
-                sql = sql + " and a.order_id in (select distinct x.order_id From t_inout_detail x "
-                      + " inner join T_Sku y"
-                      + " on(x.sku_id = y.sku_id)"
-                      + " inner join T_Item z"
-                      + " on(y.item_id = z.item_id) ";
-                sql = sql + " z.item_name like '%' + '" + orderSearchInfo.item_name + "' + '%' ";
-                sql = sql + " or z.item_code like '%' + '" + orderSearchInfo.item_name + "' + '%'  )";
-            }
-
-
-            sql = sql + " ) x ; ";
-
-            sql = sql + " Declare @iCount int;";
-
-            sql = sql + " select @iCount = COUNT(*) From @TmpTable;";
-            #endregion
-            return sql;
-        }
-        //优化方法
-        //另外创建一个方法，不要再插入临时表了，先创建基础的sql语句（带order by的，带rownumber的，然后组成基础语句）
-        //取数量的和取各状态订单的数量，和订单列表都从这里取****
-        //并且PosOrder_lj只取总订单数量和订单列表，GetPosOrderTotalCount_lj只取各状态的数量********
-
-        private string GetSearchPublicSql2(OrderSearchInfo orderSearchInfo, int IsStatus)
-        {
-            string orderby = "order by x.order_date desc,x.create_time DESC,x.order_no desc";
-            if (!string.IsNullOrEmpty(orderSearchInfo.InoutSort))
-            {
-                if (orderSearchInfo.InoutSort == "1")
-                {
-                    orderby = "order by c.order_date desc,c.create_time DESC,c.order_no desc";
-                }
-                else if (orderSearchInfo.InoutSort == "2")
-                {
-                    orderby = "order by c.modify_time desc,c.create_time DESC,c.order_no desc";
-                }
-            }
-
-            PublicService pService = new PublicService();
-            #region
-            string sql="";
-
-            //先把需要全表扫描的数据查出来，后面就不需要查了
-            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
-            //{
-            //    sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
-            //        + orderSearchInfo.customer_id + "' ";
-            //}
-          
-                    //"Declare @TmpTable Table "
-                    //  + " (order_id nvarchar(100) "
-                    //  + " ,row_no int "
-                    //  + " ); "
-
-                    //  + " insert into @TmpTable (order_id,row_no) " + 
-                    // + " select distinct x.order_id,row_no=row_number() over(" + orderby + ") From ( "  //不要再重复查多次了
-
-                      sql+=  " select distinct order_id,row_no=row_number() over(" + orderby + ")  from ("//只取唯一的order_id，链接后重复的不要重复取
-                    //row_no要放在表链接后，distinct之后才行，不然，row_no按照重复的数据计数
-                      + " select  distinct order_id"
-                      + " ,order_date  "
-                      + " ,create_time  "
-                      + " ,order_no  "
-                      + " ,modify_time "
                       + @" from   (select order_date,create_time,order_no,order_id ,modify_time ,purchase_unit_id
                             ,sales_unit_id  from  t_inout a where 1=1 and a.status != '-1' and a.Field7 != '-99' ";
             //判断是否有付款状态条件(jifeng.cao 20140320)
@@ -932,14 +775,210 @@ namespace JIT.CPOS.BS.DataAccess
             //上面先把内部条件放在里面单独的表里进行查询，然后再去连接查询
 
             sql += " ) c";
-            //连接门店关系表
             if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
             {
-                //sql += " inner join (select * from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='" 
-                //    + orderSearchInfo.customer_id + "' ) b on   (c.purchase_unit_id=b.unit_id or c.sales_unit_id=b.unit_id) ";
-               //先把模糊查询的数据查出来，然后再关联到复杂的表里，在复杂查询时就会较少运算时间，提高速度
-                sql += " inner join #unitTemp b on   (c.purchase_unit_id=b.unit_id or c.sales_unit_id=b.unit_id) ";
+                sql += " inner join (select * from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='" + orderSearchInfo.customer_id + "' ) b on   (c.purchase_unit_id=b.unit_id or c.sales_unit_id=b.unit_id) ";
             }
+            //改变这句话****  ,把模糊查询的放在了上面，在表连接之前先进行查询
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " and b.path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' ";
+            //}
+
+            sql += "  where 1=1 "; // ----and a.status != '-1' and a.Field7 != '-99'
+
+
+
+            sql = sql + " ) x ; ";
+
+            sql = sql + " Declare @iCount int;";
+
+            sql = sql + " select @iCount = COUNT(1) From @TmpTable;";
+            #endregion
+            return sql;
+        }
+        //优化方法
+        //另外创建一个方法，不要再插入临时表了，先创建基础的sql语句（带order by的，带rownumber的，然后组成基础语句）
+        //取数量的和取各状态订单的数量，和订单列表都从这里取****
+        //并且PosOrder_lj只取总订单数量和订单列表，GetPosOrderTotalCount_lj只取各状态的数量********
+
+        private string GetSearchPublicSql2(OrderSearchInfo orderSearchInfo, int IsStatus)
+        {
+            string orderby = "order by x.order_date desc,x.create_time DESC,x.order_no desc";
+            if (!string.IsNullOrEmpty(orderSearchInfo.InoutSort))
+            {
+                if (orderSearchInfo.InoutSort == "1")
+                {
+                    orderby = "order by c.order_date desc,c.create_time DESC,c.order_no desc";
+                }
+                else if (orderSearchInfo.InoutSort == "2")
+                {
+                    orderby = "order by c.modify_time desc,c.create_time DESC,c.order_no desc";
+                }
+            }
+
+            PublicService pService = new PublicService();
+            #region
+            string sql = "";
+
+            //先把需要全表扫描的数据查出来，后面就不需要查了
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
+            //        + orderSearchInfo.customer_id + "' ";
+            //}
+
+            //"Declare @TmpTable Table "
+            //  + " (order_id nvarchar(100) "
+            //  + " ,row_no int "
+            //  + " ); "
+
+            //  + " insert into @TmpTable (order_id,row_no) " + 
+            // + " select distinct x.order_id,row_no=row_number() over(" + orderby + ") From ( "  //不要再重复查多次了
+
+            sql += " select distinct order_id,row_no=row_number() over(" + orderby + ")  from ("//只取唯一的order_id，链接后重复的不要重复取
+                //row_no要放在表链接后，distinct之后才行，不然，row_no按照重复的数据计数
+            + " select  distinct order_id"
+            + " ,order_date  "
+            + " ,create_time  "
+            + " ,order_no  "
+            + " ,modify_time "
+            + @" from   (select order_date,create_time,order_no,order_id ,modify_time ,purchase_unit_id
+                            ,sales_unit_id  from  t_inout a where 1=1 and a.status != '-1' and a.Field7 != '-99' ";
+            //判断是否有付款状态条件(jifeng.cao 20140320)
+            if (!string.IsNullOrEmpty(orderSearchInfo.PayStatus))
+            {
+                if (orderSearchInfo.PayStatus == "1")
+                {
+                    sql += " and a.Field1 = '1' ";
+                }
+                else
+                {
+                    sql += " and a.Field1 != '1' ";
+                }
+            }
+
+            sql = pService.GetLinkSql(sql, "a.order_id", orderSearchInfo.order_id, "%");
+            sql = pService.GetLinkSql(sql, "a.customer_id", orderSearchInfo.customer_id, "=");//原来是%
+            sql = pService.GetLinkSql(sql, "a.order_no", orderSearchInfo.order_no, "%");
+            sql = pService.GetLinkSql(sql, "a.order_type_id", orderSearchInfo.order_type_id, "=");//原来是%
+            //sql = pService.GetLinkSql(sql, "a.order_reason_id", orderSearchInfo.order_reason_id, "%");
+            sql = pService.GetLinkSql(sql, "a.unit_id", orderSearchInfo.unit_id, "=");
+            if (!string.IsNullOrEmpty(orderSearchInfo.order_date_begin))//判断是否为空
+            {
+                sql = pService.GetLinkSql(sql, "a.order_date", orderSearchInfo.order_date_begin, ">=");  //订单开始日期
+            }
+            if (!string.IsNullOrEmpty(orderSearchInfo.order_date_end))
+            {
+                sql = pService.GetLinkSql(sql, "a.order_date", orderSearchInfo.order_date_end, "<=");  //订单开始日期
+            }
+            if (!string.IsNullOrEmpty(orderSearchInfo.complete_date_begin))
+            {
+                sql = pService.GetLinkSql(sql, "a.complete_date", orderSearchInfo.complete_date_begin, ">=");
+            }
+            if (!string.IsNullOrEmpty(orderSearchInfo.complete_date_end))
+            {
+                sql = pService.GetLinkSql(sql, "a.complete_date", orderSearchInfo.complete_date_end, "<=");
+            }
+            sql = pService.GetLinkSql(sql, "a.status", orderSearchInfo.status, "=");
+            sql = pService.GetLinkSql(sql, "a.warehouse_id", orderSearchInfo.warehouse_id, "=");
+            sql = pService.GetLinkSql(sql, "a.ref_order_no", orderSearchInfo.ref_order_no, "%");
+            sql = pService.GetLinkSql(sql, "a.data_from_id", orderSearchInfo.data_from_id, "=");
+            sql = pService.GetLinkSql(sql, "a.sales_unit_id", orderSearchInfo.sales_unit_id, "=");
+            sql = pService.GetLinkSql(sql, "a.purchase_unit_id", orderSearchInfo.purchase_unit_id, "=");
+            sql = pService.GetLinkSql(sql, "a.red_flag", orderSearchInfo.red_flag, "=");
+            sql = pService.GetLinkSql(sql, "a.purchase_warehouse_id", orderSearchInfo.purchase_warehouse_id, "=");
+            sql = pService.GetLinkSql(sql, "a.sales_warehouse_id", orderSearchInfo.sales_warehouse_id, "=");
+            // sql = pService.GetLinkSql(sql, "a.vip_no", orderSearchInfo.vip_no, "=");
+            if (string.IsNullOrEmpty(orderSearchInfo.data_from_id))
+            {
+                sql = pService.GetLinkSql(sql, "a.data_from_name", orderSearchInfo.data_from_id, "=");
+            }
+
+            //发货时间
+            if (!string.IsNullOrEmpty(orderSearchInfo.DeliveryDateBegin))
+            {
+                sql = pService.GetLinkSql(sql, "a.send_time", orderSearchInfo.DeliveryDateBegin, ">=");
+            }
+            if (!string.IsNullOrEmpty(orderSearchInfo.DeliveryDateEnd))
+            {
+                sql = pService.GetLinkSql(sql, "a.send_time", orderSearchInfo.DeliveryDateEnd, "<=");
+            }
+            #region 取消时间
+            if (orderSearchInfo.DeliveryStatus != null && orderSearchInfo.DeliveryStatus.Equals("0"))
+            {
+                if (!string.IsNullOrEmpty(orderSearchInfo.CancelDateBegin))   //时间
+                {
+                    sql = pService.GetLinkSql(sql, "a.modify_time", orderSearchInfo.CancelDateBegin, ">=");
+                }
+                if (!string.IsNullOrEmpty(orderSearchInfo.CancelDateEnd))
+                {
+                    sql = pService.GetLinkSql(sql, "a.modify_time", orderSearchInfo.CancelDateEnd, "<=");
+                }
+            }
+            #endregion
+            //改变这句话****
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " and b.path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' ";
+            //}
+
+            //Jermyn20130905 订单配送状态
+            if (IsStatus == 1)
+            {
+                if ((!string.IsNullOrEmpty(orderSearchInfo.DeliveryStatus)) && orderSearchInfo.DeliveryStatus != "0")
+                {
+                    if (orderSearchInfo.DeliveryStatus == "1234567890")
+                    //未分配门店
+                    {
+                        sql += " AND( a.sales_unit_id = '' OR  a.sales_unit_id is null) AND a.Field7 NOT IN ('600','700','800','900') ";
+                    }
+                    else
+                    {
+                        sql = pService.GetLinkSql(sql, "a.Field7", orderSearchInfo.DeliveryStatus, "=");
+                    }
+                }
+                else
+                {
+                    sql += " and isnull(a.Field7,'')!='' and a.Field7!='0' ";
+                }
+            }
+            sql = pService.GetLinkSql(sql, "a.Field8", orderSearchInfo.DeliveryId, "=");
+            sql = pService.GetLinkSql(sql, "a.Field11", orderSearchInfo.DefrayTypeId, "=");
+
+            if (orderSearchInfo.timestamp != null && orderSearchInfo.timestamp.Length > 0)
+            {
+                sql += string.Format(" and (a.modify_time < (SELECT dbo.TimestampToDate('{0}')) )", orderSearchInfo.timestamp);
+            }
+            if (!string.IsNullOrEmpty(orderSearchInfo.vip_no))
+            {
+                sql += string.Format(@" 
+            and  a.vip_no in(select VIPID from VIP where (VipName like'%" + orderSearchInfo.vip_no + "%' or WeiXin like '%" + orderSearchInfo.vip_no + "%' or Phone like '%" + orderSearchInfo.vip_no + "%') and IsDelete=0)");
+            }
+
+            if (orderSearchInfo.item_name != null && !orderSearchInfo.item_name.Equals(""))
+            {
+                sql = sql + " and a.order_id in (select distinct x.order_id From t_inout_detail x "
+                      + " inner join T_Sku y"
+                      + " on(x.sku_id = y.sku_id)"
+                      + " inner join T_Item z"
+                      + " on(y.item_id = z.item_id) ";
+                sql = sql + " z.item_name like '%' + '" + orderSearchInfo.item_name + "' + '%' ";
+                sql = sql + " or z.item_code like '%' + '" + orderSearchInfo.item_name + "' + '%'  )";
+            }
+            //上面先把内部条件放在里面单独的表里进行查询，然后再去连接查询
+
+            sql += " ) c";
+            //连接门店关系表
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //sql += " inner join (select * from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='" 
+            //    + orderSearchInfo.customer_id + "' ) b on   (c.purchase_unit_id=b.unit_id or c.sales_unit_id=b.unit_id) ";
+            //先把模糊查询的数据查出来，然后再关联到复杂的表里，在复杂查询时就会较少运算时间，提高速度
+            //sql += " inner join #unitTemp b on   (c.purchase_unit_id=b.unit_id or c.sales_unit_id=b.unit_id) ";
+            sql += " inner join #UnitSET b on   (c.purchase_unit_id=b.UnitID or c.sales_unit_id=b.UnitID) ";
+
+            //}
             //改变这句话****  ,把模糊查询的放在了上面，在表连接之前先进行查询
             //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
             //{
@@ -1160,7 +1199,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,(select wh_name From t_warehouse where warehouse_id = a.warehouse_id) warehouse_name "
                       + " ,(select wh_name From t_warehouse where warehouse_id = a.sales_warehouse_id) sales_warehouse_name "
                       + " ,(select wh_name From t_warehouse where warehouse_id = a.purchase_warehouse_id) purchase_warehouse_name "
-                      
+
                       + " ,a.Field1 "
                         + " ,a.Field2 "
                         + " ,a.Field3 "
@@ -1228,7 +1267,8 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,(select payment_type_name From T_Payment_Type where payment_type_id = a.pay_id) payment_name "   //支付方式
                       + " ,a.print_times "
                       + " ,a.carrier_id "
-                      + " ,(select top 1 unit_name From t_unit where unit_id = a.carrier_id) carrier_name "
+                //+ " ,(select top 1 unit_name From t_unit where unit_id = a.carrier_id) carrier_name "
+                      + " ,(select top 1 LogisticsName From T_LogisticsCompany where CAST(LogisticsID AS varchar(50)) = a.carrier_id) carrier_name "
                       + " ,a.remark "
                       + " ,a.status "
                       + " ,a.status_desc "
@@ -1271,7 +1311,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,(select wh_name From t_warehouse where warehouse_id = a.warehouse_id) warehouse_name "
                       + " ,(select wh_name From t_warehouse where warehouse_id = a.sales_warehouse_id) sales_warehouse_name "
                       + " ,(select wh_name From t_warehouse where warehouse_id = a.purchase_warehouse_id) purchase_warehouse_name "
-                      //配送费,查不到数据就变为0
+                //配送费,查不到数据就变为0
                       + ",isnull((select DeliveryAmount From TOrderCustomerDeliveryStrategyMapping TOCDSM WHERE TOCDSM.OrderID = a.Order_ID and isdelete=0 ),0) DeliveryAmount"
 
                 //积分折扣,下单是消费的积分20，订单返回给的积分	 21
@@ -1309,6 +1349,7 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field20 "
                          + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"  //配送方式
                         + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.Field11 ) DefrayTypeName "
+                        + "  ,( SELECT ISNULL(Amount, 0) AS Amount FROM VipAmountDetail WHERE ObjectId = a.order_id AND VipId = a.vip_no AND AmountSourceId = 13 ) AS ReturnAmount "//返现抵扣 AmountSourceId=13
                       + " From T_Inout a "
 
                       + " where 1=1 and a.order_id = '" + order_id + "';";
@@ -1459,7 +1500,7 @@ FROM         dbo.T_Inout AS I INNER JOIN
                             FROM          dbo.vw_sku) AS T ON S.sku_id = T.sku_id
 WHERE     1=1) as t";
             //VwInoutOrderItems
-            string sql = @"select ItemCode,BarCode,SalesUnitName,EnterPrice,qty,EnterAmount,Remark,ItemName from "+sql1
+            string sql = @"select ItemCode,BarCode,SalesUnitName,EnterPrice,qty,EnterAmount,Remark,ItemName from " + sql1
                 + @" where orderid='{0}'
                             union all select null,null,null,null,null,null,null,null
                             union all select null,null,null,null,null,null,null,null
@@ -1482,6 +1523,7 @@ WHERE     1=1) as t";
             string sql = "select a.order_detail_id "
                       + " ,a.order_id "
                       + " ,a.ref_order_detail_id "
+                      + "  ,oi.ImageUrl "
                       + " ,a.sku_id "
                       + " ,a.unit_id "
                       + " ,convert(decimal(18,4),a.order_qty) order_qty " //*c.red_flag
@@ -1531,7 +1573,9 @@ WHERE     1=1) as t";
                       + " inner join vw_sku b "
                       + " on(a.sku_id = b.sku_id) "
                       + " inner join t_inout c "
-                      + " on(a.order_id = c.order_id) where a.order_id= '" + orderId + "' order by b.item_code";
+                      + " on(a.order_id = c.order_id)"
+                      + " LEFT JOIN ObjectImages oi ON oi.objectID=b.item_id AND oi.DisplayIndex=1 "
+                      + " where a.order_id= '" + orderId + "' order by b.item_code";
             #endregion
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
@@ -2908,11 +2952,11 @@ and VipID = @vipid;
 
         #region 保存配送信息
 
-        public void SaveDeliveryInfo( Dictionary<string, string> dict, string order_id)
+        public void SaveDeliveryInfo(Dictionary<string, string> dict, string order_id)
         {
             if (dict == null)
             {
-                throw  new ArgumentNullException("dict");
+                throw new ArgumentNullException("dict");
             }
             var sql = new StringBuilder(" Update T_InOut Set");
             sql.AppendFormat(" modify_time = getdate(), modify_user_id ='{0}'", loggingSessionInfo.CurrentUser.User_Id);
@@ -2935,7 +2979,7 @@ and VipID = @vipid;
             sql.AppendFormat(" modify_time = getdate(), modify_user_id ='{0}'", loggingSessionInfo.CurrentUser.User_Id);
             sql.AppendFormat(" ,Field11= '{0}'", defrayType);
             sql.AppendFormat(" where order_id = '{0}'", order_id).AppendLine();
-            
+
             /*sql.AppendFormat(@"
 declare @delivery varchar(100);
 declare @status varchar(100);
