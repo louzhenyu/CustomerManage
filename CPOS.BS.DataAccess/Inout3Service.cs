@@ -38,17 +38,7 @@ namespace JIT.CPOS.BS.DataAccess
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
 
-        /// <summary>
-        /// 根据查询条件获取订单数量优化后的代码
-        /// </summary>
-        /// <param name="orderSearchInfo">查询条件对象</param>
-        /// <returns></returns>
-        public int SearchInoutCount2(OrderSearchInfo orderSearchInfo)
-        {
-            string sqlTemp = GetSearchPublicSql2(orderSearchInfo, 1);//利用优化后的sql
-            string sql =  " select count(1) from ( " + sqlTemp+" ) y";
-            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
-        }
+       
         /// <summary>
         /// 查询各个状态的数量 Jermyn20130906
         /// </summary>
@@ -101,6 +91,27 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(sql);
         }
 
+
+        /// <summary>
+        /// 根据查询条件获取订单数量优化后的代码
+        /// </summary>
+        /// <param name="orderSearchInfo">查询条件对象</param>
+        /// <returns></returns>
+        public int SearchInoutCount2(OrderSearchInfo orderSearchInfo)
+        {
+            string sqlTemp = GetSearchPublicSql2(orderSearchInfo, 1);//利用优化后的sql
+
+            string sql = "";
+            //先把需要全表扫描的数据查出来，后面就不需要查了
+            if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            {
+                sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
+                    + orderSearchInfo.customer_id + "' ";
+            }
+            sql += " select count(1) from ( " + sqlTemp + " ) y";
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
+        }
+
         /// <summary>
         /// 查询各个状态的数量 jifeng.cao 20140319
         /// </summary>
@@ -109,7 +120,14 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet SearchStatusTypeCount_lj2(OrderSearchInfo orderSearchInfo)
         {
             string sqlTemp = GetSearchPublicSql2(orderSearchInfo, 0);
-          string  sql = string.Format(@"SELECT x.StatusType,x.OptionText StatusTypeName,ISNULL(y.StatusCount,0) StatusCount FROM ( 
+            string sql = "";
+            //先把需要全表扫描的数据查出来，后面就不需要查了
+            if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            {
+                sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
+                    + orderSearchInfo.customer_id + "' ";
+            }
+          sql += string.Format(@"SELECT x.StatusType,x.OptionText StatusTypeName,ISNULL(y.StatusCount,0) StatusCount FROM ( 
                   select OptionValue as StatusType,OptionText From Options where OptionName ='TInOutStatus' and CustomerID='{0}' and isdelete=0               
                   ) x LEFT JOIN (
                   SELECT isnull(a.Field7,-99) StatusType,COUNT(*) StatusCount FROM dbo.T_Inout a 
@@ -446,7 +464,14 @@ namespace JIT.CPOS.BS.DataAccess
             }
             string sqlTemp = GetSearchPublicSql2(orderSearchInfo, 1);
             #region
-            string sql =  "select distinct a.customer_id,a.order_id "
+            string sql = "";
+            //先把需要全表扫描的数据查出来，后面就不需要查了
+            if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            {
+                sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
+                    + orderSearchInfo.customer_id + "' ";
+            }
+            sql +=  "select distinct a.customer_id,a.order_id "
                       + " ,a.order_no "
                       + " ,a.order_type_id "
                       + " ,a.order_reason_id "
@@ -549,7 +574,7 @@ namespace JIT.CPOS.BS.DataAccess
                 //返回的现金，是用的2
                         + @",isnull((SELECT  ISNULL(SUM(Amount),0) FROM dbo.VipAmountDetail	WHERE AmountSourceId=2  AND ObjectId=a.order_id),0) as AmountBack"
                       + " From T_Inout a "
-                      + " inner join (" + sqlTemp + ") b "
+                      + " inner join ( " + sqlTemp + " ) b "
                       + " on(a.order_id = b.order_id) "
                       + " where 1=1 "
                       + " and b.row_no > '" + orderSearchInfo.StartRow + "' and b.row_no <= '" + orderSearchInfo.EndRow + "' " + orderby + ";";
@@ -757,7 +782,15 @@ namespace JIT.CPOS.BS.DataAccess
 
             PublicService pService = new PublicService();
             #region
-            string sql = 
+            string sql="";
+
+            //先把需要全表扫描的数据查出来，后面就不需要查了
+            //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
+            //{
+            //    sql += " select * into #unitTemp from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='"
+            //        + orderSearchInfo.customer_id + "' ";
+            //}
+          
                     //"Declare @TmpTable Table "
                     //  + " (order_id nvarchar(100) "
                     //  + " ,row_no int "
@@ -766,7 +799,7 @@ namespace JIT.CPOS.BS.DataAccess
                     //  + " insert into @TmpTable (order_id,row_no) " + 
                     // + " select distinct x.order_id,row_no=row_number() over(" + orderby + ") From ( "  //不要再重复查多次了
 
-                    " select distinct order_id,row_no=row_number() over(" + orderby + ")  from ("//只取唯一的order_id，链接后重复的不要重复取
+                      sql+=  " select distinct order_id,row_no=row_number() over(" + orderby + ")  from ("//只取唯一的order_id，链接后重复的不要重复取
                     //row_no要放在表链接后，distinct之后才行，不然，row_no按照重复的数据计数
                       + " select  distinct order_id"
                       + " ,order_date  "
@@ -902,8 +935,10 @@ namespace JIT.CPOS.BS.DataAccess
             //连接门店关系表
             if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)
             {
-                sql += " inner join (select * from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='" 
-                    + orderSearchInfo.customer_id + "' ) b on   (c.purchase_unit_id=b.unit_id or c.sales_unit_id=b.unit_id) ";
+                //sql += " inner join (select * from vw_unit_level where path_unit_id like '%" + orderSearchInfo.path_unit_id + "%' and customer_id='" 
+                //    + orderSearchInfo.customer_id + "' ) b on   (c.purchase_unit_id=b.unit_id or c.sales_unit_id=b.unit_id) ";
+               //先把模糊查询的数据查出来，然后再关联到复杂的表里，在复杂查询时就会较少运算时间，提高速度
+                sql += " inner join #unitTemp b on   (c.purchase_unit_id=b.unit_id or c.sales_unit_id=b.unit_id) ";
             }
             //改变这句话****  ,把模糊查询的放在了上面，在表连接之前先进行查询
             //if (orderSearchInfo.path_unit_id != null && orderSearchInfo.path_unit_id.Length > 0)

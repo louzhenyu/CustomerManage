@@ -47,7 +47,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                     break;
 
                 case "PosOrder_lj": //GetPosOrder3Data()  订单查询
-                    content = GetPosOrder3Data();
+                    content = GetPosOrder3Data2(); 
                     break;
                 case "GetPosOrderTotalCount_lj": //统计数量
                     content = GetPosOrder3TotalCount();
@@ -409,6 +409,13 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 "1F0A100C42484454BAEA211D4C14B80F",
                 "2F6891A2194A4BBAB6F17B4C99A6C6F5", "1");
         }
+
+        public string GetPosOrder3Data2()
+        {
+            return GetInOutOrder3Data2(
+                "1F0A100C42484454BAEA211D4C14B80F",
+                "2F6891A2194A4BBAB6F17B4C99A6C6F5", "1");
+        }
         #endregion
 
         #region GetInOutOrderData
@@ -607,6 +614,108 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                data.ICount);
             return content;
         }
+
+        //专为出查询订单获取数据
+        /// <summary>
+        /// 获取出入库单据
+        /// </summary>
+        public string GetInOutOrder3Data2(string order_type_id, string order_reason_type_id, string red_flag)
+        {
+            var inoutService = new Inout3Service(CurrentUserInfo);
+            InoutInfo data;
+            string content = string.Empty;
+            var form = Request("form").DeserializeJSONTo<InoutQueryEntity3>();
+
+            string purchase_unit_id = string.Empty;
+            if (FormatParamValue(Request("purchase_unit_id")).Equals("") && FormatParamValue(Request("unit_id")) == null)
+            {
+                purchase_unit_id = FormatParamValue(form.purchase_unit_id);
+            }
+            else
+            {
+                purchase_unit_id = FormatParamValue(Request("purchase_unit_id"));
+            }
+            string sales_unit_id = string.Empty;
+            if (FormatParamValue(Request("sales_unit_id")).Equals("") && FormatParamValue(Request("sales_unit_id")) == null)
+            {
+                sales_unit_id = FormatParamValue(form.sales_unit_id);
+            }
+            else
+            {
+                sales_unit_id = FormatParamValue(Request("sales_unit_id"));
+            }
+
+            if (order_reason_type_id.Equals("") || order_reason_type_id == null)
+            {
+                order_reason_type_id = FormatParamValue(form.order_reason_id);
+            }
+
+            string PayStatus = FormatParamValue(form.Field1);
+
+            string order_no = FormatParamValue(form.order_no);
+            //string sales_unit_id = form.sales_unit_id; //"0d2bf77f765849249a0270c0a07fef07";//
+            string warehouse_id = FormatParamValue(form.warehouse_id);//Request("warehouse_id");//
+            //string purchase_unit_id = form.purchase_unit_id;
+            string status = FormatParamValue(form.status);
+            string order_date_begin = FormatParamValue(form.order_date_begin);
+            string order_date_end = FormatParamValue(form.order_date_end);
+            string complete_date_begin = FormatParamValue(form.complete_date_begin);
+            string complete_date_end = FormatParamValue(form.complete_date_end);
+            string data_from_id = FormatParamValue(form.data_from_id);
+            string ref_order_no = FormatParamValue(form.ref_order_no);
+
+            string Field7 = FormatParamValue(Request("Field7"));
+            string DefrayTypeId = FormatParamValue(form.DefrayTypeId);
+            string DeliveryId = FormatParamValue(form.DeliveryId);
+
+            string Field9_begin = FormatParamValue(form.Field9_begin);
+            string Field9_end = FormatParamValue(form.Field9_end);
+            string ModifyTime_begin = FormatParamValue(form.ModifyTime_begin);
+            string ModifyTime_end = FormatParamValue(form.ModifyTime_end);
+
+            string purchase_warehouse_id = FormatParamValue(form.purchase_warehouse_id);
+            string sales_warehouse_id = FormatParamValue(form.sales_warehouse_id);
+            string vip_no = FormatParamValue(form.vip_no);
+            string InoutSort = FormatParamValue(form.InoutSort); //排序
+            int maxRowCount = PageSize;
+            int startRowIndex = Utils.GetIntVal(Request("start"));
+
+            string key = string.Empty;
+            if (Request("id") != null && Request("id") != string.Empty)
+            {
+                key = Request("id").ToString().Trim();
+            }
+
+            data = inoutService.SearchInoutInfo_lj2(
+                PayStatus,
+                order_no,
+                order_reason_type_id,
+                sales_unit_id,
+                warehouse_id,
+                purchase_unit_id,
+                status,
+                order_date_begin,
+                order_date_end,
+                complete_date_begin,
+                complete_date_end,
+                data_from_id,
+                ref_order_no,
+                order_type_id,
+                red_flag,
+                maxRowCount,
+                startRowIndex
+                , purchase_warehouse_id
+                , sales_warehouse_id
+                , Field7, DeliveryId, DefrayTypeId, Field9_begin, Field9_end, ModifyTime_begin, ModifyTime_end, "", vip_no,
+                CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort);
+            //只返回了订单列表和订单数量
+            content = string.Format("{{\"totalCount\":{1},\"topics\":{0}}}",
+               data.InoutInfoList.ToJSON(),
+               data.ICount);
+            return content;
+        }
+
+
         #endregion
 
         #region GetOrderTable
@@ -2673,7 +2782,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 key = Request("id").ToString().Trim();
             }
 
-            data = inoutService.SearchInoutInfo_lj(
+            data = inoutService.SearchInoutInfo_lj3(
                 PayStatus,
                 order_no,
                 order_reason_type_id,
