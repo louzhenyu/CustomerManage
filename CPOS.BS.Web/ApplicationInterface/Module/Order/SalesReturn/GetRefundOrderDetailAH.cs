@@ -38,6 +38,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 rd.ConfirmAmount = refundEntity.ConfirmAmount;
                 rd.ActualRefundAmount = refundEntity.ActualRefundAmount;
                 rd.Points = refundEntity.Points;
+                rd.PointsAmount = refundEntity.PointsAmount;
                 rd.ReturnAmount = refundEntity.ReturnAmount;
                 rd.Amount = refundEntity.Amount;
                 rd.PayTypeName = refundEntity.PayTypeName;

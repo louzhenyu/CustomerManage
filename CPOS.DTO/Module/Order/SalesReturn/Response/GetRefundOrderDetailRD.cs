@@ -19,6 +19,7 @@ namespace JIT.CPOS.DTO.Module.Order.SalesReturn.Response
         public decimal? ConfirmAmount { get; set; }
         public decimal? ActualRefundAmount { get; set; }
         public int? Points { get; set; }
+        public decimal? PointsAmount { get; set; }
         public decimal? ReturnAmount { get; set; }
         public decimal? Amount { get; set; }
         public string PayTypeName { get; set; }
