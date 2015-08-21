@@ -65,6 +65,7 @@
 
             });
             that.elems.simpleQueryDiv.delegate(".listBtn","click",function(){
+                debugger;
                 var me=$(this);
 
                 if(!me.hasClass("show")){
@@ -75,9 +76,10 @@
 
                 $(showClass).show(0);
                 $(hideClass).hide(0);
+                $(showClass).parents(".lineT").show();
             });
 
-            //that.elems.simpleQueryDiv.find(".listBtn").eq(0).trigger("click");
+
 
             that.elems.contentArea_vipquery.delegate(".submit","click",function(){
                 var fields = $('#optionForm').serializeArray(); //自动序列化表单元素为JSON对象
@@ -111,8 +113,8 @@
                                 loadData[fileds[j].name]=configData[i].SettingValue;
                             }
                         }
-                        $("[data-flag='EnableEmployeeSales']").trigger("click").trigger("click");
-                        $("[data-flag='EnableVipSales']").trigger("click").trigger("click");
+                       $("[data-flag='EnableEmployeeSales']").trigger("click").trigger("click");
+                       $("[data-flag='EnableVipSales']").trigger("click").trigger("click");
                         if (configData[i].SettingCode == "EnableEmployeeSales") {
                             if (configData[i].SettingValue == 1) {
                                 $("[data-flag='EnableEmployeeSales']").trigger("click");

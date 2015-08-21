@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <meta charset="UTF-8" />
-    <title></title>
+    <title>会员管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link href="<%=StaticUrl+"/module/VipManage/css/reset-pc.css"%>" rel="stylesheet" type="text/css" />
         <link href="<%=StaticUrl+"/module/VipManage/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
@@ -297,10 +297,10 @@
         <#for(var i=0,length=subRoot.length;i<length;i++){ var item=subRoot[i];#>
                 <#if(item.DisplayType==1||item.DisplayType==7||item.DisplayType==3 || item.DisplayType==4){#>
                     <div class="commonSelectWrap">
-                        <em class="tit"><#=item.ColumnDesc#>：
+                        <em class="tit">
                             <#if(item.IsMustDo==1){#>
                             <span style="color: red;position: relative;top: 3px;">*</span>
-                            <#}#>
+                            <#}#><#=item.ColumnDesc#>：
                         </em>
                         <label class="searchInput"><input data-formInfo="<#=JSON.stringify(item)#>" data-text="<#=item.ColumnDesc#>"  name="newvipinfo" type="text" value=""></label>
                     </div>
@@ -390,7 +390,12 @@
         <#for(var e in idata){#>
         <td>
              <#var d= idata[e];if(e.toLowerCase()=='age' && d==0) d='';#>
+             <#if(e.toLowerCase()=='vipname' && d.length>=10){#>
+               <a data-href="/module/vipmanage/Vipdetail.aspx?vipId=<#=list.otherItems[i].VIPID#>&mid=<#=mid#>" href="javascript:;" title="<#=d#>"><#=d.substr(0,8)+'...'#></a>
+
+             <#}else{#>
              <a data-href="/module/vipmanage/Vipdetail.aspx?vipId=<#=list.otherItems[i].VIPID#>&mid=<#=mid#>" href="javascript:;"><#=d#></a>
+           <#}#>
        </td>
         <#}#>
     </tr>

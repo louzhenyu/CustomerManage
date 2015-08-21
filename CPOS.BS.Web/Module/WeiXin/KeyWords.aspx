@@ -10,12 +10,7 @@
     <link href="<%=StaticUrl+"/module/static/css/pagination.css"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    
-<!DOCTYPE HTML>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-</head>
+
 <div class="weChatTitle" id="section" data-js="js/KeyWords">
 	<span class="digTit">微信关键字管理</span>
 </div>
@@ -110,6 +105,7 @@
          </div> 
     </div>
 </div>
+   <div style="clear: both"> </div>
 <!-- 添加图文消息-弹层 -->
 <div class="ui-mask hide" id="ui-mask"></div>
 <div class="activeListPopupArea hide" id="chooseEvents">

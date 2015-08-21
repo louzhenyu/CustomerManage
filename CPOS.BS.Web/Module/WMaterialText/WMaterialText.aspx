@@ -2,6 +2,8 @@
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<meta charset="UTF-8" />
+    <title>图文素材管理</title>
     <%--    <script type="text/javascript" src="/framework/javascript/Other/jquery-1.9.0.min.js"></script>--%>
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/WApplicationInterface.js"%>" type="text/javascript"></script>
 

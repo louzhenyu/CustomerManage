@@ -81,6 +81,7 @@
 
                 $(showClass).show(0);
                 $(hideClass).hide(0);
+                $(showClass).parents(".lineT").show();
             });
 
            // that.elems.simpleQueryDiv.find(".listBtn").eq(0).trigger("click");

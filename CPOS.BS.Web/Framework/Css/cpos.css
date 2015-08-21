@@ -20,7 +20,7 @@
 .pointer { cursor:pointer; }
 .z_event { padding:10px; }
 .z_event_border { border:1px solid #ddd; }
-.z_event_step { height:70px; background:#F6F6F6; clear:both; overflow:hidden; }
+.z_event_step { height:70px; background:#F6F6F6;overflow:hidden; }
 .z_event_step_item { width:100px; height:68px; float:left; background:; margin-left:20px; }
 .z_event_step_item_hot {  }
 .z_event_step_item_text { float:left; width:38px; height:68px; padding-top:25px; text-align:center; padding-left:4px; }

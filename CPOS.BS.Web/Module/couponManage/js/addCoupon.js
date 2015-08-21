@@ -235,27 +235,34 @@
                    return  $("#Tooltip");
                 },
                 showEvent: 'click',
+                hideEvent:'dblclick',
                 onShow: function(){
                     var str= $("#applicationType").combobox("getValue");
                     if(str==0) {
                         $(this).tooltip('tip').css({"width":"222" });
                         var nodes = $("#Tooltip").find(".treeNode").tree('getChecked');
-                        $.each(nodes, function () {
+                        /*$.each(nodes, function () {
                             var me = this;
                             $("#Tooltip").find(".treeNode").tree('uncheck', me.target);
-                        });
+                        });*/
                         var t = $(this);
                         t.tooltip('tip').unbind().bind('mouseenter', function () {
                             t.tooltip('show');
                         }).bind('mouseleave', function () {
-                            t.tooltip('hide');
+                           // t.tooltip('hide');
                         });
                     }else{
                         $(this).tooltip('tip').css({"display":"none"});
                        that.addNumber();
                     }
+                },
+                onHide:function(){
+                    var nodes = $("#Tooltip").find(".treeNode").tree('getChecked');
+                    $.each(nodes, function () {
+                     var me = this;
+                     $("#Tooltip").find(".treeNode").tree('uncheck', me.target);
+                     });
                 }
-
             });
             /**************** -------------------初始化easyui 控件  End****************/
 

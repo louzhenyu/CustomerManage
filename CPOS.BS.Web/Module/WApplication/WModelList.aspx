@@ -2,7 +2,7 @@
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <title>微信模板</title>
+    <title>微信模板分类管理</title>
     
     <script src="/Framework/javascript/Biz/WModel.js" type="text/javascript"></script>
     <script src="/Framework/javascript/Biz/Status.js" type="text/javascript"></script>

@@ -42,8 +42,8 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .commonSelectWrap .specialInput input{float:left;width:90px;height:29px;border:none;color:#666;}
 
 .moreQueryWrap{float:right;}
-.moreQueryWrap .queryBtn{width:100px;height:32px;line-height:32px;}
-.moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "宋体";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
+.moreQueryWrap .queryBtn{width:88px;height:32px;line-height:32px;}
+.moreQueryWrap .more{display:block;width:88px;margin-top:5px;padding-right:4px;text-align:center;font:12px/1.2em "宋体";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
 
 /*头部 全查询*/
 .allQueryTermArea{
@@ -134,7 +134,7 @@ white-space: normal;}
 
 .commonTitle{height:16px;line-height:16px;margin:0 0 15px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;}
 /* 弹层-标签弹层*/
-.jui-dialog-selectTag{width:696px;height:500px;top:30px;margin-left:-348px;}
+.jui-dialog-selectTag{width:696px;height:500px;top:30px;}
 .jui-dialog-selectTag .promptContent{padding:30px;}
 .jui-dialog-selectTag .tagWrap{height:33px;margin-bottom:10px;}
 .jui-dialog-selectTag .tagWrap>*{float:left;margin-left:18px;}

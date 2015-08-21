@@ -781,6 +781,7 @@
         },
         //渲染tabel
         renderTable: function (data) {
+            debugger;
             var that = this;
             //获得列名
             var headerObj = data.Data.Columns;

@@ -10,10 +10,11 @@ table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}legend{col
 div,th,td{word-wrap:break-word;word-break:break-all}
 body,button,input,select,textarea{font:14px/1.5 Microsoft YaHei,Arial,Helvetica,sans-serif;}
 body{text-align:left;color:#333;background:#fff}
-input,button,.button,textarea,select{cursor:pointer;border:none;outline:none;padding:0 5px;margin:0;background:#fff;}
+input,button,.button,textarea,select{border:none;outline:none;padding:0 5px;margin:0;background:#fff;}
 button,.button,textarea,select{
     -webkit-appearance:none;
 }
+button,.button{cursor: pointer;}
 textarea{resize:none;padding:5px;}
 input[type="radio"],input[type="checkbox"]{vertical-align:middle;}
 
@@ -100,7 +101,7 @@ input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-hei
 .commonTitleBox .getBack{float:right;padding-right:28px;height:25px;line-height:25px;margin-top:20px;font-size:14px;background:url(../images/getBack.png) no-repeat right center;}
 
 /*公共区域布局*/
-.allPage{  margin: 0 auto; text-align: left;}
+.allPage{ min-width:698px; margin: 0 auto; text-align: left;}
 .centreArea{min-height:587px;}
 .contentArea{margin-left:141px;border-left:1px solid #ededed;}
 .subMenu-content{padding:40px 34px 40px 40px;}
@@ -231,7 +232,7 @@ input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-hei
 .selectDateBox p{margin-left:10px;width:98px;height:26px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fbfbfb url(../images/dateIcon.png) no-repeat 80px center;}
 
 .moreQueryWrap{float:right;margin-top:-5px;}
-.moreQueryWrap .queryBtn{width:86px;height:28px;line-height:28px;}
+.moreQueryWrap .queryBtn{width:72px;height:28px;line-height:28px;}
 .moreQueryWrap .more{display:block;width:80px;margin-top:3px;padding-right:10px;text-align:center;font:12px/1.2em "宋体";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 4px;color:#2d83cf;}
 
 /*头部 全查询*/

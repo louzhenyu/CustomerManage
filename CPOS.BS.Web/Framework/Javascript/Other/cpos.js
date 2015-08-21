@@ -50,10 +50,70 @@ function SetLogoInfo() {
                     }
                 }
             }
+
+           var menuZoom=function(){
+               $("#commonNav").show();
+               var countWidth = $(".commonHeader").outerWidth(true);  //总的的宽度
+
+               var handleWrapWidth = $(".handleWrap").outerWidth(true);//右侧门店名字的宽度
+               var logoWrapWidth = $(" .commonHeader .logoWrap").outerWidth(true);    //logo的宽度
+
+               var autoWidth = countWidth - handleWrapWidth - logoWrapWidth;
+               if($("#commonNav li.dropDown li").length>0){
+                   $("#commonNav .addul").append($("#commonNav li.dropDown li"));
+                   $("#commonNav li.dropDown").remove();
+               }
+
+
+
+               var ulList = $("<ul></ul>");
+               var liCountWidth = $("#commonNav").outerWidth(true) - $("#commonNav").width()+36; //包含边框宽度
+               liCountWidth += $("#commonNav li.dropDown").outerWidth(true) ? $("#commonNav li.dropDown").outerWidth("true") : 0;
+               debugger;
+               $("#commonNav ul li").each(function () {
+                       liCountWidth += $(this).outerWidth(true);
+                       if (liCountWidth >= autoWidth) {
+                           ulList.append($(this));
+                       }
+               });
+
+            if (ulList.find("li").length>0) {
+                $("#commonNav li.dropDown").remove();
+                $("#commonNav ul.clearfix").append("<li class='dropDown'></li>");
+                $("#commonNav li.dropDown").append(ulList);
+                $("#commonNav li.dropDown").find("ul").hide();
+
+            }
+
+
+           };
+              menuZoom();
+
+
+            $(window).resize(function(){
+                menuZoom();
+            });
+
         }
     });
 }
 $(function () {
+
+    $("#commonNav").delegate(".dropDown",'click',function(){
+        $(this).find("ul").stop().show();
+    }).delegate(".dropDown",'mouseenter',function(){
+        $(this).find("ul").stop().show();
+    }).delegate(".dropDown",'mouseleave',function(){
+        var me=  $(this);
+        setTimeout(function(){
+            me.find("ul").stop().hide();
+        },300) //设置一个超时对象
+
+    }).delegate(".dropDown ul",'mouseenter',function(){
+        $(this).stop().show();
+    }).delegate(".dropDown ul",'mouseleave',function(){
+        $(this).stop().hide();
+    });
     SetLogoInfo();
 
     $("#section").delegate(".datagrid-header-check", "mousedown", function (e) {
@@ -94,14 +154,6 @@ $(function () {
 
         return false;
     });
-
-
-
-
-    var width = $("#leftMenu").outerWidth();
-    $("#contentArea").css({ "margin-left": width + "px" })
-
-
 });
 
 //{"order_no":"","vip_no":"","sales_unit_id":"","order_date_begin":"","order_date_end":"","data_from_id":null,"DeliveryId":null,"ModifyTime_begin":"","ModifyTime_end":""}

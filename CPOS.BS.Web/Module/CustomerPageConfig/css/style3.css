@@ -1,35 +1,4 @@
-﻿@charset "utf-8";
-/*------------------ HTML5 Reset ------------------*/
-html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,address,cite,code,del,em,img,strong,sub,sup,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
-ul,ol,li{list-style: none;}
-article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}
-select,input,button,textarea{font-size:100%;font-style:normal;font-weight:400;vertical-align:middle}
-body,button,input,select,textarea{font:14px/1.5 Arial,Helvetica,sans-serif}
-body{text-align:left;color:#333;background:#fff}
-input[type="radio"]{vertical-align:middle}
-input[type="checkbox"]{vertical-align:middle}
-label,input[type="button"],input[type="submit"],button,.button{cursor:pointer;border:none;outline:none;padding:0;margin:0;-webkit-appearance:button}
-/*通用样式*/
-a{color:#333;text-decoration:none;}
-a:hover{color:#none;}
-:focus{outline:none}
-/*清除浮动*/
-.clear{display:block;clear:both;overflow:hidden;height:0;line-height:0;font-size:0}
-.clearfix:after{content:" ";visibility:hidden;display:block;clear:both;height:0;font-size:0}
-.clearfix{*zoom:1}
-/*省略号*/
-.t-overflow{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
-/*public*/
-.mb-15{margin-bottom:15px;}
-.mrml-35{margin:0 35px;}
-.ui-mask{display:none;position:fixed;_position:absolute;_width:100%;_height:100%;top:0px;left:0px;right:0px;bottom:0px;background:rgba(0,0,0,0.7);background:#000\9;filter:Alpha(opacity=70);z-index:999;}
-body{_height:100%;}
-
-.contentArea {
-    margin-left:0px;
-    float: left;
-}
-
+﻿
 /*前端页面客户化配置列表*/
 .commonOutArea{padding:15px;border:1px solid #cecedc;border-radius:4px;}
 /*公共标题*/
@@ -41,8 +10,8 @@ body{_height:100%;}
 .commonTitleWrap .appBtn{border:1px solid #b2c7ab;background:#fffefe;color:#b2c7ab}
 
 
-.pageUserConfigArea{width:730px;margin:0 auto;padding-top:30px;}
-.queryWrap{margin-bottom:25px;}
+.pageUserConfigArea{padding-top:30px;}
+.queryWrap{margin-bottom: 5px;height: 40px;}
 .queryWrap .tit{float:left;height:32px;width:80px;line-height:32px;font-size:16px;font-weight:bold;color:#404853;}
 .queryWrap input{float:left;height:28px;_line-height:28px;margin:0 10px;_margin:0 5px;text-indent:5px;border:1px solid #cecedc;}
 .queryWrap .queryBtn,.queryWrap .addBtn{float:left;width:96px;height:28px;line-height:28px;margin-top:2px;text-align:center;border-radius:4px;background:#b2c7ab;color:#fff;cursor:pointer;}
@@ -52,7 +21,7 @@ body{_height:100%;}
 .queryWrap .inputName{width:210px;}
 
 .queryListWrap table{border-collapse:collapse;border:1px solid #cecedc;}
-.queryListWrap th{text-align:center; height:55px;font-size:16px;border:none;border-bottom:1px solid #cecedc;background:#f6f6f7;color:#404853;}
+.queryListWrap th{text-align:center; height:55px;font-size:16px;border:none;border-bottom:1px solid #cecedc;background:#f6f6f7;color:#404853;line-height: 55px;}
 .queryListWrap td{text-align:center; height:40px;font-size:15px;border:none;border-right:1px solid #cecedc;color:#a6a5a5;}
 .queryListWrap tr{text-align:center;}
 .queryListWrap .editText{padding-bottom:1px;font-size:14px;font-weight:bold;font-family:"宋体";border-bottom:1px solid #79b440;color:#79b440;}

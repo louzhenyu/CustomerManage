@@ -20,17 +20,17 @@
 .tableWrapTextBtn   {height: 80px;}
 
 
-.commonBtn{text-align:center;background:#fe7c24;color:#fff;border-radius:8px;}
+.commonBtn{text-align:center;background:#fc7a52;color:#fff;border-radius:4px;}
 .moreQueryWrap{float: right;margin-top: 10px;}
 .moreQueryWrap .commonBtn{ display: block;}
-.moreQueryWrap .queryBtn{width:100px;height:32px;line-height:32px;}
+.moreQueryWrap .queryBtn{ width:72px;height:32px;line-height:32px;}
 .moreQueryWrap #addOrder{width:100px;height:32px;line-height:32px;}
 .moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "å®‹ä½“";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
 .btnWrap{padding:35px 0;text-align:center;}
 .btnWrap a{display:inline-block;}
-.cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
+.cancelBtn{height:38px;line-height:38px;border:1px solid #fc7a52;background:#fff;color:#fc7a52;}
 .cancelBtn,.saveBtn{border-radius:38px;}
-.cancelBtn:hover{background:transparent;color: #fe7c24}
+.cancelBtn:hover{background:transparent;color: #fc7a52}
 .panel-header, .panel-body {
     border: none;
 }

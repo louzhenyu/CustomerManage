@@ -1,13 +1,13 @@
 .mainPanl{padding-top: 30px; padding-left: 40px; width: 100% ;font-size: 12px;}
 
 .borderBotom{border-bottom:1px solid #d8d8d8;}
-.listBtn{ border-radius: 3px; cursor: pointer; width: 170px; height: 50px; float: left;  text-align: center; line-height: 50px; color: #666; font-size: 16px; background: #fff; position: relative; margin-left: 50px; border:1px solid #e1e1e1 }
+.listBtn{ border-radius: 2px; cursor: pointer;width: 170px; height: 50px; float: left;  text-align: center; line-height: 50px; color: #666; font-size: 16px; background: #fff; position: relative; margin-left: 50px; border:1px solid #e1e1e1 }
 .listBtn .on{ background:url("../images/duihao.png") no-repeat; width: 18px; height: 18px; position:absolute; right: 0; bottom: 0;display: none}
 
 .listBtn.show{ border-color: #07c8cf}
 .listBtn.show .on{ display: block;}
 
-.lineT{ display: block;border-bottom: 1px solid #d8d8d8; padding-bottom: 30px; margin-bottom: 30px;}
+.lineT{ display: none;border-bottom: 1px solid #d8d8d8; padding-bottom: 30px; margin-bottom: 30px;}
 
 .lineT .rowRline{ padding-left: 18px; padding-top:15px; width: 100%; }
 .lineT .rowRline input{ background: transparent;}

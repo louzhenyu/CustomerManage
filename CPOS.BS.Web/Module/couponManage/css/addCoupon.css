@@ -2,7 +2,7 @@
 
 
 
-.listBtn{ width: 170px; height: 50px; float: left;cursor: pointer; text-align: center; line-height: 50px; color: #666; font-size: 16px; background: #fff; position: relative; margin-left: 50px; border:1px solid #e1e1e1 }
+.listBtn{ width: 170px; height: 50px; border-radius: 2px; float: left;cursor: pointer; text-align: center; line-height: 50px; color: #666; font-size: 16px; background: #fff; position: relative; margin-left: 50px; border:1px solid #e1e1e1 }
 .listBtn .on{ background:url("../images/duihao.png") no-repeat; width: 18px; height: 18px; position:absolute; right: 0; bottom: 0;display: none}
 
 .listBtn.show{ border-color: #07c8cf}
@@ -41,7 +41,7 @@
 #Tooltip .tooltip-content{height: 180px;}
 .btnList{ position:absolute; border-top: 1px solid #ccc; padding-top: 10px;  left: 0; bottom: 0; width: 100%; height:45px; background-color: #fff; border-radius: 0;}
 .btnList .commonBtn{ color: #00cccc; width: 50px;height: 25px; border-color: #07c8cf; border-width:1px; border-style: solid; line-height: 25px; background-color:inherit;}
-.btnList .commonBtn{ float: left; margin-left: 20px;}
+.btnList .commonBtn{ float: left; margin-left: 40px;}
 .btnList .commonBtn.r{ border-color:#ccc; color: #ccc; }
 .cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
 .cancelBtn:hover{background:transparent;color: #fe7c24}
@@ -53,5 +53,5 @@
 .r{ float: right;}
 .checkBox.r{ margin-left: 25px; margin-top: 10px;}
 .texlist{ line-height: 30px; text-align: left;width: 88%}
-.texlist img{ float: right; margin-right: 12px; margin-top: 5px;}
+.texlist img{ float: right; margin-right: 35px; margin-top: 5px;}
 .panlDiv .datagrid-header-row{ display: none}

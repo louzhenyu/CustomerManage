@@ -139,12 +139,12 @@
                     </div>
                 </div>
             </div>
-                <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="LOGO">
-                    <img id="img_logo" src="/module/styles/images/newTemplate/logo.png" alt="LOGO" />
+                           <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="LOGO">
+ 
                         <%--<div class="arr"></div>--%>
                 </a>
-                <div class="commonNav">
-                    <ul class="clearfix">
+                <div class="commonNav" id="commonNav">
+                    <ul class="clearfix addul" >
                         <%var level1Menu = from c in MenuList where c.Parent_Menu_Id == "--" select c;  //在这里取父节点为空的
                           int i = 0;
                           foreach (var n in level1Menu)
@@ -186,10 +186,10 @@
 					</li>
 					<li class="nav005">
 						<a href="###">基础管理</a>
-					</li>--%>
+					</li>
                     <li class="nav008" style="display:none;">
                         <a href="http://help.chainclouds.com/" target="_blank" id="" class="" title="帮助手册">帮助手册</a>
-                    </li>
+                    </li>--%>
                         
                     </ul>
                 </div>
@@ -210,7 +210,7 @@
                             var urlPath = m.Url_Path;
                             var result = false;
                             result = (urlPath.IndexOf("?") >= 0);
-                            Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\"  href=\"{1}\" title=\"{2}\"><em class=\"{3}\"></em>{2}</a></dt>",
+                            Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\"  href=\"{1}\" title=\"{2}\"><em class=\"{3}\"></em><span>{2}</span></a></dt>",
                                 m.Menu_Id, (result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID)), m.Menu_Name
                                 , m.Icon_Path != "" ? m.Icon_Path : "icon", "menu" + (j.ToString().PadLeft(3, '0'))));
 

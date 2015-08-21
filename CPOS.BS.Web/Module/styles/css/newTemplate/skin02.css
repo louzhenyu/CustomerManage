@@ -54,31 +54,31 @@
 
 
 .commonHeader .handleWrap .unitName{ line-height: 67px; height: 67px;}
-.commonHeader .logoWrap{float:left;max-width:214px; width:13.93229166666667%;height:68px; line-height: 68px;}
-.commonHeader .logoWrap img{  width:92%;margin-left: 12px; margin-top:9px;  max-width: 180px;}
+.commonHeader .logoWrap{float:left; width: 187px;height: 67px; line-height: 67px;background: url(../../images/newTemplate/logo.png)  no-repeat center center;}
 /****头部，导航****/
-.commonNav { padding-left: 18px;}
+.commonNav { padding-left: 18px; display: none;}
 .commonNav li {padding: 0 18px; text-indent:0px; display: block; height: 67px; line-height: 67px; text-align:left; margin:0 auto; }
-.commonNav li a{color:#fff;height: 67px; line-height: 67px; font-size: 16px;letter-spacing:2px;}
+.commonNav li a{color:#fff;height: 67px; line-height: 67px; font-size: 18px;}
 .commonNav li:hover{ background: #06adb3;}
 .commonNav li.on{background: #06989d;}
-
-
-
-
+.commonNav li.dropDown{background:url(../../images/newTemplate/jiantou.png) no-repeat center center}
+.commonNav li.dropDown{ position: relative; width: 36px;z-index: 1000}
+.commonNav li.dropDown ul{ background:#00cccc;  position: absolute; top: 67px; left: 0px;z-index: 999}
+.commonNav li.dropDown ul li{ float: none; height: 32px; line-height: 32px; }
+.commonNav li.dropDown ul li a{ height: 32px; line-height: 32px; font-size: 14px;}
 /*全局菜单*/
-.commonMenu{ width:13.93229166666667%;max-width:187px;}
-.commonMenu li{ height: 44px; padding-left: 17.28971962616822%;}
-.commonMenu li a{ height: 44px; text-align: left; padding-left:21%; text-indent:0; font:14px/44px "Microsoft YaHei";color:#a2b7be;z-index:6;}
+.commonMenu{ width:187px;}
+.commonMenu li{ height: 44px; padding-left: 12px; }
+.commonMenu li a{ height: 44px; text-align: left; font:14px/44px "Microsoft YaHei"; color:#a2b7be; text-indent:0;display: block;}
+.commonMenu li a span{ width:128px; padding-left: 14px; float: left; text-align: left;}
 .commonMenu li:hover{border-top-right-radius:5px;border-bottom-right-radius:5px;background:none;}
 .commonMenu li:hover a{ text-decoration: none;}
-.commonMenu li.on a{color:#a2b7be;}
+.commonMenu li.on a{color:#00cccc;}
 .commonMenu li.on:hover a{color:#a2b7be;}
 /*全局菜单 icon 设置 默认一组*/
-.commonMenu li a{    position: relative;}  /**调节图标背景大小的***/
-.commonMenu li a em{background-position: left center; background-repeat: no-repeat; background-image: url("../../images/newTemplate/iconList.png");  width: 44px; height: 44px;display: block;position: absolute;left:-12%;}
-.commonMenu li a em.icon{ background-image: url("../../images/icon.png"); }
-.commonMenu li.on a em.icon{ background-image: url("../../images/iconhover.png");}
+.commonMenu li a em{background-position: left center; background-repeat: no-repeat; background-image: url("../../images/newTemplate/iconList.png"); float: left;  width: 44px; height: 44px;display: block;text-indent: 0;}
+.commonMenu li a em.icon{  background-position: -956px -56px }
+.commonMenu li.on a em.icon{ background-position: -856px -56px}
 /*全局菜单 icon设置 list集合*/
 
 /**图标同一排每个 图标直接的切换都是background-position: xpx ypx  x-100  纵向 y- 每一个**/
@@ -208,14 +208,14 @@
 
 /**右侧布局***/
 
-.contentArea{ padding-bottom: 30px; }
+.contentArea{ padding-bottom: 30px; margin-left: 187px; }
 
 
 
 /******查询*****/
 /*头部简单查询*/
 
-.queryTermArea{min-height:73px;padding:10px 20px 30px 0;background:#ebf1f4; margin-bottom:0px; border: none;}
+.queryTermArea{min-height:73px;padding:30px 20px 30px 0;background:#ebf1f4; margin-bottom:0px; border: none;}
 .queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; }
 .commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
 .commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}
@@ -347,7 +347,7 @@
 #kkpager span.curr {color: #00cccc; font-size: 14px; font-weight:600; border: none; background: none;}
 
 
-.commonSelectWrap .searchInput.bordernone{ border-color: transparent;}
+.commonSelectWrap .searchInput.bordernone{ border-color: transparent; background: none;}
 
 .checkBox{
     height: 22px; line-height: 22px;
@@ -361,7 +361,7 @@
 
 .radio{height: 28px; line-height: 28px;  }
 .radio  span{ float: left; color: #666; padding-left: 10px; white-space:normal;padding-right: 40px;}
-.radio em{  height: 28px;   width: 28px; background: url("../../images/newTemplate/radio.png") center center no-repeat; float: left;  background-size: 28px 28px;}
+.radio em{  height: 28px;   width: 28px; background: url("../../images/newTemplate/radio.png") center center no-repeat; float: left; }
 .radio.on em{ background-image: url("../../images/newTemplate/radioOn.png")}
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 
@@ -376,3 +376,7 @@
 .panel-header, .panel-body {
     border: none;
 }
+.datagrid-row td:first-of-type div{ line-height: 22px; white-space:initial;  padding-left: 20px;}
+.datagrid-row td:first-of-type div.datagrid-cell-check{ padding-left: 0;}
+ /*列表操作图标*/
+.delete{background-image:url(../../images/newTemplate/del.png); width: 16px; height: 16px; margin: 0 auto;}

@@ -152,7 +152,7 @@
         },
         categoryLayerEvent: function () {
             // 分类弹层 事件委托
-            this.ele.categoryLayer.delegate(".searchBtn", "click", function () {
+            this.ele.categoryLayer.delegate(".SearchBtn", "click", function () {
                 self.categoryLayer.loadDate($(this).siblings().children().val());
 
             }).delegate(".closePopupLayer", "click", function (e) {
@@ -175,7 +175,7 @@
                 $(this).parents(".popupLayer").hide();
                 self.mask.hide();
 
-            }).delegate(".searchBtn", "click", function () {
+            }).delegate(".SearchBtn", "click", function () {
                 self.productLayer.loadDate($(this).siblings().children("select").val(), $(this).siblings().children("input").val());
 
             }).delegate(".productItem", "click", function (e) {
@@ -957,6 +957,70 @@
 
 
         } ,
+        SaveNav:function(){
+            var list = [];
+            var model = {};
+            var flag = true;
+            if (self.currentEditData) {
+                model.id = self.currentEditData.modelTypeId;
+                model.name = self.currentEditData.modelTypeName;
+            } else {
+
+                    model.id = 4;
+                    model.name = "C区模板4";
+
+            }
+            model.styleType= self.ele.editLayer.find('input[name="navStyle"]:checked').val();
+
+            self.ele.editLayer.find(".jsAreaItem").each(function (i, e) {
+                var obj = {}, $this = $(e);
+                obj["typeId"] = $this.data("typeid");
+                obj["navName"]=  $this.find(".navName").val()
+                obj["objectName"] = $this.data("name");
+                obj["imageUrl"] = $this.data("imageurl");
+                switch (obj.typeId){
+                    case "3": obj["url"] = $this.find(".jsNameInput").val();  break;
+                    case "31": obj["url"] = "IndexShopApp"; break;
+                    case "32": obj["url"] ="Category";  break;
+                    case "33": obj["url"] = "GoodsCart";  break;
+                    case "34": obj["url"] = "MyOrder";  break;
+                    default: obj["objectId"] = $this.data("objectid"); break;
+                }
+                if (self.currentEditData) {
+                    obj["categoryAreaId"] = $this.data("categoryareaid");
+                    obj["groupId"] = self.currentEditData.groupId;
+                } else {
+
+
+                    if (!obj.objectId) {
+                        flag = false;
+                        alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
+                        return false;
+                    }
+                    if (!obj.imageUrl) {
+                        flag = false;
+                        alert("第" + (i + 1) + "项展示图片不能为空，请选择展示图片");
+                        return false;
+                    }
+                    if (!obj.url) {
+                        flag = false;
+                        alert("第" + (i + 1) + "自定义链接不可为空");
+                        return false;
+                    }
+                    if (!obj.navName) {
+                        flag = false;
+                        alert("第" + (i + 1) + "导航名称必填");
+                        return false;
+                    }
+                }
+                list.push(obj);
+            });
+            if (flag) {
+                self.SaveItemNav(list, model);
+            }
+
+
+        } ,
         saveEntrance: function () {
             var list = [];
             var model = {};
@@ -983,6 +1047,7 @@
                 //debugger;
                 var obj = {}, $this = $(e);
                 obj["typeId"] = $this.data("typeid");
+                obj["objectId"] = $this.data("objectid")==''?$this.attr("data-objectid"): $this.data("objectid");
                 obj["objectName"] = $this.data("name");
                 obj["imageUrl"] = $this.data("imageurl");
                 if (self.currentEditData) {
@@ -1012,6 +1077,11 @@
                         }
                     }
 
+                }
+                if (!obj["typeId"]) {
+                    flag = false;
+                    alert("第" + (i + 1) + "项信息已编辑，选项分类不完善");
+                    return false;
                 }
 
 

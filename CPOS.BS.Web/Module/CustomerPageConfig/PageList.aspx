@@ -9,7 +9,7 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="section" class="commonOutArea" data-js="CustomerPageConfig/pageList">
+    <div id="section" class="commonOutArea" data-js="../../CustomerPageConfig/js/pageList">
         <div class="pageUserConfigArea">
             <div class="queryWrap clearfix">
                 <span id="publicBtn" class="queryBtn">发布</span>
@@ -23,7 +23,7 @@
             </div>
         
             <div class="queryListWrap">
-        	    <table id="pageList" width="730" border="1">
+        	    <table id="pageList" style="width: 100%" border="1">
                     <thead>
                         <tr>
                             <th>操作</th>

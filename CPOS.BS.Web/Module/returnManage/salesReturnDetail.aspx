@@ -42,7 +42,7 @@
                                    </div>
                                    <div class="commonSelectWrap">
                                       <em class="tit">退货状态:</em>
-                                      <div class="searchInput" >
+                                      <div class="searchInput rowStatusStyle" >
                                        <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="StatusName"/>
                                       </div>
                                    </div>
@@ -82,13 +82,13 @@
                       </div>
                       <div class="commonSelectWrap">
                          <em class="tit">配送方式:</em>
-                         <div class="searchInput">
+                         <div class="searchInput rowStatusStyle">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="DeliveryTypeName"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap" data-type="gropupdate">
                          <em class="tit">服务类型:</em>
-                         <div class="searchInput">
+                         <div class="searchInput rowStatusStyle ">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="ServicesTypeName"/>
                          </div>
                       </div>
@@ -176,7 +176,7 @@
 
                                       <div class="commonSelectWrap">
                                          <em class="tit">支付方式:</em>
-                                         <div class="searchInput " >
+                                         <div class="searchInput rowStatusStyle" >
                                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="PayTypeName"/>
                                          </div>
                                       </div>

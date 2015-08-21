@@ -40,7 +40,7 @@
 .commonSelectWrap .wh80{ width: 80px;}
 .commonSelectWrap .wh30{ width: 80px;}
 .optionForm{ display: none;}
-.fontColor{float: left; color: #fc7a52;width: 100%;padding-left: 120px;}
+.fontColor{float: left; color: #fc7a52;width: 100%;padding-left: 128px;margin-top: -8px;margin-bottom: 12px;}
 .commonBtn.icon{width: auto; padding-left: 28px; padding-right:15px;}
 .commonBtn.icon{ background-image: url("../images/icon.png"); background-repeat: no-repeat;background-position: 6px center; }
 .commonBtn.icon.close{ background-image: url("../images/close.png"); background-color: #fc7a52;}
@@ -50,3 +50,5 @@
 .textlist .searchInput{ display:flex;}
 .textlist .searchInput em{ float: left; width: 60px;}
 .textlist .searchInput input{ float: left; width: 30%}
+
+.commonSelectWrap .rowStatusStyle input{color: #fc7a52;}
