@@ -26,8 +26,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
 
             var inoutService = new InoutService(loggingSessionInfo);
             var tInoutDetailBll = new TInoutDetailBLL(loggingSessionInfo);
-
+            var inoutBLL = new T_InoutBLL(CurrentUserInfo);
             var salesReturnEntity = salesReturnBLL.GetByID(para.SalesReturnID);
+
 
             if (salesReturnEntity != null)
             {
@@ -40,7 +41,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 rd.ActualQty = salesReturnEntity.ActualQty;
                 rd.Contacts = salesReturnEntity.Contacts;
                 rd.Phone = salesReturnEntity.Phone;
-                rd.Address = salesReturnEntity.Address;
+                rd.Address = string.Empty;
+                var orderInfo = inoutBLL.GetByID(salesReturnEntity.OrderID);
+                if (orderInfo != null)
+                    rd.Address = orderInfo.Field4;
                 rd.ServicesType = salesReturnEntity.ServicesType;
 
                 //根据订单ID获取订单明细[复用]

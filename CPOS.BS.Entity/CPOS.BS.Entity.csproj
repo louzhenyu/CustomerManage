@@ -230,6 +230,8 @@
     <Compile Include="CodeGeneration\OrderIntegralEntity.cs" />
     <Compile Include="CodeGeneration\OrderMessageLogEntity.cs" />
     <Compile Include="CodeGeneration\OrderOrderSubRunObjectMappingEntity.cs" />
+    <Compile Include="CodeGeneration\Order\Logistics\T_LogisticsCompanyEntity.cs" />
+    <Compile Include="CodeGeneration\Order\Logistics\T_LogisticsSettingEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventItemMappingEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventOrderMappingEntity.cs" />
@@ -244,9 +246,9 @@
     <Compile Include="CodeGeneration\RechargeStrategyEntity.cs" />
     <Compile Include="CodeGeneration\RegisterRequiredPageEntity.cs" />
     <Compile Include="CodeGeneration\RegisterValidationCodeEntity.cs" />
-    <Compile Include="CodeGeneration\SalesReturn\T_RefundOrderEntity.cs" />
-    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnEntity.cs" />
-    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnHistoryEntity.cs" />
+    <Compile Include="CodeGeneration\Order\SalesReturn\T_RefundOrderEntity.cs" />
+    <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnEntity.cs" />
+    <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnHistoryEntity.cs" />
     <Compile Include="CodeGeneration\SeatOrderEntity.cs" />
     <Compile Include="CodeGeneration\StoreItemDailyStatusEntity.cs" />
     <Compile Include="CodeGeneration\SysCSConclusionEntity.cs" />
@@ -460,6 +462,8 @@
     <Compile Include="CodeGeneration\LItemAuthEntity.cs" />
     <Compile Include="LItemAuthEntity.cs" />
     <Compile Include="OrderOrderSubRunObjectMappingEntity.cs" />
+    <Compile Include="Order\Logistics\T_LogisticsCompanyEntity.cs" />
+    <Compile Include="Order\Logistics\T_LogisticsSettingEntity.cs" />
     <Compile Include="PanicbuyingEventEntity.cs" />
     <Compile Include="PanicbuyingEventItemMappingEntity.cs" />
     <Compile Include="PanicbuyingEventOrderMappingEntity.cs" />
@@ -882,9 +886,9 @@
     <Compile Include="RoleMenuModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="SAIFUserInfoEntity.cs" />
-    <Compile Include="SalesReturn\T_RefundOrderEntity.cs" />
-    <Compile Include="SalesReturn\T_SalesReturnEntity.cs" />
-    <Compile Include="SalesReturn\T_SalesReturnHistoryEntity.cs" />
+    <Compile Include="Order\SalesReturn\T_RefundOrderEntity.cs" />
+    <Compile Include="Order\SalesReturn\T_SalesReturnEntity.cs" />
+    <Compile Include="Order\SalesReturn\T_SalesReturnHistoryEntity.cs" />
     <Compile Include="SeatOrderEntity.cs" />
     <Compile Include="SelectBillActionRoleInfo.cs" />
     <Compile Include="Services\RechargeStrategyEntity.cs" />

@@ -38,7 +38,6 @@ namespace JIT.CPOS.BS.DataAccess
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
 
-
         /// <summary>
         /// 查询各个状态的数量 Jermyn20130906
         /// </summary>

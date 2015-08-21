@@ -2545,16 +2545,16 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 #region 记录日志
 
-                var inoutStatusBll = new TInoutStatusBLL(loggingSessionInfo);
-                inoutStatusBll.Create(new TInoutStatusEntity
-                {
-                    InoutStatusID = Guid.Parse(Utils.NewGuid()),
-                    OrderID = orderInfo.OrderId,
-                    OrderStatus = Convert.ToInt32(orderInfo.Status),
-                    CustomerID = orderInfo.CustomerId,
-                    Remark = "生成订单",
-                    StatusRemark = "生成订单[操作人:" + loggingSessionInfo.CurrentUser.User_Name + "]"
-                });
+                //var inoutStatusBll = new TInoutStatusBLL(loggingSessionInfo);
+                //inoutStatusBll.Create(new TInoutStatusEntity
+                //{
+                //    InoutStatusID = Guid.Parse(Utils.NewGuid()),
+                //    OrderID = orderInfo.OrderId,
+                //    OrderStatus = Convert.ToInt32(orderInfo.Status),
+                //    CustomerID = orderInfo.CustomerId,
+                //    Remark = "生成订单",
+                //    StatusRemark = "生成订单[操作人:" + loggingSessionInfo.CurrentUser.User_Name + "]"
+                //});
 
                 #endregion
 

@@ -458,6 +458,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     var returnAmountFlag = rp.Parameters.ReturnAmountFlag;  //是否使用返现金额（1=使用；0=不适用）
                     var returnAmount = rp.Parameters.ReturnAmount;          //返现金额
 
+                    var vipDiscountRp=rp.Parameters.VipDiscount;            //会员抵扣价格
+
                     if (integralFlag == 1)
                     {
                         var vipIntegralBll = new VipIntegralBLL(loggingSessionInfo);
@@ -676,9 +678,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     }
 
                     #region 会员折扣
-                    if (vipDiscount > 0)
+                    if (vipDiscount > 0 && vipDiscountRp>0)
                     {
-                        discountAmount = discountAmount + (tInoutEntity.TotalAmount.Value - (tInoutEntity.TotalAmount.Value * vipDiscount));
+                        //discountAmount = discountAmount + (tInoutEntity.TotalAmount.Value - (tInoutEntity.TotalAmount.Value * vipDiscount));
+                        discountAmount = discountAmount + vipDiscountRp;
                         tInoutEntity.DiscountRate = vipDiscount * 100;
                     }
                     #endregion
@@ -776,6 +779,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     TOrderCustomerDeliveryStrategyMappingBLL tOrderCustomerDeliveryStrategyMappingBLL = new TOrderCustomerDeliveryStrategyMappingBLL(loggingSessionInfo);
                     tOrderCustomerDeliveryStrategyMappingBLL.UpdateOrderAddDeliveryAmount(orderId, rp.CustomerID);
 
+                    //增加订单操作记录 Add By Henry 2015-7-29
+                    var tinoutStatusBLL = new TInoutStatusBLL(loggingSessionInfo);
+                    TInoutStatusEntity statusEntity = new TInoutStatusEntity()
+                    {
+                        OrderID=tInoutEntity.OrderID,
+                        OrderStatus=int.Parse(tInoutEntity.Status),
+                        CustomerID=loggingSessionInfo.ClientID,
+                        StatusRemark="提交订单[操作人:用户]"
+                    };
+                    tinoutStatusBLL.Create(statusEntity);
 
                 }
                 catch (Exception ex)
@@ -892,6 +905,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 }
             }
             #endregion
+
+            //增加订单操作记录 Add By Henry 2015-8-18
+            var tinoutStatusBLL = new TInoutStatusBLL(loggingSessionInfo);
+            TInoutStatusEntity statusEntity = new TInoutStatusEntity()
+            {
+                OrderID = orderId,
+                OrderStatus = 800,
+                CustomerID = loggingSessionInfo.ClientID,
+                StatusRemark = "取消订单[操作人:用户]"
+            };
+            tinoutStatusBLL.Create(statusEntity);
 
             var rd = new EmptyResponseData();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -1677,6 +1701,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 返现金额
         /// </summary>
         public decimal ReturnAmount { get; set; }
+        /// <summary>
+        /// 会员折扣价格
+        /// </summary>
+        public decimal VipDiscount { get; set; }
         public string Remark { get; set; }
 
         //场景

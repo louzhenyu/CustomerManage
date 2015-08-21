@@ -168,21 +168,29 @@
                 <#if(entity.ALBAmount!=0){#>
                     <font>阿拉币：<#=entity.ALBAmount#>（<#=entity.ALB#>阿拉币）；</font>
                 <#}#>--%>
-                使用阿拉币
+               <%-- 使用阿拉币
                 <#if(entity.ALBAmount!=0){#>
                     <font>：<#=entity.ALB#>（<#=entity.ALBAmount#>元）</font>
                 <#}#>
-                、优惠券
+                、--%>
                 <#if(entity.couponAmount!=0){#>
-                    <font>：<#=entity.couponAmount#></font>
+                    优惠券:<font><#=entity.couponAmount#>元</font>
                 <#}#>
-                、积分
+                &nbsp;
                 <#if(entity.payPointsAmount!=0){#>
-                    <font>：<#=entity.payPoints#>（<#=entity.payPointsAmount#>元）</font>
+                    积分:<font><#=entity.payPoints#>（<#=entity.payPointsAmount#>元）</font>
                 <#}#>
-                、余额抵扣
+                &nbsp;
                 <#if(entity.vipEndAmount!=0){#>
-                    <font>：<#=entity.vipEndAmount#></font>
+                    余额抵扣:<font><#=entity.vipEndAmount#>元</font>
+                <#}#>
+                 &nbsp;
+                <#if(entity.ReturnAmount!=0){#>
+                    返现抵扣:<font><#=entity.ReturnAmount#>元</font>
+                <#}#>
+               &nbsp;
+                <#if(entity.VipDiscountAmount!=0){#>
+                    会员折扣:<font><#=entity.VipDiscountAmount#>元</font>
                 <#}#>
             </th>
             <th>总抵扣</th>

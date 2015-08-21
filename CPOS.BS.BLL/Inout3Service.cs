@@ -354,8 +354,8 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="order_type_id"></param>
         /// <param name="path_unit_id"></param>
         /// <returns></returns>
-        public int GetPosOrderUnAuditTotalCount(string order_reason_type_id, string order_type_id,string path_unit_id)
-        {            
+        public int GetPosOrderUnAuditTotalCount(string order_reason_type_id, string order_type_id, string path_unit_id)
+        {
             OrderSearchInfo orderSearchInfo = new OrderSearchInfo();
             orderSearchInfo.order_reason_id = order_reason_type_id;
             orderSearchInfo.order_type_id = order_type_id;
@@ -629,16 +629,17 @@ namespace JIT.CPOS.BS.BLL
                 {
                     DataSet ds1 = null;
                     ds1 = inoutService.SearchStatusTypeCount(orderSearchInfo);
-                    if(ds1 != null && ds1.Tables[0] != null && ds1.Tables[0].Rows.Count > 0)
+                    if (ds1 != null && ds1.Tables[0] != null && ds1.Tables[0].Rows.Count > 0)
                     {
                         foreach (DataRow dr in ds1.Tables[0].Rows)
-                        {                           
-                            switch (dr["StatusType"].ToString()) { 
+                        {
+                            switch (dr["StatusType"].ToString())
+                            {
                                 case "100":
-                                    inoutInfo.StatusCount1 = Convert.ToInt32( dr["StatusCount"].ToString());
+                                    inoutInfo.StatusCount1 = Convert.ToInt32(dr["StatusCount"].ToString());
                                     break;
                                 case "300":
-                                    inoutInfo.StatusCount2 = Convert.ToInt32( dr["StatusCount"].ToString());
+                                    inoutInfo.StatusCount2 = Convert.ToInt32(dr["StatusCount"].ToString());
                                     break;
                                 case "500":
                                     inoutInfo.StatusCount3 = Convert.ToInt32(dr["StatusCount"].ToString());
@@ -756,6 +757,7 @@ namespace JIT.CPOS.BS.BLL
 
                 //获取不同状态订单数量
                 #region 获取POS小票的不同单据数量 Jermyn20130906
+                //
                 if (orderSearchInfo != null
                     && orderSearchInfo.order_reason_id.Equals("2F6891A2194A4BBAB6F17B4C99A6C6F5")
                     && orderSearchInfo.order_type_id.Equals("1F0A100C42484454BAEA211D4C14B80F"))
@@ -803,15 +805,16 @@ namespace JIT.CPOS.BS.BLL
                         inoutInfo.StatusManagerList = DataTableToObject.ConvertToList<StatusManager>(ds1.Tables[0]);
                     }
                 }
+
                 #endregion
                 //获取总数量
-               // int iCount = inoutService.SearchInoutCount(orderSearchInfo);//cSqlMapper.Instance(loggingSessionInfo.CurrentLoggingManager).QueryForObject<int>("Inout.SearchCount", orderSearchInfo);
+                // int iCount = inoutService.SearchInoutCount(orderSearchInfo);//cSqlMapper.Instance(loggingSessionInfo.CurrentLoggingManager).QueryForObject<int>("Inout.SearchCount", orderSearchInfo);
                 int iCount = inoutService.SearchInoutCount2(orderSearchInfo);
                 IList<InoutInfo> inoutInfoList = new List<InoutInfo>();
                 DataSet ds = new DataSet();
                 //获取订单列表
-              //  ds = inoutService.SearchInoutInfo_lj(orderSearchInfo);  //这里真正查数据
-                ds = inoutService.SearchInoutInfo_lj2(orderSearchInfo); 
+                //  ds = inoutService.SearchInoutInfo_lj(orderSearchInfo);  //这里真正查数据
+                ds = inoutService.SearchInoutInfo_lj2(orderSearchInfo);
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
                     inoutInfoList = DataTableToObject.ConvertToList<InoutInfo>(ds.Tables[0]);
@@ -1036,7 +1039,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="orderList"></param>
         /// <param name="unitID"></param>
         /// <returns></returns>
-        public int SetOrderUnit(string orderList,string unitID)
+        public int SetOrderUnit(string orderList, string unitID)
         {
             try
             {
@@ -1046,9 +1049,9 @@ namespace JIT.CPOS.BS.BLL
             {
                 return -1;
             }
-            
+
         }
-        
+
         /// <summary>
         /// 查询未审核订单数
         /// </summary>
@@ -1058,17 +1061,17 @@ namespace JIT.CPOS.BS.BLL
         {
             try
             {
-                orderSearchInfo.customer_id = loggingSessionInfo.CurrentLoggingManager.Customer_Id;                                
-                return inoutService.SearchUnAuditTypeCount(orderSearchInfo); 
+                orderSearchInfo.customer_id = loggingSessionInfo.CurrentLoggingManager.Customer_Id;
+                return inoutService.SearchUnAuditTypeCount(orderSearchInfo);
             }
             catch (Exception ex)
             {
                 throw (ex);
-            }        
+            }
         }
         #endregion
 
-           /// <summary>
+        /// <summary>
         /// 获取订单运费
         /// </summary>
         /// <param name="orderId"></param>
@@ -1105,7 +1108,7 @@ namespace JIT.CPOS.BS.BLL
                 throw (ex);
             }
         }
-       
+
         /// <summary>
         /// 获取单个进出库单据的详细信息
         /// </summary>
@@ -1155,9 +1158,38 @@ namespace JIT.CPOS.BS.BLL
                 _ht.Add("OrderId", orderId);
                 InoutInfo inoutInfo = new InoutInfo();
                 DataSet ds = inoutService.GetInoutInfoById_lj(orderId);//基本信息
+                VipDAO vipDao = new VipDAO(loggingSessionInfo);
+                T_UserDAO userDao = new T_UserDAO(loggingSessionInfo);
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
                     inoutInfo = DataTableToObject.ConvertToObject<InoutInfo>(ds.Tables[0].Rows[0]);//转换成对象
+                    //读取销售人员名称(会员/员工)
+                    if (inoutInfo != null)
+                    {
+                        string tempName = string.Empty;
+                        if (inoutInfo.data_from_id == "3") //订单来自微信
+                        {
+                            var vipInfo = vipDao.GetByID(inoutInfo.sales_user);
+                            if (vipInfo != null)
+                                tempName = vipInfo.VipName;
+                        }
+                        else
+                        {
+                            var userInfo = userDao.GetByID(inoutInfo.sales_user);
+                            if (userInfo != null)
+                                tempName = userInfo.user_name;
+                        }
+                        inoutInfo.sales_user_name = tempName;
+                    }
+
+                    decimal vipDiscount = 0;//会员折扣金额
+                    if (inoutInfo.discount_rate > 0)
+                    {
+                        var tempAmount = inoutInfo.actual_amount - inoutInfo.DeliveryAmount; //应付-运费后的应付金额
+                        vipDiscount = tempAmount / (inoutInfo.discount_rate / 100) - tempAmount;// (应付-运费)/折扣率=去除折扣后实付Y；Y-包含折扣的实付=会员折扣
+                    }
+                    inoutInfo.VipDiscount = vipDiscount;
+
                 }
                 inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(orderId);//获取明细信息
                 return inoutInfo;
@@ -1184,7 +1216,7 @@ namespace JIT.CPOS.BS.BLL
                     inoutInfo = DataTableToObject.ConvertToObject<InoutInfo>(ds.Tables[0].Rows[0]);
                     inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(inoutInfo.order_id);
                 }
-                
+
                 return inoutInfo;
             }
             catch (Exception ex)
@@ -1834,7 +1866,8 @@ namespace JIT.CPOS.BS.BLL
                     //return false;
                     vipId = SetOrderInfo.OpenId;
                 }
-                else {
+                else
+                {
                     vipId = vipInfo.VIPID;
                 }
                 #endregion
@@ -1854,8 +1887,8 @@ namespace JIT.CPOS.BS.BLL
                 //inoutInfo.discount_rate = Convert.ToDecimal(SetOrderInfo.DiscountRate);
                 //if (SetOrderInfo.ActualAmount == null || SetOrderInfo.ActualAmount.ToString().Equals("") || SetOrderInfo.ActualAmount < 1)
                 //{
-                    inoutInfo.actual_amount = Convert.ToDecimal(SetOrderInfo.TotalAmount);
-                    inoutInfo.total_retail = Convert.ToDecimal(SetOrderInfo.TotalAmount);
+                inoutInfo.actual_amount = Convert.ToDecimal(SetOrderInfo.TotalAmount);
+                inoutInfo.total_retail = Convert.ToDecimal(SetOrderInfo.TotalAmount);
                 //}
                 //else
                 //{
@@ -1889,7 +1922,8 @@ namespace JIT.CPOS.BS.BLL
                 {
                     inoutInfo.purchase_unit_id = SetOrderInfo.PurchaseUnitId;
                 }
-                else {
+                else
+                {
                     if (SetOrderInfo.CustomerId.Equals("f6a7da3d28f74f2abedfc3ea0cf65c01"))
                     {
                         inoutInfo.purchase_unit_id = "8c41446fe80d4f2e9e3d659df01641fa";
@@ -1930,7 +1964,7 @@ namespace JIT.CPOS.BS.BLL
                 bool bReturn = SetInoutInfo(inoutInfo, true, out strError);
                 //Jermyn20131008 清楚购物车
                 ShoppingCartBLL shoppingCartServer = new ShoppingCartBLL(this.loggingSessionInfo);
-               // bReturn = shoppingCartServer.SetCancelShoppingCartByOrderId(inoutInfo.order_id, vipId);
+                // bReturn = shoppingCartServer.SetCancelShoppingCartByOrderId(inoutInfo.order_id, vipId);
                 //strError = "提交订单成功.";
                 #region Jermyn20131213 添加优惠券关系表
                 //TOrderCouponMappingBLL mappingServer = new TOrderCouponMappingBLL(loggingSessionInfo);
@@ -2001,8 +2035,8 @@ namespace JIT.CPOS.BS.BLL
                 //inoutInfo.discount_rate = Convert.ToDecimal(SetOrderInfo.DiscountRate);
                 if (SetOrderInfo.ActualAmount == null || SetOrderInfo.ActualAmount.ToString().Equals("") || SetOrderInfo.ActualAmount < 1)
                 {
-                inoutInfo.actual_amount = Convert.ToDecimal(SetOrderInfo.TotalAmount);
-                inoutInfo.total_retail = Convert.ToDecimal(SetOrderInfo.TotalAmount);
+                    inoutInfo.actual_amount = Convert.ToDecimal(SetOrderInfo.TotalAmount);
+                    inoutInfo.total_retail = Convert.ToDecimal(SetOrderInfo.TotalAmount);
                 }
                 else
                 {
@@ -2062,7 +2096,7 @@ namespace JIT.CPOS.BS.BLL
                 bool bReturn = SetInoutInfo(inoutInfo, true, out strError);
                 //Jermyn20131008 清楚购物车
                 ShoppingCartBLL shoppingCartServer = new ShoppingCartBLL(this.loggingSessionInfo);
-               // bReturn = shoppingCartServer.SetCancelShoppingCartByOrderId(inoutInfo.order_id, vipId);
+                // bReturn = shoppingCartServer.SetCancelShoppingCartByOrderId(inoutInfo.order_id, vipId);
                 //strError = "提交订单成功.";
                 #region Jermyn20131213 添加优惠券关系表
                 //TOrderCouponMappingBLL mappingServer = new TOrderCouponMappingBLL(loggingSessionInfo);
@@ -2099,7 +2133,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 inoutService.SetOrderPayment(SetOrderInfo);
                 string strOrderId = string.Empty;
-                
+
 
                 strError = "支付成功.";
                 return true;
@@ -2131,7 +2165,7 @@ namespace JIT.CPOS.BS.BLL
         }
         #endregion
 
-        public bool GetOrderOpenId(string order_code,out string openId,out string amount,out string orderId)
+        public bool GetOrderOpenId(string order_code, out string openId, out string amount, out string orderId)
         {
             DataSet ds = new DataSet();
             ds = inoutService.GetOrderOpenId(order_code);
@@ -2142,7 +2176,8 @@ namespace JIT.CPOS.BS.BLL
                 orderId = ds.Tables[0].Rows[0]["order_id"].ToString();
                 return true;
             }
-            else {
+            else
+            {
                 openId = "";
                 amount = "";
                 orderId = "";
@@ -2158,7 +2193,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="orderId">订单ID</param>
         /// <param name="status">状态：1未付款/2待处理/3已发货/0已取消</param>
         /// <param name="send_time">发货时间</param>
-        public bool UpdateOrderDeliveryStatus(string orderId, string status,string send_time)
+        public bool UpdateOrderDeliveryStatus(string orderId, string status, string send_time)
         {
             try
             {
@@ -2173,7 +2208,7 @@ namespace JIT.CPOS.BS.BLL
                     case "6": statusDesc = "已取消"; break;
                 }
 
-                inoutService.UpdateOrderDeliveryStatus(orderId, status, statusDesc,null);
+                inoutService.UpdateOrderDeliveryStatus(orderId, status, statusDesc, null);
                 return true;
             }
             catch
@@ -2242,7 +2277,7 @@ namespace JIT.CPOS.BS.BLL
                             inoutInfo.purchase_unit_id = tmpUnitId;
                         }
                         else
-                        { 
+                        {
                             inoutInfo.purchase_unit_id = "8c41446fe80d4f2e9e3d659df01641fa";
                         }
                     }
@@ -2299,14 +2334,15 @@ namespace JIT.CPOS.BS.BLL
         #endregion
 
         #region
-        public bool Update(InoutInfo inoutInfo,out string strError)
+        public bool Update(InoutInfo inoutInfo, out string strError)
         {
             try
             {
                 strError = "更新订单信息成功.";
                 return inoutService.Update(inoutInfo);
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 strError = ex.ToString();
                 return false;
             }
@@ -2415,7 +2451,7 @@ namespace JIT.CPOS.BS.BLL
 
         public void SaveDefrayType(string defrayType, string order_id)
         {
-            new DataAccess.Inout3Service(loggingSessionInfo).SaveDefrayType( defrayType,  order_id);
+            new DataAccess.Inout3Service(loggingSessionInfo).SaveDefrayType(defrayType, order_id);
         }
 
         #endregion

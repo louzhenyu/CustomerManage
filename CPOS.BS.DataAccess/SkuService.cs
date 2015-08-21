@@ -128,17 +128,25 @@ namespace JIT.CPOS.BS.DataAccess
             return ds;
         }
 
-        public DataSet GetSkuInfoByOne()
+        public DataSet GetSkuInfoByOne(string orderId)
         {
             DataSet ds = new DataSet();
-            string sql = GetSql("")
-              + " From ( "
-              + " select top 1 a.* "
-              + " ,row_no=row_number() over(order by a.sku_id) "
-              + " from vw_sku a  where a.status='1'"
+            //string sql = GetSql("")
+            //  + " From ( "
+            //  + " select top 1 a.* "
+            //  + " ,row_no=row_number() over(order by a.sku_id) "
+            //  + " from vw_sku a  where a.status='1'"
 
-              + " ) x where x.row_no > 0 and x.row_no <=10 "
-              + " order by x.item_code,x.barcode ";
+            //  + " ) x where x.row_no > 0 and x.row_no <=10 "
+            //  + " order by x.item_code,x.barcode ";
+            string sql = GetSql("")
+                + " FROM( SELECT TOP 1 "
+                + "  b.* "
+                + "  FROM      T_Inout_Detail a "
+                + "  LEFT JOIN vw_sku b ON a.sku_id = b.sku_id "
+                + "  INNER JOIN t_inout c ON a.order_id = c.order_id "
+                + "  WHERE     c.order_id = '" + orderId + "'"
+                + "    ) x ";
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }

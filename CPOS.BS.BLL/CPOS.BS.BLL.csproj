@@ -321,6 +321,8 @@
     <Compile Include="CodeGeneration\OrderIntegralBLL.cs" />
     <Compile Include="CodeGeneration\OrderMessageLogBLL.cs" />
     <Compile Include="CodeGeneration\OrderOrderSubRunObjectMappingBLL.cs" />
+    <Compile Include="CodeGeneration\Order\Logistics\T_LogisticsCompanyBLL.cs" />
+    <Compile Include="CodeGeneration\Order\Logistics\T_LogisticsSettingBLL.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventBLL.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventItemMappingBLL.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventOrderMappingBLL.cs" />
@@ -365,9 +367,9 @@
     <Compile Include="CodeGeneration\RouteCycleMappingBLL.cs" />
     <Compile Include="CodeGeneration\RoutePOPMappingBLL.cs" />
     <Compile Include="CodeGeneration\RouteUserMappingBLL.cs" />
-    <Compile Include="CodeGeneration\SalesReturn\T_RefundOrderBLL.cs" />
-    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnBLL.cs" />
-    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnHistoryBLL.cs" />
+    <Compile Include="CodeGeneration\Order\SalesReturn\T_RefundOrderBLL.cs" />
+    <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnBLL.cs" />
+    <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnHistoryBLL.cs" />
     <Compile Include="CodeGeneration\SeatOrderBLL.cs" />
     <Compile Include="CodeGeneration\ShoppingCartBLL.cs" />
     <Compile Include="CodeGeneration\ShopProductBLL.cs" />
@@ -797,6 +799,8 @@
     <Compile Include="OrderOrderSubRunObjectMappingBLL.cs" />
     <Compile Include="OrderService.cs" />
     <Compile Include="Module\PanicBying\PanicbuyingEventOrderMappingBLL.cs" />
+    <Compile Include="Order\Logistics\T_LogisticsCompanyBLL.cs" />
+    <Compile Include="Order\Logistics\T_LogisticsSettingBLL.cs" />
     <Compile Include="PanicbuyingEventBLL.cs" />
     <Compile Include="PanicbuyingEventItemMappingBLL.cs" />
     <Compile Include="PanicbuyingEventSkuMappingBLL.cs" />
@@ -887,9 +891,9 @@
     <Compile Include="ReservationWorkCalendarBLL.cs" />
     <Compile Include="RoleMenuService.cs" />
     <Compile Include="RoleService.cs" />
-    <Compile Include="SalesReturn\T_RefundOrderBLL.cs" />
-    <Compile Include="SalesReturn\T_SalesReturnBLL.cs" />
-    <Compile Include="SalesReturn\T_SalesReturnHistoryBLL.cs" />
+    <Compile Include="Order\SalesReturn\T_RefundOrderBLL.cs" />
+    <Compile Include="Order\SalesReturn\T_SalesReturnBLL.cs" />
+    <Compile Include="Order\SalesReturn\T_SalesReturnHistoryBLL.cs" />
     <Compile Include="SeatOrderBLL.cs" />
     <Compile Include="CS\SendMarketingMessageBLL.cs" />
     <Compile Include="Services\RechargeStrategyBLL.cs" />

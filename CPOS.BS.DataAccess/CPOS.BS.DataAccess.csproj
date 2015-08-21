@@ -287,6 +287,8 @@
     <Compile Include="CodeGeneration\OrderIntegralDAO.cs" />
     <Compile Include="CodeGeneration\OrderMessageLogDAO.cs" />
     <Compile Include="CodeGeneration\OrderOrderSubRunObjectMappingDAO.cs" />
+    <Compile Include="CodeGeneration\Order\Logistics\T_LogisticsCompanyDAO.cs" />
+    <Compile Include="CodeGeneration\Order\Logistics\T_LogisticsSettingDAO.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventDAO.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventItemMappingDAO.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventOrderMappingDAO.cs" />
@@ -331,9 +333,9 @@
     <Compile Include="CodeGeneration\RouteDAO.cs" />
     <Compile Include="CodeGeneration\RoutePOPMappingDAO.cs" />
     <Compile Include="CodeGeneration\RouteUserMappingDAO.cs" />
-    <Compile Include="CodeGeneration\SalesReturn\T_RefundOrderDAO.cs" />
-    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnDAO.cs" />
-    <Compile Include="CodeGeneration\SalesReturn\T_SalesReturnHistoryDAO.cs" />
+    <Compile Include="CodeGeneration\Order\SalesReturn\T_RefundOrderDAO.cs" />
+    <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnDAO.cs" />
+    <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnHistoryDAO.cs" />
     <Compile Include="CodeGeneration\SeatOrderDAO.cs" />
     <Compile Include="CodeGeneration\ShoppingCartDAO.cs" />
     <Compile Include="CodeGeneration\ShopProductDAO.cs" />
@@ -708,6 +710,8 @@
     <Compile Include="OrderIntegralDAO.cs" />
     <Compile Include="OrderMessageLogDAO.cs" />
     <Compile Include="OrderOrderSubRunObjectMappingDAO.cs" />
+    <Compile Include="Order\Logistics\T_LogisticsCompanyDAO.cs" />
+    <Compile Include="Order\Logistics\T_LogisticsSettingDAO.cs" />
     <Compile Include="PanicbuyingEventDAO.cs" />
     <Compile Include="PanicbuyingEventItemMappingDAO.cs" />
     <Compile Include="PanicbuyingEventSkuMappingDAO.cs" />
@@ -758,9 +762,9 @@
     <Compile Include="Project\PG\PowerHourDAO.cs" />
     <Compile Include="Project\PG\PowerHourInviteDAO.cs" />
     <Compile Include="Project\PG\PowerHourRemarkDAO.cs" />
-    <Compile Include="SalesReturn\T_RefundOrderDAO.cs" />
-    <Compile Include="SalesReturn\T_SalesReturnDAO.cs" />
-    <Compile Include="SalesReturn\T_SalesReturnHistoryDAO.cs" />
+    <Compile Include="Order\SalesReturn\T_RefundOrderDAO.cs" />
+    <Compile Include="Order\SalesReturn\T_SalesReturnDAO.cs" />
+    <Compile Include="Order\SalesReturn\T_SalesReturnHistoryDAO.cs" />
     <Compile Include="Services\RechargeStrategyDAO.cs" />
     <Compile Include="Services\SysVocationDAO.cs" />
     <Compile Include="Services\UnitDAO.cs" />

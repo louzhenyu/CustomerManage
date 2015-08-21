@@ -77,7 +77,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
 
                 salesReturnInfo.VipName = item.VipName;
                 salesReturnInfo.DeliveryType = item.DeliveryType;
-                salesReturnInfo.CreateTime = item.CreateTime.Value.ToString("yyyy-MM-dd hh:mm");
+                salesReturnInfo.CreateTime = item.CreateTime.Value.ToString("yyyy-MM-dd HH:mm");
                 //if (drSku.Count() > 0)
                 //{
                 //    skuDetail = new SkuDetailInfo();

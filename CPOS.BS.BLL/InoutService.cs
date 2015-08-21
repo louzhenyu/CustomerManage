@@ -1773,8 +1773,11 @@ namespace JIT.CPOS.BS.BLL
                 if (status == "700")
                 {
 
-                    string userId = inoutBLL.GetByID(orderId).vip_no;
-                    new VipIntegralBLL(this.loggingSessionInfo).OrderReturnMoneyAndIntegral(orderId, userId, null);
+                    //string userId = inoutBLL.GetByID(orderId).vip_no;
+                    //new VipIntegralBLL(this.loggingSessionInfo).OrderReturnMoneyAndIntegral(orderId, userId, null);
+                    var orderInfo = inoutBLL.GetByID(orderId);
+                    if (orderId != null)//和确认收货一致，复用业务逻辑层[重构代码]
+                        new VipIntegralBLL(this.loggingSessionInfo).OrderReturnMoneyAndIntegral(orderInfo.order_id, orderInfo.vip_no, tran, orderInfo.actual_amount.Value, orderInfo.sales_user, orderInfo.data_from_id);
                 }
 
 

@@ -364,13 +364,13 @@ namespace JIT.CPOS.BS.BLL
         /// 获取一条SKU记录
         /// </summary>
         /// <returns></returns>
-        public IList<SkuInfo> GetSkuInfoByOne()
+        public IList<SkuInfo> GetSkuInfoByOne(string orderId)
         {
             try
             {
                 IList<SkuInfo> skuInfoList = new List<SkuInfo>();
                 DataSet ds = new DataSet();
-                ds = skuService.GetSkuInfoByOne();
+                ds = skuService.GetSkuInfoByOne(orderId);
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
                     skuInfoList = DataTableToObject.ConvertToList<SkuInfo>(ds.Tables[0]);

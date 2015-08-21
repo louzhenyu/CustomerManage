@@ -89,6 +89,7 @@ namespace JIT.CPOS.BS.Entity
         /// 销售人员
         /// </summary>
         public string sales_user { get; set; }
+        public string sales_user_name { get; set; }
         /// <summary>
         /// 总金额
         /// </summary>
@@ -544,6 +545,15 @@ namespace JIT.CPOS.BS.Entity
         /// 佣金
         /// </summary>
         public decimal ReturnCash { get; set; }
+
+        /// <summary>
+        /// 使用返现金额
+        /// </summary>
+        public decimal ReturnAmount { get; set; }
+        /// <summary>
+        /// 会员折扣金额
+        /// </summary>
+        public decimal VipDiscount { get; set; }
 
     }
 

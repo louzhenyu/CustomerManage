@@ -42,12 +42,19 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             ProcessActionRD rd = new ProcessActionRD();
             T_InoutBLL _TInoutbll = new T_InoutBLL(this.CurrentUserInfo);  //订单表
             TInoutStatusBLL _TInoutStatusBLL = new TInoutStatusBLL(this.CurrentUserInfo);//日志表
+            VipIntegralBLL vipIntegralBLL = new VipIntegralBLL(this.CurrentUserInfo);//会员业务对象实例化
 
             string OrderID = pRequest.Parameters.OrderID; //订单ID
             string ActionCode = pRequest.Parameters.ActionCode;//订单操作码(当前订单状态码作为操作码)
             string ActionParameter = pRequest.Parameters.ActionParameter;//订单操作参数，可为空
             string DeliverCompany = pRequest.Parameters.DeliverCompany;//快递公司
             string DeliverOrder = pRequest.Parameters.DeliverOrder;//快递单号
+
+            string VipID = pRequest.UserID;
+            if (pRequest.ChannelId != "2")
+            {
+                VipID = pRequest.Parameters.VipID;
+            }
 
             var tran = _TInoutbll.GetTran();
             using (tran.Connection)//事物
@@ -77,12 +84,24 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     entity.status_desc = GetStatusDesc(ActionCode);  //输入的状态码对应的状态描述
                     entity.Field10 = GetStatusDesc(ActionCode);     //Field10=status_desc状态描述
                     entity.modify_time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");  //修改时间
-                    entity.modify_user_id = CurrentUserInfo.UserID; //修改人
+                    entity.modify_user_id = pRequest.UserID; //修改人
+
+
                     if ( ActionCode =="600" || !string.IsNullOrEmpty(DeliverOrder) || !string.IsNullOrEmpty(DeliverCompany))
                     {
                         entity.Field9 = DateTime.Now.ToSQLFormatString();
                         entity.Field2 = DeliverOrder;//快递单号
                         entity.carrier_id = DeliverCompany;//快递单号
+                        //更新订单配送商及配送单号
+                    }
+
+
+                    if (ActionCode == "700" && pRequest.ChannelId!="2" )
+                    {
+                        if (string.IsNullOrEmpty(entity.sales_user))
+                        {
+                            entity.sales_user = pRequest.UserID;//把当前用户作为服务人员。****！！
+                        }
                         //更新订单配送商及配送单号
                     } 
 
@@ -94,7 +113,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                         InoutStatusID = Guid.NewGuid(),
                         OrderID = OrderID,                         //订单ID
                         OrderStatus = Convert.ToInt32(ActionCode),   //状态码
-                        StatusRemark = "订单状态从" + Updatebeforestatus + "变为" + GetStatusDesc(ActionCode) + "[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]",               //状态更新描述
+                        //StatusRemark = "订单状态从" + Updatebeforestatus + "变为" + GetStatusDesc(ActionCode) + "[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]",               //状态更新描述
+                        StatusRemark = "订单状态从" + Updatebeforestatus + "变为" + GetStatusDesc(ActionCode) + "[操作人:用户]",               //状态更新描述
                         CustomerID = CurrentUserInfo.ClientID        //客户ID
                     };
                     _TInoutStatusBLL.Create(_TInoutStatusEntity, tran);  //用事物更新，向日志表(TInoutStatus)中插入一条数据
@@ -105,7 +125,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
                     if (ActionCode == "700")
                     {
-                        OrderReturnMoneyAndIntegral(OrderID, pRequest.UserID, tran, entity.actual_amount.Value, entity.sales_user,entity.data_from_id);
+                        // pRequest.UserID=>VipID
+                        //OrderReturnMoneyAndIntegral(OrderID, VipID, tran, entity.actual_amount.Value, entity.sales_user, entity.data_from_id);
+                        //和完成订单一致，复用业务逻辑层[重构代码]
+                        vipIntegralBLL.OrderReturnMoneyAndIntegral(OrderID, VipID, tran, entity.actual_amount.Value, entity.sales_user, entity.data_from_id);
                     }
 
                     #endregion
@@ -149,7 +172,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
         #endregion
 
         /// <summary>
-        /// 确认收货时处理积分、返现、佣金
+        /// 确认收货时处理积分、返现、佣金[暂不用，已重构到业务逻辑层
         /// </summary>
         /// <param name="orderId"></param>
         /// <param name="userId"></param>

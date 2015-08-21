@@ -28,7 +28,8 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
             switch (pContext.Request["method"])
             {
                 case "sku_prop_cfg":
-                    content = GetSkuPropCfgData();
+                    string orderId = pContext.Request["orderId"];
+                    content = GetSkuPropCfgData(orderId);
                     break;
             }
             pContext.Response.Write(content);
@@ -39,7 +40,7 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
         /// <summary>
         /// 获取SKU属性定义
         /// </summary>
-        public string GetSkuPropCfgData()
+        public string GetSkuPropCfgData(string orderId)
         {
             var skuService = new SkuService(new SessionManager().CurrentUserLoginInfo);
             SkuPropCfgInfo item = new SkuPropCfgInfo();
@@ -52,7 +53,7 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
             string key = string.Empty;
             string content = string.Empty;
 
-            var list = skuService.GetSkuInfoByOne();
+            var list = skuService.GetSkuInfoByOne(orderId);
             var sku = new SkuInfo();
             if (list != null && list.Count > 0)
             {

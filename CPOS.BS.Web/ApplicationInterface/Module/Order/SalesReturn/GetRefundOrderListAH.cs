@@ -47,7 +47,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 VipName = t.VipName,
                 ActualRefundAmount = t.ActualRefundAmount,
                 Status = t.Status,
-                CreateTime = t.CreateTime.Value.ToString("yyyy-MM-dd hh:mm")
+                CreateTime = t.CreateTime.Value.ToString("yyyy-MM-dd HH:mm")
             }).ToArray();
 
             rd.TotalCount = tempList.RowCount;
