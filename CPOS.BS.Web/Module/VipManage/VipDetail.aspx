@@ -17,10 +17,6 @@
                     <a class="before" href="javascript:history.back();">会员查询</a>
                     <img src="images/pointerTit.png" />
                     <span class="after">会员详情</span>
-                        <em class="tit">动态标签：</em>
-                        <p id="labels" class="lab clearfix">
-                        </p>
-                    </div>
                 </div>
                 <div>
                     <div class="item">
