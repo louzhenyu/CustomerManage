@@ -69,14 +69,15 @@
 
 
             that.elems.operation.delegate(".commonBtn", "click", function (e) {
-                var me=$(this)
+                var me=$(this);
+                that.elems.title=$(this).html()+"操作";
                 if(me.data("status")) {
                     that.fnbtn(me.data("status"))
-                    that.elems.title=$(this).html()+"操作";
+
                 }
-                if(me.data("optType")) {
+                if(me.data("opttype")) {
                     //  download
-                   switch(me.data("optType")){
+                   switch(me.data("opttype")){
                        case "download": that.loadData.fnDownLoadDelivery(); break;
                        case "print2": that.loadData.fnPrintDelivery(); break;
                        case "print1":  that.loadData.fnPrintPicking(); break;
