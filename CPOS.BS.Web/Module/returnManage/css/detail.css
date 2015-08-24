@@ -48,7 +48,7 @@
 
 .panlDiv  .showItem, .panlDiv .hideItem{ display: none}
 .textlist .searchInput{ display:flex;}
-.textlist .searchInput em{ float: left; width: 60px;}
+.textlist .searchInput em{ float: left; }
 .textlist .searchInput input{ float: left; width: 30%}
 
 .commonSelectWrap .rowStatusStyle input{color: #fc7a52;}

@@ -125,7 +125,7 @@
                  <div class="panlText">
                      <div class="panlL" style="width: 100%">
                       <div class="commonSelectWrap">
-                         <em class="tit">订单金额:</em>
+                         <em class="tit">订单金额(元):</em>
                          <div class="searchInput">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="total_amount"/>
                          </div>
@@ -138,13 +138,13 @@
                          </div>
                       </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">优惠券抵扣: </em>
+                         <em class="tit">优惠券抵扣(元): </em>
                          <div class="searchInput wh80">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="couponAmount"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">返现抵扣:</em>
+                         <em class="tit">返现抵扣(元):</em>
                          <div class="searchInput wh80">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="ReturnAmount" value=""/>
                          </div>
@@ -157,7 +157,7 @@
                                            </div>
                      <div class="panlL" style="width: 100%">
                       <div class="commonSelectWrap">
-                         <em class="tit">订单实付金额:</em>
+                         <em class="tit">订单实付金额(元):</em>
                          <div class="searchInput wh80">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="actual_amount"/>
                          </div>
@@ -176,7 +176,7 @@
                          </div>
                       </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">余额支付:</em>
+                         <em class="tit">余额支付(元):</em>
                          <div class="searchInput wh80">
                           <input type="text"  class="easyui-validatebox"   readonly="readonly" data-options="disabled:true" name="vipEndAmount"/>
                          </div>

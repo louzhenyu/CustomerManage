@@ -304,6 +304,7 @@
                     that.elems.operation.html(htmlText);
                 }
                 that.elems.operation.show();
+                salesReturnInfo.Points=salesReturnInfo.Points+"分 (抵扣"+salesReturnInfo.PointsAmount+"元)";
                 $("#salesReturnInfo").form('load',salesReturnInfo);
 
                 if(salesReturnInfo.ItemID){

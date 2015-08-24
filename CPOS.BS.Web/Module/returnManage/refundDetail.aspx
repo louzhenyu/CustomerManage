@@ -103,9 +103,9 @@
                                                 <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Amount"/>
 
                                                </div>
-                                                 <div class="searchInput">
-                                                  <em >积分:</em>
-                                                   <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Points"/>分
+                                                 <div class="searchInput" style="width: auto">
+                                                  <em style="width: 36px;">积分:</em>
+                                                   <input type="text" style="width:auto"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Points"/>
                                                 </div>
                                                  <div class="searchInput">
                                                   <em >返现(元):</em>
