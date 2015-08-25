@@ -281,7 +281,7 @@
            <div class="commonSelectWrap load" style="display: none">
                                                                                    <em class="tit"><#=item.item_price_type_name#>:</em>
                                                                                    <label class="searchInput " style="border: none">
-                                                                                     <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:70,height:32,disabled:true" data-flag="price" name="price" type="text" value="">
+                                                                                     <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:70,height:32,disabled:true" data-flag="price" name="price" type="text" value="0">
                                                                                    </label>
                                                               </div>
 
