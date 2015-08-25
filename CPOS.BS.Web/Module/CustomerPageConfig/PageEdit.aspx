@@ -9,7 +9,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <input id="customerId" type="hidden" value="<%=this.CurrentUserInfo.CurrentLoggingManager.Customer_Id.ToString()%>" />
     <%--data-js="CustomerPageConfig/pageEdit"，是以下面的main.js里的require的路径来做为依据的--%>
-     <div id="section" data-js="CustomerPageConfig/js/pageEdit" class="section m10">
+     <div id="section"   class="section m10" data-js="CustomerPageConfig/pageEdit">
         <div class="scratchCardSetArea">
 	        <div class="commonTitleWrap">
                 <%--<span class="cancelBtn">取消</span>--%>
