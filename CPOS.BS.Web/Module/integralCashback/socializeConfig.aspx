@@ -30,7 +30,7 @@
                              <div class="linetext"> 订单金额分成比例：<input type="text" value="" name="EOrderCommissionPer" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>
                      </div>
                      <div class="rowRline">
-                                                  <div class="linetext"> 集客订单分成比例：<input type="text" value="" name="GetVipUserOrderPer" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>
+                                                  <div class="linetext"> 集客订单分成比例：<input type="text" value="" name="GetVipUserOrderPer" class="easyui-numberbox"  data-options="min:0,precision:2"> % </div>
                                           </div>
                  </div>
                   <div class="nav02">

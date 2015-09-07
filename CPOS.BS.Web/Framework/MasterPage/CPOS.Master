@@ -208,11 +208,25 @@
                         {
                             j++;
                             var urlPath = m.Url_Path;
+                            //截取moudule之后，.aspx之前的那部分，换成
+                            int PreIndex = urlPath.IndexOf("/module/");      //如果要检索的字符串值没有出现，则该方法返回 -1。  
+                            if (PreIndex == -1)
+                            {
+                                PreIndex = PreIndex + 1;
+                            }
+                            else {
+                                PreIndex = PreIndex + 8;//"/module/"的长度
+                            }                
+                            var tempUrlPath1 = urlPath.Substring(PreIndex);
+                            int AfterIndex = tempUrlPath1.IndexOf(".aspx");//换成新取出的字符串的信息了
+                            var tempUrlPath2 = tempUrlPath1.Substring(0, AfterIndex).Replace("/","_");
+                            
                             var result = false;
                             result = (urlPath.IndexOf("?") >= 0);
-                            Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\"  href=\"{1}\" title=\"{2}\"><em class=\"{3}\"></em><span>{2}</span></a></dt>",
+                            Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\"  href=\"{1}\" title=\"{2}\"><em class=\"icon {3}\"></em><span>{2}</span></a></dt>",
                                 m.Menu_Id, (result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID)), m.Menu_Name
-                                , m.Icon_Path != "" ? m.Icon_Path : "icon", "menu" + (j.ToString().PadLeft(3, '0'))));
+                                , tempUrlPath2, "menu" + (j.ToString().PadLeft(3, '0'))));//不用m.Icon_Path，改用urlPath的截取信息 m.Icon_Path != "" ? m.Icon_Path : "icon"
+                            //icon {3}的意思是： 如果没有样式还是要用icon的样式
 
                         }
                     %>
