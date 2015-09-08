@@ -436,7 +436,7 @@ namespace JIT.CPOS.BS.DataAccess
             if (CheckProp(propInfo.Prop_Id))
             {
                 string sql = "select count(*) from t_prop a inner join [T_Sku_Property] b on a.prop_id=b.prop_id ";
-                sql += " where status='1' and prop_code='" + propInfo.Prop_Code + "'";
+                sql += " where a.status='1' and prop_code='" + propInfo.Prop_Code + "'";
                 sql += " and parent_prop_id='" + propInfo.Parent_Prop_id + "'";
                 sql += " and a.prop_id<>'" + propInfo.Prop_Id + "'";
                 sql += " and b.CustomerID='" + loggingSessionInfo.ClientID + "'";//根据商户判断了
