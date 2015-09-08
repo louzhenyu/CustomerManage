@@ -439,7 +439,7 @@ namespace JIT.CPOS.BS.DataAccess
                 sql += " where status='1' and prop_code='" + propInfo.Prop_Code + "'";
                 sql += " and parent_prop_id='" + propInfo.Parent_Prop_id + "'";
                 sql += " and a.prop_id<>'" + propInfo.Prop_Id + "'";
-                sql += " and b.CustomerID<>'" + loggingSessionInfo.ClientID + "'";//根据商户判断了
+                sql += " and b.CustomerID='" + loggingSessionInfo.ClientID + "'";//根据商户判断了
                 var obj = this.SQLHelper.ExecuteScalar(sql);
                 if (obj == DBNull.Value) return false;
                 var count = Convert.ToInt32(obj);
