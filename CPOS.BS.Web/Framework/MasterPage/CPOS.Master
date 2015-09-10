@@ -206,8 +206,13 @@
                         int j = 0;
                         foreach (var m in level2Menu)
                         {
+                            
                             j++;
                             var urlPath = m.Url_Path;
+                            if (urlPath == "")
+                            {
+                                continue;
+                            }
                             //截取moudule之后，.aspx之前的那部分，换成
                             int PreIndex = urlPath.IndexOf("/module/");      //如果要检索的字符串值没有出现，则该方法返回 -1。  
                             if (PreIndex == -1)
