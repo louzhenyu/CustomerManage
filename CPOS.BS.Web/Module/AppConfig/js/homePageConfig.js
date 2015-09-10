@@ -904,7 +904,7 @@
 
                     model.id = 4;
                     model.name = "C区模板4";
-               if(!self.currentEditData) {self.currentEditData={ss:"11"}
+               if(!self.currentEditData) {self.currentEditData={ss:"11"}}
             }
             model.styleType= self.ele.editLayer.find('input[name="navStyle"]:checked').val();
 
@@ -956,7 +956,7 @@
             }
 
 
-        } ,
+        },
         SaveNav:function(){
             var list = [];
             var model = {};
