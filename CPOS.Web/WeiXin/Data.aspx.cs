@@ -1433,7 +1433,7 @@ namespace JIT.CPOS.Web.WeiXin
                             var subBll = new VipOrderSubRunObjectMappingBLL(tmpUser);
 
                             //设置集客员工与会员关系
-                            var o = subBll.SetVipOrderSubRun(customerIdUnoin, vipId, 15, vipDCodeInfo.CreateBy);
+                            var o = subBll.SetVipOrderSubRun(customerIdUnoin, vipId, 15, vipDCodeInfo.CreateBy);//这里把集客员工从vipDCodeInfo.CreateBy里取****
                             Type t = o.GetType();
                             var Desc = t.GetProperty("Desc").GetValue(o, null).ToString();
                             var IsSuccess = t.GetProperty("IsSuccess").GetValue(o, null).ToString();
@@ -1443,7 +1443,7 @@ namespace JIT.CPOS.Web.WeiXin
                                 Message = string.Format("设置集客员工与会员关系IsSuccess:{0},Desc:{1}", IsSuccess, Desc)
                             });
 
-                            //如果销售员没有会籍店，直接不错任何操作
+                            //如果销售员没有会籍店，直接不做任何操作
                             if (!string.IsNullOrWhiteSpace(vipDCodeInfo.UnitId))
                             {
 

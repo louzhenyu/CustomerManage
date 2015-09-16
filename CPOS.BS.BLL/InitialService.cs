@@ -65,7 +65,7 @@ namespace JIT.CPOS.BS.BLL
 
 
             #region 判断客户是否已经建立总部
-            typeId = "1";
+            typeId = "1";//统一作为1来处理
             bool bReturn = false;
             string strError = string.Empty;
             string strReturn = string.Empty;
@@ -104,7 +104,7 @@ namespace JIT.CPOS.BS.BLL
                     throw new Exception("门店信息不存在.");
                 }
 
-                #region 门店是否存在
+                #region 门店是否存在（在这之前门店并没有插入到运营商管理平台的数据库）*****
                 JIT.CPOS.BS.Entity.UnitInfo unitStoreInfo2 = new JIT.CPOS.BS.Entity.UnitInfo();
                 try
                 {
@@ -165,7 +165,7 @@ namespace JIT.CPOS.BS.BLL
                 #region 角色与流程关系
                 if (typeId.Equals("1"))
                 {
-                    bReturn = new cBillService(loggingSessionInfo).SetBatBillActionRole(roleInfo.Role_Id);
+                    bReturn = new cBillService(loggingSessionInfo).SetBatBillActionRole(roleInfo.Role_Id);//不知道有什么作用
                     if (!bReturn)
                     {
                         Loggers.Debug(new DebugLogInfo()
@@ -237,7 +237,7 @@ namespace JIT.CPOS.BS.BLL
 
                 #endregion
 
-                #region 处理门店
+                #region 处理门店，用的是商户的code和名称，id没有用*****
 
                 storeInfo.Id = unitShopInfo.Id;
                 if (string.IsNullOrEmpty(unitShopInfo.Id))
@@ -245,7 +245,7 @@ namespace JIT.CPOS.BS.BLL
                     storeInfo.Id = BaseService.NewGuidPub();
                 }
                 storeInfo.TypeId = "EB58F1B053694283B2B7610C9AAD2742";
-                storeInfo.Code = customerInfo.Code;
+                storeInfo.Code = customerInfo.Code;//
                 storeInfo.Name = customerInfo.Name;
                 storeInfo.CityId = customerInfo.city_id;
                 storeInfo.Status = "1";
@@ -260,6 +260,8 @@ namespace JIT.CPOS.BS.BLL
                     Message = string.Format("SetBSInitialInfo:{0}", "提交门店：" + strReturn.ToString())
                 });
                 #endregion
+
+                //在线商城门店是在存储过程[spBasicSetting]里添加的
 
                 #region 插入用户与角色与客户总部关系
                 IList<UserRoleInfo> userRoleInfoList = new List<UserRoleInfo>();

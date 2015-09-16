@@ -389,7 +389,8 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + " Declare @iCount int; "
                       + " insert into @TmpTable(unit_id,row_no) "
                       + " select x.unit_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.unit_code),unit_id "
-                      + @" from t_unit a inner join  #UnitSET R  on a.unit_id=R.unitID  where 1=1 ";
+                      + @" from t_unit a inner join  #UnitSET R  on a.unit_id=R.unitID inner join cpos_ap..t_customer  c  on a.customer_id=c.customer_id where 1=1 "
+            +  @" and a.unit_code!=c.customer_code and unit_code!='ONLINE'";
             sql = pService.GetLinkSql(sql, "a.unit_code", _ht["unit_code"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.customer_id", _ht["CustomerId"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.unit_name", _ht["unit_name"].ToString(), "%");
