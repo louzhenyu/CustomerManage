@@ -842,13 +842,22 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
     public class EveryOneAmountRD : IAPIResponseData
     {
         /// <summary>
-        /// 我的订单数量
+        /// 我的销售订单（服务订单）总数量
         /// </summary>
         public int OrderCount { get; set; }
         /// <summary>
-        /// 本月订单数量
+        /// 本月服务订单数量
         /// </summary>
         public int OrderMonthCount { get; set; }
+        /// <summary>
+        /// 本月集客订单数量
+        /// </summary>
+        public int CollectVipOrderMonthCount { get; set; }
+
+        /// <summary>
+        /// 当前月份
+        /// </summary>
+        public int CurrentMonth { get; set; }
         /// <summary>
         /// 我的收入
         /// </summary>
