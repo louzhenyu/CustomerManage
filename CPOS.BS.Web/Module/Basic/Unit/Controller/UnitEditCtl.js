@@ -535,17 +535,17 @@ function fnSave() {
         showError("请填写联系人");
         return;
     }
-    if (unit.Telephone == null || unit.Telephone == "") {
-        showError("请填写电话");
-        return;
-    }
-    else {
-        re = /^((\d{3,4}-)*\d{7,8}(-\d{3,4})*|1\d{10}|(400)*\d{7,8}(-\d{3,4})*|(400)*\d{7,8}(-\d{3,4})*)$/  //匹配电话正则 
-        if (!re.test(unit.Telephone)) {
-            Ext.Msg.alert("提示", "请按照提示输入正确的电话");
-            return;
-        }
-    }
+    //if (unit.Telephone == null || unit.Telephone == "") {
+    //    showError("请填写电话");
+    //    return;
+    //}
+    //else {
+    //    re = /^((\d{3,4}-)*\d{7,8}(-\d{3,4})*|13\d{9}|(400)*\d{7,8}(-\d{3,4})*|(400)*\d{7,8}(-\d{3,4})*)$/  //匹配电话正则 
+    //    if (!re.test(unit.Telephone)) {
+    //        Ext.Msg.alert("提示", "请按照提示输入正确的电话");
+    //        return;
+    //    }
+    //}
 
 
     if (unit.PropertyList == null || unit.PropertyList == "") {

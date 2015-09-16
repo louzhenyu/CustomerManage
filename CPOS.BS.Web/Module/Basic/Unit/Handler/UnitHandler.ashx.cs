@@ -311,12 +311,12 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 responseData.msg = "联系人不能为空";
                 return responseData.ToJSON();
             }
-            if (obj.Telephone == null || obj.Telephone.Trim().Length == 0)
-            {
-                responseData.success = false;
-                responseData.msg = "电话不能为空";
-                return responseData.ToJSON();
-            }
+            //if (obj.Telephone == null || obj.Telephone.Trim().Length == 0)
+            //{
+            //    responseData.success = false;
+            //    responseData.msg = "电话不能为空";
+            //    return responseData.ToJSON();
+            //}
 
             if (obj.PropertyList != null)
             {

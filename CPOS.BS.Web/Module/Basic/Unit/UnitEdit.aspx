@@ -826,7 +826,7 @@
 
     <link href="<%=StaticUrl+"/Framework/Javascript/Other/kindeditor/themes/default/default.css"%>" rel="stylesheet" />
     <script src="<%=StaticUrl+"/Framework/Javascript/Other/editor/kindeditor.js"%>" type="text/javascript"></script>
-    <script src="<%=StaticUrl+"/Module/Basic/Unit/Controller/UnitEditCtl.js?v=0.22"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/Module/Basic/Unit/Controller/UnitEditCtl.js?v=0.23"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Basic/Unit/Model/UnitVM.js?v=0.1"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Basic/Unit/Model/UnitDetailVM.js?v=0.1"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Module/Basic/Unit/Store/UnitVMStore.js?v=0.1"%>" type="text/javascript"></script>
