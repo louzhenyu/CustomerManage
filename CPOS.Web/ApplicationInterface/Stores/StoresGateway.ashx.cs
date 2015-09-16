@@ -192,6 +192,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     info.IsReturn = 0;
                     info.DCodeType = RP.Parameters.VipDCode; // add by donal 2014-9-22 10:02:08
                     loggingSessionInfo.UserID = ToStr(RP.UserID);
+                    info.CreateBy = RP.UserID;
                     info.ImageUrl = imageUrl;
                     vipDCodeServer.Create(info);
                     #endregion
