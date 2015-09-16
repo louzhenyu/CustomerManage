@@ -433,7 +433,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public bool CheckProp(PropInfo propInfo)
         {
-            if (CheckProp(propInfo.Prop_Id))
+            if (CheckProp(propInfo.Prop_Id))//这个是判断数据库里是否有这条记录
             {
                 string sql = "select count(*) from t_prop a inner join [T_Sku_Property] b on a.prop_id=b.prop_id ";
                 sql += " where a.status='1' and prop_code='" + propInfo.Prop_Code + "'";
@@ -447,9 +447,10 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
             {
-                string sql = "select count(*) from t_prop ";
-                sql += " where status='1' and prop_code='" + propInfo.Prop_Code + "'";
+                string sql = "select count(*) from t_prop  a inner join [T_Sku_Property] b on a.prop_id=b.prop_id ";
+                sql += " where a.status='1' and prop_code='" + propInfo.Prop_Code + "'";
                 sql += " and parent_prop_id='" + propInfo.Parent_Prop_id + "'";
+                sql += " and b.CustomerID='" + loggingSessionInfo.ClientID + "'";//根据商户判断了
                 var obj = this.SQLHelper.ExecuteScalar(sql);
                 if (obj == DBNull.Value) return false;
                 var count = Convert.ToInt32(obj);

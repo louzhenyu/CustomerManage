@@ -36,8 +36,8 @@
 
                      <div class="commonBtn" data-status="10000" data-optType="payment">收款</div>
 
-                     <div class="commonBtn" data-optType="print1" >打印拣货单</div>
-                      <div class="commonBtn" data-optType="print2" >打印配送单</div>
+                     <div class="commonBtn printBtn" data-optType="print1" >打印拣货单</div>
+                      <div class="commonBtn printBtn" data-optType="print2" >打印配送单</div>
                       <!--<div class="commonBtn" data-optType="download" >下载配送单</div>-->
                      </div>
                 </div>

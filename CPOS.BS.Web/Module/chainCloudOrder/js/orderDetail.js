@@ -302,6 +302,10 @@
                    if(that.elems.ishideOption){
                        $(".updateBtn").remove();
                    }
+				   if(orderinfo.status=='800'){
+					   	$('.printBtn').attr('data-opttype','');
+						$('.printBtn').css({'background':'#ccc','cursor':'default'});
+				   }
                   /* orderinfo.create_time=new Date(orderinfo.create_time).format("yyyy-MM-dd hh:mm");*/
                    that.elems.ishideOption=true;
                     that.renderTable(orderinfo);
@@ -370,6 +374,7 @@
                })
            });
             that.loadData.GetInoutStatusList(function(data){
+				
                 that.elems.StatusList.datagrid({
 
                     method : 'post',

@@ -177,9 +177,10 @@
                        that.loadData.addCommodity(function (data) {
                            window.d.close();
                            $.messager.confirm("商品操作提示", "商品已添加成功,确定要继续添加商品吗？", function (r) {
-                               if (!r) {
+                               if (r) {
                                    var mid = JITMethod.getUrlParam("mid");
-                                   location.href = "queryList.aspx?Item_Id=" + rowData.Item_Id + "&mid=" + mid;
+                                   //location.href = "queryList.aspx?Item_Id=" + rowData.Item_Id + "&mid=" + mid;
+								   location.href = "release.aspx?&mid=" + mid;
                                }
                            });
 
