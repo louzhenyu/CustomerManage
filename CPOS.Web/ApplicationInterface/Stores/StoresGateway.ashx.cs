@@ -186,7 +186,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     VipDCodeEntity info = new VipDCodeEntity();
                     info.DCodeId = iResult.ToString();
                     info.CustomerId = customerId;
-                    info.UnitId = ToStr(RP.Parameters.unitId);
+                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                    info.UnitId = string.IsNullOrEmpty(RP.Parameters.unitId) ? vipBll.GetUnitByUserId(RP.UserID) : RP.Parameters.unitId; //获取会集店
                     info.Status = "0";
                     info.IsReturn = 0;
                     info.DCodeType = RP.Parameters.VipDCode; // add by donal 2014-9-22 10:02:08
