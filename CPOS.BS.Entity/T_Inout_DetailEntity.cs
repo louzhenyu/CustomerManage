@@ -38,11 +38,12 @@ namespace JIT.CPOS.BS.Entity
         /// 商品名称
         /// </summary>
         public string ItemName { get; set; }
-
+        public string ItemCode { get; set; }
         /// <summary>
         /// SKU ID
         /// </summary>
         public string SKUID { get; set; }
+        public string SkuCode { get; set; }
         /// <summary>
         /// 购买数量
         /// </summary>
