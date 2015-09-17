@@ -39,6 +39,7 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                 case "update":
                     content = this.UpdateItemCategory();
                     break;
+
                 case "add":
                     content = this.UpdateItemCategory();
                     break;
@@ -65,18 +66,27 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
             var status = this.Request("status");
             if (!string.IsNullOrWhiteSpace(id))
             {
-                bll.SetItemCategoryStatus(CurrentUserInfo, id, status, out checkRes);
-
-                if (!string.IsNullOrEmpty(checkRes))
+                var bllItem = new ItemService(this.CurrentUserInfo);
+                if (bllItem.SearchItemList(null, null, id, null, null, null, 1, 0) != null)//判断该分类下是否有商品
                 {
-                   // res = "{success:false,msg:\"" + checkRes + "\"}";
-                    rsp.success = false;
-                    rsp.msg = checkRes;
+                    bll.SetItemCategoryStatus(CurrentUserInfo, id, status, out checkRes);
+
+                    if (!string.IsNullOrEmpty(checkRes))
+                    {
+                        // res = "{success:false,msg:\"" + checkRes + "\"}";
+                        rsp.success = false;
+                        rsp.msg = checkRes;
+                    }
+                    else
+                    {
+                        // res = "{success:true}";
+                        rsp.success = true;
+                    }
                 }
                 else
                 {
-                   // res = "{success:true}";
-                    rsp.success = true;
+                    rsp.success = false;
+                    rsp.msg = "该分类下有商品，请先处理商品状态";
                 }
             }
             return rsp.ToJSON();

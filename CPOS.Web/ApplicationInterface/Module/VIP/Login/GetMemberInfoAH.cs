@@ -10,6 +10,7 @@ using JIT.CPOS.DTO.Module.VIP.Login.Response;
 using JIT.CPOS.BS.BLL;
 using JIT.CPOS.DTO.Base;
 using System.Collections;
+using JIT.Utility.DataAccess.Query;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 {
@@ -20,6 +21,27 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             GetMemberInfoRD rd = new GetMemberInfoRD();
             rd.MemberInfo = new MemberInfo();
             var vipLoginBLL = new VipBLL(base.CurrentUserInfo);
+            //如果有一个查询标识非空，就用查询标识查，发现没有会员就报错
+            if (!string.IsNullOrEmpty(pRequest.Parameters.SearchFlag))
+            {
+                List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+               // complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
+                var cond1 = new LikeCondition() { FieldName = "VipName", Value = "%" + pRequest.Parameters.SearchFlag + "%" };
+                var cond2 = new LikeCondition() { FieldName = "VipRealName", Value = "%" + pRequest.Parameters.SearchFlag + "%" };
+                var com1 = new ComplexCondition() { Left = cond1, Right = cond2, Operator = LogicalOperators.Or }; 
+
+                var cond3= new EqualsCondition() { FieldName = "Phone", Value =  pRequest.Parameters.SearchFlag  };
+                var com2 = new ComplexCondition() { Left = com1, Right = cond3, Operator = LogicalOperators.Or };
+                complexCondition.Add(com2);
+                var tempVipList = vipLoginBLL.Query(complexCondition.ToArray(),null);
+                if (tempVipList != null && tempVipList.Length != 0)
+                {
+                    pRequest.UserID = pRequest.Parameters.MemberID = tempVipList[0].VIPID;
+                }
+            }
+        
+
+
             string UserID =string.IsNullOrWhiteSpace(pRequest.Parameters.MemberID)?pRequest.UserID:pRequest.Parameters.MemberID;
             var VipLoginInfo = vipLoginBLL.GetByID(UserID);
             if (VipLoginInfo == null)

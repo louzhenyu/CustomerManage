@@ -819,6 +819,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
                 responseData.msg = "标题不能为空";
                 return responseData.ToJSON();
             }
+            if (item.DisplayIndex == null || item.DisplayIndex.ToString().Length== 0)
+            {
+                item.DisplayIndex = 0;
+            }
 
             bool status = true;
             string message = "保存成功";

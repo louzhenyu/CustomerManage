@@ -426,7 +426,7 @@ namespace JIT.CPOS.BS.DataAccess
                           + ",'" + itemInfo.Create_User_Id + "' CreateBy "
                           + ",'" + itemInfo.Create_Time + "' CreateTime "
                           + ",'" + itemImageInfo.ImageURL + "' ImageURL "
-                          + ",'" + (itemImageInfo.DisplayIndex+1) + "' DisplayIndex "
+                          + ",'" + (itemImageInfo.DisplayIndex ?? 0+1) + "' DisplayIndex "
                           + ",'" + itemImageInfo.ImageId + "' ImageId "
                           + ",'0' IsDelete "
                           + ",'" + itemImageInfo.Title + "' Title "

@@ -52,7 +52,7 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
             }
 
             data = service.GetTypeInfoListByDomain("UnitType");
-
+            data = data.Where(p => p.Type_Code == "总部" || p.Type_Code == "门店").ToList();
             var jsonData = new JsonData();
             jsonData.totalCount = data.Count.ToString();
             jsonData.data = data;
