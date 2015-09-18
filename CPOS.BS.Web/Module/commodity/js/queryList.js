@@ -10,6 +10,7 @@
             thead:$("#thead"),                    //表格head部分
             showDetail: $('#showDetail'),         //弹出框查看详情部分
             operation:$('#opt,#Tooltip'),              //弹出框操作部分
+			 dataMessage:$(".dataMessage"),
             vipSourceId:'',
             click:true,
             dataMessage:  $("#pageContianer").find(".dataMessage"),

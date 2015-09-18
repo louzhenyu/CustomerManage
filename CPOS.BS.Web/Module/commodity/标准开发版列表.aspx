@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-       <div style="display: none">
+      <div style="display: none">
       <div id="win" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
       		<div class="easyui-layout" data-options="fit:true" id="panlconent">
 
@@ -97,7 +97,7 @@
        <script id="tpl_OrderCancel" type="text/html">
             <form id="payOrder">
            <div class="commonSelectWrap">
-                 <em class="tit">备注：</em>
+                <em class="tit">备注：</em>
                 <div class="searchInput">
                    <input type="text" name="Remark" />
                </div>

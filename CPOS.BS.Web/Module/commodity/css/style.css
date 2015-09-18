@@ -13,11 +13,9 @@
 
 .r{float: right}.l{float: left}
 
-.fontC{ width: 18px; height: 18px; margin: 0 auto; background:no-repeat center center;}
+
 .red{color:red}
-.delete{background-image:url(../images/delete.png)}
-.exit{background-image:url(../images/exit.png)}
-.add  {background-image:url(../images/add.png)}
+
 .tableWrapTextBtn   {height: 120px;padding-top: 35px;padding-left: 25px;}
 
 
@@ -29,9 +27,6 @@
 .moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "å®‹ä½“";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
 .btnWrap{padding:35px 0;text-align:center;}
 .btnWrap a{display:inline-block;}
-.cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
-.cancelBtn,.saveBtn{border-radius:38px;}
-.cancelBtn:hover{background:transparent;color: #fe7c24}
 .panel-header, .panel-body {
     border: none;
 }
@@ -65,5 +60,6 @@
 .list .optBtn .del{ background:url(../images/del.png) no-repeat 0 0; background-size:16px 16px; cursor:pointer}
 #Children{border: none; max-height: 258px; height: auto;overflow-x: auto;width: 248px;}
 #Children input{ border: 1px solid #ccc; width: 160px;}
-#Children .add{ background:none; color: #00acee; font-size: 15px;}
-.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+#Children .add{ background:none; color: #00acee; font-size: 15px; }
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none;}
+.panel.window{position:fixed !important;}

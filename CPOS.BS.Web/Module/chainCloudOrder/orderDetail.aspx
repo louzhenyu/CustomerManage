@@ -80,6 +80,14 @@
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="sales_user_name"/>
                          </div>
                       </div>
+                      
+                      <div class="commonSelectWrap">
+                         <em class="tit">服务门店:</em>
+                         <div class="searchInput rowStatusStyle">
+                          <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="create_unit_name"/>
+                         </div>
+                      </div>
+                      
                      </div> <!--panl   END-->
                      <div class="panlR">
                       <div class="commonSelectWrap" style="display: none">

@@ -28,7 +28,7 @@
                         </label>
                 </div>
                 <div class="commonSelectWrap" style="height: 80px;">
-                    <em class="tit">优惠券描述：</em>
+                    <em class="tit">使用规则：</em>
                     <label class="searchInput " style="width: 487px; height: 80px;">
                         <textarea name="CouponTypeDesc" class="easyui-validatebox" data-options="required:true,validType:'length[3,100]'"></textarea>
                     </label>
@@ -50,8 +50,8 @@
                 <div class="commonSelectWrap">
                     <em class="tit">适用范围：</em>
                         <label class="searchInput bordernone" style="width: 238px;">
-                              <div class="radio on" data-name="r1" data-UsableRange="1"><em></em><span>购物券</span></div>
-                              <div class="radio" data-name="r1"  data-UsableRange="2"><em></em><span>服务类</span></div>
+                              <div class="radio on" data-name="r1" data-UsableRange="1"><em></em><span>仅限在线商城使用</span></div>
+                              <div class="radio" data-name="r1"  data-UsableRange="2"><em></em><span>仅限到店使用</span></div>
                         </label>
                 </div>
 
@@ -66,7 +66,7 @@
                              </div>
                            <div class="line">
                             <div class="radio on" data-name="r2" data-validity="day"><em></em></div>
-                                 <div class="linetext">相对天数：<input name="ServiceLife" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" /><span>天</span></div>
+                                 <div class="linetext">领券当日起顺延X天：<input name="ServiceLife" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" /><span>天</span></div>
                             </div>
                         </div>
                 </div>

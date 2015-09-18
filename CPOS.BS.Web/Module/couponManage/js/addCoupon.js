@@ -463,7 +463,8 @@
                        textField: 'text',
                        data:that.unitTree
                    });
-            $("#unitTree").combotree("setText","请选择门店");
+            $("#unitTree").combotree("setText","选择分销商所属门店");
+
             $("#searchGrid").datagrid({
                 data:[],
                 height:300,

@@ -308,7 +308,7 @@
 				   }
                   /* orderinfo.create_time=new Date(orderinfo.create_time).format("yyyy-MM-dd hh:mm");*/
                    that.elems.ishideOption=true;
-                    that.renderTable(orderinfo);
+                   that.renderTable(orderinfo);
 
                    orderinfo.memberPrice=orderinfo.VipDiscount;
                    if(orderinfo.DeliveryName=="到店自提"){
@@ -720,7 +720,8 @@
                 DeliveryType: 2, //配送方式 1 送货到家， 2是到店自提
                 Carrier_id: "",//配送商id8551f2a988899d9425ebc27d2082cfeb
                 DeliveryCode: "",//配送单号2343242
-                SendTime: ""//配送时间
+                SendTime: "",//配送时间
+				
 
             },
              //获取订单详情
