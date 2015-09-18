@@ -594,16 +594,16 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 rd.JsonColumns = ProcessXml.XmlToJSON2(xml);
             }
             rd.VipInfo = ds.Tables[1];
-            if (rd.VipInfo.Columns.Contains("Phone"))
-            {
-                for (int i = 0; i < rd.VipInfo.Rows.Count;i++)
-                {
-                    var phone = rd.VipInfo.Rows[i]["Phone"].ToString();
-                    if(!string.IsNullOrEmpty(phone)){
-                        rd.VipInfo.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
-                    }
-                }
-            }
+            //if (rd.VipInfo.Columns.Contains("Phone"))
+            //{
+            //    for (int i = 0; i < rd.VipInfo.Rows.Count;i++)
+            //    {
+            //        var phone = rd.VipInfo.Rows[i]["Phone"].ToString();
+            //        if(!string.IsNullOrEmpty(phone)){
+            //            rd.VipInfo.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
+            //        }
+            //    }
+            //}
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
@@ -965,17 +965,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             rd.Columns = GetColumns(ds.Tables[0]);
             if (rd.VipTable.Rows.Count > 0)
             {
-                if (rd.VipTable.Columns.Contains("Phone"))
-                {
-                    for (int i = rd.VipTable.Rows.Count - 1; i >= 0; i--)
-                    {
-                        var phone = rd.VipTable.Rows[i]["Phone"].ToString();
-                        if (!string.IsNullOrEmpty(phone) && phone.Length>8)
-                        {
-                            rd.VipTable.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
-                        }
-                    }
-                }
+                //if (rd.VipTable.Columns.Contains("Phone"))
+                //{
+                //    for (int i = rd.VipTable.Rows.Count - 1; i >= 0; i--)
+                //    {
+                //        var phone = rd.VipTable.Rows[i]["Phone"].ToString();
+                //        if (!string.IsNullOrEmpty(phone) && phone.Length>8)
+                //        {
+                //            rd.VipTable.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
+                //        }
+                //    }
+                //}
                 rd.TotalPageCount = (int)rd.VipTable.Rows[0]["PageCount"];
                 rd.PageIndex = Convert.ToInt32(rd.VipTable.Rows[0]["PID"]);
                 rd.TotalCount = Convert.ToInt32(rd.VipTable.Rows[0]["Rnt"]);
