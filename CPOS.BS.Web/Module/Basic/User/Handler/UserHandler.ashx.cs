@@ -247,7 +247,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             if (user.userRoleInfoList == null || user.userRoleInfoList.Count == 0)
             {
                 responseData.success = false;
-                responseData.msg = "用户职务不能为空";
+                responseData.msg = "请添加角色配置";
                 return responseData.ToJSON();
             }
 

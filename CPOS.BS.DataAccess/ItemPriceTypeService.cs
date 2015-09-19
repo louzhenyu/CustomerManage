@@ -39,7 +39,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,create_user_id "
                       + " ,modify_time "
                       + " ,modify_user_id  "
-                      + " From T_Item_Price_Type a where a.status='1'";
+                      + " From T_Item_Price_Type a where a.status='1' ORDER BY create_user_id ";
 
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;

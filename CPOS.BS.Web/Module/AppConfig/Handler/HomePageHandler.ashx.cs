@@ -529,7 +529,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
         {
             var responseData = new ResponseData();
 
-            int modelTypeId = (Int32)Utils.GetIntVal(FormatParamValue(Request("modelTypeId")));//模块ID，含有1,3,8这样的
+            int modelTypeId = (Int32)Utils.GetIntVal(FormatParamValue(Request("modelTypeId")));//模块ID，含有1,3,8,4这样的
             string modelTypeName = FormatParamValue(Request("modelTypeName"));//模块名称
             string _styleType = FormatParamValue(Request("styleType"));//样式
             string _titleName = FormatParamValue(Request("titleName"));//标题名称
