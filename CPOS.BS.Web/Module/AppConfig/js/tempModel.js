@@ -49,7 +49,7 @@
 											    </select>\
 											    </p>\
 											    <p class="infoContainer clearfix mb-15">\
-												    <input class="jsNameInput" type="text" value="<%=idata.objectName%>">\
+												    <input class="jsNameInput" type="text" value="<%=idata.url%>">\
 												    <span class="jsChooseBtn tagBtn">选择</span>\
                                                 </p>\
                                                 <p><input class="jsNameInput navName" type="text" value="<%=idata.navName%>" placeholder="导航名称"/></p>\
