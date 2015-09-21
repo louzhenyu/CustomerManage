@@ -152,7 +152,7 @@
         },
         categoryLayerEvent: function () {
             // 分类弹层 事件委托
-            this.ele.categoryLayer.delegate(".SearchBtn", "click", function () {
+            this.ele.categoryLayer.delegate(".searchBtn", "click", function () {
                 self.categoryLayer.loadDate($(this).siblings().children().val());
 
             }).delegate(".closePopupLayer", "click", function (e) {
@@ -175,7 +175,7 @@
                 $(this).parents(".popupLayer").hide();
                 self.mask.hide();
 
-            }).delegate(".SearchBtn", "click", function () {
+            }).delegate(".searchBtn", "click", function () {
                 self.productLayer.loadDate($(this).siblings().children("select").val(), $(this).siblings().children("input").val());
 
             }).delegate(".productItem", "click", function (e) {
@@ -893,19 +893,18 @@
                 self.SaveItemCategory(list, model);
             }
         },
-
         SaveNav:function(){
             var list = [];
             var model = {};
             var flag = true;
-            if (self.currentEditData) {
+            if (self.currentEditData&&self.currentEditData.modelTypeId) {//首次加载currentEditData对象不为空。
                 model.id = self.currentEditData.modelTypeId;
                 model.name = self.currentEditData.modelTypeName;
             } else {
 
                     model.id = 4;
                     model.name = "C区模板4";
-
+               if(!self.currentEditData) {self.currentEditData={ss:"11"}}
             }
             model.styleType= self.ele.editLayer.find('input[name="navStyle"]:checked').val();
 
@@ -929,7 +928,7 @@
                 } else {
 
 
-                    if (!obj.objectId) {
+                    if (!obj.objectId&&!obj["url"]) {
                         flag = false;
                         alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
                         return false;
@@ -957,7 +956,7 @@
             }
 
 
-        } ,
+        },
         saveEntrance: function () {
             var list = [];
             var model = {};
@@ -984,7 +983,6 @@
                 //debugger;
                 var obj = {}, $this = $(e);
                 obj["typeId"] = $this.data("typeid");
-                obj["objectId"] = $this.data("objectid")==''?$this.attr("data-objectid"): $this.data("objectid");
                 obj["objectName"] = $this.data("name");
                 obj["imageUrl"] = $this.data("imageurl");
                 if (self.currentEditData) {
@@ -1014,11 +1012,6 @@
                         }
                     }
 
-                }
-                if (!obj["typeId"]) {
-                    flag = false;
-                    alert("第" + (i + 1) + "项信息已编辑，选项分类不完善");
-                    return false;
                 }
 
 
@@ -1720,7 +1713,7 @@
                             self.ele.editLayer.find('.pageWrap').hide();
                         }
                         // 分页处理 end
-
+						
                     } else {
                         html = '<li style="text-align:center;">没有数据</li>';
                     }
