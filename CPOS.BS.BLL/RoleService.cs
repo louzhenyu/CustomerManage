@@ -31,7 +31,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="loggingSessionInfo"></param>
         /// <param name="roleInfo"></param>
         /// <returns></returns>
-        public string SetRoleInfo(RoleModel roleInfo, bool IsTran = true)
+        public string SetRoleInfo(RoleModel roleInfo, out string strError, bool IsTran = true)
         {
             try
             {

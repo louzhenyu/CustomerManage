@@ -144,7 +144,8 @@ namespace JIT.CPOS.BS.BLL
                     roleInfo.customer_id = customerInfo.ID;
                     roleInfo.Create_User_Id = userInfo.User_Id;
                     roleInfo.Create_Time = new BaseService().GetCurrentDateTime();
-                    strReturn = new RoleService(loggingSessionInfo).SetRoleInfo(roleInfo,false);
+                    string strerror = "";
+                    strReturn = new RoleService(loggingSessionInfo).SetRoleInfo(roleInfo,out strerror, false);//这里没有创建他的菜单
                     if (!strReturn.Equals("成功"))
                     {
                         Loggers.Debug(new DebugLogInfo()
