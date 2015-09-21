@@ -893,70 +893,7 @@
                 self.SaveItemCategory(list, model);
             }
         },
-        SaveNav:function(){
-            var list = [];
-            var model = {};
-            var flag = true;
-            if (self.currentEditData&&self.currentEditData.modelTypeId) {//首次加载currentEditData对象不为空。
-                model.id = self.currentEditData.modelTypeId;
-                model.name = self.currentEditData.modelTypeName;
-            } else {
 
-                    model.id = 4;
-                    model.name = "C区模板4";
-               if(!self.currentEditData) {self.currentEditData={ss:"11"}}
-            }
-            model.styleType= self.ele.editLayer.find('input[name="navStyle"]:checked').val();
-
-            self.ele.editLayer.find(".jsAreaItem").each(function (i, e) {
-                var obj = {}, $this = $(e);
-                obj["typeId"] = $this.data("typeid");
-                obj["navName"]=  $this.find(".navName").val()
-                obj["objectName"] = $this.data("name");
-                obj["imageUrl"] = $this.data("imageurl");
-                switch (obj.typeId){
-                    case "3": obj["url"] = $this.find(".jsNameInput").val();  break;
-                    case "31": obj["url"] = "IndexShopApp"; break;
-                    case "32": obj["url"] ="Category";  break;
-                    case "33": obj["url"] = "GoodsCart";  break;
-                    case "34": obj["url"] = "MyOrder";  break;
-                    default: obj["objectId"] = $this.data("objectid"); break;
-                }
-                if (self.currentEditData) {
-                    obj["categoryAreaId"] = $this.data("categoryareaid");
-                    obj["groupId"] = self.currentEditData.groupId;
-                } else {
-
-
-                    if (!obj.objectId&&!obj["url"]) {
-                        flag = false;
-                        alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
-                        return false;
-                    }
-                    if (!obj.imageUrl) {
-                        flag = false;
-                        alert("第" + (i + 1) + "项展示图片不能为空，请选择展示图片");
-                        return false;
-                    }
-                    if (!obj.url) {
-                        flag = false;
-                        alert("第" + (i + 1) + "自定义链接不可为空");
-                        return false;
-                    }
-                    if (!obj.navName) {
-                        flag = false;
-                        alert("第" + (i + 1) + "导航名称必填");
-                        return false;
-                    }
-                }
-                list.push(obj);
-            });
-            if (flag) {
-                self.SaveItemNav(list, model);
-            }
-
-
-        },
         SaveNav:function(){
             var list = [];
             var model = {};
