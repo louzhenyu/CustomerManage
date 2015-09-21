@@ -163,10 +163,10 @@ function fnSave() {
         showError("请填写手机");
         return;
     }
-    if (user.User_Email == null || user.User_Email == "") {
-        showError("请填写邮箱");
-        return;
-    }
+    //if (user.User_Email == null || user.User_Email == "") {
+    //    showError("请填写邮箱");
+    //    return;
+    //}
 
     Ext.Ajax.request({
         method: 'POST',

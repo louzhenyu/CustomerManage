@@ -238,12 +238,12 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 responseData.msg = "用户手机不能为空";
                 return responseData.ToJSON();
             }
-            if (user.User_Email == null || user.User_Email.Trim().Length == 0)
-            {
-                responseData.success = false;
-                responseData.msg = "用户邮箱不能为空";
-                return responseData.ToJSON();
-            }
+            //if (user.User_Email == null || user.User_Email.Trim().Length == 0)
+            //{
+            //    responseData.success = false;
+            //    responseData.msg = "用户邮箱不能为空";
+            //    return responseData.ToJSON();
+            //}
             if (user.userRoleInfoList == null || user.userRoleInfoList.Count == 0)
             {
                 responseData.success = false;

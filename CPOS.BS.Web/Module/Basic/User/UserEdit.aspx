@@ -7,7 +7,7 @@
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/UserGender.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/Status.js"%>" type="text/javascript"></script>
 
-    <script src="<%=StaticUrl+"/module/basic/user/Controller/UserEditCtl.js?v=1.0"%>" type="text/javascript"></script>
+    <script src="<%=StaticUrl+"/module/basic/user/Controller/UserEditCtl.js?v=1.1"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/module/basic/user/Model/UserVM.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/module/basic/user/Model/UserDetailVM.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/module/basic/user/Store/UserVMStore.js"%>" type="text/javascript"></script>
