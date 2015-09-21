@@ -63,7 +63,7 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder dbdSql = new StringBuilder();
             dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy, ChannelId, socialSalesType,isStore));
-            dbdSql.Append(" select * From #tmp a where 1=1 ");
+            dbdSql.Append(" select *,CASE WHEN a.EventTypeId IS NULL THEN 'GoodsDetail' WHEN a.EventTypeId =1  THEN 'GroupGoodsDetail'	WHEN a.EventTypeId =2  THEN 'RushGoodsDetail'	WHEN a.EventTypeId =3  THEN 'GoodsDetail'		END	 GoodsType From #tmp a where 1=1 ");
 
             dbdSql.Append(string.Format(@" and a.displayIndex between '{0}' and '{1}' order by a.displayindex;", beginSize, endSize));
             dbdSql.Append("select count(*) count From #tmp a where ");        
@@ -109,8 +109,8 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,imageUrl2 = a.imageUrl2 ";
             sql += " ,imageUrl3 = a.imageUrl3 ";
             sql += " ,TargetUrl='aldlinks://product/list/' ";
-            sql += " ,price = a.Price ";
-            sql += " ,salesPrice = a.SalesPrice ";
+            sql += " ,price = CASE WHEN D.ItemId IS  NULL THEN A.Price ELSE D.Price  END";//" ,price = a.Price ";
+            sql += " ,salesPrice = CASE WHEN D.ItemId IS  NULL THEN A.SalesPrice  ELSE D.SalesPrice   END"; //" ,salesPrice = a.SalesPrice ";
             sql += " ,ItemDisplayIndex ";
             sql += " ,BeginTime";
             sql += " ,discountRate = a.DiscountRate ";
@@ -140,6 +140,8 @@ namespace JIT.CPOS.BS.DataAccess
                     ,UnixBeginTime=DATEDIFF(MINUTE,'1900-01-01',a.BeginTime ) 
                     ,UnixEndTime=DATEDIFF(MINUTE,'1900-01-01',a.EndTime ) ";
             //sql += " into #tmp ";
+            sql += ",d.EventId";
+            sql+=",d.EventTypeId";
             sql += " FROM dbo.vw_item_detail a ";
             //if (!string.IsNullOrEmpty(itemTypeId))
             //{
@@ -153,6 +155,8 @@ namespace JIT.CPOS.BS.DataAccess
 
             //查询是否是小店商品
             sql += " LEFT JOIN dbo.VipStore vIsstore ON vIsstore.IsDelete=0 AND vIsstore.ItemID=a.item_id AND vIsstore.VIPID='" + userId + "'";
+            //2015-09-21  wujianxian  如果某个商品有参加活动 则只显示活动价
+            sql += " LEFT JOIN (SELECT  B.ItemId ,B.Price ,B.SalesPrice,B.Qty,a.EventId,a.EventTypeId  FROM    [dbo].[PanicbuyingEvent] A  INNER JOIN [dbo].[PanicbuyingEventItemMapping] B ON A.EventId = B.EventId   WHERE   CustomerID = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "') D ON D.ItemId = A.item_id";
 
             //我的小店商品
             if (isStore == 1)

@@ -65,7 +65,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     reqObj.special.page = 1;
                     reqObj.special.pageSize = 15;
                 }
-
+                
                 //判断客户ID是否传递
                 if (!string.IsNullOrEmpty(reqObj.common.customerId))
                 {
@@ -280,6 +280,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public decimal EveryoneSalesPrice { get; set; } // 人人销售价 add by doanl 2014-9-23 10:06:58
             public decimal ReturnAmount { get; set; } //佣金 add by donal 2014-11-25 17:56:36
             public int isStore { get; set; } //是否我的小店商品
+
+            public int eventId { get; set; }  ///商品活动id(抢购，团购，秒杀)
+            public int EventTypeId { get; set; }//活动类型id(抢购，团购，秒杀)
+            public string GoodsType { get; set; } //商品的类型GoodsDetail：正常，热销，GroupGoodsDetail：团购，RushGoodsDetail：抢购
         }
         public class getItemListReqData : ReqData
         {
