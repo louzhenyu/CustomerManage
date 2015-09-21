@@ -65,7 +65,7 @@
                       <div class="commonSelectWrap">
                          <em class="tit">下单时间:</em>
                          <div class="searchInput">
-                          <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="create_time"/>
+                          <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="order_date"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
