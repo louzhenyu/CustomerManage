@@ -361,9 +361,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddMinutes(3)<DateTime.Now)  //col21：员工集客/或者分销商集客时间
                     {
                         rsp.Message = "此客户此前已经被您集客，无需重复集客。！";
-                    }
-
-                    if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
+                    }else  if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
                     {
                         rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
                     }

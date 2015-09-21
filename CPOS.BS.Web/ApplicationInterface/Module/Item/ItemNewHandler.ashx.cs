@@ -348,6 +348,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             propInfo.Modify_Time = DateTime.Now.ToString();
             string error = "";
             service.SaveProp(propInfo, ref error);
+            if (!string.IsNullOrEmpty(error))
+            {
+                throw new APIException(error) { ErrorCode = 135 };
+            }
             if (!isNew)//不是新的
             {
                 string propIds = "";

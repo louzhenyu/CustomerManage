@@ -233,7 +233,7 @@
                             </tr>
                             <tr class="z_main_tb_tr">
                                 <td class="z_main_tb_td" style="vertical-align: top; line-height: 22px;">
-                                    <font color="red">*</font>电话
+                                  电话
                                 </td>
                                 <td class="z_main_tb_td2" style="padding-top: 0px;">
                                     <div id="txtTelephone">
