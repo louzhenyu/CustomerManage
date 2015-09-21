@@ -66,7 +66,7 @@
                              </div>
                            <div class="line">
                             <div class="radio on" data-name="r2" data-validity="day"><em></em></div>
-                                 <div class="linetext">领券当日起顺延X天：<input name="ServiceLife" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" /><span>天</span></div>
+                                 <div class="linetext">领券当日起顺延：<input name="ServiceLife" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" /><span>天</span></div>
                             </div>
                         </div>
                 </div>
