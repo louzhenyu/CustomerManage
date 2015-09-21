@@ -1640,7 +1640,7 @@
                     obj.listLength=obj.itemList.length;
                 }
                 this.ele.entranceList.html(self.render(this.template.entranceModel, obj));
-                if (obj.titleName && obj.titleName.length > 0) {
+                if (obj.titleName && obj.titleName.length > 0   ) {
                     self.ele.titleDom = $("#entranceList .jsListItem");
                     self.ele.titleDom.prepend(self.render(self.template.titleModel, {title: obj.titleName}));
                     if (obj.titleStyle == "tl1") {
