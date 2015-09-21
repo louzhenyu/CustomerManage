@@ -8,6 +8,9 @@
 
     <link href="<%=StaticUrl+"/module/commodity/css/style.css?v=0.5"%>" rel="stylesheet" type="text/css" />
     <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+    .datagrid-row td:first-of-type div{padding-left:0px;}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

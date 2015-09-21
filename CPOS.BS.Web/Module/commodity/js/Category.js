@@ -96,6 +96,10 @@
                        that.sortUpdte(optType,rowParent,row);
                        break;
                    case "del" :
+                       if(row.children&&row.children.length>0){
+                           $.messager.alert("操作提示","请先删除子分类");
+                           return false;
+                       }
                        $.messager.confirm('分类删除', '您想要删除该分类吗？', function(r){
                            if (r){
                                that.loadData.operation(row,optType,function(data){
@@ -329,7 +333,7 @@
                     },
                     {field : 'create_time',title : '子类添加',width:81,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC add" data-index="'+row.id+'" data-oprtype="addChildren"></p>';
+                            return '<p class="fontC btnAdd" data-index="'+row.id+'" data-oprtype="addChildren"></p>';
                         }
                     },
                     {field : 'id',title : '编辑',width:81,align:'center',resizable:false,
@@ -441,6 +445,7 @@
                         }
                         else {
                             alert("加载异常请联系管理员");
+                            console.log("分类信息加载失败")
                         }
                     }
                 });
@@ -518,10 +523,11 @@
                             }
 
                         } else {
-                            alert(data.msg);
+                            $.messager.alert("操作失败提示",data.msg);
                         }
                     },error: function(data) {
-                       alert("返回数据异常");
+                        $.messager.alert("操作失败提示",data.msg);
+                        console.log("日志:"+operationType+"请求接口异常")
                     }
                 });
             }

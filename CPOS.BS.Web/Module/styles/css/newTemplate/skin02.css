@@ -43,7 +43,7 @@
 
 /*adminIcon 的margin-top是 右侧文件的line-height减去自身高度/2 所以两个必须是偶数防止不一致*/
 .commonHeader .logo{background:url(../../images/blueFruit/logo.png) no-repeat 0 0;}
-.commonHeader .setBox p{background:url(../../images/newTemplate/jiantou.png) no-repeat center right; font-size: 14px; padding-right: 50px; line-height: 67px; font-size: 14px; text-indent:0.5em;}
+.commonHeader .setBox p{background:url(../../images/newTemplate/jiantou.png) no-repeat center right; font-size: 14px; padding-right: 50px; line-height: 67px; font-size: 14px; text-indent:0.5em;margin-top: 2.5px;}
 .commonHeader .setBox p b{font-size: 16px; float: left;  font-weight: 500;}
 .commonHeader .setBox-tip{top:67px; padding-top:10px; background: url(../../images/newTemplate/set-tip-bg.png)no-repeat 0 0;  right: 0px; border-bottom:1px solid #07c8cf;width: 120px; height: 88px; }
 .commonHeader .setBox-tip .safetyOutBtn{border-radius:0px; width: 90px; height: 38px; border-bottom: 1px solid #e3e3e3; padding:0; margin:0; line-height: 38px; background: none; margin:0 auto; }
@@ -53,12 +53,12 @@
 
 
 
-.commonHeader .handleWrap .unitName{ line-height: 67px; height: 67px;}
-.commonHeader .logoWrap{float:left; width: 187px;height: 67px; line-height: 67px;background: url(../../images/newTemplate/logo.png)  no-repeat center center;}
+.commonHeader .handleWrap .unitName{ line-height: 67px; height: 67px; margin-top: 2.5px;}
+.commonHeader .logoWrap{float:left; width: 187px;height: 67px; /* margin-top:-3px; *//* line-height: 67px; */background: url(../../images/newTemplate/logo.png)  no-repeat center center;}
 /****头部，导航****/
 .commonNav { padding-left: 18px; display: none;}
 .commonNav li {padding: 0 18px; text-indent:0px; display: block; height: 67px; line-height: 67px; text-align:left; margin:0 auto; }
-.commonNav li a{color:#fff;height: 67px; line-height: 67px; font-size: 18px;}
+.commonNav li a{color:#fff;height: 67px; line-height: 67px; font-size: 18px;margin-top: 2.5px;}
 .commonNav li:hover{ background: #06adb3;}
 .commonNav li.on{background: #06989d;}
 .commonNav li.dropDown{background:url(../../images/newTemplate/jiantou.png) no-repeat center center}
@@ -273,7 +273,7 @@
     width: 54px; height: 20px;
     opacity: 0;
     filter:alpha(opacity=0); //IE系列识别
-    -moz-opacity:0; //火狐私有
+-moz-opacity:0; //火狐私有
 }
 
 .datagrid-header .datagrid-cell span{ font:14px/1.5em "黑体","Microsoft YaHei"; text-align: center; color: #4d4d4d;font-weight: 600; }
@@ -300,7 +300,7 @@
     /* background: url('images/tree_icons.png') no-repeat -240px 0; */
     background: none;
 }
- .tree-folder, .tree-file{
+.tree-folder, .tree-file{
     width:0px;
 }
 .tree-indent{ width: 16px;}
@@ -378,5 +378,5 @@
 }
 .datagrid-row td:first-of-type div{ line-height: 22px; white-space:initial;  padding-left: 20px;}
 .datagrid-row td:first-of-type div.datagrid-cell-check{ padding-left: 0;}
- /*列表操作图标*/
+/*列表操作图标*/
 .delete{background-image:url(../../images/newTemplate/del.png); width: 16px; height: 16px; margin: 0 auto;}

@@ -30,7 +30,7 @@
                 <div class="commonSelectWrap" style="height: 80px;">
                     <em class="tit">使用规则：</em>
                     <label class="searchInput " style="width: 487px; height: 80px;">
-                        <textarea name="CouponTypeDesc" class="easyui-validatebox" data-options="required:true,validType:'length[3,100]'"></textarea>
+                        <textarea name="CouponTypeDesc" class="easyui-validatebox" data-options="required:true,validType:'length[6,200]'"></textarea>
                     </label>
                </div>
                 <div class="commonSelectWrap panltext">
