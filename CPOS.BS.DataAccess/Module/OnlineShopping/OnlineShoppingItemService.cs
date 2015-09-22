@@ -143,6 +143,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += ",d.EventId";
             sql+=",d.EventTypeId";
             sql += " FROM dbo.vw_item_detail a ";
+
             //if (!string.IsNullOrEmpty(itemTypeId))
             //{
             //    sql += " inner join ItemCategoryMapping e on (e.IsDelete='0' and a.item_id=e.ItemId  and e.ItemCategoryId = '" + itemTypeId + "') ";
