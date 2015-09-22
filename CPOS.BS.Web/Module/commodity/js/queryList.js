@@ -328,7 +328,7 @@
                                 return parseInt(value);
                             }
                         }},
-                    {field : 'SalesPromotion',title : '促销分组',width:120,align:'center',resizable:false,
+                    {field : 'SalesPromotion',title : '商品分组',width:120,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                             var long=18;
                             var html=""

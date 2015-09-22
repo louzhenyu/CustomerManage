@@ -7,11 +7,9 @@
 	
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-        <link href="css/global.css" rel="stylesheet" type="text/css" />
+        
         <link href="css/style.css" rel="stylesheet" type="text/css" />
-        <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
-        <link href="../static/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
-        <link href="../static/css/artDialog.css" rel="stylesheet" type="text/css" />
+       
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div class="allPage" id="section" data-js="js/groupList.js?ver=0.3">

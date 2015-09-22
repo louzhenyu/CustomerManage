@@ -184,7 +184,7 @@
 						    <span class="jsRemoveGroup">X</span>\
 					    </div>\
                         </div>',
-        titleModel: '<div  class="titlePanl">\
+        titleModel: '<div class="titlePanl">\
                             <div class="titleTxt">\
                             <div class="span"><%=title%></div>\
                             </div>\
@@ -263,6 +263,16 @@
 						    <span class="jsRemoveGroup">X</span>\
 					    </div>\
 					</div>',
+	eventEmptyModel2: '<div class="jsListItem jsListItemEmpty commonSelectArea" data-type="rightEventTemp" data-model="event">\
+						  <div class="commonIndexArea">\
+							<div class="leftbox"><a href="javascript:;"></a></div>\
+							<div class="rightbox  rightboxModel2">\
+								<a href="javascript:;"><img src=""></a>\
+								<a href="javascript:;"><img src=""></a>\
+							</div>\
+							<div class="handle"> <span class="jsRemoveGroup">X</span> </div>\
+						  </div>\
+						</div>',				
     SearchEmptyModel: '<div class="jsListItem commonSearchArea commonSelectArea"   data-type="rightSearchTemp" data-key="<%=key%>"  data-model="Search" >\
                             <a href="javascript:Jit.AM.toPage(\'Category\')" class="allClassify"></a>\
                             <div class="commonSearchBox"> \

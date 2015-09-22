@@ -962,7 +962,7 @@
             var model = {};
             var flag = true;
             //debugger;
-            if (self.currentEditData) {
+            if (self.currentEditData && self.currentEditData.modelTypeId) {
                 model.groupId = self.currentEditData.groupId;
                 model.id = self.currentEditData.modelTypeId;
                 model.name = self.currentEditData.modelTypeName;

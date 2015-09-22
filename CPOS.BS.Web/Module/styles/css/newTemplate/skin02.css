@@ -332,7 +332,7 @@
 .messager-button .l-btn {color: #000;}
 /*底部分页的重写*/
 #kkpager_gopage_wrap{ border:solid 1px #00cccc; height: 23px; line-height: 23px;}
-#kkpager_btn_go{ background:#fff; color: #fff;height: 24px;margin-top: -1px; margin-left: -1px; background: url("../../images/newTemplate/pagebtn.png") no-repeat;}
+#kkpager_btn_go{width:25px;height:23px;margin-left:-1px;text-indent:-999em;border:1px solid #0cc;border-left:none;border-radius:0 3px 3px 0;background: url(../../images/newTemplate/pagebtn.png) no-repeat center center;color:#fff;}
 #kkpager{
     clear:both;
     height:30px;

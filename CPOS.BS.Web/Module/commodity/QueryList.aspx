@@ -43,7 +43,7 @@
                                                       </div>
                                                   </div>
                                                   <div class="commonSelectWrap">
-                                                      <em class="tit">促销分组：</em>
+                                                      <em class="tit">商品分组：</em>
                                                       <div class="selectBox">
 
                                                       <input id="SalesPromotion_id" name="SalesPromotion_id" />
@@ -64,7 +64,7 @@
                 <div class="optionBtn" id="opt">
                  <div class="commonBtn " data-flag="putaway"><img src="images/jiatous.png"  >  上架</div>
                  <div class="commonBtn" data-flag="soldOut"><img src="images/jiatoux.png"  >   下架</div>
-                 <div class="commonBtn sales" data-flag="salesTooltip" id="sales"> <img src="images/cxfzbtn.png"  >更改促销分组</div>
+                 <div class="commonBtn sales" data-flag="salesTooltip" id="sales"> <img src="images/cxfzbtn.png"  >更改商品分组</div>
                  <div style="display: none">
                         <div id="Tooltip">
                                <div class="treeNode"></div>

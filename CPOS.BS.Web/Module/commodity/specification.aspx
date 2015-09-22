@@ -7,10 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/commodity/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-    <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-    	#kkpager_btn_go{height:24px;top:-3px;left:46px !important;background-color:#fff;}
-    </style>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

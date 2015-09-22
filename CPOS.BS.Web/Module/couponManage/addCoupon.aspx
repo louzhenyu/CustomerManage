@@ -51,7 +51,7 @@
                     <em class="tit">适用范围：</em>
                         <label class="searchInput bordernone" style="width: 238px;">
                               <div class="radio on" data-name="r1" data-UsableRange="1"><em></em><span>仅限在线商城使用</span></div>
-                              <div class="radio" data-name="r1"  data-UsableRange="2"><em></em><span>仅限到店使用</span></div>
+                              <!--<div class="radio" data-name="r1"  data-UsableRange="2"><em></em><span>仅限到店使用</span></div>-->
                         </label>
                 </div>
 
@@ -114,13 +114,13 @@
                         </div>
 
                    </div>
-
-                   <div class=" listTable toggClass">
+					
+                   <div class="listTable toggClass">
                      <div class="easyui-datagrid" style="width:640px;height:250px" data-options="title:'已选门店',fitColumns:true,singleSelect:true"></div>
                    </div>
 
 
-                   <div class="zsy" > </div>
+                   <div class="zsy"></div>
 
                 </div><!--panlDivEnd-->
             </div>
@@ -155,7 +155,7 @@
                                </div>
                 </div>
                <div class="commonSelectWrap">
-                                <div class=" searchInput" >
+                                <div class=" searchInput">
                                  <input  name="RetailTraderName" placeholder="分销商名称"/>
                                </div>
                 </div>

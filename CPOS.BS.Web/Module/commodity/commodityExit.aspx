@@ -45,9 +45,9 @@
                           </label>
                       </div>
                       <div class="commonSelectWrap">
-                          <em class="tit">促销分组：</em>
+                          <em class="tit">商品分组：</em>
                           <label class="searchInput">
-                            <input data-text="促销分组" id="ItemCategoryId"    data-flag="ItemCategoryId" name="ItemCategoryId" type="text" value="">
+                            <input data-text="商品分组" id="ItemCategoryId"    data-flag="ItemCategoryId" name="ItemCategoryId" type="text" value="">
                           </label>
                       </div>
                     </div>

@@ -4,17 +4,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <meta charset="UTF-8" />
     <title>团购管理</title>
-        <link href="css/global.css" rel="stylesheet" type="text/css" />
         <link href="css/style.css" rel="stylesheet" type="text/css" />
-        <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
-        <link href="../static/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
-        <link href="../static/css/artDialog.css" rel="stylesheet" type="text/css" />
-   <%-- <style type="text/css">
-        .contentArea {
-    margin-left:0px;
-    float: left;
-}
-    </style>--%>
+
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

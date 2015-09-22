@@ -3,11 +3,11 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
-    <title>促销分组管理</title>
+    <title>商品分组管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/commodity/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-    <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -45,9 +45,9 @@
 <script id="tpl_addProm" type="text/html">
            <form id="addProm">
       <div class="commonSelectWrap">
-      <em class="tit">促销分组名称：</em>
+      <em class="tit">商品分组名称：</em>
         <label class="searchInput" >
-          <input data-text="促销分组名称" class="easyui-validatebox" data-options="required:true" data-flag="Item_Category_Name" name="Item_Category_Name" type="text" value="">
+          <input data-text="商品分组名称" class="easyui-validatebox" data-options="required:true" data-flag="Item_Category_Name" name="Item_Category_Name" type="text" value="">
           <input name="Item_Category_Id" type="text" style="display: none"/>
        </label>
  </div>

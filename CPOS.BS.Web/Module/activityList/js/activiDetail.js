@@ -26,6 +26,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
         },
 
         init: function () {
+			
             this.loadDataPage();
             this.initEvent();
 
