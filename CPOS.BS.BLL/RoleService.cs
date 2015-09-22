@@ -67,12 +67,13 @@ namespace JIT.CPOS.BS.BLL
                         }
                     }
 
-                    string strError = string.Empty;
+                    strError = string.Empty;
                     roleService.SetRoleInfo(roleInfo, out strError, IsTran);
                     return strError;
                 }
                 else
                 {
+                    strError = "";
                     return "RoleModel对象为空";
                 }
 
