@@ -156,7 +156,7 @@ namespace JIT.CPOS.BS.DataAccess
             //查询是否是小店商品
             sql += " LEFT JOIN dbo.VipStore vIsstore ON vIsstore.IsDelete=0 AND vIsstore.ItemID=a.item_id AND vIsstore.VIPID='" + userId + "'";
             //2015-09-21  wujianxian  如果某个商品有参加活动 则只显示活动价
-            sql += " LEFT JOIN (SELECT  B.ItemId ,B.Price ,B.SalesPrice,B.Qty,a.EventId,a.EventTypeId  FROM    [dbo].[PanicbuyingEvent] A  INNER JOIN [dbo].[PanicbuyingEventItemMapping] B ON A.EventId = B.EventId   WHERE   CustomerID = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "') D ON D.ItemId = A.item_id";
+            sql += " LEFT JOIN (SELECT  B.ItemId ,B.Price ,B.SalesPrice,B.Qty,a.EventId,a.EventTypeId  FROM    [dbo].[PanicbuyingEvent] A  INNER JOIN [dbo].[PanicbuyingEventItemMapping] B ON A.EventId = B.EventId   WHERE   CustomerID = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' AND GETDATE() BETWEEN A.BeginTime AND a.EndTime) D ON D.ItemId = A.item_id";
 
             //我的小店商品
             if (isStore == 1)

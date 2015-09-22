@@ -97,7 +97,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 ShoppingCartBLL shoppingCartServer = new ShoppingCartBLL(loggingSessionInfo);
 
                 sw = new Stopwatch(); sw.Start();
-                respData.content.shoppingCartCount = shoppingCartServer.GetShoppingCartByVipId(userId);
+                //respData.content.shoppingCartCount = shoppingCartServer.GetShoppingCartByVipId(userId);
                 sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取会员的购物车数量，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
 
                 OnlineShoppingItemBLL itemService = new OnlineShoppingItemBLL(loggingSessionInfo);
@@ -281,7 +281,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public decimal ReturnAmount { get; set; } //佣金 add by donal 2014-11-25 17:56:36
             public int isStore { get; set; } //是否我的小店商品
 
-            public int eventId { get; set; }  ///商品活动id(抢购，团购，秒杀)
+            public string eventId { get; set; }  ///商品活动id(抢购，团购，秒杀)
             public int EventTypeId { get; set; }//活动类型id(抢购，团购，秒杀)
             public string GoodsType { get; set; } //商品的类型GoodsDetail：正常，热销，GroupGoodsDetail：团购，RushGoodsDetail：抢购
         }
