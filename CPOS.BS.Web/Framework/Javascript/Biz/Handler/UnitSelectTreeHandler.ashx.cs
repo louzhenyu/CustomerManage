@@ -53,6 +53,7 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
             {
                // units = unitService.GetUnitInfoListByTypeCode(typeCode);//这是原来的方法，就是extjs里只取根节点的方法，
                 //现在需要根据用户的userID和customerID来取他权限下面的角色
+                //一次吧下面所有的门店信息都取出来了
                 units = unitService.GetUnitByUser(loggingSessionInfo.ClientID, loggingSessionInfo.UserID);//获取当前登录人的门店
             }
             else

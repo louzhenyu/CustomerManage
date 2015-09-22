@@ -291,6 +291,9 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                 + " on(a.unit_city_id = c.city_id)";
             sql += " left join t_user ua on a.create_user_id=ua.user_id ";
             sql += " left join t_user ub on a.modify_user_id=ub.user_id ";
+            sql += @" inner join cpos_ap..t_customer  e on a.customer_id=e.customer_id where 1=1 "//去除初始化的那个门店和电商门店
+          + @" and a.unit_code!=e.customer_code and a.unit_code!='ONLINE'";
+
             return sql;
         }
         #endregion
@@ -651,7 +654,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
         /// <param name="unitInfo"></param>
         /// <param name="pTran"></param>
         /// <returns></returns>
-        private bool SetUnitRelation(UnitInfo unitInfo, IDbTransaction pTran)
+        public bool SetUnitRelation(UnitInfo unitInfo, IDbTransaction pTran)
         {
 
             this.SQLHelper.ExecuteNonQuery(" delete from T_Unit_Relation where dst_unit_id='" + unitInfo.Id + "' ");
