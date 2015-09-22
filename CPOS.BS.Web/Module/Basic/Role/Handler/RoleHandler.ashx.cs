@@ -258,7 +258,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
             obj.Modify_Time = Utils.GetNow();
             obj.Modify_User_id = CurrentUserInfo.CurrentUser.User_Id;
             string strError="";
-            roleService.SetRoleInfo(obj,out strError,null);
+            roleService.SetRoleInfo(obj,out strError);
 
             if(strError!=""){
                  responseData.success = false;
