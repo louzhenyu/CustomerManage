@@ -39,7 +39,7 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetUnitById(string unitId)
         {
             string sql = GetSql("")
-                      + "  where a.unit_id= '" + unitId + "'";
+                      + "  where   a.unit_code!=e.customer_code and a.unit_code!='ONLINE' and   a.unit_id= '" + unitId + "'";
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
@@ -56,7 +56,7 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetUnitByUnitType(string unitTypeCode, string unitId)
         {
             string sql = GetSql("")
-                      + " where 1=1 and a.customer_id = '" + this.CurrentUserInfo.CurrentUser.customer_id + "' ";
+                      + " where 1=1 and a.unit_code!=e.customer_code and a.unit_code!='ONLINE' and a.customer_id = '" + this.CurrentUserInfo.CurrentUser.customer_id + "' ";
             if (unitId != null && !unitId.Equals(""))
             {
                 sql += "  and a.unit_id= '" + unitId + "'";
@@ -86,7 +86,7 @@ namespace JIT.CPOS.BS.DataAccess
                        + "  inner join (select distinct unit_id from t_user_role "
                        + "  where 1=1 and status='1' and user_id= '" + this.loggingSessionInfo.CurrentUser.User_Id + "' and role_id= '" + this.loggingSessionInfo.CurrentUserRole.RoleId + "' "
                        + "  ) d on a.unit_id=d.unit_id "
-                       + "  where 1=1 and a.customer_id='" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id + "' "
+                       + "  where 1=1 and a.unit_code!=e.customer_code and a.unit_code!='ONLINE' and a.customer_id='" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id + "' "
                        + " and a.status = '1' order by a.unit_code";
 
             ds = this.SQLHelper.ExecuteDataset(sql);
@@ -115,7 +115,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sql += "inner join @CategoryInfo as useruntil on useruntil.dst_unit_id=d.unit_id";
             }
-            sql += "  where 1=1 and a.status = '1' and a.customer_id = '" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id + "' order by a.unit_code";
+            sql += "  where 1=1 and a.unit_code!=e.customer_code and a.unit_code!='ONLINE' and a.status = '1' and a.customer_id = '" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id + "' order by a.unit_code";
 
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
@@ -187,7 +187,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
 ";
 
              sql = GetSql(sql)
-                + " inner join #UnitSET  d on(a.unit_id = d.unitid)  where  1=1 and a.status = '1'  order by a.unit_code ";
+                + " inner join #UnitSET  d on(a.unit_id = d.unitid)  where  1=1 and a.unit_code!=e.customer_code and a.unit_code!='ONLINE' and a.status = '1'  order by a.unit_code ";
 
 
                sql += @" drop table #UnitSET                ";
@@ -239,7 +239,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
         {
             DataSet ds = new DataSet();
             string sql = GetSql("")
-                + "where b.type_code = '" + type_code + "' and a.customer_id = '" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id + "' and a.status = '1'";
+                + "where 1=1  and a.unit_code!=e.customer_code and a.unit_code!='ONLINE' b.type_code = '" + type_code + "' and a.customer_id = '" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id + "' and a.status = '1'";
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
@@ -291,8 +291,8 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                 + " on(a.unit_city_id = c.city_id)";
             sql += " left join t_user ua on a.create_user_id=ua.user_id ";
             sql += " left join t_user ub on a.modify_user_id=ub.user_id ";
-            sql += @" inner join cpos_ap..t_customer  e on a.customer_id=e.customer_id where 1=1 "//去除初始化的那个门店和电商门店
-          + @" and a.unit_code!=e.customer_code and a.unit_code!='ONLINE'";
+            sql += @" inner join cpos_ap..t_customer  e on a.customer_id=e.customer_id   "//去除初始化的那个门店和电商门店
+          + @" ";
 
             return sql;
         }

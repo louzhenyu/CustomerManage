@@ -575,7 +575,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             {
                 //分组ID
                 //兼容性，保证除c8区的通用性**
-                groupId = itemCategory.FirstOrDefault().groupId;
+                groupId = itemCategory.FirstOrDefault().groupId??0;//如果是null，转换为0
                 #region
                 //if (homeList != null && homeList.Length > 0)
                 //{
@@ -785,7 +785,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             public string categoryAreaId { get; set; }  //商品类别区域ID
             public string objectId { get; set; }        //对象ID
             public string objectName { get; set; }      //对象名称
-            public int groupId { get; set; }            //分组ID（1、2、3…….）
+            public int? groupId { get; set; }            //分组ID（1、2、3…….）
             public int displayIndex { get; set; }       //序号（1、2、3）
             public string imageUrl { get; set; }        //图片链接
             public string navName { get; set; }        //导航里各个小图片下面的文字 
