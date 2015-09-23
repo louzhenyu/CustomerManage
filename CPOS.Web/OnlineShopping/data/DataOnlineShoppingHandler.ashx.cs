@@ -97,7 +97,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 ShoppingCartBLL shoppingCartServer = new ShoppingCartBLL(loggingSessionInfo);
 
                 sw = new Stopwatch(); sw.Start();
-                //respData.content.shoppingCartCount = shoppingCartServer.GetShoppingCartByVipId(userId);
+                respData.content.shoppingCartCount = shoppingCartServer.GetShoppingCartByVipId(userId);
                 sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取会员的购物车数量，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
 
                 OnlineShoppingItemBLL itemService = new OnlineShoppingItemBLL(loggingSessionInfo);
@@ -2284,7 +2284,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     //    //根据收货地址获取经纬度，后期处理
                     //}
                     //else
-                    orderInfo.StoreId = unitServer.GetUnitByUnitType("OnlineShopping", null).Id; //获取在线商城的门店标识
+                    orderInfo.StoreId = unitServer.GetUnitByUnitTypeForWX("OnlineShopping", null).Id; //获取在线商城的门店标识
                 }
                 else    //送货到家***
                 {

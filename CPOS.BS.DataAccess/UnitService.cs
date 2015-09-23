@@ -69,6 +69,28 @@ namespace JIT.CPOS.BS.DataAccess
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
+        /// <summary>
+        /// 根据类型获取相关门店
+        /// </summary>
+        /// <param name="unitId">unitTypeId</param>
+        /// <param name="unitId">组织标识</param>
+        /// <returns></returns>
+        public DataSet GetUnitByUnitTypeForWX(string unitTypeCode, string unitId)
+        {
+            string sql = GetSql("")
+                      + " where 1=1 and a.unit_code!=e.customer_code and a.customer_id = '" + this.CurrentUserInfo.CurrentUser.customer_id + "' ";
+            if (unitId != null && !unitId.Equals(""))
+            {
+                sql += "  and a.unit_id= '" + unitId + "'";
+            }
+            if (unitTypeCode != null && !unitTypeCode.Equals(""))
+            {
+                sql += "  and b.type_code = '" + unitTypeCode + "'";
+            }
+            DataSet ds = new DataSet();
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
         #endregion
 
 

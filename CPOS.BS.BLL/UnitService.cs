@@ -706,6 +706,17 @@ namespace JIT.CPOS.BS.BLL
             //unitInfo.PropertyList = new PropertyUnitService(this.loggingSessionInfo).GetUnitPropertyListByUnit(unitId);
             return unitInfo;
         }
+        public UnitInfo GetUnitByUnitTypeForWX(string unitTypeCode, string unitId)
+        {
+            DataSet ds = unitService.GetUnitByUnitTypeForWX(unitTypeCode, unitId);
+            UnitInfo unitInfo = new UnitInfo();
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                unitInfo = DataTableToObject.ConvertToObject<UnitInfo>(ds.Tables[0].Rows[0]);
+            }
+            //unitInfo.PropertyList = new PropertyUnitService(this.loggingSessionInfo).GetUnitPropertyListByUnit(unitId);
+            return unitInfo;
+        }
         #endregion
 
         #region 获取总部门店信息

@@ -54,7 +54,7 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder sbSQL = new StringBuilder();
             //sbSQL.Append(string.Format("select (CardinalNumber+("+SalesAmount+" * Coefficient)) as ReturnAmount,PushInfo,* From [WXSalesPolicyRate]  where 1=1 and IsDelete=0 and CustomerId='{0}' ;", pCustomerId));
             //老的 没用到新的返现配置  WXSalesPolicyRate
-            //sbSQL.Append(string.Format("select (CardinalNumber+({1} * Coefficient)) as ReturnAmount,PushInfo,* From [WXSalesPolicyRate]  where 1=1 and IsDelete=0 and CustomerId='{0}' and AmountBegin<={1} and AmountEnd>={1} ;", pCustomerId,SalesAmount));
+            //sbSQL.Append(string.Format("select (CardinalNumber+({1} * Coefficient)) as ReturnAmount,PushInfo,* From [WXSalesPolicyRate]  where 1=1 and IsDelete=0 and CustomerId='{0}' and AmountBegin<={1} and AmountEnd>={1} ;", pCustomerId, SalesAmount));
             //sbSQL.Append(string.Format(" select (CardinalNumber+({0} * Coefficient)) as ReturnAmount,PushInfo,* From [WXSalesPolicyRate]  where 1=1 and IsDelete=0 and AmountBegin<={0} and AmountEnd>={0} and ([CustomerId]='' or CustomerId is NULL) ", SalesAmount));
             //新的返现配置CustomerBasicSetting
             SqlParameter[] parameters = new SqlParameter[2] 

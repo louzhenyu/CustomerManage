@@ -120,7 +120,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
                 sql += " where 1=1 ";
-            if (_ht["SalesPromotion_id"].ToString() != "")
+            if (_ht["SalesPromotion_id"]!=null && _ht["SalesPromotion_id"].ToString() != "")
             {
                 sql += " and exists (select * from ItemCategoryMapping cate where cate.ItemId=a.item_id and cate.isdelete=0 and cate.ItemCategoryId='" + _ht["SalesPromotion_id"].ToString() + "')";
             }
