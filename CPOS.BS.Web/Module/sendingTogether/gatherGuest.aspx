@@ -6,6 +6,9 @@
     <title>奖励模板设置</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="css/gatherGuest.css?v=0.1" rel="stylesheet"type="text/css" />
+    <style type="text/css">
+    .tableWrap .panlDiv{padding:5px 10px 0 50px}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/gatherGuest.js?ver=0.1" >

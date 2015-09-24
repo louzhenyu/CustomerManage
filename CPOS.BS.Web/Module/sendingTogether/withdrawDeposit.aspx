@@ -5,7 +5,6 @@
 <meta charset="UTF-8" />
     <title>分销商提现管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
     <link type="text/css" rel="stylesheet" href="css/sendingTogether.css"/>
 
 </asp:Content>
@@ -68,7 +67,7 @@
       			</div>
       			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
       				<a class="easyui-linkbutton commonBtn saveBtn" >确定</a>
-      				<a class="easyui-linkbutton commonBtn cancelBtn"  href="javascript:void(0)" onclick="javascript:$('#win').window('close')" >取消</a>
+      				<a class="easyui-linkbutton commonBtn cancelBtn"  href="javascript:void(0)" onClick="javascript:$('#win').window('close')" >取消</a>
       			</div>
       		</div>
 

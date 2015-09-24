@@ -63,3 +63,4 @@
 #Children .add{ background:none; color: #00acee; font-size: 15px; }
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none;}
 .panel.window{position:fixed !important;}
+.window-shadow{display:none !important;}

@@ -49,8 +49,8 @@
                 <div class="panlDiv">
                 <div class="commonSelectWrap">
                     <em class="tit">适用范围：</em>
-                        <label class="searchInput bordernone" style="width: 238px;">
-                              <div class="radio on" data-name="r1" data-UsableRange="1"><em></em><span>仅限在线商城使用</span></div>
+                        <label class="searchInput bordernone" style="width:347px;margin-top:5px;">
+                              <div class="checkBox" data-name="r1" data-UsableRange="1"><em></em><span>仅限在线商城使用</span></div>
                               <!--<div class="radio" data-name="r1"  data-UsableRange="2"><em></em><span>仅限到店使用</span></div>-->
                         </label>
                 </div>
