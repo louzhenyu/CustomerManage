@@ -80,9 +80,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [WMaterialText](");
-            strSql.Append("[ParentTextId],[Title],[Author],[CoverImageUrl],[Text],[OriginalUrl],[DisplayIndex],[ApplicationId],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[TypeId],[PageId],[PageUrlJson],[PageParamJson],[IsAuth],[TextId])");
+            strSql.Append("[ParentTextId],[Title],[Author],[CoverImageUrl],[Text],[OriginalUrl],[DisplayIndex],[ApplicationId],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[TypeId],[PageId],[PageUrlJson],[PageParamJson],[IsAuth],[TextId],[Abstract])");
             strSql.Append(" values (");
-            strSql.Append("@ParentTextId,@Title,@Author,@CoverImageUrl,@Text,@OriginalUrl,@DisplayIndex,@ApplicationId,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@TypeId,@PageId,@PageUrlJson,@PageParamJson,@IsAuth,@TextId)");
+            strSql.Append("@ParentTextId,@Title,@Author,@CoverImageUrl,@Text,@OriginalUrl,@DisplayIndex,@ApplicationId,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@TypeId,@PageId,@PageUrlJson,@PageParamJson,@IsAuth,@TextId,@Abstract)");
 
             string pkString = pEntity.TextId;
 
@@ -106,7 +106,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@PageUrlJson",SqlDbType.NVarChar),
 					new SqlParameter("@PageParamJson",SqlDbType.NVarChar),
 					new SqlParameter("@IsAuth",SqlDbType.Int),
-					new SqlParameter("@TextId",SqlDbType.NVarChar)
+					new SqlParameter("@TextId",SqlDbType.NVarChar),
+					new SqlParameter("@Abstract",SqlDbType.NVarChar)
             };
             parameters[0].Value = pEntity.ParentTextId;
             parameters[1].Value = pEntity.Title;
@@ -127,6 +128,7 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[16].Value = pEntity.PageParamJson;
             parameters[17].Value = pEntity.IsAuth;
             parameters[18].Value = pkString;
+            parameters[19].Value = pEntity.Abstract;
 
             //执行并将结果回写
             int result;
@@ -241,6 +243,8 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append("[PageUrlJson]=@PageUrlJson,");
             if (pIsUpdateNullField || pEntity.PageParamJson != null)
                 strSql.Append("[PageParamJson]=@PageParamJson,");
+            if (pIsUpdateNullField || pEntity.Abstract != null)
+                strSql.Append("[Abstract]=@Abstract,");
             if (pIsUpdateNullField || pEntity.IsAuth != null)
                 strSql.Append("[IsAuth]=@IsAuth");
             if (strSql.ToString().EndsWith(","))
@@ -263,6 +267,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@PageUrlJson",SqlDbType.NVarChar),
 					new SqlParameter("@PageParamJson",SqlDbType.NVarChar),
 					new SqlParameter("@IsAuth",SqlDbType.Int),
+					new SqlParameter("@Abstract",SqlDbType.NVarChar),
 					new SqlParameter("@TextId",SqlDbType.NVarChar)
             };
             parameters[0].Value = pEntity.ParentTextId;
@@ -280,7 +285,8 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[12].Value = pEntity.PageUrlJson;
             parameters[13].Value = pEntity.PageParamJson;
             parameters[14].Value = pEntity.IsAuth;
-            parameters[15].Value = pEntity.TextId;
+            parameters[15].Value = pEntity.Abstract;
+            parameters[16].Value = pEntity.TextId;
 
             //执行语句
             int result = 0;

@@ -38,7 +38,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                 Text = para.MaterialText.Text,
                 TextId = para.MaterialText.TextId,
                 Title = para.MaterialText.Title,
-                TypeId = para.MaterialText.TypeId
+                TypeId = para.MaterialText.TypeId,
+                Abstract=para.MaterialText.Abstract
             };
             #endregion
 

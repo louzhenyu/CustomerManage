@@ -51,8 +51,14 @@ namespace JIT.CPOS.BS.Entity
         {
             get
             {
-                TimeSpan span = EndTime - DateTime.Now;
-                return string.Format("还剩余{0}天{1}时{2}分{3}秒", span.Days, span.Hours, span.Minutes, span.Seconds);
+                if (EndTime >= DateTime.Now)
+                {
+                    TimeSpan span = EndTime - DateTime.Now;
+                    return string.Format("还剩余{0}天{1}时{2}分{3}秒", span.Days, span.Hours, span.Minutes, span.Seconds);
+                }
+                else
+                    return string.Format("活动结束");
+
             }
         }
 
@@ -60,7 +66,11 @@ namespace JIT.CPOS.BS.Entity
         {
             get
             {
-                return Convert.ToInt64((EndTime - DateTime.Now).TotalSeconds);
+                if (EndTime >= DateTime.Now)
+                    return Convert.ToInt64((EndTime - DateTime.Now).TotalSeconds);
+                else
+                    return 0;
+
             }
         }
         #endregion

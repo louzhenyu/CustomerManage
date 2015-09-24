@@ -21,8 +21,8 @@ namespace JIT.CPOS.DTO.Module.WeiXin.MaterialText.Request
                 throw new Exception("微信帐号【ApplicationId】不能为NULL");
             if (this.MaterialText.Title == null)
                 throw new Exception("标题【Title】不能为NULL");
-            if (this.MaterialText.TypeId == null)
-                throw new Exception("分类【TypeId】不能为NULL");
+            //if (this.MaterialText.TypeId == null)
+            //    throw new Exception("分类【TypeId】不能为NULL");
             if (this.MaterialText.ImageUrl == null)
                 throw new Exception("封面图片【ImageUrl】不能为NULL");
         }
@@ -80,6 +80,11 @@ namespace JIT.CPOS.DTO.Module.WeiXin.MaterialText.Request
         /// 页面替换参数JSON	
         /// </summary>
         public string PageParamJson { get; set; }
+
+        /// <summary>
+        /// 摘要
+        /// </summary>
+        public string Abstract { get; set; }
 
     }
 }

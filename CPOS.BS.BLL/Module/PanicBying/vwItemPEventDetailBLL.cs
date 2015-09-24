@@ -392,6 +392,7 @@ namespace JIT.CPOS.BS.BLL
                 stopReason = detail.StopReason,
                 status = detail.Status,
                 eventId = detail.EventId,
+                eventTypeID=detail.EventTypeID,
                 imageList = imagelist,
                 skuList = skulist, //数组
                 skuInfoList = skuInfoList, //数组
