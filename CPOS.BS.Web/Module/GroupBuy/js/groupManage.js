@@ -498,6 +498,7 @@
             //保存规格
             $("#saveRules").click(function(e){
                 //获得所有的选中的规格
+				var isBool = true;
                 var singlePurchaseQtyInput = $("#goodsInfo .inputBox input");
                 var items=$("#rules").find(".on");
                 var skuList=[];
@@ -545,8 +546,16 @@
                             }
                         }
                     });
+					if(obj.Qty<obj.KeepQty){
+						isBool = false;
+						alert("已售数量不能大于商品数量");
+						return false;
+					}
                     skuList.push(obj);
                 });
+				if(!isBool){
+					return false;
+				}
                 that.loadData.sku.SkuList=skuList;
                 //添加规格
                 //debugger;
