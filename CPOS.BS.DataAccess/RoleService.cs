@@ -48,6 +48,12 @@ namespace JIT.CPOS.BS.DataAccess
                     {
                         roleInfo.customer_id = this.CurrentUserInfo.CurrentLoggingManager.Customer_Id;
                     }
+                    //判断是否存在相同的角色名称
+                    if (IsExistRoleName(roleInfo.Role_Name, roleInfo.Role_Id))
+                    {
+                        strError = "角色名称已经存在。";
+                        throw (new System.Exception(strError));
+                    }
                     //判断是否存在相同的角色
                     if (IsExistRoleCode(roleInfo.Role_Code, roleInfo.Role_Id))
                     {
@@ -180,6 +186,23 @@ namespace JIT.CPOS.BS.DataAccess
                 this.SQLHelper.ExecuteNonQuery(sql);
             }
             return true;
+        }
+        /// <summary>
+        /// 判断角色名称是否重复
+        /// </summary>
+        /// <param name="RoleCode"></param>
+        /// <param name="RoleId"></param>
+        /// <returns></returns>
+        private bool IsExistRoleName(string RoleName, string RoleId)
+        {
+            string sql = "select count(*) From t_role where 1=1 and role_name = '" + RoleName + "' and [status] = '1' and customer_id = '" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id + "'";
+            if (RoleId != null && !RoleId.Equals(""))
+            {
+                sql = sql + " and role_id != '" + RoleId + "'";
+            }
+
+            int count = Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
+            return count == 1;
         }
         /// <summary>
         /// 判断角色号码是否重复
