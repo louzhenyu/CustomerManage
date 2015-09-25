@@ -23,6 +23,7 @@ namespace JIT.CPOS.Web.Interface.Data
                 //JIT.CPOS.Web.Module.Log.InterfaceWebLog.Logger.Log(Context, Request, action);
 
                 string reqContent = Request["ReqContent"];
+                //reqContent = "{\"common\":{\"openId\":\"oQ6Y9t1nNQiJ-wLJBU7v4UEEYb44\",\"customerId\":\"a4f82564c24e48f4b69f731e1623ab39\",\"userId\":\"ff500ce9a765463b8b9e12deb3e46d72\",\"locale\":null,\"ChannelID\":\"2\",\"isALD\":0},\"special\":{\"qty\":1,\"totalAmount\":15,\"action\":\"setOrderInfo\",\"orderDetailList\":[{\"skuId\":\"976F2B409A08448D94DB491446B11DEC\",\"salesPrice\":\"15\",\"qty\":1}],\"isGroupBy\":1,\"eventId\":\"29f7bcf8-cb64-4851-b193-09f4804ec2c4\"}}";
                 var request = reqContent.DeserializeJSONTo<APIRequest>();
 
                 switch (action)

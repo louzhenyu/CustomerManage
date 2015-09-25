@@ -45,6 +45,8 @@ namespace JIT.CPOS.Web.Interface.Data
 
         internal static object SetOrderInfo(Base.APIRequest request)
         {
+            
+
             var para = request.GetParameters<SetOrderInfoReqPara>();
             string msg;
             if (!para.IsValid(out msg))
@@ -54,7 +56,7 @@ namespace JIT.CPOS.Web.Interface.Data
             if(string.IsNullOrEmpty(para.storeId))
             {
                 UnitService unitServer = new UnitService(request.GetUserInfo());
-                para.storeId = unitServer.GetUnitByUnitType("OnlineShopping", null).Id; //获取在线商城的门店标识
+                para.storeId = unitServer.GetUnitByUnitTypeForWX("OnlineShopping", null).Id; //获取在线商城的门店标识
             }
             #region BLL用到common的参数,所以要赋一下值
             para.customerId = request.common.customerId;
