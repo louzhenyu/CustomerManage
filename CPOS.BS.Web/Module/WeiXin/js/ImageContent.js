@@ -59,6 +59,10 @@
             //链接
             contentEditor: $("#contentEditor"),
             //详情内容编辑
+			contentDigest: $('#contentDigest'),
+			//摘要模块
+			contentDigestText: $('#contentDigestText'),
+			//摘要内容
             moduleName: $("#moduleName"),
             //模块名
             moduleSelect: $("#moduleName .selectBox"),
@@ -427,8 +431,11 @@
                                         that.unionType = 2;
                                         that.elems.category.find("option[value='" + 2 + "']").attr("selected", "selected");
                                         that.elems.contentEditor.removeClass("hide").addClass("show");
+										that.elems.contentDigest.removeClass("hide").addClass("show");
                                         //设置详情
                                         window.editor.html(obj.Text);
+										//遍历摘要内容
+										that.elems.contentDigestText.val(obj.Abstract || '');
                                         break;
                                     case 3:
                                         that.elems.category.find("option[value='" + 3 + "']").attr("selected", "selected");
@@ -622,7 +629,8 @@
                     that.elems.accountSelect.html(html);
                     //ApplicationId
                     that.ApplicationId = data.Data.AccountList[0].ApplicationId;
-                    //填充图文分类
+                    //填充图文分类,删除分类
+					/*
                     that.loadData.getImageContentCategory(function (data) {
                         that.count++;
                         var obj =
@@ -632,6 +640,7 @@
                         var html = bd.template("optionTmpl", obj);
                         that.elems.imageCategory.find(".selectBox").html(html);
                     });
+					*/
                 });
 
             }
@@ -1005,6 +1014,8 @@
                         that.hideElems();
                         that.unionType = 2;
                         that.elems.contentEditor.removeClass("hide").addClass("show");
+						//摘要显示
+						that.elems.contentDigest.removeClass("hide").addClass("show");
                         break;
                     case 3:
                         //表示的是系统功能模块
@@ -1221,6 +1232,7 @@
             imageUrl = null, //图片地址
             originalUrl = null, //原文连接
             text = null, //文本内容
+			digestText = null, // 摘要文本内容
             displayIndex = null, //排序
             applicationId = null, //申请接口主标识
             typeId = null, //图文类别
@@ -1234,8 +1246,8 @@
             applicationId = this.elems.accountSelect.val();
             //标题
             title = this.elems.imageTitle.val();
-            //图文类别id
-            typeId = this.elems.imageCategorySelect.val();
+            //图文类别id//删除分类
+            //typeId = this.elems.imageCategorySelect.val();
             //图片地址
             imageUrl = this.generateUrl;
             this.unionType = this.elems.category.val();
@@ -1266,6 +1278,7 @@
                 //获得源码
                 var html = window.editor.html();
                 text = html;
+				digestText = that.elems.contentDigestText.val();//摘要文本内容
                 if (html.length == 0) {
                     alert("请输入详细内容");
                     return false;
@@ -1413,7 +1426,8 @@
                         OriginalUrl: originalUrl,
                         Text: text,
                         ApplicationId: applicationId,
-                        TypeId: typeId,
+                        //TypeId: typeId,//删除分类
+						Abstract: digestText,//摘要	
                         PageId: pageId,
                         //是否显示封面图片
                         IsTitlePageImage: showCover,

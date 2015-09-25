@@ -7,10 +7,8 @@
     <link href="css/style2.css?v=Math.random()" rel="stylesheet" type="text/css" />
     <link href="../static/css/pagination.css" rel="stylesheet" type="text/css" />
      <style type="text/css">
-         .contentArea {
-    margin-left:0px;
-    float: left;
-}
+         .contentArea{margin-left:0px;float:left;}
+		 #contentDigestText{padding:5px;border:1px solid #cecedc;}
      </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -36,6 +34,7 @@
         	<span class="tit">标题</span>
             <div class="handleWrap"><input type="text" id="imageTitle" class="inputBox" /></div>
         </div>
+        <!--
         <div class="commonItem clearfix">
             <span class="tit">分类</span>
             <div id="imageCategory" class="handleWrap">
@@ -44,6 +43,7 @@
                 </select>
             </div>
         </div>
+        -->
         <div class="commonItem clearfix">
             <span class="tit">显示封面图片</span>
             <div id="Div1" class="handleWrap">
@@ -172,12 +172,16 @@
                 <div class="commonItem clearfix" name="elems" id="contentEditor">
                     <span class="tit">内容编辑</span>
                     <div class="richTextBox">
-                    <textarea id="editor_id" name="content" style="width:700px;height:300px;">
-               
-                </textarea>
+                    <textarea id="editor_id" name="content" style="width:700px;height:300px;"></textarea>
                     </div>
-                    <div id="editLayer" class="handleLayer" style="">
-    	                
+                    <div id="editLayer" class="handleLayer" style=""></div>
+                </div>
+                
+                
+                <div class="commonItem clearfix" name="elems" id="contentDigest">
+                    <span class="tit">摘要</span>
+                    <div class="richTextBox">
+                    <textarea id="contentDigestText" name="content" style="width:700px;height:150px;"></textarea>
                     </div>
                 </div>
             
