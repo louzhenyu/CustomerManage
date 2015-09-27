@@ -392,6 +392,7 @@
     <Compile Include="CodeGeneration\T_Inout_DetailDAO.cs" />
     <Compile Include="CodeGeneration\T_ItemDAO.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropDAO.cs" />
+    <Compile Include="CodeGeneration\T_SkuDAO.cs" />
     <Compile Include="CodeGeneration\t_unitDAO.cs" />
     <Compile Include="CodeGeneration\T_UserDAO.cs" />
     <Compile Include="CodeGeneration\UnitCommentDAO.cs" />
@@ -867,6 +868,7 @@
     <Compile Include="t_customerDAO.cs" />
     <Compile Include="T_ItemDAO.cs" />
     <Compile Include="T_ItemSkuPropDAO.cs" />
+    <Compile Include="T_SkuDAO.cs" />
     <Compile Include="t_unitDAO.cs" />
     <Compile Include="UnitCommentDAO.cs" />
     <Compile Include="UnitService.cs" />

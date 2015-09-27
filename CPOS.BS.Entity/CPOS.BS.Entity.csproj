@@ -288,6 +288,7 @@
     <Compile Include="CodeGeneration\T_Inout_DetailEntity.cs" />
     <Compile Include="CodeGeneration\T_ItemEntity.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropEntity.cs" />
+    <Compile Include="CodeGeneration\T_SkuEntity.cs" />
     <Compile Include="CodeGeneration\t_unitEntity.cs" />
     <Compile Include="CodeGeneration\T_UserEntity.cs" />
     <Compile Include="CodeGeneration\UnitCommentEntity.cs" />
@@ -955,6 +956,7 @@
     <Compile Include="T_Inout_DetailEntity.cs" />
     <Compile Include="T_ItemEntity.cs" />
     <Compile Include="T_ItemSkuPropEntity.cs" />
+    <Compile Include="T_SkuEntity.cs" />
     <Compile Include="t_unitEntity.cs" />
     <Compile Include="UnitAccountTermInfo.cs" />
     <Compile Include="UnitCommentEntity.cs" />

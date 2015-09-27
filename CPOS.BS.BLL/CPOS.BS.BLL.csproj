@@ -426,6 +426,7 @@
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
+    <Compile Include="CodeGeneration\T_SkuBLL.cs" />
     <Compile Include="CodeGeneration\t_unitBLL.cs" />
     <Compile Include="CodeGeneration\T_UserBLL.cs" />
     <Compile Include="CodeGeneration\UnitCommentBLL.cs" />
@@ -953,6 +954,7 @@
     <Compile Include="t_customerBLL.cs" />
     <Compile Include="T_ItemBLL.cs" />
     <Compile Include="T_ItemSkuPropBLL.cs" />
+    <Compile Include="T_SkuBLL.cs" />
     <Compile Include="t_unitBLL.cs" />
     <Compile Include="UnitCommentBLL.cs" />
     <Compile Include="UserFeedbackBLL.cs" />
