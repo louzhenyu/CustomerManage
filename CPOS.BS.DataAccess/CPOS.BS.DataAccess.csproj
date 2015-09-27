@@ -107,6 +107,7 @@
     <Compile Include="CodeGeneration\CouponDAO.cs" />
     <Compile Include="CodeGeneration\CouponSourceDAO.cs" />
     <Compile Include="CodeGeneration\CouponTypeDAO.cs" />
+    <Compile Include="CodeGeneration\Coupon\CouponTypeItemMappingDAO.cs" />
     <Compile Include="CodeGeneration\Coupon\CouponTypeUnitMappingDAO.cs" />
     <Compile Include="CodeGeneration\Coupon\CouponUseDAO.cs" />
     <Compile Include="CodeGeneration\CSConversationDAO.cs" />
@@ -533,6 +534,7 @@
     <Compile Include="CouponDAO.cs" />
     <Compile Include="CouponSourceDAO.cs" />
     <Compile Include="CouponTypeDAO.cs" />
+    <Compile Include="Coupon\CouponTypeItemMappingDAO.cs" />
     <Compile Include="Coupon\CouponTypeUnitMappingDAO.cs" />
     <Compile Include="Coupon\CouponUseDAO.cs" />
     <Compile Include="CSConversationDAO.cs" />

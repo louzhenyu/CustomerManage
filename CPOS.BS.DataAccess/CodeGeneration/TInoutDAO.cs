@@ -460,6 +460,11 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[Field20]=@Field20,");
             if (pIsUpdateNullField || pEntity.PaymentcenterID!=null)
                 strSql.Append( "[paymentcenter_id]=@PaymentcenterID");
+            if (!string.IsNullOrEmpty(strSql.ToString()))
+            {
+                strSql.Length = strSql.Length - 1;//È¥µô
+            }
+
             strSql.Append(" where order_id=@OrderID ");
             SqlParameter[] parameters = 
             {

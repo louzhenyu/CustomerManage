@@ -155,7 +155,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [T_Item] where item_id='{0}'  and status<>'-1' ", id.ToString());
+            sql.AppendFormat("select * from [T_Item] where item_id='{0}'  ", id.ToString());   // and status<>'-1'
             //读取数据
             T_ItemEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))

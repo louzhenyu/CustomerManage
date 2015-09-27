@@ -117,6 +117,7 @@
     <Compile Include="CodeGeneration\ClientBussinessDefinedEntity.cs" />
     <Compile Include="CodeGeneration\CouponSourceEntity.cs" />
     <Compile Include="CodeGeneration\CouponTypeEntity.cs" />
+    <Compile Include="CodeGeneration\Coupon\CouponTypeItemMappingEntity.cs" />
     <Compile Include="CodeGeneration\Coupon\CouponTypeUnitMappingEntity.cs" />
     <Compile Include="CodeGeneration\Coupon\CouponUseEntity.cs" />
     <Compile Include="CodeGeneration\CSConversationEntity.cs" />
@@ -348,6 +349,7 @@
     <Compile Include="CodeGeneration\WXSalesPushLogEntity.cs" />
     <Compile Include="CouponSourceEntity.cs" />
     <Compile Include="CouponTypeEntity.cs" />
+    <Compile Include="Coupon\CouponTypeItemMappingEntity.cs" />
     <Compile Include="Coupon\CouponTypeUnitMappingEntity.cs" />
     <Compile Include="Coupon\CouponUseEntity.cs" />
     <Compile Include="CSConversationEntity.cs" />

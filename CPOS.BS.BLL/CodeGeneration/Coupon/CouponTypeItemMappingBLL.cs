@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/2/28 14:14:45
+ * Create On	:2015-9-26 12:18:52
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -22,27 +22,29 @@ using System.Data;
 using System.Reflection;
 using JIT.Utility;
 using JIT.Utility.ExtensionMethod;
-using JIT.CPOS.BS.DataAccess;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.DataAccess;
+using JIT.CPOS.BS.Entity;
+using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.BLL
 {   
     /// <summary>
     /// 业务处理：  
     /// </summary>
-    public partial class TInoutBLL
+    public partial class CouponTypeItemMappingBLL
     {
-        private LoggingSessionInfo CurrentUserInfo;
-        private TInoutDAO _currentDAO;
+        private BasicUserInfo CurrentUserInfo;
+        private CouponTypeItemMappingDAO _currentDAO;
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public TInoutBLL(LoggingSessionInfo pUserInfo)
+        public CouponTypeItemMappingBLL(LoggingSessionInfo pUserInfo)
         {
-            this._currentDAO = new TInoutDAO(pUserInfo);
+            this._currentDAO = new CouponTypeItemMappingDAO(pUserInfo);
+            this.CurrentUserInfo = pUserInfo;
         }
         #endregion
         #region ICRUDable 成员
@@ -50,7 +52,7 @@ namespace JIT.CPOS.BS.BLL
         /// 创建一个新实例
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Create(TInoutEntity pEntity)
+        public void Create(CouponTypeItemMappingEntity pEntity)
         {
             _currentDAO.Create(pEntity);
         }
@@ -61,7 +63,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Create(TInoutEntity pEntity, IDbTransaction pTran)
+        public void Create(CouponTypeItemMappingEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Create(pEntity,pTran);
         }
@@ -70,7 +72,7 @@ namespace JIT.CPOS.BS.BLL
         /// 根据标识符获取实例
         /// </summary>
         /// <param name="pID">标识符的值</param>
-        public TInoutEntity GetByID(object pID)
+        public CouponTypeItemMappingEntity GetByID(object pID)
         {
             return _currentDAO.GetByID(pID);
         }
@@ -79,7 +81,7 @@ namespace JIT.CPOS.BS.BLL
         /// 获取所有实例
         /// </summary>
         /// <returns></returns>
-        public TInoutEntity[] GetAll()
+        public CouponTypeItemMappingEntity[] GetAll()
         {
             return _currentDAO.GetAll();
         }
@@ -89,20 +91,17 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(TInoutEntity pEntity , IDbTransaction pTran)
+        public void Update(CouponTypeItemMappingEntity pEntity , IDbTransaction pTran)
         {
             _currentDAO.Update(pEntity,pTran);
         }
-        public void Update(TInoutEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
-        {
-            _currentDAO.Update(pEntity, pTran, pIsUpdateNullField);
-        }
+
 
         /// <summary>
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(TInoutEntity pEntity )
+        public void Update(CouponTypeItemMappingEntity pEntity )
         {
             _currentDAO.Update(pEntity);
         }
@@ -111,7 +110,7 @@ namespace JIT.CPOS.BS.BLL
         /// 删除
         /// </summary>
         /// <param name="pEntity"></param>
-        public void Delete(TInoutEntity pEntity)
+        public void Delete(CouponTypeItemMappingEntity pEntity)
         {
             _currentDAO.Delete(pEntity);
         }
@@ -121,7 +120,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(TInoutEntity pEntity, IDbTransaction pTran)
+        public void Delete(CouponTypeItemMappingEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Delete(pEntity,pTran);
         }
@@ -141,7 +140,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(TInoutEntity[] pEntities, IDbTransaction pTran)
+        public void Delete(CouponTypeItemMappingEntity[] pEntities, IDbTransaction pTran)
         {
             _currentDAO.Delete(pEntities,pTran);
         }
@@ -150,7 +149,7 @@ namespace JIT.CPOS.BS.BLL
         /// 批量删除
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
-        public void Delete(TInoutEntity[] pEntities)
+        public void Delete(CouponTypeItemMappingEntity[] pEntities)
         { 
             _currentDAO.Delete(pEntities);
         }
@@ -182,7 +181,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pWhereConditions">筛选条件</param>
         /// <param name="pOrderBys">排序</param>
         /// <returns></returns>
-        public TInoutEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        public CouponTypeItemMappingEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
            return _currentDAO.Query(pWhereConditions,pOrderBys);
         }
@@ -195,7 +194,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<TInoutEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<CouponTypeItemMappingEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
            return _currentDAO.PagedQuery(pWhereConditions,pOrderBys,pPageSize,pCurrentPageIndex);
         }
@@ -206,7 +205,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public TInoutEntity[] QueryByEntity(TInoutEntity pQueryEntity, OrderBy[] pOrderBys)
+        public CouponTypeItemMappingEntity[] QueryByEntity(CouponTypeItemMappingEntity pQueryEntity, OrderBy[] pOrderBys)
         {
            return _currentDAO.QueryByEntity(pQueryEntity,pOrderBys);
         }
@@ -217,7 +216,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public PagedQueryResult<TInoutEntity> PagedQueryByEntity(TInoutEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<CouponTypeItemMappingEntity> PagedQueryByEntity(CouponTypeItemMappingEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
            return _currentDAO.PagedQueryByEntity(pQueryEntity,pOrderBys,pPageSize,pCurrentPageIndex);
         }
