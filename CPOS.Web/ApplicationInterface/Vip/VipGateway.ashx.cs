@@ -1021,8 +1021,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             }
             SetOrderEntity orderInfo = new SetOrderEntity();//订单
 
-            try
-            {
+            //try
+            //{
                 //string reqContent = HttpContext.Current.Request["ReqContent"];
 
                 //Loggers.Debug(new DebugLogInfo()
@@ -1090,7 +1090,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 #region 如果选择到店自提sales_unit_id保存门店id，否则保存在线商城的Unit_id update by wzq
                 //if (reqObj.special.storeId == null || reqObj.special.storeId.Trim().Equals(""))
                 //{                  
-                orderInfo.StoreId = unitServer.GetUnitByUnitType("OnlineShopping", null).Id; //获取在线商城的门店标识
+                orderInfo.StoreId = unitServer.GetUnitByUnitTypeForWX("OnlineShopping", null).Id; //获取在线商城的门店标识
                 //}
                 //else    //送货到家***
                 //{
@@ -1313,13 +1313,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 #endregion
 
 
-            }
-            catch (Exception ex)
-            {
-                //respData.code = "103";
-                //respData.description = "数据库操作错误" + ex.Message;
-                //respData.exception = ex.ToString();
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //respData.code = "103";
+            //    //respData.description = "数据库操作错误" + ex.Message;
+            //    //respData.exception = ex.ToString();
+            //}
             var inoutbll = new InoutService(loggingSessionInfo);
             var flag = inoutbll.UpdateOrderDeliveryStatus(orderInfo.OrderId, "100",
                                    Utils.GetNow(), null,null);
