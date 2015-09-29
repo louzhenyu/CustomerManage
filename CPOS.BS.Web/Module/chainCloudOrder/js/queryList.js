@@ -295,7 +295,8 @@
                      return new Date(value).format("yyyy-MM-dd hh:mm");
                      }
                      },*/
-                    {field : 'Field9',title : '确认收货日期',width:120,align:'left',resizable:false,
+					 //Field9
+                    {field : 'create_time',title : '下单日期',width:120,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             if(value) {
                                 return new Date(value).format("yyyy-MM-dd hh:mm");

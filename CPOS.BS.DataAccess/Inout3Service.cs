@@ -1516,7 +1516,7 @@ WHERE     1=1) as t";
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public DataSet GetInoutDetailInfoByOrderId(string orderId)
+        public DataSet GetInoutDetailInfoByOrderId(string orderId,string strCustomerId)
         {
             #region
             string sql = "select a.order_detail_id "
@@ -1568,12 +1568,12 @@ WHERE     1=1) as t";
                         + " ,a.Field10 "
                         + ",(SELECT y.item_category_name  FROM dbo.T_Item x INNER JOIN dbo.T_Item_Category y ON(x.item_category_id = y.item_category_id) WHERE x.item_id = b.item_id ) itemCategoryName "
                         + " ,isnull(datediff(day,a.Field1,a.Field2),0) DayCount "
-                      + " From t_inout_detail a "
+                      + " From t_inout_detail a WITH(NOLOCK)  "
                       + " inner join vw_sku b "
                       + " on(a.sku_id = b.sku_id) "
-                      + " inner join t_inout c "
+                      + " inner join t_inout c WITH(NOLOCK)  "
                       + " on(a.order_id = c.order_id)"
-                      + " LEFT JOIN ObjectImages oi ON oi.objectID=b.item_id AND oi.DisplayIndex=1 "
+                      + " LEFT JOIN (SELECT *,ROW_NUMBER() OVER(PARTITION BY ObjectId  ORDER BY DisplayIndex ASC ) index FROM  ObjectImages  WHERE CustomerId='" + strCustomerId + "') oi ON oi.objectID=b.item_id AND oi.index=1 "
                       + " where a.order_id= '" + orderId + "' order by b.item_code";
             #endregion
             DataSet ds = new DataSet();

@@ -825,7 +825,7 @@ namespace JIT.CPOS.BS.BLL
                 {
                     foreach (var item in inoutInfoList)
                     {
-                        item.InoutDetailList = GetInoutDetailInfoByOrderId(item.order_id); //根据订单的ID取数据，查找详细信息
+                        item.InoutDetailList = GetInoutDetailInfoByOrderId(item.order_id,loggingSessionInfo.CurrentLoggingManager.Customer_Id); //根据订单的ID取数据，查找详细信息
                     }
                 }
 
@@ -920,7 +920,7 @@ namespace JIT.CPOS.BS.BLL
                 {
                     foreach (var item in inoutInfoList)
                     {
-                        item.InoutDetailList = GetInoutDetailInfoByOrderId(item.order_id); //根据订单的ID取数据，查找详细信息
+                        item.InoutDetailList = GetInoutDetailInfoByOrderId(item.order_id, loggingSessionInfo.CurrentLoggingManager.Customer_Id); //根据订单的ID取数据，查找详细信息
                     }
                 }
 
@@ -1127,7 +1127,7 @@ namespace JIT.CPOS.BS.BLL
                 {
                     inoutInfo = DataTableToObject.ConvertToObject<InoutInfo>(ds.Tables[0].Rows[0]);
                 }
-                inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(orderId);
+                inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(orderId, loggingSessionInfo.CurrentLoggingManager.Customer_Id);
                 return inoutInfo;
             }
             catch (Exception ex)
@@ -1191,7 +1191,7 @@ namespace JIT.CPOS.BS.BLL
                     inoutInfo.VipDiscount = Math.Round(vipDiscount,2);
 
                 }
-                inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(orderId);//获取明细信息
+                inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(orderId, loggingSessionInfo.CurrentLoggingManager.Customer_Id);//获取明细信息
                 return inoutInfo;
             }
             catch (Exception ex)
@@ -1214,7 +1214,7 @@ namespace JIT.CPOS.BS.BLL
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
                     inoutInfo = DataTableToObject.ConvertToObject<InoutInfo>(ds.Tables[0].Rows[0]);
-                    inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(inoutInfo.order_id);
+                    inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(inoutInfo.order_id, loggingSessionInfo.CurrentLoggingManager.Customer_Id);
                 }
 
                 return inoutInfo;
@@ -1230,12 +1230,12 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public IList<InoutDetailInfo> GetInoutDetailInfoByOrderId(string orderId)
+        public IList<InoutDetailInfo> GetInoutDetailInfoByOrderId(string orderId,string strCustomerId)
         {
             try
             {
                 IList<InoutDetailInfo> inoutDetailList = new List<InoutDetailInfo>();
-                DataSet ds = inoutService.GetInoutDetailInfoByOrderId(orderId);
+                DataSet ds = inoutService.GetInoutDetailInfoByOrderId(orderId, strCustomerId);
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
                     inoutDetailList = DataTableToObject.ConvertToList<InoutDetailInfo>(ds.Tables[0]);
@@ -1247,6 +1247,7 @@ namespace JIT.CPOS.BS.BLL
                 throw (ex);
             }
         }
+
 
         #endregion
 

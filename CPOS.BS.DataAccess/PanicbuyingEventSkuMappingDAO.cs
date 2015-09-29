@@ -87,9 +87,9 @@ namespace JIT.CPOS.BS.DataAccess
                select 
                     sm.MappingId,vwsku.sku_id SkuID,isnull(vp.price,0) price,sm.SalesPrice
                     ,(vwsku.prop_1_detail_name+vwsku.prop_2_detail_name+vwsku.prop_3_detail_name+vwsku.prop_4_detail_name+vwsku.prop_5_detail_name) SkuName
-                    ,sm.Qty,sm.KeepQty,sm.SoldQty,(isnull(sm.Qty,0)-isnull(sm.KeepQty,0)-isnull(sm.SoldQty,0)) InverTory
-                    ,(case when (isnull(sm.Qty,0)-isnull(sm.KeepQty,0)-isnull(sm.SoldQty,0))<=0 then '售罄' else '在售' end)StatusName
-                    ,(case when (isnull(sm.Qty,0)-isnull(sm.KeepQty,0)-isnull(sm.SoldQty,0))<=0 then 'false' else 'true' end)Status
+                    ,sm.Qty,sm.KeepQty,sm.SoldQty,(isnull(sm.Qty,0)-isnull(sm.SoldQty,0)) InverTory
+                    ,(case when (isnull(sm.Qty,0)-isnull(sm.SoldQty,0))<=0 then '售罄' else '在售' end)StatusName
+                    ,(case when (isnull(sm.Qty,0)-isnull(sm.SoldQty,0))<=0 then 'false' else 'true' end)Status
                     from  PanicbuyingEventItemMapping as im
                     inner join PanicbuyingEventSkuMapping as sm on im.EventItemMappingId=sm.EventItemMappingId
                     inner join vw_sku as vwsku on vwsku.sku_id=sm.SkuId
