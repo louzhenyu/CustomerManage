@@ -144,10 +144,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
                 {
                     return "{\"ResultCode\": 100,\"Message\": \"保存失败!已售基数不能大于商品数量 \"}";
                 }
-                if (rp.Parameters.Qty < (rp.Parameters.SoldQty + rp.Parameters.KeepQty))
-                {
-                    return "{\"ResultCode\": 100,\"Message\": \"保存失败!已售数量与真实数量之和 大于商品数量 \"}";
-                }
+                //if (rp.Parameters.Qty < (rp.Parameters.SoldQty + rp.Parameters.KeepQty))
+                //{
+                //    return "{\"ResultCode\": 100,\"Message\": \"保存失败!已售数量与真实数量之和 大于商品数量 \"}";
+                //}
                 if (rp.Parameters.Qty == 0)
                 {
                     return "{\"ResultCode\": 100,\"Message\": \"保存失败!商品数量必须大于0 \"}";
