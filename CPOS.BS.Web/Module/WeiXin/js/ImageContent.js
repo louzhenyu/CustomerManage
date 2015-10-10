@@ -415,6 +415,9 @@
                                 that.elems.imageView.html("<img src=" + obj.ImageUrl + ">");
                                 //保存图片
                                 that.generateUrl = obj.ImageUrl;
+								
+								//摘要内容
+								that.elems.contentDigestText.val(obj.Abstract || '');
                                 //表示的是链接
                                 switch (config.UnionTypeId - 0) {
                                     case 1:
@@ -431,11 +434,9 @@
                                         that.unionType = 2;
                                         that.elems.category.find("option[value='" + 2 + "']").attr("selected", "selected");
                                         that.elems.contentEditor.removeClass("hide").addClass("show");
-										that.elems.contentDigest.removeClass("hide").addClass("show");
+										//that.elems.contentDigest.removeClass("hide").addClass("show");
                                         //设置详情
                                         window.editor.html(obj.Text);
-										//遍历摘要内容
-										that.elems.contentDigestText.val(obj.Abstract || '');
                                         break;
                                     case 3:
                                         that.elems.category.find("option[value='" + 3 + "']").attr("selected", "selected");
@@ -1015,7 +1016,7 @@
                         that.unionType = 2;
                         that.elems.contentEditor.removeClass("hide").addClass("show");
 						//摘要显示
-						that.elems.contentDigest.removeClass("hide").addClass("show");
+						//that.elems.contentDigest.removeClass("hide").addClass("show");
                         break;
                     case 3:
                         //表示的是系统功能模块
@@ -1252,6 +1253,7 @@
             imageUrl = this.generateUrl;
             this.unionType = this.elems.category.val();
             showCover = $("#showCover").val();
+			digestText = that.elems.contentDigestText.val();//摘要文本内容
             if (title.length == 0) {
                 alert("请填写标题");
                 return false;
@@ -1278,7 +1280,6 @@
                 //获得源码
                 var html = window.editor.html();
                 text = html;
-				digestText = that.elems.contentDigestText.val();//摘要文本内容
                 if (html.length == 0) {
                     alert("请输入详细内容");
                     return false;

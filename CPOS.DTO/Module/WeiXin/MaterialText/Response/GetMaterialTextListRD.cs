@@ -27,6 +27,9 @@ namespace JIT.CPOS.DTO.Module.WeiXin.MaterialText.Response
         public string ModuleName { get; set; }
         public string PageParamJson { get; set; }
         public string UnionTypeId { get; set; }
+
+        public string Abstract { get; set; }
+
     }
 
 }

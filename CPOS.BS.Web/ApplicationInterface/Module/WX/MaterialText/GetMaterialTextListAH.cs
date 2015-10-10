@@ -39,6 +39,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                 PageParamJson = t.PageParamJson,
                 Text = t.Text,
                 Title = t.Title,
+                Abstract=t.Abstract,
                 TypeId = t.ModelId,
                 UnionTypeId = t.TypeId
             });

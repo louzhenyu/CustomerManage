@@ -63,6 +63,14 @@
             	</div>
             </div>
         </div>
+        
+        <div class="commonItem clearfix"  id="contentDigest">
+            <span class="tit">摘要</span>
+            <div class="richTextBox">
+            <textarea id="contentDigestText" name="content" style="width:700px;height:150px;"></textarea>
+            </div>
+        </div>
+        
     </div>
     
     <div class="tempEditArea">
@@ -178,12 +186,7 @@
                 </div>
                 
                 
-                <div class="commonItem clearfix" name="elems" id="contentDigest">
-                    <span class="tit">摘要</span>
-                    <div class="richTextBox">
-                    <textarea id="contentDigestText" name="content" style="width:700px;height:150px;"></textarea>
-                    </div>
-                </div>
+                
             
             </div>
             
