@@ -3252,8 +3252,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 //增加会员地址返回
                 var vipAddressBLL = new VipAddressBLL(loggingSessionInfo);
                 OrderBy[] orderbys = new OrderBy[]{
-                    new OrderBy(){FieldName="IsDefault",Direction=OrderByDirections.Desc},
-                    new OrderBy(){FieldName="LastUpdateTime",Direction=OrderByDirections.Desc}
+                    new OrderBy(){FieldName="IsDefault",Direction=OrderByDirections.Desc},//原来的设置默认地址
+                    new OrderBy(){FieldName="LastUpdateTime",Direction=OrderByDirections.Desc}//最后更新时间
                 };
                 var vipAddress = vipAddressBLL.QueryByEntity(new VipAddressEntity() { VIPID = userId }, orderbys).FirstOrDefault();
                 var vipAddressInfo = new VipAddressInfo() { };

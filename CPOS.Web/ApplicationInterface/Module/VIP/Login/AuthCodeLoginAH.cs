@@ -178,11 +178,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                             {
                                 throw new APIException("会员已经注册") { ErrorCode = ERROR_MEMBER_REGISTERED };
                             }
-                            //否则做会员合并
-                            if (!bll.MergeVipInfo(pRequest.CustomerID, pRequest.UserID, pRequest.Parameters.Mobile))
-                            {
-                                throw new APIException("自动绑定会员信息失败") { ErrorCode = ERROR_AUTO_MERGE_MEMBER_FAILED };
-                            }
+                            //否则做会员合并,在连锁云掌柜里暂时不用合并功能，让会员手动合并
+                            //if (!bll.MergeVipInfo(pRequest.CustomerID, pRequest.UserID, pRequest.Parameters.Mobile))
+                            //{
+                            //    throw new APIException("自动绑定会员信息失败") { ErrorCode = ERROR_AUTO_MERGE_MEMBER_FAILED };
+                            //}
                             //合并成功后重新读取信息
                             List<IWhereCondition> wheres = new List<IWhereCondition>();
                             wheres.Add(new MoreThanCondition() { FieldName = "status", Value = 0, IncludeEquals = false });

@@ -1555,7 +1555,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 }
 
                 var vipId = "";
-                if (reqObj.common.isALD != "1")
+           
+                if (!string.IsNullOrEmpty(reqObj.common.openId))
                 {
                     var vipList = (new VipBLL(loggingSessionInfo)).QueryByEntity(new VipEntity()
                     {
@@ -1563,6 +1564,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     }, null);
                     if (vipList != null && vipList.Length > 0) vipId = vipList[0].VIPID;
                 }
+                
                 if (vipId == null || vipId.Length == 0)
                 {
                     //respData.code = "2200";
