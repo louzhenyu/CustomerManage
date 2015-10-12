@@ -39,7 +39,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                 TextId = para.MaterialText.TextId,
                 Title = para.MaterialText.Title,
                 TypeId = para.MaterialText.TypeId,
-                Abstract=para.MaterialText.Abstract
+                Author=para.MaterialText.Abstract//摘要使用原来的字段
             };
             #endregion
 

@@ -31,7 +31,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
             {
                 TestId = t.TextId,
                 ApplicationId = t.ApplicationId,
-                Author = t.Author,
+                Abstract = t.Author,//摘要使用原来的字段
                 DisplayIndex = Convert.ToInt32(t.DisplayIndex),
                 ImageUrl = t.CoverImageUrl,
                 OriginalUrl = t.OriginalUrl,
@@ -39,7 +39,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                 PageParamJson = t.PageParamJson,
                 Text = t.Text,
                 Title = t.Title,
-                Abstract=t.Abstract,
                 TypeId = t.ModelId,
                 UnionTypeId = t.TypeId
             });
