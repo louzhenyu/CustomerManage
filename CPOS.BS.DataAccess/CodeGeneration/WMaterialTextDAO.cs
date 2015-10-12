@@ -707,6 +707,10 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pInstance.IsAuth = Convert.ToInt32(pReader["IsAuth"]);
             }
+            if (pReader["Abstract"] != DBNull.Value)
+            {
+                pInstance.Abstract = Convert.ToString(pReader["Abstract"]);
+            }
 
         }
         #endregion
