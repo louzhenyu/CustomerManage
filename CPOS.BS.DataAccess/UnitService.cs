@@ -1036,7 +1036,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             if (!string.IsNullOrEmpty(CityCode))
             {
                 strdistance = " ,0 as Distance ";
-                temp.AppendFormat(" and  a.unit_city_id in (select unit_city_id from t_unit where  exists(select 1 from T_City where city_id=t_unit.unit_city_id and city_code like '{0}%'))", CityCode);
+                temp.AppendFormat(" and  a.unit_city_id in (select unit_city_id from t_unit where  exists(select 1 from T_City where city_id=t_unit.unit_city_id and city_code like '{0}%'))", CityCode.Substring(0,3));
             }
             if (!string.IsNullOrEmpty(type_id))  //只取门店数据
             {
