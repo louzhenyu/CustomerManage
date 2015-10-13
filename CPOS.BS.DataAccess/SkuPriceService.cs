@@ -39,7 +39,7 @@ namespace JIT.CPOS.BS.DataAccess
   b.modify_user_id,b.bat_id,b.if_flag,b.customer_id 
   from T_Item_Price_Type a left join t_sku_price b 
   on a.item_price_type_id=b.item_price_type_id and b.status='1' and b.sku_id='{0}' and b.customer_id='{1}'  
-  where a.status='1'", skuId, this.CurrentUserInfo.CurrentLoggingManager.Customer_Id);
+  where a.status='1' order by a.create_user_id", skuId, this.CurrentUserInfo.CurrentLoggingManager.Customer_Id);
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }

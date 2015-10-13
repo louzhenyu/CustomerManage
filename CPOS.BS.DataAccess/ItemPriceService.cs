@@ -48,7 +48,9 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,a.customer_id "
                       + " From T_Item_Price a right join t_item_price_type tt on a.item_price_type_id = tt.item_price_type_id and a.item_id= '" + item_id + "' "
                       + " and a.status = '1' "
-                      + " and a.customer_id = '" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id.ToString() + "'";
+                      + " and a.customer_id = '" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id.ToString() + "'"
+            + " ORDER BY tt.create_user_id ";
+                
 
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;

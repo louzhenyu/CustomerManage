@@ -27,6 +27,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Util.SMS
                 string str = string.Format("request={0}", request.ToJSON());//请求参数
                 Loggers.Debug(new DebugLogInfo() { Message = "发送短信:" + str });
                 var res = HttpClient.PostQueryString(url, str);//发送请求，开始发送短信
+              
                 var response = res.DeserializeJSONTo<Response>();//解析发送短信后，返回的内容
                 Loggers.Debug(new DebugLogInfo() { Message = "收到返回信息:" + response.ToJSON() });
 
