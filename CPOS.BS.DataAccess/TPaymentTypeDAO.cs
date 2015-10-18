@@ -221,7 +221,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             UtilityEntity model = new UtilityEntity();
             string sql = @"select Payment_Type_Id PaymentTypeID, Payment_Type_Code PaymentTypeCode, Payment_Type_Name PaymentTypeName,Status
-                         ,PaymentCompany,PaymentItemType,LogoURL,PaymentDesc,t.CreateTime,t.LastUpdateTime
+                         ,PaymentCompany,PaymentItemType,LogoURL,PaymentDesc,IsNativePay,t.CreateTime,t.LastUpdateTime
                          ,t.CreateBy,t.LastUpdateBy,t.IsDelete
                          ,(case when m.PayDeplyType=0 then 'true' else 'false' end) IsDefault
                          ,(case when m.MappingId IS NULL then 'false' else 'true' end )IsOpen 

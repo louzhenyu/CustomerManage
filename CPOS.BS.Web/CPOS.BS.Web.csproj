@@ -799,6 +799,16 @@
     <Content Include="Module\LNewsType\Model\LNewsTypeVM.js" />
     <Content Include="Module\LNewsType\Store\LNewsVMStore.js" />
     <Content Include="Module\LNewsType\View\LNewsTypeView.js" />
+    <Content Include="Module\LNews\Controller\NewsCtl.js" />
+    <Content Include="Module\LNews\Controller\NewsEditCtl.js" />
+    <Content Include="Module\LNews\Model\NewsVM.js" />
+    <Content Include="Module\LNews\News.aspx" />
+    <Content Include="Module\LNews\NewsEdit.aspx" />
+    <Content Include="Module\LNews\Store\NewsEditVMStore.js" />
+    <Content Include="Module\LNews\Store\NewsVMStore.js" />
+    <Content Include="Module\LNews\t.htm" />
+    <Content Include="Module\LNews\View\NewsEditView.js" />
+    <Content Include="Module\LNews\View\NewsView.js" />
     <Content Include="Module\MVipShow\Controller\EventsCtl.js" />
     <Content Include="Module\MVipShow\Controller\EventsEditCtl.js" />
     <Content Include="Module\MVipShow\Controller\ImageListCtl.js" />
@@ -5177,7 +5187,6 @@
     <Content Include="Module\EnterpriseCustomer\Model\ESalesManagerVM.js" />
     <Content Include="Module\EnterpriseCustomer\Store\ESalesManagerVMStore.js" />
     <Content Include="Module\EnterpriseCustomer\View\ESalesManagerView.js" />
-    <Content Include="Module\LNews\t.htm" />
     <Content Include="Module\MapAnalysis\Common\BrandSKUTree.htm" />
     <Content Include="Module\MapAnalysis\Common\Common.aspx" />
     <Content Include="Module\MapAnalysis\Common\Controller\CommonCtl.js" />
@@ -5632,15 +5641,6 @@
     <Content Include="Module\TaskMap\indexs.html" />
     <Content Include="Module\TaskMap\indexss.html" />
     <Content Include="Module\TaskMap\Map.aspx" />
-    <Content Include="Module\LNews\Controller\NewsCtl.js" />
-    <Content Include="Module\LNews\Controller\NewsEditCtl.js" />
-    <Content Include="Module\LNews\Model\NewsVM.js" />
-    <Content Include="Module\LNews\News.aspx" />
-    <Content Include="Module\LNews\NewsEdit.aspx" />
-    <Content Include="Module\LNews\Store\NewsEditVMStore.js" />
-    <Content Include="Module\LNews\Store\NewsVMStore.js" />
-    <Content Include="Module\LNews\View\NewsEditView.js" />
-    <Content Include="Module\LNews\View\NewsView.js" />
     <Content Include="Module\MarketEvent\EventCreate\assets\images\jit\b.png" />
     <Content Include="Module\MarketEvent\EventCreate\assets\images\jit\basemap\bing.png" />
     <Content Include="Module\MarketEvent\EventCreate\assets\images\jit\basemap\gaode.png" />
@@ -6124,7 +6124,6 @@
     <Content Include="Module\WEvents\EventsLotteryLogList.aspx" />
     <Content Include="Module\WEvents\EventsPrizesList.aspx" />
     <Content Include="Module\WEvents\Handler\EventsHandler.ashx" />
-    <Content Include="Module\LNews\Handler\NewsHandler.ashx" />
     <Content Include="Module\WApplication\Handler\WApplicationHandler.ashx" />
     <Content Include="Framework\Upload\UploadFile.ashx" />
     <Content Include="Module\WApplication\Handler\ModelTreeHandel.ashx" />
@@ -6191,6 +6190,7 @@
     <None Include="Framework\swfupload\php\upload.php" />
     <Content Include="Module\EMMLManage\Qixin.Master" />
     <Content Include="Module\Basic\ItemCategoryNew\Handler\ALDCategoryTreeHandler.ashx" />
+    <Content Include="Module\LNews\Handler\NewsHandler.ashx" />
     <None Include="Module\static\images\Sorting icons.psd" />
     <None Include="Properties\PublishProfiles\bs.pubxml" />
     <None Include="Properties\PublishProfiles\bs_config.pubxml" />
@@ -7756,6 +7756,9 @@
     <Compile Include="Module\LNewsType\Handler\LNewsTypeHander.ashx.cs">
       <DependentUpon>LNewsTypeHander.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Module\LNews\Handler\NewsHandler.ashx.cs">
+      <DependentUpon>NewsHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Module\Log\InterfaceWebLog.cs" />
     <Compile Include="Module\MapAnalysis\Common\Common.aspx.cs">
       <DependentUpon>Common.aspx</DependentUpon>
@@ -7930,9 +7933,6 @@
     </Compile>
     <Compile Include="Module\Daren\Handler\LEventsEntriesHandler.ashx.cs">
       <DependentUpon>LEventsEntriesHandler.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Module\LNews\Handler\NewsHandler.ashx.cs">
-      <DependentUpon>NewsHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Module\MarketEvent\EventCreate\Handler\EventHandler.ashx.cs">
       <DependentUpon>EventHandler.ashx</DependentUpon>

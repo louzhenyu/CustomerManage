@@ -103,6 +103,10 @@ namespace JIT.CPOS.BS.Entity
         public Int32? IsDelete { get; set; }
 
         public string ChannelId { set; get; }
+        /// <summary>
+        /// 1=客户配置支付;0=平台支付
+        /// </summary>
+        public int IsNativePay { get; set; }
         #endregion
 
     }
