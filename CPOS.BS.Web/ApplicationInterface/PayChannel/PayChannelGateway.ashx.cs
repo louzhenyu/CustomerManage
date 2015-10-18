@@ -262,13 +262,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.PayChannel
             //商户条件
             //complexCondition.Add(new EqualsCondition() { FieldName = "customerid", Value = loggingSessionInfo.ClientID });
             complexCondition.Add(new DirectCondition("Payment_Type_Code in ('CCAlipayWap','AlipayWap')"));
-            var paymentTypeList = tPaymentTypeBll.Query(complexCondition.ToArray(), null);
+            var paymentTypeList = tPaymentTypeBll.Query(complexCondition.ToArray(), null); //支付宝支付和平台支付宝支付配置信息
+            var currentPaymentTypeInfo = tPaymentTypeBll.GetByID(paymentTypeId);           //当前支付方式信息
             foreach (var paymentType in paymentTypeList)
             {
                 var ptCustomerMapping = tPaymentTypeCustomerMappingBll.QueryByEntity(new TPaymentTypeCustomerMappingEntity() { CustomerId = loggingSessionInfo.ClientID, PaymentTypeID = paymentType.Payment_Type_Id }, null).FirstOrDefault();
-                if (ptCustomerMapping != null && ptCustomerMapping.PaymentTypeID != paymentTypeId)
+                if (ptCustomerMapping != null && ptCustomerMapping.PaymentTypeID != paymentTypeId && currentPaymentTypeInfo.Payment_Type_Code != "WXJS")
                     throw new APIException("同类型的支付方式只能启用一个.") { ErrorCode = 121 };
             }
+
         }
         protected override string ProcessAction(string pType, string pAction, string pRequest)
         {
