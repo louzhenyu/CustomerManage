@@ -8,7 +8,6 @@
     <link href="../static/css/artDialog.css" rel="stylesheet" type="text/css" />
     <link href="../static/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
     <style>
-    .dispatchingListArea{padding:50px 30px;}
 	/***弹出，创建版块，创建期刊***/
 	.jui-dialog{display:none;}
 	.jui-dialog-dispatching{width:760px;min-height:468px;top:50px;margin-left:-380px;}
@@ -24,12 +23,21 @@
 	.jui-dialog-dispatching .btnWrap .commonBtn{width:80px;height:27px;line-height:27px;margin-top:20px;}
 	.jui-dialog-dispatching .cancelBtn{margin-left:60px;}
 	
-	.jui-dialog-dispatching .radioBox{float:left;height:22px;line-height:19px;margin-left:20px;padding-left:22px;background:url(../styles/images/radio.png) no-repeat left center;cursor:pointer;}
-	.jui-dialog-dispatching .radioBox.on{background:url(../styles/images/skin/bg02/radio00.png) no-repeat left center;}
+	.jui-dialog-dispatching .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(images/radio.png) no-repeat left center;cursor:pointer;}
+	.jui-dialog-dispatching .radioBox.on{background:url(images/radioOn.png) no-repeat left center;}
 	
 	.jui-dialog-dispatching .uploadFileBox,.jui-dialog-dispatching .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
 	
 	#CupWap_certificatecilepath_upload{display:none;position:absolute;top:0;left:0;width:90px;height:32px;}
+	
+	.dataTable{border:none;}
+	.dataTable .title{height:58px;line-height:56px;border-bottom:2px solid #00cccb;}
+	.dataTable tr{height:91px;line-height:90px;border-bottom:1px solid #7fe6e5;}
+	.dataTable tbody tr:hover{background:#f2fcfd;}
+	.dataTable .operateWrap .editIcon{background:url(images/exit.png) no-repeat center center;}
+	
+	.radio em{  height: 28px;   width: 28px; background: url("../../images/newTemplate/radio.png") center center no-repeat; float: left; }
+.radio.on em{ background-image: url("../../images/newTemplate/radioOn.png")}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -38,21 +46,13 @@
 
 <div class="dispatchingListArea" id="section" data-js="js/dispatchingList">
     <div class="tableWrap">
-        <div class="tablehandle" style="height:45px;">
-            <div class="selectBox" style="padding-right:20px;">
-                <span class="text">按最近时间升序</span>
-            </div>
-        </div>
-    	
-        
         <!-- 已确认名单表格 -->
         <table class="dataTable" style="display:inline-table;">
             <thead>
                 <tr class="title">
-                    <th width="100" class="on"><span>选择</span></th>
-                    <th>操作</th>
-                    <th width="300">配送方式</th>
-                    <th>状态</th>
+                    <th width="40%">配送方式</th>
+                    <th width="40%">状态</th>
+                    <th width="20%">编辑</th>
                 </tr>
             </thead>
             <tbody id="dispatchingList">
@@ -88,7 +88,7 @@
     </div>
     <div class="dispatchingContent">
     	<div class="commonSelectWrap">
-            <em class="tit">账号类型</em>
+            <em class="tit">是否启用:</em>
             <div class="radioWrap">
                <p class="radioBox startUs">启用</p>
                <p class="radioBox unstartUs">停用</p>
@@ -96,15 +96,15 @@
         </div>
         
         <div class="commonSelectWrap" style="height:100px">
-            <em class="tit"><span class="fontRed">*</span> 配送费描述</em>
+            <em class="tit"><span class="fontRed">*</span> 配送费描述:</em>
             <p class="searchInput" style="height:100px"><textarea class="formInputBox" id="dispatching_describe" style="width:100%;height:100%;"></textarea></p>
         </div>
         <div class="commonSelectWrap">
-            <em class="tit"><span class="fontRed">*</span> 默认配送费</em>
+            <em class="tit"><span class="fontRed">*</span> 默认配送费:</em>
             <p class="searchInput"><input class="formInputBox" id="dispatching_cost" type="text" value="" /></p><span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">元</span>
         </div>
 		<div class="commonSelectWrap">
-            <em class="tit">免配送费最低订单金额</em>
+            <em class="tit">免配送费最低订单金额:</em>
             <p class="searchInput"><input class="formInputBox" id="dispatching_mincost" type="text" value="" /></p><span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">元</span>
         </div>
         
@@ -125,7 +125,7 @@
     </div>
     <div class="dispatchingContent">
     	<div class="commonSelectWrap">
-            <em class="tit">账号类型</em>
+            <em class="tit">是否启用:</em>
             <div class="radioWrap">
                 <p class="radioBox startUs">启用</p>
                 <p class="radioBox unstartUs">停用</p>
@@ -133,18 +133,18 @@
         </div>
         
         <div class="commonSelectWrap">
-            <em class="tit"><span class="fontRed">*</span> 备货期</em>
+            <em class="tit"><span class="fontRed">*</span> 备货期:</em>
             <p class="searchInput"><input class="formInputBox" id="dispatching_stockup" type="text" /></p>
             <span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">小时</span>
         </div>
         <div class="commonSelectWrap">
-            <em class="tit"><span class="fontRed">*</span> 门店工作时间</em>
+            <em class="tit"><span class="fontRed">*</span> 门店工作时间:</em>
             <p class="searchInput" style="width:190px;"><input class="formInputBox" id="dispatching_startTime"  type="text" /></p>
             <span style="float:left;line-height:34px;padding:0 2px 0 12px;font-size:16px;color:#ccc;">到</span>
             <p class="searchInput" style="width:190px;"><input class="formInputBox" id="dispatching_endTime" type="text" /></p>
         </div>
 		<div class="commonSelectWrap">
-            <em class="tit"><span class="fontRed">*</span> 提货期最长</em>
+            <em class="tit"><span class="fontRed">*</span> 提货期最长:</em>
             <p class="searchInput"><input class="formInputBox" id="dispatching_pickup" type="text" value="" /></p><span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">天内</span>
         </div>
         
@@ -159,16 +159,15 @@
 <script id="tpl_dispatchingList" type="text/html">
      <#for(var i=0;i<list.length;i++){ var item=list[i];#>
         	<tr>
-				<td class="checkBox"><em></em></td>
-				<td class="operateWrap" title="编辑" data-typeid="<#=item.deliveryId#>" >
-					<span class="editIcon"></span>
-				</td>
 				<td><#=item.deliveryName#></td>
 				<#if(item.IsOpen){#>
 					<td class="unstart">已启用</td>
 				<#}else{#>
 					<td class="unstart blue">未启用</td>
 				<#}#>
+				<td class="operateWrap" title="编辑" data-typeid="<#=item.deliveryId#>" >
+					<span class="editIcon"></span>
+				</td>
 			</tr>
     <#}#>
 </script>

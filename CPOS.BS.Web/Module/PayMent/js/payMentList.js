@@ -18,11 +18,13 @@
                     that.notifyUrl = data.url;
                 });
                 that.initEvent();
+				
+				$('#WXJS_parnterkey').val(that.randomString(32));
                 //that.pager();
             },
             stopBubble: function (e) {
                 if (e && e.stopPropagation) {
-                    //因此它支持W3C的stopPropagation()方法 
+                    //因此它支持W3C的stopPropagation()方法
                     e.stopPropagation();
                 }
                 else {
@@ -111,20 +113,21 @@
                 //单选框
                 $('.jui-dialog-payMent .radioBox').bind('click', function () {
                     var $this = $(this);
-
                     $('#jui-dialog-' + that.elems.dataObj.typecode + ' .radioBox').removeClass('on');
                     $this.addClass('on');
                     if ($this.data('radio') == 'disable') {
                         $this.parents('.payMentContent').find('input').attr('disabled', 'disabled').parent().css({ 'border': 'none' });
                         $this.parents('.payMentContent').find('.uploadFileBox').hide();
+						
                     } else {
                         $this.parents('.payMentContent').find('input').attr('disabled', false).parent().css({ 'border': '1px solid #dedede' });
                         $this.parents('.payMentContent').find('.uploadFileBox').show();
+						if (that.elems.dataObj.IsNativePay != 0) {
+							that.elems.dataObj.action = "SetPayChannel" //启用商户支付
+						}
+						$('#WXJS_parnterkey').attr('disabled', 'disabled');
                     }
-                    if ($this.index() == 1) {
-                        that.elems.dataObj.action = "SetPayChannel" //启用商户支付
-                    }
-
+                    
                     //$("#text").disable = ture;
                 });
                 //复选框选择
@@ -148,16 +151,31 @@
                     that.elems.dataObj.action = "SetDefaultPayChannel"//启用商户 和启用阿拉丁调用不同的方法。 默认SetDefaultPayChannel
                     that.showElements('#jui-dialog-' + that.elems.dataObj.typecode);
                     var index = 0;
-                    var userType = eval('(' + $this.data("usertype") + ')')//IsOpen 是否启用 IsDefault 是否是默认（阿拉丁）是否是商户IsCustom
-                    if (userType.IsOpen) {
-                        if (userType.IsCustom) {
-                            index = 1
+                    var userType = eval('(' + $this.data("usertype") + ')');//IsOpen 是否启用 IsDefault 是否是默认（阿拉丁）是否是商户IsCustom
+					that.elems.dataObj.IsNativePay = userType.IsNativePay;
 
-                        }
+                    if (userType.IsOpen) {
+						index = 0
+                        //if(userType.IsCustom){}
                     } else {
-                        index = 2;
+                        index = 1;
                     }
                     $('#jui-dialog-' + that.elems.dataObj.typecode + ' .radioBox').eq(index).trigger('click');
+					that.getDefaultInfo(function(params){
+						if(that.elems.dataObj.typecode == 'CCAlipayWap'){
+							
+						}else if(that.elems.dataObj.typecode == 'WXJS') {
+							$("#WXJS_appid").val(params.AccountIdentity);//微信号APPID
+							$("#WXJS_parnterid").val(params.TenPayIdentity);//微信支付商户号
+							$("#WXJS_parnterkey").val(params.TenPayKey || that.randomString(32));//API秘钥
+						}else if(that.elems.dataObj.typecode == 'AlipayWap') {//支付宝wap
+                            $("#AlipayWap_id").val(params.PayAccountNumber);//合作者ID
+							$("#AlipayWap_tbid").val(params.SalesTBAccess);//支付宝账号
+							$("#AlipayWap_publicKey").val(params.PayAccounPublic);//支付宝公钥
+							$("#AlipayWap_privateKey").val(params.PayPrivate);//私钥
+                        }
+					});
+					
                     that.stopBubble(e);
                 });
                 //关闭弹出层
@@ -206,7 +224,7 @@
                         channelId = 0;
                     }
 
-                    if (radioValue == 'unalading') {
+                    if (radioValue == 'unalading'){
                         that.disablePayment(function () {
                             alert('停用成功');
                             $tr.text('未启用').addClass('blue');
@@ -280,23 +298,19 @@
                             AddPayChannelList[0] = pay;
 
                         } else if (paymentCode == 'WXJS') {
-                            pay.PayType = "5";
+                            //pay.PayType = "6";
 
                             if (radioValue == 'busine') {
                                 if ($("#WXJS_appid").val() == '') {
-                                    that.alert('身份标识不能为空！');
-                                    return;
-                                }
-                                if ($("#WXJS_appsecret").val() == '') {
-                                    that.alert('公众平台秘钥不能为空！');
+                                    that.alert('微信号APPID不能为空！');
                                     return;
                                 }
                                 if ($("#WXJS_parnterid").val() == '') {
-                                    that.alert('财付商户通身份标识别不能为空！');
+                                    that.alert('微信支付商户号不能为空！');
                                     return;
                                 }
                                 if ($("#WXJS_parnterkey").val() == '') {
-                                    that.alert('财付通商户权限私钥不能为空！');
+                                    that.alert('API秘钥不能为空！');
                                     return;
                                 }
 
@@ -304,10 +318,9 @@
                                 pay.NotifyUrl = that.notifyUrl;
                                 var WxPayData = {
                                     "AppID": $("#WXJS_appid").val(),
-                                    "AppSecret": $("#WXJS_appsecret").val(),
-                                    "ParnterID": $("#WXJS_parnterid").val(),
-                                    "ParnterKey": $("#WXJS_parnterkey").val(),
-                                    "PaySignKey": $("#WXJS_paysignkey").val()
+                                    "Mch_ID": $("#WXJS_parnterid").val(),
+                                    "SignKey": $("#WXJS_parnterkey").val(),
+									"Trade_Type": "JSAPI"
                                 };
                                 pay.WxPayData = WxPayData;
                             }
@@ -400,7 +413,13 @@
                         } else if (paymentCode == 'GetToPay') {
                             pay.WapData = WapData;
                             AddPayChannelList[0] = pay;
-                        }
+                        } else if(paymentCode == 'CCAlipayWap'){
+							//待开发
+							pay.PayType = "3";
+							pay.NotifyUrl = that.notifyUrl;
+                            pay.WapData = WapData;
+                            AddPayChannelList[0] = pay;
+						}
 
                         obj.Parameters = {
                             'AddPayChannelData': AddPayChannelList
@@ -493,7 +512,36 @@
                         }
                     }
                 });
-            }
+            },
+			randomString: function(len) {
+			　　len = len || 32;
+			　　var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+			　　var maxPos = $chars.length;
+			　　var pwd = '';
+			　　for (i = 0; i < len; i++) {
+			　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+			　　}
+			　　return pwd;
+			},
+			getDefaultInfo: function(callback) {
+				$('#dialog').hide();
+                var that = this;
+                $.ajax({
+                    url: '/Module/PayMent/Handler/PayMentHander.ashx?type=Product&method=getMapingbyPayMentTypeId',
+                    type: "post",
+                    data:
+					{
+					    'paymentTypeId': that.elems.dataObj.typeid
+					},
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        //表示成功
+						if (callback) {
+							callback(data);
+						}
+                    }
+                });
+            },
 
         };
 
