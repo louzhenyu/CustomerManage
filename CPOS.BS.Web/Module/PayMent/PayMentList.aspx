@@ -75,7 +75,7 @@
         </div>
         
         <div class="commonSelectWrap">
-            <em class="tit"><span class="fontRed">*</span> 合作者省份(PID):</em>
+            <em class="tit"><span class="fontRed">*</span> 合作者身份(PID):</em>
             <p class="searchInput"><input id="AlipayWap_id" type="text" value="" /></p>
         </div>
         <div class="commonSelectWrap">
@@ -151,7 +151,7 @@
         </div>
         
         <div class="commonSelectWrap">
-            <em class="tit"><span class="fontRed">*</span> 微信号APPID:</em>
+            <em class="tit"><span class="fontRed">*</span> 公众号APPID:</em>
             <p class="searchInput"><input id="WXJS_appid" type="text" value="" /></p>
         </div>
         
