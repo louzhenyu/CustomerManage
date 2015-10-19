@@ -1122,6 +1122,7 @@
     <Content Include="ApplicationInterface\AllWin\RetailTrader.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewApp.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewWXGateway.ashx" />
+  
     <None Include="HtmlApp\Demo\images\Thumbs.db" />
     <None Include="HtmlApp\LJ\images\Thumbs.db" />
     <Content Include="log4net.config">
@@ -2477,6 +2478,7 @@
     <Compile Include="ApplicationInterface\Vip\VipGateway.ashx.cs">
       <DependentUpon>VipGateway.ashx</DependentUpon>
     </Compile>
+   
     <Compile Include="ApplicationInterface\Washing\OrderGateway.ashx.cs">
       <DependentUpon>OrderGateway.ashx</DependentUpon>
     </Compile>

@@ -57,7 +57,7 @@ namespace JIT.CPOS.BS.BLL
                 sign = vipBLL.GetSettingValue(CurrentUserInfo.ClientID);
 
                 string msg = "";
-                if (!Utils.SendSMSCode(CurrentUserInfo.ClientID, mobile, code, sign, out msg))
+                if (!Utils.SendSMSCode(CurrentUserInfo.ClientID, mobile, code, sign, out msg))//发送短信
                 {
                     throw new Exception("短信发送失败：" + msg);
                 }

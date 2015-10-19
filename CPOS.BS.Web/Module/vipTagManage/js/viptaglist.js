@@ -341,11 +341,12 @@
             //分页
 
             kkpager.generPageHtml({
-                pno: that.loadData.args.PageIndex-1,
+				pagerid:'kkpager',
+                pno: that.loadData.args.PageIndex,
                 mode: 'click', //设置为click模式
                 //总页码
-                total: data.Data.TotalPageCount,
-                totalRecords: data.totalCount,
+                total: data.Data.TotalPages,
+                totalRecords: data.Data.TotalCount,
                 isShowTotalPage: true,
                 isShowTotalRecords: true,
                 //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
@@ -378,7 +379,7 @@
         //加载更多的资讯或者活动
         loadMoreData: function (currentPage) {
             var that = this;
-            this.loadData.args.start = currentPage-1;
+            that.loadData.args.PageIndex = currentPage;
             that.loadData.getTagTypeAndTags(function(data){
                 that.renderTable(data);
             });
@@ -404,7 +405,7 @@
                     data:{
                        action:"GetTagTypeAndTags",
                         PageSize:this.args.PageSize,
-                        PageIndex:this.args.PageIndex
+                        PageIndex:this.args.PageIndex 
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {
