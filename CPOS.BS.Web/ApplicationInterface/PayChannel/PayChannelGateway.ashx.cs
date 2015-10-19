@@ -178,7 +178,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.PayChannel
                         + "PayDeplyType=1";
                 }
 
-                tPaymentTypeCustomerMappingBll.UpdatePaymentMap(updateSql, channelList.Datas.PayChannelIdList[0].ChannelId
+                tPaymentTypeCustomerMappingBll.UpdatePaymentMap(updateSql, channelList.Datas.PayChannelIdList[0].ChannelId + 1
                     , rp.Parameters.AddPayChannelData[0].PaymentTypeId, customerId);
             }
 
