@@ -174,7 +174,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                    // data.imageUrl = entity.ImageUrl;
                     var WKeywordReplyentity = new WKeywordReplyBLL(this.CurrentUserInfo).QueryByEntity(new WKeywordReplyEntity()
                     {
-                        Keyword = entity.QRCodeId.ToString()
+                        Keyword = entity.QRCodeId.ToString()//关键字
 
                     }, null).FirstOrDefault();
                     if (WKeywordReplyentity != null)
