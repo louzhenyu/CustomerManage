@@ -87,8 +87,23 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             string unit_tel = FormatParamValue(form.unit_tel);
             string unit_city_id = FormatParamValue(Request("unit_city_id"));
             string unit_status = FormatParamValue(form.unit_status);
-            int maxRowCount = PageSize;
-            int startRowIndex = Utils.GetIntVal(Request("start"));//第几页
+
+            string StoreType = FormatParamValue(form.StoreType);
+            string Parent_Unit_ID = FormatParamValue(form.Parent_Unit_ID);
+            string OnlyShop = form.OnlyShop;
+              int maxRowCount = PageSize;//每页数量
+              int limit = Utils.GetIntVal(Request("limit"));//传过来的参数
+              if (limit != 0)
+              {
+                  maxRowCount = PageSize = limit;
+              }
+
+
+            int page = Utils.GetIntVal(Request("page"));//第几行
+            if (page == 0) { page = 1; }
+            int startRowIndex = (page - 1) * PageSize+1;//因为row_number()从1开始
+          
+          //  int startRowIndex = Utils.GetIntVal(Request("start"));//第几行(原有的)
 
             string key = string.Empty;
             if (Request("id") != null && Request("id") != string.Empty)
@@ -106,15 +121,15 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             data = unitService.SearchUnitInfo(CurrentUserInfo,
                 unit_code, unit_name, unit_type_id,
                 unit_tel, unit_city_id, unit_status,
-                maxRowCount, startRowIndex);//分页的
+                maxRowCount, startRowIndex, StoreType, Parent_Unit_ID, OnlyShop);//分页的
 
             var jsonData = new JsonData();
             jsonData.totalCount = data.ICount.ToString();
             jsonData.data = data.UnitInfoList;
 
-            content = string.Format("{{\"totalCount\":{1},\"topics\":{0}}}",
+            content = string.Format("{{\"totalCount\":{1},\"TotalPage\":{2},\"topics\":{0}}}",
                 data.UnitInfoList.ToJSON(),
-                data.ICount);
+                data.ICount, data.TotalPage);
             return content;
         }
         #endregion
@@ -130,27 +145,32 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             var tUnitUnitSortMappingBLL = new TUnitUnitSortMappingBLL(CurrentUserInfo);
             UnitInfo data = new UnitInfo();
             string content = string.Empty;
-
+            var responseData = new ResponseData();
             string key = string.Empty;
-            if (Request("unit_id") != null && Request("unit_id") != string.Empty)
+            if (Request("unit_id") != null && Request("unit_id") != string.Empty && Request("unit_id") != "''")
             {
                 key = Request("unit_id").ToString().Trim();
+            } else
+            {
+                responseData.success = false;
+                responseData.msg = "unit_id";
+                return responseData.ToJSON();
             }
 
             data = unitService.GetUnitById(key);
 
             if (data != null)
             {
-                var unitSortMappingList = tUnitUnitSortMappingBLL.QueryByEntity(new TUnitUnitSortMappingEntity()
-                {
-                    UnitId = key
-                }, null);
+                //var unitSortMappingList = tUnitUnitSortMappingBLL.QueryByEntity(new TUnitUnitSortMappingEntity()
+                //{
+                //    UnitId = key
+                //}, null);
 
-                data.UnitSortIdList = new List<string>();
-                foreach (var unitSortMapping in unitSortMappingList)
-                {
-                    data.UnitSortIdList.Add(unitSortMapping.UnitSortId);
-                }
+                //data.UnitSortIdList = new List<string>();
+                //foreach (var unitSortMapping in unitSortMappingList)
+                //{
+                //    data.UnitSortIdList.Add(unitSortMapping.UnitSortId);
+                //}
 
                 WQRCodeManagerBLL wQRCodeManagerBLL = new WQRCodeManagerBLL(CurrentUserInfo);
                 var eventsWXList = wQRCodeManagerBLL.QueryByEntity(new WQRCodeManagerEntity
@@ -164,6 +184,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                     data.WXCodeImageUrl = eventsWXList[0].ImageUrl;
                     data.WXCode = eventsWXList[0].QRCode;
                     data.QRCodeTypeId = eventsWXList[0].QRCodeTypeId != null ? eventsWXList[0].QRCodeTypeId.ToString() : "";
+                    data.MaxWQRCod = data.WXCode;
+                    
                 }
 
                 #region 图文|二维码
@@ -171,10 +193,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 var entity = eventsWXList.FirstOrDefault();
                 if (entity != null)
                 {
-                   // data.imageUrl = entity.ImageUrl;
+                    // data.imageUrl = entity.ImageUrl;
                     var WKeywordReplyentity = new WKeywordReplyBLL(this.CurrentUserInfo).QueryByEntity(new WKeywordReplyEntity()
                     {
-                        Keyword = entity.QRCodeId.ToString()//关键字
+                        Keyword = entity.QRCodeId.ToString()
 
                     }, null).FirstOrDefault();
                     if (WKeywordReplyentity != null)
@@ -182,7 +204,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                         if (WKeywordReplyentity.ReplyType == 1)
                         {
                             data.ReplyType = "1";
-                            data.Text = WKeywordReplyentity.Text;
+                            data.Text = WKeywordReplyentity.Text;//文本信息
 
                         }
                         else if (WKeywordReplyentity.ReplyType == 3)
@@ -193,20 +215,28 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                             OrderBy[] pOrderBys = new OrderBy[]{
                              new OrderBy(){ FieldName="CreateTime", Direction= OrderByDirections.Asc}
                             };
+                            //图文映射
+                          //  List<WMenuMTextMappingEntity> listMapping = new List<WMenuMTextMappingEntity>();
                             var textMapping = bll.QueryByEntity(new WMenuMTextMappingEntity
                             {
                                 MenuId = WKeywordReplyentity.ReplyId,
                                 IsDelete = 0
                             }, pOrderBys);
+                           /// listMapping.Add(textMapping);
+
+
                             if (textMapping != null && textMapping.Length > 0)
                             {
                                 List<WMaterialTextEntity> list = new List<WMaterialTextEntity>();
                                 foreach (var item in textMapping)
                                 {
                                     WMaterialTextEntity WMaterialTextentity = wmbll.QueryByEntity(new WMaterialTextEntity { TextId = item.TextId, IsDelete = 0 }, null)[0];
+                                    WMaterialTextentity.TestId = WMaterialTextentity.TextId;//
+                                    WMaterialTextentity.ImageUrl = WMaterialTextentity.CoverImageUrl;
                                     list.Add(WMaterialTextentity);
                                 }
                                 data.listMenutext = list;
+                                data.listMenutextMapping = textMapping.ToList();
                             }
 
                         }
@@ -215,12 +245,25 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 
                 }
                 #endregion
+
+                //取图片
+                var imageService = new ObjectImagesBLL(CurrentUserInfo);
+                var itemObj = imageService.QueryByEntity(new ObjectImagesEntity() { ObjectId = key }, null);
+                if (itemObj != null && itemObj.Length > 0)
+                {
+                    data.ItemImageList= itemObj.OrderBy(item => item.DisplayIndex).ToList();
+                }
+
+
+
             }
+
 
             var jsonData = new JsonData();
             jsonData.totalCount = data == null ? "0" : "1";
             jsonData.data = data;
 
+            
             content = jsonData.ToJSON();
             return content;
         }
@@ -257,10 +300,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 obj.Id = unit_id;
             }
 
-            if (obj.CityId == "root") obj.CityId = "";
+            if (obj.CityId == "root") obj.CityId = "";//省份的上级，就是没有选择城市
             if (obj.CityId != null && obj.CityId.Trim().Length > 0 && obj.CityId.Trim().Length < 10)
             {
-                obj.CityId = cityService.GetCityGUIDByCityCode(obj.CityId);
+                obj.CityId = cityService.GetCityGUIDByCityCode(obj.CityId);//这里传过来的是区县的code
             }
 
             //if (obj.Parent_Unit_Id == null || obj.Parent_Unit_Id.Trim().Length == 0)
@@ -281,16 +324,18 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 responseData.msg = "无法获取门店二维码类别";
                 return responseData.ToJSON();
             }
-            if (obj.Code == null || obj.Code.Trim().Length == 0)
-            {
-                responseData.success = false;
-                responseData.msg = "门店编码不能为空";
-                return responseData.ToJSON();
-            }
+          
             if (obj.Name == null || obj.Name.Trim().Length == 0)
             {
                 responseData.success = false;
                 responseData.msg = "门店名称不能为空";
+                return responseData.ToJSON();
+            }
+            obj.Code = obj.Name;//没有编码的时候，就传名称
+            if (obj.Code == null || obj.Code.Trim().Length == 0)
+            {
+                responseData.success = false;
+                responseData.msg = "门店编码不能为空";
                 return responseData.ToJSON();
             }
             if (obj.CityId == null || obj.CityId.Trim().Length == 0)
@@ -345,6 +390,19 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             {
                 obj.Parent_Unit_Id = "-99";
             }
+            if (string.IsNullOrEmpty(obj.TypeId))//如果是空的时候就查找该商户下的门店类型(兼容原来老的接口和新的接口)
+            {
+                T_TypeBLL t_TypeBLL = new T_TypeBLL(this.CurrentUserInfo);
+                T_TypeEntity typeEn = new T_TypeEntity();
+                typeEn.type_code = "门店";
+                typeEn.customer_id = this.CurrentUserInfo.ClientID;
+                var typeList = t_TypeBLL.QueryByEntity(typeEn, null);
+                if (typeList != null && typeList.Length != 0)
+                {
+                    obj.TypeId = typeList[0].type_id;
+                }
+                // obj.TypeId=
+            }
 
             unitService.SetUnitInfo(CurrentUserInfo, obj);
 
@@ -352,7 +410,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 
             #region 生成二维码
             var QRCodeId = Guid.NewGuid();
-
+            //在新建门店时，就创建了二维码，会用到下面的代码****
             var wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
             {
 
@@ -360,7 +418,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 IsDelete = 0
 
             }, null).FirstOrDefault();
-            if (!string.IsNullOrEmpty(obj.WXCodeImageUrl) && wapentity!=null)
+            if (!string.IsNullOrEmpty(obj.WXCodeImageUrl) && wapentity != null)
             {
                 var QRCodeManagerentity = new WQRCodeManagerBLL(this.CurrentUserInfo).QueryByEntity(new WQRCodeManagerEntity
                 {
@@ -410,7 +468,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 
             }, null).FirstOrDefault();
 
-            if (wapentity==null)
+            if (wapentity == null)
             {
                 //无设置微信公众平台,不保存图文信息
             }
@@ -495,6 +553,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             #endregion
             responseData.success = true;
             responseData.msg = error;
+            responseData.data = obj.Id;
+
 
             content = responseData.ToJSON();
             return content;
@@ -527,19 +587,24 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                     responseData.msg = "ID不能为空";
                     return responseData.ToJSON();
                 }
-
-                var status = "-1";
-                if (FormatParamValue(Request("status")) != null && FormatParamValue(Request("status")) != string.Empty)
+                if (!string.IsNullOrEmpty(Request("IsDelete")) && Request("IsDelete").ToString() == "1")
                 {
-                    status = FormatParamValue(Request("status")).ToString().Trim();
+                    service.physicalDeleteUnit(key);
                 }
-
-                string[] ids = key.Split(',');
-                foreach (var id in ids)
+                else
                 {
-                    service.SetUnitStatus(key, status);
-                }
+                    var status = "-1";
+                    if (FormatParamValue(Request("status")) != null && FormatParamValue(Request("status")) != string.Empty)
+                    {
+                        status = FormatParamValue(Request("status")).ToString().Trim();
+                    }
+                    string[] ids = key.Split(',');
+                    foreach (var id in ids)
+                    {
+                        service.SetUnitStatus(key, status);
+                    }
 
+                }
                 responseData.success = true;
                 responseData.msg = error;
             }
@@ -652,7 +717,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             //{
             //    VwUnitPropertyBLL unitServer = new VwUnitPropertyBLL(CurrentUserInfo);
             //    WXCode = unitServer.GetUnitWXCode(UnitId).ToString();
-                
+
             //}
             #endregion
 
@@ -663,7 +728,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 CustomerId = CurrentUserInfo.CurrentUser.customer_id
                 ,
                 IsDelete = 0
-                ,WeiXinID = WeiXinId
+                ,
+                WeiXinID = WeiXinId
             }, null);
             if (wxObj == null || wxObj.Length == 0)
             {
@@ -674,7 +740,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             else
             {
                 WApplicationInterfaceBLL wApplicationInterfaceBLL = new WApplicationInterfaceBLL(CurrentUserInfo);
-                var appObj = wApplicationInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity() {
+                var appObj = wApplicationInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity()
+                {
                     WeiXinID = WeiXinId
                 }, null);
                 var appId = "";
@@ -736,15 +803,16 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             try
             {
                 //微信 公共平台
-                var wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity { 
+                var wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+                {
 
                     CustomerId = this.CurrentUserInfo.ClientID,
-                    IsDelete=0
+                    IsDelete = 0
 
                 }, null).FirstOrDefault();
-             
+
                 //获取当前二维码 最大值
-                var MaxWQRCod = new WQRCodeManagerBLL(this.CurrentUserInfo).GetMaxWQRCod()+1;
+                var MaxWQRCod = new WQRCodeManagerBLL(this.CurrentUserInfo).GetMaxWQRCod() + 1;
 
                 if (wapentity == null)
                 {
@@ -752,15 +820,15 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                     responseData.msg = "无设置微信公众平台!";
                     return responseData.ToJSON();
                 }
-             
+
                 string imageUrl = string.Empty;
 
                 #region 生成二维码
                 JIT.CPOS.BS.BLL.WX.CommonBLL commonServer = new JIT.CPOS.BS.BLL.WX.CommonBLL();
-                 imageUrl = commonServer.GetQrcodeUrl(wapentity.AppID.ToString().Trim()
-                                                           , wapentity.AppSecret.Trim()
-                                                           , "1",MaxWQRCod
-                                                           , this.CurrentUserInfo);
+                imageUrl = commonServer.GetQrcodeUrl(wapentity.AppID.ToString().Trim()
+                                                          , wapentity.AppSecret.Trim()
+                                                          , "1", MaxWQRCod
+                                                          , this.CurrentUserInfo);
 
                 if (string.IsNullOrEmpty(imageUrl))
                 {
@@ -773,7 +841,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                     CPOS.Common.DownloadImage downloadServer = new DownloadImage();
                     imageUrl = downloadServer.DownloadFile(imageUrl, host);
                     var unitTypeBll = new WQRCodeTypeBLL(this.CurrentUserInfo);
-                    var unitType = unitTypeBll.QueryByEntity(new WQRCodeTypeEntity(){ TypeCode="UnitQrCode"},null);
+                    var unitType = unitTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = "UnitQrCode" }, null);
                     var unit_id = Request("unit_id");
                     if (!string.IsNullOrEmpty(unit_id) && unitType != null && unitType.Length > 0)
                     {
@@ -784,7 +852,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                         unitQrCode.IsUse = 1;
                         unitQrCode.CustomerId = this.CurrentUserInfo.ClientID;
                         unitQrCode.ImageUrl = imageUrl;
-                        unitQrCode.ApplicationId = wapentity.ApplicationId;
+                        unitQrCode.ApplicationId = wapentity.ApplicationId;//微信公众号的编号
                         //objectId 为门店ID
                         unitQrCode.ObjectId = Request("unit_id");
                         unitQrcodeBll.Create(unitQrCode);
@@ -793,9 +861,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 #endregion
                 responseData.success = true;
                 responseData.msg = "二维码生成成功!";
-                var rp = new ReposeData() {
+                var rp = new ReposeData()
+                {
                     imageUrl = imageUrl,
-                    MaxWQRCod=MaxWQRCod
+                    MaxWQRCod = MaxWQRCod
                 };
                 responseData.data = rp;
                 return responseData.ToJSON();
@@ -804,7 +873,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             {
                 throw new APIException(ex.Message);
             }
-     
+
 
         }
         #endregion
@@ -820,9 +889,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 return responseData.ToJSON();
             }
 
-       
-         //  Url = "http://localhost:2330///HeadImage/20140903/20140903150820_9422.jpg";//测试url
-         //   Url = "http://dev.o2omarketing.cn:8400/Framework/Upload/Image/20140820/271ADE72AD7F46A09E4952147F4876D3.png";
+
+            //  Url = "http://localhost:2330///HeadImage/20140903/20140903150820_9422.jpg";//测试url
+            //   Url = "http://dev.o2omarketing.cn:8400/Framework/Upload/Image/20140820/271ADE72AD7F46A09E4952147F4876D3.png";
             //System.Net.WebClient wb = new System.Net.WebClient();
             //byte[] buffer = wb.DownloadData(Url);
             //System.IO.MemoryStream ms = new System.IO.MemoryStream(buffer);
@@ -832,11 +901,11 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             //responseData.success = true;
             //return responseData.ToJSON();
             string imageURL = Request("imageUrl");
-            string smallImagePath = imageURL.Substring(imageURL.IndexOf("HeadImage") + "HeadImage".Length+1);//取这一部分
-     
-          string targetPath = this.CurrentContext.Server.MapPath("/HeadImage/");
-            string imagePath = targetPath +smallImagePath.Replace('/','\\');// imageURL.Substring(imageURL.LastIndexOf("/")+1);
-            string imageName = imageURL.Substring(imageURL.LastIndexOf("/")+1);
+            string smallImagePath = imageURL.Substring(imageURL.IndexOf("HeadImage") + "HeadImage".Length + 1);//取这一部分
+
+            string targetPath = this.CurrentContext.Server.MapPath("/HeadImage/");
+            string imagePath = targetPath + smallImagePath.Replace('/', '\\');// imageURL.Substring(imageURL.LastIndexOf("/")+1);
+            string imageName = imageURL.Substring(imageURL.LastIndexOf("/") + 1);
             string itemName = imageName.Substring(0, imageName.IndexOf("."));
             try
             {
@@ -869,9 +938,56 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 
         #endregion
 
+        #region 导入门店
+        public string ImportUnit()
+        {
+            try
+            {
 
-       
-   
+
+                System.Web.HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
+                for (int fileCount = 0; fileCount < files.Count; fileCount++)
+                {
+                    System.Web.HttpPostedFile postedfile = files[fileCount];
+
+                    string fileName = System.IO.Path.GetFileName(postedfile.FileName);
+                    if (!String.IsNullOrEmpty(fileName))
+                    {
+
+                        string fileExtension = System.IO.Path.GetExtension(fileName);    //获取文件类型  
+
+                        //上传目录  
+                        string directory = System.Web.HttpContext.Current.Server.MapPath("/UpLoadFiles/");
+                        //文件全路径  
+                        string path = directory + fileName;
+
+                        //判断目录是否存在  
+                        if (!Directory.Exists(directory))
+                        {
+                            Directory.CreateDirectory(directory);
+                        }
+                        //文件存在就删除文件  
+                        if (File.Exists(path))
+                        {
+                            File.Delete(path);
+                        }
+                        //上传到服务器的路径  
+                        postedfile.SaveAs(path);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return "";
+
+        }
+
+        #endregion
+
+
     }
 
     #region QueryEntity
@@ -884,9 +1000,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
         public string city_code;
         public string unit_city_id;
         public string unit_status;
+        public string StoreType;
+        public string Parent_Unit_ID;
+        public string OnlyShop;
     }
     #endregion
-    public class ReposeData {
+    public class ReposeData
+    {
         public string imageUrl { set; get; }
 
         public int MaxWQRCod { set; get; }

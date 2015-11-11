@@ -42,7 +42,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Product.QiXinManage
                 var appSysService = new AppSysService(loggingSessionInfo);
                 RoleModel list = new RoleModel();
                 string key = "D8C5FF6041AA4EA19D83F924DBF56F93";
-                list = appSysService.GetRolesByAppSysId(key, 1000, 0);
+                list = appSysService.GetRolesByAppSysId(key, 1000, 0,"","","");
 
                 foreach (var item in list.RoleInfoList)
                 {

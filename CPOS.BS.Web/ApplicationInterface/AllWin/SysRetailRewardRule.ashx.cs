@@ -175,6 +175,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                 en.IsTemplate=1;
                 en.CooperateType=rp.Parameters.CooperateType;
                 en.IsDelete=0;
+                en.CustomerId = loggingSessionInfo.ClientID;//不要少写了CustomerId
                 //获取奖励模板
                 ds=bll.QueryByEntity(en, null);
             }
@@ -184,6 +185,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                 en.CooperateType=rp.Parameters.CooperateType;
                 en.RetailTraderID = rp.Parameters.RetailTraderID;
                 en.IsDelete=0;
+                en.CustomerId = loggingSessionInfo.ClientID;//不要少写了CustomerId
                 //获取奖励模板
                 ds = bll.QueryByEntity(en, null);
                 //如果该分销商没有奖励规则，就取他所属的合作类型的奖励模板的数据
@@ -193,6 +195,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                     en2.IsTemplate = 1;
                     en2.CooperateType = rp.Parameters.CooperateType;
                     en2.IsDelete = 0;
+                    en2.CustomerId = loggingSessionInfo.ClientID;//不要少写了CustomerId
                     //获取奖励模板
                     ds = bll.QueryByEntity(en2, null);
                 }

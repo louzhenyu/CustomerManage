@@ -282,14 +282,14 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                 + " ,a.unit_address Address "
                 + " ,a.unit_contact Contact "
                 + " ,a.unit_postcode Postcode "
-                + " ,a.unit_city_id CityId "
+            //    + " ,a.unit_city_id CityId "
                 + " ,a.unit_remark Remark "
                 + " ,a.Status "
                 + " ,a.unit_flag Flag "
                 + " ,a.customer_level CustomerLevel "
                 + " ,a.status_desc Status_desc "
                 + " ,c.city1_name + c.city2_name + c.city3_name  as CityName "
-                + " ,(select top 1 city_code from t_city where city_id=a.unit_city_id) CityCode "
+                + " ,(select top 1 city_code from t_city where city_id=a.unit_city_id) CityId "//CityCode
                 + " ,b.type_name TypeName "
                 + " ,(select src_unit_id From T_Unit_Relation where dst_unit_id = a.unit_id and status='1') Parent_unit_id "
                 + " ,(select y.unit_name From T_Unit_Relation x inner join t_unit y on(x.src_unit_id = y.unit_id) where x.dst_unit_id = a.unit_id and y.status='1' and x.status='1') Parent_Unit_Name"
@@ -306,6 +306,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                 + " ,a.webserversURL "
                 + " ,a.weiXinId "
                 + " ,a.dimensionalCodeURL "
+                 + " ,a.StoreType "
                 + " From t_unit a "
                 + " inner join T_Type b "
                 + " on(a.type_id = b.type_id) "
@@ -353,7 +354,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + " ,a.unit_email Email "
                       + " ,a.unit_postcode Postcode "
                       + " ,a.unit_remark Remark"
-                      + " ,a.Status Status "
+                      + " ,a.Status Status ,a.status_desc"
                       + " ,a.unit_flag Flag"
                       + " ,a.customer_level CustomerLevel"
                       + " ,a.create_user_id "
@@ -369,10 +370,12 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + " ,b.row_no "
                       + " ,a.longitude "
                       + " ,a.dimension "
+                        + ",a.StoreType ,(case a.StoreType when 'DirectStore' then '直营店'  when 'NapaStores' then '加盟店' end) StoreTypeName "
+                       + ",h.unit_name Parent_Unit_Name "
                       + " From  t_unit a "
                       + " inner join @TmpTable b "
                       + " on(a.unit_id = b.unit_id) "
-                      + " left join t_type c "
+                      + " left join t_type c "  //所属类型
                       + " on(a.type_id = c.type_id) "
                       + " left join T_City d "
                       + " on(a.unit_city_id = d.city_id) "
@@ -380,9 +383,12 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + " on(a.create_user_id = e.user_id) "
                       + " left join t_user f "
                       + " on(a.modify_user_id = f.user_id) "
+                      + " left join T_Unit_Relation g on (a.unit_id=g.dst_unit_id and g.status=1)"
+                      + " left join t_unit h on g.src_unit_id=h.unit_id"
+
                       + " where b.row_no >= '" + _ht["StartRow"] + "' "
                       + " and b.row_no <= '" + _ht["EndRow"] + "' "
-                + " order by a.customer_level desc, a.type_id, a.unit_code, a.unit_name ;";
+                + " order by  modify_time desc";  // a.customer_level desc, a.type_id, a.unit_code, a.unit_name
             ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());
             return ds;
         }
@@ -413,7 +419,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + " ); "
                       + " Declare @iCount int; "
                       + " insert into @TmpTable(unit_id,row_no) "
-                      + " select x.unit_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.unit_code),unit_id "
+                      + " select x.unit_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.modify_time desc),unit_id "  //unit_code
                       + @" from t_unit a inner join  #UnitSET R  on a.unit_id=R.unitID inner join cpos_ap..t_customer  c  on a.customer_id=c.customer_id where 1=1 "
             +  @" and a.unit_code!=c.customer_code and unit_code!='ONLINE'";
             sql = pService.GetLinkSql(sql, "a.unit_code", _ht["unit_code"].ToString(), "%");
@@ -423,6 +429,18 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             sql = pService.GetLinkSql(sql, "a.unit_tel", _ht["unit_tel"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.unit_city_id", _ht["unit_city_id"].ToString(), "=");
             sql = pService.GetLinkSql(sql, "a.status", _ht["unit_status"].ToString(), "=");
+            sql = pService.GetLinkSql(sql, "a.StoreType", _ht["StoreType"].ToString(), "=");//直营店、加盟店
+            //根据父组织
+            if (!string.IsNullOrEmpty(_ht["Parent_Unit_ID"].ToString()))
+            {
+                sql += " and a.unit_id  in (select dst_unit_id from T_Unit_Relation where src_unit_id='" + _ht["Parent_Unit_ID"].ToString() + "' )";
+            }
+            //是否只显示门店
+            if (_ht["OnlyShop"].ToString()=="1")
+            {
+                sql += " and a.type_id =(select type_id from t_type where type_code='门店' and customer_id='" + _ht["CustomerId"].ToString() + "' )";
+                    }
+
 
             sql = sql + " ) x";
 
@@ -573,6 +591,8 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             sql = pService.GetIsNotNullUpdateSql(sql, "webserversURL", unitInfo.webserversURL);
             sql = pService.GetIsNotNullUpdateSql(sql, "weiXinId", unitInfo.weiXinId);
             sql = pService.GetIsNotNullUpdateSql(sql, "dimensionalCodeURL", unitInfo.dimensionalCodeURL);
+            sql = pService.GetIsNotNullUpdateSql(sql, "StoreType", unitInfo.StoreType);
+            
             sql = sql + " where unit_id = '" + unitInfo.Id + "' ;";
             #endregion
             if (pTran != null)
@@ -622,7 +642,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + " ,webserversURL "
                       + " ,weiXinId "
                       + " ,dimensionalCodeURL "
-                      + " ,dimension) "
+                      + " ,dimension,StoreType) "
 
                       + " select a.* From ( "
                       + " select '" + unitInfo.Id + "' unit_id "
@@ -655,6 +675,8 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + ", '" + unitInfo.weiXinId + "' weiXinId "
                       + ", '" + unitInfo.dimensionalCodeURL + "' dimensionalCodeURL "
                       + ", '" + unitInfo.dimension + "' dimension "
+                       + ", '" + unitInfo.StoreType + "' StoreType "
+                      
                       + " ) a "
                       + " left join T_Unit b "
                       + " on(a.unit_id = b.unit_id) "
@@ -799,6 +821,16 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + " ,Modify_User_Id = '" + unitInfo.Modify_User_Id + "' "
                       + " ,if_flag = '0' "
                       + " where unit_id = '" + unitInfo.Id + "' ";
+            this.SQLHelper.ExecuteNonQuery(sql);
+            return true;
+        }
+
+        public bool physicalDeleteUnit(string Unit_ID)
+        {
+            string sql = "delete from t_unit"
+                      + " where unit_id = '" + Unit_ID + "' ";
+            sql += "delete from T_Unit_Relation"
+                + " where dst_unit_id = '" + Unit_ID + "' ";
             this.SQLHelper.ExecuteNonQuery(sql);
             return true;
         }

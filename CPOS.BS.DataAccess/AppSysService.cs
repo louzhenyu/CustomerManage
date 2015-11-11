@@ -90,9 +90,10 @@ namespace JIT.CPOS.BS.DataAccess
                          + "  , b.user_name as create_user_name "
                          + "  , c.user_name as modify_user_name "
                          + "  , a.role_name as role_desc "
-                         + "  , case when ISNULL(is_sys,0) = 1 then '是' else '否' end default_flag_desc "
-                         + "  , (select def_app_name From T_Def_App x where x.def_app_id = a.def_app_id) Def_App_Name "
-                         + "  from t_role a "
+                         + "  , case when ISNULL(is_sys,0) = 1 then '是' else '否' end default_flag_desc "//系统保留
+                         + "  , (select def_app_name From T_Def_App x where x.def_app_id = a.def_app_id) Def_App_Name "//系统名称
+                          + "  , a.type_id,a.org_level "
+                         + "  from t_role a "  //
                          + "  left join t_user b on a.create_user_id=b.user_id "
                          + " left join t_user c on a.modify_user_id=c.user_id"
                          + " where a.role_id= '" + roleId + "' "
@@ -152,7 +153,7 @@ namespace JIT.CPOS.BS.DataAccess
             DataSet ds = new DataSet();
             string sql = SearchRoleByAppSysIdPub(_ht);
             sql = sql + "select distinct a.role_id "
-                  + " , a.def_app_id reg_app_id "
+                  + " , a.def_app_id reg_app_id,a.Def_App_Id "
                   + " , app.def_app_code "
                   + " , app.def_app_name "
                   + " , a.role_code "
@@ -166,17 +167,20 @@ namespace JIT.CPOS.BS.DataAccess
                   + " , b.user_name as add_user_name "
                   + " , c.user_name as modify_user_name "
                   + " , a.role_name as role_desc "
+                  +",e.type_name" //层级名称
+                       + ",a.org_level" //层级名称
                   + " , case when ISNULL(is_sys,0) = 1 then '是' else '否' end default_flag_desc "
-                  + " , d.row_no "
+                  + " , d.row_no ,a.type_id"
                   + " , @iCount icount "
                   + " from t_role a "
                   + " left join t_user b on a.create_user_id=b.user_id "
                   + " left join t_user c on a.modify_user_id=c.user_id "
                   + " left join t_def_app app on a.def_app_id=app.def_app_id "
+                       + " left join t_type e  on a.type_id=e.type_id "
                   + " inner join @TmpTable d "
                   + " on(a.role_id = d.role_id) "
                   + " where 1=1 and a.[status] = '1' "
-                  + " and d.row_no  > '" + _ht["StartRow"].ToString() + "' and  d.row_no <= '" + _ht["EndRow"] + "'  "
+                  + " and d.row_no  >= '" + _ht["StartRow"].ToString() + "' and  d.row_no <= '" + _ht["EndRow"] + "'  "
                   + " order by a.def_app_id, a.role_code ;";
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
@@ -196,7 +200,16 @@ namespace JIT.CPOS.BS.DataAccess
                       + " where 1=1 and a.[status] = '1' ";
             PublicService pService = new PublicService();
             sql = pService.GetLinkSql(sql, "a.def_app_id", _ht["ApplicationId"].ToString(), "%");
-            sql = pService.GetLinkSql(sql, "a.Customer_Id", _ht["CustomerId"].ToString(), "%");
+            sql = pService.GetLinkSql(sql, "a.Customer_Id", _ht["CustomerId"].ToString(), "=");
+            sql = pService.GetLinkSql(sql, "a.role_name", _ht["role_name"]==null?"": _ht["role_name"].ToString(), "%");
+            sql = pService.GetLinkSql(sql, "a.type_id", _ht["type_id"] == null ? "" : _ht["type_id"].ToString(), "=");
+            if (string.IsNullOrEmpty(_ht["UserID"].ToString()))
+            {
+                sql += @" and  a.org_level >=( select min(z.type_level)  from T_User_Role x inner join t_role y 
+                                  on x.role_id=y.role_id
+                                  inner join t_type z on y.type_id=z.type_id where type_code!='OnlineShopping'  
+                                   and  x.user_id='" + _ht["UserID"].ToString() + "')";
+            }   
             sql = sql + " select @iCount = COUNT(*) From @TmpTable; ";
             return sql;
         }

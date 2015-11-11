@@ -241,9 +241,13 @@ namespace JIT.CPOS.BS.Entity.User
         
                 [XmlIgnore()]
         public string user_genderText { get; set; }
+                public string role_name { get; set; }
+
+
+        /// <summary>
+        /// 二维码图像
+        /// </summary>
+                public string WqrURL { get; set; }
            
-        
-
-
     }
 }

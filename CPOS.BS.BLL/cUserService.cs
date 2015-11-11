@@ -83,7 +83,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="maxRowCount">每页所占行数</param>
         /// <param name="startRowIndex">当前页的起始行数</param>
         /// <returns></returns>
-        public UserInfo SearchUserListByUnitID(string User_Code, string User_Name, string CellPhone, string User_Status, int maxRowCount, int startRowIndex, string UnitID)
+        public UserInfo SearchUserListByUnitID(string User_Code, string User_Name, string CellPhone, string User_Status, int maxRowCount, int startRowIndex, string UnitID, string para_unit_id, string role_id)
         {
             Hashtable hashtable = new Hashtable();
             hashtable.Add("UserCode", User_Code);
@@ -95,6 +95,8 @@ namespace JIT.CPOS.BS.BLL
             hashtable.Add("EndRow", startRowIndex + maxRowCount);
             hashtable.Add("CustomerId", loggingSessionInfo.CurrentLoggingManager.Customer_Id);
             hashtable.Add("UnitID", UnitID);
+            hashtable.Add("para_unit_id", para_unit_id);
+            hashtable.Add("role_id", role_id);
             IList<UserInfo> userInfoList = new List<UserInfo>();
             DataSet ds = userService.SearchUserListByUnitID(hashtable);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
@@ -674,6 +676,14 @@ namespace JIT.CPOS.BS.BLL
             }
             //return false;
         }
+
+
+        public bool physicalDeleteUser(string unitId)
+        {
+            return userService.physicalDeleteUser(unitId);
+        }
+
+
 
         /// <summary>
         /// 设置用户表的用户状态

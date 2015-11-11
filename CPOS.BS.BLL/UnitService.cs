@@ -43,7 +43,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 unitInfo = DataTableToObject.ConvertToObject<UnitInfo>(ds.Tables[0].Rows[0]);
             }
-            unitInfo.PropertyList = new PropertyUnitService(this.loggingSessionInfo).GetUnitPropertyListByUnit(unitId);
+          //  unitInfo.PropertyList = new PropertyUnitService(this.loggingSessionInfo).GetUnitPropertyListByUnit(unitId);
             return unitInfo;
         }
 
@@ -131,7 +131,7 @@ namespace JIT.CPOS.BS.BLL
                 {
                     //#if SYN_AP
                     // 单位类型是门店，提交管理平台
-                    if (unitInfo.TypeId != null && unitInfo.TypeId.Equals("EB58F1B053694283B2B7610C9AAD2742"))
+                    if (unitInfo.TypeId != null)  // && unitInfo.TypeId.Equals("EB58F1B053694283B2B7610C9AAD2742")（暂时去掉了“单位类型是门店，提交管理平台”的限制***）
                     {
                         if (!SetManagerExchangeUnitInfo(loggingSessionInfo, unitInfo, iType))
                         {
@@ -432,7 +432,7 @@ namespace JIT.CPOS.BS.BLL
                                              , string unit_status
                                              , int maxRowCount
                                              , int startRowIndex
-            )
+           , string StoreType, string Parent_Unit_ID, string OnlyShop)
         {
             Hashtable _ht = new Hashtable();
             if (unit_code == null) unit_code = "";
@@ -441,6 +441,9 @@ namespace JIT.CPOS.BS.BLL
             if (unit_tel == null) unit_tel = "";
             if (unit_city_id == null) unit_city_id = "";
             if (unit_status == null) unit_status = "";
+            if (Parent_Unit_ID == null) Parent_Unit_ID = "";
+            if (StoreType == null) StoreType = "";
+            if (OnlyShop == null) OnlyShop = "0";//默认所有都读出
             _ht.Add("unit_code", unit_code);
             _ht.Add("unit_name", unit_name);
             _ht.Add("unit_type_id", unit_type_id);
@@ -448,7 +451,11 @@ namespace JIT.CPOS.BS.BLL
             _ht.Add("unit_city_id", unit_city_id);
             _ht.Add("unit_status", unit_status);
             _ht.Add("StartRow", startRowIndex);
-            _ht.Add("EndRow", startRowIndex + maxRowCount);
+            _ht.Add("EndRow", startRowIndex + maxRowCount-1);//还需要再减去1
+            _ht.Add("Parent_Unit_ID", Parent_Unit_ID);
+            _ht.Add("StoreType", StoreType);
+            _ht.Add("OnlyShop", OnlyShop);
+
             _ht.Add("CustomerId", loggingSessionInfo.CurrentLoggingManager.Customer_Id);//还传了CustomerId
             UnitInfo unitInfo = new UnitInfo();
 
@@ -464,6 +471,9 @@ namespace JIT.CPOS.BS.BLL
 
             unitInfo.ICount = iCount;
             unitInfo.UnitInfoList = unitInfoList;
+            //取模
+            int mo=iCount%maxRowCount;
+            unitInfo.TotalPage = iCount/maxRowCount+(mo==0?0:1);
             return unitInfo;
         }
         #endregion
@@ -550,6 +560,11 @@ namespace JIT.CPOS.BS.BLL
             unitInfo.Modify_User_Id = loggingSessionInfo.CurrentUser.User_Id;
             unitInfo.Modify_Time = GetCurrentDateTime(); //获取当前时间
             return unitService.SetUnitTableStatus(unitInfo);
+        }
+
+        public bool physicalDeleteUnit(string unitId)
+        {
+            return unitService.physicalDeleteUnit(unitId);
         }
         #endregion
         /// <summary>

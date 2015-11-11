@@ -115,7 +115,10 @@ namespace JIT.CPOS.BS.DataAccess
                       + ",user_status "
                       + ",user_status_desc "
                       + ",fail_date "
-                           + @",isnull((	select top 1 c.unit_name from 	  T_User_Role b  inner join t_unit c on	  b.unit_id=c.unit_id where b.user_id=a.user_id),'') as UnitName "//UnitName
+                      + " ,isnull((select top 1 ImageUrl from WQRCodeManager where IsDelete=0 and  ObjectId =a.user_id),'' ) as WqrURL"
+                          // + @",isnull((	select top 1 c.unit_name from 	  T_User_Role b  inner join t_unit c on	  b.unit_id=c.unit_id where b.user_id=a.user_id),'') as UnitName "//UnitName
+                          + ",     dbo.fnGetRoleNamesByUserId(a.user_id) as role_name"
+                           + ",     dbo.fnGetUnitNamesByUserId(a.user_id) as UnitName"
                       + ",b.row_no "
                       + ", @iCount icount "
                       + "From t_user a "
@@ -233,6 +236,17 @@ where a.customer_id=@CustomerId    {4} ";
             sql = pService.GetLinkSql(sql, "a.User_Status", _ht["UserStatus"].ToString(), "=");
             sql = pService.GetLinkSql(sql, "a.User_CellPhone", _ht["CellPhone"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.customer_id", _ht["CustomerId"].ToString(), "=");
+            if (_ht["para_unit_id"].ToString() != "")
+            {
+                sql+=@"and user_id in (select user_id from  T_User_Role c inner join   vw_unit_level d ON d.unit_id = c.unit_id "
+                   + @"and d.path_unit_id like '%" + _ht["pare_unit_id"] + "%'  AND d.customer_id='" + _ht["CustomerId"].ToString() + "')";        
+            }
+            if (_ht["role_id"].ToString() != "")
+            {
+                sql += @"and user_id in (select user_id from  T_User_Role f inner join   vw_unit_level h ON f.unit_id = h.unit_id "
+                   + @"and f.role_id = '" + _ht["role_id"] + "'  AND h.customer_id='" + _ht["CustomerId"].ToString() + "')";
+            }
+
             sql = sql + " select @iCount = COUNT(*) From @TmpTable; ";
 
          
@@ -295,15 +309,16 @@ where a.customer_id=@CustomerId    {4} ";
                         throw (new System.Exception(strError));
                     }
 
-                    if (!DeleteUserRole(userInfo, tran))
+                    if (!DeleteUserRole(userInfo, tran))  //先删除，后增加
                     {
                         strError = "删除用户与角色单据明细失败";
                         throw (new System.Exception(strError));
                     }
                     if (userRoleInfos != null)
                     {
-                        foreach (UserRoleInfo userRoleInfo in userRoleInfos)
+                        foreach (UserRoleInfo userRoleInfo in userRoleInfos)//再插入
                         {
+                            userRoleInfo.Id = NewGuid();
                             if (!InsertUserRole(userRoleInfo, tran))
                             {
                                 strError = "插入用户与角色单据明细失败!";
@@ -527,6 +542,9 @@ where a.customer_id=@CustomerId    {4} ";
         public int ModifyUserPassword(string UserId, string UserPassword)
         {
             string sql = "update t_user set user_password = '" + UserPassword + "',modify_time = '"+ System.DateTime.Now.ToString()+"' where user_id = '" + UserId + "' ";
+            sql += "update cpos_ap..t_customer_user set cu_pwd = '" + UserPassword + "',sys_modify_stamp = '"
+                    + System.DateTime.Now.ToString() + "' where customer_user_id = '" + UserId + "' ";
+       
             var count = Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
             return count;
         }
@@ -547,11 +565,25 @@ where a.customer_id=@CustomerId    {4} ";
                        + " ,Modify_Time =  '"+ userInfo.Modify_Time +"' "
                        + " ,Modify_User_Id = '"+ userInfo.Modify_User_Id+"' "
                        + " where user_id = '"+ userInfo.User_Id+"' ;";
+
+            sql += "update cpos_ap..t_customer_user set cu_status = '" + userInfo.User_Status + "',sys_modify_stamp = '"
+                 + System.DateTime.Now.ToString() + "' where customer_user_id = '" + userInfo.User_Id + "' ";
+       
             this.SQLHelper.ExecuteNonQuery(sql);
             return true;
         }
 
         #endregion
+
+        public bool physicalDeleteUser(string user_id)
+        {
+            string sql = "delete from t_user"
+                      + " where user_id = '" + user_id + "' ";
+            sql += "delete from  cpos_ap..t_customer_user"
+                + " where customer_user_id = '" + user_id + "' ";
+            this.SQLHelper.ExecuteNonQuery(sql);
+            return true;
+        }
 
         /// <summary>
         /// 判读用户是否合法
@@ -663,7 +695,8 @@ where a.customer_id=@CustomerId    {4} ";
                       + " inner join t_user d on a.user_id=d.user_id "
                       + " inner join t_role e on a.role_id=e.role_id "
                       + " left join T_Def_App f "
-                      + " on e.def_app_id=f.def_app_id where a.user_id='" + userId + "' and e.def_app_id =case when '" + applicationId + "'='' then e.def_app_id else '" + applicationId + "' end "
+                      + " on e.def_app_id=f.def_app_id where a.user_id='" + userId
+                                        + "' and e.def_app_id =case when '" + applicationId + "'='' then e.def_app_id else '" + applicationId + "' end "//可以根据applicationId来查找信息
                       + " and  a.status = '1' order by e.def_app_id, e.role_code, a.default_flag desc, c.unit_code ;" ;
 
             DataSet ds = new DataSet();

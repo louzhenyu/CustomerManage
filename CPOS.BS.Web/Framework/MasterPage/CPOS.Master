@@ -1,7 +1,6 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CPOS.Master.cs"
     Inherits="JIT.CPOS.BS.Web.Framework.MasterPage.CPOS" %>
 <%@ Import Namespace="JIT.CPOS.BS.Entity" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -42,15 +41,17 @@
       <link href="<%=StaticUrl+"/module/static/css/jquery.datetimepicker.css"%>" rel="stylesheet" type="text/css" />
       <%--弹框--%>
     <link href="<%=StaticUrl+"/module/static/css/artDialog.css"%>" rel="stylesheet" type="text/css" /> 
-    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.5"%>" rel="stylesheet" />
- 
- 
-    
+    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.5"%>" rel="stylesheet" /> 
+     
      <%--模板 公共样式end--%>
-
       <%--模板 样式strart 切换模板样式只要更改/alading/skin02.css?v=0.5  alading qixin  college 只要三个模板 --%>
     <link href="<%=StaticUrl+"/module/styles/css/newTemplate/skin02.css?v=0.1"%>" rel="stylesheet" />
       <%--模板 样式End--%>
+       <script type="text/javascript" src="<%=StaticUrl+"/Module/AppConfig/lib/jquery-1.8.3.min.js" %>"></script>
+       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/plugin/artDialog.js" %>"></script>
+
+
+
     <%--mvc 样式strart--%>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="<%=StaticUrl+"/framework/css/reset.css"%>" rel="stylesheet" type="text/css" />
@@ -59,8 +60,7 @@
      <%--mvc 样式end--%>
     <!-- javaScript ddd -->
     <%--<script type="text/javascript" src="/framework/javascript/Other/jquery-1.4.2.min.js"></script>--%>
-    <script type="text/javascript" src="<%=StaticUrl+"/Module/AppConfig/lib/jquery-1.8.3.min.js" %>"></script>
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/plugin/artDialog.js" %>"></script>
+    
     <%--<script type="text/javascript" src="/framework/javascript/Other/menu.js"></script>--%>
     <!--[if IE 6]>
 <script type="text/javascript" src="js/png.js"></script>
@@ -84,8 +84,10 @@
     <script src="/Framework/javascript/Biz/OrderStatus.js" type="text/javascript"></script>
     <script src="/Framework/javascript/Biz/UnitSelectTree.js" type="text/javascript"></script>
     --%>
-
     <script src="<%=StaticUrl+"/Framework/javascript/Biz/Window.js"%>" type="text/javascript"></script>
+
+
+
     <link href="<%=StaticUrl+"/Framework/Css/cpos.css"%>" rel="stylesheet" type="text/css" />
     <script src="<%=StaticUrl+"/Framework/javascript/Other/cpos.js?v=0.4"%>" type="text/javascript"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
@@ -147,6 +149,7 @@
                     <ul class="clearfix addul" >
                         <%var level1Menu = from c in MenuList where c.Parent_Menu_Id == "--" select c;  //在这里取父节点为空的
                           int i = 0;
+                          //debugger;
                           foreach (var n in level1Menu)
                           {
                               i++;
@@ -207,6 +210,7 @@
                         foreach (var m in level2Menu)
                         {
                             
+                            
                             j++;
                             var urlPath = m.Url_Path;
                             if (urlPath == "")
@@ -224,7 +228,12 @@
                             }                
                             var tempUrlPath1 = urlPath.Substring(PreIndex);
                             int AfterIndex = tempUrlPath1.IndexOf(".aspx");//换成新取出的字符串的信息了
-                            var tempUrlPath2 = tempUrlPath1.Substring(0, AfterIndex).Replace("/","_");
+
+                            var tempUrlPath2 = "";
+                            if(AfterIndex!=-1)
+                            { 
+                               tempUrlPath2 = tempUrlPath1.Substring(0, AfterIndex).Replace("/","_");
+                            }
                             
                             var result = false;
                             result = (urlPath.IndexOf("?") >= 0);
@@ -268,7 +277,7 @@
                 </div>
             </div>
         </div>
-        <img src="" id="imgKeep" style="width: 0px; height: 0px;" />
+<%--        <img src="" id="imgKeep" style="width: 0px; height: 0px;" />
         <div id="session"></div>
         <script language="javascript" type="text/javascript">
             function keepSession() {
@@ -281,7 +290,7 @@
                 keepSession();
             }, 60000);
 
-        </script>
+        </script>--%>
 
         <script type="text/javascript">
             //主菜单点击

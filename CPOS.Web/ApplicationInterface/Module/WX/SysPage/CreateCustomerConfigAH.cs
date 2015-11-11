@@ -24,7 +24,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
         {
             CreateCustomerConfigRD rdRes = new CreateCustomerConfigRD();
             #region 1.写入文件。单个客户
-            if (!string.IsNullOrWhiteSpace(CurrentUserInfo.ClientID.ToString()))//如果CustomerID不为空
+            if (CurrentUserInfo==null &&  !string.IsNullOrWhiteSpace(CurrentUserInfo.ClientID.ToString()))//如果CustomerID不为空
             {
                 try
                 {
@@ -82,7 +82,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
                         try
                         {
                             string CustomerId = dt.Rows[i]["customer_id"].ToString();
-                            var currentInfo = Default.GetBSLoggingSession(CustomerId, "");
+                            var currentInfo = Default.GetBSLoggingSession(CustomerId, "");//根据商户的数据来看
                             SysPageBLL bll = new SysPageBLL(currentInfo);
                             string AllConfig = bll.GetCreateCustomerConfig(CustomerId); //获取要生成的Config内容
                             AllConfig = Regex.Replace(AllConfig, @"\s", "");

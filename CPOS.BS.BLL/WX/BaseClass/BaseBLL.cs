@@ -386,7 +386,7 @@ namespace JIT.CPOS.BS.BLL.WX
             response += "<ToUserName><![CDATA[" + openID + "]]></ToUserName>";
             response += "<FromUserName><![CDATA[" + weixinID + "]]></FromUserName>";
             response += "<CreateTime>" + new BaseService().ConvertDateTimeInt(DateTime.Now) + "</CreateTime>";
-            response += "<MsgType><![CDATA[transfer_customer_service]]></MsgType>";   //多客户
+            response += "<MsgType><![CDATA[transfer_customer_service]]></MsgType>";   //多客服
             response += "<Content><![CDATA[" + content + "]]></Content> ";
             response += "<FuncFlag>0</FuncFlag>";
             response += "</xml>";
@@ -440,7 +440,7 @@ namespace JIT.CPOS.BS.BLL.WX
                         break;
                 }
             }
-            else
+            else//如果取不到关键字回复或者自动回复，就使用客服信息程序
             {
                 //推送客服消息  qianzhi  2014-03-04
                 VipBLL vipService = new VipBLL(requestParams.LoggingSessionInfo);
@@ -453,7 +453,22 @@ namespace JIT.CPOS.BS.BLL.WX
                 if (vipList != null && vipList.Length > 0)
                 {
                     var vipEntity = vipList.FirstOrDefault();
-                    CSInvokeMessageBLL msg = new CSInvokeMessageBLL(requestParams.LoggingSessionInfo);
+                    CSInvokeMessageBLL msg = new CSInvokeMessageBLL(requestParams.LoggingSessionInfo);//调用客服信息
+
+                    /// <summary>
+                    /// 发送消息
+                    /// </summary>
+                    /// <param name="csPipelineId">消息通道ID1:微信2:短信3:IOS4:Android</param>
+                    /// <param name="userId">发送者ID</param>
+                    /// <param name="isCS">是否是客服1：是0：否</param>
+                    /// <param name="messageId">要回复的消息ID，如果为首次请求，请传NULL</param>
+                    /// <param name="messageContent">消息内容</param>
+                    /// <param name="serviceTypeId">服务类型，用于特殊类型的服务，如订单咨询</param>
+                    /// <param name="objectId">服务对象ID，请求对的对象ID，如订单ID</param>
+                    /// <param name="messageTypeId">消息类型，默认为NULL，如果是特殊类型的消息，则传特殊类型定义ID，现在暂定=5的ID为 微信优先、短信其次、App再次发送</param>
+                    /// <param name="contentTypeId">消息内容类型默认NULL或 1文本 2图片 3语音 4 视频 </param>
+                    /// <param name="sign">短信签名</param>
+                    /// <param name="mobileNo"></param>
                     msg.SendMessage(1, vipEntity.VIPID, 0, null, content, null, null, null, 1);
                 }
             }
@@ -486,7 +501,7 @@ namespace JIT.CPOS.BS.BLL.WX
             if (ds == null || ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0)
             {
                 HandlerTextOld();
-                return;
+                return;//执行 完老的发送信息的方法，就直接跳出请去，不往下走了****
             }
 
             #endregion

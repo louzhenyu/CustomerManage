@@ -190,15 +190,7 @@ namespace JIT.CPOS.BS.Entity
             get { return shortName; }
             set { shortName = value; }
         }
-        /// <summary>
-        /// 城市Id
-        /// </summary>
-        [XmlIgnore()]
-        public string CityId
-        {
-            get { return cityId; }
-            set { cityId = value; }
-        }
+   
         /// <summary>
         /// 县级市名称(查询时用)
         /// </summary>
@@ -212,11 +204,34 @@ namespace JIT.CPOS.BS.Entity
         /// 城市Code
         /// </summary>
         [XmlIgnore()]
-        public string CityCode
+        public string CityCode// 表示的是区的code
         {
             get { return cityCode; }
             set { cityCode = value; }
         }
+        public string provinceId//省份两位
+        {
+            get { return string.IsNullOrEmpty(CityId) ? "" : CityId.Substring(0, 2); }
+            set { cityCode = value; }
+        }
+        public string townId//市4位
+        {
+            get { return string.IsNullOrEmpty(CityId) ? "" : CityId.Substring(0, 4); }
+            set { cityCode = value; }
+        }
+
+        
+
+        /// <summary>
+        /// 城市Id
+        /// </summary>
+        [XmlIgnore()]
+        public string CityId
+        {
+            get { return cityId; }
+            set { cityId = value; }
+        }
+
         /// <summary>
         /// 省名称(查询时用)
         /// </summary>
@@ -226,6 +241,7 @@ namespace JIT.CPOS.BS.Entity
             get { return provinceName; }
             set { provinceName = value; }
         }
+
 
         private string stateName;
         /// <summary>
@@ -438,6 +454,8 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         [XmlIgnore()]
         public int ICount { get; set; }
+        public int TotalPage { get; set; }
+        
         /// <summary>
         /// 序号
         /// </summary>
@@ -522,8 +540,8 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 商品图片集合
         /// </summary>
-        [XmlIgnore()]
-        public IList<ObjectImagesEntity> ItemImageList { get; set; }
+        //[XmlIgnore()]
+      //  public IList<ObjectImagesEntity> ItemImageList { get; set; }
         /// <summary>
         /// 微信固定二维码
         /// </summary>
@@ -564,6 +582,17 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public List<WMaterialTextEntity> listMenutext { set; get; }
 
+
+        /// <summary>
+        /// 单位的属性列表
+        /// </summary>
+        [XmlIgnore()]
+        public IList<ObjectImagesEntity> ItemImageList
+        {
+            get;
+            set;
+        }
+
         public string ReplyType { set; get; }
 
         public string Text { set; get; }
@@ -571,6 +600,11 @@ namespace JIT.CPOS.BS.Entity
         public string MaxWQRCod { set; get; }
 
         public string imageUrl { set; get; }
+        public string StoreType { set; get; }
+        public string StoreTypeName { set; get; }
+        
+        //public string Parent_Unit_Name { set; get; }
+        
 
        
     }

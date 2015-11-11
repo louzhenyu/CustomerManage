@@ -102,7 +102,7 @@ namespace JIT.CPOS.BS.Web.Module.MarketEvent.Handler
             {
                 key = form.app_sys_id.Trim();
             }
-            list = appSysService.GetRolesByAppSysId(key, 1000, 0);
+            list = appSysService.GetRolesByAppSysId(key, 1000, 0, "", "", "");
 
             var jsonData = new JsonData();
             jsonData.totalCount = list.RoleInfoList.Count.ToString();

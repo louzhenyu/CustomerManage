@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -173,6 +174,15 @@ namespace JIT.CPOS.BS.Entity
         public string Reg_App_Name { get; set; }
 
         [XmlIgnore()]
-        public string Parent_Menu_Name { get; set; } 
+        public string Parent_Menu_Name { get; set; }
+        //支持老的树结构
+        public string id { get{ return  Menu_Id; }}
+        public string text { get { return Menu_Name; } }
+        public string state { get { return expanded_flag == "true" ? "open" : "closed"; } }
+
+    
+      [JsonProperty(PropertyName = "checked")]//转换成json数据时按照这个名称
+        public bool Checked { get { return check_flag=="true"?true:false; } }
+
     }
 }

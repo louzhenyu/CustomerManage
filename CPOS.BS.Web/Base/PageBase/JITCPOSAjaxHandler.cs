@@ -72,7 +72,7 @@ namespace JIT.CPOS.BS.Web.PageBase
 
         protected string FormatParamValue(string value)
         {
-            if (value == null || value == "null" || value == "undefined")
+            if (value == null || value == "null" || value == "undefined" || value == "")
             {
                 return string.Empty;
             }

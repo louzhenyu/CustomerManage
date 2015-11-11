@@ -29,6 +29,10 @@ namespace JIT.CPOS.BS.Entity
     public partial class CSConversationEntity : BaseEntity 
     {
         #region 属性集
+        /// <summary>
+        /// 会话的员工头像
+        /// </summary>
+        public string UserHeadUrl { get; set; }
 
         #endregion
     }

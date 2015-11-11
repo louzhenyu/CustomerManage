@@ -629,7 +629,7 @@ namespace JIT.CPOS.BS.BLL.WX
             commonService = new JIT.CPOS.BS.BLL.WX.CommonBLL();
             wUserMessageBLL = new WUserMessageBLL(loggingSessionInfo);
 
-            queryObj = new WUserMessageEntity();
+            queryObj = new WUserMessageEntity();//先保存到WUserMessage
             queryObj.MessageId = JIT.CPOS.Common.Utils.NewGuid();
             queryObj.VipId = vip.VIPID;
             queryObj.Text = message;
@@ -695,7 +695,7 @@ namespace JIT.CPOS.BS.BLL.WX
                         queryObj.IsPushSuccess = 0;
                         queryObj.FailureReason = msgResultObj.ToJSON();
                     }
-                    wUserMessageBLL.Update(queryObj, false);
+                    wUserMessageBLL.Update(queryObj, false);//保存到wUserMessage
 
                     code = "200";
                 }

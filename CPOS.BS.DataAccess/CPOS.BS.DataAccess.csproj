@@ -235,6 +235,7 @@
     <Compile Include="CodeGeneration\NewApp\InnerGroupNewsDAO.cs" />
     <Compile Include="CodeGeneration\NewApp\NewsUserMappingDAO.cs" />
     <Compile Include="CodeGeneration\NewApp\T_DeptDAO.cs" />
+    <Compile Include="CodeGeneration\NewApp\T_TypeDAO.cs" />
     <Compile Include="CodeGeneration\ObjectEvaluationDAO.cs" />
     <Compile Include="CodeGeneration\ItemKeepDAO.cs" />
     <Compile Include="CodeGeneration\ItemKnowledgeDAO.cs">
@@ -659,6 +660,7 @@
     <Compile Include="NewApp\InnerGroupNewsDAO.cs" />
     <Compile Include="NewApp\NewsUserMappingDAO.cs" />
     <Compile Include="NewApp\T_DeptDAO.cs" />
+    <Compile Include="NewApp\T_TypeDAO.cs" />
     <Compile Include="ObjectEvaluationDAO.cs" />
     <Compile Include="ItemKeepDAO.cs" />
     <Compile Include="ItemKnowledgeDAO.cs" />

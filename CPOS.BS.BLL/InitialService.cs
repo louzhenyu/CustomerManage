@@ -64,6 +64,9 @@ namespace JIT.CPOS.BS.BLL
             loggingSessionInfo.CurrentUser = userInfo;
 
 
+
+
+
             #region 判断客户是否已经建立总部
             typeId = "1";//统一作为1来处理
             bool bReturn = false;
@@ -91,7 +94,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 #region 门店
                 JIT.CPOS.BS.Entity.UnitInfo unitShopInfo = new JIT.CPOS.BS.Entity.UnitInfo();//门店
-                if (!strUnitInfo.Equals(""))
+                if (!strUnitInfo.Equals(""))//把在运营商管理平台创建的门店在这里反序列化
                 {
                     unitShopInfo = (JIT.CPOS.BS.Entity.UnitInfo)cXMLService.Deserialize(strUnitInfo, typeof(JIT.CPOS.BS.Entity.UnitInfo));        
                 }
@@ -118,7 +121,7 @@ namespace JIT.CPOS.BS.BLL
                     });
                     throw new Exception("获取门店失败：" + ex.ToString());
                 }
-                if (unitStoreInfo2 == null || !string.IsNullOrEmpty(unitStoreInfo2.Id))
+                if (unitStoreInfo2 == null || !string.IsNullOrEmpty(unitStoreInfo2.Id))//***这里的判断是不是错了，应该是(unitStoreInfo2 != null || !string.IsNullOrEmpty(unitStoreInfo2.Id))
                 {
                     Loggers.Debug(new DebugLogInfo()
                     {
@@ -129,13 +132,57 @@ namespace JIT.CPOS.BS.BLL
                 #endregion
                 #endregion
 
+
+                //创建商户自己的门店类型
+                T_TypeBLL t_TypeBLL = new T_TypeBLL(loggingSessionInfo);
+                //创建总部类型
+                T_TypeEntity typeGeneral = new T_TypeEntity();
+                typeGeneral.type_id = BaseService.NewGuidPub();//去掉了中间的‘-’
+                typeGeneral.type_code = "总部";
+                typeGeneral.type_name = "总部";
+                typeGeneral.type_name_en = "总部";
+                typeGeneral.type_domain = "UnitType";
+                typeGeneral.type_system_flag =1;
+                typeGeneral.status = 1;
+                typeGeneral.type_Level = 1;
+                typeGeneral.customer_id = customerInfo.ID;
+                t_TypeBLL.Create(typeGeneral);
+                //创建门店类型
+                T_TypeEntity typeShop = new T_TypeEntity();
+                typeShop.type_id = BaseService.NewGuidPub();//去掉了中间的‘-’
+                typeShop.type_code = "门店";
+                typeShop.type_name = "门店";
+                typeShop.type_name_en = "门店";
+                typeShop.type_domain = "UnitType";
+                typeShop.type_system_flag = 1;
+                typeShop.status = 1;
+                typeShop.type_Level = 99;//等到在页面上保存时在根据增加的层级来改变他的层级
+                typeShop.customer_id = customerInfo.ID;
+                t_TypeBLL.Create(typeShop);
+
+                //创建在线商城类型
+                T_TypeEntity typeOnlineShopping = new T_TypeEntity();
+                typeOnlineShopping.type_id = BaseService.NewGuidPub();//去掉了中间的‘-’
+                typeOnlineShopping.type_code = "OnlineShopping";
+                typeOnlineShopping.type_name = "在线商城";
+                typeOnlineShopping.type_name_en = "OnlineShopping";
+                typeOnlineShopping.type_domain = "UnitType";
+                typeOnlineShopping.type_system_flag = 1;
+                typeOnlineShopping.status = 1;
+                typeOnlineShopping.type_Level = -99;//在线商城类型不算在组织类型里，因此排在外面
+                typeOnlineShopping.customer_id = customerInfo.ID;
+                t_TypeBLL.Create(typeOnlineShopping);
+
+
+
+
                 #region 新建角色
 
                 RoleModel roleInfo = new RoleModel();
                 if (typeId.Equals("1"))
                 {
                     roleInfo.Role_Id = BaseService.NewGuidPub();
-                    roleInfo.Def_App_Id = "D8C5FF6041AA4EA19D83F924DBF56F93";
+                    roleInfo.Def_App_Id = "D8C5FF6041AA4EA19D83F924DBF56F93";  //创建了一个o2o业务系统的角色
                     roleInfo.Role_Code = "Admin";
                     roleInfo.Role_Name = "管理员";
                     roleInfo.Role_Eng_Name = "administrator";
@@ -144,6 +191,10 @@ namespace JIT.CPOS.BS.BLL
                     roleInfo.customer_id = customerInfo.ID;
                     roleInfo.Create_User_Id = userInfo.User_Id;
                     roleInfo.Create_Time = new BaseService().GetCurrentDateTime();
+//新加上所处的层级
+                    roleInfo.type_id = typeGeneral.type_id;
+                    roleInfo.org_level = (int)typeGeneral.type_Level;//等级
+
                     string strerror = "";
                     strReturn = new RoleService(loggingSessionInfo).SetRoleInfo(roleInfo,out strerror, false);//这里没有创建他的菜单
                     if (!strReturn.Equals("成功"))
@@ -191,12 +242,14 @@ namespace JIT.CPOS.BS.BLL
                     IList<UserRoleInfo> userRoleInfos = new List<UserRoleInfo>();
                     UserRoleInfo userRoleInfo = new UserRoleInfo();
                     userRoleInfo.Id = BaseService.NewGuidPub();
-                    userRoleInfo.RoleId = roleInfo.Role_Id;
+                    userRoleInfo.RoleId = roleInfo.Role_Id;// 加上管理员权限
                     userRoleInfo.UserId = userInfo.User_Id;
-                    userRoleInfo.UnitId = unitShopInfo.Id;
+                    userRoleInfo.UnitId = unitShopInfo.Id;//新建的门店标识（运营商管理平台创建的门店(Shop代表门店***)，code=customer_code,name=customer_name）
                     userRoleInfos.Add(userRoleInfo);
                     loggingSessionInfo.CurrentUserRole = userRoleInfo;
-                    bReturn = userServer.SetUserInfo(userInfo, null, out strError,false);
+                    bReturn = userServer.SetUserInfo(userInfo, null, out strError,false);//保存用户信息
+                    //先给admin键了一个门店的权限*****，可以给去掉，去掉上面一句话就可以了****
+
                     if (!bReturn) {
                         Loggers.Debug(new DebugLogInfo()
                         {
@@ -219,7 +272,9 @@ namespace JIT.CPOS.BS.BLL
                 if (typeId.Equals("1") || typeId.Equals("2"))
                 {
                     unitInfo.Id = BaseService.NewGuidPub();
-                    unitInfo.TypeId = "2F35F85CF7FF4DF087188A7FB05DED1D";
+                 //   unitInfo.TypeId = "2F35F85CF7FF4DF087188A7FB05DED1D";//这里要替换成该商户自己的门店类型标识****
+                    unitInfo.TypeId = typeGeneral.type_id;//***
+                
                     unitInfo.Code = customerInfo.Code + "总部";
                     unitInfo.Name = customerInfo.Name + "总部";
                     unitInfo.CityId = customerInfo.city_id;
@@ -240,21 +295,25 @@ namespace JIT.CPOS.BS.BLL
 
                 #region 处理门店，用的是商户的code和名称，id没有用*****
 
-                storeInfo.Id = unitShopInfo.Id;
+                storeInfo.Id = unitShopInfo.Id;//（运营商管理平台创建的门店(Shop代表门店***)
                 if (string.IsNullOrEmpty(unitShopInfo.Id))
                 {
                     storeInfo.Id = BaseService.NewGuidPub();
                 }
-                storeInfo.TypeId = "EB58F1B053694283B2B7610C9AAD2742";
-                storeInfo.Code = customerInfo.Code;//
-                storeInfo.Name = customerInfo.Name;
+               // storeInfo.TypeId = "EB58F1B053694283B2B7610C9AAD2742"; //整个平台的系统类型（门店类型）
+                storeInfo.TypeId = typeShop.type_id;//上面创建的门店类型
+                storeInfo.Code = customerInfo.Code;//商户的code
+                storeInfo.Name = customerInfo.Name;//商户的name
+                storeInfo.Name = customerInfo.Name;//商户的name
+
                 storeInfo.CityId = customerInfo.city_id;
                 storeInfo.Status = "1";
                 storeInfo.Status_Desc = "正常";
                 storeInfo.CustomerLevel = 1;
                 storeInfo.customer_id = customerInfo.ID;
-                storeInfo.Parent_Unit_Id = unitInfo.Id;
+                storeInfo.Parent_Unit_Id = unitInfo.Id;//总部下面的一个门店
                 storeInfo.strDo = "Create";
+                storeInfo.StoreType = "DirectStore";//设置为直营店
                 strReturn = unitServer.SetUnitInfo(loggingSessionInfo, storeInfo,false);
                 Loggers.Debug(new DebugLogInfo()
                 {
@@ -271,17 +330,18 @@ namespace JIT.CPOS.BS.BLL
                     UserRoleInfo userRoleInfo = new UserRoleInfo();
                     userRoleInfo.Id = BaseService.NewGuidPub();
                     userRoleInfo.UserId = userInfo.User_Id;
-                    userRoleInfo.RoleId = roleInfo.Role_Id;
-                    userRoleInfo.UnitId = unitInfo.Id;
-                    userRoleInfo.Status = "1";
+                    userRoleInfo.RoleId = roleInfo.Role_Id; //admin角色*****
+                    userRoleInfo.UnitId = unitInfo.Id;//总部下的*** 
+userRoleInfo.Status = "1";
                     userRoleInfo.DefaultFlag = 1;
                     userRoleInfoList.Add(userRoleInfo);
                 }
+                //不建立下面的关系，就可以之保留admin的总部角色权限了
                 UserRoleInfo userRoleInfo1 = new UserRoleInfo();
                 userRoleInfo1.Id = BaseService.NewGuidPub();
                 userRoleInfo1.UserId = userInfo.User_Id;
                 userRoleInfo1.RoleId = roleInfo.Role_Id;
-                userRoleInfo1.UnitId = storeInfo.Id;
+                userRoleInfo1.UnitId = storeInfo.Id;//还和子门店建立了关系（id为商户的id）
                 userRoleInfo1.Status = "1";
                 userRoleInfo1.DefaultFlag = 0;
                 userRoleInfoList.Add(userRoleInfo1);
@@ -305,7 +365,7 @@ namespace JIT.CPOS.BS.BLL
                 #region 添加仓库以及仓库与门店关系
                 JIT.CPOS.BS.Entity.Pos.WarehouseInfo warehouseInfo = new JIT.CPOS.BS.Entity.Pos.WarehouseInfo();
                 warehouseInfo.warehouse_id = BaseService.NewGuidPub();
-                warehouseInfo.wh_code = storeInfo.Code + "_wh";
+                warehouseInfo.wh_code = storeInfo.Code + "_wh";//建立了刚才见的子门点的仓库
                 warehouseInfo.wh_name = storeInfo.Name + "仓库";
                 warehouseInfo.is_default = 1;
                 warehouseInfo.wh_status = 1;

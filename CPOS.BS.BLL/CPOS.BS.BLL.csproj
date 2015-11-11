@@ -274,6 +274,7 @@
     <Compile Include="CodeGeneration\NewApp\InnerGroupNewsBLL.cs" />
     <Compile Include="CodeGeneration\NewApp\NewsUserMappingBLL.cs" />
     <Compile Include="CodeGeneration\NewApp\T_DeptBLL.cs" />
+    <Compile Include="CodeGeneration\NewApp\T_TypeBLL.cs" />
     <Compile Include="CodeGeneration\ObjectEvaluationBLL.cs" />
     <Compile Include="CodeGeneration\ItemKeepBLL.cs" />
     <Compile Include="CodeGeneration\ItemKnowledgeBLL.cs" />
@@ -439,7 +440,9 @@
     <Compile Include="CodeGeneration\VipAmountBLL.cs" />
     <Compile Include="CodeGeneration\VipAmountDetailBLL.cs" />
     <Compile Include="CodeGeneration\VipBLL.cs" />
-    <Compile Include="CodeGeneration\VipCardBasicBLL.cs" />
+    <Compile Include="CodeGeneration\VipCardBasicBLL.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="CodeGeneration\VipCardBLL.cs" />
     <Compile Include="CodeGeneration\VipCardCarBrandBLL.cs" />
     <Compile Include="CodeGeneration\VipCardDormancyBLL.cs" />
@@ -724,6 +727,7 @@
     <Compile Include="NewApp\InnerGroupNewsBLL.cs" />
     <Compile Include="NewApp\NewsUserMappingBLL.cs" />
     <Compile Include="NewApp\T_DeptBLL.cs" />
+    <Compile Include="NewApp\T_TypeBLL.cs" />
     <Compile Include="ObjectEvaluationBLL.cs" />
     <Compile Include="ItemKeepBLL.cs" />
     <Compile Include="ItemKnowledgeBLL.cs" />

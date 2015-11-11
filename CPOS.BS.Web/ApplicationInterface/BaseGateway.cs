@@ -74,14 +74,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface
             {
                 Loggers.DEFAULT.Exception(new ExceptionLogInfo(ex));
                 ErrorResponse rsp = new ErrorResponse(ex.ErrorCode, ex.Message);
+                //ErrorResponse rsp = new ErrorResponse(ex.ErrorCode, "登录超时，请重新登录。");
                 this.DoResponse(context, rsp.ToJSON());
             }
             catch (ThreadAbortException) { }    //Response.End通过抛出ThreadAbortException异常来实现中止执行后续代码的功能
             catch (Exception ex)
             {
                 Loggers.DEFAULT.Exception(new ExceptionLogInfo(ex));
-                ErrorResponse rsp = new ErrorResponse(ERROR_CODES.DEFAULT_ERROR, ex.Message);
+                //ErrorResponse rsp = new ErrorResponse(ERROR_CODES.DEFAULT_ERROR, ex.Message);
+                ErrorResponse rsp = new ErrorResponse(ERROR_CODES.DEFAULT_ERROR, "登录超时，请重新登录。");
                 this.DoResponse(context, rsp.ToJSON());
+
             }
         }
 

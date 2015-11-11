@@ -44,6 +44,7 @@ namespace JIT.CPOS.BS.BLL.CS
             if (!string.IsNullOrEmpty(mobileNo) && content.Length == 3)
             {
                 string Url = ConfigurationManager.AppSettings["customer_service_url"].TrimEnd('/') + "/CustomerService/Data.aspx";
+                //发送微信信息。
                 string param = "action=sendSMS&ReqContent={\"common\":{\"userId\":\"" + vipEntity.VIPID + "}\"},\"special\":{\"mobileNo\":\"" + mobileNo + "\",\"content\":\"" + content[0] + "\",\"sign\":\"" + signContent + "\"}}";
 
                 var res = HttpClient.PostQueryString(Url, param);

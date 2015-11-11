@@ -28,6 +28,7 @@ using JIT.Utility.Log;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.DataAccess.Base;
+using System.Configuration;
 
 namespace JIT.CPOS.BS.DataAccess
 {
@@ -501,7 +502,11 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [CSConversationID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [CSConversation] where isdelete=0 ");
+            //取员工的头像*****
+            pagedSql.AppendFormat(@") as ___rn,*,
+                                                  (case when  IsCs=1 then  isnull((  select top 1 ImageURL from ObjectImages where ObjectId=PersonID and IsDelete=0
+                                                              order by CreateTime desc),'')  else '' end ) as UserHeadUrl   
+                                          from [CSConversation] where isdelete=0 ");
             //总记录数SQL
             totalCountSql.AppendFormat("select count(1) from [CSConversation] where isdelete=0 ");
             //过滤条件
@@ -521,6 +526,8 @@ namespace JIT.CPOS.BS.DataAccess
             pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
             PagedQueryResult<CSConversationEntity> result = new PagedQueryResult<CSConversationEntity>();
+                  string rootUrl = ConfigurationManager.AppSettings["website_url"].Trim();
+               // rootUrl = !rootUrl.EndsWith("/") ? rootUrl + "/" : rootUrl;
             List<CSConversationEntity> list = new List<CSConversationEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
             {
@@ -528,6 +535,13 @@ namespace JIT.CPOS.BS.DataAccess
                 {
                     CSConversationEntity m;
                     this.Load(rdr, out m);
+                    if (!string.IsNullOrEmpty(m.UserHeadUrl))
+                    {
+                        m.UserHeadUrl = rootUrl + m.UserHeadUrl;//加上员工的头像
+                        //因为一条记录就记载着一句话（会员或者客服的）
+                     //   所以可以把
+                       // m.HeadImageUrl = rootUrl + m.UserHeadUrl
+                    }
                     list.Add(m);
                 }
             }

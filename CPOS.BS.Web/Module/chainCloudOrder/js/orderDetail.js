@@ -390,7 +390,7 @@
                     /*sortOrder : 'desc', //倒序
                      remoteSort : true, // 服务器排序*/
                     idField : 'Item_Id', //主键字段
-                    /*  pageNumber:1,*/
+                    /* pageNumber:1,*/
                     /* frozenColumns : [ [ {
                      field : 'brandLevelId',
                      checkbox : true

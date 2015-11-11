@@ -41,7 +41,7 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String TextId { get; set; }
-
+        public String TestId { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -62,6 +62,11 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public String CoverImageUrl { get; set; }
 
+        	/// <summary>
+		/// 
+		/// </summary>
+        public String ImageUrl { get; set; }
+        
 		/// <summary>
 		/// 
 		/// </summary>

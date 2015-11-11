@@ -154,15 +154,18 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="maxRowCount">每页所占行数</param>
         /// <param name="startRowIndex">当前页的起始行数</param>
         /// <returns></returns>
-        public RoleModel GetRolesByAppSysId(string appSysId, int maxRowCount, int startRowIndex)
+        public RoleModel GetRolesByAppSysId(string appSysId, int maxRowCount, int startRowIndex, string type_id, string role_name, string UserID)
         {
             RoleModel roleInfo = new RoleModel();
             Hashtable hashTable = new Hashtable();
             hashTable.Add("ApplicationId", appSysId);
             hashTable.Add("StartRow", startRowIndex);
-            hashTable.Add("EndRow", startRowIndex + maxRowCount);
+            hashTable.Add("EndRow", startRowIndex + maxRowCount-1);//结束页
             hashTable.Add("MaxRowCount", maxRowCount);
             hashTable.Add("CustomerId", loggingSessionInfo.CurrentLoggingManager.Customer_Id);
+            hashTable.Add("UserID", UserID);//用户标识
+            hashTable.Add("type_id", type_id??"");
+            hashTable.Add("role_name", role_name??"");
             int iCount = appSysService.SearchRoleByAppSysIdCount(hashTable);//cSqlMapper.Instance().QueryForObject<int>("Role.SelectByApplicationIdCount", hashTable);
             IList<RoleModel> roleInfoList = new List<RoleModel>();
             DataSet ds = new DataSet();
@@ -173,6 +176,11 @@ namespace JIT.CPOS.BS.BLL
             }
             //roleInfoList = cSqlMapper.Instance().QueryForList<RoleModel>("Role.SelectByApplicationId", hashTable);
             roleInfo.ICount = iCount;
+
+            //取模
+            int mo = iCount % maxRowCount;
+            roleInfo.TotalPage = iCount / maxRowCount + (mo == 0 ? 0 : 1);
+
             roleInfo.RoleInfoList = roleInfoList;
             return roleInfo;
         }

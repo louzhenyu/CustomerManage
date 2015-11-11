@@ -1,6 +1,6 @@
 ﻿define(['jquery', 'template', 'tools', 'kkpager','easyui', 'artDialog','datetimePicker','tips','zTree'], function ($) {
     var page = {
-        elems: {
+        elems:{
             sectionPage:$("#section"),
             simpleQueryDiv: $("#simpleQuery"),     //简单查询条件的层dom
             allQueryDiv: $("#allQuery"),             //所有的查询条件层dom
@@ -394,14 +394,14 @@
 
 
                 that.loadData.get_unit_tree(function(datas) {
-                    var data=[{},{}];
-                    data[0]["id"]=window.UnitID;
-                    data[0]["text"]=window.UnitName;
-                    data[0].children=datas;
-                    data[1]["id"]="";
-                    data[1]["text"]="请选择门店";
-                    data[1].children=[];
-                    that.unitTree=data;
+                    //var data=[{},{}];
+                    //data[0]["id"]=window.UnitID;
+                    //data[0]["text"]=window.UnitName;
+                    //data[0].children=datas;
+                    //data[1]["id"]="";
+                    //data[1]["text"]="请选择门店";
+                    //data[1].children=[];
+                    that.unitTree=datas;
                     $("#unitTree").combotree({
                         panelWidth:220,
                         //width:220,
@@ -409,7 +409,7 @@
                         multiple:false,
                         valueField: 'id',
                         textField: 'text',
-                        data:data
+                        data:datas
                     });
                     $("#unitTree").combotree("setText","请选择门店");
                 });
@@ -575,10 +575,9 @@
                     }
                 });
             },
-            //获取门店
             get_unit_tree: function (callback) {
-                $.ajax({
-                    url: "/Framework/Javascript/Biz/Handler/UnitSelectTreeHandler.ashx?method=get_unit_tree&parent_id=&_dc=1433225205961&node="+this.getUitTree.node+"&multiSelect=false&isSelectLeafOnly=false&isAddPleaseSelectItem=false&pleaseSelectText=--%E8%AF%B7%E9%80%89%E6%8B%A9--&pleaseSelectID=-2",
+                $.ajax({//&node="+this.getUitTree.node+"
+                    url: "/Framework/Javascript/Biz/Handler/UnitSelectTreeHandler.ashx?method=get_unit_tree&parent_id=&_dc=1433225205961&multiSelect=false&isSelectLeafOnly=false&isAddPleaseSelectItem=false&pleaseSelectText=--%E8%AF%B7%E9%80%89%E6%8B%A9--&pleaseSelectID=-2",
                     success: function (data) {
                         debugger;
                         data=JSON.parse(data);

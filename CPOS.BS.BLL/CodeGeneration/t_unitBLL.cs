@@ -96,6 +96,15 @@ namespace JIT.CPOS.BS.BLL
             _currentDAO.Update(pEntity,pTran);
         }
 
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(t_unitEntity pEntity, IDbTransaction pTran,bool pIsUpdateNullField)
+        {
+            _currentDAO.Update(pEntity, pTran,pIsUpdateNullField);
+        }
 
         /// <summary>
         /// 更新

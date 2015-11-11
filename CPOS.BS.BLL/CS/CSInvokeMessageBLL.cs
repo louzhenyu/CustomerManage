@@ -27,7 +27,7 @@ namespace JIT.CPOS.BS.BLL
         /// <summary>
         /// 发送消息
         /// </summary>
-        /// <param name="csPipelineId">消息通道ID1:微信2:短信3:IOS4:Android</param>
+        /// <param name="csPipelineId">****消息通道ID1:微信2:短信3:IOS4:Android</param>
         /// <param name="userId">发送者ID</param>
         /// <param name="isCS">是否是客服1：是0：否</param>
         /// <param name="messageId">要回复的消息ID，如果为首次请求，请传NULL</param>
@@ -38,6 +38,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="contentTypeId">消息内容类型默认NULL或 1文本 2图片 3语音 4 视频 </param>
         /// <param name="sign">短信签名</param>
         /// <param name="mobileNo"></param>
+        /// 会员从微信发的信息和员工从app上发的信息都要往这里面写
         public void SendMessage(int csPipelineId, string userId, int isCS, string messageId, string messageContent, int? serviceTypeId, string objectId, string messageTypeId, int? contentTypeId, string sign = null, string mobileNo = null)
         {
             Loggers.Debug(new DebugLogInfo()
@@ -55,8 +56,8 @@ namespace JIT.CPOS.BS.BLL
                 , sign
                 , mobileNo
             ) });
-            var person = new VipBLL(loggingSessionInfo).GetByID(userId);
-            var user = new cUserService(loggingSessionInfo).GetUserById(loggingSessionInfo, userId);
+            var person = new VipBLL(loggingSessionInfo).GetByID(userId);//取会员的信息，如果是员工发的，就取到是空
+            var user = new cUserService(loggingSessionInfo).GetUserById(loggingSessionInfo, userId);//如果是会员这里获取到的就是空
             //保存回话信息
             CSConversationBLL conversationBll = new CSConversationBLL(loggingSessionInfo);
             CSMessageBLL messageBll = new CSMessageBLL(loggingSessionInfo);
@@ -87,31 +88,32 @@ namespace JIT.CPOS.BS.BLL
             //TODO:取出最后回话的MessageID，如果最后回话超过60分钟则认为是新的回话
             if (isCS == 0 && csPipelineId == 1)
             {
-                var conversations = conversationBll.PagedQueryByEntity(new CSConversationEntity
+                var conversations = conversationBll.PagedQueryByEntity(new CSConversationEntity//从会话里查，而不是从message表里查
                     {
                         PersonID = userId,
-                        IsCS = 0
-                    }, new[] { new OrderBy { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }, 1, 1);
+                        IsCS = 0//查询非客服的信息
+                    }, new[] { new OrderBy { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }, 1, 1);//1，1代表只取第一条，按照创建时间倒叙排列
                 if (conversations.Entities.Length > 0)
                 {
                     TimeSpan ts = DateTime.Now - conversations.Entities[0].CreateTime.Value;
                     if (ts.Days == 0 && ts.Hours == 0 && ts.Minutes < 60)
                     {
-                        messageId = conversations.Entities[0].CSMessageID.ToString();
+                        messageId = conversations.Entities[0].CSMessageID.ToString();//60分钟内的那句话的信息（超过60分钟就不取了）
                     }
                 }
             }
+            //下面这段主要对员工起作用的
+            if (!string.IsNullOrEmpty(messageId))//取到相关1小时内的信息()
+            {
+                conversationEntity.CSMessageID = Guid.Parse(messageId);//用1小时内会话的messageid
 
-            if (!string.IsNullOrEmpty(messageId))
-            {
-                conversationEntity.CSMessageID = Guid.Parse(messageId);
-                messageEntity = messageBll.GetByID(messageId);
+                messageEntity = messageBll.GetByID(messageId);//获取关联的message主信息标识
             }
-            else
+            else//没有取到相关1小时内的信息
             {
-                messageId = newMessageID.ToString();
+                messageId = newMessageID.ToString();//新建的guid
                 messageEntity = new CSMessageEntity();
-                messageEntity.CSMessageID = newMessageID;
+                messageEntity.CSMessageID = newMessageID;//新建的guid
                 messageEntity.CSPipelineID = csPipelineId;
                 messageEntity.Content = messageContent;
                 messageEntity.CSObjectID = objectId;
@@ -124,16 +126,16 @@ namespace JIT.CPOS.BS.BLL
 
 
             }
-
+            //别的客服回复了该信息（ConnectionTime记录最新的客服的回复时间******）
             if (conversationEntity.IsCS.Value == 1 && !string.IsNullOrEmpty(messageEntity.CurrentCSID) && messageEntity.ConnectionTime != null && messageEntity.CurrentCSID.ToLower() != conversationEntity.PersonID.ToLower())
             {
-                TimeSpan ts = DateTime.Now - messageEntity.ConnectionTime.Value;
+                TimeSpan ts = DateTime.Now - messageEntity.ConnectionTime.Value;//取得是messageEntity的连接时间
                 if (ts.Days == 0 && ts.Hours == 0 && ts.Minutes < 60)
                 {
                     throw new Exception("已经有人回复该消息了");
                 }
                 //移除队列
-                CSQueueBLL queueBll = new CSQueueBLL(loggingSessionInfo);
+                CSQueueBLL queueBll = new CSQueueBLL(loggingSessionInfo);//把已经有人回复的消息从队伍里移除（虚拟删除）
                 CSQueueEntity[] queueEntities = queueBll.QueryByEntity(new CSQueueEntity
                     {
                         CSMessageID = messageEntity.CSMessageID
@@ -144,34 +146,34 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
 
-            conversationEntity.CSConversationID = conversationID;
+            conversationEntity.CSConversationID = conversationID;//新的guid*****
             conversationEntity.CreateTime = DateTime.Now;
-            conversationBll.Create(conversationEntity);
+            conversationBll.Create(conversationEntity);//创建了conversation
 
-            //用户请求
+            //会员请求（客服最后回话时间）
             if (conversationEntity.IsCS.Value == 0)
             {
                 conversationEntity.CSMessageID = Guid.Parse(messageId);
                 conversationBll.Update(conversationEntity);
                 //判断是否是第一次请求
-                if (!string.IsNullOrEmpty(messageEntity.CurrentCSID))
+                if (!string.IsNullOrEmpty(messageEntity.CurrentCSID))//已经有客服回复了
                 {
                     //判断链接时间
                     if (messageEntity.ConnectionTime != null)
                     {
-                        TimeSpan ts = DateTime.Now - messageEntity.ConnectionTime.Value;
+                        TimeSpan ts = DateTime.Now - messageEntity.ConnectionTime.Value;//判断链接时间
                         if (ts.Days == 0 && ts.Hours >= 1)
                         {
                             //TODO:如果客服回复时间超过1小时，则重新加入消息队列
-                            AddToMessageQueue(messageEntity);
+                            AddToMessageQueue(messageEntity); //****重新加入队伍，并给所有客服都推送信息“您有新的客服请求”，因为上面已经有了CSConversationID了
                         }
                         else
                         {
-                            var currentCSPipelineIDs = GetCurrentCSPipeline(messageEntity.CurrentCSID);
-                            //消息推送给客服
+                            var currentCSPipelineIDs = GetCurrentCSPipeline(messageEntity.CurrentCSID);//当前的客服信息
+                            //消息推送给客服（您有新的客服请求）
                             foreach (var currentCSPipelineID in currentCSPipelineIDs)
                             {
-                                PushNotificationMessage(messageEntity.CurrentCSID, currentCSPipelineID,
+                                PushNotificationMessage(messageEntity.CurrentCSID, currentCSPipelineID,//您有新的客服请求
                                                         conversationEntity);
                             }
                         }
@@ -180,7 +182,7 @@ namespace JIT.CPOS.BS.BLL
                 else
                 {
                     //第一次请求，加入消息队列
-                    AddToMessageQueue(messageEntity);
+                    AddToMessageQueue(messageEntity);//并且给所有的客服都推送信息
                 }
             }
             //客服回复
@@ -192,15 +194,15 @@ namespace JIT.CPOS.BS.BLL
                     conversationEntity.CSMessageID = newMessageID;
                 }
                 //更新最后客服信息
-                messageEntity = messageBll.GetByID(conversationEntity.CSMessageID);
+                messageEntity = messageBll.GetByID(conversationEntity.CSMessageID);//客服信息
                 bool b = false;
                 if (messageEntity.ConnectionTime.HasValue)
                 {
                     TimeSpan ts = DateTime.Now - messageEntity.ConnectionTime.Value;
-                    b = ts.Days == 0 && ts.Hours > 1;
+                    b = ts.Days == 0 && ts.Hours > 1;//今天并且时间大于1
                 }
 
-                if (messageEntity.CurrentCSID == null || b)
+                if (messageEntity.CurrentCSID == null || b)//客服为空或者最近一次客服回复的时间大于1小时******
                 {
                     string currentUserName = messageEntity.MemberName;
                     //第一次回复，推送给其他客服消息
@@ -227,15 +229,15 @@ namespace JIT.CPOS.BS.BLL
                         }
                     }
                 }
-                messageEntity.CurrentCSID = conversationEntity.PersonID;
+                messageEntity.CurrentCSID = conversationEntity.PersonID;//切换最新的客服
                 messageEntity.LastUpdateTime = DateTime.Now;
-                messageEntity.ConnectionTime = DateTime.Now;
+                messageEntity.ConnectionTime = DateTime.Now;//每次都更新连接时间*******
                 messageBll.Update(messageEntity);
 
                 //消息推送给用户
                 if (messageEntity.CSPipelineID != null)
                 {
-                    PushNotificationMessage(messageEntity.MemberID, messageEntity.CSPipelineID.Value,
+                    PushNotificationMessage(messageEntity.MemberID, messageEntity.CSPipelineID.Value,  //这里传的上次message信息的通道id，而不是传过来的员工回复的管道id，所以即使员工传过来的是3，这里取的也是会员的管道id：微信1
                                             conversationEntity);
                 }
 
@@ -308,7 +310,7 @@ namespace JIT.CPOS.BS.BLL
                     case 4:
                         IPushMessage pushAndroidMessage = new PushAndroidMessage(loggingSessionInfo);
                         string msg1 = "";
-                        if (conversationEntity.CSConversationID == null)
+                        if (conversationEntity.CSConversationID == null)//会话信息为空时
                         {
                             msg1 = conversationEntity.Content;
                         }
@@ -386,22 +388,24 @@ namespace JIT.CPOS.BS.BLL
             string conditionExpression;
             if (!string.IsNullOrEmpty(messageId))
             {
-                conditionExpression = string.Format("CSMessageID='{0}'", messageId);
+                conditionExpression = string.Format("CSMessageID='{0}'", messageId);//主要用于员工在app上使用
             }
             else
             {
                 IWhereCondition[] conditions;
-                if (isCS == 0)
+                if (isCS == 0)//会员的情况（非会员）
                 {
                     conditions = new IWhereCondition[]
                         {
-                            new DirectCondition("PersonID='" + personID + "'")
+                           // new DirectCondition("PersonID='" + personID + "'")//查找会员的回话
+                           new DirectCondition("MemberID='" + personID + "'")//查找会员的回话(查找CSMessage)
                         };
                 }
                 else
                 {
                     conditions = new IWhereCondition[]
                         {
+                            //这个条件是查找当前客服可以查看的message的，客服是当前员工的，或者客服人员是空的，或者客服人员不是当前人员（并且最后链接时间大于60分钟的会员）
                             new DirectCondition("((CurrentCSID='" + personID + "') or (CurrentCSID IS NULL ) OR (CurrentCSID<>'" + personID + "' and datediff(minute,ConnectionTime,getdate())>60)) and ClientID = '"+customerId+"'")
                         };
                 }
@@ -409,7 +413,7 @@ namespace JIT.CPOS.BS.BLL
                             new OrderBy
                                 {
                                     FieldName = "CreateTime",
-                                    Direction = OrderByDirections.Desc
+                                    Direction = OrderByDirections.Desc//按照创建时间
                                 }
                         });
 
@@ -418,7 +422,7 @@ namespace JIT.CPOS.BS.BLL
                     string messageIds = messageEntities.Aggregate(string.Empty,
                                                                   (current, messageEntity) =>
                                                                   string.Format("{0}'{1}'" + ",", current,
-                                                                                messageEntity.CSMessageID));
+                                                                                messageEntity.CSMessageID));//代表总的初始信息，CSMessageID代表遍历的每个对象
                     conditionExpression = string.Format("CSMessageID in ({0})", messageIds.TrimEnd(','));
                 }
                 else

@@ -123,6 +123,8 @@ namespace JIT.CPOS.BS.DataAccess
             sql = pService.GetIsNotNullUpdateSql(sql, "Is_Sys", roleInfo.Is_Sys.ToString());
             sql = pService.GetIsNotNullUpdateSql(sql, "Modify_Time", roleInfo.Modify_Time);
             sql = pService.GetIsNotNullUpdateSql(sql, "Modify_User_id", roleInfo.Modify_User_id);
+            sql = pService.GetIsNotNullUpdateSql(sql, "type_id", roleInfo.type_id);
+            sql = pService.GetIsNotNullUpdateSql(sql, "org_level", roleInfo.org_level.ToString());
             sql = sql + " where role_id = '" + roleInfo.Role_Id + "' ;";
             #endregion
             if (pTran != null)
@@ -156,7 +158,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,create_user_id "
                       + " ,modify_time "
                       + " ,modify_user_id "
-                      + " ,customer_id) "
+                      + " ,customer_id,type_id,org_level) "
                       + " select a.* From ( "
                       + " select '"+roleInfo.Role_Id+"' Role_Id "
                       + " ,'"+ roleInfo.Def_App_Id+"' Def_App_Id "
@@ -170,6 +172,8 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,'" + roleInfo.Create_Time + "' Modify_Time "
                       + " ,'" + roleInfo.Create_User_Id + "' Modify_User_Id "
                       + " ,'" + roleInfo.customer_id + "' customer_id "
+                        + " ,'" + roleInfo.type_id + "' type_id "
+                            + " ,'" + roleInfo.org_level + "' org_level "
                       + " ) a "
                       + " left join (select * From t_role where [status]='1') b "
                       + " on(a.role_code = b.role_code and a.customer_id = b.customer_id) "
@@ -195,6 +199,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         private bool IsExistRoleName(string RoleName, string RoleId)
         {
+            //只取状态 status  = '1' 
             string sql = "select count(*) From t_role where 1=1 and role_name = '" + RoleName + "' and [status] = '1' and customer_id = '" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id + "'";
             if (RoleId != null && !RoleId.Equals(""))
             {

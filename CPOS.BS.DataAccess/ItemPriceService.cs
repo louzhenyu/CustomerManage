@@ -483,7 +483,7 @@ namespace JIT.CPOS.BS.DataAccess
                             itemImageInfo.ImageId = NewGuid();
                         }
                     }
-                    if (!SetUnitImageStatus(unitInfo, pTran))
+                    if (!SetUnitImageStatus(unitInfo, pTran))//先把门店相关的图片都删除 IsDelete=1
                     {
                         strError = "删除图片信息失败";
                         return false;
@@ -491,13 +491,13 @@ namespace JIT.CPOS.BS.DataAccess
 
                     if (unitInfo.ItemImageList.Count > 0)
                     {
-                        if (!SetUnitImageUpdate(unitInfo, pTran))
+                        if (!SetUnitImageUpdate(unitInfo, pTran))//把这次带的图片的IsDelete=0
                         {
                             strError = "修改图片信息失败";
                             return false;
                         }
 
-                        if (!SetUnitImageInsert(unitInfo, pTran))
+                        if (!SetUnitImageInsert(unitInfo, pTran))//插入图片信息
                         {
                             strError = "插入图片信息失败";
                             return false;

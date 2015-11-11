@@ -223,6 +223,7 @@
     <Compile Include="CodeGeneration\NewApp\InnerGroupNewsEntity.cs" />
     <Compile Include="CodeGeneration\NewApp\NewsUserMappingEntity.cs" />
     <Compile Include="CodeGeneration\NewApp\T_DeptEntity.cs" />
+    <Compile Include="CodeGeneration\NewApp\T_TypeEntity.cs" />
     <Compile Include="CodeGeneration\ObjectEvaluationEntity.cs" />
     <Compile Include="CodeGeneration\LEventsAlbumEntity.cs" />
     <Compile Include="CodeGeneration\LEventsAlbumPhotoEntity.cs" />
@@ -454,6 +455,7 @@
     <Compile Include="NewApp\InnerGroupNewsEntity.cs" />
     <Compile Include="NewApp\NewsUserMappingEntity.cs" />
     <Compile Include="NewApp\T_DeptEntity.cs" />
+    <Compile Include="NewApp\T_TypeEntity.cs" />
     <Compile Include="ObjectEvaluationEntity.cs" />
     <Compile Include="LEventsAlbumEntity.cs" />
     <Compile Include="LEventsAlbumPhotoEntity.cs" />

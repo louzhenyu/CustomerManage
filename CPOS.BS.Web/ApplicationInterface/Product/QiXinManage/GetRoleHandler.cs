@@ -46,7 +46,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Product.QiXinManage
                 //{
                 //    key = form.app_sys_id.Trim();
                 //}
-                list = appSysService.GetRolesByAppSysId(key, 1000, 0);
+                list = appSysService.GetRolesByAppSysId(key, 1000, 0, "", "", "");
                 rdData.RoleList =list.RoleInfoList;
                 rdData.Count = list.RoleInfoList.Count;
                 rd.Data = rdData;

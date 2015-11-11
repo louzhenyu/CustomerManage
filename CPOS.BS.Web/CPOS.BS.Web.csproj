@@ -843,6 +843,17 @@
     <Content Include="Module\Order\Print\PrintPicking.aspx" />
     <Content Include="Module\Order\Print\Store\PrintPickingStore.js" />
     <Content Include="Module\Order\Print\View\PrintPickingView.js" />
+    <Content Include="Module\organizationLevel\css\setLevel.css" />
+    <Content Include="Module\organizationLevel\css\style.css" />
+    <Content Include="Module\organizationLevel\images\icon-close-btn.png" />
+    <Content Include="Module\organizationLevel\images\icon-end1.png" />
+    <Content Include="Module\organizationLevel\images\icon-end2.png" />
+    <Content Include="Module\organizationLevel\images\icon-on1.png" />
+    <Content Include="Module\organizationLevel\images\icon-on2.png" />
+    <Content Include="Module\organizationLevel\images\moreIcon.png" />
+    <Content Include="Module\organizationLevel\js\setLevel.js" />
+    <Content Include="Module\organizationLevel\js\标注开发版.js" />
+    <Content Include="Module\organizationLevel\setLevel.aspx" />
     <Content Include="Module\PayMent\Controller\PayMentCtl.js" />
     <Content Include="Module\PayMent\Controller\PayMentEditCtl.js" />
     <Content Include="Module\PayMent\Controller\PayMentListCtl.js" />
@@ -861,6 +872,78 @@
     <Content Include="Module\PayMent\View\PayMentListView.js" />
     <Content Include="Module\PayMent\View\PayMentView.js" />
     <Content Include="Module\PayMent\View\PayMentWapView.js" />
+    <Content Include="Module\roleManagement\css\roleList.css" />
+    <Content Include="Module\roleManagement\css\style.css" />
+    <Content Include="Module\roleManagement\images\closeBtn02.png" />
+    <Content Include="Module\roleManagement\images\del.png" />
+    <Content Include="Module\roleManagement\images\delete.png" />
+    <Content Include="Module\roleManagement\images\edit.png" />
+    <Content Include="Module\roleManagement\images\icon-add.png" />
+    <Content Include="Module\roleManagement\images\icon-close-btn.png" />
+    <Content Include="Module\roleManagement\images\icon-tipBox.png" />
+    <Content Include="Module\roleManagement\images\icon-trash.png" />
+    <Content Include="Module\roleManagement\images\icon-tree01.png" />
+    <Content Include="Module\roleManagement\images\icon-tree02.png" />
+    <Content Include="Module\roleManagement\images\icon-tree03.png" />
+    <Content Include="Module\roleManagement\images\on-icon.png" />
+    <Content Include="Module\roleManagement\images\on-icon3.png" />
+    <Content Include="Module\roleManagement\images\pause.png" />
+    <Content Include="Module\roleManagement\images\radio1.png" />
+    <Content Include="Module\roleManagement\images\running.png" />
+    <Content Include="Module\roleManagement\images\商品.png" />
+    <Content Include="Module\roleManagement\js\main.js" />
+    <Content Include="Module\roleManagement\js\roleList.js" />
+    <Content Include="Module\roleManagement\js\storeInfo.js" />
+    <Content Include="Module\roleManagement\js\标注开发版.js" />
+    <Content Include="Module\roleManagement\roleList.aspx" />
+    <Content Include="Module\roleManagement\storeInfo.aspx" />
+    <Content Include="Module\roleManagement\标准开发版列表.aspx" />
+    <Content Include="Module\sendingTogether\css\gatherGuest.css" />
+    <Content Include="Module\sendingTogether\css\sendingTogether.css" />
+    <Content Include="Module\sendingTogether\distributor.aspx" />
+    <Content Include="Module\sendingTogether\gatherGuest.aspx" />
+    <Content Include="Module\sendingTogether\images\duihao.png" />
+    <Content Include="Module\sendingTogether\js\distributor.js" />
+    <Content Include="Module\sendingTogether\js\gatherGuest.js" />
+    <Content Include="Module\sendingTogether\js\main.js" />
+    <Content Include="Module\sendingTogether\js\vipAward.js" />
+    <Content Include="Module\sendingTogether\js\vipDeposit.js" />
+    <Content Include="Module\sendingTogether\js\withdrawDeposit.js" />
+    <Content Include="Module\sendingTogether\js\withdrawWard.js" />
+    <Content Include="Module\sendingTogether\vipAward.aspx" />
+    <Content Include="Module\sendingTogether\vipDeposit.aspx" />
+    <Content Include="Module\sendingTogether\withdrawAward.aspx" />
+    <Content Include="Module\sendingTogether\withdrawDeposit.aspx" />
+    <Content Include="Module\staffManagement\css\staffList.css" />
+    <Content Include="Module\staffManagement\css\style.css" />
+    <Content Include="Module\staffManagement\images\closeBtn02.png" />
+    <Content Include="Module\staffManagement\images\del.png" />
+    <Content Include="Module\staffManagement\images\delete.png" />
+    <Content Include="Module\staffManagement\images\edit.png" />
+    <Content Include="Module\staffManagement\images\icon-add.png" />
+    <Content Include="Module\staffManagement\images\icon-close-btn.png" />
+    <Content Include="Module\staffManagement\images\icon-export.png" />
+    <Content Include="Module\staffManagement\images\icon-import.png" />
+    <Content Include="Module\staffManagement\images\icon-pause.png" />
+    <Content Include="Module\staffManagement\images\icon-reset.png" />
+    <Content Include="Module\staffManagement\images\icon-trash.png" />
+    <Content Include="Module\staffManagement\images\icon-tree01.png" />
+    <Content Include="Module\staffManagement\images\icon-tree02.png" />
+    <Content Include="Module\staffManagement\images\icon-tree03.png" />
+    <Content Include="Module\staffManagement\images\on-icon.png" />
+    <Content Include="Module\staffManagement\images\on-icon3.png" />
+    <Content Include="Module\staffManagement\images\pause.png" />
+    <Content Include="Module\staffManagement\images\radio1.png" />
+    <Content Include="Module\staffManagement\images\running.png" />
+    <Content Include="Module\staffManagement\images\商品.png" />
+    <Content Include="Module\staffManagement\js\main.js" />
+    <Content Include="Module\staffManagement\js\staffList.js" />
+    <Content Include="Module\staffManagement\js\storeInfo.js" />
+    <Content Include="Module\staffManagement\js\标注开发版.js" />
+    <Content Include="Module\staffManagement\staffDetail.aspx" />
+    <Content Include="Module\staffManagement\staffList.aspx" />
+    <Content Include="Module\staffManagement\storeInfo.aspx" />
+    <Content Include="Module\staffManagement\标准开发版列表.aspx" />
     <Content Include="Module\static\css\artDialog.css" />
     <Content Include="Module\static\css\artskin\aero.css" />
     <Content Include="Module\static\css\artskin\black.css" />
@@ -963,6 +1046,39 @@
     <Content Include="Module\static\js\plugin\template.js" />
     <Content Include="Module\static\js\plugin\touchslider.js" />
     <Content Include="Module\static\js\Vip14\page.js" />
+    <Content Include="Module\storeManagement\css\release.css" />
+    <Content Include="Module\storeManagement\css\storeInfo.css" />
+    <Content Include="Module\storeManagement\css\style.css" />
+    <Content Include="Module\storeManagement\images\closeBtn02.png" />
+    <Content Include="Module\storeManagement\images\del.png" />
+    <Content Include="Module\storeManagement\images\delete.png" />
+    <Content Include="Module\storeManagement\images\exit.png" />
+    <Content Include="Module\storeManagement\images\icon-addPic.png" />
+    <Content Include="Module\storeManagement\images\icon-close-btn.png" />
+    <Content Include="Module\storeManagement\images\icon-end1.png" />
+    <Content Include="Module\storeManagement\images\icon-end2.png" />
+    <Content Include="Module\storeManagement\images\icon-on1.png" />
+    <Content Include="Module\storeManagement\images\icon-on2.png" />
+    <Content Include="Module\storeManagement\images\icon-trash.png" />
+    <Content Include="Module\storeManagement\images\on-icon.png" />
+    <Content Include="Module\storeManagement\images\on-icon3.png" />
+    <Content Include="Module\storeManagement\images\pause.png" />
+    <Content Include="Module\storeManagement\images\pic.png" />
+    <Content Include="Module\storeManagement\images\qr-bg.png" />
+    <Content Include="Module\storeManagement\images\qr-createBtn.png" />
+    <Content Include="Module\storeManagement\images\qr-downBtn.png" />
+    <Content Include="Module\storeManagement\images\radio1.png" />
+    <Content Include="Module\storeManagement\images\running.png" />
+    <Content Include="Module\storeManagement\images\upload.png" />
+    <Content Include="Module\storeManagement\images\uploadimg.png" />
+    <Content Include="Module\storeManagement\images\商品.png" />
+    <Content Include="Module\storeManagement\js\main.js" />
+    <Content Include="Module\storeManagement\js\queryList.js" />
+    <Content Include="Module\storeManagement\js\storeInfo.js" />
+    <Content Include="Module\storeManagement\js\标注开发版.js" />
+    <Content Include="Module\storeManagement\QueryList.aspx" />
+    <Content Include="Module\storeManagement\storeInfo.aspx" />
+    <Content Include="Module\storeManagement\标准开发版列表.aspx" />
     <Content Include="Module\styles\css\alading\private.css" />
     <Content Include="Module\styles\css\alading\skin01.css" />
     <Content Include="Module\styles\css\alading\skin02.css" />
@@ -6044,6 +6160,15 @@
     </Compile>
     <Compile Include="ApplicationInterface\Module\Basic\Customer\SetRewardsSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Customer\SetSalesSettingAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Basic\UnitAndType\TypeTreeHandler.ashx.cs">
+      <DependentUpon>TypeTreeHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeGateway.ashx.cs">
+      <DependentUpon>UnitTypeGateway.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeTreeHandler.ashx.cs">
+      <DependentUpon>UnitTypeTreeHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Module\Item\ItemHandler.ashx.cs">
       <DependentUpon>ItemHandler.ashx</DependentUpon>
     </Compile>
@@ -6091,6 +6216,9 @@
     <Content Include="ApplicationInterface\AllWin\SysRetailRewardRule.ashx" />
     <Content Include="ApplicationInterface\Vip\VipTags.ashx" />
     <Content Include="ApplicationInterface\Vip\InnerGoupNews.ashx" />
+    <Content Include="ApplicationInterface\Module\Basic\UnitAndType\TypeTreeHandler.ashx" />
+    <Content Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeGateway.ashx" />
+    <Content Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeTreeHandler.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -7017,7 +7145,9 @@
     <Content Include="Web--minglong.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

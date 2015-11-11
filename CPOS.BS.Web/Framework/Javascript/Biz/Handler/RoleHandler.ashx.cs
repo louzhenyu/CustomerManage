@@ -41,6 +41,7 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
         /// </summary>
         public string GetRoleListData()
         {
+            var loggininfo = new SessionManager().CurrentUserLoginInfo;
             var appSysService = new AppSysService(new SessionManager().CurrentUserLoginInfo);
             RoleModel list = new RoleModel();
 
@@ -49,7 +50,7 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
             if (Request("app_sys_id") != null && Request("app_sys_id") != string.Empty)
             {
                 key = Request("app_sys_id").ToString().Trim();
-                list = appSysService.GetRolesByAppSysId(key, 1000, 0);
+                list = appSysService.GetRolesByAppSysId(key, 1000, 0, "", "", loggininfo.UserID);
             }
             else
             {

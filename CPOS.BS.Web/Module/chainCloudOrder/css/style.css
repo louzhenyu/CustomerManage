@@ -1,5 +1,5 @@
 @charset "utf-8";
-
+#contentArea{background:#f4f8fa;}
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
 .optionBtn{height:65px; border: solid  1px #eee; border-bottom:none; }
@@ -23,8 +23,8 @@
 .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
 .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
 .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
-
-.panlDiv .commonSelectWrap .searchInput{ border-width:0;}
+.commonSelectWrap .searchInput textarea{line-height:34px;font-size:14px;background:none;color:#999;}
+.panlDiv .commonSelectWrap .searchInput{ border-width:0;background:none;}
 
 .forminput .commonSelectWrap .searchInput{ border-width:1px;}
 
@@ -34,7 +34,7 @@
 .panlDiv .panlText{ display: inline-block; width: 100%}
 .panlDiv .panlL{ float: left; width: auto;}
 .panlDiv .panlR{float: left; margin-left: 65px;}
-.panlDiv .panlL .commonSelectWrap{ display: block; float: none;}
+.panlDiv .panlL .commonSelectWrap{ float: none;}
 
 .fontC{width: 56px; text-align: left; float: left;}
 .updateBtn{ float: right; width: 160px; margin-right: 65px;}
@@ -42,3 +42,17 @@
 
 .commonSelectWrap .wh80{ width: 80px;}
 .commonSelectWrap .rowStatusStyle input{color: #fc7a52;}
+.commonSelectWrap .tit,.commonSelectWrap .searchInput input{color:#999;font-size:14px;}
+.commonSelectWrap .searchInput.rowStatusStyle input{color:#fc7a52;}
+.commonSelectWrap .tit span{color:#fc7a52;}
+.actuallyDetailBox{display:inline-block;width:100%;}
+.actuallyDetail{position:relative;display:inline-block;padding-top:10px;}
+.actuallyDetail a{line-height:33px;text-decoration:underline;color:#fc7a52;}
+.otherInfoBox{display:none;position:absolute;top:50px;left:-55px;width:200px;height:325px;padding:0 20px;border:1px solid #d0d5d8;border-radius:4px;font-size:14px;background:#fff;color:#999;z-index:99;}
+.actuallyDetail:hover .otherInfoBox,.actuallyDetail:hover .arrIcon{display:block;}
+.otherInfoBox .commonSelectWrap{width:100%;margin:0;}
+.otherInfoBox .commonSelectWrap .tit{width:80px;}
+.otherInfoBox .commonSelectWrap .searchInput{width:60px;height:33px;margin-left:0;}
+.actuallyDetail .arrIcon{display:none;width:20px;height:11px;position:absolute;top:41px;left:32px;background:url(../images/arr.png) no-repeat 0 0;z-index:99;}
+.otherInfoBox .infoBox{display:inline-block;padding:10px 0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
+.otherInfoBox .infoBox .commonSelectWrap{margin-bottom:5px;}

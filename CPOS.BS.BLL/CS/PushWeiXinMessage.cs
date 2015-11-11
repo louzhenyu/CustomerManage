@@ -29,7 +29,7 @@ namespace JIT.CPOS.BS.BLL.CS
                     throw new Exception("VipID:" + vipEntity.VIPID + "没有关注公众号");
                 }
 
-                if (new CSPublicInterface(loggingSessionInfo).IsWeixinCSMessageActiveUser(memberID))
+                if (new CSPublicInterface(loggingSessionInfo).IsWeixinCSMessageActiveUser(memberID))//目前还没做是否超过48小时客服时间限制
                 {
                     CommonBLL commonBll = new CommonBLL();
                     SendMessageEntity messageEntity = new SendMessageEntity();

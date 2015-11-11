@@ -168,19 +168,19 @@
         initEvent: function () {
             var that=this;
 
-            that.loadData.get_unit_tree(function(data) {
-                debugger;
-                that.loadData.getUitTree.node=data[0].id;
+            //that.loadData.get_unit_tree(function(data) {
+            //    debugger;
+            //    that.loadData.getUitTree.node=data[0].id;
                 that.loadData.get_unit_tree(function(datas) {
-                    debugger;
-                    data[0].children=datas;
-                    that.unitTree=data;
+                    //debugger;
+                    //data[0].children=datas;
+                    that.unitTree=datas;
                     $("#unitTree").combotree({
                         panelWidth:220,
                         multiple:false,
                         valueField: 'id',
                         textField: 'text',
-                        data:data
+                        data:datas
                     });
                     $("#unitTree").combotree("setText","请选择门店");
                     var year=new Date().getFullYear();
@@ -189,7 +189,7 @@
                     $("#Year").combobox("select",year);
                     $("#Month").combobox("select",mouth);
                 })
-            });
+          //  });
 
 			//绑定搜索按钮事件
 			$('.queryBtn').on('click',function(){
@@ -393,8 +393,8 @@
             },
             //获取门店
             get_unit_tree: function (callback) {
-                $.ajax({
-                    url: "/Framework/Javascript/Biz/Handler/UnitSelectTreeHandler.ashx?method=get_unit_tree&parent_id=&_dc=1433225205961&node="+this.getUitTree.node+"&multiSelect=false&isSelectLeafOnly=false&isAddPleaseSelectItem=false&pleaseSelectText=--%E8%AF%B7%E9%80%89%E6%8B%A9--&pleaseSelectID=-2",
+                $.ajax({//&node="+this.getUitTree.node+"
+                    url: "/Framework/Javascript/Biz/Handler/UnitSelectTreeHandler.ashx?method=get_unit_tree&parent_id=&_dc=1433225205961&multiSelect=false&isSelectLeafOnly=false&isAddPleaseSelectItem=false&pleaseSelectText=--%E8%AF%B7%E9%80%89%E6%8B%A9--&pleaseSelectID=-2",
                     success: function (data) {
                         debugger;
                         data=JSON.parse(data);

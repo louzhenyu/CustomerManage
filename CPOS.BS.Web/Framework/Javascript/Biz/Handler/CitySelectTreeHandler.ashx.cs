@@ -41,15 +41,15 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
                 key = "";
             }
 
-            if (key.Length == 2)
+            if (key.Length == 2)//更具省份获取城市
             {
                 data = cityService.GetCityListByProvince(key);
             }
-            else if (key.Length == 4)
+            else if (key.Length == 4)//更具城市获取区县
             {
                 data = cityService.GetAreaListByCity(key);
             }
-            else if (key.Length == 0)
+            else if (key.Length == 0)//
             {
                 data = cityService.GetProvinceList();
             }
@@ -70,11 +70,11 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
 
         private string GetParentCode(string cityCode)
         {
-            if (cityCode.Length == 2)
+            if (cityCode.Length == 2)//省份的上级返回
                 return "root";
-            if (cityCode.Length == 4)
+            if (cityCode.Length == 4)//城市的上级是省，是两位数
                 return cityCode.Substring(0, 2);
-            if (cityCode.Length == 6)
+            if (cityCode.Length == 6)//区的上级，取中间的两位
                 return cityCode.Substring(2, 2);
             return string.Empty;
         }
