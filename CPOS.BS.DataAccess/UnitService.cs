@@ -181,16 +181,16 @@ namespace JIT.CPOS.BS.DataAccess
 
         #endregion
 
-    
+
         /// <summary>
         /// 获取某个用户权限下的门店数据
         /// </summary>
         /// <param name="unitId"></param>
         /// <returns></returns>
-        public DataSet GetUnitByUser(string CustomerID,string loginUserID)
-        { 
+        public DataSet GetUnitByUser(string CustomerID, string loginUserID)
+        {
             DataSet ds = new DataSet();
-            string sql = "";          
+            string sql = "";
             List<SqlParameter> ls = new List<SqlParameter>();
             ls.Add(new SqlParameter("@CustomerId", CustomerID));
             ls.Add(new SqlParameter("@loginUserID", loginUserID));
@@ -208,12 +208,12 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
 
 ";
 
-             sql = GetSql(sql)
-                + " inner join #UnitSET  d on(a.unit_id = d.unitid)  where  1=1 and a.unit_code!=e.customer_code and a.unit_code!='ONLINE' and a.status = '1'  order by a.unit_code ";
+            sql = GetSql(sql)
+               + " inner join #UnitSET  d on(a.unit_id = d.unitid)  where  1=1 and a.unit_code!=e.customer_code and a.unit_code!='ONLINE' and a.status = '1'  order by a.unit_code ";
 
 
-               sql += @" drop table #UnitSET                ";
-            ds = this.SQLHelper.ExecuteDataset(CommandType.Text,  sql,ls.ToArray());
+            sql += @" drop table #UnitSET                ";
+            ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());
             return ds;
         }
         #region MyRegion
@@ -282,7 +282,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                 + " ,a.unit_address Address "
                 + " ,a.unit_contact Contact "
                 + " ,a.unit_postcode Postcode "
-            //    + " ,a.unit_city_id CityId "
+                //    + " ,a.unit_city_id CityId "
                 + " ,a.unit_remark Remark "
                 + " ,a.Status "
                 + " ,a.unit_flag Flag "
@@ -421,7 +421,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + " insert into @TmpTable(unit_id,row_no) "
                       + " select x.unit_id ,x.rownum_ From ( select rownum_=row_number() over(order by a.modify_time desc),unit_id "  //unit_code
                       + @" from t_unit a inner join  #UnitSET R  on a.unit_id=R.unitID inner join cpos_ap..t_customer  c  on a.customer_id=c.customer_id where 1=1 "
-            +  @" and a.unit_code!=c.customer_code and unit_code!='ONLINE'";
+            + @" and a.unit_code!=c.customer_code and unit_code!='ONLINE'";
             sql = pService.GetLinkSql(sql, "a.unit_code", _ht["unit_code"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.customer_id", _ht["CustomerId"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.unit_name", _ht["unit_name"].ToString(), "%");
@@ -436,10 +436,10 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                 sql += " and a.unit_id  in (select dst_unit_id from T_Unit_Relation where src_unit_id='" + _ht["Parent_Unit_ID"].ToString() + "' )";
             }
             //是否只显示门店
-            if (_ht["OnlyShop"].ToString()=="1")
+            if (_ht["OnlyShop"].ToString() == "1")
             {
                 sql += " and a.type_id =(select type_id from t_type where type_code='门店' and customer_id='" + _ht["CustomerId"].ToString() + "' )";
-                    }
+            }
 
 
             sql = sql + " ) x";
@@ -592,7 +592,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             sql = pService.GetIsNotNullUpdateSql(sql, "weiXinId", unitInfo.weiXinId);
             sql = pService.GetIsNotNullUpdateSql(sql, "dimensionalCodeURL", unitInfo.dimensionalCodeURL);
             sql = pService.GetIsNotNullUpdateSql(sql, "StoreType", unitInfo.StoreType);
-            
+
             sql = sql + " where unit_id = '" + unitInfo.Id + "' ;";
             #endregion
             if (pTran != null)
@@ -676,7 +676,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                       + ", '" + unitInfo.dimensionalCodeURL + "' dimensionalCodeURL "
                       + ", '" + unitInfo.dimension + "' dimension "
                        + ", '" + unitInfo.StoreType + "' StoreType "
-                      
+
                       + " ) a "
                       + " left join T_Unit b "
                       + " on(a.unit_id = b.unit_id) "
@@ -935,7 +935,13 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
         public DataSet FuzzyQueryStoresALL(string NameLike, string CityCode, string Position, int pageindex, int pagesize, string StoreID, bool IncludeHQ, string pCustomerID)
         {
             StringBuilder temp = new StringBuilder();
-            string type_id = "EB58F1B053694283B2B7610C9AAD2742"; //只取门店的
+            string type_id = "EB58F1B053694283B2B7610C9AAD2742"; //只取门店的,老版本默认值
+            //获取当前商户门店类型的Id
+            var unitTypeDAO = new T_TypeDAO(this.CurrentUserInfo);
+            var unitTypeInfo = unitTypeDAO.QueryByEntity(new T_TypeEntity() { customer_id = pCustomerID }, null).FirstOrDefault();
+            if (unitTypeInfo != null)
+                type_id = unitTypeInfo.type_id;
+
             //模糊查询用参数
             if (!string.IsNullOrEmpty(NameLike))
                 temp.AppendFormat(" and (a.unit_name like '%{0}%' or a.unit_address like '%{0}%')", NameLike);
@@ -980,7 +986,14 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
         {
             StringBuilder temp = new StringBuilder();
             StringBuilder sql = new StringBuilder();
-            string type_id = "EB58F1B053694283B2B7610C9AAD2742"; //只取门店的
+            string type_id = "EB58F1B053694283B2B7610C9AAD2742"; //只取门店的,老版本默认值
+
+            //获取当前商户门店类型的Id
+            var unitTypeDAO = new T_TypeDAO(this.CurrentUserInfo);
+            var unitTypeInfo = unitTypeDAO.QueryByEntity(new T_TypeEntity() { customer_id = pCustomerID }, null).FirstOrDefault();
+            if (unitTypeInfo != null)
+                type_id = unitTypeInfo.type_id;
+
             string strdistance = string.Empty;
             string strDistance = string.Empty;
             //模糊查询用参数
@@ -1051,7 +1064,14 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
         {
             StringBuilder temp = new StringBuilder();
             StringBuilder sql = new StringBuilder();
-            string type_id = "EB58F1B053694283B2B7610C9AAD2742"; //只取门店的
+            string type_id = "EB58F1B053694283B2B7610C9AAD2742"; //只取门店的,老版本默认值
+
+            //获取当前商户门店类型的Id
+            var unitTypeDAO = new T_TypeDAO(this.CurrentUserInfo);
+            var unitTypeInfo = unitTypeDAO.QueryByEntity(new T_TypeEntity() { customer_id = pCustomerID }, null).FirstOrDefault();
+            if (unitTypeInfo != null)
+                type_id = unitTypeInfo.type_id;
+
             string strdistance = string.Empty;
             //模糊查询用参数
             if (!string.IsNullOrEmpty(NameLike))
@@ -1068,7 +1088,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             if (!string.IsNullOrEmpty(CityCode))
             {
                 strdistance = " ,0 as Distance ";
-                temp.AppendFormat(" and  a.unit_city_id in (select unit_city_id from t_unit where  exists(select 1 from T_City where city_id=t_unit.unit_city_id and city_code like '{0}%'))", CityCode.Substring(0,3));
+                temp.AppendFormat(" and  a.unit_city_id in (select unit_city_id from t_unit where  exists(select 1 from T_City where city_id=t_unit.unit_city_id and city_code like '{0}%'))", CityCode.Substring(0, 3));
             }
             if (!string.IsNullOrEmpty(type_id))  //只取门店数据
             {
