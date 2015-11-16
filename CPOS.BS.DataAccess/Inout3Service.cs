@@ -1316,8 +1316,8 @@ namespace JIT.CPOS.BS.DataAccess
                       + ",isnull((select DeliveryAmount From TOrderCustomerDeliveryStrategyMapping TOCDSM WHERE TOCDSM.OrderID = a.Order_ID and isdelete=0 ),0) DeliveryAmount"
 
                 //积分折扣,下单是消费的积分20，订单返回给的积分	 21
-                      + @",isnull( CONVERT(decimal(18,2),  ISNULL(   ISNULL((select SettingValue from CustomerBasicSetting  where SettingCode  ='IntegralAmountPer' and customerid=a.customer_id and isdelete=0)
-	                    ,(select SettingValue from CustomerBasicSetting  where SettingCode  ='IntegralAmountPer' and customerid is null  and isdelete=0) )
+                      + @",isnull( CONVERT(decimal(18,2),  ISNULL(   ISNULL((select CAST(SettingValue AS decimal(18,2))  from CustomerBasicSetting  where SettingCode  ='IntegralAmountPer' and customerid=a.customer_id and isdelete=0)
+	                    ,(select CAST(SettingValue AS decimal(18,2))  from CustomerBasicSetting  where SettingCode  ='IntegralAmountPer' and customerid is null  and isdelete=0) )
 	                    ,'0')*(      select top 1 abs( isnull(integral,0) )  as integral from vipIntegralDetail 
                                    where objectId = a.order_id     and vipId =vip_no  and  IntegralSourceID=20 order by createtime  )   )     ,0)as	   pay_pointsAmount"
                 //优惠券折扣
