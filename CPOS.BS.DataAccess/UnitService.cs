@@ -938,7 +938,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             string type_id = "EB58F1B053694283B2B7610C9AAD2742"; //只取门店的,老版本默认值
             //获取当前商户门店类型的Id
             var unitTypeDAO = new T_TypeDAO(this.CurrentUserInfo);
-            var unitTypeInfo = unitTypeDAO.QueryByEntity(new T_TypeEntity() { customer_id = pCustomerID }, null).FirstOrDefault();
+            var unitTypeInfo = unitTypeDAO.QueryByEntity(new T_TypeEntity() { customer_id = pCustomerID,type_code="门店" }, null).FirstOrDefault();
             if (unitTypeInfo != null)
                 type_id = unitTypeInfo.type_id;
 
@@ -990,7 +990,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
 
             //获取当前商户门店类型的Id
             var unitTypeDAO = new T_TypeDAO(this.CurrentUserInfo);
-            var unitTypeInfo = unitTypeDAO.QueryByEntity(new T_TypeEntity() { customer_id = pCustomerID }, null).FirstOrDefault();
+            var unitTypeInfo = unitTypeDAO.QueryByEntity(new T_TypeEntity() { customer_id = pCustomerID,type_code="门店"}, null).FirstOrDefault();
             if (unitTypeInfo != null)
                 type_id = unitTypeInfo.type_id;
 
@@ -1068,7 +1068,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
 
             //获取当前商户门店类型的Id
             var unitTypeDAO = new T_TypeDAO(this.CurrentUserInfo);
-            var unitTypeInfo = unitTypeDAO.QueryByEntity(new T_TypeEntity() { customer_id = pCustomerID }, null).FirstOrDefault();
+            var unitTypeInfo = unitTypeDAO.QueryByEntity(new T_TypeEntity() { customer_id = pCustomerID, type_code = "门店" }, null).FirstOrDefault();
             if (unitTypeInfo != null)
                 type_id = unitTypeInfo.type_id;
 
