@@ -48,7 +48,7 @@ namespace JIT.CPOS.BS.BLL
             var vipCardStatusChangeLogBLL = new VipCardStatusChangeLogBLL(CurrentUserInfo);
 
             UnitService unitServer = new UnitService(CurrentUserInfo);
-            string onlineShoppingUnitId = unitServer.GetUnitByUnitTypeForWX("OnlineShopping", null).Id; //获取在线商城的门店标识
+            string onlineShoppingUnitId = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
 
             //根据vipid查询VipCardVipMapping，判断是否有绑卡
             var vipCardMappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VIPID = vipId }, null).FirstOrDefault();
