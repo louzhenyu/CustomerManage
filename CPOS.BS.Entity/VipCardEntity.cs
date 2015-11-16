@@ -34,6 +34,10 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public string VipName { get; set; }
         /// <summary>
+        /// 真实姓名
+        /// </summary>
+        public string VipRealName { get; set; }
+        /// <summary>
         /// 会籍店
         /// </summary>
         public string UnitName { get; set; }
@@ -85,6 +89,39 @@ namespace JIT.CPOS.BS.Entity
         /// 状态代码
         /// </summary>
         public string VipCardStatusCode { get; set; }
+        
+        /// <summary>
+        /// 会员手机号码
+        /// </summary>
+        public string Phone { get; set; }
+        /// <summary>
+        /// 会员卡状态名称
+        /// </summary>
+        public string VipCardStatusName { get; set; }
+        /// <summary>
+        /// 会员卡类型图片Url
+        /// </summary>
+        public string picUrl { get; set; }
+        /// <summary>
+        /// 会员编号
+        /// </summary>
+        public string VipCode { get; set; }
+        /// <summary>
+        /// 会员生日
+        /// </summary>
+        public string Birthday { get; set; }
+        /// <summary>
+        /// 会员性别
+        /// </summary>
+        public int Gender { get; set; }
+        /// <summary>
+        /// 会员ID
+        /// </summary>
+        public string VIPID { get; set; }
+        /// <summary>
+        /// 会员卡状态变更记录集合
+        /// </summary>
+        public List<VipCardStatusChangeLogEntity> StatusLogList { get; set; }
         #endregion
     }
 }

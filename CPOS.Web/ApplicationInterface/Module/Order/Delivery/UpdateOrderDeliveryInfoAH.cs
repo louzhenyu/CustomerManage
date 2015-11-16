@@ -59,8 +59,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Delivery
                         throw new APIException(string.Format("未找到对应OrderID：{0}订单", OrderID)) { ErrorCode = ERROR_ORDERID_NOEXISTS };
                     }
                     entity.Field8 = DeliveryTypeID.ToString().Trim(); //订单配送方式 1.送货到家。2到店提货
-                    entity.carrier_id = StoreID;                   //自提的门店ID
-                    entity.purchase_unit_id = StoreID;                   //自提的门店ID
+                    entity.carrier_id = StoreID;                      //自提的门店ID 
+                    entity.purchase_unit_id = StoreID;                //自提的门店ID
                     entity.Field9 = PickupBeginDateTime;              //自提时间范围
                     entity.Field6 = Mobile;                           //联系电话
                     entity.Field5 = Email;                            //邮箱

@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/5/22 14:32:02
+ * Create On	:2015/10/30 15:25:27
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -38,7 +38,7 @@ namespace JIT.CPOS.BS.DataAccess
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class VipAmountDAO : BaseCPOSDAO, ICRUDable<VipAmountEntity>, IQueryable<VipAmountEntity>
+    public partial class VipAmountDAO : Base.BaseCPOSDAO, ICRUDable<VipAmountEntity>, IQueryable<VipAmountEntity>
     {
         #region 构造函数
         /// <summary>
@@ -81,43 +81,61 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipAmount](");
-            strSql.Append("[BeginAmount],[InAmount],[OutAmount],[EndAmount],[PayPassword],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[IsLocking],[TotalAmount],[ReturnAmount],[VipId])");
+            strSql.Append("[VipCardCode],[BeginAmount],[InAmount],[OutAmount],[EndAmount],[TotalAmount],[BeginReturnAmount],[InReturnAmount],[OutReturnAmount],[ReturnAmount],[ImminentInvalidRAmount],[InvalidReturnAmount],[ValidReturnAmount],[TotalReturnAmount],[PayPassword],[IsLocking],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[VipId])");
             strSql.Append(" values (");
-            strSql.Append("@BeginAmount,@InAmount,@OutAmount,@EndAmount,@PayPassword,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@IsLocking,@TotalAmount,@ReturnAmount,@VipId)");            
+            strSql.Append("@VipCardCode,@BeginAmount,@InAmount,@OutAmount,@EndAmount,@TotalAmount,@BeginReturnAmount,@InReturnAmount,@OutReturnAmount,@ReturnAmount,@ImminentInvalidRAmount,@InvalidReturnAmount,@ValidReturnAmount,@TotalReturnAmount,@PayPassword,@IsLocking,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@VipId)");            
 
 			string pkString = pEntity.VipId;
 
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@VipCardCode",SqlDbType.VarChar),
 					new SqlParameter("@BeginAmount",SqlDbType.Decimal),
 					new SqlParameter("@InAmount",SqlDbType.Decimal),
 					new SqlParameter("@OutAmount",SqlDbType.Decimal),
 					new SqlParameter("@EndAmount",SqlDbType.Decimal),
+					new SqlParameter("@TotalAmount",SqlDbType.Decimal),
+					new SqlParameter("@BeginReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@InReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@OutReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@ReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@ImminentInvalidRAmount",SqlDbType.Decimal),
+					new SqlParameter("@InvalidReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@ValidReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@TotalReturnAmount",SqlDbType.Decimal),
 					new SqlParameter("@PayPassword",SqlDbType.NVarChar),
+					new SqlParameter("@IsLocking",SqlDbType.Int),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@IsLocking",SqlDbType.Int),
-					new SqlParameter("@TotalAmount",SqlDbType.Decimal),
-					new SqlParameter("@ReturnAmount",SqlDbType.Decimal),
 					new SqlParameter("@VipId",SqlDbType.NVarChar)
             };
-			parameters[0].Value = pEntity.BeginAmount;
-			parameters[1].Value = pEntity.InAmount;
-			parameters[2].Value = pEntity.OutAmount;
-			parameters[3].Value = pEntity.EndAmount;
-			parameters[4].Value = pEntity.PayPassword;
-			parameters[5].Value = pEntity.CreateTime;
-			parameters[6].Value = pEntity.CreateBy;
-			parameters[7].Value = pEntity.LastUpdateTime;
-			parameters[8].Value = pEntity.LastUpdateBy;
-			parameters[9].Value = pEntity.IsDelete;
-			parameters[10].Value = pEntity.IsLocking;
-			parameters[11].Value = pEntity.TotalAmount;
-			parameters[12].Value = pEntity.ReturnAmount;
-			parameters[13].Value = pkString;
+			parameters[0].Value = pEntity.VipCardCode;
+			parameters[1].Value = pEntity.BeginAmount;
+			parameters[2].Value = pEntity.InAmount;
+			parameters[3].Value = pEntity.OutAmount;
+			parameters[4].Value = pEntity.EndAmount;
+			parameters[5].Value = pEntity.TotalAmount;
+			parameters[6].Value = pEntity.BeginReturnAmount;
+			parameters[7].Value = pEntity.InReturnAmount;
+			parameters[8].Value = pEntity.OutReturnAmount;
+			parameters[9].Value = pEntity.ReturnAmount;
+			parameters[10].Value = pEntity.ImminentInvalidRAmount;
+			parameters[11].Value = pEntity.InvalidReturnAmount;
+			parameters[12].Value = pEntity.ValidReturnAmount;
+			parameters[13].Value = pEntity.TotalReturnAmount;
+			parameters[14].Value = pEntity.PayPassword;
+			parameters[15].Value = pEntity.IsLocking;
+			parameters[16].Value = pEntity.CustomerID;
+			parameters[17].Value = pEntity.CreateTime;
+			parameters[18].Value = pEntity.CreateBy;
+			parameters[19].Value = pEntity.LastUpdateTime;
+			parameters[20].Value = pEntity.LastUpdateBy;
+			parameters[21].Value = pEntity.IsDelete;
+			parameters[22].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -211,7 +229,9 @@ namespace JIT.CPOS.BS.DataAccess
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [VipAmount] set ");
-                        if (pIsUpdateNullField || pEntity.BeginAmount!=null)
+                        if (pIsUpdateNullField || pEntity.VipCardCode!=null)
+                strSql.Append( "[VipCardCode]=@VipCardCode,");
+            if (pIsUpdateNullField || pEntity.BeginAmount!=null)
                 strSql.Append( "[BeginAmount]=@BeginAmount,");
             if (pIsUpdateNullField || pEntity.InAmount!=null)
                 strSql.Append( "[InAmount]=@InAmount,");
@@ -219,44 +239,78 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[OutAmount]=@OutAmount,");
             if (pIsUpdateNullField || pEntity.EndAmount!=null)
                 strSql.Append( "[EndAmount]=@EndAmount,");
+            if (pIsUpdateNullField || pEntity.TotalAmount!=null)
+                strSql.Append( "[TotalAmount]=@TotalAmount,");
+            if (pIsUpdateNullField || pEntity.BeginReturnAmount!=null)
+                strSql.Append( "[BeginReturnAmount]=@BeginReturnAmount,");
+            if (pIsUpdateNullField || pEntity.InReturnAmount!=null)
+                strSql.Append( "[InReturnAmount]=@InReturnAmount,");
+            if (pIsUpdateNullField || pEntity.OutReturnAmount!=null)
+                strSql.Append( "[OutReturnAmount]=@OutReturnAmount,");
+            if (pIsUpdateNullField || pEntity.ReturnAmount!=null)
+                strSql.Append( "[ReturnAmount]=@ReturnAmount,");
+            if (pIsUpdateNullField || pEntity.ImminentInvalidRAmount!=null)
+                strSql.Append( "[ImminentInvalidRAmount]=@ImminentInvalidRAmount,");
+            if (pIsUpdateNullField || pEntity.InvalidReturnAmount!=null)
+                strSql.Append( "[InvalidReturnAmount]=@InvalidReturnAmount,");
+            if (pIsUpdateNullField || pEntity.ValidReturnAmount!=null)
+                strSql.Append( "[ValidReturnAmount]=@ValidReturnAmount,");
+            if (pIsUpdateNullField || pEntity.TotalReturnAmount!=null)
+                strSql.Append( "[TotalReturnAmount]=@TotalReturnAmount,");
             if (pIsUpdateNullField || pEntity.PayPassword!=null)
                 strSql.Append( "[PayPassword]=@PayPassword,");
+            if (pIsUpdateNullField || pEntity.IsLocking!=null)
+                strSql.Append( "[IsLocking]=@IsLocking,");
+            if (pIsUpdateNullField || pEntity.CustomerID!=null)
+                strSql.Append( "[CustomerID]=@CustomerID,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
-            if (pIsUpdateNullField || pEntity.IsLocking!=null)
-                strSql.Append( "[IsLocking]=@IsLocking,");
-            if (pIsUpdateNullField || pEntity.TotalAmount!=null)
-                strSql.Append( "[TotalAmount]=@TotalAmount,");
-            if (pIsUpdateNullField || pEntity.ReturnAmount!=null)
-                strSql.Append( "[ReturnAmount]=@ReturnAmount");
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
             strSql.Append(" where VipId=@VipId ");
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@VipCardCode",SqlDbType.VarChar),
 					new SqlParameter("@BeginAmount",SqlDbType.Decimal),
 					new SqlParameter("@InAmount",SqlDbType.Decimal),
 					new SqlParameter("@OutAmount",SqlDbType.Decimal),
 					new SqlParameter("@EndAmount",SqlDbType.Decimal),
+					new SqlParameter("@TotalAmount",SqlDbType.Decimal),
+					new SqlParameter("@BeginReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@InReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@OutReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@ReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@ImminentInvalidRAmount",SqlDbType.Decimal),
+					new SqlParameter("@InvalidReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@ValidReturnAmount",SqlDbType.Decimal),
+					new SqlParameter("@TotalReturnAmount",SqlDbType.Decimal),
 					new SqlParameter("@PayPassword",SqlDbType.NVarChar),
+					new SqlParameter("@IsLocking",SqlDbType.Int),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
-					new SqlParameter("@IsLocking",SqlDbType.Int),
-					new SqlParameter("@TotalAmount",SqlDbType.Decimal),
-					new SqlParameter("@ReturnAmount",SqlDbType.Decimal),
 					new SqlParameter("@VipId",SqlDbType.NVarChar)
             };
-			parameters[0].Value = pEntity.BeginAmount;
-			parameters[1].Value = pEntity.InAmount;
-			parameters[2].Value = pEntity.OutAmount;
-			parameters[3].Value = pEntity.EndAmount;
-			parameters[4].Value = pEntity.PayPassword;
-			parameters[5].Value = pEntity.LastUpdateTime;
-			parameters[6].Value = pEntity.LastUpdateBy;
-			parameters[7].Value = pEntity.IsLocking;
-			parameters[8].Value = pEntity.TotalAmount;
+			parameters[0].Value = pEntity.VipCardCode;
+			parameters[1].Value = pEntity.BeginAmount;
+			parameters[2].Value = pEntity.InAmount;
+			parameters[3].Value = pEntity.OutAmount;
+			parameters[4].Value = pEntity.EndAmount;
+			parameters[5].Value = pEntity.TotalAmount;
+			parameters[6].Value = pEntity.BeginReturnAmount;
+			parameters[7].Value = pEntity.InReturnAmount;
+			parameters[8].Value = pEntity.OutReturnAmount;
 			parameters[9].Value = pEntity.ReturnAmount;
-			parameters[10].Value = pEntity.VipId;
+			parameters[10].Value = pEntity.ImminentInvalidRAmount;
+			parameters[11].Value = pEntity.InvalidReturnAmount;
+			parameters[12].Value = pEntity.ValidReturnAmount;
+			parameters[13].Value = pEntity.TotalReturnAmount;
+			parameters[14].Value = pEntity.PayPassword;
+			parameters[15].Value = pEntity.IsLocking;
+			parameters[16].Value = pEntity.CustomerID;
+			parameters[17].Value = pEntity.LastUpdateTime;
+			parameters[18].Value = pEntity.LastUpdateBy;
+			parameters[19].Value = pEntity.VipId;
 
             //执行语句
             int result = 0;
@@ -544,6 +598,8 @@ namespace JIT.CPOS.BS.DataAccess
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
             if (pQueryEntity.VipId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipId", Value = pQueryEntity.VipId });
+            if (pQueryEntity.VipCardCode!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipCardCode", Value = pQueryEntity.VipCardCode });
             if (pQueryEntity.BeginAmount!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "BeginAmount", Value = pQueryEntity.BeginAmount });
             if (pQueryEntity.InAmount!=null)
@@ -552,8 +608,30 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "OutAmount", Value = pQueryEntity.OutAmount });
             if (pQueryEntity.EndAmount!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EndAmount", Value = pQueryEntity.EndAmount });
+            if (pQueryEntity.TotalAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TotalAmount", Value = pQueryEntity.TotalAmount });
+            if (pQueryEntity.BeginReturnAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BeginReturnAmount", Value = pQueryEntity.BeginReturnAmount });
+            if (pQueryEntity.InReturnAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "InReturnAmount", Value = pQueryEntity.InReturnAmount });
+            if (pQueryEntity.OutReturnAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "OutReturnAmount", Value = pQueryEntity.OutReturnAmount });
+            if (pQueryEntity.ReturnAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ReturnAmount", Value = pQueryEntity.ReturnAmount });
+            if (pQueryEntity.ImminentInvalidRAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ImminentInvalidRAmount", Value = pQueryEntity.ImminentInvalidRAmount });
+            if (pQueryEntity.InvalidReturnAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "InvalidReturnAmount", Value = pQueryEntity.InvalidReturnAmount });
+            if (pQueryEntity.ValidReturnAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ValidReturnAmount", Value = pQueryEntity.ValidReturnAmount });
+            if (pQueryEntity.TotalReturnAmount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TotalReturnAmount", Value = pQueryEntity.TotalReturnAmount });
             if (pQueryEntity.PayPassword!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "PayPassword", Value = pQueryEntity.PayPassword });
+            if (pQueryEntity.IsLocking!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsLocking", Value = pQueryEntity.IsLocking });
+            if (pQueryEntity.CustomerID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
             if (pQueryEntity.CreateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
             if (pQueryEntity.CreateBy!=null)
@@ -564,12 +642,6 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
-            if (pQueryEntity.IsLocking!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsLocking", Value = pQueryEntity.IsLocking });
-            if (pQueryEntity.TotalAmount!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TotalAmount", Value = pQueryEntity.TotalAmount });
-            if (pQueryEntity.ReturnAmount!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ReturnAmount", Value = pQueryEntity.ReturnAmount });
 
             return lstWhereCondition.ToArray();
         }
@@ -589,6 +661,10 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.VipId =  Convert.ToString(pReader["VipId"]);
 			}
+			if (pReader["VipCardCode"] != DBNull.Value)
+			{
+				pInstance.VipCardCode =  Convert.ToString(pReader["VipCardCode"]);
+			}
 			if (pReader["BeginAmount"] != DBNull.Value)
 			{
 				pInstance.BeginAmount =  Convert.ToDecimal(pReader["BeginAmount"]);
@@ -605,9 +681,53 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.EndAmount =  Convert.ToDecimal(pReader["EndAmount"]);
 			}
+			if (pReader["TotalAmount"] != DBNull.Value)
+			{
+				pInstance.TotalAmount =  Convert.ToDecimal(pReader["TotalAmount"]);
+			}
+			if (pReader["BeginReturnAmount"] != DBNull.Value)
+			{
+				pInstance.BeginReturnAmount =  Convert.ToDecimal(pReader["BeginReturnAmount"]);
+			}
+			if (pReader["InReturnAmount"] != DBNull.Value)
+			{
+				pInstance.InReturnAmount =  Convert.ToDecimal(pReader["InReturnAmount"]);
+			}
+			if (pReader["OutReturnAmount"] != DBNull.Value)
+			{
+				pInstance.OutReturnAmount =  Convert.ToDecimal(pReader["OutReturnAmount"]);
+			}
+			if (pReader["ReturnAmount"] != DBNull.Value)
+			{
+				pInstance.ReturnAmount =  Convert.ToDecimal(pReader["ReturnAmount"]);
+			}
+			if (pReader["ImminentInvalidRAmount"] != DBNull.Value)
+			{
+				pInstance.ImminentInvalidRAmount =  Convert.ToDecimal(pReader["ImminentInvalidRAmount"]);
+			}
+			if (pReader["InvalidReturnAmount"] != DBNull.Value)
+			{
+				pInstance.InvalidReturnAmount =  Convert.ToDecimal(pReader["InvalidReturnAmount"]);
+			}
+			if (pReader["ValidReturnAmount"] != DBNull.Value)
+			{
+				pInstance.ValidReturnAmount =  Convert.ToDecimal(pReader["ValidReturnAmount"]);
+			}
+			if (pReader["TotalReturnAmount"] != DBNull.Value)
+			{
+				pInstance.TotalReturnAmount =  Convert.ToDecimal(pReader["TotalReturnAmount"]);
+			}
 			if (pReader["PayPassword"] != DBNull.Value)
 			{
 				pInstance.PayPassword =  Convert.ToString(pReader["PayPassword"]);
+			}
+			if (pReader["IsLocking"] != DBNull.Value)
+			{
+				pInstance.IsLocking =   Convert.ToInt32(pReader["IsLocking"]);
+			}
+			if (pReader["CustomerID"] != DBNull.Value)
+			{
+				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
 			}
 			if (pReader["CreateTime"] != DBNull.Value)
 			{
@@ -628,18 +748,6 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
-			}
-			if (pReader["IsLocking"] != DBNull.Value)
-			{
-				pInstance.IsLocking =   Convert.ToInt32(pReader["IsLocking"]);
-			}
-			if (pReader["TotalAmount"] != DBNull.Value)
-			{
-				pInstance.TotalAmount =  Convert.ToDecimal(pReader["TotalAmount"]);
-			}
-			if (pReader["ReturnAmount"] != DBNull.Value)
-			{
-				pInstance.ReturnAmount =  Convert.ToDecimal(pReader["ReturnAmount"]);
 			}
 
         }

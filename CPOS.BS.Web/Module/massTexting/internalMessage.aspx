@@ -1,9 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
-    <title>内部消息列表管理</title>
+    <title>消息模版列表</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="css/style.css?v=0.4" rel="stylesheet" type="text/css" />

@@ -113,7 +113,7 @@
         gopage: function () {
             var str_page = $('#' + this.gopageTextboxId).val();
             if (isNaN(str_page)) {
-                $('#' + this.gopageTextboxId).val(this.next);
+                $('#' + this.gopageTextboxId).val(this.next-1);
                 return;
             }
             var n = parseInt(str_page);
@@ -189,10 +189,11 @@
 
             var gopage_info = '';
             if (this.isGoPage) {
+
                 gopage_info = '&nbsp;' + this.lang.gopageBeforeText + '<span id="' + this.gopageWrapId + '">' +
 					'<input type="button" id="' + this.gopageButtonId + '" onclick="kkpager.gopage()" value="'
 						+ this.lang.gopageButtonOkText + '" />' +
-					'<input type="text" id="' + this.gopageTextboxId + '" onfocus="kkpager.focus_gopage()"  onkeypress="return kkpager.keypress_gopage(event);"   onblur="kkpager.blur_gopage()" value="' + this.next + '" /></span>' + this.lang.gopageAfterText;
+					'<input type="text" id="' + this.gopageTextboxId + '" onfocus="kkpager.focus_gopage()"  onkeypress="return kkpager.keypress_gopage(event);"   onblur="kkpager.blur_gopage()" value="' + this.pno + '" /></span>' + this.lang.gopageAfterText;
             }
 
             //分页处理
@@ -255,6 +256,7 @@
         init: function (config) {
             this.pno = isNaN(config.pno) ? 1 : parseInt(config.pno);
             this.total = isNaN(config.total) ? 1 : parseInt(config.total);
+            this.total= this.total-500>0 ? 500 :this.total
             this.totalRecords = isNaN(config.totalRecords) ? 0 : parseInt(config.totalRecords);
             if (config.pagerid) { this.pagerid = config.pagerid; }
             if (config.mode) { this.mode = config.mode; }

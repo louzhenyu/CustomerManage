@@ -27,7 +27,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.ServicesLog
                     servicesLog.ServicesTime = DateTime.Parse(para.ServicesTime);
                 servicesLog.VipID = para.VipID;
                 servicesLog.ServicesMode = para.ServicesMode;
-                servicesLog.UnitID = para.UnitID;
+                servicesLog.UnitID = loggingSessionInfo.CurrentUserRole.UnitId;
                 servicesLog.UserID = loggingSessionInfo.UserID;
                 //servicesLog.UserID = para.UserID;
                 servicesLog.ServicesType = para.ServicesType;
@@ -47,8 +47,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.ServicesLog
                         servicesLog.VipID = para.VipID;
                     if (!string.IsNullOrEmpty(para.ServicesMode))
                         servicesLog.ServicesMode = para.ServicesMode;
-                    if (!string.IsNullOrEmpty(para.UnitID))
-                        servicesLog.UnitID = para.UnitID;
+                    //if (!string.IsNullOrEmpty(para.UnitID))
+                    //    servicesLog.UnitID = para.UnitID;
                     //servicesLog.UserID = loggingSessionInfo.UserID;
                     //servicesLog.UserID = para.UserID;
                     if (para.ServicesType > 0)

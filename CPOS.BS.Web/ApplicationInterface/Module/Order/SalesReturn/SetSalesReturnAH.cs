@@ -38,9 +38,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
             var vipBll = new VipBLL(loggingSessionInfo);        //会员BLL实例化
             var userBll = new T_UserBLL(loggingSessionInfo);    //店员BLL实例化
             T_UserEntity userEntity = null;   //店员信息
-
+            var unitBLL = new t_unitBLL(loggingSessionInfo);
 
             salesReturnEntity = salesReturnBLL.GetByID(para.SalesReturnID);
+            //获取订单信息
+            var inoutInfo = inoutBLL.GetInoutInfo(salesReturnEntity.OrderID, loggingSessionInfo);
+            //获取会员信息
+            var vipInfo = vipBll.GetByID(inoutInfo.vip_no);
+            //获取门店信息
+            t_unitEntity unitInfo = null;
+            if (!string.IsNullOrEmpty(inoutInfo.sales_unit_id))
+                unitInfo = unitBLL.GetByID(inoutInfo.sales_unit_id);
             userEntity = userBll.GetByID(loggingSessionInfo.UserID);
             using (pTran.Connection)
             {
@@ -53,7 +61,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                             salesReturnEntity.Status = 4;//审核通过
 
                             #region 计算应退金额
-                            var inoutInfo = inoutBLL.GetInoutInfo(salesReturnEntity.OrderID, loggingSessionInfo);
                             decimal payable = 0;   //计算后应退金额
 
                             //根据订单ID获取订单明细[复用]
@@ -68,7 +75,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                 if (inoutInfo.discount_rate.Value > 0)
                                     discount = inoutInfo.discount_rate.Value / 100;
                                 //计算后应退金额
-                                payable = (((tempAmount - inoutInfo.CouponAmount)*discount) / tempAmount) * (salesPrice * salesReturnEntity.ActualQty.Value);
+                                payable = (((tempAmount - inoutInfo.CouponAmount) * discount) / tempAmount) * (salesPrice * salesReturnEntity.ActualQty.Value);
                             }
                             salesReturnEntity.RefundAmount = payable;   //应退金额
                             salesReturnEntity.ConfirmAmount = payable;  //实退金额，默认为应退金额，可支持修改
@@ -147,7 +154,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                 refundEntity.ConfirmAmount = salesReturnEntity.ConfirmAmount;   //确认退款金额
 
                                 #region 计算应退现金金额、余额、积分、返现
-                                var inoutDetail = inoutBLL.GetInoutInfo(salesReturnEntity.OrderID,loggingSessionInfo);
+                                var inoutDetail = inoutBLL.GetInoutInfo(salesReturnEntity.OrderID, loggingSessionInfo);
                                 if (inoutDetail != null)
                                 {
                                     //订单实付金额-运费 >= 应退金额
@@ -156,21 +163,21 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                         refundEntity.ActualRefundAmount = salesReturnEntity.ConfirmAmount;
                                     }
                                     //订单实付金额-运费+余额抵扣 >= 应退金额
-                                    else if (inoutDetail.actual_amount - inoutDetail.DeliveryAmount + inoutDetail.VipEndAmount >= salesReturnEntity.ConfirmAmount) 
+                                    else if (inoutDetail.actual_amount - inoutDetail.DeliveryAmount + inoutDetail.VipEndAmount >= salesReturnEntity.ConfirmAmount)
                                     {
                                         refundEntity.ActualRefundAmount = inoutDetail.actual_amount - inoutDetail.DeliveryAmount;  //实付金额
                                         //refundEntity.Amount = salesReturnEntity.ConfirmAmount - inoutDetail.actual_amount;  //退回余额
                                         refundEntity.Amount = salesReturnEntity.ConfirmAmount - refundEntity.ActualRefundAmount;  //退回余额
                                     }
                                     //订单实付金额-运费+余额抵扣+积分抵扣 >= 应退金额
-                                    else if (inoutDetail.actual_amount - inoutDetail.DeliveryAmount + inoutDetail.VipEndAmount + inoutDetail.IntegralAmount >= salesReturnEntity.ConfirmAmount) 
+                                    else if (inoutDetail.actual_amount - inoutDetail.DeliveryAmount + inoutDetail.VipEndAmount + inoutDetail.IntegralAmount >= salesReturnEntity.ConfirmAmount)
                                     {
                                         refundEntity.ActualRefundAmount = inoutDetail.actual_amount - inoutDetail.DeliveryAmount;  //实付金额
                                         refundEntity.Amount = inoutDetail.VipEndAmount;  //退回余额
                                         //退回积分抵扣金额
                                         refundEntity.PointsAmount = salesReturnEntity.ConfirmAmount.Value - (inoutDetail.actual_amount.Value - inoutDetail.DeliveryAmount) - inoutDetail.VipEndAmount;
                                         //退回积分
-                                        refundEntity.Points = (int)Math.Round(refundEntity.PointsAmount.Value* (inoutDetail.pay_points.Value / inoutDetail.IntegralAmount),1);
+                                        refundEntity.Points = (int)Math.Round(refundEntity.PointsAmount.Value * (inoutDetail.pay_points.Value / inoutDetail.IntegralAmount), 1);
 
                                     }
                                     //订单实付金额-运费+余额抵扣+积分抵扣 >= 应退金额
@@ -178,8 +185,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                     {
                                         refundEntity.ActualRefundAmount = inoutDetail.actual_amount - inoutDetail.DeliveryAmount;//实付金额
                                         refundEntity.Amount = inoutDetail.VipEndAmount;             //退回余额
-                                        refundEntity.Points =(int)Math.Round(inoutDetail.pay_points.Value,1);//退回积分
-                                        refundEntity.PointsAmount=inoutDetail.IntegralAmount;       //退回积分抵扣金额
+                                        refundEntity.Points = (int)Math.Round(inoutDetail.pay_points.Value, 1);//退回积分
+                                        refundEntity.PointsAmount = inoutDetail.IntegralAmount;       //退回积分抵扣金额
                                         //退回的返现
                                         refundEntity.ReturnAmount = salesReturnEntity.ConfirmAmount.Value - (inoutDetail.actual_amount.Value - inoutDetail.DeliveryAmount) - inoutDetail.VipEndAmount - inoutDetail.IntegralAmount;
                                     }
@@ -190,16 +197,44 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                 refundEntity.CustomerID = loggingSessionInfo.ClientID;
                                 refundOrderBLL.Create(refundEntity, pTran);
 
-                                //退货返回余额-事务和返现冲突，暂不用
-                                if(refundEntity.Amount>0)
-                                    vipAmountBLL.AddVipEndAmount(refundEntity.VipID,refundEntity.Amount.Value,"21",refundEntity.RefundID.ToString(),loggingSessionInfo);
-                                //退货返回返现-事务和余额冲突，暂不用
+                                var vipAmountEntity = vipAmountBLL.QueryByEntity(new VipAmountEntity() { VipId = vipInfo.VIPID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
+
+                                //退货返回余额
+                                if (refundEntity.Amount > 0)
+                                {
+                                    //变更余额和余额记录
+                                    var detailInfo = new VipAmountDetailEntity()
+                                    {
+                                        Amount = refundEntity.Amount.Value,
+                                        AmountSourceId = "21",
+                                        ObjectId = refundEntity.RefundID.ToString()
+                                    };
+                                    vipAmountBLL.AddVipAmount(vipInfo, unitInfo, vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
+                                }
+                                //退货返回返现
                                 if (refundEntity.ReturnAmount > 0)
-                                    vipAmountBLL.AddReturnAmount(refundEntity.VipID, refundEntity.ReturnAmount.Value, refundEntity.RefundID.ToString(),"22", loggingSessionInfo);
+                                {
+                                    var detailInfo = new VipAmountDetailEntity()
+                                    {
+                                        Amount = refundEntity.ReturnAmount.Value,
+                                        ObjectId = refundEntity.RefundID.ToString(),
+                                        AmountSourceId = "22"
+                                    };
+                                    vipAmountBLL.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
+                                }
                                 //退货返回积分
                                 if (refundEntity.Points > 0)
-                                    vipIntegralBLL.AddIntegral(refundEntity.VipID, refundEntity.Points.Value, pTran, "26", refundEntity.RefundID.ToString(), loggingSessionInfo);
-                                    
+                                {
+                                    var IntegralDetail = new VipIntegralDetailEntity()
+                                    {
+                                        Integral = refundEntity.Points.Value,
+                                        IntegralSourceID = "26",
+                                        ObjectId = refundEntity.RefundID.ToString()
+                                    };
+                                    vipIntegralBLL.AddIntegral(vipInfo, unitInfo, IntegralDetail, pTran, loggingSessionInfo);
+                                }
+                                //确认收货时退回订单奖励积分、返现和佣金
+                                vipIntegralBLL.CancelReward(inoutInfo, vipInfo, pTran);
                             }
                             #endregion
                             break;

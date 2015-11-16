@@ -79,11 +79,12 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public DataSet GetMyIntegral(Hashtable hsPara)
         {
-            var parm = new SqlParameter[4];
+            var parm = new SqlParameter[5];
             parm[0] = new SqlParameter("@VipID", System.Data.SqlDbType.NVarChar) { Value = hsPara["MemberID"] };
-            parm[1] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = hsPara["CustomerID"] };
-            parm[2] = new SqlParameter("@PageSize", System.Data.SqlDbType.Int) { Value = hsPara["PageSize"] };
-            parm[3] = new SqlParameter("@PageIndex", System.Data.SqlDbType.Int) { Value = hsPara["PageIndex"] };
+            parm[1] = new SqlParameter("@VipCardCode", System.Data.SqlDbType.NVarChar) { Value = hsPara["VipCardCode"] };
+            parm[2] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = hsPara["CustomerID"] };
+            parm[3] = new SqlParameter("@PageSize", System.Data.SqlDbType.Int) { Value = hsPara["PageSize"] };
+            parm[4] = new SqlParameter("@PageIndex", System.Data.SqlDbType.Int) { Value = hsPara["PageIndex"] };
          
 
             Loggers.Debug(new DebugLogInfo()

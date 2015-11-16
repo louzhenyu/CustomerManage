@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [MobileHome](");
-            strSql.Append("[Title],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[sortActionJson],[HomeId])");
+            strSql.Append("[Title],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[sortActionJson],[IsActivate],[IsTemplate],[TemplateId],[HomeId])");
             strSql.Append(" values (");
-            strSql.Append("@Title,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@sortActionJson,@HomeId)");
+            strSql.Append("@Title,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@sortActionJson,@IsActivate,@IsTemplate,@TemplateId,@HomeId)");
 
             Guid? pkGuid;
             if (pEntity.HomeId == null)
@@ -101,6 +101,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
 					new SqlParameter("@sortActionJson",SqlDbType.VarChar),
+					new SqlParameter("@IsActivate",SqlDbType.Int),
+					new SqlParameter("@IsTemplate",SqlDbType.Int),
+					new SqlParameter("@TemplateId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@HomeId",SqlDbType.UniqueIdentifier)
             };
             parameters[0].Value = pEntity.Title;
@@ -111,7 +114,10 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[5].Value = pEntity.IsDelete;
             parameters[6].Value = pEntity.CustomerId;
             parameters[7].Value = pEntity.sortActionJson;
-            parameters[8].Value = pkGuid;
+            parameters[8].Value = pEntity.IsActivate;
+            parameters[9].Value = pEntity.IsTemplate;
+            parameters[10].Value = pEntity.TemplateId;
+            parameters[11].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -180,7 +186,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(MobileHomeEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity, pTran, true);
+            Update(pEntity, pTran, false);
         }
 
         /// <summary>
@@ -214,7 +220,17 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.CustomerId != null)
                 strSql.Append("[CustomerId]=@CustomerId,");
             if (pIsUpdateNullField || pEntity.sortActionJson != null)
-                strSql.Append("[sortActionJson]=@sortActionJson");
+                strSql.Append("[sortActionJson]=@sortActionJson,");
+            if (pIsUpdateNullField || pEntity.IsActivate != null)
+                strSql.Append("[IsActivate]=@IsActivate,");
+            if (pIsUpdateNullField || pEntity.IsTemplate != null)
+                strSql.Append("[IsTemplate]=@IsTemplate,");
+            if (pIsUpdateNullField || pEntity.TemplateId != null)
+                strSql.Append("[TemplateId]=@TemplateId");
+
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
+
             strSql.Append(" where HomeId=@HomeId ");
             SqlParameter[] parameters = 
             {
@@ -223,6 +239,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
 					new SqlParameter("@sortActionJson",SqlDbType.VarChar),
+					new SqlParameter("@IsActivate",SqlDbType.Int),
+					new SqlParameter("@IsTemplate",SqlDbType.Int),
+					new SqlParameter("@TemplateId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@HomeId",SqlDbType.UniqueIdentifier)
             };
             parameters[0].Value = pEntity.Title;
@@ -230,7 +249,10 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[2].Value = pEntity.LastUpdateTime;
             parameters[3].Value = pEntity.CustomerId;
             parameters[4].Value = pEntity.sortActionJson;
-            parameters[5].Value = pEntity.HomeId;
+            parameters[5].Value = pEntity.IsActivate;
+            parameters[6].Value = pEntity.IsTemplate;
+            parameters[7].Value = pEntity.TemplateId;
+            parameters[8].Value = pEntity.HomeId;
 
             //执行语句
             int result = 0;
@@ -380,7 +402,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [MobileHome] where 1=1  and isdelete=0 ");
+            sql.AppendFormat("select * from [MobileHome] where 1=1  and isdelete=0");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -534,7 +556,12 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
             if (pQueryEntity.sortActionJson != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "sortActionJson", Value = pQueryEntity.sortActionJson });
-
+            if (pQueryEntity.IsTemplate != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsTemplate", Value = pQueryEntity.IsTemplate });
+            if (pQueryEntity.IsActivate != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsActivate", Value = pQueryEntity.IsActivate });
+            if (pQueryEntity.TemplateId != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TemplateId", Value = pQueryEntity.TemplateId });
             return lstWhereCondition.ToArray();
         }
         /// <summary>
@@ -585,7 +612,22 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pInstance.sortActionJson = Convert.ToString(pReader["sortActionJson"]);
             }
-
+            if (pReader["IsActivate"] != DBNull.Value)
+            {
+                pInstance.IsActivate = Convert.ToInt32(pReader["IsActivate"]);
+            }
+            if (pReader["IsTemplate"] != DBNull.Value)
+            {
+                pInstance.IsTemplate = Convert.ToInt32(pReader["IsTemplate"]);
+            }
+            if (pReader["TemplateId"] != DBNull.Value)
+            {
+                pInstance.TemplateId = (Guid)pReader["TemplateId"];
+            }
+            if (pReader["DisplayIndex"] != DBNull.Value)
+            {
+                pInstance.DisplayIndex = Convert.ToInt32(pReader["DisplayIndex"]);
+            }
         }
         #endregion
     }

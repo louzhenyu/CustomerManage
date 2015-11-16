@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/20 11:22:27
+ * Create On	:2015/10/27 22:13:12
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -45,12 +45,122 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public Int32? Category { get; set; }
+
+		/// <summary>
+		/// 卡类型编码
+		/// </summary>
 		public String VipCardTypeCode { get; set; }
+
+		/// <summary>
+		/// 卡类型名称
+		/// </summary>
+		public String VipCardTypeName { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String VipCardTypeName { get; set; }
+		public Int32? VipCardLevel { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? IsPassword { get; set; }
+
+		/// <summary>
+		/// 累计充值
+		/// </summary>
+		public Decimal? AddUpAmount { get; set; }
+
+		/// <summary>
+		/// 是否扩展到会员
+		/// </summary>
+		public Int32? IsExpandVip { get; set; }
+
+		/// <summary>
+		/// 充值优惠
+		/// </summary>
+		public Decimal? PreferentialAmount { get; set; }
+
+		/// <summary>
+		/// 消费优惠
+		/// </summary>
+		public Decimal? SalesPreferentiaAmount { get; set; }
+
+		/// <summary>
+		/// 积分倍数
+		/// </summary>
+		public Int32? IntegralMultiples { get; set; }
+
+		/// <summary>
+		/// 是否可储值
+		/// </summary>
+		public Int32? Isprepaid { get; set; }
+
+		/// <summary>
+		/// 是否可积分
+		/// </summary>
+		public Int32? IsPoints { get; set; }
+
+		/// <summary>
+		/// 是否可打折
+		/// </summary>
+		public Int32? IsDiscount { get; set; }
+
+		/// <summary>
+		/// 是否可线上充值
+		/// </summary>
+		public Int32? IsOnlineRecharge { get; set; }
+
+		/// <summary>
+		/// 是否可记名
+		/// </summary>
+		public Int32? IsRegName { get; set; }
+
+		/// <summary>
+		/// 是否可同用优惠券
+		/// </summary>
+		public Int32? IsUseCoupon { get; set; }
+
+		/// <summary>
+		/// 是否绑定电子卡
+		/// </summary>
+		public Int32? IsBindECard { get; set; }
+
+		/// <summary>
+		/// 卡类型图片
+		/// </summary>
+		public String PicUrl { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? UpgradeAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? UpgradeOnceAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? UpgradePoint { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? ExchangeIntegral { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? Prices { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CustomerID { get; set; }
 
 		/// <summary>
 		/// 
@@ -65,7 +175,7 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-        public DateTime? LastUpdateTime { get; set; }
+		public DateTime? LastUpdateTime { get; set; }
 
 		/// <summary>
 		/// 
@@ -76,36 +186,6 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String CustomerID { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Decimal? AddUpAmount { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? IsExpandVip { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String PreferentialAmount { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String SalesPreferentiaAmount { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String IntegralMultiples { get; set; }
 
 
         #endregion

@@ -366,7 +366,7 @@ namespace JIT.CPOS.BS.Web.Module.VipCard.Search.Handler
                 if (VipCardStatusId.Length > 0) vipCardStatusId = int.Parse(VipCardStatusId);
             }
 
-            service.Update(new VipCardEntity() { VipCardID = key, VipCardStatusId = vipCardStatusId }, false);
+            service.Update(new VipCardEntity() { VipCardID = key, VipCardStatusId = vipCardStatusId }, null);
 
             vipCardStatusChangeLogBLL.Create(new VipCardStatusChangeLogEntity()
             { 

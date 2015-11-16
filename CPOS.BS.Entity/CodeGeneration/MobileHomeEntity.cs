@@ -81,7 +81,21 @@ namespace JIT.CPOS.BS.Entity
         /// 
         /// </summary>
         public String sortActionJson { get; set; }
+        /// <summary>
+        /// 是否主页
+        /// </summary>
+        public Int32? IsActivate { get; set; }
+        /// <summary>
+        /// 是否模板
+        /// </summary>
+        public Int32? IsTemplate { get; set; }
+        /// <summary>
+        /// 模板Id
+        /// </summary>
+        public Guid? TemplateId { get; set; }
 
+        public Int32? DisplayIndex { get; set; }
+ 
 
         #endregion
 

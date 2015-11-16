@@ -215,7 +215,7 @@
 /******查询*****/
 /*头部简单查询*/
 
-.queryTermArea{min-height:73px;padding:30px 20px 30px 0;background:#ebf1f4; margin-bottom:0px; border: none;}
+.queryTermArea{min-height:73px;padding:30px 20px 30px 0;background:#fafafa; margin-bottom:0; border: none;}
 .queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; }
 .commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
 .commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}
@@ -230,7 +230,7 @@
 /*.commonSelectWrap .selectList{display:block;}*/
 .commonSelectWrap .searchInput{display:block;float:left;width:161px;height:34px;line-height:34px;margin-left:5px;font-family:Arial;border:1px solid #d0d5d8;border-radius:2px;}
 .commonSelectWrap .searchInput input{float:left;width:100%;height:100%;border:none;color:#666;}
-.commonSelectWrap .searchInput textarea{white-space: normal; line-height:22px;float:left;width:100%;height:100%;border:none;color:#666; padding-left: 3px;}
+.commonSelectWrap .searchInput textarea{white-space: normal; line-height:22px;float:left;width:100%;height:100%;border:none;color:#666; padding-left: 10px;}
 
 
 /*登录页*/
@@ -334,7 +334,7 @@
 #kkpager_gopage_wrap{ border:solid 1px #00cccc; height: 23px; line-height: 23px;}
 #kkpager_btn_go{width:25px;height:23px;margin-left:-1px;text-indent:-999em;border:1px solid #0cc;border-left:none;border-radius:0 3px 3px 0;background: url(../../images/newTemplate/pagebtn.png) no-repeat center center;color:#fff;}
 #kkpager{
-    clear:both;
+    clear:none;
     height:30px;
     line-height: 23px;
     margin-top:20px;
@@ -371,7 +371,7 @@
 
 .btnWrap{padding:35px 0;text-align:center;}
 .btnWrap a{display:inline-block;}
-.cancelBtn,.saveBtn{border-radius:38px;color: #fff;}
+.cancelBtn,.saveBtn{border-radius:38px;color: #fff; border: none;}
 .cancelBtn{height:38px;line-height:38px;background:#cccccc;color:#fff; margin-left: 15px;}
 
 /*.cancelBtn:hover{background:transparent;color: #fe7c24}*/
@@ -381,10 +381,22 @@
 .datagrid-row td:first-of-type div{ line-height: 22px; white-space:initial;  padding-left: 40px;}
 .datagrid-header-row td:first-of-type div{ line-height: 22px; white-space:initial;  padding-left: 40px;}
 .datagrid-row td:first-of-type div.datagrid-cell-check{ padding-left: 0;}
+.datagrid-header-row td:first-of-type div.datagrid-header-check{  padding-left: 0;}
 /*列表操作图标*/
+.noDelete{background-image:url(../../images/newTemplate/nodel.png); width: 16px; height: 16px; margin: 0 auto;}
 .delete{background-image:url(../../images/newTemplate/del.png); width: 16px; height: 16px; margin: 0 auto;}
 .down{background-image:url(../../images/newTemplate/down.png); width: 18px; height: 17px; margin: 0 auto;}
 .exit{background-image:url(../../images/newTemplate/exit.png); width: 16px; height: 16px; margin: 0 auto;}
 .btnAdd    {background:url(../../images/newTemplate/addstr.png) center center  no-repeat; width: 18px; height: 18px; margin: 0 auto;}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 .datebox .combo-arrow{padding-right:26px;}
+.gridLoading{display: block} /*所有需要loading的dataGrid*/
+.loading{text-align: center;osition:width: 100% absolute; vertical-align: middle;width: 100%;margin-top: 10px;}
+.datagrid-body{position: relative;z-index: 8}
+.datagrid-body .loading{ z-index:8;}
+
+.datagrid-row-over, .datagrid-header td.datagrid-header-over{ background:transparent;}
+
+.datagrid-header td, .datagrid-footer td{cursor: default;}
+.cursorDef  .datagrid-body td{ cursor: default}
+.datagrid-view{ height: 200px;}

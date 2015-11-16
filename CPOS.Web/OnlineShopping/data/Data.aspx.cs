@@ -29,6 +29,7 @@ using System.Net;
 using System.IO;
 using JIT.CPOS.BS.DataAccess.Base;
 using JIT.CPOS.DTO.Base;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.Web.OnlineShopping.data
 {
@@ -2844,7 +2845,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 orderInfo.OpenId = ToStr(reqObj.common.openId);
                 orderInfo.username = ToStr(reqObj.special.username);
                 orderInfo.StoreId = ToStr(reqObj.special.storeId);
-                orderInfo.CarrierID = ToStr(reqObj.special.storeId);
+                //orderInfo.CarrierID = ToStr(reqObj.special.storeId);
                 orderInfo.OrderId = ToStr(reqObj.special.orderId);
                 orderInfo.CouponsPrompt = ToStr(reqObj.special.couponsPrompt);
                 orderInfo.Invoice = ToStr(reqObj.special.invoice);
@@ -8110,7 +8111,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                 {
                                     try
                                     {
-                                        vipAmountBll.AddVipEndAmount(reqObj.common.userId, totalAmount, tran, "10", orderInfo.order_id, loggingSessionInfo);  //变更余额和余额记录
+                                        //vipAmountBll.AddVipAmount(reqObj.common.userId, totalAmount, (SqlTransaction)tran, "10", orderInfo.order_id, loggingSessionInfo);  //变更余额和余额记录
                                     }
                                     catch (Exception ex)
                                     {

@@ -43,7 +43,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
             #endregion
 
-            #region 获取配送信息
+            #region 获取配方式
 
             string deliveryId = orderList[0].Field8;
             DeliveryBLL deliverBll = new DeliveryBLL(this.CurrentUserInfo);
@@ -67,18 +67,41 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
             #endregion
 
-            //承运商
+            //配送商
             string carrierId = orderList[0].carrier_id;
 
-            DataSet carrierDs = tInoutBll.GetStoreInfo(carrierId);
-
-            if (carrierDs.Tables[0].Rows.Count > 0)
+            //DataSet carrierDs = tInoutBll.GetStoreInfo(carrierId);
+            //if (carrierDs.Tables[0].Rows.Count > 0)
+            //{
+            //    rd.OrderListInfo.CarrierID = carrierId;
+            //    rd.OrderListInfo.CarrierName = carrierDs.Tables[0].Rows[0]["unit_name"].ToString();
+            //}
+            if (!string.IsNullOrEmpty(carrierId))
             {
-                rd.OrderListInfo.CarrierID = carrierId;
-                rd.OrderListInfo.CarrierName = carrierDs.Tables[0].Rows[0]["unit_name"].ToString();
+                //配送方式 1.送货到家;2.到店提货
+                if (deliveryId == "1")
+                {
+                    var logisticsCompanyBLL = new T_LogisticsCompanyBLL(this.CurrentUserInfo);
+                    var logCompInfo = logisticsCompanyBLL.GetByID(carrierId);
+                    if (logCompInfo != null)
+                    {
+                        rd.OrderListInfo.CarrierID = carrierId;
+                        rd.OrderListInfo.CarrierName = logCompInfo.LogisticsName;
+                    }
+                }
+                else if (deliveryId == "2")
+                {
+                    var unitBLL = new t_unitBLL(this.CurrentUserInfo);
+                    var unitInfo = unitBLL.GetByID(carrierId);
+                    if (unitInfo != null)
+                    {
+                        rd.OrderListInfo.CarrierID = carrierId;
+                        rd.OrderListInfo.CarrierName = unitInfo.unit_name;
+                    }
+                }
             }
-
-
+            rd.OrderListInfo.CourierNumber = orderList[0].Field2;//配送单号
+            rd.OrderListInfo.Invoice = orderList[0].Field19 == null ? "" : orderList[0].Field19;     //发票信息
             if (vipList.Count() > 0)
             {
                 rd.OrderListInfo.VipID = vipList[0].VIPID;

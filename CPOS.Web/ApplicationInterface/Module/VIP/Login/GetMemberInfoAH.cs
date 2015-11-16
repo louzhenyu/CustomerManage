@@ -25,29 +25,29 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             if (!string.IsNullOrEmpty(pRequest.Parameters.SearchFlag))
             {
                 List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
-               // complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
+                // complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
                 var cond1 = new LikeCondition() { FieldName = "VipName", Value = "%" + pRequest.Parameters.SearchFlag + "%" };
                 var cond2 = new LikeCondition() { FieldName = "VipRealName", Value = "%" + pRequest.Parameters.SearchFlag + "%" };
-                var com1 = new ComplexCondition() { Left = cond1, Right = cond2, Operator = LogicalOperators.Or }; 
+                var com1 = new ComplexCondition() { Left = cond1, Right = cond2, Operator = LogicalOperators.Or };
 
-                var cond3= new EqualsCondition() { FieldName = "Phone", Value =  pRequest.Parameters.SearchFlag  };
+                var cond3 = new EqualsCondition() { FieldName = "Phone", Value = pRequest.Parameters.SearchFlag };
                 var com2 = new ComplexCondition() { Left = com1, Right = cond3, Operator = LogicalOperators.Or };
                 complexCondition.Add(com2);
-                var tempVipList = vipLoginBLL.Query(complexCondition.ToArray(),null);
+                var tempVipList = vipLoginBLL.Query(complexCondition.ToArray(), null);
                 if (tempVipList != null && tempVipList.Length != 0)
                 {
                     pRequest.UserID = pRequest.Parameters.MemberID = tempVipList[0].VIPID;
                 }
             }
-        
 
 
-            string UserID =string.IsNullOrWhiteSpace(pRequest.Parameters.MemberID)?pRequest.UserID:pRequest.Parameters.MemberID;
+
+            string UserID = string.IsNullOrWhiteSpace(pRequest.Parameters.MemberID) ? pRequest.UserID : pRequest.Parameters.MemberID;
             var VipLoginInfo = vipLoginBLL.GetByID(UserID);
             if (VipLoginInfo == null)
                 throw new APIException("用户不存在") { ErrorCode = 330 };
             #region 20140909 kun.zou 发现状态为0，改为1
-            if (VipLoginInfo.Status.HasValue && VipLoginInfo.Status==0)
+            if (VipLoginInfo.Status.HasValue && VipLoginInfo.Status == 0)
             {
                 VipLoginInfo.Status = 1;
                 vipLoginBLL.Update(VipLoginInfo, false);
@@ -73,11 +73,35 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             rd.MemberInfo.ImageUrl = VipLoginInfo.HeadImgUrl;//会员头像  add by Henry 2014-12-5
             rd.MemberInfo.VipRealName = VipLoginInfo.VipRealName;
             rd.MemberInfo.VipNo = VipLoginInfo.VipCode;
-            rd.MemberInfo.Integration = VipLoginInfo.Integration ?? 0;//会员积分
-            //会员等级
-            rd.MemberInfo.VipLevelName = string.IsNullOrEmpty(vipLoginBLL.GetVipLeave(UserID)) ? null : vipLoginBLL.GetVipLeave(UserID);
+            //rd.MemberInfo.Integration = VipLoginInfo.Integration ?? 0;//会员积分
 
-            rd.MemberInfo.Status = VipLoginInfo.Status.HasValue?VipLoginInfo.Status.Value:1;
+            #region 会员有效积分
+            var vipIntegralBLL = new VipIntegralBLL(CurrentUserInfo);
+            var vipIntegralInfo = vipIntegralBLL.QueryByEntity(new VipIntegralEntity() { VipID = UserID, VipCardCode = VipLoginInfo.VipCode }, null).FirstOrDefault();
+            if (vipIntegralInfo != null)
+                rd.MemberInfo.Integration = vipIntegralInfo.ValidIntegral != null ? vipIntegralInfo.ValidIntegral.Value : 0;
+            #endregion
+
+            //会员等级
+            //rd.MemberInfo.VipLevelName = string.IsNullOrEmpty(vipLoginBLL.GetVipLeave(UserID)) ? null : vipLoginBLL.GetVipLeave(UserID);
+            #region 会员卡名称
+            var vipCardVipMappingBLL = new VipCardVipMappingBLL(CurrentUserInfo);
+            var vipCardBLL = new VipCardBLL(CurrentUserInfo);
+            var vipCardTypeBLL = new SysVipCardTypeBLL(CurrentUserInfo);
+            
+            var vipCardMappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VIPID = CurrentUserInfo.UserID }, null).FirstOrDefault();
+            if (vipCardMappingInfo != null)
+            {
+                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardID = vipCardMappingInfo.VipCardID }, null).FirstOrDefault();
+                if (vipCardInfo != null)
+                {
+                    var vipCardTypeInfo = vipCardTypeBLL.QueryByEntity(new SysVipCardTypeEntity() { VipCardTypeID = vipCardInfo.VipCardTypeID }, null).FirstOrDefault();
+                    rd.MemberInfo.VipLevelName = vipCardTypeInfo != null ? vipCardTypeInfo.VipCardTypeName : "";
+                }
+            }
+            #endregion
+
+            rd.MemberInfo.Status = VipLoginInfo.Status.HasValue ? VipLoginInfo.Status.Value : 1;
             rd.MemberInfo.CouponsCount = couponCount;
             rd.MemberInfo.IsActivate = (VipLoginInfo.IsActivate.HasValue && VipLoginInfo.IsActivate.Value == 1 ? true : false);
             var customerBasicSettingBll = new CustomerBasicSettingBLL(CurrentUserInfo);
@@ -87,14 +111,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
             //获取标签信息
             TagsBLL TagsBLL = new TagsBLL(base.CurrentUserInfo);
-         
+
 
             var dsIdentity = TagsBLL.GetVipTagsList("", UserID);//“车主标签”  传7
             if (dsIdentity != null && dsIdentity.Tables.Count > 0 && dsIdentity.Tables[0].Rows.Count > 0)
             {
                 rd.IdentityTagsList = DataTableToObject.ConvertToList<TagsInfo>(dsIdentity.Tables[0]).ToArray(); //“年龄段”  传8
             }
-       
+
 
             #region 获取注册表单的列明和值
 
@@ -122,7 +146,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                         ControlType = Convert.ToInt32(t["ControlType"]),
                         ColumnValue = vipDs.Tables[0].Rows[0][t["ColumnName"].ToString()].ToString(),
                         ColumnDesc = t["columnDesc"].ToString()
-                        
+
                     });
 
                     rd.MemberControlList = temp.ToArray();
@@ -154,12 +178,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
             //返现 add by Henry 2015-4-15
             var vipAmountBll = new VipAmountBLL(CurrentUserInfo);
-            var vipAmountInfo = vipAmountBll.GetByID(UserID);
+            //var vipAmountInfo = vipAmountBll.GetByID(UserID);
+            var vipAmountInfo = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = UserID, VipCardCode = VipLoginInfo.VipCode }, null).FirstOrDefault();
             decimal returnAmount = 0;
             decimal amount = 0;
             if (vipAmountInfo != null)
             {
-                returnAmount = vipAmountInfo.ReturnAmount == null ? 0 : vipAmountInfo.ReturnAmount.Value;
+                returnAmount = vipAmountInfo.ValidReturnAmount == null ? 0 : vipAmountInfo.ValidReturnAmount.Value;
                 amount = vipAmountInfo.EndAmount == null ? 0 : vipAmountInfo.EndAmount.Value;
             }
             rd.MemberInfo.ReturnAmount = returnAmount;//返现
@@ -172,10 +197,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             //先获取订单列表，再获取订单详细信息
             int? pageSize = 3;//rp.Parameters.PageSize;,只取三条记录
             int? pageIndex = 1; //rp.Parameters.PageIndex;
-            string OrderBy="";
-            string OrderType="";
-            T_InoutBLL T_InoutBLL=new T_InoutBLL(CurrentUserInfo);
-            InoutService InoutService=new InoutService(CurrentUserInfo);
+            string OrderBy = "";
+            string OrderType = "";
+            T_InoutBLL T_InoutBLL = new T_InoutBLL(CurrentUserInfo);
+            InoutService InoutService = new InoutService(CurrentUserInfo);
             //只取状态为700的
             //根据订单列表取订单详情
             DataSet dsOrder = T_InoutBLL.GetOrdersByVipID(rd.MemberInfo.VipID, pageIndex ?? 1, pageSize ?? 15, OrderBy, OrderType);//获取会员信息            
@@ -189,8 +214,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                 }
                 rd.OrderList = orderList;
             }
- 
-            
+
+
 
             return rd;
         }

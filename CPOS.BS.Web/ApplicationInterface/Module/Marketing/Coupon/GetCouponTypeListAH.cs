@@ -21,31 +21,40 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var couponTypeBLL = new CouponTypeBLL(loggingSessionInfo);
+            bool IsEffective = false;
+            if (para.IsEffective != null)
+                IsEffective = para.IsEffective.Value;
             //查询参数
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
             complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
             if (!string.IsNullOrEmpty(para.CouponTypeName))
-                complexCondition.Add(new LikeCondition() { FieldName = "CouponTypeName", Value = "%"+para.CouponTypeName + "%" });
+                complexCondition.Add(new LikeCondition() { FieldName = "CouponTypeName", Value = "%" + para.CouponTypeName + "%" });
             if (!string.IsNullOrEmpty(para.ParValue))
                 complexCondition.Add(new LikeCondition() { FieldName = "ParValue", Value = para.ParValue.ToString() });
+            if (IsEffective)
+            {
+                complexCondition.Add(new DirectCondition("ServiceLife=0 or (ServiceLife=1 and BeginTime<=GETDATE() and EndTime>=GETDATE()) "));
+            }
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc });
 
-            var tempList = couponTypeBLL.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize,para.PageIndex);
+
+
+            var tempList = couponTypeBLL.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize, para.PageIndex);
             rd.TotalPageCount = tempList.PageCount;
             rd.TotalCount = tempList.RowCount;
             rd.CouponTypeList = tempList.Entities.Select(t => new CouponTypeInfo()
             {
-               CouponTypeID=t.CouponTypeID,
-               CouponTypeName=t.CouponTypeName,
-               ParValue=t.ParValue,
-               IssuedQty=t.IssuedQty,
-               SurplusQty=t.IssuedQty-t.IsVoucher,
-               ValidityPeriod = t.BeginTime ==null? (t.ServiceLife + "天") : (t.BeginTime.Value.ToString("yyyy-MM-dd") + "至" + t.EndTime.Value.ToString("yyyy-MM-dd")),
-               BeginTime=t.BeginTime,
-               EndTime=t.EndTime,
-               ServiceLife=t.ServiceLife
+                CouponTypeID = t.CouponTypeID,
+                CouponTypeName = t.CouponTypeName,
+                ParValue = t.ParValue,
+                IssuedQty = t.IssuedQty,
+                SurplusQty = t.IssuedQty - t.IsVoucher,
+                ValidityPeriod = t.BeginTime == null ? (t.ServiceLife + "天") : (t.BeginTime.Value.ToString("yyyy-MM-dd") + "至" + t.EndTime.Value.ToString("yyyy-MM-dd")),
+                BeginTime = t.BeginTime,
+                EndTime = t.EndTime,
+                ServiceLife = t.ServiceLife
             }).ToArray();
             return rd;
         }

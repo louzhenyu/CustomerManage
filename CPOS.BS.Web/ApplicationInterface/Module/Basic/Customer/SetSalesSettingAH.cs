@@ -63,6 +63,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                 SettingCode = "GetVipUserOrderPer",
                 SettingValue = para.GetVipUserOrderPer.ToString()
             });
+             list.Add(new CustomerBasicSettingEntity()
+            {
+                SettingCode = "InvitePartnersPoints",
+                SettingValue = para.InvitePartnersPoints.ToString()
+            });
             int i = customerBasicSettingBLL.SaveustomerBasicrInfo(list);
 
             return rd;

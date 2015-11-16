@@ -45,5 +45,18 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetVipAmountByOrderId(orderId, userId, amountSourceId);
         }
+        
+        /// <summary>
+        /// 获取余额/返现变更明细
+        /// </summary>
+        /// <param name="pWhereConditions">筛选条件</param>
+        /// <param name="pOrderBys">排序</param>
+        /// <param name="pPageSize">每页的记录数</param>
+        /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
+        /// <returns></returns>
+        public PagedQueryResult<VipAmountDetailEntity> GetVipAmountDetailList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        {
+            return this._currentDAO.GetVipAmountDetailList(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
+        }
     }
 }

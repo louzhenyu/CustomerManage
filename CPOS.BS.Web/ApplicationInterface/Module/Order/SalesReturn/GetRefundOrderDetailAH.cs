@@ -37,10 +37,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 rd.Phone = refundEntity.Phone;
                 rd.ConfirmAmount = refundEntity.ConfirmAmount;
                 rd.ActualRefundAmount = refundEntity.ActualRefundAmount;
-                rd.Points = refundEntity.Points;
-                rd.PointsAmount = refundEntity.PointsAmount;
-                rd.ReturnAmount = refundEntity.ReturnAmount;
-                rd.Amount = refundEntity.Amount;
+                rd.Points = refundEntity.Points == null ? 0 : refundEntity.Points;
+                rd.PointsAmount = refundEntity.PointsAmount == null ? 0 : refundEntity.PointsAmount;
+                rd.ReturnAmount = refundEntity.ReturnAmount == null ? 0 : refundEntity.RefundAmount;
+                rd.Amount = refundEntity.Amount == null ? 0 : refundEntity.Amount;
                 rd.PayTypeName = refundEntity.PayTypeName;
                 rd.PayOrderID = refundEntity.PayOrderID;
                 rd.OrderID = refundEntity.OrderID;

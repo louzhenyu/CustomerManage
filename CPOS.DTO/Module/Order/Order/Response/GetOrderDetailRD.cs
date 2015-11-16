@@ -36,6 +36,14 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public string CarrierID { get; set; }
         public string CarrierName { get; set; }
         /// <summary>
+        /// 快递单号
+        /// </summary>
+        public string CourierNumber { get; set; }
+        /// <summary>
+        /// 发票信息
+        /// </summary>
+        public string Invoice { get; set; }
+        /// <summary>
         /// 收货时间
         /// </summary>
         public string ReceiptTime { get; set; }

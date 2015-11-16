@@ -1,0 +1,288 @@
+/*common*/
+body{font:12px/1.5em "黑体","Microsoft YaHei";background:#fff;color:#4d4d4d;}
+input{border:0px solid transparent;font-family:"黑体";}
+.ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
+.commonBtn{cursor: pointer;display:block;width:140px;height:40px;line-height:40px;text-align:center;font-size:14px;border-radius:5px;background:#fe7c24;color:#fff;}
+.commonBtn:hover{color:#f1f1f1;cursor: pointer}
+.centreArea{min-width:1262px;min-height:587px;background:url(../images/topShadow.png) repeat-x 0 0;}
+/*公共弹层*/
+.jui-dialog{position:absolute;top:25%;left:15%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
+.jui-dialog-tit{position:relative;padding-left:25px;height:55px;background:#f3f3f6;border-radius:6px 6px 0 0;color:#66666d;}
+.jui-dialog-tit h2,.jui-dialog-tit h3{font:bold 16px/55px "黑体";}
+.jui-dialog-close{position:absolute;top:12px;right:12px;width:30px;height:30px;background:url(../images/hintClose.png) no-repeat center center;}
+.jui-dialog .btnWrap{padding-bottom:35px;text-align:center;}
+.jui-dialog .btnWrap a{display:inline-block;}
+.jui-dialog .titName{position:absolute;top:0;left:50%;margin-left:-225px;width:450px;line-height:55px;text-align:center;color:#333;}
+.jui-dialog .cancelBtn{margin-left:35px;background:#949ca7;}
+
+
+/******会员查询*****/
+/*头部简单 查询*/
+.queryTermArea{min-height:73px;padding:10px 20px 0 0px;border:1px solid #d8d8d8;background:#fbfbfb; margin-bottom:0px;}
+.queryTermArea .item{margin-bottom:4px;white-space:nowrap;}
+.commonSelectWrap{float:left;height:33px;margin-right:10px;margin-bottom:10px;position:relative;}
+.commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}                                           9
+.commonSelectWrap .endTime .tit{width:15px;}
+.commonSelectWrap .endTime .selectBox{margin-left:22px;}
+.commonSelectWrap .selectBox{margin-left:5px;width:161px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../images/moreIcon.png) no-repeat 96% center;cursor:pointer;}
+.commonSelectWrap .selectBox .text{display:block;width:150px;line-height:31px;text-indent:5px;}
+.commonSelectWrap .selectList{position:relative;display:none;top:10px;left:-1px;width:161px;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:100;}
+.commonSelectWrap .selectList p{line-height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
+.commonSelectWrap .selectList p:hover{background:#f1f1f1;}
+/*.commonSelectWrap .selectBox:hover{position:relative;}*/
+/*.commonSelectWrap .selectList{display:block;}*/
+.commonSelectWrap .searchInput{display:block;float:left;width:161px;height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
+.commonSelectWrap .searchInput input{float:left;width:100%;height:29px;border:none;color:#666;}
+/*特殊的范围的输入框处理*/
+.commonSelectWrap .specialInput{display:block;float:left;width:100px;height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
+.commonSelectWrap .specialInput input{float:left;width:90px;height:29px;border:none;color:#666;}
+
+.moreQueryWrap{float:right;}
+.moreQueryWrap .queryBtn{width:100px;height:32px;line-height:32px;}
+.moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "宋体";text-decoration:underline;background:url(../../washCardManage/images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
+
+/*头部 全查询*/
+.allQueryTermArea{
+    position: relative;
+    min-height: 100px;
+    margin-bottom: 8px;
+    padding: 10px 0px 0px;
+    border: 1px solid #d8d8d8;
+    background: #fbfbfb;
+}
+.allQueryTermArea .fromWrap{margin-bottom: 5px;}  /*clear: left;*/
+.allQueryTermArea .item{height:33px;margin-bottom:15px;white-space:nowrap;}
+.allQueryTermArea .otherSelect{border-top:1px dashed #ccc;}
+.allQueryTermArea .timeInput{float:right;margin-left:185px;}
+/*标签显示*/
+.allQueryTermArea .labelWrap,.allQueryTermArea .labelWrap .commonSelectWrap,.allQueryTermArea .labelWrap .tit{line-height:40px;}
+
+.allQueryTermArea .labelWrap .tit{float:left;float:left;width:120px;height:40px;line-height:40px;text-align:right;font-size:14px;color:#4d4d4d;}
+.allQueryTermArea .labelWrap .pointerArea{margin-left:120px;}
+.allQueryTermArea .labelWrap .pointerArea *{display:inline-block;margin-left:5px;}
+
+.allQueryTermArea .pointerIcon{width:98px;height:33px;line-height:34px;margin-top:3px;text-indent:18px;font-size:12px;background:url(../images/pointer.png) no-repeat 0 0;color:#fe7c23;}
+.allQueryTermArea .pointerIcon.weird{/*width:100px;line-height:16px;padding:0 15px 0 2px;text-indent:0px;white-space:normal;*/width: 100px;
+line-height: 30px;
+padding: 0 14px 0 2px;
+text-indent: 0px;
+white-space: normal;}
+.allQueryTermArea .digF{font-size:24px;color:#fe7c23;}
+.allQueryTermArea .minF{font-size:14px;color:#333;}
+.allQueryTermArea .commonBtn{width:60px;height:32px;line-height:32px;margin-top:4px;}
+.allQueryTermArea .modifyBtn{margin:4px 6px 0 15px;}
+.allQueryTermArea .recentBtn{width:88px;height:30px;line-height:30px;border:1px solid #ccc;background:#fff;color:#fe7c23;}
+.recentBtn{}
+.allQueryTermArea .queryBtn{display: inline-block;width: 100px;height: 32px;line-height: 32px;margin-top: -2px;}
+
+.allQueryTermArea .drawBtn{display:block;position:absolute;left:50%;bottom:-29px;margin-left:-49px;width:98px;height:28px;line-height:31px;text-indent:33px;border:1px solid #ccc;border-top:none;border-radius:0 0 4px 4px;background:#fbfbfb url(../images/arr02.png) no-repeat 60px center;color:#3f97fe;}
+
+/*表格*/
+.tableHandleBox{padding:12px 0;text-align:right;}
+.tableHandleBox span{display:inline-block;width:100px;height:32px;line-height:32px;margin-left:10px;border-radius:3px;cursor:pointer;}
+.tableWrap{min-height:300px;}
+.tablehandle{height:44px;padding:9px;border:1px solid #d8d8d8;background:#f5f5f5;}
+.tablehandle a{float:left;width:75px;height:27px;margin-right:20px;}
+/*
+.tablehandle .importBtn{background:url(../images/importBtn.png) no-repeat 0 0;}
+.tablehandle .exportBtn{background:url(../images/exportBtn.png) no-repeat 0 0;}
+*/
+.tablehandle .selectBox{position:relative;float:right;width:149px;height:25px;border:1px solid #b9b9b9;border-radius:2px;text-align:center;font:12px/25px "宋体";color:#666;background:#fff url(../images/moreIcon.png) no-repeat 90% center;cursor:pointer;}
+.tablehandle .selectBox.fl{float:left;width:72px;margin-right:20px;}
+.tablehandle .selectBox.filterIcon{background:#fff url(../images/filterIcon.png) no-repeat 95% center;cursor:pointer;}
+
+.tablehandle .selectBox .text{/*display:block;width:width:100%;*/}
+.tablehandle .selectList{display:none;position:absolute;top:26px;left:-1px;width:100%;border-left:1px solid #b9b9b9;border-right:1px solid #b9b9b9;}
+.tablehandle .selectList p{line-height:25px;border-bottom:1px solid #b9b9b9;background:#f1f1f1;}
+.tablehandle .selectList p:hover{background:#f8f8f8;}
+.tablehandle .selectBox:hover .selectList{display:block;}
+.tablehandle .count{float:right;margin-right:10px;line-height:26px;}
+.tablehandle .count span{font-weight:bold;color:#2d83cf;}
+
+.dataTable{width:100%;border:1px solid #d8d8d8;border-top:none;font:13px/39px "黑体";color:#4d4d4d;}
+.dataTable .selectListBox{background:url(../images/selectIcon02.png) no-repeat 80% center;cursor:pointer;}
+.dataTable .minSelectBox{display:none;position:absolute;top:32px;left:15px;width:80px;min-height:50px;border:1px solid #ccc;border-radius:3px;text-align:center;background:#f8f8f8;color:#666;}
+.dataTable .minSelectBox p{font-size:12px;font-weight:normal;line-height:25px;border-bottom:1px solid #ccc;}
+.dataTable .minArr{position:absolute;top:-5px;left:22px;display:block;width:10px;height:10px;background:url(../images/minArr.png) no-repeat 0 0;}
+.dataTable .selectListBox:hover{position:relative;}
+.dataTable .selectListBox:hover .minSelectBox{display:block;}
+.dataTable .seeIcon{background:url(../images/seeIcon02.png) no-repeat center center;cursor:pointer;}
+.dataTable .fontF{font-family:"Arial";}
+.dataTable .title{border-bottom:2px solid #fe7c23;}
+.dataTable .title th{font-weight:bold;*border-bottom:2px solid #fe7c23;text-align:center;min-width: 60px;}
+.dataTable tr{height:39px;border-bottom:1px solid #fedbc3;text-align:center;}
+.dataTable tbody td{*border-bottom:1px solid #fedbc3;}
+.dataTable tbody tr:hover{background:#fff1d8;}
+.dataTable .joinBtn{display:block;width:100px;height:30px;line-height:30px;margin:0 auto;text-align:center;border-radius:4px;cursor:pointer;}
+.dataTable tbody tr:hover .joinBtn{background:#fe7c23;color:#fff;}
+
+.dataTable input{width:100px;height:26px;border:1px solid #ccc;color:#333;border-radius:2px;}
+.dataTable .checkBox{vertical-align:middle;cursor:pointer;}
+.dataTable .checkBox em{display:block;width:25px;height:25px;margin:0 auto;background:url(../images/radio1.png) no-repeat center center;}
+.dataTable .checkBox.on em{background:url(../images/radio2.png) no-repeat center center;}
+.fontC{color:#2d83cf;font-family:"Arial";}
+.fontC:hover{color:#2d83cf;font-family:"Arial";}
+
+
+.commonTitle{height:16px;line-height:16px;margin:0 0 15px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;}
+/* 弹层-标签弹层*/
+.jui-dialog-selectTag{width:696px;height:500px;top:30px;margin-left:-348px;}
+.jui-dialog-selectTag .promptContent{padding:30px;}
+.jui-dialog-selectTag .tagWrap{height:33px;margin-bottom:10px;}
+.jui-dialog-selectTag .tagWrap>*{float:left;margin-left:18px;}
+.jui-dialog-selectBox{position:relative;width:58px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../images/selectIcon02.png) no-repeat 40px center;cursor:pointer;}
+.jui-dialog-selectBox .text{display:block;width:50px;line-height:31px;text-indent:5px;}
+.jui-dialog-selectBox .selectList{display:none;position:absolute;top:30px;left:-1px;width:100%;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:10;}
+.jui-dialog-selectBox .selectList p{line-height:31px;height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
+.jui-dialog-selectBox .selectList p:hover{background:#f1f1f1;}
+
+.jui-dialog-selectTag .selectValueBox{position:relative;width:218px;height:31px;line-height:31px;border:1px solid #ccc;border-radius:2px;background:#fff;cursor:pointer;}
+.jui-dialog-selectTag .selectValueBox input{width:200px;height:30px;text-indent:5px;border:none;background:none;color:#fe7c23;}
+.jui-dialog-selectTag .selectValueBox .tipTit{display:none;position:absolute;top:-15px;left:45px;width:155px;height:30px;line-height:30px;text-indent:17px;font-size:13px;background:url(../images/tipBg.png) no-repeat 0 0;color:#666;}
+.jui-dialog-selectTag .selectValueBox:hover,.jui-dialog-selectTag .selectValueBox.on{position:relative;}
+.jui-dialog-selectTag .selectValueBox:hover .tipTit,.jui-dialog-selectTag .selectValueBox.on .selectValueList{display:block;z-index:1;}
+.jui-dialog-selectTag .handleWrap a{float:left;width:16px;height:31px;}
+.jui-dialog-selectTag .addIcon{background:url(../images/addIcon001.png) no-repeat center center;}
+.jui-dialog-selectTag .minusIcon{margin-left:8px;background:url(../images/minusIcon001.png) no-repeat center center;}
+.jui-dialog-selectTag .promptContent{height: 260px;
+overflow-y: scroll;}
+.jui-dialog-selectTag .commonBtn{font-size:16px;}
+.jui-dialog-selectTag .cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
+
+.selectValueList{display:none;position:absolute;left:-205px;top:42px;width:696px;height:255px;border-top:1px solid #fe7c24;background:#f8f8f8;}
+.selectValueList .pointer03{position:absolute;top:-9px;left:35%;width:16px;height:10px;background:url(../images/pointer003.png) no-repeat 0 0;}
+.selectValueList ul{height:50px;border-bottom:1px solid #ccc;}
+.selectValueList li{float:left;height:25px;line-height:25;margin:10px 0;font-size:14px;border-right:1px solid #ccc;}
+.selectValueList li a{display:block;height:24px;line-height:24px;margin:0 10px 0;color:#ccc;text-align:center;}
+.selectValueList li.on a{border-bottom:1px solid #fe7c24;color:#fe7c24;}
+.selectValueInfo{height:180px;padding:10px;overflow:auto;}
+.selectValueInfo p{float:left;padding:0 15px;height:34px;line-height:34px;margin:0 0 10px 10px;text-align:center;font-size:15px;border-radius:5px;border:1px dashed #b5b5b5;color:#666;}
+.selectValueInfo p:hover,.selectValueInfo p.on{position:relative;background:#c7c7c7;}
+.selectValueInfo p:hover .tipTit2{display:block;}
+.selectValueInfo .tipTit2{display:none;position:absolute;top:-8px;left:112px;width:126px;height:49px;line-height:25px;padding:0 11px 0 18px;text-align:left;font-size:13px;background:url(../images/tipBg2.png) no-repeat 0 0;color:#666;}
+
+
+
+
+
+
+/*****订单详情*****/
+/*订单信息*/
+.contentArea_vipquery{min-width:1000px;min-height:587px;padding:20px;}
+
+.vipDetailInfo {border: 1px solid #d8d8d8}
+
+.vipDetailInfo .item{height:32px;line-height:32px;display:block ;}
+.vipDetailInfo .line{border-bottom:1px dashed #ededed;}
+.vipDetailInfo .itemBox{float:left;font-size:15px;}
+.vipDetailInfo .itemBox .tit{float:left;min-width:136px;text-align:right;color:#000;}
+.vipDetailInfo .itemText{margin-left:108px;min-width:168px;color:#999; white-space:nowrap}
+.vipDetailInfo span.itemText{margin-left:60px;min-width:80px;color:#999; white-space:nowrap}
+.vipDetailInfo .lab{float:left;}
+.vipDetailInfo .lab span{display:inline-block;margin-right:15px;font-size:14px;color:#fe7c23;}
+.vipDetailInfo .tagItem{line-height:31px; min-height:31px;}
+.panltitle{display:inline-block; padding-top: 30px; }
+.panltitle div{float: left; height: 35px; line-height: 35px; font-size: 15px;}
+.panltitle .title{padding: 0 35px 0 15px; border-left: #fe7c24 4px solid; font-weight: bold; height: 15px;line-height: 15px;margin: 10px 0px 13px;}
+.panltitle .commonBtn{ width:80px; height:32px; line-height: 32px;}
+
+/*菜单*/
+.subMenu{height:98px;margin-top:5px;padding-left:0px;border-radius: 5px 5px 0 0; border:1px solid #d8d8d8;background:#fff }
+.subMenu ul{ border-bottom:1px solid #d8d8d8;  height:55px; /* padding-left: 40px; */background:#f2f2f2}
+.subMenu li{float:left;width: 200px;height:54px;margin-top:0px;text-align:center;line-height:55px;color: #000;cursor:pointer;border-right: 1px solid #d8d8d8;font-size: 16px;/* font-weight: 600; */}
+
+.subMenu li.on{background-color:#fff;}
+
+
+/*基本信息*/
+.baseInfoArea{width:350px;min-height:80px;margin:0 auto;padding:40px 0;}
+.baseInfoArea .commonSelectWrap{margin:0 10px 22px 0;}
+.baseInfoArea .btnWrap{clear:left;height:32px;}
+.baseInfoArea .saveBtn{float:right;height:32px;line-height:32px;margin-right:65px;border-radius:3px;}
+
+
+.vipDetailInfo .button{color:#2d83cf;font-family:"Arial"; text-decoration:underline;}
+
+
+
+.queryTermArea{min-height:73px;padding:10px 20px 0 0px;border:1px solid #d8d8d8;background:#fbfbfb; margin-bottom:0px;}
+.queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; }
+.commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
+.commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}
+.commonSelectWrap .endTime .tit{width:15px;}
+.commonSelectWrap .endTime .selectBox{margin-left:22px;}
+.commonSelectWrap .selectBox{ float:left;margin-left:5px;width:161px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../images/moreIcon.png) no-repeat 96% center;cursor:pointer;}
+.commonSelectWrap .selectBox .text{display:block;width:150px;line-height:31px;text-indent:5px;}
+.commonSelectWrap .selectList{position:relative;display:none;top:10px;left:-1px;width:161px;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:100;}
+.commonSelectWrap .selectList p{line-height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
+.commonSelectWrap .selectList p:hover{background:#f1f1f1;}
+/*.commonSelectWrap .selectBox:hover{position:relative;}*/
+/*.commonSelectWrap .selectList{display:block;}*/
+.commonSelectWrap .searchInput{display:block;float:left;width:161px;height:31px;line-height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
+.commonSelectWrap .searchInput input{float:left;width:100%;height:29px;border:none;color:#666;}
+/*ç‰¹æ®Šçš„èŒƒå›´çš„è¾“å…¥æ¡†å¤„ç†*/
+.commonSelectWrap .specialInput{display:block;float:left;width:100px;height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
+.commonSelectWrap .specialInput input{float:left;width:90px;height:29px;border:none;color:#666;}
+.moreQueryWrap{float: right;margin-top: 10px;}
+.moreQueryWrap .commonBtn{ display: block;}
+.moreQueryWrap .queryBtn{width:100px;height:32px;line-height:32px;}
+.moreQueryWrap #addOrder{width:100px;height:32px;line-height:32px;}
+.moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "å®‹ä½“";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
+.btnWrap{padding:35px 0;text-align:center;}
+.btnWrap a{display:inline-block;}
+.cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
+.cancelBtn:hover{background:transparent;color: #fe7c24}
+
+.panlDiv{ width: 100%; height: 130px; padding-top: 45px; text-align: center}
+.panlDiv .panl{ width: 300px; margin: 0 auto; }
+
+.carinfoWrap{ width:100%; padding-top: 45px;text-align: center}
+.carinfoWrap .paneldiv{ width:600px; margin: 0 auto }
+.carinfoWrap .listBtn{ height: 70px; padding-top:10px;clear:both; text-align: center;}
+.carinfoWrap .listLeft{float:left; width: 50%;}
+.carinfoWrap .listRight{ float: right; width: 50%;}
+.carinfoWrap .listNode{ height: 70px; padding-top:10px; width: 300px; margin-bottom: 25px;border: 1px solid transparent;}
+.carinfoWrap .listNode:hover{ border: 1px solid #ccc}
+.carinfoWrap .listNode .txt{ float: right; width: 230px;}
+.carinfoWrap .listNode .txt p{ height:25px; line-height: 25px; font-size: 14px; text-align:left; }
+.carinfoWrap .listBtn .commonBtn{ margin: 0 auto;}
+.listRight .txtBox{ width: 160px; height: 32px;}
+#CarNoProvince {background: url(../images/moreIcon.png) no-repeat 96% center;}
+
+#listSpan span{border: 1px solid #d4d4d4;padding: 6px; margin: 6px;line-height: 33px;font-size: 12px;cursor: pointer;white-space: nowrap;}
+.Address{ width:552px; height: 80px;}
+.Address .inputBox{margin-top: 12px; width: 312px;float: left; }
+.Address .selectBox{display: inline-block; width: 325px;}
+.Address .selectBox .textbox{ float: left; margin-right: 5px;}
+
+.listTag{ height:auto !important; width: 427px; -moz-user-select:none;
+    -webkit-user-select:none;
+    user-select:none; }  /* -moz-user-select:none;-webkit-user-select:none;user-select:none;禁止文本选定*/
+.listTag .checkPanel { margin-top: -12px; margin-left: 8px;}
+.listTag  span{ padding: 8px; margin:8px 8px 8px 0px; float: left; border: 1px #CCC solid;cursor:pointer}
+.listTag .checkPanel { margin-top: -12px; margin-left: 5px; float: right; width: 300px;}
+.listTag  span.on{ background:#fe7c24; color: #fff;}
+
+
+
+/********打印订单*********/
+.wordDIv h1{ font-size: 36px; font-weight: bold; text-align: center; line-height: 88px; height:88px;}
+
+.panl{  font-size: 22px; margin: 0 auto; text-align: center;}
+
+.panl table {width: 100%;}
+.panl table td{ border: 1px solid #000; font-size: 22px; height: 42px; line-height: 42px; vertical-align: middle; white-space: nowrap; }
+.panl .txtL{ text-align: left; padding-left:8px;}
+.panl .txtR{ text-align: right;padding-right:8px;}
+.panl .txtC{ text-align: center;}
+.panl input.bodernone{border:1px solid transparent; color:#000;}
+.optionclass  .commonSelectWrap .tit{ width: 222px;}
+
+
+.borderNone{ border:1px solid transparent;float:left;margin-left:5px;width:161px;height:31px;line-height:31px;font-family:Arial;border-radius:2px;background:#fff }
+.borderNone .numberbox {border:1px solid transparent; width: 100%}
+
+.panl table td input.textbox-text.validatebox-text{ color:#000;}
+.panl table td .numberbox {border:none;width:100%}
+.panl table td .numberbox input{ padding:0;}
+.panl table td input {background: none;width: auto; font-size: 22px; white-space: nowrap}

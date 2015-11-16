@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
+.commonSelectWrap .selectBox{ border: 1px solid transparent; height: 32px; line-height: 32px;}
+.commonSelectWrap input{ height: 32px;}
+
+
+.r{float: right} .l{float: left}
+.btnopt{margin: 0 auto;margin-top: 45px; width:380px;}
+.btnopt .commonBtn{ margin-left: 35px;border-radius: 23px;float:left; width: 153px; }
+.btnopt .commonBtn.cancel{ background-color: #cccccc}
+.btnopt .commonBtn.bgWhite{background:#f4f8fa; color:#fc7a52; border: #fc7a52 1px solid; display:none;}
+
+.submitPanel{ width: 838px; height:318px;padding-top: 50px; margin: 0 auto; }
+.submitPanel .r,.submitPanel .l{ width: 344px;}
+.submitPanel .commonSelectWrap{ float: none;}
+.submitPanel .commonSelectWrap .tit{width: 68px;}
+.submitPanel .commonSelectWrap .selectBox{ width: 260px;}
+.submitPanel .commonSelectWrap .searchInput{ width: 260px;}
+.submitPanel .commonSelectWrap .checkBox{ margin-top: 6px; float:left;}
+.radio{ float: left;}
+.submitPanel .Address .selectBox{ width: 269px;}
+.Address .selectBox .textbox{ float: left; margin-right: 9px;}
+.optBtn{ margin:0 auto; border-radius: 32px;}
+
+.bgColor{ background-color: #efefef}
+.bgColor input{ background-color: #efefef}
+
+

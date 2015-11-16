@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/3/26 18:33:14
+ * Create On	:2015-8-14 20:18:26
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -46,6 +46,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String order_no { get; set; }
+
+		/// <summary>
+		/// ª·‘±ø®∫≈
+		/// </summary>
+		public String VipCardCode { get; set; }
 
 		/// <summary>
 		/// 

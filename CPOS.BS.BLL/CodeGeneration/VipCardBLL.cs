@@ -92,13 +92,8 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>        
         public void Update(VipCardEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity,true, pTran);
+            _currentDAO.Update(pEntity, pTran);
         }
-        public void Update(VipCardEntity pEntity, bool pIsUpdateNullField , IDbTransaction pTran)
-        {
-            _currentDAO.Update(pEntity,pIsUpdateNullField,pTran);
-        }
-
 
         /// <summary>
         /// 更新
@@ -106,13 +101,8 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pEntity">实体实例</param>
         public void Update(VipCardEntity pEntity)
         {
-            Update(pEntity , true);
+            _currentDAO.Update(pEntity);
         }
-        public void Update(VipCardEntity pEntity , bool pIsUpdateNullField)
-        {
-            _currentDAO.Update(pEntity,pIsUpdateNullField);
-        }
-
         /// <summary>
         /// 删除
         /// </summary>

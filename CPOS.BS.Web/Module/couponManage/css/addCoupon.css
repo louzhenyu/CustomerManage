@@ -43,8 +43,7 @@
 .btnList .commonBtn{ color: #00cccc; width: 50px;height: 25px; border-color: #07c8cf; border-width:1px; border-style: solid; line-height: 25px; background-color:inherit;}
 .btnList .commonBtn{ float: left; margin-left: 40px;}
 .btnList .commonBtn.r{ border-color:#ccc; color: #ccc; }
-.cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
-.cancelBtn:hover{background:transparent;color: #fe7c24}
+
 
 .bordernone{ border: none;}
 .searchBtn{float: left;width: 88px; margin-left: 346px;height: 33px;line-height: 33px;}

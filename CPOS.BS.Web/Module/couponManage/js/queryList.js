@@ -288,7 +288,7 @@
                 mode: 'click', //设置为click模式
                 //总页码
                 total: data.TotalPageCount,
-                totalRecords: data.totalCount,
+                totalRecords: data.TotalCount,
                 isShowTotalPage: true,
                 isShowTotalRecords: true,
                 //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
@@ -322,6 +322,7 @@
         loadMoreData: function (currentPage) {
             var that = this;
             this.loadData.args.PageIndex = currentPage;
+            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             that.loadData.GetCouponTypeList(function(data){
                 that.renderTable(data);
             });

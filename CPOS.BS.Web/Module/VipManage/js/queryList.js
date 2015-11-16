@@ -1,26 +1,12 @@
-﻿define(['jquery', 'template', 'tools', 'kkpager', 'artDialog','datetimePicker','tips','zTree'], function ($) {
-    window.alert = function (content, autoHide) {
-        var d = dialog({
-            title: '提示',
-            cancelValue: '关闭',
-            skin: "black",
-            content: content
-        });
-        page.d = d;
-        d.showModal();
-        if (autoHide) {
-            setTimeout(function () {
-                page.d.close();
-            }, 2000);
-        }
-    }
+﻿define(['jquery', 'template', 'tools', 'kkpager', 'artDialog','datetimePicker','tips','easyui','zTree'], function ($) {
+
     var page = { 
         elems: {
             sectionPage:$("#section"), 
             simpleQueryDiv: $("#simpleQuery"),     //简单查询条件的层dom
             allQueryDiv: $("#allQuery"),             //所有的查询条件层dom
             uiMask: $("#ui-mask"),
-            tabel:$("#content"),                   //表格body部分
+            tableBody:$("#content"),                   //表格body部分
             thead:$("#thead"),                    //表格head部分
             dialogLabel:$("#dialogLabel"),          //标签选择层
             menuItems:$("#menuItems"),             //针对表格的操作菜单
@@ -34,9 +20,15 @@
         },
         init: function () {
             var that = this;
+            $(".loading").css({width:$("#pageContianer").width()+"px"});
+            $("#leftMenu").find("li").removeClass("on").each(function(){
+                if( $(this).find("em").hasClass("vipmanage_querylist")){
+                    $(this).addClass("on");
+                    that.elems.mid= $(this).find("a").attr("id"); // 多页面跳转菜单按钮权限控制问题。
+                }
+            });
             this.elems.vipSourceId = JITMethod.getUrlParam("vip_source_id");
             this.loadPageData();
-            //获得标签类型
             //获得标签列表
             that.loadData.getTagList(function(data){
                 that.select.tagType=data.Data.VipTagTypeList;
@@ -55,7 +47,7 @@
 				alignTo: 'target',
 				alignX: 'right',
 				alignY: 'center',
-				offsetX: -10,
+				offsetX: -10
 				//showTimeout: 100
 			});
         },
@@ -145,10 +137,24 @@
                 that.elems.dialogLabel.find("._sureBtn").removeAttr("disabled").css('background','#fe7c24');
                 that.stopBubble(e);
             });
+            $("#win").window({
+                onOpen: function(){
+                    $("#VipCardISN").focus();
+                }
+            })
             //点击查询按钮进行数据查询
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
                 that.setCondition();
+                if($(this).data("flag")){
+                    $("#win").window("open");
+
+                    return false;
+                }
+
+                var length=that.elems.colLength?that.elems.colLength:0;
+                $("#content").html('<tr ><td class="loading" colspan="'+length+'"><span><img src="../static/images/loading.gif"></span></td> </tr>');
+
                 //查询数据
                 that.loadData.getVipList(function(data){
                     //写死的数据
@@ -187,7 +193,48 @@
                 });
                 that.stopBubble(e);
             });
+            $("#win").delegate(".saveBtn","click",function() {
+                var mid = JITMethod.getUrlParam("mid");
+                if ($('#payOrder').form('validate')) {
 
+                    var fields = $('#payOrder').serializeArray(); //自动序列化表单元素为JSON对象
+                    that.loadData.args.VipCardISN = fields[0].value;
+                    that.loadData.getVipDetail(function (data) {
+
+
+                         debugger;
+                        //设置会员基本信息
+                        var info = data.Data.VipDetailInfo;
+                        that.elems.vipInfo = info;
+                         if(info.VipId) {
+                             location.href = "VipDetail.aspx?vipId=" + info.VipId + "&mid=" + mid;
+                         }else{
+                             $.messager.alert("提示","根据卡号没有查询到会员");
+                         }
+                    });
+                }
+
+            });
+            $("body").delegate("input[name='VipCardISN']","keydown",function(e){
+
+                if(e.keyCode==13){
+                    var str=$(this).val().replace(/;/g,"").replace(/\?/g,"").replace(/；/g,"").replace(/？/g,"");
+                    if(that.elems.vipCardCode) {
+                        str= str.replace(that.elems.vipCardCode,"");
+
+                        that.elems.vipCardCode=str;
+                    } else{
+                        that.elems.vipCardCode=str;
+                    }
+
+
+                    $.util.stopBubble(e);
+                    $(this).focus();
+                    $(this).val(str);
+                    $('#win').find(".saveBtn").trigger("click");
+                }
+
+            });
 
             /***
              *** 此处为比较复杂的逻辑部分
@@ -209,19 +256,19 @@
              //全选当前页面的全选   
              that.elems.thead.delegate("._selCurPage","click",function(e){
                  that.select.isSelectAllPage=false;
-                 that.elems.tabel.find(".checkBox").addClass("on");  //全选
+                 that.elems.tableBody.find(".checkBox").addClass("on");  //全选
                  that.stopBubble(e);
              }).delegate("._selAllPage","click",function(e){  //所有页面都选择     进行特殊处理   即使翻页也选中
                   that.select.isSelectAllPage=true;   //设置为把所有的选择都选中
-                  that.elems.tabel.find(".checkBox").addClass("on");  //全选
+                  that.elems.tableBody.find(".checkBox").addClass("on");  //全选
                   that.stopBubble(e);
              }).delegate("._cancelSel","click",function(e){   //取消所有的选择
                   that.select.isSelectAllPage=false;  //设置不是所有页都选中
-                  that.elems.tabel.find(".checkBox").removeClass("on");  //反选
+                  that.elems.tableBody.find(".checkBox").removeClass("on");  //反选
                   that.stopBubble(e);
              });
              //查询会员详情页面事件
-             that.elems.tabel.delegate(".seeIcon","click",function(e){
+             that.elems.tableBody.delegate(".seeIcon","click",function(e){
                 var vipId=$(this).parent().data("id");
                 var option={
                     domFlag:"data-flag",
@@ -237,8 +284,9 @@
                 that.stopBubble(e);
              });
              //跳转到详情页
-             that.elems.tabel.delegate("td>a","click",function(e){
-                var $t=$(this);
+             that.elems.tableBody.delegate("td","click",function(e){
+                var $t=$(this).find("a");
+
                 var option={
                     domFlag:"data-flag",
                     attrs:["unitId","optionid"],    //属性也要保存  回来进行使用
@@ -277,7 +325,7 @@
              });
              //删除会员按钮事件
              //that.elems.menuItems.delegate("._delVip","click",function(e){
-             //   var selDoms=that.elems.tabel.find(".on");   //获得选中的dom对象
+             //   var selDoms=that.elems.tableBody.find(".on");   //获得选中的dom对象
              //   if(selDoms.length==0){
              //       alert("至少选择一行再进行删除!!",true);
              //       return false;
@@ -446,7 +494,7 @@
              });
 
              //选中行操作  复选框选择事件
-             that.elems.tabel.delegate("td","click",function(e){
+             that.elems.tableBody.delegate("td","click",function(e){
                 var $t=$(this);
                 $t.toggleClass("on");
              });
@@ -668,6 +716,8 @@
             }
             //将查询条件赋值
             that.loadData.args.SearchColumns = vipinfo;
+            that.loadData.args.PageIndex=0
+
         },
         //显示日期
         showDatepicker:function(){
@@ -705,7 +755,7 @@
                     }
                 });
                 //触发查询事件
-                $(that.elems.sectionPage.find(".queryBtn").get(0)).trigger("click");
+                that.elems.sectionPage.find(".queryBtn").eq(0).trigger("click");
             });
         },
         //加载ztree
@@ -756,6 +806,9 @@
         loadMoreData: function (currentPage) {
             var that = this;
             this.loadData.args.PageIndex = currentPage;
+            var length=that.elems.colLength?that.elems.colLength:0
+            $("#content").html('<tr ><td class="loading" colspan="'+length+'"><span><img src="../static/images/loading.gif"></span></td> </tr>');
+
             that.loadData.getVipList(function(data){
                     that.renderTable(data);
             });
@@ -779,12 +832,13 @@
                 this.elems.dialogLabel.find(".promptContent").append(html);
             }
         },
-        //渲染tabel
+        //渲染tableBody
         renderTable: function (data) {
             debugger;
             var that = this;
             //获得列名
             var headerObj = data.Data.Columns;
+            that.elems.colLength=Object.keys(headerObj).length;
             $("#thead").html('<tr class="title"></tr>').find(".title").html(bd.template("tpl_thead", { obj: headerObj }));
             //获得列表数据
             var bodyList = data.Data.VipTable;
@@ -811,12 +865,14 @@
                 finalList.push(obj);
             }
               debugger;
-            var myMid = JITMethod.getUrlParam("mid");
-            $("#content").html(bd.template("tpl_content", { list: { finalList: finalList, otherItems: otherItems }, mid: myMid }));
+            var myMid =that.elems.mid?that.elems.mid:JITMethod.getUrlParam("mid");
+            that.elems.tableBody.html(" ");
+            $(".loading").remove();
+            that.elems.tableBody.html(bd.template("tpl_content", { list: { finalList: finalList, otherItems: otherItems }, mid: myMid }));
             //设置所有匹配的记录数
             that.elems.resultCount.html(data.Data.TotalCount);
             if(that.select.isSelectAllPage){  //如果是选择所有页面的  全选   则触发选中checkbox事件
-                that.elems.tabel.find(".checkBox").addClass("on");  //全选
+                that.elems.tableBody.find(".checkBox").addClass("on");  //全选
             }
             if (data.Data.TotalPageCount > 1) {
                 kkpager.generPageHtml(
@@ -870,7 +926,7 @@
         },
         loadData: {
             args: {
-                PageIndex: 1,
+                PageIndex: 0,
                 PageSize: 10,
                 SearchColumns: [],    //查询的动态表单配置
                 NewVipInfoColumns:[], //新增会员动态表单配置
@@ -1054,6 +1110,26 @@
             //        }
             //    });
             //}
+            getVipDetail: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Vip/VipGateway.ashx",
+                    data: {
+                        action: "GetVipDetail",
+                        VipCardISN:this.args.VipCardISN
+                    },
+                    success: function (data) {
+
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback) {
+                                callback(data);
+                            }
+
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            }
         }
 
     };

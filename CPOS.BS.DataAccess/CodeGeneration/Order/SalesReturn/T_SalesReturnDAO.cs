@@ -716,6 +716,7 @@ namespace JIT.CPOS.BS.DataAccess
                 var inoutInfo = inoutDAO.GetByID(pInstance.OrderID);
                 if (inoutInfo != null)
                 {
+                    pInstance.OrderNo = inoutInfo.order_no;
                     var paymentTypeDAO = new TPaymentTypeDAO(CurrentUserInfo);
                     var paymentTypeInfo = paymentTypeDAO.GetByID(inoutInfo.pay_id);
                     if (paymentTypeInfo != null)

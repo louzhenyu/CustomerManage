@@ -12,6 +12,7 @@ label,input[type="button"],input[type="submit"],button,.button{cursor:pointer;bo
 a{color:#333;text-decoration:none}
 a:hover{color:#none;}
 :focus{outline:none}
+
 /*清除浮动*/
 .clear{display:block;clear:both;overflow:hidden;height:0;line-height:0;font-size:0}
 .clearfix:after{content:" ";visibility:hidden;display:block;clear:both;height:0;font-size:0}

@@ -1,0 +1,29 @@
+#CarNoProvince {background: url(../images/moreIcon.png) no-repeat 96% center;}
+
+#listSpan span{border: 1px solid #d4d4d4;padding: 6px; margin: 6px;line-height: 33px;font-size: 12px;cursor: pointer;white-space: nowrap;}
+
+
+.main{ width: 736px; margin-left: 46px; margin-bottom: 25px;}
+.daylist{height:36px;margin-top:5px;border-radius: 5px 5px 0 0; border:1px solid #d8d8d8;background:#f2f2f2 }
+.daylist li{ float:left;width: 200px;height:34px;margin-top:0px;text-align:center;line-height:34px;color: #000;cursor:pointer;border-right: 1px solid #d8d8d8;font-size: 16px}
+.daylist li:hover{background:#fff;}
+.daylist li.on{background:#fff;}
+.panlList{ padding-top: 25px;}
+.panlList .panel{ display: none;}
+.panlList .panel .item{ width: 100px; float: left; margin:10px;}
+.panlList .panel .item .time{cursor:pointer; background:#dda11c; height: 35px;line-height: 35px; text-align: center;color: #fff; font-size: 16px;}
+.panlList .panel .item .time.on{background: #00B83F;}
+
+
+.checkBox{vertical-align:middle;cursor:pointer;line-height: 27px;}
+.checkBox em{width:25px;height:25px;background:url(../images/radio1.png) no-repeat center center;float: left;margin-right: 8px;}
+.checkBox.on em{ background:url(../images/radio2.png) no-repeat center center; }
+
+.commonSelectWrap .searchInput.bordernone{ border-color: transparent;}
+
+
+.commonSelectWrap .numberbox{ border-color: transparent;background:transparent}
+
+.marBot35{ margin-bottom: 25px; clear: both;}
+.saveBtn{ margin: 0 auto; width: 140px; margin-bottom: 25px;}
+.carno .textbox-invalid,.carno .combo{ border:none;background:transparent}

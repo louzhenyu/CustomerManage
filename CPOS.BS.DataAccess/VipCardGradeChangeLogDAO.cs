@@ -101,7 +101,7 @@ namespace JIT.CPOS.BS.DataAccess
                 try
                 {
                     VipCardDAO vipCardDAO = new VipCardDAO(this.CurrentUserInfo);
-                    vipCardDAO.Update(vipCardInfo, false, tran);
+                    vipCardDAO.Update(vipCardInfo, tran);
                     Create(vipCardGCInfo, tran);
                     //TO-DO:实现自己的业务
                     tran.Commit();

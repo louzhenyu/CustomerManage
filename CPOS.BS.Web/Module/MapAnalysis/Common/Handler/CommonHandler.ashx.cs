@@ -11,7 +11,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
-using JIT.Utility.ExtensionMethod;
 using System.Configuration;
 
 namespace JIT.CPOS.BS.Web.Module.MapAnalysis.Common.Handler

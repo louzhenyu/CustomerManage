@@ -339,6 +339,11 @@
 
         },
 
+
+     /*  mergeCellsByField()在DataGrid的onLoadSuccess中调用。
+      * EasyUI DataGrid根据字段动态合并单元格
+      * @param tableID 要合并table的id
+      * @param colList 要合并的列,用逗号分隔(例如："name,department,office");*/
          //合并相同的值的属性行
          mergeCellsByField:function(table,colList){
 

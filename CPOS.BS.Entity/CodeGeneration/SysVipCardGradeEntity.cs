@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/12/11 9:12:03
+ * Create On	:2015-8-14 20:18:25
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -48,6 +48,56 @@ namespace JIT.CPOS.BS.Entity
 		public String VipCardGradeName { get; set; }
 
 		/// <summary>
+		/// 会员卡等级(按数值大小来确定等级高低)
+		/// </summary>
+		public Int32? VipCardGrade { get; set; }
+
+		/// <summary>
+		/// 累计充值
+		/// </summary>
+		public Decimal? AddUpAmount { get; set; }
+
+		/// <summary>
+		/// 是否扩展到会员
+		/// </summary>
+		public Int32? IsExpandVip { get; set; }
+
+		/// <summary>
+		/// 充值优惠
+		/// </summary>
+		public Decimal? PreferentialAmount { get; set; }
+
+		/// <summary>
+		/// 消费优惠
+		/// </summary>
+		public Decimal? SalesPreferentiaAmount { get; set; }
+
+		/// <summary>
+		/// 积分倍数
+		/// </summary>
+		public Decimal? IntegralMultiples { get; set; }
+
+		/// <summary>
+		/// 成为会员
+		/// </summary>
+		public String BeVip { get; set; }
+
+		/// <summary>
+		/// 描述
+		/// </summary>
+		public String Remark { get; set; }
+
+		/// <summary>
+		/// 期初积分
+		/// </summary>
+		public Int32? BeginIntegral { get; set; }
+
+		/// <summary>
+		/// 期末积分
+		/// </summary>
+		public Int32? EndIntegral { get; set; }
+
+		/// <summary>
 		/// 
 		/// </summary>
 		public DateTime? CreateTime { get; set; }
@@ -76,51 +126,6 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String CustomerID { get; set; }
-
-		/// <summary>
-		/// 累计充值
-		/// </summary>
-		public Decimal? AddUpAmount { get; set; }
-
-		/// <summary>
-		/// 是否扩展到会员
-		/// </summary>
-		public Int32? IsExpandVip { get; set; }
-
-		/// <summary>
-		/// 充值优惠
-		/// </summary>
-		public Decimal? PreferentialAmount { get; set; }
-
-		/// <summary>
-		/// 消费优惠
-		/// </summary>
-		public Decimal? SalesPreferentiaAmount { get; set; }
-
-		/// <summary>
-		/// 积分倍数
-		/// </summary>
-		public Decimal? IntegralMultiples { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String BeVip { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Remark { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? BeginIntegral { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? EndIntegral { get; set; }
 
 
         #endregion

@@ -10,6 +10,8 @@ namespace JIT.CPOS.DTO.Module.Order.SalesReturn.Response
     {
         public string SalesReturnID { get; set; }
         public string SalesReturnNo { get; set; }
+        public string OrderID { get; set; }
+        public string OrderNo { get; set; }
         public int? Status { get; set; }
         public int? DeliveryType { get; set; }
         public string Reason { get; set; }

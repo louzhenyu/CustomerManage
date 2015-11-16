@@ -26,6 +26,8 @@ using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
+using System.Data.SqlClient;
+using JIT.CPOS.DTO.Base;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -92,6 +94,14 @@ namespace JIT.CPOS.BS.BLL
         public decimal GetVipIntegralByOrder(string orderId, string userId)
         {
             return this._currentDAO.GetVipIntegralByOrder(orderId, userId);
+        }
+        /// <summary>
+        /// ÊÂÎñ
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
         }
     }
 }

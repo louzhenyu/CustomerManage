@@ -487,7 +487,8 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //×éÖ¯SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [T_User] where isdelete=0 ");
+            //sql.AppendFormat("select * from [T_User] where isdelete=0 ");
+            sql.AppendFormat("select * from [T_User] where 1=1 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)

@@ -77,6 +77,10 @@ namespace JIT.CPOS.DTO.Base
         public static int INVALID_REQUEST_CAN_NOT_FIND_ACTION_HANDLER = 106;
         #endregion
 
+        #region 300-499 业务处理失败
+        public static int INVALID_BUSINESS = 300;
+        #endregion
+
         #region 500 - 599 未归类错误
         /// <summary>
         /// 默认的错误码

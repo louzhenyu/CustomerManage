@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/26 10:58:28
+ * Create On	:2015-8-27 19:35:02
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -43,14 +43,44 @@ namespace JIT.CPOS.BS.Entity
 		public String LogID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员卡标识
 		/// </summary>
 		public String VipCardID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员卡状态标识
 		/// </summary>
 		public Int32? VipCardStatusID { get; set; }
+
+		/// <summary>
+		/// 门店标识
+		/// </summary>
+		public String UnitID { get; set; }
+
+		/// <summary>
+		/// 操作动作
+		/// </summary>
+		public String Action { get; set; }
+
+		/// <summary>
+		/// 原因
+		/// </summary>
+		public String Reason { get; set; }
+
+		/// <summary>
+		/// 图片URL
+		/// </summary>
+		public String PicUrl { get; set; }
+
+		/// <summary>
+		/// 原状态标识
+		/// </summary>
+		public Int32? OldStatusID { get; set; }
+
+		/// <summary>
+		/// 备注
+		/// </summary>
+		public String Remark { get; set; }
 
 		/// <summary>
 		/// 
@@ -80,12 +110,7 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? OldStatusID { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String UnitID { get; set; }
+		public String CustomerID { get; set; }
 
 
         #endregion

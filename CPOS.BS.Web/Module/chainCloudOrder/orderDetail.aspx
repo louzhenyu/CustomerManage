@@ -6,7 +6,7 @@
     <title> 订单详情</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="<%=StaticUrl+"/module/chainCloudOrder/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/chainCloudOrder/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -29,7 +29,7 @@
                      <div class="commonBtn" data-status="600" data-showstaus="'500'">确认发货</div>
                       </div>
 
-                      <div class="commonBtn" data-status="800" data-showstaus="100,500,410,500,510"  >取消</div>
+                      <div class="commonBtn" data-status="800" data-showstaus="100,500,410,500,510,900"  >取消</div>
 
                      <div class="commonBtn" data-status="700" data-showstaus="600,610">完成</div>
 
@@ -217,14 +217,14 @@
                                      <div class="commonSelectWrap">
                                           <em class="tit">配送费用:</em>
                                           <div class="searchInput wh80">
-                                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="memberPrice" value=""/>
+                                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="DeliveryAmount" value=""/>
                                           </div>
                                      </div>
                                  </div>
                                  <div class="commonSelectWrap" style="margin:10px 0;">
                                       <em class="tit" style="font-size:16px">实付金额:</em>
                                       <div class="searchInput wh80">
-                                       <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="memberPrice" value=""  style="font-size:16px">
+                                       <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="actual_amount" value=""  style="font-size:16px">
                                       </div>
                                  </div>
                                  
@@ -292,13 +292,13 @@
                          </div>
                       </div>
 					  
-                      <div class="commonSelectWrap">
+                      <div class="commonSelectWrap" id="deliveryExpressBox">
                          <em class="tit">配送快递:</em>
                          <div class="searchInput">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="carrier_name"/>
                          </div>
                       </div>
-                      <div class="commonSelectWrap">
+                      <div class="commonSelectWrap" id="expressNumBox">
                          <em class="tit">快递单号:</em>
                          <div class="searchInput">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="Field2"/>
@@ -350,13 +350,13 @@
                          </div>
                       </div>
 
-                      <div class="commonSelectWrap">
+                      <div class="commonSelectWrap"  id="deliveryExpressBox2">
                          <em class="tit">配送快递:</em>
                          <div class="searchInput bordrnone">
                           <input type="text" id="carrier"  class="easyui-combobox" data-options="width:160,height:32"  name="Carrier_id"/>
                          </div>
                       </div>
-                      <div class="commonSelectWrap">
+                      <div class="commonSelectWrap" id="expressNumBox2">
                          <em class="tit">快递单号:</em>
                          <div class="searchInput">
                           <input type="text"  class="easyui-validatebox"   name="DeliveryCode"/>

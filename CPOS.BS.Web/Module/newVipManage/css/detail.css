@@ -1,0 +1,115 @@
+@charset "utf-8";
+
+ /**头部操作按钮**/
+.queryTermArea{  padding: 20px 0 20px 24px;}
+.queryTermArea .commonBtn{display: none;}
+.queryTermArea .commonBtn{ margin-left: 66px; width: 100px; height: 32px;  line-height: 32px; float:left;}
+
+.queryTermArea  .optBtn{background-color: #00cccc;margin-right: 24px; margin-left:0;}
+/*****会员详情*****/
+/*会员信息*/
+.contentArea_vipquery{min-width:1000px;min-height:587px;padding:20px;}
+.vipDetailInfo .commonTitle{margin-left:0px;font-size:15px;}
+.commonTitle em{display:inline-block;width:14px;height:14px;background:url(images/pointerTit.png) no-repeat 0 0;}
+.commonTitle img{margin:0 3px;vertical-align:top;}
+.commonTitle .before{color:#fe7c23;}
+.commonTitle .after{color:#333;}
+.vipDetailInfo{ background-color: #ebf1f4; padding-top: 35px; padding-bottom:35px;}
+.vipDetailInfo .item{height:50px;line-height:50px;}
+.vipDetailInfo .line{border-bottom:1px dashed #ededed;}
+.vipDetailInfo .itemBox{float:left;font-size:15px;}
+.vipDetailInfo .tit{float:left;width:108px;text-align:right;color:#999;}
+.vipDetailInfo .itemText{margin-left:108px;width:180px;color:#000; white-space:nowrap}
+.vipDetailInfo .lab{float:left;}
+.vipDetailInfo .lab span{display:inline-block;margin-right:15px;font-size:14px;color:#fe7c23;}
+.vipDetailInfo .tagItem{line-height:31px; min-height:31px;}
+
+/*菜单*/
+.subMenu{height:50px;padding-left:40px;background:#fff; border-top: 1px solid #d0d5d8;border-bottom:1px solid #d0d5d8 }
+.subMenu li{float:left;height:25px;width:85px; margin-top:12px; font-size: 14px; margin-right: 35px; text-align:center;line-height:25px;color:#4d4d4d;cursor:pointer;}
+.subMenu li.on {color: #07c8cf; border-bottom:1px solid #00cccc;}
+ /*tab选项卡公共样式*/
+.commonSelectWrap .bonone{ border: 1px solid transparent;}
+.R{ float:right} .L{ float: left}  .txtCenter{ text-align: center}
+.panltaglist .fontC{ height: 27px; background: center center no-repeat; margin:0 auto}
+.commonSelectWrap .searchInput.remark{ width: 460px; height:80px;}
+.commonSelectWrap .searchInput.remark textarea{ width:100%; height: 100%; line-height: 20px;white-space: normal;}
+
+
+
+/*******会员标签**********/
+.panlnav09{ width: 100%; padding-top: 35px; padding-left: 35px;}
+.panlnav09 p{ font-size: 16px; line-height: 36px; color: #666; height: 36px;  float: left; width: 100%;}
+.tagbtnList{float: left; padding-bottom: 15px;border-bottom: 1px solid #d0d5d8; padding-top:15px; display: block; width:100%;}
+.tagbtn{cursor: pointer; margin-bottom: 15px; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #07c8cf; position: relative; float: left; margin-right:30px; line-height: 32px; color: #07c8cf; font-size: 14px; }
+.tagbtn{ float: left;}
+.tagbtn .icon{display: none}
+.tagbtn .icon{background: url("../images/delicon.png")no-repeat; width: 30px; height: 30px; top: -19px; right:-19px; position: absolute;}
+.bgtext.tagbtn  { background-color: #07c8cf; color: #fff;}
+.panltaglist{ float: left;}
+.groupTag{ float: left;border-left: 1px solid #d0d5d8;}
+.groupTag li{cursor: pointer; width: 120px; text-align: center; border: 1px solid #d0d5d8; border-bottom-width:0;border-left-width:0;height: 28px; line-height: 28px; float: left;}
+.groupTag li.on{ color: #07c8cf;}
+.panltaglist .fontC{ cursor: pointer; float: left; font-size: 14px; line-height: 36px; width: 86px; text-align: center;}
+.spinner input{ height: 22px;}
+.groupTaglist{  padding-left:35px;float: left; border:1px solid #d0d5d8; width: 100%;min-height:70px; padding-top: 22px;}
+
+.btnList{float:left; margin-top: 35px; text-align: center; width: 100%; margin-bottom: 65px}
+.btnList .commonBtn{ width:80px; height: 32px; line-height: 32px; margin:0 auto; }
+
+.textbtn{ display: inline-block; float: left;}
+.textbtn .saveTagBtn{ background-color: #07c8cf; color: #fff;}
+.textbtn  input{ float: left;}
+
+
+.optPanel{height:75px; background-color: #f4f8fa;  line-height: 45px; font-size: 14px; padding-top: 20px;}
+.inputBox { float: left; width: 120px; padding-left: 3px; line-height: 34px;}
+.optPanel .commonBtn{ width: 100px; float: left; height: 32px; line-height: 32px; background-color: #00cccc;}
+.lineTitle{height: 37px; background-color: #d9d9d9; color: #666; padding-left: 35px; font-size: 14px; line-height: 37px;}
+.optPanel .commonSelectWrap{margin: 0 auto;}
+.optPanel .commonSelectWrap .tit{width: 100px;}
+
+
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none;}
+
+.imageList {width:100%;font:13px/39px "é»‘ä½“";color:#4d4d4d; text-align: center;}
+.imageList .line{width: 100%; border-bottom: 1px #d9d9d9 solid; padding: 20px; display: inline-block}
+.imageList .tit{ width: 80px;}
+.line .textA{float: left; height: 157px;}
+.line .textA p{line-height: 42px; color: #00cccc; font-size: 14px;}
+.lineText{ float: left; width: 658px; text-align: left;}
+
+.uploadBtn{ background: url("../images/upload.png") no-repeat; width: 37px; height: 37px;}
+
+.commonSelectWrap .searchInput .uploadBtn{float:left; position: relative; width: 37px; height: 37px; background:url(../images/upload.png); cursor:pointer;margin-right: 20px;}
+.commonSelectWrap .searchInput .uploadBtn .ke-button-common {width:37px;height:37px;opacity:0;filter:Alpha(opacity=0);}
+.commonSelectWrap .searchInput .uploadBtn input{display:block;width:37px;height:37px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;left:0;}
+.commonSelectWrap .searchInput .imgPanel{ float: left; border: 1px solid #d0d5d8; width: 100px; height: 100px;}
+.commonSelectWrap .searchInput .imgPanel img{display: none; width: 100%; height: 100%}
+
+/***新增客服记录***/
+.tableHandleBox{padding:12px 0;text-align:right;width: 100%; height: 58px;}
+.tableHandleBox span{display:inline-block; background-color:#00cccc;width:100px;height:32px;line-height:32px;margin-left:10px;border-radius:3px;cursor:pointer;}
+.tableWrap{min-height:300px;}
+
+/******XXXX信息相关样式*********/
+.lineTitle{ height: 50px;line-height: 50px;padding-left: 30px; font-size: 16px; color: #333;background-color: #fafafa;border:1px solid #e0e0e0;border-left:none; border-right:none;}
+.topDashed{ border-top-style: dashed;}
+.lineTitle em{ display:block; width: 4px; height: 18px;margin-top: 16px;background-color:#00cccc; margin-right: 10px; float: left;}
+.linePanel{  padding-top: 18px; padding-bottom: 18px;display:inline-block;width:100%}
+.linePanel .selectBox{ border: 1px solid transparent; background: none}
+.linePanel .commonSelectWrap .tit{ width: 108px}
+.linePanel .exitDiv{ width:813px;float:left;}
+.linePanel .exitDiv .selectBox{ width: 198px;}
+.linePanel .exitDiv .searchInput{ width: 198px;}
+.widthMax{ width:460px}
+.commonSelectWrap .hint{ color: #cc0000; line-height: 35px; font-size: 15px; padding-left: 8px;}
+.adjustList {height:45px; line-height: 45px; font-size: 14px;margin-top: 10px; margin-bottom: 20px}
+.linePanel .commonBtn{  width: 100px; height: 32px;  line-height: 32px; background-color: #00cccc; float: left;  margin: 0 auto; border-radius: 3px;}
+.adjustList .commonSelectWrap{margin: 0 auto;}
+.adjustList .commonSelectWrap .tit{width: 100px;}
+.linePanel .mTop10{ margin-top: 10px;}
+.fontC input{ color: #fc7a52}
+
+#win .commonSelectWrap .hint{ position: absolute; left: 300px; width: 300px; font-size: 14px; color: #07c8cf; }
+.commonSelectWrap .selectBox.bigColor input{ font-size: 18px; font-weight: 800; color: #fb7a52;}

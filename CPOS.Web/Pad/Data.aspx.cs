@@ -463,13 +463,10 @@ namespace JIT.CPOS.Web.Pad
                         {
                             vipIntegralEntity.VipID = data.VipID;
                             //vipIntegralEntity.InIntegral = 0; // 增加积分
-                            vipIntegralEntity.OutIntegral = Common.Utils.GetDecimalVal(
-                                vipIntegralDataList[0].OutIntegral) + integralValue; //消费积分
-                            vipIntegralEntity.EndIntegral = Common.Utils.GetDecimalVal(
-                                vipIntegralDataList[0].EndIntegral) + integralValue; //积分余额
+                            vipIntegralEntity.OutIntegral =vipIntegralDataList[0].OutIntegral + integralValue; //消费积分
+                            vipIntegralEntity.EndIntegral =vipIntegralDataList[0].EndIntegral+ integralValue; //积分余额
                             //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                            vipIntegralEntity.ValidIntegral = Common.Utils.GetDecimalVal(
-                                vipIntegralDataList[0].ValidIntegral) + integralValue; // 当前有效积分
+                            vipIntegralEntity.ValidIntegral =vipIntegralDataList[0].ValidIntegral + integralValue; // 当前有效积分
                             //vipIntegralBLL.Update(vipIntegralEntity, false);
                         }
 
@@ -570,7 +567,7 @@ namespace JIT.CPOS.Web.Pad
                 if (data != null)
                 {
                     string integralSourceId = "1";
-                    decimal integralValue = 0;
+                    int integralValue = 0;
                     if (data.OpenID == null || data.OpenID.Trim().Length == 0)
                     {
                         respData.Code = "103";
@@ -617,8 +614,7 @@ namespace JIT.CPOS.Web.Pad
                     else
                     {
                         integralRuleData = integralRuleDataList[0];
-                        integralValue = CPOS.Common.Utils.GetDecimalVal(integralRuleData.Integral) *
-                            CPOS.Common.Utils.GetDecimalVal(data.SalesAmount);
+                        integralValue =int.Parse(integralRuleData.Integral) *int.Parse(data.SalesAmount.ToString());
                     }
 
                     // 插入积分明细
@@ -651,13 +647,10 @@ namespace JIT.CPOS.Web.Pad
                     {
                         vipIntegralEntity.VipID = data.VipID;
                         //vipIntegralEntity.InIntegral = 0; // 增加积分
-                        vipIntegralEntity.InIntegral = Common.Utils.GetDecimalVal(
-                            vipIntegralDataList[0].InIntegral) + integralValue; //消费积分
-                        vipIntegralEntity.EndIntegral = Common.Utils.GetDecimalVal(
-                            vipIntegralDataList[0].EndIntegral) + integralValue; //积分余额
+                        vipIntegralEntity.InIntegral = vipIntegralDataList[0].InIntegral + integralValue; //消费积分
+                        vipIntegralEntity.EndIntegral =vipIntegralDataList[0].EndIntegral + integralValue; //积分余额
                         //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                        vipIntegralEntity.ValidIntegral = Common.Utils.GetDecimalVal(
-                            vipIntegralDataList[0].ValidIntegral) + integralValue; // 当前有效积分
+                        vipIntegralEntity.ValidIntegral =vipIntegralDataList[0].ValidIntegral + integralValue; // 当前有效积分
                         //vipIntegralBLL.Update(vipIntegralEntity, false);
                     }
 
@@ -796,7 +789,7 @@ namespace JIT.CPOS.Web.Pad
             if (reqInfo != null)
             {
                 string integralSourceId = "9";
-                decimal integralValue = 0;
+                int integralValue = 0;
 
                 // 查询会员ID
                 VipEntity vipIdData = null;
@@ -835,7 +828,7 @@ namespace JIT.CPOS.Web.Pad
                         else
                         {
                             integralRuleData = integralRuleDataList[0];
-                            integralValue = CPOS.Common.Utils.GetDecimalVal(integralRuleData.Integral) * Convert.ToInt32(reqInfo.SalesAmount);
+                            integralValue =int.Parse(integralRuleData.Integral) * Convert.ToInt32(reqInfo.SalesAmount);
                         }
                         #endregion
                         #region 插入积分明细
@@ -869,13 +862,10 @@ namespace JIT.CPOS.Web.Pad
                         {
                             vipIntegralEntity.VipID = reqInfo.VipID;
 
-                            vipIntegralEntity.InIntegral = Common.Utils.GetDecimalVal(
-                                vipIntegralDataList[0].InIntegral) + integralValue; //增加积分
-                            vipIntegralEntity.EndIntegral = Common.Utils.GetDecimalVal(
-                                vipIntegralDataList[0].EndIntegral) + integralValue; //积分余额
+                            vipIntegralEntity.InIntegral =vipIntegralDataList[0].InIntegral + integralValue; //增加积分
+                            vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral+ integralValue; //积分余额
                             //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                            vipIntegralEntity.ValidIntegral = Common.Utils.GetDecimalVal(
-                                vipIntegralDataList[0].ValidIntegral) + integralValue; // 当前有效积分
+                            vipIntegralEntity.ValidIntegral = vipIntegralDataList[0].ValidIntegral + integralValue; // 当前有效积分
                             //vipIntegralBLL.Update(vipIntegralEntity, false);
                         }
                         #endregion

@@ -15,7 +15,7 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
     /// <summary>
     /// VipSourceHandler 的摘要说明
     /// </summary>
-    public class VipSourceHandler : JIT.CPOS.BS.Web.PageBase.JITCPOSAjaxHandler, 
+    public class VipSourceHandler : JIT.CPOS.BS.Web.PageBase.JITCPOSAjaxHandler,
         IHttpHandler, IRequiresSessionState
     {
         /// <summary>
@@ -32,9 +32,9 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
                     break;
                 case "VipSource":
                 default:
-                    content = GetVipSourceData();
+                    content = GetVipSourceData(pContext.Request["vipSourceType"]);
                     break;
-                    
+
             }
             pContext.Response.Write(content);
             pContext.Response.End();
@@ -42,17 +42,24 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
 
         #region GetVipSourceData
         /// <summary>
-        /// 
+        /// 获取订单或者会员来源
         /// </summary>
-        public string GetVipSourceData()
+        /// <param name="vipSourceType">0=会员；1=订单</param>
+        /// <returns></returns>
+        public string GetVipSourceData(string vipSourceType)
         {
             IList<BillStatusModel> list = new List<BillStatusModel>();
             SysVipSourceBLL service = new SysVipSourceBLL(new SessionManager().CurrentUserLoginInfo);
-            var dataList = service.GetAll();
+            SysVipSourceEntity[] dataList = null;
+            if (!string.IsNullOrEmpty(vipSourceType))
+                dataList = service.QueryByEntity(new SysVipSourceEntity() { VipSourceType = int.Parse(vipSourceType) }, null);
+            else
+                dataList = service.GetAll();
             foreach (var dataItem in dataList)
             {
-                list.Add(new BillStatusModel() { 
-                    Id = dataItem.VipSourceID, 
+                list.Add(new BillStatusModel()
+                {
+                    Id = dataItem.VipSourceID,
                     Description = dataItem.VipSourceName
                 });
             }
@@ -75,7 +82,7 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
             if (string.IsNullOrWhiteSpace(phone))
             {
                 return new List<VipEntity>().ToJSON();
-            }          
+            }
 
             List<VipEntity> viplist = vipBll.GetVipByPhone(phone.Trim());
 

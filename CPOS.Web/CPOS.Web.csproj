@@ -298,17 +298,7 @@
     <Content Include="Images\mingLong\question9\b2.png" />
     <Content Include="Images\mingLong\question9\topic01.jpg" />
     <Content Include="Images\mingLong\question9\topic02.jpg" />
-    <Content Include="Interface\Images\bg.png" />
-    <Content Include="Interface\Images\bg2.png" />
-    <Content Include="Interface\Images\btn1.png" />
-    <Content Include="Interface\Images\btn2.png" />
-    <Content Include="Interface\Images\msg_vip.jpg" />
     <Content Include="HeadImage\qrcodeBack.png" />
-    <Content Include="Interface\Images\bg.png" />
-    <Content Include="Interface\Images\bg2.png" />
-    <Content Include="Interface\Images\btn1.png" />
-    <Content Include="Interface\Images\btn2.png" />
-    <Content Include="Interface\Images\msg_vip.jpg" />
     <Content Include="HtmlApp\Demo\html\WQuestion.html" />
     <Content Include="HtmlApp\Demo\images\icon_gift.png" />
     <Content Include="HtmlApp\Demo\images\sprites.png" />
@@ -2271,6 +2261,7 @@
     <Compile Include="ApplicationInterface\Module\VIP\Register\SetRegisterFormItemsAH.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetVipAmountDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipListNum\GetVipListNumAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipList\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\WifiSign\WifiSignAH.cs" />

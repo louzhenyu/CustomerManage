@@ -78,6 +78,16 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                 SettingCode = "CashOrderUpLimit",
                 SettingValue = para.CashOrderUpLimit.ToString()
             });
+            list.Add(new CustomerBasicSettingEntity()
+            {
+                SettingCode = "PointsValidPeriod",
+                SettingValue = para.PointsValidPeriod.ToString()
+            });
+            list.Add(new CustomerBasicSettingEntity()
+            {
+                SettingCode = "CashValidPeriod",
+                SettingValue = para.CashValidPeriod.ToString()
+            });
             int i = customerBasicSettingBLL.SaveustomerBasicrInfo(list);
 
             return rd;

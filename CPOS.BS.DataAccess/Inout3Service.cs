@@ -38,6 +38,7 @@ namespace JIT.CPOS.BS.DataAccess
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
 
+
         /// <summary>
         /// 查询各个状态的数量 Jermyn20130906
         /// </summary>
@@ -538,6 +539,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,a.vip_no "
                       + " ,(select top 1 vipName from vip where vipId=a.vip_no) vip_name "
                       + " ,(select top 1 vipLevel from vip where vipId=a.vip_no) vipLevel "
+                      + " ,(select top 1 phone From vip where vipId = a.vip_no) vipPhone "
                       + " ,a.create_time "
                       + " ,a.create_user_id "
                       + " ,a.approve_time "
@@ -1346,6 +1348,7 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field18 "
                         + " ,a.Field19"
                         + " ,a.Field20 "
+                        + " ,paymentcenter_id "
                          + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"  //配送方式
                         + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.Field11 ) DefrayTypeName "
                         + "  ,( SELECT ISNULL(Amount, 0) AS Amount FROM VipAmountDetail WHERE ObjectId = a.order_id AND VipId = a.vip_no AND AmountSourceId = 13 ) AS ReturnAmount "//返现抵扣 AmountSourceId=13

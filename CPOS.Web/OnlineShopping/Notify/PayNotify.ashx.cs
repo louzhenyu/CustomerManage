@@ -52,7 +52,7 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                         //{
                         //    throw new APIException("缺少参数【PayID】或参数值为空") { ErrorCode = 135 };
                         //}
-                        var loggingSessionInfo = Default.GetBSLoggingSession(CustomerID, "1");
+                        var loggingSessionInfo = Default.GetBSLoggingSession(CustomerID, UserID);
 
                         var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
                         //商品订单支付
@@ -242,10 +242,34 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                             {
                                 rechargeOrderInfo.Status = 1;//已支付
                                 rechargeOrderBll.Update(rechargeOrderInfo);
+
+                                var vipBll = new VipBLL(loggingSessionInfo);
+
+                                var unitBLL = new t_unitBLL(loggingSessionInfo);
+
+                                //获取会员信息
+                                var vipInfo = vipBll.GetByID(loggingSessionInfo.UserID);
+                                //获取门店信息
+                                t_unitEntity unitInfo = null;
+                                if (!string.IsNullOrEmpty(inoutInfo.sales_unit_id))
+                                    unitInfo = unitBLL.GetByID(inoutInfo.sales_unit_id);
+                                var vipAmountEntity = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = vipInfo.VIPID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
                                 //充值
-                                vipAmountBll.AddVipEndAmount(UserID, rechargeOrderInfo.TotalAmount.Value, null, "4", rechargeOrderInfo.OrderID.ToString(), loggingSessionInfo);
+                                var amountDetailInfo = new VipAmountDetailEntity()
+                                {
+                                    Amount = rechargeOrderInfo.TotalAmount.Value,
+                                    AmountSourceId = "4",
+                                    ObjectId = rechargeOrderInfo.OrderID.ToString()
+                                };
+                                vipAmountBll.AddVipAmount(vipInfo, unitInfo, vipAmountEntity, amountDetailInfo, null, loggingSessionInfo);
                                 //充值返现
-                                vipAmountBll.AddReturnAmount(UserID, rechargeOrderInfo.ReturnAmount.Value, rechargeOrderInfo.OrderID.ToString(), "6", loggingSessionInfo);
+                                var returnAmountdetailInfo = new VipAmountDetailEntity()
+                                {
+                                    Amount = rechargeOrderInfo.ReturnAmount.Value,
+                                    ObjectId = rechargeOrderInfo.OrderID.ToString(),
+                                    AmountSourceId = "6"
+                                };
+                                vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, returnAmountdetailInfo, null, loggingSessionInfo);
                             }
                         }
 

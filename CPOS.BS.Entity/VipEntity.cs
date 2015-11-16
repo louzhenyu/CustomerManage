@@ -213,7 +213,10 @@ namespace JIT.CPOS.BS.Entity
         /// æ‡¿Î
         /// </summary>
         public decimal Distance { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? NewBirthday { get; set; }
         #endregion
     }
 }

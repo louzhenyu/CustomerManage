@@ -51,7 +51,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Utility">
+    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Utility.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -103,6 +104,7 @@
     <Compile Include="CodeGeneration\CardDepositDAO.cs" />
     <Compile Include="CodeGeneration\CityDAO.cs" />
     <Compile Include="CodeGeneration\ClientBussinessDefinedDAO.cs" />
+    <Compile Include="CodeGeneration\ContactEventDAO.cs" />
     <Compile Include="CodeGeneration\ContactWeDAO.cs" />
     <Compile Include="CodeGeneration\CouponDAO.cs" />
     <Compile Include="CodeGeneration\CouponSourceDAO.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="CodeGeneration\GLServicePersonInfoDAO.cs" />
     <Compile Include="CodeGeneration\GLServiceTaskDAO.cs" />
     <Compile Include="CodeGeneration\GOrderDAO.cs" />
+    <Compile Include="CodeGeneration\HolidayDAO.cs" />
     <Compile Include="CodeGeneration\HotelDynamicPriceDAO.cs" />
     <Compile Include="CodeGeneration\HotelRoomDAO.cs" />
     <Compile Include="CodeGeneration\HotelsCheckUserDAO.cs" />
@@ -216,6 +219,8 @@
     <Compile Include="CodeGeneration\LNewsMicroMappingDAO.cs" />
     <Compile Include="CodeGeneration\LNumberTypeMappingDAO.cs" />
     <Compile Include="CodeGeneration\LongContentDAO.cs" />
+    <Compile Include="CodeGeneration\Menu\T_Menu_FunctionDAO.cs" />
+    <Compile Include="CodeGeneration\Menu\T_Role_Menu_FunctionDAO.cs" />
     <Compile Include="CodeGeneration\MHAdAreaDAO.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaDAO.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaGroupDAO.cs" />
@@ -342,6 +347,7 @@
     <Compile Include="CodeGeneration\ShoppingCartDAO.cs" />
     <Compile Include="CodeGeneration\ShopProductDAO.cs" />
     <Compile Include="CodeGeneration\ShortUrlChangeDAO.cs" />
+    <Compile Include="CodeGeneration\SpecialDateDAO.cs" />
     <Compile Include="CodeGeneration\StoreBrandMappingDAO.cs" />
     <Compile Include="CodeGeneration\StoreDAO.cs" />
     <Compile Include="CodeGeneration\StoreItemDailyStatusDAO.cs" />
@@ -406,15 +412,20 @@
     <Compile Include="CodeGeneration\VipAddressDAO.cs" />
     <Compile Include="CodeGeneration\VipAmountDAO.cs" />
     <Compile Include="CodeGeneration\VipAmountDetailDAO.cs" />
+    <Compile Include="CodeGeneration\VipCardBalanceChangeDAO.cs" />
     <Compile Include="CodeGeneration\VipCardBasicDAO.cs" />
+    <Compile Include="CodeGeneration\VipCardBatchDAO.cs" />
     <Compile Include="CodeGeneration\VipCardCarBrandDAO.cs" />
     <Compile Include="CodeGeneration\VipCardDAO.cs" />
     <Compile Include="CodeGeneration\VipCardDormancyDAO.cs" />
     <Compile Include="CodeGeneration\VipCardGradeChangeLogDAO.cs" />
     <Compile Include="CodeGeneration\VipCardModelsDAO.cs" />
     <Compile Include="CodeGeneration\VipCardRechargeRecordDAO.cs" />
+    <Compile Include="CodeGeneration\VipCardRuleDAO.cs" />
     <Compile Include="CodeGeneration\VipCardSalesDAO.cs" />
     <Compile Include="CodeGeneration\VipCardStatusChangeLogDAO.cs" />
+    <Compile Include="CodeGeneration\VipCardTransLogDAO.cs" />
+    <Compile Include="CodeGeneration\VipCardTransLogHisDAO.cs" />
     <Compile Include="CodeGeneration\VipCardUnitMappingDAO.cs" />
     <Compile Include="CodeGeneration\VipCardVipMappingDAO.cs" />
     <Compile Include="CodeGeneration\VipCouponMappingDAO.cs" />
@@ -533,6 +544,7 @@
     <Compile Include="CodeGeneration\ZInterfaceTimestampDAO.cs" />
     <Compile Include="CodeGeneration\ZLargeForumCourseMappingDAO.cs" />
     <Compile Include="CodeGeneration\ZLargeForumDAO.cs" />
+    <Compile Include="ContactEventDAO.cs" />
     <Compile Include="ContactWeDAO.cs" />
     <Compile Include="CouponDAO.cs" />
     <Compile Include="CouponSourceDAO.cs" />
@@ -607,6 +619,7 @@
     <Compile Include="Extension\X_VipPointMarkDetailDAO.cs" />
     <Compile Include="FStaffDAO.cs" />
     <Compile Include="GOrderDAO.cs" />
+    <Compile Include="HolidayDAO.cs" />
     <Compile Include="HotelDynamicPriceDAO.cs" />
     <Compile Include="HotelRoomDAO.cs" />
     <Compile Include="HotelsCheckUserDAO.cs" />
@@ -640,9 +653,28 @@
     <Compile Include="LNewsCommentDAO.cs" />
     <Compile Include="LNewsMicroMappingDAO.cs" />
     <Compile Include="LNumberTypeMappingDAO.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_ActivityDAO.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_ActivityMessageDAO.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_MessageSendDAO.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_MessageTemplateDAO.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_PrizeReceiveDAO.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_PrizesDAO.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_PrizesDetailDAO.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_TargetGroupDAO.cs" />
+    <Compile Include="Marketing\C_ActivityDAO.cs" />
+    <Compile Include="Marketing\C_ActivityMessageDAO.cs" />
+    <Compile Include="Marketing\C_MessageSendDAO.cs" />
+    <Compile Include="Marketing\C_MessageTemplateDAO.cs" />
+    <Compile Include="Marketing\C_PrizeReceiveDAO.cs" />
+    <Compile Include="Marketing\C_PrizesDAO.cs" />
+    <Compile Include="Marketing\C_PrizesDetailDAO.cs" />
+    <Compile Include="Marketing\C_TargetGroupDAO.cs" />
+    <Compile Include="Menu\T_Menu_FunctionDAO.cs" />
+    <Compile Include="Menu\T_Role_Menu_FunctionDAO.cs" />
     <Compile Include="MHCategoryAreaGroupDAO.cs" />
     <Compile Include="MHSeachAreaDAO.cs" />
     <Compile Include="MobileBussinessDefinedDAO.cs" />
+    <Compile Include="MobileHomeDAO.cs" />
     <Compile Include="MobileModuleDAO.cs" />
     <Compile Include="MobileModuleObjectMappingDAO.cs" />
     <Compile Include="Module\AppConfig\MHAdAreaDAO.cs" />
@@ -774,6 +806,7 @@
     <Compile Include="Services\RechargeStrategyDAO.cs" />
     <Compile Include="Services\SysVocationDAO.cs" />
     <Compile Include="Services\UnitDAO.cs" />
+    <Compile Include="SpecialDateDAO.cs" />
     <Compile Include="SysModulePageMappingDAO.cs" />
     <Compile Include="SysPageDAO.cs" />
     <Compile Include="SysVocationVersionMappingDAO.cs" />
@@ -869,6 +902,7 @@
     <Compile Include="TypeService.cs" />
     <Compile Include="T_CityDAO.cs" />
     <Compile Include="t_customerDAO.cs" />
+    <Compile Include="T_InoutDAO.cs" />
     <Compile Include="T_Payment_TypeDAO.cs" />
     <Compile Include="T_ItemDAO.cs" />
     <Compile Include="T_ItemSkuPropDAO.cs" />
@@ -893,15 +927,20 @@
     <Compile Include="VersionManagerDAO.cs" />
     <Compile Include="VipAmountDAO.cs" />
     <Compile Include="VipAmountDetailDAO.cs" />
+    <Compile Include="VipCardBalanceChangeDAO.cs" />
     <Compile Include="VipCardBasicDAO.cs" />
+    <Compile Include="VipCardBatchDAO.cs" />
     <Compile Include="VipCardCarBrandDAO.cs" />
     <Compile Include="VipCardDAO.cs" />
     <Compile Include="VipCardDormancyDAO.cs" />
     <Compile Include="VipCardGradeChangeLogDAO.cs" />
     <Compile Include="VipCardModelsDAO.cs" />
     <Compile Include="VipCardRechargeRecordDAO.cs" />
+    <Compile Include="VipCardRuleDAO.cs" />
     <Compile Include="VipCardSalesDAO.cs" />
     <Compile Include="VipCardStatusChangeLogDAO.cs" />
+    <Compile Include="VipCardTransLogDAO.cs" />
+    <Compile Include="VipCardTransLogHisDAO.cs" />
     <Compile Include="VipCardUnitMappingDAO.cs" />
     <Compile Include="VipCardVipMappingDAO.cs" />
     <Compile Include="VIPCollectionDataService.cs" />

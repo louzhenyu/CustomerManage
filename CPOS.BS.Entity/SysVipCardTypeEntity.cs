@@ -29,7 +29,32 @@ namespace JIT.CPOS.BS.Entity
     public partial class SysVipCardTypeEntity : BaseEntity 
     {
         #region 属性集
+        public Int32? RuleID { get; set; }
 
+        /// <summary>
+        /// 品牌标识
+        /// </summary>
+        public String BrandID { get; set; }
+
+        /// <summary>
+        /// 卡折扣
+        /// </summary>
+        public Decimal? CardDiscount { get; set; }
+
+        /// <summary>
+        /// 积分倍数
+        /// </summary>
+        public Int32? PointsMultiple { get; set; }
+
+        /// <summary>
+        /// 充值满n
+        /// </summary>
+        public Decimal? ChargeFull { get; set; }
+
+        /// <summary>
+        /// 充值送n
+        /// </summary>
+        public Decimal? ChargeGive { get; set; }
         #endregion
     }
 }

@@ -522,7 +522,8 @@
                     data:{
                         page:1,
                         start:0,
-                        limit:25
+                        limit:25,
+						vipSourceType:1
                     },
                     success: function (data) {
                         if (data) {

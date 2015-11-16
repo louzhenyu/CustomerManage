@@ -206,7 +206,7 @@
             that.elems.tabel.datagrid({
                 method : 'post',
                 iconCls : 'icon-list', //图标
-                singleSelect : false, //多选
+                singleSelect : true, //dan选
                 // height : 332, //高度
                 fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped : true, //奇偶行颜色不同
@@ -216,7 +216,7 @@
                 sortName : 'brandCode', //排序的列
                 /*sortOrder : 'desc', //倒序
                  remoteSort : true, // 服务器排序*/
-                idField : 'Item_Id', //主键字段
+                idField : 'Id', //主键字段
                 /* pageNumber:1,*/
                 /*
                 frozenColumns:[[

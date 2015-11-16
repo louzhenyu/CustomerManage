@@ -55,23 +55,37 @@ namespace JIT.CPOS.BS.BLL
             //判断是否启用会员折扣
             var basicSettingBLL = new CustomerBasicSettingBLL(CurrentUserInfo);
             var vipBLL = new VipBLL(CurrentUserInfo);
-            var sysVipCardGradeBLL = new SysVipCardGradeBLL(CurrentUserInfo);
-            string vipDiscountSetting = basicSettingBLL.GetSettingValueByCode("VipCardGradeSalesPreferentia");
-            if (!string.IsNullOrEmpty(vipDiscountSetting))
+            //var sysVipCardGradeBLL = new SysVipCardGradeBLL(CurrentUserInfo);
+            var vipCardVipMappingBLL = new VipCardVipMappingBLL(CurrentUserInfo);
+            var vipCardBLL = new VipCardBLL(CurrentUserInfo);
+            var vipCardRuleBLL = new VipCardRuleBLL(CurrentUserInfo);
+            //string vipDiscountSetting = basicSettingBLL.GetSettingValueByCode("VipCardGradeSalesPreferentia");
+            //if (!string.IsNullOrEmpty(vipDiscountSetting))
+            //{
+            //    if (int.Parse(vipDiscountSetting) > 0)//启用
+            //    {
+            //        var vipInfo = vipBLL.GetByID(CurrentUserInfo.UserID);
+            //        if (vipInfo != null)
+            //        {
+            //            if (vipInfo.VipLevel>0)
+            //            {
+            //                //获取会员等级折扣
+            //                var sysVipCardGradeInfo = sysVipCardGradeBLL.GetByID(vipInfo.VipLevel);
+            //                if (sysVipCardGradeInfo != null)
+            //                    vipDiscount = sysVipCardGradeInfo.SalesPreferentiaAmount.Value;
+            //            }
+            //        }
+            //    }
+            //}
+            var vipCardMappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VIPID = CurrentUserInfo.UserID }, null).FirstOrDefault();
+            if (vipCardMappingInfo != null)
             {
-                if (int.Parse(vipDiscountSetting) > 0)//启用
+                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardID = vipCardMappingInfo.VipCardID }, null).FirstOrDefault();
+                if (vipCardInfo != null)
                 {
-                    var vipInfo = vipBLL.GetByID(CurrentUserInfo.UserID);
-                    if (vipInfo != null)
-                    {
-                        if (vipInfo.VipLevel>0)
-                        {
-                            //获取会员等级折扣
-                            var sysVipCardGradeInfo = sysVipCardGradeBLL.GetByID(vipInfo.VipLevel);
-                            if (sysVipCardGradeInfo != null)
-                                vipDiscount = sysVipCardGradeInfo.SalesPreferentiaAmount.Value;
-                        }
-                    }
+                    var vipCardRuleInfo = vipCardRuleBLL.QueryByEntity(new VipCardRuleEntity() { VipCardTypeID = vipCardInfo.VipCardTypeID }, null).FirstOrDefault();
+                    if (vipCardRuleInfo != null)
+                        vipDiscount = vipCardRuleInfo.CardDiscount == null ? 1 : (vipCardRuleInfo.CardDiscount.Value / 10);
                 }
             }
             return vipDiscount;

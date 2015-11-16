@@ -1752,7 +1752,14 @@ namespace JIT.CPOS.BS.BLL
                         statusDesc = optionsList[0].OptionText;
                     }
                 }
+
                 T_InoutBLL inoutBLL = new T_InoutBLL(this.loggingSessionInfo);
+                if (status == "700")
+                {
+                    var orderInfo = inoutBLL.GetInoutInfo(orderId, this.loggingSessionInfo);
+                    if (orderInfo != null && orderInfo.status != "700")//完成订单时处理积分、返现、佣金[和确认收货一致]
+                        new VipIntegralBLL(this.loggingSessionInfo).OrderReward(orderInfo, tran);
+                }
                 inoutService.UpdateOrderDeliveryStatus(orderId, status, statusDesc, null, null, tableNo);
                 if (status == "600")
                 {
@@ -1761,25 +1768,10 @@ namespace JIT.CPOS.BS.BLL
                     Loggers.Debug(new DebugLogInfo() { Message = "付款方式:" + payId });
                     if (payId == "DFD3E26D5C784BBC86B075090617F44B")
                     {
-
                         var deliverMsg = inoutBLL.GetDeliverInfoByOrderId(orderId, this.loggingSessionInfo);
-
                         Loggers.Debug(new DebugLogInfo() { Message = "微信发货通知接口返回值:" + deliverMsg });
                     }
-
                 }
-
-                //status==700，订单完成，调用方法给积分  Updated by Willie Yan on 2014-05-28
-                if (status == "700")
-                {
-
-                    //string userId = inoutBLL.GetByID(orderId).vip_no;
-                    //new VipIntegralBLL(this.loggingSessionInfo).OrderReturnMoneyAndIntegral(orderId, userId, null);
-                    var orderInfo = inoutBLL.GetByID(orderId);
-                    if (orderId != null)//和确认收货一致，复用业务逻辑层[重构代码]
-                        new VipIntegralBLL(this.loggingSessionInfo).OrderReturnMoneyAndIntegral(orderInfo.order_id, orderInfo.vip_no, tran, orderInfo.actual_amount.Value, orderInfo.sales_user, orderInfo.data_from_id);
-                }
-
 
                 //订单消息推送 update by Henry 2015-4-15 洗e客-商城不用推送商品订单
                 //OrderPushMessage(orderId, status);
@@ -2029,7 +2021,7 @@ namespace JIT.CPOS.BS.BLL
                         string mailsubject = "您有新的邮件";
 
                         string strMailKey = "mailToList";
-                        if (ConfigurationManager.AppSettings.GetValues(strMailKey).Length >0)
+                        if (ConfigurationManager.AppSettings.GetValues(strMailKey).Length > 0)
                         {
                             string strMails = ConfigurationManager.AppSettings[strMailKey];
                             string[] mails = strMails.Split(',');

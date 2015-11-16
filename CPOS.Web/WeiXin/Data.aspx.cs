@@ -402,7 +402,7 @@ namespace JIT.CPOS.Web.WeiXin
 
             // SysIntegralSource: 8
             string integralSourceId = "8";
-            decimal integralValue = 0;
+            int integralValue = 0;
             if (true)
             {
                 IntegralRuleEntity integralRuleData = null;
@@ -420,13 +420,13 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     integralRuleData = integralRuleDataList[0];
-                    integralValue = CPOS.Common.Utils.GetDecimalVal(integralRuleData.Integral);
+                    integralValue =int.Parse(integralRuleData.Integral);
                 }
             }
 
             // SysIntegralSource: 5
             string highIntegralSourceId = "5";
-            decimal highIntegralValue = 0;
+            int highIntegralValue = 0;
             if (true)
             {
                 IntegralRuleEntity integralRuleData = null;
@@ -444,7 +444,7 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     integralRuleData = integralRuleDataList[0];
-                    highIntegralValue = CPOS.Common.Utils.GetDecimalVal(integralRuleData.Integral);
+                    highIntegralValue =int.Parse(integralRuleData.Integral);
                 }
             }
 
@@ -452,7 +452,7 @@ namespace JIT.CPOS.Web.WeiXin
             if (true)
             {
                 string tmpVipId = vipId;
-                decimal tmpIntegralValue = integralValue;
+                int tmpIntegralValue = integralValue;
                 string tmpIntegralSourceId = integralSourceId;
                 string tmpOpenId = openId;
                 string msgModel = "您的优惠券已验证通过，新增积分{0}分。恭喜您！";
@@ -485,14 +485,11 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     vipIntegralEntity.VipID = tmpVipId;
-                    vipIntegralEntity.InIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].InIntegral) + tmpIntegralValue; ; // 增加积分
+                    vipIntegralEntity.InIntegral = vipIntegralDataList[0].InIntegral + tmpIntegralValue; ; // 增加积分
                     //vipIntegralEntity.OutIntegral = 0; //消费积分
-                    vipIntegralEntity.EndIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].EndIntegral) + tmpIntegralValue; //积分余额
+                    vipIntegralEntity.EndIntegral =  vipIntegralDataList[0].EndIntegral + tmpIntegralValue; //积分余额
                     //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                    vipIntegralEntity.ValidIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].ValidIntegral) + tmpIntegralValue; // 当前有效积分
+                    vipIntegralEntity.ValidIntegral = vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
                     //vipIntegralBLL.Update(vipIntegralEntity, false);
                 }
 
@@ -532,7 +529,7 @@ namespace JIT.CPOS.Web.WeiXin
             if (true)
             {
                 string tmpVipId = highVipId;
-                decimal tmpIntegralValue = highIntegralValue;
+                int tmpIntegralValue = highIntegralValue;
                 string tmpIntegralSourceId = highIntegralSourceId;
                 string tmpOpenId = highOpenId;
                 string msgModel = "刚刚有会员验证了您提供的优惠券，为了表示感谢，我们送您积分{0}分。该会员在本店的每次购买，我们都将奖励您积分。谢谢您！";
@@ -565,14 +562,11 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     vipIntegralEntity.VipID = tmpVipId;
-                    vipIntegralEntity.InIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].InIntegral) + tmpIntegralValue; // 增加积分
+                    vipIntegralEntity.InIntegral =vipIntegralDataList[0].InIntegral + tmpIntegralValue; // 增加积分
                     //vipIntegralEntity.OutIntegral = 0; //消费积分
-                    vipIntegralEntity.EndIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].EndIntegral) + tmpIntegralValue; //积分余额
+                    vipIntegralEntity.EndIntegral =vipIntegralDataList[0].EndIntegral + tmpIntegralValue; //积分余额
                     //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                    vipIntegralEntity.ValidIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].ValidIntegral) + tmpIntegralValue; // 当前有效积分
+                    vipIntegralEntity.ValidIntegral =vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
                     //vipIntegralBLL.Update(vipIntegralEntity, false);
                 }
 
@@ -727,7 +721,7 @@ namespace JIT.CPOS.Web.WeiXin
 
             // SysIntegralSource: 8
             string integralSourceId = "8";
-            decimal integralValue = 0;
+            int integralValue = 0;
             if (true)
             {
                 IntegralRuleEntity integralRuleData = null;
@@ -745,13 +739,13 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     integralRuleData = integralRuleDataList[0];
-                    integralValue = CPOS.Common.Utils.GetDecimalVal(integralRuleData.Integral);
+                    integralValue = int.Parse(integralRuleData.Integral);
                 }
             }
 
             // SysIntegralSource: 5
             string highIntegralSourceId = "5";
-            decimal highIntegralValue = 0;
+            int highIntegralValue = 0;
             if (true)
             {
                 IntegralRuleEntity integralRuleData = null;
@@ -769,7 +763,7 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     integralRuleData = integralRuleDataList[0];
-                    highIntegralValue = CPOS.Common.Utils.GetDecimalVal(integralRuleData.Integral);
+                    highIntegralValue =int.Parse(integralRuleData.Integral);
                 }
             }
             #endregion
@@ -777,7 +771,7 @@ namespace JIT.CPOS.Web.WeiXin
             if (true)
             {
                 string tmpVipId = vipId;
-                decimal tmpIntegralValue = integralValue;
+                int tmpIntegralValue = integralValue;
                 string tmpIntegralSourceId = integralSourceId;
                 string tmpOpenId = openId;
                 string msgModel = "您的优惠券已验证通过，新增积分{0}分。恭喜您！";
@@ -811,14 +805,11 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     vipIntegralEntity.VipID = tmpVipId;
-                    vipIntegralEntity.InIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].InIntegral) + tmpIntegralValue; ; // 增加积分
+                    vipIntegralEntity.InIntegral =  vipIntegralDataList[0].InIntegral+ tmpIntegralValue; ; // 增加积分
                     //vipIntegralEntity.OutIntegral = 0; //消费积分
-                    vipIntegralEntity.EndIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].EndIntegral) + tmpIntegralValue; //积分余额
+                    vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral+ tmpIntegralValue; //积分余额
                     //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                    vipIntegralEntity.ValidIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].ValidIntegral) + tmpIntegralValue; // 当前有效积分
+                    vipIntegralEntity.ValidIntegral = vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
                     //vipIntegralBLL.Update(vipIntegralEntity, false);
                 }
 
@@ -860,7 +851,7 @@ namespace JIT.CPOS.Web.WeiXin
             if (true)
             {
                 string tmpVipId = highVipId;
-                decimal tmpIntegralValue = highIntegralValue;
+                int tmpIntegralValue = highIntegralValue;
                 string tmpIntegralSourceId = highIntegralSourceId;
                 string tmpOpenId = highOpenId;
                 string msgModel = "刚刚有会员验证了您提供的优惠券，为了表示感谢，我们送您积分{0}分。该会员在本店的每次购买，我们都将奖励您积分。谢谢您！";
@@ -894,14 +885,11 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     vipIntegralEntity.VipID = tmpVipId;
-                    vipIntegralEntity.InIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].InIntegral) + tmpIntegralValue; // 增加积分
+                    vipIntegralEntity.InIntegral = vipIntegralDataList[0].InIntegral+ tmpIntegralValue; // 增加积分
                     //vipIntegralEntity.OutIntegral = 0; //消费积分
-                    vipIntegralEntity.EndIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].EndIntegral) + tmpIntegralValue; //积分余额
+                    vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral+ tmpIntegralValue; //积分余额
                     //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                    vipIntegralEntity.ValidIntegral = Common.Utils.GetDecimalVal(
-                        vipIntegralDataList[0].ValidIntegral) + tmpIntegralValue; // 当前有效积分
+                    vipIntegralEntity.ValidIntegral = vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
                     //vipIntegralBLL.Update(vipIntegralEntity, false);
                 }
 

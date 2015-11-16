@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/20 11:22:28
+ * Create On	:2015-8-14 20:18:28
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -43,42 +43,42 @@ namespace JIT.CPOS.BS.Entity
 		public String SalesID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员卡标识
 		/// </summary>
 		public String VipCardID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 消费金额
 		/// </summary>
 		public Decimal? SalesAmount { get; set; }
 
 		/// <summary>
-		/// 
+		/// 消费前金额
 		/// </summary>
 		public Decimal? SalesBeforeAmount { get; set; }
 
 		/// <summary>
-		/// 
+		/// 消费后金额
 		/// </summary>
 		public Decimal? SalesAfterAmount { get; set; }
 
 		/// <summary>
-		/// 
+		/// 关联订单号
 		/// </summary>
 		public String OrderNo { get; set; }
 
 		/// <summary>
-		/// 
+		/// 消费门店
 		/// </summary>
 		public String UnitID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 消费时间
 		/// </summary>
 		public DateTime? SalesTime { get; set; }
 
 		/// <summary>
-		/// 
+		/// 操作人
 		/// </summary>
 		public String OperationUserID { get; set; }
 

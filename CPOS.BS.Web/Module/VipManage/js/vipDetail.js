@@ -1,5 +1,5 @@
-﻿define(['jquery', 'template', 'tools', 'kkpager', 'artDialog','easyui', 'datetimePicker','zTree'], function ($) {
-
+﻿define(['jquery', 'template', 'tools', 'kkpager', 'artDialog','easyui', 'datetimePicker','zTree','kindeditor'], function ($) {
+    KE = KindEditor;
     var page = {
         createPager: function (dataId, pageIndex, totalPage, totalCount) {
             debugger;
@@ -43,21 +43,56 @@
             groupTagList:$('#groupTagList'),//可选择的会员标签
             onlineTable: $('#tblOnline'),
             logsTable:$('#tblLogs'),
+            dataMessage:$(".dataMessage"),
             servicesLog:$('#servicesLog'),
             consumerTable: $('#tblConsumer'),
-            pager: $('#kkpager')
+            pager: $('#kkpager'),
+            vipInfo:[]
         },
         init: function () {
             //获得地址栏参数为vipId的值
             var vipId = $.util.getUrlParam("vipId");
+            var VipCardISN = $.util.getUrlParam("VipCardISN");
+           if(VipCardISN){
+
+                   VipCardISN=VipCardISN.replace(/;/g,"").replace(/\?/g,"").replace(/；/g,"").replace(/？/g,"")
+
+           }
             //vipId保存起来用来做查询交易记录的参数
             this.loadData.args.VipId = vipId;
+            this.loadData.args.VipCardISN = VipCardISN;
+
             //请求数据
             //this.loadPageData();
             //请求会员详细信息   注:暂无接口以及文档
-            this.loadVipDetail();
+
             //初始化事件
-            this.initEvent();
+            this.initEvent();  //initEvent 一定是在权限前面，第一点，移除按钮可能会对绑定时间有影响 。第二点权限的菜单id要根据选中菜单的id来配置
+            this.authority();
+            this.loadVipDetail();
+        },
+          //权限控制
+        authority:function(){
+            return false;
+            this.loadData.getFunctionList(function(data){
+                debugger;
+                if(data.Data.FunctionList&&data.Data.FunctionList.length>=0){
+                    $("[data-authority]").each(function(){
+                        var me=$(this),isRemove=true; //定义是否移除按钮， 获取全部按钮，遍历权限列表，如果权限列表有，不删除（isRemove=false）
+                        for(var i=0;i<data.Data.FunctionList.length;i++){
+                            if(me.data("authority").toLowerCase()==data.Data.FunctionList[i].FunctionCode.toLowerCase()){
+                                isRemove=false;
+                            }
+
+                        }
+                        if(isRemove){
+                            me.remove();
+                        }
+
+                    })
+
+                }
+            })
         },
         hidePanels: function () {
             $('#nav01,#nav02,#nav03,#nav04,#nav05,#nav06,#nav07,#nav08,#nav09').hide();
@@ -67,9 +102,54 @@
             var noContent = bd.template("tpl_noContent", { tips: tips });
             jqObj.html(noContent);
         },
+        //调整积分;
+        adjustIntegral:function(data){
+            var that=this;
+            that.elems.optionType="updateIntegral";
+            $('#win').window({title:"积分调整",width:630,height:500,top:($(window).height()-500)*0.5,left:($(window).width()-630)*0.5});
+            //改变弹框内容，调用百度模板显示不同内容
+            $('#panlconent').layout('remove','center');
+            var html=bd.template('tpl_adjustIntegral');
+            var options = {
+                region: 'center',
+                content:html
+            };
+            $('#panlconent').layout('add',options);
+            $('#win').window('open');
+            $("#optionform").form('load',that.elems.vipInfo);
+            that.registerUploadImgBtn ();
+            that.loadData.args.imgSrc=""
+        },
+
+
+
         //事件绑定方法
         initEvent: function () {
+            $("#leftMenu").find("li").removeClass("on").each(function(){
+                if( $(this).find("em").hasClass("vipmanage_querylist")){
+                    $(this).addClass("on");
+                }
+            });
+
+
             var that = this;
+
+            /**************** -------------------弹出窗口初始化 start****************/
+            $('#win').window({
+                modal:true,
+                shadow:false,
+                collapsible:false,
+                minimizable:false,
+                maximizable:false,
+                closed:true,
+                closable:true
+            });
+            $('#panlconent').layout({
+                fit:true
+            });
+
+            /**************** -------------------弹出窗口初始化 end****************/
+
             $("#win").delegate(".radio","click",function(e){
                 var me= $(this), name= me.data("name");
                 me.toggleClass("on");
@@ -105,6 +185,8 @@
             $('#nav03').delegate('.export', 'click', function (e) {
                 that.loadData.exportVipIntegral();
                 that.stopBubble(e);
+            }).delegate('.adjust',"click",function(e){
+                that.adjustIntegral();
             });
             $('#nav05').delegate('.export', 'click', function (e) {
                 that.loadData.exportVipConsumerCard();
@@ -144,16 +226,14 @@
                                     var list = data.Data.VipServicesLogList;
                                     list = list ? list : [];
                                     debugger;
-                                    if (list.length) {
+
                                         that.elems.servicesLog.datagrid("loadData",list);
 
                                         if (data.Data.TotalPageCount > 0) {
                                             that.createPager('nav07', 1, data.Data.TotalPageCount, data.Data.TotalCount);
                                         }
-                                    }else {
-                                        that.showTableTips(that.elems.servicesLog, "该会员无操作记录!");
-                                    }
-                                    panel.attr(loadKey, true);
+
+
                                 });
                             });
 
@@ -178,7 +258,7 @@
                     }
                 }
 
-            })
+            });
 
             $('#nav06').delegate('.export', 'click', function (e) {
                 that.loadData.exportVipOnlineOffline();
@@ -187,12 +267,13 @@
 
             //更新数据
             $('#nav01').delegate('.saveBtn', 'click', function (e) {
-                that.setEditVipInfoCondition();
-                that.loadData.updateVipInfo(function (data) {
-                    alert('会员信息更新成功',true);
-                    //刷新数据
-                    that.loadVipDetail();
-                });
+              if(  that.setEditVipInfoCondition()) {
+                  that.loadData.updateVipInfo(function (data) {
+                      alert('会员信息更新成功', true);
+                      //刷新数据
+                      that.loadVipDetail();
+                  });
+              }
                 that.stopBubble(e);
             });
               ///标签事件的绑定和操作
@@ -285,7 +366,9 @@
                     });
 
                 } else{
-                    that.elems.groupTagList.html("该标签分类无值");
+                    list = list ? list : [];
+                    var html = bd.template('groupTagBtn', { list:list });
+                    that.elems.groupTagList.html(html);
                 }
 
             }).delegate(".fontC","click",function(){
@@ -340,63 +423,46 @@
                if($("#optionform").form("validate")) {
                    var fields = $("#optionform").serializeArray();
 
-                   that.loadData.operation(fields, "addCoupon", function () {
+
+                   that.loadData.operation(fields, that.elems.optionType, function () {
                        $("#win").window("close");
-                       alert("操作成功");
-                       that.loadData.GetVipServicesLogList(function (data) {
-                           debugger;
-                           var list = data.Data.VipServicesLogList;
-                           list = list ? list : [];
-                           debugger;
-                           debugger;
-                           if (list.length) {
 
-                               that.elems.servicesLog.datagrid({
-                                   data: list,
-                                   singleSelect: true,
-                                   fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
-                                   columns: [
-                                       [
-                                           {field: 'ServicesTime', title: '服务时间', width: 160},
-                                           {field: 'ServicesMode', title: '服务方式', width: 200, align: 'left'},
-                                           {field: 'Content', title: '服务内容', width: 500, align: 'left',
-                                               formatter: function (value, row, index) {
-                                                   var long = 56;
-                                                   if (value && value.length > long) {
-                                                       return '<div class="rowText" title="' + value + '">' + value.substring(0, long) + '...</div>'
-                                                   } else {
-                                                       return '<div class="rowText">' + value + '</div>'
-                                                   }
-                                               }
+                       switch (that.elems.optionType) {
+                           case "addCoupon":
+                               that.loadData.GetVipServicesLogList(function (data) {
+                                   debugger;
+                                   var list = data.Data.VipServicesLogList;
+                                   list = list ? list : [];
+                                   that.elems.servicesLog.datagrid("loadData", list);
 
-                                           },
-                                           {field: 'id', title: '编辑', width: 81, align: 'center', resizable: false,
-                                               formatter: function (value, row, index) {
-                                                   return '<p class="fontC exit" data-index="' + index + '" data-oprtype="exit"></p>';
-                                               }
-                                           },
-                                           {field: '', title: '删除', width: 81, align: 'center', resizable: false,
-                                               formatter: function (value, row, index) {
-                                                   return '<p class="fontC delete" data-index="' + index + '" data-oprtype="del"></p>';
-                                               }
-                                           }
-                                       ]
-                                   ]
+
+
+                                   if (data.Data.TotalPageCount > 0) {
+                                       that.createPager('nav07', 1, data.Data.TotalPageCount, data.Data.TotalCount);
+                                   }
+
+
                                });
+                               alert("操作成功");
+                            break;
+                           case "updateIntegral":
+                               $.messager.alert("提示","此次积分变动"+that.elems.Qty+",由原"+that.elems.vipInfo.VipIntegral+"变动至"+page.elems.VipIntegral);
+                               that.loadData.getVipPointList(function (data) {
+                                   var list = data.Data.VipIntegralList;
+                                   list = list ? list : [];
+                                   that.elems.pointTable.datagrid("loadData", list);
+                                   if (data.Data.TotalPages > 0) {
+                                       that.createPager('nav03', 1, data.Data.TotalPageCount, data.Data.TotalCount);
+                                   }
 
-                               if (data.Data.TotalPages > 1) {
-                                   that.createPager('nav07', 1, data.Data.TotalPageCount, data.Data.TotalCount);
-                               }
-                           } else {
-                               that.showTableTips(that.elems.servicesLog, "该会员无操作记录!");
+                               });
+                              that.loadVipDetail();
 
-                               if (data.Data.TotalPageCount > 0) {
-                                   that.createPager('nav07', 1, data.Data.TotalPageCount, data.Data.TotalCount);
-                               }
-                           }
-                           panel.attr(loadKey, true);
-                       });
-                   })
+                               break;
+
+                       }
+
+                   });
                }
             });
 
@@ -405,6 +471,7 @@
                 that.hidePanels();
                 var panelId = $(this).attr('data-id');
                 var panel = $('#' + panelId);
+                that.elems.dataMessage= $('#' + panelId).find(".dataMessage");
                 $(this).addClass('on');
                 panel.show();
                // debugger;
@@ -419,8 +486,70 @@
                 if (panel.attr(loadKey)) {
                     switch (panelId) {
                         case 'nav02':
-                            that.createPager('nav02', order.PageIndex,
-                                order.TotalPages, order.TotalCount);
+                            /*that.createPager('nav02', order.PageIndex,
+                                order.TotalPages, order.TotalCount);*/
+                         //交易记录
+                            that.loadData.getVipCardTransLogList(function (data) {
+                                var list = data.Data.VipCardTransLogList;
+                                list = list ? list : [];
+
+                                //用百度模板引擎渲染成html字符串
+                                /*   *//*   var html = bd.template("tpl_content", { list: list });
+                                 //将数据添加到页面的id=content的对象节点中*//*
+                                 that.elems.content.datagrid();*/
+                                that.elems.content.datagrid({
+                                    data:list,
+                                    striped : true,
+                                    singleSelect:true,
+                                    fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                                    columns:[[
+
+                                        {field:'BillNo',title:'订单号',width:100,align:'center'},
+                                        {field:'Cash',title:'现金',width:60,align:'center'},
+                                        {field:'Points',title:'积分',width:60,align:'center'},
+                                        {field:'Bonus',title:'额外奖赏',width:60,align:'center'},
+                                        {field:'UnitCode',title:'消费门店',width:100,align:'center',
+                                            formatter:function(value ,row,index){
+                                                var long=56;
+                                                if(value&&value.length>long){
+                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                                }else{
+                                                    return '<div class="rowText">'+value+'</div>'
+                                                }
+                                            }
+
+                                        },
+                                        {field:'TransTime',title:'日期',width:100,align:'center',
+                                            formatter:function(value ,row,index){
+                                                debugger;
+                                                if(!isNaN(new Date(value))){
+                                                    return  new Date(value).format("yyyy-MM-dd")
+                                                }
+
+                                            }
+                                        }
+
+                                    ]],
+
+                                    onLoadSuccess : function(data) {
+                                        debugger;
+                                        that.elems.content.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                                        if(data.rows.length>0) {
+                                            that.elems.dataMessage.hide();
+                                        }else{
+                                            that.elems.dataMessage.show();
+                                        }
+                                    }
+
+                                });
+                                order.TotalCount = data.Data.TotalCount;
+                                order.TotalPages = data.Data.TotalPages;
+                                if (data.Data.TotalPages > 0) {
+                                    that.createPager('nav02', 1, data.Data.TotalPages, data.Data.TotalCount);
+                                }
+
+                                panel.attr(loadKey, true);
+                            });
                             break;
                         case 'nav03':
                             that.createPager('nav03', point.PageIndex,
@@ -435,8 +564,8 @@
                                 online.TotalPages, online.TotalCount);
                             break;
                         case 'nav05':
-                            that.createPager('nav05', consumerCard.PageIndex,
-                                consumerCard.TotalPages, consumerCard.TotalCount);
+                           /* that.createPager('nav05', consumerCard.PageIndex,
+                                consumerCard.TotalPages, consumerCard.TotalCount);*/
                             break;
                         case 'nav07':
                             that.createPager('nav07', ServicesLog.PageIndex,
@@ -450,6 +579,7 @@
                     return;
                 }
             //    debugger;
+
                 switch (panelId) {
                     // 会员标签加载
                     case 'nav09':
@@ -498,23 +628,67 @@
                         break;
 
                     case 'nav02':  //交易记录
-                        that.loadData.getVipOrderList(function (data) {
-                            var list = data.Data.VipOrderList;
+
+
+                        that.loadData.getVipCardTransLogList(function (data) {
+                            var list = data.Data.VipCardTransLogList;
                             list = list ? list : [];
-                            if (list.length) {
+                              debugger;
                                 //用百度模板引擎渲染成html字符串
-                                var html = bd.template("tpl_content", { list: list });
-                                //将数据添加到页面的id=content的对象节点中
-                                that.elems.content.html(html);
+                          /*   *//*   var html = bd.template("tpl_content", { list: list });
+                                //将数据添加到页面的id=content的对象节点中*//*
+                                that.elems.content.datagrid();*/
+                            that.elems.content.datagrid({
+                                data:list,
+                                striped : true,
+                                singleSelect:true,
+                                fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                                columns:[[
+
+                                    {field:'BillNo',title:'订单号',width:100,align:'center'},
+                                    {field:'Cash',title:'现金',width:60,align:'center'},
+                                    {field:'Points',title:'积分',width:60,align:'center'},
+                                   {field:'Bonus',title:'额外奖赏',width:60,align:'center'},
+                                    {field:'UnitCode',title:'消费门店',width:100,align:'center',
+                                        formatter:function(value ,row,index){
+                                            var long=56;
+                                            if(value&&value.length>long){
+                                                return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                            }else{
+                                                return '<div class="rowText">'+value+'</div>'
+                                            }
+                                        }
+
+                                    },
+                                    {field:'TransTime',title:'日期',width:100,align:'center',
+                                        formatter:function(value ,row,index){
+                                            debugger;
+                                            if(!isNaN(new Date(value))){
+                                                return  new Date(value).format("yyyy-MM-dd")
+                                            }
+
+                                        }
+                                    }
+
+                                ]],
+
+                                onLoadSuccess : function(data) {
+                                    debugger;
+                                    that.elems.content.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                                    if(data.rows.length>0) {
+                                        that.elems.dataMessage.hide();
+                                    }else{
+                                        that.elems.dataMessage.show();
+                                    }
+                                }
+
+                            });
                                 order.TotalCount = data.Data.TotalCount;
                                 order.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 1) {
+                                if (data.Data.TotalPages > 0) {
                                     that.createPager('nav02', 1, data.Data.TotalPages, data.Data.TotalCount);
                                 }
-                            } else {
-                                //没有内容的提示
-                                that.showTableTips(that.elems.content, "该会员暂无交易记录!");
-                            }
+
                             panel.attr(loadKey, true);
                         });
                         break;
@@ -527,7 +701,7 @@
                                 that.elems.logsTable.html(html);
                                 logs.TotalCount = data.Data.TotalCount;
                                 logs.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 1) {
+                                if (data.Data.TotalPages > 0) {
                                     that.createPager('nav08', 1, data.Data.TotalPages, data.Data.TotalCount);
                                 }
                             }else {
@@ -543,19 +717,36 @@
                             list = list ? list : [];
                             debugger;
 
-                            if (list.length) {
+
                                 ServicesLog.TotalCount = data.Data.TotalCount;
                                 ServicesLog.TotalPages = data.Data.TotalPageCount;
                                  that.elems.servicesLog.datagrid({
                                      data:list,
+                                     striped : true,
                                      singleSelect:true,
                                      fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                                      columns:[[
                                          {field:'ServicesTime',title:'服务时间',width:160},
-                                         {field:'ServicesMode',title:'服务方式',width:200,align:'left'},
-                                         {field:'Content',title:'服务内容',width:500,align:'left',
+                                         {field:'ServicesMode',title:'服务方式',width:175,align:'left'},
+                                         {field: 'UnitName', title: '服务门店', width: 175, align: 'left',
+                                             formatter: function (value, row, index) {
+
+                                                 var long = 28;
+                                                 if (value && value.length > long) {
+                                                     return '<div class="rowText" title="' + value + '">' + value.substring(0, long) + '...</div>'
+                                                 } else {
+                                                     return '<div class="rowText">' + value + '</div>'
+                                                 }
+                                             }
+
+
+
+                                         },
+                                         {field:'UserName',title:'服务员工',width:175,align:'left'},
+                                         {field:'Content',title:'服务内容',width:175,align:'left',
                                              formatter:function(value ,row,index){
-                                                 var long=56;
+
+                                                 var long=28;
                                                  if(value&&value.length>long){
                                                      return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
                                                  }else{
@@ -574,15 +765,26 @@
                                                  return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
                                              }
                                          }
-                                     ]]
+                                     ]],
+
+                                     onLoadSuccess : function(data) {
+                                         debugger;
+                                         that.elems.servicesLog.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                                         that.elems.dataMessage.hide();
+                                         if(data.rows.length>0) {
+                                             that.elems.dataMessage.hide();
+                                         }else{
+                                             that.elems.dataMessage.show();
+                                         }
+                                     }
+
                                  });
 
                                 if (data.Data.TotalPageCount > 0) {
                                     that.createPager('nav07', 1, data.Data.TotalPageCount, data.Data.TotalCount);
                                 }
-                            }else {
-                                that.showTableTips(that.elems.servicesLog, "该会员无操作记录!");
-                            }
+
+
                             panel.attr(loadKey, true);
                         });
                         break;
@@ -591,34 +793,138 @@
                         that.loadData.getVipPointList(function (data) {
                             var list = data.Data.VipIntegralList;
                             list = list ? list : [];
-                            if (list.length) {
-                                var html = bd.template('tpl_point', { list: list });
-                                that.elems.pointTable.html(html);
+                                var CumulativeIntegral=that.elems.vipInfo.CumulativeIntegral? that.elems.vipInfo.CumulativeIntegral:0;
+                                var VipIntegral=that.elems.vipInfo.VipIntegral? that.elems.vipInfo.VipIntegral:0;
+                                $("#CumulativeIntegral").html(CumulativeIntegral);
+                                $("#VipIntegral").html(VipIntegral);
+                                that.elems.pointTable.datagrid({
+
+                                    method : 'post',
+                                    iconCls : 'icon-list', //图标
+                                    singleSelect : true, //多选
+                                    // height : 332, //高度
+                                    fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                                    striped : true, //奇偶行颜色不同
+                                    collapsible : true,//可折叠
+                                    //数据来源
+                                    data:list,
+
+
+                                    columns : [[
+                                        {field : 'Date',title : '时间',width:180,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+                                            }
+                                        },
+                                        {field : 'UnitName',title : '门店',width:125,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                var long=56;
+                                                if(value&&value.length>long){
+                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                                }else{
+                                                    return '<div class="rowText">'+value+'</div>'
+                                                }
+                                            }
+                                        },
+
+                                        {field : 'Integral',title : '积分增减',width:58,align:'center',resizable:false,
+                                            formatter:function(value,row,index){
+                                                if(isNaN(parseInt(value))){
+                                                    return 0;
+                                                }else{
+                                                    return parseInt(value);
+                                                }
+                                            }
+                                        },
+                                        {field : 'VipIntegralSource',title : '变更类型',width:100,align:'center',resizable:false},
+
+                                        {field : 'Reason',title : '原因',width:100,align:'center',resizable:false} ,
+                                        {field : 'Remark',title : '备注',width:160,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                var long=56;
+                                                if(value&&value.length>long){
+                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                                }else{
+                                                    return '<div class="rowText">'+value+'</div>'
+                                                }
+                                            }
+                                        },
+                                        {field : 'CreateByName',title : '操作人',width:80,align:'center',resizable:false },
+                                        {field : 'ImageUrl',title : '图片',width:80,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                var html='无';
+                                                if(value){
+                                                    html='<div id="imageListPanel_'+index+'" > <img src="'+value+'" width="70" height="70"  />' +
+                                                        '<div>'
+                                                }
+
+                                                return html;
+                                            }
+                                        }
+
+                                    ]],
+
+                                    onLoadSuccess : function(data) {
+                                        console.log("nav03 执行");
+                                        debugger;
+                                        that.elems.pointTable.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                                        that.elems.dataMessage.hide();
+                                        if(data.rows.length>0) {
+                                            that.elems.dataMessage.hide();
+                                        }else{
+                                            that.elems.dataMessage.show();
+                                        }
+                                        for(var i=0;i<data.rows.length;i++) {
+                                            $('#imageListPanel_'+i).tooltip({
+                                                position: 'top',
+                                                content: '<img class="imgShow" width="257" height="176" src="'+data.rows[i].ImageUrl+'">'
+                                            });
+                                        }
+                                    }
+
+
+                                });
+
                                 point.TotalCount = data.Data.TotalCount;
                                 point.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 1) {
+                                if (data.Data.TotalPages > 0) {
                                     that.createPager('nav03', 1, data.Data.TotalPages, data.Data.TotalCount);
                                 }
-                            } else {
-                                that.showTableTips(that.elems.pointTable, "该会员暂无积分记录!");
-                            }
+
+
+
                             panel.attr(loadKey, true);
                         });
                         break;
                     case 'nav05':    //消费卡
-                        that.loadData.getVipConsumeCardList(function (data) {
-                            var list = data.Data.VipConsumeCardList;
+                        that.loadData.getVipCardList(function (data) {
+                            debugger;
+                            var list = data.Data.VipCardList;
                             list = list ? list : [];
                             if (list.length) {
-                                var html = bd.template('tpl_consumer', { list: list });
+                                for(var i=0;i<list.length;i++){
+                                    //正常，冻结，失效，挂失，休眠)
+                                   switch (list[i].VipCardStatusID){
+                                       case  0:list[i]["VipCardStatusName"]="未激活"; break;
+                                       case  1:list[i]["VipCardStatusName"]="正常"; break;
+                                       case  2:list[i]["VipCardStatusName"]="已冻结"; break;
+                                       case  3:list[i]["VipCardStatusName"]="已失效"; break;
+                                       case  4:list[i]["VipCardStatusName"]="已挂失"; break;
+                                       case  5:list[i]["VipCardStatusName"]="已休眠"; break;
+                                   }
+                                    list[i].ImageUrl= list[i].ImageUrl? list[i].ImageUrl:"images/default.png";
+                                }
+                                var myMid = JITMethod.getUrlParam("mid");
+                                var html = bd.template('tpl_consumer', { list: list,mid:myMid });
+
                                 that.elems.consumerTable.html(html);
                                 consumerCard.TotalCount = data.Data.TotalCount;
                                 consumerCard.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 1) {
+                               /* if (data.Data.TotalPages > 0) {
                                     that.createPager('nav05', 1, data.Data.TotalPages, data.Data.TotalCount);
-                                }
+                                }*/
                             } else {
-                                that.showTableTips(that.elems.consumerTable, "该会员消费卡暂无变更记录!");
+                                that.elems.consumerTable.html( "该会员没有办理过会员卡");
                             }
                             panel.attr(loadKey, true);
                         });
@@ -633,7 +939,7 @@
                                 that.elems.onlineTable.html(html);
                                 online.TotalCount = data.Data.TotalCount;
                                 online.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 1) {
+                                if (data.Data.TotalPages > 0) {
                                     that.createPager('nav06', 1, data.Data.TotalPages, data.Data.TotalCount);
                                 }
                             } else {
@@ -642,21 +948,87 @@
                             panel.attr(loadKey, true);
                         });
                         break;
-                    case 'nav04':  //余额
-                        that.loadData.getVipAmountList(function (data) {
-                            var list = data.Data.VipAmountList;
+                    case 'nav04':  //优惠券
+                        that.loadData.getVipConsumeCardList(function (data) {
+                            var list = data.Data.VipConsumeCardList;
                             list = list ? list : [];
-                            if (list.length) {
-                                var html = bd.template('tpl_amount', { list: list });
-                                that.elems.amountTable.html(html);
+
+
+
+                                that.elems.amountTable.datagrid({
+
+                                    method : 'post',
+                                    iconCls : 'icon-list', //图标
+                                    singleSelect : true, //单选
+                                    // height : 332, //高度
+                                    fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                                    striped : true, //奇偶行颜色不同
+                                    collapsible : true,//可折叠
+                                    //数据来源
+                                    data:list,
+
+
+                                    columns : [[
+
+                                        {field : 'CouponCode',title : '优惠券编码',width:100,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                var long=26;
+                                                if(value&&value.length>long){
+                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                                }else{
+                                                    return '<div class="rowText">'+value+'</div>'
+                                                }
+                                            }
+                                        },
+
+                                        {field : 'CouponName',title : '优惠券名称',width:100,align:'center',resizable:false,
+                                            formatter:function(value,row,index){
+                                                if(isNaN(parseInt(value))){
+                                                    return 0;
+                                                }else{
+                                                    return parseInt(value);
+                                                }
+                                            }
+                                        },
+
+                                        {field : 'Remark',title : '优惠券描述',width:200,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                            var long=56;
+                                            if(value&&value.length>long){
+                                                return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                            }else{
+                                                return '<div class="rowText">'+value+'</div>'
+                                            }
+                                        }
+                                        },  {field : 'EndDate',title : '有效期至',width:80,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                return value;//new Date(value).format("yyyy-MM-dd");
+                                            }
+                                        }, {field : 'CouponStatus',title : '状态',width:60,align:'center',resizable:false}
+
+
+
+                                    ]],
+
+                                    onLoadSuccess : function(data) {
+                                        debugger;
+                                        that.elems.amountTable.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                                        if(data.rows.length>0) {
+                                            that.elems.dataMessage.hide();
+                                        }else{
+                                            that.elems.dataMessage.show();
+                                            //that.elems.amountTable.html("该会员无优惠券!");
+                                        }
+                                    }
+
+
+                                });
                                 amount.TotalCount = data.Data.TotalCount;
                                 amount.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 1) {
+                                if (data.Data.TotalPages > 0) {
                                     that.createPager('nav04', 1, data.Data.TotalPages, data.Data.TotalCount);
                                 }
-                            } else {
-                                that.showTableTips(that.elems.amountTable, "该会员余额暂无变更记录!");
-                            }
+
                             panel.attr(loadKey, true);
                         });
                         break;
@@ -707,24 +1079,33 @@
                     $t.parent().parent().find(".ztree").show();
                 }
                 that.stopBubble(e);
-            });;
+            });
         },
         //加载vip详细信息
         loadVipDetail: function () {
             var that = this;
             //获得详情信息
             this.loadData.getVipDetail(function (data) {
+
                 var str = "暂未填写";
                 //设置会员基本信息
                 var info = data.Data.VipDetailInfo;
+                that.elems.vipInfo=info;
+                that.loadData.args.VipId=info.VipId;
+                that.loadData.args.VipCode=info.VipNo;
                 //会员编号
                 $("#vipCode").html(info.VipNo ? info.VipNo : "未知");
                 //会员名称
+                debugger;
                 $("#vipName").html(info.VipRealName ? info.VipRealName : str);
                 //修改部分的
                 //$("#editVipRealName").val(info.VipRealName ? info.VipRealName : "");
                 //会员昵称
-                $("#vipWeixin").html(info.VipName ? info.VipName : str);
+                $("#vipWeixin").parent().hide(0).html(info.VipName ? info.VipName : str);
+
+                //会员手机号
+                $("#phone").html(info.Phone?info.Phone:str);
+
                 //$("#editVipName").val(info.VipName ? info.VipName : "");
                 //会员等级
                 $("#vipLevel").html(info.VipLevel);
@@ -733,6 +1114,8 @@
                 //$("#editStore").val(info.UnitName ? info.UnitName : "");
                 //会员积分
                 $("#vipPoint").html(info.VipIntegral ? info.VipIntegral : 0);
+                //会员卡类型
+                $("#VipCardTypeName").html(info.VipCardTypeName ? info.VipCardTypeName :"无");
                 //会员余额
                 $("#vipBalance").html(info.VipEndAmount + "元");
                 //设置手机号
@@ -752,13 +1135,18 @@
                 //动态会员数据
                 that.loadData.getVipDyniform(function (result) {
                     var html = bd.template('tpl_EditVipForm', result);
-                   
+
                     $('#nav01').find('.promptContent').html(html);
+                    /*$.parser.parse();*/
                     //显示datepicker
                     that.showDatepicker();
                     //让树显示
                     that.showZtree();
                 });
+                var CumulativeIntegral=that.elems.vipInfo.CumulativeIntegral? that.elems.vipInfo.CumulativeIntegral:0;
+                var VipIntegral=that.elems.vipInfo.VipIntegral? that.elems.vipInfo.VipIntegral:0;
+                $("#CumulativeIntegral").html(CumulativeIntegral);
+                $("#VipIntegral").html(VipIntegral);
             });
         },
         //展示ztree
@@ -795,7 +1183,7 @@
                                 $t.parent().find("input").val(treeNode.name).attr("unitId",treeNode.UnitID);
                                 $t.hide();
                             //}
-                                
+
                         }
                     }
                 };
@@ -807,18 +1195,23 @@
         //加载页面的数据请求,dataId表示显示哪个tab下面的表格
         //加载更多的资讯或者活动
         loadMoreData: function (dataId, currentPage) {
+
             var that = this;
+            //that.elems.dataMessage.show();
             //请求接口参数下标从1开始      分页的是从1开始
             switch (dataId) {
-                //积分明细                        
+                //积分明细
                 case 'nav03':
                     this.loadData.args.point.PageIndex = currentPage;
                     that.loadData.getVipPointList(function (data) {
                         var list = data.Data.VipIntegralList;
                         list = list ? list : [];
                         if (list.length) {
-                            var html = bd.template('tpl_point', { list: list });
-                            that.elems.pointTable.html(html);
+                            /* var html = bd.template('tpl_point', { list: list });
+                             that.elems.pointTable.html(html);*/
+                            that.elems.pointTable.datagrid("loadData", list);
+                            console.log("nav03 需要执行");
+
                         }
                     });
                     break;
@@ -843,50 +1236,20 @@
                         if (list.length) {
                             ServicesLog.TotalCount = data.Data.TotalCount;
                             ServicesLog.TotalPages = data.Data.TotalPageCount;
-                            that.elems.servicesLog.datagrid({
-                                data:list,
+                            that.elems.servicesLog.datagrid("loadData",list);
 
-                                singleSelect:true,
-                                fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
-                                columns:[[
-                                    {field:'ServicesTime',title:'服务时间',width:160},
-                                    {field:'ServicesMode',title:'服务方式',width:200,align:'left'},
-                                    {field:'Content',title:'服务内容',width:500,align:'left',
-                                        formatter:function(value ,row,index){
-                                            var long=56;
-                                            if(value&&value.length>long){
-                                                return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
-                                            }else{
-                                                return '<div class="rowText">'+value+'</div>'
-                                            }
-                                        }
-
-                                    },
-                                    {field : 'id',title : '编辑',width:81,align:'center',resizable:false,
-                                        formatter:function(value ,row,index){
-                                            return '<p class="fontC exit" data-index="'+index+'" data-oprtype="exit"></p>';
-                                        }
-                                    },
-                                    {field : '',title : '删除',width:81,align:'center',resizable:false,
-                                        formatter:function(value ,row,index){
-                                            return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
-                                        }
-                                    }
-                                ]]
-                            });
-
-                            if (data.Data.TotalPages > 1) {
+                            if (data.Data.TotalPages > 0) {
                                 that.createPager('nav07', 1, data.Data.TotalPageCount, data.Data.TotalCount);
                             }
                         }else {
-                            that.showTableTips(that.elems.servicesLog, "该会员无操作记录!");
+
                         }
                         panel.attr(loadKey, true);
                     });
                     break;
-                //消费卡                        
+                //消费卡
                 case 'nav05':
-                    this.loadData.args.consumerCard.PageIndex = currentPage;
+                    this.loadData.args.cardList.PageIndex = currentPage;
                     that.loadData.getVipConsumeCardList(function (data) {
                         var list = list ? list : [];
                         if (list.length) {
@@ -895,7 +1258,7 @@
                         }
                     });
                     break;
-                //上线与下线                        
+                //上线与下线
                 case 'nav06':
                     this.loadData.args.onlineOffline.PageIndex = currentPage;
                     that.loadData.getVipOnlineOffline(function (data) {
@@ -907,27 +1270,27 @@
                         }
                     });
                     break;
-                //帐内余额                        
+                //帐内余额
                 case 'nav04':
                     this.loadData.args.amount.PageIndex = currentPage;
-                    that.loadData.getVipAmountList(function (data) {
-                        var list = data.Data.VipAmountList;
+                    that.loadData.getVipConsumeCardList(function (data) {
+                        var list = data.Data.VipConsumeCardList;
                         list = list ? list : [];
-                        if (list.length) {
-                            var html = bd.template('tpl_amount', { list: list });
-                            that.elems.amountTable.html(html);
-                        }
+                        /*if (list.length) {
+                           *//* var html = bd.template('tpl_amount', { list: list });*//*
+
+                        }*/ that.elems.amountTable.datagrid("loadData", list);
                     });
                     break;
 
 
-                //交易记录                        
+                //交易记录
                 case "nav02":
                     this.loadData.args.order.PageIndex = currentPage;
-                    that.loadData.getVipOrderList(function (data) {
-                        var list = data.Data.VipOrderList;
-                        list = list ? list : [];   //模板引擎没有判断传递的list是否为null  次数判断  
-                        if (list.length) {
+                    that.loadData.getVipCardTransLogList(function (data) {
+                        var list = data.Data.VipCardTransLogList;
+                        list = list ? list : [];   //模板引擎没有判断传递的list是否为null  次数判断
+                      /*  if (list.length) {
                             //用百度模板引擎渲染成html字符串
                             var html = bd.template("tpl_content", { list: list });
                             //将数据添加到页面的id=content的对象节点中
@@ -935,7 +1298,8 @@
                         } else {
                             //没有内容的提示
                             that.showTableTips(that.elems.content, "该会员暂无消费记录!");
-                        }
+                        }*/
+                        that.elems.amountTable.datagrid("loadData", list);
                     });
                     break;
                 default:
@@ -955,11 +1319,11 @@
         },
         stopBubble: function (e) {
             if (e && e.stopPropagation) {
-                //因此它支持W3C的stopPropagation()方法 
+                //因此它支持W3C的stopPropagation()方法
                 e.stopPropagation();
             }
             else {
-                //否则，我们需要使用IE的方式来取消事件冒泡 
+                //否则，我们需要使用IE的方式来取消事件冒泡
                 window.event.cancelBubble = true;
             }
             e.preventDefault();
@@ -969,6 +1333,7 @@
             var that = this;
             var vipinfo = [];
             var inputDom = $('[name=editvipinfo]');
+            var isSubmit=true;
             inputDom.each(function (i, dom) {
                 var $dom = $(dom);
                 var dataText = $dom.attr("data-text");
@@ -989,7 +1354,15 @@
                 }else if(json.DisplayType==205){   //树结构
                     debugger;
                     obj.ColumnValue1=$dom.attr("unitId")?$dom.attr("unitId"):"";
-                } else {
+                } else if( json.DisplayType==6){
+                     debugger;
+                    var str=/^(([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8]))))|((([0-9]{2})(0[48]|[2468][048]|[13579][26])|((0[48]|[2468][048]|[3579][26])00))-02-29)$/.test($dom.val());
+                    if(!str){
+                        $.messager.alert("提示","生日输入不是正确的日期");
+                        isSubmit=false;
+                    }
+                    obj.ColumnValue1 = $dom.val();
+                }else{
                     obj.ColumnValue1 = $dom.val();
                 }
                 obj.ColumnName = json.ColumnName;
@@ -999,8 +1372,10 @@
                 //}
 
             });
+            debugger;
             //将查询条件赋值
             that.loadData.args.EditVipInfoColumns = vipinfo;
+            return isSubmit
         },
         //显示日期
         showDatepicker: function () {
@@ -1015,7 +1390,7 @@
         //新增客服记录
         addCustomer :function(data){
             var that=this;
-            that.elems.optionType="cancel";
+            that.elems.optionType="addCoupon";
             $('#win').window({title:"新增客服记录",width:630,height:380,top:($(window).height()-380)*0.5,left:($(window).width()-630)*0.5});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
@@ -1028,10 +1403,75 @@
             //this.loadData.tag.orderID=data.OrderID;
             $('#win').window('open');
             $("#win").find(".radio").eq(0).trigger("click");
+            $("#searchInputUnitName").val(window.UnitName);
+            $("#userName").val(window.UserName);
+
         },
+
+        //图片上传按钮绑定
+        registerUploadImgBtn: function () {
+            var self = this;
+            // 注册上传按钮
+            $("#win").find(".uploadBtn").each(function (i, e) {
+                self.addUploadImgEvent(e);
+            });
+        },
+        //上传图片区域的各种事件绑定
+        addUploadImgEvent: function (e) {
+            var self = this;
+
+
+
+            //上传图片并显示
+            self.uploadImg(e, function (ele, data) {
+                self.loadData.args.imgSrc=data.url;
+                $(ele).siblings(".imgPanel").find("img").show().attr({"src":data.url,width:100,height:100});
+
+            });
+
+        },
+        //上传图片
+        uploadImg: function (btn, callback) {
+            var uploadbutton = KE.uploadbutton({
+                button: btn,
+                width:37,
+                //上传的文件类型
+                fieldName: 'imgFile',
+                //注意后面的参数，dir表示文件类型，width表示缩略图的宽，height表示高
+                url: '/Framework/Javascript/Other/kindeditor/asp.net/upload_homepage_json.ashx?dir=image&width=640',
+
+                afterUpload: function (data) {
+                    debugger;
+                    if (data.error === 0) {
+                        if (callback) {
+                            callback(btn, data);
+                        }
+                        //取返回值,注意后台设置的key,如果要取原值
+                        //取缩略图地址
+                        //var thumUrl = KE.formatUrl(data.thumUrl, 'absolute');
+
+                        //取原图地址
+                        //var url = KE.formatUrl(data.url, 'absolute');
+                    } else{
+                        alert(data.msg);
+                    }
+                },
+                afterError: function (str) {
+                    alert('自定义错误信息: ' + str);
+                }
+            });
+            debugger;
+            uploadbutton.fileBox.change(function (e) {
+                uploadbutton.submit();
+            });
+        },
+
         loadData: {
+
             args: {
                 VipId: "", //会员Id
+                VipCardISN:"",//卡内码
+                VipCode:"",
                 EditVipInfoColumns:[],//更新会员的动态属性信息
                 //积分
                 point: {
@@ -1049,6 +1489,15 @@
                     TotalCount: 0,
                     OrderType: 'DESC'
                 },
+                //会员卡
+                cardList: {
+                    PageIndex: 1,
+                    PageSize: 10,
+                    TotalPages: 0,
+                    TotalCount: 0,
+                    OrderType: 'DESC'
+                },
+
                 //交易记录
                 order: {
                     PageIndex: 1,
@@ -1148,7 +1597,7 @@
                     url: "/ApplicationInterface/Vip/VipGateway.ashx",
                     data: {
                         action: 'GetVipDetail',
-                        VipId: this.args.VipId,
+                        VipId: this.args.VipId
 
                     },
                     success: function (data) {
@@ -1228,13 +1677,15 @@
                     }
                 });
             },
-            //获取动态的注册表单
-            getVipDyniform: function (callback) {
+             //获取会员消费记录
+            getVipCardTransLogList: function (callback) {
                 $.util.ajax({
-                    url: "/ApplicationInterface/Vip/VipGateway.ashx",
+                    url: "/ApplicationInterface/Gateway.ashx",
                     data: {
-                        action: "GetExistVipInfo",
-                        VipId:this.args.VipId
+                        action: "VIP.VipCardTransLog.GetVipCardTransLogList",
+                        VipCode: this.args.VipCode,   //参数会员id
+                        PageIndex: this.args.order.PageIndex,
+                        PageSize: this.args.order.PageSize
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {
@@ -1248,13 +1699,57 @@
                     }
                 });
             },
-            //获取会员消费信息列表
+
+
+            getVipCardList: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Gateway.ashx",
+                    data: {
+                        action: "VIP.VIPCard.GetVipCardList",
+                        VipId: this.args.VipId,   //参数会员id
+                        PageIndex: this.args.cardList.PageIndex,
+                        PageSize: this.args.cardList.PageSize
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback) {
+                                callback(data);
+                            }
+
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获取动态的注册表单
+            getVipDyniform: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Vip/VipGateway.ashx",
+                    data: {
+                        action: "GetExistVipInfo",
+                        VipId:this.args.VipId,
+                        VipCardISN:this.args.VipCardISN
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback) {
+                                callback(data);
+                            }
+
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获取优惠券
             getVipConsumeCardList: function (callback) {
                 $.util.ajax({
                     url: '/ApplicationInterface/Vip/VipGateway.ashx',
                     data: {
                         action: 'GetVipConsumeCardList',
-                        VipId: this.args.VipId,
+                        VipId:this.args.VipId,
                         PageIndex: this.args.consumerCard.PageIndex,
                         PageSize: this.args.consumerCard.PageSize
                     },
@@ -1298,34 +1793,65 @@
             operation:function(pram,operationType,callback){
                 debugger;
                 var prams={data:{action:""}};
+                var submit={is:true,msg:""};
+                var  VipIntegral=0;
                 prams.url="/Applicationinterface/Gateway.ashx";
                 switch(operationType){
                     case "addCoupon":
                     case "exit":
-                        prams.data["ServicesMode"]=$(".radio.on[data-name]").find("span").html().trim();
-                        prams.data.action="VIP.ServicesLog.SetVipServicesLog";  //上架
+                        prams.data["ServicesTime"]=new Date().format("yyyy-MM-dd hh:mm");
+                        prams.data["ServicesMode"]=$(".radio.on[data-name]").find("span").html();
+                        prams.data.action="VIP.ServicesLog.SetVipServicesLog";  //编辑和新增客服记录
                         $.each(pram, function (index, field) {
                             if(field.value!=="") {
                                 prams.data[field.name] = field.value;
                             }
                         });
                         break;
-                    case "del":prams.data.action="VIP.ServicesLog.DelVipServicesLog"; //删除
+
+                    case "del":prams.data.action="VIP.ServicesLog.DelVipServicesLog"; //删除  客服记录
                         prams.data["ServicesLogID"]=pram.ServicesLogID;
+                        break;
+                    case  "updateIntegral":
+                        prams.data.action="VIP.VipIntegral.SetVipIntegral";
+
+                        prams.data["VipCode"]=this.args.VipCode;
+                        $.each(pram, function (index, field) {
+                                prams.data[field.name] = field.value;
+                            if(field.name=="Qty"&&field.value==0){
+                                submit.is=false;
+                                submit.msg="积分调整数量不能为零，请重新填写";
+
+                            }
+                            if(field.name=="Qty"){
+
+                                VipIntegral =page.elems.vipInfo.VipIntegral+parseInt(field.value);
+                                if(VipIntegral<0){
+                                    submit.is=false;
+                                    submit.msg="扣除积分不可超出当前积分";
+                                }
+                                page.elems.Qty =field.value
+                            }
+                        });
+                        prams.data["IntegralSourceID"]="27";
+                        prams.data["ImageUrl"]=this.args.imgSrc;
                         break;
                 }
                 prams.data["VipID"]=this.args.VipId;
+                if(!submit.is) {$.messager.alert("异常提示",submit.msg); return false;}
                 $.util.ajax({
                     url: prams.url,
                     data:prams.data,
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {
+                            page.elems.VipIntegral=VipIntegral;
                             if (callback) {
                                 callback(data);
+
                             }
 
                         } else {
-                            alert(data.Message);
+                            $.messager.alert("异常提示",data.Message);
                         }
                     }
                 });
@@ -1433,7 +1959,8 @@
                     data: {
                         action: 'GetVipIntegralList',
                         //用vipid:4e98550ffb2749e49f4a1b53a5da10b1测试
-                        VipId: this.args.VipId,
+                        VipId:this.args.VipId,
+                        VipCode:this.args.VipCode,
                         PageIndex: this.args.point.PageIndex,
                         PageSize: this.args.point.PageSize
                     },
@@ -1498,9 +2025,34 @@
                     url: "/ApplicationInterface/Vip/VipGateway.ashx",
                     data: {
                         action: "GetVipDetail",
-                        VipId: this.args.VipId
+                        VipId: this.args.VipId,
+                        VipCardISN:this.args.VipCardISN
                     },
                     success: function (data) {
+
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback) {
+                                callback(data);
+                            }
+
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+
+            //页面权限分组
+            getFunctionList: function (callback) {
+                $.util.ajax({
+                    url: "/applicationinterface/Gateway.ashx",
+                    data: {
+                        action: "Basic.Menu.GetFunctionList",
+                        MenuID:$("#leftMenu").find(".on a").attr("id")?$("#leftMenu").find(".on a").attr("id"): $.util.getUrlParam("mid")
+
+                    },
+                    success: function (data) {
+
                         if (data.IsSuccess && data.ResultCode == 0) {
                             if (callback) {
                                 callback(data);

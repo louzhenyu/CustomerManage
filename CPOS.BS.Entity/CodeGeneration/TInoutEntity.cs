@@ -48,6 +48,11 @@ namespace JIT.CPOS.BS.Entity
 		public String OrderNo { get; set; }
 
 		/// <summary>
+		/// ª·‘±ø®∫≈
+		/// </summary>
+		public String VipCardCode { get; set; }
+
+		/// <summary>
 		/// 
 		/// </summary>
 		public String OrderTypeID { get; set; }

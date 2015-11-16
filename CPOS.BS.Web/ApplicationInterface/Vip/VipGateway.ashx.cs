@@ -49,7 +49,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                     OffShelfCount = Convert.ToInt32(t["OffShelfCount"]),
                     OnlineUnitCount = Convert.ToInt32(t["OnlineUnitCount"]),
                     PaidNotSentCount = Convert.ToInt32(t["PaidNotSentCount"]),
-                    SentCount=Convert.ToInt32(t["SentCount"]),
+                    SentCount = Convert.ToInt32(t["SentCount"]),
                     UpShelfCount = Convert.ToInt32(t["UpShelfCount"])
                 }).FirstOrDefault();
                 rd.VipInfo = temp;
@@ -58,7 +58,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             {
                 var tmp = ds.Tables[1].AsEnumerable().Select(t => new AttentionVipInfo
                 {
-                    Date =  Convert.ToDateTime( t["PDate"]).ToShortDateString(),// t["PDate"].ToString(),
+                    Date = Convert.ToDateTime(t["PDate"]).ToShortDateString(),// t["PDate"].ToString(),
                     CumulativeNo = Convert.ToInt32(t["VipNumber"])
 
                 });
@@ -102,7 +102,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var rp = pRequest.DeserializeJSONTo<APIRequest<EmptyRequestParameter>>();
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var bll = new VipBLL(loggingSessionInfo);
-            var result = bll.GetCreateVipPropList(loggingSessionInfo.ClientID,loggingSessionInfo.UserID);
+            var result = bll.GetCreateVipPropList(loggingSessionInfo.ClientID, loggingSessionInfo.UserID);
             System.Xml.XmlDocument xml = new System.Xml.XmlDocument();
             xml.LoadXml(result);
             result = ProcessXml.XmlToJSON2(xml);
@@ -161,7 +161,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var bll = new VipBLL(loggingSessionInfo);
             try
             {
-                bll.UpdateVipInfo(rp.Parameters.VipId,rp.Parameters.Columns);
+                bll.UpdateVipInfo(rp.Parameters.VipId, rp.Parameters.Columns);
                 var rsp = new SuccessResponse<EmptyResponseData>();
                 return rsp.ToJSON();
             }
@@ -200,11 +200,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
 
             var bll = new VipBLL(loggingSessionInfo);
 
-            var result = bll.GetVipSearchPropList(loggingSessionInfo.ClientID, "Vip",loggingSessionInfo.CurrentUserRole.UnitId);
+            var result = bll.GetVipSearchPropList(loggingSessionInfo.ClientID, "Vip", loggingSessionInfo.CurrentUserRole.UnitId);
 
             //var result = bll.GetVipSearchPropList(loggingSessionInfo.ClientID, "Vip");
 
-            
+
             System.Xml.XmlDocument xml = new System.Xml.XmlDocument();
             xml.LoadXml(result);
             result = ProcessXml.XmlToJSON2(xml);
@@ -267,7 +267,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             columns.Add("PayStatus", "支付状态");
             columns.Add("payTypeName", "支付方式");
             columns.Add("status_desc", "订单状态");
-            ExportVipInfo(columns, ds.Tables[0],"会员交易记录");
+            ExportVipInfo(columns, ds.Tables[0], "会员交易记录");
         }
         //导出会员上线与下线
         public void ExportVipOnlineOffline(string pRequest)
@@ -289,7 +289,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             columns.Add("endintegral", "积分");
             columns.Add("highercount", "下线数");
             columns.Add("createtime", "入会时间");
-            ExportVipInfo(columns, ds.Tables[1],"会员上线与下线");
+            ExportVipInfo(columns, ds.Tables[1], "会员上线与下线");
         }
         //导出会员操作日志
         public void ExportVipLogs(string pRequest)
@@ -319,14 +319,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var bll = new VipBLL(loggingSessionInfo);
             var rd = new VipConsumeCardInfoRD();
-            var ds = bll.GetVipConsumeCardList(rp.Parameters.VipId,  1,Int32.MaxValue, rp.Parameters.OrderType);
+            var ds = bll.GetVipConsumeCardList(rp.Parameters.VipId, 1, Int32.MaxValue, rp.Parameters.OrderType);
             var columns = new Dictionary<string, string>();
             columns.Add("CouponTypeName", "卡类型");
             columns.Add("CoupnName", "卡名称");
             columns.Add("OptionText", "领卡方式");
             columns.Add("CouponDesc", "备注");
             columns.Add("CouponStatus", "状态");
-            ExportVipInfo(columns, ds.Tables[1],"会员消费卡列表");
+            ExportVipInfo(columns, ds.Tables[1], "会员消费卡列表");
         }
         //导出会员余额列表
         public void ExportVipAmount(string pRequest)
@@ -340,13 +340,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             //var loggingSessionInfo = Default.GetBSLoggingSession("e703dbedadd943abacf864531decdac1", "7c292994c45143028cbf0b60c9555aec");
             var bll = new VipBLL(loggingSessionInfo);
-            var ds = bll.GetVipAmountList(rp.Parameters.VipId,  1, Int32.MaxValue, rp.Parameters.OrderType);
+            var ds = bll.GetVipAmountList(rp.Parameters.VipId, 1, Int32.MaxValue, rp.Parameters.OrderType);
             var columns = new Dictionary<string, string>();
             columns.Add("createtime", "时间");
             columns.Add("Amount", "余额");
             columns.Add("optiontext", "变更类型");
             columns.Add("Remark", "备注");
-            ExportVipInfo(columns, ds.Tables[0],"会员余额列表");
+            ExportVipInfo(columns, ds.Tables[0], "会员余额列表");
         }
         //导出积分列表
         public void ExportVipIntegral(string pRequest)
@@ -359,13 +359,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var bll = new VipBLL(loggingSessionInfo);
             var rd = new GetVipIntegralInfoRD();
-            var ds = bll.GetVipIntegralList(rp.Parameters.VipId,  1, Int32.MaxValue, rp.Parameters.OrderType);
+            var ds = bll.GetVipIntegralList(rp.Parameters.VipId, 1, Int32.MaxValue, rp.Parameters.OrderType);
             var columns = new Dictionary<string, string>();
             columns.Add("CreateTime", "时间");
             columns.Add("Integral", "积分变更");
             columns.Add("IntegralSource", "变更类型");
             columns.Add("Remark", "备注");
-            ExportVipInfo(columns, ds.Tables[0],"会员积分列表");
+            ExportVipInfo(columns, ds.Tables[0], "会员积分列表");
         }
         /// <summary>
         /// 导出会员列表
@@ -389,14 +389,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                                         rp.Parameters.OrderBy, rp.Parameters.SortType, rp.Parameters.SearchColumns,
                                         rp.Parameters.VipSearchTags);
             var columns = GetColumns(ds.Tables[0]);
-            ExportVipInfo(columns,ds.Tables[1],"会员列表");
+            ExportVipInfo(columns, ds.Tables[1], "会员列表");
         }
         /// <summary>
         ///  从dataTable数据转成列的定义到数据字典
         /// </summary>
         /// <param name="columns"></param>
         /// <param name="dt"></param>
-        private Dictionary<string,string> GetColumns(DataTable dt)
+        private Dictionary<string, string> GetColumns(DataTable dt)
         {
             var columns = new Dictionary<string, string>();
             if (null != dt && dt.Rows.Count > 0)
@@ -470,7 +470,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         #endregion
 
         #region 导出会员信息
-        private void ExportVipInfo(Dictionary<string,string> columns, DataTable dt,string fileName)
+        private void ExportVipInfo(Dictionary<string, string> columns, DataTable dt, string fileName)
         {
             #region /// comment
             //Dictionary<string, string> exportFields = new Dictionary<string, string>();
@@ -502,7 +502,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             {
                 System.IO.Directory.CreateDirectory(savePath);
             }
-            savePath = savePath + "\\"+fileName + DateTime.Now.ToFileTime() + ".xls";
+            savePath = savePath + "\\" + fileName + DateTime.Now.ToFileTime() + ".xls";
             wb.Save(savePath);//保存Excel文件
             new ExcelCommon().OutPutExcel(HttpContext.Current, savePath);
             HttpContext.Current.Response.End();
@@ -513,16 +513,30 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         public string GetVipDetailInfo(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<GetVipDetailInfoRP>>();
-
-            if (rp.Parameters.VipId == null || string.IsNullOrEmpty(rp.Parameters.VipId))
-            {
-                throw new APIException("请求参数中缺少VipId或值为空.") { ErrorCode = 121 };
-            }
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             //var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "d601bdeaed614c35bf792a2aeda640fa");// "1");
+            if (rp.Parameters.VipId == null || string.IsNullOrEmpty(rp.Parameters.VipId))
+            {
+                //throw new APIException("请求参数中缺少VipId或值为空.") { ErrorCode = 121 };
+
+                //刷卡查询业务处理 Update by Henry 2015-8-27
+                if (rp.Parameters.VipCardISN == null || string.IsNullOrEmpty(rp.Parameters.VipCardISN))
+                    throw new APIException("缺少请求参数") { ErrorCode = ERROR_CODES.INVALID_REQUEST_LACK_REQUEST_PARAMETER };
+                var vipCardBLL = new VipCardBLL(loggingSessionInfo);//会员卡业务对象示例化
+                var vipCardVipMappingBLL = new VipCardVipMappingBLL(loggingSessionInfo);//会员卡和会员映射业务对象实例化
+                //获取会员卡信息
+                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardISN = rp.Parameters.VipCardISN }, null).FirstOrDefault();
+                if (vipCardInfo != null)
+                {
+                    var mappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VipCardID = vipCardInfo.VipCardID }, null).FirstOrDefault();
+                    if (mappingInfo != null)
+                        rp.Parameters.VipId = mappingInfo.VIPID;//重新赋值VipID
+                }
+            }
+
             var bll = new VipBLL(loggingSessionInfo);
 
-            var ds = bll.GetVipDetailInfo(rp.Parameters.VipId,loggingSessionInfo.ClientID);
+            var ds = bll.GetVipDetailInfo(rp.Parameters.VipId, loggingSessionInfo.ClientID);
 
             var rd = new GetVipDetailInfoRD();
             rd.VipDetailInfo = new VipInfo();
@@ -542,11 +556,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                     integral = "0";
                 rd.VipDetailInfo.VipIntegral = Convert.ToDecimal(integral);
 
+                //获取累计积分
+                var vipIntegralBLL = new VipIntegralBLL(loggingSessionInfo);
+                var IntegralEntity = vipIntegralBLL.GetByID(rp.Parameters.VipId);
+                if (IntegralEntity != null)
+                    rd.VipDetailInfo.CumulativeIntegral = IntegralEntity.CumulativeIntegral != null ? IntegralEntity.CumulativeIntegral.Value : 0;
+
                 var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
                 var vipAmountEntity = vipAmountBll.GetByID(rp.Parameters.VipId);
                 if (vipAmountEntity != null)
                 {
-                    rd.VipDetailInfo.VipEndAmount = vipAmountEntity.EndAmount??0;
+                    rd.VipDetailInfo.VipEndAmount = vipAmountEntity.EndAmount ?? 0;
                 }
             }
             if (ds.Tables[1].Rows.Count > 0)
@@ -563,7 +583,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 }
                 rd.VipTags = tags.ToArray();
             }
-        
+
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
 
             return rsp.ToJSON();
@@ -577,12 +597,25 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         public string GetExistVipInfo(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<GetVipDetailInfoRP>>();
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             if (string.IsNullOrEmpty(rp.Parameters.VipId))
             {
-                throw new APIException("请求参数中缺少VipId或值为空.") { ErrorCode = 121 };
+                //throw new APIException("请求参数中缺少VipId或值为空.") { ErrorCode = 121 };
+                //刷卡查询业务处理 Update by Henry 2015-8-27
+                if (rp.Parameters.VipCardISN == null || string.IsNullOrEmpty(rp.Parameters.VipCardISN))
+                    throw new APIException("缺少请求参数") { ErrorCode = ERROR_CODES.INVALID_REQUEST_LACK_REQUEST_PARAMETER };
+                var vipCardBLL = new VipCardBLL(loggingSessionInfo);//会员卡业务对象示例化
+                var vipCardVipMappingBLL = new VipCardVipMappingBLL(loggingSessionInfo);//会员卡和会员映射业务对象实例化
+                //获取会员卡信息
+                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardISN = rp.Parameters.VipCardISN }, null).FirstOrDefault();
+                if (vipCardInfo != null)
+                {
+                    var mappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VipCardID = vipCardInfo.VipCardID }, null).FirstOrDefault();
+                    if (mappingInfo != null)
+                        rp.Parameters.VipId = mappingInfo.VIPID;//重新赋值VipID
+                }
             }
-            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            if(null == loggingSessionInfo)
+            if (null == loggingSessionInfo)
                 loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);// "1");
             var bll = new VipBLL(loggingSessionInfo);
             var rd = new GetExistVipInfoRD();
@@ -594,16 +627,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 rd.JsonColumns = ProcessXml.XmlToJSON2(xml);
             }
             rd.VipInfo = ds.Tables[1];
-            //if (rd.VipInfo.Columns.Contains("Phone"))
-            //{
-            //    for (int i = 0; i < rd.VipInfo.Rows.Count;i++)
-            //    {
-            //        var phone = rd.VipInfo.Rows[i]["Phone"].ToString();
-            //        if(!string.IsNullOrEmpty(phone)){
-            //            rd.VipInfo.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
-            //        }
-            //    }
-            //}
+            if (rd.VipInfo.Columns.Contains("Phone"))
+            {
+                for (int i = 0; i < rd.VipInfo.Rows.Count; i++)
+                {
+                    var phone = rd.VipInfo.Rows[i]["Phone"].ToString();
+                    if (!string.IsNullOrEmpty(phone))
+                    {
+                        rd.VipInfo.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
+                    }
+                }
+            }
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
@@ -624,7 +658,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
 
             var rd = new GetVipAmountInfoRD();
 
-            var ds = bll.GetVipAmountList(rp.Parameters.VipId, pageIndex ?? 1, pageSize ?? 15,rp.Parameters.OrderType);
+            var ds = bll.GetVipAmountList(rp.Parameters.VipId, pageIndex ?? 1, pageSize ?? 15, rp.Parameters.OrderType);
 
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -637,15 +671,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                         Remark = t["Remark"].ToString()
                     });
                 rd.VipAmountList = temp.ToArray();
-                ds = bll.GetVipAmountList(rp.Parameters.VipId, 1, Int32.MaxValue,rp.Parameters.OrderType);
+                ds = bll.GetVipAmountList(rp.Parameters.VipId, 1, Int32.MaxValue, rp.Parameters.OrderType);
                 rd.TotalCount = ds.Tables[0].Rows.Count;
                 rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(ds.Tables[0].Rows.Count * 1.00 / (pageSize ?? 15) * 1.00)));
 
-            }           
+            }
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
 
-            return rsp.ToJSON(); 
+            return rsp.ToJSON();
         }
 
         #endregion
@@ -668,7 +702,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
 
             var rd = new GetVipIntegralInfoRD();
 
-            var ds = bll.GetVipIntegralList(rp.Parameters.VipId, pageIndex ?? 1, pageSize ?? 15,rp.Parameters.OrderType);
+            var ds = bll.GetVipIntegralList(rp.Parameters.VipId, pageIndex ?? 1, pageSize ?? 15, rp.Parameters.OrderType);
             if (ds.Tables[0].Rows.Count > 0)
             {
                 var temp = ds.Tables[0].AsEnumerable().Select(t => new VipIntegralInfo()
@@ -677,11 +711,27 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                     VipIntegralSource = t["IntegralSource"].ToString(),
                     Date = t["CreateTime"].ToString(),
                     Integral = Convert.ToDecimal(t["Integral"].ToString()),
-                    Remark = t["Remark"].ToString()
+                    Remark = t["Remark"].ToString(),
+                    UnitName=t["UnitName"].ToString(),
+                    Reason=t["Reason"].ToString(),
+                    IntegralSourceId = t["IntegralSourceId"].ToString(),
+                    CreateBy=t["CreateBy"].ToString()
                 });
                 rd.VipIntegralList = temp.ToArray();
 
-                ds = bll.GetVipIntegralList(rp.Parameters.VipId, 1, Int32.MaxValue,rp.Parameters.OrderType);
+                //人工调整时，显示操作人
+                var userBLL = new T_UserBLL(loggingSessionInfo);
+                T_UserEntity userInfo = null;
+                foreach (var item in rd.VipIntegralList)
+                {
+                    if (item.IntegralSourceId == "27")//人工调整
+                    {
+                        userInfo = userBLL.GetByID(item.CreateBy);
+                        item.CreateByName = userInfo != null ? userInfo.user_name : "";
+                    }
+                }
+
+                ds = bll.GetVipIntegralList(rp.Parameters.VipId, 1, Int32.MaxValue, rp.Parameters.OrderType);
                 rd.TotalCount = ds.Tables[0].Rows.Count;
                 rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(ds.Tables[0].Rows.Count * 1.00 / (pageSize ?? 15) * 1.00)));
             }
@@ -709,7 +759,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
 
             var rd = new VipOrderInfoRD();
 
-            var ds = bll.GetVipOrderList(rp.Parameters.VipId, loggingSessionInfo.ClientID, pageIndex ?? 1, pageSize ?? 15,rp.Parameters.OrderType);
+            var ds = bll.GetVipOrderList(rp.Parameters.VipId, loggingSessionInfo.ClientID, pageIndex ?? 1, pageSize ?? 15, rp.Parameters.OrderType);
             if (ds.Tables[0].Rows.Count > 0)
             {
                 var temp = ds.Tables[0].AsEnumerable().Select(t => new VipOrderInfo()
@@ -717,15 +767,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                     OrderId = t["order_id"].ToString(),
                     OrderNo = t["order_no"].ToString(),
                     OrderStatus = t["status_desc"].ToString(),
-                    PayAmount =  t["actual_amount"] as decimal?,
+                    PayAmount = t["actual_amount"] as decimal?,
                     PayStatus = t["PayStatus"].ToString(),
                     PayType = t["payTypeName"].ToString(),
                     PayUnitId = t["vipsourcename"].ToString(),
                     PayUnitName = t["UnitName"].ToString(),
                     CreateTime = t["create_time"].ToString(),
+                    VipCardCode = t["VipCardCode"].ToString(),
+                    TotalAmount =Convert.ToDecimal(t["total_amount"].ToString())
                 });
                 rd.VipOrderList = temp.ToArray();
-                ds = bll.GetVipOrderList(rp.Parameters.VipId, loggingSessionInfo.ClientID, 1, Int32.MaxValue,rp.Parameters.OrderType);
+                ds = bll.GetVipOrderList(rp.Parameters.VipId, loggingSessionInfo.ClientID, 1, Int32.MaxValue, rp.Parameters.OrderType);
                 rd.TotalCount = ds.Tables[0].Rows.Count;
                 rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(ds.Tables[0].Rows.Count * 1.00 / (pageSize ?? 15) * 1.00)));
 
@@ -762,7 +814,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var bll = new VipBLL(loggingSessionInfo);
 
             var rd = new VipConsumeCardInfoRD();
-            var ds = bll.GetVipConsumeCardList(rp.Parameters.VipId, pageIndex ?? 1, pageSize ?? 15,rp.Parameters.OrderType);
+            var ds = bll.GetVipConsumeCardList(rp.Parameters.VipId, pageIndex ?? 1, pageSize ?? 15, rp.Parameters.OrderType);
             rd.TotalCount = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
             rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(rd.TotalCount * 1.00 / (pageSize ?? 15) * 1.00)));
             if (ds.Tables[1].Rows.Count > 0)
@@ -770,19 +822,21 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 var temp = ds.Tables[1].AsEnumerable().Select(t => new VipConsumeCardInfo()
                 {
                     CouponId = t["CouponID"].ToString(),
+                    CouponCode=t["CouponCode"].ToString(),
                     CouponName = t["CoupnName"].ToString(),
                     CouponType = t["CouponTypeName"].ToString(),
                     CouponStatus = t["CouponStatus"].ToString(),
                     CollarCardMode = t["OptionText"].ToString(),
-                    Remark = t["CouponDesc"].ToString()
-                    });
+                    Remark = t["CouponDesc"].ToString(),
+                    EndDate=t["EndDate"].ToString()
+                });
                 rd.VipConsumeCardList = temp.ToArray();
             }
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
-            return rsp.ToJSON();            
+            return rsp.ToJSON();
         }
         #endregion
-        private string  AddVip(string pRequest)
+        private string AddVip(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<VipEntityRP>>();
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
@@ -790,7 +844,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var bll = new VipBLL(loggingSessionInfo);
             try
             {
-                bll.InsertVipEntity(rp.Parameters.Columns,loggingSessionInfo.ClientID);
+                bll.InsertVipEntity(rp.Parameters.Columns, loggingSessionInfo.ClientID);
                 var rsp = new SuccessResponse<EmptyResponseData>();
                 return rsp.ToJSON();
             }
@@ -901,14 +955,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var rp = pRequest.DeserializeJSONTo<APIRequest<GetVipOnlineOfflineRP>>();
             if (rp.Parameters.PageIndex <= 0) rp.Parameters.PageIndex = 1;
             if (rp.Parameters.PageSize <= 0) rp.Parameters.PageSize = 15;
-            if(string.IsNullOrEmpty(rp.Parameters.VipId))
+            if (string.IsNullOrEmpty(rp.Parameters.VipId))
                 throw new APIException("请求参数中缺少VipId或值为空.") { ErrorCode = 121 };
             var si = new SessionManager().CurrentUserLoginInfo;
             //var si = Default.GetBSLoggingSession(rp.CustomerID, "d601bdeaed614c35bf792a2aeda640fa");// "1");
             if (null == si)
                 si = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
             var bll = new VipBLL(si);
-            var ds = bll.GetVipOnlineOffline(rp.Parameters.VipId, rp.Parameters.PageIndex, rp.Parameters.PageSize,rp.Parameters.OrderType);
+            var ds = bll.GetVipOnlineOffline(rp.Parameters.VipId, rp.Parameters.PageIndex, rp.Parameters.PageSize, rp.Parameters.OrderType);
             var rd = new GetVipOnlineOfflineRD();
             rd.TotalCount = Convert.ToInt32(ds.Tables[0].Rows[0][0]);
             rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(rd.TotalCount * 1.00 / (rp.Parameters.PageSize) * 1.00)));
@@ -918,12 +972,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 {
                     // v.vipid,v.vipcode,v.vipname,v.viprealname,g.vipcardgradename,
                     //p.endintegral,x.highercount offlineCount,v.createtime
-                     VipId = t["vipid"].ToString(),
-                     VipCode = t["vipcode"].ToString(),
-                     VipName = t["vipname"].ToString(),
-                     VipRealName = t["viprealname"].ToString(),
+                    VipId = t["vipid"].ToString(),
+                    VipCode = t["vipcode"].ToString(),
+                    VipName = t["vipname"].ToString(),
+                    VipRealName = t["viprealname"].ToString(),
                     VipCardGradeName = t["vipcardgradename"].ToString(),
-                     EndIntegral = t["endintegral"] as decimal?,
+                    EndIntegral = t["endintegral"] as decimal?,
                     OfflineCount = t["highercount"] as int?,
                     CreateTime = t["createtime"].ToString(),
                 });
@@ -951,35 +1005,63 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 rp.Parameters.PageSize = 15;
             var si = new SessionManager().CurrentUserLoginInfo;
             //var si = Default.GetBSLoggingSession(rp.CustomerID, "d601bdeaed614c35bf792a2aeda640fa");// "1");
-                //si = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            //si = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
             var bll = new VipBLL(si);
             var ds = bll.SearchVipList(si.ClientID, si.UserID, rp.Parameters.PageIndex, rp.Parameters.PageSize,
                                         rp.Parameters.OrderBy, rp.Parameters.SortType, rp.Parameters.SearchColumns,
                                         rp.Parameters.VipSearchTags);
             if (ds == null || ds.Tables.Count < 2)
             {
-                throw  new APIException("客户没有配置查询列信息.") { ErrorCode = 121 };
+                throw new APIException("客户没有配置查询列信息.") { ErrorCode = 121 };
             }
             var rd = new VipSearchListRD();
             rd.VipTable = ds.Tables[1];
             rd.Columns = GetColumns(ds.Tables[0]);
+
             if (rd.VipTable.Rows.Count > 0)
             {
-                //if (rd.VipTable.Columns.Contains("Phone"))
-                //{
-                //    for (int i = rd.VipTable.Rows.Count - 1; i >= 0; i--)
-                //    {
-                //        var phone = rd.VipTable.Rows[i]["Phone"].ToString();
-                //        if (!string.IsNullOrEmpty(phone) && phone.Length>8)
-                //        {
-                //            rd.VipTable.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
-                //        }
-                //    }
-                //}
+                for (int i = rd.VipTable.Rows.Count - 1; i >= 0; i--)
+                {
+
+                    if (rd.VipTable.Columns.Contains("CreateTime"))
+                    {
+                        // dt.Columns["ChkYn"].DataType=Type.GetType("System.bool");
+                        // rd.VipTable.Columns["CreateTime"].DataType = Type.GetType("System.string");
+                        var CreateTime = rd.VipTable.Rows[i]["CreateTime"] == null || rd.VipTable.Rows[i]["CreateTime"] is DBNull ? "" : rd.VipTable.Rows[i]["CreateTime"].ToString();
+                        if (!string.IsNullOrEmpty(CreateTime))
+                        {
+                            var tempTime = Convert.ToDateTime(rd.VipTable.Rows[i]["CreateTime"]).ToString("yyyy-MM-dd"); ;//隐藏中间的几列***
+                            rd.VipTable.Rows[i]["CreateTime"] = tempTime;
+                        }
+                        rd.VipTable.AcceptChanges();
+                    }
+                    if (rd.VipTable.Columns.Contains("Birthday"))
+                    {
+
+                        var Birthday = rd.VipTable.Rows[i]["Birthday"] == null || rd.VipTable.Rows[i]["Birthday"] is DBNull ? "" : rd.VipTable.Rows[i]["Birthday"].ToString();
+                        if (!string.IsNullOrEmpty(Birthday))
+                        {
+                            rd.VipTable.Rows[i]["Birthday"] = Convert.ToDateTime(rd.VipTable.Rows[i]["Birthday"]).ToString("yyyy-MM-dd");//隐藏中间的几列***
+                        }
+
+                    }
+                    if (rd.VipTable.Columns.Contains("Phone"))
+                    {
+                        var phone = rd.VipTable.Rows[i]["Phone"].ToString();
+                        if (!string.IsNullOrEmpty(phone) && phone.Length > 8)
+                        {
+                            rd.VipTable.Rows[i]["Phone"] = phone.Substring(0, 3) + "****" + phone.Substring(7);
+
+                        }
+                    }
+                }
                 rd.TotalPageCount = (int)rd.VipTable.Rows[0]["PageCount"];
                 rd.PageIndex = Convert.ToInt32(rd.VipTable.Rows[0]["PID"]);
                 rd.TotalCount = Convert.ToInt32(rd.VipTable.Rows[0]["Rnt"]);
             }
+
+
+
             else
             {
                 rd.PageIndex = rd.TotalPageCount = rd.TotalCount = 0;
@@ -1107,6 +1189,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
     public class GetVipDetailInfoRP : IAPIRequestParameter
     {
         public string VipId { get; set; }
+        /// <summary>
+        /// 会员卡内码
+        /// </summary>
+        public string VipCardISN { get; set; }
 
         public int? PageSize { get; set; }
         public int? PageIndex { get; set; }
@@ -1123,7 +1209,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         /// 使用此券的门店
         /// </summary>
         public string ObjectID { get; set; }
-      
+
         public void Validate()
         {
         }
@@ -1146,13 +1232,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         {
         }
     }
-    
+
     public class GetVipOnlineOfflineRD : IAPIResponseData
     {
         public int TotalCount { get; set; }
         public int TotalPages { get; set; }
         public VipOnlineOffline[] VipOnlineOfflines { get; set; }
-        
+
     }
     public class GetVipDetailInfoRD : IAPIResponseData
     {
@@ -1209,6 +1295,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         public string UnitName { get; set; }
         public string UnitId { get; set; }
         public decimal VipIntegral { get; set; }
+        /// <summary>
+        /// 累计积分
+        /// </summary>
+        public decimal CumulativeIntegral { get; set; }
         public decimal VipEndAmount { get; set; }
         public string Phone { get; set; }
 
@@ -1237,6 +1327,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         public string Date { get; set; }
         public decimal Integral { get; set; }
         public string Remark { get; set; }
+        public string UnitName { get; set; }
+        public string Reason { get; set; }
+        public string IntegralSourceId { get; set; }
+        /// <summary>
+        /// 操作人ID
+        /// </summary>
+        public string CreateBy { get; set; }
+        /// <summary>
+        /// 操作人
+        /// </summary>
+        public string CreateByName { get; set; }
     }
     public class VipAmountInfo
     {
@@ -1257,6 +1358,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         public string PayStatus { get; set; }
         public string PayType { get; set; }
         public string OrderStatus { get; set; }
+        /// <summary>
+        /// 卡号
+        /// </summary>
+        public string VipCardCode { get; set; }
+        /// <summary>
+        /// 消费金额
+        /// </summary>
+        public decimal TotalAmount { get; set; }
     }
 
     public class GetUpdateVipInfoRP : IAPIRequestParameter
@@ -1278,6 +1387,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
     public class VipConsumeCardInfo : IAPIResponseData
     {
         public string CouponId { get; set; }
+        public string CouponCode { get; set; }
         public string CouponName { get; set; }
         public string CouponType { get; set; }
         //public decimal ConditionValue { get; set; }
@@ -1286,6 +1396,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         //public string CouponDate { get; set; }
         public string Remark { get; set; }
         public string CollarCardMode { get; set; }
+        public string EndDate { get; set; }
 
     }
     public class VipEntityRP : IAPIRequestParameter
@@ -1359,6 +1470,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         /// <summary>
         /// 列定义
         /// </summary>
-        public Dictionary<string,string> Columns { get; set; }
+        public Dictionary<string, string> Columns { get; set; }
     }
 }

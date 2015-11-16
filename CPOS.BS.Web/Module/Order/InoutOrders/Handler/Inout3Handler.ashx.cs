@@ -47,7 +47,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                     break;
 
                 case "PosOrder_lj": //GetPosOrder3Data()  订单查询
-                    content = GetPosOrder3Data2(); 
+                    content = GetPosOrder3Data2();
                     break;
                 case "GetPosOrderTotalCount_lj": //统计数量
                     content = GetPosOrder3TotalCount();
@@ -300,7 +300,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             r.couponAmount = orderInfo.couponAmount; //优惠券金额
 
             r.payPoints = IntegralDetailEntity == null ? 0 :
-                (IntegralDetailEntity.Integral == null ? 0 :Math.Abs(IntegralDetailEntity.Integral.Value));//积分
+                (IntegralDetailEntity.Integral == null ? 0 : Math.Abs(IntegralDetailEntity.Integral.Value));//积分
 
             //r.payPointsAmount = IntegralDetailEntity == null ? 0 :
             //    (IntegralDetailEntity.SalesAmount == null ? 0 : IntegralDetailEntity.SalesAmount);//积分抵扣金额
@@ -349,7 +349,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             //    : 0;
 
             //r.AllDeduction = r.couponAmount + r.payPointsAmount + r.vipEndAmount + r.ALBAmount;
-            
+
             //会员折扣处理
             if (orderInfo.discount_rate > 0)
             {
@@ -2494,18 +2494,21 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             //图片路径
             string filePath = "/File/img/" + CurrentUserInfo.CurrentLoggingManager.Customer_Id + "/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" + DateTime.Now.Day + "/" + DateTime.Now.ToString("yyyyMMddHHmmssfff");
 
-            if (!string.IsNullOrEmpty(rParams["order_id"]))
+            string orderId = rParams["order_id"];
+
+            if (!string.IsNullOrEmpty(orderId))
             {
                 var inoutService = new Inout3Service(CurrentUserInfo);
                 var service = new InoutService(CurrentUserInfo);
                 var inoutStatus = new TInoutStatusBLL(CurrentUserInfo);
                 var inoutStatusnode = new TInOutStatusNodeBLL(CurrentUserInfo);
+                var inoutBLL = new T_InoutBLL(CurrentUserInfo);
 
-                var order = inoutService.GetInoutInfoById(rParams["order_id"]);
+                var order = inoutService.GetInoutInfoById(orderId);
 
                 TInoutStatusEntity info = new TInoutStatusEntity();
                 info.InoutStatusID = Guid.Parse(Utils.NewGuid());
-                info.OrderID = rParams["order_id"];
+                info.OrderID = orderId;
                 info.CustomerID = CurrentUserInfo.CurrentLoggingManager.Customer_Id;
                 info.Remark = rParams["Remark"];
 
@@ -2551,6 +2554,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
 
                         info.OrderStatus = int.Parse(status);
 
+                        string statusDesc=GetStatusDesc(status);//变更后的状态名称
+
                         if (info.OrderStatus == 10000)
                         {
                             //付款
@@ -2559,40 +2564,21 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                         }
                         else
                         {
-                            info.StatusRemark = "订单状态从" + order.status_desc + "变为" + GetStatusDesc(status) + "[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
+                            info.StatusRemark = "订单状态从" + order.status_desc + "变为" + statusDesc + "[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
                             service.UpdateOrderDeliveryStatus(order.order_id, status, Utils.GetNow());
                         }
 
-                        #region 订单状态更新到同步到ALD add by donal 2014-10-23 13:35:51
-                        //if (order.Field3 == "1")
-                        //{
-                        //    try
-                        //    {
-                        //        var request = new
-                        //            {
-                        //                BusinessZoneID = 1,
-                        //                Locale = 1,
-                        //                UserID = order.vip_no,
-                        //                Parameters = new
-                        //                {
-                        //                    MemberID = new Guid(order.vip_no),
-                        //                    SourceOrdersID = order.order_id,
-                        //                    Status = status,
-                        //                    IsPaid = info.OrderStatus == 10000 ? true : (order.Field1 == "1" ? true : false)
-                        //                }
-                        //            };
-                        //        var url = ConfigurationManager.AppSettings["ALDGatewayURL"];
-                        //        var postContent = string.Format("Action=ChangeOrderStatus&ReqContent={0}", request.ToJSON());
-                        //        var strAldRsp = HttpWebClient.DoHttpRequest(url, postContent);
-                        //    }
-                        //    catch (Exception)
-                        //    {
-                        //        throw;
-                        //    }
-                        //}
+                        inoutStatus.Create(info);
+
+                        #region 处理积分返现和退款
+
+                        if (statusDesc=="已取消")//取消订单
+                        {
+                            //执行取消订单业务 reconstruction By Henry 2015-10-20
+                            inoutBLL.SetCancelOrder(orderId,0,CurrentUserInfo);
+                        }
                         #endregion
 
-                        inoutStatus.Create(info);
                         res = "{success:true,msg:'保存成功'}";
                     }
                     #endregion

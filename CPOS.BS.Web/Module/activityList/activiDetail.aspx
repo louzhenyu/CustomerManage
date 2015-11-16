@@ -181,89 +181,10 @@
       	</div>
        </div>
        <!-- 取消订单-->
-       <script id="tpl_OrderCancel" type="text/html">
-            <form id="payOrder">
-           <div class="commonSelectWrap">
-                 <em class="tit">备注：</em>
-                <div class="searchInput">
-                   <input type="text" name="Remark" />
-               </div>
-           </div>
-
-           <p class="winfont">你确认取消此笔订单吗？</p>
-           </form>
-       </script>
-      <script id="tpl_uploadimg" type="text/html">
-              <div class="jsAreaItem">
-                              <div class="wrapPic">
-                                 <span class="uploadBtn"><input class="uploadImgBtn input" type="file" /></span>
-                                 <div><img src=""></div>
-
-                               </div>
-
-                       </div>
 
 
-      </script>
-      <script id="tpl_AddPro"  type="text/html">
-                        <div class="skuList">
-
-                           <div class="pro">
-                               <div class="commonSelectWrap">
-                               <em class="tit">商品规格：</em>
-                                      <label class="selectBox">
-                                          <input   class="easyui-combobox proList" name="CarNumber"  type="text" value="">
-                                      </label>
-                                </div>
-                              <div class="icon"></div>
-                           </div>
-                           <div class="proDetailList">
-                              <div class="proValue">
-                              </div>
-                               <div class="fontC" data-type="add"> +添加</div>
-                           </div>
-                          </div>
 
 
-      </script>
-      <script id="tpl_AddProDetail" type="text/html">
-  <div class="commonSelectWrap">
-      <div class="selectBox">
-         <input   id="proDetail"  type="text" value="" />
-      </div>
-     <div class="commonBtn proDetailSave" > 确定</div>
-     <div class="commonBtn proDetailCancel" > 取消</div>
-  </div>
-      </script>
-      <script id="tpl_AddBtn" type="text/html">
-          <div class="btn" data-id="<#=id#>" data-name="<#=name#>"><#=name#> <em class="icon"></em></div>
-      </script>
- <!--动态生成 商品详情字段-->
- <script id="tpl_commodityForm" type="text/html">
-     <#var subRoot=Children;subRoot=subRoot?subRoot:[];#>
-         <#for(var i=0,length=subRoot.length;i<length;i++){ var item=subRoot[i];#>
-                 <#if(item.Prop_Input_Flag=="text"){#>
-                 <div class="textList">
-                                       <div class="commonSelectWrap" style="display: none;">
-                                           <em class="tit"><#=item.Prop_Name#>:</em>
-                                           <label class="searchInput">
-                                             <input data-text="<#=item.Prop_Name#>" data-type="text"  data-flagInfo="<#=JSON.stringify(item)#>" data-flag="details" type="text"  readonly="readonly"  value="0">
-                                           </label>
-                      </div>
-                 </div>
-                 <#}#>
-
-                 <#if(item.Prop_Input_Flag=="htmltextarea"){ #>
-                   <div class="textList">
-                       <textarea data-text="<#=item.Prop_Name#>" class="info" data-type="htmltextarea"  data-flagInfo="<#=JSON.stringify(item)#>" data-flag="details" style="width: 100%;"></textarea>
-                   </div>
-                 <#}#>
-
-
-         <#}#>
-
-
- </script>
 
 
   <!--动态生成销售信息的类型-->
@@ -300,16 +221,6 @@
 
   </script>
 
- <script id="tpl_AddBatch" type="text/html">
- <div class="mainpanl" title="<#=name#>" data-item="<#=JSON.stringify(obj)#>">
-    <div class="searchInput">
-              <input type="text" value="" placeholder="请输入<#=name#>"/>
-           </div>
-           <div class="commonBtn" data-type="save" >确定</div>
-           <div class="commonBtn" data-type="cancel">取消</div>
- </div>
 
-
-       </script>
 <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>" defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>" ></script>
 </asp:Content>

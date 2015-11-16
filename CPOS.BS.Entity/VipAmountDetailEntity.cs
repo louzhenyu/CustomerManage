@@ -26,10 +26,15 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class VipAmountDetailEntity : BaseEntity 
+    public partial class VipAmountDetailEntity : BaseEntity
     {
         #region 属性集
-
+        public string AmountSourceName { get; set; }
+        public string ImageUrl { get; set; }
+        /// <summary>
+        /// 手工调整时，显示操作人
+        /// </summary>
+        public string CreateByName { get; set; }
         #endregion
     }
 }

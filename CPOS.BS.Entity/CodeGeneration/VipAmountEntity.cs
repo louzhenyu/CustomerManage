@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/5/22 14:32:02
+ * Create On	:2015/10/30 15:25:27
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -45,6 +45,11 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public String VipCardCode { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public Decimal? BeginAmount { get; set; }
 
 		/// <summary>
@@ -65,7 +70,62 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public Decimal? TotalAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? BeginReturnAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? InReturnAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? OutReturnAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? ReturnAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? ImminentInvalidRAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? InvalidReturnAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? ValidReturnAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? TotalReturnAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public String PayPassword { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? IsLocking { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CustomerID { get; set; }
 
 		/// <summary>
 		/// 
@@ -91,21 +151,6 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? IsLocking { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Decimal? TotalAmount { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Decimal? ReturnAmount { get; set; }
 
 
         #endregion

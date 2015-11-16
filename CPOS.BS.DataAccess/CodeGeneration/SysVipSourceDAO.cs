@@ -25,8 +25,8 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
@@ -72,37 +72,42 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentNullException("pEntity");
             
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [SysVipSource](");
-            strSql.Append("[VipSourceName],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[VipSourceID])");
+            strSql.Append("[VipSourceType],[VipSourceName],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[TmpCount],[VipSourceID])");
             strSql.Append(" values (");
-            strSql.Append("@VipSourceName,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@VipSourceID)");            
+            strSql.Append("@VipSourceType,@VipSourceName,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@TmpCount,@VipSourceID)");            
 
 			string pkString = pEntity.VipSourceID;
 
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@VipSourceType",SqlDbType.Int),
 					new SqlParameter("@VipSourceName",SqlDbType.NVarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@TmpCount",SqlDbType.Int),
 					new SqlParameter("@VipSourceID",SqlDbType.NVarChar)
             };
-			parameters[0].Value = pEntity.VipSourceName;
-			parameters[1].Value = pEntity.CreateTime;
-			parameters[2].Value = pEntity.CreateBy;
-			parameters[3].Value = pEntity.LastUpdateTime;
-			parameters[4].Value = pEntity.LastUpdateBy;
-			parameters[5].Value = pEntity.IsDelete;
-			parameters[6].Value = pkString;
+			parameters[0].Value = pEntity.VipSourceType;
+			parameters[1].Value = pEntity.VipSourceName;
+			parameters[2].Value = pEntity.CreateTime;
+			parameters[3].Value = pEntity.CreateBy;
+			parameters[4].Value = pEntity.LastUpdateTime;
+			parameters[5].Value = pEntity.LastUpdateBy;
+			parameters[6].Value = pEntity.IsDelete;
+			parameters[7].Value = pEntity.TmpCount;
+			parameters[8].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -125,7 +130,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [SysVipSource] where VipSourceID='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [SysVipSource] where VipSourceID='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             SysVipSourceEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -148,7 +153,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [SysVipSource] where isdelete=0");
+            sql.AppendFormat("select * from [SysVipSource] where 1=1  and isdelete=0");
             //读取数据
             List<SysVipSourceEntity> list = new List<SysVipSourceEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -171,44 +176,57 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(SysVipSourceEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity,true,pTran);
+            Update(pEntity , pTran,true);
         }
-        public void Update(SysVipSourceEntity pEntity , bool pIsUpdateNullField, IDbTransaction pTran)
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(SysVipSourceEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipSourceID==null)
+            if (pEntity.VipSourceID == null)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
              //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [SysVipSource] set ");
+                        if (pIsUpdateNullField || pEntity.VipSourceType!=null)
+                strSql.Append( "[VipSourceType]=@VipSourceType,");
             if (pIsUpdateNullField || pEntity.VipSourceName!=null)
                 strSql.Append( "[VipSourceName]=@VipSourceName,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
-            if (strSql.ToString().EndsWith(","))
-                strSql.Remove(strSql.Length - 1, 1);
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.TmpCount!=null)
+                strSql.Append( "[TmpCount]=@TmpCount");
             strSql.Append(" where VipSourceID=@VipSourceID ");
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@VipSourceType",SqlDbType.Int),
 					new SqlParameter("@VipSourceName",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@TmpCount",SqlDbType.Int),
 					new SqlParameter("@VipSourceID",SqlDbType.NVarChar)
             };
-			parameters[0].Value = pEntity.VipSourceName;
-			parameters[1].Value = pEntity.LastUpdateTime;
-			parameters[2].Value = pEntity.LastUpdateBy;
-			parameters[3].Value = pEntity.VipSourceID;
+			parameters[0].Value = pEntity.VipSourceType;
+			parameters[1].Value = pEntity.VipSourceName;
+			parameters[2].Value = pEntity.LastUpdateTime;
+			parameters[3].Value = pEntity.LastUpdateBy;
+			parameters[4].Value = pEntity.TmpCount;
+			parameters[5].Value = pEntity.VipSourceID;
 
             //执行语句
             int result = 0;
@@ -224,11 +242,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pEntity">实体实例</param>
         public void Update(SysVipSourceEntity pEntity )
         {
-            Update(pEntity ,true);
-        }
-        public void Update(SysVipSourceEntity pEntity ,bool pIsUpdateNullField )
-        {
-            this.Update(pEntity, pIsUpdateNullField, null);
+            this.Update(pEntity, null);
         }
 
         /// <summary>
@@ -250,7 +264,7 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipSourceID==null)
+            if (pEntity.VipSourceID == null)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
@@ -269,11 +283,9 @@ namespace JIT.CPOS.BS.DataAccess
                 return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [SysVipSource] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where VipSourceID=@VipSourceID;");
+            sql.AppendLine("update [SysVipSource] set  isdelete=1 where VipSourceID=@VipSourceID;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.VarChar,Value=Convert.ToString(CurrentUserInfo.UserID)},
                 new SqlParameter{ParameterName="@VipSourceID",SqlDbType=SqlDbType.VarChar,Value=pID}
             };
             //执行语句
@@ -296,15 +308,15 @@ namespace JIT.CPOS.BS.DataAccess
             object[] entityIDs = new object[pEntities.Length];
             for (int i = 0; i < pEntities.Length; i++)
             {
-                var item = pEntities[i];
+                var pEntity = pEntities[i];
                 //参数校验
-                if (item == null)
+                if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.VipSourceID==null)
+                if (pEntity.VipSourceID == null)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = item.VipSourceID;
+                entityIDs[i] = pEntity.VipSourceID;
             }
             Delete(entityIDs, pTran);
         }
@@ -343,7 +355,7 @@ namespace JIT.CPOS.BS.DataAccess
                 primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [SysVipSource] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy='"+CurrentUserInfo.UserID+"',IsDelete=1 where VipSourceID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [SysVipSource] set  isdelete=1 where VipSourceID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
             int result = 0;   
             if (pTran == null)
@@ -364,7 +376,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [SysVipSource] where isdelete=0 ");
+            sql.AppendFormat("select * from [SysVipSource] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -425,9 +437,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [VipSourceID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [SysVipSource] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [SysVipSource] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [SysVipSource] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [SysVipSource] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -502,6 +514,8 @@ namespace JIT.CPOS.BS.DataAccess
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
             if (pQueryEntity.VipSourceID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipSourceID", Value = pQueryEntity.VipSourceID });
+            if (pQueryEntity.VipSourceType!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipSourceType", Value = pQueryEntity.VipSourceType });
             if (pQueryEntity.VipSourceName!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipSourceName", Value = pQueryEntity.VipSourceName });
             if (pQueryEntity.CreateTime!=null)
@@ -514,6 +528,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.TmpCount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TmpCount", Value = pQueryEntity.TmpCount });
 
             return lstWhereCondition.ToArray();
         }
@@ -522,7 +538,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(SqlDataReader pReader, out SysVipSourceEntity pInstance)
+        protected void Load(IDataReader pReader, out SysVipSourceEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
             pInstance = new SysVipSourceEntity();
@@ -532,6 +548,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["VipSourceID"] != DBNull.Value)
 			{
 				pInstance.VipSourceID =  Convert.ToString(pReader["VipSourceID"]);
+			}
+			if (pReader["VipSourceType"] != DBNull.Value)
+			{
+				pInstance.VipSourceType =   Convert.ToInt32(pReader["VipSourceType"]);
 			}
 			if (pReader["VipSourceName"] != DBNull.Value)
 			{
@@ -556,6 +576,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["TmpCount"] != DBNull.Value)
+			{
+				pInstance.TmpCount =   Convert.ToInt32(pReader["TmpCount"]);
 			}
 
         }

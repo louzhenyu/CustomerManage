@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/5/23 11:40:34
+ * Create On	:2015/10/30 15:25:27
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -50,7 +50,47 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public String VipCardCode { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String UnitID { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String UnitName { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? SalesAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public Decimal? Amount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Decimal? UsedReturnAmount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String Reason { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public DateTime? EffectiveDate { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public DateTime? DeadlineDate { get; set; }
 
 		/// <summary>
 		/// 
@@ -66,6 +106,21 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String Remark { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? IsValid { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? IsWithdrawCash { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CustomerID { get; set; }
 
 		/// <summary>
 		/// 

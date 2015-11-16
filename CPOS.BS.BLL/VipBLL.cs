@@ -19,6 +19,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.OleDb;
 using System.Reflection;
 using JIT.Utility;
 using JIT.Utility.ExtensionMethod;
@@ -34,6 +37,7 @@ using JIT.CPOS.BS.Entity.WX;
 using System.Transactions;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.BLL.WX;
+using JIT.CPOS.DTO.Module.Report.VipReport.Response;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -42,6 +46,42 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class VipBLL
     {
+
+        /// <summary>
+        /// 根据标识符获取实例
+        /// </summary>
+        /// <param name="pID">标识符的值</param>
+        public VipEntity NewGetByID(object pID)
+        {
+            return _currentDAO.NewGetByID(pID);
+        }
+
+        #region 会员统计报表
+        /// <summary>
+        /// 会员生日统计报表
+        /// </summary>
+        /// <param name="Month"></param>
+        /// <param name="UnitID"></param>
+        /// <param name="Gender"></param>
+        /// <param name="CardStatusID"></param>
+        /// <param name="StarDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        public DataSet GetVipBirthdayCount(string Month, string UnitID, string Gender, int? CardStatusID, string StarDate, string EndDate, int? PageSize, int? PageIndex)
+        {
+            //VipBirthdayRD Data = null;
+            //int? ThisCardStatusID = null;
+            //if (CardStatusID != null) {
+            //    ThisCardStatusID = CardStatusID.Value;
+            //}
+            DataSet ds = this._currentDAO.VipBirthdayCount(Month, UnitID, Gender, CardStatusID, StarDate, EndDate, PageSize, PageIndex);
+            
+            
+
+            return ds;
+        }
+        #endregion
+
         #region 会员查询
         /// <summary>
         /// 会员查询 Jermyn20130514+
@@ -783,7 +823,7 @@ namespace JIT.CPOS.BS.BLL
                     vip.Status = 2;
                     vip.VipRealName = name;
 
-                    vipBLL.Update(vip,true);
+                    vipBLL.Update(vip, true);
 
                     //added by zhangwei 注册送200积分
                     #region 插入积分 防止影响注册，增加try catch 并忽略错误
@@ -954,7 +994,7 @@ namespace JIT.CPOS.BS.BLL
                     var strAldRsp = HttpWebClient.DoHttpRequest(url, postContent);
                     var aldRsp = strAldRsp.DeserializeJSONTo<ALDResponse>();
 
-                    if (aldRsp != null && aldRsp.Data != null && aldRsp.Data.Count!=0 && aldRsp.ResultCode == 200)
+                    if (aldRsp != null && aldRsp.Data != null && aldRsp.Data.Count != 0 && aldRsp.ResultCode == 200)
                     {
                         var entity = aldRsp.Data.FirstOrDefault();
                         //同步用户信息
@@ -1160,9 +1200,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="objectID">优惠券使用门店/分销商ID</param>
         /// <param name="type">是否包含抵用券（0=包含抵用券；1=不包含抵用券）</param>
         /// <returns></returns>
-        public DataSet GetVipCouponDataSet(string vipId, decimal totalPayAmount,int usableRange,string objectID,int type)
+        public DataSet GetVipCouponDataSet(string vipId, decimal totalPayAmount, int usableRange, string objectID, int type)
         {
-            return this._currentDAO.GetVipCouponDataSet(vipId, totalPayAmount,usableRange,objectID,type);
+            return this._currentDAO.GetVipCouponDataSet(vipId, totalPayAmount, usableRange, objectID, type);
         }
 
         public void ProcSetCancelOrder(string customerId, string orderId, string vipId)
@@ -1184,9 +1224,9 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #region 充值卡模块，查找会员
-        public DataSet GetCardVip(string criterion,string couponCode, int pageSize, int pageIndex)
+        public DataSet GetCardVip(string criterion, string couponCode, int pageSize, int pageIndex)
         {
-            return this._currentDAO.GetCardVip(criterion,couponCode, pageSize, pageIndex);
+            return this._currentDAO.GetCardVip(criterion, couponCode, pageSize, pageIndex);
         }
         #endregion
 
@@ -1204,9 +1244,9 @@ namespace JIT.CPOS.BS.BLL
 
         }
 
-        public string GetVipSearchPropList(string customerId, string tableName,string unitId)
+        public string GetVipSearchPropList(string customerId, string tableName, string unitId)
         {
-            return this._currentDAO.GetVipSearchPropList(customerId, tableName,unitId);
+            return this._currentDAO.GetVipSearchPropList(customerId, tableName, unitId);
         }
         /// <summary>
         /// 获取更新会员所需列信息以及列对应的值
@@ -1215,7 +1255,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="userId"></param>
         /// <param name="vipId"></param>
         /// <returns></returns>
-        public DataSet GetExistVipInfo(string customerId,string userId ,string vipId)
+        public DataSet GetExistVipInfo(string customerId, string userId, string vipId)
         {
             return this._currentDAO.GetExistVipInfo(customerId, userId, vipId);
         }
@@ -1224,9 +1264,9 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="customerId">客户ID</param>
         /// <returns></returns>
-        public string GetCreateVipPropList(string customerId,string userId)
+        public string GetCreateVipPropList(string customerId, string userId)
         {
-            return this._currentDAO.GetCreateVipPropList(customerId,userId);
+            return this._currentDAO.GetCreateVipPropList(customerId, userId);
         }
         public DataSet GetVipTagTypeList()
         {
@@ -1236,7 +1276,7 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetVipTagList(customerId);
         }
-        public DataSet GetVipDetailInfo(string vipId,string customerId)
+        public DataSet GetVipDetailInfo(string vipId, string customerId)
         {
             return this._currentDAO.GetVipDetailInfo(vipId, customerId);
         }
@@ -1260,27 +1300,27 @@ namespace JIT.CPOS.BS.BLL
                 scope.Complete();
             }
         }
-        public DataSet GetVipIntegralList(string vipId, int pageIndex, int pageSize,string sortType)
+        public DataSet GetVipIntegralList(string vipId, int pageIndex, int pageSize, string sortType)
         {
-            return this._currentDAO.GetVipIntegralList(vipId, pageIndex, pageSize,sortType);
+            return this._currentDAO.GetVipIntegralList(vipId, pageIndex, pageSize, sortType);
         }
 
-        public DataSet GetVipOrderList(string vipId, string customerId, int pageIndex, int pageSize,string sortType)
+        public DataSet GetVipOrderList(string vipId, string customerId, int pageIndex, int pageSize, string sortType)
         {
-            return this._currentDAO.GetVipOrderList(vipId, customerId, pageIndex, pageSize,sortType);
+            return this._currentDAO.GetVipOrderList(vipId, customerId, pageIndex, pageSize, sortType);
         }
-        public DataSet GetVipConsumeCardList(string vipId, int pageIndex, int pageSize,string sortType)
+        public DataSet GetVipConsumeCardList(string vipId, int pageIndex, int pageSize, string sortType)
         {
             return this._currentDAO.GetVipConsumeCardList(vipId, pageIndex, pageSize, sortType);
         }
 
-        public DataSet GetVipAmountList(string vipid, int pageIndex, int pageSize,string sortType)
+        public DataSet GetVipAmountList(string vipid, int pageIndex, int pageSize, string sortType)
         {
-            return this._currentDAO.GetVipAmountList(vipid, pageIndex, pageSize,sortType);
+            return this._currentDAO.GetVipAmountList(vipid, pageIndex, pageSize, sortType);
         }
-        public DataSet GetVipOnlineOffline(string vipId, int pageIndex, int pageSize,string sortType)
+        public DataSet GetVipOnlineOffline(string vipId, int pageIndex, int pageSize, string sortType)
         {
-            return this._currentDAO.GetVipOnlineOffline(vipId, pageIndex, pageSize,sortType);
+            return this._currentDAO.GetVipOnlineOffline(vipId, pageIndex, pageSize, sortType);
         }
         /// <summary>
         /// 根据条件和标签查询VIP列表
@@ -1331,7 +1371,7 @@ namespace JIT.CPOS.BS.BLL
         /// 根据列添加会员
         /// </summary>
         /// <param name="columns"></param>
-        public void InsertVipEntity(SearchColumn[] columns,string clientId)
+        public void InsertVipEntity(SearchColumn[] columns, string clientId)
         {
             var bll = new VipBLL(this.CurrentUserInfo);
             var vipLogBll = new VipLogBLL(this.CurrentUserInfo);
@@ -1370,27 +1410,28 @@ namespace JIT.CPOS.BS.BLL
         {
             var customerBll = new t_customerBLL(this.CurrentUserInfo);
             var customer = customerBll.GetByCustomerID(vip.ClientID);
-            if(null == customer) return;
+            if (null == customer) return;
             var address = customer.customer_address;
             var remark = string.Format("备注：如有疑问，请咨询{0}。", customer.customer_tel);
             var first = string.Format("您好，您已经成为{0}会员。", customer.customer_name);
-            var message = new WeixinTemplateMessage(){
-                touser=vip.WeiXinUserId,
-                template_id=newVipNotificationTemplateId,
-                url="",
-                topcolor="#FF0000",
-                data = new Dictionary<string,WeixinTemplateMessageData>()
-                };
-            message.Add("first",first,"#cccccc");
-            message.Add("cardNumber", vip.VipCode,  "#cccccc" );
-            message.Add("type",  "商户",  "#000000" );
-            message.Add("address",  address,  "#cccccc");
-            message.Add("VIPName",  vip.VipName, "#cccccc" );
+            var message = new WeixinTemplateMessage()
+            {
+                touser = vip.WeiXinUserId,
+                template_id = newVipNotificationTemplateId,
+                url = "",
+                topcolor = "#FF0000",
+                data = new Dictionary<string, WeixinTemplateMessageData>()
+            };
+            message.Add("first", first, "#cccccc");
+            message.Add("cardNumber", vip.VipCode, "#cccccc");
+            message.Add("type", "商户", "#000000");
+            message.Add("address", address, "#cccccc");
+            message.Add("VIPName", vip.VipName, "#cccccc");
             message.Add("VIPPhone", vip.Phone, "#cccccc");
             message.Add("expDate", DateTime.MaxValue.Date.ToSQLFormatString(), "#cccccc");
             message.Add("remark", remark, "#cccccc");
             var jsonContent = message.ToJSON();
-            Loggers.Debug(new DebugLogInfo() { Message = string.Format("zk weixin template message interface json result:{0}", jsonContent)});
+            Loggers.Debug(new DebugLogInfo() { Message = string.Format("zk weixin template message interface json result:{0}", jsonContent) });
             #region simple format template message for new vip
             /******* 
             var content = new
@@ -1447,12 +1488,12 @@ namespace JIT.CPOS.BS.BLL
             #endregion
             var appService = new WApplicationInterfaceBLL(this.CurrentUserInfo);
             var appList = appService.QueryByEntity(new WApplicationInterfaceEntity { CustomerId = vip.ClientID }, null);
-            if(appList == null || appList.Length == 0) return;
+            if (appList == null || appList.Length == 0) return;
             var app = appList.FirstOrDefault();
             var commonBll = new CommonBLL();
             Loggers.Debug(new DebugLogInfo() { Message = string.Format("开始发送成为会员通知模板消息:{0}", jsonContent) });
             var result = commonBll.SendTemplateMessage(app.WeiXinID, jsonContent);
-            Loggers.Debug(new DebugLogInfo(){Message = string.Format("发送成为会员通知模板消息返回结果：{0}",result)});
+            Loggers.Debug(new DebugLogInfo() { Message = string.Format("发送成为会员通知模板消息返回结果：{0}", result) });
         }
 
         #region RequestParameter 2014-10-16
@@ -1548,11 +1589,11 @@ namespace JIT.CPOS.BS.BLL
         public decimal GetVipSale(string vipID)
         {
             DataSet ds = _currentDAO.GetVipSale(vipID);
-            if (ds != null && ds.Tables[0].Rows.Count>0)
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 if (ds.Tables[0].Rows[0]["SalesPreferentiaAmount"] is DBNull)
                 {
-                    return 100;                    
+                    return 100;
                 }
                 else
                 {
@@ -1583,6 +1624,88 @@ namespace JIT.CPOS.BS.BLL
         public int GetInviteCount(string userID)
         {
             return _currentDAO.GetInviteCount(userID);
+        }
+        /// <summary>
+        /// 会员卡信息
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="idnumber"></param>
+        /// <param name="vipcardcode"></param>
+        /// <returns></returns>
+        public DataSet GetVipCardInfo(string phone, string idnumber, string vipcardcode)
+        {
+            return this._currentDAO.GetVipCardInfo(phone, idnumber, vipcardcode);
+        }
+        /// <summary>
+        /// 会员卡详情
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="idnumber"></param>
+        /// <param name="vipcardcode"></param>
+        /// <returns></returns>
+        public DataSet GetVipCardDetail(string phone, string idnumber, string vipcardcode)
+        {
+            return this._currentDAO.GetVipCardDetail(phone, idnumber, vipcardcode);
+        }
+
+        /// <summary>
+        /// excel导入数据库
+        /// </summary>
+        /// <param name="strPath"></param>
+        /// <param name="CurrentUserInfo"></param>
+        public DataSet ExcelToDb(string strPath, LoggingSessionInfo CurrentUserInfo)
+        {
+            DataSet ds; //要插入的数据  
+            DataSet dsResult = null; //要插入的数据  
+            DataTable dt;
+
+            string strConn = "Provider=Microsoft.Ace.OleDb.12.0;" + "data source=" + strPath + ";Extended Properties='Excel 12.0; HDR=Yes; IMEX=1'";
+            OleDbConnection conn = new OleDbConnection(strConn); //连接excel              
+            if (conn.State.ToString() == "Open")
+            {
+                conn.Close();
+            }
+            conn.Open();    //外部表不是预期格式，不兼容2010的excel表结构  
+            string s = conn.State.ToString();
+            OleDbDataAdapter myCommand = null;
+            ds = null;
+
+            string strExcel = "select * from [sheet1$]";
+            myCommand = new OleDbDataAdapter(strExcel, conn);
+            ds = new DataSet();
+            myCommand.Fill(ds);
+            conn.Close();
+            try
+            {
+                dt = ds.Tables[0];
+                string connString = @"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
+                SqlConnection connSql = new SqlConnection(connString);
+                connSql.Open();
+                DataRow dr = null;
+                int C_Count = dt.Columns.Count;//获取列数  
+                for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
+                {
+                    dr = dt.Rows[i];
+                    this._currentDAO.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                }
+
+                connSql.Close();
+                //临时表导入正式表
+                dsResult = this._currentDAO.ExcelImportToDB();
+            }
+            catch (Exception)
+            {
+            }
+
+            return dsResult;
+        }
+        /// <summary>
+        /// 事务
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
         }
     }
 }

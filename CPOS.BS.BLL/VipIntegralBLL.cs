@@ -39,7 +39,7 @@ namespace JIT.CPOS.BS.BLL
     public partial class VipIntegralBLL
     {
         #region Jermyn20130916 处理终端消费，计算积分，发送消息
-        public bool SetPushIntegral(string orderId,string msgUrl, out string strError)
+        public bool SetPushIntegral(string orderId, string msgUrl, out string strError)
         {
             try
             {
@@ -155,13 +155,10 @@ namespace JIT.CPOS.BS.BLL
                     {
                         vipIntegralEntity.VipID = vipInfo.VIPID;
                         //vipIntegralEntity.InIntegral = 0; // 增加积分
-                        vipIntegralEntity.OutIntegral = Common.Utils.GetDecimalVal(
-                            vipIntegralDataList[0].OutIntegral) + integralValue; //消费积分
-                        vipIntegralEntity.EndIntegral = Common.Utils.GetDecimalVal(
-                            vipIntegralDataList[0].EndIntegral) + integralValue; //积分余额
+                        vipIntegralEntity.OutIntegral = vipIntegralDataList[0].OutIntegral + integralValue; //消费积分
+                        vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral + integralValue; //积分余额
                         //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                        vipIntegralEntity.ValidIntegral = Common.Utils.GetDecimalVal(
-                            vipIntegralDataList[0].ValidIntegral) + integralValue; // 当前有效积分
+                        vipIntegralEntity.ValidIntegral = vipIntegralDataList[0].ValidIntegral + integralValue; // 当前有效积分
                         //vipIntegralBLL.Update(vipIntegralEntity, false);
                     }
                     #endregion
@@ -169,7 +166,7 @@ namespace JIT.CPOS.BS.BLL
                     #region 更新VIP
                     VipEntity vipEntity = new VipEntity();
                     var vipEntityDataList = vipBLL.QueryByEntity(
-                        new VipEntity() { VIPID = vipInfo.VIPID}, null);
+                        new VipEntity() { VIPID = vipInfo.VIPID }, null);
                     if (vipEntityDataList == null || vipEntityDataList.Length == 0 || vipEntityDataList[0] == null)
                     {
                         vipEntity.VIPID = vipInfo.VIPID;
@@ -248,7 +245,8 @@ namespace JIT.CPOS.BS.BLL
                 strError = "成功.";
                 return true;
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 strError = ex.ToString();
                 Loggers.Debug(new DebugLogInfo()
                 {
@@ -272,12 +270,11 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="point">积分(如果指定积分,则使用此积分更新)</param>
         /// <param name="remark">描述</param>
         /// <param name="updateBy">积分操作人 【必须】</param>
-        public void ProcessPoint(int sourceId, string customerId, string vipId, string objectId,System.Data.SqlClient.SqlTransaction tran=null, string fromVipId = null, decimal point = 0, string remark = null, string updateBy = null)
+        public void ProcessPoint(int sourceId, string customerId, string vipId, string objectId, System.Data.SqlClient.SqlTransaction tran = null, string fromVipId = null, decimal point = 0, string remark = null, string updateBy = null)
         {
             try
             {
                 Loggers.Debug(new DebugLogInfo() { Message = string.Format("soureId: {0}, customerId: {1}, vipId: {2}, objectId: {3}, point: {4}", sourceId, customerId, vipId, objectId, point) });
-
                 string result = "0";
                 result = this._currentDAO.ProcessPoint(sourceId, customerId, vipId, objectId, tran, fromVipId, point, remark, updateBy) ?? "0";
 
@@ -295,7 +292,7 @@ namespace JIT.CPOS.BS.BLL
         #endregion
 
         /// <summary>
-        /// 订单完成时，返积分，返现
+        /// 订单完成时，返积分，返现 Willie Yan
         /// </summary>
         /// <param name="orderId"></param>
         /// <param name="userId">vipId</param>
@@ -333,7 +330,7 @@ namespace JIT.CPOS.BS.BLL
 
             var bll = new VipBLL(CurrentUserInfo);
             //返现总金额
-            var totalReturnAmount = bll.GetTotalReturnAmountBySkuId(str,tran);
+            var totalReturnAmount = bll.GetTotalReturnAmountBySkuId(str, tran);
 
             if (totalReturnAmount > 0)
             {
@@ -392,129 +389,159 @@ namespace JIT.CPOS.BS.BLL
         /// <summary>
         /// 确认收货时处理积分、返现、佣金
         /// </summary>
-        /// <param name="orderId"></param>
-        /// <param name="userId"></param>
-        /// <param name="tran"></param>
-        /// <param name="actualAmount"></param>
-        /// <param name="salesUser">销售员ID</param>
+        /// <param name="orderInfo">订单信息</param>
+        /// <param name="tran">事务</param>
         /// <param name="dataFromId">16=会员小店;17=员工小店;3=微商城下单</param>
-        public void OrderReturnMoneyAndIntegral(string orderId, string userId, SqlTransaction tran, decimal actualAmount, string salesUserId, string dataFromId)
+        public void OrderReward(T_InoutEntity orderInfo, SqlTransaction tran)
         {
-            //获取社会化销售配置和积分返现配置
+            var vipBll = new VipBLL(this.CurrentUserInfo);
+            var unitBLL = new t_unitBLL(CurrentUserInfo);
             var basicSettingBll = new CustomerBasicSettingBLL(this.CurrentUserInfo);
+            var vipAmountBll = new VipAmountBLL(CurrentUserInfo);
+
+            var vipCardVipMappingBLL = new VipCardVipMappingBLL(CurrentUserInfo);
+            var vipCardBLL = new VipCardBLL(CurrentUserInfo);
+            var vipCardRuleBLL = new VipCardRuleBLL(CurrentUserInfo);
+
+            //获取会员信息
+            var vipInfo = vipBll.GetByID(orderInfo.vip_no);
+            //获取门店信息
+            t_unitEntity unitInfo = null;
+            if (!string.IsNullOrEmpty(orderInfo.sales_unit_id))
+                unitInfo = unitBLL.GetByID(orderInfo.sales_unit_id);
+
+            //获取社会化销售配置和积分返现配置
             Hashtable htSetting = basicSettingBll.GetSocialSetting();
 
-            //3.获取积分与金额的兑换比例
-            var vipBll = new VipBLL(this.CurrentUserInfo);
+            //获取积分与金额的兑换比例
             var integralAmountPre = vipBll.GetIntegralAmountPre(this.CurrentUserInfo.ClientID);
             if (integralAmountPre == 0)
                 integralAmountPre = (decimal)0.01;
 
+            decimal actualAmount = orderInfo.actual_amount ?? 0;    //实付金额
+            decimal deliveryAmount = orderInfo.DeliveryAmount;      //运费
+
+            actualAmount = actualAmount - deliveryAmount;           //实付金额-运费
+
+            //账户余额和返现
+            var vipAmountEntity = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = vipInfo.VIPID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
+
+            #region 获取卡规则
+
+            VipCardRuleEntity vipCardRuleInfo = null;
+            var vipCardMappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VIPID = vipInfo.VIPID }, null).FirstOrDefault();
+            if (vipCardMappingInfo != null)
+            {
+                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardID = vipCardMappingInfo.VipCardID }, null).FirstOrDefault();
+                if (vipCardInfo != null)
+                {
+                    vipCardRuleInfo = vipCardRuleBLL.QueryByEntity(new VipCardRuleEntity() { VipCardTypeID = vipCardInfo.VipCardTypeID }, null).FirstOrDefault();
+                }
+            }
+            #endregion
+
             #region 返积分 update by Henry 2015-4-17
+
             if (int.Parse(htSetting["enableIntegral"].ToString()) == 1)
             {
                 var vipIntegralBll = new VipIntegralBLL(this.CurrentUserInfo);
                 var vipIntegralDetailBll = new VipIntegralDetailBLL(this.CurrentUserInfo);
-                if (int.Parse(htSetting["rewardsType"].ToString()) == 1)//按商品
+                if (int.Parse(htSetting["rewardsType"].ToString()) == 1)//按商品[暂不支持]
                 {
-                    const int sourceId = 21;//返现
-                    vipIntegralBll.ProcessPoint(sourceId, CurrentUserInfo.ClientID, userId, orderId, tran, null,
-                        0, null, userId);
+                    //const int sourceId = 21;//返现
+                    //vipIntegralBll.ProcessPoint(sourceId, CurrentUserInfo.ClientID, userId, orderId, tran, null,0, null, userId);
                 }
                 else//按订单
                 {
-                    decimal points = (int)Math.Round(actualAmount * (decimal.Parse(htSetting["rewardPointsPer"].ToString()) / 100) / integralAmountPre, 1);
-                    var vipIntegral = vipIntegralBll.GetByID(userId);
-                    //修改会员信息中的积分
-                    var vipInfo = vipBll.GetByID(userId);
-                    if (vipInfo != null)
+                    if (vipCardRuleInfo != null)
                     {
-                        vipInfo.Integration = (vipInfo.Integration == null ? 0 : vipInfo.Integration.Value) + points;
-                        vipBll.Update(vipInfo);
+                        decimal paidGivePoints = vipCardRuleInfo.PaidGivePoints != null ? vipCardRuleInfo.PaidGivePoints.Value : 0;
+                        if (paidGivePoints > 0)
+                        {
+                            //int points = (int)Math.Round(actualAmount * (decimal.Parse(htSetting["rewardPointsPer"].ToString()) / 100) / integralAmountPre, 1);
+                            int points = (int)Math.Round(actualAmount / paidGivePoints, 1);
+                            int pointsOrderUpLimit = int.Parse(htSetting["pointsOrderUpLimit"].ToString());
+                            if (pointsOrderUpLimit > 0)
+                                points = points > pointsOrderUpLimit ? pointsOrderUpLimit : points; //处理每单赠送积分上限
+                            if (points > 0)
+                            {
+                                //积分变更
+                                var IntegralDetail = new VipIntegralDetailEntity()
+                                {
+                                    Integral = points,
+                                    IntegralSourceID = "1",
+                                    ObjectId = orderInfo.order_id
+                                };
+                                this.AddIntegral(vipInfo, unitInfo, IntegralDetail, tran, this.CurrentUserInfo);
+                            }
+                        }
                     }
-                    //修改会员积分表中的积分
-                    if (vipIntegral == null)
-                    {
-                        VipIntegralEntity vipIntegralEntity = new VipIntegralEntity() { };
-                        vipIntegralEntity.VipID = userId;
-                        vipIntegralEntity.InIntegral = points;
-                        vipIntegralEntity.EndIntegral = points;
-                        vipIntegralEntity.ValidIntegral = points;
-                        vipIntegralBll.Create(vipIntegralEntity);
-                    }
-                    else
-                    {
-                        vipIntegral.InIntegral = vipIntegral.InIntegral + points;
-                        vipIntegral.EndIntegral = vipIntegral.EndIntegral + points;
-                        vipIntegral.ValidIntegral = vipIntegral.ValidIntegral + points;
-                        vipIntegralBll.Update(vipIntegral);
-                    }
-                    VipIntegralDetailEntity detail = new VipIntegralDetailEntity() { };
-                    detail.VipIntegralDetailID = Guid.NewGuid().ToString();
-                    detail.VIPID = userId;
-                    detail.ObjectId = orderId;
-                    detail.Integral = points;
-                    detail.IntegralSourceID = "1";//消费奖励
-                    detail.IsAdd = 1;
-                    vipIntegralDetailBll.Create(detail);
                 }
             }
+
             #endregion
 
             #region 返现
 
-            var vipAmountBll = new VipAmountBLL(CurrentUserInfo);
             if (int.Parse(htSetting["enableRewardCash"].ToString()) == 1)
             {
-                //1.Get All Order.skuId and Order.Qty 
-
-                var orderDetail = new TInoutDetailBLL(this.CurrentUserInfo);
-
-                var orderDetailList = orderDetail.QueryByEntity(new TInoutDetailEntity()
+                if (vipCardRuleInfo != null)
                 {
-                    order_id = orderId
-                }, null);
+                    decimal returnAmountPer = vipCardRuleInfo.ReturnAmountPer != null ? vipCardRuleInfo.ReturnAmountPer.Value : 0;
+                    if (returnAmountPer > 0)
+                    {
+                        var orderDetail = new TInoutDetailBLL(this.CurrentUserInfo);
+                        var orderDetailList = orderDetail.QueryByEntity(new TInoutDetailEntity() { order_id = orderInfo.order_id }, null);
 
-                if (orderDetailList == null || orderDetailList.Length == 0)
-                {
-                    throw new APIException("该订单没有商品") { ErrorCode = 121 };
+                        if (orderDetailList == null || orderDetailList.Length == 0)
+                        {
+                            throw new APIException("该订单没有商品") { ErrorCode = 121 };
+                        }
+                        var str = orderDetailList.Aggregate("", (i, j) =>
+                        {
+                            i += string.Format("{0},{1};", j.SkuID, Convert.ToInt32(j.OrderQty));
+                            return i;
+                        });
+
+                        decimal totalReturnAmount = 0;//返现总金额
+
+                        if (int.Parse(htSetting["rewardsType"].ToString()) == 1)//按商品[暂不支持]
+                            totalReturnAmount = vipBll.GetTotalReturnAmountBySkuId(str, tran);
+                        else//按订单
+                            totalReturnAmount = actualAmount * (returnAmountPer / 100);
+                        //totalReturnAmount = actualAmount * (decimal.Parse(htSetting["rewardCashPer"].ToString()) / 100);
+
+                        decimal cashOrderUpLimit = int.Parse(htSetting["cashOrderUpLimit"].ToString());
+                        if (cashOrderUpLimit > 0)
+                            totalReturnAmount = totalReturnAmount > cashOrderUpLimit ? cashOrderUpLimit : totalReturnAmount; //处理每单返现上线
+
+                        if (totalReturnAmount > 0)
+                        {
+                            //更新个人账户的可使用余额 
+                            var detailInfo = new VipAmountDetailEntity()
+                            {
+                                Amount = totalReturnAmount,
+                                ObjectId = orderInfo.order_id,
+                                AmountSourceId = "2"
+                            };
+                            vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, detailInfo, tran, CurrentUserInfo);
+                        }
+                    }
                 }
-                var str = orderDetailList.Aggregate("", (i, j) =>
-                {
-                    i += string.Format("{0},{1};", j.SkuID, Convert.ToInt32(j.OrderQty));
-                    return i;
-                });
-
-                var bll = new VipBLL(CurrentUserInfo);
-                decimal totalReturnAmount = 0;//返现总金额
-                if (int.Parse(htSetting["rewardsType"].ToString()) == 1)//按商品
-                {
-                    totalReturnAmount = bll.GetTotalReturnAmountBySkuId(str, tran);
-                }
-                else//按订单
-                {
-                    totalReturnAmount = actualAmount * (decimal.Parse(htSetting["rewardCashPer"].ToString()) / 100);
-                }
-                if (totalReturnAmount > 0)
-                {
-                    //更新个人账户的可使用余额 
-                    vipAmountBll.AddReturnAmount(userId, totalReturnAmount, orderId, "2", this.CurrentUserInfo);
-                }
-
             }
             #endregion
 
-            #region 佣金处理 add by Henry 2016-6-10
+            #region 佣金处理 add by Henry 2015-6-10
 
             decimal totalAmount = 0; //订单总佣金
             if (int.Parse(htSetting["socialSalesType"].ToString()) == 1)     //按商品设置计算
             {
                 //确认收货时，如果销售者(sales_user)不为空,则将商品佣金*购买的数量保存到余额表中
-                if (!string.IsNullOrEmpty(salesUserId))
+                if (!string.IsNullOrEmpty(orderInfo.sales_user))
                 {
                     var skuPriceBll = new SkuPriceService(this.CurrentUserInfo);              //sku价格
                     var inoutService = new InoutService(this.CurrentUserInfo);
-                    List<OrderDetail> orderDetailList = skuPriceBll.GetSkuPrice(orderId);
+                    List<OrderDetail> orderDetailList = skuPriceBll.GetSkuPrice(orderInfo.order_id);
                     if (orderDetailList.Count > 0)
                     {
                         foreach (var detail in orderDetailList)
@@ -526,12 +553,12 @@ namespace JIT.CPOS.BS.BLL
             }
             else//按订单金额
             {
-                if (dataFromId == "16")     //会员小店
+                if (orderInfo.data_from_id == "16")     //会员小店
                 {
                     if (int.Parse(htSetting["enableVipSales"].ToString()) > 0)//启用会员小店
                         totalAmount += actualAmount * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100);
                 }
-                else if (dataFromId == "17") //员工小店
+                else if (orderInfo.data_from_id == "17") //员工小店
                 {
                     if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
                         totalAmount += actualAmount * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100);
@@ -539,36 +566,93 @@ namespace JIT.CPOS.BS.BLL
             }
             if (totalAmount > 0)
             {
-                vipAmountBll.AddVipEndAmount(salesUserId, totalAmount, tran, "10", orderId, this.CurrentUserInfo);  //变更余额和余额记录
+                var detailInfo = new VipAmountDetailEntity()
+                {
+                    Amount = totalAmount,
+                    AmountSourceId = "10",
+                    ObjectId = orderInfo.order_id
+                };
+                //变更余额和余额记录
+                vipAmountBll.AddVipAmount(vipInfo, unitInfo, vipAmountEntity, detailInfo, tran, this.CurrentUserInfo);
             }
             #endregion
         }
+        /// <summary>
+        /// 退换货-确认收货时退回订单奖励积分、返现和佣金
+        /// </summary>
+        /// <param name="orderInfo"></param>
+        /// <param name="tran"></param>
+        public void CancelReward(T_InoutEntity orderInfo, VipEntity vipInfo, SqlTransaction tran)
+        {
+            //取消奖励积分
+            var vipIntegralBll = new VipIntegralBLL(this.CurrentUserInfo);
+            var vipIntegralDetailBll = new VipIntegralDetailBLL(this.CurrentUserInfo);
 
+            var integralDetailInfo = vipIntegralDetailBll.QueryByEntity(new VipIntegralDetailEntity() { VIPID = orderInfo.vip_no, ObjectId = orderInfo.order_id, IntegralSourceID = "1" }, null).FirstOrDefault();
+            if (integralDetailInfo != null)
+            {
+                var vipIntegralInfo = vipIntegralBll.QueryByEntity(new VipIntegralEntity() { VipID = vipInfo.VIPID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
+
+                vipIntegralInfo.InIntegral -= integralDetailInfo.Integral;
+                vipIntegralInfo.EndIntegral -= integralDetailInfo.Integral;
+                vipIntegralInfo.ValidIntegral -= integralDetailInfo.Integral;
+                vipIntegralInfo.CumulativeIntegral -= integralDetailInfo.Integral;
+                vipIntegralBll.Update(vipIntegralInfo, tran);
+
+                vipIntegralDetailBll.Delete(integralDetailInfo, tran);
+            }
+            //取消奖励返现
+            var vipAmountBll = new VipAmountBLL(this.CurrentUserInfo);
+            var vipAmountDetailBll = new VipAmountDetailBLL(this.CurrentUserInfo);
+
+            var vipAmountDetailInfo = vipAmountDetailBll.QueryByEntity(new VipAmountDetailEntity() { VipId = orderInfo.vip_no, ObjectId = orderInfo.order_id, AmountSourceId = "2" }, null).FirstOrDefault();
+            if (vipAmountDetailInfo != null)
+            {
+                var vipAmountInfo = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = vipInfo.VIPID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
+
+                vipAmountInfo.InReturnAmount -= vipAmountDetailInfo.Amount;
+                vipAmountInfo.ReturnAmount -= vipAmountDetailInfo.Amount;
+                vipAmountInfo.ValidReturnAmount -= vipAmountDetailInfo.Amount;
+                vipAmountInfo.TotalReturnAmount -= vipAmountDetailInfo.Amount;
+                vipAmountBll.Update(vipAmountInfo, tran);
+
+                vipAmountDetailBll.Delete(vipAmountDetailInfo, tran);
+            }
+            //取消奖励佣金
+        }
         /// <summary>
         /// 积分变更
         /// </summary>
-        /// <param name="vipId"></param>
-        /// <param name="points"></param>
-        /// <param name="tran"></param>
-        /// <param name="type"></param>
-        /// <param name="objectId"></param>
-        /// <param name="loggingSessionInfo"></param>
+        /// <param name="vipInfo">会员信息</param>
+        /// <param name="unitInfo">门店信息</param>
+        /// <param name="detailInfo">变更明细信息</param>
+        /// <param name="tran">事物</param>
+        /// <param name="loggingSessionInfo">登录信息</param>
         /// <returns></returns>
-        public bool AddIntegral(string vipId,int points, System.Data.SqlClient.SqlTransaction tran, string type, string objectId, LoggingSessionInfo loggingSessionInfo)
+        public string AddIntegral(VipEntity vipInfo, t_unitEntity unitInfo, VipIntegralDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
         {
-            bool b = false;
+            string vipIntegralDetailId = string.Empty;//变更明细ID
             //更新个人账户的可使用余额 
             try
             {
                 var vipBLL = new VipBLL(loggingSessionInfo);
                 var vipIntegralBLL = new VipIntegralBLL(loggingSessionInfo);
                 var vipIntegralDetailBLL = new VipIntegralDetailBLL(loggingSessionInfo);
-                var vipInfo = vipBLL.GetByID(vipId);
-                var vipIntegralInfo = vipIntegralBLL.GetByID(vipId);
+                var customerBasicSettingBLL = new CustomerBasicSettingBLL(loggingSessionInfo);
+
+                //获取积分有效期
+                int pointsValidPeriod = 2;  //默认为1，业务处理时会减去1
+                var pointsValidPeriodInfo = customerBasicSettingBLL.QueryByEntity(new CustomerBasicSettingEntity() { SettingCode = "PointsValidPeriod", CustomerID = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+                if (pointsValidPeriodInfo != null)
+                    pointsValidPeriod = int.Parse(pointsValidPeriodInfo.SettingValue);
+
+                //获取会员积分主表信息
+                //var vipIntegralInfo = vipIntegralBLL.GetByID(vipId);
+                var vipIntegralInfo = vipIntegralBLL.QueryByEntity(new VipIntegralEntity() { VipID = vipInfo.VIPID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
                 //修改会员信息剩余积分
                 if (vipInfo != null)
                 {
-                    vipInfo.Integration=vipInfo.Integration==null?0:(vipInfo.Integration.Value+points);
+                    vipInfo.Integration = (vipInfo.Integration == null ? 0 : vipInfo.Integration.Value) + detailInfo.Integral;
                     vipBLL.Update(vipInfo, tran);
                 }
                 //创建会员积分记录信息
@@ -576,43 +660,59 @@ namespace JIT.CPOS.BS.BLL
                 {
                     vipIntegralInfo = new VipIntegralEntity
                     {
-                        VipID=vipId,
-                        BeginIntegral=points,
-                        InIntegral=points,
-                        EndIntegral=points,
-                        ValidIntegral=points
+                        VipID = vipInfo.VIPID,
+                        VipCardCode = vipInfo.VipCode,
+                        BeginIntegral = 0,
+                        InIntegral = detailInfo.Integral,
+                        OutIntegral = 0,
+                        EndIntegral = detailInfo.Integral,
+                        ImminentInvalidIntegral = 0,
+                        InvalidIntegral = 0,
+                        ValidIntegral = detailInfo.Integral,
+                        CumulativeIntegral = detailInfo.Integral,
+                        CustomerID = loggingSessionInfo.ClientID
                     };
                     vipIntegralBLL.Create(vipIntegralInfo, tran);
                 }
                 else//修改会员积分记录信息
                 {
-                    vipIntegralInfo.EndIntegral = (vipIntegralInfo.EndIntegral == null ? 0 : vipIntegralInfo.EndIntegral.Value) + points;
-                    vipIntegralInfo.ValidIntegral = (vipIntegralInfo.ValidIntegral == null ? 0 : vipIntegralInfo.ValidIntegral.Value) + points;
-                    if (points > 0)
-                        vipIntegralInfo.InIntegral = (vipIntegralInfo.InIntegral == null ? 0 : vipIntegralInfo.InIntegral.Value) + points;
+                    if (detailInfo.Integral > 0)
+                    {
+                        vipIntegralInfo.InIntegral = (vipIntegralInfo.InIntegral == null ? 0 : vipIntegralInfo.InIntegral.Value) + detailInfo.Integral;
+                        vipIntegralInfo.CumulativeIntegral = (vipIntegralInfo.CumulativeIntegral == null ? 0 : vipIntegralInfo.CumulativeIntegral.Value) + detailInfo.Integral;
+                    }
                     else
-                        vipIntegralInfo.OutIntegral = (vipIntegralInfo.OutIntegral == null ? 0 : vipIntegralInfo.OutIntegral.Value) + points;
+                        vipIntegralInfo.OutIntegral = (vipIntegralInfo.OutIntegral == null ? 0 : vipIntegralInfo.OutIntegral.Value) + Math.Abs(detailInfo.Integral.Value);
+                    vipIntegralInfo.EndIntegral = (vipIntegralInfo.EndIntegral == null ? 0 : vipIntegralInfo.EndIntegral.Value) + detailInfo.Integral;
+                    vipIntegralInfo.ValidIntegral = (vipIntegralInfo.ValidIntegral == null ? 0 : vipIntegralInfo.ValidIntegral.Value) + detailInfo.Integral;
+
                     vipIntegralBLL.Update(vipIntegralInfo, tran);
                 }
                 //增加记录
                 VipIntegralDetailEntity detail = new VipIntegralDetailEntity() { };
                 detail.VipIntegralDetailID = Guid.NewGuid().ToString();
-                detail.VIPID = vipId;
-                detail.ObjectId = objectId;
-                detail.Integral = points;
-                detail.IntegralSourceID = type;
-                vipIntegralDetailBLL.Create(detail,tran);
+                detail.VIPID = vipInfo.VIPID;
+                detail.VipCardCode = vipInfo.VipCode;
+                detail.UnitID = unitInfo != null ? unitInfo.unit_id : "";
+                detail.UnitName = unitInfo != null ? unitInfo.unit_name : "";
+                detail.ObjectId = detailInfo.ObjectId;
+                detail.Integral = detailInfo.Integral;
+                detail.UsedIntegral = 0;
+                detail.IntegralSourceID = detailInfo.IntegralSourceID;
+                detail.Reason = detailInfo.Reason;
+                detail.Remark = detailInfo.Remark;
+                detail.EffectiveDate = DateTime.Now;
+                detail.DeadlineDate = Convert.ToDateTime((DateTime.Now.Year + pointsValidPeriod - 1) + "-12-31 23:59:59 ");//失效时间
+                detail.CustomerID = loggingSessionInfo.ClientID;
+                vipIntegralDetailBLL.Create(detail, tran);
+
+                vipIntegralDetailId = detail.VipIntegralDetailID;
             }
             catch (Exception ex)
             {
                 throw new APIException(ex.ToString()) { ErrorCode = 121 };
             }
-            finally
-            {
-                b = true;
-            }
-
-            return b;
+            return vipIntegralDetailId;
         }
     }
 }

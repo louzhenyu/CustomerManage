@@ -338,10 +338,10 @@
 
 
 
-<!-- 弹出，连锁掌柜微信支付 -->
+<!-- 弹出，连锁掌柜支付宝支付 -->
 <div id="jui-dialog-CCAlipayWap" class="jui-dialog jui-dialog-payMent" style="width:460px;min-height:200px;margin-left:-230px;">
 	<div class="jui-dialog-tit">
-    	<h2>连锁掌柜微信支付</h2>
+    	<h2>连锁掌柜支付宝支付</h2>
         <span class="jui-dialog-close"></span>
     </div>
     <div class="payMentContent">

@@ -45,6 +45,10 @@ namespace JIT.CPOS.BS.Entity
         /// OperationUserName
         /// </summary>
         public string OperationUserName { get; set; }
+        /// <summary>
+        /// 创建人名称
+        /// </summary>
+        public string CreateByName { get; set; }
         #endregion
     }
 }

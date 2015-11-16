@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/20 11:22:28
+ * Create On	:2015-8-14 20:18:28
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,8 +25,8 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
@@ -72,11 +72,12 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentNullException("pEntity");
             
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipCardSales](");
@@ -141,7 +142,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipCardSales] where SalesID='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [VipCardSales] where SalesID='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             VipCardSalesEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -164,7 +165,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipCardSales] where isdelete=0");
+            sql.AppendFormat("select * from [VipCardSales] where 1=1  and isdelete=0");
             //读取数据
             List<VipCardSalesEntity> list = new List<VipCardSalesEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -194,18 +195,19 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.SalesID==null)
+            if (pEntity.SalesID == null)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
              //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [VipCardSales] set ");
-            if (pIsUpdateNullField || pEntity.VipCardID!=null)
+                        if (pIsUpdateNullField || pEntity.VipCardID!=null)
                 strSql.Append( "[VipCardID]=@VipCardID,");
             if (pIsUpdateNullField || pEntity.SalesAmount!=null)
                 strSql.Append( "[SalesAmount]=@SalesAmount,");
@@ -227,8 +229,6 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.CustomerID!=null)
                 strSql.Append( "[CustomerID]=@CustomerID");
-            if (strSql.ToString().EndsWith(","))
-                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where SalesID=@SalesID ");
             SqlParameter[] parameters = 
             {
@@ -298,7 +298,7 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.SalesID==null)
+            if (pEntity.SalesID == null)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
@@ -317,11 +317,9 @@ namespace JIT.CPOS.BS.DataAccess
                 return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipCardSales] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where SalesID=@SalesID;");
+            sql.AppendLine("update [VipCardSales] set  isdelete=1 where SalesID=@SalesID;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.VarChar,Value=Convert.ToString(CurrentUserInfo.UserID)},
                 new SqlParameter{ParameterName="@SalesID",SqlDbType=SqlDbType.VarChar,Value=pID}
             };
             //执行语句
@@ -344,15 +342,15 @@ namespace JIT.CPOS.BS.DataAccess
             object[] entityIDs = new object[pEntities.Length];
             for (int i = 0; i < pEntities.Length; i++)
             {
-                var item = pEntities[i];
+                var pEntity = pEntities[i];
                 //参数校验
-                if (item == null)
+                if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.SalesID==null)
+                if (pEntity.SalesID == null)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = item.SalesID;
+                entityIDs[i] = pEntity.SalesID;
             }
             Delete(entityIDs, pTran);
         }
@@ -391,7 +389,7 @@ namespace JIT.CPOS.BS.DataAccess
                 primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipCardSales] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy='"+CurrentUserInfo.UserID+"',IsDelete=1 where SalesID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [VipCardSales] set  isdelete=1 where SalesID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
             int result = 0;   
             if (pTran == null)
@@ -412,7 +410,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipCardSales] where isdelete=0 ");
+            sql.AppendFormat("select * from [VipCardSales] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -473,9 +471,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [SalesID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [VipCardSales] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [VipCardSales] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [VipCardSales] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [VipCardSales] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -586,7 +584,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(SqlDataReader pReader, out VipCardSalesEntity pInstance)
+        protected void Load(IDataReader pReader, out VipCardSalesEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
             pInstance = new VipCardSalesEntity();

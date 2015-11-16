@@ -29,6 +29,7 @@ namespace JIT.CPOS.BS.Entity
     public partial class T_SalesReturnEntity : BaseEntity 
     {
         #region  Ù–‘ºØ
+        public string OrderNo { get; set; }
         public string VipName { get; set; }
         public string PayTypeName { get; set; }
         #endregion

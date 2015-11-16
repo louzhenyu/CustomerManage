@@ -2,9 +2,7 @@
 body{font:12px/1.5em "黑体","Microsoft YaHei";background:#fff;color:#4d4d4d;}
 input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"黑体";color:#a5a5a5;}
 .ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
-.commonBtn{display:block;width:140px;height:40px;line-height:40px;text-align:center;font-size:14px;border-radius:5px;background:#fe7c24;color:#fff;}
-.commonBtn:hover{color:#f1f1f1;}
-.centreArea{min-height:587px;background:url(../images/topShadow.png) repeat-x 0 0;}
+/*.centreArea{min-height:587px;background:url(../images/topShadow.png) repeat-x 0 0;}*/
 /*公共弹层*/
 .jui-dialog{position:absolute;top:25%;left:15%;box-shadow:0 0 6px rgba(0,0,0,0.4);border-radius:5px;background:#fff;z-index:1000;}
 .jui-dialog-tit{position:relative;padding-left:25px;height:55px;background:#f3f3f6;border-radius:6px 6px 0 0;color:#66666d;}
@@ -14,7 +12,6 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .jui-dialog .btnWrap a{display:inline-block;}
 .jui-dialog .titName{position:absolute;top:0;left:50%;margin-left:-225px;width:450px;line-height:55px;text-align:center;color:#333;}
 .jui-dialog .cancelBtn{margin-left:35px;background:#949ca7;}
-
 
 /******会员查询*****/
 /*头部简单 查询*/
@@ -42,7 +39,7 @@ input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31p
 .commonSelectWrap .specialInput input{float:left;width:90px;height:29px;border:none;color:#666;}
 
 .moreQueryWrap{float:right;}
-.moreQueryWrap .queryBtn{width:88px;height:32px;line-height:32px;}
+.moreQueryWrap .queryBtn{width:88px;height:32px;line-height:32px;margin-top: 12px;margin-bottom: 22px;}
 .moreQueryWrap .more{display:block;width:88px;margin-top:5px;padding-right:4px;text-align:center;font:12px/1.2em "宋体";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
 
 /*头部 全查询*/
@@ -83,7 +80,7 @@ white-space: normal;}
 
 /*表格*/
 .tableHandleBox{padding:12px 0;text-align:right;width: 100%; height: 58px;}
-.tableHandleBox span{display:inline-block;width:100px;height:32px;line-height:32px;margin-left:10px;border-radius:3px;cursor:pointer;}
+.tableHandleBox span{display:inline-block; background-color:#00cccc;width:100px;height:32px;line-height:32px;margin-left:10px;border-radius:3px;cursor:pointer;}
 .tableWrap{min-height:300px;}
 .tablehandle{height:44px;padding:9px;border:1px solid #d8d8d8;background:#f5f5f5;}
 .tablehandle a{float:left;width:75px;height:27px;margin-right:20px;}
@@ -115,7 +112,7 @@ white-space: normal;}
 .dataTable .title{border-bottom:2px solid #fe7c23;}
 .dataTable .title th{font-weight:bold;*border-bottom:2px solid #fe7c23;text-align:center;min-width: 60px;}
 .dataTable tr{height:39px;border-bottom:1px solid #fedbc3;text-align:center;}
-.dataTable tbody td{*border-bottom:1px solid #fedbc3;}
+.dataTable tbody td{*border-bottom:1px solid #fedbc3; cursor:pointer;}
 .dataTable tbody tr:hover{background:#fff1d8;}
 .dataTable .joinBtn{display:block;width:100px;height:30px;line-height:30px;margin:0 auto;text-align:center;border-radius:4px;cursor:pointer;}
 .dataTable tbody tr:hover .joinBtn{background:#fe7c23;color:#fff;}
@@ -127,9 +124,7 @@ white-space: normal;}
 
 .btnWrap{padding:35px 0;text-align:center;}
 .btnWrap a{display:inline-block;}
-.cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
-.cancelBtn,.saveBtn{border-radius:38px;}
-.cancelBtn:hover{background:transparent;color: #fe7c24}
+
 .radio span{ padding-right: 10px;}
 
 .commonTitle{height:16px;line-height:16px;margin:0 0 15px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;}
@@ -182,8 +177,8 @@ overflow-y: scroll;}
 .commonTitle img{margin:0 3px;vertical-align:top;}
 .commonTitle .before{color:#fe7c23;}
 .commonTitle .after{color:#333;}
-
-.vipDetailInfo .item{height:31px;line-height:31px;}
+.vipDetailInfo{ background-color: #ebf1f4; padding-top: 35px; padding-bottom:35px;}
+.vipDetailInfo .item{height:50px;line-height:50px;}
 .vipDetailInfo .line{border-bottom:1px dashed #ededed;}
 .vipDetailInfo .itemBox{float:left;font-size:15px;}
 .vipDetailInfo .tit{float:left;width:108px;text-align:right;color:#999;}
@@ -193,9 +188,9 @@ overflow-y: scroll;}
 .vipDetailInfo .tagItem{line-height:31px; min-height:31px;}
 
 /*菜单*/
-.subMenu{height:62px;margin-top:5px;padding-left:40px;background:#eee;}
-.subMenu li{float:left;width:auto;height:59px; padding:0 8px;margin:3px 22px 0 0;text-align:center;line-height:98px;color:#999;cursor:pointer;}
-.subMenu .nav01{background:url(../images/nav01.png) no-repeat center 4px;}
+.subMenu{height:50px;padding-left:40px;background:#fff; border-top: 1px solid #d0d5d8;border-bottom:1px solid #d0d5d8 }
+.subMenu li{float:left;height:25px;width:65px; margin-top:12px; font-size: 14px;color: #999; margin-right: 35px; text-align:center;line-height:25px;color:#999;cursor:pointer;}
+/*.subMenu .nav01{background:url(../images/nav01.png) no-repeat center 4px;}
 .subMenu .nav02{background:url(../images/nav02.png) no-repeat center 4px;}
 .subMenu .nav03{background:url(../images/nav03.png) no-repeat center 4px;}
 .subMenu .nav04{background:url(../images/nav04.png) no-repeat center 10px;}
@@ -203,9 +198,9 @@ overflow-y: scroll;}
 .subMenu .nav06{background:url(../images/nav06.png) no-repeat center 4px;}
 .subMenu .nav07{background:url(../images/nav07.png) no-repeat center 9px;}
 .subMenu .nav08{background:url(../images/nav08.png) no-repeat center 4px;}
-.subMenu .nav09{background:url(../images/nav09.png) no-repeat center 10px;}
-.subMenu li.on{background-color:#fff;}
-
+.subMenu .nav09{background:url(../images/nav09.png) no-repeat center 10px;}*/
+/*.subMenu li.on{background-color:#fff;}*/
+.subMenu li.on {color: #07c8cf; border-bottom:1px solid #00cccc;}
 /*弹出-添加新会员*/
 .jui-dialog-addNewVip{width:696px;top:40px;margin-left:-348px;}
 .jui-dialog-addNewVip .promptContent{height:290px;padding:20px 0;overflow-y:auto;}
@@ -235,10 +230,11 @@ overflow-y: scroll;}
 .fixedMenuArea.on .arr{background-position:65px -448px;}
 
 /*基本信息*/
-.baseInfoArea{width:650px;min-height:80px;margin-left:110px;padding:40px 0;}
+.baseInfoArea{width:650px;min-height:80px;margin-left:110px;padding:40px 0; display: inline-block;}
 .baseInfoArea .commonSelectWrap{margin:0 10px 22px 0;}
-.baseInfoArea .btnWrap{clear:left;height:32px;}
-.baseInfoArea .saveBtn{float:right;width:64px;height:32px;line-height:32px;margin-right:65px;border-radius:3px;}
+.promptContent{display: inline-block;}
+.baseInfoArea .btnWrap{height:32px;}
+.baseInfoArea .saveBtn{width:150px;height:44px; font-size:16px;line-height:44x;margin-right:65px;border-radius:23px;}
 
 
 .vipDetailInfo .button{color:#2d83cf;font-family:"Arial"; text-decoration:underline;}
@@ -272,7 +268,7 @@ overflow-y: scroll;}
 .gridTables .commonSelectWrap .searchInput textarea{ width: 100%; height: 100%}
 /*.gridTables .commonSelectWrap .grid{height: 120px;overflow: auto;}*/
 .jui-dialog-addNewVip .commonSelectWrap .searchInput p{ text-align: left; margin-left:3px;}
-.commonSelectWrap .borderNone{ border: 1px solid transparent; border-top-color:#ccc}
+.commonSelectWrap .borderNone{ border: 1px solid transparent;}
 .commonSelectWrap .bonone{ border: 1px solid transparent;}
 .R{ float:right} .L{ float: left}  .txtCenter{ text-align: center}
 
@@ -283,11 +279,11 @@ overflow-y: scroll;}
 
 .panlnav09{ width: 100%; padding-top: 35px; padding-left: 35px;}
 .panlnav09 p{ font-size: 16px; line-height: 36px; color: #666; height: 36px;  float: left; width: 100%;}
-.tagbtnList{float: left; padding-bottom: 15px; padding-top:15px}
- .tagbtn{cursor: pointer; margin-bottom: 15px; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #07c8cf; position: relative; float: left; margin-right:30px; line-height: 32px; color: #07c8cf; font-size: 14px; }
- .tagbtn{ float: left;}
+.tagbtnList{float: left; padding-bottom: 15px;border-bottom: 1px solid #d0d5d8; padding-top:15px; display: block; width:100%;}
+.tagbtn{cursor: pointer; margin-bottom: 15px; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #07c8cf; position: relative; float: left; margin-right:30px; line-height: 32px; color: #07c8cf; font-size: 14px; }
+.tagbtn{ float: left;}
 .tagbtn .icon{display: none}
- .tagbtn .icon{background: url("../images/delicon.png")no-repeat; width: 30px; height: 30px; top: -19px; right:-19px; position: absolute;}
+.tagbtn .icon{background: url("../images/delicon.png")no-repeat; width: 30px; height: 30px; top: -19px; right:-19px; position: absolute;}
 .bgtext.tagbtn  { background-color: #07c8cf; color: #fff;}
 .panltaglist{ float: left;}
 .groupTag{ float: left;border-left: 1px solid #d0d5d8;}
@@ -303,3 +299,30 @@ overflow-y: scroll;}
 .textbtn{ display: inline-block; float: left;}
 .textbtn .saveTagBtn{ background-color: #07c8cf; color: #fff;}
 .textbtn  input{ float: left;}
+
+
+.optPanel{height:75px; background-color: #f4f8fa;  line-height: 45px; font-size: 14px;}
+.inputBox { float: left; width: 120px; padding-left: 3px; line-height: 34px;}
+.optPanel .commonBtn{ width: 100px; float: left; height: 32px; line-height: 32px; background-color: #00cccc; margin-top: 20px;}
+.lineTitle{height: 37px; background-color: #d9d9d9; color: #666; padding-left: 35px; font-size: 14px; line-height: 37px;}
+.optPanel .commonSelectWrap{margin: 0 auto;margin-top: 20px;}
+.optPanel .commonSelectWrap .tit{width: 100px;}
+
+
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none;}
+
+.imageList {width:100%;font:13px/39px "黑体";color:#4d4d4d; text-align: center;}
+.imageList .line{width: 100%; border-bottom: 1px #d9d9d9 solid; padding: 20px; display: inline-block}
+.imageList .tit{ width: 80px;}
+.line .textA{float: left; height: 157px;}
+.line .textA p{line-height: 42px; color: #00cccc; font-size: 14px;}
+.lineText{ float: left; width: 658px; text-align: left;}
+
+
+.uploadBtn{ background: url("../images/upload.png") no-repeat; width: 37px; height: 37px;}
+
+.commonSelectWrap .searchInput .uploadBtn{float:left; position: relative; width: 37px; height: 37px; background:url(../images/upload.png); cursor:pointer;margin-right: 20px;}
+.commonSelectWrap .searchInput .uploadBtn .ke-button-common {width:37px;height:37px;opacity:0;filter:Alpha(opacity=0);}
+.commonSelectWrap .searchInput .uploadBtn input{display:block;width:37px;height:37px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;left:0;}
+.commonSelectWrap .searchInput .imgPanel{ float: left; border: 1px solid #d0d5d8; width: 100px; height: 100px;}
+.commonSelectWrap .searchInput .imgPanel img{display: none; width: 100%; height: 100%}

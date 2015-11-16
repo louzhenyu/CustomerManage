@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-06-08 20:59:54
+ * Create On	:2015-07-01 11:14:15
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -196,6 +196,21 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String dimensionalCodeURL { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String BizHoursStarttime { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String BizHoursEndtime { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String StoreType { get; set; }
 
 
         #endregion

@@ -49,6 +49,72 @@ namespace JIT.CPOS.BS.DataAccess
             this.Load(rd, out m);
         }
 
+        /// <summary>
+        /// 根据标识符获取实例
+        /// </summary>
+        /// <param name="pID">标识符的值</param>
+        public VipEntity NewGetByID(object pID)
+        {
+            //参数检查
+            if (pID == null)
+                return null;
+            string id = pID.ToString();
+            //组织SQL
+            StringBuilder sql = new StringBuilder();
+            sql.AppendFormat("select *,CONVERT(date,Birthday,23) as NewBirthday from [Vip] where VIPID='{0}'  and isdelete=0 ", id.ToString());
+            //读取数据
+            VipEntity m = null;
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    this.Load(rdr, out m);
+                    if (rdr["NewBirthday"] != DBNull.Value)
+                    {
+                        m.NewBirthday = Convert.ToDateTime(rdr["NewBirthday"]);
+                    }
+                    break;
+                }
+            }
+            //返回
+            return m;
+        }
+
+
+        #region 会员报表
+        /// <summary>
+        /// 会员生日统计
+        /// </summary>
+        /// <param name="Month"></param>
+        /// <param name="UnitID"></param>
+        /// <param name="Gender"></param>
+        /// <param name="CardStatusID"></param>
+        /// <param name="StarDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        public DataSet VipBirthdayCount(string Month, string UnitID, string Gender, int? CardStatusID, string StarDate, string EndDate, int? PageSize, int? PageIndex)
+        {
+            if (PageSize == null) { PageSize = 10; }
+            if (PageIndex == null) { PageIndex = 1; }
+
+            var parm = new SqlParameter[8];
+            parm[0] = new SqlParameter("@BirthdayMonth", System.Data.SqlDbType.NVarChar) { Value = Month };
+            parm[1] = new SqlParameter("@UnitID", System.Data.SqlDbType.NVarChar) { Value = UnitID };
+            parm[2] = new SqlParameter("@Gender", System.Data.SqlDbType.NVarChar) { Value = Gender };
+            parm[3] = new SqlParameter("@CardStatusID", System.Data.SqlDbType.Int) { Value = CardStatusID };
+            parm[4] = new SqlParameter("@StareDate", System.Data.SqlDbType.DateTime) { Value = StarDate };
+            parm[5] = new SqlParameter("@EndDate", System.Data.SqlDbType.DateTime) { Value = EndDate };
+            parm[6] = new SqlParameter("@PageSize", System.Data.SqlDbType.Int) { Value = PageSize };
+            parm[7] = new SqlParameter("@PageIndex", System.Data.SqlDbType.Int) { Value = PageIndex };
+            Loggers.Debug(new DebugLogInfo()
+            {
+                Message = parm.ToJSON()
+            });
+
+            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Report_VipBirthdayCount", parm);
+        }
+        #endregion
+
         #region 会员查询
 
         /// <summary>
@@ -571,7 +637,8 @@ namespace JIT.CPOS.BS.DataAccess
                             a.CouponInfo,a.PurchaseAmount,a.PurchaseCount,a.DeliveryAddress,a.Longitude,a.Latitude,a.VipPasswrod,a.HeadImgUrl,a.Col1,
                             a.Col2,a.Col3,a.Col4,a.Col5,a.Col6,a.Col7,a.Col8,a.Col9,a.Col10,a.Col11,a.Col12,a.Col13,a.Col14,a.Col15,a.Col16,a.Col17,a.Col18,a.Col19,a.Col20,a.Col21,a.Col22,
                             a.Col23,a.Col24,a.Col25,a.Col26,a.Col27,a.Col28,a.Col29,a.Col30,a.Col31,a.Col32,a.Col33,a.Col34,a.Col35,a.Col36,a.Col37,a.Col38,a.Col39,a.Col40,a.Col41,a.Col42,a.Col43,a.Col44,a.Col45,a.Col46,
-                            a.Col47,a.Col48,a.Col49,a.Col50,a.isActivate,a.VIPImportID,a.VipRealName,a.ShareVipId,a.SetoffUserId,a.ShareUserId FROM cpos_ap.dbo.vip a "
+                            a.Col47,a.Col48,a.Col49,a.Col50,a.isActivate,a.VIPImportID,a.VipRealName,a.ShareVipId,a.SetoffUserId,a.ShareUserId
+                            FROM cpos_ap.dbo.vip a "
                          + " LEFT JOIN vip b ON(a.WeiXinUserId = b.WeiXinUserId and b.isdelete='0') "
                          + " WHERE 1=1 ";
             if (OpenId != null && !OpenId.Equals(""))
@@ -1420,7 +1487,8 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder sql = new StringBuilder();
             sql.Append(" select user_id,user_name,user_status,user from t_user where customer_id = @pCustomerId and ");
             sql.Append(" (user_code = @pUserName or user_telephone = @pUserName)");
-            sql.Append(" and user_password = @pPassword");
+            sql.Append(" and user_password = @pPassword ");
+            sql.Append(" order by user_status desc ");//按照状态倒序排，如果有一个账号已经被停用了，又用这个账号建了一个，先取没被停用的
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
         }
@@ -1736,7 +1804,7 @@ select @ReturnValue", pCustomerID);
         /// <param name="objectID">优惠券使用门店/分销商ID</param>
         /// <param name="type">是否包含抵用券（0=包含抵用券；1=不包含抵用券）</param>
         /// <returns></returns>
-        public DataSet GetVipCouponDataSet(string vipId, decimal totalPayAmount, int usableRange, string objectID,int type)
+        public DataSet GetVipCouponDataSet(string vipId, decimal totalPayAmount, int usableRange, string objectID, int type)
         {
             //var paras = new List<SqlParameter>
             //{
@@ -2002,11 +2070,16 @@ select @ReturnValue", pCustomerID);
                 sortType = "DESC";
             var sql = new StringBuilder();
             sql.Append(" select * from (");
-            sql.AppendFormat(" select ROW_NUMBER()over(order by a.CreateTime {0}) _row, a.VIpIntegralDetailId,a.Integral,IntegralSource = b.IntegralSourceName", sortType);
+            sql.AppendFormat(" select ROW_NUMBER()over(order by a.CreateTime {0}) _row, a.VIpIntegralDetailId,a.Integral,a.UnitID,a.UnitName,a.VipCardCode,Reason,a.integralSourceId,a.CreateBy,IntegralSource = b.IntegralSourceName,oi.ImageUrl", sortType);
             sql.Append(" ,ISNULL(a.Remark,'无') AS Remark,a.CreateTime from");
             sql.Append(" VipIntegralDetail a left join SysIntegralSource  b");
-            sql.Append(" on a.IntegralSourceId = b.IntegralSourceId  and b.isdelete = 0 where a.isdelete = 0");
-            sql.AppendFormat(" and a.vipId = '{0}'", vipId);
+            sql.Append(" on a.IntegralSourceId = b.IntegralSourceId  and b.isdelete = 0 ");
+            sql.Append(" left join ObjectImages oi on oi.ObjectID=a.VipIntegralDetailID and oi.isdelete=0");
+            sql.Append(" where a.isdelete = 0");
+            if (!string.IsNullOrEmpty(vipId))
+            {
+                sql.AppendFormat(" and a.vipId = '{0}'", vipId);
+            }
             sql.Append(") t");
             sql.AppendFormat(" where t._row>{0}*{1} and t._row<=({0}+1)*{1}", pageIndex - 1, pageSize);
 
@@ -2036,7 +2109,7 @@ select @ReturnValue", pCustomerID);
                 //房态表中有信息 花间堂定制
                 //sql += SearchInoutDetailSqlNew(orderSearchInfo);
                 sql.Append(" select * from (");
-                sql.AppendFormat("select ROW_NUMBER()over(order by a.Create_Time {0}) _row,a.order_id,a.order_no,a.create_time,a.status_desc,", sortType);
+                sql.AppendFormat("select ROW_NUMBER()over(order by a.Create_Time {0}) _row,a.order_id,a.order_no,a.create_time,a.status_desc,a.VipCardCode,a.total_amount,", sortType);
                 sql.AppendFormat("((SELECT sum(sis.LowestPrice) AS priceNew FROM T_Inout i LEFT JOIN T_Inout_Detail ind ON i.order_id=ind.order_id LEFT JOIN T_Sku s ON ind.sku_id=s.sku_id LEFT JOIN StoreItemDailyStatus sis ON sis.SkuID=ind.sku_id WHERE (sis.StatusDate BETWEEN ind.Field1 AND DATEADD(DAY,-1,convert(date,ind.Field2)))  AND i.order_id =a.order_id  AND i.customer_id='{0}')* a.total_qty * tid.discount_rate /100) actual_amount, ", customerId);
                 sql.Append(" case a.Field1 when 1 then '已付款' else  '未付款' end PayStatus,");
                 sql.Append(" payTypeName = b.Payment_Type_Name,v.vipsourcename,'UnitName'= c.unit_name");
@@ -2053,7 +2126,7 @@ select @ReturnValue", pCustomerID);
             else
             {
                 sql.Append(" select * from (");
-                sql.AppendFormat("select ROW_NUMBER()over(order by a.Create_Time {0}) _row,a.order_id,a.order_no,a.create_time,a.status_desc,a.actual_amount,", sortType);
+                sql.AppendFormat("select ROW_NUMBER()over(order by a.Create_Time {0}) _row,a.order_id,a.order_no,a.create_time,a.status_desc,a.actual_amount,a.VipCardCode,a.total_amount,", sortType);
                 sql.Append(" case a.Field1 when 1 then '已付款' else  '未付款' end PayStatus,");
                 sql.Append(" payTypeName = b.Payment_Type_Name,v.vipsourcename,'UnitName'= c.unit_name");
                 sql.Append(" from t_inout a left join SysVipSource v on a.data_from_id = v.VipSourceId ");
@@ -2095,9 +2168,9 @@ select @ReturnValue", pCustomerID);
                 select @totalPages = count(1)  from
                 (
                  select  
-                a.CouponID, CouponStatus = case a.status when '1' then '已使用' else '未使用' end,
+                a.CouponID,a.CouponCode,CouponStatus = case a.status when '1' then '已使用' else '未使用' end,
                  c.CouponTypeName,o.OptionText, a.CouponDesc,
-                 a.CoupnName  
+                 a.CoupnName,CONVERT(varchar(50),EndDate,23) EndDate 
                  from Coupon a inner join VipCouponMapping b on a.couponid=b.couponid left join CouponType c on 
                  cast(a.CouponTypeID as nvarchar(100))=c.coupontypeid left join options o on a.CollarCardMode=o.OptionValue and o.optionname='CollarCardMode'
                  --where o.optionname='CollarCardMode'
@@ -2106,9 +2179,9 @@ select @ReturnValue", pCustomerID);
                 ) tmp
                 select @totalPages as totalPages
                 select * from ( select ROW_NUMBER()over(order by a.CreateTime {3}) _row, 
-                a.CouponID, CouponStatus = case a.status when '1' then '已使用' else '未使用' end,
+                a.CouponID,a.CouponCode,CouponStatus = case a.status when '1' then '已使用' else '未使用' end,
                  c.CouponTypeName,o.OptionText, a.CouponDesc,
-                 a.CoupnName  
+                 a.CoupnName,CONVERT(varchar(50),EndDate,23) EndDate
                  from Coupon a inner join VipCouponMapping b on a.couponid=b.couponid left join CouponType c on 
                  cast(a.CouponTypeID as nvarchar(100))=c.coupontypeid left join options o on a.CollarCardMode=o.OptionValue and o.optionname='CollarCardMode'
                 where  a.IsDelete = 0 and b.IsDelete = 0  
@@ -2539,7 +2612,86 @@ select @ReturnValue", pCustomerID);
             string sql = string.Format("SELECT COUNT(*) FROM dbo.Vip WHERE SetoffUserId='{0}'", userID);
             return Convert.ToInt32(SQLHelper.ExecuteScalar(sql));
         }
+        /// <summary>
+        /// 会员卡信息
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="idnumber"></param>
+        /// <param name="vipcardcode"></param>
+        /// <returns></returns>
+        public DataSet GetVipCardInfo(string phone, string idnumber, string vipcardcode)
+        {
+            string sql = @"SELECT vc.VipCardCode cardno, v.VipName vipname, svct.VipCardTypeCode viplevel, vc.VipCardStatusId status
+                        FROM dbo.Vip v INNER JOIN dbo.VipCardVipMapping vcvm ON v.VIPID = vcvm.VIPID 
+                        INNER JOIN dbo.VipCard vc ON vcvm.VipCardID = vc.VipCardID
+                        LEFT JOIN dbo.SysVipCardType svct ON vc.VipCardTypeID = svct.VipCardTypeID
+                        WHERE 1=1 ";
+            if (!string.IsNullOrWhiteSpace(phone))
+                sql += " AND (v.Phone = '" + phone + "') ";
+            if (!string.IsNullOrWhiteSpace(idnumber))
+                sql += " AND (v.IDNumber = '" + idnumber + "') ";
+            if (!string.IsNullOrWhiteSpace(vipcardcode))
+                sql += " AND (vc.VipCardCode = '" + vipcardcode + "') ";
+            sql += " AND (v.ClientID = '" + this.CurrentUserInfo.ClientID + "') ";
+            DataSet ds = new DataSet();
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
 
+        /// <summary>
+        /// 会员卡详情
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <param name="idnumber"></param>
+        /// <param name="vipcardcode"></param>
+        /// <returns></returns>
+        public DataSet GetVipCardDetail(string phone, string idnumber, string vipcardcode)
+        {
+            string sql = @"SELECT vc.VipCardCode cardno, v.VipName vipname, svct.VipCardTypeCode viplevel, vc.VipCardStatusId status,
+                        v.birthday, v.gender, v.idnumber, v.phone, v.DeliveryAddress address, v.email
+                        FROM dbo.Vip v INNER JOIN dbo.VipCardVipMapping vcvm ON v.VIPID = vcvm.VIPID 
+                        INNER JOIN dbo.VipCard vc ON vcvm.VipCardID = vc.VipCardID
+                        LEFT JOIN dbo.SysVipCardType svct ON vc.VipCardTypeID = svct.VipCardTypeID
+                        WHERE 1=1 ";
+            if (!string.IsNullOrWhiteSpace(phone))
+                sql += " AND (v.Phone = '" + phone + "') ";
+            if (!string.IsNullOrWhiteSpace(idnumber))
+                sql += " AND (v.IDNumber = '" + idnumber + "') ";
+            if (!string.IsNullOrWhiteSpace(vipcardcode))
+                sql += " AND (vc.VipCardCode = '" + vipcardcode + "') ";
+            sql += " AND (v.ClientID = '" + this.CurrentUserInfo.ClientID + "') ";
+            DataSet ds = new DataSet();
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+        #region 导入Vip信息
+
+        /// 导入用户临时表
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <param name="column_count"></param>
+        /// <param name="conn"></param>
+        public void insertToSql(DataRow dr, int column_count, SqlConnection conn, string strCustomerId, string strCreateUserId)
+        {
+
+            string sql = "insert into [ImportUserTemp] values";
+            sql += "('" + dr[0].ToString() + "','" + dr[1].ToString() + "','" + dr[2].ToString() + "','" + dr[3].ToString() + "','" + dr[4].ToString() + "',";
+            sql += "'" + dr[5].ToString() + "','" + dr[6].ToString() + "',";
+            sql += "'" + strCustomerId + "','" + strCreateUserId + "')";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+        }
+        /// <summary>
+        /// 调用sp将临时表中的用户信息导入正式表T_User,并返回未导入的信息
+        /// </summary>
+        /// <returns></returns>
+        public DataSet ExcelImportToDB()
+        {
+            string sql = "Proc_ExcelImportToUser";
+            var ds = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, sql);
+            return ds;
+        }
+        #endregion
         #region 获取云店会员卡包
         public DataSet GetCardBag(string weixinUserId, string cloudCustomerId)
         {

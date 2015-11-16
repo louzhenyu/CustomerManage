@@ -40,16 +40,11 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aspose.Cells, Version=7.0.1.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Aspose.Cells">
       <HintPath>..\ReferenceDll\Aspose.Cells.dll</HintPath>
     </Reference>
     <Reference Include="JdSoft.Apns.Notifications">
       <HintPath>..\ReferenceDll\JdSoft.Apns.Notifications.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ReferenceDll\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -68,8 +63,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Utility">
       <HintPath>..\ReferenceDll\Utility.dll</HintPath>
     </Reference>
     <Reference Include="Utility.Message, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -139,6 +133,7 @@
     <Compile Include="CodeGeneration\CardDepositBLL.cs" />
     <Compile Include="CodeGeneration\CityBLL.cs" />
     <Compile Include="CodeGeneration\ClientBussinessDefinedBLL.cs" />
+    <Compile Include="CodeGeneration\ContactEventBLL.cs" />
     <Compile Include="CodeGeneration\ContactWeBLL.cs" />
     <Compile Include="CodeGeneration\CouponBLL.cs" />
     <Compile Include="CodeGeneration\CouponSourceBLL.cs" />
@@ -219,6 +214,7 @@
     <Compile Include="CodeGeneration\GLServicePersonInfoBLL.cs" />
     <Compile Include="CodeGeneration\GLServiceTaskBLL.cs" />
     <Compile Include="CodeGeneration\GOrderBLL.cs" />
+    <Compile Include="CodeGeneration\HolidayBLL.cs" />
     <Compile Include="CodeGeneration\HotelDynamicPriceBLL.cs" />
     <Compile Include="CodeGeneration\HotelRoomBLL.cs" />
     <Compile Include="CodeGeneration\HotelsCheckUserBLL.cs" />
@@ -255,6 +251,16 @@
     <Compile Include="CodeGeneration\LNewsMicroMappingBLL.cs" />
     <Compile Include="CodeGeneration\LNumberTypeMappingBLL.cs" />
     <Compile Include="CodeGeneration\LongContentBLL.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_ActivityBLL.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_ActivityMessageBLL.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_MessageSendBLL.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_MessageTemplateBLL.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_PrizeReceiveBLL.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_PrizesBLL.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_PrizesDetailBLL.cs" />
+    <Compile Include="CodeGeneration\Marketing\C_TargetGroupBLL.cs" />
+    <Compile Include="CodeGeneration\Menu\T_Menu_FunctionBLL.cs" />
+    <Compile Include="CodeGeneration\Menu\T_Role_Menu_FunctionBLL.cs" />
     <Compile Include="CodeGeneration\MHAdAreaBLL.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaBLL.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaGroupBLL.cs" />
@@ -376,6 +382,7 @@
     <Compile Include="CodeGeneration\ShoppingCartBLL.cs" />
     <Compile Include="CodeGeneration\ShopProductBLL.cs" />
     <Compile Include="CodeGeneration\ShortUrlChangeBLL.cs" />
+    <Compile Include="CodeGeneration\SpecialDateBLL.cs" />
     <Compile Include="CodeGeneration\StoreBLL.cs" />
     <Compile Include="CodeGeneration\StoreBrandMappingBLL.cs" />
     <Compile Include="CodeGeneration\StoreItemDailyStatusBLL.cs" />
@@ -425,7 +432,7 @@
     <Compile Include="CodeGeneration\t_customerBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
- <Compile Include="CodeGeneration\T_Payment_TypeBLL.cs" />
+    <Compile Include="CodeGeneration\T_Payment_TypeBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
     <Compile Include="CodeGeneration\T_SkuBLL.cs" />
@@ -440,17 +447,22 @@
     <Compile Include="CodeGeneration\VipAmountBLL.cs" />
     <Compile Include="CodeGeneration\VipAmountDetailBLL.cs" />
     <Compile Include="CodeGeneration\VipBLL.cs" />
+    <Compile Include="CodeGeneration\VipCardBalanceChangeBLL.cs" />
     <Compile Include="CodeGeneration\VipCardBasicBLL.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CodeGeneration\VipCardBatchBLL.cs" />
     <Compile Include="CodeGeneration\VipCardBLL.cs" />
     <Compile Include="CodeGeneration\VipCardCarBrandBLL.cs" />
     <Compile Include="CodeGeneration\VipCardDormancyBLL.cs" />
     <Compile Include="CodeGeneration\VipCardGradeChangeLogBLL.cs" />
     <Compile Include="CodeGeneration\VipCardModelsBLL.cs" />
     <Compile Include="CodeGeneration\VipCardRechargeRecordBLL.cs" />
+    <Compile Include="CodeGeneration\VipCardRuleBLL.cs" />
     <Compile Include="CodeGeneration\VipCardSalesBLL.cs" />
     <Compile Include="CodeGeneration\VipCardStatusChangeLogBLL.cs" />
+    <Compile Include="CodeGeneration\VipCardTransLogBLL.cs" />
+    <Compile Include="CodeGeneration\VipCardTransLogHisBLL.cs" />
     <Compile Include="CodeGeneration\VipCardUnitMappingBLL.cs" />
     <Compile Include="CodeGeneration\VipCardVipMappingBLL.cs" />
     <Compile Include="CodeGeneration\VipCouponMappingBLL.cs" />
@@ -568,6 +580,7 @@
     <Compile Include="CodeGeneration\ZInterfaceTimestampBLL.cs" />
     <Compile Include="CodeGeneration\ZLargeForumBLL.cs" />
     <Compile Include="CodeGeneration\ZLargeForumCourseMappingBLL.cs" />
+    <Compile Include="ContactEventBLL.cs" />
     <Compile Include="ContactWeBLL.cs" />
     <Compile Include="CouponBLL.cs" />
     <Compile Include="CouponSourceBLL.cs" />
@@ -667,6 +680,7 @@
     <Compile Include="FStaffBLL.cs" />
     <Compile Include="GetResponseParams.cs" />
     <Compile Include="GOrderBLL.cs" />
+    <Compile Include="HolidayBLL.cs" />
     <Compile Include="HotelDynamicPriceBLL.cs" />
     <Compile Include="HotelRoomBLL.cs" />
     <Compile Include="HotelsCheckUserBLL.cs" />
@@ -704,9 +718,20 @@
     <Compile Include="LNewsCommentBLL.cs" />
     <Compile Include="LNewsMicroMappingBLL.cs" />
     <Compile Include="LNumberTypeMappingBLL.cs" />
+    <Compile Include="Marketing\C_ActivityBLL.cs" />
+    <Compile Include="Marketing\C_ActivityMessageBLL.cs" />
+    <Compile Include="Marketing\C_MessageSendBLL.cs" />
+    <Compile Include="Marketing\C_MessageTemplateBLL.cs" />
+    <Compile Include="Marketing\C_PrizeReceiveBLL.cs" />
+    <Compile Include="Marketing\C_PrizesBLL.cs" />
+    <Compile Include="Marketing\C_PrizesDetailBLL.cs" />
+    <Compile Include="Marketing\C_TargetGroupBLL.cs" />
+    <Compile Include="Menu\T_Menu_FunctionBLL.cs" />
+    <Compile Include="Menu\T_Role_Menu_FunctionBLL.cs" />
     <Compile Include="MHCategoryAreaGroupBLL.cs" />
     <Compile Include="MHSeachAreaBLL.cs" />
     <Compile Include="MobileBussinessDefinedBLL.cs" />
+    <Compile Include="MobileHomeBLL.cs" />
     <Compile Include="MobileModuleBLL.cs" />
     <Compile Include="MobileModuleObjectMappingBLL.cs" />
     <Compile Include="Module\AppConfig\MHAdAreaBLL.cs" />
@@ -913,6 +938,7 @@
     <Compile Include="SkuPriceService.cs" />
     <Compile Include="SkuPropServer.cs" />
     <Compile Include="SkuService.cs" />
+    <Compile Include="SpecialDateBLL.cs" />
     <Compile Include="StockBalanceService.cs" />
     <Compile Include="StoreBLL.cs" />
     <Compile Include="StoreBrandMappingBLL.cs" />
@@ -957,7 +983,8 @@
     <Compile Include="TUserThirdPartyMappingBLL.cs" />
     <Compile Include="T_CityBLL.cs" />
     <Compile Include="t_customerBLL.cs" />
- <Compile Include="T_Payment_TypeBLL.cs" />
+    <Compile Include="T_InoutBLL.cs" />
+    <Compile Include="T_Payment_TypeBLL.cs" />
     <Compile Include="T_ItemBLL.cs" />
     <Compile Include="T_ItemSkuPropBLL.cs" />
     <Compile Include="T_SkuBLL.cs" />
@@ -971,15 +998,20 @@
     <Compile Include="VersionManagerBLL.cs" />
     <Compile Include="VipAmountBLL.cs" />
     <Compile Include="VipAmountDetailBLL.cs" />
+    <Compile Include="VipCardBalanceChangeBLL.cs" />
     <Compile Include="VipCardBasicBLL.cs" />
+    <Compile Include="VipCardBatchBLL.cs" />
     <Compile Include="VipCardBLL.cs" />
     <Compile Include="VipCardCarBrandBLL.cs" />
     <Compile Include="VipCardDormancyBLL.cs" />
     <Compile Include="VipCardGradeChangeLogBLL.cs" />
     <Compile Include="VipCardModelsBLL.cs" />
     <Compile Include="VipCardRechargeRecordBLL.cs" />
+    <Compile Include="VipCardRuleBLL.cs" />
     <Compile Include="VipCardSalesBLL.cs" />
     <Compile Include="VipCardStatusChangeLogBLL.cs" />
+    <Compile Include="VipCardTransLogBLL.cs" />
+    <Compile Include="VipCardTransLogHisBLL.cs" />
     <Compile Include="VipCardUnitMappingBLL.cs" />
     <Compile Include="VipCardVipMappingBLL.cs" />
     <Compile Include="VIPCollectionDataBLL.cs" />

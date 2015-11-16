@@ -100,31 +100,31 @@
                                     textField: 'LogisticsName',
                                     data: data.Data.LogisticsCompanyList
                                 });
-                            that.loadData.GetDeliveryType(function(data){
-
-                                $("#DeliveryType").combobox({
-                                    panelHeight: that.elems.panlH,
-                                    valueField: 'DeliveryId',
-                                    textField: 'DeliveryName',
-                                    data:data,
-                                    onSelect:function(record){
-                                        debugger;
-                                        $("#optionDelivery").find("[data-flag]").hide()
-                                            // var flag=$("#DeliveryType").combobox("getText");
-                                        var selet = "[data-flag='"+record.DeliveryName+"']";
-                                        $(selet).show();
-
-                                    }
-                                });
-                                $("#DeliveryType").combobox("select",that.loadData.opertionField.DeliveryType);
-                            $("#optionDelivery").form('load',that.loadData.opertionField);
-                            $("#optionDelivery").show();
-                                //$("#carrier").combobox("setValue", that.elems.orderIdInfo.carrier_name);
-                                me.parents(".panlDiv").find("[data-type]").hide().show();
-                                var selet = "[data-type='"+me.data("type")+"']";
-                                $(selet).hide();
-
-                            });
+								that.loadData.GetDeliveryType(function(data){
+	
+									$("#DeliveryType").combobox({
+										panelHeight: that.elems.panlH,
+										valueField: 'DeliveryId',
+										textField: 'DeliveryName',
+										data:data,
+										onSelect:function(record){
+											debugger;
+											$("#optionDelivery").find("[data-flag]").hide()
+												// var flag=$("#DeliveryType").combobox("getText");
+											var selet = "[data-flag='"+record.DeliveryName+"']";
+											$(selet).show();
+	
+										}
+									});
+									$("#DeliveryType").combobox("select",that.loadData.opertionField.DeliveryType);
+									$("#optionDelivery").form('load',that.loadData.opertionField);
+									$("#optionDelivery").show();
+									//$("#carrier").combobox("setValue", that.elems.orderIdInfo.carrier_name);
+									me.parents(".panlDiv").find("[data-type]").hide().show();
+									var selet = "[data-type='"+me.data("type")+"']";
+									$(selet).hide();
+	
+								});
                             });
                             break;
                         case "save":
@@ -307,6 +307,17 @@
 						$('.printBtn').css({'background':'#ccc','cursor':'default'});
 				   }
                   /* orderinfo.create_time=new Date(orderinfo.create_time).format("yyyy-MM-dd hh:mm");*/
+				  if(orderinfo.Field7=='500' || orderinfo.Field7=='100' || orderinfo.Field7=='900'){
+				  		$('#deliveryExpressBox').hide();
+						$('#expressNumBox').hide();
+						$('#deliveryExpressBox2').hide();
+						$('#expressNumBox2').hide();
+				  }
+				  
+				  if(orderinfo.Field7=='800' || orderinfo.Field7=='700'){
+				  	   	$("[data-flag='update']").hide();
+				  }
+				  
                    that.elems.ishideOption=true;
                    that.renderTable(orderinfo);
 

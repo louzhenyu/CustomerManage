@@ -55,6 +55,7 @@ require.config({
         md5: '/Module/static/js/lib/MD5',
         cookie: '/Module/static/js/plugin/jquery.cookie',
         kkpager: '/Module/static/js/plugin/kkpager',
+        kindeditor: '/Module/static/js/plugin/kindeditor',
         datetimePicker: '/Module/static/js/plugin/jquery.datetimepicker',
         swfobject: '/Framework/swfupload/scripts/swfobject',
         fullAvatarEditor: '/Framework/swfupload/scripts/fullAvatarEditor',

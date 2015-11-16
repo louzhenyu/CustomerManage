@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/20 11:22:28
+ * Create On	:2015-8-14 20:18:27
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -43,32 +43,32 @@ namespace JIT.CPOS.BS.Entity
 		public String DormancyID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员卡标识
 		/// </summary>
 		public String VipCardID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 截止时间
 		/// </summary>
 		public DateTime? EndTime { get; set; }
 
 		/// <summary>
-		/// 
+		/// 卡等级
 		/// </summary>
 		public Int32? VipCardGradeID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 休眠时间
 		/// </summary>
 		public String DormancyTime { get; set; }
 
 		/// <summary>
-		/// 
+		/// 操作门店
 		/// </summary>
 		public String UnitID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 操作人
 		/// </summary>
 		public String OperationUserID { get; set; }
 
@@ -96,6 +96,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CustomerID { get; set; }
 
 
         #endregion

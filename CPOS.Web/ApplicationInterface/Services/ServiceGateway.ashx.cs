@@ -480,6 +480,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
             var unitBll = new UnitBLL(loggingSessionInfo);
             Hashtable htPara = new Hashtable();
             htPara["MemberID"] = loggingSessionInfo.UserID;
+            htPara["VipCardCode"] =rp.Parameters.VipCardCode;
             htPara["CustomerID"] = rp.CustomerID;
             htPara["PageIndex"] = rp.Parameters.PageIndex + 1;
             htPara["PageSize"] = rp.Parameters.PageSize;
@@ -891,6 +892,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Services
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
+        public string VipCardCode { get; set; }
         /// <summary>
         /// 指定优惠券状态（0：未用，1：已使用，2：已过期）[非比填]
         /// </summary>

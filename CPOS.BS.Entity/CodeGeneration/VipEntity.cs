@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/9/11 18:12:58
+ * Create On	:2015-8-14 20:18:26
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -58,29 +58,39 @@ namespace JIT.CPOS.BS.Entity
 		public String VipCode { get; set; }
 
 		/// <summary>
-		/// 
+		/// 微信公众号
 		/// </summary>
 		public String WeiXin { get; set; }
 
 		/// <summary>
-		/// 
+		/// 微信OpenID
 		/// </summary>
 		public String WeiXinUserId { get; set; }
 
 		/// <summary>
-		/// 
+		/// 性别
 		/// </summary>
 		public Int32? Gender { get; set; }
 
 		/// <summary>
-		/// 
+		/// 年龄
 		/// </summary>
 		public Int32? Age { get; set; }
 
 		/// <summary>
-		/// 
+		/// 手机号
 		/// </summary>
 		public String Phone { get; set; }
+
+		/// <summary>
+		/// 证件类型
+		/// </summary>
+		public String IDType { get; set; }
+
+		/// <summary>
+		/// 身份证号
+		/// </summary>
+		public String IDNumber { get; set; }
 
 		/// <summary>
 		/// 
@@ -118,22 +128,22 @@ namespace JIT.CPOS.BS.Entity
 		public String VipSourceId { get; set; }
 
 		/// <summary>
-		/// 
+		/// 积分
 		/// </summary>
 		public Decimal? Integration { get; set; }
 
 		/// <summary>
-		/// 
+		/// 客户标识
 		/// </summary>
 		public String ClientID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 最近消费时间
 		/// </summary>
 		public DateTime? RecentlySalesTime { get; set; }
 
 		/// <summary>
-		/// 
+		/// 注册时间
 		/// </summary>
 		public DateTime? RegistrationTime { get; set; }
 
@@ -168,17 +178,17 @@ namespace JIT.CPOS.BS.Entity
 		public String APPID { get; set; }
 
 		/// <summary>
-		/// 上线会员主标识
+		/// 上线会员标识
 		/// </summary>
 		public String HigherVipID { get; set; }
 
 		/// <summary>
-		/// QRVipCode
+		/// 二维码卡会员
 		/// </summary>
 		public String QRVipCode { get; set; }
 
 		/// <summary>
-		/// 
+		/// 城市
 		/// </summary>
 		public String City { get; set; }
 
@@ -188,9 +198,14 @@ namespace JIT.CPOS.BS.Entity
 		public String CouponURL { get; set; }
 
 		/// <summary>
-		/// 优惠券信息
+		/// 优惠券信息（会籍店）
 		/// </summary>
 		public String CouponInfo { get; set; }
+
+		/// <summary>
+		/// 会籍店
+		/// </summary>
+		public String MembershipStore { get; set; }
 
 		/// <summary>
 		/// 购买金额
@@ -203,27 +218,27 @@ namespace JIT.CPOS.BS.Entity
 		public Int32? PurchaseCount { get; set; }
 
 		/// <summary>
-		/// 
+		/// 地址
 		/// </summary>
 		public String DeliveryAddress { get; set; }
 
 		/// <summary>
-		/// 
+		/// 经度
 		/// </summary>
 		public String Longitude { get; set; }
 
 		/// <summary>
-		/// 
+		/// 维度
 		/// </summary>
 		public String Latitude { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员密码
 		/// </summary>
 		public String VipPasswrod { get; set; }
 
 		/// <summary>
-		/// 
+		/// 头像URL
 		/// </summary>
 		public String HeadImgUrl { get; set; }
 
@@ -478,39 +493,39 @@ namespace JIT.CPOS.BS.Entity
 		public String Col50 { get; set; }
 
 		/// <summary>
-		/// 
+		/// 真实姓名
 		/// </summary>
 		public String VipRealName { get; set; }
 
 		/// <summary>
-		/// 
+		/// 是否激活
 		/// </summary>
 		public Int32? IsActivate { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员导入标识
 		/// </summary>
 		public String VIPImportID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 分享会员标识
 		/// </summary>
 		public String ShareVipId { get; set; }
 
 		/// <summary>
-		/// 
+		/// 集客员工标识
 		/// </summary>
 		public String SetoffUserId { get; set; }
 
 		/// <summary>
-		/// 
+		/// 分享员工标识
 		/// </summary>
 		public String ShareUserId { get; set; }
 
-        /// <summary>
-        /// 用户是否开店
-        /// </summary>
-        public int? IsSotre { get; set; }
+		/// <summary>
+		/// 是否小店
+		/// </summary>
+		public Int32? IsSotre { get; set; }
 
 
         #endregion

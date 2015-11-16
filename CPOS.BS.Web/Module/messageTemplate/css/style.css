@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
+.commonSelectWrap .selectBox{ border: 1px solid transparent;}
+.optionBtns .commonBtn{background: no-repeat 8px center #00cccc;  float: left; margin-left: 35px;}
+.optionBtn .commonBtn{background-color: #00cccc; width: 146px; height: 44px; float: left; margin-left: 35px;}
+.queryTermArea{padding-left: 0; padding-right:0}
+.btnOpt{margin: 0 auto;margin-top:145px;border-radius: 23px; line-height: 44px; }
+.optionBtn .commonBtn.bg{ background-color: #fc7a52 }
+.moreQueryWrap{ float: left;margin-top: 12px;}
+.moreQueryWrap .queryBtn{ width: 58px;}
+.title{ font-size: 16px; line-height: 36px;}
+.tableWrap{ min-height: 50px;}
+.commonSelectWrap{ width: 100%;}
+.commonSelectWrap .wh80{ width: 80px;}
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+.lineTitle{ text-align: left; width:100%;padding-left: 30px; color: #333;font-size: 16px; background: #eaeff2; height: 39px; line-height: 39px; }
+.panelSubmit{ width: 718px; margin: 0 auto;}
+#placeholder{float:left;background-color: #00cccc; margin-left: 86px;}
+.commonBtn{ position: relative;z-index: 36;}
+.commonBtn ul{ display: none;left:0; width:140px;border: 1px solid #d0d5d8; background-color: #fff;position: absolute; top: 0;}
+.commonBtn ul li{ font-size: 15px; line-height: 40px; color: #666; text-align: left; padding-left: 8px;}
+.commonBtn ul li:hover{ background-color: #00cccc; color: #fff;}
+.commonBtn:hover ul{display:inline-block; }

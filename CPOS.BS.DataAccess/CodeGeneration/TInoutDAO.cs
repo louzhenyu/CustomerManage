@@ -459,10 +459,13 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.Field20!=null)
                 strSql.Append( "[Field20]=@Field20,");
             if (pIsUpdateNullField || pEntity.PaymentcenterID!=null)
-                strSql.Append( "[paymentcenter_id]=@PaymentcenterID");
-     
+                strSql.Append( "[paymentcenter_id]=@PaymentcenterID,");
+            if (pIsUpdateNullField || pEntity.VipCardCode != null)
+                strSql.Append("[VipCardCode]=@VipCardCode");
             if (strSql.ToString().EndsWith(","))
                 strSql.Remove(strSql.Length - 1, 1);
+
+
             strSql.Append(" where order_id=@OrderID ");
             SqlParameter[] parameters = 
             {
@@ -537,6 +540,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@Field19",SqlDbType.NVarChar),
 					new SqlParameter("@Field20",SqlDbType.NVarChar),
 					new SqlParameter("@PaymentcenterID",SqlDbType.NVarChar),
+                    new SqlParameter("@VipCardCode",SqlDbType.NVarChar),
 					new SqlParameter("@OrderID",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.OrderNo;
@@ -610,7 +614,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[68].Value = pEntity.Field19;
 			parameters[69].Value = pEntity.Field20;
 			parameters[70].Value = pEntity.PaymentcenterID;
-			parameters[71].Value = pEntity.OrderID;
+            parameters[71].Value = pEntity.VipCardCode;
+			parameters[72].Value = pEntity.OrderID;
 
             //Ö´ÐÐÓï¾ä
             int result = 0;

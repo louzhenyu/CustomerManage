@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/20 11:22:27
+ * Create On	:2015-8-14 20:18:25
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -43,12 +43,12 @@ namespace JIT.CPOS.BS.Entity
 		public Int32? VipCardStatusId { get; set; }
 
 		/// <summary>
-		/// 
+		/// ×´Ì¬±àÂë
 		/// </summary>
 		public String VipCardStatusCode { get; set; }
 
 		/// <summary>
-		/// 
+		/// ×´Ì¬Ãû³Æ
 		/// </summary>
 		public String VipCardStatusName { get; set; }
 

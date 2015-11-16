@@ -7,7 +7,7 @@ var appConfig = {
 // 路径定义
 require.config({
     urlArgs: "v=" + (appConfig.cache ? appConfig.version : (new Date()).getTime()),
-    baseUrl: '',
+    baseUrl:'',   //window.staticUrl ? window.staticUrl:'http://static.uat.chainclouds.com'
     shim: {
         'pagination': {
             deps: ['jquery'],

@@ -26,6 +26,7 @@ using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -33,6 +34,24 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理：  
     /// </summary>
     public partial class SysVipCardTypeBLL
-    {  
+    {
+        /// <summary>
+        /// 事务
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
+        }
+        /// <summary>
+        /// 获取会员卡列表
+        /// </summary>
+        /// <param name="pWhereConditions">筛选条件</param>
+        /// <param name="pOrderBys">排序</param>
+        /// <returns></returns>
+        public SysVipCardTypeEntity[] GetVipCardList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        {
+            return this._currentDAO.GetVipCardList(pWhereConditions, pOrderBys);
+        }
     }
 }

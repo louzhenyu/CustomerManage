@@ -27,9 +27,10 @@ function SetLogoInfo() {
         async: true,
         url: '/Module/CustomerBasicSetting/Handler/CustomerBasicSettingHander.ashx?mid=' + getUrlParam('mid') + '&method=GetCustomerList',
         success: function (response) {
+            debugger;
             var data = Ext.decode(response.responseText);
             var logo = $('#img_logo');
-          //  debugger;
+            //  debugger;
             logo.attr('alt', data.data.loadInfo.customerName);
             logo.closest('a').attr('title', data.data.loadInfo.customerName);
 
@@ -37,7 +38,8 @@ function SetLogoInfo() {
 
             var str = $("#lblLoginUserName").html();
             var UnitName = window.UnitShortName ? window.UnitShortName : window.UnitName;
-            UnitName = UnitName.length > 8 ? UnitName.substring(0, 8) + "..." : UnitName;
+            window.UserName = str;
+            UnitName = UnitName.length > 8 ? UnitName.substring(0, 8) + "..." : UnitName
             $("#lblLoginUserName").html("<b>|</b>" + UnitName + "&nbsp;&nbsp;&nbsp;" + str).attr("title", window.UnitName + "(" + window.RoleName + ")");
             if (data.data.requset != null) {
                 for (var i = 0; i < data.data.requset.length; i++) {
@@ -51,46 +53,45 @@ function SetLogoInfo() {
                 }
             }
 
-           var menuZoom=function(){
-               $("#commonNav").show();
-               var countWidth = $(".commonHeader").outerWidth(true);  //总的的宽度
+            var menuZoom = function () {
+                $("#commonNav").show();
+                var countWidth = $(".commonHeader").outerWidth(true);  //总的的宽度
 
-               var handleWrapWidth = $(".handleWrap").outerWidth(true);//右侧门店名字的宽度
-               var logoWrapWidth = $(" .commonHeader .logoWrap").outerWidth(true);    //logo的宽度
+                var handleWrapWidth = $(".handleWrap").outerWidth(true); //右侧门店名字的宽度
+                var logoWrapWidth = $(" .commonHeader .logoWrap").outerWidth(true);    //logo的宽度
 
-               var autoWidth = countWidth - handleWrapWidth - logoWrapWidth;
-               if($("#commonNav li.dropDown li").length>0){
-                   $("#commonNav .addul").append($("#commonNav li.dropDown li"));
-                   $("#commonNav li.dropDown").remove();
-               }
-
-
-
-               var ulList = $("<ul></ul>");
-               var liCountWidth = $("#commonNav").outerWidth(true) - $("#commonNav").width()+36; //包含边框宽度
-               liCountWidth += $("#commonNav li.dropDown").outerWidth(true) ? $("#commonNav li.dropDown").outerWidth("true") : 0;
-               debugger;
-               $("#commonNav ul li").each(function () {
-                       liCountWidth += $(this).outerWidth(true);
-                       if (liCountWidth >= autoWidth) {
-                           ulList.append($(this));
-                       }
-               });
-
-            if (ulList.find("li").length>0) {
-                $("#commonNav li.dropDown").remove();
-                $("#commonNav ul.clearfix").append("<li class='dropDown'></li>");
-                $("#commonNav li.dropDown").append(ulList);
-                $("#commonNav li.dropDown").find("ul").hide();
-
-            }
+                var autoWidth = countWidth - handleWrapWidth - logoWrapWidth;
+                if ($("#commonNav li.dropDown li").length > 0) {
+                    $("#commonNav .addul").append($("#commonNav li.dropDown li"));
+                    $("#commonNav li.dropDown").remove();
+                }
 
 
-           };
-              menuZoom();
+
+                var ulList = $("<ul></ul>");
+                var liCountWidth = $("#commonNav").outerWidth(true) - $("#commonNav").width() + 36; //包含边框宽度
+                liCountWidth += $("#commonNav li.dropDown").outerWidth(true) ? $("#commonNav li.dropDown").outerWidth("true") : 0
+                $("#commonNav ul li").each(function () {
+                    liCountWidth += $(this).outerWidth(true);
+                    if (liCountWidth >= autoWidth) {
+                        ulList.append($(this));
+                    }
+                });
+
+                if (ulList.find("li").length > 0) {
+                    $("#commonNav li.dropDown").remove();
+                    $("#commonNav ul.clearfix").append("<li class='dropDown'></li>");
+                    $("#commonNav li.dropDown").append(ulList);
+                    $("#commonNav li.dropDown").find("ul").hide();
+
+                }
 
 
-            $(window).resize(function(){
+            };
+            menuZoom();
+
+
+            $(window).resize(function () {
                 menuZoom();
             });
 
@@ -157,12 +158,13 @@ $(function () {
 });
 
 //{"order_no":"","vip_no":"","sales_unit_id":"","order_date_begin":"","order_date_end":"","data_from_id":null,"DeliveryId":null,"ModifyTime_begin":"","ModifyTime_end":""}
+ /***未处理订单统计接口****/
 function GetUnAuditCount() {
     Ext.Ajax.request({
         method: 'GET',
         //sync: false,
         async: true,
-        url: '/Module/Order/InoutOrders/Handler/Inout3Handler.ashx?method=GetPosOrderUnAuditTotalCount',        
+        url: '/Module/Order/InoutOrders/Handler/Inout3Handler.ashx?method=GetPosOrderUnAuditTotalCount',
         params: {
             form: ""
             , sales_unit_id: ""

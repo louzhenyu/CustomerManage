@@ -49,6 +49,9 @@
     <Reference Include="Utility">
       <HintPath>..\ReferenceDll\Utility.dll</HintPath>
     </Reference>
+    <Reference Include="Utility.Message">
+      <HintPath>..\ReferenceDll\Utility.Message.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />

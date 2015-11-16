@@ -26,7 +26,7 @@
 .commonSelectWrap .searchInput textarea{line-height:34px;font-size:14px;background:none;color:#999;}
 .panlDiv .commonSelectWrap .searchInput{ border-width:0;background:none;}
 
-.forminput .commonSelectWrap .searchInput{ border-width:1px;}
+.forminput .commonSelectWrap .searchInput{ border-width:1px;background:#fff;}
 
 .forminput .commonSelectWrap .bordrnone.searchInput{ border-width:0;}
 .panlDiv{ display: block;  border-bottom: 1px solid #d0d5d8; padding-top:5px; padding-bottom: 5px; position: relative;margin-left: 35px; }

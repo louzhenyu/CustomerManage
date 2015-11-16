@@ -45,6 +45,11 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public Int32? VipSourceType { get; set; }
+
+		/// <summary>
+		/// À´Ô´Ãû³Æ
+		/// </summary>
 		public String VipSourceName { get; set; }
 
 		/// <summary>
@@ -71,6 +76,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? TmpCount { get; set; }
 
 
         #endregion

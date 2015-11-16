@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/20 11:22:28
+ * Create On	:2015-8-14 20:18:27
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -43,47 +43,47 @@ namespace JIT.CPOS.BS.Entity
 		public String RechargeRecordID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员卡标识
 		/// </summary>
 		public String VipCardID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 充值金额
 		/// </summary>
 		public Decimal? RechargeAmount { get; set; }
 
 		/// <summary>
-		/// 
+		/// 充值前卡内余额
 		/// </summary>
 		public Decimal? BalanceBeforeAmount { get; set; }
 
 		/// <summary>
-		/// 
+		/// 充值后卡内余额
 		/// </summary>
 		public Decimal? BalanceAfterAmount { get; set; }
 
 		/// <summary>
-		/// 
+		/// 充值小票号
 		/// </summary>
 		public String RechargeNo { get; set; }
 
 		/// <summary>
-		/// 
+		/// 充值方式
 		/// </summary>
 		public String PaymentTypeID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 充值时间
 		/// </summary>
 		public DateTime? RechargeTime { get; set; }
 
 		/// <summary>
-		/// 
+		/// 充值操作员
 		/// </summary>
 		public String RechargeUserID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 充值门店
 		/// </summary>
 		public String UnitID { get; set; }
 

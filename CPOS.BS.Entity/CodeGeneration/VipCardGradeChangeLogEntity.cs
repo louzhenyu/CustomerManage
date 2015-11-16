@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/20 11:41:32
+ * Create On	:2015-8-14 20:18:27
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -43,42 +43,42 @@ namespace JIT.CPOS.BS.Entity
 		public String ChangeLogID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员卡标识
 		/// </summary>
 		public String VipCardID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 变动前等级
 		/// </summary>
 		public Int32? ChangeBeforeGradeID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 现等级
 		/// </summary>
 		public Int32? NowGradeID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 变动原因
 		/// </summary>
 		public String ChangeReason { get; set; }
 
 		/// <summary>
-		/// 
+		/// 操作类型(1=自动,2=手动）
 		/// </summary>
 		public Int32? OperationType { get; set; }
 
 		/// <summary>
-		/// 
+		/// 变动时间
 		/// </summary>
 		public DateTime? ChangeTime { get; set; }
 
 		/// <summary>
-		/// 
+		/// 操作门店
 		/// </summary>
 		public String UnitID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 操作员工
 		/// </summary>
 		public String OperationUserID { get; set; }
 
@@ -106,6 +106,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 客户标识
+		/// </summary>
+		public String CustomerID { get; set; }
 
 
         #endregion

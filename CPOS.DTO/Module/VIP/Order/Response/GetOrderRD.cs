@@ -120,13 +120,25 @@ namespace JIT.CPOS.DTO.Module.VIP.Order.Response
         /// </summary>
         public string ItemName { get; set; }
         /// <summary>
+        /// 商品编码
+        /// </summary>
+        public string ItemCode { get; set; }
+        /// <summary>
         /// SKU ID
         /// </summary>
         public string SKUID { get; set; }
+        public string SkuCode { get; set; }
         /// <summary>
         /// 购买数量
         /// </summary>
-        public int Qty { get; set; }
+        public decimal Qty { get; set; }
+        public decimal? DiscountRate { get; set; }
+        public decimal? Amount { get; set; }
+        public decimal? DiscountAmount { get; set; }
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public string Remark { get; set; }
         /// <summary>
         /// 规格描述
         /// </summary>

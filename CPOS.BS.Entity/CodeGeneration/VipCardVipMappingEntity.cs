@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/20 11:22:29
+ * Create On	:2015-8-14 20:18:29
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -43,12 +43,12 @@ namespace JIT.CPOS.BS.Entity
 		public String MappingID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 会员标识
 		/// </summary>
 		public String VIPID { get; set; }
 
 		/// <summary>
-		/// 
+		/// 卡标识
 		/// </summary>
 		public String VipCardID { get; set; }
 
@@ -76,6 +76,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CustomerID { get; set; }
 
 
         #endregion

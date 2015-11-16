@@ -311,7 +311,7 @@ namespace JIT.CPOS.BS.Entity
 
         #region update by wzq
 
-        public decimal integral { get; set; }
+        public int integral { get; set; }
       
         #endregion
         /// <summary>
@@ -508,7 +508,7 @@ namespace JIT.CPOS.BS.Entity
         public decimal couponAmount { get; set; }//优惠券折扣
         public decimal vipEndAmount { get; set; }//余额支付
 
-        public decimal IntegralBack { get; set; }//返回的积分
+        public int IntegralBack { get; set; }//返回的积分
         public decimal AmountBack { get; set; }//返回的现金
 
         
@@ -554,6 +554,10 @@ namespace JIT.CPOS.BS.Entity
         /// 会员折扣金额
         /// </summary>
         public decimal VipDiscount { get; set; }
+        /// <summary>
+        /// 商户订单号
+        /// </summary>
+        public string paymentcenter_id { get; set; }
 
     }
 

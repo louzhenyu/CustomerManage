@@ -1,0 +1,125 @@
+body{background:#fff;color:#4d4d4d; margin:0; }
+input,button,select,textarea{outline:none}
+textarea{resize:none}
+*{ margin:0; padding:0;}
+fieldset, img {
+    border: 0;
+}
+img{ vertical-align:top;}
+/* remember to define focus styles! */
+:focus {
+    outline: 0;
+}
+address, caption, cite, code, dfn,
+em, strong, th, var, optgroup {
+    font-style: normal;
+}
+strong{color:#383838; }
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+
+}
+abbr, acronym {
+    border: 0;
+    font-variant: normal;
+}
+
+input, button, textarea,
+select, optgroup, option {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+code, kbd, samp, tt {
+    font-size: 100%;
+}
+/*@purpose To enable resizing for IE */
+/*@branch For IE6-Win, IE7-Win */
+input, button, textarea, select {
+    font-size: 100%;
+}
+
+ol, ul {
+    list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+caption, th {
+    text-align: left;
+}
+sup, sub {
+    font-size: 100%;
+    vertical-align: baseline;
+}
+/* remember to highlight anchors and inserts somehow! */
+:link, :visited , ins,a {
+    text-decoration: none;
+}
+
+a:hover{ text-decoration:none;}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+.fontC{color:#2d83cf;font-family:"Arial";}
+.R{ float:right} .L{ float: left} .w100{ width: 100px;} .txtCenter{ text-align: center}
+input{border:1px solid #ccc;border-radius:3px;width:120px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"黑体";color:#a5a5a5;}
+.ui-pc-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;background:#000;opacity:0.7;filter:alpha(opacity=70);z-index:999;}
+.commonBtn{width:140px;height:40px;line-height:40px;text-align:center;font-size:14px;border-radius:5px;background:#fe7c24;color:#fff;}
+
+.centreArea{min-width:1215px;min-height:587px;background:url(../images/topShadow.png) repeat-x 0 0;}
+
+/*头部简单 查询*/
+.queryTermArea{min-height:73px;padding:10px 20px 0 0px;border:1px solid #d8d8d8;background:#fbfbfb; margin-bottom:0px;}
+.queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; }
+.commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
+.commonSelectWrap .tit{float:left;width:120px;height:33px;line-height:33px;text-align:right;font-size:14px;color:#4d4d4d;}
+.commonSelectWrap .endTime .tit{width:15px;}
+.commonSelectWrap .endTime .selectBox{margin-left:22px;}
+.commonSelectWrap .selectBox{ float:left;margin-left:5px;width:161px;height:31px;line-height:31px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff url(../images/moreIcon.png) no-repeat 96% center;cursor:pointer;}
+.commonSelectWrap .selectBox .text{display:block;width:150px;line-height:31px;text-indent:5px;}
+.commonSelectWrap .selectList{position:relative;display:none;top:10px;left:-1px;width:161px;border-left:1px solid #ccc;border-right:1px solid #b9b9b9;z-index:100;}
+.commonSelectWrap .selectList p{line-height:31px;text-align:center;border-bottom:1px solid #ccc;background:#f8f8f8;}
+.commonSelectWrap .selectList p:hover{background:#f1f1f1;}
+/*.commonSelectWrap .selectBox:hover{position:relative;}*/
+/*.commonSelectWrap .selectList{display:block;}*/
+.commonSelectWrap .searchInput{display:block;float:left;width:161px;height:31px;line-height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
+.commonSelectWrap .searchInput input{float:left;width:100%;height:29px;border:none;color:#666;}
+/*特殊的范围的输入框处理*/
+.commonSelectWrap .specialInput{display:block;float:left;width:100px;height:31px;margin-left:5px;font-family:Arial;border:1px solid #ccc;border-radius:2px;}
+.commonSelectWrap .specialInput input{float:left;width:90px;height:29px;border:none;color:#666;}
+.moreQueryWrap{float: right;margin-top: 10px;}
+.moreQueryWrap .commonBtn{ display: block;}
+.moreQueryWrap .queryBtn{width:100px;height:32px;line-height:32px;}
+.moreQueryWrap #addOrder{width:100px;height:32px;line-height:32px;}
+.moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "宋体";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
+.btnWrap{padding:35px 0;text-align:center;}
+.btnWrap a{display:inline-block;}
+.cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
+.cancelBtn:hover{background:transparent;color: #fe7c24}
+
+
+/*取消第三方样式*/
+.panel-header, .panel-body {
+    border: none;
+}
+
+.dataTable{width:100%;border:1px solid #d8d8d8;border-top:none;font:13px/39px "黑体";color:#4d4d4d;}
+.bodernone{ border:1px solid transparent; width: 100%; }
+/*******以上是公共样式*********/
+.optionclass  .commonSelectWrap .tit{ width: 222px;}
+
+.borderNone{ border:1px solid transparent;float:left;margin-left:5px;width:161px;height:31px;line-height:31px;font-family:Arial;border-radius:2px;background:#fff }
+.borderNone .numberbox {border:1px solid transparent; width: 100%}
+
+.datagrid .fontC{ width: 40%; float: left;}
+.winfont{width:100%;text-align: center; line-height: 36px; font-size: 16px;clear: both}

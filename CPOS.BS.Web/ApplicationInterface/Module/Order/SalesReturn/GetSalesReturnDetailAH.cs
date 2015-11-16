@@ -34,6 +34,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
             {
                 rd.SalesReturnID = salesReturnEntity.SalesReturnID.ToString();
                 rd.SalesReturnNo = salesReturnEntity.SalesReturnNo;
+                rd.OrderID = salesReturnEntity.OrderID;
+                rd.OrderNo = salesReturnEntity.OrderNo;
                 rd.Status = salesReturnEntity.Status;
                 rd.DeliveryType = salesReturnEntity.DeliveryType;
                 rd.Reason = salesReturnEntity.Reason;

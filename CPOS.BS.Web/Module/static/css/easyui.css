@@ -44,7 +44,8 @@
   position: absolute;
   top: 50%;
   margin-top: -8px;
-  height: 16px;
+  /*height: 16px;*/
+  display: inline-block;
   overflow: hidden;
 }
 .panel-icon {
@@ -57,8 +58,8 @@
 }
 .panel-tool a {
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 32px;
+  height: 32px;
   opacity: 0.6;
   filter: alpha(opacity=60);
   margin: 0 0 0 2px;
@@ -94,7 +95,6 @@
  }
 .panel-tool-close {
     background: url('images/hintClose.png') no-repeat center center;
-    background-size: 16px;
     padding-right: 33px;
 }
 
@@ -203,7 +203,7 @@
 .window .window-header .panel-icon,
 .window .window-header .panel-tool {
   top: 50%;
-  margin-top: -11px;
+  margin-top: -18px;
 }
 .window .window-header .panel-icon {
   left: 1px;

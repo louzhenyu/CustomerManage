@@ -69,7 +69,7 @@
             default:
                 break;
         }
-        return  new Date(startTime)-new Date(endTime)/ parseInt(divNum);
+        return  parseInt((new Date(startTime)-new Date(endTime))/ parseInt(divNum));
     };
 
 
@@ -158,7 +158,18 @@
 			};
 			
 			$.extend(_param,param);
-			
+        _param.success= function (data) {
+            if (!data.IsSuccess && data.ResultCode == 500) {
+                $.messager.alert("提示", data.Message,"error",function() {
+                    location.href = "/default.aspx?method=LogOut";
+                });
+
+            } else {
+                param.success(data);
+            }
+
+
+        };
 			//var baseInfo = this.getBaseAjaxParam();
 			
 			var action = param.data.action,
@@ -215,6 +226,7 @@
     
     */
    util.oldBuildAjaxParams=function(param){
+       debugger;
        var _param = {
            type: "post",
            dataType: "json",
@@ -253,7 +265,7 @@
            $.each(query,function(name,val){
                querystring+="&{0}={1}".format(name,val);
            });
-           console.log(querystring);
+          // console.log(querystring);
            _param.url += querystring;
        }
 

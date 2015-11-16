@@ -222,7 +222,7 @@ namespace JIT.CPOS.Web.wap
 
                 // SysIntegralSource: 10
                 string integralSourceId = "10";
-                decimal integralValue = 0;
+                int integralValue = 0;
                 if (true)
                 {
                     IntegralRuleEntity integralRuleData = null;
@@ -240,7 +240,7 @@ namespace JIT.CPOS.Web.wap
                     else
                     {
                         integralRuleData = integralRuleDataList[0];
-                        integralValue = CPOS.Common.Utils.GetDecimalVal(integralRuleData.Integral);
+                        integralValue = int.Parse(integralRuleData.Integral);
                     }
                 }
 
@@ -248,7 +248,7 @@ namespace JIT.CPOS.Web.wap
                 if (true)
                 {
                     string tmpVipId = vipId;
-                    decimal tmpIntegralValue = integralValue;
+                    int tmpIntegralValue = integralValue;
                     string tmpIntegralSourceId = integralSourceId;
                     string tmpOpenId = openId;
                     string msgModel = "【验真品，送积分】活动，您本次验证赢得{0}点积分。您当前的总积分是{1}点。";
@@ -282,14 +282,11 @@ namespace JIT.CPOS.Web.wap
                     else
                     {
                         vipIntegralEntity.VipID = tmpVipId;
-                        vipIntegralEntity.InIntegral = Common.Utils.GetDecimalVal(
-                            vipIntegralDataList[0].InIntegral) + tmpIntegralValue; ; // 增加积分
+                        vipIntegralEntity.InIntegral = vipIntegralDataList[0].InIntegral + tmpIntegralValue; ; // 增加积分
                         //vipIntegralEntity.OutIntegral = 0; //消费积分
-                        vipIntegralEntity.EndIntegral = Common.Utils.GetDecimalVal(
-                            vipIntegralDataList[0].EndIntegral) + tmpIntegralValue; //积分余额
+                        vipIntegralEntity.EndIntegral =vipIntegralDataList[0].EndIntegral + tmpIntegralValue; //积分余额
                         //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                        vipIntegralEntity.ValidIntegral = Common.Utils.GetDecimalVal(
-                            vipIntegralDataList[0].ValidIntegral) + tmpIntegralValue; // 当前有效积分
+                        vipIntegralEntity.ValidIntegral =vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
                         //vipIntegralBLL.Update(vipIntegralEntity, false);
                     }
 

@@ -1,18 +1,15 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <meta charset="UTF-8" />
     <title>会员管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <link href="<%=StaticUrl+"/module/VipManage/css/reset-pc.css"%>" rel="stylesheet" type="text/css" />
+
         <link href="<%=StaticUrl+"/module/VipManage/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-        <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
-        <link href="<%=StaticUrl+"/module/static/css/jquery.datetimepicker.css"%>" rel="stylesheet" type="text/css" />
-        <link href="<%=StaticUrl+"/module/static/css/artDialog.css"%>" rel="stylesheet" type="text/css" />
+
         <link href="<%=StaticUrl+"/module/static/css/tip-yellowsimple/tip-yellowsimple.css"%>" rel="stylesheet" type="text/css" />
         <link href="<%=StaticUrl+"/module/static/css/zTreeStyle/zTreeStyle.css"%>" rel="stylesheet" type="text/css" />
-        <%--<link href="../static/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css" />--%>
         <style type="text/css">
 
             .commonSelectWrap input {
@@ -31,7 +28,8 @@
             <div class="item clearfix">
                 <div class="moreQueryWrap">
                 	<a href="javascript:;" class="commonBtn queryBtn">查询</a>
-                    <a href="javascript:;" class="more">更多查询条件</a>
+                	<a href="javascript:;" class="commonBtn queryBtn" data-flag="card">刷卡查询</a>
+                   <!-- <a href="javascript:;" class="more">更多查询条件</a>-->
                 </div>
             </div>
         </div>
@@ -54,9 +52,9 @@
         -->
         <!--表格操作按钮-->
         <div id="menuItems" class="tableHandleBox">
-            <span class="commonBtn _addVip">添加新会员</span>
-            <span class="commonBtn _exportVip">全部导出</span>
-            <%--<span class="commonBtn _delVip">删除</span>--%>
+           <!-- <span class="commonBtn _addVip">添加新会员</span>-->
+         <!--   <span class="commonBtn _exportVip">导出当前页</span>-->
+         <!--   <span class="commonBtn _delVip">删除</span>-->
         </div>    
         <div class="tableWrap">
             <div class="tablehandle">
@@ -105,7 +103,12 @@
                     </tr>-->
                 </thead>
                 <tbody id="content">
+                  <tr ><td class="loading" colspan="10"><span><img src="../static/images/loading.gif"></span></td>
+                   </tr>
                     <!--
+
+
+
                     <tr>
                         <td class="checkBox on"><em></em></td>
                         <td class="seeIcon"></td>
@@ -118,6 +121,7 @@
                         <td class="fontF">998</td>
                         <td class="fontF">138****7765</td>
                     </tr>-->
+
                 </tbody>
             </table>
             <div id="pageContianer">
@@ -128,7 +132,35 @@
 </div>
 
 
+<div style="display: none">
+      <div id="win" class="easyui-window" data-options="modal:true,closed:true,collapsible:false,minimizable:false,maximizable:false,
+      title:'刷卡查询',width:636,height:320,left:($(window).width()-636)/2,top:($(window).height()-320)/2" >
+      		<div class="easyui-layout" data-options="fit:true" id="panlconent">
 
+      			<div data-options="region:'center'" style="padding-top:62px;">
+      			  <form></form>
+      			   <form id="payOrder">
+                           <div class="commonSelectWrap  cardswipe">
+                                 <em class="tit" style="width:167px">卡号：</em>
+                                <div class="searchInput" style="width:306px">
+                                   <input type="text"    name="VipCardISN"  id="VipCardISN" class="easyui-validatebox" data-options="required:true"  placeholder="请刷卡/输入卡号" />
+                               </div>
+                           </div>
+
+                           </form>
+      			</div>
+      			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
+      				<a class=" commonBtn saveBtn cardswip cardswipe" >确定</a>
+      				<a class="easyui-linkbutton commonBtn cancelBtn"  href="javascript:void(0)" onclick="javascript:$('#win').window('close')" >取消</a>
+      			</div>
+      		</div>
+
+      	</div>
+
+      </div>
+
+
+</div>
 <!-- 弹层,遮罩 -->
 <div class="ui-pc-mask" id="ui-mask" style="display:none;"></div>
 <!--弹层,添加新会员-->
@@ -367,7 +399,7 @@
     </div>-->
 <!--头部名称-->
 <script id="tpl_thead" type="text/html">
-    <th class="selectListBox">
+  <!--  <th class="selectListBox">
         选择
         <div class="minSelectBox">
             <em class="minArr"></em>
@@ -376,7 +408,7 @@
             <p class="_cancelSel">取消选择</p>
         </div>
     </th>
-    <th>操作</th>
+    <th>操作</th>-->
     <#for(var i in obj){#>
         <th><#=obj[i]#></th>
     <#}#>
@@ -385,8 +417,8 @@
 <script id="tpl_content" type="text/html">
     <#for(var i=0,idata;i<list.finalList.length;i++){ idata=list.finalList[i]; #>
     <tr data-id="<#=list.otherItems[i].VIPID #>">
-        <td class="checkBox" ><em></em></td>
-        <td class="seeIcon"></td>
+        <!--<td class="checkBox" ><em></em></td>
+        <td class="seeIcon"></td>-->
         <#for(var e in idata){#>
         <td>
              <#var d= idata[e];if(e.toLowerCase()=='age' && d==0) d='';#>

@@ -87,7 +87,15 @@
         //设置查询条件   取得动态的表单查询参数
         setCondition:function(){
 
-
+            var that=this;
+            //查询每次都是从第一页开始
+            that.loadData.args.start=0;
+            var fileds=$("#seach").serializeArray();
+            $.each(fileds,function(i,filed){
+                filed.value=filed.value=="-1"?"":filed.value;
+                that.loadData.seach[filed.name]=filed.value;
+                that.loadData.seach.form[filed.name]=filed.value;
+            });
 
         },
 

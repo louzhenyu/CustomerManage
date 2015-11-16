@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/6/9 14:43:04
+ * Create On	:2015/10/30 15:25:27
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,8 +25,8 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
@@ -72,47 +72,58 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentNullException("pEntity");
             
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipIntegral](");
-            strSql.Append("[BeginIntegral],[InIntegral],[OutIntegral],[EndIntegral],[InvalidIntegral],[ValidIntegral],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[VipID])");
+            strSql.Append("[VipCardCode],[BeginIntegral],[InIntegral],[OutIntegral],[EndIntegral],[ImminentInvalidIntegral],[InvalidIntegral],[ValidIntegral],[CumulativeIntegral],[ValidNotIntegral],[CustomerID],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[VipID])");
             strSql.Append(" values (");
-            strSql.Append("@BeginIntegral,@InIntegral,@OutIntegral,@EndIntegral,@InvalidIntegral,@ValidIntegral,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@VipID)");            
+            strSql.Append("@VipCardCode,@BeginIntegral,@InIntegral,@OutIntegral,@EndIntegral,@ImminentInvalidIntegral,@InvalidIntegral,@ValidIntegral,@CumulativeIntegral,@ValidNotIntegral,@CustomerID,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@VipID)");            
 
 			string pkString = pEntity.VipID;
 
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@BeginIntegral",SqlDbType.Decimal),
-					new SqlParameter("@InIntegral",SqlDbType.Decimal),
-					new SqlParameter("@OutIntegral",SqlDbType.Decimal),
-					new SqlParameter("@EndIntegral",SqlDbType.Decimal),
-					new SqlParameter("@InvalidIntegral",SqlDbType.Decimal),
-					new SqlParameter("@ValidIntegral",SqlDbType.Decimal),
+					new SqlParameter("@VipCardCode",SqlDbType.VarChar),
+					new SqlParameter("@BeginIntegral",SqlDbType.Int),
+					new SqlParameter("@InIntegral",SqlDbType.Int),
+					new SqlParameter("@OutIntegral",SqlDbType.Int),
+					new SqlParameter("@EndIntegral",SqlDbType.Int),
+					new SqlParameter("@ImminentInvalidIntegral",SqlDbType.Int),
+					new SqlParameter("@InvalidIntegral",SqlDbType.Int),
+					new SqlParameter("@ValidIntegral",SqlDbType.Int),
+					new SqlParameter("@CumulativeIntegral",SqlDbType.Int),
+					new SqlParameter("@ValidNotIntegral",SqlDbType.Int),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
+					new SqlParameter("@CreateBy",SqlDbType.VarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
-					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
+					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@VipID",SqlDbType.NVarChar)
+					new SqlParameter("@VipID",SqlDbType.VarChar)
             };
-			parameters[0].Value = pEntity.BeginIntegral;
-			parameters[1].Value = pEntity.InIntegral;
-			parameters[2].Value = pEntity.OutIntegral;
-			parameters[3].Value = pEntity.EndIntegral;
-			parameters[4].Value = pEntity.InvalidIntegral;
-			parameters[5].Value = pEntity.ValidIntegral;
-			parameters[6].Value = pEntity.CreateTime;
-			parameters[7].Value = pEntity.CreateBy;
-			parameters[8].Value = pEntity.LastUpdateTime;
-			parameters[9].Value = pEntity.LastUpdateBy;
-			parameters[10].Value = pEntity.IsDelete;
-			parameters[11].Value = pkString;
+			parameters[0].Value = pEntity.VipCardCode;
+			parameters[1].Value = pEntity.BeginIntegral;
+			parameters[2].Value = pEntity.InIntegral;
+			parameters[3].Value = pEntity.OutIntegral;
+			parameters[4].Value = pEntity.EndIntegral;
+			parameters[5].Value = pEntity.ImminentInvalidIntegral;
+			parameters[6].Value = pEntity.InvalidIntegral;
+			parameters[7].Value = pEntity.ValidIntegral;
+			parameters[8].Value = pEntity.CumulativeIntegral;
+			parameters[9].Value = pEntity.ValidNotIntegral;
+			parameters[10].Value = pEntity.CustomerID;
+			parameters[11].Value = pEntity.CreateBy;
+			parameters[12].Value = pEntity.CreateTime;
+			parameters[13].Value = pEntity.LastUpdateBy;
+			parameters[14].Value = pEntity.LastUpdateTime;
+			parameters[15].Value = pEntity.IsDelete;
+			parameters[16].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -135,7 +146,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipIntegral] where VipID='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [VipIntegral] where VipID='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             VipIntegralEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -158,7 +169,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipIntegral] where isdelete=0");
+            sql.AppendFormat("select * from [VipIntegral] where 1=1  and isdelete=0");
             //读取数据
             List<VipIntegralEntity> list = new List<VipIntegralEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -181,24 +192,33 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(VipIntegralEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity,true,pTran);
+            Update(pEntity , pTran,true);
         }
-        public void Update(VipIntegralEntity pEntity , bool pIsUpdateNullField, IDbTransaction pTran)
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(VipIntegralEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipID==null)
+            if (pEntity.VipID == null)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
              //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [VipIntegral] set ");
+                        if (pIsUpdateNullField || pEntity.VipCardCode!=null)
+                strSql.Append( "[VipCardCode]=@VipCardCode,");
             if (pIsUpdateNullField || pEntity.BeginIntegral!=null)
                 strSql.Append( "[BeginIntegral]=@BeginIntegral,");
             if (pIsUpdateNullField || pEntity.InIntegral!=null)
@@ -207,38 +227,54 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[OutIntegral]=@OutIntegral,");
             if (pIsUpdateNullField || pEntity.EndIntegral!=null)
                 strSql.Append( "[EndIntegral]=@EndIntegral,");
+            if (pIsUpdateNullField || pEntity.ImminentInvalidIntegral!=null)
+                strSql.Append( "[ImminentInvalidIntegral]=@ImminentInvalidIntegral,");
             if (pIsUpdateNullField || pEntity.InvalidIntegral!=null)
                 strSql.Append( "[InvalidIntegral]=@InvalidIntegral,");
             if (pIsUpdateNullField || pEntity.ValidIntegral!=null)
                 strSql.Append( "[ValidIntegral]=@ValidIntegral,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.CumulativeIntegral!=null)
+                strSql.Append( "[CumulativeIntegral]=@CumulativeIntegral,");
+            if (pIsUpdateNullField || pEntity.ValidNotIntegral!=null)
+                strSql.Append( "[ValidNotIntegral]=@ValidNotIntegral,");
+            if (pIsUpdateNullField || pEntity.CustomerID!=null)
+                strSql.Append( "[CustomerID]=@CustomerID,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
-            if (strSql.ToString().EndsWith(","))
-                strSql.Remove(strSql.Length - 1, 1);
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
             strSql.Append(" where VipID=@VipID ");
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@BeginIntegral",SqlDbType.Decimal),
-					new SqlParameter("@InIntegral",SqlDbType.Decimal),
-					new SqlParameter("@OutIntegral",SqlDbType.Decimal),
-					new SqlParameter("@EndIntegral",SqlDbType.Decimal),
-					new SqlParameter("@InvalidIntegral",SqlDbType.Decimal),
-					new SqlParameter("@ValidIntegral",SqlDbType.Decimal),
+					new SqlParameter("@VipCardCode",SqlDbType.VarChar),
+					new SqlParameter("@BeginIntegral",SqlDbType.Int),
+					new SqlParameter("@InIntegral",SqlDbType.Int),
+					new SqlParameter("@OutIntegral",SqlDbType.Int),
+					new SqlParameter("@EndIntegral",SqlDbType.Int),
+					new SqlParameter("@ImminentInvalidIntegral",SqlDbType.Int),
+					new SqlParameter("@InvalidIntegral",SqlDbType.Int),
+					new SqlParameter("@ValidIntegral",SqlDbType.Int),
+					new SqlParameter("@CumulativeIntegral",SqlDbType.Int),
+					new SqlParameter("@ValidNotIntegral",SqlDbType.Int),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
+					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
-					new SqlParameter("@VipID",SqlDbType.NVarChar)
+					new SqlParameter("@VipID",SqlDbType.VarChar)
             };
-			parameters[0].Value = pEntity.BeginIntegral;
-			parameters[1].Value = pEntity.InIntegral;
-			parameters[2].Value = pEntity.OutIntegral;
-			parameters[3].Value = pEntity.EndIntegral;
-			parameters[4].Value = pEntity.InvalidIntegral;
-			parameters[5].Value = pEntity.ValidIntegral;
-			parameters[6].Value = pEntity.LastUpdateTime;
-			parameters[7].Value = pEntity.LastUpdateBy;
-			parameters[8].Value = pEntity.VipID;
+			parameters[0].Value = pEntity.VipCardCode;
+			parameters[1].Value = pEntity.BeginIntegral;
+			parameters[2].Value = pEntity.InIntegral;
+			parameters[3].Value = pEntity.OutIntegral;
+			parameters[4].Value = pEntity.EndIntegral;
+			parameters[5].Value = pEntity.ImminentInvalidIntegral;
+			parameters[6].Value = pEntity.InvalidIntegral;
+			parameters[7].Value = pEntity.ValidIntegral;
+			parameters[8].Value = pEntity.CumulativeIntegral;
+			parameters[9].Value = pEntity.ValidNotIntegral;
+			parameters[10].Value = pEntity.CustomerID;
+			parameters[11].Value = pEntity.LastUpdateBy;
+			parameters[12].Value = pEntity.LastUpdateTime;
+			parameters[13].Value = pEntity.VipID;
 
             //执行语句
             int result = 0;
@@ -254,11 +290,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pEntity">实体实例</param>
         public void Update(VipIntegralEntity pEntity )
         {
-            Update(pEntity ,true);
-        }
-        public void Update(VipIntegralEntity pEntity ,bool pIsUpdateNullField )
-        {
-            this.Update(pEntity, pIsUpdateNullField, null);
+            this.Update(pEntity, null);
         }
 
         /// <summary>
@@ -280,7 +312,7 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipID==null)
+            if (pEntity.VipID == null)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
@@ -299,11 +331,9 @@ namespace JIT.CPOS.BS.DataAccess
                 return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipIntegral] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where VipID=@VipID;");
+            sql.AppendLine("update [VipIntegral] set  isdelete=1 where VipID=@VipID;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.VarChar,Value=Convert.ToString(CurrentUserInfo.UserID)},
                 new SqlParameter{ParameterName="@VipID",SqlDbType=SqlDbType.VarChar,Value=pID}
             };
             //执行语句
@@ -326,15 +356,15 @@ namespace JIT.CPOS.BS.DataAccess
             object[] entityIDs = new object[pEntities.Length];
             for (int i = 0; i < pEntities.Length; i++)
             {
-                var item = pEntities[i];
+                var pEntity = pEntities[i];
                 //参数校验
-                if (item == null)
+                if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.VipID==null)
+                if (pEntity.VipID == null)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = item.VipID;
+                entityIDs[i] = pEntity.VipID;
             }
             Delete(entityIDs, pTran);
         }
@@ -373,7 +403,7 @@ namespace JIT.CPOS.BS.DataAccess
                 primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipIntegral] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy='"+CurrentUserInfo.UserID+"',IsDelete=1 where VipID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [VipIntegral] set  isdelete=1 where VipID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
             int result = 0;   
             if (pTran == null)
@@ -394,7 +424,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipIntegral] where isdelete=0 ");
+            sql.AppendFormat("select * from [VipIntegral] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -455,9 +485,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [VipID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [VipIntegral] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [VipIntegral] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [VipIntegral] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [VipIntegral] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -532,6 +562,8 @@ namespace JIT.CPOS.BS.DataAccess
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
             if (pQueryEntity.VipID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = pQueryEntity.VipID });
+            if (pQueryEntity.VipCardCode!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipCardCode", Value = pQueryEntity.VipCardCode });
             if (pQueryEntity.BeginIntegral!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "BeginIntegral", Value = pQueryEntity.BeginIntegral });
             if (pQueryEntity.InIntegral!=null)
@@ -540,18 +572,26 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "OutIntegral", Value = pQueryEntity.OutIntegral });
             if (pQueryEntity.EndIntegral!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EndIntegral", Value = pQueryEntity.EndIntegral });
+            if (pQueryEntity.ImminentInvalidIntegral!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ImminentInvalidIntegral", Value = pQueryEntity.ImminentInvalidIntegral });
             if (pQueryEntity.InvalidIntegral!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "InvalidIntegral", Value = pQueryEntity.InvalidIntegral });
             if (pQueryEntity.ValidIntegral!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ValidIntegral", Value = pQueryEntity.ValidIntegral });
-            if (pQueryEntity.CreateTime!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
+            if (pQueryEntity.CumulativeIntegral!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CumulativeIntegral", Value = pQueryEntity.CumulativeIntegral });
+            if (pQueryEntity.ValidNotIntegral!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ValidNotIntegral", Value = pQueryEntity.ValidNotIntegral });
+            if (pQueryEntity.CustomerID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
             if (pQueryEntity.CreateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateTime!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
+            if (pQueryEntity.CreateTime!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
             if (pQueryEntity.LastUpdateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
+            if (pQueryEntity.LastUpdateTime!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
 
@@ -562,7 +602,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(SqlDataReader pReader, out VipIntegralEntity pInstance)
+        protected void Load(IDataReader pReader, out VipIntegralEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
             pInstance = new VipIntegralEntity();
@@ -573,45 +613,65 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.VipID =  Convert.ToString(pReader["VipID"]);
 			}
+			if (pReader["VipCardCode"] != DBNull.Value)
+			{
+				pInstance.VipCardCode =  Convert.ToString(pReader["VipCardCode"]);
+			}
 			if (pReader["BeginIntegral"] != DBNull.Value)
 			{
-				pInstance.BeginIntegral =  Convert.ToDecimal(pReader["BeginIntegral"]);
+				pInstance.BeginIntegral =   Convert.ToInt32(pReader["BeginIntegral"]);
 			}
 			if (pReader["InIntegral"] != DBNull.Value)
 			{
-				pInstance.InIntegral =  Convert.ToDecimal(pReader["InIntegral"]);
+				pInstance.InIntegral =   Convert.ToInt32(pReader["InIntegral"]);
 			}
 			if (pReader["OutIntegral"] != DBNull.Value)
 			{
-				pInstance.OutIntegral =  Convert.ToDecimal(pReader["OutIntegral"]);
+				pInstance.OutIntegral =   Convert.ToInt32(pReader["OutIntegral"]);
 			}
 			if (pReader["EndIntegral"] != DBNull.Value)
 			{
-				pInstance.EndIntegral =  Convert.ToDecimal(pReader["EndIntegral"]);
+				pInstance.EndIntegral =   Convert.ToInt32(pReader["EndIntegral"]);
+			}
+			if (pReader["ImminentInvalidIntegral"] != DBNull.Value)
+			{
+				pInstance.ImminentInvalidIntegral =   Convert.ToInt32(pReader["ImminentInvalidIntegral"]);
 			}
 			if (pReader["InvalidIntegral"] != DBNull.Value)
 			{
-				pInstance.InvalidIntegral =  Convert.ToDecimal(pReader["InvalidIntegral"]);
+				pInstance.InvalidIntegral =   Convert.ToInt32(pReader["InvalidIntegral"]);
 			}
 			if (pReader["ValidIntegral"] != DBNull.Value)
 			{
-				pInstance.ValidIntegral =  Convert.ToDecimal(pReader["ValidIntegral"]);
+				pInstance.ValidIntegral =   Convert.ToInt32(pReader["ValidIntegral"]);
 			}
-			if (pReader["CreateTime"] != DBNull.Value)
+			if (pReader["CumulativeIntegral"] != DBNull.Value)
 			{
-				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
+				pInstance.CumulativeIntegral =   Convert.ToInt32(pReader["CumulativeIntegral"]);
+			}
+			if (pReader["ValidNotIntegral"] != DBNull.Value)
+			{
+				pInstance.ValidNotIntegral =   Convert.ToInt32(pReader["ValidNotIntegral"]);
+			}
+			if (pReader["CustomerID"] != DBNull.Value)
+			{
+				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
 			}
 			if (pReader["CreateBy"] != DBNull.Value)
 			{
 				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
 			}
-			if (pReader["LastUpdateTime"] != DBNull.Value)
+			if (pReader["CreateTime"] != DBNull.Value)
 			{
-				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
+				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
 			}
 			if (pReader["LastUpdateBy"] != DBNull.Value)
 			{
 				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
+			}
+			if (pReader["LastUpdateTime"] != DBNull.Value)
+			{
+				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
 			}
 			if (pReader["IsDelete"] != DBNull.Value)
 			{

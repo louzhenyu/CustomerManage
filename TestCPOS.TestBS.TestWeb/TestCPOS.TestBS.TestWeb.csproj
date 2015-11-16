@@ -33,7 +33,7 @@
   <ItemGroup>
     <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ReferenceDll\nunit.framework.dll</HintPath>
+      <HintPath>C:\Users\admin\Desktop\NUnit-2.6.1-rc2\NUnit-2.6.1-rc2\bin\framework\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestClass\ApplicationInterface\Module\VipCard\VipCardTest.cs" />
     <Compile Include="TestClass\ApplicationInterface\Module\WX\Account\TestAPI.cs" />
     <Compile Include="TestClass\ApplicationInterface\Module\WX\Event\TestAPI.cs" />
     <Compile Include="TestClass\ApplicationInterface\Module\WX\Keyword\TestAPI.cs" />
@@ -62,12 +63,16 @@
     <Compile Include="TestMaterial\APIClientProxy.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
+      <Project>{9adf4825-9b7c-4bb1-a05c-9c137b33d81b}</Project>
+      <Name>CPOS.BS.BLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
       <Project>{6d911430-7243-4ab2-b70e-4daffc4d1b22}</Project>
       <Name>CPOS.BS.Entity</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Web\CPOS.BS.Web.csproj">
-      <Project>{D5725CD5-20AA-4A3E-B72E-146F781C4FDA}</Project>
+      <Project>{d5725cd5-20aa-4a3e-b72e-146f781c4fda}</Project>
       <Name>CPOS.BS.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.DTO\CPOS.DTO.csproj">

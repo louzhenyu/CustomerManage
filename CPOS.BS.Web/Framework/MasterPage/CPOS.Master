@@ -90,6 +90,15 @@
 
     <link href="<%=StaticUrl+"/Framework/Css/cpos.css"%>" rel="stylesheet" type="text/css" />
     <script src="<%=StaticUrl+"/Framework/javascript/Other/cpos.js?v=0.4"%>" type="text/javascript"></script>
+    <script type="text/javascript">
+        function PMenuClick(urlPath, childMenuID, parentMenu_Id) {
+
+            var result = urlPath.indexOf("?");
+            var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID + "&PMenuID=" + parentMenu_Id) : (urlPath + "?mid=" + childMenuID + "&PMenuID=" + parentMenu_Id);
+            location = newUrl;
+        }
+    
+    </script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 
 </head>
@@ -294,12 +303,7 @@
 
         <script type="text/javascript">
             //主菜单点击
-            function PMenuClick(urlPath, childMenuID, parentMenu_Id) {
-
-                var result = urlPath.indexOf("?");
-                var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID + "&PMenuID=" + parentMenu_Id) : (urlPath + "?mid=" + childMenuID + "&PMenuID=" + parentMenu_Id);
-                location = newUrl;
-            }
+         
             $(function () {
                 var mid = JITMethod.getUrlParam("mid");
                 //判断对于没有传PMenuID的情况根据mid去找相应的实体，然后查找出来

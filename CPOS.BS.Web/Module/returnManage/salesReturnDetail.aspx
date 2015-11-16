@@ -63,6 +63,13 @@
                  <div class="panlText">
                      <div class="panlL">
                       <div class="commonSelectWrap">
+                         <em class="tit">原订单编号:</em>
+                         <div class="searchInput">
+                          <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="OrderNo"/>
+                         </div>
+                      </div>
+                     
+                      <div class="commonSelectWrap">
                          <em class="tit">联系人:</em>
                          <div class="searchInput">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Contacts"/>

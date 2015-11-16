@@ -31,7 +31,7 @@ using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
 {
-    
+
     /// <summary>
     /// 数据访问：  
     /// 表VipCardStatusChangeLog的数据访问类 
@@ -101,8 +101,8 @@ namespace JIT.CPOS.BS.DataAccess
                 try
                 {
                     VipCardDAO vipCardDAO = new VipCardDAO(this.CurrentUserInfo);
-                    vipCardDAO.Update(vipCardInfo, false,tran);
-                    Create(statusChangeInfo,tran);
+                    vipCardDAO.Update(vipCardInfo, tran);
+                    Create(statusChangeInfo, tran);
                     //TO-DO:实现自己的业务
                     tran.Commit();
                     strError = "状态变更成功.";
@@ -115,6 +115,21 @@ namespace JIT.CPOS.BS.DataAccess
                     throw;
                 }
             }
+        }
+        #endregion
+
+        #region 状态变更记录
+        /// <summary>
+        /// 获取卡状态变更记录查询
+        /// </summary>
+        /// <param name="VipCardID">卡ID</param>
+        /// <returns></returns>
+        public DataSet GetLogList(int VipCardID)
+        {
+            string sql = "select * from ";
+            DataSet ds=this.SQLHelper.ExecuteDataset(sql);
+
+            return ds;
         }
         #endregion
 

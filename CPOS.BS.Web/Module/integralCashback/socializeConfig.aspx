@@ -51,6 +51,11 @@
                      <div class="rowRline">
                              <div class="linetext"> 订单金额分成比例：<input type="text" value="" name="VOrderCommissionPer" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>
                      </div>
+                     
+                     <div class="rowRline" style="padding-left:6px">
+                             <div class="linetext"> 邀请小伙伴获得积分：<input type="text" value="" name="InvitePartnersPoints" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分 </div>
+                     </div>
+                     
                      </div>
                    <div class="nav02">
                     <div class="rowRline">

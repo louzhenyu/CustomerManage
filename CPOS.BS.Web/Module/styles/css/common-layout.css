@@ -14,7 +14,13 @@ input,button,.button,textarea,select{border:none;outline:none;padding:0 5px;marg
 button,.button,textarea,select{
     -webkit-appearance:none;
 }
-button,.button{cursor: pointer;}
+.x-border-box, .x-border-box,* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+button,.button,input[type="file"]{cursor: pointer;}
 textarea{resize:none;padding:5px;}
 input[type="radio"],input[type="checkbox"]{vertical-align:middle;}
 
@@ -223,15 +229,13 @@ input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-hei
 .commonSelectWrap .selectBox:hover{position:relative;}/* add by yehua*/
 .commonSelectWrap .selectBox:hover .selectList{display:block;}
 .commonSelectWrap .searchInput{display:block;float:left;margin-left:10px;width:137px;height:26px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff;}
-.commonSelectWrap input{float:left;width:95%;height:26px;line-height:26px\9;border:none;background:none;color:#666;}
+.commonSelectWrap input{float:left;width:95%;height:32px;line-height:32px;border:none;background:none;color:#666;}
 .commonSelectWrap .searchBtn{float:right;width:64px;height:32px;background:url(../images/searchBtn.png) no-repeat 0 0;}
 
 .selectDateBox{margin-left:30px;}
 .selectDateBox > *{float:left;}
 .selectDateBox .tit{margin-left:10px;}
 .selectDateBox p{margin-left:10px;width:98px;height:26px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fbfbfb url(../images/dateIcon.png) no-repeat 80px center;}
-
-.moreQueryWrap{float:right;margin-top:-5px;}
 .moreQueryWrap .queryBtn{width:72px;height:28px;line-height:28px;}
 .moreQueryWrap .more{display:block;width:80px;margin-top:3px;padding-right:10px;text-align:center;font:12px/1.2em "宋体";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 4px;color:#2d83cf;}
 

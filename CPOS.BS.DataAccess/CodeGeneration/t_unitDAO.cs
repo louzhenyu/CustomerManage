@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-06-08 20:59:54
+ * Create On	:2015-07-01 11:14:15
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -76,9 +76,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [t_unit](");
-            strSql.Append("[type_id],[unit_code],[unit_name],[unit_name_en],[unit_name_short],[unit_city_id],[unit_address],[unit_contact],[unit_tel],[unit_fax],[unit_email],[unit_postcode],[unit_remark],[Status],[unit_flag],[CUSTOMER_LEVEL],[create_user_id],[create_time],[modify_user_id],[modify_time],[status_desc],[bat_id],[if_flag],[customer_id],[longitude],[dimension],[imageURL],[ftpImagerURL],[webserversURL],[weiXinId],[dimensionalCodeURL],[unit_id])");
+            strSql.Append("[type_id],[unit_code],[unit_name],[unit_name_en],[unit_name_short],[unit_city_id],[unit_address],[unit_contact],[unit_tel],[unit_fax],[unit_email],[unit_postcode],[unit_remark],[Status],[unit_flag],[CUSTOMER_LEVEL],[create_user_id],[create_time],[modify_user_id],[modify_time],[status_desc],[bat_id],[if_flag],[customer_id],[longitude],[dimension],[imageURL],[ftpImagerURL],[webserversURL],[weiXinId],[dimensionalCodeURL],[BizHoursStarttime],[BizHoursEndtime],[StoreType],[unit_id])");
             strSql.Append(" values (");
-            strSql.Append("@type_id,@unit_code,@unit_name,@unit_name_en,@unit_name_short,@unit_city_id,@unit_address,@unit_contact,@unit_tel,@unit_fax,@unit_email,@unit_postcode,@unit_remark,@Status,@unit_flag,@CUSTOMER_LEVEL,@create_user_id,@create_time,@modify_user_id,@modify_time,@status_desc,@bat_id,@if_flag,@customer_id,@longitude,@dimension,@imageURL,@ftpImagerURL,@webserversURL,@weiXinId,@dimensionalCodeURL,@unit_id)");            
+            strSql.Append("@type_id,@unit_code,@unit_name,@unit_name_en,@unit_name_short,@unit_city_id,@unit_address,@unit_contact,@unit_tel,@unit_fax,@unit_email,@unit_postcode,@unit_remark,@Status,@unit_flag,@CUSTOMER_LEVEL,@create_user_id,@create_time,@modify_user_id,@modify_time,@status_desc,@bat_id,@if_flag,@customer_id,@longitude,@dimension,@imageURL,@ftpImagerURL,@webserversURL,@weiXinId,@dimensionalCodeURL,@BizHoursStarttime,@BizHoursEndtime,@StoreType,@unit_id)");            
 
 			string pkString = pEntity.unit_id;
 
@@ -115,6 +115,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@webserversURL",SqlDbType.NVarChar),
 					new SqlParameter("@weiXinId",SqlDbType.NVarChar),
 					new SqlParameter("@dimensionalCodeURL",SqlDbType.NVarChar),
+					new SqlParameter("@BizHoursStarttime",SqlDbType.NVarChar),
+					new SqlParameter("@BizHoursEndtime",SqlDbType.NVarChar),
+					new SqlParameter("@StoreType",SqlDbType.NVarChar),
 					new SqlParameter("@unit_id",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.type_id;
@@ -148,7 +151,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[28].Value = pEntity.webserversURL;
 			parameters[29].Value = pEntity.weiXinId;
 			parameters[30].Value = pEntity.dimensionalCodeURL;
-			parameters[31].Value = pkString;
+			parameters[31].Value = pEntity.BizHoursStarttime;
+			parameters[32].Value = pEntity.BizHoursEndtime;
+			parameters[33].Value = pEntity.StoreType;
+			parameters[34].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -301,7 +307,13 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.weiXinId!=null)
                 strSql.Append( "[weiXinId]=@weiXinId,");
             if (pIsUpdateNullField || pEntity.dimensionalCodeURL!=null)
-                strSql.Append( "[dimensionalCodeURL]=@dimensionalCodeURL");
+                strSql.Append( "[dimensionalCodeURL]=@dimensionalCodeURL,");
+            if (pIsUpdateNullField || pEntity.BizHoursStarttime!=null)
+                strSql.Append( "[BizHoursStarttime]=@BizHoursStarttime,");
+            if (pIsUpdateNullField || pEntity.BizHoursEndtime!=null)
+                strSql.Append( "[BizHoursEndtime]=@BizHoursEndtime,");
+            if (pIsUpdateNullField || pEntity.StoreType!=null)
+                strSql.Append( "[StoreType]=@StoreType");
             strSql.Append(" where unit_id=@unit_id ");
             SqlParameter[] parameters = 
             {
@@ -336,6 +348,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@webserversURL",SqlDbType.NVarChar),
 					new SqlParameter("@weiXinId",SqlDbType.NVarChar),
 					new SqlParameter("@dimensionalCodeURL",SqlDbType.NVarChar),
+					new SqlParameter("@BizHoursStarttime",SqlDbType.NVarChar),
+					new SqlParameter("@BizHoursEndtime",SqlDbType.NVarChar),
+					new SqlParameter("@StoreType",SqlDbType.NVarChar),
 					new SqlParameter("@unit_id",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.type_id;
@@ -369,7 +384,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[28].Value = pEntity.webserversURL;
 			parameters[29].Value = pEntity.weiXinId;
 			parameters[30].Value = pEntity.dimensionalCodeURL;
-			parameters[31].Value = pEntity.unit_id;
+			parameters[31].Value = pEntity.BizHoursStarttime;
+			parameters[32].Value = pEntity.BizHoursEndtime;
+			parameters[33].Value = pEntity.StoreType;
+			parameters[34].Value = pEntity.unit_id;
 
             //执行语句
             int result = 0;
@@ -719,6 +737,12 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "weiXinId", Value = pQueryEntity.weiXinId });
             if (pQueryEntity.dimensionalCodeURL!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "dimensionalCodeURL", Value = pQueryEntity.dimensionalCodeURL });
+            if (pQueryEntity.BizHoursStarttime!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BizHoursStarttime", Value = pQueryEntity.BizHoursStarttime });
+            if (pQueryEntity.BizHoursEndtime!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BizHoursEndtime", Value = pQueryEntity.BizHoursEndtime });
+            if (pQueryEntity.StoreType!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "StoreType", Value = pQueryEntity.StoreType });
 
             return lstWhereCondition.ToArray();
         }
@@ -861,6 +885,18 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["dimensionalCodeURL"] != DBNull.Value)
 			{
 				pInstance.dimensionalCodeURL =  Convert.ToString(pReader["dimensionalCodeURL"]);
+			}
+			if (pReader["BizHoursStarttime"] != DBNull.Value)
+			{
+				pInstance.BizHoursStarttime =  Convert.ToString(pReader["BizHoursStarttime"]);
+			}
+			if (pReader["BizHoursEndtime"] != DBNull.Value)
+			{
+				pInstance.BizHoursEndtime =  Convert.ToString(pReader["BizHoursEndtime"]);
+			}
+			if (pReader["StoreType"] != DBNull.Value)
+			{
+				pInstance.StoreType =  Convert.ToString(pReader["StoreType"]);
 			}
 
         }
