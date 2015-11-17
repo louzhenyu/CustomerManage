@@ -103,6 +103,10 @@
 			//最后的保存
 			$('#staffSaveBtn').on('click',function(){
 				if($('#seach').form('validate')) {
+					if($('.setUnitBtn.on').length==0){
+						alert('至少一个设为所属单位！');
+						return false;
+					}
                     var fields = $('#seach').serializeArray(),
 						obj = {}; //自动序列化表单元素为JSON对象
 					$.each(fields,function(i,para){
@@ -655,7 +659,7 @@
                 });
             },
             getClassify: function(callback){
-                $.util.ajax({
+                $.util.oldAjax({
                     url: "/ApplicationInterface/Module/Basic/UnitAndType/UnitTypeTreeHandler.ashx",
                     data:{
 						hasShop:1
