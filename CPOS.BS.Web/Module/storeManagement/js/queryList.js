@@ -75,7 +75,10 @@
 			
            	//组织层级
             that.loadData.getClassify(function(data) {
-                data[0].children.push({id:0,text:"请选择"});
+                if(!(data&&data.length>0)){
+                    data=[];
+                }
+                data.push({id: 0, text: "请选择"});
                 $('#Parent_Unit_ID').combotree({
                     width:wd,
                     height:H,
@@ -460,7 +463,7 @@
                                 callback(data);
                         }
                         else{
-                            alert(data.Message);
+                            alert("门店数据加载不成功");
                         }
                     }
                 });
