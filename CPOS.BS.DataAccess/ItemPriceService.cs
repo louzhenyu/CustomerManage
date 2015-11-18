@@ -366,7 +366,8 @@ namespace JIT.CPOS.BS.DataAccess
                           ;
                 i++;
             }
-            sql = sql + " ) a, ObjectImages x where ( x.ObjectId = a.ObjectId and x.ImageURL = a.ImageURL and x.DisplayIndex = a.DisplayIndex) or (x.ImageId = a.ImageId)";
+            sql = sql + " ) a, ObjectImages x where  (x.ImageId = a.ImageId)";
+           // ---( x.ObjectId = a.ObjectId and x.ImageURL = a.ImageURL and x.DisplayIndex = a.DisplayIndex) or
 
             #endregion
             if (pTran != null)
@@ -441,12 +442,12 @@ namespace JIT.CPOS.BS.DataAccess
             sql = sql + " ) P "
                     + " left join ObjectImages b "
                     + " on(P.ImageId = b.ImageId) "
-                    + " left join ObjectImages c "
-                    + " on(P.ObjectId = c.ObjectId "
-                    + " and P.ImageURL = c.ImageURL "
-                    + " and P.DisplayIndex = c.DisplayIndex) "
-                    + " where b.ImageId is null "
-                    + " and c.ObjectId is null;";
+                //+ " left join ObjectImages c "
+                //+ " on(P.ObjectId = c.ObjectId "
+                //+ " and P.ImageURL = c.ImageURL "
+                //+ " and P.DisplayIndex = c.DisplayIndex) "
+                    + " where b.ImageId is null ";
+                    //+ " and c.ObjectId is null;";
 
 
             #endregion
