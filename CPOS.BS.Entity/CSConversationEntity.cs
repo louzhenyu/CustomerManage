@@ -30,10 +30,25 @@ namespace JIT.CPOS.BS.Entity
     {
         #region 属性集
         /// <summary>
-        /// 会话的员工头像
+        /// 会话的员工头像(微信端用的)
         /// </summary>
         public string UserHeadUrl { get; set; }
+     
+    
+        /// <summary>
+        /// 会话的会员头像
+        /// </summary>
+        public string VipHeadImage { get; set; }
+        /// <summary>
+        /// 会话的会员标识
+        /// </summary>
+        public string VipID { get; set; }
 
+  /// <summary>
+        /// 会话的会员名称
+        /// </summary>
+        public string VipName { get; set; }
+        
         #endregion
     }
 }
