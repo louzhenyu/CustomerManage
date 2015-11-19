@@ -729,7 +729,22 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pInstance.OpenId = Convert.ToString(pReader["OpenId"]);
             }
-
+            if (pReader["UserHeadUrl"] != DBNull.Value)
+            {
+                pInstance.UserHeadUrl = Convert.ToString(pReader["UserHeadUrl"]);
+            }
+            if (pReader["VipHeadImage"] != DBNull.Value)
+            {
+                pInstance.VipHeadImage = Convert.ToString(pReader["VipHeadImage"]);
+            }
+            if (pReader["VipID"] != DBNull.Value)
+            {
+                pInstance.VipID = Convert.ToString(pReader["VipID"]);
+            }
+            if (pReader["VipName"] != DBNull.Value)
+            {
+                pInstance.VipName = Convert.ToString(pReader["VipName"]);
+            }
         }
         #endregion
     }
