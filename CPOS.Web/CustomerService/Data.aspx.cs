@@ -8,6 +8,7 @@ using JIT.CPOS.BS.Entity;
 using JIT.CPOS.Web.SendSMSService;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.Log;
+using System.Data;
 
 namespace JIT.CPOS.Web.CustomerService
 {
@@ -35,11 +36,17 @@ namespace JIT.CPOS.Web.CustomerService
                     case "receiveMessage":
                         content = ReceiveMessage();
                         break;
+                    case "receiveMessageNew":
+                        content = ReceiveMessageNew();
+                        break;
                     //case "readFromQueue":
                     //    content = ReadFromQueue();
                     //    break;
                     case "sendSMS":
                         content = SendSMS();
+                        break;
+                    case "GetMessageVipInfo":
+                        content = GetMessageVipInfo();
                         break;
                 }
             }
@@ -217,6 +224,144 @@ namespace JIT.CPOS.Web.CustomerService
             public IList<CSConversationEntity> conversations;
         }
         #endregion
+
+
+        #region 获取消息
+        private string ReceiveMessageNew()
+        {
+            RecevieMessageNewRespData respData = new RecevieMessageNewRespData();
+            try
+            {
+                string requestData = Request["ReqContent"];
+                if (!string.IsNullOrEmpty(requestData))
+                {
+                    Loggers.DEFAULT.Debug(new DebugLogInfo
+                    {
+                        Message = "接收客服消息请求数据：" + requestData
+                    });
+                    var reqObj = requestData.DeserializeJSONTo<RecevieMessageNewReqData>();
+                    var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.common.customerId, "1");
+                    CSInvokeMessageBLL bll = new CSInvokeMessageBLL(loggingSessionInfo);
+                    int recordCount;
+                    DateTime? CurrentGetTimeNew = null;
+                    DateTime? NextTimeNew = null;
+                    IList<CSConversationEntity> conversationEntities = bll.ReceiveMessageNew(reqObj.common.userId
+                        , reqObj.special.isCS
+                        , reqObj.special.messageId
+                        , reqObj.special.pageSize
+                        , reqObj.special.pageIndex
+                        , reqObj.common.customerId
+                        , reqObj.special.ReceiveType
+                       , reqObj.special.CurrentGetTime　　　//会不会导致更改后的时间没有返回？
+                            ,  reqObj.special.NextTime
+                      , out recordCount
+                      , out CurrentGetTimeNew
+                      , out NextTimeNew
+                      );
+                    respData.content = new RecevieMessageNewRespContentData();
+                    respData.content.recordCount = recordCount;
+                    respData.content.conversations = conversationEntities;
+
+                    //返回时间
+                    respData.content.CurrentGetTime = CurrentGetTimeNew;
+                    respData.content.NextTime = NextTimeNew;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                respData.code = "103";
+                respData.description = "操作失败:" + ex.Message;
+                respData.exception = ex.Message;
+            }
+            return respData.ToJSON();
+        }
+        public class RecevieMessageNewReqData : Default.ReqData
+        {
+            public RecevieMessageNewReqSpecialData special;
+        }
+        public class RecevieMessageNewReqSpecialData
+        {
+            public int isCS;
+            public string messageId;
+            public int? pageSize;
+            public int? pageIndex;
+            public int isReadFromQueue;
+            public DateTime? CurrentGetTime;
+            public DateTime? NextTime;
+            public int ReceiveType;//获取信息的类型
+        }
+
+        public class RecevieMessageNewRespData : Default.LowerRespData
+        {
+            public RecevieMessageNewRespContentData content;
+        }
+        public class RecevieMessageNewRespContentData
+        {
+            public int recordCount;
+            public IList<CSConversationEntity> conversations;
+            public DateTime? CurrentGetTime;
+            public DateTime? NextTime;
+
+        }
+        #endregion
+
+
+        #region 获取已发送客服信息的会员
+        private string GetMessageVipInfo()
+        {
+            GetMessageVipInfoRespData respData = new GetMessageVipInfoRespData();
+            try
+            {
+                string requestData = Request["ReqContent"];
+                if (!string.IsNullOrEmpty(requestData))
+                {
+                    Loggers.DEFAULT.Debug(new DebugLogInfo
+                    {
+                        Message = "获取已发送客服信息的会员：" + requestData
+                    });
+                    var reqObj = requestData.DeserializeJSONTo<RecevieMessageNewReqData>();
+                    var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.common.customerId, "1");
+                    CSConversationBLL bll = new CSConversationBLL(loggingSessionInfo);              
+                  DataSet ds = bll.GetMessageVipInfo(reqObj.common.userId                   
+                        , reqObj.common.customerId                   
+                      );
+                  List<CSConversationEntity> ls = new List<CSConversationEntity>();
+                  if (ds != null && ds.Tables != null && ds.Tables.Count != 0)
+                  {
+                      ls = DataTableToObject.ConvertToList<CSConversationEntity>(ds.Tables[0]);
+                  }
+                  respData.content = new GetMessageVipInfoRespContentData();
+                  respData.content.conversations = ls;
+                 
+
+                }
+            }
+            catch (Exception ex)
+            {
+                respData.code = "103";
+                respData.description = "操作失败:" + ex.Message;
+                respData.exception = ex.Message;
+            }
+            return respData.ToJSON();
+        }
+   
+
+        public class GetMessageVipInfoRespData : Default.LowerRespData
+        {
+            public GetMessageVipInfoRespContentData content;
+        }
+        public class GetMessageVipInfoRespContentData
+        {
+            
+            public IList<CSConversationEntity> conversations;
+         
+
+        }
+        #endregion
+
+
+
 
         /*
 

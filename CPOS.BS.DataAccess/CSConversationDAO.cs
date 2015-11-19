@@ -42,6 +42,34 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class CSConversationDAO : Base.BaseCPOSDAO, ICRUDable<CSConversationEntity>, IQueryable<CSConversationEntity>
     {
+
+        #region 获取已发送客服信息的会员
+        public DataSet GetMessageVipInfo(string personID,string customerId)
+        {
+            List<SqlParameter> ls = new List<SqlParameter>();
+            ls.Add( new SqlParameter( "@personID",personID));
+            ls.Add(new SqlParameter("@customerId", customerId));
+
+            string sql = @"select *
+	            ,(select top 1 HeadImageUrl from CSConversation x where IsCS=0 and CSMessageID=tt.CSMessageID order by x.CreateTime desc ) as VipHeadImage
+   ,(select top 1 person from CSConversation x where IsCS=0 and CSMessageID=tt.CSMessageID order by x.CreateTime desc ) as VipName
+
+              from (select Row_Number() OVER (partition by MemberID ORDER BY a.createtime desc) rn,a.* ,b.MemberID as VipID
+	                from CSConversation a
+	                inner join CSMessage b on a.CSMessageID=b.CSMessageID
+	                 where 1=1 
+	                 and  ((CurrentCSID=@personID) or (CurrentCSID IS NULL )
+			                  OR (CurrentCSID<>@personID and datediff(minute,ConnectionTime,getdate())>60)) 
+	                  and b.ClientID = @customerId)
+	                  tt
+	                  where rn=1
+	                 order by CreateTime desc 	              ";
+
         
+            DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text,sql.ToString(),ls.ToArray());
+            return ds;
+        }
+        #endregion
+
     }
 }

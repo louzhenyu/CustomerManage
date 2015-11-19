@@ -33,6 +33,22 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理： 交流记录 
     /// </summary>
     public partial class CSConversationBLL
-    {  
+    {
+        /// <summary>
+        /// 接收消息列表
+        /// </summary>
+        /// <param name="isCS">是否是客服1：是0：否</param>
+        /// <param name="personID">当前用户ID</param>
+        /// <param name="messageId">当前消息ID，如果要获取所有消息，则消息ID为NULL</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageIndex">当前页</param>
+        /// <param name="recordCount">总记录数</param>
+        /// <returns>消息列表</returns>
+        public DataSet GetMessageVipInfo(string personID, string customerId)
+        {
+           return  this._currentDAO.GetMessageVipInfo(personID, customerId);
+        }
+
     }
+
 }

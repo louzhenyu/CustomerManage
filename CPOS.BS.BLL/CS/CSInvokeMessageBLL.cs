@@ -9,6 +9,7 @@ using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.Log;
+using System.Globalization;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -55,7 +56,8 @@ namespace JIT.CPOS.BS.BLL
                 , contentTypeId
                 , sign
                 , mobileNo
-            ) });
+            )
+            });
             var person = new VipBLL(loggingSessionInfo).GetByID(userId);//取会员的信息，如果是员工发的，就取到是空
             var user = new cUserService(loggingSessionInfo).GetUserById(loggingSessionInfo, userId);//如果是会员这里获取到的就是空
             //保存回话信息
@@ -379,7 +381,8 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pageIndex">当前页</param>
         /// <param name="recordCount">总记录数</param>
         /// <returns>消息列表</returns>
-        public IList<CSConversationEntity> ReceiveMessage(string personID, int isCS, string messageId, int pageSize, int pageIndex,string customerId, out int recordCount)
+        public IList<CSConversationEntity> ReceiveMessage(string personID, int isCS, string messageId, int pageSize
+            , int pageIndex, string customerId, out int recordCount)
         {
             CSConversationBLL conversationBll = new CSConversationBLL(loggingSessionInfo);
             CSMessageBLL messageBll = new CSMessageBLL(loggingSessionInfo);
@@ -432,6 +435,8 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
             Loggers.DEFAULT.Debug(new DebugLogInfo() { Message = string.Format("conditionExpression={0}", conditionExpression) });
+
+
             //得到回话列表
             var conversations = conversationBll.PagedQuery(new IWhereCondition[]
                         {
@@ -450,6 +455,214 @@ namespace JIT.CPOS.BS.BLL
             return conversations.Entities;
 
         }
+
+
+
+
+        /// <summary>
+        /// 接收消息列表
+        /// </summary>
+        /// <param name="isCS">是否是客服1：是0：否</param>
+        /// <param name="personID">当前用户ID</param>
+        /// <param name="messageId">当前消息ID，如果要获取所有消息，则消息ID为NULL</param>
+        /// <param name="pageSize">页大小</param>
+        /// <param name="pageIndex">当前页</param>
+        /// <param name="recordCount">总记录数</param>
+        /// <returns>消息列表</returns>
+        public IList<CSConversationEntity> ReceiveMessageNew(string personID, int isCS, string messageId, int? pageSize, int? pageIndex, string customerId
+            , int ReceiveType, DateTime? CurrentGetTime, DateTime? NextTime, out int recordCount, out DateTime? CurrentGetTimeNew
+                      , out DateTime? NextTimeNew)
+        {
+            CSConversationBLL conversationBll = new CSConversationBLL(loggingSessionInfo);
+            CSMessageBLL messageBll = new CSMessageBLL(loggingSessionInfo);
+
+            CurrentGetTimeNew = null;
+            NextTimeNew = null;
+
+            //返回用户消息列表
+            string conditionExpression;
+            if (!string.IsNullOrEmpty(messageId))
+            {
+                conditionExpression = string.Format("CSMessageID='{0}'", messageId);//主要用于员工在app上使用
+            }
+            else
+            {
+                IWhereCondition[] conditions;
+                if (isCS == 0)//会员的情况（非）
+                {
+                    conditions = new IWhereCondition[]
+                        {
+                           // new DirectCondition("PersonID='" + personID + "'")//查找会员的回话
+                           new DirectCondition("MemberID='" + personID + "'")//查找会员的回话(查找CSMessage)
+                        };
+                }
+                else
+                {
+                    conditions = new IWhereCondition[]
+                        {
+                            //这个条件是查找当前客服可以查看的message的，客服是当前员工的，或者客服人员是空的，或者客服人员不是当前人员（并且最后链接时间大于60分钟的会员）
+                            new DirectCondition("((CurrentCSID='" + personID + "') or (CurrentCSID IS NULL ) OR (CurrentCSID<>'" + personID + "' and datediff(minute,ConnectionTime,getdate())>60)) and ClientID = '"+customerId+"'")
+                        };
+                }
+
+                //根据条件查询****
+                var messageEntities = messageBll.Query(conditions, new[]{//根据条件查出MessageEntity，然后获取CSMessageID
+                            new OrderBy
+                                {
+                                    FieldName = "CreateTime",
+                                    Direction = OrderByDirections.Desc//按照创建时间
+                                }
+                        });
+
+                if (messageEntities.Length > 0)
+                {
+                    string messageIds = messageEntities.Aggregate(string.Empty,
+                                                                  (current, messageEntity) =>
+                                                                  string.Format("{0}'{1}'" + ",", current,
+                                                                                messageEntity.CSMessageID));//代表总的初始信息，CSMessageID代表遍历的每个对象
+                    conditionExpression = string.Format("CSMessageID in ({0})", messageIds.TrimEnd(','));
+                }
+                else
+                {
+                    recordCount = 0;
+                    return null;
+                }
+            }
+            Loggers.DEFAULT.Debug(new DebugLogInfo() { Message = string.Format("conditionExpression={0}", conditionExpression) });
+
+
+            recordCount = 0;
+            var conversations = new PagedQueryResult<CSConversationEntity>();
+            //第一次页面打开的查询方法
+            if (ReceiveType == 1)
+            {//普通分页查询方法
+                //得到回话列表
+                conversations = conversationBll.PagedQuery(new IWhereCondition[]
+                        {
+                            new DirectCondition(conditionExpression)
+                        }, new[]
+                            {
+                                new OrderBy
+                                    {
+                                        FieldName = "CreateTime",
+                                        Direction = OrderByDirections.Desc
+                                    }
+                            },
+                                                                (int)pageSize,
+                                                                 (int)pageIndex);
+                recordCount = conversations.RowCount;
+                if (conversations != null && conversations.Entities != null && conversations.Entities.Length != 0)
+                {
+                    //取出NextTime，如果没有数据怎么去
+                    NextTimeNew = conversations.Entities[conversations.Entities.Length - 1].CreateTime;
+                    //取出 CurrentGetTime
+                    CurrentGetTimeNew = conversations.Entities[0].CreateTime;//日期最大的一条数据的时间,因为在取时间时，带了毫秒，而传进去，就没有了
+                    //   CurrentGetTimeNew =DateTime.Now;
+
+                }
+                else
+                { //因为只有第一次打开页面时调用这个页面，所以只有此会员没有一条客服信息时，才会出现下面的情况
+                    CurrentGetTimeNew = DateTime.Now.AddHours(-1);//往后找一个小时
+                    NextTimeNew = DateTime.Now;//时间
+                }
+                return conversations.Entities;//要到前端去倒叙查出来，因为app上都是这样处理的，不然，没法协调了***
+            }
+
+
+            //轮询查找的方法
+            if (ReceiveType == 2)
+            {
+                // CreateTime>'2015-11-16 11:22:58.4670000'//这样不行，只能保留三位毫秒，保留七位无法识别
+                conditionExpression += string.Format(" and CreateTime>'{0}'", ((DateTime)CurrentGetTime).ToString("yyyy-MM-dd HH:mm:ss.fff"));//要是不拼接字符串，而是用参数化，可能就不会把毫秒给去掉了。
+           
+                //var moreThan = new MoreThanCondition()
+                //{
+                //    FieldName = "CreateTime",
+                //    Value = CurrentGetTime,
+                //    IncludeEquals = false,
+                //    DateTimeAccuracy = DateTimeAccuracys.DateTime
+                //};//新加一个条件，时间的
+                //var time=CurrentGetTime.ToString()
+               //var a= ((DateTime)CurrentGetTime).ToLongTimeString();
+               //var b = ((DateTime)CurrentGetTime).ToLongDateString();
+               //var c = ((DateTime)CurrentGetTime).ToString("yyyy-MM-dd HH:mm:ss.fffffff");//带上七位的毫秒
+            
+
+                var conversationList = conversationBll.Query(new IWhereCondition[]
+                        {
+                            new DirectCondition(conditionExpression)
+                            //,moreThan，只精确到了秒，没有到毫秒
+                            }, new[]
+                            {
+                                new OrderBy
+                                    {
+                                        FieldName = "CreateTime",
+                                        Direction = OrderByDirections.Desc
+                                    }
+                       });
+                if (conversationList != null && conversationList.Length != 0)//还是用最后一条记录的时间
+                {
+                    CurrentGetTimeNew = conversationList[0].CreateTime;//
+                    //不要处理NextTime
+                }
+                else
+                {
+                    CurrentGetTimeNew = CurrentGetTime;//还用老时间
+                }
+                //       CurrentGetTimeNew =DateTime.Now;
+                recordCount = conversationList.Length;
+                return conversationList;
+            }
+
+            //点击查看更多，查看之前的信息
+            if (ReceiveType == 3)
+            {
+                conditionExpression += string.Format(" and CreateTime<'{0}'", ((DateTime)NextTime).ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                //得到回话列表
+              // var lessThan = new LessThanCondition() { FieldName = "CreateTime", Value = NextTime, IncludeEquals = false, DateTimeAccuracy = DateTimeAccuracys.DateTime };//新加一个条件，时间的
+
+                conversations = conversationBll.PagedQuery(new IWhereCondition[]
+                        {
+                            new DirectCondition(conditionExpression)
+                          //  ,lessThan
+                        }, new[]
+                            {
+                                new OrderBy
+                                    {
+                                        FieldName = "CreateTime",
+                                        Direction = OrderByDirections.Desc
+                                    }
+                            },
+                                                                (int)pageSize,
+                                                                 1);
+                recordCount = conversations.RowCount;
+                if (conversations != null && conversations.Entities != null && conversations.Entities.Length != 0)
+                {
+                    //取出NextTime，如果没有数据怎么去
+                    NextTimeNew = conversations.Entities[conversations.Entities.Length - 1].CreateTime;//取时间最早的一条
+                    //不处理CurrentGetTime
+                    //  CurrentGetTime = conversations.Entities[0].CreateTime;//日期最大的一条数据的时间
+                }
+                else
+                { //因为只有第一次打开页面时调用这个页面，所以只有此会员没有一条客服信息时，才会出现下面的情况
+                    // CurrentGetTime = DateTime.Now.AddMonths(-1);
+                    //  NextTime =ne;//NextTime还用之前的
+                    NextTimeNew = NextTime;
+                }
+                return conversations.Entities;//要到前端去倒叙查出来，因为app上都是这样处理的，不然，没法协调了***
+            }
+
+
+            return null;
+
+
+        }
+
+
+
+
+
+
 
         /// <summary>
         /// 从消息队列里获取消息【废弃、改为主动推送消息】
