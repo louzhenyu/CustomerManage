@@ -246,6 +246,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CodeGeneration\LEventsGenreBLL.cs" />
+    <Compile Include="CodeGeneration\LEventsShareBLL.cs" />
+    <Compile Include="CodeGeneration\LEventsSharePersonBLL.cs" />
     <Compile Include="CodeGeneration\LEventsTypeBLL.cs" />
     <Compile Include="CodeGeneration\LNewsCommentBLL.cs" />
     <Compile Include="CodeGeneration\LNewsMicroMappingBLL.cs" />
@@ -386,6 +388,7 @@
     <Compile Include="CodeGeneration\StoreBLL.cs" />
     <Compile Include="CodeGeneration\StoreBrandMappingBLL.cs" />
     <Compile Include="CodeGeneration\StoreItemDailyStatusBLL.cs" />
+    <Compile Include="CodeGeneration\SysContactPointTypeBLL.cs" />
     <Compile Include="CodeGeneration\SysCSConclusionBLL.cs" />
     <Compile Include="CodeGeneration\SysCSPipelineBLL.cs" />
     <Compile Include="CodeGeneration\SysCSServiceTypeBLL.cs" />
@@ -428,6 +431,7 @@
     <Compile Include="CodeGeneration\TUnitSortBLL.cs" />
     <Compile Include="CodeGeneration\TUnitUnitSortMappingBLL.cs" />
     <Compile Include="CodeGeneration\TUserThirdPartyMappingBLL.cs" />
+    <Compile Include="CodeGeneration\t_award_poolBLL.cs" />
     <Compile Include="CodeGeneration\T_CityBLL.cs" />
     <Compile Include="CodeGeneration\t_customerBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
@@ -714,6 +718,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="LEventsGenreBLL.cs" />
+    <Compile Include="LEventsShareBLL.cs" />
+    <Compile Include="LEventsSharePersonBLL.cs" />
     <Compile Include="LEventsTypeBLL.cs" />
     <Compile Include="LNewsCommentBLL.cs" />
     <Compile Include="LNewsMicroMappingBLL.cs" />
@@ -943,6 +949,7 @@
     <Compile Include="StoreBLL.cs" />
     <Compile Include="StoreBrandMappingBLL.cs" />
     <Compile Include="StoreItemDailyStatusBLL.cs" />
+    <Compile Include="SysContactPointTypeBLL.cs" />
     <Compile Include="SysCSConclusionBLL.cs" />
     <Compile Include="SysCSPipelineBLL.cs" />
     <Compile Include="SysCSServiceTypeBLL.cs" />
@@ -981,6 +988,7 @@
     <Compile Include="TUnitSortBLL.cs" />
     <Compile Include="TUnitUnitSortMappingBLL.cs" />
     <Compile Include="TUserThirdPartyMappingBLL.cs" />
+    <Compile Include="t_award_poolBLL.cs" />
     <Compile Include="T_CityBLL.cs" />
     <Compile Include="t_customerBLL.cs" />
     <Compile Include="T_InoutBLL.cs" />

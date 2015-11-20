@@ -1,226 +1,688 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <meta charset="UTF-8" />
-    <title>活动列表</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="UTF-8" />
+  <title>活动详情</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="<%=StaticUrl+"/module/activityList/css/activityDetail.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+  <style type="text/css">
+a:hover{color:#fff;}
+#contentArea{background:#f4f8fa;}
+#section{padding:30px 20px 0 20px;}
+.contentArea-info{border-radius:5px 5px 0 0;}
+.panelDiv{margin-top:0;}
+.contentArea-info .title{border:1px solid #d8d8d8;}
+.contentArea-info .title li{height:55px;line-height:55px;}
+.contentArea-info .title li{width:33.33%;}
+.borderArea{border:1px solid #d8d8d8;border-top:none;background:#fff;}
+.clearBorder .combo,.clearBorder .numberbox{
+	border: none;
+	background: none;
+}
+.textbox-invalid {
+	border-color: #d0d5d8;
+	background-color: #fff;
+}
+.textbox-addon-right {
+	right: 9px !important;
+	top: 1px;
+}
+.inlineBlockArea {
+	display: inline-block;
+	width: 100%;
+	padding: 21px 0;
+}
+.titleItem {
+	display: inline-block;
+	width: 100%;
+	height: 41px;
+	line-height: 39px;
+	padding-left: 30px;
+	font-size: 16px;
+	border-top: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+	background: #eaeff1;
+	color: #333;
+}
+.dataTable{border:none;}
+.dataTable tr{height:49px;line-height:48px;}
+.dataTable th{text-align:center;font-size:14px;color:#4d4d4d;}
+.dataTable td{font-size:13px;color:#666;}
+.dataTable .tableHead{border-bottom:2px solid #07c8cf;}
+.dataTable .addBtn{display:block;width:100%;height:49px;background:url(images/icon-add.png) no-repeat center center;cursor:pointer;}
+.dataTable .delBtn{display:block;width:100%;height:49px;background:url(images/delete.png) no-repeat center center;cursor:pointer;}
 
-    <link href="<%=StaticUrl+"/module/activityList/css/activityDetail.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+.addPrizeArea{height:73px;padding:20px;border-bottom:1px solid #d0d5d8;}
+.commonHandleBtn{display:block;width:132px;height:32px;line-height:32px;text-align:center;font-size:14px;border-radius:4px;background:#07c8cf;color:#fff;}
+.addPrizeArea .commonHandleBtn{}
+.btnWrap{padding:55px 0 30px 0;text-align:center;}
+.commonStepBtn{display:inline-block;width:148px;height:43px;line-height:43px;text-align:center;font-size:15px;border-radius:22px;background:#fc7a52;color:#fff;}
 
+/*活动配置*/
+.activityConfigArea{height:585px;padding:28px 0px 5px 70px;}
+.activityConfigArea .examplePic,.activityConfigArea .createPic{float:left;width:324px;height:506px;border:3px solid #ccc;border-radius:5px;}
+.activityConfigArea .createPicBox{float:left;width:324px;}
+.activityConfigArea .redPackPrize{position:absolute;bottom:105px;left:37px;width:250px;height:148px;}
+.activityConfigArea .redPackPrize img{width:100%;}
+.activityConfigArea .uploadPicBox{float:left;width:368px;height:506px;}
+.activityConfigArea .createPic>img,.createPic .logoPic img{width:100%;height:auto;}
+.uploadPicBox{padding:3px 0;}
+.uploadPicBox>div{margin-bottom:27px;padding:3px 0;}
+.uploadItem{font-size:14px;}
+.uploadItem .tit{float:left;width:126px;height:32px;line-height:32px;text-align:right;color:#666;}
+.uploadItem .infoBox{margin-left:126px;}
+.uploadItem .exp{padding-top:7px;font-size:13px;color:#999;}
+.createPic{position:relative;background:#f1f1f1 url(images/icon-red.jpg) no-repeat center 150px;}
+.createPic .logoPic{position:absolute;top:15px;left:15px;width:50px;height:50px;}
+.createPic .getRedBtn{display:block;position:absolute;bottom:40px;left:50%;margin-left:-126px;width:252px;height:42px;}
+.createPic .getRedBtn img{width:100%;}
+.gameAction{line-height:33px;font-size:14px;width:168px;margin-left:120px;display:block;color:#4d4d4d;}
+.seeRedBtn{display:inline-block;width:100%;padding:17px 0;text-align:center;font-size:15px;color:#0098ff;cursor:pointer;}
+
+/*大转盘*/
+.LuckyTurntable .bgpic {background:#f1f1f1;}
+.LuckyTurntable .bgpic p {position:absolute;z-index:3; border-radius: 50px; }
+.LuckyTurntable .bgpic p img{width:50px;height:50px;  border-radius: 50px;cursor:pointer;}
+.LuckyTurntable .bgpic .Pic1 {position:absolute;z-index:3;width:50px;height:50px;  top: 62px;left: 132px; border:0px;}
+.LuckyTurntable .Pic2 {bottom: 45px;left: 45px;}
+.LuckyTurntable .Pic3 {bottom: 45px;left: 104px;}
+.LuckyTurntable .Pic4 {bottom: 45px;left: 163px;}
+.LuckyTurntable .Pic5 {bottom: 45px;left: 222px;}
+.LuckyTurntable .Pic6 {bottom: 104px;left: 45px;}
+.LuckyTurntable .Pic7 {bottom: 104px;left: 222px;}
+.LuckyTurntable .Pic8 {bottom: 163px;left: 45px;}
+.LuckyTurntable .Pic9 {bottom: 163px;left: 222px;}
+.LuckyTurntable .Pic10 {bottom: 222px;left: 45px;}
+.LuckyTurntable .Pic11 {bottom: 222px;left: 104px;}
+.LuckyTurntable .Pic12 {bottom: 222px;left: 163px;}
+.LuckyTurntable .Pic13 {bottom: 222px;left: 222px;}
+.LuckyTurntable .createPic .regularpic {position:absolute;z-index:3;bottom: 114px; left: 114px;width:90px;height:90px; border-radius: 15px; }
+.LuckyTurntable .createPic .realpic {  z-index: 3; position: absolute;}
+.LuckyTurntable .createPic .bgpic1 {  z-index: 1; top: 181px; width:318px;height:318px;}
+.LuckyTurntable .createPic .bgpic2 {  z-index: 2; top: 216px;height:250px; border-radius: 36px;width:250px;left:35px;}
+.LuckyTurntable .border {border: 2px #fe9d1e solid;}
+.LuckyTurntable .border1 {box-shadow:0 0 0 6px rgba(6, 6, 6, 0.09);}
+
+
+.kvpic { max-height: 184px;}
+/*插件的上传按钮*/
+form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
+.commonHandleBtn.uploadImgBtn{background:url(images/uploadImgBtn.png) no-repeat 0 0;cursor:pointer;}
+.ke-upload-file,.ke-button-common,input[type="button"],input[type="submit"],input[type="reset"], input[type="file"]::-webkit-file-upload-button,button{cursor:pointer !important;}
+
+/*奖品配置，弹出*/
+.jui-dialog-redPackage{width:636px;height:470px;position:fixed;top:90px;margin-left:-318px;}
+.jui-dialog-tit{height:55px;}
+.jui-dialog-tit h2{font:16px/55px "Microsoft YaHei";color:#66666d;}
+.jui-dialog-close{position:absolute;top:0px;right:18px;width:30px;height:54px;background:url(images/icon-close-btn.png) no-repeat center center;cursor:pointer;}
+.jui-dialog .tit{width:250px;}
+.jui-dialog .redPackageContent{padding:10px 0 30px 0;}
+.jui-dialog .searchInput{width:190px;}
+.jui-dialog .commonSelectWrap{float:none;display:block;margin:20px 0 2px 0;}
+.jui-dialog .hint-exp{padding-top:5px;text-indent:30px;text-align:center;font-size:14px;color:#999;}
+.jui-dialog .btnWrap{padding:30px 0 0 0;}
+.jui-dialog .commonBtn{width:150px;height:45px;line-height:45px;}
+.jui-dialog .cancelBtn{border:none;background:#ccc;color:#fff;}
+
+/*大转盘奖品配置，弹出*/
+.jui-dialog-LuckyTurntable{width:636px;height:530px;position:fixed;top:90px;margin-left:-318px;}
+.jui-dialog-LuckyTurntable .LuckyTurntableLeft {float:left}
+.jui-dialog-LuckyTurntable .LuckyTurntableright {float: right; padding: 50px 70px 0 0;}
+.jui-dialog-LuckyTurntable .LuckyTurntableright p{text-align:center;margin-top: 20px;}
+.jui-dialog-LuckyTurntable .LuckyTurntableright a{text-align:center;margin-top: 20px;  margin-left: 12px;}
+.jui-dialog .LuckyTurntableLeft .tit{width:120px;}
+.jui-dialog .LuckyTurntableLeft .hint-exp {text-align:left; }
+
+
+/*大转盘奖品选择，弹出*/
+.jui-dialog-Prizeselect{width:636px;max-height:430px;position:fixed;top:90px;margin-left:-318px;}
+
+
+/*奖品数量追加*/
+.jui-dialog-prizeCountAdd{width:636px;height:322px;position:fixed;top:20%;margin-left:-318px;}
+.prizeCountAddContent .commonSelectWrap{margin:60px 0 45px 0;}
+
+/*图文消息*/
+.imageTextArea{display:inline-block;height:160px;padding:15px 0;}
+.imageTextArea .picBox{float:left;width:270px;height:130px;margin-left:5px;border:1px solid #d0d5d8;border-radius:3px;background:#f9f9f9 url(images/icon-img.png) no-repeat center center;}
+.imageTextArea .picBox img{width:100%;height:100%;}
+.imageTextArea .tit{float:left;width:75xp;}
+.imageTextArea .commonHandleBtn{margin-bottom:5px;}
+.ruleText textarea{width:217px;height:94px;padding:5px;border:1px solid #d0d5d8;border-radius:3px;}
+.graphicHandleBox{float:left;width:640px;padding-bottom:17px;border-right:1px solid #d8d8d8;}
+.graphicHandleBox .commonSelectWrap{margin:15px 0 15px 0;}
+.uploadImgWrap{margin:77px 0 0 380px;color:#999;}
+.graphicPreview{width:420px;height:355px;margin-left:670px;padding:12px;border:1px solid #d8d8d8;border-radius:7px;}
+.previewPic{width:390px;height:218px;margin:18px 0 15px;background:#f9f9f9 url(images/icon-img.png) no-repeat center center;}
+.previewPic img{width:100%;height:100%;}
+.previewTit{height:30px;line-height:30px;overflow:hidden;font-size:24px;color:#000;}
+.previewDsc{height:48px;line-height:24px;overflow:hidden;font-size:18px;color:#a9a9a9;}
+</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-        <div class="allPage" id="section" data-js="js/activiDetail.js?ver=0.3">
-            <!-- 内容区域 -->
-            <div class="contentArea_vipquery">
-                <!--个别信息查询-->
-                <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
-                    <div  class="title">
-                           <ul id="optPanel">
-                           <li data-flag="#nav01" class="on one">基本信息</li>
-                           <li data-flag="#nav02">活动规则</li>
-                           <li data-flag="#nav03">活动配置</li>
-                           </ul>
-                    </div>
-                    <form></form>
-                    <form id="nav0_1">
-                   <div class="panelDiv" id="nav01" data-index="0">
-                             <div class="commonSelectWrap">
-                                                      <em class="tit">活动名称：</em>
-                                                      <label class="searchInput" style="width: 446px;">
-                                                          <input data-text="活动名称" data-flag="item_name" name="item_name" type="text"
-                                                              value="">
-                                                      </label>
-                                                  </div>
-                              <div class="commonSelectWrap">
-                                                      <em class="tit">活动时间：</em>
-                                                      <div class="selectBox" style="width: 200px">
-                                                            <input type="text" id="startDate"  required="true" class="easyui-datebox"  data-options="width:88,height:32"/>至<input  required="true" type="text" class="easyui-datebox" validType="compareDate[$('#startDate').datebox('getText'),'前面选择的时间必须晚于该时间']" data-options="width:88,height:32"/>
-                                                      </div>
-                                                  </div>
-                      <div class="commonSelectWrap">
-                          <em class="tit">活动对象:</em>
-                          <label class="searchInput">
-                            <input data-text="活动对象" id="Category" data-options="required:true" data-flag="Item_Category_Id" name="Item_Category_Id" type="text" value="">
-                          </label>
-                      </div>
-                      <div class="commonSelectWrap">
-                          <em class="tit">活动类型：</em>
-                          <label class="searchInput">
-                            <input data-text="活动类型" id="ItemCategoryId"    data-flag="ItemCategoryId" name="ItemCategoryId" type="text" value="">
-                          </label>
-                      </div>
-                       <div class="commonSelectWrap">
-                           <em class="tit">活动方式：</em>
-                           <label class="searchInput">
-                             <input data-text="活动方式" id="ItemCategoryId1"    data-flag="ItemCategoryId" name="ItemCategoryId" type="text" value="">
-                           </label>
-                       </div>
-
-                   </div>
-                   </form>
-                   <!--商品详情-->
-                   <div class="panelDiv" id="nav02" data-index="1">
-                          <form id="nav0_2" >
-                           <div class="commonSelectWrap">
-                                                <em class="tit">参与游戏次数:</em>
-                                                <label class="selectBox">
-                                                  <input data-text="参与游戏次数"  class="easyui-numberbox" data-options="required:true,width:160,height:32,min:0,precision:0"  type="text" value="">
-                                                </label>
-                                            </div>
-                                            <div class="commonSelectWrap">
-                                                <em class="tit">参与游戏所需积分:</em>
-                                                <label class="selectBox">
-                                                  <input data-text="参与游戏所需积分"  class="easyui-numberbox" data-options="required:true,width:160,height:32,min:0,precision:0"  type="text" value="">
-                                                </label>
-                                            </div>
-
-                      </form>
-                   </div>
-                    <!--商品详情End-->
-                   <!--销售信息-->
-                   <div class="panelDiv" id="nav03" data-index="2">
-                      <div  data-state="商品基本信息" id="dataState">
-                        <div class="commonSelectWrap">
-                          <em class="tit">商品条码：</em>
-                          <label class="searchInput">
-                            <input data-text="商品条码" data-flag="price" name="barcode" class="easyui-validatebox" data-options="validType:'englishCheckSub'" type="text" value="">
-                          </label>
-                      </div>
-                        <div class="textList" id="textList">
-                      <div class="commonSelectWrap">
-                          <em class="tit">价格：</em>
-                          <label class="searchInput">
-                            <input data-text="价格" data-flag="CarNumber" name="CarNumber" type="text" value="">
-                          </label>
-                      </div>
-                      <div class="commonSelectWrap">
-                          <em class="tit">原价：</em>
-                          <label class="searchInput">
-                            <input data-text="原价" data-flag="CarNumber" name="CarNumber" type="text" value="">
-                          </label>
-                      </div>
-                      <div class="commonSelectWrap">
-                          <em class="tit">库存：</em>
-                          <label class="searchInput">
-                            <input data-text="库存" data-flag="CarNumber" name="CarNumber" type="text" value="">
-                          </label>
-                      </div>
-                   </div>
-                        <div class="zsy"> </div>
-                      </div>
-
-                       <div class="SKU" id="sku">
-                       <!--   <div class="skuList">
-
-                           <div class="pro">
-                               <div class="commonSelectWrap">
-                                      <label class="selectBox">
-                                          <input   class="easyui-combobox proList" name="CarNumber"  type="text" value="">
-                                      </label>
-                                </div>
-                              <div class="icon"></div>
-                           </div>
-                           <div class="proDetailList">
-                               <div class="proValue">
-                                <div class="btn">白色 <em class="icon"></em></div>
-                                <div class="btn">黑色 <em class="icon"></em></div>
-                                <div class="btn">白色 <em class="icon"></em></div>
-                                <div class="btn">白色 <em class="icon"></em></div>
-                                </div>
-                                <div class="fontC" data-type="add"> +添加</div>
-
-                           </div>
-                          </div>-->
-                        <div class="commonBtn addSKU">添加规格</div>
-                       </div>
-
-                     <div class="skuTable">  <div id="skuTable" class="easyui-datagrid" ></div>
-
-                        <div id="batch">
-                                                                               <div class="commonSelectWrap">
-                                                                                   <em class="tit">批量操作：</em>
-                                                                                   <label class="searchInput borderNone" id="option">
-
-                                                                                   </label>
-                                                                               </div>
-                                                                               <div class="commonSelectWrap">
-                                                                                   <em class="tit">总库存：</em>
-                                                                                   <label class="searchInput borderNone">
-                                                                                       <b id="countRepertory">0</b>
-                                                                                   </label>
-                                                                               </div>
-
-
-                                                                              </div>
-                     </div>
-
-
-
-                   </div>
-                     <!--销售信息End-->
-                  <div class="zsy"></div>
-                </div>
-               <div class="btnopt commonBtn" id="submitBtn" data-flag="#nav02">下一步</div>
-            </div>
+  <div class="allPage" id="section" data-js="js/activiDetail.js?ver=0.3"> 
+    <!-- 内容区域 -->
+    <div class="contentArea-info">
+      <!--个别信息查询-->
+      <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
+        <div class="title">
+          <ul id="optPanel">
+            <li data-flag="#nav01" class="on one">基本信息</li>
+            <li data-flag="#nav02">奖品配置</li>
+            <li data-flag="#nav03" style="border-right:none">图文推送</li>
+          </ul>
         </div>
-       <div style="display: none">
-         <div id="win" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
-      		<div class="easyui-layout" data-options="fit:true" id="panlconent">
+        <div class="panelDiv" id="nav01" data-index="0">
+        <form></form>
+          <form id="nav0_1">
+          	<div class="borderArea">
+                <!--<p class="titleItem" style="border-top:none;">基本信息</p>-->
+                <div class="inlineBlockArea">
+                  <div class="commonSelectWrap"> <em class="tit">活动名称：</em>
+                    <label class="searchInput" style="width: 446px;">
+                      <input data-text="活动名称" class="easyui-validatebox"  data-flag="item_name" id="item_name" name="Title" type="text" data-options="required:true"  value="" placeholder="请输入活动名称">
+                    </label>
+                  </div>
+                  <div class="commonSelectWrap"> <em class="tit">活动时间：</em>
+                    <div class="selectBox" style="width:400px">
+                      <input type="text" id="startDate"  class="easyui-datebox" name="BeginTime"   data-options="required:true,width:160,height:32"/>
+                      &nbsp;&nbsp;至&nbsp;&nbsp;
+                      <input type="text" id="endDate" class="easyui-datebox" name="EndTime" validType="compareDate[$('#startDate').datebox('getText'),'结束时间不能小于开始时间']" data-options="required:true,width:160,height:32"/>
+                    </div>
+                  </div>
+                  <div class="commonSelectWrap" style="height:auto;"> <em class="tit">活动内容：</em>
+                    <label class="searchInput" style="width:926px;height:100px">
+                      <textarea data-text="活动内容" class="easyui-validatebox" id="" data-flag="item_content" name="Content"  data-options="" value=""></textarea>
+                    </label>
+                  </div>
+                </div>
+                <!--
+                <p class="titleItem">目标群体</p>
+                <div class="inlineBlockArea">
+                  <div class="commonSelectWrap">
+                  	<em class="tit">卡类型：</em>
+                    <label class="searchInput clearBorder">
+                      <input data-text="卡类型" class="easyui-combobox" id="cardType" data-options="required:true,width:160,height:32" data-flag="cardType" name="VipCardType" type="text" value="" validType='selectIndex'>
+                    </label>
+                  </div>
+                  
+                  <div class="commonSelectWrap">
+                  	<em class="tit">卡等级：</em>
+                    <label class="searchInput clearBorder">
+                      <input data-text="卡等级" class="easyui-combobox" id="cardGrade" data-options="required:true,width:160,height:32" data-flag="cardGrade" name="VipCardGrade" type="text" value="" validType='selectIndex'>
+                    </label>
+                  </div>
+                </div>
+                -->
+                <p class="titleItem">活动设置</p>
+                <div class="inlineBlockArea">
+                  <div class="commonSelectWrap">
+                  	<em class="tit">活动类型：</em>
+                    <span class="gameAction" data-id="081AEC92-CC16-4041-9496-B4F6BC3B11FC">游戏活动</span>
+                    <!--
+                    <label class="searchInput clearBorder">
+                      <input data-text="活动类型" class="easyui-combobox" id="eventsType" data-flag="eventsType"  name="EventTypeID" type="text" value="" data-options="required:true,width:160,height:32"  validType='selectIndex'>
+                    </label>
+                    -->
+                  </div>
+                  <div class="commonSelectWrap">
+                  	<em class="tit" style="width:126px">活动方式：</em>
+                    <label class="searchInput clearBorder">
+                      <input data-text="活动方式" class="easyui-combobox" id="lEventDrawMethod" data-flag="lEventDrawMethod" name="DrawMethodId" type="text" value="" data-options="required:true,width:160,height:32"  validType='selectIndex'>
+                    </label>
+                  </div>
+                </div>
+                <p class="titleItem">活动规则</p>
+                <div class="inlineBlockArea">
+                  <div class="commonSelectWrap" style="margin-right:55px;">
+                  	<em class="tit">参与游戏次数：</em>
+                    <label class="searchInput clearBorder"> 
+                      <input data-text="参与游戏次数" class="easyui-combobox" id="personCount" data-flag="personCount" name="PersonCount" type="text" value="" data-options="required:true,width:160,height:32"  validType='selectIndex'>
+                    </label>
+                  </div>
+                  <div class="commonSelectWrap"> <em class="tit" style="width:126px">参与游戏所需积分：</em>
+                    <label class="selectBox">
+                      <input data-text="参与游戏所需积分"  class="easyui-numberbox" data-options="width:160,height:32,min:0,precision:0" id="PointsLottery" name="PointsLottery"  type="text" value="">
+                    </label>
+                  </div>
+                </div>
+            </div>
+            <div class="btnWrap">
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav02">下一步</a>
+            </div>
+          </form>
+        </div>
+        
+        <!--奖品配置-->
+        <div class="panelDiv" id="nav02" data-index="1">
+          <form id="nav0_2" class="PrizeSet" style="display:none;" >
+            <div class="borderArea">
+              <div class="addPrizeArea">
+              		<a href="javascript:;" class="commonHandleBtn" id="addPrizeBtn">+添加奖品</a>
+              </div>
+              <table class="dataTable" id="prizeListTable">
+              	<thead>
+                	<tr class="tableHead">
+                        <th>奖品等级</th>
+                        <th>奖品名称</th>
+                        <th>数量</th>
+                        <th>已有生成数量</th>
+                        <th>追加</th>
+                        <th>删除</th>
+                      </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+              
+              <div class="activityConfigArea">
+              		<div class="examplePic"><img src="images/red-bg.png" /></div>
+                    <div class="uploadPicBox">
+                    	<div id="beforeBgPic" class="uploadItem" data-flag=1  data-url="" data-batid="beforeGround">
+                        	<p class="tit">领取前背景颜色：</p>
+                            <div class="infoBox">
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <p class="exp">(建议尺寸640*1008 大小为200K)</p>
+                            </div>
+                        </div>
+                        
+                        <div id="backBgPic" class="uploadItem" data-url="" data-batid="BackGround">
+                        	<p class="tit">领取后背景颜色：</p>
+                            <div class="infoBox">
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <p class="exp">(建议尺寸640*1008 大小为200K)</p>
+                            </div>
+                        </div>
+                        
+                        <div id="logoBgPic" class="uploadItem" data-flag=3  data-url="" data-batid="Logo">
+                        	<p class="tit">logo图片：</p>
+                            <div class="infoBox">
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <p class="exp">(建议尺寸640*1008 大小为50K)</p>
+                            </div>
+                        </div>
+                        
+                        <div id="ruleBgPic" class="uploadItem" data-url="" data-batid="rule">
+                        	<p class="tit">活动规则内容：</p>
+                            <label class="searchInput">
+                              <input data-text="活动规则内容" class="easyui-combobox" id="ruleOption" name="" type="text" value="" data-options="required:true,width:132,height:34">
+                            </label>
+                            <div class="infoBox ruleText"  style="margin-top:10px">
+                            	<textarea placeholder="请输入"></textarea>
+                            </div>
+                            <div class="infoBox ruleImg"  style="margin-top:10px">
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <p class="exp">(建议尺寸640*1008 大小为200K)</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="createPicBox">
+                        <div class="createPic">
+                            <p class="logoPic"><img id="logoPic" src="images/icon-log.png" /></p>
+                            <img id="redBgPic" src="" />
+                            <span class="getRedBtn getRedBackBtn"><img src="images/get-red-btn.png" /></span>
+                            <div class="backAction hide">
+                            <p class="redPackPrize"><img src="images/redpackBackText.png" /></p>
+                            <span class="getRedBtn"><img src="images/shareBtn.png" /></span>
+                            </div>
+                        </div>
+                        <span class="seeRedBtn">查看领取后页面</span>
+                    </div>
+                    
+              </div>
+              
+            </div>
+            <div class="btnWrap">
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="#nav01">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            </div>
+          </form>
 
-      			<div data-options="region:'center'" style="padding:10px;">
-      				指定的模板添加内容
-      			</div>
-      			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
-      				<a class="easyui-linkbutton commonBtn saveBtn" >确定</a>
-      				<a class="easyui-linkbutton commonBtn cancelBtn"  href="javascript:void(0)" onclick="javascript:$('#win').window('close')" >取消</a>
-      			</div>
-      		</div>
+            <!--大转盘-->
+            <form id="LuckyTurntable_form" class="LuckyTurntable PrizeSet" >
+            <div class="borderArea">
+              <div class="addPrizeArea">
+              		<a href="javascript:;" class="commonHandleBtn" id="LuckyTurntableaddBtn">+添加奖品</a>
+              </div>
+              <table class="dataTable" id="Table1">
+              	<thead>
+                	<tr class="tableHead">
+                        <th>奖品等级</th>
+                        <th>奖品名称</th>
+                        <th>数量</th>
+                        <th>中奖概率（%）</th>
+                        <th>追加</th>
+                        <th>编辑</th>
+                        <th>删除</th>
+                      </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+              
+              <div class="activityConfigArea">
+              		<div class="examplePic"><img src="images/LuckyTurntable_bg.png" /></div>
+                    <div class="uploadPicBox">
+                    	<div id="Div1" class="uploadItem" style="margin-top: 75px;" data-flag=10  data-url="" data-batid="beforeGround">
+                        	<p class="tit">KV图片：</p>
+                            <div class="infoBox">
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <p class="exp">(尺寸:640*368)</p>
+                            </div>
+                        </div>
+                        
+                        <div id="Div2" class="uploadItem"  data-flag=11  data-url="" data-batid="BackGround">
+                        	<p class="tit">活动规则内容：</p>
+                            <div class="infoBox">
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <p class="exp">(尺寸：640*1008)</p>
+                            </div>
+                        </div>
+                        
+                        <div id="Div3" class="uploadItem"  data-flag=12  data-url="" data-batid="Logo">
+                        	<p class="tit">背景颜色1：</p>
+                            <div class="infoBox">
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <p class="exp">(尺寸：640*640)</p>
+                            </div>
+                        </div>
+                         <div id="Div4" class="uploadItem" data-flag=13  data-url="" data-batid="Logo">
+                        	<p class="tit">背景颜色2：</p>
+                            <div class="infoBox">
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <p class="exp">(尺寸：640*640)</p>
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="createPicBox">
+                        <div id="selectPrize" class="createPic bgpic">
+                            <img  class="Pic1" id="Img1"  src="images/KVimg.png" />
+                            <p class="Pic2"><img id="Img2" src="images/addimg.png" /></p>
+                            <p class="Pic3"><img id="Img3" src="images/addimg.png" /></p>
+                            <p class="Pic4"><img id="Img4" src="images/addimg.png" /></p>
+                            <p class="Pic5"><img id="Img5" src="images/addimg.png" /></p>
+                            <p class="Pic6"><img id="Img6" src="images/addimg.png" /></p>
+                            <p class="Pic7"><img id="Img7" src="images/addimg.png" /></p>
+                            <p class="Pic8"><img id="Img8" src="images/addimg.png" /></p>
+                            <p class="Pic9"><img id="Img9" src="images/addimg.png" /></p>
+                            <p class="Pic10"><img id="Img10" src="images/addimg.png" /></p>
+                            <p class="Pic11"><img id="Img11" src="images/addimg.png" /></p>
+                            <p class="Pic12"><img id="Img12" src="images/addimg.png" /></p>
+                            <p class="Pic13"><img id="Img13" src="images/addimg.png" /></p>
+                            <img id="regularpic" class="regularpic realpic"  src="images/regularImg.png" />
+                           <img id="kv_pic" class="realpic kvpic" src=""/>
+                           <img id="bgpic1" class="realpic bgpic1" src="images/bgpic1.png"/>
+                           <img id="bgpic2" class="realpic bgpic2" src="images/bgpic2.png"/>
+                        </div>
+                    </div>
+                    
+              </div>
+              
+            </div>
+            <div class="btnWrap">
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="#nav01">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            </div>
+          </form>
+        </div>
+        <!--奖品配置End--> 
+        
+        <!--图文推送-->
+        <div class="panelDiv" id="nav03" data-index="2">
+          <form id="nav0_3">
+          	<div class="borderArea">
+            	<div class="inlineBlockArea">
+                	<div class="graphicHandleBox">
+                      <div class="commonSelectWrap" style="margin-top:0;">
+                      	<em class="tit" style="width:75px;">标题：</em>
+                        <label class="searchInput" style="width:525px;">
+                          <input data-text="标题" type="text" class="easyui-validatebox"  data-flag="" id="graphicTitle" name="graphicTitle" data-options="required:true"  value="" placeholder="请输入">
+                        </label>
+                      </div>
 
-      	</div>
-       </div>
-       <!-- 取消订单-->
+                      <div class="imageTextArea uploadItem" data-flag=4 data-url="">
+                      		<em class="tit" style="width:75px;">封面：</em>
+                      		<p class="picBox"><img id="imageTextPic" src="" /></p>
+                            <div class="uploadImgWrap">
+                                <a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <span>(建议尺寸536*300 大小为100K)</span>
+                            </div>
+                      </div>
+                      
+                      <div class="commonSelectWrap" style="height:auto;">
+                      	<em class="tit" style="width:75px;">摘要：</em>
+                        <label class="searchInput" style="width:525px;height:100px">
+                          <textarea data-text="摘要" class="easyui-validatebox" data-flag="" id="graphicDsc" name="graphicDsc" data-options="" value="" placeholder="请输入"></textarea>
+                        </label>
+                      </div>
+                    </div>
+                    
+                    <div class="graphicPreview">
+                    	<h2 class="previewTit">标题</h2>
+                        <div class="previewPic"><img src="" /></div>
+                        <p class="previewDsc">摘要</p>
+                    </div>
+               </div>
+            </div>
+            <div class="btnWrap">
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="#nav02">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav04" style="margin-left:40px;">完成</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+ 
+<!-- 遮罩层 -->
+<div class="jui-mask"></div>
+<!--添加奖品，弹出-->
+<div class="jui-dialog jui-dialog-redPackage" style="display:none">
+	<div class="jui-dialog-tit">
+    	<h2>奖品配置</h2>
+        <span class="jui-dialog-close"></span>
+    </div>
+    <div class="redPackageContent">
+    	<form id="addPrizeForm">
+        <div class="commonSelectWrap">
+            <em class="tit">奖品等级：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品等级" class="easyui-combobox" id="prizeLevel" data-options="required:true,width:190,height:32" data-flag="" name="PrizeLevel" type="text" value="">
+            </label>
+        </div>
+        
+        <div class="commonSelectWrap">
+            <em class="tit">奖品选择：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品选择" class="easyui-combobox" id="prizeOption" data-options="required:true,width:190,height:32" data-flag="" name="PrizeTypeId" type="text" value="">
+            </label>
+        </div>
+        
+        <div class="commonSelectWrap" id="couponItem">
+            <em class="tit">优惠券：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="优惠券" class="easyui-combobox" id="couponOption" data-options="width:190,height:32" data-flag="" name="CouponTypeID" type="text" value="">
+            </label>
+        </div>
+        
+        
+        <div class="commonSelectWrap"  id="integralItem" style="display:none">
+        	<em class="tit">积分：</em>
+            <label class="selectBox">
+              <input data-text="积分"  class="easyui-numberbox" data-options="width:190,height:32,min:0,precision:0" id="integralOption" name="Point"  type="text" value="">
+            </label>
+        </div>
+        
+        
+        
+        <div class="commonSelectWrap">
+            <em class="tit">奖品名称：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品名称" class="easyui-validatebox" id="prizeName" data-options="required:true,width:190,height:32" data-flag="" name="PrizeName" type="text" value="">
+            </label>
+        </div>
+        <!--
+        <div class="commonSelectWrap">
+            <em class="tit">中奖概率：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="中奖概率" class="easyui-numberbox" id="prizeProbability" data-options="required:true,width:190,height:32" data-flag="" name="Probability" type="text" value="">
+            </label>
+        </div>
+        -->
+        <div class="commonSelectWrap">
+            <em class="tit">奖品总数量：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品总数量" class="easyui-numberbox" id="prizeCount" data-options="required:true,width:190,height:32" data-flag="" name="CountTotal" type="text" value="">
+            </label>
+        </div>
+        
+        <p class="hint-exp">提示：奖品数量不能超过券的生成数量！</p>
+        </form>
+        
+        <div class="btnWrap">
+        	<a href="javascript:;" class="commonBtn saveBtn">保存</a>
+            <a href="javascript:;" class="commonBtn cancelBtn" style="margin-left:16px;">取消</a>
+        </div>
+    </div>
+</div>
 
 
+    <!--大转盘添加奖品，弹出-->
+<div class="jui-dialog jui-dialog-LuckyTurntable" style="display:none">
+	<div class="jui-dialog-tit">
+    	<h2>奖品配置</h2>
+        <span class="jui-dialog-close"></span>
+    </div>
+    <div class="redPackageContent">
+    	<form id="Form1">
+            <div class="LuckyTurntableLeft">
+        <div class="commonSelectWrap">
+            <em class="tit">奖品等级：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品等级" class="easyui-combobox" id="LTprizeLevel" data-options="required:true,width:190,height:32" data-flag="" name="PrizeLevel" type="text" value="">
+            </label>
+        </div>
+        
+        <div class="commonSelectWrap">
+            <em class="tit">奖品选择：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品选择" class="easyui-combobox" id="LTprizeOption" data-options="required:true,width:190,height:32" data-flag="" name="PrizeTypeId" type="text" value="">
+            </label>
+        </div>
+        
+        <div class="commonSelectWrap" id="LTcouponItem" style="display:none">
+            <em class="tit">优惠券选择：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="优惠券选择" class="easyui-combobox" id="LTcouponOption" data-options="width:190,height:32" data-flag="" name="CouponTypeID" type="text" value="">
+            </label>
+        </div>
 
+                  
+        <div class="commonSelectWrap"  id="LTintegralItem" style="display:none">
+        	<em class="tit">积分：</em>
+            <label class="selectBox">
+              <input data-text="积分"  class="easyui-numberbox" data-options="width:190,height:32,min:0,precision:0" id="LTintegralOption" name="Point"  type="text" value="">
+            </label>
+        </div>
+        
+        
+        
+        <div class="commonSelectWrap">
+            <em class="tit">奖品名称：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品名称" class="easyui-validatebox" id="LTprizeName" data-options="required:true,width:190,height:32" data-flag="" name="PrizeName" type="text" value="">
+            </label>
+        </div>
+        
+        <div class="commonSelectWrap">
+            <em class="tit">中奖概率：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="中奖概率" class="easyui-numberbox" id="LTprizeProbability" data-options="required:true,width:190,height:32" data-flag="" name="Probability" type="text" value="">
+            </label>
+        </div>
+        
+        <div class="commonSelectWrap">
+            <em class="tit">奖品总数量：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品总数量" class="easyui-numberbox" id="LTprizeCount" data-options="required:true,width:190,height:32" data-flag="" name="CountTotal" type="text" value="">
+            </label>
+        </div>
+        
+        <p class="hint-exp">提示：奖品数量不能超过券的生成数量！</p>
+                </div>
+            <div class="LuckyTurntableright" >
 
+                <div><img src="images/uploadpic.png" /></div>
+                <p>尺寸：120*120</p>
+                <a href="javascript:;" class="commonHandleBtn uploadImgBtn"></a>
+            </div>
+            <div style="clear:both;"></div>
+        </form>
+        
+        <div class="btnWrap">
+        	<a href="javascript:;" class="commonBtn saveBtn">保存</a>
+            <a href="javascript:;" class="commonBtn cancelBtn" style="margin-left:16px;">取消</a>
+        </div>
+    </div>
+</div>
 
+     <!--大转盘奖品选择，弹出-->
+<div class="jui-dialog jui-dialog-Prizeselect" style="display:none">
+	<div class="jui-dialog-tit">
+    	<h2>奖品配置</h2>
+        <span class="jui-dialog-close"></span>
+    </div>
+    <div class="redPackageContent">
+    	<form id="Form2">
+            没有数据
+        </form>
+        
+        <div class="btnWrap">
+        	<a href="javascript:;" class="commonBtn saveBtn">保存</a>
+            <a href="javascript:;" class="commonBtn cancelBtn" style="margin-left:16px;">取消</a>
+        </div>
+    </div>
+</div>
 
-  <!--动态生成销售信息的类型-->
-  <script id="tpl_commoditySellForm" type="text/html">
-      <#var subRoot=Data.ItemPriceTypeList;subRoot=subRoot?subRoot:[];#>
-          <#for(var i=0,length=subRoot.length;i<length;i++){ var item=subRoot[i];#>
-                  <#if(item.item_price_type_code=="销量"){#>
-           <div class="commonSelectWrap load" style="display: none">
-                                                                                   <em class="tit"><#=item.item_price_type_name#>:</em>
-                                                                                   <label class="searchInput " style="border: none">
-                                                                                     <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:70,height:32,disabled:true" data-flag="price" name="price" type="text" value="">
-                                                                                   </label>
-                                                              </div>
+<!--奖品数量追加，弹出-->
+<div class="jui-dialog jui-dialog-prizeCountAdd" style="display:none">
+	<div class="jui-dialog-tit">
+    	<h2>奖品数量追加</h2>
+        <span class="jui-dialog-close"></span>
+    </div>
+    <div class="prizeCountAddContent">
+    	 <div class="commonSelectWrap">
+            <em class="tit" style="width:172px;">数量：</em>
+            <label class="searchInput clearBorder" style="width:308px">
+              <input data-text="奖品数量追加" class="easyui-numberbox" id="prizeCountAdd" data-options="required:true,width:308,height:32" data-flag="" name="" type="text" value="">
+            </label>
+        </div>
+        <div class="btnWrap">
+            <a href="javascript:;" class="commonBtn saveBtn">保存</a>
+            <a href="javascript:;" class="commonBtn cancelBtn" style="margin-left:16px;">取消</a>
+        </div>
+	</div>
+</div>
 
-                  <#}else{#>
+<!--数据部分-->
+<script id="tpl_prizeList" type="text/html">
+<#for(var i=0,idata;i<PrizeList.length;i++){ idata=PrizeList[i];#>
+<tr data-eventid="<#=idata.EventId#>" data-prizesid="<#=idata.PrizesID#>" data-num="<#=idata.CountTotal#>">
+	<td><#=idata.PrizeLevel#></td>
+	<td><#=idata.PrizeName#></td>
+	<td class="numBox"><#=idata.CountTotal#></td>
+	<td><#=idata.IssuedQty#></td>
+	<td><em class="addBtn"></em></td>
+	<td><em class="delBtn"></em></td>
+</tr>
+<#}#>
+</script>
+  
+<script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>" defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>" ></script> 
 
-                                                          <div class="commonSelectWrap load">
-                                                              <em class="tit"><#=item.item_price_type_name#>:</em>
-                                                              <label class="searchInput " style="border: none">
-                                                              <#if(item.item_price_type_code=="库存"){#>
-                                                                <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" data-flag="price" name="price" type="text" value="">
-                                                            <#}else{#>
-                                                             <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:2,width:160,height:32" data-flag="price" name="price" type="text" value="">
-
-                                                            <#}#>
-                                                              </label>
-                                                           </div>
-                                    <#}#>
-
-
-
-          <#}#>
-
-
-  </script>
-
-
-<script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>" defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>" ></script>
 </asp:Content>

@@ -438,7 +438,7 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
             //{
             //    data.WeiXinPublicID = eventWeiXinMappings[0].WeiXinPublicID;
             //}
-            if (data.PrizeTypeId == 2)
+            if (data.PrizeTypeId == "Coupon")
             {
                 PrizeCouponTypeMappingEntity[] entity = new PrizeCouponTypeMappingBLL(this.CurrentUserInfo).QueryByEntity(new PrizeCouponTypeMappingEntity
                    {
@@ -1177,7 +1177,7 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
                 eventsEntity.PrizesID = PrizesID;
                 eventsService.Update(eventsEntity, false);
             }
-            if (eventsEntity.PrizeTypeId == 2)
+            if (eventsEntity.PrizeTypeId == "Coupon")
             {
                 PrizeCouponTypeMappingBLL serivice = new PrizeCouponTypeMappingBLL(this.CurrentUserInfo);
                 PrizeCouponTypeMappingEntity[] mapentitys = serivice.QueryByEntity(new PrizeCouponTypeMappingEntity

@@ -63,6 +63,11 @@ namespace JIT.CPOS.BS.BLL.Control
             return new ControlDAO(CurrentUserInfo).GetLEventsType();
           
         }
+
+        public DataSet GetLEventsType2()
+        {
+            return new ControlDAO(CurrentUserInfo).GetLEventsType2();
+        }
         #endregion
 
         #region GetMobileModule

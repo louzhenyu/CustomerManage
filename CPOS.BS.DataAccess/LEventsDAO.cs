@@ -708,13 +708,13 @@ namespace JIT.CPOS.BS.DataAccess
             var sql = new StringBuilder();
             sql.Append("select isnull(ShareRemark,'') ShareRemark,");
             sql.Append("isnull(PosterImageUrl,'') PosterImageUrl,isnull(OverRemark,'') OverRemark");
-            sql.Append(",isnull(BootURL,'') BootURL from levents where eventId = @pEventId"); 
+            sql.Append(",isnull(BootURL,'') BootURL from levents where eventId = @pEventId");
             var para = new List<SqlParameter>();
 
             para.Add(new SqlParameter() { ParameterName = "@pEventId", Value = eventId });
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), para.ToArray());
-           
+
         }
 
         public SqlTransaction GetTran()
@@ -747,5 +747,107 @@ namespace JIT.CPOS.BS.DataAccess
         #region 获取活动详情
 
         #endregion
+        #region 活动列表
+        public DataSet GetEventList(int pageIndex, int pageSize, string strTitle, string strDrawMethodName, string strBeginTime, string strEndTime)
+        {
+
+
+            SqlParameter[] parameters = new SqlParameter[7] 
+            { 
+                new SqlParameter{ParameterName="@PageIndex",SqlDbType=SqlDbType.Int,Value=pageIndex},
+                new SqlParameter{ParameterName="@PageSize",SqlDbType=SqlDbType.Int,Value=pageSize},
+                new SqlParameter{ParameterName="@Title",SqlDbType=SqlDbType.NVarChar,Value=strTitle},
+                new SqlParameter{ParameterName="@DrawMethodName",SqlDbType=SqlDbType.NVarChar,Value=strDrawMethodName},
+                new SqlParameter{ParameterName="@BeginTime",SqlDbType=SqlDbType.NVarChar,Value=strBeginTime},
+                new SqlParameter{ParameterName="@EndTime",SqlDbType=SqlDbType.NVarChar,Value=strEndTime},
+                new SqlParameter{ParameterName="@CustomerId",SqlDbType=SqlDbType.NVarChar,Value=CurrentUserInfo.ClientID},
+            };
+
+            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Proc_GetEventList", parameters);
+        }
+        #endregion
+        #region 删除活动
+        public void DeleteByProc(string strEventId)
+        {
+            if (String.IsNullOrEmpty(strEventId))
+                return;
+            IDbTransaction pTran = null;
+            string strSql = "Proc_DeleteEvent";
+            SqlParameter[] parameters = new SqlParameter[2] 
+            { 
+                new SqlParameter{ParameterName="@UpdateBy",SqlDbType=SqlDbType.VarChar,Value=Convert.ToString(CurrentUserInfo.UserID)},
+                new SqlParameter{ParameterName="@EventId",SqlDbType=SqlDbType.VarChar,Value=strEventId}
+            };
+
+            //执行语句
+            int result = 0;
+            if (pTran != null)
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.StoredProcedure, strSql, parameters);
+            else
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, strSql, parameters);
+            return;
+        }
+        #endregion
+      
+        /// <summary>
+        /// 启用停用
+        /// </summary>
+        /// <param name="strEventId"></param>
+        /// <param name="intEventStatus"></param>
+
+        public void UpdateEventStatus(string strEventId, int intEventStatus)
+        {
+            var sql = string.Format("UPDATE dbo.LEvents SET EventStatus={0} WHERE EventID='{1}'", intEventStatus, strEventId);
+            this.SQLHelper.ExecuteNonQuery(sql.ToString());
+        }
+
+        public DataSet GetNewEventInfo(string eventId)
+        {
+            string sql = @"select   t1.EventID ,
+			   t1.Title EventName,
+                t1.[DrawMethodId] ,
+                t2.DrawMethodName  
+                ,DrawMethodCode      ,         
+                t1.BeginTime ,
+                t1.EndTime ,
+                  t1.[VipCardType] ,
+                t1.[VipCardGrade] ,
+				t1.EventStatus,
+				t1.EventTypeId,
+				t3.Title EventTypeName,
+				CASE	
+						WHEN CAST(t1.BeginTime AS DATETIME)>GETDATE()  THEN	'未开始'
+						WHEN GETDATE()>=CAST(t1.BeginTime AS DATETIME) AND GETDATE()<=CAST(t1.EndTime AS DATETIME) AND t1.EventStatus=20 THEN	'运行中'
+						WHEN GETDATE()>=CAST(t1.BeginTime AS DATETIME) AND GETDATE()<=CAST(t1.EndTime AS DATETIME) AND t1.EventStatus=30 THEN	'暂停'
+						WHEN CAST(t1.EndTime AS DATETIME)<GETDATE()  THEN	'结束'
+				END	statusDESC
+   from levents t1
+   left join LEventDrawMethod t2  ON t1.[DrawMethodId] = t2.DrawMethodID
+   left join LEventsType t3 on  t1.EventTypeID = t3.EventTypeID WHERE t1.EventID = '" + eventId + "'";
+            var ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+
+
+        public DataSet GetMaterialTextInfo(string eventId)
+        {
+            string sql = @"   	    select d.*,b.ReplyId,c.MappingId from WQRCodeManager  a
+	                    inner join WKeywordReply b on CONVERT(varchar(50), a.QRCodeId)=b.Keyword
+	                    inner join  WMenuMTextMapping c on b.ReplyId=c.MenuId
+	                    inner join WMaterialText d on c.TextId=d.TextId
+	                    where a.ObjectId = '" + eventId + "'";
+            var ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+
+        #region 获取正在运行中的活动列表
+        public DataSet GetWorkingEventList()
+        {
+            string strSql = "Select EventID,Title FROM vw_EventList WHERE [status]='运行中' and CustomerId='" + CurrentUserInfo.ClientID + "' ORDER BY CreateTime DESC";
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, strSql);
+        }
+        #endregion
+
+
     }
 }

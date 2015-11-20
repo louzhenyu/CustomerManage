@@ -228,8 +228,17 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public int? DrawMethod { set; get; }
 
-
+        public string DrawMethodName { set; get; }
+        /// <summary>
+        /// 参与人数
+        /// </summary>
+        public int JoinCount { set; get; }
+        /// <summary>
+        /// 获奖人数
+        /// </summary>
+        public int WinnerCount { set; get; }
         public string MaxWQRCod { set; get; }
+       
         #endregion
     }
 }

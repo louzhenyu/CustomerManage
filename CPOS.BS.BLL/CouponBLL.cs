@@ -782,6 +782,16 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetUsableCouponID(couponTypeID);
         }
+        /// <summary>
+        /// 抽奖活动根据CouponTypeId获取优惠券
+        /// </summary>
+        /// <param name="strCouponTypeId"></param>
+        /// <returns></returns>
+        public DataSet GetCouponIdByCouponTypeID(string strCouponTypeId)
+        {
+            return this._currentDAO.GetCouponIdByCouponTypeID(strCouponTypeId);
+        } 
+    
     }
 
 
@@ -1066,4 +1076,6 @@ namespace JIT.CPOS.BS.BLL
     }
 
     #endregion
+            
+
 }

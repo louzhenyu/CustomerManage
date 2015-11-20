@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess;
-using System.Data;
-using System.Data.SqlClient;
 using JIT.CPOS.BS.Entity.Eliya;
 using JIT.CPOS.DTO.Module.UnitAndItem.Unit.Response;
 using JIT.CPOS.DTO.Base;
+using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.OleDb;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -43,7 +45,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 unitInfo = DataTableToObject.ConvertToObject<UnitInfo>(ds.Tables[0].Rows[0]);
             }
-          //  unitInfo.PropertyList = new PropertyUnitService(this.loggingSessionInfo).GetUnitPropertyListByUnit(unitId);
+            //  unitInfo.PropertyList = new PropertyUnitService(this.loggingSessionInfo).GetUnitPropertyListByUnit(unitId);
             return unitInfo;
         }
 
@@ -451,7 +453,7 @@ namespace JIT.CPOS.BS.BLL
             _ht.Add("unit_city_id", unit_city_id);
             _ht.Add("unit_status", unit_status);
             _ht.Add("StartRow", startRowIndex);
-            _ht.Add("EndRow", startRowIndex + maxRowCount-1);//还需要再减去1
+            _ht.Add("EndRow", startRowIndex + maxRowCount - 1);//还需要再减去1
             _ht.Add("Parent_Unit_ID", Parent_Unit_ID);
             _ht.Add("StoreType", StoreType);
             _ht.Add("OnlyShop", OnlyShop);
@@ -472,8 +474,8 @@ namespace JIT.CPOS.BS.BLL
             unitInfo.ICount = iCount;
             unitInfo.UnitInfoList = unitInfoList;
             //取模
-            int mo=iCount%maxRowCount;
-            unitInfo.TotalPage = iCount/maxRowCount+(mo==0?0:1);
+            int mo = iCount % maxRowCount;
+            unitInfo.TotalPage = iCount / maxRowCount + (mo == 0 ? 0 : 1);
             return unitInfo;
         }
         #endregion
@@ -900,5 +902,121 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+
+        #region 导入门店信息
+        /// <summary>
+        /// excel导入数据库
+        /// </summary>
+        /// <param name="strPath"></param>
+        /// <param name="CurrentUserInfo"></param>
+        public DataSet ExcelToDb(string strPath, LoggingSessionInfo CurrentUserInfo)
+        {
+
+            DataSet ds; //要插入的数据  
+            DataSet dsResult = new DataSet(); //要插入的数据  
+            DataTable dt;
+
+            DataTable table = new DataTable("Error");
+            //获取列集合,添加列  
+            DataColumnCollection columns = table.Columns;
+            columns.Add("ErrMsg", typeof(String));
+
+
+            string strConn = "Provider=Microsoft.Ace.OleDb.12.0;" + "data source=" + strPath + ";Extended Properties='Excel 12.0; HDR=Yes; IMEX=1'";
+            OleDbConnection conn = new OleDbConnection(strConn); //连接excel              
+            if (conn.State.ToString() == "Open")
+            {
+                conn.Close();
+            }
+            conn.Open();    //外部表不是预期格式，不兼容2010的excel表结构  
+            string s = conn.State.ToString();
+            OleDbDataAdapter myCommand = null;
+            ds = null;
+
+            string strExcel = "select * from [sheet1$]";
+            myCommand = new OleDbDataAdapter(strExcel, conn);
+            ds = new DataSet();
+            myCommand.Fill(ds);
+            conn.Close();
+            try
+            {
+                dt = ds.Tables[0];
+                string connString = System.Configuration.ConfigurationManager.AppSettings["Conn_alading"]; //@"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
+                SqlConnection connSql = new SqlConnection(connString);
+                connSql.Open();
+                DataRow dr = null;
+                int C_Count = dt.Columns.Count;//获取列数  
+                if (C_Count == 13)
+                {
+                    for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
+                    {
+                        dr = dt.Rows[i];
+                        this.unitService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                    }
+
+                    connSql.Close();
+                    //临时表导入正式表
+                    dsResult = this.unitService.ExcelImportToDB();
+                }
+                else
+                {
+
+                    DataRow row = table.NewRow();
+                    row["ErrMsg"] = "模板列数不对";
+                    table.Rows.Add(row);
+                    dsResult.Tables.Add(table);
+
+                    DataTable tableCount = new DataTable("Count");
+                    DataColumnCollection columns1 = tableCount.Columns;
+                    columns1.Add("TotalCount", typeof(Int16));
+                    columns1.Add("ErrCount", typeof(Int16));
+                    row = tableCount.NewRow();
+                    row["TotalCount"] = "0";
+                    row["ErrCount"] = "0";
+                    tableCount.Rows.Add(row);
+                    dsResult.Tables.Add(tableCount);
+                }
+            }
+            catch (Exception ex)
+            {
+                DataRow row = table.NewRow();
+                row["ErrMsg"] = ex.Message.ToString();
+                table.Rows.Add(row);
+                dsResult.Tables.Add(table);
+            }
+
+            return dsResult;
+        }
+        public DataSet DataTableToDb(DataTable dt, LoggingSessionInfo CurrentUserInfo)
+        {
+
+            DataSet dsResult = null; //要插入的数据  
+            try
+            {
+                string connString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Conn_alading"].ToString();
+                //string connString = @"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
+                SqlConnection connSql = new SqlConnection(connString);
+                connSql.Open();
+                DataRow dr = null;
+                int C_Count = dt.Columns.Count;//获取列数  
+                for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
+                {
+                    dr = dt.Rows[i];
+                    this.unitService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                }
+
+                connSql.Close();
+                //临时表导入正式表
+                dsResult = this.unitService.ExcelImportToDB();
+            }
+            catch (Exception)
+            {
+            }
+
+            return dsResult;
+        }
+
+        #endregion
+
     }
 }

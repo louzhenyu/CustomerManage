@@ -98,6 +98,12 @@ namespace JIT.CPOS.BS.Entity
 		public String Description { get; set; }
 
 
+        public int IfFlag { get; set; }
+        public String BatId { get; set; }
+
+        public int? RuleId { get; set; }
+        public string RuleContent { get; set; }
+
         #endregion
 
     }

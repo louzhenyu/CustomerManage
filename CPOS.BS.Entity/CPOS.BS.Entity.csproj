@@ -201,6 +201,8 @@
     <Compile Include="CodeGeneration\LEventDrawMethodMappingEntity.cs" />
     <Compile Include="CodeGeneration\LEventsAlbumTypeEntity.cs" />
     <Compile Include="CodeGeneration\LEventsGenreEntity.cs" />
+    <Compile Include="CodeGeneration\LEventsShareEntity.cs" />
+    <Compile Include="CodeGeneration\LEventsSharePersonEntity.cs" />
     <Compile Include="CodeGeneration\LEventsTypeEntity.cs" />
     <Compile Include="CodeGeneration\LNewsCommentEntity.cs" />
     <Compile Include="CodeGeneration\LNewsMicroMappingEntity.cs" />
@@ -258,6 +260,7 @@
     <Compile Include="CodeGeneration\SeatOrderEntity.cs" />
     <Compile Include="CodeGeneration\SpecialDateEntity.cs" />
     <Compile Include="CodeGeneration\StoreItemDailyStatusEntity.cs" />
+    <Compile Include="CodeGeneration\SysContactPointTypeEntity.cs" />
     <Compile Include="CodeGeneration\SysCSConclusionEntity.cs" />
     <Compile Include="CodeGeneration\SysCSPipelineEntity.cs" />
     <Compile Include="CodeGeneration\SysCSServiceTypeEntity.cs" />
@@ -288,6 +291,7 @@
     <Compile Include="CodeGeneration\TUnitSortEntity.cs" />
     <Compile Include="CodeGeneration\TUnitUnitSortMappingEntity.cs" />
     <Compile Include="CodeGeneration\TUserThirdPartyMappingEntity.cs" />
+    <Compile Include="CodeGeneration\t_award_poolEntity.cs" />
     <Compile Include="CodeGeneration\T_CityEntity.cs" />
     <Compile Include="CodeGeneration\t_customerEntity.cs" />
     <Compile Include="CodeGeneration\T_InoutEntity.cs" />
@@ -450,6 +454,8 @@
     <Compile Include="LEventDrawMethodMappingEntity.cs" />
     <Compile Include="LEventsAlbumTypeEntity.cs" />
     <Compile Include="LEventsGenreEntity.cs" />
+    <Compile Include="LEventsShareEntity.cs" />
+    <Compile Include="LEventsSharePersonEntity.cs" />
     <Compile Include="LEventsTypeEntity.cs" />
     <Compile Include="LNewsCommentEntity.cs" />
     <Compile Include="LNewsMicroMappingEntity.cs" />
@@ -945,6 +951,7 @@
     <Compile Include="StoreItemDailyStatusEntity.cs" />
     <Compile Include="StoreItemDailyStatusViewEntity.cs" />
     <Compile Include="StoreListEntity.cs" />
+    <Compile Include="SysContactPointTypeEntity.cs" />
     <Compile Include="SysCSConclusionEntity.cs" />
     <Compile Include="SysCSPipelineEntity.cs" />
     <Compile Include="SysCSServiceTypeEntity.cs" />
@@ -984,6 +991,7 @@
     <Compile Include="TUnitUnitSortMappingEntity.cs" />
     <Compile Include="TUserThirdPartyMappingEntity.cs" />
     <Compile Include="TypeInfo.cs" />
+    <Compile Include="t_award_poolEntity.cs" />
     <Compile Include="T_CityEntity.cs" />
     <Compile Include="t_customerEntity.cs" />
     <Compile Include="T_InoutEntity.cs" />

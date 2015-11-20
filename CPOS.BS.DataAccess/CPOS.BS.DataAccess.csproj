@@ -214,6 +214,8 @@
     <Compile Include="CodeGeneration\LEventDrawMethodMappingDAO.cs" />
     <Compile Include="CodeGeneration\LEventsAlbumTypeDAO.cs" />
     <Compile Include="CodeGeneration\LEventsGenreDAO.cs" />
+    <Compile Include="CodeGeneration\LEventsShareDAO.cs" />
+    <Compile Include="CodeGeneration\LEventsSharePersonDAO.cs" />
     <Compile Include="CodeGeneration\LEventsTypeDAO.cs" />
     <Compile Include="CodeGeneration\LNewsCommentDAO.cs" />
     <Compile Include="CodeGeneration\LNewsMicroMappingDAO.cs" />
@@ -351,6 +353,7 @@
     <Compile Include="CodeGeneration\StoreBrandMappingDAO.cs" />
     <Compile Include="CodeGeneration\StoreDAO.cs" />
     <Compile Include="CodeGeneration\StoreItemDailyStatusDAO.cs" />
+    <Compile Include="CodeGeneration\SysContactPointTypeDAO.cs" />
     <Compile Include="CodeGeneration\SysCSConclusionDAO.cs" />
     <Compile Include="CodeGeneration\SysCSPipelineDAO.cs" />
     <Compile Include="CodeGeneration\SysCSServiceTypeDAO.cs" />
@@ -393,6 +396,7 @@
     <Compile Include="CodeGeneration\TUnitSortDAO.cs" />
     <Compile Include="CodeGeneration\TUnitUnitSortMappingDAO.cs" />
     <Compile Include="CodeGeneration\TUserThirdPartyMappingDAO.cs" />
+    <Compile Include="CodeGeneration\t_award_poolDAO.cs" />
     <Compile Include="CodeGeneration\T_CityDAO.cs" />
     <Compile Include="CodeGeneration\t_customerDAO.cs" />
     <Compile Include="CodeGeneration\T_InoutDAO.cs" />
@@ -649,6 +653,8 @@
     <Compile Include="LEventDrawMethodMappingDAO.cs" />
     <Compile Include="LEventsAlbumTypeDAO.cs" />
     <Compile Include="LEventsGenreDAO.cs" />
+    <Compile Include="LEventsShareDAO.cs" />
+    <Compile Include="LEventsSharePersonDAO.cs" />
     <Compile Include="LEventsTypeDAO.cs" />
     <Compile Include="LNewsCommentDAO.cs" />
     <Compile Include="LNewsMicroMappingDAO.cs" />
@@ -900,6 +906,7 @@
     <Compile Include="TUnitUnitSortMappingDAO.cs" />
     <Compile Include="TUserThirdPartyMappingDAO.cs" />
     <Compile Include="TypeService.cs" />
+    <Compile Include="t_award_poolDAO.cs" />
     <Compile Include="T_CityDAO.cs" />
     <Compile Include="t_customerDAO.cs" />
     <Compile Include="T_InoutDAO.cs" />

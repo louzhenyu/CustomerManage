@@ -80,9 +80,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [ObjectImages](");
-            strSql.Append("[ObjectId],[ImageURL],[DisplayIndex],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[Title],[Description],[ImageId])");
+            strSql.Append("[ObjectId],[ImageURL],[DisplayIndex],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[Title],[Description],[ImageId],[BatId],[RuleId],[RuleContent])");
             strSql.Append(" values (");
-            strSql.Append("@ObjectId,@ImageURL,@DisplayIndex,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@Title,@Description,@ImageId)");            
+            strSql.Append("@ObjectId,@ImageURL,@DisplayIndex,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@Title,@Description,@ImageId,@BatId,@RuleId,@RuleContent)");            
 
 			string pkString = pEntity.ImageId;
 
@@ -99,7 +99,11 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
 					new SqlParameter("@Title",SqlDbType.NVarChar),
 					new SqlParameter("@Description",SqlDbType.NVarChar),
-					new SqlParameter("@ImageId",SqlDbType.NVarChar)
+					new SqlParameter("@ImageId",SqlDbType.NVarChar),
+					new SqlParameter("@BatId",SqlDbType.NVarChar),
+					new SqlParameter("@RuleId",SqlDbType.Int),
+					new SqlParameter("@RuleContent",SqlDbType.NVarChar)
+
             };
 			parameters[0].Value = pEntity.ObjectId;
 			parameters[1].Value = pEntity.ImageURL;
@@ -112,7 +116,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[8].Value = pEntity.CustomerId;
 			parameters[9].Value = pEntity.Title;
 			parameters[10].Value = pEntity.Description;
-			parameters[11].Value = pkString;
+            parameters[11].Value = pkString;
+            parameters[12].Value = pEntity.BatId;
+            parameters[13].Value = pEntity.RuleId;
+            parameters[14].Value = pEntity.RuleContent;
+
 
             //执行并将结果回写
             int result;
@@ -158,7 +166,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [ObjectImages] where isdelete=0");
+            sql.AppendFormat("select * from [ObjectImages] where isdelete=0 order by createtime desc");
             //读取数据
             List<ObjectImagesEntity> list = new List<ObjectImagesEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -214,7 +222,14 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.Title!=null)
                 strSql.Append( "[Title]=@Title,");
             if (pIsUpdateNullField || pEntity.Description!=null)
-                strSql.Append( "[Description]=@Description");
+                strSql.Append( "[Description]=@Description,");
+
+            if (pIsUpdateNullField || pEntity.BatId != null)
+                strSql.Append("[BatId]=@BatId,");
+            if (pIsUpdateNullField || pEntity.RuleId != null)
+                strSql.Append("[RuleId]=@RuleId,");
+            if (pIsUpdateNullField || pEntity.RuleContent != null)
+                strSql.Append("[RuleContent]=@RuleContent");
             if (strSql.ToString().EndsWith(","))
                 strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where ImageId=@ImageId ");
@@ -228,6 +243,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
 					new SqlParameter("@Title",SqlDbType.NVarChar),
 					new SqlParameter("@Description",SqlDbType.NVarChar),
+					new SqlParameter("@BatId",SqlDbType.NVarChar),
+					new SqlParameter("@RuleId",SqlDbType.Int),
+					new SqlParameter("@RuleContent",SqlDbType.NVarChar),
 					new SqlParameter("@ImageId",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.ObjectId;
@@ -237,8 +255,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[4].Value = pEntity.LastUpdateTime;
 			parameters[5].Value = pEntity.CustomerId;
 			parameters[6].Value = pEntity.Title;
-			parameters[7].Value = pEntity.Description;
-			parameters[8].Value = pEntity.ImageId;
+            parameters[7].Value = pEntity.Description;
+            parameters[8].Value = pEntity.BatId;
+            parameters[9].Value = pEntity.RuleId;
+            parameters[10].Value = pEntity.RuleContent;
+			parameters[11].Value = pEntity.ImageId;
 
             //执行语句
             int result = 0;
@@ -554,7 +575,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Title", Value = pQueryEntity.Title });
             if (pQueryEntity.Description!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Description", Value = pQueryEntity.Description });
-
+            if (pQueryEntity.BatId != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BatId", Value = pQueryEntity.BatId });
             return lstWhereCondition.ToArray();
         }
         /// <summary>
@@ -617,6 +639,10 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.Description =  Convert.ToString(pReader["Description"]);
 			}
+            if (pReader["BatId"] != DBNull.Value)
+            {
+                pInstance.BatId = Convert.ToString(pReader["BatId"]);
+            }
 
         }
         #endregion

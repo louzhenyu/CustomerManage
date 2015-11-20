@@ -124,6 +124,15 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetEventInfo(eventId);
         }
         #endregion
+        public DataSet GetNewEventInfo(string eventId)
+        {
+            return this._currentDAO.GetNewEventInfo(eventId);
+        }
+        public DataSet GetMaterialTextInfo(string eventId)
+        {
+            return this._currentDAO.GetMaterialTextInfo(eventId);
+        }
+
 
         #region 是否在现场
         /// <summary>
@@ -919,9 +928,10 @@ namespace JIT.CPOS.BS.BLL
                                 }, null).FirstOrDefault();
                                 if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
                                 {
-                                    UnitService unitServer = new UnitService(loggingSessionInfo);
-                                    var userOnUnit = unitServer.GetUnitListByUserId(qrCodeEntity.ObjectId);
-                                    vipEntity.CouponInfo = userOnUnit[0].unit_id;//会籍店ID
+                                    //UnitService unitServer = new UnitService(loggingSessionInfo);
+                                    //var userOnUnit = unitServer.GetUnitListByUserId(qrCodeEntity.ObjectId);
+                                    var unitid = vipBll.GetUnitByUserId(qrCodeEntity.ObjectId);
+                                    vipEntity.CouponInfo = !string.IsNullOrEmpty(unitid) ? unitid : vipEntity.CouponInfo;//获取会集店//userOnUnit[0].unit_id;//会籍店ID
                                     vipEntity.SetoffUserId = qrCodeEntity.ObjectId;//店员ID（上线）
                                     vipBll.Update(vipEntity);
                                     //var bll = new VipOrderSubRunObjectMappingBLL(loggingSessionInfo);
@@ -998,7 +1008,7 @@ namespace JIT.CPOS.BS.BLL
                     }
                     #endregion
 
-                    if (weixinId != "")
+                    if (weixinId != "")//处理素材的
                     {
                         QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
                             weixinId, 4, openId, httpContext);
@@ -1029,7 +1039,7 @@ namespace JIT.CPOS.BS.BLL
             BaseService.WriteLogWeixin("weixinId:" + weixinId);
             BaseService.WriteLogWeixin(ds.Tables[0].Rows.Count.ToString());
 
-            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)//只回复一条关键字
             {
                 string Text = ds.Tables[0].Rows[0]["Text"].ToString();  //素材类型
                 string ReplyId = ds.Tables[0].Rows[0]["ReplyId"].ToString();  //素材ID
@@ -1321,7 +1331,45 @@ namespace JIT.CPOS.BS.BLL
             return rsp;
         }
         #endregion
+        /// <summary>
+        /// 活动列表
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="strTitle"></param>
+        /// <param name="strDrawMethodName"></param>
+        /// <param name="strBeginTime"></param>
+        /// <param name="strEndTime"></param>
+        /// <returns></returns>
+        public DataSet GetEventList(int pageIndex, int pageSize, string strTitle, string strDrawMethodName, string strBeginTime, string strEndTime)
+        {
+            return _currentDAO.GetEventList(pageIndex, pageSize, strTitle, strDrawMethodName, strBeginTime, strEndTime);
+        }
 
+
+        /// <summary>
+        /// 删除活动(通过存储过程操作)
+        /// </summary>
+        /// <param name="pEntity"></param>
+        public void DeleteByProc(string strEventId)
+        {
+            this._currentDAO.DeleteByProc(strEventId);
+        }
+        #region 活动 启用停用
+        public void UpdateEventStatus(string strEventId, int intEventStatus)
+        {
+            this._currentDAO.UpdateEventStatus(strEventId, intEventStatus);
+        }
+        #endregion
+
+        #region 获取运行中的活动
+        public DataSet GetWorkingEventList()
+        {
+           return this._currentDAO.GetWorkingEventList();
+        }
+
+        #endregion
+   
         public JIT.CPOS.BS.BLL.MobileModuleBLL.Field[] GetFieldList(DataSet formDataSet)
         {
             return (from f in formDataSet.Tables[0].AsEnumerable()

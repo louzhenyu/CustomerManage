@@ -164,5 +164,10 @@ namespace JIT.CPOS.BS.BLL
             return _currentDAO.DeleteByObjectID(objectID);
         }
         #endregion
+
+        public DataSet GetObjectImagesByEventId(string EventId)
+        {
+            return this._currentDAO.GetObjectImagesByEventId(EventId);
+        }
     }
 }

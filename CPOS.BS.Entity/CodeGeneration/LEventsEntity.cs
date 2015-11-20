@@ -213,10 +213,14 @@ namespace JIT.CPOS.BS.Entity
 		public String EventFlag { get; set; }
 
 		/// <summary>
-		/// 
+		/// 活动类型
 		/// </summary>
 		public String EventTypeID { get; set; }
 
+        /// <summary>
+        /// 活动方式
+        /// </summary>
+        public int DrawMethodId { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
@@ -316,6 +320,12 @@ namespace JIT.CPOS.BS.Entity
         /// 
         /// </summary>
         public Int32? IsSignUpList { get; set; }
+
+
+
+        public int VipCardType { get; set; }
+        public int VipCardGrade { get; set; }
+
         #endregion
 
     }

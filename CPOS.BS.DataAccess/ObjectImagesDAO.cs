@@ -224,5 +224,18 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql, ls.ToArray());
         }
         #endregion
+
+        #region 根据活动id获取活动图片
+        public DataSet GetObjectImagesByEventId(string EventId)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.AppendFormat("select * from [ObjectImages] where ObjectId='{0}' and IsDelete=0 Order BY CreateTime DESC", EventId);
+
+
+            DataSet ds = this.SQLHelper.ExecuteDataset(sql.ToString());
+            return ds;
+        }
+        #endregion
+
     }
 }

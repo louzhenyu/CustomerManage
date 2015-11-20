@@ -121,12 +121,15 @@ namespace JIT.CPOS.BS.BLL
         {
             _currentDAO.Delete(pEntity);
         }
+ 
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        /// 
+
         public void Delete(LEventsEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Delete(pEntity,pTran);

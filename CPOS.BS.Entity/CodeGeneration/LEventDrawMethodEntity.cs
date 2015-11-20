@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/5/8 15:11:12
+ * Create On	:2015-8-18 16:58:06
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -86,6 +86,16 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String DrawMethodCode { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String EventTypeId { get; set; }
 
 
         #endregion

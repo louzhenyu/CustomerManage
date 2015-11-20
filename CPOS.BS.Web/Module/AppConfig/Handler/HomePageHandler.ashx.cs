@@ -70,6 +70,291 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             pContext.Response.End();
         }
 
+        #region 激活操作
+        public string ChangeStatus()
+        {
+            var responseData = new ResponseData();
+            try
+            {
+                string strHomeId = FormatParamValue(Request("HomeId"));//模板id
+                var homeEntity = new MobileHomeEntity();
+                var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
+                homeEntity.HomeId = new Guid(strHomeId);
+                homeEntity.CustomerId = this.CurrentUserInfo.ClientID;
+                homeEntity.IsActivate = 1;
+
+                homeBll.UpdateIsActivate(homeEntity);//先把当前商户下的所有主页状态设为未激活状态
+                homeBll.Update(homeEntity);//把当前主页设为激活状态
+
+                responseData.success = true;
+                return responseData.ToJSON();
+            }
+            catch (Exception ex)
+            {
+                responseData.success = false;
+                responseData.msg = ex.Message.ToString();
+                return responseData.ToJSON();
+            }
+        }
+        #endregion
+        /// <summary>
+        /// 删除操作
+        /// </summary>
+        /// <returns></returns>
+        public string DeleteHomePage()
+        {
+            var responseData = new ResponseData();
+            try
+            {
+
+
+                string strHomeId = FormatParamValue(Request("HomeId"));//模板id
+
+                var homeEntity = new MobileHomeEntity();
+                var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
+
+                homeEntity.HomeId = new Guid(strHomeId);
+                homeEntity.CustomerId = this.CurrentUserInfo.ClientID;
+                homeEntity.IsDelete = 1;
+                homeBll.Delete(homeEntity);
+
+                responseData.success = true;
+                return responseData.ToJSON();
+            }
+            catch (Exception ex)
+            {
+                responseData.success = false;
+                responseData.msg = ex.Message.ToString();
+                return responseData.ToJSON();
+            }
+        }
+
+        #region 主页信息
+        public class GetTemplateRespContentData
+        {
+
+            public string HomeId { get; set; }
+            public IList<MobileHomeEntity> TemplateList { get; set; }             //主页
+        }
+        public class GetMobileHomeRespContentData
+        {
+
+            public int totalCount { get; set; }     // 总数量
+            public int pageCount { get; set; }      //总页数
+            public string HomeId { get; set; }
+            public IList<MobileHomeEntity> moblieHomeList { get; set; }             //主页
+        }
+        /// <summary>
+        /// 获取模板信息
+        /// </summary>
+        /// <returns></returns>
+        public string GetHomePageTemplate()
+        {
+            var responseData = new ResponseData();
+            try
+            {
+                var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
+                var homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID, IsTemplate = 1 }, null);
+                if (homeList != null && homeList.Length > 0)
+                {
+
+                    var content = new GetTemplateRespContentData
+                    {
+                        HomeId=new Guid().ToString(),
+                        TemplateList = new List<MobileHomeEntity>()
+
+                    };
+                    content.TemplateList = homeList.OrderBy(a => a.DisplayIndex).ToArray();
+
+                    responseData.success = true;
+                    responseData.data = content;
+                }
+
+                return responseData.ToJSON();
+
+            }
+            catch (Exception ex)
+            {
+
+                responseData.success = false;
+                responseData.msg = ex.ToString();
+                return responseData.ToJSON();
+            }
+        }
+        /// <summary>
+        /// 获取商户所有主页列表
+        /// </summary>
+        /// <returns></returns>
+        public string GetHomePageListByCustomer()
+        {
+            var responseData = new ResponseData();
+            try
+            {
+                var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
+                int pPageSize = Convert.ToInt32(Request("PageSize"));//分页数量
+                int pCurrentPageIndex = Convert.ToInt32(Request("PageIndex"));//页码
+
+
+                var homeList = homeBll.PagedQueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID, IsTemplate = 0 }, null, pPageSize, pCurrentPageIndex);
+
+                var content = new GetMobileHomeRespContentData
+                {
+                    totalCount = 0,
+                    pageCount = 0,
+                    moblieHomeList = new List<MobileHomeEntity>()
+
+                };
+                if (homeList != null && homeList.RowCount > 0)
+                {
+
+                    content.totalCount = homeList.RowCount;
+                    content.pageCount = homeList.PageCount;
+                    content.moblieHomeList = homeList.Entities
+                        .Select(a => new MobileHomeEntity
+                        {
+                            HomeId = a.HomeId,
+                            Title = a.Title,
+                            sortActionJson = a.sortActionJson,
+                            IsActivate = a.IsActivate,
+                            CreateTime = a.CreateTime
+                        }).ToArray();
+                    responseData.success = true;
+                    responseData.data = content;
+                }
+                else
+                {
+                    responseData.success = true;
+                    responseData.data = content;
+                    responseData.msg = "还未添加主页";
+                }
+
+                return responseData.ToJSON();
+
+            }
+            catch (Exception ex)
+            {
+
+                responseData.success = false;
+                responseData.msg = ex.ToString();
+                return responseData.ToJSON();
+            }
+
+        }
+        /// <summary>
+        /// 保存当前主页并设为激活状态
+        /// </summary>
+        /// <returns></returns>
+        public string SaveHomePage()
+        {
+            var responseData = new ResponseData();
+            try
+            {
+
+
+                string strHomeId = FormatParamValue(Request("HomeId"));//主页id
+                //string strTemplateId = FormatParamValue(Request("TemplateId"));//模板id
+                string strTitle = FormatParamValue(Request("Title"));//模板名称
+
+                var homeEntity = new MobileHomeEntity();
+                var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
+
+                var homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID, HomeId = new Guid(strHomeId) }, null);
+                
+                if (homeList != null && homeList.Length > 0)
+                {
+                
+                    homeEntity.Title = strTitle;
+                    homeEntity.CustomerId = this.CurrentUserInfo.ClientID;
+                    homeEntity.IsActivate = 1;
+
+                    homeBll.UpdateIsActivate(homeEntity);//先把当前商户下的所有主页状态设为未激活状态
+                    homeBll.Update(homeEntity);//把当前主页设为激活状态
+                }
+                //else
+                //{
+                //    homeEntity.Title = strTitle;
+                //    homeEntity.HomeId = new Guid(strHomeId);
+                //    homeEntity.CustomerId = this.CurrentUserInfo.ClientID;
+                //    homeEntity.IsActivate = 1;
+                //    homeEntity.IsDelete = 0;
+                //    //homeEntity.TemplateId = new Guid(strTemplateId);
+
+                //    homeBll.UpdateIsActivate(homeEntity);//先把当前商户下的所有主页状态设为未激活状态
+                //    homeBll.Create(homeEntity);//把当前主页设为激活状态
+                //}
+                responseData.success = true;
+                responseData.data = homeEntity.HomeId;
+
+                return responseData.ToJSON();
+            }
+            catch (Exception ex)
+            {
+                responseData.success = false;
+                responseData.msg = ex.Message.ToString();
+                return responseData.ToJSON();
+            }
+        }
+        #endregion
+
+        #region 立即关注
+        public class MaterialTextIdInfo
+        {
+            public string TextId { get; set; }
+
+            public string Title { get; set; }
+            public string ImageUrl { get; set; }
+
+            public string Text { get; set; }
+            public string OriginalUrl { get; set; }
+            public string Author { get; set; }
+        }
+        public class followInfo
+        {
+            public string HomeId { get; set; }
+
+            public string Text { get; set; }
+            public MaterialTextIdInfo MaterialText { get; set; }
+        }
+        public string GetFollowInfo()
+        {
+            var responseData = new ResponseData();
+            string replyId = FormatParamValue(Request("homeId"));
+
+            var bll = new WKeywordReplyBLL(CurrentUserInfo);
+            var ds = bll.GetKeyWordListByReplyId(replyId);
+            var textDs = bll.GetWMaterialTextByReplyId(replyId);
+
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                var temp = ds.Tables[0].AsEnumerable().Select(t => new followInfo()
+                {
+
+                    HomeId = string.IsNullOrEmpty(t["ReplyId"].ToString()) ? "" : t["ReplyId"].ToString(),
+                    Text = string.IsNullOrEmpty(t["text"].ToString()) ? "" : t["text"].ToString(),
+                    MaterialText = textDs.Tables[0].AsEnumerable().Select(tt => new MaterialTextIdInfo()
+                    {
+                        TextId = string.IsNullOrEmpty(tt["TextId"].ToString()) ? "" : tt["TextId"].ToString(),
+                        ImageUrl =
+                            string.IsNullOrEmpty(tt["CoverImageUrl"].ToString()) ? "" : tt["CoverImageUrl"].ToString(),
+                        Title = string.IsNullOrEmpty(tt["Title"].ToString()) ? "" : tt["Title"].ToString(),
+                        Author = string.IsNullOrEmpty(tt["Author"].ToString()) ? "" : tt["Author"].ToString(),
+                        Text = string.IsNullOrEmpty(tt["Text"].ToString()) ? "" : tt["Text"].ToString(),
+                        OriginalUrl = string.IsNullOrEmpty(tt["OriginalUrl"].ToString()) ? "" : tt["OriginalUrl"].ToString()
+                    }).FirstOrDefault()
+                });
+                responseData.success = true;
+                responseData.data = temp.FirstOrDefault();
+            }
+            else
+            {
+                responseData.success = false;
+                responseData.msg = "没有设置关注信息";
+            }
+            return responseData.ToJSON();
+        }
+       
+        #endregion
+
         #region  更新首页各个模块的排列顺序
         public string UpdateMobileHomeSort()
         {
@@ -99,6 +384,9 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             var currentHome = homeList.FirstOrDefault();
             currentHome.sortActionJson = sortActionJson;
             homeBll.Update(currentHome);
+
+
+
             responseData.success = true;
             responseData.msg = "更新成功";
             return responseData.ToJSON();

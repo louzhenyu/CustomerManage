@@ -6,10 +6,14 @@
             allQueryDiv: $("#allQuery"),             //所有的查询条件层dom
             uiMask: $("#ui-mask"),
             tabel:$("#gridTable"),                   //表格body部分
+			tabel2:$("#gridTable2"), 
             tabelWrap:$('#tableWrap'),
+			tabelWrap2:$('#tableWrap2'),
             thead:$("#thead"),                    //表格head部分
             showDetail: $('#showDetail'),         //弹出框查看详情部分
             operation:$('#opt,#Tooltip'),              //弹出框操作部分
+			dataMessage:$(".dataMessage"),
+			dataMessage2:$(".dataMessage2"),
             vipSourceId:'',
             click:true,
             dataMessage:  $("#pageContianer").find(".dataMessage"),
@@ -25,190 +29,89 @@
         init: function () {
             this.initEvent();
             this.loadPageData();
-
         },
         initEvent: function () {
             var that = this;
             //点击查询按钮进行数据查询
-
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
                 that.setCondition();
                 //查询数据
+				that.loadData.args.PageIndex = 1;
                 that.loadData.getCommodityList(function(data){
-                    //写死的数据
-                    //data={"ResultCode":0,"Message":null,"IsSuccess":true,"Data":{"DicColNames":{"UserName":"姓名","Phone":"手机","Email":"邮箱","Col9":"人数","Col8":"职位","Col7":"公司","Col3":"性别"},"SignUpList":[{"SignUpID":"60828091-F8F4-4C97-8F6C-6AC9E627DF97","EventID":"16856b2950892b62473798f3a88ee3e3","UserName":"王孟孟","Phone":"18621865591","Email":"mengmeng.wang@jitmarketing.cn","Col9":"1","Col8":"研发总监","Col7":"上海杰亦特有限公司","Col3":"男"}],"TotalCountUn":1,"TotalCountYet":9,"TotalPage":1}};
-                    //渲染table
-
                     that.renderTable(data);
-
-
                 });
                 $.util.stopBubble(e);
-
             });
-            that.elems.operation.delegate(".commonBtn","click",function(e){
-                var  selectList= that.elems.tabel.datagrid("getSelections");
-                if(selectList.length==0){
-                    alert("必须选择一个商品");
-                    return false;
-                }
-                var  type= $(this).data("flag");
-                var parms={};
-                parms.ItemInfoList=selectList;
-                if(type=="sales"){
-                    var nodes=$("#Tooltip").find(".treeNode").tree('getChecked');
-                  /*  if(nodes.length==0){
-                        alert("至少选择一个促销分组");
-                        return false;
-                    }*/
-                    parms.SalesPromotionList=nodes
-                }
-                if(type!="salesTooltip"&&type!="cannel"){
-                    that.loadData.operation(parms,type,function(data){
-                        alert("操作成功");
-                        that.loadPageData(e);
-                    });
-                } else if(type=="cannel"){
-                    $('#sales').tooltip("hide");
-                }
-
-
-            });
-            $('#sales').tooltip({
-                content: function(){
-                    return  $("#Tooltip");
-                },
-                showEvent: 'click',
-                onShow: function(){
-                    var nodes=$("#Tooltip").find(".treeNode").tree('getChecked');
-                    $.each(nodes,function(){
-                        var me=this
-                        $("#Tooltip").find(".treeNode").tree('uncheck',me.target);
-                    });
-                    var t = $(this);
-                    t.tooltip('tip').unbind().bind('mouseenter', function(){
-                        t.tooltip('show');
-                    }).bind('mouseleave', function(){
-                        t.tooltip('hide');
-                    });
-                }
-            });
-            /**************** -------------------弹出easyui 控件 start****************/
-            var  wd=160,H=32;
-            $('#item_status').combobox({
-                width:wd,
-                height:H,
-                panelHeight:that.elems.panlH,
-                valueField: 'id',
-                textField: 'text',
-                data:[{
-                    "id":1,
-                    "text":"上架"
-                },{
-                    "id":-1,
-                    "text":"下架"
-                },{
-                    "id":0,
-                    "text":"全部"
-                }]
-            });
-            $('#item_status').combobox("setValue",1);
-             // 分类
-            that.loadData.getClassify(function(data) {
-                data[0].children.push({id:0,text:"请选择"});
-                $('#item_category_id').combotree({
-                    width:wd,
-                    height:H,
-                    editable:true,
-                    lines:true,
-                    panelHeight:that.elems.panlH,
-                    valueField: 'id',
-                    textField: 'text',
-                    data:data[0].children
-                });
-            });
-            that.loadData.args.bat_id='2';
-            that.loadData.getClassify(function(data) {
-                $("#Tooltip").find(".treeNode").tree({
-                   // animate:true,
-                    checkbox:true,
-                    valueField: 'id',
-                    textField: 'text',
-                    data:data
-
-                });
-                data.push({id:0,text:"请选择"});
-                $('#SalesPromotion_id').combobox({
-                    width: wd,
-                    height: H,
-                    panelHeight: that.elems.panlH,
-                    valueField: 'id',
-                    textField: 'text',
-                    data: data
-                });
-
-            });
-
-            /**************** -------------------弹出easyui 控件  End****************/
-
-
-            /**************** -------------------弹出窗口初始化 start****************/
-            $('#win').window({
-                modal:true,
-                shadow:false,
-                collapsible:false,
-                minimizable:false,
-                maximizable:false,
-                closed:true,
-                closable:true
-            });
-            $('#panlconent').layout({
-                fit:true
-            });
-            $('#win').delegate(".saveBtn","click",function(e){
-
-                if ($('#payOrder').form('validate')) {
-
-                    var fields = $('#payOrder').serializeArray(); //自动序列化表单元素为JSON对象
-
-                    that.loadData.operation(fields,that.elems.optionType,function(data){
-
-                        alert("操作成功");
-                        $('#win').window('close');
-                        that.loadPageData(e);
-
-                    });
-                }
-            });
-            /**************** -------------------弹出窗口初始化 end****************/
-
-            /**************** -------------------列表操作事件用例 start****************/
-            that.elems.tabelWrap.delegate(".fontC","click",function(e){
-                var rowIndex=$(this).data("index");
-                var optType=$(this).data("oprtype");
+            
+            //列表操作事件用例
+            that.elems.tabelWrap.delegate(".handle","click",function(e){
+                var $this = $(this),
+					$tr = $this.parents('tr'),
+					rowIndex=$(this).data("index"),
+					optType=$(this).data("oprtype");
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
-                if(optType=="payment") {
-                    if(row.IsPaid!=1&&row.Status!=10&&row.Status!=11) {
-                        that.payMent(row);
-                    }
+                if(optType=="delete"){
+					that.deleteEvent(row.EventID,$tr);
                 }
-                if(optType=="cancel"){
-                    that.cancelOrder(row);
+                if(optType=="running"){
+					that.statusEvent(row.EventID,0,$this);
                 }
-                if(optType=="down"){
-
-                    // window.location.href=row.QRImageUrl;
-                    new Image().src=row.Image_Url;
-                    //that.saveit('images/duihao.png');
-
-                    //that.saveit(downloadFile);
-                    that.downloadFile('1111111.jpg',row.Image_Url);
-
+				if(optType=="pause"){
+                    that.statusEvent(row.EventID,1,$this);
                 }
-            })
-            /**************** -------------------列表操作事件用例 End****************/
+				if(optType=="down"){
+					var date = new Date();
+                    new Image().src=row.ImageUrl;
+                    that.downloadFile(date.getTime()+'.jpg',row.ImageUrl);
+                }
+				if((optType=="joinprize" || optType=="winprize")  && $this.text() != '0'){
+					that.loadData2.action = (optType=="joinprize") ? 'events_lotterylog_list_query' : 'get_prizes_winner_list';
+					
+					if(optType=="joinprize"){
+						that.loadData2.titName = '抽奖次数';
+						that.loadData2.titValue = 'LotteryCount';
+					}else{
+						that.loadData2.titName = '奖品名称';
+						that.loadData2.titValue = 'PrizeName';
+					}
+					
+					that.loadData2.eventId = row.EventID;
+					
+					that.loadData2.page = 1;
+					that.censusCount(function(data){
+						 that.renderTable2(data);
+					});
+					
+					$('.jui-mask').show();
+					$('.jui-dialog-table').show();
+				}
+				$.util.stopBubble(e);
+            });
+			
+			$('.jui-dialog-close').bind('click',function(){
+				$('.jui-mask').hide();
+				$('.jui-dialog-table').hide();
+			})
+			
+			$('.jui-dialog-table .saveBtn').bind('click',function(){
+				$('.jui-mask').hide();
+				$('.jui-dialog-table').hide();
+			})
+			//跳转详情页
+			that.elems.tabelWrap.delegate("tr","click",function(e){
+                var $this = $(this),
+					mid = JITMethod.getUrlParam("mid");
+                var row = that.elems.tabel.datagrid('getSelected');
+				location.href = "activiDetail.aspx?EventID=" + row.EventID + "&mid=" + mid;
+			});
+			
+			//跳转创建游戏页面
+			$('#addNewGamesBtn').on('click',function(){
+				location.href = 'activiDetail.aspx?mid='+JITMethod.getUrlParam("mid");
+			})
+            
         },
 
 
@@ -216,23 +119,15 @@
 
         //设置查询条件   取得动态的表单查询参数
         setCondition:function(){
-            debugger;
             var that=this;
-            //查询每次都是从第一页开始
-            that.loadData.args.start=0;
             var fileds=$("#seach").serializeArray();
             $.each(fileds,function(i,filed){
-                filed.value=filed.value=="0"?"":filed.value;
-                that.loadData.seach[filed.name]=filed.value;
+                //filed.value=filed.value=="0"?"":filed.value;
+                //that.loadData.seach[filed.name]=filed.value;
                 that.loadData.seach.form[filed.name]=filed.value;
             });
-
-
-
-
-
         },
-
+		
         //加载页面的数据请求
         loadPageData: function (e) {
             debugger;
@@ -240,170 +135,118 @@
             $(that.elems.sectionPage.find(".queryBtn").get(0)).trigger("click");
             $.util.stopBubble(e);
         },
-
+		
+		
+		
         //渲染tabel
         renderTable: function (data) {
-            debugger;
             var that=this;
-            if(!data.topics){
-
-                return;
+			if(!data.LEventsList){
+                data.LEventsList=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({
-
+				
                 method : 'post',
-                iconCls : 'icon-list', //图标
-                singleSelect : false, //多选
+                //iconCls : 'icon-list', //图标
+                singleSelect : true, //单选
                 // height : 332, //高度
                 fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped : true, //奇偶行颜色不同
-                collapsible : true,//可折叠
+                //collapsible : true,//可折叠
                 //数据来源
-                data:data.topics,
-                sortName : 'brandCode', //排序的列
+                data:data.LEventsList,
+                //sortName : 'brandCode', //排序的列
                 /*sortOrder : 'desc', //倒序
                  remoteSort : true, // 服务器排序*/
-                idField : 'Item_Id', //主键字段
+                //idField : '', //主键字段
                 /*  pageNumber:1,*/
-                /* frozenColumns : [ [ {
-                 field : 'brandLevelId',
-                 checkbox : true
-                 } //显示复选框
-                 ] ],*/
-                frozenColumns:[[
-                  /*  {
-                        field : 'ck',
-                        width:70,
-                        title:'全选',
-                        align:'center',
-                        checkbox : true
-                    }//显示复选框*/
-                    /*  {field : 'OrderNo',title : '订单号',width:96,align:'center',resizable:false},
-                     {field : 'OrderID',title : '操作',width:96,align:'center',resizable:false,
-                     formatter:function(value ,row,index){
-                     *//* var html="";
-                     if(row.IsPaid==0&&row.Status!=10&&row.Status!=11) {
-                     html=   '<p class="fontC" data-oprType="payment" data-index="'+index+'"> 收款</p>';
-                     }
-                     if($.util.GetDateDiff(new Date().format("yyyy-mm-dd"),row.ReserveTime,"day")>=1&&row.Status!=6&&row.Status!=10&&row.Status!=11){
-                     html+='<p class="fontC" data-oprType="cancel" data-index="'+index+'"> 取消</p>';
-                     }
-                     return html;*//*
-                     }
-
-                     }*/
-                ]],
+                //frozenColumns:[[]],
                 columns : [[
-
-                    {field : 'Item_Name',title : '活动名称',width:125,align:'center',resizable:false,
+                    {field : 'Title',title : '活动名称',width:110,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value&&value.length>long){
-                                return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                return '<a class="rowText" title="'+value+'">'+value.substring(0,long)+'...</a>'
                             }else{
-                                return '<div class="rowText">'+value+'</div>'
+                                return '<a class="rowText">'+value+'</a>'
                             }
                         }
                     },
-                    {field : 'Item_Category_Code',title : '活动方式',width:58,resizable:false,align:'center'},
-                    {field : 'Modify_Time',title : '开始时间',width:58,resizable:false,align:'center',
+                    {field : 'DrawMethodName',title : '活动方式',width:58,resizable:false,align:'center'},
+                    {field : 'BeginTime',title : '开始时间',width:58,resizable:false,align:'center',
+                    formatter: function (value, row, index) {
+                        debugger;
+                            return new Date(value).format("yyyy-MM-dd");
+                        }
+                    },
+                    {field : 'EndTime',title : '结束时间',width:58,resizable:false,align:'center',
                         formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd");
                         }
                     },
-                    {field : 'minPrice',title : '结束时间',width:58,resizable:false,align:'center',
-                        formatter:function(value ,row,index){
-                            return new Date(value).format("yyyy-MM-dd");
-                        }
-                    },
-                    {field : 'Modify_User_Name',title : '活动对象',width:58,resizable:false,align:'center'},
-                    {field : 'stock',title : '参与人数',width:58,align:'center',resizable:false,
+					/*
+                    {field : 'VipCardTypeName',title : '卡类型',width:58,resizable:false,align:'center'},
+					{field : 'VipCardGradeName',title : '卡等级',width:58,resizable:false,align:'center'},
+                    {field : 'JoinCount',title : '参与人数',width:58,align:'center',resizable:false,
                         formatter:function(value,row,index){
-                           if(isNaN(parseInt(value))){
-                             return 0;
-                           }else{
-                              return parseInt(value);
-                           }
+                          return '<p class="handle joinprize"  data-index="'+index+'"  data-oprtype="joinprize">'+value+'</p>';
                         }
                     },
-                    {field : 'SalesCount',title : '中奖人数',width:60,align:'center',resizable:false,
+					*/
+                    {field : 'WinnerCount',title : '中奖人数',width:60,align:'center',resizable:false,
                         formatter:function(value,row,index){
-                            if(isNaN(parseInt(value))){
-                                return 0;
-                            }else{
-                                return parseInt(value);
-                            }
-                        }},
-
-
-                    {field : 'Status',title : '状态',width:80,align:'center',resizable:false,
+                          return '<p class="handle winprize"  data-index="'+index+'"  data-oprtype="winprize">'+value+'</p>';
+                        }
+					},
+                    {field : 'Status',title : '状态',width:40,align:'center',resizable:false,align:'center'},
+                    {field : 'EventID',title : '操作',width:30,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-                            debugger;
-                            var staus;
-                            switch (value){
-                                case "1": staus="上架";break;
-
-                                case "-1": staus= "下架"; break;
-                            }
-                            return staus;
+							var status = row.Status;
+							if(status=='未开始'){
+								return '<p class="handle delete" data-index="'+index+'" data-oprtype="delete"></p>';
+							}else if(status=='运行中'){
+								return '<p class="handle running" data-index="'+index+'" data-oprtype="running"></p>';
+							}else if(status=='暂停'){
+								return '<p class="handle pause" data-index="'+index+'" data-oprtype="pause"></p>';
+							}else if(status=='结束'){
+								return '';
+							}
+                            
                         }
                     },
-                    {field : 'isParent',title : '操作',width:30,align:'center',resizable:false,
+                    {field : 'ImageUrl',title : '二维码',width:30,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
-                        }
-                    },
-                    {field : 'id',title : '二维码',width:30,align:'center',resizable:false,
-                        formatter:function(value ,row,index){
-                            return '<p class="fontC down" data-index="'+index+'" data-oprtype="down"></p>';
+                            return '<p class="handle down" data-index="'+index+'" data-oprtype="down"></p>';
                         }
                     }
-
-
                 ]],
-
-                onLoadSuccess : function(data) {
-                    debugger;
+				onLoadSuccess : function(data) {
                     that.elems.tabel.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
-                    if(data.rows.length>0) {
-                        that.elems.dataMessage.hide();
-                    }else{
-                        that.elems.dataMessage.show();
-                    }
-                },
-                onClickRow:function(rowindex,rowData){
-                      debugger;
-                     if(that.elems.click){
-                     that.elems.click = true;
-                     debugger;
-
-                     var mid = JITMethod.getUrlParam("mid");
-                     location.href = "activiDetail.aspx?Item_Id=" + rowData.Item_Id +"&mid=" + mid;
-                     }
-
-                },onClickCell:function(rowIndex, field, value){
-                      if(field=="ck"||field=='id'||field=='isParent'){    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
-                     that.elems.click=false;
-                     }else{
-                     that.elems.click=true;
-                     }
+					if(data.rows.length>0) {
+						that.elems.dataMessage.hide();
+						$('#kkpager').show();
+					}else{
+						that.elems.dataMessage.show();
+						$('#kkpager').hide();
+					}
+					//that.elems.tabel.datagrid('getSelected');
                 }
-
             });
 
 
 
             //分页
-            data.Data={};
-            data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
-            var page=parseInt(that.loadData.args.start/15);
+            //data.Data={};
+            //data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
+            //var page=parseInt(that.loadData.args.start/15);
             kkpager.generPageHtml({
-                pno: page?page+1:1,
+				pagerid:'kkpager',
+                pno: that.loadData.args.PageIndex,
                 mode: 'click', //设置为click模式
                 //总页码
-                total: data.Data.TotalPageCount,
-                totalRecords: data.totalCount,
+                total: data.PageCount,
+                totalRecords: data.TotalCount,
                 isShowTotalPage: true,
                 isShowTotalRecords: true,
                 //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
@@ -426,22 +269,15 @@
                 }
 
             }, true);
-
-
-            if((that.loadData.opertionField.displayIndex||that.loadData.opertionField.displayIndex==0)){  //点击的行索引的  如果不存在表示不是显示详情的修改。
-                that.elems.tabel.find("tr").eq(that.loadData.opertionField.displayIndex).find("td").trigger("click",true);
-                that.loadData.opertionField.displayIndex=null;
-            }
         },
         //加载更多的资讯或者活动
         loadMoreData: function (currentPage) {
             var that = this;
-            this.loadData.args.start = (currentPage-1)*15;
+            that.loadData.args.PageIndex = currentPage;
             that.loadData.getCommodityList(function(data){
                 that.renderTable(data);
             });
         },
-
         downloadFile:function (fileName, content){
 
             var aLink = document.createElement('a');
@@ -449,31 +285,149 @@
             var evt = document.createEvent("HTMLEvents");
             evt.initEvent("click", false, false);//initEvent 不加后两个参数在FF下会报错, 感谢 Barret Lee 的反馈
             aLink.download = fileName;
-            aLink.href =content//; URL.createObjectURL(content);
+            aLink.href =content; //URL.createObjectURL(content);
             aLink.dispatchEvent(evt);
-
+			
         },
-        //取消订单
-        cancelOrder:function(data){
+		deleteEvent:function(id,$dom){
+			var that = this;
+			$.util.ajax({
+				  url: "/ApplicationInterface/Module/WEvents/EventsListHandler.ashx",
+				  data:{
+					  action:'DeleteEvent',
+					  EventId:id
+				  },
+				  success: function (data) {
+					  if(data.IsSuccess && data.ResultCode == 0) {
+							$dom.reomve();
+					  }else{
+						alert(data.Message);
+					}
+				}
+			});
+		},
+		statusEvent:function(id,status,$dom){
+			var that = this;
+			$.util.ajax({
+				  url: "/ApplicationInterface/Module/WEvents/EventsListHandler.ashx",
+				  data:{
+					  action:'StartOrStopEvent',
+					  EventId:id,
+					  Status:status
+				  },
+				  success: function (data) {
+					  if(data.IsSuccess && data.ResultCode == 0) {
+						  	if(status==0){
+								$dom.attr('class','handle pause').data('oprtype','pause');
+								$('td[field="Status"] div',$dom.parents('tr')).text('暂停');
+							}else{
+								$dom.attr('class','handle running').data('oprtype','running');
+								$('td[field="Status"] div',$dom.parents('tr')).text('运行中');
+							}
+					  }else{
+						alert(data.Message);
+					  }
+				  }
+			});
+		},
+		loadData2: {
+			page:1,
+			start:0,
+			limit:4,
+			action:'',
+			eventId:'',
+			titName:'',
+			titValue:''
+		},
+        //人数统计，弹层
+        censusCount:function(callback){
             var that=this;
-            that.elems.optionType="cancel";
-            $('#win').window({title:"取消订单",width:360,height:260});
-            //改变弹框内容，调用百度模板显示不同内容
-            $('#panlconent').layout('remove','center');
-            var html=bd.template('tpl_OrderCancel');
-            var options = {
-                region: 'center',
-                content:html
-            };
-            $('#panlconent').layout('add',options);
-            this.loadData.tag.orderID=data.OrderID;
-            $('#win').window('open');
+           	$.util.oldAjax({
+				  url: "/Module/WEvents/Handler/EventsHandler.ashx",
+				  data:{
+					  action:that.loadData2.action,
+					  EventId:that.loadData2.eventId,
+					  page:that.loadData2.page,
+					  //start:that.loadData2.start,
+					  limit:that.loadData2.limit
+				  },
+				  success: function (data) {
+					  var result = data.topics;
+					  if(result.length>0){
+						if(callback){
+							callback(data);
+						}
+					  }else{
+						alert("加载数据不成功");
+					  }
+				}
+			});
+        },
+		renderTable2: function (data) {
+            var that=this;
+			if(!data.topics){
+                data.topics=[];
+            }
+            that.elems.tabel2.datagrid({
+                method : 'post',
+                singleSelect : true, //单选
+                fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                striped : true, //奇偶行颜色不同
+                data:data.topics,
+                columns : [[
+                    {field : 'VipName',title : '会员名称',width:30,align:'center',resizable:false,
+                        formatter:function(value ,row,index){
+                            return value;
+                        }
+                    },
+                    {field : that.loadData2.titValue,title : that.loadData2.titName,width:40,align:'center',resizable:false,align:'center',
+						formatter:function(value ,row,index){
+							return value;
+						}
+					},
+					{field : 'CreateTime',title : '时间',width:30,resizable:false,align:'center',
+                        formatter:function(value ,row,index){
+                            return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+                        }
+                    }
+                ]],
+				onLoadSuccess : function(data) {
+                    that.elems.tabel.datagrid('clearSelections'); //一定要加上这一句
+                }
+            });
+			
+			var pageCount = data.totalCount%that.loadData2.limit==0? data.totalCount/that.loadData2.limit: data.totalCount/that.loadData2.limit +1;
+			
+            kkpager.generPageHtml({
+				pagerid:'kkpager2',
+                pno: that.loadData2.page,
+                mode: 'click', //设置为click模式
+                total: pageCount,//总页数
+                totalRecords: data.totalCount,//总条数
+                isShowTotalPage: true,
+                isShowTotalRecords: true,
+                click: function(n){
+                    this.selectPage(n);
+                    that.loadMoreData2(n);
+                },
+                getHref: function (n) {
+                    return '#';
+                }
+            }, true);
+        },
+		//加载更多的资讯或者活动
+        loadMoreData2: function (currentPage) {
+            var that = this;
+            that.loadData2.page = currentPage;
+            that.censusCount(function(data){
+                that.renderTable2(data);
+            });
         },
         loadData: {
             args: {
                 bat_id:"1",
-                PageIndex: 0,
-                PageSize: 6,
+                PageIndex: 1,
+                PageSize: 10,
                 SearchColumns:{},    //查询的动态表单配置
                 OrderBy:"",           //排序字段
                 SortType: 'DESC',    //如果有提供OrderBy，SortType默认为'ASC'
@@ -492,115 +446,40 @@
                 form:{
                     item_code:"",
                     item_name:"",
-                    item_status:null,
-                    item_can_redeem:null
+                    item_startTime:'',
+                    item_endTime:''
                 }
             },
             opertionField:{},
-
             getCommodityList: function (callback) {
-                $.util.oldAjax({
-                    url: "/module/basic/Item/Handler/ItemHandler.ashx",
+				var item_name = this.seach.form.item_name,
+					item_startTime = this.seach.form.item_startTime,
+					item_endTime = this.seach.form.item_endTime;
+                $.util.ajax({
+                      url: "/ApplicationInterface/Module/WEvents/EventsListHandler.ashx",
                       data:{
-                          action:'search_item',
-                          item_category_id:this.seach.item_category_id,
-                          SalesPromotion_id:this.seach.SalesPromotion_id,
-                          page:this.args.page,
-                          start:this.args.start,
-                          limit:this.args.limit,
-                          form:{
-                              item_code:"",
-                              item_name:this.seach.form.item_name,
-                              item_status:this.seach.form.item_status,
-                              item_can_redeem:null
-                          }
+                          action:'GetEventList',
+						  Title:item_name,
+						  DrawMethodName:'',
+						  BeginTime:item_startTime,
+						  EndTime:item_endTime,
+                          PageSize:this.args.PageSize,
+                          PageIndex:this.args.PageIndex
                       },
                       success: function (data) {
-                          debugger;
-                        if (data.topics) {
-                            if (callback) {
-                                callback(data);
-                            }
-
-                        } else {
+						  if (data.IsSuccess && data.ResultCode == 0) {
+								var result = data.Data,
+									lEventsList = result.LEventsList;
+								if(callback) {
+									callback(result);
+								}
+						  }else{
                             alert("加载数据不成功");
-                        }
-                    }
-                });
-            },
-            getClassify: function (callback) {
-                $.util.oldAjax({
-                    url: "/module/basic/ItemCategoryNew/Handler/ItemCategoryTreeHandler.ashx",
-                    data:{
-                        node:"root",
-                        isAddPleaseSelectItem:true,
-                        pleaseSelectText:"请选择",
-                        pleaseSelectID:"0",
-                        bat_id:this.args.bat_id,
-                        Status:"1"
-
-
-                    },
-                    success: function (data) {
-                        if (data) {
-                            if (callback)
-                                callback(data);
-                        }
-                        else {
-                            alert("分类加载异常请联系管理员");
-                        }
-                    }
-                });
-            },
-            operation:function(pram,operationType,callback){
-                debugger;
-                var prams={data:{action:""}};
-                prams.url="/ApplicationInterface/Module/Item/ItemNewHandler.ashx";
-                //根据不同的操作 设置不懂请求路径和 方法
-
-
-                prams.data.ItemInfoList=[];
-                $.each( pram.ItemInfoList,function(){
-                           var me=this;
-                    prams.data.ItemInfoList.push({Item_Id:me.Item_Id})
-                });
-
-                if(pram.SalesPromotionList) {
-                    prams.data.SalesPromotionList=[];
-                    $.each(pram.SalesPromotionList, function () {
-                        var me = this;
-                        prams.data.SalesPromotionList.push({ItemCategoryId: me.id})
-                    });
-                }
-                switch(operationType){
-                    case "putaway":prams.data.action="ItemToggleStatus";  //上架
-                        prams.data.Status="1";
-                        break;
-                    case "soldOut":prams.data.action="ItemToggleStatus";  //下架
-                        prams.data.Status="-1";
-                        break;
-                    case "sales":prams.data.action="UpdateSalesPromotion";  //更改促销分组
-                        break;
-                }
-
-
-                $.util.ajax({
-                    url: prams.url,
-                    data:prams.data,
-                    success: function (data) {
-                        if (data.IsSuccess && data.ResultCode == 0) {
-                            if (callback) {
-                                callback(data);
-                            }
-
-                        } else {
-                            alert(data.Message);
-                        }
+                          }
                     }
                 });
             }
-
-
+			 
         }
 
     };

@@ -70,5 +70,13 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.CreateReturnID(pEntity, pTran);
         }
+        /// <summary>
+        /// 优惠券使用情况
+        /// </summary>
+        /// <returns></returns>
+        public DataSet GetCouponTypeCount()
+        {
+            return this._currentDAO.GetCouponTypeCount();
+        }
     }
 }

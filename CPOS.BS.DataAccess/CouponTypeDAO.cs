@@ -61,12 +61,16 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetCouponTypeList()
         {
             //updated by Willie: CustomerId is null 为通用类型 on 2014-09-17
-            string sql = @"select 
-                         CouponTypeID
-                       ,('满'+convert(nvarchar,ISNULL(ConditionValue,0)) +'抵' +convert(nvarchar,isnull(ParValue,0))+CouponTypeName) as CouponTypeName
-                        , CouponTypeName as OriginalCouponTypeName
-                         from  CouponType  where  IsDelete='0' and  (CustomerId is null or CustomerId='" + this.CurrentUserInfo.ClientID + "')";
-            return this.SQLHelper.ExecuteDataset(sql);
+            string sql = @"SELECT 
+                         C.CouponTypeID
+                        , C.CouponTypeName
+                        , SUM(c.[IssuedQty]) IssuedQty
+                        ,SUM(CountTotal) CountTotal
+                         FROM  CouponType c
+                        LEFT JOIN PrizeCouponTypeMapping p ON CAST(c.CouponTypeID AS NVARCHAR(200)) = p.CouponTypeID 
+                        LEFT JOIN dbo.LPrizes l ON l.PrizesID = p.PrizesID AND [PrizeTypeId] ='Coupon'  
+                        where  C.IsDelete='0' and   C.CustomerId='" + this.CurrentUserInfo.ClientID + "' AND ((EndTime IS NULL AND ServiceLife IS NOT NULL) OR (EndTime IS NOT NULL AND EndTime <getdate())) GROUP BY c.CouponTypeID,c.CouponTypeName";
+             return this.SQLHelper.ExecuteDataset(sql);
         }
         #endregion
 
@@ -160,5 +164,25 @@ namespace JIT.CPOS.BS.DataAccess
             pEntity.CouponTypeID = pkGuid;
             return pkGuid.Value;
         }
+
+        #region 获取活动中优惠券使用情况
+        /// <summary>
+        /// 获取奖品人员列表
+        /// </summary>
+        /// <param name="EventID"></param>
+        /// <returns></returns>
+        public DataSet GetCouponTypeCount()
+        {
+            string sql = "SELECT  c.CouponTypeID,SUM(c.[IssuedQty])[IssuedQty],SUM(CountTotal) CountTotal  "
+                        + " FROM [dbo].[CouponType] C "
+                        + " LEFT JOIN PrizeCouponTypeMapping  p ON CAST(C.CouponTypeID AS NVARCHAR(200))=p.CouponTypeID  "
+
+                        + " INNER JOIN dbo.LPrizes l ON l.PrizesID=p.PrizesID  AND  [PrizeTypeId]=1   "
+                        + " WHERE  c.IsDelete=0 "
+                        + " GROUP BY c.CouponTypeID ";
+            DataSet ds = new DataSet();
+            return this.SQLHelper.ExecuteDataset(sql);
+        }
+        #endregion
     }
 }

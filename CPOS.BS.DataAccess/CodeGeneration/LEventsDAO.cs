@@ -80,9 +80,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [LEvents](");
-            strSql.Append("[Title],[EventLevel],[ParentEventID],[BeginTime],[EndTime],[WeiXinID],[Address],[CityID],[Description],[ImageURL],[URL],[Content],[PhoneNumber],[Email],[ApplyQuesID],[PollQuesID],[IsSubEvent],[Longitude],[Latitude],[EventStatus],[DisplayIndex],[PersonCount],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[ModelId],[EventManagerUserId],[IsDefault],[IsTop],[Organizer],[EventFlag],[EventTypeID],[Intro],[EventGenreId],[CanSignUpCount],[IsTicketRequired],[ReplyType],[Text],[Distance],[IsShare],[ShareRemark],[PosterImageUrl],[OverRemark],[BootURL],[MailSendInterval],[ShareLogoUrl],[IsPointsLottery],[PointsLottery],[RewardPoints],[BeginPersonCount],[EventFee],[IsSignUpList],[EventID])");
+            strSql.Append("[Title],[EventLevel],[ParentEventID],[BeginTime],[EndTime],[WeiXinID],[Address],[CityID],[Description],[ImageURL],[URL],[Content],[PhoneNumber],[Email],[ApplyQuesID],[PollQuesID],[IsSubEvent],[Longitude],[Latitude],[EventStatus],[DisplayIndex],[PersonCount],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[ModelId],[EventManagerUserId],[IsDefault],[IsTop],[Organizer],[EventFlag],[EventTypeID],[Intro],[EventGenreId],[CanSignUpCount],[IsTicketRequired],[ReplyType],[Text],[Distance],[IsShare],[ShareRemark],[PosterImageUrl],[OverRemark],[BootURL],[MailSendInterval],[ShareLogoUrl],[IsPointsLottery],[PointsLottery],[RewardPoints],[BeginPersonCount],[EventFee],[IsSignUpList],[EventID],[DrawMethodId],[VipCardType],[VipCardGrade])");
             strSql.Append(" values (");
-            strSql.Append("@Title,@EventLevel,@ParentEventID,@BeginTime,@EndTime,@WeiXinID,@Address,@CityID,@Description,@ImageURL,@URL,@Content,@PhoneNumber,@Email,@ApplyQuesID,@PollQuesID,@IsSubEvent,@Longitude,@Latitude,@EventStatus,@DisplayIndex,@PersonCount,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@ModelId,@EventManagerUserId,@IsDefault,@IsTop,@Organizer,@EventFlag,@EventTypeID,@Intro,@EventGenreId,@CanSignUpCount,@IsTicketRequired,@ReplyType,@Text,@Distance,@IsShare,@ShareRemark,@PosterImageUrl,@OverRemark,@BootURL,@MailSendInterval,@ShareLogoUrl,@IsPointsLottery,@PointsLottery,@RewardPoints,@BeginPersonCount,@EventFee,@IsSignUpList,@EventID)");            
+            strSql.Append("@Title,@EventLevel,@ParentEventID,@BeginTime,@EndTime,@WeiXinID,@Address,@CityID,@Description,@ImageURL,@URL,@Content,@PhoneNumber,@Email,@ApplyQuesID,@PollQuesID,@IsSubEvent,@Longitude,@Latitude,@EventStatus,@DisplayIndex,@PersonCount,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@ModelId,@EventManagerUserId,@IsDefault,@IsTop,@Organizer,@EventFlag,@EventTypeID,@Intro,@EventGenreId,@CanSignUpCount,@IsTicketRequired,@ReplyType,@Text,@Distance,@IsShare,@ShareRemark,@PosterImageUrl,@OverRemark,@BootURL,@MailSendInterval,@ShareLogoUrl,@IsPointsLottery,@PointsLottery,@RewardPoints,@BeginPersonCount,@EventFee,@IsSignUpList,@EventID,@DrawMethodId,@VipCardType,@VipCardGrade)");            
 
 			string pkString = pEntity.EventID;
 
@@ -143,7 +143,11 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@BeginPersonCount",SqlDbType.Int),
 					new SqlParameter("@EventFee",SqlDbType.Int),
 					new SqlParameter("@IsSignUpList",SqlDbType.Int),
-					new SqlParameter("@EventID",SqlDbType.NVarChar)
+					new SqlParameter("@EventID",SqlDbType.NVarChar),
+					new SqlParameter("@DrawMethodId",SqlDbType.Int),
+					new SqlParameter("@VipCardType",SqlDbType.NVarChar),
+					new SqlParameter("@VipCardGrade",SqlDbType.NVarChar)
+
             };
 			parameters[0].Value = pEntity.Title;
 			parameters[1].Value = pEntity.EventLevel;
@@ -200,7 +204,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[52].Value = pEntity.BeginPersonCount;
 			parameters[53].Value = pEntity.EventFee;
 			parameters[54].Value = pEntity.IsSignUpList;
-			parameters[55].Value = pkString;
+            parameters[55].Value = pkString;
+            parameters[56].Value = pEntity.DrawMethodId;
+            parameters[57].Value = pEntity.VipCardType;
+            parameters[58].Value = pEntity.VipCardGrade; 
 
             //执行并将结果回写
             int result;
@@ -261,6 +268,7 @@ namespace JIT.CPOS.BS.DataAccess
             //返回
             return list.ToArray();
         }
+   
 
         /// <summary>
         /// 更新
@@ -390,7 +398,17 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.EventFee!=null)
                 strSql.Append( "[EventFee]=@EventFee,");
             if (pIsUpdateNullField || pEntity.IsSignUpList!=null)
-                strSql.Append( "[IsSignUpList]=@IsSignUpList");
+                strSql.Append( "[IsSignUpList]=@IsSignUpList,");
+
+            if (pIsUpdateNullField || pEntity.DrawMethodId != null)
+                strSql.Append("[DrawMethodId]=@DrawMethodId,");
+
+            if (pIsUpdateNullField || pEntity.VipCardType != null)
+                strSql.Append("[VipCardType]=@VipCardType,");
+
+            if (pIsUpdateNullField || pEntity.VipCardGrade != null)
+                strSql.Append("[VipCardGrade]=@VipCardGrade");
+
             if (strSql.ToString().EndsWith(","))
                 strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where EventID=@EventID ");
@@ -448,6 +466,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@BeginPersonCount",SqlDbType.Int),
 					new SqlParameter("@EventFee",SqlDbType.Int),
 					new SqlParameter("@IsSignUpList",SqlDbType.Int),
+					new SqlParameter("@DrawMethodId",SqlDbType.Int),
+					new SqlParameter("@VipCardType",SqlDbType.Int),
+					new SqlParameter("@VipCardGrade",SqlDbType.Int),
 					new SqlParameter("@EventID",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.Title;
@@ -501,8 +522,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[48].Value = pEntity.RewardPoints;
 			parameters[49].Value = pEntity.BeginPersonCount;
 			parameters[50].Value = pEntity.EventFee;
-			parameters[51].Value = pEntity.IsSignUpList;
-			parameters[52].Value = pEntity.EventID;
+            parameters[51].Value = pEntity.IsSignUpList;
+            parameters[52].Value = pEntity.DrawMethodId;
+            parameters[53].Value = pEntity.VipCardType;
+            parameters[54].Value = pEntity.VipCardGrade;
+			parameters[55].Value = pEntity.EventID;
 
             //执行语句
             int result = 0;
@@ -1145,6 +1169,18 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.IsSignUpList =   Convert.ToInt32(pReader["IsSignUpList"]);
 			}
+            if (pReader["DrawMethodId"] != DBNull.Value)
+            {
+                pInstance.DrawMethodId = Convert.ToInt32(pReader["DrawMethodId"]);
+            }
+            if (pReader["VipCardType"] != DBNull.Value)
+            {
+                pInstance.VipCardType = Convert.ToInt32(pReader["VipCardType"]);
+            }
+            if (pReader["VipCardGrade"] != DBNull.Value)
+            {
+                pInstance.VipCardGrade = Convert.ToInt32(pReader["VipCardGrade"]);
+            }
 
         }
         #endregion

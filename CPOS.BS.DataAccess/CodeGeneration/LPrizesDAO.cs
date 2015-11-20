@@ -715,7 +715,7 @@ namespace JIT.CPOS.BS.DataAccess
 			}
 			if (pReader["PrizeTypeId"] != DBNull.Value)
 			{
-				pInstance.PrizeTypeId =   Convert.ToInt32(pReader["PrizeTypeId"]);
+                pInstance.PrizeTypeId = Convert.ToString(pReader["PrizeTypeId"]);
 			}
 			if (pReader["Point"] != DBNull.Value)
 			{

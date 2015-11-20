@@ -81,6 +81,5 @@ namespace JIT.CPOS.BS.DataAccess
             return sql;
         }
         #endregion
-        
     }
 }

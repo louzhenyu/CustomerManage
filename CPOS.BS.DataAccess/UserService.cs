@@ -963,5 +963,34 @@ where a.customer_id=@CustomerId    {4} ";
             return ds;
         }
 
+        #region 导入用户信息
+
+        /// 导入用户临时表
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <param name="column_count"></param>
+        /// <param name="conn"></param>
+        public void insertToSql(DataRow dr, int column_count, SqlConnection conn, string strCustomerId, string strCreateUserId)
+        {
+
+            string sql = "insert into [ImportUserTemp] values";
+            sql += "('" + dr[0].ToString() + "','" + dr[1].ToString() + "','" + dr[2].ToString() + "','" + dr[3].ToString() + "','" + dr[4].ToString() + "',";
+            sql += "'" + dr[5].ToString() + "','" + dr[6].ToString() + "',";
+            sql += "'" + strCustomerId + "','" + strCreateUserId + "')";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+        }
+        /// <summary>
+        /// 调用sp将临时表中的用户信息导入正式表T_User,并返回未导入的信息
+        /// </summary>
+        /// <returns></returns>
+        public DataSet ExcelImportToDB()
+        {
+            string sql = "Proc_ExcelImportToUser";
+            var ds = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, sql);
+            return ds;
+        }
+        #endregion
+
     }
 }

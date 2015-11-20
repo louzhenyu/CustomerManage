@@ -205,5 +205,77 @@ namespace JIT.CPOS.BS.DataAccess
             return sql;
         }
         #endregion
+
+        #region 保存奖品
+        public int SavePrize(LPrizesEntity entity)
+        {
+            
+             SqlParameter[] parameters = new SqlParameter[9] 
+            { 
+                new SqlParameter{ParameterName="@EventId",SqlDbType=SqlDbType.NVarChar,Value=entity.EventId},
+                new SqlParameter{ParameterName="@PrizesID",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizesID},
+                new SqlParameter{ParameterName="@PrizeLevel",SqlDbType=SqlDbType.Int,Value=entity.PrizeLevel},
+                new SqlParameter{ParameterName="@PrizeTypeId",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizeTypeId},
+                new SqlParameter{ParameterName="@Point",SqlDbType=SqlDbType.Int,Value=entity.Point},
+                new SqlParameter{ParameterName="@CouponTypeID",SqlDbType=SqlDbType.NVarChar,Value=entity.CouponTypeID},
+                new SqlParameter{ParameterName="@PrizeName",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizeName},
+                new SqlParameter{ParameterName="@CountTotal",SqlDbType=SqlDbType.Int,Value=entity.CountTotal},
+                //new SqlParameter{ParameterName="@Probability",SqlDbType=SqlDbType.Decimal,Value=entity.Probability},
+                new SqlParameter{ParameterName="@Creator",SqlDbType=SqlDbType.NVarChar,Value=entity.CreateBy}
+            };
+             return this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "Proc_AddPrizes", parameters);
+        }
+        #endregion
+        #region 追加奖品
+        public int AppendPrize(LPrizesEntity entity)
+        {
+            
+             SqlParameter[] parameters = new SqlParameter[5] 
+            { 
+                new SqlParameter{ParameterName="@EventId",SqlDbType=SqlDbType.NVarChar,Value=entity.EventId},
+                new SqlParameter{ParameterName="@PrizeId",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizesID},
+                new SqlParameter{ParameterName="@PrizeType",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizeTypeId},
+                new SqlParameter{ParameterName="@Qty",SqlDbType=SqlDbType.Int,Value=entity.CountTotal},      
+                new SqlParameter{ParameterName="@UpdateBy",SqlDbType=SqlDbType.NVarChar,Value=entity.LastUpdateBy}
+            };
+             return this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "Proc_AppendPrizes", parameters);
+        }
+        #endregion
+        #region 删除奖品
+        public int DeletePrize(LPrizesEntity entity)
+        {
+
+            SqlParameter[] parameters = new SqlParameter[3] 
+            { 
+                new SqlParameter{ParameterName="@EventId",SqlDbType=SqlDbType.NVarChar,Value=entity.EventId},
+                new SqlParameter{ParameterName="@PrizesID",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizesID},
+                new SqlParameter{ParameterName="@UpdateBy",SqlDbType=SqlDbType.NVarChar,Value=entity.LastUpdateBy}
+            };
+            return this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "Proc_DeletePrizes", parameters);
+        }
+        #endregion
+        #region 奖品列表
+
+        public DataSet GetPirzeList(string strEventId)
+        {
+            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel ,l.CountTotal ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty "
+                        +"From dbo.LPrizes l "
+                        +"LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
+                        +"LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "
+                        + " where l.IsDelete = '0'"
+                        + " and l.EventId = '" + strEventId + "' "
+                        + " order by l.CreateTime asc ";
+            DataSet ds = new DataSet();
+            return this.SQLHelper.ExecuteDataset(sql);
+        }
+
+        #endregion
+
+        public DataSet GetCouponTypeIDByPrizeId(string strPrizesID)
+        {
+            string strSql = string.Format("SELECT CouponTypeID FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID where l.PrizesID='{0}'", strPrizesID);
+            return this.SQLHelper.ExecuteDataset(strSql);
+
+        }
     }
 }

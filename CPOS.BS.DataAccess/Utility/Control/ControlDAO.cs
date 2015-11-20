@@ -95,6 +95,14 @@ select @cnt=count(*)
                             and IsDelete=0 order by CreateTime ", CurrentUserInfo.ClientID);
             return GetAll(pSql);
         }
+
+        public DataSet GetLEventsType2()
+        {
+            //为什么取Lower的
+            string pSql = string.Format(@"select * from LEventsType where ClientID='{0}'
+                            and IsDelete=0 order by CreateTime ", CurrentUserInfo.ClientID);
+            return GetAll(pSql);
+        }
         #endregion
 
         #region GetMobileModule

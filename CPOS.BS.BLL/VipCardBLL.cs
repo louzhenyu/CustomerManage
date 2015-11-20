@@ -259,6 +259,11 @@ namespace JIT.CPOS.BS.BLL
         #endregion
 
 
+        public DataSet GetVipCardTypeList(string customerId)
+        {
+            return this._currentDAO.GetVipCardTypeList(customerId);
+        }
+
         /// <summary>
         /// µ¼³ö¿¨ºÅ
         /// </summary>

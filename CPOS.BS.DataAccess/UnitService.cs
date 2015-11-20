@@ -1115,5 +1115,30 @@ where b.IsDelete = '0' and customer_id='{0}'", pCustomerID);
             return ds;
         }
         #endregion
+        /// 导入门店临时表
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <param name="column_count"></param>
+        /// <param name="conn"></param>
+        public void insertToSql(DataRow dr, int column_count, SqlConnection conn, string strCustomerId, string strCreateUserId)
+        {
+
+            string sql = "insert into [ImportUnitTemp] values";
+            sql += "('" + dr[0].ToString() + "','" + dr[1].ToString() + "','" + dr[2].ToString() + "','" + dr[3].ToString() + "','" + dr[4].ToString() + "',";
+            sql += "'" + dr[5].ToString() + "','" + dr[6].ToString() + "','" + dr[7].ToString() + "','" + dr[8].ToString() + "','" + dr[9].ToString() + "',";
+            sql += "'" + dr[10].ToString() + "','" + dr[11].ToString() + "','" + dr[12].ToString() + "','" + strCustomerId + "','" + strCreateUserId + "')";
+            SqlCommand cmd = new SqlCommand(sql, conn);
+            cmd.ExecuteNonQuery();
+        }
+        /// <summary>
+        /// 调用sp将临时表中的门店信息导入正式表T_Unit,并返回未导入的信息
+        /// </summary>
+        /// <returns></returns>
+        public DataSet ExcelImportToDB()
+        {
+            string sql = "Proc_ExcelImportToUnit";
+            var ds = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, sql);
+            return ds;
+        }
     }
 }

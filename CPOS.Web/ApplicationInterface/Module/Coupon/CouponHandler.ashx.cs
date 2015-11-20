@@ -64,7 +64,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 var reqObj = reqContent.DeserializeJSONTo<reqConunbondata>();
                 var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, "1");
                 CouponTypeBLL bll = new CouponTypeBLL(loggingSessionInfo);
-                DataSet ds = bll.GetCouponType();
+                DataSet ds = bll.GetCouponTypeList();
                 if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {
                     respData.couponTypeList = DataTableToObject.ConvertToList<CouponTypeEntity>(ds.Tables[0]);

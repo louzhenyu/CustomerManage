@@ -6305,9 +6305,19 @@
     <Compile Include="ApplicationInterface\Module\VIP\VipIntegral\SetVipIntegralAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\UpdateVipAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\ContactEvent\GetContactEventListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\EventShareHandler.ashx.cs">
+      <DependentUpon>EventShareHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx.cs">
+      <DependentUpon>EventsListHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardBalanceChangeListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx.cs">
+      <DependentUpon>EventsSaveHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Module\WX\Customer\GetDisplaynoneAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\KeyWord\DeleteKeyWordAH.cs" />
     <Content Include="ApplicationInterface\Vip\VipGateway.ashx" />
@@ -6340,6 +6350,9 @@
     <Content Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeGateway.ashx" />
     <Content Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeTreeHandler.ashx" />
     <Content Include="ApplicationInterface\Module\Basic\UnitAndType\TypeTreeHandler.ashx" />
+    <Content Include="ApplicationInterface\Module\WEvents\EventShareHandler.ashx" />
+    <Content Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx" />
+    <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -8337,7 +8350,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ApplicationInterface\Module\VIP\VipGe\" />
-    <Folder Include="ApplicationInterface\Module\WEvents\" />
     <Folder Include="File\Delivery\" />
     <Folder Include="File\hs\images\" />
     <Folder Include="File\VipCard\" />

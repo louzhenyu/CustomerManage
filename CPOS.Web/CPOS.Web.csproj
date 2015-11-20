@@ -1112,7 +1112,6 @@
     <Content Include="ApplicationInterface\AllWin\RetailTrader.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewApp.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewWXGateway.ashx" />
-  
     <None Include="HtmlApp\Demo\images\Thumbs.db" />
     <None Include="HtmlApp\LJ\images\Thumbs.db" />
     <Content Include="log4net.config">
@@ -2192,6 +2191,10 @@
       <DependentUpon>CouponHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Event\Lottery\ContactPrizeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Event\Lottery\GetImageAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Event\Lottery\RedPacketAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Event\Lottery\ShareAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\GetActivityApplyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\SetActivityApplyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\LuckDraw\ExchangeCouponAH.cs" />
@@ -2469,7 +2472,6 @@
     <Compile Include="ApplicationInterface\Vip\VipGateway.ashx.cs">
       <DependentUpon>VipGateway.ashx</DependentUpon>
     </Compile>
-   
     <Compile Include="ApplicationInterface\Washing\OrderGateway.ashx.cs">
       <DependentUpon>OrderGateway.ashx</DependentUpon>
     </Compile>

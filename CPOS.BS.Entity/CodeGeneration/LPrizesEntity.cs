@@ -130,7 +130,7 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? PrizeTypeId { get; set; }
+		public string   PrizeTypeId { get; set; }
 
 		/// <summary>
 		/// 
@@ -141,7 +141,12 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsAutoPrizes { get; set; }
+        /// <summary>
+        /// ½±Æ·µÈ¼¶
+        /// </summary>
+        public int PrizeLevel { get; set; }
 
+        public decimal Probability { get; set; }
 
         #endregion
 

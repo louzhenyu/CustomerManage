@@ -13,14 +13,20 @@ using JIT.Utility.Reflection;
 using JIT.Utility.Web;
 using JIT.CPOS.BS.Entity.User;
 using System.IO;
+using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
 using System.Net;
 using System.Net.Security;
 using System.Globalization;
+using System.Data.OleDb;
 using System.Configuration;
 using JIT.CPOS.DTO.Base;
 using JIT.Utility.DataAccess.Query;
 using JIT.Utility.Log;
-
+using CPOS.Common;
+using JIT.CPOS.BS.Web.Base.Excel;
+using Aspose.Cells;
 namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 {
     /// <summary>
@@ -941,50 +947,97 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
         #region 导入门店
         public string ImportUnit()
         {
-            try
+            var responseData = new ResponseData();
+            var unitService = new UnitService(CurrentUserInfo);
+            ExcelHelper excelHelper = new ExcelHelper();
+            //if (Request("filePath")!=null && Request("filePath").ToString()!="")
+            //{
+            //    DataTable dt = new DataTable();
+            //    //dt = excelHelper.OpenCSV(Request("filePath").ToString());
+            //    dt = excelHelper.OpenCSV("d:\\B4EE87CCD42A4A66A9F6453280F6BC97.csv");
+            //    DataSet ds = unitService.DataTableToDb(dt, CurrentUserInfo);
+            //    if (ds != null && ds.Tables[0].Rows.Count > 0)
+            //    {
+
+            //        //数据获取
+            //        Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(dt, 0);
+            //        string savePath = HttpContext.Current.Server.MapPath(@"~/File/Unit");
+            //        if (!System.IO.Directory.Exists(savePath))
+            //        {
+            //            System.IO.Directory.CreateDirectory(savePath);
+            //        }
+            //        savePath = savePath + "\\门店错误信息导出" + DateTime.Now.ToFileTime() + ".xls";
+            //        wb.Save(savePath);//保存Excel文件
+            //        new ExcelCommon().OutPutExcel(HttpContext.Current, savePath);
+            //        HttpContext.Current.Response.End();
+            //    }
+            //    else
+            //    {
+            //        responseData.success = true;
+            //        responseData.msg = "操作成功";
+            //    }
+            //}
+            //else
+            //{
+            //    responseData.success = false;
+            //    responseData.msg ="文件路径不对";
+            //}
+            if (Request("filePath") != null && Request("filePath").ToString() != "")
             {
-
-
-                System.Web.HttpFileCollection files = System.Web.HttpContext.Current.Request.Files;
-                for (int fileCount = 0; fileCount < files.Count; fileCount++)
+                try
                 {
-                    System.Web.HttpPostedFile postedfile = files[fileCount];
-
-                    string fileName = System.IO.Path.GetFileName(postedfile.FileName);
-                    if (!String.IsNullOrEmpty(fileName))
+                    var rp = new ImportRP();
+                    string strPath = Request("filePath").ToString();
+                    string strFileName = string.Empty;
+                    DataSet ds = unitService.ExcelToDb(HttpContext.Current.Server.MapPath(strPath), CurrentUserInfo);
+                    if (ds != null && ds.Tables.Count > 1 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                     {
 
-                        string fileExtension = System.IO.Path.GetExtension(fileName);    //获取文件类型  
-
-                        //上传目录  
-                        string directory = System.Web.HttpContext.Current.Server.MapPath("/UpLoadFiles/");
-                        //文件全路径  
-                        string path = directory + fileName;
-
-                        //判断目录是否存在  
-                        if (!Directory.Exists(directory))
+                        Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(ds.Tables[0], 0);
+                        string savePath = HttpContext.Current.Server.MapPath(@"~/File/ErrFile/Unit");
+                        if (!System.IO.Directory.Exists(savePath))
                         {
-                            Directory.CreateDirectory(directory);
+                            System.IO.Directory.CreateDirectory(savePath);
                         }
-                        //文件存在就删除文件  
-                        if (File.Exists(path))
+                        strFileName = "\\门店错误信息导出" + DateTime.Now.ToFileTime() + ".xls";
+                        savePath = savePath + strFileName;
+                        wb.Save(savePath);//保存Excel文件
+
+                        //new ExcelCommon().OutPutExcel(HttpContext.Current, savePath);
+                        //HttpContext.Current.ApplicationInstance.CompleteRequest();
+                        //HttpContext.Current.Response.End();
+
+                        rp = new ImportRP()
                         {
-                            File.Delete(path);
-                        }
-                        //上传到服务器的路径  
-                        postedfile.SaveAs(path);
+                            Url = "/File/ErrFile/Unit" + strFileName,
+                            TotalCount = Convert.ToInt32(ds.Tables[1].Rows[0]["TotalCount"].ToString()),
+                            ErrCount = Convert.ToInt32(ds.Tables[1].Rows[0]["ErrCount"].ToString())
+                        };
                     }
+                    else
+                    {
+                        rp = new ImportRP()
+                        {
+                            Url = "",
+                            TotalCount = Convert.ToInt32(ds.Tables[1].Rows[0]["TotalCount"].ToString()),
+                            ErrCount = Convert.ToInt32(ds.Tables[1].Rows[0]["ErrCount"].ToString())
+                        };
+
+                        responseData.success = true;
+                    }
+                    responseData.success = true;
+                    responseData.data = rp;
+                }
+                catch (Exception err)
+                {
+                    responseData.success = false;
+                    responseData.msg = err.Message.ToString();
                 }
             }
-            catch (Exception)
-            {
+            return responseData.ToJSON();
 
-                throw;
-            }
-            return "";
 
         }
-
         #endregion
 
 
@@ -1011,5 +1064,11 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 
         public int MaxWQRCod { set; get; }
 
+    }
+    public class ImportRP
+    {
+        public string Url { get; set; }
+        public int TotalCount { get; set; }
+        public int ErrCount { get; set; }
     }
 }

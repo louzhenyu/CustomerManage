@@ -26,6 +26,8 @@ using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
+using System.Data.SqlClient;
+
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -34,6 +36,15 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class LLotteryLogBLL
     {
+        /// <summary>
+        /// 事务
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
+        }
+
         #region 活动抽奖日志列表
         /// <summary>
         /// 活动抽奖日志列表
@@ -93,5 +104,7 @@ namespace JIT.CPOS.BS.BLL
             }
         }
         #endregion
+
+ 
     }
 }

@@ -276,7 +276,7 @@ namespace JIT.CPOS.BS.DataAccess
         }
         public void Update(LPrizePoolsEntity pEntity ,bool pIsUpdateNullField )
         {
-            this.Update(pEntity, pIsUpdateNullField, null);
+            this.Update(pEntity, pIsUpdateNullField,null);
         }
 
         /// <summary>
