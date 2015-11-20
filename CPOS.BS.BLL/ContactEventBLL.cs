@@ -32,6 +32,25 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理：  
     /// </summary>
     public partial class ContactEventBLL
-    {  
+    {
+        public DataSet GetContactEventList(int pPageSize, int pCurrentPageIndex)
+        {
+            return this._currentDAO.GetContactEventList(pPageSize, pCurrentPageIndex);
+        }
+        public void AddContactEventPrize(LPrizesEntity pEntity)
+        {
+            this._currentDAO.AddContactEventPrize(pEntity);
+        }
+
+        /// <summary>
+        ///  触点是否已存在
+        /// </summary>
+        /// <param name="strContactType"></param>
+        /// <param name="strShareEventId"></param>
+        /// <returns></returns>
+        public int ExistsContact(ContactEventEntity entityContact)
+        {
+            return this._currentDAO.ExistsContact(entityContact);
+        }
     }
 }
