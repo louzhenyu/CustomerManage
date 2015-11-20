@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/10/26 20:41:45
+ * Create On	:2015/11/11 17:58:00
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -63,9 +63,14 @@ namespace JIT.CPOS.BS.Entity
 		public DateTime? EndDate { get; set; }
 
 		/// <summary>
-		/// 1：积分，2：优惠券，3：参加活动次数
+		/// Point，Coupon，Chance
 		/// </summary>
-		public Int32? RewardType { get; set; }
+		public String PrizeType { get; set; }
+
+		/// <summary>
+		/// 奖品数量
+		/// </summary>
+		public Int32? PrizeCount { get; set; }
 
 		/// <summary>
 		/// 
@@ -89,6 +94,16 @@ namespace JIT.CPOS.BS.Entity
 
 		/// <summary>
 		/// 
+		/// </summary>
+		public String ShareEventId { get; set; }
+
+		/// <summary>
+		/// 奖励次数 OnlyOne,Once a day，unlimited
+		/// </summary>
+		public String RewardNumber { get; set; }
+
+		/// <summary>
+		/// 1-未开始2-进行中3-暂停4-结束
 		/// </summary>
 		public Int32? Status { get; set; }
 
