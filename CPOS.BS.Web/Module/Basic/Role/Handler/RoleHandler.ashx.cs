@@ -288,6 +288,21 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
                 responseData.msg = "角色名称不能为空";
                 return responseData.ToJSON();
             }
+
+            //根据role_id 获取角色信息,系统保留角色的编码不允许修改，主要是admin、administrator等默认角色
+            RoleModel roleOld = new AppSysService(CurrentUserInfo).GetRoleById(CurrentUserInfo, role_id);            
+            if (roleOld != null && roleOld.Is_Sys == 1)
+            {
+                //throw (new System.Exception("不能删除系统保留的角色"));
+                obj.Role_Code = roleOld.Role_Code;//还用原来的，不用role_name
+                obj.Is_Sys = 1;
+            }
+            //if (obj.Is_Sys == null)
+            //{
+            //    responseData.success = false;
+            //    responseData.msg = "是否系统保留不能为空";
+            //    return responseData.ToJSON();
+            //}
             if (obj.Role_Code == null || obj.Role_Code.Trim().Length == 0)
             {
                 //responseData.success = false;
@@ -295,13 +310,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
                 //return responseData.ToJSON();
                 obj.Role_Code = obj.Role_Name;
             }
-
-            //if (obj.Is_Sys == null)
-            //{
-            //    responseData.success = false;
-            //    responseData.msg = "是否系统保留不能为空";
-            //    return responseData.ToJSON();
-            //}
+          
 
             if (obj.RoleMenuInfoList != null)
             {
