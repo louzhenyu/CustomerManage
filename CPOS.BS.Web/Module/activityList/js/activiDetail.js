@@ -314,7 +314,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 		//初始化基本信息数据
 		getFirstStep:function(){
 			var that = this;
-			that.activityWay('84F3E197-5474-4364-906E-5357C64098E1');//081AEC92-CC16-4041-9496-B4F6BC3B11FC 
+			that.activityWay('84F3E197-5474-4364-906E-5357C64098E1'); //081AEC92-CC16-4041-9496-B4F6BC3B11FC 
 			$.util.ajax({
 				url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
 				data: {
