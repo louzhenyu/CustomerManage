@@ -405,7 +405,7 @@
             }
         },
         saveEvent: function () {
-            //debugger;
+            debugger;
             var list = [];
             var flag = true;
             self.ele.editLayer.find(".jsTab").each(function (i, e) {

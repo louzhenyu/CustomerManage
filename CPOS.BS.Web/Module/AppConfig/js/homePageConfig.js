@@ -837,7 +837,7 @@
                 model.id = self.currentEditData.modelTypeId;
                 model.name = self.currentEditData.modelTypeName;
             } else {
-                var modelId = self.ele.editLayer.find(".jsSectionCTabContainer .on").data("model");
+                var modelId =3;
                 if (!modelId) {
                     alert("获取不到模板信息");
                     return;
@@ -968,10 +968,10 @@
                 model.name = self.currentEditData.modelTypeName;
 
             } else {
-                model.id = 8;
+                model.id = 1;
                 model.name = "C区模板8";
             }
-            model.styleType= self.ele.editLayer.find('input[name="entranceStyle"]:checked').val();
+            model.showCount= self.ele.editLayer.find('input[name="entranceStyle"]:checked').val();
             var addTitle=self.ele.editLayer.find("#addTitle").text()=="添加标题"?false:true;
             if(addTitle){
                 model.titleName=self.ele.editLayer.find(".titleText").val();

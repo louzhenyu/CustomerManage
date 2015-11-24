@@ -13,9 +13,9 @@ require.config({
             deps: ['jquery'],
             exports: 'touchslider'
         },
-        'pagination': {
-            deps: ['jquery'],
-            exports: 'pagination'
+        'easyui':{
+            deps: ['jqueryui','jquery'],
+            exports: 'touchslider'
         },
         'tools': {
             deps: ['jquery'],
@@ -25,16 +25,16 @@ require.config({
     paths: {
         //page
         homePageTemp: 'js/tempModel',
-
+        kkpager: '/Module/static/js/plugin/kkpager',
         // lib
         jquery: '/Module/static/js/lib/jquery-1.8.3.min',
         jqueryui: '/Module/static/js/lib/jquery-ui.min',
+        easyui: '/Module/static/js/lib/jquery.easyui.min',
         tools: '/Module/static/js/lib/tools-lib',
         // plugin
         touchslider: '/Module/static/js/plugin/touchslider',
         template: '/Module/static/js/plugin/template',
         kindeditor: '/Module/static/js/plugin/kindeditor',
-        pagination: '/Module/static/js/plugin/jquery.jqpagination'
     }
 });
 

@@ -280,6 +280,22 @@
                     },
 
                     {field : 'data_from_name',title : '订单渠道',width:100,align:'left',resizable:false},
+                    {field : 'Field1',title : '付款状态',width:100,align:'left',resizable:false,
+                        styler: function(index,row){
+                            /* status: "700"
+                             status_desc: "已完成"*/
+                            return 'color: #fc7a52;';    //rowStyle是一个已经定义了的ClassName(类名)
+
+                        },
+                        formatter:function(value,row,index){
+                            var str="";
+                            switch(value){
+                                case "0": str="未付款";  break;
+                                case "1": str="已付款";  break;
+                            }
+                            return str;
+                        }
+                    },
 
                     {field : 'status_desc',title : '订单状态',width:70,align:'center',resizable:false,
                         styler: function(index,row){
@@ -425,6 +441,7 @@
                     data: data
 
                 });
+                $(".tooltip ").hide();
                 /*  })*/
             });
         },

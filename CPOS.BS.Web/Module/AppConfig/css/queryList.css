@@ -1,0 +1,32 @@
+@charset "utf-8";
+.opt{ color: #00cccc}
+.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
+.commonSelectWrap .selectBox{ border: 1px solid transparent;}
+.optionBtn{height:65px; padding-top: 20px; background: #f4f8fa; border: solid  1px #eee; border-bottom:none;}
+.optionBtn .commonBtn{ width:72px; background: #00cccc;line-height: 32px; height:32px; float: left; margin-left: 20px;}
+.optionBtn .sales{ width: 132px;}
+.optionBtn .sales img{margin-top: -3px; margin-right: 6px;}
+.moreQueryWrap{ float: left;margin-top: 12px;}
+.noOpt{color: #ccc;}
+.imgList{ width:688px;margin:0 auto; padding-top:30px; }
+
+.center{margin: 0 60px;}
+.radioPanel{ width:140px; margin: 0 auto; padding-top:15px; margin-left: 35px; display:block;}
+.radioPanel .radio{ width:96%;}
+.radioPanel .radio span{  padding-right: 15px;}
+.imgPanel  img{cursor: pointer;}
+
+.imgPanel{ float: left; width: 180px; position: relative;}
+.imgPanel .bg{ width: 180px; height: 369px; position: absolute; top:0; left: 0; background:#707070; opacity:0.7; border-radius: 35px;}
+.imgPanel .imgT{position:absolute; left:22%;top:30%; }
+.imgBody { width: 640px; margin: 0 auto; text-align: center;}
+.imgOpt{ padding-left:6px;  width: 120px;height: 32px; background: #e6e6e6; color: #5e5e5e; margin:0 auto;margin-bottom: 10px;}
+.imgOpt div{float: left;margin-right: 6px; width: 26px; height: 26px; margin-top: 3px; background-position: center center; background-repeat: no-repeat;}
+.imgOpt span{float: left;font-size: 15px;font-weight:bold; border-bottom: 2px solid #5e5e5e; height: 25px; line-height: 32px; }
+.imgOpt div.on{ background-color: #00cccc;}
+.imgOpt .magnify { background-image: url("../images/magnifyB.png")}
+.imgOpt .shrink { background-image: url("../images/shrinkB.png")}
+.imgOpt .on.magnify { background-image: url("../images/magnifyW.png")}
+.imgOpt .on.shrink { background-image: url("../images/shrinkW.png")}
+
+

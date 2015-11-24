@@ -313,6 +313,7 @@
 							<td><%=idata.categoryName %></td>\
 						</tr>\
 					<%} %>',
+
 		// 弹层：商品
 		product: '<%for(var i=0;i<itemList.length;i++){var idata=itemList[i]; %>\
 				<tr class="productItem" data-id="<%=idata.itemId%>" data-name="<%=idata.itemName%>">\

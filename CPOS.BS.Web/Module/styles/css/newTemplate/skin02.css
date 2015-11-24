@@ -281,8 +281,9 @@
 .datagrid-header .datagrid-cell span{ font:14px/1.5em "黑体","Microsoft YaHei"; text-align: center; color: #4d4d4d;font-weight: 600; }
 .datagrid-header{border-color:#00cccc;}
 .datagrid{ border:1px solid #eee;}
-.datagrid-row-alt{ background-color: #f2fcfc;}/*奇偶不同*/
-.datagrid-row-over{background-color: #b2f0f0;} /*鼠标停靠*/
+.datagrid-row{ background-color:#f2fcfc;}
+.datagrid-row-alt{ background-color:#fff;}/*奇偶不同*/
+.datagrid-row-over{background-color:#b2f0f0;} /*鼠标停靠*/
 .datagrid-row-selected{background-color: #b2f0f0;}
 .imgTable .datagrid-row-checked {background:none;}
 .imgTable .datagrid-header-row{ height: 50px;line-height: 50px;}
@@ -384,10 +385,10 @@
 .datagrid-header-row td:first-of-type div.datagrid-header-check{  padding-left: 0;}
 /*列表操作图标*/
 .noDelete{background-image:url(../../images/newTemplate/nodel.png); width: 16px; height: 16px; margin: 0 auto;}
-.delete{background-image:url(../../images/newTemplate/del.png); width: 16px; height: 16px; margin: 0 auto;}
-.down{background-image:url(../../images/newTemplate/down.png); width: 18px; height: 17px; margin: 0 auto;}
-.exit{background-image:url(../../images/newTemplate/exit.png); width: 16px; height: 16px; margin: 0 auto;}
-.btnAdd    {background:url(../../images/newTemplate/addstr.png) center center  no-repeat; width: 18px; height: 18px; margin: 0 auto;}
+.delete{background-image:url(../../images/newTemplate/del.png); width: 16px; height: 16px; margin: 0 auto; cursor: pointer}
+.down{background-image:url(../../images/newTemplate/down.png); width: 18px; height: 17px; margin: 0 auto;cursor: pointer}
+.exit{background-image:url(../../images/newTemplate/exit.png); width: 16px; height: 16px; margin: 0 auto;cursor: pointer}
+.btnAdd    {background:url(../../images/newTemplate/addstr.png) center center  no-repeat; width: 18px; height: 18px; margin: 0 auto; cursor: pointer}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 .datebox .combo-arrow{padding-right:26px;}
 .gridLoading{display: block} /*所有需要loading的dataGrid*/
@@ -395,8 +396,9 @@
 .datagrid-body{position: relative;z-index: 8}
 .datagrid-body .loading{ z-index:8;}
 
-.datagrid-row-over, .datagrid-header td.datagrid-header-over{ background:transparent;}
+.datagrid-header td.datagrid-header-over{ background:transparent;}
 
 .datagrid-header td, .datagrid-footer td{cursor: default;}
 .cursorDef  .datagrid-body td{ cursor: default}
 .datagrid-view{ height: 200px;}
+
