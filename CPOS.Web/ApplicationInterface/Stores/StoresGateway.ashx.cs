@@ -148,7 +148,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         //如果名称不为空，就把图片放在一定的背景下面
                         if (!string.IsNullOrEmpty(RP.Parameters.RetailTraderName))
                         {
-                            imageUrl = CombinImage(@"http://api.dev.51xiyike.com/HeadImage/qrcodeBack.jpg", imageUrl, RP.Parameters.RetailTraderName + "合作二维码");
+                            string apiDomain = ConfigurationManager.AppSettings["website_url"];
+                            
+                            imageUrl = CombinImage(apiDomain+@"/HeadImage/qrcodeBack.jpg", imageUrl, RP.Parameters.RetailTraderName + "合作二维码");
                         }
 
 

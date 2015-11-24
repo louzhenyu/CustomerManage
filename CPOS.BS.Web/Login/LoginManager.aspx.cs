@@ -48,6 +48,8 @@ namespace JIT.CPOS.BS.Web.Login
             var AuthWebService = new JIT.CPOS.BS.WebServices.AuthManagerWebServices.AuthServiceSoapClient();
             AuthWebService.Endpoint.Address = new System.ServiceModel.EndpointAddress(
                 ConfigurationManager.AppSettings["sso_url"].ToString() + "/AuthService.asmx");
+         //   AuthWebService.Endpoint.Address = new System.ServiceModel.EndpointAddress("http://localhost:42305/AuthService.asmx");
+
             string str = AuthWebService.GetLoginUserInfo(token);
 
             var myLoggingManager = (JIT.CPOS.BS.Entity.LoggingManager)cXMLService.Deserialize(
