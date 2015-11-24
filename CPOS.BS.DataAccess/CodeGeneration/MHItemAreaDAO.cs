@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/3/31 15:58:37
+ * Create On	:2015/11/24 13:51:07
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -38,7 +38,7 @@ namespace JIT.CPOS.BS.DataAccess
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class MHItemAreaDAO : BaseCPOSDAO, ICRUDable<MHItemAreaEntity>, IQueryable<MHItemAreaEntity>
+    public partial class MHItemAreaDAO : Base.BaseCPOSDAO, ICRUDable<MHItemAreaEntity>, IQueryable<MHItemAreaEntity>
     {
         #region 构造函数
         /// <summary>
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [MHItemArea](");
-            strSql.Append("[HomeId],[IsUrl],[EventId],[ItemId],[DisplayIndex],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[areaFlag],[ItemAreaId])");
+            strSql.Append("[HomeId],[IsUrl],[EventId],[ItemId],[ItemImageUrl],[DisplayIndex],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[areaFlag],[ShowStyle],[GroupId],[ItemAreaId])");
             strSql.Append(" values (");
-            strSql.Append("@HomeId,@IsUrl,@EventId,@ItemId,@DisplayIndex,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@areaFlag,@ItemAreaId)");            
+            strSql.Append("@HomeId,@IsUrl,@EventId,@ItemId,@ItemImageUrl,@DisplayIndex,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@areaFlag,@ShowStyle,@GroupId,@ItemAreaId)");            
 
 			Guid? pkGuid;
 			if (pEntity.ItemAreaId == null)
@@ -97,6 +97,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsUrl",SqlDbType.Int),
 					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@ItemId",SqlDbType.NVarChar),
+					new SqlParameter("@ItemImageUrl",SqlDbType.NVarChar),
 					new SqlParameter("@DisplayIndex",SqlDbType.Int),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
@@ -104,20 +105,25 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@areaFlag",SqlDbType.VarChar),
+					new SqlParameter("@ShowStyle",SqlDbType.Int),
+					new SqlParameter("@GroupId",SqlDbType.Int),
 					new SqlParameter("@ItemAreaId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.HomeId;
 			parameters[1].Value = pEntity.IsUrl;
 			parameters[2].Value = pEntity.EventId;
 			parameters[3].Value = pEntity.ItemId;
-			parameters[4].Value = pEntity.DisplayIndex;
-			parameters[5].Value = pEntity.CreateTime;
-			parameters[6].Value = pEntity.CreateBy;
-			parameters[7].Value = pEntity.LastUpdateBy;
-			parameters[8].Value = pEntity.LastUpdateTime;
-			parameters[9].Value = pEntity.IsDelete;
-			parameters[10].Value = pEntity.areaFlag;
-			parameters[11].Value = pkGuid;
+            parameters[4].Value = pEntity.ItemImageUrl;
+			parameters[5].Value = pEntity.DisplayIndex;
+			parameters[6].Value = pEntity.CreateTime;
+			parameters[7].Value = pEntity.CreateBy;
+			parameters[8].Value = pEntity.LastUpdateBy;
+			parameters[9].Value = pEntity.LastUpdateTime;
+			parameters[10].Value = pEntity.IsDelete;
+			parameters[11].Value = pEntity.areaFlag;
+			parameters[12].Value = pEntity.ShowStyle;
+			parameters[13].Value = pEntity.GroupId;
+			parameters[14].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -186,7 +192,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(MHItemAreaEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity , pTran,true);
+            Update(pEntity , pTran,false);
         }
 
         /// <summary>
@@ -219,6 +225,8 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[EventId]=@EventId,");
             if (pIsUpdateNullField || pEntity.ItemId!=null)
                 strSql.Append( "[ItemId]=@ItemId,");
+            if (pIsUpdateNullField || pEntity.ItemImageUrl != null)
+                strSql.Append("[ItemImageUrl]=@ItemImageUrl,");
             if (pIsUpdateNullField || pEntity.DisplayIndex!=null)
                 strSql.Append( "[DisplayIndex]=@DisplayIndex,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
@@ -226,7 +234,11 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.areaFlag!=null)
-                strSql.Append( "[areaFlag]=@areaFlag");
+                strSql.Append( "[areaFlag]=@areaFlag,");
+            if (pIsUpdateNullField || pEntity.ShowStyle!=null)
+                strSql.Append( "[ShowStyle]=@ShowStyle,");
+            if (pIsUpdateNullField || pEntity.GroupId!=null)
+                strSql.Append( "[GroupId]=@GroupId");
             strSql.Append(" where ItemAreaId=@ItemAreaId ");
             SqlParameter[] parameters = 
             {
@@ -234,21 +246,27 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsUrl",SqlDbType.Int),
 					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@ItemId",SqlDbType.NVarChar),
+					new SqlParameter("@ItemImageUrl",SqlDbType.NVarChar),
 					new SqlParameter("@DisplayIndex",SqlDbType.Int),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@areaFlag",SqlDbType.VarChar),
+					new SqlParameter("@ShowStyle",SqlDbType.Int),
+					new SqlParameter("@GroupId",SqlDbType.Int),
 					new SqlParameter("@ItemAreaId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.HomeId;
 			parameters[1].Value = pEntity.IsUrl;
 			parameters[2].Value = pEntity.EventId;
 			parameters[3].Value = pEntity.ItemId;
-			parameters[4].Value = pEntity.DisplayIndex;
-			parameters[5].Value = pEntity.LastUpdateBy;
-			parameters[6].Value = pEntity.LastUpdateTime;
-			parameters[7].Value = pEntity.areaFlag;
-			parameters[8].Value = pEntity.ItemAreaId;
+            parameters[4].Value = pEntity.ItemImageUrl;
+			parameters[5].Value = pEntity.DisplayIndex;
+			parameters[6].Value = pEntity.LastUpdateBy;
+			parameters[7].Value = pEntity.LastUpdateTime;
+			parameters[8].Value = pEntity.areaFlag;
+			parameters[9].Value = pEntity.ShowStyle;
+			parameters[10].Value = pEntity.GroupId;
+			parameters[11].Value = pEntity.ItemAreaId;
 
             //执行语句
             int result = 0;
@@ -544,6 +562,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventId", Value = pQueryEntity.EventId });
             if (pQueryEntity.ItemId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemId", Value = pQueryEntity.ItemId });
+            if (pQueryEntity.ItemImageUrl != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemImageUrl", Value = pQueryEntity.ItemImageUrl });
             if (pQueryEntity.DisplayIndex!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "DisplayIndex", Value = pQueryEntity.DisplayIndex });
             if (pQueryEntity.CreateTime!=null)
@@ -558,6 +578,10 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
             if (pQueryEntity.areaFlag!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "areaFlag", Value = pQueryEntity.areaFlag });
+            if (pQueryEntity.ShowStyle!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ShowStyle", Value = pQueryEntity.ShowStyle });
+            if (pQueryEntity.GroupId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "GroupId", Value = pQueryEntity.GroupId });
 
             return lstWhereCondition.ToArray();
         }
@@ -593,6 +617,10 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.ItemId =  Convert.ToString(pReader["ItemId"]);
 			}
+            if (pReader["ItemImageUrl"] != DBNull.Value)
+			{
+                pInstance.ItemImageUrl = Convert.ToString(pReader["ItemImageUrl"]);
+			}
 			if (pReader["DisplayIndex"] != DBNull.Value)
 			{
 				pInstance.DisplayIndex =   Convert.ToInt32(pReader["DisplayIndex"]);
@@ -620,6 +648,14 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["areaFlag"] != DBNull.Value)
 			{
 				pInstance.areaFlag =  Convert.ToString(pReader["areaFlag"]);
+			}
+			if (pReader["ShowStyle"] != DBNull.Value)
+			{
+				pInstance.ShowStyle =   Convert.ToInt32(pReader["ShowStyle"]);
+			}
+			if (pReader["GroupId"] != DBNull.Value)
+			{
+				pInstance.GroupId =   Convert.ToInt32(pReader["GroupId"]);
 			}
 
         }

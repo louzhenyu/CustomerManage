@@ -37,5 +37,9 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetItemDetails();
         }
+        public DataSet GetItemDetails(string strHomeId, string strGroupId)
+        {
+            return this._currentDAO.GetItemDetails(strHomeId, strGroupId);
+        }
     }
 }

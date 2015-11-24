@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/3/31 15:58:37
+ * Create On	:2015/11/4 14:35:51
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -31,23 +31,11 @@ namespace JIT.CPOS.BS.BLL
     /// <summary>
     /// 业务处理：  
     /// </summary>
-    public partial class MHCategoryAreaBLL
-    {
-        public int GetMaxGroupId()
+    public partial class MHFollowBLL
+    {  
+        public DataSet GetFollowInfo(string strHomeId)
         {
-            return this._currentDAO.GetMaxGroupId();
-        }
-        public int GetMaxGroupId(string strHomeId)
-        {
-            return this._currentDAO.GetMaxGroupId(strHomeId);
-        }
-        /// <summary>
-        /// 获取客户下的所有数据
-        /// </summary>
-        /// <returns></returns>
-        public MHCategoryAreaEntity[] GetByCustomerID()
-        {
-            return this._currentDAO.GetByCustomerID();
+            return this._currentDAO.GetFollowInfo(strHomeId);
         }
     }
 }

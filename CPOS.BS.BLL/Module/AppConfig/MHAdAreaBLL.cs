@@ -62,6 +62,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetByCustomerID();
         }
+        public MHAdAreaEntity[] GetAdByHomeId(string strHomeId)
+        {
+            return this._currentDAO.GetAdByHomeId(strHomeId);
+        }
         #endregion
 
         #region 获取活动区域数据
@@ -75,7 +79,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetEventInfo(homeId);
         }
-
+        public DataSet GetEventInfoByGroupId(string homeId, string strGroupId)
+        {
+            return this._currentDAO.GetEventInfoByGroupId(homeId, strGroupId);
+        }
         #endregion
 
         #region 获取分类分组ID
@@ -103,12 +110,23 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetItemList(groupId,homeId);
         }
-
+        public DataSet GetCategoryProductList(string groupId, string homeId, int intShowCount)
+        {
+            return this._currentDAO.GetCategoryProductList(groupId, homeId, intShowCount);
+        }
+        public DataSet GetGroupProductList(string groupId, string homeId, int intShowCount)
+        {
+            return this._currentDAO.GetGroupProductList(groupId, homeId, intShowCount);
+        }
+        
+        public DataSet GetModelTypeIdByGroupId(string groupId,string strHomeId)
+        {
+            return this._currentDAO.GetModelTypeIdByGroupId(groupId, strHomeId);
+        }
         public DataSet GetModelTypeIdByGroupId(string groupId)
         {
             return this._currentDAO.GetModelTypeIdByGroupId(groupId);
         }
-
         #endregion
 
         #region 更新商品分类区域表
@@ -127,9 +145,9 @@ namespace JIT.CPOS.BS.BLL
         {
             this._currentDAO.DeleteItemCategoryByGroupIdandHomeID(GroupID, HomeId);
         }
-        public void DeleteCategoryGroupByGroupIdandCustomerId(int GroupID, string customerId)
+        public void DeleteCategoryGroupByGroupIdandCustomerId(int GroupID, string customerId,string strHomeId)
         {
-            this._currentDAO.DeleteCategoryGroupByGroupIdandCustomerId(GroupID, customerId);
+            this._currentDAO.DeleteCategoryGroupByGroupIdandCustomerId(GroupID, customerId, strHomeId);
         }
         #endregion
     }

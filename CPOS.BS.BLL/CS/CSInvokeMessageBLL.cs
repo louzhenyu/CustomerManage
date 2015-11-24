@@ -718,6 +718,11 @@ namespace JIT.CPOS.BS.BLL
             return conversationEntities;
         }
 
+
+        public IList<CSConversationEntity> ReceiveMessageNew(string p1, int p2, string p3, int? nullable1, int? nullable2, string p4, int p5, DateTime? nullable3, DateTime? nullable4, out int recordCount)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

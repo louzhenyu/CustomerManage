@@ -45,7 +45,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 unitInfo = DataTableToObject.ConvertToObject<UnitInfo>(ds.Tables[0].Rows[0]);
             }
-            //  unitInfo.PropertyList = new PropertyUnitService(this.loggingSessionInfo).GetUnitPropertyListByUnit(unitId);
+          //  unitInfo.PropertyList = new PropertyUnitService(this.loggingSessionInfo).GetUnitPropertyListByUnit(unitId);
             return unitInfo;
         }
 
@@ -453,7 +453,7 @@ namespace JIT.CPOS.BS.BLL
             _ht.Add("unit_city_id", unit_city_id);
             _ht.Add("unit_status", unit_status);
             _ht.Add("StartRow", startRowIndex);
-            _ht.Add("EndRow", startRowIndex + maxRowCount - 1);//还需要再减去1
+            _ht.Add("EndRow", startRowIndex + maxRowCount-1);//还需要再减去1
             _ht.Add("Parent_Unit_ID", Parent_Unit_ID);
             _ht.Add("StoreType", StoreType);
             _ht.Add("OnlyShop", OnlyShop);
@@ -474,8 +474,8 @@ namespace JIT.CPOS.BS.BLL
             unitInfo.ICount = iCount;
             unitInfo.UnitInfoList = unitInfoList;
             //取模
-            int mo = iCount % maxRowCount;
-            unitInfo.TotalPage = iCount / maxRowCount + (mo == 0 ? 0 : 1);
+            int mo=iCount%maxRowCount;
+            unitInfo.TotalPage = iCount/maxRowCount+(mo==0?0:1);
             return unitInfo;
         }
         #endregion
@@ -993,7 +993,7 @@ namespace JIT.CPOS.BS.BLL
             DataSet dsResult = null; //要插入的数据  
             try
             {
-                string connString = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Conn_alading"].ToString();
+                string connString=System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Conn_alading"].ToString();
                 //string connString = @"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
                 SqlConnection connSql = new SqlConnection(connString);
                 connSql.Open();

@@ -1081,7 +1081,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " , displayIndex = ROW_NUMBER() OVER(ORDER BY a.item_name) ";
             sql += " INTO #tmp ";
             sql += " FROM dbo.T_Item a ";
-            sql += " INNER JOIN dbo.T_Item_Category b ON a.item_category_id = b.item_category_id ";            
+            sql += " INNER JOIN dbo.T_Item_Category b ON a.item_category_id = b.item_category_id and b.status='1'";            
             sql += " WHERE a.CustomerId = '" + customerId + "' ";
             sql += " AND a.status = '1' ";
 
@@ -1153,6 +1153,36 @@ namespace JIT.CPOS.BS.DataAccess
 
             sql.AppendFormat("select * from #tmp a where 1 = 1 and a.displayindex between {0} and {1} order by a.displayindex", beginSize, endSize);
 
+            var ds = this.SQLHelper.ExecuteDataset(sql.ToString());
+            return ds;
+        }
+        /// <summary>
+        /// 根据活动id EventId获取参加活动的商品
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="eventId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public DataSet GetItemListByEventId(string customerId, string eventId, int pageIndex, int pageSize)
+        {
+            int beginSize = pageIndex * pageSize + 1;
+            int endSize = pageIndex * pageSize + pageSize;
+
+
+            var sql = new StringBuilder(500);
+            sql.Append(" SELECT  L.EventId,L.ItemID,L.ItemName,L.ImageUrl,L.SalesPrice,L.Price,displayindex =ROW_NUMBER()  OVER(ORDER BY ItemName) ");
+            sql.Append(" INTO #tmp ");
+            sql.Append(" FROM ( SELECT  a.ItemId,a.EventId,");
+            sql.Append(" b.item_name ItemName , ");
+            sql.Append(" CASE WHEN b.imageUrl IS NULL OR b.imageUrl = '' THEN ( SELECT TOP 1 ImageURL	FROM    ObjectImages x WHERE   x.ObjectId = a.ItemId AND x.IsDelete = '0'ORDER BY DisplayIndex)   ELSE b.imageUrl END ImageUrl,");
+            sql.Append(" a.SalesPrice,a.Price");
+            sql.Append(" FROM    PanicbuyingEventItemMapping a ");
+            sql.Append(" INNER JOIN T_Item b ON a.ItemId = b.item_id and b.status=1 AND a.IsDelete=0 ");
+            sql.Append(" where a.EventId='" + eventId + "'  ");
+            sql.Append(") L ");
+            sql.AppendFormat("select * from #tmp a where 1 = 1 and a.displayindex between {0} and {1} order by a.displayindex", beginSize, endSize);
+            sql.Append(" select count(1) TotalCount from #tmp ");
             var ds = this.SQLHelper.ExecuteDataset(sql.ToString());
             return ds;
         }
@@ -1288,6 +1318,14 @@ namespace JIT.CPOS.BS.DataAccess
             sql.AppendFormat("and a.customerid = '{0}' and a.eventTypeId = {1} and a.title like '%{2}%' ", customerId, eventTypeId, title);
             sql.AppendFormat("and (a.beginTime >= '{0}' or a.endTime <='{1}') order by a.displayIndex", eventBeginTime, eventEndTime);
 
+            return this.SQLHelper.ExecuteDataset(sql.ToString());
+        }
+        public DataSet GetLEventsList(string customerId, string eventTypeId)
+        {
+            StringBuilder sql = new StringBuilder(500);
+
+            sql.Append("select a.eventId,a.title,a.EventTypeId,a.BeginTime,a.EndTime,a.CityID,cityName = b.city1_name + '-' + b.city2_name + '-' + b.city3_name ,a.displayIndex from LEvents a ,t_city b where a.cityId = b.city_id and  isdelete =0 ");
+            sql.AppendFormat("and a.customerid = '{0}' and a.eventTypeId = {1} ", customerId, eventTypeId);
             return this.SQLHelper.ExecuteDataset(sql.ToString());
         }
         #endregion

@@ -628,10 +628,41 @@ namespace JIT.CPOS.BS.DataAccess
 		     AND c.isdelete=0",couponTypeID);
             return this.SQLHelper.ExecuteScalar(sql.ToString()).ToString();
         }
+        /// <summary>
+        /// 优惠券核销列表
+        /// Create By: Sun Xu
+        /// Create Date:2015-11-02
+        /// </summary>
+        /// <param name="mobile"></param>
+        /// <param name="couponCode"></param>
+        /// <param name="status"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        public DataSet WriteOffCouponList(string mobile, string couponCode, string status, int pageSize, int pageIndex)
+        {
+            DataSet dataSet = new DataSet();
+
+            string sql = "sp_WriteOffCouponList";
+
+            List<SqlParameter> sqlParameter = new List<SqlParameter>();
+
+            sqlParameter.Add(new SqlParameter("@Mobile", mobile));
+            sqlParameter.Add(new SqlParameter("@CouponCode", couponCode));
+            sqlParameter.Add(new SqlParameter("@Status", status));
+            sqlParameter.Add(new SqlParameter("@PageIndex", pageIndex));
+            sqlParameter.Add(new SqlParameter("@PageSize", pageSize));
+            sqlParameter.Add(new SqlParameter("@CustomerId", CurrentUserInfo.ClientID));
+
+            dataSet = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, sql, sqlParameter.ToArray());
+
+            return dataSet;
+        }
         public DataSet GetCouponIdByCouponTypeID(string strCouponTypeId)
         {
             string strSql = string.Format("select top 1 a. * from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
             return this.SQLHelper.ExecuteDataset(strSql);
         }
+
     }
 }

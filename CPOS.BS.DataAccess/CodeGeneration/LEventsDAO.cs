@@ -961,14 +961,14 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.ParentEventID =  Convert.ToString(pReader["ParentEventID"]);
 			}
-			if (pReader["BeginTime"] != DBNull.Value)
-			{
-				pInstance.BeginTime =  Convert.ToString(pReader["BeginTime"]);
-			}
-			if (pReader["EndTime"] != DBNull.Value)
-			{
-				pInstance.EndTime =  Convert.ToString(pReader["EndTime"]);
-			}
+            if (pReader["BeginTime"] != DBNull.Value)
+            {
+                pInstance.BeginTime = Convert.ToDateTime(pReader["BeginTime"]).ToString("yyyy-MM-dd");
+            }
+            if (pReader["EndTime"] != DBNull.Value)
+            {
+                pInstance.EndTime = Convert.ToDateTime(pReader["EndTime"]).ToString("yyyy-MM-dd");
+            }
 			if (pReader["WeiXinID"] != DBNull.Value)
 			{
 				pInstance.WeiXinID =  Convert.ToString(pReader["WeiXinID"]);

@@ -10,7 +10,10 @@ using System.Data.SqlClient;
 using JIT.Utility.DataAccess;
 using System.Collections;
 using System.Configuration;
-
+using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.OleDb;
 namespace JIT.CPOS.BS.DataAccess
 {
     /// <summary>

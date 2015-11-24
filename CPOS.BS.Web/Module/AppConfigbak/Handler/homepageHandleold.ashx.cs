@@ -621,7 +621,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfigbak.Handler
                 var categoryAreaGroup = mHCategoryAreaGroup.QueryByEntity(new MHCategoryAreaGroupEntity()   //QueryByEntity取出来的是一个集合
                 {
                     GroupValue = groupId,//这里对应的是categoryAreaGroup表里的GroupValue，而不是groupId
-                    CustomerId = this.CurrentUserInfo.ClientID
+                    CustomerID = this.CurrentUserInfo.ClientID
                 }, null);//根据GroupValue取值，查找出相关信息
 
                 var categoryAreaGroupEntity = new MHCategoryAreaGroupEntity()  //这里直接用传request穿过来的参数了
@@ -629,10 +629,10 @@ namespace JIT.CPOS.BS.Web.Module.AppConfigbak.Handler
                     ModelTypeId = modelTypeId,
                     ModelName = modelTypeName,
                     GroupValue = groupId,
-                    CustomerId = this.CurrentUserInfo.ClientID,
-                    titleName = _titleName,
-                    titleStyle = _titleStyle,
-                    styleType = _styleType
+                    CustomerID = this.CurrentUserInfo.ClientID,
+                    TitleName = _titleName,
+                    TitleStyle = _titleStyle,
+                    StyleType = _styleType
 
                 };
                 if (categoryAreaGroup == null || !categoryAreaGroup.Any())
@@ -693,7 +693,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfigbak.Handler
 
                 DeleteItemCategoryByGroupIdandHomeID(groupId, (Guid)homeId);//删除小块的内容
                 //删除大块的内容
-                DeleteCategoryGroupByGroupIdandCustomerId(groupId, this.CurrentUserInfo.ClientID);//删除大块的内容,,CustomerId = this.CurrentUserInfo.ClientID
+                DeleteCategoryGroupByGroupIdandCustomerId(groupId, this.CurrentUserInfo.ClientID,homeId.ToString());//删除大块的内容,,CustomerId = this.CurrentUserInfo.ClientID
 
                 // responseData.success = false;
                 responseData.success = true;
@@ -768,10 +768,10 @@ namespace JIT.CPOS.BS.Web.Module.AppConfigbak.Handler
             adAreaBll.DeleteItemCategoryByGroupIdandHomeID(GroupID, HomeId); ;
 
         }
-        public void DeleteCategoryGroupByGroupIdandCustomerId(int GroupID, string customerId)
+        public void DeleteCategoryGroupByGroupIdandCustomerId(int GroupID, string customerId,string strHomeId)
         {
             var adAreaBll = new MHAdAreaBLL(this.CurrentUserInfo);
-            adAreaBll.DeleteCategoryGroupByGroupIdandCustomerId(GroupID, customerId); //删除大块
+            adAreaBll.DeleteCategoryGroupByGroupIdandCustomerId(GroupID, customerId, strHomeId); //删除大块
         }
 
         public class SaveItemCategoryReqContentData

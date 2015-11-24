@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/12/23 14:13:25
+ * Create On	:2015/11/6 8:56:56
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,13 +25,13 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class MHSeachAreaEntity : BaseEntity 
+    public partial class MHFollowEntity : BaseEntity 
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public MHSeachAreaEntity()
+        public MHFollowEntity()
         {
         }
         #endregion     
@@ -40,32 +40,27 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Guid? MHSearchAreaID { get; set; }
+		public Guid? FollowId { get; set; }
+
+		/// <summary>
+		/// 3:链接,35图文
+		/// </summary>
+		public Int32? TypeId { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Guid? HomeId { get; set; }
+		public String Title { get; set; }
+
+		/// <summary>
+		/// 对应的图文信息的TextId
+		/// </summary>
+		public String TextId { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String ImageUrl { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String ObjectId { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? ObjectTypeId { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Int32? DisplayIndex { get; set; }
+		public String TextTitle { get; set; }
 
 		/// <summary>
 		/// 
@@ -75,17 +70,22 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? Status { get; set; }
+		public String HomeId { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public DateTime? CreateTime { get; set; }
+		public String CustomerID { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public String CreateBy { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public DateTime? CreateTime { get; set; }
 
 		/// <summary>
 		/// 
@@ -102,26 +102,6 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? IsDelete { get; set; }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public String titleName { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String titleStyle { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String styleType { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String show { get; set; }
- 
 
         #endregion
 

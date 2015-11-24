@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/12/22 17:22:45
+ * Create On	:2015/11/2 21:32:01
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,11 +81,11 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [MHCategoryAreaGroup](");
-            strSql.Append("[ModelName],[ModelDesc],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[ModelTypeId],[CustomerID],[GroupValue],[styleType],[titleName],[titleStyle],[GroupId])");
+            strSql.Append("[ModelName],[ModelDesc],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[ModelTypeId],[CustomerID],[GroupValue],[StyleType],[TitleName],[TitleStyle],[ShowCount],[ShowName],[ShowPrice],[ShowSalesPrice],[ShowDiscount],[ShowSalesQty],[DisplayIndex],[HomeId])");
             strSql.Append(" values (");
-            strSql.Append("@ModelName,@ModelDesc,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@ModelTypeId,@CustomerID,@GroupValue,@styleType,@titleName,@titleStyle,@GroupId)");
+            strSql.Append("@ModelName,@ModelDesc,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@ModelTypeId,@CustomerID,@GroupValue,@StyleType,@TitleName,@TitleStyle,@ShowCount,@ShowName,@ShowPrice,@ShowSalesPrice,@ShowDiscount,@ShowSalesQty,@DisplayIndex,@HomeId)");
+            strSql.AppendFormat("{0}select SCOPE_IDENTITY();", Environment.NewLine);
 
-            int? pkInt = pEntity.GroupId;
 
             SqlParameter[] parameters = 
             {
@@ -99,10 +99,17 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@ModelTypeId",SqlDbType.Int),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@GroupValue",SqlDbType.Int),
-					new SqlParameter("@styleType",SqlDbType.VarChar),
-					new SqlParameter("@titleName",SqlDbType.VarChar),
-					new SqlParameter("@titleStyle",SqlDbType.VarChar),
-					new SqlParameter("@GroupId",SqlDbType.Int)
+					new SqlParameter("@StyleType",SqlDbType.VarChar),
+					new SqlParameter("@TitleName",SqlDbType.VarChar),
+					new SqlParameter("@TitleStyle",SqlDbType.VarChar),
+					new SqlParameter("@ShowCount",SqlDbType.Int),
+					new SqlParameter("@ShowName",SqlDbType.Int),
+					new SqlParameter("@ShowPrice",SqlDbType.Int),
+					new SqlParameter("@ShowSalesPrice",SqlDbType.Int),
+					new SqlParameter("@ShowDiscount",SqlDbType.Int),
+					new SqlParameter("@ShowSalesQty",SqlDbType.Int),
+					new SqlParameter("@DisplayIndex",SqlDbType.Int),
+					new SqlParameter("@HomeId",SqlDbType.NVarChar)
             };
             parameters[0].Value = pEntity.ModelName;
             parameters[1].Value = pEntity.ModelDesc;
@@ -112,20 +119,27 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[5].Value = pEntity.LastUpdateTime;
             parameters[6].Value = pEntity.IsDelete;
             parameters[7].Value = pEntity.ModelTypeId;
-            parameters[8].Value = pEntity.CustomerId;
+            parameters[8].Value = pEntity.CustomerID;
             parameters[9].Value = pEntity.GroupValue;
-            parameters[10].Value = pEntity.styleType;
-            parameters[11].Value = pEntity.titleName;
-            parameters[12].Value = pEntity.titleStyle;
-            parameters[13].Value = pkInt;
+            parameters[10].Value = pEntity.StyleType;
+            parameters[11].Value = pEntity.TitleName;
+            parameters[12].Value = pEntity.TitleStyle;
+            parameters[13].Value = pEntity.ShowCount;
+            parameters[14].Value = pEntity.ShowName;
+            parameters[15].Value = pEntity.ShowPrice;
+            parameters[16].Value = pEntity.ShowSalesPrice;
+            parameters[17].Value = pEntity.ShowDiscount;
+            parameters[18].Value = pEntity.ShowSalesQty;
+            parameters[19].Value = pEntity.DisplayIndex;
+            parameters[20].Value = pEntity.HomeId;
 
             //执行并将结果回写
-            int result;
+            object result;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteScalar((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
-            pEntity.GroupId = pkInt;
+                result = this.SQLHelper.ExecuteScalar(CommandType.Text, strSql.ToString(), parameters);
+            pEntity.GroupId = Convert.ToInt32(result);
         }
 
         /// <summary>
@@ -186,7 +200,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(MHCategoryAreaGroupEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity, pTran, true);
+            Update(pEntity, pTran, false);
         }
 
         /// <summary>
@@ -221,16 +235,32 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.ModelTypeId != null)
                 strSql.Append("[ModelTypeId]=@ModelTypeId,");
-            if (pIsUpdateNullField || pEntity.CustomerId != null)
+            if (pIsUpdateNullField || pEntity.CustomerID != null)
                 strSql.Append("[CustomerID]=@CustomerID,");
             if (pIsUpdateNullField || pEntity.GroupValue != null)
                 strSql.Append("[GroupValue]=@GroupValue,");
-            if (pIsUpdateNullField || pEntity.styleType != null)
-                strSql.Append("[styleType]=@styleType,");
-            if (pIsUpdateNullField || pEntity.titleName != null)
-                strSql.Append("[titleName]=@titleName,");
-            if (pIsUpdateNullField || pEntity.titleStyle != null)
-                strSql.Append("[titleStyle]=@titleStyle");
+            if (pIsUpdateNullField || pEntity.StyleType != null)
+                strSql.Append("[StyleType]=@StyleType,");
+            if (pIsUpdateNullField || pEntity.TitleName != null)
+                strSql.Append("[TitleName]=@TitleName,");
+            if (pIsUpdateNullField || pEntity.TitleStyle != null)
+                strSql.Append("[TitleStyle]=@TitleStyle,");
+            if (pIsUpdateNullField || pEntity.ShowCount != null)
+                strSql.Append("[ShowCount]=@ShowCount,");
+            if (pIsUpdateNullField || pEntity.ShowName != null)
+                strSql.Append("[ShowName]=@ShowName,");
+            if (pIsUpdateNullField || pEntity.ShowPrice != null)
+                strSql.Append("[ShowPrice]=@ShowPrice,");
+            if (pIsUpdateNullField || pEntity.ShowSalesPrice != null)
+                strSql.Append("[ShowSalesPrice]=@ShowSalesPrice,");
+            if (pIsUpdateNullField || pEntity.ShowDiscount != null)
+                strSql.Append("[ShowDiscount]=@ShowDiscount,");
+            if (pIsUpdateNullField || pEntity.ShowSalesQty != null)
+                strSql.Append("[ShowSalesQty]=@ShowSalesQty,");
+            if (pIsUpdateNullField || pEntity.DisplayIndex != null)
+                strSql.Append("[DisplayIndex]=@DisplayIndex,");
+            if (pIsUpdateNullField || pEntity.HomeId != null)
+                strSql.Append("[HomeId]=@HomeId");
             strSql.Append(" where GroupId=@GroupId ");
             SqlParameter[] parameters = 
             {
@@ -241,9 +271,17 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@ModelTypeId",SqlDbType.Int),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@GroupValue",SqlDbType.Int),
-					new SqlParameter("@styleType",SqlDbType.VarChar),
-					new SqlParameter("@titleName",SqlDbType.VarChar),
-					new SqlParameter("@titleStyle",SqlDbType.VarChar),
+					new SqlParameter("@StyleType",SqlDbType.VarChar),
+					new SqlParameter("@TitleName",SqlDbType.VarChar),
+					new SqlParameter("@TitleStyle",SqlDbType.VarChar),
+					new SqlParameter("@ShowCount",SqlDbType.Int),
+					new SqlParameter("@ShowName",SqlDbType.Int),
+					new SqlParameter("@ShowPrice",SqlDbType.Int),
+					new SqlParameter("@ShowSalesPrice",SqlDbType.Int),
+					new SqlParameter("@ShowDiscount",SqlDbType.Int),
+					new SqlParameter("@ShowSalesQty",SqlDbType.Int),
+					new SqlParameter("@DisplayIndex",SqlDbType.Int),
+					new SqlParameter("@HomeId",SqlDbType.NVarChar),
 					new SqlParameter("@GroupId",SqlDbType.Int)
             };
             parameters[0].Value = pEntity.ModelName;
@@ -251,12 +289,20 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[2].Value = pEntity.LastUpdateBy;
             parameters[3].Value = pEntity.LastUpdateTime;
             parameters[4].Value = pEntity.ModelTypeId;
-            parameters[5].Value = pEntity.CustomerId;
+            parameters[5].Value = pEntity.CustomerID;
             parameters[6].Value = pEntity.GroupValue;
-            parameters[7].Value = pEntity.styleType;
-            parameters[8].Value = pEntity.titleName;
-            parameters[9].Value = pEntity.titleStyle;
-            parameters[10].Value = pEntity.GroupId;
+            parameters[7].Value = pEntity.StyleType;
+            parameters[8].Value = pEntity.TitleName;
+            parameters[9].Value = pEntity.TitleStyle;
+            parameters[10].Value = pEntity.ShowCount;
+            parameters[11].Value = pEntity.ShowName;
+            parameters[12].Value = pEntity.ShowPrice;
+            parameters[13].Value = pEntity.ShowSalesPrice;
+            parameters[14].Value = pEntity.ShowDiscount;
+            parameters[15].Value = pEntity.ShowSalesQty;
+            parameters[16].Value = pEntity.DisplayIndex;
+            parameters[17].Value = pEntity.HomeId;
+            parameters[18].Value = pEntity.GroupId;
 
             //执行语句
             int result = 0;
@@ -316,7 +362,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql.AppendLine("update [MHCategoryAreaGroup] set  isdelete=1 where GroupId=@GroupId;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@GroupId",SqlDbType=SqlDbType.Int,Value=pID}
+                new SqlParameter{ParameterName="@GroupId",SqlDbType=SqlDbType.VarChar,Value=pID}
             };
             //执行语句
             int result = 0;
@@ -382,7 +428,7 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("'{0}',", item.ToString());
+                primaryKeys.AppendFormat("{0},", item.ToString());
             }
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [MHCategoryAreaGroup] set  isdelete=1 where GroupId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
@@ -560,16 +606,32 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
             if (pQueryEntity.ModelTypeId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ModelTypeId", Value = pQueryEntity.ModelTypeId });
-            if (pQueryEntity.CustomerId != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerId });
+            if (pQueryEntity.CustomerID != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
             if (pQueryEntity.GroupValue != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "GroupValue", Value = pQueryEntity.GroupValue });
-            if (pQueryEntity.styleType != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "styleType", Value = pQueryEntity.styleType });
-            if (pQueryEntity.titleName != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "titleName", Value = pQueryEntity.titleName });
-            if (pQueryEntity.titleStyle != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "titleStyle", Value = pQueryEntity.titleStyle });
+            if (pQueryEntity.StyleType != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "StyleType", Value = pQueryEntity.StyleType });
+            if (pQueryEntity.TitleName != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TitleName", Value = pQueryEntity.TitleName });
+            if (pQueryEntity.TitleStyle != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TitleStyle", Value = pQueryEntity.TitleStyle });
+            if (pQueryEntity.ShowCount != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ShowCount", Value = pQueryEntity.ShowCount });
+            if (pQueryEntity.ShowName != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ShowName", Value = pQueryEntity.ShowName });
+            if (pQueryEntity.ShowPrice != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ShowPrice", Value = pQueryEntity.ShowPrice });
+            if (pQueryEntity.ShowSalesPrice != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ShowSalesPrice", Value = pQueryEntity.ShowSalesPrice });
+            if (pQueryEntity.ShowDiscount != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ShowDiscount", Value = pQueryEntity.ShowDiscount });
+            if (pQueryEntity.ShowSalesQty != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ShowSalesQty", Value = pQueryEntity.ShowSalesQty });
+            if (pQueryEntity.DisplayIndex != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DisplayIndex", Value = pQueryEntity.DisplayIndex });
+            if (pQueryEntity.HomeId != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "HomeId", Value = pQueryEntity.HomeId });
 
             return lstWhereCondition.ToArray();
         }
@@ -623,23 +685,55 @@ namespace JIT.CPOS.BS.DataAccess
             }
             if (pReader["CustomerID"] != DBNull.Value)
             {
-                pInstance.CustomerId = Convert.ToString(pReader["CustomerID"]);
+                pInstance.CustomerID = Convert.ToString(pReader["CustomerID"]);
             }
             if (pReader["GroupValue"] != DBNull.Value)
             {
                 pInstance.GroupValue = Convert.ToInt32(pReader["GroupValue"]);
             }
-            if (pReader["styleType"] != DBNull.Value)
+            if (pReader["StyleType"] != DBNull.Value)
             {
-                pInstance.styleType = Convert.ToString(pReader["styleType"]);
+                pInstance.StyleType = Convert.ToString(pReader["StyleType"]);
             }
-            if (pReader["titleName"] != DBNull.Value)
+            if (pReader["TitleName"] != DBNull.Value)
             {
-                pInstance.titleName = Convert.ToString(pReader["titleName"]);
+                pInstance.TitleName = Convert.ToString(pReader["TitleName"]);
             }
-            if (pReader["titleStyle"] != DBNull.Value)
+            if (pReader["TitleStyle"] != DBNull.Value)
             {
-                pInstance.titleStyle = Convert.ToString(pReader["titleStyle"]);
+                pInstance.TitleStyle = Convert.ToString(pReader["TitleStyle"]);
+            }
+            if (pReader["ShowCount"] != DBNull.Value)
+            {
+                pInstance.ShowCount = Convert.ToInt32(pReader["ShowCount"]);
+            }
+            if (pReader["ShowName"] != DBNull.Value)
+            {
+                pInstance.ShowName = Convert.ToInt32(pReader["ShowName"]);
+            }
+            if (pReader["ShowPrice"] != DBNull.Value)
+            {
+                pInstance.ShowPrice = Convert.ToInt32(pReader["ShowPrice"]);
+            }
+            if (pReader["ShowSalesPrice"] != DBNull.Value)
+            {
+                pInstance.ShowSalesPrice = Convert.ToInt32(pReader["ShowSalesPrice"]);
+            }
+            if (pReader["ShowDiscount"] != DBNull.Value)
+            {
+                pInstance.ShowDiscount = Convert.ToInt32(pReader["ShowDiscount"]);
+            }
+            if (pReader["ShowSalesQty"] != DBNull.Value)
+            {
+                pInstance.ShowSalesQty = Convert.ToInt32(pReader["ShowSalesQty"]);
+            }
+            if (pReader["DisplayIndex"] != DBNull.Value)
+            {
+                pInstance.DisplayIndex = Convert.ToInt32(pReader["DisplayIndex"]);
+            }
+            if (pReader["HomeId"] != DBNull.Value)
+            {
+                pInstance.HomeId = Convert.ToString(pReader["HomeId"]);
             }
 
         }

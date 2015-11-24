@@ -26,7 +26,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                 try
                 {
 
-
                     rd = bllPrize.CheckIsWinnerForShare(pRequest.UserID, para.EventId);
 
                 }

@@ -61,6 +61,8 @@
     <Compile Include="Base\EmptyResponseData.cs" />
     <Compile Include="Base\ErrorResponse.cs" />
     <Compile Include="Base\ERROR_CODES.cs" />
+    <Compile Include="Module\Basic\Holiday\Request\GetHolidayDetailRP.cs" />
+    <Compile Include="Module\Basic\Holiday\Response\GetHolidayDetailRD.cs" />
     <Compile Include="Base\IAPIRequestParameter.cs" />
     <Compile Include="Base\IAPIResponseData.cs" />
     <Compile Include="Base\SuccessResponse.cs" />
@@ -72,12 +74,6 @@
     <Compile Include="Module\AppConfig\HomePageConfig\Response\SetEventItemRD.cs" />
     <Compile Include="Module\Basic\Customer\Request\SetRewardsSettingRP.cs" />
     <Compile Include="Module\Basic\Customer\Request\SetSalesSettingRP.cs" />
-    <Compile Include="Module\Basic\Holiday\Request\DeleteHolidayRP.cs" />
-    <Compile Include="Module\Basic\Holiday\Request\GetHolidayDetailRP.cs" />
-    <Compile Include="Module\Basic\Holiday\Request\GetHolidayListRP.cs" />
-    <Compile Include="Module\Basic\Holiday\Request\SetHolidayRP.cs" />
-    <Compile Include="Module\Basic\Holiday\Response\GetHolidayDetailRD.cs" />
-    <Compile Include="Module\Basic\Holiday\Response\GetHolidayListRD.cs" />
     <Compile Include="Module\Basic\Menu\Request\GetFuntionListRP.cs" />
     <Compile Include="Module\Basic\Menu\Response\GetFuntionListRD.cs" />
     <Compile Include="Module\Basic\MessageTemplate\Request\GetMessageTemplateListRP.cs" />
@@ -92,12 +88,10 @@
     <Compile Include="Module\Event\ContactEvent\Request\ChangeContactEventStatusRP.cs" />
     <Compile Include="Module\Event\ContactEvent\Request\GetContactEventDetailRP.cs" />
     <Compile Include="Module\Event\ContactEvent\Request\GetContactEventListRP.cs" />
-    <Compile Include="Module\Event\ContactEvent\Request\GetContactEventRP.cs" />
     <Compile Include="Module\Event\ContactEvent\Request\SetContactEventRP.cs" />
     <Compile Include="Module\Event\ContactEvent\Response\ChangeContactEventStatusRD.cs" />
     <Compile Include="Module\Event\ContactEvent\Response\GetContactEventDetailRD.cs" />
     <Compile Include="Module\Event\ContactEvent\Response\GetContactEventListRD.cs" />
-    <Compile Include="Module\Event\ContactEvent\Response\GetContactEventRD.cs" />
     <Compile Include="Module\Event\ContactEvent\Response\SetContactEventRD.cs" />
     <Compile Include="Module\Event\Lottery\Request\LotteryRP.cs" />
     <Compile Include="Module\Event\Lottery\Request\GetImageRP.cs" />
@@ -113,23 +107,23 @@
     <Compile Include="Module\Extension\Question\Request\GetQuestionListRP.cs" />
     <Compile Include="Module\Extension\Question\Response\GetQuestionListRD.cs" />
     <Compile Include="Module\Marketing\Activity\Request\DelPrizesDetailRP.cs" />
-    <Compile Include="Module\Marketing\Activity\Request\GetActivityDeatilRP.cs" />
-    <Compile Include="Module\Marketing\Activity\Request\GetActivityListRP.cs" />
-    <Compile Include="Module\Marketing\Activity\Request\GetCardholderCountRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\SetActivityMessageRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\SetActivityRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\SetPrizesRP.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\ActivityMessageInfo.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\GetActivityDeatilRD.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\GetActivityListRD.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\GetCardholderCountRD.cs" />
     <Compile Include="Module\Marketing\Activity\Response\GetMessageTemplateDeatileRD.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\PrizesInfo.cs" />
     <Compile Include="Module\Marketing\Activity\Response\SetActivityRD.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\DelCouponRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\GetCouponTypeListRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\SetCouponRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Response\GetCouponTypeListRD.cs" />
+    <Compile Include="Module\Marketing\Activity\Request\GetActivityDeatilRP.cs" />
+    <Compile Include="Module\Marketing\Activity\Request\GetActivityListRP.cs" />
+    <Compile Include="Module\Marketing\Activity\Request\GetCardholderCountRP.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\ActivityMessageInfo.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\GetActivityDeatilRD.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\GetActivityListRD.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\GetCardholderCountRD.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\PrizesInfo.cs" />
     <Compile Include="Module\Order\Logistics\Request\GetLogisticsCompanyRP.cs" />
     <Compile Include="Module\Order\Logistics\Request\SetLogisticsCompanyRP.cs" />
     <Compile Include="Module\Order\Logistics\Response\GetLogisticsCompanyRD.cs" />
@@ -152,6 +146,10 @@
     <Compile Include="Module\VIP\Attribute\Request\SetAttributeRP.cs" />
     <Compile Include="Module\VIP\Attribute\Response\GetAttributeListRD.cs" />
     <Compile Include="Module\VIP\Attribute\Response\SetAttributeRD.cs" />
+    <Compile Include="Module\Basic\Holiday\Request\DeleteHolidayRP.cs" />
+    <Compile Include="Module\Basic\Holiday\Request\GetHolidayListRP.cs" />
+    <Compile Include="Module\Basic\Holiday\Request\SetHolidayRP.cs" />
+    <Compile Include="Module\Basic\Holiday\Response\GetHolidayListRD.cs" />
     <Compile Include="Module\VIP\Evaluation\Request\SetEvaluationItemRP.cs" />
     <Compile Include="Module\VIP\LoginOut\Request\RemoveAndriodMessageBindRP.cs" />
     <Compile Include="Module\VIP\LoginOut\Request\RemoveIOSMessageBindRP.cs" />
@@ -371,6 +369,10 @@
     <Folder Include="Module\HtmlApp\Config\Request\" />
     <Folder Include="Module\VIP\VipIntegral\Response\" />
     <Folder Include="Product\Eclub\Module\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\CPOS.DTO.dll" />
+    <Content Include="bin\Debug\CPOS.DTO.pdb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7298,6 +7298,7 @@
     <Compile Include="ApplicationInterface\Module\WX\KeyWord\SetKeyWordAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextListNewAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextTypeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\SetMaterialTextAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\Menu\DeleteMenuAH.cs" />

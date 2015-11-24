@@ -266,6 +266,7 @@
     <Compile Include="CodeGeneration\MHAdAreaBLL.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaBLL.cs" />
     <Compile Include="CodeGeneration\MHCategoryAreaGroupBLL.cs" />
+    <Compile Include="CodeGeneration\MHFollowBLL.cs" />
     <Compile Include="CodeGeneration\MHItemAreaBLL.cs" />
     <Compile Include="CodeGeneration\MHSeachAreaBLL.cs" />
     <Compile Include="CodeGeneration\MLAccessControlBLL.cs" />
@@ -734,7 +735,9 @@
     <Compile Include="Marketing\C_TargetGroupBLL.cs" />
     <Compile Include="Menu\T_Menu_FunctionBLL.cs" />
     <Compile Include="Menu\T_Role_Menu_FunctionBLL.cs" />
+    <Compile Include="MHCategoryAreaBLL.cs" />
     <Compile Include="MHCategoryAreaGroupBLL.cs" />
+    <Compile Include="MHFollowBLL.cs" />
     <Compile Include="MHSeachAreaBLL.cs" />
     <Compile Include="MobileBussinessDefinedBLL.cs" />
     <Compile Include="MobileHomeBLL.cs" />

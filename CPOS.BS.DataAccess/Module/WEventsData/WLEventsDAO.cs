@@ -766,11 +766,11 @@ namespace JIT.CPOS.BS.DataAccess
             }
             if (pReader["BeginTime"] != DBNull.Value)
             {
-                pInstance.BeginTime = Convert.ToString(pReader["BeginTime"]);
+                pInstance.BeginTime = Convert.ToDateTime(pReader["BeginTime"]).ToString("yyyy-MM-dd");
             }
             if (pReader["EndTime"] != DBNull.Value)
             {
-                pInstance.EndTime = Convert.ToString(pReader["EndTime"]);
+                pInstance.EndTime = Convert.ToDateTime(pReader["EndTime"]).ToString("yyyy-MM-dd");
             }
             if (pReader["WeiXinID"] != DBNull.Value)
             {

@@ -1361,6 +1361,15 @@ namespace JIT.CPOS.BS.BLL
             this._currentDAO.UpdateEventStatus(strEventId, intEventStatus);
         }
         #endregion
+        /// <summary>
+        /// 更新活动是否分享
+        /// </summary>
+        /// <param name="strEventId"></param>
+        public void UpdateEventIsShare(string strEventId)
+        {
+            this._currentDAO.UpdateEventIsShare(strEventId);
+        }
+
 
         #region 获取运行中的活动
         public DataSet GetWorkingEventList()

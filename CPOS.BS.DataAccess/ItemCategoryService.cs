@@ -421,18 +421,40 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
             return this.SQLHelper.ExecuteDataset(sql);
         }
 
-        #region 获取首页商品分类
+        #region 获取首页商品分类/商品分组
 
+        /// <summary>
+        /// 获取首页商品分组数量
+        /// </summary>
+        public int GetItemGroupCount(string customerId, string categoryName)
+        {
+            string sql = GetItemCategorySql(customerId, categoryName, "2");
+            sql = sql + " select count(*) as icount From #tmp   ; ";
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
+        }
         /// <summary>
         /// 获取首页商品分类数量
         /// </summary>
         public int GetItemCategoryCount(string customerId, string categoryName)
         {
-            string sql = GetItemCategorySql(customerId, categoryName);
-            sql = sql + " select count(*) as icount From #tmp; ";
+            string sql = GetItemCategorySql(customerId, categoryName,"1");
+            sql = sql + " select count(*) as icount From #tmp  ; ";
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
+        /// <summary>
+        /// 获取首页商品分组列表
+        /// </summary>
+        public DataSet GetItemGroupList(string customerId, string categoryName, int pageIndex, int pageSize)
+        {
+            int beginSize = pageIndex * pageSize + 1;
+            int endSize = pageIndex * pageSize + pageSize;
 
+            string sql = GetItemCategorySql(customerId, categoryName, "2");
+            sql += " select * From #tmp a where 1=1 and a.displayindex between '" +
+                beginSize + "' and '" + endSize + "' order by a.displayindex ";
+            var ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
         /// <summary>
         /// 获取首页商品分类列表
         /// </summary>
@@ -441,8 +463,8 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
             int beginSize = pageIndex * pageSize + 1;
             int endSize = pageIndex * pageSize + pageSize;
 
-            string sql = GetItemCategorySql(customerId, categoryName);
-            sql += " select * From #tmp a where 1=1 and a.displayindex between '" +
+            string sql = GetItemCategorySql(customerId, categoryName,"1");
+            sql += " select * From #tmp a where 1=1  and a.displayindex between '" +
                 beginSize + "' and '" + endSize + "' order by a.displayindex ";
             var ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
@@ -452,7 +474,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
         /// 公共查询sql
         /// </summary>
         /// <returns></returns>
-        private string GetItemCategorySql(string customerId, string categoryName)
+        private string GetItemCategorySql(string customerId, string categoryName,string strBatId)
         {
             string sql = string.Empty;
             sql += " SELECT categoryId = item_category_id ";
@@ -461,7 +483,7 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
             sql += " INTO #tmp ";
             sql += " FROM dbo.T_Item_Category ";
             sql += " WHERE CustomerID = '" + customerId + "' ";
-            sql += " AND status = '1' ";
+            sql += " AND status = '1' and bat_id='" + strBatId + "' ";
 
             if (!string.IsNullOrEmpty(categoryName))
             {
@@ -621,6 +643,18 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
                     and a.GroupId={1} and b.customerId = '{2}'", userId, groupId, customerId);
             this.SQLHelper.ExecuteNonQuery(sql);
         }
+        /// <summary>
+        /// 删除模块关联的数据
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <param name="strHomeId"></param>
+        public void DeleteItemCategoryAreaData(string groupId, string strHomeId)
+        {
+            string customerId = this.CurrentUserInfo.ClientID;
+            string userId = this.CurrentUserInfo.UserID;
+            string sql = string.Format(@"DELETE MHCategoryArea  where GroupId={0} and HomeId='{1}'", groupId,strHomeId);
+            this.SQLHelper.ExecuteNonQuery(sql);
+        }
 
         public void DeleteItemCategoryAreaGroupData(string groupId)
         {
@@ -628,6 +662,30 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
             string customerId = this.CurrentUserInfo.ClientID;
             string sql = string.Format("update MHCategoryAreaGroup set isdelete = 1,LastUpdateBy ='{1}' ,LastUpdateTime =getdate() " +
                                        " where groupvalue = {0} and customerId = '{2}'", groupId, userId, customerId);
+            this.SQLHelper.ExecuteNonQuery(sql);
+        }
+        /// <summary>
+        /// 删除模块数据
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <param name="strHomeId"></param>
+        public void DeleteItemCategoryAreaGroupData(string groupId, string strHomeId)
+        {
+            string userId = this.CurrentUserInfo.UserID;
+            string customerId = this.CurrentUserInfo.ClientID;
+            string sql = string.Format("DELETE MHCategoryAreaGroup  where groupId = {0} and HomeId = '{1}'", groupId, strHomeId);
+            this.SQLHelper.ExecuteNonQuery(sql);
+        }
+        /// <summary>
+        /// 删除活动数据
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <param name="strHomeId"></param>
+        public void DeleteItemAreaData(string groupId, string strHomeId)
+        {
+            string userId = this.CurrentUserInfo.UserID;
+            string customerId = this.CurrentUserInfo.ClientID;
+            string sql = string.Format("DELETE MHItemArea  where groupId = {0} ", groupId);
             this.SQLHelper.ExecuteNonQuery(sql);
         }
         #endregion

@@ -54,6 +54,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetPanicbuyingEvent(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
         }
+        public PagedQueryResult<PanicbuyingEventEntity> GetPanicbuyingEventList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        {
+            return this._currentDAO.GetPanicbuyingEventList(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
+        }
         public DataSet GetPanicbuyingEvent(string pEvenid)
         {
             return this._currentDAO.GetPanicbuyingEvent(pEvenid);

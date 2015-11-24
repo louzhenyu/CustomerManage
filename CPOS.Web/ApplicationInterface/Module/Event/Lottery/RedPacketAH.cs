@@ -36,13 +36,27 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             if(eventEntity==null)
             {
                 
-                rd.ResultMsg = "活动不存在或活动已经结束";
+                rd.ResultMsg = "活动已结束";
+                rd.PrizeId = "-1";
+
                 return rd;
             }
             var entityPrize=bllPrize.QueryByEntity(new LPrizesEntity() { EventId = eventEntity.EventID }, null);
             if(entityPrize==null)
             {
-                rd.ResultMsg = "红包活动未设置奖品";
+                rd.ResultMsg = "活动无奖品";
+                rd.PrizeId = "-2";
+                return rd;
+            }
+
+            var vipBLL = new VipBLL(this.CurrentUserInfo);
+            var vipInfo = vipBLL.GetByID(pRequest.UserID);
+
+
+            if(vipInfo.Integration<0 || vipInfo.Integration <eventEntity.PointsLottery)
+            {
+                rd.ResultMsg = "积分不足";
+                rd.PrizeId ="-3";
                 return rd;
             }
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
@@ -169,9 +183,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                 bllAward.Update(awardEntity, false);
                 //扣除参与积分
                 VipIntegralBLL bllVipIntegral = new VipIntegralBLL(this.CurrentUserInfo);
-                var vipBLL = new VipBLL(this.CurrentUserInfo);
-                var vipInfo = vipBLL.GetByID(pRequest.UserID);
-
                 VipIntegralDetailEntity IntegralDetail = new VipIntegralDetailEntity()
                 {
                     Integral = -eventEntity.PointsLottery,

@@ -60,5 +60,17 @@ namespace JIT.CPOS.BS.DataAccess
             sbSQL.Append("select distinct a.GroupValue,a.ModelName,b.Height,b.TopDistance,b.ModelType,b.DisplayIndex from dbo.MHCategoryAreaGroup a inner join ObjectCSSDefine b on b.ObjectId=a.ModelName inner join MHCategoryArea c on c.GroupId=a.GroupValue where a.IsDelete=0 and b.IsDelete=0 and c.IsDelete=0  and a.CustomerID='" + pCustomerId + "' and c.HomeId =(select top 1 HomeId from MobileHome where CustomerID='" + pCustomerId + "') order by DisplayIndex ");
             return this.SQLHelper.ExecuteDataset(CommandType.Text,sbSQL.ToString());
         }
+
+        /// <summary>
+        /// ¸üÐÂÅÅÐò
+        /// </summary>
+        /// <param name="strIndex"></param>
+        /// <param name="strGroupId"></param>
+        /// <returns></returns>
+        public int UpdateCategoryAreaGroupDisplayIndex(int strIndex, string strGroupId)
+        {
+            string sql = "update MHCategoryAreaGroup set DisplayIndex='" + strIndex + "' where GroupId='" + strGroupId + "'";
+            return this.SQLHelper.ExecuteNonQuery(sql);
+        }
     }
 }

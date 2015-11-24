@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/12/28 11:05:59
+ * Create On	:2015/11/24 13:51:07
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -65,6 +65,11 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+        public String ItemImageUrl { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public Int32? DisplayIndex { get; set; }
 
 		/// <summary>
@@ -96,6 +101,17 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String areaFlag { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? ShowStyle { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? GroupId { get; set; }
+
 
         #endregion
 

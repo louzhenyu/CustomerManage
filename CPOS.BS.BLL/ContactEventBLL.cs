@@ -41,7 +41,7 @@ namespace JIT.CPOS.BS.BLL
         {
             this._currentDAO.AddContactEventPrize(pEntity);
         }
-
+      
         /// <summary>
         ///  触点是否已存在
         /// </summary>

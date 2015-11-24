@@ -749,6 +749,19 @@ namespace JIT.CPOS.BS.BLL
             return itemService.GetItemAreaList(customerId, eventTypeId, pageIndex, pageSize);
         }
         /// <summary>
+        /// 根据活动ID获取商品
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="eventId"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public DataSet GetItemListByEventId(string customerId, string eventId, int pageIndex, int pageSize)
+        {
+            return itemService.GetItemListByEventId(customerId, eventId, pageIndex, pageSize);
+        }
+
+        /// <summary>
         /// 活动商品数量获取
         /// </summary>
         public int GetItemAreaListCount(string customerId, string eventTypeId)

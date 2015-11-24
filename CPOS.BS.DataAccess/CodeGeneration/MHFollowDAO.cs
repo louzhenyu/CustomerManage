@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/12/23 17:24:20
+ * Create On	:2015/11/6 8:56:56
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -33,18 +33,18 @@ namespace JIT.CPOS.BS.DataAccess
 {
     /// <summary>
     /// 数据访问：  
-    /// 表MobileHome的数据访问类     
+    /// 表MHFollow的数据访问类     
     /// 1.实现ICRUDable接口
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class MobileHomeDAO : Base.BaseCPOSDAO, ICRUDable<MobileHomeEntity>, IQueryable<MobileHomeEntity>
+    public partial class MHFollowDAO : Base.BaseCPOSDAO, ICRUDable<MHFollowEntity>, IQueryable<MHFollowEntity>
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public MobileHomeDAO(LoggingSessionInfo pUserInfo)
+        public MHFollowDAO(LoggingSessionInfo pUserInfo)
             : base(pUserInfo)
         {
         }
@@ -55,7 +55,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 创建一个新实例
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Create(MobileHomeEntity pEntity)
+        public void Create(MHFollowEntity pEntity)
         {
             this.Create(pEntity, null);
         }
@@ -65,74 +65,76 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Create(MobileHomeEntity pEntity, IDbTransaction pTran)
+        public void Create(MHFollowEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-
+            
             //初始化固定字段
-            pEntity.IsDelete = 0;
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
 
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into [MobileHome](");
-            strSql.Append("[Title],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[sortActionJson],[IsActivate],[IsTemplate],[TemplateId],[HomeId])");
+            strSql.Append("insert into [MHFollow](");
+            strSql.Append("[TypeId],[Title],[TextId],[TextTitle],[Url],[HomeId],[CustomerID],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[FollowId])");
             strSql.Append(" values (");
-            strSql.Append("@Title,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@sortActionJson,@IsActivate,@IsTemplate,@TemplateId,@HomeId)");
+            strSql.Append("@TypeId,@Title,@TextId,@TextTitle,@Url,@HomeId,@CustomerID,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@FollowId)");            
 
-            Guid? pkGuid;
-            if (pEntity.HomeId == null)
-                pkGuid = Guid.NewGuid();
-            else
-                pkGuid = pEntity.HomeId;
+			Guid? pkGuid;
+			if (pEntity.FollowId == null)
+				pkGuid = Guid.NewGuid();
+			else
+				pkGuid = pEntity.FollowId;
 
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@TypeId",SqlDbType.Int),
 					new SqlParameter("@Title",SqlDbType.NVarChar),
+					new SqlParameter("@TextId",SqlDbType.NVarChar),
+					new SqlParameter("@TextTitle",SqlDbType.NVarChar),
+					new SqlParameter("@Url",SqlDbType.NVarChar),
+					new SqlParameter("@HomeId",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
+					new SqlParameter("@CreateBy",SqlDbType.VarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
-					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
-					new SqlParameter("@sortActionJson",SqlDbType.VarChar),
-					new SqlParameter("@IsActivate",SqlDbType.Int),
-					new SqlParameter("@IsTemplate",SqlDbType.Int),
-					new SqlParameter("@TemplateId",SqlDbType.UniqueIdentifier),
-					new SqlParameter("@HomeId",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@FollowId",SqlDbType.UniqueIdentifier)
             };
-            parameters[0].Value = pEntity.Title;
-            parameters[1].Value = pEntity.CreateTime;
-            parameters[2].Value = pEntity.CreateBy;
-            parameters[3].Value = pEntity.LastUpdateBy;
-            parameters[4].Value = pEntity.LastUpdateTime;
-            parameters[5].Value = pEntity.IsDelete;
-            parameters[6].Value = pEntity.CustomerId;
-            parameters[7].Value = pEntity.sortActionJson;
-            parameters[8].Value = pEntity.IsActivate;
-            parameters[9].Value = pEntity.IsTemplate;
-            parameters[10].Value = pEntity.TemplateId;
-            parameters[11].Value = pkGuid;
+			parameters[0].Value = pEntity.TypeId;
+			parameters[1].Value = pEntity.Title;
+			parameters[2].Value = pEntity.TextId;
+			parameters[3].Value = pEntity.TextTitle;
+			parameters[4].Value = pEntity.Url;
+			parameters[5].Value = pEntity.HomeId;
+			parameters[6].Value = pEntity.CustomerID;
+			parameters[7].Value = pEntity.CreateBy;
+			parameters[8].Value = pEntity.CreateTime;
+			parameters[9].Value = pEntity.LastUpdateBy;
+			parameters[10].Value = pEntity.LastUpdateTime;
+			parameters[11].Value = pEntity.IsDelete;
+			parameters[12].Value = pkGuid;
 
             //执行并将结果回写
             int result;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
-            pEntity.HomeId = pkGuid;
+               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
+            pEntity.FollowId = pkGuid;
         }
 
         /// <summary>
         /// 根据标识符获取实例
         /// </summary>
         /// <param name="pID">标识符的值</param>
-        public MobileHomeEntity GetByID(object pID)
+        public MHFollowEntity GetByID(object pID)
         {
             //参数检查
             if (pID == null)
@@ -140,9 +142,9 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [MobileHome] where HomeId='{0}'  and isdelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [MHFollow] where FollowId='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
-            MobileHomeEntity m = null;
+            MHFollowEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
@@ -159,18 +161,18 @@ namespace JIT.CPOS.BS.DataAccess
         /// 获取所有实例
         /// </summary>
         /// <returns></returns>
-        public MobileHomeEntity[] GetAll()
+        public MHFollowEntity[] GetAll()
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [MobileHome] where 1=1  and isdelete=0");
+            sql.AppendFormat("select * from [MHFollow] where 1=1  and isdelete=0");
             //读取数据
-            List<MobileHomeEntity> list = new List<MobileHomeEntity>();
+            List<MHFollowEntity> list = new List<MHFollowEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    MobileHomeEntity m;
+                    MHFollowEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -184,9 +186,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(MobileHomeEntity pEntity, IDbTransaction pTran)
+        public void Update(MHFollowEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity, pTran, false);
+            Update(pEntity , pTran,false);
         }
 
         /// <summary>
@@ -194,65 +196,66 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(MobileHomeEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
+        public void Update(MHFollowEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (!pEntity.HomeId.HasValue)
+            if (!pEntity.FollowId.HasValue)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
-            //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+             //初始化固定字段
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update [MobileHome] set ");
-            if (pIsUpdateNullField || pEntity.Title != null)
-                strSql.Append("[Title]=@Title,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy != null)
-                strSql.Append("[LastUpdateBy]=@LastUpdateBy,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
-                strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.CustomerId != null)
-                strSql.Append("[CustomerId]=@CustomerId,");
-            if (pIsUpdateNullField || pEntity.sortActionJson != null)
-                strSql.Append("[sortActionJson]=@sortActionJson,");
-            if (pIsUpdateNullField || pEntity.IsActivate != null)
-                strSql.Append("[IsActivate]=@IsActivate,");
-            if (pIsUpdateNullField || pEntity.IsTemplate != null)
-                strSql.Append("[IsTemplate]=@IsTemplate,");
-            if (pIsUpdateNullField || pEntity.TemplateId != null)
-                strSql.Append("[TemplateId]=@TemplateId");
-
-            if (strSql.ToString().EndsWith(","))
-                strSql.Remove(strSql.Length - 1, 1);
-
-            strSql.Append(" where HomeId=@HomeId ");
+            strSql.Append("update [MHFollow] set ");
+                        if (pIsUpdateNullField || pEntity.TypeId!=null)
+                strSql.Append( "[TypeId]=@TypeId,");
+            if (pIsUpdateNullField || pEntity.Title!=null)
+                strSql.Append( "[Title]=@Title,");
+            if (pIsUpdateNullField || pEntity.TextId!=null)
+                strSql.Append( "[TextId]=@TextId,");
+            if (pIsUpdateNullField || pEntity.TextTitle!=null)
+                strSql.Append( "[TextTitle]=@TextTitle,");
+            if (pIsUpdateNullField || pEntity.Url!=null)
+                strSql.Append( "[Url]=@Url,");
+            if (pIsUpdateNullField || pEntity.HomeId!=null)
+                strSql.Append( "[HomeId]=@HomeId,");
+            if (pIsUpdateNullField || pEntity.CustomerID!=null)
+                strSql.Append( "[CustomerID]=@CustomerID,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
+            strSql.Append(" where FollowId=@FollowId ");
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@TypeId",SqlDbType.Int),
 					new SqlParameter("@Title",SqlDbType.NVarChar),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@TextId",SqlDbType.NVarChar),
+					new SqlParameter("@TextTitle",SqlDbType.NVarChar),
+					new SqlParameter("@Url",SqlDbType.NVarChar),
+					new SqlParameter("@HomeId",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
+					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
-					new SqlParameter("@sortActionJson",SqlDbType.VarChar),
-					new SqlParameter("@IsActivate",SqlDbType.Int),
-					new SqlParameter("@IsTemplate",SqlDbType.Int),
-					new SqlParameter("@TemplateId",SqlDbType.UniqueIdentifier),
-					new SqlParameter("@HomeId",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@FollowId",SqlDbType.UniqueIdentifier)
             };
-            parameters[0].Value = pEntity.Title;
-            parameters[1].Value = pEntity.LastUpdateBy;
-            parameters[2].Value = pEntity.LastUpdateTime;
-            parameters[3].Value = pEntity.CustomerId;
-            parameters[4].Value = pEntity.sortActionJson;
-            parameters[5].Value = pEntity.IsActivate;
-            parameters[6].Value = pEntity.IsTemplate;
-            parameters[7].Value = pEntity.TemplateId;
-            parameters[8].Value = pEntity.HomeId;
+			parameters[0].Value = pEntity.TypeId;
+			parameters[1].Value = pEntity.Title;
+			parameters[2].Value = pEntity.TextId;
+			parameters[3].Value = pEntity.TextTitle;
+			parameters[4].Value = pEntity.Url;
+			parameters[5].Value = pEntity.HomeId;
+			parameters[6].Value = pEntity.CustomerID;
+			parameters[7].Value = pEntity.LastUpdateBy;
+			parameters[8].Value = pEntity.LastUpdateTime;
+			parameters[9].Value = pEntity.FollowId;
 
             //执行语句
             int result = 0;
@@ -266,7 +269,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(MobileHomeEntity pEntity)
+        public void Update(MHFollowEntity pEntity )
         {
             this.Update(pEntity, null);
         }
@@ -275,7 +278,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 删除
         /// </summary>
         /// <param name="pEntity"></param>
-        public void Delete(MobileHomeEntity pEntity)
+        public void Delete(MHFollowEntity pEntity)
         {
             this.Delete(pEntity, null);
         }
@@ -285,17 +288,17 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(MobileHomeEntity pEntity, IDbTransaction pTran)
+        public void Delete(MHFollowEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (!pEntity.HomeId.HasValue)
+            if (!pEntity.FollowId.HasValue)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.HomeId.Value, pTran);
+            this.Delete(pEntity.FollowId.Value, pTran);           
         }
 
         /// <summary>
@@ -306,21 +309,21 @@ namespace JIT.CPOS.BS.DataAccess
         public void Delete(object pID, IDbTransaction pTran)
         {
             if (pID == null)
-                return;
+                return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [MobileHome] set  isdelete=1 where HomeId=@HomeId;");
+            sql.AppendLine("update [MHFollow] set  isdelete=1 where FollowId=@FollowId;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@HomeId",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
+                new SqlParameter{ParameterName="@FollowId",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
             };
             //执行语句
             int result = 0;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
-            return;
+                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+            return ;
         }
 
         /// <summary>
@@ -328,7 +331,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(MobileHomeEntity[] pEntities, IDbTransaction pTran)
+        public void Delete(MHFollowEntity[] pEntities, IDbTransaction pTran)
         {
             //整理主键值
             object[] entityIDs = new object[pEntities.Length];
@@ -338,11 +341,11 @@ namespace JIT.CPOS.BS.DataAccess
                 //参数校验
                 if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (!pEntity.HomeId.HasValue)
+                if (!pEntity.FollowId.HasValue)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = pEntity.HomeId;
+                entityIDs[i] = pEntity.FollowId;
             }
             Delete(entityIDs, pTran);
         }
@@ -351,8 +354,8 @@ namespace JIT.CPOS.BS.DataAccess
         /// 批量删除
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
-        public void Delete(MobileHomeEntity[] pEntities)
-        {
+        public void Delete(MHFollowEntity[] pEntities)
+        { 
             Delete(pEntities, null);
         }
 
@@ -362,7 +365,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pIDs">标识符值数组</param>
         public void Delete(object[] pIDs)
         {
-            Delete(pIDs, null);
+            Delete(pIDs,null);
         }
 
         /// <summary>
@@ -370,24 +373,24 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran)
+        public void Delete(object[] pIDs, IDbTransaction pTran) 
         {
-            if (pIDs == null || pIDs.Length == 0)
-                return;
+            if (pIDs == null || pIDs.Length==0)
+                return ;
             //组织参数化SQL
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("'{0}',", item.ToString());
+                primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [MobileHome] set  isdelete=1 where HomeId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [MHFollow] set  isdelete=1 where FollowId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
-            int result = 0;
+            int result = 0;   
             if (pTran == null)
                 result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
         }
         #endregion
 
@@ -398,11 +401,11 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pWhereConditions">筛选条件</param>
         /// <param name="pOrderBys">排序</param>
         /// <returns></returns>
-        public MobileHomeEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        public MHFollowEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [MobileHome] where 1=1  and isdelete=0");
+            sql.AppendFormat("select * from [MHFollow] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -420,12 +423,12 @@ namespace JIT.CPOS.BS.DataAccess
                 sql.Remove(sql.Length - 1, 1);
             }
             //执行SQL
-            List<MobileHomeEntity> list = new List<MobileHomeEntity>();
+            List<MHFollowEntity> list = new List<MHFollowEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    MobileHomeEntity m;
+                    MHFollowEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -441,7 +444,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<MobileHomeEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<MHFollowEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             //组织SQL
             StringBuilder pagedSql = new StringBuilder();
@@ -452,7 +455,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pOrderBys)
                 {
-                    if (item != null)
+                    if(item!=null)
                     {
                         pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
                     }
@@ -461,17 +464,17 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
             {
-                pagedSql.AppendFormat(" [HomeId] desc"); //默认为主键值倒序
+                pagedSql.AppendFormat(" [FollowId] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [MobileHome] where 1=1  and isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [MHFollow] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [MobileHome] where 1=1  and isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [MHFollow] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
                 {
-                    if (item != null)
+                    if(item!=null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
                         totalCountSql.AppendFormat(" and {0}", item.GetExpression());
@@ -480,15 +483,15 @@ namespace JIT.CPOS.BS.DataAccess
             }
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
-            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
-            PagedQueryResult<MobileHomeEntity> result = new PagedQueryResult<MobileHomeEntity>();
-            List<MobileHomeEntity> list = new List<MobileHomeEntity>();
+            PagedQueryResult<MHFollowEntity> result = new PagedQueryResult<MHFollowEntity>();
+            List<MHFollowEntity> list = new List<MHFollowEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    MobileHomeEntity m;
+                    MHFollowEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -509,10 +512,10 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public MobileHomeEntity[] QueryByEntity(MobileHomeEntity pQueryEntity, OrderBy[] pOrderBys)
+        public MHFollowEntity[] QueryByEntity(MHFollowEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
-            return Query(queryWhereCondition, pOrderBys);
+            return Query(queryWhereCondition,  pOrderBys);            
         }
 
         /// <summary>
@@ -521,9 +524,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public PagedQueryResult<MobileHomeEntity> PagedQueryByEntity(MobileHomeEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<MHFollowEntity> PagedQueryByEntity(MHFollowEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
+            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
@@ -534,34 +537,37 @@ namespace JIT.CPOS.BS.DataAccess
         /// 根据实体非Null属性生成查询条件。
         /// </summary>
         /// <returns></returns>
-        protected IWhereCondition[] GetWhereConditionByEntity(MobileHomeEntity pQueryEntity)
-        {
+        protected IWhereCondition[] GetWhereConditionByEntity(MHFollowEntity pQueryEntity)
+        { 
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.HomeId != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "HomeId", Value = pQueryEntity.HomeId });
-            if (pQueryEntity.Title != null)
+            if (pQueryEntity.FollowId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "FollowId", Value = pQueryEntity.FollowId });
+            if (pQueryEntity.TypeId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TypeId", Value = pQueryEntity.TypeId });
+            if (pQueryEntity.Title!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Title", Value = pQueryEntity.Title });
-            if (pQueryEntity.CreateTime != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.CreateBy != null)
+            if (pQueryEntity.TextId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TextId", Value = pQueryEntity.TextId });
+            if (pQueryEntity.TextTitle!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TextTitle", Value = pQueryEntity.TextTitle });
+            if (pQueryEntity.Url!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Url", Value = pQueryEntity.Url });
+            if (pQueryEntity.HomeId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "HomeId", Value = pQueryEntity.HomeId });
+            if (pQueryEntity.CustomerID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
+            if (pQueryEntity.CreateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateBy != null)
+            if (pQueryEntity.CreateTime!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
+            if (pQueryEntity.LastUpdateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
-            if (pQueryEntity.LastUpdateTime != null)
+            if (pQueryEntity.LastUpdateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.IsDelete != null)
+            if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
-            if (pQueryEntity.CustomerId != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
-            if (pQueryEntity.sortActionJson != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "sortActionJson", Value = pQueryEntity.sortActionJson });
-            if (pQueryEntity.IsTemplate != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsTemplate", Value = pQueryEntity.IsTemplate });
-            if (pQueryEntity.IsActivate != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsActivate", Value = pQueryEntity.IsActivate });
-            if (pQueryEntity.TemplateId != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TemplateId", Value = pQueryEntity.TemplateId });
+
             return lstWhereCondition.ToArray();
         }
         /// <summary>
@@ -569,65 +575,66 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(IDataReader pReader, out MobileHomeEntity pInstance)
+        protected void Load(IDataReader pReader, out MHFollowEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
-            pInstance = new MobileHomeEntity();
+            pInstance = new MHFollowEntity();
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-            if (pReader["HomeId"] != DBNull.Value)
-            {
-                pInstance.HomeId = (Guid)pReader["HomeId"];
-            }
-            if (pReader["Title"] != DBNull.Value)
-            {
-                pInstance.Title = Convert.ToString(pReader["Title"]);
-            }
-            if (pReader["CreateTime"] != DBNull.Value)
-            {
-                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
-            }
-            if (pReader["CreateBy"] != DBNull.Value)
-            {
-                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
-            }
-            if (pReader["LastUpdateBy"] != DBNull.Value)
-            {
-                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
-            }
-            if (pReader["LastUpdateTime"] != DBNull.Value)
-            {
-                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
-            }
-            if (pReader["IsDelete"] != DBNull.Value)
-            {
-                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
-            }
-            if (pReader["CustomerId"] != DBNull.Value)
-            {
-                pInstance.CustomerId = Convert.ToString(pReader["CustomerId"]);
-            }
-            if (pReader["sortActionJson"] != DBNull.Value)
-            {
-                pInstance.sortActionJson = Convert.ToString(pReader["sortActionJson"]);
-            }
-            if (pReader["IsActivate"] != DBNull.Value)
-            {
-                pInstance.IsActivate = Convert.ToInt32(pReader["IsActivate"]);
-            }
-            if (pReader["IsTemplate"] != DBNull.Value)
-            {
-                pInstance.IsTemplate = Convert.ToInt32(pReader["IsTemplate"]);
-            }
-            if (pReader["TemplateId"] != DBNull.Value)
-            {
-                pInstance.TemplateId = (Guid)pReader["TemplateId"];
-            }
-            if (pReader["DisplayIndex"] != DBNull.Value)
-            {
-                pInstance.DisplayIndex = Convert.ToInt32(pReader["DisplayIndex"]);
-            }
+			if (pReader["FollowId"] != DBNull.Value)
+			{
+				pInstance.FollowId =  (Guid)pReader["FollowId"];
+			}
+			if (pReader["TypeId"] != DBNull.Value)
+			{
+				pInstance.TypeId =   Convert.ToInt32(pReader["TypeId"]);
+			}
+			if (pReader["Title"] != DBNull.Value)
+			{
+				pInstance.Title =  Convert.ToString(pReader["Title"]);
+			}
+			if (pReader["TextId"] != DBNull.Value)
+			{
+				pInstance.TextId =  Convert.ToString(pReader["TextId"]);
+			}
+			if (pReader["TextTitle"] != DBNull.Value)
+			{
+				pInstance.TextTitle =  Convert.ToString(pReader["TextTitle"]);
+			}
+			if (pReader["Url"] != DBNull.Value)
+			{
+				pInstance.Url =  Convert.ToString(pReader["Url"]);
+			}
+			if (pReader["HomeId"] != DBNull.Value)
+			{
+				pInstance.HomeId =  Convert.ToString(pReader["HomeId"]);
+			}
+			if (pReader["CustomerID"] != DBNull.Value)
+			{
+				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
+			}
+			if (pReader["CreateBy"] != DBNull.Value)
+			{
+				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
+			}
+			if (pReader["CreateTime"] != DBNull.Value)
+			{
+				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
+			}
+			if (pReader["LastUpdateBy"] != DBNull.Value)
+			{
+				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
+			}
+			if (pReader["LastUpdateTime"] != DBNull.Value)
+			{
+				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
+			}
+			if (pReader["IsDelete"] != DBNull.Value)
+			{
+				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+
         }
         #endregion
     }

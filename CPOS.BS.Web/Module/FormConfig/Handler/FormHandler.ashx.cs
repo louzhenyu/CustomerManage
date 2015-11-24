@@ -429,7 +429,7 @@ namespace JIT.CPOS.BS.Web.Module.FormConfig.Handler
                     var categoryAreaGroup = mHCategoryAreaGroup.QueryByEntity(new MHCategoryAreaGroupEntity()
                     {
                         GroupValue = groupId,
-                        CustomerId =  this.CurrentUserInfo.ClientID
+                         CustomerID =  this.CurrentUserInfo.ClientID
                     }, null);
 
                     var categoryAreaGroupEntity = new MHCategoryAreaGroupEntity()
@@ -437,7 +437,7 @@ namespace JIT.CPOS.BS.Web.Module.FormConfig.Handler
                         ModelTypeId = modelTypeId,
                         ModelName = modelTypeName,
                         GroupValue = groupId,
-                        CustomerId =  this.CurrentUserInfo.ClientID
+                        CustomerID = this.CurrentUserInfo.ClientID
                     };
                     if (categoryAreaGroup == null || !categoryAreaGroup.Any())
                     {

@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/11/24 13:51:07
+ * Create On	:2015/11/6 8:56:56
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -33,17 +33,17 @@ namespace JIT.CPOS.BS.BLL
     /// <summary>
     /// 业务处理：  
     /// </summary>
-    public partial class MHItemAreaBLL
+    public partial class MHFollowBLL
     {
         private BasicUserInfo CurrentUserInfo;
-        private MHItemAreaDAO _currentDAO;
+        private MHFollowDAO _currentDAO;
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public MHItemAreaBLL(LoggingSessionInfo pUserInfo)
+        public MHFollowBLL(LoggingSessionInfo pUserInfo)
         {
-            this._currentDAO = new MHItemAreaDAO(pUserInfo);
+            this._currentDAO = new MHFollowDAO(pUserInfo);
             this.CurrentUserInfo = pUserInfo;
         }
         #endregion
@@ -52,7 +52,7 @@ namespace JIT.CPOS.BS.BLL
         /// 创建一个新实例
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Create(MHItemAreaEntity pEntity)
+        public void Create(MHFollowEntity pEntity)
         {
             _currentDAO.Create(pEntity);
         }
@@ -63,7 +63,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Create(MHItemAreaEntity pEntity, IDbTransaction pTran)
+        public void Create(MHFollowEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Create(pEntity,pTran);
         }
@@ -72,7 +72,7 @@ namespace JIT.CPOS.BS.BLL
         /// 根据标识符获取实例
         /// </summary>
         /// <param name="pID">标识符的值</param>
-        public MHItemAreaEntity GetByID(object pID)
+        public MHFollowEntity GetByID(object pID)
         {
             return _currentDAO.GetByID(pID);
         }
@@ -81,7 +81,7 @@ namespace JIT.CPOS.BS.BLL
         /// 获取所有实例
         /// </summary>
         /// <returns></returns>
-        public MHItemAreaEntity[] GetAll()
+        public MHFollowEntity[] GetAll()
         {
             return _currentDAO.GetAll();
         }
@@ -91,7 +91,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(MHItemAreaEntity pEntity , IDbTransaction pTran)
+        public void Update(MHFollowEntity pEntity , IDbTransaction pTran)
         {
             _currentDAO.Update(pEntity,pTran);
         }
@@ -101,7 +101,7 @@ namespace JIT.CPOS.BS.BLL
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(MHItemAreaEntity pEntity )
+        public void Update(MHFollowEntity pEntity )
         {
             _currentDAO.Update(pEntity);
         }
@@ -110,7 +110,7 @@ namespace JIT.CPOS.BS.BLL
         /// 删除
         /// </summary>
         /// <param name="pEntity"></param>
-        public void Delete(MHItemAreaEntity pEntity)
+        public void Delete(MHFollowEntity pEntity)
         {
             _currentDAO.Delete(pEntity);
         }
@@ -120,7 +120,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(MHItemAreaEntity pEntity, IDbTransaction pTran)
+        public void Delete(MHFollowEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Delete(pEntity,pTran);
         }
@@ -140,7 +140,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(MHItemAreaEntity[] pEntities, IDbTransaction pTran)
+        public void Delete(MHFollowEntity[] pEntities, IDbTransaction pTran)
         {
             _currentDAO.Delete(pEntities,pTran);
         }
@@ -149,7 +149,7 @@ namespace JIT.CPOS.BS.BLL
         /// 批量删除
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
-        public void Delete(MHItemAreaEntity[] pEntities)
+        public void Delete(MHFollowEntity[] pEntities)
         { 
             _currentDAO.Delete(pEntities);
         }
@@ -181,7 +181,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pWhereConditions">筛选条件</param>
         /// <param name="pOrderBys">排序</param>
         /// <returns></returns>
-        public MHItemAreaEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        public MHFollowEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
            return _currentDAO.Query(pWhereConditions,pOrderBys);
         }
@@ -194,7 +194,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<MHItemAreaEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<MHFollowEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
            return _currentDAO.PagedQuery(pWhereConditions,pOrderBys,pPageSize,pCurrentPageIndex);
         }
@@ -205,7 +205,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public MHItemAreaEntity[] QueryByEntity(MHItemAreaEntity pQueryEntity, OrderBy[] pOrderBys)
+        public MHFollowEntity[] QueryByEntity(MHFollowEntity pQueryEntity, OrderBy[] pOrderBys)
         {
            return _currentDAO.QueryByEntity(pQueryEntity,pOrderBys);
         }
@@ -216,7 +216,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public PagedQueryResult<MHItemAreaEntity> PagedQueryByEntity(MHItemAreaEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<MHFollowEntity> PagedQueryByEntity(MHFollowEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
            return _currentDAO.PagedQueryByEntity(pQueryEntity,pOrderBys,pPageSize,pCurrentPageIndex);
         }

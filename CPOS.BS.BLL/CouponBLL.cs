@@ -681,6 +681,38 @@ namespace JIT.CPOS.BS.BLL
         }
         #endregion
 
+        #region 核销优惠券列表
+
+        public WriteOffCouponListRD WriteOffCouponList(string mobile,string couponCode,string status,int pageSize,int pageIndex) {
+            WriteOffCouponListRD rd = new WriteOffCouponListRD();
+            DataSet ds = this._currentDAO.WriteOffCouponList(mobile, couponCode, status, pageSize, pageIndex);
+
+            if (ds.Tables.Count == 2)
+            {
+                var couponList = (from d in ds.Tables[0].AsEnumerable()
+                                  select new WriteOffCouponListEntity
+                                  {
+                                      CouponID = d["CouponID"].ToString(),
+                                      VipName = d["VipName"].ToString(),
+                                      Phone = d["Phone"].ToString(),
+                                      CouponName = d["CoupnName"].ToString(),
+                                      CouponCode = d["CouponCode"].ToString(),
+                                      UnitName = d["UnitName"].ToString(),
+                                      VerifyDate = d["VerifyDate"].ToString() != "" ? Convert.ToDateTime(d["VerifyDate"].ToString()).ToLongDateString().ToString() : "",
+                                      VerifyPerson = d["VerifyPerson"].ToString(),
+                                      ConponStatus = d["ConponStatus"].ToString(),
+                                  });
+
+                rd.WriteOffCouponList = couponList.ToArray();
+                rd.TotalPage = int.Parse(ds.Tables[1].Rows[0][0].ToString());
+                rd.TotalCount = int.Parse(ds.Tables[1].Rows[0][1].ToString());
+            }
+
+            return rd;          
+        }
+
+        #endregion
+
         #region 核销优惠券
         public object WriteOffCoupon(WriteOffCouponRP writeOffCouponRP)
         {
@@ -790,8 +822,7 @@ namespace JIT.CPOS.BS.BLL
         public DataSet GetCouponIdByCouponTypeID(string strCouponTypeId)
         {
             return this._currentDAO.GetCouponIdByCouponTypeID(strCouponTypeId);
-        } 
-    
+        }    
     }
 
 
@@ -1012,6 +1043,37 @@ namespace JIT.CPOS.BS.BLL
         }
     }
 
+
+    public class WriteOffCouponListRP : IAPIRequestParameter
+    {
+        /// <summary>
+        /// 手机号
+        /// </summary>
+        public string Mobile { get; set; }
+        /// <summary>
+        /// 优惠券编码
+        /// </summary>
+        public string CouponCode { get; set; }
+        /// <summary>
+        /// 优惠券状态
+        /// </summary>
+        public string Status { get; set; }
+        /// <summary>
+        /// 页码
+        /// </summary>
+        public int PageIndex { get; set; }
+        /// <summary>
+        /// 记录数 
+        /// </summary>
+        public int PageSize { get; set; }
+
+        public void Validate()
+        {
+            if (string.IsNullOrEmpty(Mobile) && string.IsNullOrEmpty(CouponCode))
+                throw new APIException(201, "搜索条件不能为空！");
+        }
+    }
+
     #endregion
 
     #region ResponseData
@@ -1054,6 +1116,34 @@ namespace JIT.CPOS.BS.BLL
         public string CreateTime { get; set; }
         public string PageIndex { get; set; }
         public string PageSize { get; set; }
+    }
+
+    public class WriteOffCouponListRD : IAPIResponseData
+    {
+        public WriteOffCouponListEntity[] WriteOffCouponList { get; set; }
+        public int TotalPage { get; set; }
+        public int TotalCount { get; set; }    
+    }
+
+    public class WriteOffCouponListEntity
+    {
+        public string CouponID { get; set; }
+
+        public string VipName { get; set; }
+
+        public string Phone { get; set; }
+
+        public string CouponName { get; set; }
+
+        public string CouponCode { get; set; }
+
+        public string UnitName { get; set; }
+
+        public string VerifyDate { get; set; }
+
+        public string VerifyPerson { get; set; }
+
+        public string ConponStatus { get; set; }
     }
 
     #endregion

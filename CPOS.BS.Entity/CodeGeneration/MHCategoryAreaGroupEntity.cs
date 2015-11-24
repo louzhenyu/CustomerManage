@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/12/22 17:22:45
+ * Create On	:2015/11/2 21:32:01
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -85,7 +85,7 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 
         /// </summary>
-        public String CustomerId { get; set; }
+        public String CustomerID { get; set; }
 
         /// <summary>
         /// 
@@ -95,17 +95,57 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 
         /// </summary>
-        public String styleType { get; set; }
+        public String StyleType { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public String titleName { get; set; }
+        public String TitleName { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public String titleStyle { get; set; }
+        public String TitleStyle { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? ShowCount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? ShowName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? ShowPrice { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? ShowSalesPrice { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? ShowDiscount { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? ShowSalesQty { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Int32? DisplayIndex { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public String HomeId { get; set; }
 
 
         #endregion

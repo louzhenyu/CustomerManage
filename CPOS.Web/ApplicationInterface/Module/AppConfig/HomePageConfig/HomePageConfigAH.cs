@@ -30,11 +30,29 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
             var logginUserInfo = base.CurrentUserInfo;
 
             HomePageConfigRD resData = new HomePageConfigRD();
+            resData.eventList = new List<EventListEntity>();
+            resData.secondKill = new List<EventListEntity>();
+            resData.groupBuy = new List<EventListEntity>();
+            resData.hotBuy = new List<EventListEntity>();
+
+            var bllHome = new MobileHomeBLL(logginUserInfo);
+            var entityHome=bllHome.QueryByEntity(new MobileHomeEntity() { CustomerId = logginUserInfo.ClientID ,IsActivate=1}, null).FirstOrDefault();
+            if(entityHome==null)
+            {
+                resData.Success = false;
+                resData.ErrMsg = "商城正在维护";
+                return resData;
+            }
+            resData.Success = true;
+            string strHomeId=entityHome.HomeId.ToString();
+
+            resData.sortActionJson = entityHome.sortActionJson == null ? "" : entityHome.sortActionJson;//返回排序数据
+
 
             #region 广告部分
             List<AdAreaInfo> AdAreaList = new List<AdAreaInfo> { };
             var adBll = new MHAdAreaBLL(logginUserInfo);
-            var tempAdArealist = adBll.GetByCustomerID();
+            var tempAdArealist = adBll.GetAdByHomeId(strHomeId);
             AdAreaList.AddRange(tempAdArealist.Select(t => new AdAreaInfo
             {
                 DisplayIndex = t.DisplayIndex,
@@ -44,142 +62,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
                 Url = t.Url
             }));
             #endregion
-
-            #region 活动部分
-            List<ItemEventAreaInfo> ItemEventAreaList = new List<ItemEventAreaInfo> { };
-            var itemEventBll = new MHItemAreaBLL(logginUserInfo);
-            var tempItemEventAreaList = itemEventBll.GetItemDetails();
-            ItemEventAreaList.AddRange(tempItemEventAreaList.Select(t => new ItemEventAreaInfo
-            {
-                ItemID = t.ItemId,
-                ItemName = t.ItemName,
-                ImageUrl = t.ImageUrl,
-                Price = t.Price,
-                SalesPrice = t.SalesPrice,
-                DiscountRate = t.DiscountRate == null ? 0 : Convert.ToDecimal((t.DiscountRate / 10).ToString("0.0")),    //折扣 update by Henry 2014-10-20
-                DisplayIndex = t.DisplayIndex,
-                DeadlineTime = t.DeadlineTime,
-                DeadlineSecond = t.DeadlineSecond,
-                AddedTime = t.AddedTime.To19FormatString(),
-                BeginTime = t.BeginTime.To19FormatString(),
-                EndTime = t.EndTime.To19FormatString(),
-                TypeID = t.TypeId,
-                areaFlag = t.areaFlag
-            }));
-
-            #endregion
-            #region 废弃代码
-            //#region 分类和商品部分
-            //List<CategoryGroupInfo> CategoryAreaList = new List<CategoryGroupInfo> { };
-            //var categoryBll = new MHCategoryAreaBLL(logginUserInfo);
-            //var tempCategoryAreaList = categoryBll.GetByCustomerID();
-            //var tempCategoryInfoList = tempCategoryAreaList.Select(t => new CategoryAreaInfo
-            //{
-            //    ObjectID = t.ObjectId,
-            //    ImageUrl = t.ImageUrlObject,
-            //    DisplayIndex = t.DisplayIndex,
-            //    TypeID = t.ObjectTypeId,
-            //    GroupID = t.GroupID
-            //});
-            //tempCategoryInfoList.Select(t => t.GroupID).Distinct().ToList().ForEach(t =>
-            //    {
-            //        CategoryAreaList.Add(new CategoryGroupInfo()
-            //        {
-            //            GroupID = t,
-            //            ModelTypeId =Convert.ToInt32(adBll.GetModelTypeIdByGroupId(t.ToString()).Tables[0].Rows[0]["modelTypeId"]),
-            //            ModelTypeName = Convert.ToString(adBll.GetModelTypeIdByGroupId(t.ToString()).Tables[0].Rows[0]["modelTypeName"]),
-            //            CategoryAreaList = tempCategoryInfoList.Where(tt => tt.GroupID == t).OrderBy(tt => tt.DisplayIndex).ToArray()
-            //        });
-            //    });
-            //#endregion
-            #endregion
-
-            //获取分组ID
-
-            var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
-            var homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID }, null);
-
-            var homeEntity = homeList.FirstOrDefault();
-            resData.sortActionJson = homeEntity.sortActionJson == null ? "" : homeEntity.sortActionJson;//返回排序数据
-
-            var dsGroup = adBll.GetCategoryGroupId(homeEntity.HomeId.ToString());
-            var categoryList = new List<CategoryGroupInfo>();
-            if (dsGroup != null && dsGroup.Tables.Count > 0 && dsGroup.Tables[0].Rows.Count > 0)
-            {
-
-
-                foreach (DataRow dr in dsGroup.Tables[0].Rows)
-                {
-                    var category = new CategoryGroupInfo();
-                    category.GroupID = Convert.ToInt32(dr[0]);
-                    category.CategoryAreaList = new List<CategoryAreaInfo>().ToArray();
-
-                    var dsItem = adBll.GetItemList(category.GroupID.ToString(), homeEntity.HomeId.ToString());
-                    if (dsItem != null && dsItem.Tables.Count > 0 && dsItem.Tables[0].Rows.Count > 0)
-                    {
-                        DataSet modelDs = adBll.GetModelTypeIdByGroupId(category.GroupID.ToString());
-                        if (modelDs.Tables[0].Rows.Count > 0)
-                        {
-                            category.ModelTypeId = Convert.ToInt32(modelDs.Tables[0].Rows[0]["modelTypeId"]);
-                            category.ModelTypeName = Convert.ToString(modelDs.Tables[0].Rows[0]["modelTypeName"]);
-                            category.styleType = Convert.ToString(modelDs.Tables[0].Rows[0]["styleType"]);  //直接Convert.ToString会把null值变为“”
-                            category.titleName = Convert.ToString(modelDs.Tables[0].Rows[0]["titleName"]);
-                            category.titleStyle = Convert.ToString(modelDs.Tables[0].Rows[0]["titleStyle"]);
-                        }
-
-                        category.CategoryAreaList = DataTableToObject.ConvertToList<CategoryAreaInfo>(dsItem.Tables[0]).ToArray();
-
-                        categoryList.Add(category);
-                    }
-
-
-                }
-            }
-
-
-            resData.AdAreaList = AdAreaList.OrderBy(t => t.DisplayIndex).ToArray();
-            //这里要根据areaFlag来分出eventList和secondKill
-            //   resData.ItemEventAreaList = ItemEventAreaList.ToArray();
-            if (ItemEventAreaList != null && ItemEventAreaList.Count > 0)
-            {
-                resData.ItemEventAreaList = new EventListEntity();//要先实例化
-                //原来的团购部分，三块分别是抢购、团购、热销的
-                resData.ItemEventAreaList.arrayList = ItemEventAreaList.Where(p => p.areaFlag == "eventList").ToList();
-                // content.eventList.shopType =-1;//不是任何的一个值,不赋值
-                resData.ItemEventAreaList.areaFlag = "eventList";//不是任何的一个值
-                //新秒杀部分，要么团购，要么全是秒杀
-                //  secondKill
-                resData.secondKill = new EventListEntity();//要先实例化
-                resData.secondKill.arrayList = ItemEventAreaList.Where(p => p.areaFlag == "secondKill").ToList();
-                if (resData.secondKill.arrayList != null && resData.secondKill.arrayList.Count != 0)
-                {
-                    resData.secondKill.shopType = resData.secondKill.arrayList[0].TypeID;//不是任何的一个值
-                }
-                resData.secondKill.areaFlag = "secondKill";//不是任何的一个值
-
-            }
-
-            // 过滤分类集合，把ModelTypeID=8的取出来(获取唯一的)
-            if (categoryList.Where(p => p.ModelTypeId == 8) != null && categoryList.Where(p => p.ModelTypeId == 8).Count() != 0)
-            {
-                resData.CategoryEntrance = categoryList.Where(p => p.ModelTypeId == 8).OrderByDescending(p => p.GroupID).ToList()[0];
-            }
-            if (categoryList.Where(p => p.ModelTypeId == 4) != null && categoryList.Where(p => p.ModelTypeId ==4).Count() != 0)
-            {
-                resData.navList = categoryList.Where(p => p.ModelTypeId == 4).OrderByDescending(p => p.GroupID).ToList()[0];//只 取第一条 
-            }
-            //List<CategoryGroupInfo> lc = categoryList.Where(p => p.ModelTypeId == 8).ToList();
-            //if (lc != null && lc.Count != 0)
-            //{
-            //    resData.CategoryEntrance = lc[0];
-            //}
-            //过滤分类集合，把ModelTypeID<>8的取出来
-            resData.CategoryGroupList = categoryList.Where(p => p.ModelTypeId != 8).Where(p => p.ModelTypeId != 4).ToList().ToArray();
-
-
+            resData.adAreaList = AdAreaList.ToArray();
+            
             #region 搜索框
 
-            var dsSearch = adBll.GetMHSearchArea(homeEntity.HomeId.ToString());//获取搜索框
+            var dsSearch = adBll.GetMHSearchArea(strHomeId);//获取搜索框
             if (dsSearch != null && dsSearch.Tables.Count > 0 && dsSearch.Tables[0].Rows.Count > 0)
             {
                 resData.search = DataTableToObject.ConvertToObject<MHSearchAreaEntity>(dsSearch.Tables[0].Rows[0]);//转换成一个对象时，里面的参数不能是一个表，而是一行数据
@@ -187,6 +74,180 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
 
             #endregion
 
+            #region 活动部分
+            var adAreaBll = new MHAdAreaBLL(logginUserInfo);
+            var itemEventBll = new MHItemAreaBLL(logginUserInfo);
+
+            var bllCategoryAreaGroup = new MHCategoryAreaGroupBLL(this.CurrentUserInfo);
+
+            var allGroup = bllCategoryAreaGroup.QueryByEntity(new MHCategoryAreaGroupEntity { CustomerID = this.CurrentUserInfo.ClientID, HomeId = strHomeId }, null);
+
+            var eventGroup = allGroup.Where(a => a.ModelTypeId == 5 || a.ModelTypeId == 6 || a.ModelTypeId == 7 || a.ModelTypeId == 8);
+            foreach (var item in eventGroup)
+            {
+            
+
+                var dsEvent = itemEventBll.GetItemDetails(strHomeId, item.GroupId.ToString());
+
+                if (dsEvent != null && dsEvent.Tables.Count > 0 && dsEvent.Tables[0].Rows.Count > 0)
+                {
+                    var dsEventList = DataTableToObject.ConvertToList<ItemEventAreaInfo>(dsEvent.Tables[0]);
+                    var category = new EventListEntity
+                    {
+                        showStyle = dsEventList.FirstOrDefault().ShowStyle,
+                        shopType = dsEventList.FirstOrDefault().TypeID,
+                        displayIndex = item.DisplayIndex,
+                        areaFlag=dsEventList.FirstOrDefault().areaFlag,
+                        arrayList = dsEventList
+                    };
+
+                    if (dsEventList.FirstOrDefault().areaFlag == "eventList")
+                    {
+                        
+                        resData.eventList.Add(category);
+                    }
+                    if (dsEventList.FirstOrDefault().areaFlag == "secondKill")
+                    {
+                        resData.secondKill.Add(category);
+                    }
+                    if (dsEventList.FirstOrDefault().areaFlag == "groupBuy")
+                    {
+                        resData.groupBuy.Add(category);
+                    }
+                    if (dsEventList.FirstOrDefault().areaFlag == "hotBuy")
+                    {
+                        resData.hotBuy.Add(category);
+                    }
+                }
+
+            }
+            #endregion
+            List<CategoryGroupInfo> allList = new List<CategoryGroupInfo>();
+            eventGroup = allGroup.Where(a => a.ModelTypeId != 5 && a.ModelTypeId != 6 && a.ModelTypeId != 7 && a.ModelTypeId != 8 && a.ModelTypeId != 2);
+
+            if (eventGroup != null)
+            {
+                foreach (var groupItem in eventGroup)
+                {
+                    var category = new CategoryGroupInfo
+                    {
+                        groupID = groupItem.GroupId,
+                        CategoryAreaList = new List<CategoryAreaInfo>()
+                    };
+                    category.modelTypeId = groupItem.ModelTypeId;
+                    category.modelTypeName = groupItem.ModelName;
+                    category.styleType = groupItem.StyleType;
+                    category.titleName = groupItem.TitleName;
+                    category.titleStyle = groupItem.TitleStyle;
+                    category.showCount = (int)groupItem.ShowCount;
+                    category.showName = (int)groupItem.ShowName;
+                    category.showPrice = (int)groupItem.ShowPrice;
+                    category.showSalesPrice = (int)groupItem.ShowSalesPrice;
+                    category.showDiscount = (int)groupItem.ShowDiscount;
+                    category.showSalesQty = (int)groupItem.ShowSalesQty;
+                    category.displayIndex = (int)groupItem.DisplayIndex;
+
+
+                    //根据groupId和HomeId来取MHCategoryArea
+                    if (groupItem.ModelTypeId == 2)
+                    {
+
+                    }
+                    else
+                    {
+                    }
+                    var dsItem = adAreaBll.GetItemList(category.groupID.ToString(), entityHome.HomeId.ToString());
+                    if (dsItem != null && dsItem.Tables.Count > 0 && dsItem.Tables[0].Rows.Count > 0)
+                    {
+                        category.CategoryAreaList = DataTableToObject.ConvertToList<CategoryAreaInfo>(dsItem.Tables[0]);
+                    }
+                    allList.Add(category);
+                }
+            }
+            //分类组合
+            List<CategoryGroupInfo> lc = allList.Where(p => p.modelTypeId == 1).ToList();
+            if (lc != null && lc.Count != 0)
+            {
+                resData.categoryEntrance = lc.OrderByDescending(p => p.groupID).ToList()[0]; ;
+            }
+      
+
+            //创意组合
+            if (allList.Where(p => p.modelTypeId == 3).ToList() != null && allList.Where(p => p.modelTypeId == 3).ToList().Count != 0)
+            {
+                resData.originalityList = allList.Where(p => p.modelTypeId == 3).ToList();
+
+            }
+            //导航
+            List<CategoryGroupInfo> lc4 = allList.Where(p => p.modelTypeId == 4).ToList();
+            if (lc4 != null && lc4.Count != 0)
+            {
+                resData.navList = lc4.OrderByDescending(p => p.groupID).ToList()[0]; ;//(获取唯一的)
+            }
+            //商品列表
+            eventGroup = allGroup.Where(a => a.ModelTypeId == 2);
+            List<ProductListInfo> productList = new List<ProductListInfo>();
+            if (eventGroup != null)
+            {
+                foreach (var groupItem in eventGroup)
+                {
+                    var category = new ProductListInfo
+                    {
+                        CategoryAreaList = new List<ProductInfo>()
+                    };
+                    category.modelTypeId = groupItem.ModelTypeId;
+                    category.modelTypeName = groupItem.ModelName;
+                    category.styleType = groupItem.StyleType;
+                    category.titleName = groupItem.TitleName;
+                    category.titleStyle = groupItem.TitleStyle;
+                    category.showCount = (int)groupItem.ShowCount;
+                    category.showName = (int)groupItem.ShowName;
+                    category.showPrice = (int)groupItem.ShowPrice;
+                    category.showSalesPrice = (int)groupItem.ShowSalesPrice;
+                    category.showDiscount = (int)groupItem.ShowDiscount;
+                    category.showSalesQty = (int)groupItem.ShowSalesQty;
+                    category.displayIndex = (int)groupItem.DisplayIndex;
+
+                    MHCategoryAreaBLL bllCategoryArea = new MHCategoryAreaBLL(logginUserInfo);
+                    int intObjectId = bllCategoryArea.GetObjectTypeIDByGroupId((int)groupItem.GroupId);
+                    DataSet dsItem = null;
+                    if (intObjectId == 4)
+                        dsItem = adAreaBll.GetGroupProductList(groupItem.GroupId.ToString(), entityHome.HomeId.ToString(), category.showCount);
+                    else
+                        dsItem = adAreaBll.GetCategoryProductList(groupItem.GroupId.ToString(), entityHome.HomeId.ToString(), category.showCount);
+
+                    if (dsItem != null && dsItem.Tables.Count > 0 && dsItem.Tables[0].Rows.Count > 0)
+                    {
+                        category.CategoryAreaList = DataTableToObject.ConvertToList<ProductInfo>(dsItem.Tables[0]);
+                    }
+                    productList.Add(category);
+                }
+            }
+
+
+            if (productList != null && productList.Count != 0)
+            {
+                resData.productList = productList.ToList(); ;
+            }
+            #region 关注信息
+
+            var bllFollow = new MHFollowBLL(CurrentUserInfo);
+            var entity = new MHFollowEntity();
+
+            var dsFollow = bllFollow.QueryByEntity(new MHFollowEntity() { HomeId = strHomeId }, null);
+            followInfo follow = new followInfo();
+            follow = dsFollow.Select(f => new followInfo()
+            {
+                HomeId = f.HomeId,
+                FollowId = f.FollowId.ToString(),
+                Title = f.Title,
+                TextId = f.TextId,
+                TextTitle = f.TextTitle,
+                Url = f.Url,
+                TypeId = f.TypeId
+            }).FirstOrDefault();
+            resData.follow = follow;
+            #endregion
             return resData;
         }
         #endregion

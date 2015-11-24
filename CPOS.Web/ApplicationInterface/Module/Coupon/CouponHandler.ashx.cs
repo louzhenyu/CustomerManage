@@ -99,7 +99,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 }
                 var loggingSessionInfo = Default.GetBSLoggingSession(reqObj.customerId, "1");
                 CouponBLL bll = new CouponBLL(loggingSessionInfo);
-                DataSet ds = bll.GetCouponList(reqObj.userId, reqObj.Parameters.couponTypeID);
+                //DataSet ds = bll.GetCouponList(reqObj.userId, reqObj.Parameters.couponTypeID);
+                DataSet ds = bll.GetCouponList(reqObj.userId,"");
 
                 if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                 {

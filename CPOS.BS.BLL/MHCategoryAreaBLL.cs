@@ -39,9 +39,35 @@ namespace JIT.CPOS.BS.BLL
         /// 获取客户下的所有数据
         /// </summary>
         /// <returns></returns>
-        public MHCategoryAreaEntity[] GetByCustomerID()
+        //public MHCategoryAreaEntity[] GetByCustomerID()
+        //{
+        //    return this._currentDAO.GetByCustomerID();
+        //}
+        #region 更新商品分类区域表
+
+        /// <summary>
+        /// 更新商品分类区域表
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        //public void UpdateMHCategoryArea(MHCategoryAreaEntity entity)
+        //{
+        //    this._currentDAO.UpdateMHCategoryArea(entity);
+        //}
+
+        //public void DeleteItemCategoryByGroupIdandHomeID(int GroupID, Guid HomeId)
+        //{
+        //    this._currentDAO.DeleteItemCategoryByGroupIdandHomeID(GroupID, HomeId);
+        //}
+        //public void DeleteCategoryGroupByGroupIdandCustomerId(int GroupID, string customerId, string strHomeId)
+        //{
+        //    this._currentDAO.DeleteCategoryGroupByGroupIdandCustomerId(GroupID, customerId, strHomeId);
+        //}
+        #endregion
+
+        public int GetObjectTypeIDByGroupId(int intGropuId)
         {
-            return this._currentDAO.GetByCustomerID();
+            return this._currentDAO.GetObjectTypeIDByGroupId(intGropuId);
         }
     }
 }

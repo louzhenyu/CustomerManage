@@ -800,6 +800,15 @@ namespace JIT.CPOS.BS.DataAccess
             var sql = string.Format("UPDATE dbo.LEvents SET EventStatus={0} WHERE EventID='{1}'", intEventStatus, strEventId);
             this.SQLHelper.ExecuteNonQuery(sql.ToString());
         }
+        /// <summary>
+        /// 更新活动是否分享
+        /// </summary>
+        /// <param name="strEventId"></param>
+        public void UpdateEventIsShare(string strEventId)
+        {
+            var sql = string.Format("UPDATE dbo.LEvents SET IsShare=1 WHERE EventID='{1}'",strEventId);
+            this.SQLHelper.ExecuteNonQuery(sql.ToString());
+        }
 
         public DataSet GetNewEventInfo(string eventId)
         {

@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Data.SqlClient;
 using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
+using System.Data.OleDb;
+
 using System.Collections;
 
 using JIT.CPOS.BS.Entity;
@@ -15,10 +18,7 @@ using System.Configuration;
 using System.Web;
 using JIT.Utility.ExtensionMethod;
 using JIT.CPOS.DTO.Base;
-using System.Data;
-using System.Data.Sql;
-using System.Data.SqlClient;
-using System.Data.OleDb;
+
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -474,7 +474,7 @@ namespace JIT.CPOS.BS.BLL
                 CPOS.BS.WebServices.CustomerDataExchangeWebService.CustomerDataExchangeService cdxService = new WebServices.CustomerDataExchangeWebService.CustomerDataExchangeService();
                 cdxService.Url = System.Configuration.ConfigurationManager.AppSettings["ap_url"] + "/customer/CustomerDataExchangeService.asmx";
                 //cdxService.SynUser(loggingSessionInfo.CurrentLoggingManager.Customer_Id, 5, strUserInfo);
-                return cdxService.SynUser(loggingSessionInfo.CurrentLoggingManager.Customer_Id, TypeId, strUserInfo);
+                return cdxService.SynUser(loggingSessionInfo.CurrentLoggingManager.Customer_Id, TypeId, strUserInfo);//
                 //return false;
                 
             }
@@ -716,6 +716,7 @@ namespace JIT.CPOS.BS.BLL
             }
         }
         #endregion
+
         #region 用户的角色
 
         /// <summary>
@@ -1479,6 +1480,7 @@ namespace JIT.CPOS.BS.BLL
 
         #endregion
 
+
         /// <summary>
         /// excel导入数据库
         /// </summary>
@@ -1487,7 +1489,7 @@ namespace JIT.CPOS.BS.BLL
         public DataSet ExcelToDb(string strPath, LoggingSessionInfo CurrentUserInfo)
         {
             DataSet ds; //要插入的数据  
-            DataSet dsResult = new DataSet(); //要插入的数据  
+            DataSet dsResult=new DataSet(); //要插入的数据  
             DataTable dt;
 
             DataTable table = new DataTable("Error");
@@ -1517,7 +1519,7 @@ namespace JIT.CPOS.BS.BLL
 
             try
             {
-
+         
 
                 dt = ds.Tables[0];
                 string connString = System.Configuration.ConfigurationManager.AppSettings["Conn_alading"]; //@"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
@@ -1562,7 +1564,7 @@ namespace JIT.CPOS.BS.BLL
                 DataRow row = table.NewRow();
                 row["ErrMsg"] = ex.Message.ToString();
                 table.Rows.Add(row);
-                dsResult.Tables.Add(table);
+                dsResult.Tables.Add(table); 
             }
 
             return dsResult;

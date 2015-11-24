@@ -220,6 +220,7 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetCouponTypeIDByPrizeId(strPrizesID);
 
         }
+
         #region 分享设置是否中奖
         /// <summary>
         /// 是否中奖
@@ -300,7 +301,7 @@ namespace JIT.CPOS.BS.BLL
                         //entityCoupon.Status = 1;
                         //bllCoupon.Update(entityCoupon, null);
                         entityCoupon = DataTableToObject.ConvertToList<CouponEntity>(bllCoupon.GetCouponIdByCouponTypeID(entityPrize.CouponTypeID).Tables[0]).FirstOrDefault();
-
+                       
                         VipCouponMappingEntity entityVipCouponMapping = null;
                         VipCouponMappingBLL bllVipCouponMapping = new VipCouponMappingBLL(this.CurrentUserInfo);
 
@@ -354,7 +355,8 @@ namespace JIT.CPOS.BS.BLL
             }
             return rd;
         }
-
+       
         #endregion
+
     }
 }

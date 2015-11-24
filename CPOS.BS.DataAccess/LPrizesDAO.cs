@@ -131,7 +131,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public DataSet GetPrizesByEventId(string EventId)
         {
-            string sql = "select a.* From LPrizes a "
+            string sql = "select top 1 a.* From LPrizes a with(nolock)"
                         + " where a.IsDelete = '0' "
                         + " and a.EventId = '" + EventId + "' "
                         + " order by a.displayIndex desc ";
@@ -210,7 +210,7 @@ namespace JIT.CPOS.BS.DataAccess
         public int SavePrize(LPrizesEntity entity)
         {
             
-             SqlParameter[] parameters = new SqlParameter[9] 
+             SqlParameter[] parameters = new SqlParameter[10] 
             { 
                 new SqlParameter{ParameterName="@EventId",SqlDbType=SqlDbType.NVarChar,Value=entity.EventId},
                 new SqlParameter{ParameterName="@PrizesID",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizesID},
@@ -220,6 +220,7 @@ namespace JIT.CPOS.BS.DataAccess
                 new SqlParameter{ParameterName="@CouponTypeID",SqlDbType=SqlDbType.NVarChar,Value=entity.CouponTypeID},
                 new SqlParameter{ParameterName="@PrizeName",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizeName},
                 new SqlParameter{ParameterName="@CountTotal",SqlDbType=SqlDbType.Int,Value=entity.CountTotal},
+                new SqlParameter{ParameterName="@CustomerId",SqlDbType=SqlDbType.NVarChar,Value=this.CurrentUserInfo.ClientID},
                 //new SqlParameter{ParameterName="@Probability",SqlDbType=SqlDbType.Decimal,Value=entity.Probability},
                 new SqlParameter{ParameterName="@Creator",SqlDbType=SqlDbType.NVarChar,Value=entity.CreateBy}
             };
@@ -230,8 +231,9 @@ namespace JIT.CPOS.BS.DataAccess
         public int AppendPrize(LPrizesEntity entity)
         {
             
-             SqlParameter[] parameters = new SqlParameter[5] 
+             SqlParameter[] parameters = new SqlParameter[6] 
             { 
+                new SqlParameter{ParameterName="@CustomerId",SqlDbType=SqlDbType.NVarChar,Value=this.CurrentUserInfo.ClientID},
                 new SqlParameter{ParameterName="@EventId",SqlDbType=SqlDbType.NVarChar,Value=entity.EventId},
                 new SqlParameter{ParameterName="@PrizeId",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizesID},
                 new SqlParameter{ParameterName="@PrizeType",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizeTypeId},
@@ -265,15 +267,13 @@ namespace JIT.CPOS.BS.DataAccess
                         + " where l.IsDelete = '0'"
                         + " and l.EventId = '" + strEventId + "' "
                         + " order by l.CreateTime asc ";
-            DataSet ds = new DataSet();
             return this.SQLHelper.ExecuteDataset(sql);
         }
 
         #endregion
-
         public DataSet GetCouponTypeIDByPrizeId(string strPrizesID)
         {
-            string strSql = string.Format("SELECT CouponTypeID FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID where l.PrizesID='{0}'", strPrizesID);
+            string strSql = string.Format("SELECT CouponTypeID FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID where l.PrizesID='{0}'",strPrizesID);
             return this.SQLHelper.ExecuteDataset(strSql);
 
         }

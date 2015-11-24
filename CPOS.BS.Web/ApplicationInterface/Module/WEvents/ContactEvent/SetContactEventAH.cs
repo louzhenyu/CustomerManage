@@ -23,7 +23,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var bllContactEvent = new ContactEventBLL(loggingSessionInfo);
-
+            var bllEvent = new LEventsBLL(loggingSessionInfo);
+            
             try
             {
            
@@ -58,7 +59,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         contactEvent.CustomerID = CurrentUserInfo.ClientID;
                         contactEvent.RewardNumber = para.RewardNumber;
                         contactEvent.ShareEventId = para.ShareEventId;
-                       
+                        if (para.ContactTypeCode=="Share" && para.ShareEventId != null && para.ShareEventId != "")
+                            bllEvent.UpdateEventIsShare(para.ShareEventId);
 
                     }
                     bllContactEvent.Update(contactEvent);
@@ -68,9 +70,21 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                 else
                 {
                     ContactEventEntity entityContactEvent = new ContactEventEntity();
+                    //判断触点活动是否已存在
+                    if (bllContactEvent.ExistsContact(entityContactEvent) > 0)
+                    {
+                        if (para.ContactTypeCode == "Share" && para.ShareEventId != null && para.ShareEventId.Length > 0)
+                        {
+                            rd.ErrMsg = "该分享活动已存在";
+                        }
+                        else
+                        {
+                            rd.ErrMsg = "有效期与已存在的触点活动有冲突";
+                        }
+                        rd.Success = false;
 
-              
-
+                        return rd;
+                    }
                     //RewardType:Point,Coupon,Chance
                     if (para.PrizeType == "Point")
                         entityContactEvent.Integral = para.Integral;
@@ -86,7 +100,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                       //判断触点中的分享设置的开始时间和结束时间是否在被分享的活动时间范围内
                         if (bllContactEvent.ExistsContact(entityContactEvent) > 0)
                         {
-                            var bllEvent = new LEventsBLL(loggingSessionInfo);
+                            
                             var entityEvent = bllEvent.GetByID(para.ShareEventId);
                             if (DateTime.Compare(Convert.ToDateTime(para.BeginDate), Convert.ToDateTime(entityEvent.BeginTime)) < 0 || DateTime.Compare(Convert.ToDateTime(para.EndDate), Convert.ToDateTime(entityEvent.EndTime))>0)
                             {
@@ -97,23 +111,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                             return rd;
                         }
                         entityContactEvent.ShareEventId = para.ShareEventId;
-                    }
-                    //判断触点活动是否已存在
-                    if (bllContactEvent.ExistsContact(entityContactEvent) > 0)
-                    {
-                        if (para.ContactTypeCode == "Share" && para.ShareEventId != null && para.ShareEventId.Length > 0)
-                        {
-                            rd.ErrMsg = "该分享活动已存在";
-                        }
-                        else
-                        {
-                            rd.ErrMsg = "有效期与已存在的触点活动有冲突";
-                        }
-                        rd.Success = false;
-                        
-                        return rd;
-                    }
+                        bllEvent.UpdateEventIsShare(para.ShareEventId);
 
+                    }
                     entityContactEvent.PrizeCount = para.PrizeCount;
                     entityContactEvent.ContactTypeCode = para.ContactTypeCode;
                     entityContactEvent.ContactEventName = para.ContactEventName;

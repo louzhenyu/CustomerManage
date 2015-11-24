@@ -181,6 +181,68 @@ namespace JIT.CPOS.BS.DataAccess
                 result.PageCount++;
             return result;
         }
+
+        public PagedQueryResult<PanicbuyingEventEntity> GetPanicbuyingEventList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        {
+            //组织SQL
+            StringBuilder pagedSql = new StringBuilder();
+            StringBuilder totalCountSql = new StringBuilder();
+            //分页SQL
+            pagedSql.AppendFormat("select * from (select row_number()over( order by ");
+            if (pOrderBys != null && pOrderBys.Length > 0)
+            {
+                foreach (var item in pOrderBys)
+                {
+                    if (item != null)
+                    {
+                        pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
+                    }
+                }
+                pagedSql.Remove(pagedSql.Length - 1, 1);
+            }
+            else
+            {
+                pagedSql.AppendFormat(" [EventId] desc"); //默认为主键值倒序
+            }
+            pagedSql.AppendFormat(") as ___rn,* from [VwPanicBuyingEvent] WITH(NOLOCK) where 1=1 and EventStatus='已上架'");
+            //总记录数SQL
+            totalCountSql.AppendFormat("select count(1) from [VwPanicBuyingEvent] WITH(NOLOCK) where 1=1  and EventStatus='已上架' ");
+            //过滤条件
+            if (pWhereConditions != null)
+            {
+                foreach (var item in pWhereConditions)
+                {
+                    if (item != null)
+                    {
+                        pagedSql.AppendFormat(" and {0}", item.GetExpression());
+                        totalCountSql.AppendFormat(" and {0}", item.GetExpression());
+                    }
+                }
+            }
+            pagedSql.AppendFormat(") as A ");
+            //取指定页的数据
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
+            //执行语句并返回结果
+            PagedQueryResult<PanicbuyingEventEntity> result = new PagedQueryResult<PanicbuyingEventEntity>();
+            List<PanicbuyingEventEntity> list = new List<PanicbuyingEventEntity>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    PanicbuyingEventEntity m;
+                    this.LoadPanicbuyingEvent(rdr, out m);
+                    list.Add(m);
+                }
+            }
+            result.Entities = list.ToArray();
+            int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(totalCountSql.ToString()));    //计算总行数
+            result.RowCount = totalCount;
+            int remainder = 0;
+            result.PageCount = Math.DivRem(totalCount, pPageSize, out remainder);
+            if (remainder > 0)
+                result.PageCount++;
+            return result;
+        }
         /// <summary>
         /// 装载实体
         /// </summary>
@@ -230,6 +292,44 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pInstance.RemainQty = Convert.ToInt32(pReader["RemainQty"].ToString());
             }
+        }
+        protected void LoadPanicbuyingEvent(SqlDataReader pReader, out PanicbuyingEventEntity pInstance)
+        {
+            //将所有的数据从SqlDataReader中读取到Entity中
+            pInstance = new PanicbuyingEventEntity();
+            pInstance.PersistenceHandle = new PersistenceHandle();
+            pInstance.PersistenceHandle.Load();
+
+            if (pReader["EventId"] != DBNull.Value)
+            {
+                pInstance.EventId = (Guid)pReader["EventId"];
+            }
+            if (pReader["EventName"] != DBNull.Value)
+            {
+                pInstance.EventName = Convert.ToString(pReader["EventName"]);
+            }
+            if (pReader["EventTypeId"] != DBNull.Value)
+            {
+                pInstance.EventTypeId = Convert.ToInt32(pReader["EventTypeId"]);
+            }
+            if (pReader["BeginTime"] != DBNull.Value)
+            {
+                pInstance.BeginTime = Convert.ToDateTime(pReader["BeginTime"]);
+            }
+            if (pReader["EndTime"] != DBNull.Value)
+            {
+                pInstance.EndTime = Convert.ToDateTime(pReader["EndTime"]);
+            }
+            if (pReader["CustomerID"] != DBNull.Value)
+            {
+                pInstance.CustomerID = Convert.ToString(pReader["CustomerID"]);
+            }
+
+            if (pReader["EventStatus"] != DBNull.Value)
+            {
+                pInstance.EventStatusStr = pReader["EventStatus"].ToString();
+            }
+  
         }
          public DataSet GetPanicbuyingEvent(string pEvenid)
         {

@@ -46,9 +46,9 @@ namespace JIT.CPOS.BS.DataAccess
         {
             List<MHItemAreaEntity> list = new List<MHItemAreaEntity> { };
             string sql = string.Format(@"select a.*,b.ItemName,b.ImageUrl,b.Price,b.SalesPrice,b.AddedTime,b.EndTime,b.BeginTime,b.EventTypeID
-                                        from MHItemArea a join vwPEventItemDetail b on a.EventId=b.EventId and a.ItemId=b.ItemID
-                                        left join MobileHome c on a.HomeID =c.HomeID and c.isdelete=0
-                                        where c.CustomerID='{0}' and a.isdelete=0 and datediff(day,getdate(),b.EndTime )>=0	
+                                        from MHItemArea a left join vwPEventItemDetail b on a.EventId=b.EventId and a.ItemId=b.ItemID
+                                        inner join MobileHome c on a.HomeID =c.HomeID and c.isdelete=0  AND c.IsActivate=1
+                                        where c.CustomerID='{0}'  AND c.IsActivate=1 and a.isdelete=0 and datediff(day,getdate(),b.EndTime )>=0	
             ", this.CurrentUserInfo.ClientID);//datediff(day,getdate(),b.EndTime )>=0	活动结束时间包含选中的那天
             using (var rd = this.SQLHelper.ExecuteReader(sql))
             {
@@ -69,6 +69,18 @@ namespace JIT.CPOS.BS.DataAccess
                 }
             }
             return list.ToArray();
+        }
+        public DataSet GetItemDetails(string strHomeId, string strGroupId)
+        {
+            List<MHItemAreaEntity> list = new List<MHItemAreaEntity> { };
+            string sql = string.Format(@"select a.*,b.ItemName,(CASE WHEN a.areaFlag='eventList' THEN b.ImageUrl ELSE  a.ItemImageUrl END ) ImageUrl,b.Price,b.SalesPrice,b.AddedTime,b.EndTime,b.BeginTime,b.EventTypeID as TypeID,b.RemainingSec
+                                        from MHItemArea a 
+                                                INNER JOIN dbo.MHCategoryAreaGroup mc ON a.GroupId=mc.GroupId AND mc.HomeId = a.HomeId
+                                                LEFT JOIN vwPEventItemDetail b on a.EventId=b.EventId and a.ItemId=b.ItemID
+                                        where a.HomeId='{0}' and a.GroupId={1} and a.isdelete=0  order by a.DisplayIndex asc
+            ", strHomeId, strGroupId);//活动结束时间包含选中的那天 and datediff(day,getdate(),b.EndTime )>=0	
+            return this.SQLHelper.ExecuteDataset(sql);
+            
         }
     }
 }

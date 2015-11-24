@@ -14,6 +14,7 @@ using JIT.Utility.Web;
 using JIT.CPOS.BS.Entity.User;
 using JIT.CPOS.BS.Entity.Pos;
 using System.Collections;
+using CPOS.Common;
 
 namespace JIT.CPOS.BS.Web.Module.Basic.VIP.Handler
 {
@@ -202,6 +203,31 @@ namespace JIT.CPOS.BS.Web.Module.Basic.VIP.Handler
 
         #endregion
 
+        #region 导入Vip
+        public string ImportVip()
+        {
+            var responseData = new ResponseData();
+            var vipBLL = new VipBLL(CurrentUserInfo);
+
+            ExcelHelper excelHelper = new ExcelHelper();
+            string strPath = excelHelper.UploadExcel();//上传文件
+            if (strPath.Length > 0)
+            {
+                try
+                {
+                    responseData.data = vipBLL.ExcelToDb(strPath, CurrentUserInfo);
+                    responseData.success = true;
+                    responseData.msg = "操作成功";
+                }
+                catch (Exception err)
+                {
+                    responseData.success = false;
+                    responseData.msg = err.Message.ToString();
+                }
+            }
+            return "";
+        }
+        #endregion
     }
 
     #region QueryEntity

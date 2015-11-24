@@ -24,9 +24,7 @@ using JIT.Utility.Log;
 using CPOS.Common;
 using JIT.CPOS.BS.Web.Base.Excel;
 using Aspose.Cells;
-using System.Net;
-using System.Drawing;
-using System.Globalization;
+
 
 
 namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
@@ -69,9 +67,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 case "DownloadQRCode"://下载员工固定二维码
                     DownloadQRCode();
                     break;
-                //case "ImportUser":
-                //    content = ImportUser();
-                //    break;
+                case "ImportUser":
+                    content = ImportUser();
+                    break;
 
             }
             pContext.Response.Write(content);
@@ -269,7 +267,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 responseData.msg = "请添加角色配置";
                 return responseData.ToJSON();
             }
-            //设为归属单位有且只能有一个***
+            //设为归属单位有且只能有一个
             int countDefaultFlag = user.userRoleInfoList.Where(p => p.DefaultFlag == 1).Count();
             if (countDefaultFlag < 1)
             {
@@ -282,14 +280,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 responseData.success = false;
                 responseData.msg = "只能设置一个单位为默认单位";
                 return responseData.ToJSON();
-            }
-           UserRoleInfo roleinfo =user.userRoleInfoList.Where(p => p.DefaultFlag == 1).ToArray()[0];
-            t_unitBLL t_unitBLL=new BLL.t_unitBLL(CurrentUserInfo);
-            t_unitEntity UnitEn = t_unitBLL.GetByID(roleinfo.UnitId);
-            string unitName = "";
-            if (UnitEn != null && UnitEn.unit_name!=null)
-            {
-                unitName = UnitEn.unit_name;
             }
             //增加用户标识
             foreach (var userRoleItem in user.userRoleInfoList)
@@ -333,14 +323,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                     responseData.msg = "无法获取员工二维码类别";
                     return responseData.ToJSON();
                 }
-                //生成了微信二维码
-                   var wxCode = CretaeWxCode();               
-                   //如果名称不为空，就把图片放在一定的背景下面
-                   if (!string.IsNullOrEmpty(user.User_Name))
-                   {
-                           string apiDomain = ConfigurationManager.AppSettings["original_url"];
-                           wxCode.ImageUrl = CombinImage(apiDomain + @"/HeadImage/qrcodeBack.jpg", wxCode.ImageUrl, unitName + "-" + user.User_Name);
-                   }
+
+                   var wxCode = CretaeWxCode();
 
                 var WQRCodeManagerbll = new WQRCodeManagerBLL(CurrentUserInfo);
 
@@ -445,87 +429,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 
         }
         #endregion
-
-        public static string CombinImage(string imgBack, string destImg, string strData)
-        {
-            //1、上面的图片部分
-            HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(destImg);
-            WebResponse response_qrcode = null;
-            Stream qrcode_stream = null;
-            response_qrcode = request_qrcode.GetResponse();
-            qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
-
-
-            Bitmap _bmpQrcode1 = new Bitmap(qrcode_stream);//把流转换成Bitmap
-            Bitmap _bmpQrcode = new Bitmap(_bmpQrcode1, 327, 327);//缩放图片           
-            //把二维码由八位的格式转为24位的
-            Bitmap bmpQrcode = new Bitmap(_bmpQrcode.Width, _bmpQrcode.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb); //并用上面图片的尺寸做了一个位图
-            //用上面空的位图生成了一个空的画板
-            Graphics g3 = Graphics.FromImage(bmpQrcode);
-            g3.DrawImageUnscaled(_bmpQrcode, 0, 0);//把原来的图片画了上去
-
-
-            //2、背景部分
-            HttpWebRequest request_backgroup = (HttpWebRequest)WebRequest.Create(imgBack);
-            WebResponse response_keleyi = null;
-            Stream backgroup_stream = null;
-            response_keleyi = request_backgroup.GetResponse();
-            backgroup_stream = response_keleyi.GetResponseStream();//把背景图片转换成流
-
-            Bitmap bmp = new Bitmap(backgroup_stream);
-            Graphics g = Graphics.FromImage(bmp);//生成背景图片的画板
-
-            //3、画上文字
-            //  String str = "文峰美容";
-            System.Drawing.Font font = new System.Drawing.Font("黑体", 25);
-            SolidBrush sbrush = new SolidBrush(Color.White);
-            SizeF sizeText = g.MeasureString(strData, font);
-
-            g.DrawString(strData, font, sbrush, (bmp.Width - sizeText.Width) / 2, 490);
-
-
-            // g.DrawString(str, font, sbrush, new PointF(82, 490));
-
-
-            g.DrawImage(bmp, 0, 0, bmp.Width, bmp.Height);//又把背景图片的位图画在了背景画布上。必须要这个，否则无法处理阴影
-
-            //4.合并图片
-            g.DrawImage(bmpQrcode, 130, 118, bmpQrcode.Width, bmpQrcode.Height);
-
-            MemoryStream ms = new MemoryStream();
-            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            System.Drawing.Image newImg = Image.FromStream(ms);//生成的新的图片
-            //把新图片保存下来
-            string DownloadUrl = ConfigurationManager.AppSettings["website_WWW"];
-            string host = DownloadUrl + "/HeadImage/";
-            //创建下载根文件夹
-            //var dirPath = @"C:\DownloadFile\";
-            var dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "HeadImage\\";
-            if (!Directory.Exists(dirPath))
-            {
-                Directory.CreateDirectory(dirPath);
-            }
-            //根据年月日创建下载子文件夹
-            var ymd = DateTime.Now.ToString("yyyyMMdd", DateTimeFormatInfo.InvariantInfo);
-            dirPath += ymd + @"\";
-            host += ymd + "/";
-            if (!Directory.Exists(dirPath))
-            {
-                Directory.CreateDirectory(dirPath);
-            }
-
-            //下载到本地文件
-            var fileExt = Path.GetExtension(destImg).ToLower();
-            var newFileName = DateTime.Now.ToString("yyyyMMddHHmmss_ffff", DateTimeFormatInfo.InvariantInfo) + ".jpg";//+ fileExt;
-            var filePath = dirPath + newFileName;
-            host += newFileName;
-
-            newImg.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            return host;
-        }
-
-
 
         #region DeleteData
         /// <summary>
@@ -675,7 +578,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             }
         }
 
-
         #region 导入用户
         public string ImportUser()
         {
@@ -715,7 +617,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                     string strPath = Request("filePath").ToString();
                     string strFileName = string.Empty;
                     DataSet ds = userService.ExcelToDb(HttpContext.Current.Server.MapPath(strPath), CurrentUserInfo);
-                    if (ds != null && ds.Tables.Count > 1 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                    if (ds != null && ds.Tables.Count>1 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                     {
 
                         Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(ds.Tables[0], 0);
@@ -727,7 +629,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                         strFileName = "\\用户错误信息导出" + DateTime.Now.ToFileTime() + ".xls";
                         savePath = savePath + strFileName;
                         wb.Save(savePath);//保存Excel文件   
-
+                           
                         //new ExcelCommon().OutPutExcel(HttpContext.Current, savePath);
                         //HttpContext.Current.ApplicationInstance.CompleteRequest();
                         //HttpContext.Current.Response.End();
@@ -760,7 +662,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 }
             }
             return responseData.ToJSON();
-
+           
         }
         #endregion
     }

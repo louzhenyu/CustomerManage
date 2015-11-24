@@ -27,6 +27,8 @@ using JIT.Utility.Log;
 using CPOS.Common;
 using JIT.CPOS.BS.Web.Base.Excel;
 using Aspose.Cells;
+
+
 namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 {
     /// <summary>
@@ -69,6 +71,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                     break;
                 case "UploadImagerUrl":
                     content = UploadImagerUrl();
+                    break;
+                case "ImportUnit":
+                    content=ImportUnit();
                     break;
             }
             pContext.Response.Write(content);
@@ -947,9 +952,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
         #region 导入门店
         public string ImportUnit()
         {
-            var responseData = new ResponseData();
-            var unitService = new UnitService(CurrentUserInfo);
-            ExcelHelper excelHelper = new ExcelHelper();
+             var responseData = new ResponseData();
+             var unitService = new UnitService(CurrentUserInfo);
+             ExcelHelper excelHelper = new ExcelHelper();
             //if (Request("filePath")!=null && Request("filePath").ToString()!="")
             //{
             //    DataTable dt = new DataTable();
@@ -958,7 +963,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             //    DataSet ds = unitService.DataTableToDb(dt, CurrentUserInfo);
             //    if (ds != null && ds.Tables[0].Rows.Count > 0)
             //    {
-
+                    
             //        //数据获取
             //        Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(dt, 0);
             //        string savePath = HttpContext.Current.Server.MapPath(@"~/File/Unit");
@@ -982,65 +987,63 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             //    responseData.success = false;
             //    responseData.msg ="文件路径不对";
             //}
-            if (Request("filePath") != null && Request("filePath").ToString() != "")
-            {
-                try
-                {
-                    var rp = new ImportRP();
-                    string strPath = Request("filePath").ToString();
-                    string strFileName = string.Empty;
-                    DataSet ds = unitService.ExcelToDb(HttpContext.Current.Server.MapPath(strPath), CurrentUserInfo);
-                    if (ds != null && ds.Tables.Count > 1 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
-                    {
+             if (Request("filePath")!=null && Request("filePath").ToString()!="")
+             {
+                 try
+                 {
+                     var rp = new ImportRP();
+                     string strPath = Request("filePath").ToString();
+                     string strFileName = string.Empty;
+                     DataSet ds = unitService.ExcelToDb(HttpContext.Current.Server.MapPath(strPath), CurrentUserInfo);
+                     if (ds != null && ds.Tables.Count > 1 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                     {
 
-                        Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(ds.Tables[0], 0);
-                        string savePath = HttpContext.Current.Server.MapPath(@"~/File/ErrFile/Unit");
-                        if (!System.IO.Directory.Exists(savePath))
-                        {
-                            System.IO.Directory.CreateDirectory(savePath);
-                        }
-                        strFileName = "\\门店错误信息导出" + DateTime.Now.ToFileTime() + ".xls";
-                        savePath = savePath + strFileName;
-                        wb.Save(savePath);//保存Excel文件
+                         Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(ds.Tables[0], 0);
+                         string savePath = HttpContext.Current.Server.MapPath(@"~/File/ErrFile/Unit");
+                         if (!System.IO.Directory.Exists(savePath))
+                         {
+                             System.IO.Directory.CreateDirectory(savePath);
+                         }
+                         strFileName = "\\门店错误信息导出" + DateTime.Now.ToFileTime() + ".xls";
+                         savePath = savePath + strFileName;
+                         wb.Save(savePath);//保存Excel文件
 
-                        //new ExcelCommon().OutPutExcel(HttpContext.Current, savePath);
-                        //HttpContext.Current.ApplicationInstance.CompleteRequest();
-                        //HttpContext.Current.Response.End();
+                         //new ExcelCommon().OutPutExcel(HttpContext.Current, savePath);
+                         //HttpContext.Current.ApplicationInstance.CompleteRequest();
+                         //HttpContext.Current.Response.End();
 
-                        rp = new ImportRP()
-                        {
-                            Url = "/File/ErrFile/Unit" + strFileName,
-                            TotalCount = Convert.ToInt32(ds.Tables[1].Rows[0]["TotalCount"].ToString()),
-                            ErrCount = Convert.ToInt32(ds.Tables[1].Rows[0]["ErrCount"].ToString())
-                        };
-                    }
-                    else
-                    {
-                        rp = new ImportRP()
-                        {
-                            Url = "",
-                            TotalCount = Convert.ToInt32(ds.Tables[1].Rows[0]["TotalCount"].ToString()),
-                            ErrCount = Convert.ToInt32(ds.Tables[1].Rows[0]["ErrCount"].ToString())
-                        };
+                         rp = new ImportRP()
+                         {
+                             Url = "/File/ErrFile/Unit" + strFileName,
+                             TotalCount = Convert.ToInt32(ds.Tables[1].Rows[0]["TotalCount"].ToString()),
+                             ErrCount = Convert.ToInt32(ds.Tables[1].Rows[0]["ErrCount"].ToString())
+                         };
+                     }
+                     else
+                     {
+                         rp = new ImportRP()
+                         {
+                             Url = "",
+                             TotalCount = Convert.ToInt32(ds.Tables[1].Rows[0]["TotalCount"].ToString()),
+                             ErrCount = Convert.ToInt32(ds.Tables[1].Rows[0]["ErrCount"].ToString())
+                         };
 
-                        responseData.success = true;
-                    }
-                    responseData.success = true;
-                    responseData.data = rp;
-                }
-                catch (Exception err)
-                {
-                    responseData.success = false;
-                    responseData.msg = err.Message.ToString();
-                }
-            }
-            return responseData.ToJSON();
-
+                         responseData.success = true;
+                     }
+                     responseData.success = true;
+                     responseData.data = rp;
+                 }
+                 catch (Exception err)
+                 {
+                     responseData.success = false;
+                     responseData.msg = err.Message.ToString();
+                 }
+             }
+             return responseData.ToJSON();
+           
 
         }
         #endregion
-
-
     }
 
     #region QueryEntity

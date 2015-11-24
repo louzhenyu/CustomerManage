@@ -57,7 +57,21 @@ namespace JIT.CPOS.BS.DataAccess
                 return Convert.ToInt32(result);
             }
         }
+        public int GetMaxGroupId(string strHomeId)
+        {
+            string sql = string.Format("select max(groupId) groupId from MHCategoryArea a,mobileHome b where a.homeId = b.homeId " +
+                         " and b.customerId ='{0}' and b.Homeid='{1}' ", this.CurrentUserInfo.ClientID,strHomeId);
 
+            string result = this.SQLHelper.ExecuteScalar(sql).ToString();
+            if (string.IsNullOrEmpty(result))
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt32(result);
+            }
+        }
         /// <summary>
         /// 获取指定客户下的商品分类区域的项
         /// </summary>

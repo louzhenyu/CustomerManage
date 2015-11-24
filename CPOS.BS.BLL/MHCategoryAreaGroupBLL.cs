@@ -38,12 +38,22 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetMaxGroupId();
         }
         /// <summary>
-        /// 获取首页每个模块配置信息
+        /// 获取首页每个模块配置信息 
         /// </summary>
         /// <returns></returns>
         public DataSet GetLayoutList(string pCustomerId)
         {
             return this._currentDAO.GetLayoutList(pCustomerId);
+        }
+        /// <summary>
+        /// 更新各个模块的排序
+        /// </summary>
+        /// <param name="intIndex"></param>
+        /// <param name="strGroupId"></param>
+        /// <returns></returns>
+        public int UpdateCategoryAreaGroupDisplayIndex(int intIndex, string strGroupId)
+        {
+            return this._currentDAO.UpdateCategoryAreaGroupDisplayIndex(intIndex, strGroupId);
         }
     }
 }

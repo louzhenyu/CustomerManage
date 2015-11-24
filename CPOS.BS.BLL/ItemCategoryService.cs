@@ -505,6 +505,23 @@ namespace JIT.CPOS.BS.BLL
 
         #endregion
 
+        #region 商品分组
+        /// <summary>
+        /// 首页商品分组列表获取
+        /// </summary>
+        public DataSet GetItemGroupList(string customerId, string categoryName, int pageIndex, int pageSize)
+        {
+            return itemCategoryService.GetItemGroupList(customerId, categoryName, pageIndex, pageSize);
+        }
+        /// <summary>
+        /// 首页商品分组数量获取
+        /// </summary>
+        public int GetItemGroupCount(string customerId, string categoryName)
+        {
+            return itemCategoryService.GetItemGroupCount(customerId, categoryName);
+        }
+        #endregion
+
         #region 获取第一级商品分类
 
         /// <summary>
@@ -615,13 +632,37 @@ namespace JIT.CPOS.BS.BLL
         {
             itemCategoryService.DeleteItemCategoryAreaData(groupID);
         }
-
+        /// <summary>
+        /// 删除模块关联的数据
+        /// </summary>
+        /// <param name="groupID"></param>
+        /// <param name="strHomeId"></param>
+        public void DeleteItemCategoryAreaData(string groupID,string strHomeId)
+        {
+            itemCategoryService.DeleteItemCategoryAreaData(groupID, strHomeId);
+        }
         public void DeleteItemCategoryAreaGroupData(string groupId)
         {
             itemCategoryService.DeleteItemCategoryAreaGroupData(groupId);
         }
-
-
+        /// <summary>
+        /// 删除模块数据
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <param name="strHomeId"></param>
+        public void DeleteItemCategoryAreaGroupData(string groupId, string strHomeId)
+        {
+            itemCategoryService.DeleteItemCategoryAreaGroupData(groupId, strHomeId);
+        }
+        /// <summary>
+        /// 删除活动数据
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <param name="strHomeId"></param>
+        public void DeleteItemAreaData(string groupId, string strHomeId)
+        {
+            itemCategoryService.DeleteItemAreaData(groupId, strHomeId);
+        }
         public void UpdateMHSearchAreaData(Guid MHSearchAreaID, string customerId)
         {
             itemCategoryService.UpdateMHSearchAreaData(MHSearchAreaID, customerId);

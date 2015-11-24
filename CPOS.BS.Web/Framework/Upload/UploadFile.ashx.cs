@@ -98,7 +98,13 @@ namespace JIT.CPOS.BS.Web.Framework.Upload
         }
         public class FileData
         {
+            /// <summary>
+            /// 包括域名的完整地址
+            /// </summary>
             public string url { get; set; }
+            /// <summary>
+            /// 没有域名的完整地址
+            /// </summary>
             public string localurl { get; set; }
             public string name { get; set; }
             public string extension { get; set; }
