@@ -21,7 +21,8 @@
 			domain:""
         },
         detailDate:{},
-        ValueCard:'',//储值卡号
+        ValueCard: '',//储值卡号
+        submitappcount:false,//是否正在提交追加表单
         select:{
             isSelectAllPage:false,                 //是否是选择所有页面
             tagType:[],                             //标签类型
@@ -58,6 +59,7 @@
             });
 			
 
+
             that.getActivityEventList();
             that.getCouponList();
 			
@@ -82,30 +84,37 @@
 			    $('.jui-dialog-prizeCountAdd').show();
 			    $('.jui-dialog-prizeCountAdd .saveBtn').unbind('click');
 			    $('.jui-dialog-prizeCountAdd .saveBtn').bind('click', function () {
+			        if (!that.submitappcount) {
+			            that.submitappcount = true;
+			            if ($('#prizeCount_Add').form('validate')) {
+			                var addNum = $('#prizeCountAdd').val() - 0,
+                                count = num + addNum;
+			                //提交接口
+			                $.util.ajax({
+			                    url: that.elems.domain + "/ApplicationInterface/Gateway.ashx",
+			                    data: {
+			                        "action": 'WEvents.ContactEvent.SetContactEvent',
+			                        "ContactEventId": Contact_EventId,
+			                        "PrizeCount": addNum,
+			                        "Method": "Append"
 
-			        if ($('#prizeCount_Add').form('validate')) {
-			            var addNum = $('#prizeCountAdd').val() - 0,
-                            count = num + addNum;
-			            //提交接口
-			            $.util.ajax({
-			                url: that.elems.domain + "/ApplicationInterface/Gateway.ashx",
-			                data: {
-			                    "action": 'WEvents.ContactEvent.SetContactEvent',
-			                    "ContactEventId": Contact_EventId,
-			                    "PrizeCount": addNum,
-			                    "Method":"Append"
+			                    },
+			                    success: function (data) {
+			                        if (data.IsSuccess && data.ResultCode == 0) {
+			                            $('.jui-mask').hide();
+			                            $('.jui-dialog-prizeCountAdd').hide();
+			                            that.loadPageData();
+			                        } else {
+			                            $.messager.alert('提示', data.Message);
+			                        }
 
-			                },
-			                success: function (data) {
-			                    if (data.IsSuccess && data.ResultCode == 0) {
-			                        $('.jui-mask').hide();
-			                        $('.jui-dialog-prizeCountAdd').hide();
-			                        that.loadPageData();
-			                    } else {
-			                        alert(data.Message);
+			                        that.submitappcount = false;
 			                    }
-			                }
-			            });
+			                });
+			            }
+			        } else {
+
+			            $.messager.alert('提示', '正在提交请稍后！');
 			        }
 
 			    });
@@ -200,7 +209,7 @@
                     {
                         field: 'ContactEventName', title: '活动名称', width: 200, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
-                            var long = 18;
+                            var long = 17;
                             var html = ""
                             if (value && value.length > long) {
                                 html = '<div class="rowTextnew" title="' + value + '">' + value.substring(0, long) + '...</div>'
@@ -229,7 +238,7 @@
                     {
                         field: 'Reward', title: '奖品名称', width: 120, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
-                            var long = 9;
+                            var long = 8;
                             var html = ""
                             if (value && value.length > long) {
                                 html = '<div class="rowTextnew" title="' + value + '">' + value.substring(0, long) + '...</div>'
@@ -403,7 +412,7 @@
 		    $('.jui-dialog-addShare').show();
 		    var that = this;
 		    /**************** -------------------弹出easyui 控件 start****************/
-		    var wd = 160, H = 32;
+		    var wd = 190, H = 32;
 		    //触点类型
 		    $('#Activity_ContactTypeCode').combobox({
 		        width: wd,

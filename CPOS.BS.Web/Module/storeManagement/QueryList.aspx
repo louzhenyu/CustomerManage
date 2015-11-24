@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>门店管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="<%=StaticUrl+"/module/commodity/css/style.css?v=0.61"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/storeManagement/css/style.css?v=0.64"%>" rel="stylesheet" type="text/css" />
     <style type="text/css">
 	.queryTermArea{background:#ecf1f5;}
     .queryTermArea .commonSelectWrap{margin-right:0px;}
@@ -12,12 +12,24 @@
 	.optionBtn .commonBtn{width:100px;}
 	.commonSelectWrap .tit{width:105px;}
 	.moreQueryWrap{float:left;margin-left:20px;}
-	.optionBtn .exportBtn,.optionBtn .entranceBtn{float:right;}
 	.optionBtn .exportBtn{margin-right:40px;}
 	.moreQueryWrap .queryBtn{width:73px;}
 	.iconPlay,.iconPause{display:inline-block;width:30px;height:90px;}
 	.iconPlay{background:url(images/running.png) no-repeat center center;}
 	.iconPause{background:url(images/pause.png) no-repeat center center;}
+    .importBtn, .exportBtn {
+float: left;
+width: 82px;
+height: 32px;
+margin-left: 20px;
+cursor: pointer;
+}
+    .importBtn {
+background: url(images/icon-import.png) no-repeat center center;
+}
+    .exportBtn {
+background: url(images/icon-export.png) no-repeat center center;
+}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -76,8 +88,10 @@
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
                 	<div class="commonBtn" id="addStoreBtn">添加门店</div>
-                    <div class="commonBtn exportBtn" data-flag="">导出门店</div>
-                    <div class="commonBtn entranceBtn" data-flag="">导入门店</div>
+
+                    
+                    <div class="importBtn"  id="inportStoreBtn"></div>
+                    <div class="exportBtn"></div>
                     
                     <!--
                     <div class="commonBtn " data-flag="putaway"><img src="images/jiatous.png"  >  上架</div>
@@ -110,12 +124,73 @@
       <div id="win" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
       		<div class="easyui-layout" data-options="fit:true" id="panlconent">
 
-      			<div data-options="region:'center'" style="padding:10px;">
-      				指定的模板添加内容
+      			<div data-options="region:'center'" style="padding:0px;">
+
+
+			            <div class="qb_member">
+                            <div id="step1" class="member step">
+                                <div class="menber_title"><img src="images/lc_1.jpg" /></div>
+                                <div class="menber_center">
+                                    <div class="menber_centernr">
+                                        <div class="menber_centernrt">
+                                            <p>请按照数据模板的格式准备要导入的数据<a href="#">（如何导入？）</a></p>
+                                            <p><a href="/File/ExcelTemplate/门店导入数据模板.xlsx">下载模板</a></p>
+                                            <div class="attention"><span>注意事项：</span>
+                                                1.模板中的表头名称不可更改、表头行不能删除。<br />
+                                                2.项目顺序可以调整，不需要的项目可以删除。<br />
+                                                3.表中的会员姓名、手机号为必填项目，必须保留。<br />
+                                                4.导入文件请勿超过 1 MB。
+                                            </div>
+                                        </div>
+                                        <div class="menber_centernrb" id="editLayer">
+                                            选择需要导入的CSV文件
+                                            <p id="nofiletext" >未选择文件</p>
+                                             <div class="CSVFilelist"></div>
+                                            <input id="CSVFileurl" value="" type="hidden"  />
+                                           <input type="file" class="uploadCSVFileBtn" />
+                                        </div>
+                                    </div>  
+	                            </div>
+                            </div>
+
+                             <div id="step2"  class="member step" style="display:none">
+                                <div class="menber_title"><img src="images/lc_2.jpg" /></div>
+                                    <div class="menber_center">
+                                        <div class="menber_centernr">
+                                            <div class="loading">导入中...</div>
+                                            <div class="attention"><span>提示：</span>
+                                                1.导入过程中请勿关闭此页面；<br />
+                                                2.数据导入结束后，可能下载错误报告，以便重新处理。
+                                            </div>
+        	                            </div>
+		                            </div>
+                            </div>
+
+
+                            <div id="step3"  class="member step" style="display:none">
+                                <div class="menber_title"><img src="images/lc_3.jpg" /></div>
+                                <div class="menber_center">
+                                    <div class="menber_centernr">
+                                        <div class="succeed">导入完成<p>共<span id="inputTotalCount" class="inputCount"> 0</span> 条，成功导入<span  id="inputErrCount" class="red inputCount"> 0</span> 条</p></div>
+                                        <div class="menber_centernrb1">
+                	                        下载错误报告，查看失败原因
+                                            <p><a id="error_report" href="javascipt:void(0)">error_report.csv</a><span>选择文件</span></p>
+                    
+                                        </div>
+        	                        </div>
+		                        </div>
+                            </div>
+
+
+                            </div>
+			
+			  
+
+
       			</div>
-      			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
-      				<a class="easyui-linkbutton commonBtn saveBtn" >确定</a>
-      				<a class="easyui-linkbutton commonBtn cancelBtn"  href="javascript:void(0)" onclick="javascript:$('#win').window('close')" >取消</a>
+      			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:right;padding:5px 20px 0;">
+      				<a id="startinport"  class="easyui-linkbutton commonBtn saveBtn" >开始导入</a>  
+                      <a id="closebutton" style="display:none;" class="easyui-linkbutton commonBtn closeBtn close" >关闭</a>
       			</div>
       		</div>
 
@@ -207,6 +282,11 @@
            </tr>
            <#} #>
        </script>
+    
+        
        <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
             defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
+
+
+
 </asp:Content>

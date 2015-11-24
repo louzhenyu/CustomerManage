@@ -742,6 +742,7 @@
     <Content Include="Module\commodity\release.aspx" />
     <Content Include="Module\commodity\specification.aspx" />
     <Content Include="Module\couponManage\addCoupon.aspx" />
+    <Content Include="Module\couponManage\couponQueryList.aspx" />
     <Content Include="Module\couponManage\css\addCoupon.css" />
     <Content Include="Module\couponManage\css\style.css" />
     <Content Include="Module\couponManage\images\add.png" />
@@ -753,6 +754,7 @@
     <Content Include="Module\couponManage\images\radio.png" />
     <Content Include="Module\couponManage\images\radioOn.png" />
     <Content Include="Module\couponManage\js\addCoupon.js" />
+    <Content Include="Module\couponManage\js\couponQueryList.js" />
     <Content Include="Module\couponManage\js\main.js" />
     <Content Include="Module\couponManage\js\queryList.js" />
     <Content Include="Module\couponManage\QueryList.aspx" />
@@ -6305,7 +6307,10 @@
     <Compile Include="ApplicationInterface\Module\VIP\VipIntegral\SetVipIntegralAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\UpdateVipAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\ContactEvent\ChangeContactEventStatusAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\ContactEvent\GetContactEventDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\ContactEvent\GetContactEventListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\ContactEvent\SetContactEventAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\EventShareHandler.ashx.cs">
       <DependentUpon>EventShareHandler.ashx</DependentUpon>
     </Compile>

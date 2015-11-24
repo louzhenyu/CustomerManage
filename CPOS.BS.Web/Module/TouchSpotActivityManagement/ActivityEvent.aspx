@@ -378,6 +378,7 @@
 .prizeCountAddContent .commonSelectWrap{margin:60px 0 45px 0;}
     </style>
 
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -411,7 +412,6 @@
                         </div>
                 </div>
                 -->
-
             <div class="addShareArea">
                 <a href="javascript:;" class="commonHandleBtn" id="addShareBtn">+添加活动</a>
             </div>
@@ -443,11 +443,13 @@
         <div class="redPackageContent">
             <form></form>
             <form id="addShareForm">
+                
                 <div class="commonSelectWrap">
                     <em class="tit">触点类型：</em>
                     <label class="searchInput clearBorder">
                         <input id="ContactEventId" name="ContactEventId" value="" type="hidden" style="display: none" />
                         <input data-text="触点类型" class="easyui-combobox" id="Activity_ContactTypeCode" data-options="required:true,width:190,height:32,invalidMessage:'必填',missingMessage:'必填'" missingMessage="必填" name="ContactTypeCode" type="text" value="" validtype='selectIndex'>
+                        
                     </label>
                 </div>
 

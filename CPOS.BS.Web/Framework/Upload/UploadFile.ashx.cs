@@ -61,6 +61,7 @@ namespace JIT.CPOS.BS.Web.Framework.Upload
                         tempFileUrl = getFtpUrl(fileInfo, tempFileUrl, targetDir);//上传到ftp
                         #endregion
                         respObj.file.url = tempFileUrl;
+                        respObj.file.localurl = folderPath + fileName;
                         respObj.file.name = fileName;
                         respObj.file.extension = extension;
                         respObj.file.size = postedFile.ContentLength;
@@ -98,6 +99,7 @@ namespace JIT.CPOS.BS.Web.Framework.Upload
         public class FileData
         {
             public string url { get; set; }
+            public string localurl { get; set; }
             public string name { get; set; }
             public string extension { get; set; }
             public long size { get; set; }

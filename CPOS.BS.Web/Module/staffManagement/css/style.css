@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
@@ -64,3 +64,51 @@
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none;}
 .panel.window{}
 .window-shadow{display:none !important;}
+
+
+
+/*导出窗口样式*/
+.qb_member{ width:694px; }
+.member{ width:694px; padding-bottom:2px; float:left; background:#fff;border-radius:5px;}
+.menber_top{ width:679px; height:50px; font-size:16px; color:#666;  font-weight:700; line-height:50px; padding-left:15px; background:#f3f3f3;border-radius:5px 5px 0px 0px;}
+.menber_top img{ width:30px; height:30px; margin-right:10px; margin-top:8px; _margin-top:-40px; float:right;}
+.menber_title{ width:100%; float:left;}
+.menber_title img{ width:100%; height:90px; }
+.menber_center{ width:614px;font-size:14px; color:#666; background:#ccc; margin:0 auto;}
+.menber_centernr{ width:100%; float:left;}
+.menber_centernrt{width:594px; float:left; padding-bottom:20px; padding-left:20px; margin-top:10px; border-bottom:1px solid #ededed;}
+.menber_centernrt p{  line-height:30px;}
+.menber_centernrt a{ color:#09f;}
+.menber_centernrb{width:594px;float:left; margin-top:20px; padding-bottom:20px; padding-left:20px; border-bottom:1px solid #ededed;}
+.menber_centernrb p{ color:#ccc; line-height:50px;}
+.menber_centernrb span{font-size:14px;background:#0cc;padding:10px 20px;cursor:pointer; border-radius:6px; text-align:center; color:#fff; line-height:32px; }
+.menber_centernrb1{width:594px;float:left; color:#999;   padding-bottom:20px; padding-left:20px; border-bottom:1px solid #ededed;}
+.menber_centernrb1 p{ color:#666; line-height:50px;}
+.menber_centernrb1 span{font-size:14px;background:#0cc;padding:5px 10px;cursor:pointer; border-radius:6px; text-align:center; color:#fff; line-height:32px;  margin-left:10px; }
+
+
+.import{ width:100%; float:left; margin-top:20px; }
+.import a{ font-size:14px;background:#fc7a52;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff;line-height:32px;float:right;}
+.import a:hover{background:#f00; text-decoration:none;}
+
+
+.attention{ width:100%;line-height:24px;color:#999;  float:left;}
+.attention span{font-size:16px;line-height:40px; color:#666; display:block;}
+
+.memberloading{ width:100%; height:50px; padding-top:80px; background:url(../images/loading.gif) no-repeat center center; line-height:40px; text-align:center; float:left;}
+.succeed{ width:100%; padding-top:60px; padding-bottom:40px; background:url(../images/chenggong.png) no-repeat  top 30px center; line-height:20px; text-align:center; float:left;}
+.succeed p{ color:#999;}
+.succeed .red{ color:#fc7a52;}
+
+
+
+.btnWrap .close{  float:right; margin-top:20px;font-size:14px;background:#ccc;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff; line-height:32px; float:right; }
+
+
+/* 上传文件按钮 */
+ .uploadCSVFileBtn{float:left; position: relative; width: 96px; height: 40px; background:url(../images/SelectBtn.png) no-repeat; cursor:pointer;margin-right: 20px;}
+ .uploadCSVFileBtn .ke-button-common {width:50px;height:50px;opacity:0;filter:Alpha(opacity=0);}
+ .uploadCSVFileBtn span{display:block;width:50px;height:50px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;left:0;}
+ .uploadCSVFileBtn input{float:left; position: relative; width: 50px; height: 50px; background:url(../images/upload.png); cursor:pointer;margin-right: 20px;}
+ .ke-upload-area .ke-upload-file {position: absolute;top: 0;right: 0;height: 25px;padding: 0;	margin: 0;z-index: 811212;border: 0 none;	opacity: 0;	filter: alpha(opacity=0);}
+.panel-body {overflow-x: hidden;}
