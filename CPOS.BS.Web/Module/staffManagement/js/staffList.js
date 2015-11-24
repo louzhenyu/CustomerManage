@@ -62,16 +62,19 @@
                     });
                 }
             });
+
+            
 			
 			//监听删除，编辑事件
-            that.elems.tabelWrap.delegate(".handle","click",function(e){
+            that.elems.tabelWrap.delegate(".handle", "click", function (e) {
+
                 var $this = $(this),
 					$tr = $this.parents('tr'),
 					flag = $this.data('flag'),
 					rowIndex=$(this).data("index");
                 that.elems.tabel.datagrid('selectRow', rowIndex);
 				var row = that.elems.tabel.datagrid('getSelected'),
-					userId = row.User_Id;	
+					userId = row.User_Id;
 				switch(flag){
 					case 'reset':
 						$.messager.confirm('重置密码', '您确定要密码重置为888888吗？',function(r){
@@ -98,7 +101,6 @@
 							$('td[field="User_Status_Desc"]',$tr).find('div').text('停用');
 						});
 					break;
-					
 					case 'delete':
 						$.messager.confirm('员工删除', '您确定要删除该员工吗？',function(r){
 						   if(r){
@@ -111,7 +113,23 @@
 				}
 				$.util.stopBubble(e);
             });
-			
+
+            //监听下载事件
+            that.elems.tabelWrap.delegate(".downImg", "click", function (e) {
+                debugger
+                var $this = $(this),
+					$tr = $this.parents('tr'),
+					rowIndex = $tr.attr("datagrid-row-index");
+                that.elems.tabel.datagrid('selectRow', rowIndex);
+                var row = that.elems.tabel.datagrid('getSelected');
+
+                        var date = new Date();
+                        new Image().src = row.WqrURL;
+                        that.downloadFile(date.getTime() + '.jpg', row.WqrURL);
+            });
+
+
+          
 			//跳转详情页
 			/*
             that.elems.tabelWrap.delegate(".datagrid-btable tr","click",function(e){
@@ -211,6 +229,17 @@
 			
 			
         },
+        downloadFile: function (fileName, content) {
+
+            var aLink = document.createElement('a');
+            //var blob = new Blob([content]);
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent("click", false, false);//initEvent 不加后两个参数在FF下会报错, 感谢 Barret Lee 的反馈
+            aLink.download = fileName;
+            aLink.href = content; //URL.createObjectURL(content);
+            aLink.dispatchEvent(evt);
+
+        },
         //渲染tabel
         renderTable: function (data) {
             debugger;
@@ -272,7 +301,7 @@
                     },
 					{field : 'WqrURL',title : '下载二维码',width:30,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-                           	return value?'<span data-url="'+value+'" class="">下载</span>':'';
+                            return value ? '<span data-url="' + value + '" data-flag="down" class="downImg">下载</span>' : '';
                         }
                     },
 					{field : 'User_Id',title : '操作',width:90,align:'center',resizable:false,
