@@ -1,0 +1,132 @@
+html,body{margin:0px; padding:0px;font-family:"Microsoft YaHei";}
+ul,li,dl,dt,dd{ list-style-type:none;margin:0px;padding:0px;}
+a{text-decoration:none}
+a:hover{ text-decoration:underline;}
+input,p,h1,h3,h2{margin:0;padding:0;font-weight:normal;}
+.right1{ float:right; margin-top:8px;_margin-top:210px;*margin-top:-22px;}
+img{border:0;}
+em{font-style:normal;color:#cc0000}
+a em{text-decoration:underline}
+
+
+
+
+.login{ width:100%; height:1078px;background:url(../images/login_bg.jpg) no-repeat left #f4f6f9;}
+.login_nr{ width:450px;margin-right:185px; margin-top:110px; float:right;}
+.logo{ width:100%; text-align:center; float:left;}
+.logo img{ width:102px; height:126px;}
+.login_dl{ width:358px; padding:20px 45px; border:1px solid #e5e5e5; margin-top:38px; background:#fff; float:left;}
+.login_dl li{width:100%;  font-size:18px;color:#767676; line-height:30px; float:left; margin-top:20px;}
+.login_dl li span{display:block;}
+.login_dl li input{width:338px;height:54px;font-size:18px;color:#767676;font-family:"Microsoft YaHei"; line-height:30px; padding:0 10px;background:#fff; border:1px solid #cecece;}
+
+.login_dl li span input{width:20px;height:20px;background:#fff; border:1px solid #0cc; vertical-align:middle; margin-top:5px; margin-right:5px; float:left;}
+.denglu{ width:100%; float:left; margin-top:20px; }
+.denglu a{ width:100%; font-size:18px;background:#0cd;cursor:pointer; border-radius:5px; text-align:center; color:#fff;line-height:54px;float:right;}
+.denglu a:hover{background:#f00; text-decoration:none;}
+.guanzhu{ width:100%; font-size:18px;color:#0cc;font-family:"Microsoft YaHei"; line-height:60px;float:left; margin-top:10px;}
+.guanzhu dt{ float:left;position:relative;}
+.guanzhu dt:hover{ width:150px; height:209px;cursor:pointer; position:absolute; z-index:1; background:url(../images/weixin.png) no-repeat 0 50px;}
+.guanzhu dd{ float:right;position:relative;}
+.guanzhu dd:hover{ height:209px;cursor:pointer; position:absolute; z-index:1; margin-left:196px;background:url(../images/weixin01.png) no-repeat 0 50px;}
+
+
+.qb_member{ width:694px; margin:120px auto;}
+.member{ width:694px; padding-bottom:30px; float:left; background:#fff;border-radius:5px;}
+.menber_top{ width:679px; height:50px; font-size:16px; color:#666;  font-weight:700; line-height:50px; padding-left:15px; background:#f3f3f3;border-radius:5px 5px 0px 0px;}
+.menber_top img{ width:30px; height:30px; margin-right:10px; margin-top:8px; _margin-top:-40px; float:right;}
+.menber_title{ width:100%; float:left;}
+.menber_title img{ width:694px; height:90px; }
+.menber_center{ width:614px;font-size:14px; color:#666; background:#ccc; margin:0 auto;}
+.menber_centernr{ width:100%; float:left;}
+.menber_centernrt{width:594px; float:left; padding-bottom:20px; padding-left:20px; margin-top:30px; border-bottom:1px solid #ededed;}
+.menber_centernrt p{  line-height:30px;}
+.menber_centernrt a{ color:#09f;}
+.menber_centernrb{width:594px;float:left; margin-top:20px; padding-bottom:20px; padding-left:20px; border-bottom:1px solid #ededed;}
+.menber_centernrb p{ color:#ccc; line-height:50px;}
+.menber_centernrb span{font-size:14px;background:#0cc;padding:10px 20px;cursor:pointer; border-radius:6px; text-align:center; color:#fff; line-height:32px; }
+.menber_centernrb1{width:594px;float:left; color:#999;  margin-top:20px; padding-bottom:20px; padding-left:20px; border-bottom:1px solid #ededed;}
+.menber_centernrb1 p{ color:#666; line-height:50px;}
+.menber_centernrb1 span{font-size:14px;background:#0cc;padding:5px 10px;cursor:pointer; border-radius:6px; text-align:center; color:#fff; line-height:32px;  margin-left:10px; }
+
+.import{ width:100%; float:left; margin-top:20px; }
+.import a{ font-size:14px;background:#fc7a52;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff;line-height:32px;float:right;}
+.import a:hover{background:#f00; text-decoration:none;}
+
+
+.attention{ width:100%;line-height:24px;color:#999; margin-top:30px; float:left;}
+.attention span{font-size:16px;line-height:40px; color:#666; display:block;}
+
+.loading{ width:100%; height:50px; padding-top:80px; background:url(../images/loading.gif) no-repeat center center; line-height:40px; text-align:center; float:left;}
+.succeed{ width:100%; padding-top:130px; padding-bottom:50px; background:url(../images/chenggong.png) no-repeat center center; line-height:20px; text-align:center; float:left;}
+.succeed p{ color:#999;}
+.succeed span{ color:#fc7a52;}
+
+.close{ width:100%; float:left; margin-top:20px; }
+.close a{ font-size:14px;background:#ccc;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff; line-height:32px; float:right;}
+.close a:hover{background:#f00; text-decoration:none;}
+
+
+
+
+.qb_quick{ width:694px; margin:120px auto;}
+.quick{ width:694px; padding-bottom:30px; float:left; background:#fff;border-radius:5px;}
+.quick_top{ width:679px; height:50px; font-size:16px; color:#666;  font-weight:700; line-height:50px; padding-left:15px; background:#f3f3f3;border-radius:5px 5px 0px 0px;}
+.quick_top img{ width:30px; height:30px; margin-right:10px; margin-top:8px; _margin-top:-40px; float:right;}
+.quick_title{ width:100%; float:left;}
+.quick_title img{ width:694px; height:90px; }
+.quick_center{ width:614px;font-size:14px; color:#666; background:#ccc; margin:0 auto;}
+.quick_centernr{ width:594px; float:left; padding-bottom:20px; padding-left:20px;}
+
+.found{ width:100%;line-height:24px;color:#999; margin-top:30px; float:left;}
+.found span{font-size:16px;line-height:40px; color:#666; display:block;}
+.found p{ color:#666; margin-top:15px;}
+.found a{ color:#f33;}
+
+.unrealistic{ width:100%; font-size:14px; color:#666; float:left; margin-top:70px;}
+.unrealistic input{width:20px;height:20px;background:#fff; border:1px solid #0cc; vertical-align:middle;margin-right:5px; float:left;}
+
+
+
+.help{}
+.Novice{ width:100%; margin:15px 0 30px 0;float:left;}
+.novice_title{ width:100%; color:#999; float:left; }
+.novice_title h1{ font-size:25px; float:left;font-family:"黑体";}
+.novice_title span{ font-size:18px; margin-left:15px; margin-top:2px; float:left;}
+.novice_title a{position:relative;top:14px;font-size:14px; color:#999; line-height:30px; padding-right:20px; background:url(../images/tubiao.png) no-repeat right; float:right; margin-top:4px;}
+.novice_title a:hover{ color:#000;}
+#novice_nr { width:100%; float:left; margin-top:10px;}
+#novice_nr li{line-height:30px; font-size:18px; padding:0 60px; color:#333; float:left;}
+#novice_nr li a{ color:#333;}
+#novice_nr li a:hover{color:#39d3d9; padding-bottom:25px; background:url(../images/biaoti_bg.png) no-repeat center bottom;text-decoration:none;}
+#novice_nr li.selectTag a {color:#39d3d9; padding-bottom:25px; background:url(../images/biaoti_bg.png) no-repeat center bottom; text-decoration:none;}
+
+.tagContent {display:none;}
+#tagContent div.selectTag{display: block;background:url(../images/biaoti_bg.png) no-repeat center bottom;}
+#tagContent{ width:100%; height:163px; background:#fff; margin-top:20px; padding:24px 0; float:left;}
+#tagContent li{ font-size:16px; color:#000; text-align:center; padding:0px; line-height:50px; float:left;}
+#tagContent li a{ color:#000;}
+#tagContent li a:hover{ color:#39d3d9;text-decoration:none;}
+#tagContent li span{ display:block;}
+#tagContent li img { width:172px; height:72px; padding:0 50px; border-right:1px solid #e0e0e0;}
+
+
+.commonly_nr{width:100%; padding-bottom:30px; background:#fff; margin-top:15px; float:left;}
+.commonly_nr span{ width:1px; height:150px; background:#e0e0e0; margin-top:50px; float:left;}
+.commonly_nr1{ width:33%;padding:0px 15px 0 50px;float:left;}
+.commonly_nr1 h2 { width:100%; font-size:18px; color:#000; line-height:60px; text-align:center; margin-bottom:10px; display:block; float:left;}
+.commonly_nr1 li{width:100%;font-size:14px;color:#999;line-height:30px; display:block; float:left;}
+.commonly_nr1 a{color:#999;white-space:nowrap;overflow:hidden;display:block;text-overflow:ellipsis;float:left;}
+.commonly_nr1 a:hover{color:#000;text-decoration:underline;}
+
+.commonly_nr2{ width:24%;padding:0px 15px 0 50px;float:left;}
+.commonly_nr2 h2 { width:100%; font-size:18px; color:#000; line-height:60px; text-align:center; margin-bottom:10px; display:block; float:left;}
+.commonly_nr2 li{width:100%;font-size:14px;color:#999;line-height:30px; display:block; float:left;}
+.commonly_nr2 a{color:#999;white-space:nowrap;overflow:hidden;display:block;text-overflow:ellipsis;float:left;}
+.commonly_nr2 a:hover{color:#000;text-decoration:underline;}
+
+#leftMenu{display:none;}
+#contentArea{margin-left:0;height:1000px;padding:20px 100px;background:#f5f5f5;}
+
+/*显示下载app二维码*/
+#tagContent .QRcode {display:none;width:140px;height:140px;position:absolute;z-index:1;border:0px;padding:0px;margin-left: 17px; margin-top: -13px;} 
