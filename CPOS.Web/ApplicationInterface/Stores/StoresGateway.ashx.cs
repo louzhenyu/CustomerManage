@@ -530,7 +530,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                             VipAmountBLL Amountbll = new VipAmountBLL(loggingSessionInfo);
                                             if (temp.IsReturn != 1)  //当未返现的时候金额变更
                                             {
-                                                if (Amountbll.SetVipAmountChange(RP.CustomerID, 2, RP.Parameters.VipId, ReturnAmount ?? 0, RP.Parameters.orderId, "门店返现", "IN", out strErrormessage, tran))
+                                                if (Amountbll.SetVipAmountChange(RP.CustomerID, 2, RP.Parameters.VipId, ReturnAmount ?? 0, RP.Parameters.orderId, "门店返现", "IN", out strErrormessage, null))//tran,因为ExecuteScalar会把事务关掉 ，导致 后面无法执行
                                                 {
                                                     entity.IsReturn = 1;
                                                 }
@@ -545,7 +545,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
 
 
                                             JIT.CPOS.BS.BLL.WX.CommonBLL.StoreRebate(RP.Parameters.DcodeId.Trim(), RP.Parameters.amount, PushInfo,
-                                              ReturnAmount ?? 0, RP.Parameters.VipId, vipEntity.WeiXinUserId, tran, loggingSessionInfo);
+                                              ReturnAmount ?? 0, RP.Parameters.VipId, vipEntity.WeiXinUserId, tran, loggingSessionInfo);//tran
 
                                             #region 增加抽奖信息
                                             var rateList = SalesPolicybll.QueryByEntity(new WXSalesPolicyRateEntity { CustomerId = RP.CustomerID }, null);
