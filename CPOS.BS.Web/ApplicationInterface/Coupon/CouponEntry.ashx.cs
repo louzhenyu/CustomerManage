@@ -153,6 +153,54 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Coupon
         }
 
         /// <summary>
+        /// 核销优惠券列表
+        /// Create By: Sun Xu
+        /// Create Date:2015-11-02
+        /// </summary>
+        /// <param name="pRequest"></param>
+        /// <returns></returns>
+        public string WriteOffCouponList(string pRequest)
+        {
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            var couponBLL = new CouponBLL(loggingSessionInfo);
+
+            var rq = pRequest.DeserializeJSONTo<APIRequest<WriteOffCouponListRP>>();
+            rq.Parameters.Validate();
+            
+            ErrorResponse er = new ErrorResponse();
+           
+            try
+            {
+                SuccessResponse<IAPIResponseData> rp = null;
+
+                if (!string.IsNullOrWhiteSpace(rq.Parameters.CouponCode))
+                {
+                    var couponEntity = couponBLL.QueryByEntity(new CouponEntity()
+                    {
+                        CouponCode = rq.Parameters.CouponCode
+                    }, null);
+
+                    if (couponEntity == null || couponEntity.Length == 0)
+                    {
+                        rp = new SuccessResponse<IAPIResponseData>();
+                        rp.ResultCode = 103;
+                        rp.Message = "优惠券无效";
+                        return rp.ToJSON();
+                    }
+                }
+                var rd = new WriteOffCouponListRD();
+                rd = couponBLL.WriteOffCouponList(rq.Parameters.Mobile, rq.Parameters.CouponCode, rq.Parameters.Status, rq.Parameters.PageSize, rq.Parameters.PageIndex);
+                rp = new SuccessResponse<IAPIResponseData>(rd);
+                return rp.ToJSON();                                
+            }
+            catch (Exception ex) {
+                er.Message = ex.Message;
+                return er.ToJSON();
+            }
+
+        }
+
+        /// <summary>
         /// 更改优惠券状态
         /// </summary>
         /// <param name="pRequest"></param>
@@ -414,6 +462,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Coupon
                 case "exportBindExcel":
                     rst = this.exportBindExcel(pRequest);
                     break; 
+                case "WriteOffCouponList":
+                    rst = this.WriteOffCouponList(pRequest);
+                    break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
                     {

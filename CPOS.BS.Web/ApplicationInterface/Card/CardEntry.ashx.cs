@@ -216,6 +216,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Card
             return rsp.ToJSON();
         }
 
+        /// <summary>
+        /// 这个方法在couponWriteOff.js已经不用,Sun@2015-11-03标注
+        /// </summary>
+        /// <param name="pRequest"></param>
+        /// <returns></returns>
         public string GetCardVip(string pRequest)
         {
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
