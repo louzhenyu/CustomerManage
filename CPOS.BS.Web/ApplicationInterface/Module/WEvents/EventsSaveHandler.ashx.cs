@@ -255,7 +255,16 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             eventEntity.DrawMethodId = reqObj.Parameters.DrawMethodId;
             eventEntity.PersonCount = reqObj.Parameters.PersonCount;
             eventEntity.PointsLottery = reqObj.Parameters.PointsLottery;
-            eventEntity.EventStatus = 10;//10=未开始,20=运行中,30=暂停,40=结束
+            if (DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.BeginTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <= 0 && DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.EndTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) > 0)
+            {
+                eventEntity.EventStatus = 20;//10=未开始,20=运行中,30=暂停,40=结束
+
+            }
+            else
+            {
+                eventEntity.EventStatus = 10;//10=未开始,20=运行中,30=暂停,40=结束
+
+            }
             eventEntity.CustomerId = loggingSessionInfo.ClientID;
 
             var methodBll = new LEventDrawMethodMappingBLL(loggingSessionInfo);

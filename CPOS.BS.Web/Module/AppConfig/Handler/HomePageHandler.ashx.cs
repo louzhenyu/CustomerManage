@@ -2163,7 +2163,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                             areaFlag = _areaFlag,//所属区域
                             DisplayIndex = item.displayIndex,
                             ShowStyle = Convert.ToInt32(strShowStyle),
-                            ItemImageUrl = item.imageUrl
+                            ItemImageUrl = item.imageUrl == null ? "" : item.imageUrl
 
 
                         };
