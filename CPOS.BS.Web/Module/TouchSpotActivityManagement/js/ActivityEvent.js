@@ -209,7 +209,7 @@
                     {
                         field: 'ContactEventName', title: '活动名称', width: 200, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
-                            var long = 17;
+                            var long = 17; 
                             var html = ""
                             if (value && value.length > long) {
                                 html = '<div class="rowTextnew" title="' + value + '">' + value.substring(0, long) + '...</div>'
