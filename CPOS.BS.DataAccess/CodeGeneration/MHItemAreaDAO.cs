@@ -226,7 +226,7 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.ItemId!=null)
                 strSql.Append( "[ItemId]=@ItemId,");
             if (pIsUpdateNullField || pEntity.ItemImageUrl != null)
-                strSql.Append("[ItemImageUrl]=@ItemImageUrl,");
+                strSql.Append(" [ItemImageUrl]=@ItemImageUrl,");
             if (pIsUpdateNullField || pEntity.DisplayIndex!=null)
                 strSql.Append( "[DisplayIndex]=@DisplayIndex,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
