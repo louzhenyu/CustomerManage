@@ -220,6 +220,7 @@ namespace JIT.CPOS.BS.DataAccess
             //初始化固定字段
             pEntity.LastUpdateTime = DateTime.Now;
             pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+                    
 
 
             //组织参数化SQL

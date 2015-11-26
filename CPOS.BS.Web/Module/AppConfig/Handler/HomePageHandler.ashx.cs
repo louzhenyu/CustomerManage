@@ -2164,7 +2164,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                             DisplayIndex = item.displayIndex,
                             ShowStyle = Convert.ToInt32(strShowStyle),
                             ItemImageUrl = item.imageUrl == null ? "" : item.imageUrl,
-                            GroupId = Convert.ToInt32(this.CurrentContext.Request["groupId"].ToString())
+                            GroupId = categoryAreaGroupEntity.GroupId
 
 
                         };
