@@ -188,7 +188,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                     item.ReturnAmount = item.salesPrice * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100);
                                 }
                             }
-
                         }
                         else //商品人人销售价格
                             item.salesPrice = item.EveryoneSalesPrice;
@@ -236,21 +235,21 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             private string imageurl;
             public string imageUrl
             {
-                get { return ImagePathUtil.GetImagePathStr(this.imageurl, "240"); }  //请求图片缩略图 
-                set { this.imageurl = value; }
+                set { ImagePathUtil.GetImagePathStr(this.imageurl, "240"); }  //请求图片缩略图 
+                get { return this.imageurl; }
             }
 
             private string imageurl2;
             public string imageUrl2
             {
-                get { return ImagePathUtil.GetImagePathStr(this.imageurl2, "240"); }  //请求图片缩略图 
-                set { this.imageurl2 = value; }
+                get { return imageurl2; }  //请求图片缩略图 
+                set { imageurl2 = ImagePathUtil.GetImagePathStr(imageUrl.Replace("_240",""), "480"); }
             }
             private string imageurl3;
             public string imageUrl3
             {
-                get { return ImagePathUtil.GetImagePathStr(this.imageurl3, "240"); }  //请求图片缩略图 
-                set { this.imageurl3 = value; }
+                get { return imageurl3; }  //请求图片缩略图 
+                set { imageurl3 = ImagePathUtil.GetImagePathStr(imageUrl.Replace("_240", ""), "640"); }
             } 
             public string TargetUrl { get; set; }
 
@@ -2437,7 +2436,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     //获取订单号
                     TUnitExpandBLL serviceUnitExpand = new TUnitExpandBLL(loggingSessionInfo);
                     //if (!string.IsNullOrEmpty(orderInfo.StoreId))  //发货门店为空时，订单编号根据商户ID保存订单的最大值处理 update by Henry 2014-11-27 21:01:21
-                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo(loggingSessionInfo, orderInfo.StoreId);
                     //else
                     //    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo(loggingSessionInfo,loggingSessionInfo.ClientID);
                 }
