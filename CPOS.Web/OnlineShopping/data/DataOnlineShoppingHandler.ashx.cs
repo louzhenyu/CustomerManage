@@ -235,8 +235,9 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             private string imageurl;
             public string imageUrl
             {
-                set { ImagePathUtil.GetImagePathStr(this.imageurl, "240"); }  //请求图片缩略图 
                 get { return this.imageurl; }
+                set { imageurl = ImagePathUtil.GetImagePathStr(value, "240"); }
+
             }
 
             private string imageurl2;
