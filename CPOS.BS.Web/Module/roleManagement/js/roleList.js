@@ -72,7 +72,7 @@
 						params[para.name]=para.value;
 					});
 					params['RoleMenuInfoList'] = [];
-					var nodes = $('#limitsTreeBox').tree('getChecked','checked');
+					var nodes = $('#limitsTreeBox').tree('getChecked',['checked','indeterminate']);//
 					if(!nodes.length){
 						$('.icon-tipBox').show();
 						setTimeout(function(){
@@ -251,7 +251,7 @@
                     },
 					{field : 'Role_Id',title : '操作',width:80,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-                           var htmlStr='<a href="javascript:;" data-index='+index+' class="handle editBtn"></a><a href="javascript:;" class="handle deleteBtn"  data-index='+index+' ></a>';
+                           var htmlStr='<a href="javascript:;" title="编辑" data-index='+index+' class="handle editBtn"></a><a href="javascript:;" title="删除" class="handle deleteBtn"  data-index='+index+' ></a>';
                             return htmlStr;
                         }
                     }
@@ -496,6 +496,7 @@
 							//animate:true,
 							//lines: true,
 							checkbox: true,
+							cascadeCheck: false,
 							//valueField: 'id',
 							//textField: 'text',
 							data: result
