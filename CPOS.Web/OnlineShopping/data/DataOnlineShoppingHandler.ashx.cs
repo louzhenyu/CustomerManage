@@ -2437,6 +2437,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     //获取订单号
                     TUnitExpandBLL serviceUnitExpand = new TUnitExpandBLL(loggingSessionInfo);
                     //if (!string.IsNullOrEmpty(orderInfo.StoreId))  //发货门店为空时，订单编号根据商户ID保存订单的最大值处理 update by Henry 2014-11-27 21:01:21
+                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo(loggingSessionInfo, orderInfo.StoreId);
                     //else
                     //    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo(loggingSessionInfo,loggingSessionInfo.ClientID);
                 }
