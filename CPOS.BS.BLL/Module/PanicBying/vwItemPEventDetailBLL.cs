@@ -136,7 +136,7 @@ namespace JIT.CPOS.BS.BLL
                         Status = t.Status
                     });
                     vwPanicbuyingEventEntity onEntity = new vwPanicbuyingEventEntity();
-                    onEntity.DeadlineSecond = Convert.ToInt64(onEventItemlist[0].RemainingSec);
+                    onEntity.DeadlineSecond = Convert.ToInt64(detailOnList.FirstOrDefault().DeadlineSecond);
                     onEntity.EventStatusDesc = "抢购中";
                     onEntity.PanicbuyingItemList = detailOnList.ToArray();
 
@@ -173,7 +173,7 @@ namespace JIT.CPOS.BS.BLL
                         CreateDate = t.CreateTime.Substring(0, 10),
                         SalesCount = t.SalesQty,
                         DeadlineTime = t.deadlineTime,
-                        DeadlineSecond = Convert.ToInt64((t.EndTime.Value - DateTime.Now).TotalSeconds),
+                        DeadlineSecond = Convert.ToInt64(t.RemainingSec),
                         AddedTime = t.AddTime.Value.To19FormatString(),
                         BeginTime = t.BeginTime.Value.To19FormatString(),
                         EndTime = t.EndTime.Value.To19FormatString(),
@@ -183,7 +183,7 @@ namespace JIT.CPOS.BS.BLL
                         Status = t.Status
                     });
                     soonEntity = new vwPanicbuyingEventEntity();
-                    soonEntity.DeadlineSecond = Convert.ToInt64((eventModel.BeginTime.Value - DateTime.Now).TotalSeconds);
+                    soonEntity.DeadlineSecond = Convert.ToInt64(detailSoonList.FirstOrDefault().DeadlineSecond);
                     soonEntity.EventStatusDesc = "即将开始";
                     soonEntity.PanicbuyingItemList = detailSoonList.ToArray();
                     eventList.Add(soonEntity);

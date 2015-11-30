@@ -478,9 +478,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
             {
                 return "{\"ResultCode\": 100,\"Message\": \"时间不能为空!\"}";
             }
-            else if ((rp.Parameters.EndTime-rp.Parameters.BeginTime).Days >=2)
+            else if ((rp.Parameters.EndTime-rp.Parameters.BeginTime).Days >=10)
             {
-                return "{\"ResultCode\": 100,\"Message\": \"目前抢购只能设定48小时内!\"}";
+                return "{\"ResultCode\": 100,\"Message\": \"目前抢购只能设定10天内!\"}";
             }
            
             PanicbuyingEventEntity entity = new PanicbuyingEventEntity();
@@ -540,7 +540,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
             }
             else if ((rp.Parameters.EndTime - rp.Parameters.BeginTime).Days >=10)
             {
-                return "{\"ResultCode\": 100,\"Message\": \"目前抢购只能设定48小时内!\"}";
+                return "{\"ResultCode\": 100,\"Message\": \"目前抢购只能设定10天内!\"}";
             }
 
             PanicbuyingEventEntity entity = new PanicbuyingEventEntity();
