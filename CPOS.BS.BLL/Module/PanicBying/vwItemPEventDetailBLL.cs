@@ -144,7 +144,7 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
             #endregion
-            #region 即将推出
+            #region 即将开始
             if (soonEventItemlist.Count > 0)
             {
                 //根据活动和开始时间筛选
@@ -184,7 +184,7 @@ namespace JIT.CPOS.BS.BLL
                     });
                     soonEntity = new vwPanicbuyingEventEntity();
                     soonEntity.DeadlineSecond = Convert.ToInt64((eventModel.BeginTime.Value - DateTime.Now).TotalSeconds);
-                    soonEntity.EventStatusDesc = "即将推出";
+                    soonEntity.EventStatusDesc = "即将开始";
                     soonEntity.PanicbuyingItemList = detailSoonList.ToArray();
                     eventList.Add(soonEntity);
                 }
