@@ -69,6 +69,9 @@ namespace JIT.CPOS.BS.BLL
             //2.	判断，该商品活动是否已经终止
             if (!string.IsNullOrEmpty(detail.StopReason))
                 throw new Exception("活动已停止,停止原因:" + detail.StopReason);
+            //3.判断购买个数是否小于等于剩余个数
+            if (int.Parse(para.qty) > detail.RemainingQty)
+                throw new Exception("活动商品数量不足，当前数量：" + detail.RemainingQty);
 
             #endregion
 
