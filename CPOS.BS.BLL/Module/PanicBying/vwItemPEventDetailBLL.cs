@@ -126,7 +126,7 @@ namespace JIT.CPOS.BS.BLL
                         CreateDate = t.CreateTime.Substring(0, 10),
                         SalesCount = t.SalesQty,
                         DeadlineTime = t.deadlineTime,
-                        DeadlineSecond = Convert.ToInt64((t.EndTime.Value - DateTime.Now).TotalSeconds),
+                        DeadlineSecond = Convert.ToInt64(t.RemainingSec),
                         AddedTime = t.AddTime.Value.To19FormatString(),
                         BeginTime = t.BeginTime.Value.To19FormatString(),
                         EndTime = t.EndTime.Value.To19FormatString(),
@@ -136,7 +136,7 @@ namespace JIT.CPOS.BS.BLL
                         Status = t.Status
                     });
                     vwPanicbuyingEventEntity onEntity = new vwPanicbuyingEventEntity();
-                    onEntity.DeadlineSecond = Convert.ToInt64((onEventItemlist[0].EndTime.Value - DateTime.Now).TotalSeconds);
+                    onEntity.DeadlineSecond = Convert.ToInt64(onEventItemlist[0].RemainingSec);
                     onEntity.EventStatusDesc = "ÇÀ¹ºÖÐ";
                     onEntity.PanicbuyingItemList = detailOnList.ToArray();
 
