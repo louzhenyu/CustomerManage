@@ -102,8 +102,8 @@ namespace JIT.CPOS.BS.BLL
             if (onEventItemlist.Count > 0)
             {
                 //根据活动和开始时间筛选
-                var onEventList = onEventItemlist.GroupBy(t => new { t.EventId, t.EndTime })
-                                                     .Select(t => new { EventID = t.Key.EventId, EndTime = t.Key.EndTime });
+                var onEventList = onEventItemlist.GroupBy(t => new { t.EventId, t.EndTime,t.RemainingSec })
+                                                     .Select(t => new { EventID = t.Key.EventId, EndTime = t.Key.EndTime, DeadlineSecond=t.Key.RemainingSec });
                 foreach (var eventModel in onEventList)
                 {
                     var detailOnList = onEventItemlist.Where(t => t.EventId == eventModel.EventID).Select(t => new vwPanicbuyingItemInfo()
@@ -136,7 +136,7 @@ namespace JIT.CPOS.BS.BLL
                         Status = t.Status
                     });
                     vwPanicbuyingEventEntity onEntity = new vwPanicbuyingEventEntity();
-                    onEntity.DeadlineSecond = Convert.ToInt64(detailOnList.FirstOrDefault().DeadlineSecond);
+                    onEntity.DeadlineSecond = Convert.ToInt64(eventModel.DeadlineSecond);
                     onEntity.EventStatusDesc = "抢购中";
                     onEntity.PanicbuyingItemList = detailOnList.ToArray();
 
@@ -148,8 +148,8 @@ namespace JIT.CPOS.BS.BLL
             if (soonEventItemlist.Count > 0)
             {
                 //根据活动和开始时间筛选
-                var soonEventList = soonEventItemlist.GroupBy(t => new { t.EventId, t.BeginTime })
-                                                     .Select(t => new { EventID = t.Key.EventId, BeginTime = t.Key.BeginTime });
+                var soonEventList = soonEventItemlist.GroupBy(t => new { t.EventId, t.BeginTime,t.RemainingSec})
+                                                     .Select(t => new { EventID = t.Key.EventId, BeginTime = t.Key.BeginTime, RemainingSec=t.Key.RemainingSec });
                 vwPanicbuyingEventEntity soonEntity = null;
                 foreach (var eventModel in soonEventList)
                 {
@@ -183,7 +183,7 @@ namespace JIT.CPOS.BS.BLL
                         Status = t.Status
                     });
                     soonEntity = new vwPanicbuyingEventEntity();
-                    soonEntity.DeadlineSecond = Convert.ToInt64(detailSoonList.FirstOrDefault().DeadlineSecond);
+                    soonEntity.DeadlineSecond = Convert.ToInt64(eventModel.RemainingSec);
                     soonEntity.EventStatusDesc = "即将开始";
                     soonEntity.PanicbuyingItemList = detailSoonList.ToArray();
                     eventList.Add(soonEntity);
