@@ -437,7 +437,18 @@ namespace JIT.CPOS.BS.BLL
         {
             this._currentDAO.ExecProcPEventItemQty(para, pEntity, tran);
         }
-
+        /// <summary>
+        /// ÐÞ¸Ä»î¶¯¿â´æ
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="eventId"></param>
+        /// <param name="orderId"></param>
+        /// <param name="vipId"></param>
+        /// <param name="tran"></param>
+        public void ExecProcPEventItemQty(string customerId, string eventId, string orderId, string vipId, SqlTransaction tran)
+        {
+            this._currentDAO.ExecProcPEventItemQty(customerId, eventId, orderId, vipId, tran);
+        }
         private vwItemPEventDetailEntity GetByEventIDAndItemID(Guid eventId, string itemId)
         {
             var temp = this._currentDAO.GetByEventIDAndItemID(eventId, itemId);

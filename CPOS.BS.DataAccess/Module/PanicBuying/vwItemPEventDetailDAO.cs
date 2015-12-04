@@ -145,7 +145,22 @@ namespace JIT.CPOS.BS.DataAccess
             else
                 this.SQLHelper.ExecuteNonQuery(sql);
         }
-
+        /// <summary>
+        /// ÐÞ¸Ä»î¶¯¿â´æ
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="eventId"></param>
+        /// <param name="orderId"></param>
+        /// <param name="vipId"></param>
+        /// <param name="tran"></param>
+        public void ExecProcPEventItemQty(string customerId,string eventId,string orderId,string vipId,SqlTransaction tran)
+        {
+            string sql = string.Format("exec spPEventItemQty '{0}','{1}','{2}','{3}'",customerId,eventId,orderId,vipId);
+            if (tran != null)
+                this.SQLHelper.ExecuteNonQuery(tran, CommandType.Text, sql);
+            else
+                this.SQLHelper.ExecuteNonQuery(sql);
+        }
         public vwItemPEventDetailEntity[] GetByEventIDAndItemID(Guid? eventId, string itemId)
         {
             List<vwItemPEventDetailEntity> list = new List<vwItemPEventDetailEntity> { };
@@ -192,7 +207,7 @@ namespace JIT.CPOS.BS.DataAccess
                             inner join T_Inout_Detail c on a.order_id=c.order_id
                             inner join vw_sku d on d.sku_id=c.sku_id
                             where  b.IsDelete=0 and d.item_id='" + itemId + "' and a.vip_no='" + vipId +
-                            "' and b.EventId='" + eventId + "'group by a.order_id";
+                            "' and b.EventId='" + eventId + "'group by b.EventId";
             return this.SQLHelper.ExecuteDataset(sql);
         }
 

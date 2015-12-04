@@ -20,11 +20,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Holiday
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var VipCardBLL = new HolidayBLL(loggingSessionInfo);
+            //查询参数
+            List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+            //商户条件
+            complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc });
             //调用会员卡管理列表查询
-            var tempList = VipCardBLL.PagedQuery(null, lstOrder.ToArray(), para.PageSize, para.PageIndex);
+            var tempList = VipCardBLL.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize, para.PageIndex);
             rd.TotalPageCount = tempList.PageCount;
             rd.TotalCount = tempList.RowCount;
             rd.HolidayList = tempList.Entities.Select(t => new HolidayInfo()

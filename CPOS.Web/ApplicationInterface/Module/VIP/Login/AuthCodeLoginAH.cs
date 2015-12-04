@@ -172,7 +172,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                                 IsActivate = vipByID.IsActivate.HasValue && vipByID.IsActivate.Value == 1 ? true : false
                             };
                             //处理绑卡业务 add by Henry 2015/10/28
-                            vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode);
+                            vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode,vipByID.CouponInfo);
                         }
                         else
                         {//否则调用存储过程,做自动会员合并
@@ -210,7 +210,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                                 IsActivate = vipByID.IsActivate.HasValue && vipByID.IsActivate.Value == 1 ? true : false
                             };
                             //处理绑卡业务 add by Henry 2015/10/28
-                            vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode);
+                            vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode, vipByID.CouponInfo);
                         }
                         #endregion
                     }

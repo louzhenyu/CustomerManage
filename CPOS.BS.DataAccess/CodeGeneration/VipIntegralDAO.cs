@@ -243,7 +243,7 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
-            strSql.Append(" where VipID=@VipID ");
+            strSql.Append(" where VipID=@VipID and VipCardCode=@VipCardCode2");
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@VipCardCode",SqlDbType.VarChar),
@@ -259,7 +259,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@VipID",SqlDbType.VarChar)
+					new SqlParameter("@VipID",SqlDbType.VarChar),
+                    new SqlParameter("@VipCardCode2",SqlDbType.VarChar),
             };
 			parameters[0].Value = pEntity.VipCardCode;
 			parameters[1].Value = pEntity.BeginIntegral;
@@ -275,6 +276,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[11].Value = pEntity.LastUpdateBy;
 			parameters[12].Value = pEntity.LastUpdateTime;
 			parameters[13].Value = pEntity.VipID;
+            parameters[14].Value = pEntity.VipCardCode;
 
             //Ö´ÐÐÓï¾ä
             int result = 0;

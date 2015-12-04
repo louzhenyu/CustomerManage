@@ -72,6 +72,8 @@ namespace JIT.CPOS.BS.BLL
             //3.判断购买个数是否小于等于剩余个数
             if (int.Parse(para.qty) > detail.RemainingQty)
                 throw new Exception("活动商品数量不足，当前数量：" + detail.RemainingQty);
+            if (string.IsNullOrEmpty(para.userId))
+                throw new Exception("会员信息不存在");
 
             #endregion
 
@@ -122,8 +124,9 @@ namespace JIT.CPOS.BS.BLL
                         data_from_id = para.reqBy,
                         if_flag = "0",
                         remark = para.remark,
+                        Field1 = "0",
                         Field3 = para.isALD,
-                        Field7 = "100",
+                        Field7 = "-99",
                         Field8 = para.deliveryId,
                         send_time = para.deliveryTime,
                         Field9 = para.deliveryTime,
@@ -131,7 +134,7 @@ namespace JIT.CPOS.BS.BLL
                         Field6 = para.mobile,
                         Field12 = para.email,
                         Field13 = para.openId,
-                        Field10 = "未支付",
+                        Field10 = "未审核",
                         Field14 = para.username,
                         Field20 = para.tableNumber,
                         Field16 = para.couponsPrompt,
@@ -181,8 +184,8 @@ namespace JIT.CPOS.BS.BLL
                     #endregion
 
                     //下订单，修改抢购商品的数量信息存储过程ProcPEventItemQty
-                    var eventbll = new vwItemPEventDetailBLL(loggingSessionInfo);
-                    eventbll.ExecProcPEventItemQty(para, entity, tran);
+                    //var eventbll = new vwItemPEventDetailBLL(loggingSessionInfo);
+                    //eventbll.ExecProcPEventItemQty(para, entity, tran);
                     tran.Commit();
                 }
             }
@@ -507,10 +510,10 @@ namespace JIT.CPOS.BS.BLL
             return RD;
         }
         //根据状态获取订单信息
-        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList,string isPayment, string orderNo,
+        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList, string isPayment, string orderNo,
             string customerId, int? pageSize, int? pageIndex, string OrderChannelID)
         {
-            return this._currentDAO.GetOrdersList(orderId, userId, orderStatusList,isPayment, orderNo, customerId, pageSize ?? 0,
+            return this._currentDAO.GetOrdersList(orderId, userId, orderStatusList, isPayment, orderNo, customerId, pageSize ?? 0,
                 pageIndex ?? 15, OrderChannelID);
         }
         //获取销售（服务）订单
@@ -519,7 +522,7 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetServiceOrderList(order_no, OrderChannelID, userId, customerId, pageSize ?? 0,
                 pageIndex ?? 15);
         }
-        
+
         //获取集客订单
         public DataSet GetCollectOrderList(string order_no, string OrderChannelID, string userId, string customerId, int? pageSize, int? pageIndex)
         {
@@ -711,7 +714,7 @@ namespace JIT.CPOS.BS.BLL
 
         public DataSet GetOrdersByVipID(string vipID, int pageIndex, int pageSize, string OrderBy, string sortType)
         {
-            return this._currentDAO.GetOrdersByVipID(vipID,pageIndex, pageSize, OrderBy, sortType);
+            return this._currentDAO.GetOrdersByVipID(vipID, pageIndex, pageSize, OrderBy, sortType);
         }
     }
 

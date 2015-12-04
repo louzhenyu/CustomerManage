@@ -68,11 +68,13 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder sql = new StringBuilder();
             if (!string.IsNullOrWhiteSpace(VipCardTypeID))
             {
-                sql.AppendFormat("select count(*) from VipCard as a where IsDelete=0 and VipCardStatusId=1  and VipCardTypeID={0}", Convert.ToInt32(VipCardTypeID));
+                sql.AppendFormat("select count(*) from VipCard as a where IsDelete=0 and VipCardStatusId=1  and VipCardTypeID={0} ", Convert.ToInt32(VipCardTypeID));
+               
             }
             else {
-                sql.Append("select count(*) from VipCard as a where IsDelete=0 and VipCardStatusId=1");
+                sql.Append("select count(*) from VipCard as a where IsDelete=0 and VipCardStatusId=1 ");
             }
+            sql.AppendFormat(" and CustomerID='{0}'", CurrentUserInfo.ClientID);
             //if (!string.IsNullOrWhiteSpace(ActivityID))
             //{
             //    sql.Append("select count(*) from VipCard where VipCardStatusId=5 or VipCardStatusId=1 and IsDelete=0 ");

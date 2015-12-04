@@ -40,6 +40,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Holiday
                     UpdateData.BeginDate = para.BeginDate;
                     UpdateData.EndDate = para.EndDate.AddHours(23).AddMinutes(59);
                     UpdateData.Desciption = para.Desciption;
+                    UpdateData.CustomerID = loggingSessionInfo.ClientID;
                     //执行
                     HolidayBLL.Update(UpdateData);
                 }

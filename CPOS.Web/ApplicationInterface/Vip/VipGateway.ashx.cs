@@ -497,6 +497,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
             if (rp.OpenID == "" || string.IsNullOrEmpty(rp.OpenID))
                 throw new APIException("OpenID不能为空【OpenID】") { ErrorCode = 121 };
+            if (rp.UserID == "" || string.IsNullOrEmpty(rp.UserID))
+                throw new APIException("UserID不能为空【UserID】") { ErrorCode = 121 };
             if (orderId == "" || string.IsNullOrEmpty(orderId))
                 throw new APIException("订单标识不能为空【OrderId】") { ErrorCode = 121 };
             if (status == "" || string.IsNullOrEmpty(status))
@@ -782,6 +784,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                         StatusRemark = "提交订单[操作人:用户]"
                     };
                     tinoutStatusBLL.Create(statusEntity, tran);
+                    #endregion
+
+                    #region 抢购团购处理库存
+                    if (tInoutEntity.OrderReasonID == "CB43DD7DD1C94853BE98C4396738E00C" || tInoutEntity.OrderReasonID == "671E724C85B847BDA1E96E0E5A62055A")
+                    {
+                        //下订单，修改抢购商品的数量信息存储过程ProcPEventItemQty
+                        var eventbll = new vwItemPEventDetailBLL(loggingSessionInfo);
+                        eventbll.ExecProcPEventItemQty(loggingSessionInfo.ClientID, rp.Parameters.EventId, orderId, tInoutEntity.VipNo, (SqlTransaction)tran);
+                    }
                     #endregion
 
                     tran.Commit();
@@ -2147,6 +2158,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 运费
         /// </summary>
         public decimal DeliveryAmount { get; set; }
+        /// <summary>
+        /// 活动ID
+        /// </summary>
+        public string EventId { get; set; }
         public void Validate()
         {
         }

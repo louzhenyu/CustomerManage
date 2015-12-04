@@ -84,8 +84,10 @@ namespace JIT.CPOS.BS.BLL
                 if (vipCardInfo != null)
                 {
                     var vipCardRuleInfo = vipCardRuleBLL.QueryByEntity(new VipCardRuleEntity() { VipCardTypeID = vipCardInfo.VipCardTypeID }, null).FirstOrDefault();
-                    if (vipCardRuleInfo != null)
+                    if (vipCardRuleInfo != null&&vipCardRuleInfo.CardDiscount>0)
+                    {
                         vipDiscount = vipCardRuleInfo.CardDiscount == null ? 1 : (vipCardRuleInfo.CardDiscount.Value / 10);
+                    }
                 }
             }
             return vipDiscount;

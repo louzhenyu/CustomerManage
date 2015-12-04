@@ -20,11 +20,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.MessageTemplate
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var MessageTemplateBLL = new C_MessageTemplateBLL(loggingSessionInfo);
+            //查询参数
+            List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+            //商户条件
+            complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "LastUpdateTime", Direction = OrderByDirections.Desc });
 
-            List<C_MessageTemplateEntity> ResultList = MessageTemplateBLL.Query(null, lstOrder.ToArray()).ToList();
+            List<C_MessageTemplateEntity> ResultList = MessageTemplateBLL.Query(complexCondition.ToArray(), lstOrder.ToArray()).ToList();
             if (ResultList.Count > 0)
             {
                 rd.MessageTemplateInfoList = (from u in ResultList

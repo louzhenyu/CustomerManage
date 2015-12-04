@@ -36,12 +36,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                     rd.StartTime = ActivityData.StartTime == null ? "" : ActivityData.StartTime.Value.ToString("yyyy-MM-dd");
                     rd.EndTime = ActivityData.EndTime == null ? "" : ActivityData.EndTime.Value.ToString("yyyy-MM-dd");
                     rd.IsLongTime = ActivityData.IsLongTime == null ? "0" : ActivityData.IsLongTime.Value.ToString();
-                    rd.PointsMultiple = ActivityData.PointsMultiple==null?0:ActivityData.PointsMultiple.Value;
+                    rd.PointsMultiple = ActivityData.PointsMultiple == null ? 0 : ActivityData.PointsMultiple.Value;
 
                     int m_IsAllVipCardType = ActivityData.IsAllVipCardType == null ? 0 : ActivityData.IsAllVipCardType.Value;
                     if (m_IsAllVipCardType == 1)
                     {
-                        C_TargetGroupEntity VipCardTargetGroupData = TargetGroupBLL.QueryByEntity(new C_TargetGroupEntity() { ActivityID = ActivityData.ActivityID,GroupType=1 }, null).FirstOrDefault();
+                        C_TargetGroupEntity VipCardTargetGroupData = TargetGroupBLL.QueryByEntity(new C_TargetGroupEntity() { ActivityID = ActivityData.ActivityID, GroupType = 1 }, null).FirstOrDefault();
                         rd.VipCardTypeID = VipCardTargetGroupData == null ? "" : VipCardTargetGroupData.ObjectID;
                     }
                     int m_IsVipGrouping = ActivityData.IsVipGrouping == null ? 0 : ActivityData.IsVipGrouping.Value;
@@ -55,7 +55,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                 }
                 #endregion
                 #region 奖品
-                var PrizesList = PrizesBLL.Query(new IWhereCondition[] { new LikeCondition() { FieldName = "ActivityID", Value = para.ActivityID } }, null).ToList();
+                var PrizesList = PrizesBLL.Query(new IWhereCondition[] { new EqualsCondition() { FieldName = "ActivityID", Value = para.ActivityID }, new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID } }, null).ToList();
                 if (PrizesList.Count > 0)
                 {
                     //奖品集合赋值
@@ -93,7 +93,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                 }
                 #endregion
                 #region 消息
-                var ActivityMessageList = ActivityMessageBLL.Query(new IWhereCondition[] { new LikeCondition() { FieldName = "ActivityID", Value = para.ActivityID } }, null).ToList();
+                var ActivityMessageList = ActivityMessageBLL.Query(new IWhereCondition[] { new EqualsCondition() { FieldName = "ActivityID", Value = para.ActivityID },new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID } }, null).ToList();
                 if (ActivityMessageList.Count > 0)
                 {
                     //消息赋值

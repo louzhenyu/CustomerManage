@@ -40,7 +40,8 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="vipId"></param>
         /// <param name="vipCode"></param>
-        public void BindVipCard(string vipId, string vipCode)
+        /// <param name="unitId">会籍店</param>
+        public void BindVipCard(string vipId, string vipCode,string unitId)
         {
             var vipCardVipMappingBLL = new VipCardVipMappingBLL(CurrentUserInfo);
             var sysVipCardTypeBLL = new SysVipCardTypeBLL(CurrentUserInfo);
@@ -48,7 +49,8 @@ namespace JIT.CPOS.BS.BLL
             var vipCardStatusChangeLogBLL = new VipCardStatusChangeLogBLL(CurrentUserInfo);
 
             UnitService unitServer = new UnitService(CurrentUserInfo);
-            string onlineShoppingUnitId = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
+            if(string.IsNullOrEmpty(unitId))
+                unitId = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
 
             //根据vipid查询VipCardVipMapping，判断是否有绑卡
             var vipCardMappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VIPID = vipId }, null).FirstOrDefault();
@@ -69,7 +71,7 @@ namespace JIT.CPOS.BS.BLL
                         vipCardInfo.VipCardTypeName = vipCardTypeInfo.VipCardTypeName;
                         vipCardInfo.VipCardCode = vipCode;
                         vipCardInfo.VipCardStatusId = 1;//正常
-                        vipCardInfo.MembershipUnit = onlineShoppingUnitId;
+                        vipCardInfo.MembershipUnit = unitId;
                         vipCardInfo.MembershipTime = DateTime.Now;
                         vipCardInfo.CustomerID = CurrentUserInfo.ClientID;
                         vipCardBLL.Create(vipCardInfo);
@@ -81,7 +83,7 @@ namespace JIT.CPOS.BS.BLL
                         VipCardStatusID = vipCardInfo.VipCardStatusId,
                         VipCardID = vipCardInfo.VipCardID,
                         Action = "注册",
-                        UnitID = onlineShoppingUnitId,
+                        UnitID = unitId,
                         CustomerID = CurrentUserInfo.ClientID
                     };
                     vipCardStatusChangeLogBLL.Create(vipCardStatusChangeLogEntity);

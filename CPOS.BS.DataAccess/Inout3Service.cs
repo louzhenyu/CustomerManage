@@ -138,7 +138,7 @@ namespace JIT.CPOS.BS.DataAccess
             //        + orderSearchInfo.customer_id + "' ";
             //}
 
-            sql +=string.Format( @"DECLARE @AllUnit NVARCHAR(200)
+            sql += string.Format(@"DECLARE @AllUnit NVARCHAR(200)
 
                 CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
                  INSERT #UnitSET (UnitID)                  
@@ -1278,7 +1278,8 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,a.keep_the_change "
                       + " ,a.wiping_zero "
                       + " ,a.vip_no "
-                      + " ,isnull(isnull((select top 1 vipName From vip where vipId = a.vip_no),a.Field3),a.Field6) vip_name "
+                      //+ " ,isnull(isnull((select top 1 vipName From vip where vipId = a.vip_no),a.Field3),a.Field6) vip_name "
+                      + " ,(select top 1 vipName From vip where vipId = a.vip_no) vip_name "
                       + " ,(select top 1 vipCode From vip where vipId = a.vip_no) vip_code "
                       + " ,(select top 1 phone From vip where vipId = a.vip_no) vipPhone "
                       + " ,a.create_time "
@@ -1519,7 +1520,7 @@ WHERE     1=1) as t";
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public DataSet GetInoutDetailInfoByOrderId(string orderId,string strCustomerId)
+        public DataSet GetInoutDetailInfoByOrderId(string orderId, string strCustomerId)
         {
             #region
             string sql = "select a.order_detail_id "

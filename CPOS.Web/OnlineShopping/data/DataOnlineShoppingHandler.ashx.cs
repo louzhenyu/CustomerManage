@@ -2234,6 +2234,12 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     respData.description = "没有特殊参数";
                     return respData.ToJSON().ToString();
                 }
+                if (string.IsNullOrEmpty(reqObj.common.userId))
+                {
+                    respData.code = "102";
+                    respData.description = "会员信息不存在";
+                    return respData.ToJSON().ToString();
+                }
 
                 if (reqObj.special.orderDetailList == null || reqObj.special.orderDetailList.Count == 0)//商品数量为0
                 {

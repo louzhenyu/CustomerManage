@@ -22,6 +22,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
 
             //条件参数
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+            complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
             if (!string.IsNullOrEmpty(para.ActivityType))
                 complexCondition.Add(new EqualsCondition() { FieldName = "ActivityType", Value = para.ActivityType });
             if (!string.IsNullOrEmpty(para.ActivityName))

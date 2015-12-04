@@ -100,7 +100,7 @@
                  </div><!--clearfix END-->
                  </div><!--panlDiv订单信息  END-->
                 <div class="panlDiv">
-                 <div class="title">提货人信息</div>
+                 <div class="title">会员信息</div>
                  <div class="panlText">
                      <div class="panlL">
                       <div class="commonSelectWrap">
@@ -115,12 +115,12 @@
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="vipPhone"/>
                          </div>
                       </div>
-                      <div class="commonSelectWrap">
+                      <%--<div class="commonSelectWrap">
                          <em class="tit">详细地址:</em>
                          <div class="searchInput" style=" width: 459px">
                           <input type="text"  class="easyui-validatebox" data-options="width:459,disabled:true"  readonly="readonly" name="Field4"/>
                          </div>
-                      </div>
+                      </div>--%>
 
                      </div><!--panl   END-->
 

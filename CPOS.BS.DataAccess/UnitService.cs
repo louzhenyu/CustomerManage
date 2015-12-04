@@ -959,7 +959,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
                 temp.AppendFormat(" and a.type_id='{0}'", type_id);
             }
             StringBuilder sql = new StringBuilder(string.Format(@"select * into #temp from 
-                                           (select row_number()over(order by create_time) _row, a.*,b.unitPT,b.unitRD,c.type_code from t_unit a
+                                           (select row_number()over(order by a.create_time) _row, a.*,b.unitPT,b.unitRD,c.type_code from t_unit a
                                                 join VwUnitProperty b on a.unit_id=b.unitid
                                                 join t_type c on a.type_id=c.type_id
                                                 where 1=1 and a.Status=1 {2})
