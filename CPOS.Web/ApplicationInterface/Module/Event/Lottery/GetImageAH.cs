@@ -38,6 +38,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         rd.Logo = i.ImageURL;
                     if (i.BatId == "Rule")
                         rd.Rule = i.ImageURL;
+                    if (i.BatId == "LT_kvPic")
+                        rd.LT_kvPic = i.ImageURL;
+                    if (i.BatId == "LT_Rule")
+                        rd.LT_Rule = i.ImageURL;
+                    if (i.BatId == "LT_bgpic1")
+                        rd.LT_bgpic1 = i.ImageURL;
+                    if (i.BatId == "LT_bgpic2")
+                        rd.LT_bgpic2 = i.ImageURL;
+                    if (i.BatId == "LT_regularpic")
+                        rd.LT_regularpic = i.ImageURL;
                 };
 
 

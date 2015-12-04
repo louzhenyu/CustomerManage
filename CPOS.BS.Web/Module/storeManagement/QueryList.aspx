@@ -70,7 +70,7 @@ background: url(images/icon-export.png) no-repeat center center;
 
                               
                               <div class="commonSelectWrap">
-                                  <em class="tit">上级组织结构：</em>
+                                  <em class="tit">上级组织：</em>
                                   <div class="selectBox">
                                   <input id="Parent_Unit_ID" name="Parent_Unit_ID" />
                                   </div>

@@ -145,6 +145,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                 var prize = DataTableToObject.ConvertToList<LPrizesEntity>(bllPrize.GetCouponTypeIDByPrizeId(awardEntity.PrizesID).Tables[0]).FirstOrDefault();
                 rd.PrizeId = prize.PrizesID;
                 rd.PrizeName = prize.PrizeName;
+                rd.Location = prize.Location;
                 rd.ResultMsg = "中奖";
                 //中奖记录
                 LPrizeWinnerBLL bllPrizeWinner = new LPrizeWinnerBLL(this.CurrentUserInfo);
@@ -186,7 +187,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                 VipIntegralDetailEntity IntegralDetail = new VipIntegralDetailEntity()
                 {
                     Integral = -eventEntity.PointsLottery,
-                    IntegralSourceID = "22",
+                    IntegralSourceID = "24",
                     ObjectId = ""
                 };
                 bllVipIntegral.AddIntegral(vipInfo, null, IntegralDetail, null, this.CurrentUserInfo);

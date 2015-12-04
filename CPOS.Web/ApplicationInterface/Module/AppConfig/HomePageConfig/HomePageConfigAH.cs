@@ -85,9 +85,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
             var eventGroup = allGroup.Where(a => a.ModelTypeId == 5 || a.ModelTypeId == 6 || a.ModelTypeId == 7 || a.ModelTypeId == 8);
             foreach (var item in eventGroup)
             {
-            
 
-                var dsEvent = itemEventBll.GetItemDetails(strHomeId, item.GroupId.ToString());
+                DataSet dsEvent = new DataSet();
+                if (item.ModelTypeId == 8)
+                    dsEvent = itemEventBll.GetEventListItemDetails(strHomeId, item.GroupId.ToString());//获取EventList
+                else
+                    dsEvent = itemEventBll.GetItemDetails(strHomeId, item.GroupId.ToString());
 
                 if (dsEvent != null && dsEvent.Tables.Count > 0 && dsEvent.Tables[0].Rows.Count > 0)
                 {

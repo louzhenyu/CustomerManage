@@ -163,6 +163,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
                 item.KeepQty = item.KeepQty - entity.KeepQty + rp.Parameters.KeepQty;
                 if (item.SoldQty == null) item.SoldQty = 0;
                 if (entity.SoldQty == null) entity.SoldQty = 0;
+                item.SalesPrice = rp.Parameters.SalesPrice;
                 item.SoldQty = item.SoldQty - entity.SoldQty + rp.Parameters.SoldQty;
                 server.Update(item);
                 entity.SalesPrice = rp.Parameters.SalesPrice;

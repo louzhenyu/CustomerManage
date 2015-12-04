@@ -29,7 +29,7 @@ namespace JIT.CPOS.BS.DataAccess
     {
         public int GetObjectTypeIDByGroupId(int intGroupId)
         {
-            string strSql = string.Format("SELECT TOP 1 ObjectTypeId FROM MHCategoryArea WHERE GroupId={0} ", intGroupId);
+            string strSql = string.Format("SELECT TOP 1 ObjectTypeId FROM MHCategoryArea WHERE GroupId='{0}' ", intGroupId);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
 

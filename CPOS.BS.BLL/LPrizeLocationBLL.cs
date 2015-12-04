@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/3/31 15:58:37
+ * Create On	:2015/12/2 22:01:03
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -31,19 +31,7 @@ namespace JIT.CPOS.BS.BLL
     /// <summary>
     /// 业务处理：  
     /// </summary>
-    public partial class MHItemAreaBLL
-    {
-        public MHItemAreaEntity[] GetItemDetails()
-        {
-            return this._currentDAO.GetItemDetails();
-        }
-        public DataSet GetItemDetails(string strHomeId, string strGroupId)
-        {
-            return this._currentDAO.GetItemDetails(strHomeId, strGroupId);
-        }
-        public DataSet GetEventListItemDetails(string strHomeId, string strGroupId)
-        {
-            return this._currentDAO.GetEventListItemDetails(strHomeId, strGroupId);
-        }
+    public partial class LPrizeLocationBLL
+    {  
     }
 }

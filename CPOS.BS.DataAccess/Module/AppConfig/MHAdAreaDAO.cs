@@ -153,7 +153,7 @@ namespace JIT.CPOS.BS.DataAccess
 
             return this.SQLHelper.ExecuteDataset(sql);
         }
-        public DataSet GetEventInfoByGroupId(string homeId,string strGroupId)
+        public DataSet GetEventInfoByGroupId(string homeId, string strGroupId)
         {
             string sql = string.Empty;
             sql += " SELECT eventAreaItemId = a.ItemAreaId ";
@@ -161,22 +161,50 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " , eventId = a.EventId ";
             sql += " , itemId = a.ItemId ";
             sql += " , displayIndex = a.DisplayIndex ";
-            sql += " , itemName = c.ItemName ";
-            sql += " , imageUrl = (CASE WHEN a.areaFlag='eventList' THEN c.ImageUrl ELSE  a.ItemImageUrl END ) ";
-            sql += " , qty = c.Qty ";
-            sql += " , price = c.Price ";
-            sql += " , salesPrice = c.SalesPrice ";
-            sql += " , discountRate = c.DiscountRate ";
-            sql += " , remainingSec = c.RemainingSec ";
+            //sql += " , itemName = c.ItemName ";
+            sql += " , imageUrl = a.ItemImageUrl ";
+            //sql += " , imageUrl = (CASE WHEN a.areaFlag='eventList' THEN c.ImageUrl ELSE  a.ItemImageUrl END ) ";
+            //sql += " , qty = c.Qty ";
+            //sql += " , price = c.Price ";
+            //sql += " , salesPrice = c.SalesPrice ";
+            //sql += " , discountRate = c.DiscountRate ";
+            sql += " , remainingSec = b.RemainingSec ";
             sql += " , ShowStyle ,b.EventName";
             sql += " FROM dbo.MHItemArea a ";
-            sql += " left JOIN dbo.PanicbuyingEvent b ON a.EventId = b.EventId ";
-            sql += " left JOIN dbo.vwPEventItemDetail c ON a.EventId=c.EventId and a.ItemId = c.ItemID ";
+            sql += " left JOIN dbo.VwPanicBuyingEvent b ON a.EventId = b.EventId ";
+            //sql += " left JOIN dbo.vwPEventItemDetail c ON a.EventId=c.EventId ";
             sql += " WHERE a.IsDelete = 0 ";
             sql += " AND a.HomeId = '" + homeId + "' ";
             sql += " AND a.GroupId = '" + strGroupId + "' ";
             sql += " ORDER BY a.DisplayIndex ";
-            
+
+            return this.SQLHelper.ExecuteDataset(sql);
+        }
+        public DataSet GetEventListInfoByGroupId(string homeId, string strGroupId)
+        {
+            string sql = string.Empty;
+            sql += " SELECT eventAreaItemId = a.ItemAreaId ";
+            sql += " ,areaFlag, typeId = b.EventTypeId ";//ªÒ»°¡ÀtypeId
+            sql += " , eventId = a.EventId ";
+            sql += " , itemId = a.ItemId ";
+            sql += " , displayIndex = a.DisplayIndex ";
+            //sql += " , itemName = c.ItemName ";
+            //sql += " , imageUrl = a.ItemImageUrl ";
+            sql += " , imageUrl = (CASE WHEN a.areaFlag='eventList' THEN c.ImageUrl ELSE  a.ItemImageUrl END ) ";
+            //sql += " , qty = c.Qty ";
+            //sql += " , price = c.Price ";
+            //sql += " , salesPrice = c.SalesPrice ";
+            //sql += " , discountRate = c.DiscountRate ";
+            sql += " , remainingSec = b.RemainingSec ";
+            sql += " , ShowStyle ,b.EventName";
+            sql += " FROM dbo.MHItemArea a ";
+            sql += " left JOIN dbo.VwPanicBuyingEvent b ON a.EventId = b.EventId ";
+            sql += " left JOIN dbo.vwPEventItemDetail c ON a.EventId=c.EventId AND a.ItemId=c.ItemID";
+            sql += " WHERE a.IsDelete = 0 ";
+            sql += " AND a.HomeId = '" + homeId + "' ";
+            sql += " AND a.GroupId = '" + strGroupId + "' ";
+            sql += " ORDER BY a.DisplayIndex ";
+
             return this.SQLHelper.ExecuteDataset(sql);
         }
         #endregion

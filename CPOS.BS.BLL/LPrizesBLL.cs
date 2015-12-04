@@ -249,8 +249,6 @@ namespace JIT.CPOS.BS.BLL
 
                     var entityPrize = bllPrize.GetPrizesByEventId(contactEvent.ContactEventId.ToString()).FirstOrDefault();
 
-
-
                     var bllPrizePool = new LPrizePoolsBLL(CurrentUserInfo);
                     var entityPrizePool = new LPrizePoolsEntity();
 
@@ -285,12 +283,11 @@ namespace JIT.CPOS.BS.BLL
                             bllVipIntegral.AddIntegral(vipInfo, null, IntegralDetail, pTran, this.CurrentUserInfo);
                         }
 
+
                         #endregion
                     }
-                    else if (entityPrize.PrizeTypeId == "Counpon")
+                    else if (entityPrize.PrizeTypeId == "Coupon")
                     {
-
-
                         List<OrderBy> lstOrder = new List<OrderBy> { };
                         CouponEntity entityCoupon = null;
                         CouponBLL bllCoupon = new CouponBLL(this.CurrentUserInfo);
@@ -308,7 +305,7 @@ namespace JIT.CPOS.BS.BLL
                         entityVipCouponMapping = new VipCouponMappingEntity()
                         {
                             VipCouponMapping = Guid.NewGuid().ToString(),
-                            VIPID = CurrentUserInfo.UserID,
+                            VIPID = strVipId,
                             CouponID = entityCoupon.CouponID
                         };
                         bllVipCouponMapping.Create(entityVipCouponMapping);

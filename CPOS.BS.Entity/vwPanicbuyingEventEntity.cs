@@ -37,8 +37,8 @@ namespace JIT.CPOS.BS.Entity
         public string ImageUrlThumb { get; set; }
         public string ImageUrlMiddle { get; set; }
         public string ImageUrlBig { get; set; }
-        public string Price { get; set; }
-        public string SalesPrice { get; set; }
+        public decimal Price { get; set; }
+        public decimal SalesPrice { get; set; }
         public string DiscountRate { get; set; }
         public int? DisplayIndex { get; set; }
         public string ItemCategoryName { get; set; }

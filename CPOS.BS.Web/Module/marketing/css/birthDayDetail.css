@@ -12,7 +12,7 @@
 .title li{cursor: pointer;  width:33.33333%; height: 56px; line-height: 56px;  float:left; text-align:center; font-size: 17px; font-weight:600; color:#3d3e40;  border-right:1px solid #d8d8d8; }
 .title li.on{ background:#fff;}
 .title li span{ position:relative}
-.title li span em{width:33px; height: 33px; left: -52px; position: absolute; top: -3px; color:#fff; line-height: 33px; background:url(../images/yuan.png) no-repeat left center}
+.title li span em{width:33px; height: 33px; left: -52px; position: absolute; top: -8px; color:#fff; line-height: 33px; background:url(../images/yuan.png) no-repeat left center}
 .title li.on span em{ background:url(../images/yuanHover.png) no-repeat left center}
 .title li.one{ border-radius: 8px 0 0 0;}
 .title li.borderNone{ border:none}

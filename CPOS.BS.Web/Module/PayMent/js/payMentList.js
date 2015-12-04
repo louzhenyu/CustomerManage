@@ -230,6 +230,7 @@
                             $tr.text('未启用').addClass('blue');
                             that.elems.uiMask.slideUp();
                             $this.parents('.jui-dialog').fadeOut();
+                            that.init();
                         });
                     } else {
                         var AddPayChannelList = new Array();
@@ -432,6 +433,7 @@
                             $tr.text('已启用').removeClass('blue');
                             that.elems.uiMask.slideUp();
                             $this.parents('.jui-dialog').fadeOut();
+                            that.init();
                         });
 
                     }

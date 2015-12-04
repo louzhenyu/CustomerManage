@@ -99,6 +99,7 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
     
     public class ItemEventAreaInfo
     {
+        public string EventName { get; set; }
         /// <summary>
         /// 商品标识		【必须】
         /// </summary>

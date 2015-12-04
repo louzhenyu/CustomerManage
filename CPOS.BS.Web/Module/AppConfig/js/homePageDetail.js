@@ -1077,12 +1077,13 @@
 
                 var $this=$(this);
                 self.categoryLayer.pageIndex = 0;
-                self.categoryLayer.shopType= $this.parents(".jsAreaTitle").data("typeid");
+                self.categoryLayer.shopType= $this.parents(".jsAreaTitle").data("typeid")||$this.parents(".jsAreaItem").data("typeid")  ;
                 if(self.categoryLayer.shopType) {
                     self.categoryLayer.showActivity(function (key, name) {
                         //注册回调
                         debugger;
                         $this.parents(".jsAreaTitle").eq(0).data("eventid", key).data("name", name);
+                        $this.parents(".jsAreaItem").eq(0).data("eventid", key).data("name", name);
                         $this.siblings("input").val(name);
                     });
 
@@ -1585,7 +1586,7 @@
             var model = {};
             var flag = true;
             if (self.currentEditData&&self.currentEditData.modelTypeId) {//首次加载currentEditData对象不为空。
-                model.modelTypeId = self.currentEditData.modelTypeId;
+                model.modelTypeId = self.cturrentEditData.modelTypeId;
                 model.modelTypeName = self.currentEditData.modelTypeName;
                 model.groupId = self.currentEditData.CategoryAreaGroupId;
                 model.categoryAreaGroupId = self.currentEditData.CategoryAreaGroupId;
@@ -1755,10 +1756,11 @@
 
             self.ele.editLayer.find(".jsAreaItem").each(function (i, e) {
                 var obj = {}, $this = $(e);
-                obj["typeId"] =typeId;
-                obj["itemId"] = $this.data("itemid");
+                obj["typeId"] =$this.data("typeid");
+                obj["itemId"] = $this.data("eventid"); ///
                 obj["itemName"] = $this.data("name");
                 obj["eventId"] =$this.data("eventid");
+                obj["eventName"] =$this.data("eventname");
                 obj["imageUrl"] = $this.data("imageurl");
                 obj["isUrl"] = 1;
                 obj["itemAreaId"]= $this.data("eventareaitemid");
@@ -1766,7 +1768,7 @@
 
                     if (!obj.itemId) {
                         flag = false;
-                        alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
+                        alert("第" + (i + 1) + "项展示分组不能为空，请选择展示的类型");
                         return false;
                     }
                     if (!obj.imageUrl) {
@@ -2207,7 +2209,7 @@
                                                  var minutes = Math.floor(maxTime % (60*12));
                                                  var seconds = Math.floor(maxTime % 60);*/
                                                 var d = Math.floor(maxTime / 60 / 60 / 24);
-                                                var h = Math.floor(maxTime / 60 / 60 % 24);
+                                                var h = Math.floor(maxTime / 60 / 60);
                                                 var m = Math.floor(maxTime / 60 % 60);
                                                 var s = Math.floor(maxTime % 60);
                                                 var html = "<em>" + h + "</em>:<em>" + m + "</em>:<em>" + s + "</em>";

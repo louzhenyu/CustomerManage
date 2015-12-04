@@ -73,14 +73,33 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetItemDetails(string strHomeId, string strGroupId)
         {
             List<MHItemAreaEntity> list = new List<MHItemAreaEntity> { };
-            string sql = string.Format(@"select a.*,b.ItemName,(CASE WHEN a.areaFlag='eventList' THEN b.ImageUrl ELSE  a.ItemImageUrl END ) ImageUrl,b.Price,b.SalesPrice,b.AddedTime,b.EndTime,b.BeginTime,b.EventTypeID as TypeID,b.RemainingSec
+            string sql = string.Format(@"select a.*,b.EventName ItemName,EventName,a.ItemImageUrl ImageUrl,b.EndTime,b.BeginTime,b.EventTypeID as TypeID,b.RemainingSec,b.IsStart
                                         from MHItemArea a 
                                                 INNER JOIN dbo.MHCategoryAreaGroup mc ON a.GroupId=mc.GroupId AND mc.HomeId = a.HomeId
-                                                LEFT JOIN vwPEventItemDetail b on a.EventId=b.EventId and a.ItemId=b.ItemID
-                                        where a.HomeId='{0}' and a.GroupId={1} and a.isdelete=0  order by a.DisplayIndex asc
-            ", strHomeId, strGroupId);//活动结束时间包含选中的那天 and datediff(day,getdate(),b.EndTime )>=0	
+                                                LEFT JOIN VwPanicBuyingEvent b on a.EventId=b.EventId 
+                                        where a.HomeId='{0}' and a.GroupId='{1}' and a.isdelete=0  order by a.DisplayIndex asc
+            ", strHomeId, strGroupId);
+
+//            string sql = string.Format(@"select a.*,b.ItemName,(CASE WHEN a.areaFlag='eventList' THEN b.ImageUrl ELSE  a.ItemImageUrl END ) ImageUrl,b.Price,b.SalesPrice,b.AddedTime,b.EndTime,b.BeginTime,b.EventTypeID as TypeID,b.RemainingSec
+//                                                    from MHItemArea a 
+//                                                            INNER JOIN dbo.MHCategoryAreaGroup mc ON a.GroupId=mc.GroupId AND mc.HomeId = a.HomeId
+//                                                            LEFT JOIN vwPEventItemDetail b on a.EventId=b.EventId and a.ItemId=b.ItemID
+//                                                    where a.HomeId='{0}' and a.GroupId={1} and a.isdelete=0  order by a.DisplayIndex asc
+//                        ", strHomeId, strGroupId);//活动结束时间包含选中的那天 and datediff(day,getdate(),b.EndTime )>=0	
             return this.SQLHelper.ExecuteDataset(sql);
             
+        }
+        public DataSet GetEventListItemDetails(string strHomeId, string strGroupId)
+        {
+            List<MHItemAreaEntity> list = new List<MHItemAreaEntity> { };
+            string sql = string.Format(@"select a.*,b.ItemName, b.ImageUrl  ImageUrl,b.Price,b.SalesPrice,b.AddedTime,b.EndTime,b.BeginTime,b.EventTypeID as TypeID,b.RemainingSec,b.IsStart
+                                                                from MHItemArea a 
+                                                                        INNER JOIN dbo.MHCategoryAreaGroup mc ON a.GroupId=mc.GroupId AND mc.HomeId = a.HomeId
+                                                                        LEFT JOIN vwPEventItemDetail b on a.EventId=b.EventId and a.ItemId=b.ItemID
+                                                                where a.HomeId='{0}' and a.GroupId={1} and a.isdelete=0  order by a.DisplayIndex asc
+                                    ", strHomeId, strGroupId);//活动结束时间包含选中的那天 and datediff(day,getdate(),b.EndTime )>=0	
+            return this.SQLHelper.ExecuteDataset(sql);
+
         }
     }
 }

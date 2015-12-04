@@ -83,6 +83,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetEventInfoByGroupId(homeId, strGroupId);
         }
+        public DataSet GetEventListInfoByGroupId(string homeId, string strGroupId)
+        {
+            return this._currentDAO.GetEventListInfoByGroupId(homeId, strGroupId);
+        }
         #endregion
 
         #region 获取分类分组ID

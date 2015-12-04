@@ -45,6 +45,7 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public string CouponTypeID { set; get; }
 
+        public int Location { set; get; }
 
         #endregion
     }

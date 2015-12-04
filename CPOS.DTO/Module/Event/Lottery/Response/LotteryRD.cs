@@ -10,5 +10,6 @@ namespace JIT.CPOS.DTO.Module.Event.Lottery.Response
         public string PrizeId { get; set; }
         public string PrizeName { get; set; }
         public string ResultMsg { get; set; }
+        public int Location { get; set; }
     }
 }

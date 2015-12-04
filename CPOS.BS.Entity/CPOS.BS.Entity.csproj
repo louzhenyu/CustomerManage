@@ -208,6 +208,7 @@
     <Compile Include="CodeGeneration\LNewsMicroMappingEntity.cs" />
     <Compile Include="CodeGeneration\LNumberTypeMappingEntity.cs" />
     <Compile Include="CodeGeneration\LongContentEntity.cs" />
+    <Compile Include="CodeGeneration\LPrizeLocationEntity.cs" />
     <Compile Include="CodeGeneration\Menu\T_Menu_FunctionEntity.cs" />
     <Compile Include="CodeGeneration\Menu\T_Role_Menu_FunctionEntity.cs" />
     <Compile Include="CodeGeneration\MHAdAreaEntity.cs" />
@@ -469,6 +470,7 @@
     <Compile Include="CodeGeneration\Marketing\C_PrizesDetailEntity.cs" />
     <Compile Include="CodeGeneration\Marketing\C_PrizesEntity.cs" />
     <Compile Include="CodeGeneration\Marketing\C_TargetGroupEntity.cs" />
+    <Compile Include="LPrizeLocationEntity.cs" />
     <Compile Include="Marketing\C_ActivityEntity.cs" />
     <Compile Include="Marketing\C_ActivityMessageEntity.cs" />
     <Compile Include="Marketing\C_MessageSendEntity.cs" />

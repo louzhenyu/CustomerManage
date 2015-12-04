@@ -131,7 +131,8 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public DataSet GetPrizesByEventId(string EventId)
         {
-            string sql = "select top 1 a.* From LPrizes a with(nolock)"
+            string sql = "select top 1 a.*,p.CouponTypeID From LPrizes a with(nolock)"
+                        + "LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON a.PrizesID=p.PrizesID "
                         + " where a.IsDelete = '0' "
                         + " and a.EventId = '" + EventId + "' "
                         + " order by a.displayIndex desc ";
@@ -210,7 +211,7 @@ namespace JIT.CPOS.BS.DataAccess
         public int SavePrize(LPrizesEntity entity)
         {
             
-             SqlParameter[] parameters = new SqlParameter[10] 
+             SqlParameter[] parameters = new SqlParameter[11] 
             { 
                 new SqlParameter{ParameterName="@EventId",SqlDbType=SqlDbType.NVarChar,Value=entity.EventId},
                 new SqlParameter{ParameterName="@PrizesID",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizesID},
@@ -222,6 +223,7 @@ namespace JIT.CPOS.BS.DataAccess
                 new SqlParameter{ParameterName="@CountTotal",SqlDbType=SqlDbType.Int,Value=entity.CountTotal},
                 new SqlParameter{ParameterName="@CustomerId",SqlDbType=SqlDbType.NVarChar,Value=this.CurrentUserInfo.ClientID},
                 //new SqlParameter{ParameterName="@Probability",SqlDbType=SqlDbType.Decimal,Value=entity.Probability},
+                new SqlParameter{ParameterName="@ImageUrl",SqlDbType=SqlDbType.NVarChar,Value=entity.ImageUrl},
                 new SqlParameter{ParameterName="@Creator",SqlDbType=SqlDbType.NVarChar,Value=entity.CreateBy}
             };
              return this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "Proc_AddPrizes", parameters);
@@ -260,10 +262,11 @@ namespace JIT.CPOS.BS.DataAccess
 
         public DataSet GetPirzeList(string strEventId)
         {
-            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel ,l.CountTotal ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty "
+            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl "
                         +"From dbo.LPrizes l "
                         +"LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
                         +"LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "
+                        + "LEFT JOIN Options o ON l.PrizeLevel=o.OptionValue"
                         + " where l.IsDelete = '0'"
                         + " and l.EventId = '" + strEventId + "' "
                         + " order by l.CreateTime asc ";
@@ -273,7 +276,7 @@ namespace JIT.CPOS.BS.DataAccess
         #endregion
         public DataSet GetCouponTypeIDByPrizeId(string strPrizesID)
         {
-            string strSql = string.Format("SELECT CouponTypeID FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID where l.PrizesID='{0}'",strPrizesID);
+            string strSql = string.Format("SELECT l.*,CouponTypeID,Location FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID LEFT JOIN dbo.LPrizeLocation lc WITH(NOLOCK) ON l.PrizesID=lc.PrizeID where l.PrizesID='{0}'", strPrizesID);
             return this.SQLHelper.ExecuteDataset(strSql);
 
         }

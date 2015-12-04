@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <meta charset="UTF-8" />
     <title>团购管理</title>
-        <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <link href="css/style.css?v1.0" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 
@@ -163,7 +163,7 @@
                     </div>
                     <div class="handleShop">
                         <a class="addSizeBtn" href="javascript:;"></a>
-                        <span class="uploadPicBtn"></span>
+                        <span class="uploadPicBtn" style="display:none"></span>
                         <span class="moveUp <#=(i==0)?"first":""#>">上移</span>
                         <span class="moveDown <#=(i==list.length-1)?"last":""#>">下移</span>
                     </div>
@@ -229,7 +229,7 @@
      <#for(var i=0;i<list.length;i++){ var item=list[i];#>
         <li data-itemid="<#=item.ItemId#>" data-name="<#=item.ItemName#>">
             <p class="classify"><#=item.ItemCategoryName#></p>
-            <p class="shopName"><#=item.ItemName#></p>
+            <p class="shopName t-overflow"><#=item.ItemName#></p>
         </li>
     <#}#>
     </ul>

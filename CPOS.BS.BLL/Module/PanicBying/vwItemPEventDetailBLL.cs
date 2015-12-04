@@ -115,10 +115,10 @@ namespace JIT.CPOS.BS.BLL
                         ImageUrlThumb = string.IsNullOrEmpty(t.ImageUrl) ? "" : GetImageUrl(t.ImageUrl, "_120"),
                         ImageUrlMiddle = string.IsNullOrEmpty(t.ImageUrl) ? "" : GetImageUrl(t.ImageUrl, "_240"),
                         ImageUrlBig = string.IsNullOrEmpty(t.ImageUrl) ? "" : GetImageUrl(t.ImageUrl, "_480"),
-                        Price = t.Price.Value.ToString("0.##"),
-                        SalesPrice = t.SalesPrice.Value.ToString("0.##"),
+                        Price = t.Price.Value,
+                        SalesPrice = t.SalesPrice.Value,
                         //DiscountRate = t.DiscountRate.ToString(),
-                        DiscountRate = t.DiscountRate.Value.ToString("0."),
+                        DiscountRate = t.DiscountRate.Value.ToString(),
                         DisplayIndex = t.DisplayIndex,
                         ItemCategoryName = t.ItemCategoryName,
                         SalesPersonCount = t.SalesPersonCount,
@@ -162,9 +162,9 @@ namespace JIT.CPOS.BS.BLL
                         ImageUrlThumb = string.IsNullOrEmpty(t.ImageUrl) ? "" : GetImageUrl(t.ImageUrl, "_120"),
                         ImageUrlMiddle = string.IsNullOrEmpty(t.ImageUrl) ? "" : GetImageUrl(t.ImageUrl, "_240"),
                         ImageUrlBig = string.IsNullOrEmpty(t.ImageUrl) ? "" : GetImageUrl(t.ImageUrl, "_480"),
-                        Price = t.Price.Value.ToString("0.##"),
-                        SalesPrice = t.SalesPrice.Value.ToString("0.##"),
-                        DiscountRate = t.DiscountRate.Value.ToString("0."),
+                        Price = t.Price.Value,
+                        SalesPrice = t.SalesPrice.Value,
+                        DiscountRate = t.DiscountRate.Value.ToString(),
                         //DiscountRate = t.DiscountRate.ToString(),
                         DisplayIndex = t.DisplayIndex,
                         ItemCategoryName = t.ItemCategoryName,
@@ -222,10 +222,13 @@ namespace JIT.CPOS.BS.BLL
                 skuId = t["skuId"].ToString(),
                 skuProp1 = t["skuProp1"].ToString(),
                 skuProp2 = t["skuProp2"].ToString(),
-                price = t["price"] is DBNull ? "0" : Double.Parse(t["price"].ToString()).ToString("0.##"),
-                salesPrice = t["salesPrice"] is DBNull ? "0" : Double.Parse(t["salesPrice"].ToString()).ToString("0.##"),
+                price = t["price"] is DBNull ? 0 : Double.Parse(t["price"].ToString()),
+                salesPrice = t["salesPrice"] is DBNull ? 0: Double.Parse(t["salesPrice"].ToString()),
+                //price = t["price"] is DBNull ? "0" : Double.Parse(t["price"].ToString()).ToString("0.##"),
+                //salesPrice = t["salesPrice"] is DBNull ? "0" : Double.Parse(t["salesPrice"].ToString()).ToString("0.##"),
                 discountRate = string.IsNullOrEmpty(t["discountRate"].ToString()) ? "0" : t["discountRate"].ToString(),//уш©ш
                 integral = string.IsNullOrEmpty(t["integral"].ToString()) ? "0" : t["integral"].ToString(),
+                
                 //qty = Convert.ToInt32(t["qty"] is DBNull ? "0" : t["qty"]),
                 //overQty = Convert.ToInt32(t["overQty"] is DBNull ? "0" : t["overQty"])
             }).ToArray();
@@ -409,6 +412,7 @@ namespace JIT.CPOS.BS.BLL
                 CustomerInfo = customerInfo
                 #endregion
             };
+
             return content;
         }
         /// <summary>

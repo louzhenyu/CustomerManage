@@ -307,7 +307,7 @@
                             return value;
                         }
 					},
-                    {field : 'Parent_Unit_Name',title : '上级组织结构',width:58,align:'center',resizable:false,
+                    {field : 'Parent_Unit_Name',title : '上级组织',width:58,align:'center',resizable:false,
                         formatter:function(value,row,index){
                            return value
                         }

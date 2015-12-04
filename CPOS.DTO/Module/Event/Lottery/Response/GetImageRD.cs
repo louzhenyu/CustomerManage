@@ -14,6 +14,11 @@ namespace JIT.CPOS.DTO.Module.Event.Lottery.Response
         public string Logo { get; set; }
         public string Rule { get; set; }
 
+        public string LT_kvPic { get; set; }
+        public string LT_Rule { get; set; }
+        public string LT_bgpic1 { get; set; }
+        public string LT_bgpic2 { get; set; }
+        public string LT_regularpic { get; set; }
         public string EventTitle { get; set; }
         public string EventContent { get; set; }
 

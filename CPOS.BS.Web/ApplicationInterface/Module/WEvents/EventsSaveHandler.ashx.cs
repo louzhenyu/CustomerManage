@@ -95,6 +95,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 case "SaveEventStep3": //保存，更新活动第一步
                     rst = this.SaveEventStep3(pRequest);
                     break;
+                case "SavePrizeLocation": //保存奖品位置
+                    rst = this.SavePrizeLocation(pRequest);
+                    break;
+                case "GetPrizeLocationList": //获取奖品位置列表
+                    rst = this.GetPrizeLocationList(pRequest);
+                    break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
                     {
@@ -360,7 +366,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             entity.CouponTypeID = rp.Parameters.CouponTypeID;
             entity.PrizeName = rp.Parameters.PrizeName;
             entity.CountTotal = rp.Parameters.CountTotal;
-            //entity.Probability = rp.Parameters.Probability;
+            entity.ImageUrl = rp.Parameters.ImageUrl;
+            //entity.Probability = rp.Parameters.Probability == null ? 0 : rp.Parameters.Probability;
             entity.CreateBy = loggingSessionInfo.UserID;
             entity.PrizesID = Guid.NewGuid().ToString();
             bll.SavePrize(entity);
@@ -464,7 +471,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 {
                     rd.ImageList = DataTableToObject.ConvertToList<ObjectImagesEntity>(dsImage.Tables[0]);
 
-                    rd.RuleId = Convert.ToInt32(dsImage.Tables[0].Rows[0]["RuleId"]);
+                    rd.RuleId = Convert.ToInt32(dsImage.Tables[0].Rows[0]["RuleId"].ToString() == "" ? "0" : dsImage.Tables[0].Rows[0]["RuleId"].ToString());
                     rd.RuleContent = dsImage.Tables[0].Rows[0]["RuleContent"].ToString();
                 }
             }
@@ -815,6 +822,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         }
 
         #endregion
+
         #region 奖品类型
         public string GetPrizeType(string pRequest)
         {
@@ -835,6 +843,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             return rsp.ToJSON();
         }
         #endregion
+
         #region new 生成活动二维码
         public WxCode CretaeWxCode()
         {
@@ -896,8 +905,102 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
 
         }
         #endregion
+
+        #region 大转盘相关
+        /// <summary>
+        /// 保存奖品位置
+        /// </summary>
+        /// <param name="pRequest"></param>
+        /// <returns></returns>
+        public string SavePrizeLocation(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<PrizeLocationRP>>().Parameters;
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+
+            var entityPrizeLocation = new LPrizeLocationEntity();
+            var bllPrizeLocation = new LPrizeLocationBLL(loggingSessionInfo);
+
+            if(rp.PrizeLocationList.Count>0)
+            {
+                foreach(var item in rp.PrizeLocationList)
+                {
+                    var entity = new LPrizeLocationEntity()
+                    {
+                        EventID = rp.EventID,
+                        PrizeID = item.PrizeID,
+                        PrizeName=item.PrizeName,
+                        Location = item.Location,
+                        ImageUrl = item.ImageUrl
+
+                    };
+                    if (item.PrizeLocationID != null && item.PrizeLocationID.ToString() != "")
+                    {
+                        entity.PrizeLocationID = item.PrizeLocationID;
+                        bllPrizeLocation.Update(entity);
+                    }
+                    else
+                    {
+                        bllPrizeLocation.Create(entity);
+                    }
+                }
+            }
+
+            var rd = new EmptyRD();
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
+        /// <summary>
+        /// 获取奖品位置列表
+        /// </summary>
+        /// <param name="pRequest"></param>
+        /// <returns></returns>
+        public string GetPrizeLocationList(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<PrizeLocationRP>>().Parameters;
+            var rd = new PrizeLocationRD();
+
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+
+            var entityPrizeLocation = new LPrizeLocationEntity();
+            var bllPrizeLocation = new LPrizeLocationBLL(loggingSessionInfo);
+
+            if (string.IsNullOrEmpty(rp.EventID))
+            {
+                rd.ErrMsg = "EventID参数有误";
+            }
+            else
+            {
+                rd.EventID = rp.EventID;
+                rd.PrizeLocationList = bllPrizeLocation.QueryByEntity(new LPrizeLocationEntity() { EventID = rp.EventID }, null).ToList();
+            }
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
+        #endregion
+    }
+    public class PrizeLocation
+    {
+        public Guid? PrizeLocationID { get; set; }
+        public string PrizeID { get; set; }
+        public string PrizeName { get; set; }
+        public int Location { get; set; }
+        public string ImageUrl { get; set; }
+    }
+    public class PrizeLocationRP:IAPIRequestParameter
+    {
+        public string EventID { get; set; }
+        public List<PrizeLocation> PrizeLocationList { get; set; }
+        public void Validate()
+        {
+        }
     }
 
+    public class PrizeLocationRD:IAPIResponseData
+    {
+        public string EventID { get; set; }
+        public string ErrMsg { get; set; }
+        public List<LPrizeLocationEntity> PrizeLocationList { get; set; }
+    }
     public class WxCode
     {
         public bool success { get; set; }
@@ -905,7 +1008,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         public string ImageUrl { get; set; }
         public int MaxWQRCod { get; set; }
     }
-
     public class EventRP : IAPIRequestParameter
     {/// <summary>
         /// 
@@ -1201,7 +1303,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         public string EventId { get; set; }
         public LEventsEntity EventInfo { get; set; }//活动列表   
     }
-
     public class GetStep3InfoRD : IAPIResponseData
     {
         public string EventId { get; set; }
@@ -1236,7 +1337,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         public string EventTypeId { get; set; }
         public string EventTypeName { get; set; }
     }
-
     public class SaveEventStep3RP : IAPIRequestParameter
     {/// <summary>
         /// 
@@ -1252,7 +1352,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         {
         }
     }
-
     public class MaterialTextInfo
     {
         /// <summary>
@@ -1305,11 +1404,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         public string PageParamJson { get; set; }
 
     }
-
-
-
-
-
     public class ImageObjectRP : IAPIRequestParameter
     {
         public string EventId { get; set; }
@@ -1355,13 +1449,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
 
         public decimal Probability { get; set; }
 
-
+        public string ImageUrl { get; set; }
         public List<ObjectImage> ObjectImage { get; set; }
         public void Validate()
         {
         }
     }
-
     public class PrizeRD : IAPIResponseData
     {
         public int RuleId { get; set; }
@@ -1376,26 +1469,25 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         public string PrizesID { get; set; }
         public string PrizeName { get; set; }
         public int PrizeLevel { get; set; }
+        public string PrizeLevelName { get; set; }
         public string CouponTypeName { get; set; }
         public string CouponTypeID { get; set; }
         public int CountTotal { get; set; }
         public int IssuedQty { get; set; }
         public decimal Probability { get; set; }
+        public string ImageUrl { get; set; }
     }
-
     public class ObjectImage
     {
         public string ImageURL { get; set; }
         public string BatId { get; set; }
 
     }
-
     public class SavePrizesRD : IAPIResponseData
     {
         public string EventId { get; set; }
 
     }
-
     public class AppendPrizeRP : IAPIRequestParameter
     {
 
@@ -1455,12 +1547,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
     {
         public VipCardTypeInfo[] VipCardTypeList { get; set; }
     }
-
     public class GetPrizeTypeRD : IAPIResponseData
     {
         public PrizeTypeInfo[] PrizeTypeList { get; set; }
     }
-
     public class VipCardTypeInfo
     {
         #region 属性集
@@ -1557,8 +1647,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
     {
         public SysVipCardGradeEntity[] VipCardGradeList { get; set; }
     }
-
-
     #region 1.1 查询数据表 Options
     /// <summary>
     /// 接口请求参数

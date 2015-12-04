@@ -731,15 +731,7 @@
 							    <span class="jsTab two" data-model="2"><em></em></span>\
 							    <span class="jsTab three on" data-model="3"><em></em></span>\
 						    </div>',
-        SencondKillListTemp: '<div class="jsAreaTitle clearfix" data-eventid="<%=eventId%>" data-type="sk-1" data-typeid="<%=shopType%>" >\
-                                     	<div class="tit">选择分组:</div>\
-                                     	<div class="wrapInput">\
-											   <p class="infoContainer clearfix">\
-												    <input class="jsNameInput" type="text" style="width:258px;" value="<%=eventName%>">\
-												    <span class="jsChooseEventBtn tagBtn" style="width:76px;">选择</span>\
-											    </p>\
-										    </div>\
-                              </div>\
+        SencondKillListTemp: '<div class="jsAreaTitle clearfix" data-eventid="<%=eventId%>" data-type="sk-1" data-typeid="<%=shopType%>" ></div>\
                                 <%if(arrayList&&arrayList.length){%>\
                                <%if(arrayList.length==1){%>\
         					     <div class="hint"><b> 图片:</b><span>支持格式jpg、jpeg、png，建议尺寸640px*346px，200KB以内</span></div>\
@@ -760,8 +752,8 @@
 										    </div>\
 										    <div class="wrapInput">\
 											   <p class="infoContainer clearfix">\
-												    <input class="jsNameInput" type="text" style="width:258px;" value="<%=idata.itemName%>">\
-												    <span class="jsChooseBtn tagBtn" style="width:76px;">选择商品</span>\
+												   <input class="jsNameInput" type="text" style="width:258px;" value="<%=idata.eventName%>">\
+												    <span class="jsChooseEventBtn tagBtn" style="width:76px;">选择分组</span>\
 											    </p>\
 										    </div>\
 									    </div>\
@@ -775,15 +767,15 @@
         					     <div class="hint"><b> 图片:</b><span>支持格式jpg、jpeg、png，建议尺寸① 320px*346px，②③ 320px*173px，200KB以内 </span></div>\
 						     <%}%>\
 								    <%for(var i=0;i<length;i++){%>\
-									    <div class="jsAreaItem concise uploadArea clearfix">\
+									    <div class="jsAreaItem concise uploadArea clearfix"  data-typeid="<%=shopType%>">\
 										    <div class="wrapPic">\
 											    <p><img src="images/handleLayer/default.png"></p>\
 											   <span class="uploadBtn"><em class="upTit">上传</em><input class="uploadImgBtn input" type="file" /></span>\
 											 </div>\
 										    <div class="wrapInput">\
 											    <p class="infoContainer clearfix">\
-												    <input class="jsNameInput" style="width:258px;" type="text" value="">\
-												    <span class="jsChooseBtn tagBtn" style="width:76px;">选择商品</span>\
+												  <input class="jsNameInput" type="text" style="width:258px;" value="">\
+												    <span class="jsChooseEventBtn tagBtn" style="width:76px;">选择分组</span>\
 											    </p>\
 										    </div>\
 									    </div>\

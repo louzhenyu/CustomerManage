@@ -45,6 +45,8 @@ a:hover{color:#fff;}
 .commonStepBtn{display:inline-block;width:148px;height:43px;line-height:43px;text-align:center;font-size:15px;border-radius:22px;background:#ccc;color:#fff;}
 .commonStepBtn.nextStepBtn{background:#fc7a52;}
 
+
+.panel-body-noheader .combobox-item{font-size:12px;}
 /*奖品配置，弹出*/
 .jui-dialog-redPackage{width:636px;height:470px;position:fixed;top:90px;margin-left:-318px;}
 .jui-dialog-tit{height:55px;}

@@ -16,8 +16,8 @@
         <div class="contentArea_vipquery">
                     <!--个别信息查询-->
                     <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
-                      <div class="listBtn" data-cooperatetype="TwoWay" data-hide="oneway" data-show="twoway" >互相集客<br> (资源共享)<div class="on"></div></div>
-                      <div class="listBtn" data-cooperatetype="OneWay"data-show="oneway" data-hide="twoway" >单向集客<br>（赚取佣金）<div class="on"></div></div>
+                      <div class="listBtn" data-cooperatetype="TwoWay" data-hide="oneway" data-show="twoway" >互相引流<br> (资源共享)<div class="on"></div></div>
+                      <div class="listBtn" data-cooperatetype="OneWay"data-show="oneway" data-hide="twoway" >单向引流<br>（赚取佣金）<div class="on"></div></div>
                     </div>
                     <form></form>
                     <form id="addOneWay" >

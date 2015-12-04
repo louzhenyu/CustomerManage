@@ -253,6 +253,7 @@
     <Compile Include="CodeGeneration\LNewsMicroMappingBLL.cs" />
     <Compile Include="CodeGeneration\LNumberTypeMappingBLL.cs" />
     <Compile Include="CodeGeneration\LongContentBLL.cs" />
+    <Compile Include="CodeGeneration\LPrizeLocationBLL.cs" />
     <Compile Include="CodeGeneration\Marketing\C_ActivityBLL.cs" />
     <Compile Include="CodeGeneration\Marketing\C_ActivityMessageBLL.cs" />
     <Compile Include="CodeGeneration\Marketing\C_MessageSendBLL.cs" />
@@ -725,6 +726,7 @@
     <Compile Include="LNewsCommentBLL.cs" />
     <Compile Include="LNewsMicroMappingBLL.cs" />
     <Compile Include="LNumberTypeMappingBLL.cs" />
+    <Compile Include="LPrizeLocationBLL.cs" />
     <Compile Include="Marketing\C_ActivityBLL.cs" />
     <Compile Include="Marketing\C_ActivityMessageBLL.cs" />
     <Compile Include="Marketing\C_MessageSendBLL.cs" />

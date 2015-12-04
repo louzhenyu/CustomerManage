@@ -1374,7 +1374,12 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     var eventGroup = allGroup.Where(a => a.ModelTypeId == 5 || a.ModelTypeId == 6 || a.ModelTypeId == 7 || a.ModelTypeId == 8);
                     foreach (var item in eventGroup)
                     {
-                        var dsEvent = adAreaBll.GetEventInfoByGroupId(homeEntity.HomeId.ToString(), item.GroupId.ToString());//获取
+                        DataSet dsEvent = null;
+                        if(item.ModelTypeId==8)
+                            dsEvent = adAreaBll.GetEventListInfoByGroupId(homeEntity.HomeId.ToString(), item.GroupId.ToString());//获取EventList
+                        else
+                            dsEvent = adAreaBll.GetEventInfoByGroupId(homeEntity.HomeId.ToString(), item.GroupId.ToString());//获取其他活动
+                           
 
                         if (dsEvent != null && dsEvent.Tables.Count > 0 && dsEvent.Tables[0].Rows.Count > 0)
                         {
