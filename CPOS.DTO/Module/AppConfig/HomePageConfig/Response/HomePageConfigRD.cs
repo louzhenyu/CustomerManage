@@ -137,6 +137,10 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         /// </summary>
         public int? RemainingSec { get; set; }
         /// <summary>
+        /// 是否开始 0:未开始 1:已开始 2:结束
+        /// </summary>
+        public int IsStart { get; set; } 
+        /// <summary>
         /// 上架时间(格式：yyyy-MM-dd HH:mm:ss)
         /// </summary>
         public string AddedTime { get; set; }
