@@ -35,7 +35,7 @@
                                                       <em class="tit">确认收货日期：</em>
                         <div class="searchInput bordernone whauto"  style="width: 202px; background: none;">
                           <div class="line">
-                               <div class="linetext"></div> <input id="startDate"  name="order_date_begin" class="easyui-datebox"  data-options="width:100,height:32" /><span>至</span> <input id="expireDate" name="order_date_end" class="easyui-datebox" data-options="width:100,height:32" validType="compareDate[$('#startDate').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/></div>
+                                <input id="startDate"  name="order_date_begin" class="easyui-datebox"  data-options="width:100,height:32" /><span>至</span> <input id="expireDate" name="order_date_end" class="easyui-datebox" data-options="width:100,height:32" validType="compareDate[$('#startDate').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/></div>
                              </div>
                              </div>
                                                   <div class="commonSelectWrap">

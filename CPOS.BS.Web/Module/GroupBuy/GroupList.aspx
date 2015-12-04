@@ -48,7 +48,7 @@
         <div>
             <h3>上架状态：</h3>
             <label class="selectBox">
-                <span id="statusText" data-tt="5" data-shopstatus="10">在商城中显示</span>
+                <span id="statusText" data-tt="5" data-shopstatus="20">在商城中显示</span>
                 <span class="dropList">
                     <span data-status="10">不在商城中显示</span>
                     <span data-status="20">在商城中显示</span>
@@ -65,7 +65,7 @@
      <#for(var i=0;i<list.length;i++){
           var item=list[i];#>
         	<li>
-<a href="GroupManage.aspx?eventId=<#=item.EventId#>&pageType=<#=item.EventTypeId#>&showPage=shopManage&pageName=<#=item.pageStr#>&mid=<#=Mid#>">
+<a href="GroupManage.aspx?eventId=<#=item.EventId#>&pageType=<#=item.EventTypeId#>&showPage=shopManage&pageName=<#=item.pageStr#>&mid=<#=Mid#>&PMenuID=<#=PMenuID#>">
                 <div class="groupList-item">
                     <div class="markBox">
                         <#var index=parseInt(item.BeginTime.split("-")[1])-1,day=item.BeginTime.split("-")[2].split(" ")[0];#>

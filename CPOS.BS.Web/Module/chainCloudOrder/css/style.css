@@ -1,13 +1,13 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 #contentArea{background:#f4f8fa;}
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
 .optionBtn{height:65px; border: solid  1px #eee; border-bottom:none; }
-.optionBtn li{cursor: pointer; font-size: 15px; color: #999; float: left; padding-left: 35px; float: left; line-height:43px; }
+.optionBtn li{cursor: pointer; font-size: 15px; color: #999; float: left; padding-left: 35px; float: left; line-height:33px; }
 .optionBtn li.on{color: #07c8cf}
 .optionBtn li.on em{border-bottom: 2px #07c8cf solid;}
 
-.optionBtn{height:65px; padding-top: 20px;  border: solid  1px #eee; border-bottom:none;}
+.optionBtn{height:65px; padding-top: 15px;  border: solid  1px #eee; border-bottom:none;}
 .optionBtn .commonBtn{ width:99px; background: #00cccc;line-height: 32px; height:32px; float: left; margin-left:20px; padding:0 12px;}
 .queryTermArea{border-bottom:1px solid #07c8cf;padding-left: 0; padding-right:0}
 .moreQueryWrap{ float: left;margin-top: 12px;}
@@ -48,7 +48,7 @@
 .actuallyDetailBox{display:inline-block;width:100%;}
 .actuallyDetail{position:relative;display:inline-block;padding-top:10px;}
 .actuallyDetail a{line-height:33px;text-decoration:underline;color:#fc7a52;}
-.otherInfoBox{display:none;position:absolute;top:50px;left:-55px;width:200px;height:325px;padding:0 20px;border:1px solid #d0d5d8;border-radius:4px;font-size:14px;background:#fff;color:#999;z-index:99;}
+.otherInfoBox{display:none;position:absolute;top:50px;left:-55px;width:200px;height:350px;padding:0 20px;border:1px solid #d0d5d8;border-radius:4px;font-size:14px;background:#fff;color:#999;z-index:99;}
 .actuallyDetail:hover .otherInfoBox,.actuallyDetail:hover .arrIcon{display:block;}
 .otherInfoBox .commonSelectWrap{width:100%;margin:0;}
 .otherInfoBox .commonSelectWrap .tit{width:80px;}

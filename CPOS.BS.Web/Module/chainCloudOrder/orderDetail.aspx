@@ -174,19 +174,19 @@
                      -->
                       <div class="actuallyDetailBox">	
                           <div class="commonSelectWrap">
-                             <em class="tit">实付金额:<span>￥</span></em>
+                             <em class="tit"><div class="Paystatus" style="display: inline-block;">实付金额:</div><span>￥</span></em>
                              <div class="searchInput" style="width:40px;margin-left:-3px;">
                               <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="actual_amount" style="color:#fc7a52;">
                              </div>
                           </div>
                           <div class="actuallyDetail">
-                            <a href="javascript:;">实付金额明细</a>
+                            <a href="javascript:;" class="PaystatusDetail">实付金额明细</a>
                             <span class="arrIcon"></span>
                             <div class="otherInfoBox">
                             	<div class="commonSelectWrap" style="margin:10px 0">
                                      <em class="tit">商品总金额:</em>
                                      <div class="searchInput">
-                                     <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="total_amount"/>
+                                     <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="total_retail"/>
                                      </div>
                                   </div>
                                   <div class="infoBox">
@@ -209,6 +209,12 @@
                                          </div>
                                       </div>
                                       <div class="commonSelectWrap">
+                                         <em class="tit">余额抵扣:</em>
+                                         <div class="searchInput wh80">
+                                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="vipEndAmount" value=""/>
+                                         </div>
+                                      </div>
+                                      <div class="commonSelectWrap">
                                           <em class="tit">会员折扣:</em>
                                           <div class="searchInput wh80">
                                            <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="memberPrice" value=""/>
@@ -222,7 +228,7 @@
                                      </div>
                                  </div>
                                  <div class="commonSelectWrap" style="margin:10px 0;">
-                                      <em class="tit" style="font-size:16px">实付金额:</em>
+                                      <em class="tit Paystatus" style="font-size:16px">实付金额:</em>
                                       <div class="searchInput wh80">
                                        <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="actual_amount" value=""  style="font-size:16px">
                                       </div>
@@ -364,7 +370,7 @@
                       </div>
 						
                       <div class="commonSelectWrap">
-                         <em class="tit">门店地址:</em>
+                         <em class="tit">地址:</em>
                          <div class="searchInput" style="width: 459px;">
                           <input type="text"  class="easyui-validatebox" data-options="width:459" name="Addr"/>
                          </div>

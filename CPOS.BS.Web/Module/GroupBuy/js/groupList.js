@@ -94,7 +94,9 @@
                     });
                     //传mid
                     var mid = JITMethod.getUrlParam("mid");
-                    var html = bd.template("tpl_content", { list: list, Mid: mid })
+                    var pMenuID = JITMethod.getUrlParam("PMenuID");
+                    debugger;
+                    var html = bd.template("tpl_content", { list: list, Mid: mid, PMenuID: pMenuID })
                     $("#goodsList").html(html);
                     kkpager.generPageHtml({
                         pno: 1,
@@ -133,7 +135,8 @@
                         list[i].pageStr = (that.pageStr ? that.pageStr : "团购");
                     });
                     var mid = JITMethod.getUrlParam("mid");
-                    var html = bd.template("tpl_content", { list: list,Mid:mid })
+                    var pMenuID = JITMethod.getUrlParam("PMenuID");
+                    var html = bd.template("tpl_content", { list: list, Mid: mid, PMenuID: pMenuID })
                     $("#goodsList").html(html);
                 });
             },

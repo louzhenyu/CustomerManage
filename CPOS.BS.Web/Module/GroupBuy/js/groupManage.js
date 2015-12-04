@@ -43,7 +43,9 @@
             //团购  抢购 市场都是一套逻辑  故用pageType标识
             var pageType=$.util.getUrlParam("pageType");
             //活动id
-            var eventId=$.util.getUrlParam("eventId");
+            var eventId = $.util.getUrlParam("eventId");
+            //栏目id
+            var PMenuID = $.util.getUrlParam("PMenuID");
             var pageName = decodeURIComponent($.util.getUrlParam("pageName"));
             this.eventId=eventId;
             var pageStr = "";
@@ -72,7 +74,8 @@
             $(".groupNav").find("."+this.showPage).addClass("on").siblings().removeClass("on");
             $("[data-table='block']").hide();
             //要跳转的地址
-            $("#toBrowser").attr("href","GroupList.aspx?pageType="+that.pageType+"&pageName="+pageName);
+            debugger;
+            $("#toBrowser").attr("href", "GroupList.aspx?pageType=" + that.pageType + "&pageName=" + pageName + "&PMenuID=" + PMenuID);
 
         },
         init: function () {
@@ -222,6 +225,7 @@
                 that.loadData.args.EventStatus=$("#statusText").data("status");
                 //添加新团购
                 that.loadData.updateEvent(function(data){
+                    that.initDetail();
                     alert("活动设置修改成功!");
                 });
 
@@ -816,7 +820,7 @@
                                 d.showModal();
                             }
                             else {
-                                alert(json.type);
+                                alert("错误："+json.content);
                             }
                             break;
                     }
