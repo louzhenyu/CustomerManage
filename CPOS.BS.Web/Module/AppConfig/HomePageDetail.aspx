@@ -545,7 +545,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                     <div class="addBtn" data-createtype="productList">
                         商品列表</div>
                     <div class="addBtn paddingBtn" data-createtype="eventList">
-                                            疯狂团购/热销榜单/疯狂团购</div>
+                                            限时抢购/疯狂团购/热销榜单</div>
                     <div class="addBtn" data-createtype="nav">
                         底部导航</div>
 

@@ -287,15 +287,11 @@
 			</div>\
 			</div>\
              <%}else{%>\
-           <div class="commonIndexArea" type="3"> \
-		<div class="leftBox">\
-			<a href="javascript:;">\
-			<img src="images/itemlist/3_1.png"></a>\
-			</div>\
-			<div class="rightBox rightBoxModel2">\
+           <div class="commonIndexArea" type="1"> \
+			<div class="allBox">\
 			<a href="javascript:;"> \
-			<img src="images/itemlist/3_2.png"></a> <a href="javascript:;"> \
-			<img src="images/itemlist/3_3.png"></a> \
+		<img src="images/itemlist/1_1.png">\
+			</a> \
 			</div>\
 			</div>\
              <%}%>\

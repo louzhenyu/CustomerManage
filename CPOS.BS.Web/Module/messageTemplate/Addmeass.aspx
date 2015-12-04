@@ -23,7 +23,7 @@
                     <input data-text="标题" placeholder="请输入" class="easyui-validatebox" name="Title" data-options="required:true,validType:'stringCheck',width:320,height:32" />
                 </label>
             </div>
-            <div class="commonBtn" id="placeholder">插入占位符
+            <div class="commonBtn" id="placeholder">插入个性化字段
             <ul>
             <li data-formInfo='#Name#'>会员名称</li>
             <li data-formInfo='#Card#'>会员卡</li>

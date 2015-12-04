@@ -769,9 +769,9 @@
                             self.ele.editLayer.html(self.render(self.template.rightSecondKillTemp,object));
 
                             //c区模板选择
-                            self.ele.editLayer.append(self.render(self.template.SecondKillModelTemp));
-                            var cuttentTab = self.ele.editLayer.find(".jsSectionCTabContainer .on");
-                            var modelId = cuttentTab.data("model");
+                            //self.ele.editLayer.append(self.render(self.template.SecondKillModelTemp));
+                            //var cuttentTab = self.ele.editLayer.find(".jsSectionCTabContainer .on");
+                            var modelId =1// cuttentTab.data("model");
                             self.renderSecondKillItemList({ length: modelId,shopType:$this.data().typeid});
                         }  else if(model=="nav") {
                             isAddTitle = false;
@@ -982,7 +982,7 @@
 
 
                             $(this).html();
-
+                            obj.length=1;
                             html = '<p class="space"></p>' + self.render(self.template.secondKillModel, obj);
                             if(self.ele.sortableDiv.find('[data-type="navList"]').length>0) {
                                 self.ele.sortableDiv.find('[data-type="navList"]').before("<div class='action' data-type='" + obj.key + "'>" + html + "</div>");
@@ -1586,7 +1586,7 @@
             var model = {};
             var flag = true;
             if (self.currentEditData&&self.currentEditData.modelTypeId) {//首次加载currentEditData对象不为空。
-                model.modelTypeId = self.cturrentEditData.modelTypeId;
+                model.modelTypeId = self.currentEditData.modelTypeId;
                 model.modelTypeName = self.currentEditData.modelTypeName;
                 model.groupId = self.currentEditData.CategoryAreaGroupId;
                 model.categoryAreaGroupId = self.currentEditData.CategoryAreaGroupId;
@@ -1780,7 +1780,7 @@
                 list.push(obj);
             });
 
-            model.ShowStyle= self.ele.editLayer.find(".jsSectionCTabContainer .on").data("model") ;
+            model.ShowStyle= 1 ;
             if (self.currentEditData&&self.currentEditData.length>0) {
                 model.ShowStyle= self.currentEditData.showStyle;
                // model.name = self.currentEditData.modelTypeName;
@@ -2212,6 +2212,15 @@
                                                 var h = Math.floor(maxTime / 60 / 60);
                                                 var m = Math.floor(maxTime / 60 % 60);
                                                 var s = Math.floor(maxTime % 60);
+                                                if(h<10){
+                                                    h="0"+h
+                                                }
+                                                if(m<10){
+                                                    m="0"+m
+                                                }
+                                                if(s<10){
+                                                    s="0"+s
+                                                }
                                                 var html = "<em>" + h + "</em>:<em>" + m + "</em>:<em>" + s + "</em>";
                                                 me.html(html);
                                                 --maxTime;
@@ -2293,7 +2302,7 @@
                         self.ele.notRepetition=true;
                     },
                     error: function () {
-
+                        self.ele.notRepetition=true
                     }
                 });
             }
@@ -2408,6 +2417,7 @@
                         self.ele.notRepetition=true;
                     },
                     error: function (e) {
+                        self.ele.notRepetition=true
                     }
                 });
             }
@@ -2443,7 +2453,7 @@
                         self.ele.notRepetition=true;
                     },
                     error: function (e) {
-
+                        self.ele.notRepetition=true
                     }
                 });
             }
@@ -2541,7 +2551,7 @@
                         self.ele.notRepetition=true;
                     },
                     error: function () {
-
+                        self.ele.notRepetition=true
                     }
                 });
             }

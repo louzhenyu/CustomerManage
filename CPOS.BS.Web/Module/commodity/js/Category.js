@@ -98,16 +98,19 @@
                    case "del" :
                        if(row.children&&row.children.length>0){
                            $.messager.alert("操作提示","请先删除子分类");
+                           $(".messager-window").css({"top":"129px"});
                            return false;
                        }
-                       $.messager.confirm('分类删除', '您想要删除该分类吗？', function(r){
+                       $.messager.confirm('提示','您确定要删除该分类吗？',function(r){
                            if (r){
                                that.loadData.operation(row,optType,function(data){
                                    alert("操作成功");
                                });
                                that.loadPageData(e);
+
                            }
                        });
+                       $(".messager-window").css({"top":"129px"});
                        break;
                    case "exit" :
                        that.elems.optionType="exit";
@@ -510,6 +513,7 @@
                 prams.data.bat_id="1";
                 if(prams.data.Item_Category_Id&&prams.data.Parent_Id&& prams.data.Parent_Id==prams.data.Item_Category_Id){
                     $.messager.alert("提示","上级分类不可以指定为自己");
+                    $(".messager-window").css({"top":"211px"});
                     return false;
                 }
                 $.util.oldAjax({
@@ -524,10 +528,12 @@
 
                         } else {
                             $.messager.alert("操作失败提示",data.msg);
+                            $(".messager-window").css({"top":"211px"});
                         }
                     },error: function(data) {
                         $.messager.alert("操作失败提示",data.msg);
-                        console.log("日志:"+operationType+"请求接口异常")
+                        console.log("日志:"+operationType+"请求接口异常");
+                        $(".messager-window").css({"top":"211px"});
                     }
                 });
             }
