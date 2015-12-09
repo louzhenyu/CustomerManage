@@ -85,7 +85,7 @@
 					
 					case 'edit':
 						location.href = "staffDetail.aspx?userId=" + userId +"&mid=" + JITMethod.getUrlParam("mid");
-						//that.addEditRoleDialog(userId,);
+
 					break;
 					
 					case 'pause':
@@ -210,7 +210,7 @@
 			
 			//获取所属层级数据
             that.loadData.getClassify(function(data) {
-                data[0].children.push({id:0,text:"请选择"});
+                data.push({id:0,text:"请选择"});
                 $('#type_id').combotree({
                     width:that.elems.width,
 					height:that.elems.height,
@@ -224,9 +224,6 @@
             });
 			//获取角色列表
 			that.getRoleList();
-            
-			
-			
         },
         downloadFile: function (fileName, content) {
 
@@ -348,8 +345,10 @@
 
             //分页
             data.Data={};
-            data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
-            var page=parseInt(that.loadData.args.start/15);
+			
+            data.TotalPage = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
+			//alert(that.loadData.args.start);
+			//alert(data.TotalPage);
             kkpager.generPageHtml({
                 pno: that.loadData.args.PageIndex,
                 mode: 'click', //设置为click模式
@@ -386,7 +385,7 @@
         loadMoreData: function (currentPage) {
             var that = this;
             that.loadData.args.PageIndex = currentPage;
-			
+			that.loadData.args.start=parseInt(9*(that.loadData.args.PageIndex-1));
             that.loadData.getCommodityList(function(data){
                 that.renderTable(data);
             });
@@ -479,57 +478,6 @@
 				}
 			});
 		},
-		addEditRoleDialog:function(data){
-            var that=this;
-            $('#win').window({title:"新建角色",width:600,height:600,top:15,left:($(window).width() - 550) * 0.5});
-            //改变弹框内容，调用百度模板显示不同内容
-            $('#panlconent').layout('remove','center');
-            var html=bd.template('tpl_addProm');
-            var options = {
-                region: 'center',
-                content:html
-            };
-            $('#panlconent').layout('add',options);
-            $('#win').window('open');
-			
-			
-			//获取所属层级数据
-            that.loadData.getClassify(function(data) {
-				data[0].children.push({id:0,text:"请选择"});
-                $('#type_id2').combotree({
-                    width:that.elems.width,
-					height:that.elems.height,
-                    editable:true,
-                    lines:true,
-                    panelHeight:that.elems.panlH,
-                    valueField: 'id',
-                    textField: 'text',
-                    data:data
-                });
-				
-				
-            });
-			
-			
-			//拥有的权限
-			//that.getLimitsTree('');
-			
-			/*
-			$('#Category').combotree({
-				width: that.elems.width,
-				height: that.elems.height,
-				panelHeight: that.elems.panlH,
-				lines:true,
-				valueField: 'id',
-				textField: 'text',
-				data: that.elems.categoryList
-			});
-
-            if(data) {
-                $("#editLayer").find(".imgPanl img").attr("src",data.ImageUrl);
-            }
-			*/
-        },
 		setSaveRole:function(){
 			var that = this;
 			$.util.oldAjax({
@@ -758,7 +706,7 @@
                       data:{
                           action:'search_user',
                           page:this.args.PageIndex,
-                          //start:this.args.start,
+                          start:this.args.start,
                           limit:this.args.limit,
                           form:this.seach
                       },
@@ -774,9 +722,11 @@
                 });
             },
             getClassify: function(callback){
-                $.util.ajax({
-                    url: "/ApplicationInterface/Module/Basic/UnitAndType/TypeTreeHandler.ashx",
-                    data:{},
+                $.util.oldAjax({
+                    url: "/ApplicationInterface/Module/Basic/UnitAndType/UnitTypeTreeHandler.ashx",
+                    data:{
+						hasShop:1
+					},
                     success: function(data){
                         if(data){
                             if(callback)
@@ -788,6 +738,8 @@
                     }
                 });
             }
+		
+			
         }
     };
     page.init();

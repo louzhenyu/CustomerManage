@@ -806,7 +806,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="strEventId"></param>
         public void UpdateEventIsShare(string strEventId)
         {
-            var sql = string.Format("UPDATE dbo.LEvents SET IsShare=1 WHERE EventID='{1}'",strEventId);
+            var sql = string.Format("UPDATE dbo.LEvents SET IsShare=1 WHERE EventID='{0}'",strEventId);
             this.SQLHelper.ExecuteNonQuery(sql.ToString());
         }
 

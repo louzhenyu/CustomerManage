@@ -18,8 +18,8 @@
 	.textbox-addon-right{right:9px !important;}
 	#addRoleBtn{width:115px; text-indent:20px;background:#0cc url(images/icon-add.png) no-repeat 20px center;}
 	
-	.datagrid-body .datagrid-row{height:61px;}
-	.datagrid-body .handle{display:inline-block;width:30px;height:60px;margin-left:8px;}
+	.datagrid-body .datagrid-row{}
+	.datagrid-body .handle{display:inline-block;width:30px;height:39px;margin-left:8px;}
 	.deleteBtn{background:url(images/delete.png) no-repeat center center;}
 	.editBtn{background:url(images/edit.png) no-repeat center center;}
 	.resetBtn{background:url(images/icon-reset.png) no-repeat center center;}
@@ -31,7 +31,7 @@
 	.textbox-invalid{border:none;background:none;}
 	.limitsTreeBox{height:200px;width:460px;margin-left:110px;border:1px solid #d0d5d8;border-radius:3px;overflow-x:auto;}
 	#btnWrap{height:60px !important;}
-	.importBtn,.exportBtn{display:none;float:left;width:82px;height:32px;margin-left:20px;cursor:pointer;}
+	.importBtn,.exportBtn{float:left;width:82px;height:32px;margin-left:20px;cursor:pointer;}
 	.importBtn{background:url(images/icon-import.png) no-repeat center center;}
 	.exportBtn{background:url(images/icon-export.png) no-repeat center center;}
 	.loading{width:81%;}
@@ -65,7 +65,7 @@
                               <div class="commonSelectWrap">
                                   <em class="tit">所属单位：</em>
                                   <div class="selectBox">
-                                       <input id="type_id" name="unit_id" />
+                                       <input id="type_id" name="unit_id"  class="easyui-combobox"   data-options="width:232,height:32" />
                                   </div>
                               </div>
                               
@@ -76,7 +76,7 @@
                               <div class="commonSelectWrap">
                                   <em class="tit">所属角色：</em>
                                   <div class="selectBox">
-                                       <select id="role_id" name="role_id"></select>
+                                       <select id="role_id" name="role_id" class="easyui-combobox"   data-options="width:232,height:32"></select>
                                   </div>
                               </div>
                               
