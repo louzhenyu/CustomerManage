@@ -29,7 +29,8 @@ namespace JIT.CPOS.BS.Entity
     public partial class CouponEntity : BaseEntity 
     {
         #region  Ù–‘ºØ
-
+        public string LogoUrl { get; set; }
+        public string FollowUrl { get; set; }
         #endregion
     }
 }

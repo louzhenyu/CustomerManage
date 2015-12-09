@@ -30,6 +30,10 @@ namespace JIT.CPOS.BS.Entity
     {
         #region  Ù–‘ºØ
 
+        public string ShareEventName { get; set; }
+        public string EventName { get; set; }
+
+        public string CouponTypeName { get; set; }
         #endregion
     }
 }

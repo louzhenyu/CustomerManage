@@ -55,11 +55,15 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " END Reward ,";
             sql += " CONVERT(NVARCHAR(10),BeginDate,120) + '到'+ CONVERT(NVARCHAR(10),EndDate,120) Date, ";
             sql += " CASE WHEN Status=1 THEN '未开始'	WHEN Status=2 THEN '进行中'	WHEN Status=3 THEN '暂停'WHEN Status=4 THEN '结束'	END StatusName,";
-            sql += " t3.JoinCount";
+            sql += " t3.JoinCount,";
+            sql += " c.CouponTypeName,";
+            sql += " d.Title EventName,";
+            sql += " e.Title ShareEventName";
             sql += " FROM    ContactEvent A";
             sql += " LEFT JOIN SysContactPointType B ON A.ContactTypeCode = B.ContactTypeCode ";
             sql += " LEFT JOIN dbo.CouponType c ON A.CouponTypeID = c.CouponTypeID AND C.CustomerId=A.CustomerId";
             sql += " LEFT JOIN dbo.LEvents d ON a.EventId=d.EventID AND A.CustomerId=D.CustomerId";
+            sql += " LEFT JOIN dbo.LEvents e WITH(NOLOCK) ON a.ShareEventId=e.EventID AND A.CustomerId=e.CustomerId";
             sql += " LEFT JOIN (SELECT EventId,COUNT(DISTINCT VIPID) JoinCount FROM dbo.LLotteryLog	GROUP BY EventId) t3 ON a.EventID = t3.EventId";
             sql += " WHERE A.IsDelete=0 AND A.CustomerId = '" + CurrentUserInfo.ClientID + "') a";
             return sql;
@@ -74,7 +78,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql.Append(CreateSql());
             sql.AppendFormat(" SELECT  *");
             sql.AppendFormat(" FROM   #tmp");
-            sql.AppendFormat(" WHERE   num >{0}  AND num<{1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
+            sql.AppendFormat(" WHERE   num >{0}  AND num<{1}", pPageSize * (pCurrentPageIndex - 1), (pPageSize * (pCurrentPageIndex))+1);
             sql.AppendFormat("SELECT COUNT(1)TotalCount,(COUNT(1)/{0})+1 TotalPage FROM #tmp", pPageSize);
  
             var ds = this.SQLHelper.ExecuteDataset(sql.ToString());

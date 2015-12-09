@@ -44,6 +44,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     rd.ChanceCount = entityContactEvent.ChanceCount;
                     rd.EventId = entityContactEvent.EventId;
                     rd.ShareEventId = entityContactEvent.ShareEventId;
+                    rd.ShareEventName = entityContactEvent.ShareEventName;
+                    rd.EventName = entityContactEvent.EventName;
+                    rd.CouponTypeName = entityContactEvent.CouponTypeName;
+                    
                 }
             }
             catch (APIException apiEx)

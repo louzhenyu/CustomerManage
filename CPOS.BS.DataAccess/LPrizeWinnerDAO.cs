@@ -150,10 +150,27 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetPrizeCouponTypeMapping(string prizeWinnerID, IDbTransaction tran)
         {
             string sql = string.Format(@"select c.* From dbo.LPrizeWinner a
-inner join lPrizes b on a.PrizeID=b.PrizesID
-inner join dbo.PrizeCouponTypeMapping c on b.PrizesID=c.PrizesID
-where prizeWinnerID='{0}'", prizeWinnerID);
+                                            inner join lPrizes b on a.PrizeID=b.PrizesID
+                                            inner join dbo.PrizeCouponTypeMapping c on b.PrizesID=c.PrizesID
+                                            where prizeWinnerID='{0}'", prizeWinnerID);
             return SQLHelper.ExecuteDataset((SqlTransaction)tran, CommandType.Text, sql);
+        }
+        /// <summary>
+        /// 根据活动Id获取最近10名中奖者名单
+        /// </summary>
+        /// <param name="strEventId"></param>
+        /// <returns></returns>
+        public DataSet GetTop10PizewWinnerListByEventId(string strEventId)
+        {
+            string strSql = string.Format(@"SELECT TOP 10  o.OptionText  PrizeLevel,P.PrizeName,PW.CreateTime,V.VipName
+                                            FROM    dbo.LPrizeWinner PW WITH(NOLOCK) 
+                                            INNER JOIN dbo.LPrizes P WITH(NOLOCK) ON PW.PrizeID = P.PrizesID AND P.EventId = '{0}'
+                                            LEFT JOIN Options o ON P.PrizeLevel=o.OptionValue  and o.OptionName='PrizeGrade'
+		                                    INNER JOIN dbo.Vip V WITH(NOLOCK) ON PW.VipID=V.VIPID
+                                            ORDER BY PW.CreateTime DESC
+                                ", strEventId);
+            return SQLHelper.ExecuteDataset(CommandType.Text, strSql);
+
         }
     }
 }

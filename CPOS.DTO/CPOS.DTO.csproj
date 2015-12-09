@@ -49,6 +49,7 @@
     <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Utility.dll</HintPath>
+	  
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -99,6 +100,7 @@
     <Compile Include="Module\Event\Lottery\Response\GetImageRD.cs" />
     <Compile Include="Module\Event\Lottery\Response\GetPrizeLocationListRD.cs" />
     <Compile Include="Module\Event\Lottery\Response\LotteryRD.cs" />
+    <Compile Include="Module\Event\Lottery\Response\PrizeWinnerListRD.cs" />
     <Compile Include="Module\Extension\ActivityApply\Request\SetActivityApplyRP.cs" />
     <Compile Include="Module\Extension\ActivityApply\Response\GetActivityApplyRD.cs" />
     <Compile Include="Module\Extension\LuckDraw\Request\ExchangeCouponRP.cs" />
@@ -116,8 +118,10 @@
     <Compile Include="Module\Marketing\Activity\Response\SetActivityRD.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\DelCouponRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\GetCouponTypeListRP.cs" />
+    <Compile Include="Module\Marketing\Coupon\Request\GrantCouponRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\SetCouponRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Response\GetCouponTypeListRD.cs" />
+ <Compile Include="Module\Marketing\Coupon\Response\GrantCouponRD.cs" />
     <Compile Include="Module\Marketing\Activity\Request\GetActivityDeatilRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\GetActivityListRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\GetCardholderCountRP.cs" />

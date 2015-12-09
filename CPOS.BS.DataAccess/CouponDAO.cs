@@ -421,11 +421,13 @@ namespace JIT.CPOS.BS.DataAccess
                                  (case when BeginDate>getdate() then '-1'  when EndDate='9999-12-31 00:00:00.000' then '0' when EndDate is null then '0' when  GETDATE() <= EndDate then '0' else '1' end) isexpired,
                                  (case when EndDate='9999-12-31 00:00:00.000' then '1' when EndDate is null then '1' else '0' end) iseffective
                                  ,(case when EndDate='9999-12-31 00:00:00.000' then 0 when EndDate is null then 0 else (select datediff( dd, getdate(), EndDate)) end) diffDay
+                                 ,[SettingValue] LogoUrl,'' FollowUrl 
                                  FROM Coupon a 
                                  INNER JOIN CouponType b ON a.CouponTypeID = b.CouponTypeID 
                                  LEFT JOIN CouponSource c ON b.CouponSourceID = c.CouponSourceID 
                                  INNER JOIN dbo.VipCouponMapping d ON a.CouponID = d.CouponID 
                                  left join  Vip f on d.VIPID=f.VIPID
+                                 LEFT JOIN [CustomerBasicSetting] CBS ON a.CustomerID=cbs.[CustomerID] and [SettingCode]='WebLogo' and CBS.[IsDelete]=0
                                  WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0
                                  and a.CouponID='{0}' ", couponID);
             //strb.AppendFormat(" and a.CustomerID='{0}'", CurrentUserInfo.CurrentLoggingManager.Customer_Id);//考虑一下，暂时不要？因为洗衣客培训环境里用的是是正式环境的券。

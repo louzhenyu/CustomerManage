@@ -65,7 +65,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     }
                     bllContactEvent.Update(contactEvent);
                     rd.ContactEventId = para.ContactEventId.ToString();
-
+                    rd.ErrMsg = "操作成功";
+                    rd.Success = true;
+                     
                 }
                 else
                 {
@@ -145,13 +147,18 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     bllContactEvent.AddContactEventPrize(entityPrize);
 
                     rd.ContactEventId = entityContactEvent.ContactEventId.ToString();
-
+                    rd.ErrMsg="操作成功";
+                    rd.Success = true;
                 }
 
             }
             catch (APIException apiEx)
             {
+                rd.Success = false;
+                rd.ErrMsg = apiEx.Message;
                 throw new APIException(apiEx.ErrorCode, apiEx.Message);
+                
+
             }
 
             return rd;

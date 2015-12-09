@@ -108,5 +108,15 @@ namespace JIT.CPOS.BS.BLL
         {
             return _currentDAO.GetPrizeCouponTypeMapping(prizeWinnerID,tran);
         }
+        /// <summary>
+        /// 根据活动Id获取最近10名中奖者名单
+        /// </summary>
+        /// <param name="strEventId"></param>
+        /// <returns></returns>
+        public DataSet GetTop10PizewWinnerListByEventId(string strEventId)
+        {
+            return _currentDAO.GetTop10PizewWinnerListByEventId(strEventId);
+        }
+        
     }
 }

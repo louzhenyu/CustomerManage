@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013-12-14 15:57
+ * Create On	:2015/12/7 16:07:17
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,6 +81,21 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public DateTime? CreateTime { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String FromVipId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String ObjectId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CouponSourceId { get; set; }
 
 
         #endregion

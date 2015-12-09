@@ -156,7 +156,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [ContactEvent] where ContactEventId='{0}'  and isdelete=0 ", id.ToString());
+            sql.AppendFormat("select c.*  from [ContactEvent] c  where ContactEventId='{0}'  and c.isdelete=0  ", id.ToString());
             //读取数据
             ContactEventEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))

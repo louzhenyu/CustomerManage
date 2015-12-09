@@ -330,6 +330,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
                         PanicbuyingEventItemMappingentity.Qty = myQty;
                         PanicbuyingEventItemMappingentity.SoldQty = mySoldQty;
                         PanicbuyingEventItemMappingentity.SinglePurchaseQty = rp.Parameters.SinglePurchaseQty;
+                        PanicbuyingEventItemMappingentity.SalesPrice = skulist[0].SalesPrice;
+
                         new PanicbuyingEventItemMappingBLL(loggingSessionInfo).Update(PanicbuyingEventItemMappingentity);
                     }
                 }

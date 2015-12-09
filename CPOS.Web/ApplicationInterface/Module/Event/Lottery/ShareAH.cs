@@ -25,8 +25,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(para.ShareUserId))
+                    {
+                        rd.ResultMsg="该活动未分享";
+                        return rd;
+                    }
+                    else
+                    {
+                        rd = bllPrize.CheckIsWinnerForShare(para.ShareUserId, para.EventId,para.Type);
+                    }
 
-                    rd = bllPrize.CheckIsWinnerForShare(pRequest.UserID, para.EventId);
 
                 }
                 catch (Exception ex)

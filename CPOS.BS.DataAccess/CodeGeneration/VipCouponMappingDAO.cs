@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013-12-14 15:57
+ * Create On	:2015/12/7 16:07:17
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,8 +25,8 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
@@ -72,23 +72,20 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentNullException("pEntity");
             
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [VipCouponMapping](");
-            strSql.Append("[VIPID],[CouponID],[UrlInfo],[IsDelete],[LastUpdateBy],[LastUpdateTime],[CreateBy],[CreateTime],[VipCouponMapping])");
+            strSql.Append("[VIPID],[CouponID],[UrlInfo],[IsDelete],[LastUpdateBy],[LastUpdateTime],[CreateBy],[CreateTime],[FromVipId],[ObjectId],[CouponSourceId],[VipCouponMapping])");
             strSql.Append(" values (");
-            strSql.Append("@VIPID,@CouponID,@UrlInfo,@IsDelete,@LastUpdateBy,@LastUpdateTime,@CreateBy,@CreateTime,@VipCouponMapping)");            
+            strSql.Append("@VIPID,@CouponID,@UrlInfo,@IsDelete,@LastUpdateBy,@LastUpdateTime,@CreateBy,@CreateTime,@FromVipId,@ObjectId,@CouponSourceId,@VipCouponMapping)");            
 
-			string pkString = string.Empty;
-            if (pEntity.VipCouponMapping == null)
-                pkString = Guid.NewGuid().ToString();
-            else
-                pkString = pEntity.VipCouponMapping;
+			string pkString = pEntity.VipCouponMapping;
 
             SqlParameter[] parameters = 
             {
@@ -100,6 +97,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
+					new SqlParameter("@FromVipId",SqlDbType.NVarChar),
+					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
+					new SqlParameter("@CouponSourceId",SqlDbType.NVarChar),
 					new SqlParameter("@VipCouponMapping",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.VIPID;
@@ -110,7 +110,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[5].Value = pEntity.LastUpdateTime;
 			parameters[6].Value = pEntity.CreateBy;
 			parameters[7].Value = pEntity.CreateTime;
-			parameters[8].Value = pkString;
+			parameters[8].Value = pEntity.FromVipId;
+			parameters[9].Value = pEntity.ObjectId;
+			parameters[10].Value = pEntity.CouponSourceId;
+			parameters[11].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -133,7 +136,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipCouponMapping] where VipCouponMapping='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [VipCouponMapping] where VipCouponMapping='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             VipCouponMappingEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -156,7 +159,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipCouponMapping] where isdelete=0");
+            sql.AppendFormat("select * from [VipCouponMapping] where 1=1  and isdelete=0");
             //读取数据
             List<VipCouponMappingEntity> list = new List<VipCouponMappingEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -179,25 +182,32 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(VipCouponMappingEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity,true,pTran);
+            Update(pEntity , pTran,true);
         }
-        public void Update(VipCouponMappingEntity pEntity , bool pIsUpdateNullField, IDbTransaction pTran)
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(VipCouponMappingEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipCouponMapping==null)
+            if (pEntity.VipCouponMapping == null)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
              //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [VipCouponMapping] set ");
-            if (pIsUpdateNullField || pEntity.VIPID!=null)
+                        if (pIsUpdateNullField || pEntity.VIPID!=null)
                 strSql.Append( "[VIPID]=@VIPID,");
             if (pIsUpdateNullField || pEntity.CouponID!=null)
                 strSql.Append( "[CouponID]=@CouponID,");
@@ -206,9 +216,13 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
-            if (strSql.ToString().EndsWith(","))
-                strSql.Remove(strSql.Length - 1, 1);
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.FromVipId!=null)
+                strSql.Append( "[FromVipId]=@FromVipId,");
+            if (pIsUpdateNullField || pEntity.ObjectId!=null)
+                strSql.Append( "[ObjectId]=@ObjectId,");
+            if (pIsUpdateNullField || pEntity.CouponSourceId!=null)
+                strSql.Append( "[CouponSourceId]=@CouponSourceId");
             strSql.Append(" where VipCouponMapping=@VipCouponMapping ");
             SqlParameter[] parameters = 
             {
@@ -217,6 +231,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@UrlInfo",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@FromVipId",SqlDbType.NVarChar),
+					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
+					new SqlParameter("@CouponSourceId",SqlDbType.NVarChar),
 					new SqlParameter("@VipCouponMapping",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.VIPID;
@@ -224,7 +241,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[2].Value = pEntity.UrlInfo;
 			parameters[3].Value = pEntity.LastUpdateBy;
 			parameters[4].Value = pEntity.LastUpdateTime;
-			parameters[5].Value = pEntity.VipCouponMapping;
+			parameters[5].Value = pEntity.FromVipId;
+			parameters[6].Value = pEntity.ObjectId;
+			parameters[7].Value = pEntity.CouponSourceId;
+			parameters[8].Value = pEntity.VipCouponMapping;
 
             //执行语句
             int result = 0;
@@ -240,11 +260,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pEntity">实体实例</param>
         public void Update(VipCouponMappingEntity pEntity )
         {
-            Update(pEntity ,true);
-        }
-        public void Update(VipCouponMappingEntity pEntity ,bool pIsUpdateNullField )
-        {
-            this.Update(pEntity, pIsUpdateNullField, null);
+            this.Update(pEntity, null);
         }
 
         /// <summary>
@@ -266,7 +282,7 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.VipCouponMapping==null)
+            if (pEntity.VipCouponMapping == null)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
@@ -285,11 +301,9 @@ namespace JIT.CPOS.BS.DataAccess
                 return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipCouponMapping] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where VipCouponMapping=@VipCouponMapping;");
+            sql.AppendLine("update [VipCouponMapping] set  isdelete=1 where VipCouponMapping=@VipCouponMapping;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.Int,Value=Convert.ToInt32(CurrentUserInfo.UserID)},
                 new SqlParameter{ParameterName="@VipCouponMapping",SqlDbType=SqlDbType.VarChar,Value=pID}
             };
             //执行语句
@@ -312,15 +326,15 @@ namespace JIT.CPOS.BS.DataAccess
             object[] entityIDs = new object[pEntities.Length];
             for (int i = 0; i < pEntities.Length; i++)
             {
-                var item = pEntities[i];
+                var pEntity = pEntities[i];
                 //参数校验
-                if (item == null)
+                if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.VipCouponMapping==null)
+                if (pEntity.VipCouponMapping == null)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = item.VipCouponMapping;
+                entityIDs[i] = pEntity.VipCouponMapping;
             }
             Delete(entityIDs, pTran);
         }
@@ -359,7 +373,7 @@ namespace JIT.CPOS.BS.DataAccess
                 primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [VipCouponMapping] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy="+CurrentUserInfo.UserID+",IsDelete=1 where VipCouponMapping in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [VipCouponMapping] set  isdelete=1 where VipCouponMapping in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
             int result = 0;   
             if (pTran == null)
@@ -380,7 +394,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [VipCouponMapping] where isdelete=0 ");
+            sql.AppendFormat("select * from [VipCouponMapping] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -441,9 +455,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [VipCouponMapping] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [VipCouponMapping] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [VipCouponMapping] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [VipCouponMapping] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [VipCouponMapping] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -534,6 +548,12 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
             if (pQueryEntity.CreateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
+            if (pQueryEntity.FromVipId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "FromVipId", Value = pQueryEntity.FromVipId });
+            if (pQueryEntity.ObjectId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ObjectId", Value = pQueryEntity.ObjectId });
+            if (pQueryEntity.CouponSourceId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponSourceId", Value = pQueryEntity.CouponSourceId });
 
             return lstWhereCondition.ToArray();
         }
@@ -542,7 +562,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(SqlDataReader pReader, out VipCouponMappingEntity pInstance)
+        protected void Load(IDataReader pReader, out VipCouponMappingEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
             pInstance = new VipCouponMappingEntity();
@@ -584,6 +604,18 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["CreateTime"] != DBNull.Value)
 			{
 				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
+			}
+			if (pReader["FromVipId"] != DBNull.Value)
+			{
+				pInstance.FromVipId =  Convert.ToString(pReader["FromVipId"]);
+			}
+			if (pReader["ObjectId"] != DBNull.Value)
+			{
+				pInstance.ObjectId =  Convert.ToString(pReader["ObjectId"]);
+			}
+			if (pReader["CouponSourceId"] != DBNull.Value)
+			{
+				pInstance.CouponSourceId =  Convert.ToString(pReader["CouponSourceId"]);
 			}
 
         }

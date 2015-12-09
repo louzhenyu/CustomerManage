@@ -221,7 +221,16 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetCouponTypeIDByPrizeId(strPrizesID);
 
         }
+        /// <summary>
+        /// 根据活动id返回未中奖的位置
+        /// </summary>
+        /// <param name="strEventID"></param>
+        /// <returns></returns>
+        public int GetLocationByEventID(string strPrizesID)
+        {
+            return this._currentDAO.GetLocationByEventID(strPrizesID);
 
+        }
         #region 分享设置是否中奖
         /// <summary>
         /// 是否中奖
@@ -229,7 +238,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="strVipId"></param>
         /// <param name="strEventId"></param>
         /// <returns></returns>
-        public LotteryRD CheckIsWinnerForShare(string strVipId, string strEventId)
+        public LotteryRD CheckIsWinnerForShare(string strVipId, string strEventId, string strType)
         {
             var rd = new LotteryRD();//返回值
 
@@ -241,10 +250,12 @@ namespace JIT.CPOS.BS.BLL
 
             try
             {
+                ContactEventEntity contactEvent = null;
+                if (strEventId != "" || strEventId.Length>0)
+                    contactEvent = bllContactEvent.QueryByEntity(new ContactEventEntity() { ShareEventId = strEventId, IsDelete = 0, Status = 2 }, null).FirstOrDefault();
+                else
+                    contactEvent = bllContactEvent.QueryByEntity(new ContactEventEntity() { ContactTypeCode=strType,IsDelete = 0, Status = 2 }, null).FirstOrDefault();
 
-
-                //var share = bllContactEvent.GetByID(strEventId);
-                var contactEvent = bllContactEvent.QueryByEntity(new ContactEventEntity() { ShareEventId = strEventId, IsDelete = 0, Status = 2 }, null).FirstOrDefault();
                 if (contactEvent != null)
                 {
 
@@ -268,9 +279,9 @@ namespace JIT.CPOS.BS.BLL
                     {
                         #region 调用积分统一接口
                         var salesReturnBLL = new T_SalesReturnBLL(this.CurrentUserInfo);
-                        var pTran = salesReturnBLL.GetTran();//事务
-                        using (pTran.Connection)
-                        {
+                        //var pTran = salesReturnBLL.GetTran();//事务
+                        //using (pTran.Connection)
+                        //{
                             VipIntegralBLL bllVipIntegral = new VipIntegralBLL(this.CurrentUserInfo);
                             var vipBLL = new VipBLL(this.CurrentUserInfo);
 
@@ -285,7 +296,7 @@ namespace JIT.CPOS.BS.BLL
                             string OldIntegral=(vipInfo.Integration??0).ToString();
                             //变动积分
                             string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
-                            var vipIntegralDetailId = bllVipIntegral.AddIntegral(ref vipInfo, null,IntegralDetail, pTran, this.CurrentUserInfo);
+                            var vipIntegralDetailId = bllVipIntegral.AddIntegral(ref vipInfo, null,IntegralDetail, null, this.CurrentUserInfo);
                             //发送微信积分变动通知模板消息
                             if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
                             {
@@ -293,7 +304,7 @@ namespace JIT.CPOS.BS.BLL
                                 CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, this.CurrentUserInfo);
                             }
 
-                        }
+                        //}
 
 
                         #endregion
@@ -321,6 +332,11 @@ namespace JIT.CPOS.BS.BLL
                             CouponID = entityCoupon.CouponID
                         };
                         bllVipCouponMapping.Create(entityVipCouponMapping);
+                        //更新CouponType的IsVoucher(被领用数量)
+                        CouponTypeBLL bllCouponType = new CouponTypeBLL(this.CurrentUserInfo);
+                        CouponTypeEntity entityCouponType = bllCouponType.GetByID(entityPrize.CouponTypeID);
+                        entityCouponType.IsVoucher = entityCouponType.IsVoucher + 1;
+                        bllCouponType.Update(entityCouponType);
                     }
                     else if (entityPrize.PrizeTypeId == "Chance")
                     {
@@ -366,6 +382,267 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+        #region 红包 大转盘
+        public LotteryRD RedPacket(string strVipId, string strEventId)
+        {
+            var rd = new LotteryRD();//返回值
 
+            LLotteryLogBLL bllLottery = new LLotteryLogBLL(this.CurrentUserInfo);
+            LEventsBLL bll = new LEventsBLL(this.CurrentUserInfo);
+            t_award_poolBLL bllAward = new t_award_poolBLL(this.CurrentUserInfo);
+            LPrizesBLL bllPrize = new LPrizesBLL(this.CurrentUserInfo);
+
+            LLotteryLogEntity lotteryEntityOld = null;
+            LLotteryLogEntity lotteryEntityNew = null;
+
+
+
+            LEventsEntity eventEntity = bll.QueryByEntity(new LEventsEntity() { EventID = strEventId }, null).FirstOrDefault();// bll.GetByID(strEventId);
+            if (eventEntity.EventStatus == 40 || eventEntity == null)
+            {
+                rd.PrizeName = "活动已结束";
+                return rd;
+            }
+            if (eventEntity.EventStatus == 10 || eventEntity.EventStatus == 30)
+            {
+                rd.PrizeName = "活动未开始";
+                return rd;
+            }
+            var entityPrize = bllPrize.QueryByEntity(new LPrizesEntity() { EventId = eventEntity.EventID }, null);
+            if (entityPrize == null)
+            {
+                rd.PrizeName = "活动无奖品";
+                return rd;
+            }
+
+            var vipBLL = new VipBLL(this.CurrentUserInfo);
+            var vipInfo = vipBLL.GetByID(strVipId);
+
+            if (vipInfo == null)
+            {
+                rd.PrizeName = "用户不存在";
+                return rd;
+            }
+
+            if (eventEntity.PointsLottery > 0 && vipInfo.Integration < eventEntity.PointsLottery)
+            {
+                rd.PrizeName = "积分不足";
+                return rd;
+            }
+
+
+            t_award_poolEntity awardEntity = null;
+
+
+            List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+            if (!string.IsNullOrEmpty(strEventId))
+                complexCondition.Add(new EqualsCondition() { FieldName = " EventId", Value = strEventId });
+            complexCondition.Add(new DirectCondition("releasetime<='" + DateTime.Now + "' and balance=0 "));
+            List<OrderBy> lstOrder = new List<OrderBy> { };
+            lstOrder.Add(new OrderBy() { FieldName = " releasetime", Direction = OrderByDirections.Desc });
+            awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+            if (awardEntity == null)
+            {
+                rd.PrizeName = "未中奖";
+                return rd;
+            }
+            lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
+
+            #region 判断是否有资格参与抽奖
+            switch (eventEntity.PersonCount)
+            {
+                case 1://仅能参加一次抽奖
+                    if (lotteryEntityOld == null)
+                    {
+                        awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+                    }
+                    else
+                    {
+                        rd.PrizeName = "机会已使用";
+                        return rd;
+                    }
+                    break;
+                case 2://每天一次
+                    if ((lotteryEntityOld != null && Convert.ToDateTime(lotteryEntityOld.LastUpdateTime.ToString()).Date < DateTime.Now.Date) || lotteryEntityOld == null)
+                    {
+                        awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+
+                    }
+                    else
+                    {
+                        rd.PrizeName = "机会已使用";
+                        return rd;
+                    }
+                    break;
+                case 3://每周一次
+                    if ((lotteryEntityOld != null && DateTime.Now.Date < Convert.ToDateTime(lotteryEntityOld.LastUpdateTime.ToString()).Date) || lotteryEntityOld == null)
+                    {
+                        awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+
+                    }
+                    else
+                    {
+                        rd.PrizeName = "机会已使用";
+                        return rd;
+                    }
+                    break;
+                case 4://无限
+                    awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+                    break;
+
+            }
+            #endregion
+
+            //抽奖记录
+            lotteryEntityNew = new LLotteryLogEntity()
+            {
+                LogId = Guid.NewGuid().ToString(),
+                VipId = strVipId,
+                EventId = strEventId,
+                LotteryCount = (lotteryEntityOld == null ? 0 + 1 : lotteryEntityOld.LotteryCount + 1),
+                CreateBy = this.CurrentUserInfo.UserID,
+                CreateTime = DateTime.Now,
+                IsDelete = 0
+
+            };
+            if (lotteryEntityOld == null)
+                bllLottery.Create(lotteryEntityNew);
+            else
+            {
+                bllLottery.Update(lotteryEntityNew);
+            }
+
+
+            if (awardEntity != null)
+            {
+
+                //var prize = bllPrize.GetCouponTypeIDByPrizeId(awardEntity.PrizesID);
+                var prize = DataTableToObject.ConvertToList<LPrizesEntity>(bllPrize.GetCouponTypeIDByPrizeId(awardEntity.PrizesID).Tables[0]).FirstOrDefault();
+                rd.PrizeId = prize.PrizesID;
+                rd.PrizeName = prize.PrizeName;
+                rd.Location = prize.Location;
+                rd.ResultMsg = "中奖";
+                //中奖记录
+                LPrizeWinnerBLL bllPrizeWinner = new LPrizeWinnerBLL(this.CurrentUserInfo);
+                LPrizeWinnerEntity entityPrizeWinner = null;
+
+                entityPrizeWinner = new LPrizeWinnerEntity()
+                {
+                    PrizeWinnerID = Guid.NewGuid().ToString(),
+                    VipID = strVipId,
+                    PrizeID = awardEntity.PrizesID,
+                    PrizeName = prize.PrizeName,
+                    PrizePoolID = awardEntity.PrizePoolsID,
+                    CreateBy = this.CurrentUserInfo.UserID,
+                    CreateTime = DateTime.Now,
+                    IsDelete = 0
+                };
+                bllPrizeWinner.Create(entityPrizeWinner);
+                //更新中奖人数
+                LEventRountPrizesMappingBLL bllEventRountPrizesMapping = new LEventRountPrizesMappingBLL(this.CurrentUserInfo);
+                bllEventRountPrizesMapping.UpdateWinnerCount(prize.PrizesID);
+                //PrizePools状态更新
+                LPrizePoolsEntity entityPrizePools = new LPrizePoolsEntity();
+
+                entityPrizePools.PrizePoolsID = awardEntity.PrizePoolsID;
+                entityPrizePools.Status = 0;
+
+                LPrizePoolsBLL bllPrizePools = new LPrizePoolsBLL(this.CurrentUserInfo);
+                bllPrizePools.Update(entityPrizePools, false);
+                //更新t_award_pool奖品池的状态
+                awardEntity = new t_award_poolEntity()
+                {
+                    Balance = 1,
+                    id = awardEntity.id
+                };
+                bllAward.Update(awardEntity, false);
+                VipIntegralBLL bllVipIntegral = new VipIntegralBLL(this.CurrentUserInfo);
+                VipIntegralDetailEntity IntegralDetail = new VipIntegralDetailEntity();
+                if (eventEntity.PointsLottery > 0)
+                {
+                    //扣除参与积分
+                    IntegralDetail = new VipIntegralDetailEntity()
+                    {
+                        Integral = -eventEntity.PointsLottery,
+                        IntegralSourceID = "24",
+                        ObjectId = "",
+                        UnitID=vipInfo.CouponInfo
+                    };
+                    //变动前积分
+                    string OldIntegral = (vipInfo.Integration ?? 0).ToString();
+                    //变动积分
+                    string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
+                    var vipIntegralDetailId = bllVipIntegral.AddIntegral(ref vipInfo, null, IntegralDetail, null, this.CurrentUserInfo);
+                    //发送微信积分变动通知模板消息
+                    if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                    {
+                        var CommonBLL = new CommonBLL();
+                        CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, this.CurrentUserInfo);
+                    }
+                }
+                if (prize.PrizeTypeId == "Point")
+                {
+                    #region 调用积分统一接口
+                    //var salesReturnBLL = new T_SalesReturnBLL(this.CurrentUserInfo);
+                    //var pTran = salesReturnBLL.GetTran();//事务
+                    //using (pTran.Connection)
+                    //{
+                    IntegralDetail = new VipIntegralDetailEntity()
+                    {
+                        Integral = prize.Point,
+                        IntegralSourceID = "22",
+                        ObjectId = "",
+                        UnitID = vipInfo.CouponInfo
+                    };
+                    //变动前积分
+                    string OldIntegral = (vipInfo.Integration ?? 0).ToString();
+                    //变动积分
+                    string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
+                    var vipIntegralDetailId = bllVipIntegral.AddIntegral(ref vipInfo, null, IntegralDetail, null, this.CurrentUserInfo);
+                    //发送微信积分变动通知模板消息
+                    if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                    {
+                        var CommonBLL = new CommonBLL();
+                        CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, this.CurrentUserInfo);
+                    }
+                    //}
+                    #endregion
+
+
+                }
+                if (prize.PrizeTypeId == "Coupon")
+                {
+                    CouponEntity entityCoupon = null;
+                    CouponBLL bllCoupon = new CouponBLL(this.CurrentUserInfo);
+                    entityCoupon = DataTableToObject.ConvertToList<CouponEntity>(bllCoupon.GetCouponIdByCouponTypeID(prize.CouponTypeID).Tables[0]).FirstOrDefault();
+
+                    VipCouponMappingEntity entityVipCouponMapping = null;
+                    VipCouponMappingBLL bllVipCouponMapping = new VipCouponMappingBLL(this.CurrentUserInfo);
+
+                    entityVipCouponMapping = new VipCouponMappingEntity()
+                    {
+                        VipCouponMapping = Guid.NewGuid().ToString(),
+                        VIPID = CurrentUserInfo.UserID,
+                        CouponID = entityCoupon.CouponID
+                    };
+                    bllVipCouponMapping.Create(entityVipCouponMapping);
+                    //更新CouponType的IsVoucher(被领用数量)
+                    CouponTypeBLL bllCouponType = new CouponTypeBLL(this.CurrentUserInfo);
+                    CouponTypeEntity entityCouponType = bllCouponType.GetByID(prize.CouponTypeID);
+                    entityCouponType.IsVoucher = entityCouponType.IsVoucher + 1;
+                    bllCouponType.Update(entityCouponType);
+                }
+            }
+            else
+            {
+                int intLocation = bllPrize.GetLocationByEventID(strEventId);
+                rd.Location = intLocation;
+                rd.PrizeId = "0";
+                rd.PrizeName = "未中奖";
+            }
+
+            return rd;
+        }
+        #endregion
     }
 }

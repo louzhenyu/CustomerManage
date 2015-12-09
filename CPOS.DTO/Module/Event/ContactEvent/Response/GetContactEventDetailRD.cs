@@ -24,6 +24,11 @@ namespace JIT.CPOS.DTO.Module.Event.ContactEvent.Response
         public int? ChanceCount{get;set;}
 
         public string ShareEventId { get; set; }
+        public string ShareEventName { get; set; }
+
+        public string EventName { get; set; }
+
+        public string CouponTypeName { get; set; }
 
     }
 }

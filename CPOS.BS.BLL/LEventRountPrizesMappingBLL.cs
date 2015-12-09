@@ -33,6 +33,14 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理：  
     /// </summary>
     public partial class LEventRountPrizesMappingBLL
-    {  
+    {
+        /// <summary>
+        /// 更新中奖人数
+        /// </summary>
+        /// <param name="strPrizesID"></param>
+        public void UpdateWinnerCount(string strPrizesID)
+        {
+            this._currentDAO.UpdateWinnerCount(strPrizesID);
+        }
     }
 }

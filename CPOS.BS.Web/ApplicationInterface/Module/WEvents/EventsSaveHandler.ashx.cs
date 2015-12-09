@@ -526,6 +526,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                     rd.ModulePage = SysModuleList.Where(p => p.PageKey == "RedPacket").SingleOrDefault();//红包-新
                     break;
                 default:
+                    rd.ModulePage = SysModuleList.Where(p => p.PageKey == "RedPacket").SingleOrDefault();//红包-新
                     break;
             }
 

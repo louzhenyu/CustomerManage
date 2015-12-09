@@ -54,5 +54,10 @@ namespace JIT.CPOS.DTO.Module.Event.ContactEvent.Response
         public string ShareEventId { get; set; }
 
         public int JoinCount { get; set; }
+        public string ShareEventName { get; set; }
+
+        public string EventName { get; set; }
+
+        public string CouponTypeName { get; set; }
     }
 }

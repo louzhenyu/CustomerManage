@@ -2190,12 +2190,14 @@
     <Compile Include="ApplicationInterface\Module\Coupon\CouponHandler.ashx.cs">
       <DependentUpon>CouponHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\Coupon\Grant\GrantCouponAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetApiVipServicesLogListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\SetApiVipServicesLogAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\ContactPrizeAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetImageAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeLocationListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeWinnerListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\RedPacketAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\RouletteAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\ShareAH.cs" />

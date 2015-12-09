@@ -266,8 +266,8 @@ namespace JIT.CPOS.BS.DataAccess
                         +"From dbo.LPrizes l "
                         +"LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
                         +"LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "
-                        + "LEFT JOIN Options o ON l.PrizeLevel=o.OptionValue"
-                        + " where l.IsDelete = '0'"
+                        + "LEFT JOIN Options o ON l.PrizeLevel=o.OptionValue "
+                        + " where l.IsDelete = '0'  AND o.OptionName='PrizeGrade'"
                         + " and l.EventId = '" + strEventId + "' "
                         + " order by l.CreateTime asc ";
             return this.SQLHelper.ExecuteDataset(sql);
@@ -276,8 +276,19 @@ namespace JIT.CPOS.BS.DataAccess
         #endregion
         public DataSet GetCouponTypeIDByPrizeId(string strPrizesID)
         {
-            string strSql = string.Format("SELECT l.*,CouponTypeID,Location FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID LEFT JOIN dbo.LPrizeLocation lc WITH(NOLOCK) ON l.PrizesID=lc.PrizeID where l.PrizesID='{0}'", strPrizesID);
+            string strSql = string.Format("SELECT top 1 l.*,CouponTypeID,Location FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID LEFT JOIN dbo.LPrizeLocation lc WITH(NOLOCK) ON l.PrizesID=lc.PrizeID where l.PrizesID='{0}' ORDER BY NEWID()", strPrizesID);
             return this.SQLHelper.ExecuteDataset(strSql);
+
+        }
+        /// <summary>
+        /// 根据活动id返回未中奖的位置
+        /// </summary>
+        /// <param name="strEventID"></param>
+        /// <returns></returns>
+        public int GetLocationByEventID(string strEventID)
+        {
+            string strSql = string.Format("SELECT top 1 Location FROM dbo.LPrizeLocation lc WITH(NOLOCK) where EventID='{0}' AND PrizeID='' order by newid()", strEventID);
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql) == null ? "0" : this.SQLHelper.ExecuteScalar(strSql).ToString());
 
         }
     }

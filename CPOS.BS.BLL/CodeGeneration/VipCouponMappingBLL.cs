@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013-12-14 15:57
+ * Create On	:2015/12/7 16:07:17
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -22,10 +22,11 @@ using System.Data;
 using System.Reflection;
 using JIT.Utility;
 using JIT.Utility.ExtensionMethod;
-using JIT.CPOS.BS.DataAccess;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.DataAccess;
+using JIT.CPOS.BS.Entity;
+using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.BLL
 {   
@@ -34,7 +35,7 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class VipCouponMappingBLL
     {
-        private LoggingSessionInfo CurrentUserInfo;
+        private BasicUserInfo CurrentUserInfo;
         private VipCouponMappingDAO _currentDAO;
         #region 构造函数
         /// <summary>
@@ -42,8 +43,8 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         public VipCouponMappingBLL(LoggingSessionInfo pUserInfo)
         {
-            this.CurrentUserInfo = pUserInfo;
             this._currentDAO = new VipCouponMappingDAO(pUserInfo);
+            this.CurrentUserInfo = pUserInfo;
         }
         #endregion
         #region ICRUDable 成员
@@ -89,14 +90,10 @@ namespace JIT.CPOS.BS.BLL
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>        
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(VipCouponMappingEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity,true, pTran);
-        }
-        public void Update(VipCouponMappingEntity pEntity, bool pIsUpdateNullField , IDbTransaction pTran)
-        {
-            _currentDAO.Update(pEntity,pIsUpdateNullField,pTran);
+            _currentDAO.Update(pEntity,pTran);
         }
 
 
@@ -104,13 +101,9 @@ namespace JIT.CPOS.BS.BLL
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(VipCouponMappingEntity pEntity)
+        public void Update(VipCouponMappingEntity pEntity )
         {
-            Update(pEntity , true);
-        }
-        public void Update(VipCouponMappingEntity pEntity , bool pIsUpdateNullField)
-        {
-            _currentDAO.Update(pEntity,pIsUpdateNullField);
+            _currentDAO.Update(pEntity);
         }
 
         /// <summary>

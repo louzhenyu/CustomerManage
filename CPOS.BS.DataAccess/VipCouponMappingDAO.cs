@@ -42,6 +42,32 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class VipCouponMappingDAO : Base.BaseCPOSDAO, ICRUDable<VipCouponMappingEntity>, IQueryable<VipCouponMappingEntity>
     {
-        
+        /// <summary>
+        /// 判断优惠券是否被赠送
+        /// </summary>
+        /// <param name="strCouponId"></param>
+        /// <returns></returns>
+        public int HadBeGranted(string strCouponId)
+        {
+            string strSql = string.Format(@"SELECT COUNT (1) FROM   [dbo].[VipCouponMapping] WITH(NOLOCK)
+                                            WHERE  CouponID='{0}' AND IsDelete=0 AND FromVipId IS NULL
+            ", strCouponId);
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+        }
+        /// <summary>
+        /// 优惠券转增
+        /// </summary>
+        /// <param name="strGiver">赠送者</param>
+        /// <param name="strGrantee">被赠送</param>
+        /// <param name="strCouponId">优惠券ID</param>
+        /// <returns></returns>
+        public int  GrantCoupon(string strGiver,string strGrantee,string strCouponId)
+        {
+            string strSql = string.Format(@"Update  [dbo].[VipCouponMapping] Set VIPID='{0}'
+                                               ,FromVipId='{1}',CouponSourceId='22E189E1-57C2-488E-A1DA-C42AEBAF3766'
+                                            WHERE  CouponID='{2}' AND IsDelete=0
+            ", strGrantee,strGiver,strCouponId);
+            return this.SQLHelper.ExecuteNonQuery(strSql);
+        }
     }
 }

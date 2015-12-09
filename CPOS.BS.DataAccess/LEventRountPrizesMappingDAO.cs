@@ -42,6 +42,14 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class LEventRountPrizesMappingDAO : Base.BaseCPOSDAO, ICRUDable<LEventRountPrizesMappingEntity>, IQueryable<LEventRountPrizesMappingEntity>
     {
-        
+        /// <summary>
+        /// 更新中奖人数
+        /// </summary>
+        /// <param name="strPrizesID"></param>
+        public void UpdateWinnerCount(string strPrizesID)
+        {
+            string strSql = string.Format("UPDATE LEventRountPrizesMapping SET WinnerCount=WinnerCount+1 WHERE PrizesID='{0}'", strPrizesID);
+            this.SQLHelper.ExecuteNonQuery(strSql);
+        }
     }
 }
