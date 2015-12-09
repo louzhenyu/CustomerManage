@@ -677,6 +677,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							html = '<tr><td colspan="7">亲，你还没有添加活动奖品哦！</td></tr>';
 
 					    //初始化奖品列表数据start
+
+						$(".PrizeseOption").html('');
 						if (prizeList) {
 						    if (that.elems.activiType == 1) {
 						        html = bd.template("tpl_prizeList", result);
@@ -690,14 +692,13 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 
 						    that.GetPrizeLocationList();
 
-						    $(".PrizeseOption").html('');
 						     for (i = 0; i < prizeList.length; i++) {
 						         $(".PrizeseOption").append("<div class='radio ' data-prizesname='" + prizeList[i].PrizeName + "' data-imageurl='" + prizeList[i].ImageUrl + "' data-prizesid='" + prizeList[i].PrizesID + "' ><em></em>" + prizeList[i].PrizeName + "</div>");
 
 						     }
-						     $(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX.png" data-prizesid=""><em></em>谢谢您！</div>');
 
-						 }
+						}
+						 $(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX.png" data-prizesid=""><em></em>谢谢您！</div>');
 						 if (that.elems.activiType == 1) {
 						     $('#prizeListTable tbody').html(html);
 						 }
