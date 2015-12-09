@@ -820,9 +820,9 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="couponTypeID"></param>
         /// <returns></returns>
-        public List< CouponEntity> GetCouponBycouponType(string couponTypeID)
+        public DataSet GetCouponIDBycouponType(string couponTypeID)
         {
-            return DataTableToObject.ConvertToList<CouponEntity>(this._currentDAO.GetCouponBycouponType(couponTypeID).Tables[0]); ;
+            return this._currentDAO.GetCouponIDBycouponType(couponTypeID);
         }
 
         /// <summary>
