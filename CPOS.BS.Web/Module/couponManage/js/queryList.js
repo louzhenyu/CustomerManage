@@ -266,9 +266,6 @@
                                 return parseInt(value);
                             }
                         }},
-                    {field : 'addOpt',title : '追加',width:100,align:'center',resizable:false,
-                        formatter:function(value,row,index){
-                            return "<div data-index="+index+" data-flag='add' class='btnAdd  opt'> </div>"
 
                     {field : 'addOptdel',title : '操作',width:200,align:'center',resizable:false,
                     formatter: function (value, row, index) {
@@ -276,13 +273,6 @@
                             str += "<div data-index=" + index + "  data-flag='Download' data-TypeName='" + row.CouponTypeName + "' data-TypeID='" + row.CouponTypeID + "' class='btnDownload  opt' title='下载'> </div>";
                             str += "<div data-index=" + index + " data-flag='delete' class='delete opt' title='删除'></div></div>";
                             return str
-                        }
-
-                    } ,
-
-                    {field : 'addOptdel',title : '删除',width:100,align:'center',resizable:false,
-                        formatter:function(value ,row,index){
-                            return "<div data-index="+index+" data-flag='delete' class='delete opt'></div>"
                         }
                     }
 

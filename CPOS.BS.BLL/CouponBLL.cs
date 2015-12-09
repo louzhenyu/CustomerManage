@@ -814,14 +814,15 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetUsableCouponID(couponTypeID);
         }
+
         /// <summary>
         /// 根据优惠券类型获取优惠券
         /// </summary>
         /// <param name="couponTypeID"></param>
         /// <returns></returns>
-        public DataSet GetCouponIDBycouponType(string couponTypeID)
+        public List< CouponEntity> GetCouponBycouponType(string couponTypeID)
         {
-            return this._currentDAO.GetCouponIDBycouponType(couponTypeID) ;
+            return DataTableToObject.ConvertToList<CouponEntity>(this._currentDAO.GetCouponBycouponType(couponTypeID).Tables[0]); ;
         }
 
         /// <summary>

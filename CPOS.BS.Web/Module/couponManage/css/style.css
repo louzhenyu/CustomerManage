@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
@@ -15,7 +15,7 @@
 
 .fontC{ width: 18px; height: 18px; margin: 0 auto; background:no-repeat center center;}
 .red{color:red}
-.delete{background-image:url(../images/del.png); width: 16px; height: 16px; margin: 0 auto;}
+.delete{background:url(../images/del.png) no-repeat; width: 16px; height: 16px; margin: 0 auto;}
 
 .tableWrapTextBtn   {height: 80px;}
 
@@ -43,4 +43,7 @@
 .borderNone{ float: left; padding-left: 6px;}
 .optionclass{ padding-top: 20px;}
 .btnAdd    {background:url(../images/addstr.png) center center  no-repeat}
+.btnDownload    {background:url(../images/Download.png) center center  no-repeat;width: 16px; height: 16px;cursor:pointer;}
+.operation{display: inline-block;}
+.opt {float: left; width: 18px;height: 18px;margin: 6px 10px;}
 

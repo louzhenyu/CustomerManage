@@ -6368,6 +6368,9 @@
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\SetActivityMessageAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\SetPrizesAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Coupon\DelCouponTypeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Marketing\Coupon\DownLoadCouponTicketNumber.ashx.cs">
+      <DependentUpon>DownLoadCouponTicketNumber.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Module\Marketing\Coupon\GetCouponTypeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Coupon\SetCouponAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\DelActivityAH.cs" />
@@ -6459,6 +6462,7 @@
     <Content Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeGateway.ashx" />
     <Content Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeTreeHandler.ashx" />
     <Content Include="ApplicationInterface\Module\Basic\UnitAndType\TypeTreeHandler.ashx" />
+	<Content Include="ApplicationInterface\Module\Marketing\Coupon\DownLoadCouponTicketNumber.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventShareHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
