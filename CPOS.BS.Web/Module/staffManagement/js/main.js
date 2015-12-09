@@ -3,7 +3,6 @@ var appConfig = {
     cache: document.body.hasAttribute("cache"),
     version: document.body.hasAttribute("cache") && document.body.hasAttribute("version") ? document.body.getAttribute("version") : Math.floor(new Date().getTime() / (1000 * 60 * 60 * 12))
 }
-
 // 路径定义
 require.config({
     urlArgs: "v=" + (appConfig.cache ? appConfig.version : (new Date()).getTime()),

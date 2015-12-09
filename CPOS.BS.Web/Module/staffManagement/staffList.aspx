@@ -35,6 +35,7 @@
 	.importBtn{background:url(images/icon-import.png) no-repeat center center;}
 	.exportBtn{background:url(images/icon-export.png) no-repeat center center;}
 	.loading{width:81%;}
+	
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

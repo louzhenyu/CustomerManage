@@ -1,5 +1,6 @@
 ﻿define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialog'], function ($) {
     var page = {
+		
         elems: {
             sectionPage:$("#section"),
             simpleQueryDiv: $("#simpleQuery"),     //简单查询条件的层dom

@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="<%=StaticUrl+"/module/staffManagement/css/style.css?v=0.62"%>" rel="stylesheet" type="text/css" />
     <style type="text/css">
+	
 	.contentArea{font-family:"黑体";}
 	.queryTermArea{border-bottom:1px solid #dcdcdc;background:#fff;}
 	.queryTermArea .item{display:inline-block;}

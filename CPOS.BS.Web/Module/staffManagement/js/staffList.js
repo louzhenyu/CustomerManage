@@ -1,5 +1,4 @@
 ﻿define(['jquery', 'template', 'tools', 'langzh_CN', 'easyui', 'kkpager', 'artDialog', 'kindeditor'], function ($) {
-
     KE = KindEditor;
     var page = {
         elems: {
