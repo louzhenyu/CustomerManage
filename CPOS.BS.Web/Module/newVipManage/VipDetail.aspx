@@ -169,11 +169,13 @@
                 
                 <li data-id="nav011" class="nav011">返现记录</li>
                 <li data-id="nav012" class="nav012">余额记录</li>
+				<li data-id="nav013" class="nav013">积分记录</li>
 
-                   <!-- <li data-id="nav01" class="nav01 on">会员信息</li>-->
-                                       <!--<li data-id="nav05" class="nav05">会员卡</li>-->
-                    <!--<li data-id="nav06" class="nav06">下线会员</li>-->
-                  <!--  <li data-id="nav08" class="nav08">变更记录</li>-->
+                <!--
+                <li data-id="nav01" class="nav01">会员信息</li>
+                <li data-id="nav05" class="nav05">会员卡</li>-->
+                <!--<li data-id="nav06" class="nav06">下线会员</li>-->
+                <!--  <li data-id="nav08" class="nav08">变更记录</li>-->
 
 
                 </ul>
@@ -227,6 +229,28 @@
             <!--返现记录end-->
             
             
+            
+            <!--积分记录-->
+            <div id="nav013" class="cursorDef" style="display: none;">
+            <div class="lineTitle" style="display:none">
+             积分记录
+            </div>
+                 <!--<div class="tableHandleBox">
+                    <span class="commonBtn export">全部导出</span>
+                </div>-->
+                <div id="tblIntegralBox" class="gridLoading">
+                       <div  class="loading">
+                           <span><img src="../static/images/loading.gif"></span>
+                       </div>
+                </div>
+				<div id="pageContianer">
+                        <div class="dataMessage" >该会员没有积分记录</div>
+                </div>
+                <!--分页-->
+                <div id="kkpager" style="text-align: center;">
+                </div>
+            </div>
+            <!--积分记录end-->
             
             
             
@@ -589,12 +613,12 @@
                                     <#}#>
                                 </script>
             </div>
-            <!--积分明细-->
-            <div id="nav03" style="display: none;">
+            <!--操作记录(原来的积分)-->
+            <div id="nav03" style="display: none;" class="cursorDef">
                  <!--<div class="tableHandleBox">
                     <span class="commonBtn export">全部导出</span>
                 </div>-->
-                <div class="imgTable cursorDef">
+                <div class="cursorDef">
                 <div id="tblPoint" class="gridLoading">
 
                        <div  class="loading">

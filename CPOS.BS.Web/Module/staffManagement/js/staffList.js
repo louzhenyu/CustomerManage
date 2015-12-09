@@ -91,18 +91,18 @@
 					
 					case 'pause':
 						that.setStatusEvent(userId,1,function(){
-							$this.attr('class','handle runningBtn').data('flag','running');
+							$this.attr('class','handle runningBtn').attr('title','停用').data('flag','running');
 							$('td[field="User_Status_Desc"]',$tr).find('div').text('正常');
 						});
 					break;
 					case 'running':
 						that.setStatusEvent(userId,-1,function(){
-							$this.attr('class','handle pauseBtn').data('flag','pause');
+							$this.attr('class','handle pauseBtn').attr('title','启用').data('flag','pause');
 							$('td[field="User_Status_Desc"]',$tr).find('div').text('停用');
 						});
 					break;
 					case 'delete':
-						$.messager.confirm('员工删除', '您确定要删除该员工吗？',function(r){
+						$.messager.confirm('提示', '您确定要删除该员工吗？',function(r){
 						   if(r){
 							   that.setRemoveUser(userId,function(data){
 								   $tr.remove();
@@ -306,10 +306,11 @@
                     },
 					{field : 'User_Id',title : '操作',width:90,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-						   var text = row.User_Status==1?'running':'pause';
+						   var text = row.User_Status==1?'running':'pause',
+						   	   tit = row.User_Status==1?'停用':'启用';
                            var htmlStr='<a href="javascript:;" data-flag="reset" data-index='+index+' class="handle resetBtn" title="重置密码"></a>\
 								<a href="javascript:;" data-flag="edit" data-index='+index+' class="handle editBtn" title="编辑"></a>\
-								<a href="javascript:;" data-flag="'+text+'" data-index='+index+'  class="handle '+text+'Btn" title="启用"></a>\
+								<a href="javascript:;" data-flag="'+text+'" data-index='+index+'  class="handle '+text+'Btn" title="'+tit+'"></a>\
 								<a href="javascript:;" data-flag="delete" data-index='+index+'  class="handle deleteBtn" title="删除"></a>';
                             return htmlStr;
                         }

@@ -38,7 +38,8 @@
             tabIndex:0,
             tabs: $('#section .subMenu ul'),
             content: $("#content"),     //交易记录表格数据
-            pointTable: $('#tblPoint'),   //积分明细
+            pointTable: $('#tblPoint'),   //卡操作记录（原来积分）
+			tblIntegralBox:$('#tblIntegralBox'),//积分记录
 			tblBalanceBox:$('#tblBalanceBox'),
 			tblCashBox:$('#tblCashBox'),
             amountTable: $('#tblAmount'),
@@ -97,7 +98,7 @@
             });
         },
         hidePanels: function () {
-            $('#nav01,#nav02,#nav03,#nav04,#nav05,#nav06,#nav07,#nav08,#nav09,#nav010,#nav011,#nav012').hide();
+            $('#nav01,#nav02,#nav03,#nav04,#nav05,#nav06,#nav07,#nav08,#nav09,#nav010,#nav011,#nav012,#nav013').hide();
         },
         //没有数据的table提示
         showTableTips: function (jqObj, tips) {
@@ -1303,8 +1304,6 @@
                             var list = data.Data.VipConsumeCardList;
                             list = list ? list : [];
 
-
-
                                 that.elems.amountTable.datagrid({
 
                                     method : 'post',
@@ -1397,7 +1396,7 @@
                                     method : 'post',
                                     iconCls : 'icon-list', //图标
                                     singleSelect : true, //多选
-                                    // height : 332, //高度
+                                    //height : 332, //高度
                                     fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                                     striped : true, //奇偶行颜色不同
                                     collapsible : true,//可折叠
@@ -1594,6 +1593,105 @@
                             panel.attr(loadKey, true);
                         });
                         break;
+						
+					case "nav013":
+						that.loadData.getVipPointList(function(data) {
+                            var list = data.Data.VipIntegralList;
+                            list = list ? list : [];
+                                that.elems.tblIntegralBox.datagrid({
+                                    method : 'post',
+                                    iconCls : 'icon-list', //图标
+                                    singleSelect : true, //多选
+                                    // height : 332, //高度
+                                    fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                                    striped : true, //奇偶行颜色不同
+                                    collapsible : true,//可折叠
+                                    //数据来源
+                                    data:list,
+                                    columns : [[
+                                        {field : 'Date',title : '时间',width:180,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                return new Date(value).format("yyyy-MM-dd hh:mm:ss");
+                                            }
+                                        },
+                                        {field : 'UnitName',title : '门店',width:125,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                var long=56;
+                                                if(value&&value.length>long){
+                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                                }else{
+                                                    return '<div class="rowText">'+value+'</div>'
+                                                }
+                                            }
+                                        },
+
+                                        {field : 'Integral',title : '积分增减',width:58,align:'center',resizable:false,
+                                            formatter:function(value,row,index){
+                                                if(isNaN(parseInt(value))){
+                                                    return 0;
+                                                }else{
+                                                    return parseInt(value);
+                                                }
+                                            }
+                                        },
+                                        {field : 'VipIntegralSource',title : '变更类型',width:100,align:'center',resizable:false},
+
+                                        {field : 'Reason',title : '原因',width:100,align:'center',resizable:false} ,
+                                        {field : 'Remark',title : '备注',width:160,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                var long=56;
+                                                if(value&&value.length>long){
+                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                                                }else{
+                                                    return '<div class="rowText">'+value+'</div>'
+                                                }
+                                            }
+                                        },
+                                        {field : 'CreateByName',title : '操作人',width:80,align:'center',resizable:false },
+                                        {field : 'ImageUrl',title : '图片',width:80,align:'center',resizable:false,
+                                            formatter:function(value ,row,index){
+                                                var html='无';
+                                                if(value){
+                                                    html='<div id="imageListPanel_'+index+'" > <img src="'+value+'" width="70" height="70"  />' +
+                                                        '<div>'
+                                                }
+
+                                                return html;
+                                            }
+                                        }
+
+                                    ]],
+
+                                    onLoadSuccess : function(data) {
+                                        console.log("nav013 执行");
+                                        debugger;
+                                        that.elems.tblIntegralBox.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                                        that.elems.dataMessage.hide();
+                                        if(data.rows.length>0) {
+                                            that.elems.dataMessage.hide();
+                                        }else{
+                                            that.elems.dataMessage.show();
+                                        }
+                                        for(var i=0;i<data.rows.length;i++) {
+                                            $('#imageListPanel_'+i).tooltip({
+                                                position: 'top',
+                                                content: '<img class="imgShow" width="257" height="176" src="'+data.rows[i].ImageUrl+'">'
+                                            });
+                                        }
+                                    }
+
+
+                                });
+
+                                point.TotalCount = data.Data.TotalCount;
+                                point.TotalPages = data.Data.TotalPages;
+                                if (data.Data.TotalPages > 0) {
+                                    that.createPager('nav013', 1, data.Data.TotalPages, data.Data.TotalCount);
+                                }
+                            panel.attr(loadKey, true);
+                        });
+                        break;	
+						
                     default:
                         break;
                 }
@@ -2065,6 +2163,24 @@
                         }*/
                         that.elems.tblBalanceBox.datagrid("loadData", list);
                     });
+                    break;
+				//积分列表
+                case "nav013":
+                    this.loadData.args.integralList.PageIndex = currentPage;
+                    that.loadData.getVipPointList(function (data) {
+                        var list = data.Data.VipIntegralList;
+                        list = list ? list : [];   //模板引擎没有判断传递的list是否为null  次数判断
+                      	/*if(list.length) {
+                            //用百度模板引擎渲染成html字符串
+                            var html = bd.template("tpl_content", { list: list });
+                            //将数据添加到页面的id=content的对象节点中
+                            that.elems.content.html(html);
+                        } else {
+                            //没有内容的提示
+                            that.showTableTips(that.elems.content, "该会员暂无消费记录!");
+                        }*/
+                        that.elems.tblIntegralBox.datagrid("loadData", list);
+                    });
                     break;	
 						
                 default:
@@ -2171,8 +2287,15 @@
                 OperationType:-100,//卡状态的操作
                 EditVipInfoColumns:[],//更新会员的动态属性信息
                 SearchColumns:[],
-                //积分
+                //卡操作
                 point: {
+                    PageIndex: 1,
+                    PageSize: 10,
+                    TotalPages: 0,
+                    TotalCount: 0,
+                    OrderType:'DESC'
+                },
+				integralList: {
                     PageIndex: 1,
                     PageSize: 10,
                     TotalPages: 0,

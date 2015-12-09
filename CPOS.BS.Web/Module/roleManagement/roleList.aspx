@@ -32,6 +32,7 @@
 	.limitsTreeBox{float:left;height:200px;width:380px;margin-left:5px;border:1px solid #d0d5d8;border-radius:3px;overflow-x:auto;}
 	#btnWrap{height:60px !important;}
 	.icon-tipBox{display:none;float:left;width:41px;height:18px;margin-left:6px;background:url(images/icon-tipBox.png) no-repeat 0 0;}
+	.loading{width:81%;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -73,7 +74,13 @@
                 <div class="optionBtn" id="opt">
                 	<div class="commonBtn" id="addRoleBtn">新增角色</div>
                 </div>
-                   <div class="imgTable"> <table class="dataTable" id="gridTable"></table>  </div>
+                   <div class="">
+                        <table class="dataTable" id="gridTable">
+                        	<div  class="loading">
+                               <span><img src="../static/images/loading.gif"></span>
+                            </div>
+                        </table>
+                   </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager" >

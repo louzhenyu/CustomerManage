@@ -12,7 +12,7 @@
 	.optionBtn .commonBtn{width:100px;}
 	.commonSelectWrap .tit{width:105px;}
 	.moreQueryWrap{float:left;margin-left:20px;}
-	.optionBtn .exportBtn{margin-right:40px;}
+	.optionBtn .exportBtn{display:none;margin-right:40px;}
 	.moreQueryWrap .queryBtn{width:73px;}
 	.iconPlay,.iconPause{display:inline-block;width:30px;height:90px;}
 	.iconPlay{background:url(images/running.png) no-repeat center center;}
@@ -30,6 +30,7 @@ background: url(images/icon-import.png) no-repeat center center;
     .exportBtn {
 background: url(images/icon-export.png) no-repeat center center;
 }
+	.loading{width:81%;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -111,7 +112,13 @@ background: url(images/icon-export.png) no-repeat center center;
                  </div>
 
                 </div>
-                   <div class="imgTable"> <table class="dataTable" id="gridTable"></table>  </div>
+                   <div>
+                   		<table class="dataTable" id="gridTable">
+                        	<div  class="loading">
+                               <span><img src="../static/images/loading.gif"></span>
+                            </div>
+                        </table>
+                   </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager" >

@@ -111,7 +111,7 @@
 				var row = that.elems.tabel.datagrid('getSelected');
 				
                 if(flag == 'handle deleteBtn'){
-					$.messager.confirm('角色删除', '您确定要删除该角色吗？',function(r){
+					$.messager.confirm('提示', '您确定要删除该角色吗？',function(r){
 					   if(r){
 						   that.setRemoveRole(row.Role_Id,function(data){
 							   $tr.remove();

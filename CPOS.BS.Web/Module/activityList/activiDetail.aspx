@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>活动详情</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <link href="<%=StaticUrl+"/module/activityList/css/activityDetail.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+  <link href="<%=StaticUrl+"/module/activityList/css/activityDetail.css?v=0.5"%>" rel="stylesheet" type="text/css" />
   <style type="text/css">
 a:hover{color:#fff;}
 #contentArea{background:#f4f8fa;}

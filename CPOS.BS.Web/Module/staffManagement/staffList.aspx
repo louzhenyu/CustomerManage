@@ -31,9 +31,10 @@
 	.textbox-invalid{border:none;background:none;}
 	.limitsTreeBox{height:200px;width:460px;margin-left:110px;border:1px solid #d0d5d8;border-radius:3px;overflow-x:auto;}
 	#btnWrap{height:60px !important;}
-	.importBtn,.exportBtn{float:left;width:82px;height:32px;margin-left:20px;cursor:pointer;}
+	.importBtn,.exportBtn{display:none;float:left;width:82px;height:32px;margin-left:20px;cursor:pointer;}
 	.importBtn{background:url(images/icon-import.png) no-repeat center center;}
 	.exportBtn{background:url(images/icon-export.png) no-repeat center center;}
+	.loading{width:81%;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -88,7 +89,13 @@
                     <div class="importBtn"  id="inportvipmanageBtn"></div>
                     <div class="exportBtn" style="display:none"></div>
                 </div>
-                   <div class="imgTable"> <table class="dataTable" id="gridTable"></table>  </div>
+                   <div class="">
+                   		<table class="dataTable" id="gridTable">
+                        	<div  class="loading">
+                               <span><img src="../static/images/loading.gif"></span>
+                            </div>
+                        </table>
+                   </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager" >

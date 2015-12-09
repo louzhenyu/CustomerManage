@@ -24,10 +24,10 @@
                   <div class="nav01">
                    <div class="checkBox" data-flag="EnableEmployeeSales"><em></em> <span>员工分销设置 </span></div>
                       <div class="rowRline">
-                       <div class="linetext  pl1_8em"> 商品分销价比例：<input type="text" value="" name="EDistributionPricePer" class="easyui-numberbox"  data-options="min:0,precision:0"> %  <em class="explain">（分销价=商品价格*百分比）</em></div>
+                       <div class="linetext  pl1_8em"> 商品分销价比例：<input type="text" value="" name="EDistributionPricePer" class="easyui-numberbox"  data-options="min:0,precision:2"> %  <em class="explain">（分销价=商品价格*百分比）</em></div>
                      </div>
                      <div class="rowRline">
-                             <div class="linetext"> 订单金额分成比例：<input type="text" value="" name="EOrderCommissionPer" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>
+                             <div class="linetext"> 订单金额分成比例：<input type="text" value="" name="EOrderCommissionPer" class="easyui-numberbox"  data-options="min:0,precision:2"> % </div>
                      </div>
                      <div class="rowRline">
                                                   <div class="linetext"> 集客订单分成比例：<input type="text" value="" name="GetVipUserOrderPer" class="easyui-numberbox"  data-options="min:0,precision:2"> % </div>
@@ -46,10 +46,10 @@
                    <div class="nav01">
                    <div class="checkBox" data-flag="EnableVipSales"><em></em> <span>会员分销设置 </span></div>
                       <div class="rowRline">
-                       <div class="linetext  pl1_8em"> 商品分销价比例：<input type="text" name="VDistributionPricePer" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> %  <em class="explain">（分销价=商品价格*百分比）</em></div>
+                       <div class="linetext  pl1_8em"> 商品分销价比例：<input type="text" name="VDistributionPricePer" value="" class="easyui-numberbox"  data-options="min:0,precision:2"> %  <em class="explain">（分销价=商品价格*百分比）</em></div>
                      </div>
                      <div class="rowRline">
-                             <div class="linetext"> 订单金额分成比例：<input type="text" value="" name="VOrderCommissionPer" class="easyui-numberbox"  data-options="min:0,precision:0"> % </div>
+                             <div class="linetext"> 订单金额分成比例：<input type="text" value="" name="VOrderCommissionPer" class="easyui-numberbox"  data-options="min:0,precision:2"> % </div>
                      </div>
                      
                      <div class="rowRline" style="padding-left:6px">

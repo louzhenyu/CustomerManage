@@ -228,10 +228,16 @@
 							}else if(!REG_INT.test(parseInt($("#dispatching_cost").val()))){
 								that.alert('默认配送费为大于0的整数！');
 								return ;
+							}else if(parseInt($("#dispatching_cost").val())>1000){
+								that.alert('默认配送费为小于或等于1000的整数！');
+								return ;
 							}
 							
 							if(!REG_INT.test(parseInt($("#dispatching_mincost").val()))){
-								that.alert('订单金额为大于0的整数！');
+								that.alert('订单金额为大于的整数！');
+								return ;
+							}else if(parseInt($("#dispatching_mincost").val())>1000){
+								that.alert('订单金额为小于或等于1000的整数！');
 								return ;
 							}
 							
