@@ -522,7 +522,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                         vipWDBll.Update(vipWDInfo, pTran);//修改
 
                         //提现申请保存
-                        string withdrawNo = unitExpandBll.GetUnitOrderNo(loggingSessionInfo, rp.CustomerID);
+                        string withdrawNo = unitExpandBll.GetUnitOrderNo();
                         VipWithdrawDepositApplyEntity entity = new VipWithdrawDepositApplyEntity
                         {
                             VipID = rp.UserID,

@@ -1,4 +1,5 @@
 ﻿using JIT.CPOS.BS.BLL;
+using JIT.CPOS.BS.BLL.WX;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.Web.ApplicationInterface.Base;
 using JIT.CPOS.BS.Web.Session;
@@ -44,11 +45,26 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipAmount
                         Remark = para.Remark
                     };
                     string vipAmountDetailId = string.Empty;
-                    if (para.AmountSourceID == "23")        //人工调整余额
-                        vipAmountDetailId = vipAmountBLL.AddVipAmount(vipInfo, unitInfo, vipAmountEntity, amountDetail, pTran, loggingSessionInfo);
-                    else if (para.AmountSourceID == "24")   //人工调整返现
-                        vipAmountDetailId = vipAmountBLL.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, amountDetail, pTran, loggingSessionInfo);
+                    if (para.AmountSourceID == "23")
+                    {      //人工调整余额
+                        vipAmountDetailId = vipAmountBLL.AddVipAmount(vipInfo, unitInfo,ref vipAmountEntity, amountDetail, pTran, loggingSessionInfo);
 
+                        if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
+                        {//发送微信账户余额变动模板消息
+                            var CommonBLL = new CommonBLL();
+                            CommonBLL.BalanceChangedMessage("人工调整", vipAmountEntity, amountDetail, vipInfo.WeiXinUserId, vipInfo.VIPID, loggingSessionInfo);
+                        }
+                    }
+                    else if (para.AmountSourceID == "24")
+                    {  //人工调整返现
+                        vipAmountDetailId = vipAmountBLL.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity,ref amountDetail, pTran, loggingSessionInfo);
+                        if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
+                        {//发送返现到账通知微信模板消息
+                            var CommonBLL = new CommonBLL();
+                            CommonBLL.CashBackMessage("人工调整", amountDetail.Amount, vipInfo.WeiXinUserId, vipInfo.VIPID,loggingSessionInfo);
+
+                        }
+                    }
                     //增加图片上传
                     if (!string.IsNullOrEmpty(para.ImageUrl))
                     {

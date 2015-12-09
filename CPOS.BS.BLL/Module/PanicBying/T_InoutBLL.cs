@@ -46,7 +46,7 @@ namespace JIT.CPOS.BS.BLL
             var loggingSessionInfo = this.CurrentUserInfo as LoggingSessionInfo;
             //获取订单号
             TUnitExpandBLL serviceUnitExpand = new TUnitExpandBLL(loggingSessionInfo);
-            string OrderCode = serviceUnitExpand.GetUnitOrderNo(loggingSessionInfo, para.storeId);
+            string OrderCode = serviceUnitExpand.GetUnitOrderNo();
 
             ////如果StoreID为空,是在线商城订单,重复的逻辑
             //if (string.IsNullOrEmpty(para.storeId.Trim()))

@@ -6375,6 +6375,9 @@
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\GetActivityListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Logistics\GetLogisticsCompanyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Logistics\SetLogisticsCompanyAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\DownLoadSales.ashx.cs">
+      <DependentUpon>DownLoadSales.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetRefundOrderDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetRefundOrderListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnDetailAH.cs" />
@@ -6459,6 +6462,7 @@
     <Content Include="ApplicationInterface\Module\WEvents\EventShareHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
+    <Content Include="ApplicationInterface\Module\Order\SalesReturn\DownLoadSales.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />

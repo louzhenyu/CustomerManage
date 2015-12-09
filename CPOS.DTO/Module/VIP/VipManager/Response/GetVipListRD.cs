@@ -44,6 +44,10 @@ namespace JIT.CPOS.DTO.Module.VIP.VipManager.Response
         /// </summary>
         public string VipName { get; set; }
         /// <summary>
+        /// 会员昵称
+        /// </summary>
+        public string VipRealName { get; set; }
+        /// <summary>
         /// 手机号
         /// </summary>
         public string Phone { get; set; }

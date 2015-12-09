@@ -366,6 +366,7 @@
     <Compile Include="CodeGeneration\WXSalesPolicyRateEntity.cs" />
     <Compile Include="CodeGeneration\WXSalesPolicyRateObjectMappingEntity.cs" />
     <Compile Include="CodeGeneration\WXSalesPushLogEntity.cs" />
+    <Compile Include="CodeGeneration\WXTMConfigEntity.cs" />
     <Compile Include="ContactEventEntity.cs" />
     <Compile Include="CouponSourceEntity.cs" />
     <Compile Include="CouponTypeEntity.cs" />
@@ -1124,7 +1125,9 @@
     <Compile Include="WXSalesPolicyRateEntity.cs" />
     <Compile Include="WXSalesPolicyRateObjectMappingEntity.cs" />
     <Compile Include="WXSalesPushLogEntity.cs" />
+    <Compile Include="WXTMConfigEntity.cs" />
     <Compile Include="WX\AccessTokenEntity.cs" />
+    <Compile Include="WX\Data.cs" />
     <Compile Include="WX\MenusEntity.cs" />
     <Compile Include="WX\QrCodeEntity.cs" />
     <Compile Include="WX\RequestParams.cs" />

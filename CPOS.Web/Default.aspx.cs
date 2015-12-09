@@ -1,5 +1,6 @@
 ﻿using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
+using JIT.CPOS.BS.Entity.User;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
 using System;
@@ -183,6 +184,23 @@ namespace JIT.CPOS.Web
             loggingSessionInfo.CurrentLoggingManager.Customer_Name = name;
             loggingSessionInfo.CurrentLoggingManager.User_Name = "";
 
+            //用户角色信息
+            cUserService userService = new cUserService(loggingSessionInfo);
+            string applicationId = "649F8B8BDA9840D6A18130A5FF4CB9C8";//[T_Def_App] app
+            IList<UserRoleInfo> userRoleList = userService.GetUserRoles(loggingSessionInfo.UserID, applicationId);
+              if (userRoleList != null && userRoleList.Count > 0)
+              {
+                  loggingSessionInfo.CurrentUserRole = new UserRoleInfo();
+                  loggingSessionInfo.CurrentUserRole.UserId = loggingSessionInfo.UserID;
+                  //loggingSessionInfo.CurrentUserRole.UserName = login_user.User_Name;
+                  loggingSessionInfo.CurrentUserRole.RoleId = userRoleList[0].RoleId;
+                  loggingSessionInfo.CurrentUserRole.RoleCode = userRoleList[0].RoleCode;
+                  loggingSessionInfo.CurrentUserRole.RoleName = userRoleList[0].RoleName;
+
+                  loggingSessionInfo.CurrentUserRole.UnitId = userService.GetDefaultUnitByUserIdAndRoleId(
+                          loggingSessionInfo.CurrentUserRole.UserId, loggingSessionInfo.CurrentUserRole.RoleId);
+                  
+              }
             loggingSessionInfo.ClientName = name;
             return loggingSessionInfo;
         }

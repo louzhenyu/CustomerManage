@@ -11,6 +11,7 @@ using JIT.Utility.ExtensionMethod;
 using System.Data;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.BLL.WX;
 
 
 
@@ -31,7 +32,7 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
             var UserID = context.Request["UserID"];
             var ChannelID = context.Request["ChannelID"];
             var SerialPay = context.Request["SerialPay"];
-
+            
             try
             {
                 if (string.IsNullOrEmpty(OrderID) || string.IsNullOrEmpty(OrderStatus) || string.IsNullOrEmpty(CustomerID) || string.IsNullOrEmpty(UserID) || string.IsNullOrEmpty(ChannelID))
@@ -42,7 +43,6 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                 {
                     if (OrderStatus == "2")
                     {
-
                         //支付成功，更新卡的支付状态
                         //OrderID就是VIPCardID
                         //
@@ -53,7 +53,6 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                         //    throw new APIException("缺少参数【PayID】或参数值为空") { ErrorCode = 135 };
                         //}
                         var loggingSessionInfo = Default.GetBSLoggingSession(CustomerID, UserID);
-
                         var vipAmountBll = new VipAmountBLL(loggingSessionInfo);
                         //商品订单支付
                         //更新积分和状态
@@ -71,6 +70,13 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                             }
                             else
                             {
+                                #region 发送订单支付成功微信模板消息
+                                //获取会员信息
+                                var vipBll = new VipBLL(loggingSessionInfo);
+                                var vipInfo = vipBll.GetByID(loggingSessionInfo.UserID);
+                                var SuccessCommonBLL = new CommonBLL();
+                                SuccessCommonBLL.SentPaymentMessage(inoutInfo, vipInfo.WeiXinUserId,vipInfo.VIPID, loggingSessionInfo);
+                                #endregion
                                 Loggers.Debug(new DebugLogInfo() { Message = "调用SetOrderPayment方法更新订单成功" });
                             }
                             //获取订单信息,根据Field3==1判断,如果是ALD订单,则调用ALD接口更新ALD订单的状态
@@ -261,7 +267,12 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                                     AmountSourceId = "4",
                                     ObjectId = rechargeOrderInfo.OrderID.ToString()
                                 };
-                                vipAmountBll.AddVipAmount(vipInfo, unitInfo, vipAmountEntity, amountDetailInfo, null, loggingSessionInfo);
+                                var vipAmountDetailId= vipAmountBll.AddVipAmount(vipInfo, unitInfo,ref vipAmountEntity, amountDetailInfo, null, loggingSessionInfo);
+                                if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
+                                {//发送账户余额变动微信模板消息
+                                    var CommonBLL = new CommonBLL();
+                                    CommonBLL.BalanceChangedMessage(inoutInfo.order_no, vipAmountEntity, amountDetailInfo, vipInfo.WeiXinUserId,vipInfo.VIPID, loggingSessionInfo);
+                                }
                                 //充值返现
                                 var returnAmountdetailInfo = new VipAmountDetailEntity()
                                 {
@@ -269,9 +280,17 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                                     ObjectId = rechargeOrderInfo.OrderID.ToString(),
                                     AmountSourceId = "6"
                                 };
-                                vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, returnAmountdetailInfo, null, loggingSessionInfo);
+                                var vipReturnAmountDetailId = vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity,ref returnAmountdetailInfo, null, loggingSessionInfo);
+                                if (!string.IsNullOrWhiteSpace(vipReturnAmountDetailId))
+                                {//发送返现到账通知微信模板消息
+                                    var CommonBLL = new CommonBLL();
+                                    CommonBLL.CashBackMessage(inoutInfo.order_no, returnAmountdetailInfo.Amount, vipInfo.WeiXinUserId, vipInfo.VIPID,loggingSessionInfo);
+                                }
                             }
                         }
+
+                        
+
 
                         context.Response.Write("SUCCESS");
                     }

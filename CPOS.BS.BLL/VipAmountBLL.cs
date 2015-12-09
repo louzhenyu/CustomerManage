@@ -136,7 +136,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="tran">事务</param>
         /// <param name="loggingSessionInfo">登录信息</param>
         /// <returns></returns>
-        public string AddVipAmount(VipEntity vipInfo, t_unitEntity unitInfo, VipAmountEntity vipAmountEntity, VipAmountDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
+        public string AddVipAmount(VipEntity vipInfo, t_unitEntity unitInfo,ref VipAmountEntity vipAmountEntity, VipAmountDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
         {
             string vipAmountDetailId = string.Empty;//变更明细ID
             //更新个人账户的可使用余额 
@@ -204,6 +204,7 @@ namespace JIT.CPOS.BS.BLL
                 vipamountDetailBll.Create(vipAmountDetailEntity, tran);
 
                 vipAmountDetailId = vipAmountDetailEntity.VipAmountDetailId.ToString();
+
             }
             catch (Exception ex)
             {
@@ -221,7 +222,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="tran">事务</param>
         /// <param name="loggingSessionInfo">登录信息</param>
         /// <param name="amountSourceId"></param>
-        public string AddReturnAmount(VipEntity vipInfo, t_unitEntity unitInfo, VipAmountEntity vipAmountInfo, VipAmountDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
+        public string AddReturnAmount(VipEntity vipInfo, t_unitEntity unitInfo,VipAmountEntity vipAmountInfo,ref VipAmountDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
         {
             string vipAmountDetailId = string.Empty;//变更明细ID
             var vipAmountDao = new VipAmountBLL(loggingSessionInfo);

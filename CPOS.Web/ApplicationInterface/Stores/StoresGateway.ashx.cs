@@ -464,8 +464,20 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 {
                     RP.Parameters.DcodeId = RP.Parameters.DcodeId.Replace(" ", "").Trim();
                 }
+               
 
                 var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
+
+                //判断订单号是否重复
+                var InoutBLL = new T_InoutBLL(loggingSessionInfo);
+                var Result = InoutBLL.QueryByEntity(new T_InoutEntity() { order_no = RP.Parameters.OffOrderNo }, null).ToList();
+                if (Result.Count() > 0)
+                {
+                    rsp.ResultCode = 305;
+                    rsp.Message = "订单号重复，请重新输入！";
+                    return rsp.ToJSON().ToString();
+                }
+
                 #endregion
                 #region
                 string strError = string.Empty;

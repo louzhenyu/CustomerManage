@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-7-3 10:30:21
+ * Create On	:2015/11/26 17:42:50
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -31,17 +31,7 @@ namespace JIT.CPOS.BS.BLL
     /// <summary>
     /// 业务处理：  
     /// </summary>
-    public partial class T_RefundOrderBLL
+    public partial class WXTMConfigBLL
     {  
-         /// <summary>
-        /// 根据状态获取退款单
-        /// </summary>
-        /// <param name="Status"></param>
-        /// <param name="CustomerID"></param>
-        /// <returns></returns>
-        public DataSet GetWhereRefundOrder(int Status, string CustomerID)
-        {
-            return this._currentDAO.GetWhereRefundOrder(Status, CustomerID);
-        }
     }
 }

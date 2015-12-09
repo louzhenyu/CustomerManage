@@ -1,4 +1,5 @@
 ﻿using JIT.CPOS.BS.BLL;
+using JIT.CPOS.BS.BLL.WX;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.Web.ApplicationInterface.Base;
 using JIT.CPOS.BS.Web.Session;
@@ -209,7 +210,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                         AmountSourceId = "21",
                                         ObjectId = refundEntity.RefundID.ToString()
                                     };
-                                    vipAmountBLL.AddVipAmount(vipInfo, unitInfo, vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
+                                    var vipAmountDetailId= vipAmountBLL.AddVipAmount(vipInfo, unitInfo,ref vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
+                                    if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
+                                    {//发送微信账户余额变动模板消息
+                                        var CommonBLL = new CommonBLL();
+                                        CommonBLL.BalanceChangedMessage(inoutInfo.order_no, vipAmountEntity, detailInfo, vipInfo.WeiXinUserId,vipInfo.VIPID, loggingSessionInfo);
+                                    }
                                 }
                                 //退货返回返现
                                 if (refundEntity.ReturnAmount > 0)
@@ -220,7 +226,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                         ObjectId = refundEntity.RefundID.ToString(),
                                         AmountSourceId = "22"
                                     };
-                                    vipAmountBLL.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
+                                    var vipAmountDetailId= vipAmountBLL.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity,ref detailInfo, pTran, loggingSessionInfo);
+                                    if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
+                                    {//发送返现到账通知微信模板消息
+                                        var CommonBLL = new CommonBLL();
+                                        CommonBLL.CashBackMessage(salesReturnEntity.OrderNo, detailInfo.Amount, vipInfo.WeiXinUserId, vipInfo.VIPID, loggingSessionInfo);
+
+                                    }
                                 }
                                 //退货返回积分
                                 if (refundEntity.Points > 0)
@@ -231,7 +243,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                         IntegralSourceID = "26",
                                         ObjectId = refundEntity.RefundID.ToString()
                                     };
-                                    vipIntegralBLL.AddIntegral(vipInfo, unitInfo, IntegralDetail, pTran, loggingSessionInfo);
+                                    //变动前积分
+                                    string OldIntegral = (vipInfo.Integration ?? 0).ToString();
+                                    //变动积分
+                                    string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
+                                    var vipIntegralDetailId = vipIntegralBLL.AddIntegral(ref vipInfo, unitInfo,  IntegralDetail, pTran, loggingSessionInfo);
+                                    //发送微信积分变动通知模板消息
+                                    if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                                    {
+                                        var CommonBLL = new CommonBLL();
+                                        CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, loggingSessionInfo);
+                                    }
                                 }
                                 //确认收货时退回订单奖励积分、返现和佣金
                                 vipIntegralBLL.CancelReward(inoutInfo, vipInfo, pTran);

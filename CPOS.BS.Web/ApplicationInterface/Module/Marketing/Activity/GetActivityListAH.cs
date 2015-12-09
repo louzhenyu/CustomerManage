@@ -47,7 +47,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                             break;
                         case "3":
                             //运行中
-                            complexCondition.Add(new DirectCondition("((StartTime<='" + m_Date + "' and EndTime>='" + m_Date + "') or (IsLongTime=0 and StartTime<='" + m_Date + "')) "));
+                            complexCondition.Add(new DirectCondition("((StartTime<='" + m_Date + "' and EndTime>='" + m_Date + "') or (IsLongTime=1 and StartTime<='" + m_Date + "')) "));
                             break;
                         case "4":
                             //结束
@@ -78,7 +78,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                 SendCouponQty = t.SendCouponQty == null ? 0 : t.SendCouponQty.Value,
                 IsLongTime = t.IsLongTime == null ? 0 : t.IsLongTime.Value,
                 StartTime = t.StartTime == null ? "" : t.StartTime.Value.ToString("yyyy-MM-dd"),
-                EndTime = t.EndTime == null ? "" : t.StartTime.Value.ToString("yyyy-MM-dd"),
+                EndTime = t.EndTime == null ? "" : t.EndTime.Value.ToString("yyyy-MM-dd"),
             }).ToList();
 
             foreach (var item in rd.ActivityList)
@@ -87,7 +87,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                 {
                     //当前活动不是长期
                     DateTime NowData = DateTime.Now.Date;
-                    if (item.IsLongTime == 0)
+                    if (item.IsLongTime == 1)
                     {
                         //长期
                         if (!string.IsNullOrWhiteSpace(item.StartTime))
@@ -113,7 +113,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                     }
                 }
 
-                if (item.IsLongTime == 0)
+                if (item.IsLongTime == 1)
                 {
                     int i = item.BeginEndData.IndexOf("至");
                     if (i > 0)

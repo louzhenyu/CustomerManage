@@ -67,7 +67,7 @@ namespace JIT.CPOS.BS.BLL
             return orderNo;
         }
 
-        #region 
+        #region
         /// <summary>
         /// 获取当前单据号
         /// </summary>
@@ -78,7 +78,8 @@ namespace JIT.CPOS.BS.BLL
         {
             int count = GetOrderNo(loggingSessionInfo, unitId, 1);
             string orderNo = string.Empty;
-            switch (count.ToString().Length) { 
+            switch (count.ToString().Length)
+            {
                 case 1:
                     orderNo = "000" + count.ToString();
                     break;
@@ -109,9 +110,56 @@ namespace JIT.CPOS.BS.BLL
             UnitService unitServer = new UnitService(loggingSessionInfo);
             UnitInfo unitInfo = new UnitInfo();
             unitInfo = unitServer.GetUnitById(unitId);
-            if (unitInfo != null && unitInfo.Code != null && !unitInfo.Code.Equals("")) {
+            if (unitInfo != null && unitInfo.Code != null && !unitInfo.Code.Equals(""))
+            {
                 OrderNo = unitInfo.Code + OrderNo;
             }
+            return OrderNo;
+        }
+        /// <summary>
+        /// 新订单规则
+        /// 取年份后两位加上月日时分，再加三维随机数
+        public string GetUnitOrderNo()
+        {
+            string ReturnOrderNo = "";
+            string OrderNo = GenerateOrderNo();
+            //检索订单号是否重复
+            var InoutBLL = new T_InoutBLL(this.CurrentUserInfo);
+            var Result = InoutBLL.QueryByEntity(new T_InoutEntity() { order_no = OrderNo }, null).ToList();
+
+            if (Result.Count() < 0)
+            {
+                System.Threading.Thread.Sleep(1000);
+                ReturnOrderNo=GenerateOrderNo();
+            }
+            else
+            {
+                ReturnOrderNo = OrderNo;
+            }
+
+
+            return ReturnOrderNo;
+        }
+        /// <summary>
+        /// 生成订单号
+        /// </summary>
+        /// <returns></returns>
+        private string GenerateOrderNo() {
+            DateTime NowTime = DateTime.Now;
+            //去年份后两位
+            string OrderNo = NowTime.ToString("yyyy");
+            OrderNo = OrderNo.Substring(2, 2);
+            //获取时，分
+            OrderNo += NowTime.ToString("MMddHHmm");
+            //获取三维随机数
+            Random ran = new Random();
+            string Number = "";
+            for (int i = 1; i < 4; i++)
+            {
+                int RandKey = ran.Next(0, 9);
+                Number += RandKey.ToString();
+            }
+            OrderNo += Number;
             return OrderNo;
         }
         #endregion

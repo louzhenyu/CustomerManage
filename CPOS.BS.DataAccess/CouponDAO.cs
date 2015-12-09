@@ -400,7 +400,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 strb.Append(" AND b.CouponTypeID = '" + TypeID + "'");
             }
-            strb.Append("  ORDER BY isnull(a.Status,0) Asc,isexpired Asc");
+            strb.Append("  ORDER BY isnull(a.Status,0) Asc,isexpired Asc,d.CreateTime desc");
             DataSet ds = this.SQLHelper.ExecuteDataset(strb.ToString());
             return ds;
         }

@@ -23,8 +23,102 @@ namespace CPOS.Common
         }
         public ExcelHelper()
         {
-          
+
         }
+        #region MyRegion
+        /// <summary>
+        /// 自动设置Excel列宽
+        /// </summary>
+        /// <param name="sheet">Excel表</param>
+        private void AutoSizeColumns(ISheet sheet)
+        {
+            if (sheet.PhysicalNumberOfRows > 0)
+            {
+                IRow headerRow = sheet.GetRow(0);
+
+                for (int i = 0, l = headerRow.LastCellNum; i < l; i++)
+                {
+                    sheet.AutoSizeColumn(i);
+                }
+            }
+        }
+        /// <summary>
+        /// DataTable转换成Excel文档流
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public MemoryStream RenderToExcel(DataTable table)
+        {
+            MemoryStream ms = new MemoryStream();
+
+            using (table)
+            {
+                IWorkbook workbook = new HSSFWorkbook();
+
+                ISheet sheet = workbook.CreateSheet();
+
+                IRow headerRow = sheet.CreateRow(0);
+
+                // handling header.
+                foreach (DataColumn column in table.Columns)
+                    headerRow.CreateCell(column.Ordinal).SetCellValue(column.Caption);//If Caption not set, returns the ColumnName value
+
+                // handling value.
+                int rowIndex = 1;
+
+                foreach (DataRow row in table.Rows)
+                {
+                    IRow dataRow = sheet.CreateRow(rowIndex);
+
+                    foreach (DataColumn column in table.Columns)
+                    {
+                        dataRow.CreateCell(column.Ordinal).SetCellValue(row[column].ToString());
+                    }
+
+                    rowIndex++;
+                }
+                AutoSizeColumns(sheet);
+
+                workbook.Write(ms);
+                ms.Flush();
+                ms.Position = 0;
+            }
+            return ms;
+        }
+
+        /// <summary>
+        /// DataTable转换成Excel文档流，并保存到文件
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="fileName">保存的路径</param>
+        public void RenderToExcel(DataTable table, string fileName)
+        {
+            using (MemoryStream ms = RenderToExcel(table))
+            {
+                SaveToFile(ms, fileName);
+            }
+        }
+
+        /// <summary>
+        /// 保存Excel文档流到文件
+        /// </summary>
+        /// <param name="ms">Excel文档流</param>
+        /// <param name="fileName">文件名</param>
+        private void SaveToFile(MemoryStream ms, string fileName)
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                byte[] data = ms.ToArray();
+
+                fs.Write(data, 0, data.Length);
+                fs.Flush();
+
+                data = null;
+            }
+        }
+        
+        #endregion
+
         /// <summary>
         /// 将DataTable数据导入到excel中
         /// </summary>
@@ -262,13 +356,13 @@ namespace CPOS.Common
         /// </summary>
         /// <param name="fileName">CSV文件路径</param>
         /// <returns>返回读取了CSV数据的DataTable</returns>
-        public  DataTable OpenCSV(string filePath)
+        public DataTable OpenCSV(string filePath)
         {
             DataTable dt = new DataTable();
             FileStream fs = new FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read);
 
             //StreamReader sr = new StreamReader(fs, Encoding.UTF8);
-            StreamReader sr = new StreamReader(fs,System.Text.Encoding.UTF8);
+            StreamReader sr = new StreamReader(fs, System.Text.Encoding.UTF8);
             //string fileContent = sr.ReadToEnd();
             //encoding = sr.CurrentEncoding;
             //记录每次读取的一行记录

@@ -62,7 +62,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Card
         }
 
         #region 导出方法
-        private void ExportVipInfo(Dictionary<string, string> columns, DataTable dt, string fileName)
+        public void ExportVipInfo(Dictionary<string, string> columns, DataTable dt, string fileName)
         {
             Workbook wb = DataTableExporter.WriteXLS(dt, 0);
             string savePath = HttpContext.Current.Server.MapPath(@"~/File/VipCard");

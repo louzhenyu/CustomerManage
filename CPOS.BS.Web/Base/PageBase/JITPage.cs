@@ -63,7 +63,11 @@ namespace JIT.CPOS.BS.Web.PageBase
         {
             return "7C7CC257927D44BD8CF4F9CD5AC5BDCD";
         }
-
+        //得到APP项目的ApplicationId
+        public static string GetAppApplicationId()
+        {
+            return "649F8B8BDA9840D6A18130A5FF4CB9C8";
+        }
         public JITPage()
             : base()
         {

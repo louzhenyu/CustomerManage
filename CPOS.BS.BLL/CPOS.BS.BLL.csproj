@@ -576,6 +576,7 @@
     <Compile Include="CodeGeneration\WXSalesPolicyRateBLL.cs" />
     <Compile Include="CodeGeneration\WXSalesPolicyRateObjectMappingBLL.cs" />
     <Compile Include="CodeGeneration\WXSalesPushLogBLL.cs" />
+    <Compile Include="CodeGeneration\WXTMConfigBLL.cs" />
     <Compile Include="CodeGeneration\ZCourseApplyBLL.cs" />
     <Compile Include="CodeGeneration\ZCourseBLL.cs" />
     <Compile Include="CodeGeneration\ZCourseNewsMappingBLL.cs" />
@@ -1115,6 +1116,7 @@
     <Compile Include="WXSalesPolicyRateBLL.cs" />
     <Compile Include="WXSalesPolicyRateObjectMappingBLL.cs" />
     <Compile Include="WXSalesPushLogBLL.cs" />
+    <Compile Include="WXTMConfigBLL.cs" />
     <Compile Include="WX\BaseClass\ServiceBLL.cs" />
     <Compile Include="WX\BaseClass\SubscriptionBLL.cs" />
     <Compile Include="WX\Common\AuthBLL.cs" />

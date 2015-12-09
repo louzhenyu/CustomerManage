@@ -391,6 +391,28 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var columns = GetColumns(ds.Tables[0]);
             ExportVipInfo(columns, ds.Tables[1], "会员列表");
         }
+
+        //#region 导出卡号
+        ///// <summary>
+        ///// 导出卡号
+        ///// </summary>
+        ///// <param name="pRequest"></param>
+        //public void ExportVipCardCode(string pRequest)
+        //{
+        //    var rp = pRequest.DeserializeJSONTo<APIRequest<ExportVipCardCodeRP>>();
+        //    if (!string.IsNullOrWhiteSpace(rp.Parameters.BatchNo))
+        //    {
+        //        var si = new SessionManager().CurrentUserLoginInfo;
+        //        if (null == si)
+        //            si = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+        //        var VipCardBLL = new VipCardBLL(si);
+        //        var ds = VipCardBLL.ExportVipCardCode(rp.Parameters.BatchNo);
+        //        var columns = new Dictionary<string, string>();
+        //        columns.Add("VipCardCode", "卡号");
+        //        ExportVipInfo(columns, ds.Tables[0], "导出卡号");
+        //    }
+        //}
+        //#endregion
         /// <summary>
         ///  从dataTable数据转成列的定义到数据字典
         /// </summary>

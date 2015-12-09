@@ -18,5 +18,9 @@ namespace JIT.CPOS.BS.Entity.WX
         /// 错误内容
         /// </summary>
         public string errmsg { get; set; }
+        /// <summary>
+        /// 模板ID
+        /// </summary>
+        public string template_id { get; set; }
     }
 }

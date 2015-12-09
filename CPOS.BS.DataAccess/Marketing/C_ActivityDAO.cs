@@ -54,7 +54,8 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 string sql = string.Format("select b.VipCardTypeName from C_TargetGroup as a left join SysVipCardType as b on a.ObjectID=b.VipCardTypeID where a.ActivityID='{0}'", ActivityID);
                 strTargetGroups = Convert.ToString(this.SQLHelper.ExecuteScalar(sql));
-
+                if (string.IsNullOrWhiteSpace(strTargetGroups))
+                    strTargetGroups = "È«²¿";
             }
             return strTargetGroups;
         }
@@ -68,13 +69,18 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder sql = new StringBuilder();
             if (!string.IsNullOrWhiteSpace(VipCardTypeID))
             {
-                sql.AppendFormat("select count(*) from VipCard as a where IsDelete=0 and VipCardStatusId=1  and VipCardTypeID={0} ", Convert.ToInt32(VipCardTypeID));
-               
+                sql.Append("select count(1) from VipCardVipMapping as vm ");
+                sql.Append("inner join VipCard as vc on vm.VipCardID=vc.VipCardID and vc.VipCardStatusId=1 and vc.IsDelete=0 ");
+                sql.Append("inner join vip as vp on vm.vipid=vp.vipid and vp.IsDelete=0 ");
+                sql.AppendFormat("where vm.IsDelete=0 and vc.VipCardTypeID={0} ", int.Parse(VipCardTypeID));
             }
-            else {
-                sql.Append("select count(*) from VipCard as a where IsDelete=0 and VipCardStatusId=1 ");
+            else
+            {
+                sql.Append("select count(1) from VipCardVipMapping as vm ");
+                sql.Append("inner join VipCard as vc on vm.VipCardID=vc.VipCardID and vc.VipCardStatusId=1 and vc.IsDelete=0 ");
+                sql.Append("inner join vip as vp on vm.vipid=vp.vipid and vp.IsDelete=0 ");
+                sql.Append("where vm.IsDelete=0 ");
             }
-            sql.AppendFormat(" and CustomerID='{0}'", CurrentUserInfo.ClientID);
             //if (!string.IsNullOrWhiteSpace(ActivityID))
             //{
             //    sql.Append("select count(*) from VipCard where VipCardStatusId=5 or VipCardStatusId=1 and IsDelete=0 ");
@@ -82,7 +88,7 @@ namespace JIT.CPOS.BS.DataAccess
             //    sql.AppendFormat("where c.ActivityID='{0}')",ActivityID);
             //}
 
-            count= Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql.ToString()));
+            count = Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql.ToString()));
 
 
             return count;

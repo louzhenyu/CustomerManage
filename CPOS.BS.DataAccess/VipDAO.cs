@@ -1580,9 +1580,9 @@ select @ReturnValue", pCustomerID);
         {
             var sql = new StringBuilder();
 
-            sql.Append("select isnull(COUNT(1),0) as num from VipCouponMapping a,Coupon b");
-            sql.Append(" where a.CouponID = b.CouponID and a.IsDelete =0 and b.status = 0  ");
-            sql.AppendFormat(" and b.IsDelete = 0 and a.vipId = '{0}' and  EndDate > GETDATE() ", vipId);//没有被使用，并且没有过期
+            sql.Append("select COUNT(1) from VipCouponMapping as a left join Coupon as b on a.CouponID=b.CouponID and b.Status=0 and b.EndDate > GETDATE() ");
+
+            sql.AppendFormat("where a.VIPID='{0}' and a.IsDelete=0", vipId);//没有被使用，并且没有过期
 
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql.ToString()));
         }
@@ -2185,7 +2185,7 @@ select @ReturnValue", pCustomerID);
                  from Coupon a inner join VipCouponMapping b on a.couponid=b.couponid left join CouponType c on 
                  cast(a.CouponTypeID as nvarchar(100))=c.coupontypeid left join options o on a.CollarCardMode=o.OptionValue and o.optionname='CollarCardMode'
                 where  a.IsDelete = 0 and b.IsDelete = 0  
-                 and c.IsDelete = 0  and b.vipId = '{0}'
+                 and c.IsDelete = 0  and b.vipId = '{0}' and a.EndDate>GetDate() 
                  ) t 
                 where t._row between {1} and {2}";
 

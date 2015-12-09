@@ -175,7 +175,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                 Data.VipCode = VipData.VipCode;
                 if (Data.VipCardCode == null)
                     Data.VipCardCode = VipData.VipCode;
-                Data.VipName = VipData.VipName;
+                if (!string.IsNullOrWhiteSpace(VipData.VipRealName))
+                    Data.VipName = VipData.VipRealName;
+                else
+                    Data.VipName = VipData.VipName??"";
                 Data.Phone = VipData.Phone;
                 Data.Birthday = VipData.Birthday == null ? "" : VipData.Birthday;
                 Data.Gender = VipData.Gender ?? 0;

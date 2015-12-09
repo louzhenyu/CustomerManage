@@ -2024,7 +2024,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     orderInfo.DiscountRate = Convert.ToDecimal((orderInfo.SalesPrice / orderInfo.StdPrice) * 100);
                     //获取订单号
                     TUnitExpandBLL serviceUnitExpand = new TUnitExpandBLL(loggingSessionInfo);
-                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo(loggingSessionInfo, orderInfo.StoreId);
+                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo();
                 }
 
                 #endregion
@@ -2234,7 +2234,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     //orderInfo.DiscountRate = Convert.ToDecimal((orderInfo.SalesPrice / orderInfo.StdPrice) * 100);
                     //获取订单号
                     TUnitExpandBLL serviceUnitExpand = new TUnitExpandBLL(loggingSessionInfo);
-                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo(loggingSessionInfo, orderInfo.StoreId);
+                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo();
                 }
                 int i = 1;
                 orderInfo.OrderDetailInfoList = new List<InoutDetailInfo>();
@@ -2493,7 +2493,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     //orderInfo.DiscountRate = Convert.ToDecimal((orderInfo.SalesPrice / orderInfo.StdPrice) * 100);
                     //获取订单号
                     TUnitExpandBLL serviceUnitExpand = new TUnitExpandBLL(loggingSessionInfo);
-                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo(loggingSessionInfo, orderInfo.StoreId);
+                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo();
 
                     #region 处理阿拉丁需要的参数
 

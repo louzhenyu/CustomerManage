@@ -18,6 +18,7 @@ using JIT.CPOS.BS.Web.Session;
 using System.Data;
 using System.Threading;
 using System.Configuration;
+using JIT.CPOS.BS.BLL.WX;
 
 namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
 {
@@ -2577,6 +2578,22 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             //执行取消订单业务 reconstruction By Henry 2015-10-20
                             inoutBLL.SetCancelOrder(orderId,0,CurrentUserInfo);
                         }
+
+                        
+                        #endregion
+
+                        #region 处理订单发货发送微信模板消息
+                        if (statusDesc == "已发货")
+                        {
+                            //获取会员信息
+                            var vipBll = new VipBLL(CurrentUserInfo);
+                            var vipInfo = vipBll.GetByID(order.vip_no);
+                            //物流公司
+                            order.carrier_name = inoutService.GetCompanyName(order.carrier_id);
+                            
+                            var CommonBLL = new CommonBLL();
+                            CommonBLL.SentShipMessage(order, vipInfo.WeiXinUserId, order.vip_no, CurrentUserInfo);
+                        }
                         #endregion
 
                         res = "{success:true,msg:'保存成功'}";
@@ -2587,6 +2604,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             }
             return res.ToJSON();
         }
+        
         #endregion
 
         #region 上传文件

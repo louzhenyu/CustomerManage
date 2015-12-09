@@ -1080,6 +1080,16 @@ namespace JIT.CPOS.BS.BLL
         {
             return inoutService.GetDeliveryAmountByOrderId(orderId);
         }
+        /// <summary>
+        /// 获取物流公司名称
+        /// </summary>
+        /// <param name="CompanyID"></param>
+        /// <returns></returns>
+        public string GetCompanyName(string CompanyID)
+        {
+            return inoutService.GetCompanyName(CompanyID);
+        }
+
         #region 单个单据详细信息
 
         /// <summary>

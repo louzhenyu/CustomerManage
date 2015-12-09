@@ -1,4 +1,5 @@
 ﻿using JIT.CPOS.BS.BLL;
+using JIT.CPOS.BS.BLL.WX;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.Web.ApplicationInterface.Base;
 using JIT.CPOS.BS.Web.Session;
@@ -41,7 +42,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipIntegral
                         Reason = para.Reason,
                         Remark = para.Remark
                     };
-                    string vipIntegralDetailId = vipIntegralBLL.AddIntegral(vipInfo, unitInfo, IntegralDetail, pTran, loggingSessionInfo);
+                    //变动前积分
+                    string OldIntegral = (vipInfo.Integration ?? 0).ToString();
+                    //变动积分
+                    string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
+                    string vipIntegralDetailId = vipIntegralBLL.AddIntegral(ref vipInfo, unitInfo,  IntegralDetail, pTran, loggingSessionInfo);
+                    //发送微信积分变动通知模板消息
+                    if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                    {
+                        var CommonBLL = new CommonBLL();
+                        CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, loggingSessionInfo);
+                    }
 
                     //增加图片上传
                     if (!string.IsNullOrEmpty(para.ImageUrl))

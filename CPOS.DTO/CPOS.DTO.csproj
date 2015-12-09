@@ -129,6 +129,7 @@
     <Compile Include="Module\Order\Logistics\Request\GetLogisticsCompanyRP.cs" />
     <Compile Include="Module\Order\Logistics\Request\SetLogisticsCompanyRP.cs" />
     <Compile Include="Module\Order\Logistics\Response\GetLogisticsCompanyRD.cs" />
+    <Compile Include="Module\Order\Order\Request\ExportSalesReturnExcelRD.cs" />
     <Compile Include="Module\Order\SalesReturn\Request\GetRefundOrderDetailRP.cs" />
     <Compile Include="Module\Order\SalesReturn\Request\GetRefundOrderListRP.cs" />
     <Compile Include="Module\Order\SalesReturn\Request\GetSalesReturnDetailRP.cs" />
@@ -224,6 +225,7 @@
     <Compile Include="Module\VIP\Register\Response\MergeVipInfoRD.cs" />
     <Compile Include="Module\VIP\Register\Response\SetRegisterFormItemsRD.cs" />
     <Compile Include="Module\VIP\ServicesLog\Request\GetVipServicesLogListRP.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Request\SetApiVipServicesLogRP.cs" />
     <Compile Include="Module\VIP\ServicesLog\Request\SetVipServicesLogRP.cs" />
     <Compile Include="Module\VIP\ServicesLog\Response\GetVipServicesLogDetailRD.cs" />
     <Compile Include="Module\VIP\ServicesLog\Response\GetVipServicesLogListRD.cs" />

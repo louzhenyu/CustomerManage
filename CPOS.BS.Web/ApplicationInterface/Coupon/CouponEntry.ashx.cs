@@ -340,7 +340,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Coupon
                     orderInfo.DiscountRate = Convert.ToDecimal((orderInfo.SalesPrice / orderInfo.StdPrice) * 100);
                     //获取订单号
                     TUnitExpandBLL serviceUnitExpand = new TUnitExpandBLL(loggingSessionInfo);
-                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo(loggingSessionInfo, orderInfo.StoreId);
+                    orderInfo.OrderCode = serviceUnitExpand.GetUnitOrderNo();
                 }
 
                 #endregion

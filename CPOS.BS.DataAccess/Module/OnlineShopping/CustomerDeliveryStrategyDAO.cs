@@ -69,7 +69,7 @@ namespace JIT.CPOS.BS.DataAccess
 //";
             string sql = @"declare @deliveryCount int
                 select * from CustomerDeliveryStrategy where CustomerId=@CustomerId
-                and  (@total_amount between AmountBegin  and AmountEnd)
+                and  (@total_amount > AmountBegin  and @total_amount< AmountEnd)
                 and DeliveryId=@DeliveryId and IsDelete=0 ";
             ls.Add(new SqlParameter("@CustomerId", CustomerId));
             ls.Add(new SqlParameter("@total_amount", total_amount));

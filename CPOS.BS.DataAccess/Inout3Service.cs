@@ -470,16 +470,16 @@ namespace JIT.CPOS.BS.DataAccess
 
         public DataSet SearchInoutInfo_lj2(OrderSearchInfo orderSearchInfo)
         {
-            string orderby = " order by a.order_date desc,a.modify_time desc,a.order_no desc";
+            string orderby = " order by a.order_date desc,a.create_time desc";
             if (!string.IsNullOrEmpty(orderSearchInfo.InoutSort))
             {
                 if (orderSearchInfo.InoutSort == "1")
                 {
-                    orderby = " order by a.order_date desc,a.modify_time desc,a.order_no desc";
+                    orderby = " order by a.order_date desc,a.create_time desc";
                 }
                 else if (orderSearchInfo.InoutSort == "2")
                 {
-                    orderby = " order by a.modify_time desc,a.order_date DESC,a.order_no desc";
+                    orderby = " order by a.order_date desc,a.modify_time desc";
                 }
             }
             string sqlTemp = GetSearchPublicSql2(orderSearchInfo, 1);
@@ -608,7 +608,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " inner join ( " + sqlTemp + " ) b "
                       + " on(a.order_id = b.order_id) "
                       + " where 1=1 "
-                      + " and b.row_no > '" + orderSearchInfo.StartRow + "' and b.row_no <= '" + orderSearchInfo.EndRow + "' " + orderby + ";";
+                      + " and b.row_no > '" + orderSearchInfo.StartRow + "' and b.row_no <= '" + orderSearchInfo.EndRow + "' " + orderby + " drop table #UnitSET;";
             #endregion
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
@@ -999,7 +999,29 @@ namespace JIT.CPOS.BS.DataAccess
             return sql;
         }
 
-
+        /// <summary>
+        /// 获取物流公司名称
+        /// </summary>
+        /// <param name="CompanyID"></param>
+        /// <returns></returns>
+        public string GetCompanyName(string CompanyID)
+        {
+            string Result = "";
+            string sql = string.Format("select LogisticsName from T_LogisticsCompany where LogisticsID='{0}'", CompanyID);
+            DataSet ds = new DataSet();
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            if (ds != null)
+            {
+                if (ds.Tables[0].Rows.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0]["LogisticsName"] != DBNull.Value)
+                    {
+                        Result = ds.Tables[0].Rows[0]["LogisticsName"].ToString();
+                    }
+                }
+            }
+            return Result;
+        }
         /// <summary>
         /// 获取单据，打印配送单
         /// </summary>

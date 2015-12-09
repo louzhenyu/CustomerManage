@@ -30,6 +30,7 @@ using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.Utility.Log;
 using System.Collections;
+using JIT.CPOS.BS.BLL.WX;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -472,7 +473,17 @@ namespace JIT.CPOS.BS.BLL
                                     IntegralSourceID = "1",
                                     ObjectId = orderInfo.order_id
                                 };
-                                this.AddIntegral(vipInfo, unitInfo, IntegralDetail, tran, this.CurrentUserInfo);
+                                //变动前积分
+                                string OldIntegral = (vipInfo.Integration ?? 0).ToString();
+                                //变动积分
+                                string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
+                                String vipIntegralDetailId = this.AddIntegral(ref vipInfo, unitInfo,IntegralDetail, tran, this.CurrentUserInfo);
+                                //发送微信积分变动通知模板消息
+                                if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                                {
+                                    var CommonBLL = new CommonBLL();
+                                    CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, this.CurrentUserInfo);
+                                }
                             }
                         }
                     }
@@ -524,7 +535,13 @@ namespace JIT.CPOS.BS.BLL
                                 ObjectId = orderInfo.order_id,
                                 AmountSourceId = "2"
                             };
-                            vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, detailInfo, tran, CurrentUserInfo);
+                            var vipAmountDetailId= vipAmountBll.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity,ref detailInfo, tran, CurrentUserInfo);
+                            if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
+                            {//发送返现到账通知微信模板消息
+                                var CommonBLL = new CommonBLL();
+                                CommonBLL.CashBackMessage(orderInfo.order_no, detailInfo.Amount, vipInfo.WeiXinUserId, vipInfo.VIPID, CurrentUserInfo);
+
+                            }
                         }
                     }
                 }
@@ -573,7 +590,13 @@ namespace JIT.CPOS.BS.BLL
                     ObjectId = orderInfo.order_id
                 };
                 //变更余额和余额记录
-                vipAmountBll.AddVipAmount(vipInfo, unitInfo, vipAmountEntity, detailInfo, tran, this.CurrentUserInfo);
+                var vipAmountDetailId= vipAmountBll.AddVipAmount(vipInfo, unitInfo, ref vipAmountEntity, detailInfo, tran, this.CurrentUserInfo);
+                if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
+                {//发送微信账户余额变动模板消息
+
+                    var CommonBLL = new CommonBLL();
+                    CommonBLL.BalanceChangedMessage(orderInfo.order_no, vipAmountEntity, detailInfo, vipInfo.WeiXinUserId, orderInfo.vip_no, this.CurrentUserInfo);
+                }
             }
             #endregion
         }
@@ -629,7 +652,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="tran">事物</param>
         /// <param name="loggingSessionInfo">登录信息</param>
         /// <returns></returns>
-        public string AddIntegral(VipEntity vipInfo, t_unitEntity unitInfo, VipIntegralDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
+        public string AddIntegral(ref VipEntity vipInfo, t_unitEntity unitInfo,VipIntegralDetailEntity detailInfo, SqlTransaction tran, LoggingSessionInfo loggingSessionInfo)
         {
             string vipIntegralDetailId = string.Empty;//变更明细ID
             //更新个人账户的可使用余额 

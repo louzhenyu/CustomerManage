@@ -27,6 +27,7 @@ using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.DTO.Module.Event.Lottery.Response;
+using JIT.CPOS.BS.BLL.WX;
 namespace JIT.CPOS.BS.BLL
 {
     /// <summary>
@@ -194,7 +195,7 @@ namespace JIT.CPOS.BS.BLL
         #region 保存奖品
         public int SavePrize(LPrizesEntity pEntity)
         {
-           return this._currentDAO.SavePrize(pEntity);
+            return this._currentDAO.SavePrize(pEntity);
         }
         #endregion
         #region 删除奖品
@@ -280,7 +281,18 @@ namespace JIT.CPOS.BS.BLL
                                 IntegralSourceID = "22",
                                 ObjectId = ""
                             };
-                            bllVipIntegral.AddIntegral(vipInfo, null, IntegralDetail, pTran, this.CurrentUserInfo);
+                            //变动前积分
+                            string OldIntegral=(vipInfo.Integration??0).ToString();
+                            //变动积分
+                            string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
+                            var vipIntegralDetailId = bllVipIntegral.AddIntegral(ref vipInfo, null,IntegralDetail, pTran, this.CurrentUserInfo);
+                            //发送微信积分变动通知模板消息
+                            if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                            {
+                                var CommonBLL = new CommonBLL();
+                                CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, this.CurrentUserInfo);
+                            }
+
                         }
 
 
@@ -298,7 +310,7 @@ namespace JIT.CPOS.BS.BLL
                         //entityCoupon.Status = 1;
                         //bllCoupon.Update(entityCoupon, null);
                         entityCoupon = DataTableToObject.ConvertToList<CouponEntity>(bllCoupon.GetCouponIdByCouponTypeID(entityPrize.CouponTypeID).Tables[0]).FirstOrDefault();
-                       
+
                         VipCouponMappingEntity entityVipCouponMapping = null;
                         VipCouponMappingBLL bllVipCouponMapping = new VipCouponMappingBLL(this.CurrentUserInfo);
 
@@ -352,7 +364,7 @@ namespace JIT.CPOS.BS.BLL
             }
             return rd;
         }
-       
+
         #endregion
 
     }
