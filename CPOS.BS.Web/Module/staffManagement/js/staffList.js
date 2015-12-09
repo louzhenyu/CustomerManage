@@ -45,6 +45,7 @@
             //点击查询按钮进行数据查询
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
+				that.loadData.args.start = 0;
                 that.setCondition();
             });
 			

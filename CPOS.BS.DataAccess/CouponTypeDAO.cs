@@ -71,6 +71,7 @@ namespace JIT.CPOS.BS.DataAccess
                         LEFT JOIN dbo.LPrizes l ON l.PrizesID = p.PrizesID AND [PrizeTypeId] ='Coupon'  
                         where  C.IsDelete='0' and   C.CustomerId='" + this.CurrentUserInfo.ClientID + "' AND ((EndTime IS NULL AND ServiceLife IS NOT NULL) OR (EndTime IS NOT NULL AND EndTime <getdate())) GROUP BY c.CouponTypeID,c.CouponTypeName";
              return this.SQLHelper.ExecuteDataset(sql);
+
         }
         #endregion
 
