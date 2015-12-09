@@ -47,7 +47,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
 
                 var couponBLL = new CouponBLL(CurrentUserInfo);
 
-                List<CouponEntity> list_CouponEntity= couponBLL.GetCouponBycouponType(couponTypeID);
+                System.Data.DataTable list_CouponEntity = couponBLL.GetCouponIDBycouponType(couponTypeID).Tables[0];
 
                 #endregion
 
@@ -101,16 +101,16 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 #endregion
                 //生成行1 标题行  
                 
-                cells[0, 0].PutValue("优惠券券号");//填写内容
+                cells[0, 0].PutValue(string.Format("{0}券号",filename));//填写内容
                 cells[0, 0].SetStyle(styleTitle);
                 cells.SetRowHeight(0, 30);
                 cells.SetColumnWidth(0, 50);
 
               
                 #region 生成数据行
-                for (int i = 0; i < list_CouponEntity.Count; i++)
+                for (int i = 0; i < list_CouponEntity.Rows.Count; i++)
                 {
-                    cells[1 + i, 0].PutValue(list_CouponEntity[i].CouponCode);
+                    cells[1 + i, 0].PutValue(list_CouponEntity.Rows[i]["CouponCode"]);
                     cells[1 + i, 0].SetStyle(style3);
 
                     cells.SetRowHeight(1+i, 24);
