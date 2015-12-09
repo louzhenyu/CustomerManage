@@ -424,7 +424,7 @@ namespace JIT.CPOS.BS.BLL
                 return rd;
             }
 
-            if (eventEntity.PointsLottery > 0 && vipInfo.Integration < eventEntity.PointsLottery)
+            if (eventEntity.PointsLottery > 0 && (vipInfo.Integration == null ? 0 : vipInfo.Integration) < eventEntity.PointsLottery)
             {
                 rd.PrizeName = "»ý·Ö²»×ã";
                 return rd;
