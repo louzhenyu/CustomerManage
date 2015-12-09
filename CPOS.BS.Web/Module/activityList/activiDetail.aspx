@@ -804,3 +804,4 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>" defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>" ></script> 
 
 </asp:Content>
+

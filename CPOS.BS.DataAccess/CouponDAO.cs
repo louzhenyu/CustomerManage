@@ -701,5 +701,6 @@ namespace JIT.CPOS.BS.DataAccess
             string strSql = string.Format("select top 1 a. * from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
             return this.SQLHelper.ExecuteDataset(strSql);
         }
+
     }
 }

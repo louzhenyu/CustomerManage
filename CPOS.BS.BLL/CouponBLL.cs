@@ -834,6 +834,7 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetCouponIdByCouponTypeID(strCouponTypeId);
         }    
+
     }
 
 

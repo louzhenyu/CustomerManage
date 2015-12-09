@@ -1254,3 +1254,4 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
     page.init();
 });
 
+
