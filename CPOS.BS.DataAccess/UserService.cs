@@ -224,6 +224,8 @@ where a.customer_id=@CustomerId    {4} ";
         public string SearchPublicSql(Hashtable _ht)
         {
             PublicService pService = new PublicService();
+
+            /**
             string sql = "Declare @TmpTable Table "
                      + " (user_id nvarchar(100) "
                      + " ,row_no int "
@@ -251,6 +253,78 @@ where a.customer_id=@CustomerId    {4} ";
             }
 
             sql = sql + " select @iCount = COUNT(*) From @TmpTable; ";
+            **/
+            string sql="";//初始化
+             if (_ht["para_unit_id"].ToString() != "")
+             {
+                 sql += @"   DECLARE @News table 
+( 
+ dst_unit_id varchar(100), 
+ src_unit_id varchar(100)
+ );
+
+            with temp2 ( dst_unit_id, src_unit_id)
+                            as
+                            (
+                                select dst_unit_id,src_unit_id
+                                from T_Unit_Relation
+                                where dst_unit_id =  '" + _ht["para_unit_id"] + @"' ----这个是当前用户的权限下的门店
+                                union all
+                                select a.dst_unit_id,a.src_unit_id
+                                from T_Unit_Relation a
+                                inner join temp2 on a.src_unit_id = temp2.dst_unit_id
+                            )
+       insert into @News select * from temp2
+";
+             }
+              sql +=@" Declare @TmpTable Table  (user_id nvarchar(100)  ,row_no int  );  
+                Declare @iCount int;  
+
+                with temp ( dst_unit_id, src_unit_id)
+                as
+                (
+                select dst_unit_id,src_unit_id
+                from T_Unit_Relation
+                where dst_unit_id =  '" + _ht["UnitID"] + @"'  ----这个是当前用户的权限下的门店
+                union all
+                select a.dst_unit_id,a.src_unit_id
+                from T_Unit_Relation a
+                inner join temp on a.src_unit_id = temp.dst_unit_id
+                )
+
+                insert into @TmpTable(user_id,row_no)  
+                select 
+                      a.user_id
+	                 ,row_no=row_number() over(order by a.user_code)  
+	                 from t_user a 
+	                 where 1=1 
+	                 and a.user_id 
+	                 in (
+	                 select user_id 
+	                   from  T_User_Role c inner join temp d     ----在前面就把需要计算的数据先算好了，就不要再每次取数据时再取了
+	                   ON d.dst_unit_id = c.unit_id)                            
+	                   and a.User_Status = '1' 
+	                   and a.customer_id = '" + _ht["CustomerId"].ToString() + "'";
+             sql = pService.GetLinkSql(sql, "a.User_Name", _ht["UserName"].ToString(), "%");
+             sql = pService.GetLinkSql(sql, "a.User_Code", _ht["UserCode"].ToString(), "%");
+             sql = pService.GetLinkSql(sql, "a.User_Status", _ht["UserStatus"].ToString(), "=");
+             sql = pService.GetLinkSql(sql, "a.User_CellPhone", _ht["CellPhone"].ToString(), "%");
+             sql = pService.GetLinkSql(sql, "a.customer_id", _ht["CustomerId"].ToString(), "=");
+              if (_ht["role_id"].ToString() != "")
+            {
+                  sql+=  @" and a.user_id in (select user_id from  T_User_Role f where  f.role_id = '" + _ht["role_id"] + "')";
+              }
+             if (_ht["para_unit_id"].ToString() != "")
+             {
+
+                 sql += @"    and a.user_id   in (
+	                 select user_id 
+	                   from  T_User_Role c inner join @News d     ----在前面就把需要计算的数据先算好了，就不要再每次取数据时再取了
+	                   ON d.dst_unit_id = c.unit_id)    ";
+             }
+
+	    
+ 	  sql+=" select @iCount = COUNT(*) From @TmpTable ";
 
          
                 //+ "left join T_User_Role c on b.user_id=c.user_id "
