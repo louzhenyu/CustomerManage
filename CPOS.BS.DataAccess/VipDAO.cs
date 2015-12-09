@@ -2704,5 +2704,156 @@ select @ReturnValue", pCustomerID);
             return this.SQLHelper.ExecuteDataset(sql);
         }
         #endregion
+
+        /// <summary>
+        /// 获取会员列表-新版
+        /// </summary>
+        /// <param name="pWhereConditions"></param>
+        /// <param name="pOrderBys"></param>
+        /// <param name="pPageSize"></param>
+        /// <param name="pCurrentPageIndex"></param>
+        /// <returns></returns>
+        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        {
+            //组织SQL
+            StringBuilder hqUnitSql = new StringBuilder();
+            StringBuilder pagedSql = new StringBuilder();
+            StringBuilder totalCountSql = new StringBuilder();
+            //分页SQL
+            hqUnitSql.AppendFormat(@" --查询总部门店ID
+                                    DECLARE @HQUnitID VARCHAR(50)
+                                    SELECT TOP 1
+                                            @HQUnitID = unit_id
+                                    FROM    t_unit
+                                    WHERE   customer_id = '{0}'
+                                            AND STATUS = 1
+                                            AND TYPE_ID = ( SELECT  type_id
+                                                            FROM    t_type
+                                                            WHERE   customer_Id = '{0}'
+                                                                    AND type_code = '总部'); ", CurrentUserInfo.ClientID);
+            pagedSql.Append(hqUnitSql);
+            pagedSql.AppendFormat("select * from (select row_number()over( order by ");
+            if (pOrderBys != null && pOrderBys.Length > 0)
+            {
+                foreach (var item in pOrderBys)
+                {
+                    if (item != null)
+                    {
+                        pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
+                    }
+                }
+                pagedSql.Remove(pagedSql.Length - 1, 1);
+            }
+            else
+            {
+                pagedSql.AppendFormat(" [VIPID] desc"); //默认为主键值倒序
+            }
+            pagedSql.AppendFormat(" ) as ___rn,v.VIPID ,v.VipCode,v.VipName ,v.VipRealName ,v.Gender ,v.Phone ,v.CreateTime,u.unit_name ,ct.VipCardTypeName ,vc.VipCardID,vc.VipCardCode,vc.VipCardStatusId ");
+            pagedSql.AppendFormat(" from [Vip] v ");
+            pagedSql.AppendFormat(@" INNER JOIN vw_unit_level ul ON --会籍店为空时，只有总部用户可以查询
+						    ( CASE WHEN ISNULL(v.CouponInfo, '') = '' THEN @HQUnitID
+                            ELSE v.CouponInfo END ) = ul.unit_id AND ul.customer_id = '{0}' ", CurrentUserInfo.ClientID);
+            pagedSql.AppendFormat(" LEFT JOIN VipCardVipMapping AS m ON m.VipID = v.VipID AND m.IsDelete = 0 ");
+            pagedSql.AppendFormat(" LEFT JOIN VipCard AS vc ON vc.VipCardID = m.VipcardID AND vc.IsDelete=0 ");
+            pagedSql.AppendFormat(" LEFT JOIN SysVipCardType AS ct ON vc.VipCardTypeID = ct.VipCardTypeID AND ct.IsDelete = 0 ");
+            pagedSql.AppendFormat(" LEFT JOIN T_Unit u ON v.couponInfo=u.unit_id ");
+            pagedSql.AppendFormat(" where 1=1  and v.IsDelete=0 ");
+
+            //总记录数SQL
+            totalCountSql.Append(hqUnitSql);
+            totalCountSql.AppendFormat("select count(1) from [Vip] v");
+            totalCountSql.AppendFormat(@" INNER JOIN vw_unit_level ul ON --会籍店为空时，只有总部用户可以查询
+						    ( CASE WHEN ISNULL(v.CouponInfo, '') = '' THEN @HQUnitID
+                            ELSE v.CouponInfo END ) = ul.unit_id AND ul.customer_id = '{0}' ", CurrentUserInfo.ClientID);
+            totalCountSql.AppendFormat(" LEFT JOIN VipCardVipMapping AS m ON m.VipID = v.VipID AND m.IsDelete = 0 ");
+            totalCountSql.AppendFormat(" LEFT JOIN VipCard AS vc ON vc.VipCardID = m.VipcardID AND vc.IsDelete=0 ");
+            totalCountSql.AppendFormat(" LEFT JOIN SysVipCardType AS ct ON vc.VipCardTypeID = ct.VipCardTypeID AND ct.IsDelete = 0 ");
+            totalCountSql.AppendFormat(" LEFT JOIN T_Unit u ON v.couponInfo=u.unit_id ");
+            totalCountSql.AppendFormat(" where 1=1  and v.IsDelete=0 ");
+            //过滤条件
+            if (pWhereConditions != null)
+            {
+                foreach (var item in pWhereConditions)
+                {
+                    if (item != null)
+                    {
+                        pagedSql.AppendFormat(" and {0}", item.GetExpression());
+                        totalCountSql.AppendFormat(" and {0}", item.GetExpression());
+                    }
+                }
+            }
+            pagedSql.AppendFormat(") as A ");
+            //取指定页的数据
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
+            //执行语句并返回结果
+            PagedQueryResult<VipEntity> result = new PagedQueryResult<VipEntity>();
+            List<VipEntity> list = new List<VipEntity>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    VipEntity m = new VipEntity() { };
+
+                    if (rdr["VIPID"] != DBNull.Value)
+                    {
+                        m.VIPID = rdr["VIPID"].ToString();
+                    }
+                    if (rdr["VipCode"] != DBNull.Value)
+                    {
+                        m.VipCode = rdr["VipCode"].ToString();
+                    }
+                    if (rdr["Gender"] != DBNull.Value)
+                    {
+                        m.Gender = int.Parse(rdr["Gender"].ToString());
+                    }
+                    if (rdr["VipName"] != DBNull.Value)
+                    {
+                        m.VipName = rdr["VipName"].ToString();
+                    }
+                    if (rdr["VipRealName"] != DBNull.Value)
+                    {
+                        m.VipRealName = rdr["VipRealName"].ToString();
+                    }
+                    if (rdr["Phone"] != DBNull.Value)
+                    {
+                        m.Phone = rdr["Phone"].ToString();
+                    }
+                    if (rdr["CreateTime"] != DBNull.Value)
+                    {
+                        m.CreateTime =Convert.ToDateTime(rdr["CreateTime"].ToString());
+                    }
+                    if (rdr["unit_name"] != DBNull.Value)
+                    {
+                        m.UnitName = rdr["unit_name"].ToString();
+                    }
+                    if (rdr["VipCardID"] != DBNull.Value)
+                    {
+                        m.VipCardID = rdr["VipCardID"].ToString();
+                    }
+                    if (rdr["VipCardCode"] != DBNull.Value)
+                    {
+                        m.VipCardCode = rdr["VipCardCode"].ToString();
+                    }
+                    if (rdr["VipCardTypeName"] != DBNull.Value)
+                    {
+                        m.VipCardTypeName = rdr["VipCardTypeName"].ToString();
+                    }
+                    if (rdr["VipCardStatusId"] != DBNull.Value)
+                    {
+                        m.VipCardStatusId = int.Parse(rdr["VipCardStatusId"].ToString());
+                    }
+                    list.Add(m);
+                }
+            }
+            result.Entities = list.ToArray();
+            int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(totalCountSql.ToString()));    //计算总行数
+            result.RowCount = totalCount;
+            int remainder = 0;
+            result.PageCount = Math.DivRem(totalCount, pPageSize, out remainder);
+            if (remainder > 0)
+                result.PageCount++;
+            return result;
+        }
     }
+
 }

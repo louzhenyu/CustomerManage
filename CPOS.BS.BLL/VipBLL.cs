@@ -1707,5 +1707,17 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetTran();
         }
+        /// <summary>
+        /// 获取会员列表-新版
+        /// </summary>
+        /// <param name="pWhereConditions"></param>
+        /// <param name="pOrderBys"></param>
+        /// <param name="pPageSize"></param>
+        /// <param name="pCurrentPageIndex"></param>
+        /// <returns></returns>
+        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        {
+            return this._currentDAO.GetVipList(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
+        }
     }
 }

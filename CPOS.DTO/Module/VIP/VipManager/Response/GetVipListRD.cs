@@ -50,7 +50,7 @@ namespace JIT.CPOS.DTO.Module.VIP.VipManager.Response
         /// <summary>
         /// 性别
         /// </summary>
-        public int Gender { get; set; }
+        public int? Gender { get; set; }
         /// <summary>
         /// 卡类型名称
         /// </summary>
@@ -58,10 +58,10 @@ namespace JIT.CPOS.DTO.Module.VIP.VipManager.Response
         /// <summary>
         /// 卡状态ID
         /// </summary>
-        public int VipCardStatusId { get; set; }
+        public int? VipCardStatusId { get; set; }
         
         /// <summary>
-        /// 办卡日期
+        /// 注册时间
         /// </summary>
         public string MembershipTime { get; set; }
         /// <summary>

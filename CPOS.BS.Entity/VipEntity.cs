@@ -217,6 +217,30 @@ namespace JIT.CPOS.BS.Entity
         /// 
         /// </summary>
         public DateTime? NewBirthday { get; set; }
+
+
+
+        /// <summary>
+        /// 会员卡类型名称
+        /// </summary>
+        public string VipCardTypeName { get; set; }
+        /// <summary>
+        /// 会籍店名称
+        /// </summary>
+        public string UnitName { get; set; }
+
+        /// <summary>
+        /// 会员卡状态
+        /// </summary>
+        public int? VipCardStatusId { get; set; }
+        /// <summary>
+        /// 会员卡ID
+        /// </summary>
+        public string VipCardID { get; set; }
+        /// <summary>
+        /// 会员卡号
+        /// </summary>
+        public string VipCardCode { get; set; }
         #endregion
     }
 }

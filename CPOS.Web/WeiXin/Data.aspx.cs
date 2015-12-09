@@ -167,8 +167,8 @@ namespace JIT.CPOS.Web.WeiXin
                             vipInfo.WeiXin = WeiXin;
                             vipInfo.VipSourceId = "3";//是否需要把这个去掉，因为VipSourceId=13也会走到这里
                             vipInfo.HeadImgUrl = headimgurl;
-                            //var vipObj = vipService.QueryByEntity(vipQueryInfo, null);  update by Henry
-                            var vipObj = vipService.QueryByEntity(new VipEntity() { WeiXinUserId = OpenID }, null);
+                            var vipObj = vipService.QueryByEntity(vipQueryInfo, null);  
+                            //var vipObj = vipService.QueryByEntity(new VipEntity() { WeiXinUserId = OpenID }, null);
                             if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                             {
                                 vipInfo.Status = 1;
@@ -180,7 +180,7 @@ namespace JIT.CPOS.Web.WeiXin
                             else
                             {
                                 vipInfo.VIPID = vipObj[0].VIPID;
-                                if (vipInfo.VipCode == null || vipInfo.VipCode.Equals(""))
+                                if (vipObj[0].VipCode == null || vipObj[0].VipCode.Equals(""))
                                 {
                                     vipInfo.VipCode = vipCode;
                                 }
@@ -1343,7 +1343,7 @@ namespace JIT.CPOS.Web.WeiXin
                         vipInfo.Status = 2;
                     }
                     #endregion
-                    if (vipInfo.VipCode == null || vipInfo.VipCode.Equals(""))
+                    if (vipObj[0].VipCode == null || vipObj[0].VipCode.Equals(""))
                     {
                         vipInfo.VipCode = vipServiceUnion.GetVipCode();
                     }

@@ -1094,7 +1094,7 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             {
                 temp.AppendFormat(" and a.type_id='{0}'", type_id);
             }
-            sql = new StringBuilder(string.Format("select * into #temp from (select row_number()over(order by create_time) _row, a.*,b.unitPT,b.unitRD,c.type_code " + strdistance + " from t_unit a  join VwUnitProperty b on a.unit_id=b.unitid join t_type c on a.type_id=c.type_id where 1=1 and a.Status=1 {2}) t where t._row>{0}*{1} and t._row<= ({0}+1)*{1} order by 1", pageindex, pagesize, temp.ToString()));
+            sql = new StringBuilder(string.Format("select * into #temp from (select row_number()over(order by a.create_time) _row, a.*,b.unitPT,b.unitRD,c.type_code " + strdistance + " from t_unit a  join VwUnitProperty b on a.unit_id=b.unitid join t_type c on a.type_id=c.type_id where 1=1 and a.Status=1 {2}) t where t._row>{0}*{1} and t._row<= ({0}+1)*{1} order by 1", pageindex, pagesize, temp.ToString()));
             sql.AppendLine(" select * from #temp");
             sql.AppendLine("select * from ObjectImages where IsDelete=0 and exists( select 1 from #temp where unit_id=ObjectImages.ObjectId) order by ObjectId,ObjectImages.DisplayIndex ");
             sql.AppendLine(" drop Table #temp");

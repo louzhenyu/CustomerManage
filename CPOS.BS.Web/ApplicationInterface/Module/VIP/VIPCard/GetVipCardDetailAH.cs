@@ -52,7 +52,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
             {
                 //会员编号获取详情
                 VipCardVipMappingEntity m_VipMappingData = VipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VIPID = para.VipID }, null).FirstOrDefault();
-                if (!string.IsNullOrWhiteSpace(m_VipMappingData.VipCardID))
+                if (m_VipMappingData != null && !string.IsNullOrWhiteSpace(m_VipMappingData.VipCardID))
                     resultData = VipCardBLL.GetByID(para.VipCardID);
             }
             else
@@ -74,15 +74,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                 }
             }
 
-            try
-            {
-                if (resultData == null)
-                    throw new APIException("该卡不存在！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
-            }
-            catch (APIException apiEx)
-            {
-                throw new APIException(apiEx.ErrorCode, apiEx.Message);
-            }
+            //try
+            //{
+            //    if (resultData == null)
+            //        throw new APIException("该卡不存在！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
+            //}
+            //catch (APIException apiEx)
+            //{
+            //    throw new APIException(apiEx.ErrorCode, apiEx.Message);
+            //}
             #endregion
 
             #region 卡关系
@@ -91,15 +91,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
             {
                 VipCardVipMappingData = VipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VipCardID = resultData.VipCardID }, null).FirstOrDefault();
             }
-            else
-            {
-                return Data;
-            }
+            //else
+            //{
+            //    return Data;
+            //}
             #endregion
 
             #region 门店
             t_unitEntity unidData = null;
-            if (!string.IsNullOrWhiteSpace(resultData.MembershipUnit))
+            if (resultData != null && !string.IsNullOrWhiteSpace(resultData.MembershipUnit))
             {
                 unidData = unitBll.GetByID(resultData.MembershipUnit);
             }
@@ -109,7 +109,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
 
             VipEntity VipData = null;
             VipIntegralEntity IntegralData = null;
-            string VIPID = VipCardVipMappingData == null ? "" : VipCardVipMappingData.VIPID;
+            //string VIPID = VipCardVipMappingData == null ? "" : VipCardVipMappingData.VIPID;
+            string VIPID = para.VipID;
             if (!string.IsNullOrWhiteSpace(VIPID))
             {
                 VipData = VipBLL.NewGetByID(VIPID);
@@ -120,44 +121,68 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
 
             #region 员工
             T_UserEntity UserData = null;
-            if (!string.IsNullOrWhiteSpace(resultData.CreateBy))
+            if (resultData != null && !string.IsNullOrWhiteSpace(resultData.CreateBy))
             {
                 UserData = UserBLL.GetByID(resultData.CreateBy);
             }
             #endregion
 
             #region 响应对象赋值
-            //卡
-            Data.VipCardID = resultData.VipCardID;
-            Data.VipCardCode = resultData.VipCardCode;
-            Data.VipCardISN = resultData.VipCardISN;
-            Data.CraeteUserName = UserData == null ? "" : UserData.user_name;
+            if (resultData != null)
+            {
+                //卡
+                Data.VipCardID = resultData.VipCardID;
+                Data.VipCardCode = resultData.VipCardCode;
+                Data.VipCardISN = resultData.VipCardISN;
+                Data.CraeteUserName = UserData == null ? "" : UserData.user_name;
 
-            Data.VipCardStatusId = resultData.VipCardStatusId.Value;
-            Data.MembershipTime = resultData.MembershipTime == null ? "" : resultData.MembershipTime.Value.ToString("yyyy-MM-dd");
-            Data.MembershipUnitName = unidData == null ? "" : unidData.unit_name;
-            //Data.TotalAmount = resultData.RechargeTotalAmount == null ? 0 : resultData.RechargeTotalAmount.Value;
-            //Data.BalanceAmount = resultData.BalanceAmount == null ? 0 : resultData.BalanceAmount.Value;
-            Data.BeginDate = resultData.BeginDate;
-            Data.EndDate = "永久有效";
-            Data.SalesUserName = resultData.SalesUserName == null ? "" : resultData.SalesUserName;
-            #region 卡类型名称
-            SysVipCardTypeEntity SysVipCardTypeData = SysVipCardTypeBLL.GetByID(resultData.VipCardTypeID);
-            Data.VipCardName = SysVipCardTypeData == null ? "" : SysVipCardTypeData.VipCardTypeName;
-            #endregion
+                Data.VipCardStatusId = resultData.VipCardStatusId.Value;
+                Data.MembershipTime = resultData.MembershipTime == null ? "" : resultData.MembershipTime.Value.ToString("yyyy-MM-dd");
+                Data.MembershipUnitName = unidData == null ? "" : unidData.unit_name;
+                //Data.TotalAmount = resultData.RechargeTotalAmount == null ? 0 : resultData.RechargeTotalAmount.Value;
+                //Data.BalanceAmount = resultData.BalanceAmount == null ? 0 : resultData.BalanceAmount.Value;
+                Data.BeginDate = resultData.BeginDate;
+                Data.EndDate = "永久有效";
+                Data.SalesUserName = resultData.SalesUserName == null ? "" : resultData.SalesUserName;
+                #region 卡类型名称
+                SysVipCardTypeEntity SysVipCardTypeData = SysVipCardTypeBLL.GetByID(resultData.VipCardTypeID);
+                Data.VipCardName = SysVipCardTypeData == null ? "" : SysVipCardTypeData.VipCardTypeName;
+                #endregion
+
+                #region 状态变更记录列表
+
+                var VipCardStatusChangeLogArray = VipCardStatusChangeLogBLL.Query
+                    (new IWhereCondition[] { new EqualsCondition() { FieldName = "VipCardID", Value = resultData.VipCardID } },
+                     new OrderBy[] { new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }).ToList();
+                //转换业务对象
+                Data.StatusLogList = (from t in VipCardStatusChangeLogArray
+                                      select new VipCardStatusChangeLog()
+                                      {
+                                          CreateTime = t.CreateTime.Value.ToString("yyyy-MM-dd"),
+                                          UnitName = t.UnitName == null ? "" : t.UnitName,
+                                          Action = t.Action == null ? "" : t.Action,
+                                          ChangeReason = t.Reason == null ? "" : t.Reason,
+                                          Remark = t.Remark == null ? "" : t.Remark,
+                                          CreateBy = t.CreateByName,
+                                          ImageUrl = t.PicUrl == null ? "" : t.PicUrl
+                                      }).ToList();
+                #endregion
+            }
             #region 会员
             if (VipData != null)
             {
                 Data.VipID = VipData.VIPID;
                 Data.VipCode = VipData.VipCode;
+                if (Data.VipCardCode == null)
+                    Data.VipCardCode = VipData.VipCode;
                 Data.VipName = VipData.VipName;
                 Data.Phone = VipData.Phone;
                 Data.Birthday = VipData.Birthday == null ? "" : VipData.Birthday;
-                Data.Gender = VipData.Gender??0;
+                Data.Gender = VipData.Gender ?? 0;
                 //Data.Integration = VipData.Integration == null ? 0 : VipData.Integration.Value;
                 //会员创建人姓名
                 T_UserEntity VipUserData = null;
-                if (!string.IsNullOrWhiteSpace(resultData.CreateBy))
+                if (resultData != null && !string.IsNullOrWhiteSpace(resultData.CreateBy))
                 {
                     VipUserData = UserBLL.GetByID(resultData.CreateBy);
                 }
@@ -194,24 +219,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
             }
             #endregion
 
-            #region 状态变更记录列表
-
-            var VipCardStatusChangeLogArray = VipCardStatusChangeLogBLL.Query
-                (new IWhereCondition[] { new EqualsCondition() { FieldName = "VipCardID", Value = resultData.VipCardID } },
-                 new OrderBy[] { new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }).ToList();
-            //转换业务对象
-            Data.StatusLogList = (from t in VipCardStatusChangeLogArray
-                                  select new VipCardStatusChangeLog()
-                                  {
-                                      CreateTime = t.CreateTime.Value.ToString("yyyy-MM-dd"),
-                                      UnitName = t.UnitName == null ? "" : t.UnitName,
-                                      Action = t.Action == null ? "" : t.Action,
-                                      ChangeReason = t.Reason == null ? "" : t.Reason,
-                                      Remark = t.Remark == null ? "" : t.Remark,
-                                      CreateBy = t.CreateByName,
-                                      ImageUrl = t.PicUrl == null ? "" : t.PicUrl
-                                  }).ToList();
-            #endregion
 
             #endregion
             return Data;
