@@ -69,7 +69,7 @@ namespace JIT.CPOS.BS.DataAccess
                          FROM  CouponType c
                         LEFT JOIN PrizeCouponTypeMapping p ON CAST(c.CouponTypeID AS NVARCHAR(200)) = p.CouponTypeID 
                         LEFT JOIN dbo.LPrizes l ON l.PrizesID = p.PrizesID AND [PrizeTypeId] ='Coupon'  
-                        where  C.IsDelete='0' and   C.CustomerId='" + this.CurrentUserInfo.ClientID + "' AND ((EndTime IS NULL AND ServiceLife IS NOT NULL) OR (EndTime IS NOT NULL AND EndTime <getdate())) GROUP BY c.CouponTypeID,c.CouponTypeName";
+                        where  C.IsDelete='0' and   C.CustomerId='" + this.CurrentUserInfo.ClientID + "' AND ((EndTime IS NULL AND ServiceLife IS NOT NULL) OR (EndTime IS NOT NULL AND EndTime >getdate())) GROUP BY c.CouponTypeID,c.CouponTypeName";
              return this.SQLHelper.ExecuteDataset(sql);
 
         }
