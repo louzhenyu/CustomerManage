@@ -79,6 +79,7 @@
                 panelHeight:that.elems.panlH,
                 valueField: 'id',
                 textField: 'text',
+                value:"0",
                 data:[{
                     "id":1,
                     "text":"快递送回"
@@ -153,8 +154,8 @@
             //查询每次都是从第一页开始
             that.loadData.args.start=0;
             var fileds=$("#seach").serializeArray();
-            $.each(fileds,function(i,filed){
-                if(filed.value) {
+            $.each(fileds, function (i, filed) {
+                if(filed.value||filed.value=="") {
                     that.loadData.seach[filed.name] = filed.value;
                 }
             });

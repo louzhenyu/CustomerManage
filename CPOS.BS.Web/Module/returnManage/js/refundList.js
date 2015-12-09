@@ -47,6 +47,17 @@
                 $.util.stopBubble(e);
 
             });
+
+            //导出退款单
+            that.elems.tabelWrap.delegate(".commonBtn", "click", function (e) {
+
+                var optType = $(this).data("flag");
+                if(optType=="export")
+                {
+                    that.ExportSalesReturnExcel(that.elems.operation.find("li.on").data("status"));
+                }
+            });
+
             that.elems.operation.delegate("li","click",function(e){
                 that.elems.operation.find("li").removeClass("on");
                 $(this).addClass("on");
@@ -331,6 +342,25 @@
             this.loadData.tag.orderID=data.OrderID;
             $('#win').window('open');
         },
+        //导出退款单
+        ExportSalesReturnExcel: function (status)
+        {
+            var method = "";
+            switch (status)
+            {
+                case 0: method = "ExportDownLoadALLRefund"; break;
+                case 1: method = "ExportDownLoadPendingRefund"; break;
+                case 2: method = "ExportDownLoadRefunded"; break;
+            }
+            $.messager.confirm('提示', '是否下载?', function (r) {
+                if (r) {
+                    window.open("/ApplicationInterface/Module/Order/SalesReturn/DownLoadSales.ashx?method=" + method, "_blank");
+                }
+            });
+            
+            
+        }
+        ,
         loadData: {
             args: {
                 bat_id:"1",

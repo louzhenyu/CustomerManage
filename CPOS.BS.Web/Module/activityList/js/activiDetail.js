@@ -17,7 +17,9 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             priceFilde:"item_price_type_name_",//数据库价格相关的字段，一般有销量库存，价格实体价格
             allData:{}, //页面所有存放对象基础数据
 			eventId:$.util.getUrlParam('EventID'),
-			jsonParams:{},
+			jsonParams: {},
+			activiType: 1, //活动类型1:红包，2：大转盘，3：刮刮卡
+			Prizeindex: 1, //大转盘奖项index
 			domain:''
         },
         init: function(){
@@ -59,82 +61,153 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						$(idVal).fadeIn("slow");
 						break;
 					  case '#nav02':
-					  	if($('#nav0_1').form('validate')){
-							var prams = {action:'SaveEventStep1',EventID:that.elems.eventId},
-								fields = $('#nav0_1').serializeArray();
-					  	    //console.log(fields);
+					      if($('#nav0_1').form('validate')){
+					          var prams = {action:'SaveEventStep1',EventID:that.elems.eventId},
+                                  fields = $('#nav0_1').serializeArray();
+					          //console.log(fields);
 
-							for(var i=0;i<fields.length;i++){
-								var obj = fields[i];
-								prams[obj['name']] = obj['value'];
-							}
-							//console.log(prams);
-							prams.EventTypeID = '081AEC92-CC16-4041-9496-B4F6BC3B11FC';
-							if(prams.PointsLottery == ''){
-								prams.PointsLottery = 0;
-							}
-							that.setFirstStep(prams, function (DrawMethodId) {
-								that.elems.optPanel.find("li").removeClass("on");
-								that.elems.optPanel.find("li").eq(1).addClass("on");
-								$panelDiv.hide();
-								$(idVal).fadeIn("slow");
-								if (DrawMethodId == 2) {
-								    that.LuckyTurntable();
-								} else {
-								    $(".PrizeSet").hide();
-								    $("#nav0_2").show();
-								}
+					          for(var i=0;i<fields.length;i++){
+					              var obj = fields[i];
+					              prams[obj['name']] = obj['value'];
+					          }
+					          //console.log(prams);
+					          prams.EventTypeID = '081AEC92-CC16-4041-9496-B4F6BC3B11FC';
+					          if(prams.PointsLottery == ''){
+					              prams.PointsLottery = 0;
+					          }
+					          that.setFirstStep(prams, function (DrawMethodId) {
+					              that.elems.optPanel.find("li").removeClass("on");
+					              that.elems.optPanel.find("li").eq(1).addClass("on");
+					              $panelDiv.hide();
+					              $(idVal).fadeIn("slow");
+					              if (DrawMethodId == 2) {
+					                  that.elems.activiType = 2;
+					                  that.LuckyTurntable();
+					              //} else if (DrawMethodId == 1) {
+					              //    that.elems.activiType = 3;
+					              //    that.ScratchCard();
+					              }else{
+					                  $(".PrizeSet").hide();
+					                  $("#nav0_2").show();
+					              }
 								
 								//保存第一步的同时获取第二步的数据
 								//待开发
 							});
 							//第二步，奖品配置模块数据初始化
-							that.getPrizeList();
+							that.getPrizeList(true);
 							that.addPrizeList();
 						}
 						break;
 					  case '#nav03':
-					  	if($this.data('page')=='redPackage'){
-							var logo = $('#logoBgPic').data('url'),
-								beforeGround = $('#beforeBgPic').data('url'),
-								backGround = $('#backBgPic').data('url'),
-								rule = $('#ruleBgPic').data('url'),
-								ruleContent = $('.ruleText textarea').val(),
-								ruleFlag = $('#ruleOption').combobox('getValue'),
-								leng = $('#prizeListTable tbody tr td').length>1,
-								array = [];
-							if(!leng){
-								return alert('请添加奖品信息！');
-							}else if(!beforeGround){
-								return alert('请上传领取前背景图片！');
-							}else if(!backGround){
-								return alert('请上传领取后背景图片！');
-							}else if(!logo){
-								return alert('请上传logo图片！');
-							}else if(ruleFlag==1 && !ruleContent){
-								return alert('请填写活动规则内容文本！');
-							}else if(ruleFlag==2 && !rule){
-								return alert('请上传活动规则内容图片！');
-							}
-							array = [
-										{
-											"ImageURL":logo,
-											"BatId":"Logo"
-										},
-										{
-											"ImageURL":beforeGround,
-											"BatId":"BeforeGround"
-										},
-										{
-											"ImageURL":backGround,
-											"BatId":"BackGround"
-										},
-										{
-											"ImageURL":rule,
-											"BatId":"Rule"
-										}
-									];
-							that.setSaveWxPrize(array,ruleFlag,ruleContent);
+					      if ($this.data('page') == 'redPackage') {
+					          var array = [],
+					              leng;
+					          debugger;
+					          if (that.elems.activiType == 1) {
+					              var logo = $('#logoBgPic').data('url'),
+                                      beforeGround = $('#beforeBgPic').data('url'),
+                                      backGround = $('#backBgPic').data('url'),
+                                      rule = $('#ruleBgPic').data('url'),
+                                      ruleContent = $('.ruleText textarea').val(),
+                                      ruleFlag = $('#ruleOption').combobox('getValue');
+					              leng = $('#prizeListTable tbody tr td').length > 1;
+                                      
+					              if (!leng) {
+					                  return $.messager.alert("提示", '请添加奖品信息！');
+					              } else if (!beforeGround) {
+					                  return $.messager.alert("提示", '请上传领取前背景图片！');
+					              } else if (!backGround) {
+					                  return $.messager.alert("提示", '请上传领取后背景图片！');
+					              } else if (!logo) {
+					                  return $.messager.alert("提示", '请上传logo图片！');
+					              } else if (ruleFlag == 1 && !ruleContent) {
+					                  return $.messager.alert("提示", '请填写活动规则内容文本！');
+					              } else if (ruleFlag == 2 && !rule) {
+					                  return $.messager.alert("提示", '请上传活动规则内容图片！');
+					              }
+					              array = [
+                                              {
+                                                  "ImageURL": logo,
+                                                  "BatId": "Logo"
+                                              },
+                                              {
+                                                  "ImageURL": beforeGround,
+                                                  "BatId": "BeforeGround"
+                                              },
+                                              {
+                                                  "ImageURL": backGround,
+                                                  "BatId": "BackGround"
+                                              },
+                                              {
+                                                  "ImageURL": rule,
+                                                  "BatId": "Rule"
+                                              }
+					              ];
+
+					              that.setSaveWxPrize(array, ruleFlag, ruleContent);
+					          }
+                              //大转盘
+					          if (that.elems.activiType == 2) {
+					              var LT_Data_kvPic = $('#LT_Data_kvPic').data('url'),
+                                      LT_Data_Rule = $('#LT_Data_Rule').data('url'),
+                                      LT_Data_bgpic1 = $('#LT_Data_bgpic1').data('url'),
+                                      LT_Data_bgpic2 = $('#LT_Data_bgpic2').data('url'),
+                                      LT_Data_regularpic = $('#LT_Data_regularpic').data('url');
+					              leng = $('#LuckyTurnListTable tbody tr td').length > 1;
+					              if (!leng) {
+					                  return $.messager.alert("提示",'请添加奖品信息！');
+					              } else if (!LT_Data_regularpic) {
+					                  return $.messager.alert("提示", '请上传试试手气背景图片！');
+					              } else if (!LT_Data_kvPic) {
+					                  return $.messager.alert("提示", '请上传kv图片！');
+					              } else if (!LT_Data_Rule) {
+					                  return $.messager.alert("提示", '请上传活动规则图片！');
+					              } else if (!LT_Data_bgpic1) {
+					                  return $.messager.alert("提示", '请上传背景图片1！');
+					              } else if (!LT_Data_bgpic2) {
+					                  return $.messager.alert("提示", '请上传背景图片2！');
+					              }
+                                  
+					              if ($("#selectPrize ._selected").length < 12) {
+					             
+					                  return $.messager.alert("提示", "奖品选项未全部添加！");
+					              }
+
+					              array = [
+                                              {
+                                                  "ImageURL": LT_Data_kvPic,
+                                                  "BatId": "LT_kvPic"
+                                              },
+                                              {
+                                                  "ImageURL": LT_Data_Rule,
+                                                  "BatId": "LT_Rule"
+                                              },
+                                              {
+                                                  "ImageURL": LT_Data_bgpic1,
+                                                  "BatId": "LT_bgpic1"
+                                              },
+                                              {
+                                                  "ImageURL": LT_Data_bgpic2,
+                                                  "BatId": "LT_bgpic2"
+                                              },
+                                              {
+                                                  "ImageURL": LT_Data_regularpic,
+                                                  "BatId": "LT_regularpic"
+                                              }
+					              ];
+
+					              that.setSaveWxPrize(array, 1, "");
+
+					              var imgjsonstr = "[";
+					              $("#selectPrize p img").each(function () {
+					                  imgjsonstr += " {PrizeLocationID:" + ($(this).data("prizeLocationid") == undefined ? "''" : "'" + $(this).data("prizeLocationid") + "'") + ",Location:'" + $(this).data("index") + "',PrizeID:'" + $(this).data("prizesid") + "',ImageUrl:'" + $(this).attr("src") + "',PrizeName:'" + $(this).data("prizesname") + "'},";
+					              });
+					              imgjsonstr = imgjsonstr.trim(",") + "]";
+					              var imgjson= Ext.decode(imgjsonstr);
+					              that.SavePrizeLocation(imgjson);
+					          }
+					          
 						}
 					  	that.elems.optPanel.find("li").removeClass("on");
 						that.elems.optPanel.find("li").eq(2).addClass("on");
@@ -143,13 +216,15 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						//保存第二步的同时获取第三步的数据
 						that.getThirdStep();
 						break;
-					  case '#nav04':
+				    case '#nav04':
 					  	if($('#nav0_3').form('validate')){
 							var url = $('.imageTextArea').data('url');
 							if(!url){
 								return alert('请上传图片！');
 							}
-							//待开发，保存第三步
+					  	    //待开发，保存第三步
+
+							debugger;
 							that.setThirdStep(that.elems.jsonParams);
 						}
 					  	break;
@@ -161,19 +236,32 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			
 			//奖品配置模块
             $('#addPrizeBtn').bind('click', function () {
+                $('#addPrizeForm').form('clear');
 				$('.jui-mask').show();
 				$('.jui-dialog-redPackage').show();
             });
 
 
             //大转盘奖品选择
+            $('#selectPrize .regularpic').bind('click', function () {
+                
+            });
+
+            //大转盘奖品选择
             $('#selectPrize p img').bind('click', function () {
                 $('.jui-mask').show();
                 $('.jui-dialog-Prizeselect').show();
+
+                that.elems.Prizeindex = $(this).data("index");
+
+
             });
 
             //大转盘奖品配置模块
             $('#LuckyTurntableaddBtn').bind('click', function () {
+
+                $("#LuckyTurntablePrize").form("load", { PrizeLevel: "0", PrizeTypeId: "", CouponTypeID: "", Point: "", PrizeName: "", CountTotal: "", ImageUrl: "" });
+                $("#LuckyTurntablePrizeimg").attr("src","images/uploadpic.png");
                 $('.jui-mask').show();
                 $('.jui-dialog-LuckyTurntable').show();
             });
@@ -188,7 +276,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				$('.jui-mask').hide();
 				$('.jui-dialog').hide();
 			});
-			$('.jui-dialog-redPackage .saveBtn').bind('click',function(){
+			$('.jui-dialog-redPackage .saveBtn').bind('click', function () {
 				//保存奖品
 				if($('#addPrizeForm').form('validate')){//a03d28e78b2c18104d4812ba18a5c69b
 					var prams = {action:'SavePrize',EventId:that.elems.eventId},
@@ -207,9 +295,55 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					that.setSavePrize(prams);
 				}
 			});
+
+            //大转盘奖品选择提交
+			$('.jui-dialog-Prizeselect .saveBtn').bind('click', function () {
+			    debugger;
+			    var imageurl = $(".PrizeseOption .on").data("imageurl");
+			    var prizesid = $(".PrizeseOption .on").data("prizesid");
+			    var prizesname = $(".PrizeseOption .on").data("prizesname");
+
+			    var img = $("#Img" + that.elems.Prizeindex);
+
+			    img.attr("src", imageurl);
+			    img.data("prizesid", prizesid);
+			    img.data("prizesname", prizesname);
+			    img.addClass("_selected");
+			    $('.jui-mask').hide();
+			    $('.jui-dialog-Prizeselect').hide();
+			});
+
+
+            //大转盘保存奖品start
+			$('.jui-dialog-LuckyTurntable .saveBtn').bind('click', function () {
+			    //保存奖品
+			    
+			    if ($('#LuckyTurntablePrize').form('validate')) {//a03d28e78b2c18104d4812ba18a5c69b
+			        if ($("#LT_dataPrizeimg")[0].value != undefined && $("#LT_dataPrizeimg")[0].value != "") {
+			            var prams = { action: 'SavePrize', EventId: that.elems.eventId },
+                            fields = $('#LuckyTurntablePrize').serializeArray();
+			            //console.log(fields);
+			            for (var i = 0; i < fields.length; i++) {
+			                var obj = fields[i];
+			                prams[obj['name']] = obj['value'];
+
+			                if (obj['name'] == 'Point' && obj['value'] == '') {
+			                    prams[obj['name']] = 0;
+			                }
+
+			            }
+			            //console.log(prams);
+			            that.setSavePrize(prams);
+			        } else {
+			            $.messager.alert("提示","请上传奖品图片！");
+			        }
+			    }
+
+			});
+            //大转盘保存奖品end
 			
 			//追加
-			$('#prizeListTable').delegate('.addBtn','click',function(){
+			$('#prizeListTable,#LuckyTurnListTable').delegate('.addBtn', 'click', function () {
 				var $this = $(this),
 					$tr = $this.parents('tr'),
 					$num = $('.numBox',$tr),
@@ -248,7 +382,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			
 			
 			//删除
-			$('#prizeListTable').delegate('.delBtn','click',function(){
+			$('#prizeListTable,#LuckyTurnListTable').delegate('.delBtn', 'click', function () {
 				var $this = $(this),
 					$tr = $this.parents('tr'),
 					prizesId = $tr.data('prizesid');
@@ -277,7 +411,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				});
 					
 			});
-			
+
+
 			
 			//查看领取后页面
 			$('.seeRedBtn').bind('click',function(){
@@ -314,8 +449,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 		//初始化基本信息数据
 		getFirstStep:function(){
 			var that = this;
-			that.activityWay('84F3E197-5474-4364-906E-5357C64098E1'); //081AEC92-CC16-4041-9496-B4F6BC3B11FC 
-			$.util.ajax({
+			that.activityWay('081AEC92-CC16-4041-9496-B4F6BC3B11FC');//081AEC92-CC16-4041-9496-B4F6BC3B11FC
+	        $.util.ajax({
 				url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
 				data: {
 					action: 'GetEventBaseData'
@@ -486,6 +621,13 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					if (data.IsSuccess && data.ResultCode == 0) {
 						var result = data.Data,
 							LEventDrawMethodList = result.LEventDrawMethodList;
+						
+					    //只显示大转盘和红包 start(要显示全部请把这段代码删除)
+						LEventDrawMethodList = 
+                            [{DrawMethodID:'2',DrawMethodName:'大转盘'},{DrawMethodID:'4',DrawMethodName:'红包'}]
+					    
+                        //只显示大转盘和红包end
+                        
 						$('#lEventDrawMethod').combobox({
 							width: that.elems.width,
 							height: that.elems.height,
@@ -510,8 +652,15 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 
 
 		},
-		//获取奖品配置列表
-		getPrizeList:function(){
+        //刮刮卡
+		ScratchCard: function () {
+		    $(".PrizeSet").hide();
+		    $("#ScratchCard_form").show();
+
+
+		},
+        //获取奖品配置列表isLoadAll:是否初始化所有数据（否则只初始化奖品列表数据）
+		getPrizeList:function(isLoadAll){
 			var that = this;
 			$.util.ajax({
 				url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
@@ -526,27 +675,99 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							prizeList = result.PrizeList,//奖品列表
 							imageList = result.ImageList,//图片列表
 							html = '<tr><td colspan="7">亲，你还没有添加活动奖品哦！</td></tr>';
-						 if(prizeList){
-							html = bd.template("tpl_prizeList",result);
-						 }	
-						 $('#prizeListTable tbody').html(html);
-						 if(imageList){
-						 	for(var i=0;i<imageList.length;i++){
-								if(imageList[i].BatId=='Logo'){
-									$('#logoBgPic').data('url',imageList[i].ImageURL);
-									$('#logoPic').attr('src',imageList[i].ImageURL);
-								}else if(imageList[i].BatId=='BeforeGround'){
-									$('#beforeBgPic').data('url',imageList[i].ImageURL);
-									$('#redBgPic').attr('src',imageList[i].ImageURL);
-								}else if(imageList[i].BatId=='BackGround'){
-									$('#backBgPic').data('url',imageList[i].ImageURL);
-								}else if(imageList[i].BatId=='Rule'){
-									$('#ruleBgPic').data('url',imageList[i].ImageURL);
-								}
-							}
+
+					    //初始化奖品列表数据start
+						if (prizeList) {
+						    if (that.elems.activiType == 1) {
+						        html = bd.template("tpl_prizeList", result);
+						    }
+
+						    if (that.elems.activiType == 2) {
+						        
+						        html = bd.template("tpl_LuckyTurnprizeList", result);
+
+						    }
+
+						    that.GetPrizeLocationList();
+
+						    $(".PrizeseOption").html('');
+						     for (i = 0; i < prizeList.length; i++) {
+						         $(".PrizeseOption").append("<div class='radio ' data-prizesname='" + prizeList[i].PrizeName + "' data-imageurl='" + prizeList[i].ImageUrl + "' data-prizesid='" + prizeList[i].PrizesID + "' ><em></em>" + prizeList[i].PrizeName + "</div>");
+
+						     }
+						     $(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX.png" data-prizesid=""><em></em>谢谢您！</div>');
+
 						 }
-						 $('#ruleOption').combobox('select',result.RuleId);
-						 $('.ruleText textarea').html(result.RuleContent);
+						 if (that.elems.activiType == 1) {
+						     $('#prizeListTable tbody').html(html);
+						 }
+
+						 if (that.elems.activiType == 2) {
+						     $('#LuckyTurnListTable tbody').html(html);
+						 }
+                         
+					    //初始化奖品列表数据end
+
+						 $(".PrizeseOption").delegate(".radio", 'click', function ()
+						 {
+						     var $this = $(this);
+						     $(".PrizeseOption .radio").removeClass("on");
+						     $this.addClass("on");
+						 });
+
+					    //初始化图片数据start
+						 if (isLoadAll) {
+
+
+						     if (imageList) {
+						         for (var i = 0; i < imageList.length; i++) {
+
+						             if (that.elems.activiType == 1) {
+						                 if (imageList[i].BatId == 'Logo') {
+						                     $('#logoBgPic').data('url', imageList[i].ImageURL);
+						                     $('#logoPic').attr('src', imageList[i].ImageURL);
+						                 } else if (imageList[i].BatId == 'BeforeGround') {
+						                     $('#beforeBgPic').data('url', imageList[i].ImageURL);
+						                     $('#redBgPic').attr('src', imageList[i].ImageURL);
+						                 } else if (imageList[i].BatId == 'BackGround') {
+						                     $('#backBgPic').data('url', imageList[i].ImageURL);
+						                 } else if (imageList[i].BatId == 'Rule') {
+						                     $('#ruleBgPic').data('url', imageList[i].ImageURL);
+						                 }
+						             }
+
+						             //大转盘start
+						             if (that.elems.activiType == 2) {
+						                 debugger;
+						                 if (imageList[i].BatId == 'LT_regularpic') {
+						                     $('#LT_Data_regularpic').data('url', imageList[i].ImageURL);
+						                     $('#LT_regularpic').attr('src', imageList[i].ImageURL);
+						                 } else if (imageList[i].BatId == 'LT_kvPic') {
+						                     $('#LT_Data_kvPic').data('url', imageList[i].ImageURL);
+						                     $('#LT_kvPic').attr('src', imageList[i].ImageURL);
+						                 } else if (imageList[i].BatId == 'LT_bgpic1') {
+						                     $('#LT_Data_bgpic1').data('url', imageList[i].ImageURL);
+						                     $('#LT_bgpic1').attr('src', imageList[i].ImageURL);
+						                 } else if (imageList[i].BatId == 'LT_bgpic2') {
+						                     $('#LT_Data_bgpic2').data('url', imageList[i].ImageURL);
+						                     $('#LT_bgpic2').attr('src', imageList[i].ImageURL);
+						                 } else if (imageList[i].BatId == 'LT_Rule') {
+						                     $('#LT_Data_Rule').data('url', imageList[i].ImageURL);
+						                 }
+						             }
+						             //大转盘end
+						         }
+						     }
+
+						     if (that.elems.activiType == 1) {
+						         $('#ruleOption').combobox('select', result.RuleId);
+						         $('.ruleText textarea').html(result.RuleContent);
+						     }
+						 }
+
+					    //初始化图片数据end
+
+						
 						 
 					}
 					else {
@@ -702,7 +923,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				data: params,
 				success: function(data) {
 					if(data.IsSuccess && data.ResultCode == 0) {
-						that.getPrizeList();
+						that.getPrizeList(false);
 						$('.jui-mask').hide();
 						$('.jui-dialog').hide();
 						alert('成功添加奖品！');
@@ -719,6 +940,18 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             self.elems.simpleQuery.find(".uploadImgBtn").each(function(i,e) {
                 self.addUploadImgEvent(e);
             });
+
+            // 大转盘试试手气上传按钮注册
+            self.elems.simpleQuery.find(".regularpicupload").each(function (i, e) {
+                self.addUploadImgEvent(e);
+            });
+
+            // 大转盘奖项上传按钮注册
+            $(".LuckyTurntableright").find(".uploadImgBtn").each(function (i, e) {
+                self.addLuckyTurntableUploadImgEvent(e);
+            });
+
+            
         },
         //上传图片区域的各种事件绑定
         addUploadImgEvent:function(e) {
@@ -727,10 +960,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				$logoPic = $('#logoPic'),
 				$imageTextPic = $('#imageTextPic');
             //大转盘start
-            var $kvPic = $('#kv_pic'),
-                $bgpic1 = $('#bgpic1'),
-                $bgpic2 = $('#bgpic2'),
-                $regularpic = $('#regularpic');
+            var $kvPic = $('#LT_kvPic'),
+                $bgpic1 = $('#LT_bgpic1'),
+                $bgpic2 = $('#LT_bgpic2'),
+                $regularpic = $('#LT_regularpic');
             //大转盘end
             //上传图片并显示
             self.uploadImg(e,function(ele,data) {
@@ -739,6 +972,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					result = data,
 					thumUrl = result.thumUrl,//缩略图
 					url = result.url;//原图
+                debugger
 				if(flag==1){
 					$redBgPic.attr('src',url);
 				}else if(flag==3){
@@ -754,12 +988,15 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				if (flag == 10) {
 				    $kvPic.attr('src', url);
 				} else if (flag == 11) {
-				    $regularpic.attr('src', url);
-				    $("#regularpic").addClass("border1");
+				   
 				} else if (flag == 12) {
 				    $bgpic1.attr('src', url);
 				} else if (flag == 13) {
 				    $bgpic2.attr('src', url);
+				}
+				else if (flag == 14) {
+				    $regularpic.attr('src', url);
+				    $("#LT_regularpic").addClass("border1");
 				}
 
 
@@ -767,8 +1004,23 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				$uploadItem.data('url',url);
             });
         },
+        //上传图片区域的各种事件绑定
+        addLuckyTurntableUploadImgEvent: function (e) {
+            var self = this,
+				$LuckyTurntablePrizeimg = $('#LuckyTurntablePrizeimg');
+            //上传图片并显示
+            self.uploadImg(e, function (ele, data) {
+                var result = data,
+					thumUrl = result.thumUrl,//缩略图
+					url = result.url;//原图
+                $LuckyTurntablePrizeimg.attr('src', url);
+                debugger;
+                $("#LuckyTurntablePrize").form("load", {ImageUrl:url});
+            });
+        },
         //上传图片
-        uploadImg: function (btn,callback){
+        uploadImg: function (btn, callback) {
+            var _width = 130;
             var that = this,
 				w = 640,
 				h = 1008,
@@ -780,9 +1032,13 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				w = 536;
 				h = 300;
 			}
+			if ($(btn).parents('.uploadItem').data("flag") == 14)
+			{
+			    _width = 88;
+			}
 			var	uploadbutton = KE.uploadbutton({
 					button: btn,
-					width:130,
+					width: _width,
 					//上传的文件类型
 					fieldName: 'imgFile',
 					//注意后面的参数，dir表示文件类型，width表示缩略图的宽，height表示高
@@ -825,6 +1081,57 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				}
 			});
 		},
+		SavePrizeLocation: function (param) {//保存奖品位置
+		        var that = this;
+		        $.util.ajax({
+		            url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
+		            data: {
+		                action: 'SavePrizeLocation',
+		                EventID: that.elems.eventId,
+		                PrizeLocationList: param
+		            },
+		            success: function(data){
+		                if(data.IsSuccess && data.ResultCode == 0){
+		                    //alert('图片保存成功！');
+		                }else{
+		                    alert(data.Message);
+		                }
+		            }
+		        });
+		},
+		GetPrizeLocationList: function () {//根据EventID获取奖品位置列表
+		    var that = this;
+		    $.util.ajax({
+		        url: that.elems.domain + "/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
+		        data: {
+		            action: 'GetPrizeLocationList',
+		            EventID: that.elems.eventId
+		        },
+		        success: function (data) {
+		            if (data.IsSuccess && data.ResultCode == 0) {
+		                //alert('图片保存成功！');
+		                debugger;
+		                var data = data.Data;
+		                var imgs = $("#selectPrize p img");
+		                if (data.PrizeLocationList)
+		                {
+		                    for (i = 0; i < data.PrizeLocationList.length; i++)
+		                    {
+		                        $("#Img" + data.PrizeLocationList[i].Location).data("index", data.PrizeLocationList[i].Location);
+		                        $("#Img" + data.PrizeLocationList[i].Location).data("prizesid", data.PrizeLocationList[i].PrizeID);
+		                        $("#Img" + data.PrizeLocationList[i].Location).data("prizesname", data.PrizeLocationList[i].PrizeName);
+		                        $("#Img" + data.PrizeLocationList[i].Location).attr("src", data.PrizeLocationList[i].ImageUrl);
+		                        $("#Img" + data.PrizeLocationList[i].Location).data("prizeLocationid", data.PrizeLocationList[i].PrizeLocationID);
+		                        $("#Img" + data.PrizeLocationList[i].Location).addClass("_selected");
+		                       
+		                    }
+		                }
+		            } else {
+		                alert(data.Message);
+		            }
+		        }
+		    });
+		},
 		getThirdStep:function(){
 			var that = this;
 			$.util.ajax({
@@ -833,7 +1140,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					action : 'GetStep3Info',
 					EventID : that.elems.eventId,
 				},
-				success: function(data){
+				success: function (data) {
+				    debugger;
 					if(data.IsSuccess && data.ResultCode == 0){
 						var result = data.Data.MaterialText,
 							pageDetail = data.Data.EventInfo,
@@ -878,7 +1186,6 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 									UnionTypeId: 3
 							  }
 						];
-						
 						params.UnionTypeId = "3";
 						params.Author = '';
 						params.PageId = data.Data.ModulePage.PageID;

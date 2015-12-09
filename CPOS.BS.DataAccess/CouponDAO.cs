@@ -630,6 +630,42 @@ namespace JIT.CPOS.BS.DataAccess
 		     AND c.isdelete=0",couponTypeID);
             return this.SQLHelper.ExecuteScalar(sql.ToString()).ToString();
         }
+
+        /// <summary>
+        /// 根据优惠券类型获取优惠券
+        /// </summary>
+        /// <param name="couponTypeID"></param>
+        /// <returns></returns>
+        public DataSet GetCouponBycouponType(string couponTypeID)
+        {
+
+            DataSet dataSet = new DataSet();
+            string sql = string.Format(@"
+             SELECT c.* FROM Coupon c 
+		     INNER JOIN CouponType ct ON ct.CouponTypeID=c.couponTypeID
+		     WHERE c.couponTypeID='{0}' 
+		     AND c.isdelete=0", couponTypeID);
+            return this.SQLHelper.ExecuteDataset(sql.ToString());
+        }
+
+
+        /// <summary>
+        /// 根据优惠券类型获取优惠券id
+        /// </summary>
+        /// <param name="couponTypeID"></param>
+        /// <returns></returns>
+        public DataSet GetCouponIDBycouponType(string couponTypeID)
+        {
+
+            DataSet dataSet = new DataSet();
+            string sql = string.Format(@"
+             SELECT c.CouponCode FROM Coupon c 
+		     INNER JOIN CouponType ct ON ct.CouponTypeID=c.couponTypeID
+		     WHERE c.couponTypeID='{0}' 
+		     AND c.isdelete=0", couponTypeID);
+            return this.SQLHelper.ExecuteDataset(sql.ToString());
+        }
+
         /// <summary>
         /// 优惠券核销列表
         /// Create By: Sun Xu
@@ -665,6 +701,5 @@ namespace JIT.CPOS.BS.DataAccess
             string strSql = string.Format("select top 1 a. * from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
             return this.SQLHelper.ExecuteDataset(strSql);
         }
-
     }
 }

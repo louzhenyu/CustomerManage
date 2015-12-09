@@ -1650,8 +1650,9 @@
             //获得详情信息
             this.loadData.GetVipCardDetail(function (data) {
 
-                $("#simpleQuery").find(".commonBtn").each(function(){
-                    if($(this).data("show").toString().indexOf(data.Data.VipCardStatusId)==-1){
+                $("#simpleQuery").find(".commonBtn").each(function () {
+                    debugger
+                    if ($(this).data("show").toString().indexOf(data.Data.VipCardStatusId) == -1 || data.Data.VipCardID == null) {
                         $(this).hide();
                     }else{
                         $(this).show();
@@ -1664,6 +1665,7 @@
                        $("#BirthdayHint").html("生日被修改过不可再修改");
                        $("#Birthday").datebox({ disabled:true});
                    }
+                   debugger;
                 var VipCardStatusName="未知";
                 var isAddCLass=true;
                 switch (data.Data.VipCardStatusId){
@@ -1680,6 +1682,11 @@
                     case 4:VipCardStatusName="已挂失" ;break;
                     case 5:VipCardStatusName="已休眠" ;break;
 
+                }
+
+                if (data.Data.VipCardID == null)
+                {
+                    VipCardStatusName = "";
                 }
 
                 if(isAddCLass){

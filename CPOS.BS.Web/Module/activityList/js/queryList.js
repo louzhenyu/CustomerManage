@@ -56,10 +56,10 @@
 					that.deleteEvent(row.EventID,$tr);
                 }
                 if(optType=="running"){
-					that.statusEvent(row.EventID,0,$this);
+					that.statusEvent(row.EventID,30,$this);
                 }
 				if(optType=="pause"){
-                    that.statusEvent(row.EventID,1,$this);
+                    that.statusEvent(row.EventID,20,$this);
                 }
 				if(optType=="down"){
 					var date = new Date();
@@ -317,7 +317,7 @@
 				  },
 				  success: function (data) {
 					  if(data.IsSuccess && data.ResultCode == 0) {
-						  	if(status==0){
+						  	if(status==30){
 								$dom.attr('class','handle pause').data('oprtype','pause');
 								$('td[field="Status"] div',$dom.parents('tr')).text('暂停');
 							}else{

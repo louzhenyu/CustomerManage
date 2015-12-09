@@ -16,7 +16,8 @@
             panlH:116                           // 下来框统一高度
         },
         detailDate:{},
-        ValueCard:'',//储值卡号
+        ValueCard: '',//储值卡号
+        submitappcount: false,//是否正在提交追加表单
         select:{
             isSelectAllPage:false,                 //是否是选择所有页面
             tagType:[],                             //标签类型
@@ -73,18 +74,29 @@
             });
             $('#win').delegate(".saveBtn","click",function(e){
 
-                if ($('#optionForm').form('validate')) {
+                if (!that.submitappcount) {
+                    that.submitappcount = true;
 
-                    var fields = $('#optionForm').serializeArray(); //自动序列化表单元素为JSON对象
+                    if ($('#optionForm').form('validate')) {
 
-                    that.loadData.operation(fields,that.elems.optionType,function(data){
-                        $('#win').window('close');
-                        alert("操作成功");
+                        var fields = $('#optionForm').serializeArray(); //自动序列化表单元素为JSON对象
 
-                        that.loadPageData(e);
+                        that.loadData.operation(fields, that.elems.optionType, function (data) {
 
-                    });
+                            that.submitappcount = false;
+                            $('#win').window('close');
+                            alert("操作成功");
+
+                            that.loadPageData(e);
+
+                        });
+                    }
+
+                } else {
+
+                    $.messager.alert('提示', '正在提交请稍后！');
                 }
+
             });
             /**************** -------------------弹出窗口初始化 end****************/
 
@@ -92,15 +104,28 @@
             that.elems.tabelWrap.delegate(".opt","click",function(e){
                 debugger;
                 var rowIndex=$(this).data("index");
-                var optType=$(this).data("flag");
+                var optType = $(this).data("flag");
+                var couponTypeID = $(this).data("typeid");
+                var CouponTypeName = $(this).data("typename");
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
-                that.loadData.args.CouponTypeID=row.CouponTypeID;
+                that.loadData.args.CouponTypeID = row.CouponTypeID;
                 if(optType=="add") {
 
                         that.addNumber(row);
 
                 }
+
+                if (optType == "Download") {
+                    $.messager.confirm('提示', '是否下载?', function (r) {
+                        if (r) {
+                            debugger;
+                            window.open("/ApplicationInterface/Module/Marketing/Coupon/DownLoadCouponTicketNumber.ashx?method=download_CouponTicketNumber&couponTypeID=" + couponTypeID + "&filename=" + CouponTypeName + "_优惠券", "_blank");
+                        }
+                    });
+
+                }
+
                 if(optType=="delete"){
                     if (row.BeginTime&&row.EndTime) {
                         var Begindate = Date.parse(new Date(row.BeginTime).format("yyyy-MM-dd").replace(/-/g, "/"));
@@ -245,6 +270,12 @@
                         formatter:function(value,row,index){
                             return "<div data-index="+index+" data-flag='add' class='btnAdd  opt'> </div>"
 
+                    {field : 'addOptdel',title : '操作',width:200,align:'center',resizable:false,
+                    formatter: function (value, row, index) {
+                            var str = "<div class='operation'><div data-index=" + index + " data-flag='add' class='btnAdd  opt' title='追加'> </div>";
+                            str += "<div data-index=" + index + "  data-flag='Download' data-TypeName='" + row.CouponTypeName + "' data-TypeID='" + row.CouponTypeID + "' class='btnDownload  opt' title='下载'> </div>";
+                            str += "<div data-index=" + index + " data-flag='delete' class='delete opt' title='删除'></div></div>";
+                            return str
                         }
 
                     } ,

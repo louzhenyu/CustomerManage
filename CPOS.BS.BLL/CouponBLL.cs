@@ -815,6 +815,16 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetUsableCouponID(couponTypeID);
         }
         /// <summary>
+        /// 根据优惠券类型获取优惠券
+        /// </summary>
+        /// <param name="couponTypeID"></param>
+        /// <returns></returns>
+        public DataSet GetCouponIDBycouponType(string couponTypeID)
+        {
+            return this._currentDAO.GetCouponIDBycouponType(couponTypeID) ;
+        }
+
+        /// <summary>
         /// 抽奖活动根据CouponTypeId获取优惠券
         /// </summary>
         /// <param name="strCouponTypeId"></param>

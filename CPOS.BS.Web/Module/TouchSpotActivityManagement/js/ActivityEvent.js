@@ -101,9 +101,17 @@
 			                    },
 			                    success: function (data) {
 			                        if (data.IsSuccess && data.ResultCode == 0) {
-			                            $('.jui-mask').hide();
-			                            $('.jui-dialog-prizeCountAdd').hide();
-			                            that.loadPageData();
+
+			                            if (data.Data.Success) {
+			                                $('.jui-mask').hide();
+			                                $('.jui-dialog-prizeCountAdd').hide();
+			                                that.loadPageData();
+			                            } else {
+
+			                                $.messager.alert('提示', data.Data.ErrMsg);
+			                            }
+
+			                            
 			                        } else {
 			                            $.messager.alert('提示', data.Message);
 			                        }
@@ -209,7 +217,7 @@
                     {
                         field: 'ContactEventName', title: '活动名称', width: 200, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
-                            var long = 17; 
+                            var long = 17;
                             var html = ""
                             if (value && value.length > long) {
                                 html = '<div class="rowTextnew" title="' + value + '">' + value.substring(0, long) + '...</div>'
@@ -321,7 +329,7 @@
                             that.update(row);
                             that.showRewardType(row.PrizeType);
                             that.showShareEventId(row.ContactTypeCode);
-                            $('#addShareForm').form('load', { ContactTypeCode: row.ContactTypeCode, ContactEventName: row.ContactEventName, BeginDate: row.BeginDate.split(" ")[0].replace("/", "-").replace("/", "-"), EndDate: row.EndDate.split(" ")[0].replace("/", "-").replace("/", "-"), PrizeType: row.PrizeType, Integral: row.Integral, CouponTypeID: row.CouponTypeID, EventId: row.EventId, ChanceCount: row.ChanceCount, ContactEventId: row.ContactEventId, PrizeCount: row.PrizeCount, ShareEventId: row.ShareEventId, RewardNumber: row.RewardNumber.replace(/\s+/g, "") });
+                            $('#addShareForm').form('load', { ContactTypeCode: row.ContactTypeCode, ContactEventName: row.ContactEventName, BeginDate: row.BeginDate.split(" ")[0].replace("/", "-").replace("/", "-"), EndDate: row.EndDate.split(" ")[0].replace("/", "-").replace("/", "-"), PrizeType: row.PrizeType, Integral: row.Integral, CouponTypeID: row.CouponTypeName, EventId: row.EventName, ChanceCount: row.ChanceCount, ContactEventId: row.ContactEventId, PrizeCount: row.PrizeCount, ShareEventId: row.ShareEventName, RewardNumber: row.RewardNumber.replace(/\s+/g, "") });
                             that.hideEdit();
                         }
                    
@@ -420,19 +428,21 @@
 		        panelHeight: that.elems.panlH,
 		        valueField: 'key',
 		        textField: 'value',
-		        data: [{
-		            "key": "Focus",
-		            "value": "关注"
-		        }, {
-		            "key": "Reg",
-		            "value": "注册"
-		        }, {
-		            "key": "Comment",
-		            "value": "评论"
-		        }, {
-		            "key": "SignIn",
-		            "value": "签到"
-		        }, {
+		        data: [
+                //    {
+		        //    "key": "Focus",
+		        //    "value": "关注"
+		        //}, {
+		        //    "key": "Reg",
+		        //    "value": "注册"
+		        //}, {
+		        //    "key": "Comment",
+		        //    "value": "评论"
+		        //}, {
+		        //    "key": "SignIn",
+		        //    "value": "签到"
+		        //},
+                {
 		            "key": "Share",
 		            "value": "分享"
 		        }, {
@@ -459,10 +469,12 @@
 		        }, {
 		            "key": "Coupon",
 		            "value": "优惠券"
-		        }, {
-		            "key": "Chance",
-		            "value": "抽奖机会"
-		        }, {
+		        }
+                //, {
+		        //    "key": "Chance",
+		        //    "value": "抽奖机会"
+                //}
+                , {
 		            "key": "",
 		            "value": "请选择"
 		        }],
@@ -759,15 +771,23 @@
 				data: params,
 				success: function(data) {
 				    if (data.IsSuccess && data.ResultCode == 0) {
-				        that.loadMoreData(1);
-				        debugger;
-						$('.jui-mask').hide();
-						$('.jui-dialog').hide();
-						if (data.Data.ContactEventId == -1) {
-						    alert("触点已存在！");
-						} else {
-						    alert('操作成功！');
-						}
+
+				        if (data.Data.Success) {
+				            that.loadMoreData(1);
+				            $('.jui-mask').hide();
+				            $('.jui-dialog').hide();
+				            if (data.Data.ContactEventId == -1) {
+				                alert("触点已存在！");
+				            } else {
+				                alert('操作成功！');
+				            }
+				        } else {
+
+				            $.messager.alert('提示', data.Data.ErrMsg);
+				        }
+
+
+				       
 				    } else {
 						alert(data.Message);
 					}

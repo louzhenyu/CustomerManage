@@ -29,7 +29,7 @@ Ext.onReady(function () {
                 var htmltypename = "<font style=font-size:x-large>订单明细</font>"
                 Ext.getCmp("lbltypename").jitSetValue(htmltypename);
                 var o = Ext.getCmp("panel").items.items[0].items.items[3];
-                o.jitSetValue("<img src=\"" + jdata.image + "\" />")
+                //o.jitSetValue("<img src=\"" + jdata.image + "\" />")
                 bindStore();//绑定store
 
 

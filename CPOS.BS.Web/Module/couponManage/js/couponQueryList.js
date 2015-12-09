@@ -112,7 +112,9 @@
         setCondition:function(){
             var that=this;
             //查询每次都是从第一页开始
-            that.loadData.args.start=0;
+            that.loadData.args.start = 0;
+
+            that.elems.dataMessage.html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             var fileds=$("#seach").serializeArray();
             $.each(fileds, function (i, filed) {
                that.loadData.seach[filed.name] = filed.value;
@@ -128,7 +130,8 @@
         loadPageData: function (e) {
             var that = this;
             debugger;
-            var data = {"WriteOffCouponList":[],"TotalPage":1,"TotalCount":0};
+            var data = { "WriteOffCouponList": [], "TotalPage": 1, "TotalCount": 0 };
+            that.elems.dataMessage.html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             that.renderTable(data);
 
             $.util.stopBubble(e);
@@ -220,7 +223,9 @@
                     that.elems.tabel.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                     if(data.rows.length>0) {
                         that.elems.dataMessage.hide();
-                    }else{
+                    } else {
+
+                        that.elems.dataMessage.html("没有符合条件的记录");
                         that.elems.dataMessage.show();
                     }
                 },
@@ -358,6 +363,8 @@
                                 callback(data.Data);
                             }
                         } else {
+
+                            $("#pageContianer").find(".dataMessage").html("没有符合条件的记录");
                             alert(data.Message);
                         }
                     }

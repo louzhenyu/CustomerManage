@@ -218,7 +218,7 @@
             }
             if(data.Data.VipInfoList.length==1){
                 var rowData= data.Data.VipInfoList[0];
-                if(rowData.VIPID&&rowData.VipCardID) {
+                if(rowData.VIPID||rowData.VipCardID) {
                     location.href = "VipDetail.aspx?vipId=" + rowData.VIPID + "&VipCardId=" + rowData.VipCardID + "&mid=" + $.util.getUrlParam("mid");
                   console.log("此卡没有绑定会员信息")
                 }else{
@@ -245,14 +245,26 @@
 
                 columns: [[
 
-                    {field: 'VipCardCode', title: '会员卡号', width: 96, align: 'left', resizable: false},
-                    {field: 'VipName', title: '会员姓名', width: 82, align: 'left', resizable: false,
+                    {field: 'VipCardCode', title: '会员编号', width: 96, align: 'left', resizable: false},
+                    {
+                        field: 'VipRealName', title: '会员姓名', width: 82, align: 'left', resizable: false,
                         formatter:function(value ,row,index){
                             var long=26;
                             if(value&&value.length>long){
                                 return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
                             }else{
                                 return '<div class="rowText">'+value+'</div>'
+                            }
+                        }
+                    },
+                    {
+                        field: 'VipName', title: '昵称', width: 82, align: 'left', resizable: false,
+                        formatter: function (value, row, index) {
+                            var long = 26;
+                            if (value && value.length > long) {
+                                return '<div class="rowText" title="' + value + '">' + value.substring(0, long) + '...</div>'
+                            } else {
+                                return '<div class="rowText">' + value + '</div>'
                             }
                         }
                     },
@@ -269,7 +281,7 @@
                             return str;
                         }
                     },
-                    {field: 'VipCardTypeName', title: '会员卡类型', width: 82, align: 'left', resizable: false},
+                    {field: 'VipCardTypeName', title: '会员卡名称', width: 82, align: 'left', resizable: false},
                     {field: 'VipCardStatusId', title: '会员卡状态', width: 66, resizable: false, align: 'left',
                     //-1废卡，0未激活，1正常，2冻结，3失效，4挂失，5休眠
                         formatter:function(value ,row,index){
@@ -287,7 +299,7 @@
                             return str;
                         }
                     },
-                    {field: 'MembershipUnitName', title: '办卡门店', width: 66, resizable: false, align: 'left',
+                    {field: 'MembershipUnitName', title: '会籍店', width: 66, resizable: false, align: 'left',
                      formatter:function(value ,row,index){
                          var long=26;
                          if(value&&value.length>long){
@@ -299,7 +311,7 @@
                     },
                     {
                         field: 'MembershipTime',
-                        title: '办卡日期',
+                        title: '注册时间',
                         width: 106,
                         align: 'center',
                         resizable: false
@@ -412,7 +424,6 @@
                     }
 
                 });
-                debugger;
                 prams.data["VipTypeID"]= this.args.type;
 
                 //每一次查完//归类到点击查询；
@@ -422,6 +433,7 @@
                     data: prams.data,
 
                     success: function (data) {
+                        debugger;
                         if (data.IsSuccess && data.ResultCode == 0) {
                             if (callback) {
                                 callback(data);

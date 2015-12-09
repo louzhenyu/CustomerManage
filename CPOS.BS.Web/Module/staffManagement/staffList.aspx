@@ -86,7 +86,7 @@
                 <div class="optionBtn" id="opt">
                 	<div class="commonBtn" id="addUserBtn">新增用户</div>
                     <div class="importBtn"  id="inportvipmanageBtn"></div>
-                    <div class="exportBtn"></div>
+                    <div class="exportBtn" style="display:none"></div>
                 </div>
                    <div class="imgTable"> <table class="dataTable" id="gridTable"></table>  </div>
                     <div id="pageContianer">

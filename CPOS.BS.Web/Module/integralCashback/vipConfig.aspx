@@ -30,7 +30,7 @@
            <form id="optionForm">
                           <div class="lineT">
                              <div class="nav01">
-                              <div class="checkBox" data-flag="EnableIntegral" data-name="r1" style="height:70px;">
+                              <div class="checkBox" data-flag="EnableIntegral" data-name="r1" style="width: 100px;margin-bottom: 40px;">
                                   <em></em>
                                   <span>积分</span>
                                   <span style="padding-top:10px;">积分使用规划</span>

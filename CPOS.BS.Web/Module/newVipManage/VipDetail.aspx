@@ -77,7 +77,7 @@
 <div class="linePanel">
 
                    <div class="commonSelectWrap">
-                    <em class="tit">会员卡号:</em>
+                    <em class="tit">会员编号:</em>
                     <div class="selectBox"><input name="VipCardCode" disabled="disabled"/></div>
                    </div> <!--commonSelectWrap-->
                    <div class="commonSelectWrap">
