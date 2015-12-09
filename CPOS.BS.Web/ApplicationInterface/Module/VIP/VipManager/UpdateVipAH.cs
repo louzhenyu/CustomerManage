@@ -29,7 +29,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VipManager
                     throw new APIException("会员不存在！") { ErrorCode = ERROR_CODES.INVALID_REQUEST_LACK_REQUEST_PARAMETER };
 
 
-                UpData.VipName = para.VipName;
+                //UpData.VipName = para.VipName;
                 UpData.VipRealName = para.VipName;
                 UpData.Phone = para.Phone;
 
