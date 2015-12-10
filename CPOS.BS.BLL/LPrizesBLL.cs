@@ -263,7 +263,6 @@ namespace JIT.CPOS.BS.BLL
 
                     var bllPrizePool = new LPrizePoolsBLL(CurrentUserInfo);
                     var entityPrizePool = new LPrizePoolsEntity();
-
                     entityPrizePool = bllPrizePool.QueryByEntity(new LPrizePoolsEntity() { EventId = strEventId, PrizeID = entityPrize.PrizesID, Status = 1 }, null).FirstOrDefault();
                     if (entityPrizePool == null)
                     {
@@ -500,8 +499,6 @@ namespace JIT.CPOS.BS.BLL
                 VipId = strVipId,
                 EventId = strEventId,
                 LotteryCount = (lotteryEntityOld == null ? 0 + 1 : lotteryEntityOld.LotteryCount + 1),
-                CreateBy = this.CurrentUserInfo.UserID,
-                CreateTime = DateTime.Now,
                 IsDelete = 0
 
             };
