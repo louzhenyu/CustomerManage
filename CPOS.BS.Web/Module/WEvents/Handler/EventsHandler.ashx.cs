@@ -2102,7 +2102,13 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
             LPrizesEntity queryObj = new LPrizesEntity();
             queryObj.EventId = EventId;
 
-            var dataList = service.GetPrizeWinnerListByEventId(EventId, pageIndex, PageSize);
+            int limit = Utils.GetIntVal(FormatParamValue(Request("limit")));
+            if (limit == 0)//根据穿过来的值
+            {
+                limit = PageSize;
+            }    
+
+            var dataList = service.GetPrizeWinnerListByEventId(EventId, pageIndex, limit);//PageSize
             IList<LPrizeWinnerEntity> data = new List<LPrizeWinnerEntity>();
             int dataTotalCount = 0;
 

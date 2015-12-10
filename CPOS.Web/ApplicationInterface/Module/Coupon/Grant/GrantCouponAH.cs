@@ -49,7 +49,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
                     }
                     else
                     {
-                        rd.IsAccept = 0;
+                        rd.IsAccept = 1;
                         rd.IsSuccess = false;
                         rd.Message = "领取失败";
                     }
@@ -58,7 +58,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
                 }
                 else
                 {
-                    rd.IsAccept = 0;
+                    rd.IsAccept = 1;
                     rd.IsSuccess = false;
                     rd.Message = "优惠券已被使用";
                 }
