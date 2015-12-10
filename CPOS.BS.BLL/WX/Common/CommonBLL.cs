@@ -1809,8 +1809,8 @@ namespace JIT.CPOS.BS.BLL.WX
                         DataJson = JsonHelper.JsonSerializer<PaySuccess>(PaySuccessData);
                         break;
                 }
-                string url = "http://api.test.chainclouds.com/HtmlApps/html/common/vipCard/getCard.html?customerId=2ad24e9a668b439a8acbd67a23f77dc6&openId=" + openID;
-               
+                //string url = "http://api.test.chainclouds.com/HtmlApps/html/common/vipCard/getCard.html?customerId=2ad24e9a668b439a8acbd67a23f77dc6&openId=" + openID;
+                string url = WApplicationInterfaceBLL.GetOsVipMemberCentre(WAData.WeiXinID);
 
                 string Json = "{\"touser\":\"" + openID + "\",\"template_id\":\"" + TemplateId + "\",\"url\":\"" + url + "\",\"data\":";
                 Json += DataJson + "}";

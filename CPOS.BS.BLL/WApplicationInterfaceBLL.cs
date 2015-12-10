@@ -120,5 +120,15 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetCloudWAppInterface(pWhereConditions, pOrderBys);
         }
+
+        /// <summary>
+        /// 获取奥斯认证会员中心链接地址
+        /// </summary>
+        /// <param name="OpenID"></param>
+        /// <returns></returns>
+        public string GetOsVipMemberCentre(string OpenID)
+        {
+            return this._currentDAO.GetOsVipMemberCentre(OpenID);
+        }
     }
 }

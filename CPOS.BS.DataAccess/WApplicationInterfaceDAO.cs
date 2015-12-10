@@ -251,5 +251,25 @@ namespace JIT.CPOS.BS.DataAccess
             //返回结果
             return list.ToArray();
         }
+
+        /// <summary>
+        /// 获取奥斯认证会员中心链接地址
+        /// </summary>
+        /// <param name="OpenID"></param>
+        /// <returns></returns>
+        public string GetOsVipMemberCentre(string OpenID)
+        {
+            string Url = "";
+            if (!string.IsNullOrWhiteSpace(OpenID))
+            {
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select menuurl from wmenu where pageid in ");
+                sql.AppendFormat("(SELECT pageid from vwPageInfo WHERE customerid='{0}' AND pagekey='GetVipCard' and IsDelete=0) ", CurrentUserInfo.ClientID);
+                sql.AppendFormat("and isdelete=0 and weixinid='{0}' AND ISNULL(parentid,'')!=''", OpenID);
+
+                Url = (this.SQLHelper.ExecuteScalar(sql.ToString())).ToString();
+            }
+            return Url;
+        }
     }
 }

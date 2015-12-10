@@ -30,6 +30,7 @@ using JIT.CPOS.DTO.Base;
 using System.Data;
 using JIT.CPOS.BS.DataAccess.Base;
 using System.Collections;
+using JIT.CPOS.BS.BLL.WX;
 namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 {
     public class ProcessActionAH : BaseActionHandler<ProcessActionRP, ProcessActionRD>
@@ -121,6 +122,27 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     #endregion
 
                     tran.Commit();
+
+                    #region 处理订单发货发送微信模板消息
+                    //获取会员信息
+                    var vipBll = new VipBLL(CurrentUserInfo);
+                    var vipInfo = vipBll.GetByID(entity.vip_no);
+                    var inoutService = new Inout3Service(CurrentUserInfo);
+                    //物流公司
+                    string LogisticsName = inoutService.GetCompanyName(entity.carrier_id);
+
+                    var InoutInfo = new InoutInfo()
+                    { 
+                        order_no=entity.order_no,
+                        carrier_name = LogisticsName,
+                        vipId=entity.vip_no,
+                        Field2=entity.Field2
+                    };
+
+                    var CommonBLL = new CommonBLL();
+                    CommonBLL.SentShipMessage(InoutInfo, vipInfo.WeiXinUserId, InoutInfo.vip_no, CurrentUserInfo);
+                    #endregion
+
                 }
                 catch (Exception ex)
                 {
