@@ -519,14 +519,20 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             var SysModuleList = temp;     
 
             //获取相应页面的信息
-            //根据活动的抽奖方式获取：“HB”
+            //根据活动的抽奖方式获取：“HB” “BigDial“
             switch (rd.EventInfo.DrawMethodCode)
             { 
                 case "HB":
                     rd.ModulePage = SysModuleList.Where(p => p.PageKey == "RedPacket").SingleOrDefault();//红包-新
                     break;
+                case "DZP":
+                    rd.ModulePage = SysModuleList.Where(p => p.PageKey == "BigDial").SingleOrDefault();//大转盘
+                    break;
+                case "GGK":
+                    rd.ModulePage = SysModuleList.Where(p => p.PageKey == "BigDial").SingleOrDefault();//大转盘
+                    break;
                 default:
-                    rd.ModulePage = SysModuleList.Where(p => p.PageKey == "RedPacket").SingleOrDefault();//红包-新
+                    rd.ModulePage = SysModuleList.Where(p => p.PageKey == "RedPacket").SingleOrDefault();
                     break;
             }
 
