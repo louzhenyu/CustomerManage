@@ -263,7 +263,7 @@ namespace JIT.CPOS.BS.BLL
 
                     var bllPrizePool = new LPrizePoolsBLL(CurrentUserInfo);
                     var entityPrizePool = new LPrizePoolsEntity();
-                    entityPrizePool = bllPrizePool.QueryByEntity(new LPrizePoolsEntity() { EventId = strEventId, PrizeID = entityPrize.PrizesID, Status = 1 }, null).FirstOrDefault();
+                     entityPrizePool = bllPrizePool.QueryByEntity(new LPrizePoolsEntity() { EventId = contactEvent.ContactEventId.ToString(), PrizeID = entityPrize.PrizesID, Status = 1 }, null).FirstOrDefault();
                     if (entityPrizePool == null)
                     {
                         rd.ResultMsg = "奖品已发完！";
