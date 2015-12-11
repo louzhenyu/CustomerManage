@@ -160,13 +160,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             }
             else
             {
-                if (!string.IsNullOrEmpty(item.Item_Id))
-                {
+                //if (!string.IsNullOrEmpty(item.Item_Id))
+                //{
                     if (!itemService.IsExistItemCode(loggingSessionInfo, item.Item_Code, item.Item_Id))
                     {
                         throw new APIException("商品编码不能重复。") { ErrorCode = 135 };
                     }
-                }
+                //}
             }
             item.OperationType = rp.Parameters.OperationType;
             item.ItemImageList = rp.Parameters.ItemImageList;
