@@ -2562,6 +2562,20 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             //付款
                             info.StatusRemark = "订单收款成功[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
                             inoutStatusnode.SetOrderPayment(order.order_id, out error);
+                            
+                            #region 发送订单支付成功微信模板消息
+                            //获取会员信息
+                            var vipBll = new VipBLL(CurrentUserInfo);
+                            var vipInfo = vipBll.GetByID(order.vip_no);
+                            var SuccessCommonBLL = new CommonBLL();
+                            var InoutEntity = new T_InoutEntity()
+                            {
+                                actual_amount = order.actual_amount == null ? 0 : order.actual_amount,
+                                Field4 = order.Field4,
+                                order_no = order.order_no
+                            };
+                            SuccessCommonBLL.SentPaymentMessage(InoutEntity, vipInfo.WeiXinUserId, vipInfo.VIPID, CurrentUserInfo);
+                            #endregion
                         }
                         else
                         {
