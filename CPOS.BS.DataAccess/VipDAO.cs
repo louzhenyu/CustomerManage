@@ -1584,7 +1584,6 @@ select @ReturnValue", pCustomerID);
             sql.Append("inner join Coupon as b on a.CouponID=b.CouponID and b.IsDelete=0 and b.Status=0 and b.EndDate>GETDATE() ");
             sql.AppendFormat("where a.IsDelete=0 and a.VIPID='{0}'", vipId);//没有被使用，并且没有过期
 
-            sql.AppendFormat("where a.VIPID='{0}' and a.IsDelete=0", vipId);//没有被使用，并且没有过期
 
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql.ToString()));
         }
