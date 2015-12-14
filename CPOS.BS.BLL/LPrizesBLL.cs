@@ -336,6 +336,15 @@ namespace JIT.CPOS.BS.BLL
                         CouponTypeEntity entityCouponType = bllCouponType.GetByID(entityPrize.CouponTypeID);
                         entityCouponType.IsVoucher = entityCouponType.IsVoucher + 1;
                         bllCouponType.Update(entityCouponType);
+                        ///更新优惠券有效期
+                        if (entityCouponType.ServiceLife!=null && entityCouponType.ServiceLife > 0)
+                        {
+                            entityCoupon.BeginDate = DateTime.Now.Date;
+                            entityCoupon.EndDate = DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife).Date;
+
+                            bllCoupon.Update(entityCoupon);
+
+                        }
                     }
                     else if (entityPrize.PrizeTypeId == "Chance")
                     {
@@ -474,7 +483,7 @@ namespace JIT.CPOS.BS.BLL
                     }
                     break;
                 case 3://每周一次
-                    if ((lotteryEntityOld != null && DateTime.Now.Date < Convert.ToDateTime(lotteryEntityOld.LastUpdateTime.ToString()).Date) || lotteryEntityOld == null)
+                    if ((lotteryEntityOld != null && Convert.ToDateTime(lotteryEntityOld.LastUpdateTime.ToString()).Date < DateTime.Now.Date.AddDays(-7)) || lotteryEntityOld == null)
                     {
                         awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
 
@@ -498,7 +507,7 @@ namespace JIT.CPOS.BS.BLL
                 LogId = Guid.NewGuid().ToString(),
                 VipId = strVipId,
                 EventId = strEventId,
-                LotteryCount = (lotteryEntityOld == null ? 0 + 1 : lotteryEntityOld.LotteryCount + 1),
+                LotteryCount = 1,
                 IsDelete = 0
 
             };
@@ -506,7 +515,8 @@ namespace JIT.CPOS.BS.BLL
                 bllLottery.Create(lotteryEntityNew);
             else
             {
-                bllLottery.Update(lotteryEntityNew);
+                lotteryEntityOld.LotteryCount = (lotteryEntityOld == null ? 0 + 1 : lotteryEntityOld.LotteryCount + 1);
+                bllLottery.Update(lotteryEntityOld);
             }
 
 
@@ -622,12 +632,22 @@ namespace JIT.CPOS.BS.BLL
                         VIPID = CurrentUserInfo.UserID,
                         CouponID = entityCoupon.CouponID
                     };
+
                     bllVipCouponMapping.Create(entityVipCouponMapping);
                     //更新CouponType的IsVoucher(被领用数量)
                     CouponTypeBLL bllCouponType = new CouponTypeBLL(this.CurrentUserInfo);
                     CouponTypeEntity entityCouponType = bllCouponType.GetByID(prize.CouponTypeID);
                     entityCouponType.IsVoucher = entityCouponType.IsVoucher + 1;
                     bllCouponType.Update(entityCouponType);
+                    ///更新优惠券有效期
+                    if (entityCouponType.ServiceLife != null && entityCouponType.ServiceLife > 0)
+                    {
+                        entityCoupon.BeginDate = DateTime.Now.Date;
+                        entityCoupon.EndDate = DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife).Date;
+
+                        bllCoupon.Update(entityCoupon);
+
+                    }
                 }
             }
             else

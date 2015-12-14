@@ -69,5 +69,9 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetObjectTypeIDByGroupId(intGropuId);
         }
+        public int DeleteCategoryAreaByGroupId(int intGropuId)
+        {
+            return this._currentDAO.DeleteCategoryAreaByGroupId(intGropuId);
+        }
     }
 }

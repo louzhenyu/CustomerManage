@@ -32,7 +32,11 @@ namespace JIT.CPOS.BS.DataAccess
             string strSql = string.Format("SELECT TOP 1 ObjectTypeId FROM MHCategoryArea WHERE GroupId='{0}' ", intGroupId);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
+        public int DeleteCategoryAreaByGroupId(int intGroupId)
+        {
+            string strSql = string.Format("Delete  MHCategoryArea WHERE GroupId='{0}'", intGroupId);
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
 
-       
+        }
     }
 }

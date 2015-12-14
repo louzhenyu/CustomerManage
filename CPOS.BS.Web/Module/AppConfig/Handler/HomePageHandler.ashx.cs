@@ -1740,6 +1740,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 groupId = categoryAreaGroupEntity.GroupId;
                 var entityMHCategoryArea = new MHCategoryAreaEntity();
                 var bllMHCategoryArea=new MHCategoryAreaBLL(CurrentUserInfo);
+                bllMHCategoryArea.DeleteCategoryAreaByGroupId((int)groupId);
                 entityMHCategoryArea = bllMHCategoryArea.QueryByEntity(new MHCategoryAreaEntity() { GroupID = groupId }, null).FirstOrDefault();
                 #region
                 if (entityMHCategoryArea==null)
