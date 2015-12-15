@@ -453,56 +453,6 @@ namespace JIT.CPOS.BS.BLL
             //    return rd;
             //}
             lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
-            switch (eventEntity.PersonCount)
-            {
-                case 1://仅能参加一次抽奖
-                    if (lotteryEntityOld == null)
-                    {
-                        awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
-                    }
-                    else
-                    {
-                        rd.PrizeName = "抽奖机会用完了";
-                        return rd;
-                    }
-                    break;
-                case 2://每天一次
-                    if ((lotteryEntityOld != null && Convert.ToDateTime(lotteryEntityOld.LastUpdateTime.ToString()).Date < DateTime.Now.Date) || lotteryEntityOld == null)
-                    {
-                        awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
-
-                    }
-                    else
-                    {
-                        rd.PrizeName = "今天抽奖机会用完了";
-                        return rd;
-                    }
-                    break;
-                case 3://每周一次
-                    if ((lotteryEntityOld != null && Convert.ToDateTime(lotteryEntityOld.LastUpdateTime.ToString()).Date < DateTime.Now.Date.AddDays(-7)) || lotteryEntityOld == null)
-                    {
-                        awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
-
-                    }
-                    else
-                    {
-                        rd.PrizeName = "本周抽奖机会用完了";
-                        return rd;
-                    }
-                    break;
-                case 4://无限
-                    awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
-                    break;
-
-            }
-            #endregion
-            if (awardEntity == null)
-            {
-                rd.PrizeName = "未中奖";
-                return rd;
-            }
-
-            
             //抽奖记录
             lotteryEntityNew = new LLotteryLogEntity()
             {
@@ -520,6 +470,58 @@ namespace JIT.CPOS.BS.BLL
                 lotteryEntityOld.LotteryCount = (lotteryEntityOld == null ? 0 + 1 : lotteryEntityOld.LotteryCount + 1);
                 bllLottery.Update(lotteryEntityOld);
             }
+
+            switch (eventEntity.PersonCount)
+            {
+                case 1://仅能参加一次抽奖
+                    if (lotteryEntityOld == null)
+                    {
+                        awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+                    }
+                    else
+                    {
+                        rd.PrizeName = "您的抽奖机会用完了";
+                        return rd;
+                    }
+                    break;
+                case 2://每天一次
+                    if ((lotteryEntityOld != null && Convert.ToDateTime(lotteryEntityOld.LastUpdateTime.ToString()).Date < DateTime.Now.Date) || lotteryEntityOld == null)
+                    {
+                        awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+
+                    }
+                    else
+                    {
+                        rd.PrizeName = "您今天的抽奖机会用完了";
+                        return rd;
+                    }
+                    break;
+                case 3://每周一次
+                    if ((lotteryEntityOld != null && Convert.ToDateTime(lotteryEntityOld.LastUpdateTime.ToString()).Date < DateTime.Now.Date.AddDays(-7)) || lotteryEntityOld == null)
+                    {
+                        awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+
+                    }
+                    else
+                    {
+                        rd.PrizeName = "您本周的抽奖机会用完了";
+                        return rd;
+                    }
+                    break;
+                case 4://无限
+                    awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+                    break;
+
+            }
+            #endregion
+            if (awardEntity == null)
+            {
+                rd.PrizeName = "未中奖";
+                return rd;
+            }
+
+            
+
 
 
             if (awardEntity != null)
