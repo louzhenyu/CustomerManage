@@ -422,7 +422,7 @@ namespace JIT.CPOS.BS.BLL
                 rd.PrizeName = "活动无奖品";
                 return rd;
             }
-
+            #region 判断是否有资格参与抽奖
             var vipBLL = new VipBLL(this.CurrentUserInfo);
             var vipInfo = vipBLL.GetByID(strVipId);
 
@@ -438,25 +438,21 @@ namespace JIT.CPOS.BS.BLL
                 return rd;
             }
 
-
+            
             t_award_poolEntity awardEntity = null;
-
-
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
             if (!string.IsNullOrEmpty(strEventId))
                 complexCondition.Add(new EqualsCondition() { FieldName = " EventId", Value = strEventId });
             complexCondition.Add(new DirectCondition("releasetime<='" + DateTime.Now + "' and balance=0 "));
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = " releasetime", Direction = OrderByDirections.Desc });
-            awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
-            if (awardEntity == null)
-            {
-                rd.PrizeName = "未中奖";
-                return rd;
-            }
-            lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
+            //awardEntity = bllAward.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+            //if (awardEntity == null)
+            //{
+            //    rd.PrizeName = "未中奖";
+            //    return rd;
+            //}
 
-            #region 判断是否有资格参与抽奖
             switch (eventEntity.PersonCount)
             {
                 case 1://仅能参加一次抽奖
@@ -466,7 +462,7 @@ namespace JIT.CPOS.BS.BLL
                     }
                     else
                     {
-                        rd.PrizeName = "机会已使用";
+                        rd.PrizeName = "抽奖机会用完了";
                         return rd;
                     }
                     break;
@@ -478,7 +474,7 @@ namespace JIT.CPOS.BS.BLL
                     }
                     else
                     {
-                        rd.PrizeName = "机会已使用";
+                        rd.PrizeName = "今天抽奖机会用完了";
                         return rd;
                     }
                     break;
@@ -490,7 +486,7 @@ namespace JIT.CPOS.BS.BLL
                     }
                     else
                     {
-                        rd.PrizeName = "机会已使用";
+                        rd.PrizeName = "本周抽奖机会用完了";
                         return rd;
                     }
                     break;
@@ -500,7 +496,13 @@ namespace JIT.CPOS.BS.BLL
 
             }
             #endregion
+            if (awardEntity == null)
+            {
+                rd.PrizeName = "未中奖";
+                return rd;
+            }
 
+            lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
             //抽奖记录
             lotteryEntityNew = new LLotteryLogEntity()
             {
