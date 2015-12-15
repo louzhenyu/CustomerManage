@@ -452,7 +452,7 @@ namespace JIT.CPOS.BS.BLL
             //    rd.PrizeName = "未中奖";
             //    return rd;
             //}
-
+            lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
             switch (eventEntity.PersonCount)
             {
                 case 1://仅能参加一次抽奖
@@ -502,7 +502,7 @@ namespace JIT.CPOS.BS.BLL
                 return rd;
             }
 
-            lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
+            
             //抽奖记录
             lotteryEntityNew = new LLotteryLogEntity()
             {
