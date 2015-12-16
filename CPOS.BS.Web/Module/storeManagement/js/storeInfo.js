@@ -629,7 +629,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					//上传的文件类型
 					fieldName: 'imgFile',
 					//注意后面的参数，dir表示文件类型，width表示缩略图的宽，height表示高
-					url: 'http://bs.dev.chainclouds.com'+'/Framework/Javascript/Other/kindeditor/asp.net/upload_thumbnails_json.ashx?dir=image&width='+w+'&height='+h,
+					url: '/Framework/Javascript/Other/kindeditor/asp.net/upload_thumbnails_json.ashx?dir=image&width='+w+'&height='+h,
 					//&width='+w+'&height='+h+'&originalWidth='+w+'&originalHeight='+h
 					afterUpload: function(data){
 						if(data.error===0){

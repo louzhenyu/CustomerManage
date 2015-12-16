@@ -24,7 +24,7 @@
         },
         select:{
             isSelectAllPage:false,                 //是否是选择所有页面
-            tagType:[],                             //标签类型
+            tagType:[],                            //标签类型
             tagList:[]                              //标签列表
         },
         init: function () {
@@ -37,7 +37,6 @@
             //导入导出门店初始化
             setTimeout(function () {
                 that.inportStoreDialog();
-
             }, 500);
 
 
@@ -212,7 +211,6 @@
 
             //开始导入
 			$('#win').delegate(".saveBtn", "click", function (e) {
-
 			    var CSVFileurl = $('#CSVFileurl').val();
 			    if (CSVFileurl != "") {
 			        $('#startinport').hide();
@@ -378,7 +376,6 @@
 
             });
 
-
             //分页
             data.Data={};
             data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
@@ -453,10 +450,13 @@
 				},
 				success: function(data){
 					if(data.success){
+						var $status = $dom.parents('tr').find('td[field="Status"] div');
 						if(tag==1){
 							$dom.attr('class','handle iconPlay');
+							$status.text('正常');
 						}else{
 							$dom.attr('class','handle iconPause');
+							$status.text('停用');
 						}
 					}else{
 						alert(data.msg);

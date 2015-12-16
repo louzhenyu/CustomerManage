@@ -14,7 +14,7 @@
 	.moreQueryWrap{float:left;margin-left:20px;}
 	.optionBtn .exportBtn{display:none;margin-right:40px;}
 	.moreQueryWrap .queryBtn{width:73px;}
-	.iconPlay,.iconPause{display:inline-block;width:30px;height:90px;}
+	.iconPlay,.iconPause{display:inline-block;width:30px;height:39px;}
 	.iconPlay{background:url(images/running.png) no-repeat center center;}
 	.iconPause{background:url(images/pause.png) no-repeat center center;}
     .importBtn, .exportBtn {
