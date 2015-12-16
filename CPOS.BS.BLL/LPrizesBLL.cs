@@ -241,8 +241,6 @@ namespace JIT.CPOS.BS.BLL
         public LotteryRD CheckIsWinnerForShare(string strVipId, string strEventId, string strType)
         {
             var rd = new LotteryRD();//返回值
-
-
             var bllShare = new LEventsShareBLL(this.CurrentUserInfo);
             var bllContactEvent = new ContactEventBLL(this.CurrentUserInfo);
             var bllPrize = new LPrizesBLL(this.CurrentUserInfo);
@@ -258,15 +256,14 @@ namespace JIT.CPOS.BS.BLL
 
                 if (contactEvent != null)
                 {
-
                     var entityPrize = bllPrize.GetPrizesByEventId(contactEvent.ContactEventId.ToString()).FirstOrDefault();
 
                     var bllPrizePool = new LPrizePoolsBLL(CurrentUserInfo);
                     var entityPrizePool = new LPrizePoolsEntity();
-                     entityPrizePool = bllPrizePool.QueryByEntity(new LPrizePoolsEntity() { EventId = contactEvent.ContactEventId.ToString(), PrizeID = entityPrize.PrizesID, Status = 1 }, null).FirstOrDefault();
+                    entityPrizePool = bllPrizePool.QueryByEntity(new LPrizePoolsEntity() { EventId = contactEvent.ContactEventId.ToString(), PrizeID = entityPrize.PrizesID, Status = 1 }, null).FirstOrDefault();
                     if (entityPrizePool == null)
                     {
-                        rd.ResultMsg = "奖品已发完！";
+                        rd.PrizeName = "奖品已发完！";
                         return rd;
                     }
                     ///改变奖品池状态
@@ -305,7 +302,6 @@ namespace JIT.CPOS.BS.BLL
 
                         //}
 
-
                         #endregion
                     }
                     else if (entityPrize.PrizeTypeId == "Coupon")
@@ -313,12 +309,6 @@ namespace JIT.CPOS.BS.BLL
                         List<OrderBy> lstOrder = new List<OrderBy> { };
                         CouponEntity entityCoupon = null;
                         CouponBLL bllCoupon = new CouponBLL(this.CurrentUserInfo);
-
-                        //lstOrder = new List<OrderBy> { };
-                        //lstOrder.Add(new OrderBy() { FieldName = " createtime", Direction = OrderByDirections.Desc });
-                        ////entityCoupon = bllCoupon.QueryByEntity(new CouponEntity() { CouponTypeID = entityPrize.CouponTypeID, Status = 0 }, lstOrder.ToArray()).FirstOrDefault();
-                        //entityCoupon.Status = 1;
-                        //bllCoupon.Update(entityCoupon, null);
                         entityCoupon = DataTableToObject.ConvertToList<CouponEntity>(bllCoupon.GetCouponIdByCouponTypeID(entityPrize.CouponTypeID).Tables[0]).FirstOrDefault();
 
                         VipCouponMappingEntity entityVipCouponMapping = null;
@@ -372,14 +362,6 @@ namespace JIT.CPOS.BS.BLL
                     rd.PrizeName = entityPrize.PrizeName;
                     rd.ResultMsg = "中奖";
                 }
-
-
-
-
-                //if (share.ShareEventId !="")
-                //{
-
-                //}
             }
             catch (Exception ex)
             {
@@ -438,6 +420,14 @@ namespace JIT.CPOS.BS.BLL
                 return rd;
             }
 
+
+            t_award_poolEntity awardEntity = null;
+            List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+            if (!string.IsNullOrEmpty(strEventId))
+                complexCondition.Add(new EqualsCondition() { FieldName = " EventId", Value = strEventId });
+            complexCondition.Add(new DirectCondition("releasetime<='" + DateTime.Now + "' and balance=0 "));
+            List<OrderBy> lstOrder = new List<OrderBy> { };
+            lstOrder.Add(new OrderBy() { FieldName = " releasetime", Direction = OrderByDirections.Desc });
 
             switch (eventEntity.PersonCount)
             {
@@ -502,14 +492,12 @@ namespace JIT.CPOS.BS.BLL
             }
             if (awardEntity == null)
             {
+                int intLocation = bllPrize.GetLocationByEventID(strEventId);
+                rd.Location = intLocation;
+                rd.PrizeId = "0";
                 rd.PrizeName = "啊呜  手气不是时时有 下次再接再厉哦";
                 return rd;
             }
-
-            
-
-
-
             if (awardEntity != null)
             {
 
@@ -640,14 +628,6 @@ namespace JIT.CPOS.BS.BLL
                     }
                 }
             }
-            else
-            {
-                int intLocation = bllPrize.GetLocationByEventID(strEventId);
-                rd.Location = intLocation;
-                rd.PrizeId = "0";
-                rd.PrizeName = "未中奖";
-            }
-
             return rd;
         }
         #endregion
