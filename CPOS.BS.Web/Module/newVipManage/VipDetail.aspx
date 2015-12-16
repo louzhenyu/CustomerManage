@@ -184,10 +184,7 @@
             
             
             <!--返现记录-->
-            <div id="nav011" style="display: none;">
-            <div class="lineTitle" style="display:none">
-             返现记录
-            </div>
+            <div id="nav011" style="display:none;">
                  <!--<div class="tableHandleBox">
                     <span class="commonBtn export">全部导出</span>
                 </div>-->
@@ -200,22 +197,17 @@
                         <div class="dataMessage" >该会员没有返现记录</div>
                 </div>
                 <!--分页-->
-                <div id="kkpager" style="text-align: center;">
-                </div>
             </div>
             <!--返现记录end-->
             
             
             <!--余额记录-->
-            <div id="nav012" style="display: none;">
-            <div class="lineTitle" style="display:none">
-             余额记录
-            </div>
+            <div id="nav012" style="display:none;">
                  <!--<div class="tableHandleBox">
                     <span class="commonBtn export">全部导出</span>
                 </div>-->
                 <div id="tblBalanceBox" class="gridLoading">
-                       <div  class="loading">
+                       <div class="loading">
                            <span><img src="../static/images/loading.gif"></span>
                        </div>
                 </div>
@@ -223,40 +215,31 @@
                         <div class="dataMessage" >该会员没有余额记录</div>
                 </div>
                 <!--分页-->
-                <div id="kkpager" style="text-align: center;">
-                </div>
             </div>
             <!--返现记录end-->
             
             
             
             <!--积分记录-->
-            <div id="nav013" class="cursorDef" style="display: none;">
-            <div class="lineTitle" style="display:none">
-             积分记录
-            </div>
+            <div id="nav013" style="display: none;">
                  <!--<div class="tableHandleBox">
                     <span class="commonBtn export">全部导出</span>
                 </div>-->
-                <div id="tblIntegralBox" class="gridLoading">
-                       <div  class="loading">
-                           <span><img src="../static/images/loading.gif"></span>
-                       </div>
-                </div>
-				<div id="pageContianer">
-                        <div class="dataMessage" >该会员没有积分记录</div>
-                </div>
-                <!--分页-->
-                <div id="kkpager" style="text-align: center;">
-                </div>
+                <div class="tableWrap cursorDef">
+                    <div id="tblIntegralBox" class="gridLoading">
+                           <div  class="loading">
+                               <span><img src="../static/images/loading.gif"></span>
+                           </div>
+                    </div>
+                    <div id="pageContianer">
+                            <div class="dataMessage" >该会员没有积分记录</div>
+                    </div>
+                    <!--分页
+                    <div id="kkpager" style="text-align: center;"></div>
+                    -->
+                </div>    
             </div>
             <!--积分记录end-->
-            
-            
-            
-            
-            
-            
             
             
             <div id="nav09" style="display: none;">
@@ -309,23 +292,21 @@
                <div class="tagbtn" data-tagid="<#=item.TagId#>" data-tagname="<#=item.TagName#>"> <#=item.TagName#> <em class="icon" style="display: none;"></em></div>
            <#}#>
             </script>
-            <div id="nav07" style="display: none;" >
+            <div id="nav07" style="display:none;">
                 <div class="tableHandleBox">
                     <!-- <span class="commonBtn export">全部导出</span>-->
                     <span class="commonBtn addICon L"  data-authority="Add">新增客服记录</span>
                 </div>
-                <div  id="servicesLog" class="gridLoading">
-
-                       <div  class="loading">
-                                    <span>
-                                        <img src="../static/images/loading.gif"></span>
-                                </div>
-                </div>
-                  <div id="pageContianer">
-                   <div class="dataMessage" >该会员没有客服记录</div>
-
-
+                <div class="tableWrap cursorDef">
+                    <div  id="servicesLog" class="gridLoading">
+                           <div  class="loading">
+                               <span><img src="../static/images/loading.gif"></span>
+                           </div>
                     </div>
+                    <div id="pageContianer">
+                        <div class="dataMessage" >该会员没有客服记录</div>
+                    </div>
+                </div>
             </div>
             <div id="nav08" style="display: none;">
                 <div class="tableHandleBox">
@@ -614,29 +595,19 @@
                                 </script>
             </div>
             <!--操作记录(原来的积分)-->
-            <div id="nav03" style="display: none;" class="cursorDef">
+            <div id="nav03" style="display:none;">
                  <!--<div class="tableHandleBox">
                     <span class="commonBtn export">全部导出</span>
                 </div>-->
-                <div class="cursorDef">
                 <div id="tblPoint" class="gridLoading">
-
-                       <div  class="loading">
-                                    <span>
-                                        <img src="../static/images/loading.gif"></span>
-                                 </div>
-
-
-
-                </div>
-                 <div id="pageContianer">
-                        <div class="dataMessage" >该会员没有操作记录</div>
-
+                   <div  class="loading">
+                        <span><img src="../static/images/loading.gif"></span>
                    </div>
-                   </div> <!--imgTable-->
-                <!--分页-->
-                <div id="kkpager" style="text-align: center;">
                 </div>
+                <div id="pageContianer">
+                    <div class="dataMessage" >该会员没有操作记录</div>
+                </div>
+                <!--分页-->
                 <script id="tpl_point" type="text/html">
                 <#for(var i=0;i<list.length; i++){ var item=list[i];#>
                     <tr>
@@ -653,23 +624,19 @@
             </div>
 
             <!--帐内余额-->
-            <div id="nav04" style="display: none;">
+            <div id="nav04" style="display:none;">
                <!-- <div class="tableHandleBox">
                     <span class="commonBtn export">全部导出</span>
                 </div>-->
                 <div id="tblAmount" class="gridLoading">
-
-                       <div  class="loading">
-                                    <span>
-                                        <img src="../static/images/loading.gif"></span>
-                                </div>
-
+                   <div  class="loading">
+                        <span>
+                            <img src="../static/images/loading.gif"></span>
+                    </div>
                 </div>
                 <div id="pageContianer">
-                  <div class="dataMessage" >该会员没有可使用的优惠券</div>
-
-
-                 </div>
+                  	<div class="dataMessage" >该会员没有可使用的优惠券</div>
+                </div>
                 <script id="tpl_amount" type="text/html">
                 <#for(var i=0;i<list.length;i++){var item=list[i];#>
                     <tr>
@@ -759,25 +726,22 @@
             <!--交易记录-->
             <div id="nav02">
                 <div class="tableWrap cursorDef">
-
                     <!-- 已确认名单表格 -->
                     <div id="content"  class="gridLoading">
-
                        <div  class="loading">
-                                    <span>
-                                        <img src="../static/images/loading.gif"></span>
-                                </div>
-
+                         <span><img src="../static/images/loading.gif"></span>
+                       </div>
                     </div>
-                     <div id="pageContianer">
-                                      <div class="dataMessage" >该会员没有任何消费记录</div>
-
-
-                                     </div>
+                    <div id="pageContianer">
+                         <div class="dataMessage" >该会员没有任何消费记录</div>
+					</div>
                     <!--分页-->
                 </div>
             </div>
             <!--表格操作按钮-->
+            
+           <!-- 分页 --> 
+           <div id="kkpager" style="text-align: center;"></div> 
         </div>
         <!---easy ui  弹框---->
         <div style="display: none">

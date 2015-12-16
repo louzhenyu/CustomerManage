@@ -604,87 +604,33 @@
                // debugger;
                 var loadKey = 'loaded';
                 var point = that.loadData.args.point;
+				var cash = that.loadData.args.cash;
+				var balance = that.loadData.args.balance;
                 var amount = that.loadData.args.amount;
                 var online = that.loadData.args.onlineOffline;
                 var order = that.loadData.args.order;
+				var integralList = that.loadData.args.integralList;//新积分列表
                 var consumerCard = that.loadData.args.consumerCard;
                 var logs = that.loadData.args.logs;
                 var ServicesLog = that.loadData.args.ServicesLog;
                 if (panel.attr(loadKey)) {
                     switch (panelId){
-                        case 'nav02':
-                            /*that.createPager('nav02', order.PageIndex,
-                                order.TotalPages, order.TotalCount);*/
-                         //交易记录
-                            that.loadData.getVipOrderList(function (data) {
+                        case 'nav02'://交易记录
+							/*
+							that.loadData.getVipOrderList(function (data) {
                                 var list = data.Data.VipOrderList;
                                 list = list ? list : [];
-
-                                //用百度模板引擎渲染成html字符串
-                                /*   *//*   var html = bd.template("tpl_content", { list: list });
-                                 //将数据添加到页面的id=content的对象节点中*//*
-                                 that.elems.content.datagrid();*/
-                                that.elems.content.datagrid({
-                                    data:list,
-                                    striped : true,
-                                    singleSelect:true,
-                                    fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
-                                    columns:[[
-
-                                        {field : 'OrderNo',title : '订单编号',width:120,resizable:false,align:'center'},
-										{field : 'TotalAmount',title : '订单金额(元)',width:120,resizable:false,align:'center'},								
-										{field : 'PayType',title : '支付方式',width:120,align:'center',resizable:false},
-										
-					
-										{field : 'PayStatus',title : '支付状态',width:100,align:'left',resizable:false},
-					
-										{field : 'OrderStatus',title : '订单状态',width:70,align:'center',resizable:false,
-											styler: function(index,row){
-												/* status: "700"
-												 status_desc: "已完成"*/
-												return 'color: #fc7a52;';    //rowStyle是一个已经定义了的ClassName(类名)
-					
-											}
-					
-										},
-										{field : 'CreateTime',title : '下单日期',width:120,align:'left',resizable:false,
-											formatter:function(value ,row,index){
-												if(value) {
-													return new Date(value).format("yyyy-MM-dd hh:mm");
-												}
-											}
-										}
-
-                                    ]],
-
-                                    onLoadSuccess : function(data) {
-                                        debugger;
-                                        that.elems.content.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
-                                        if(data.rows.length>0) {
-                                            that.elems.dataMessage.hide();
-                                        }else{
-                                            that.elems.dataMessage.show();
-                                        }
-                                    }
-
-                                });
-                                order.TotalCount = data.Data.TotalCount;
-                                order.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 0) {
-                                    that.createPager('nav02', 1, data.Data.TotalPages, data.Data.TotalCount);
-                                }
-
-                                panel.attr(loadKey, true);
+                                that.elems.content.datagrid("loadData", list);
                             });
+							*/
+							that.createPager('nav02', order.PageIndex,
+                                order.TotalPages, order.TotalCount);
+                         break;
+                        case 'nav03'://卡操作记录
+                            that.createPager('nav03', point.PageIndex,
+                                point.TotalPages, point.TotalCount);
                             break;
-                        case 'nav03':
-                            that.loadData.GetVipCardDetail(function (data) {
-                                var list = data.Data.StatusLogList;
-                                list = list ? list : [];
-                                that.elems.pointTable.datagrid("loadData", list);
-                            });
-                            break;
-                        case 'nav04':
+                        case 'nav04'://电子优惠券
                             that.createPager('nav04', amount.PageIndex,
                                 amount.TotalPages, amount.TotalCount);
                             break;
@@ -696,7 +642,7 @@
                            /* that.createPager('nav05', consumerCard.PageIndex,
                                 consumerCard.TotalPages, consumerCard.TotalCount);*/
                             break;
-                        case 'nav07':
+                        case 'nav07'://客服记录
                             that.createPager('nav07', ServicesLog.PageIndex,
                                 ServicesLog.TotalPages, ServicesLog.TotalCount);
                             break;
@@ -704,229 +650,22 @@
                             that.createPager('nav08', logs.PageIndex,
                                 logs.TotalPages, logs.TotalCount);
                             break;
-						case 'nav011':  //返现
-                        that.loadData.getVipCashList(function (data) {
-                            var list = data.Data.VipAmountDetailList;
-                            list = list ? list : [];
-								/*
-                                var CumulativeIntegral=that.elems.vipInfo.CumulativeIntegral? that.elems.vipInfo.CumulativeIntegral:0;
-                                var VipIntegral=that.elems.vipInfo.VipIntegral? that.elems.vipInfo.VipIntegral:0;
-                                $("#CumulativeIntegral").html(CumulativeIntegral);
-                                $("#VipIntegral").html(VipIntegral);
-								*/
-                                that.elems.tblCashBox.datagrid({
-
-                                    method : 'post',
-                                    iconCls : 'icon-list', //图标
-                                    singleSelect : true, //多选
-                                    // height : 332, //高度
-                                    fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
-                                    striped : true, //奇偶行颜色不同
-                                    collapsible : true,//可折叠
-                                    //数据来源
-                                    data:list,
-
-
-                                    columns : [[
-                                        {field : 'CreateTime',title : '时间',width:180,align:'center',resizable:false,
-                                            formatter:function(value ,row,index){
-                                                return new Date(value).format("yyyy-MM-dd hh:mm:ss");
-                                            }
-                                        },
-                                        {field : 'UnitName',title : '门店',width:125,align:'center',resizable:false,
-                                            formatter:function(value ,row,index){
-                                                var long=56;
-                                                if(value&&value.length>long){
-                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
-                                                }else{
-                                                    return '<div class="rowText">'+value+'</div>'
-                                                }
-                                            }
-                                        },
-
-                                        {field : 'Amount',title : '返现增减',width:58,align:'center',resizable:false,
-                                            formatter:function(value,row,index){
-                                                if(isNaN(parseInt(value))){
-                                                    return 0;
-                                                }else{
-                                                    return parseInt(value);
-                                                }
-                                            }
-                                        },
-                                        {field : 'AmountSourceName',title : '变更类型',width:100,align:'center',resizable:false},
-
-                                        {field : 'Reason',title : '原因',width:100,align:'center',resizable:false} ,
-                                        {field : 'Remark',title : '备注',width:160,align:'center',resizable:false,
-                                            formatter:function(value ,row,index){
-                                                var long=56;
-                                                if(value&&value.length>long){
-                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
-                                                }else{
-                                                    return '<div class="rowText">'+value+'</div>'
-                                                }
-                                            }
-                                        },
-                                        {field : 'CreateByName',title : '操作人',width:80,align:'center',resizable:false },
-                                        {field : 'ImageUrl',title : '图片',width:80,align:'center',resizable:false,
-                                            formatter:function(value ,row,index){
-                                                var html='无';
-                                                if(value){
-                                                    html='<div id="imageListPanel_'+index+'" > <img src="'+value+'" width="70" height="70"  />' +
-                                                        '<div>'
-                                                }
-
-                                                return html;
-                                            }
-                                        }
-
-                                    ]],
-
-                                    onLoadSuccess : function(data) {
-                                        console.log("nav011 执行");
-                                        debugger;
-                                        that.elems.tblCashBox.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
-                                        that.elems.dataMessage.hide();
-                                        if(data.rows.length>0) {
-                                            that.elems.dataMessage.hide();
-                                        }else{
-											that.elems.tblCashBox.hide();
-                                            that.elems.dataMessage.show();
-                                        }
-										/*
-                                        for(var i=0;i<data.rows.length;i++) {
-                                            $('#imageListPanel_'+i).tooltip({
-                                                position: 'top',
-                                                content: '<img class="imgShow" width="257" height="176" src="'+data.rows[i].ImageUrl+'">'
-                                            });
-                                        }
-										*/
-                                    }
-
-
-                                });
-
-                                that.loadData.args.cash.TotalCount = data.Data.TotalCount;
-                                that.loadData.args.cash.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 0) {
-                                    that.createPager('nav011', 1, data.Data.TotalPages, data.Data.TotalCount);
-                                }
-                            panel.attr(loadKey, true);
-                        });
+						case 'nav011'://返现记录
+							that.createPager('nav011', cash.PageIndex,
+                                cash.TotalPages, cash.TotalCount);
+                        	break;
+						case 'nav012'://余额记录
+							that.createPager('nav012', balance.PageIndex,
+                                balance.TotalPages, balance.TotalCount);
+                        	break;
+						case "nav013"://新积分列表
+							that.createPager('nav013', integralList.PageIndex,
+                                integralList.TotalPages, integralList.TotalCount);
                         break;
-						case 'nav012':  //余额记录
-                        that.loadData.getVipBalanceList(function (data) {
-                            var list = data.Data.VipAmountDetailList;
-                            list = list ? list : [];
-								/*
-                                var CumulativeIntegral=that.elems.vipInfo.CumulativeIntegral? that.elems.vipInfo.CumulativeIntegral:0;
-                                var VipIntegral=that.elems.vipInfo.VipIntegral? that.elems.vipInfo.VipIntegral:0;
-                                $("#CumulativeIntegral").html(CumulativeIntegral);
-                                $("#VipIntegral").html(VipIntegral);
-								*/
-								
-                                that.elems.tblBalanceBox.datagrid({
-                                    method : 'post',
-                                    iconCls : 'icon-list', //图标
-                                    singleSelect : true, //多选
-                                    // height : 332, //高度
-                                    fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
-                                    striped : true, //奇偶行颜色不同
-                                    collapsible : true,//可折叠
-                                    //数据来源
-                                    data:list,
-
-
-                                    columns : [[
-                                        {field : 'CreateTime',title : '时间',width:180,align:'center',resizable:false,
-                                            formatter:function(value ,row,index){
-                                                return new Date(value).format("yyyy-MM-dd hh:mm:ss");
-                                            }
-                                        },
-                                        {field : 'UnitName',title : '门店',width:125,align:'center',resizable:false,
-                                            formatter:function(value ,row,index){
-                                                var long=56;
-                                                if(value&&value.length>long){
-                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
-                                                }else{
-                                                    return '<div class="rowText">'+value+'</div>'
-                                                }
-                                            }
-                                        },
-
-                                        {field : 'Amount',title : '余额增减',width:58,align:'center',resizable:false,
-                                            formatter:function(value,row,index){
-                                                if(isNaN(parseInt(value))){
-                                                    return 0;
-                                                }else{
-                                                    return parseInt(value);
-                                                }
-                                            }
-                                        },
-                                        {field : 'AmountSourceName',title : '变更类型',width:100,align:'center',resizable:false},
-
-                                        {field : 'Reason',title : '原因',width:100,align:'center',resizable:false} ,
-                                        {field : 'Remark',title : '备注',width:160,align:'center',resizable:false,
-                                            formatter:function(value ,row,index){
-                                                var long=56;
-                                                if(value&&value.length>long){
-                                                    return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
-                                                }else{
-                                                    return '<div class="rowText">'+value+'</div>'
-                                                }
-                                            }
-                                        },
-                                        {field : 'CreateByName',title : '操作人',width:80,align:'center',resizable:false },
-                                        {field : 'ImageUrl',title : '图片',width:80,align:'center',resizable:false,
-                                            formatter:function(value ,row,index){
-                                                var html='无';
-                                                if(value){
-                                                    html='<div id="imageListPanel_'+index+'" > <img src="'+value+'" width="70" height="70"  />' +
-                                                        '<div>'
-                                                }
-
-                                                return html;
-                                            }
-                                        }
-
-                                    ]],
-
-                                    onLoadSuccess : function(data) {
-                                        console.log(data);
-                                        debugger;
-                                        that.elems.tblBalanceBox.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
-                                        that.elems.dataMessage.hide();
-                                        if(data.rows.length>0) {
-                                            that.elems.dataMessage.hide();
-                                        }else{
-											that.elems.tblBalanceBox.hide();
-                                            that.elems.dataMessage.show();
-                                        }
-										/*
-                                        for(var i=0;i<data.rows.length;i++) {
-                                            $('#imageListPanel_'+i).tooltip({
-                                                position: 'top',
-                                                content: '<img class="imgShow" width="257" height="176" src="'+data.rows[i].ImageUrl+'">'
-                                            });
-                                        }
-										*/
-                                    }
-
-
-                                });
-								
-                                that.loadData.args.balance.TotalCount = data.Data.TotalCount;
-                                that.loadData.args.balance.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 0) {
-                                    that.createPager('nav012', 1, data.Data.TotalPages, data.Data.TotalCount);
-                                }
-                            panel.attr(loadKey, true);
-                        });
-                        break;	
                     }
                     return;
                 }
-            //    debugger;
-
+            	//debugger;
                 switch (panelId) {
                     // 会员标签加载
                     case 'nav09':
@@ -975,8 +714,6 @@
                         break;
 
                     case 'nav02':  //交易记录
-
-
                         that.loadData.getVipOrderList(function (data) {
                             var list = data.Data.VipOrderList;
                             list = list ? list : [];
@@ -1068,11 +805,7 @@
                         that.loadData.GetVipServicesLogList(function (data) {
                             var list = data.Data.VipServicesLogList;
                             list = list ? list : [];
-                            debugger;
 
-
-                                ServicesLog.TotalCount = data.Data.TotalCount;
-                                ServicesLog.TotalPages = data.Data.TotalPageCount;
                                  that.elems.servicesLog.datagrid({
                                      data:list,
                                      striped : true,
@@ -1132,6 +865,9 @@
                                      }
 
                                  });
+								 
+								ServicesLog.TotalCount = data.Data.TotalCount;
+                                ServicesLog.TotalPages = data.Data.TotalPageCount;
 
                                 if (data.Data.TotalPageCount > 0) {
                                     that.createPager('nav07', 1, data.Data.TotalPageCount, data.Data.TotalCount);
@@ -1229,18 +965,14 @@
                                             });
                                         }
                                     }
-
-
                                 });
-
                                 point.TotalCount = data.Data.TotalCount;
-                                point.TotalPages = data.Data.TotalPages;
-                               /* if (data.Data.TotalPages > 0) {
-                                    that.createPager('nav03', 1, data.Data.TotalPages, data.Data.TotalCount);
-                                }*/
-
-
-
+                                point.TotalPages = data.Data.TotalPageCount;
+								
+								if (data.Data.TotalPageCount > 0) {
+                                    that.createPager('nav03', 1, data.Data.TotalPageCount, data.Data.TotalCount);
+                                }
+							
                             panel.attr(loadKey, true);
                         });
                         break;
@@ -1374,7 +1106,7 @@
                                 });
                                 amount.TotalCount = data.Data.TotalCount;
                                 amount.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 0) {
+                                if (data.Data.TotalPageCount > 0) {
                                     that.createPager('nav04', 1, data.Data.TotalPages, data.Data.TotalCount);
                                 }
 
@@ -1474,13 +1206,12 @@
 
 
                                 });
-
-                                that.loadData.args.cash.TotalCount = data.Data.TotalCount;
-                                that.loadData.args.cash.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 0) {
-                                    that.createPager('nav011', 1, data.Data.TotalPages, data.Data.TotalCount);
+								//that.loadData.args.cash.TotalCount
+                                cash.TotalCount = data.Data.TotalCount;
+                                cash.TotalPages = data.Data.TotalPageCount;
+                                if (data.Data.TotalPageCount > 0) {
+                                    that.createPager('nav011', 1, data.Data.TotalPageCount, data.Data.TotalCount);
                                 }
-								
                             panel.attr(loadKey, true);
                         });
                         break;
@@ -1584,12 +1315,13 @@
 
 
                                 });
-
-                                that.loadData.args.balance.TotalCount = data.Data.TotalCount;
-                                that.loadData.args.balance.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPages > 0) {
-                                    that.createPager('nav012', 1, data.Data.TotalPages, data.Data.TotalCount);
+								//that.loadData.args.balance.TotalCount
+                                balance.TotalCount = data.Data.TotalCount;
+                                balance.TotalPages = data.Data.TotalPageCount;
+                                if (data.Data.TotalPageCount > 0) {
+                                    that.createPager('nav012', 1, data.Data.TotalPageCount, data.Data.TotalCount);
                                 }
+								
                             panel.attr(loadKey, true);
                         });
                         break;
@@ -1682,13 +1414,13 @@
 
 
                                 });
-
-                                point.TotalCount = data.Data.TotalCount;
-                                point.TotalPages = data.Data.TotalPages;
+                                integralList.TotalCount = data.Data.TotalCount;
+                                integralList.TotalPages = data.Data.TotalPages;
                                 if (data.Data.TotalPages > 0) {
-                                    that.createPager('nav013', 1, data.Data.TotalPages, data.Data.TotalCount);
+                                    that.createPager('nav013',1,data.Data.TotalPages, data.Data.TotalCount);
                                 }
-                            panel.attr(loadKey, true);
+                            panel.attr(loadKey,true);
+							
                         });
                         break;	
 						
@@ -2028,20 +1760,23 @@
             //that.elems.dataMessage.show();
             //请求接口参数下标从1开始      分页的是从1开始
             switch (dataId) {
-                //积分明细
+                //卡操作记录
                 case 'nav03':
-                    //this.loadData.args.point.PageIndex = currentPage;
-                   /* that.loadData.GetVipCardDetail(function (data) {
+					this.loadData.args.point.PageIndex = currentPage;
+                    that.loadData.GetVipCardDetail(function (data) {
                         var list = data.Data.StatusLogList;
-                        list = list ? list : [];
-                        if (list.length) {
-                            /!* var html = bd.template('tpl_point', { list: list });
-                             that.elems.pointTable.html(html);*!/
-                            that.elems.pointTable.datagrid("loadData", list);
-                            console.log("nav03 需要执行");
-
-                        }
-                    });*/
+                        list = list ? list : [];   //模板引擎没有判断传递的list是否为null  次数判断
+                      	/*if(list.length) {
+                            //用百度模板引擎渲染成html字符串
+                            var html = bd.template("tpl_content", { list: list });
+                            //将数据添加到页面的id=content的对象节点中
+                            that.elems.content.html(html);
+                        } else {
+                            //没有内容的提示
+                            that.showTableTips(that.elems.content, "该会员暂无消费记录!");
+                        }*/
+                        that.elems.pointTable.datagrid("loadData", list);
+                    });
                     break;
                     //操作日志
                 case 'nav08':
@@ -2125,7 +1860,7 @@
                             //没有内容的提示
                             that.showTableTips(that.elems.content, "该会员暂无消费记录!");
                         }*/
-                        that.elems.amountTable.datagrid("loadData", list);
+						that.elems.content.datagrid("loadData", list);//that.elems.amountTable
                     });
                     break;
 				//返现
@@ -2330,7 +2065,7 @@
                 //帐内余额
                 amount: {
                     PageIndex: 1,
-                    PageSize: 10,
+                    PageSize: 20,
                     TotalPages: 0,
                     TotalCount: 0,
                     OrderType:'DESC'
@@ -2371,19 +2106,18 @@
                 },
 				balance: {
                     PageIndex: 1,
-                    PageSize: 20,
+                    PageSize: 10,
                     TotalPages: 0,
                     TotalCount: 0,
                     OrderType:'DESC'
                 },
 				cash: {
                     PageIndex: 1,
-                    PageSize: 20,
+                    PageSize: 10,
                     TotalPages: 0,
                     TotalCount: 0,
                     OrderType:'DESC'
                 }
-
             },
             //设置会员标签
             setVipTags:function (callback) {
@@ -2862,7 +2596,7 @@
                 var getUrl = '/ApplicationInterface/Vip/VipGateway.ashx?type=Product&action=ExportVipIntegral';//&req=';
                 var data = {
                     Parameters: {
-                        PageSize: this.args.point.PageSize,
+                        PageSize: this.args.point.PageSize,//this.args.integralList.PageIndex
                         PageIndex: this.args.point.PageIndex,
                         OrderType: this.args.point.OrderType,
                         VipId: this.args.VipId
@@ -2942,8 +2676,8 @@
                         //用vipid:4e98550ffb2749e49f4a1b53a5da10b1测试
                         VipId:this.args.VipId,
                         VipCode:this.args.VipCode,
-                        PageIndex: this.args.point.PageIndex,
-                        PageSize: this.args.point.PageSize
+                        PageIndex: this.args.integralList.PageIndex,
+                        PageSize: this.args.integralList.PageSize
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {

@@ -423,8 +423,11 @@
 				},
 				success: function(data){
 					var result = data.data;
-					if(data.data){
+					if(result){
 						$('#seach').form('load',result);
+						if(result.User_Password != null){
+							$('#User_Password').attr('disabled','disabled');
+						}
 					}else{
 						alert('加载数据失败');
 					}
@@ -454,8 +457,13 @@
 		
 		addEditRoleDialog:function(rowObj){
 			//console.log(rowObj);
-            var that=this;
-            $('#win').window({title:"添加角色",width:638,height:418,top:110,left:($(window).width() - 638) * 0.5});
+			
+            var that=this,
+				tit='添加角色';
+			if(rowObj!=''){
+				tit = '编辑角色';
+			}	
+            $('#win').window({title:tit,width:638,height:418,top:110,left:($(window).width() - 638) * 0.5});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_addProm');
@@ -626,7 +634,7 @@
                 Status:-1,
                 page:1,
                 start:0,
-                limit:9
+                limit:100
             },
             tag:{
                 VipId:"",

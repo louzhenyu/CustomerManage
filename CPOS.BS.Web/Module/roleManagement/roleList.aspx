@@ -19,7 +19,7 @@
 	.moreQueryWrap .queryBtn{width:73px;}
 	.textbox-addon-right{right:9px !important;}
 	#addRoleBtn{width:115px; text-indent:20px;background:#0cc url(images/icon-add.png) no-repeat 20px center;}
-	
+	.datagrid-header td, .datagrid-body td, .datagrid-footer td{cursor:inherit;}
 	.datagrid-body .datagrid-row{height:61px;}
 	.datagrid-body .handle{display:inline-block;width:30px;height:60px;}
 	.deleteBtn{margin-left:15px;background:url(images/delete.png) no-repeat center center;}

@@ -20,8 +20,8 @@
 	.textbox-addon-right{right:9px !important;}
 	#addRoleBtn{width:115px; text-indent:20px;background:#0cc url(images/icon-add.png) no-repeat 20px center;}
 	
-	.datagrid-body .datagrid-row{height:61px;}
-	.datagrid-body .handle{display:inline-block;width:30px;height:60px;margin-left:8px;}
+	.datagrid-body .datagrid-row{height:45px;}
+	.datagrid-body .handle{display:inline-block;width:30px;height:45px;margin-left:8px;}
 	.deleteBtn{background:url(images/delete.png) no-repeat center center;}
 	.editBtn{background:url(images/edit.png) no-repeat center center;}
 	.resetBtn{background:url(images/icon-reset.png) no-repeat center center;}
@@ -106,7 +106,7 @@
                 	<span>角色/权限</span>
                 </div>
                 <div class="tableWrap" id="tableWrap">
-                   <div class="imgTable"> <table class="dataTable" id="gridTable"></table>  </div>
+                   <div class=""> <table class="dataTable" id="gridTable"></table>  </div>
                     <div id="pageContianer">
                     <div class="dataMessage" style="display:none">没有符合条件的查询记录</div>
                         <div id="kkpager" >
