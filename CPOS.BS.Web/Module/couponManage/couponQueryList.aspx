@@ -30,7 +30,6 @@ margin-top: 50px;
 font-size: 18px;
         }
         .cursorDef .datagrid-body td { cursor: default;}
-
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

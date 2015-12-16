@@ -49,7 +49,7 @@
                 <div class="panlDiv">
                 <div class="commonSelectWrap">
                     <em class="tit">适用范围：</em>
-                        <label class="searchInput bordernone" style="width: 347px;">
+                        <label class="searchInput bordernone" style="width:347px;margin-top:5px;">
                               <div class="radio on" data-name="r1" data-UsableRange="1"><em></em><span>仅限在线商城使用</span></div>
                               <div class="radio" data-name="r1"  data-UsableRange="2"><em></em><span>仅限到店使用</span></div>
                         </label>
@@ -66,7 +66,7 @@
                              </div>
                            <div class="line">
                             <div class="radio on" data-name="r2" data-validity="day"><em></em></div>
-                                 <div class="linetext">领券当日起顺延X天：<input name="ServiceLife" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" /><span>天</span></div>
+                                 <div class="linetext">领券当日起顺延：<input name="ServiceLife" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" /><span>天</span></div>
                             </div>
                         </div>
                 </div>
@@ -114,13 +114,13 @@
                         </div>
 
                    </div>
-
-                   <div class=" listTable toggClass">
+					
+                   <div class="listTable toggClass">
                      <div class="easyui-datagrid" style="width:640px;height:250px" data-options="title:'已选门店',fitColumns:true,singleSelect:true"></div>
                    </div>
 
 
-                   <div class="zsy" > </div>
+                   <div class="zsy"></div>
 
                 </div><!--panlDivEnd-->
             </div>
@@ -155,7 +155,7 @@
                                </div>
                 </div>
                <div class="commonSelectWrap">
-                                <div class=" searchInput" >
+                                <div class=" searchInput">
                                  <input  name="RetailTraderName" placeholder="分销商名称"/>
                                </div>
                 </div>

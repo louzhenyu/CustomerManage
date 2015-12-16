@@ -210,7 +210,6 @@
                                 return "<div data-index=" + index + " data-flag='CouponEvent' class='CouponEventBtn'>核销</div>"
                             } else {
                                 return "";
-
                             }
                         }
                     }

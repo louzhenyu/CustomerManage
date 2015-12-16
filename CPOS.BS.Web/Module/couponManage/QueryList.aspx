@@ -49,11 +49,13 @@
 
 
                 </div>
+                <div class="cursorDef">
                    <div  id="gridTable" class="gridLoading">
                          <div  class="loading">
                                   <span>
                                 <img src="../static/images/loading.gif"></span>
                            </div>
+                   </div>
                    </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>

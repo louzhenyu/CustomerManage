@@ -133,6 +133,7 @@
                 me.toggleClass("on");
                 $.util.stopBubble(e);
                 debugger;
+                $('#addUnit').tooltip("hide");  //取消按钮
                 var  className="."+me.data("toggleclass");
                 if(me.hasClass("on")&&me.data("flag")=="SuitableForStore"){
                    $(className).hide(0);
@@ -249,7 +250,7 @@
                         t.tooltip('tip').unbind().bind('mouseenter', function () {
                             t.tooltip('show');
                         }).bind('mouseleave', function () {
-                           // t.tooltip('hide');
+                            t.tooltip('hide');
                         });
                     }else{
                         $(this).tooltip('tip').css({"display":"none"});
