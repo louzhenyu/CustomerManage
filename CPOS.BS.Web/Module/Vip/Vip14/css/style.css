@@ -66,3 +66,92 @@ body{font-family:"微软雅黑";}
 .commonShowLeft .goodInfo>div,.commonShowLeft .storeNumInfo>div{height:50px;line-height:50px;}
 .commonShowLeft .goodInfo p,.commonShowLeft .storeNumInfo p{float:left;width:100px;margin-right:20px;}
 .commonShowLeft .goodInfo .num,.commonShowLeft .storeNumInfo .num{float:left;font-size:36px;font-family:"Arial";color:#fe7c23;}
+
+
+
+
+
+/*快速上手*/
+.login{ width:100%; height:1078px;background:url(../images/login_bg.jpg) no-repeat left #f4f6f9;}
+.login_nr{ width:450px;margin-right:185px; margin-top:110px; float:right;}
+.logo{ width:100%; text-align:center; float:left;}
+.logo img{ width:102px; height:126px;}
+.login_dl{ width:358px; padding:20px 45px; border:1px solid #e5e5e5; margin-top:38px; background:#fff; float:left;}
+.login_dl li{width:100%;  font-size:18px;color:#767676; line-height:30px; float:left; margin-top:20px;}
+.login_dl li span{display:block;}
+.login_dl li input{width:338px;height:54px;font-size:18px;color:#767676;font-family:"Microsoft YaHei"; line-height:30px; padding:0 10px;background:#fff; border:1px solid #cecece;}
+
+.login_dl li span input{width:20px;height:20px;background:#fff; border:1px solid #0cc; vertical-align:middle; margin-top:5px; margin-right:5px; float:left;}
+.denglu{ width:100%; float:left; margin-top:20px; }
+.denglu a{ width:100%; font-size:18px;background:#0cd;cursor:pointer; border-radius:5px; text-align:center; color:#fff;line-height:54px;float:right;}
+.denglu a:hover{background:#f00; text-decoration:none;}
+.guanzhu{ width:100%; font-size:18px;color:#0cc;font-family:"Microsoft YaHei"; line-height:60px;float:left; margin-top:10px;}
+.guanzhu dt{ float:left;position:relative;}
+.guanzhu dd{ float:right;position:relative;}
+.guanzhu img{ width:150px; height:159px; position:absolute; top:50px; left:5px;}
+
+
+.qb_member{ width:694px; margin:120px auto;}
+.member{ width:694px; padding-bottom:30px; float:left; background:#fff;border-radius:5px;}
+.menber_top{ width:679px; height:50px; font-size:16px; color:#666;  font-weight:700; line-height:50px; padding-left:15px; background:#f3f3f3;border-radius:5px 5px 0px 0px;}
+.menber_top img{ width:30px; height:30px; margin-right:10px; margin-top:8px; _margin-top:-40px; float:right;}
+.menber_title{ width:100%; float:left;}
+.menber_title img{ width:694px; height:90px; }
+.menber_center{ width:614px;font-size:14px; color:#666; background:#ccc; margin:0 auto;}
+.menber_centernr{ width:100%; float:left;}
+.menber_centernrt{width:594px; float:left; padding-bottom:20px; padding-left:20px; margin-top:30px; border-bottom:1px solid #ededed;}
+.menber_centernrt p{  line-height:30px;}
+.menber_centernrt a{ color:#09f;}
+.menber_centernrb{width:594px;float:left; margin-top:20px; padding-bottom:20px; padding-left:20px; border-bottom:1px solid #ededed;}
+.menber_centernrb p{ color:#ccc; line-height:50px;}
+.menber_centernrb span{font-size:14px;background:#0cc;padding:10px 20px;cursor:pointer; border-radius:6px; text-align:center; color:#fff; line-height:32px; }
+.menber_centernrb1{width:594px;float:left; color:#999;  margin-top:20px; padding-bottom:20px; padding-left:20px; border-bottom:1px solid #ededed;}
+.menber_centernrb1 p{ color:#666; line-height:50px;}
+.menber_centernrb1 span{font-size:14px;background:#0cc;padding:5px 10px;cursor:pointer; border-radius:6px; text-align:center; color:#fff; line-height:32px;  margin-left:10px; }
+
+.import{ width:100%; float:left; margin-top:20px; }
+.import a{ font-size:14px;background:#fc7a52;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff;line-height:32px;float:right;}
+.import a:hover{background:#f00; text-decoration:none;}
+
+
+.attention{ width:100%;line-height:24px;color:#999; margin-top:30px; float:left;}
+.attention span{font-size:16px;line-height:40px; color:#666; display:block;}
+
+.loading{ width:100%; height:50px; padding-top:80px; background:url(../images/loading.gif) no-repeat center center; line-height:40px; text-align:center; float:left;}
+.succeed{ width:100%; padding-top:130px; padding-bottom:50px; background:url(../images/chenggong.png) no-repeat center center; line-height:20px; text-align:center; float:left;}
+.succeed p{ color:#999;}
+.succeed span{ color:#fc7a52;}
+
+.close{ width:100%; float:left; margin-top:20px; }
+.close a{ font-size:14px;background:#ccc;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff; line-height:32px; float:right;}
+.close a:hover{background:#f00; text-decoration:none;}
+
+
+
+
+.qb_quick{display:none;width:694px;position:fixed;top:50%;left:50%;margin:-245px 0 0 -347px;background:rgba(0,0,0,0.5);z-index:9999;}
+.closeBtn{float:right;}
+.quick{width:694px;float:left; background:#fff;border-radius:5px;}
+.quick_top{ width:694px; height:50px; font-size:16px; color:#666;  font-weight:700; line-height:50px; padding-left:15px; background:#f3f3f3;border-radius:5px 5px 0px 0px;}
+.quick_top img{ width:30px; height:30px; margin-right:13px; margin-top:8px; _margin-top:-40px; float:right;}
+.quick_title{ width:100%; float:left;}
+.quick_title img{ width:694px; height:90px; }
+.quick_center{ width:614px;font-size:14px; color:#666; background:#ccc; margin:0 auto;}
+.quick_centernr{float:left;width:594px;height:335px;padding-left:20px;}
+
+.found{ width:100%;line-height:24px;color:#999; margin-top:30px; float:left;}
+.found span{font-size:16px;line-height:40px; color:#666; display:block;}
+.found p{ color:#666; margin-top:15px;}
+.found a{ color:#f33;}
+
+.unrealistic{position:absolute;bottom:0;left:0;right:0;width:160px;padding:20px;font-size:14px;color:#666;}
+.nextNoShow{line-height:20px;cursor:pointer;}
+.nextNoShow.on em{background:url(../images/icon-checked.png) no-repeat center center;}
+.nextNoShow em{float:left;width:20px;height:20px;border:1px solid #0cc;border-radius:3px;}
+.nextNoShow span{display:block;margin-left:26px;}
+.handleBtnBox{position:absolute;bottom:0;right:0;width:250px;padding:20px;text-align:right;font-size:0;}
+.handleBtnBox a{display:inline-block;width:82px;height:32px;line-height:32px;margin-left:20px;border-radius:5px;text-align:center;font-size:14px;}
+.handleBtnBox .nextStep{background:#0cc;color:#fff;}
+.handleBtnBox .prevStep{border:1px solid #0cc;backkground:#fff;color:#0cc;}
+.handleBtnBox .finishStep{background:#fc7a52;color:#fff;}
+.stepBox{height:425px;overflow:hidden;display:none;}
