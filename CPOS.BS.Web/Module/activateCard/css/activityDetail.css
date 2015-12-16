@@ -2,7 +2,7 @@
 .queryTermArea{ background:none;width:100%;padding: 30px 15px 0 30px; }
 .queryTermArea  .panelList{width:100%;  text-align: center; padding-bottom:25px;border: 1px solid #d8d8d8; border-radius:8px 8px 0 0;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.line{border-bottom: 1px solid #d0d5d8; margin:0 auto; width:95%; display:inline-block}
+.line{border-top: 1px solid #d0d5d8; margin:0 auto; width:95%; display:inline-block}
 .title{ height: 57px; background:#f2f2f2; border-bottom:1px solid #d8d8d8;border-radius:8px 8px 0 0; }
 .title li{cursor: pointer;  width:50%; height: 56px; line-height: 56px;  float:left; text-align:center; font-size: 17px; font-weight:600; color:#3d3e40;  border-right:1px solid #d8d8d8; }
 .title li.on{ background:#fff;}
@@ -70,3 +70,5 @@
 .commonSelectWrap.numberBox-100 .textbox,
 .commonSelectWrap.numberBox-100 .validatebox-text{width:96px !important;height:32px !important;border:none}
 .commonSelectWrap .searchInput input,.textbox .textbox-text{color:#999;}
+
+.ruleTipText{display:none;clear:left;padding-left:130px;color:#f00;}

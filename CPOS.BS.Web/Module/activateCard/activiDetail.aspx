@@ -18,15 +18,14 @@
                 <div class="panelList">
                     <div  class="title">
                            <ul id="optPanel">
-                           <li data-flag="#nav01" class="on one">卡类型</li>
-                           <li data-flag="#nav02" class="borderNone">特殊日期</li>
-
+                               <li data-flag="#nav01" class="on one">卡类型</li>
+                               <li data-flag="#nav02" class="borderNone">特殊日期</li>
                            </ul>
                     </div>
                     <form></form>
                     <form id="nav0_1">
                    <div class="panelDiv" id="nav01" data-index="0">
-                   	  <div class="line">
+                   	  <div class="line" style="border-top:none">
                       		<div class="commonSelectWrap vipTypeCard">
                                   <em class="tit">卡类型：</em>
                                   <div class="radio" data-name="r2" data-category=0><em></em>会员卡</div>
@@ -54,11 +53,12 @@
                           <div class="checkBox" id="IsPassword" data-flag="IsPassword" style="margin:5px 0 0 20px;"><em></em> <span>启用密码 </span></div>
                       </div>
                       
-                      <div class="commonSelectWrap" style="clear:left;">
+                      <div class="commonSelectWrap" id="vipCardLevelBox" style="clear:left;">
                           <em class="tit" style="width:92px">卡等级值：</em>
                           <label class="searchInput" style="width:200px;border:1px solid #fff;" >
                             <input data-text="卡等级值" class="easyui-combobox" id="VipCardLevel" name="VipCardLevel" data-options="tipPosition:'top'"  type="text" value="">
                           </label>
+                          <span class="textF33" style="padding:8px 0 0 20px;float:left;">数值越大，等级越高</span>
                       </div>
                       
                       
@@ -98,40 +98,27 @@
                          </div>
                       </div>
                      </div>
-						
-                       
-                     <!--<div class="line">
-                        <div class="commonSelectWrap">
-                           <em class="tit"> 折扣：</em>
-                           <label class="selectBox" style=" width:189px">
-                            <input type="text" class="easyui-numberbox"  name="CardDiscount" data-options="min:0,precision:2,max:10,width:160,height:32">  折
-                           </label>
-                           <span class="hint">提示：98折应输入9.8</span>
-                       </div>
-                     </div>-->
-                     
-                     
-                     
+
                        <div class="line" style="padding-bottom:20px;">
-                       	 <div class="linetext">
+                       	 <div class="linetext" id="cardDiscountBox">
                             <div class="checkBox"  data-name="r1" data-flag="CardDiscount"><em></em> <span>折扣 </span></div>
                             <div class="inputDiv">&nbsp;&nbsp;&nbsp;消费&nbsp;&nbsp;<input type="text" class="easyui-numberbox"  name="CardDiscount" data-options="min:0,precision:2,max:10,width:120,height:32"> 折 <span class="textF33">提示：98折应输入9.8</span>
                             </div>
                          </div>
                        
-                         <div class="linetext">
+                         <div class="linetext" id="paidGivePointsBox">
                             <div class="checkBox"  data-name="r1" data-flag="PaidGivePoints"><em></em> <span>积分 </span></div>
                             <div class="inputDiv">&nbsp;&nbsp;&nbsp;消费&nbsp;&nbsp;<input type="text" name="PaidGivePoints" class="easyui-numberbox" data-options="min:0,precision:2,max:10000,width:120,height:32"> 元 回馈1积分
                        		</div>
                         </div>
                         
-                        <div class="linetext">
+                        <div class="linetext" id="chargeGiveBox">
                             <div class="checkBox" data-flag="EnableRewardCash" data-name="r1"><em></em> <span>充值 </span></div>
                             <div class="inputDiv">充值满 <input type="text" class="easyui-numberbox" name="ChargeFull" data-options="min:0,precision:0,width:120,height:32">&nbsp;送&nbsp;<input type="text"  name="ChargeGive"  class="easyui-numberbox" data-options="min:0,precision:0,max:1000,width:120,height:32"></div>
                         </div>
                         
                         
-                        <div class="linetext">
+                        <div class="linetext" id="returnAmountPerBox">
                             <div class="checkBox" data-flag="ReturnAmountPer" data-name="r1"><em></em> <span>返现</span></div>
                             <div class="inputDiv"><input type="text" name="ReturnAmountPer" class="easyui-numberbox" data-options="min:0,precision:2,max:10000,width:120,height:32"> % （获得返现的订单金额比例）
                        		</div>
@@ -143,7 +130,7 @@
                        
                        
                        
-                       <div class="line" style="padding-bottom:20px">
+                       <div class="line" id="autoUpdateBox" style="padding-bottom:20px">
                              <div class="linetext" style="width:100%">
                                 <div class="checkBox" data-flag="UpgradeAmount"><em></em> <span>累计消费金额满 </span></div>
                                 <div class="inputDiv" style="margin-left:8px;"><input type="text" class="easyui-numberbox"  name="UpgradeAmount" data-options="min:0,precision:1,width:120,height:32"> 自动升级
@@ -239,6 +226,7 @@
                        <div class="listBtn"  data-flag="NoRewardPoints" >不可用回馈积分<div class="on"></div></div>
                           </div>
                       </div>
+					  <p class="ruleTipText">规则必须最少选择一项</P>
 
            </form>
        </script>

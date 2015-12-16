@@ -63,3 +63,6 @@
 #Children input{ border: 1px solid #ccc; width: 160px;}
 #Children .add{ background:none; color: #00acee; font-size: 15px;}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+
+.datagrid-row td:first-of-type div,.datagrid-header-row td:first-of-type div{padding-left:0;}
+.rowText{text-align:center;}

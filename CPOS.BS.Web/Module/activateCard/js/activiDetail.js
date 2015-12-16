@@ -42,10 +42,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 				panelHeight:115,
 				valueField: 'VipCardLevel',
 				textField: 'VipCardName',
-				data:[{
-					VipCardLevel : 0,
-					VipCardName : '无等级'
-				},
+				data:[
 				{
 					VipCardLevel : 1,
 					VipCardName : '等级1'
@@ -223,15 +220,41 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 
                 }
                 $.util.stopBubble(e);
-            }).delegate(".radio","click",function(e){//wLong添加的单选框
-				var me= $(this),
-					$vipTypeCard = $('.vipTypeCard .radio');
-				$vipTypeCard.removeClass('on');
-				me.addClass('on');
-			}).delegate("#addDatetime","click",function(){
+            }).delegate("#addDatetime","click",function(){
                    that.addDatetime()
             });
-            //取消订单
+            
+			$('.vipTypeCard .radio').on('click',function(){
+				var me= $(this),
+					$vipTypeCard = $('.vipTypeCard .radio'),
+					val = me.data('category'),
+					$autoUpdateBox = $('#autoUpdateBox'),//自动升级
+					$returnAmountPerBox = $('#returnAmountPerBox'),//返现
+					$chargeGiveBox = $('#chargeGiveBox'),//充值
+					$paidGivePointsBox = $('#paidGivePointsBox'),//积分
+					$cardDiscountBox = $('#cardDiscountBox'),//折扣
+					$vipCardLevelBox = $('#vipCardLevelBox');//卡等级
+				$vipTypeCard.removeClass('on');
+				me.addClass('on');
+				
+				$autoUpdateBox.show();
+				$returnAmountPerBox.show();
+				$chargeGiveBox.show();
+				$paidGivePointsBox.show();
+				$cardDiscountBox.show();
+				$vipCardLevelBox.show();
+				if(val==1 || val==2){//储值卡,消费卡
+					$autoUpdateBox.hide();
+					$returnAmountPerBox.hide();
+					$paidGivePointsBox.hide();
+					$cardDiscountBox.hide();
+					$vipCardLevelBox.hide();
+					if(val == 2){
+						$chargeGiveBox.hide();//充值
+					}
+					
+				}
+			})
 
 
             /**************** -------------------弹出窗口初始化 start****************/
@@ -250,7 +273,13 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
             $('#win').delegate(".saveBtn","click",function(e){
 
                 if ($('#payOrder').form('validate')) {
-
+					if($('.listBtn.show').length==0){
+						$('.ruleTipText').show();
+						setTimeout(function(){
+							$('.ruleTipText').hide();
+						},1000);
+						return false;
+					}
                     var fields = $('#payOrder').serializeArray(); //自动序列化表单元素为JSON对象
 
                     that.loadData.operation(fields,"setDate",function(data){
@@ -258,7 +287,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                         that.loadData.getSysVipCardTypeDetail(function(data){
                             alert("操作成功");
                             $('#win').window('close');
-                            that.elems.SpecialDateList=data.Data.SpecialDateList
+                            that.elems.SpecialDateList=data.Data.SpecialDateList;
                             that.renderTable(that.elems.SpecialDateList)
                         });
                     });
@@ -298,7 +327,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
         addDatetime:function(){
             var that=this;
 
-            $('#win').window({title:"特殊日期",width:444,height:310,top:($(window).height()-310)/2,left:($(window).width()-444)/2 });
+            $('#win').window({title:"特殊日期",width:444,height:335,top:($(window).height()-310)/2,left:($(window).width()-444)/2 });
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_addDatetime');
@@ -328,15 +357,16 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                    that.loadData.getSysVipCardTypeDetail(function (data) {
 					   //TODO:wlong
 					   if(data.Data){//卡类型
-							$('.radio[data-category='+data.Data.Category+']').trigger("click"); 	
+					   		var value = data.Data.Category;
+							if(value != null){
+								$('.radio[data-category='+data.Data.Category+']').trigger("click");
+								$('.vipTypeCard .radio').unbind('click');
+							}
 					   }
-					   if(data.Data && data.Data.IsPassword){//卡类型
-							$('.radio[data-flag="IsPassword"]').trigger("click");
-					   }
-					   if(data.Data){//卡类型
+					   if(data.Data){
 						   setTimeout(function(){
-								$('#VipCardLevel').combobox('setValue',data.Data.VipCardLevel);
-							},200);
+								$('#VipCardLevel').combobox('setValue',data.Data.VipCardLevel || 1);
+						   },200);
 					   }
 					   //zhekou
 					   if (data.Data && data.Data.IsPassword) {//密码
@@ -514,7 +544,6 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
             self.uploadImg(e, function (ele, data) {
                 self.loadData.args.imgSrc=data.url;
                 $(ele).parent().siblings(".imgPanl").find("img").attr("src",data.url);
-
             });
 
         },

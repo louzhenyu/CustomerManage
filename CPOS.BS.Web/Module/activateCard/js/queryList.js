@@ -188,9 +188,7 @@
                  ] ],*/
 
                 columns : [[
-                    {field : 'VipCardTypeCode',title : '编码',width:100,align:'center',resizable:false},
-
-                    {field : 'VipCardTypeName',title : '类型',width:120,align:'left',resizable:false,
+                    {field : 'VipCardTypeName',title : '类型',width:120,resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value&&value.length>long){
