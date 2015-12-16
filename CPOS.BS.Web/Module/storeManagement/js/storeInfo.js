@@ -430,9 +430,9 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							$('#nav0_2').form('load',result);
 							
 							setTimeout(function(){
-								$('#ReplyType').combobox('select','');
+								$('#ReplyType').combobox('select',0);
 								setTimeout(function(){
-									$('#ReplyType').combobox('select',result.ReplyType);
+									$('#ReplyType').combobox('select',result.ReplyType || 0);
 								},1000);
 							},1000);
 							$('.qrInfoBox img').attr('src',result.WXCodeImageUrl).attr('data-code',result.WXCode);
