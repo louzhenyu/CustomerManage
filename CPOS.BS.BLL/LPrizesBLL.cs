@@ -429,6 +429,7 @@ namespace JIT.CPOS.BS.BLL
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = " releasetime", Direction = OrderByDirections.Desc });
 
+            lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
             switch (eventEntity.PersonCount)
             {
                 case 1://仅能参加一次抽奖
@@ -472,7 +473,7 @@ namespace JIT.CPOS.BS.BLL
 
             }
             #endregion
-            lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
+           
             //抽奖记录
             lotteryEntityNew = new LLotteryLogEntity()
             {
