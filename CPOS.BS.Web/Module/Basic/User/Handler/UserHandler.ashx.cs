@@ -72,7 +72,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 case "ImportUser":
                     content = ImportUser();
                     break;
-
+                case "DownloadQRCodeNew":
+                     DownloadQRCodeNew();
+                    break;
+                    
             }
             pContext.Response.Write(content);
             pContext.Response.End();
@@ -305,6 +308,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             userService.SetUserInfo(user, user.userRoleInfoList, out error);
 
             #region  生成员工二维码
+            /**
           //微信 公共平台
             var wapentity = new WApplicationInterfaceBLL(CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
             {
@@ -369,9 +373,18 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 
     
 
-
+            **/
             #endregion
 
+            string errorMsg = "";
+            
+            string wxCodeImageUrl = CreateUserWxCode(user, unitName,out errorMsg);
+            if (errorMsg!="")
+            {
+                responseData.success = false;
+                responseData.msg = errorMsg;
+                return responseData.ToJSON();
+            }
 
 
             responseData.success = true;
@@ -382,6 +395,85 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             return content;
         }
         #endregion
+
+
+        //生成员工二维码
+        public string CreateUserWxCode(UserInfo user, string unitName, out string errorMsg)
+        {
+            errorMsg = "";
+            #region  生成员工二维码
+            //微信 公共平台
+            var wapentity = new WApplicationInterfaceBLL(CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+            {
+                CustomerId = CurrentUserInfo.ClientID,
+                IsDelete = 0
+            }, null).FirstOrDefault();//取默认的第一个微信
+
+            var QRCodeId = Guid.NewGuid();
+            var QRCodeManagerentity = new WQRCodeManagerBLL(this.CurrentUserInfo).QueryByEntity(new WQRCodeManagerEntity
+            {
+                ObjectId =  user.User_Id
+            }, null).FirstOrDefault();
+            if (QRCodeManagerentity != null)
+            {
+                QRCodeId = (Guid)QRCodeManagerentity.QRCodeId;
+            }
+            if (QRCodeManagerentity == null)
+            {
+                //二维码类别
+                var wqrentity = new WQRCodeTypeBLL(this.CurrentUserInfo).QueryByEntity(
+                    new WQRCodeTypeEntity { TypeCode = "UserQrCode" }
+                    , null).FirstOrDefault();
+                if (wqrentity == null)
+                {
+                    //responseData.success = false;
+                    //responseData.msg = "无法获取员工二维码类别";
+                    //return responseData.ToJSON();
+                    errorMsg = "无法获取员工二维码类别";
+                }
+                //生成了微信二维码
+                var wxCode = CretaeWxCode();//***
+                //如果名称不为空，就把图片放在一定的背景下面
+                if (!string.IsNullOrEmpty(user.User_Name))
+                {
+                    string apiDomain = ConfigurationManager.AppSettings["original_url"];
+                    wxCode.ImageUrl = CombinImage(apiDomain + @"/HeadImage/qrcodeBack.jpg", wxCode.ImageUrl, unitName + "-" + user.User_Name);
+                }
+
+                var WQRCodeManagerbll = new WQRCodeManagerBLL(CurrentUserInfo);
+
+                //    Guid QRCodeId = Guid.NewGuid();
+
+                if (!string.IsNullOrEmpty(wxCode.ImageUrl))
+                {
+                    WQRCodeManagerbll.Create(new WQRCodeManagerEntity
+                    {
+                        QRCodeId = QRCodeId,
+                        QRCode = wxCode.MaxWQRCod.ToString(),
+                        QRCodeTypeId = wqrentity.QRCodeTypeId,
+                        IsUse = 1,
+                        ObjectId = user.User_Id,
+                        CreateBy = CurrentUserInfo.UserID,
+                        ApplicationId = wapentity.ApplicationId,
+                        IsDelete = 0,
+                        ImageUrl = wxCode.ImageUrl,
+                        CustomerId = CurrentUserInfo.ClientID
+
+                    });
+                }
+
+                return wxCode.ImageUrl;//生成新的二维码地址
+
+            }
+            else {
+                return QRCodeManagerentity.ImageUrl;
+            }
+
+
+
+
+            #endregion
+        }
 
 
                    #region new 生成活动二维码
@@ -674,6 +766,109 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 CurrentContext.Response.End();
             }
         }
+
+        private void DownloadQRCodeNew()//新的下载二维码的方法
+        {
+            //string weixinDomain = ConfigurationManager.AppSettings["original_url"];
+            //string sourcePath = this.CurrentContext.Server.MapPath("/QRCodeImage/qrcode.jpg");
+            //string targetPath = this.CurrentContext.Server.MapPath("/QRCodeImage/");
+            //string currentDomain = this.CurrentContext.Request.Url.Host;
+            //string itemId = FormatParamValue(Request("item_id"));//商品ID
+            //string itemName = FormatParamValue(Request("item_name"));//商品名
+            //string imageURL;
+
+            //ObjectImagesBLL objectImagesBLL = new ObjectImagesBLL(CurrentUserInfo);
+            ////查找是否已经生成了二维码
+            //ObjectImagesEntity[] objectImagesEntityArray = objectImagesBLL.QueryByEntity(new ObjectImagesEntity() { ObjectId = itemId, Description = "自动生成的产品二维码" }, null);
+
+            //if (objectImagesEntityArray.Length == 0)
+            //{
+            //    //http://api.dev.chainclouds.com
+            //    //    http://api.dev.chainclouds.com/WXOAuth/AuthUniversal.aspx?customerId=049b0a8f641f4ca7b17b0b7b6291de1f&applicationId=1D7A01FC1E7D41ECBAC2696D0D363315&goUrl=api.dev.chainclouds.com/HtmlApps/html/public/shop/goods_detail.html?rootPage=true&rootPage=true&goodsId=DBF5326F4C5B4B0F8508AB54B0B0EBD4&ver=1448273310707&scope=snsapi_userinfo
+
+            //    string itemUrl = weixinDomain + "/WXOAuth/AuthUniversal.aspx?customerId=" + CurrentUserInfo.ClientID
+            //        + "&goUrl=" + weixinDomain + "/HtmlApps/html/public/shop/goods_detail.html?goodsId="
+            //        + itemId + "&scope=snsapi_userinfo";
+
+            //    //  string itemUrl = "http://localhost:1950/" + "/WXOAuth/AuthUniversal.aspx?customerId=" + CurrentUserInfo.ClientID
+            //    //      + "&goUrl=" + weixinDomain + "/HtmlApps/html/public/shop/goods_detail.html?rootPage=true&rootPage=true&goodsId="
+            //    //      + itemId + "&scope=snsapi_userinfo";
+            //    ////原来的老页面  weixinDomain + "/HtmlApps/Auth.html?pageName=GoodsDetail&rootPage=true&customerId=" + CurrentUserInfo.ClientID + "&goodsId=" + itemId
+            //   imageURL = Utils.GenerateQRCode(itemUrl, currentDomain, sourcePath, targetPath);
+            //    //把下载下来的图片的地址存到ObjectImages
+            //    objectImagesBLL.Create(new ObjectImagesEntity()
+            //    {
+            //        ImageId = Utils.NewGuid(),
+            //        CustomerId = CurrentUserInfo.ClientID,
+            //        ImageURL = imageURL,
+            //        ObjectId = itemId,
+            //        Title = itemName
+            //        ,
+            //        Description = "自动生成的产品二维码"
+            //    });
+
+            //    Loggers.Debug(new DebugLogInfo() { Message = "二维码已生成，imageURL:" + imageURL });
+            //}
+            //else
+            //{
+            //    imageURL = objectImagesEntityArray[0].ImageURL;
+            //}
+
+            //string imagePath = targetPath + imageURL.Substring(imageURL.LastIndexOf("/"));
+            //Loggers.Debug(new DebugLogInfo() { Message = "二维码路径，imagePath:" + imageURL });
+
+
+            //需要有一个targetPath？？？明天测试一下//参考上面的 方法
+            string user_id = user_id = Request("user_id").ToString().Trim();
+            //根据id获取到员工信息
+            var service = new cUserService(CurrentUserInfo);
+            UserInfo user = service.GetUserById(CurrentUserInfo,user_id);
+            string errorMsg = "";
+
+            string wxCodeImageUrl = CreateUserWxCode(user, user.UnitName, out errorMsg);
+            //if (errorMsg != "")
+            //{
+            //    responseData.success = false;
+            //    responseData.msg = errorMsg;
+            //    return responseData.ToJSON();
+            //}
+
+            var dirPath = System.AppDomain.CurrentDomain.BaseDirectory;
+            var imageName = wxCodeImageUrl.Substring(wxCodeImageUrl.IndexOf("HeadImage")).Replace("/",@"\");
+            var imagePath = dirPath + imageName;//整个
+            try
+            {
+                //要下载的文件名
+                FileInfo DownloadFile = new FileInfo(imagePath);  //imagePath原来是这个，明天试试
+
+                if (DownloadFile.Exists)
+                {
+                    CurrentContext.Response.Clear();
+                    CurrentContext.Response.AddHeader("Content-Disposition", "attachment;filename=\"" + System.Web.HttpUtility.UrlEncode(user.User_Name, System.Text.Encoding.UTF8) + ".jpg" + "\"");
+                    CurrentContext.Response.AddHeader("Content-Length", DownloadFile.Length.ToString());
+                    CurrentContext.Response.ContentType = "application/octet-stream";
+                    CurrentContext.Response.TransmitFile(DownloadFile.FullName);
+                    CurrentContext.Response.Flush();
+                }
+                else
+                    Loggers.Debug(new DebugLogInfo() { Message = "二维码未找到" });
+            }
+            catch (Exception ex)
+            {
+                CurrentContext.Response.ContentType = "text/plain";
+                CurrentContext.Response.Write(ex.Message);
+            }
+            finally
+            {
+                CurrentContext.Response.End();
+            }
+        }
+
+
+        //下载员工二维码 新
+
+
+
 
         #region 导入用户
         public string ImportUser()

@@ -686,6 +686,10 @@ where a.customer_id=@CustomerId    {4} ";
             sql += "select distinct a.* ";
             sql += " ,b.user_name create_user_name ";
             sql += " ,c.user_name modify_user_name ";
+            sql += @" ,isnull((select top 1 unit_name from t_user_role x inner join  t_unit y 
+                   on x.unit_id=y.unit_id and x.user_id=a.user_id
+                   and x.default_flag=1
+                ),'') UnitName";
             sql += " from t_user a ";
             sql += " left join t_user b on a.create_user_id=b.user_id ";
             sql += " left join t_user c on a.modify_user_id=c.user_id ";
