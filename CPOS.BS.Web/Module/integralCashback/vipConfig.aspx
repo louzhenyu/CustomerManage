@@ -32,8 +32,7 @@
                              <div class="nav01">
                               <div class="checkBox" data-flag="EnableIntegral" data-name="r1" style="width: 100px;margin-bottom: 40px;">
                                   <em></em>
-                                  <span>积分</span>
-                                  <span style="padding-top:10px;">积分使用规划</span>
+                                  <span>启用积分</span>
                               </div>
                              
                              <div class="rowRline">
@@ -68,7 +67,7 @@
 
                           <div class="lineT">
                               <div class="nav01">
-                              <div class="checkBox" data-flag="EnableRewardCash" data-name="r1"  style="height:50px;"><em></em> <span>返现 </span></div>
+                              <div class="checkBox" data-flag="EnableRewardCash" data-name="r1"  style="height:50px;"><em></em> <span>启用返现 </span></div>
 								<!--
                                 <div class="rowRline">
                                         <div class="linetext"><em class="txt">  获得按金额比例计算：</em>  <input type="text" class="easyui-numberbox"  data-options="min:0,precision:0" value="" name="RewardCashPer"> % </div>
