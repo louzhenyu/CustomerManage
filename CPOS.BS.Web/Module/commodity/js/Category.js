@@ -69,7 +69,7 @@
 
                 if ($('#addProm').form('validate')) {
                       debugger;
-                    var fields = $('#addProm').serializeArray(); //自动序列化表单元素为JSON对象
+                    var fields = $('#addFrom').serializeArray(); //自动序列化表单元素为JSON对象
                     that.loadData.operation(fields,that.elems.optionType,function(data){
 
                         alert("操作成功");
@@ -115,13 +115,13 @@
                    case "exit" :
                        that.elems.optionType="exit";
                        that.update(row);
-                       $('#addProm').form('load',{Item_Category_Name:row.text,Item_Category_Id:row.id,Parent_Id:row.ParentID});
+                       $('#addFrom').form('load',{Item_Category_Name:row.text,Item_Category_Id:row.id,Parent_Id:row.ParentID});
                        break;
                    case "addChildren" :
                        that.elems.optionType="addChildren";
                        row.ImageUrl="";
                        that.update(row);
-                       $('#addProm').form('load',{Parent_Id:row.id});
+                       $('#addFrom').form('load',{Parent_Id:row.id});
                        break;
                }
 
@@ -190,7 +190,7 @@
                 left:($(window).width() - 550) * 0.5});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
-            var html=bd.template('tpl_addProm');
+            var html=bd.template('tpl_addFrom');
             var options = {
                 region: 'center',
                 content:html
@@ -229,7 +229,8 @@
             var self = this;
             //上传图片并显示
             self.uploadImg(e, function (ele, data) {
-                $(ele).parent().siblings(".imgPanl").find("img").attr("src",data.url);
+                $(ele).parent().siblings(".imgPanl").html('<img src="'+data.url+'">');
+                //$(ele).parent().siblings(".imgPanl").find("img").attr("src",data.url);
 
             });
 

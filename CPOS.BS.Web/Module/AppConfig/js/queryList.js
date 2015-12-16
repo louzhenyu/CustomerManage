@@ -344,7 +344,7 @@
                 columns: [[
 
                     {
-                        field: 'Title', title: '名称', width: 100, align: 'center', resizable: false,
+                        field: 'Title', title: '名称', width: 200, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
                             var long = 56;
                             if (value && value.length > long) {
@@ -356,7 +356,7 @@
                     },
 
                     {
-                        field: 'CreateTime', title: '创建时间', width: 200, align: 'left', resizable: false
+                        field: 'CreateTime', title: '创建时间', width: 100, align: 'center', resizable: false
                         , formatter: function (value, row, index) {
                         /*   if (!value) {
                          return new Date(value).format("yyyy-MM-dd") + "至" + new Date(row.EndTime).format("yyyy-MM-dd");

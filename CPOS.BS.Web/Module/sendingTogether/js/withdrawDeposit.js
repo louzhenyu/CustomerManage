@@ -72,7 +72,7 @@
 
                     columns : [[
 
-                        {field : 'WithdrawNo',title : '提现单号',width:300,align:'left',resizable:false,
+                        {field : 'WithdrawNo',title : '提现单号',width:200,align:'center',resizable:false,
                             formatter:function(value ,row,index){
                                 var long=56;
                                 if(value&&value.length>long){
@@ -83,12 +83,12 @@
                             }
                         },
 
-                        {field : 'ApplyDate',title : '申请日期',width:200,align:'center',resizable:false
+                        {field : 'ApplyDate',title : '申请日期',width:80,align:'center',resizable:false
                             ,formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd");
                         }
                         },
-                        {field : 'VipName',title : '商家名称',width:200,align:'left',resizable:false,
+                        {field : 'VipName',title : '商家名称',width:160,align:'left',resizable:false,
                             formatter:function(value ,row,index){
                                 var long=56;
                                 if(value&&value.length>long){
@@ -98,10 +98,10 @@
                                 }
                             }
                         },
-                        {field : 'CardNo',title : '银行卡号',width:400,align:'left',resizable:false},
-                        {field : 'BankName',title : '银行名称',width:200,align:'left',resizable:false},
-                        {field : 'AccountName',title : '开户人姓名',width:200,align:'left',resizable:false},
-                        {field : 'Amount',title : '提现金额',width:150,align:'center',resizable:false,
+                        {field : 'CardNo',title : '银行卡号',width:200,align:'left',resizable:false},
+                        {field : 'BankName',title : '银行名称',width:100,align:'left',resizable:false},
+                        {field : 'AccountName',title : '开户人姓名',width:60,align:'left',resizable:false},
+                        {field : 'Amount',title : '提现金额',width:80,align:'center',resizable:false,
                             formatter:function(value,row,index){
                                 if(isNaN(parseInt(value))){
                                     return 0;
@@ -109,7 +109,7 @@
                                     return value;
                                 }
                             }},
-                        {field : 'Status',title : '状态',width:100,align:'left',resizable:false,
+                        {field : 'Status',title : '状态',width:60,align:'left',resizable:false,
                             formatter:function(value ,row,index){
                                 var status="";
                                 switch (value){//0=待确认；1=已确认；2=已完成
@@ -120,7 +120,7 @@
                                 return  status ;
                             }
                         },
-                        {field : 'CompleteDate',title : '完成日期',width:200,align:'center',resizable:false
+                        {field : 'CompleteDate',title : '完成日期',width:80,align:'center',resizable:false
                             ,formatter:function(value ,row,index){
                             if(value) {
                                 return new Date(value).format("yyyy-MM-dd");
@@ -276,7 +276,6 @@
                         var Status= $(this).data("statusid");
                         debugger
                         var applyId=dataAll[0].ApplyID;
-                        var  str="";
                         var isSubmit=false;
                         if (dataAll[0].Status==2)
                         {

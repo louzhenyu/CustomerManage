@@ -284,7 +284,7 @@
 					obj = JSON.stringify(obj);
 					//{ "Parameters": { "DeliveryId": "2", "TakeDeliveryId": null, "Status": 1, "StockUpPeriod":1, "BeginWorkTime":"0001-01-01T00:00:00", "EndWorkTime":"0001-01-01T00:00:00", "MaxDelivery":2 } }	
 					that.saveDeliveryInfo(obj,function(data){
-						//location.reload();
+						that.queryDispatchingList();
 						if(obj2.Parameters.Status){
 							alert('启用成功！');
 							$tr.text('已启用').removeClass('blue');

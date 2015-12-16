@@ -2714,16 +2714,18 @@ select @ReturnValue", pCustomerID);
         /// <param name="pPageSize"></param>
         /// <param name="pCurrentPageIndex"></param>
         /// <returns></returns>
-        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int type,int pPageSize, int pCurrentPageIndex)
         {
             //组织SQL
             StringBuilder hqUnitSql = new StringBuilder();
             StringBuilder pagedSql = new StringBuilder();
             StringBuilder totalCountSql = new StringBuilder();
-            //分页SQL
+            StringBuilder unitListSql = new StringBuilder();
+            //对应门店及其子门店 add by Sun_Xu@2015-12-12
+
             hqUnitSql.AppendFormat(@" --查询总部门店ID
                                     DECLARE @HQUnitID VARCHAR(50)
-                                    SELECT TOP 1
+                                    SELECT TOP 14
                                             @HQUnitID = unit_id
                                     FROM    t_unit
                                     WHERE   customer_id = '{0}'
@@ -2732,7 +2734,25 @@ select @ReturnValue", pCustomerID);
                                                             FROM    t_type
                                                             WHERE   customer_Id = '{0}'
                                                                     AND type_code = '总部'); ", CurrentUserInfo.ClientID);
-            pagedSql.Append(hqUnitSql);
+
+            unitListSql.AppendFormat(@"
+                with unittemp ( dst_unit_id, src_unit_id)
+							as
+							(
+							select dst_unit_id,src_unit_id
+							from T_Unit_Relation
+							where dst_unit_id = {0}
+							union all
+							select a.dst_unit_id,a.src_unit_id
+							from T_Unit_Relation a
+							inner join unittemp on a.src_unit_id = unittemp.dst_unit_id
+							)
+
+            ", type == 0 ? "'"+CurrentUserInfo.CurrentUserRole.UnitId +"'": "@HQUnitID");
+            
+            //分页SQL
+            pagedSql.Append(hqUnitSql + "\n");
+            pagedSql.Append(unitListSql + "\n");
             pagedSql.AppendFormat("select * from (select row_number()over( order by ");
             if (pOrderBys != null && pOrderBys.Length > 0)
             {
@@ -2751,26 +2771,27 @@ select @ReturnValue", pCustomerID);
             }
             pagedSql.AppendFormat(" ) as ___rn,v.VIPID ,v.VipCode,v.VipName ,v.VipRealName ,v.Gender ,v.Phone ,v.CreateTime,u.unit_name ,ct.VipCardTypeName ,vc.VipCardID,vc.VipCardCode,vc.VipCardStatusId ");
             pagedSql.AppendFormat(" from [Vip] v ");
-            pagedSql.AppendFormat(@" INNER JOIN vw_unit_level ul ON --会籍店为空时，只有总部用户可以查询
-						    ( CASE WHEN ISNULL(v.CouponInfo, '') = '' THEN @HQUnitID
-                            ELSE v.CouponInfo END ) = ul.unit_id AND ul.customer_id = '{0}' ", CurrentUserInfo.ClientID);
-            pagedSql.AppendFormat(" LEFT JOIN VipCardVipMapping AS m ON m.VipID = v.VipID AND m.IsDelete = 0 ");
-            pagedSql.AppendFormat(" LEFT JOIN VipCard AS vc ON vc.VipCardID = m.VipcardID AND vc.IsDelete=0 ");
-            pagedSql.AppendFormat(" LEFT JOIN SysVipCardType AS ct ON vc.VipCardTypeID = ct.VipCardTypeID AND ct.IsDelete = 0 ");
-            pagedSql.AppendFormat(" LEFT JOIN T_Unit u ON v.couponInfo=u.unit_id ");
-            pagedSql.AppendFormat(" where 1=1  and v.IsDelete=0 ");
+            pagedSql.AppendFormat(@" Left JOIN unittemp ul ON --会籍店为空时，只有总部用户可以查询
+						            v.CouponInfo = ul.dst_unit_id ");
+            pagedSql.AppendFormat(@" LEFT JOIN VipCardVipMapping AS m ON m.VipID = v.VipID AND m.IsDelete = 0 
+                                    LEFT JOIN VipCard AS vc ON vc.VipCardID = m.VipcardID AND vc.IsDelete=0 
+                                    LEFT JOIN SysVipCardType AS ct ON vc.VipCardTypeID = ct.VipCardTypeID AND ct.IsDelete = 0 
+                                    LEFT JOIN T_Unit u ON v.couponInfo=u.unit_id 
+                                    where 1=1  and v.IsDelete=0 ");
 
             //总记录数SQL
-            totalCountSql.Append(hqUnitSql);
+            totalCountSql.Append(hqUnitSql + "\n");
+            totalCountSql.Append(unitListSql + "\n");
             totalCountSql.AppendFormat("select count(1) from [Vip] v");
-            totalCountSql.AppendFormat(@" INNER JOIN vw_unit_level ul ON --会籍店为空时，只有总部用户可以查询
-						    ( CASE WHEN ISNULL(v.CouponInfo, '') = '' THEN @HQUnitID
-                            ELSE v.CouponInfo END ) = ul.unit_id AND ul.customer_id = '{0}' ", CurrentUserInfo.ClientID);
+            totalCountSql.AppendFormat(@" Left JOIN unittemp ul ON --会籍店为空时，只有总部用户可以查询
+						            v.CouponInfo = ul.dst_unit_id ");
             totalCountSql.AppendFormat(" LEFT JOIN VipCardVipMapping AS m ON m.VipID = v.VipID AND m.IsDelete = 0 ");
             totalCountSql.AppendFormat(" LEFT JOIN VipCard AS vc ON vc.VipCardID = m.VipcardID AND vc.IsDelete=0 ");
             totalCountSql.AppendFormat(" LEFT JOIN SysVipCardType AS ct ON vc.VipCardTypeID = ct.VipCardTypeID AND ct.IsDelete = 0 ");
             totalCountSql.AppendFormat(" LEFT JOIN T_Unit u ON v.couponInfo=u.unit_id ");
             totalCountSql.AppendFormat(" where 1=1  and v.IsDelete=0 ");
+            pagedSql.AppendFormat(" and ISNULL(v.CouponInfo,'') = (case when @HQUnitID= {0} then ISNULL(v.CouponInfo,'') else {0}  end) ", type == 0 ? "'" + CurrentUserInfo.CurrentUserRole.UnitId + "'" : "@HQUnitID");
+            totalCountSql.AppendFormat(" and ISNULL(v.CouponInfo,'') = (case when @HQUnitID= {0} then ISNULL(v.CouponInfo,'') else {0}  end) ", type == 0 ? "'" + CurrentUserInfo.CurrentUserRole.UnitId + "'" : "@HQUnitID");
             //过滤条件
             if (pWhereConditions != null)
             {

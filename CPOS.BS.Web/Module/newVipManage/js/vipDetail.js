@@ -1062,15 +1062,7 @@
                                             }
                                         },
 
-                                        {field : 'CouponName',title : '优惠券名称',width:100,align:'center',resizable:false,
-                                            formatter:function(value,row,index){
-                                                if(isNaN(parseInt(value))){
-                                                    return 0;
-                                                }else{
-                                                    return parseInt(value);
-                                                }
-                                            }
-                                        },
+                                        {field : 'CouponName',title : '优惠券名称',width:100,align:'center',resizable:false },
 
                                         {field : 'Remark',title : '优惠券描述',width:200,align:'center',resizable:false,
                                             formatter:function(value ,row,index){
@@ -1153,15 +1145,7 @@
                                             }
                                         },
 
-                                        {field : 'Amount',title : '返现增减',width:58,align:'center',resizable:false,
-                                            formatter:function(value,row,index){
-                                                if(isNaN(parseInt(value))){
-                                                    return 0;
-                                                }else{
-                                                    return parseInt(value);
-                                                }
-                                            }
-                                        },
+                                        {field : 'Amount',title : '返现增减',width:58,align:'center',resizable:false},
                                         {field : 'AmountSourceName',title : '变更类型',width:100,align:'center',resizable:false},
 
                                         {field : 'Reason',title : '原因',width:100,align:'center',resizable:false} ,

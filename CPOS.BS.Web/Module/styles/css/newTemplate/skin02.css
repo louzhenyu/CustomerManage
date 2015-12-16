@@ -379,8 +379,8 @@
 .panel-header, .panel-body {
     border: none;
 }
-.datagrid-row td:first-of-type div{ line-height: 22px; white-space:initial;  padding-left: 40px;}
-.datagrid-header-row td:first-of-type div{ line-height: 22px; white-space:initial;  padding-left: 40px;}
+.datagrid-row td:first-of-type div.datagrid-cell{ line-height: 22px; white-space:initial;  padding-left: 40px;}
+.datagrid-header-row td:first-of-type div.datagrid-cell{ line-height: 22px; white-space:initial;  padding-left: 40px;}
 .datagrid-row td:first-of-type div.datagrid-cell-check{ padding-left: 0;}
 .datagrid-header-row td:first-of-type div.datagrid-header-check{  padding-left: 0;}
 /*列表操作图标*/

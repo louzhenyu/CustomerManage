@@ -1715,9 +1715,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pPageSize"></param>
         /// <param name="pCurrentPageIndex"></param>
         /// <returns></returns>
-        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int type, int pPageSize, int pCurrentPageIndex)
         {
-            return this._currentDAO.GetVipList(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
+            return this._currentDAO.GetVipList(pWhereConditions, pOrderBys,type, pPageSize, pCurrentPageIndex);
         }
     }
 }

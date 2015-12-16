@@ -20,11 +20,11 @@
             <form id="queryFrom">
             <div class="commonSelectWrap">
                 <em class="tit">年份：</em>
-                <label class="searchInput"><input id="Year"  name="Year" class="easyui-combobox" type="text" ></label>
+                <label class="selectBox"><input id="Year"  name="Year" class="easyui-combobox" type="text" ></label>
             </div>
             <div class="commonSelectWrap">
                             <em class="tit">月份：</em>
-                            <label class="searchInput"><input class="easyui-combobox" id="Month" name="Month" type="text" ></label>
+                            <label class="selectBox"><input class="easyui-combobox" id="Month" name="Month" type="text" ></label>
                         </div>
             <div class="commonSelectWrap">
                 <em class="tit">姓名：</em>

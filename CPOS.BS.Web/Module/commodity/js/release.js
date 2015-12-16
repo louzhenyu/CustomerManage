@@ -1160,6 +1160,7 @@
 
         },
         //上传图片
+
         uploadImg: function (btn, callback) {
             var uploadbutton = KE.uploadbutton({
                 button: btn,

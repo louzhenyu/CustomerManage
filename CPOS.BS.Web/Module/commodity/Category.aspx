@@ -48,19 +48,19 @@
       	</div>
       </div>
 
-<script id="tpl_addProm" type="text/html">
+<script id="tpl_addFrom" type="text/html">
            <form id="addProm">
       <div class="commonSelectWrap">
       <em class="tit">分类名称：</em>
         <label class="searchInput" >
-          <input data-text="促销分组名称" class="easyui-validatebox" data-options="required:true" data-flag="Item_Category_Name" name="Item_Category_Name" type="text" value="">
+          <input data-text="分类名称" class="easyui-validatebox" data-options="required:true" data-flag="Item_Category_Name" name="Item_Category_Name" type="text" value="">
           <input name="Item_Category_Id" type="text" style="display: none"/>
        </label>
  </div>
   <div class="commonSelectWrap">
                            <em class="tit">上级分类：</em>
-                           <label class="searchInput">
-                             <input data-text="上级分类" id="Category" data-options="required:true" data-flag="Parent_Id" name="Parent_Id" type="text" value="">
+                           <label class="selectBox">
+                             <input  id="Category" data-options="required:true" data-flag="Parent_Id" name="Parent_Id" type="text" value="">
                            </label>
                        </div>
   <div class="commonSelectWrap">

@@ -59,7 +59,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Register
                 {
                     if (Convert.ToBoolean(item.IsMustDo) && string.IsNullOrEmpty(item.Value))
                     {
-                        throw new APIException("必填字段不能为空") {ErrorCode = ERROR_ColumnValue_IsMustDo};
+                        throw new APIException("必填字段不能为空") { ErrorCode = ERROR_ColumnValue_IsMustDo };
                     }
                     sql += bll.GetColumnName(item.ID) + "='" + item.Value + "',";
 
@@ -75,11 +75,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Register
                 //根据表更新字段
 
                 // bll.UpdateDynamicColumnValue(sql.Trim(','), "003e30e7121741beb749a230eebecfe0");
-                bll.UpdateDynamicColumnValue(sql.Trim(','), pRequest.UserID,tableName);
+                //注册时只需输入手机号，兼容处理
+                sql = sql.Trim(',');
+                if (sql != "")
+                    bll.UpdateDynamicColumnValue(sql, pRequest.UserID, tableName);
             }
             else
             {
-                throw new APIException("用户ID无效") {ErrorCode = 121};
+                throw new APIException("用户ID无效") { ErrorCode = 121 };
             }
             return rd;
         }
