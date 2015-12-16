@@ -1,30 +1,8 @@
 ﻿define(['jquery', 'tools', 'highcharts', 'langzh_CN', 'easyui', 'mustache'], function ($, temp) {
-
     var page = {
-
         init: function () {
-
-            $.util.ajax({
-                customerId: $.util.getUrlParam('CustomerId') || '92a251898d63474f96b2145fcee2860c',
-                url: "/ApplicationInterface/Vip/VipGateway.ashx",
-                data: {
-                    action: 'GetVipTotal'
-                },
-                success: function (data) {
-
-                    if (data.IsSuccess) {
-
-                        self.updateBaseInfo(data.Data);
-
-                        self.initHighCharts(data.Data);
-
-                        //self.updateEventTable(data.Data);
-                    }
-                },
-                error: function () {
-                    //self.initHighCharts();
-                }
-            });
+			var that = this;
+			that.isNavigator();
         },
 		isNavigator:function(){
 			var that = this,
