@@ -3,6 +3,20 @@
 	<title>页面详情页</title>
 	<link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/style.css?v=0.3" />
+    <style>
+
+        .qb_WeixinService {display:none;  width: 794px;position: fixed; top: 50%;left: 45%;margin: -245px 0 0 -347px;background: rgba(0,0,0,0.5);z-index: 9999;}
+        .qb_WeixinService .quick_top {width: 794px;}
+        .qb_WeixinService .quick {width: 794px;}
+        .qb_WeixinService .quick_center{width: 794px;}
+        .qb_WeixinService .quick_centernr {width: 794px;  height: 500px;}
+        .qb_WeixinService .found {  text-align: center;}
+        .qb_WeixinService .found img{border-radius:5px;  width: 265px;margin: 6px;}
+        .qb_WeixinService .found a{color:#00cccc}
+        .qb_WeixinService .found font{color:#00cccc}
+        .qb_WeixinService .found  p{  font-size: 18px;  color: #999;}
+        .qb_quick { z-index: 9000;}
+    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div data-js="/Module/static/js/Vip14/page.js?ver=0.2" id="section">
@@ -64,9 +78,9 @@
                     <div class="found">
                         <span>创建云店：</span>
                         一键对接品牌微信，建立微商城、微官网
-                        <p>① 微信服务号授权<a href="javascript:;">（立即授权）</a></p>
+                        <p>① 微信服务号授权<a id="WeixinService" href="javascript:;">（立即授权）</a></p>
                         <p>② 上传并发布商品<a target="_blank" href="http://help.chainclouds.cn/?p=652">（商品发布介绍）</a></p>
-                        <p>③ 装修云店<a href="javascript:;">（装修入门介绍）</a></p>
+                        <p>③ 装修云店<a  target="_blank" href="http://help.chainclouds.cn/?p=772">（装修入门介绍）</a></p>
                     </div>
                 </div>
             </div>
@@ -125,6 +139,28 @@
     </div>
 </div>
 
+
+    <!-- 微信服务号授权 -->
+<div class="qb_WeixinService">
+    <div class="quick">
+        <div class="quick_top">绑定微信帐号<a href="javascript:;" class="WeixinServicecloseBtn"><img src="images/close.png" /></a></div>
+        
+            <div class="quick_center">
+                <div class="quick_centernr">
+                    <div class="found">
+                        <br />
+                       <p>如果您已有<font>微信公众服务号并已通过实名认证</font>，请与连锁掌柜打通吧。</p><br /><br /><br />
+                        <a target="_blank"  href="http://open.chainclouds.com/receive"><img src="images/weixinset.png" /></a><br />
+                        如果你还没有微信公众服务号，可以<a target="_blank"  href="https://mp.weixin.qq.com/cgi-bin/readtemplate?t=register/step1_tmpl&lang=zh_CN">点击注册</a><br /><br /><br /><br />
+                        绑定微信服务号，将可使用连锁掌柜所有功能，<a target="_blank"  href="\Module\helpCenter\helpCenterClass.aspx">了解所有功能</a><br />
+                        请注意是微信公众服务号，不是订阅号哦，<a target="_blank"  href="http://kf.qq.com/faq/140806zARbmm140826M36RJF.html">有何区别？</a>
+                    </div>
+                </div>
+            </div>
+        
+        
+    </div>
+</div>
 
 <script type="text/javascript" src="/Module/static/js/lib/require.js" defer async="true" data-main="/Module/static/js/main"></script>
 </asp:Content>

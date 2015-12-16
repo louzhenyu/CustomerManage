@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /*common*/
 .commonBtn{background:#fc7a52; cursor:pointer;}
 .commonTitle{border-left:4px solid #fe7c24;}
@@ -62,8 +62,8 @@
 .commonNav li:hover{ background: #06adb3;}
 .commonNav li.on{background: #06989d;}
 .commonNav li.dropDown{background:url(../../images/newTemplate/jiantou.png) no-repeat center center}
-.commonNav li.dropDown{ position: relative; width: 36px;z-index: 1000}
-.commonNav li.dropDown ul{ background:#00cccc;  position: absolute; top: 67px; left: 0px;z-index: 999}
+.commonNav li.dropDown{ position: relative; width: 36px;z-index: 999}
+.commonNav li.dropDown ul{ background:#00cccc;  position: absolute; top: 67px; left: 0px;z-index: 998}
 .commonNav li.dropDown ul li{ float: none; height: 32px; line-height: 32px; }
 .commonNav li.dropDown ul li a{ height: 32px; line-height: 32px; font-size: 14px;}
 /*全局菜单*/

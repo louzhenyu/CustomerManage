@@ -31,6 +31,8 @@ require.config({
 
         // lib 
         jquery: 'lib/jquery-1.8.3.min',
+        easyui: '/Module/static/js/lib/jquery.easyui.min',
+        langzh_CN: '/Module/static/js/lib/easyui-lang-zh_CN',
         tools:'lib/tools-lib',
 		mustache:'lib/mustache',
         // plugin

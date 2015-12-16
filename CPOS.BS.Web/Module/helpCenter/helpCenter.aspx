@@ -21,9 +21,9 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
             <div id="tagContent">
                 <div class="tagContent selectTag" id=tagContent0>
                     <ul>
-                        <li><a href=""><img src="images/tp01.png" /><span>微信服务号授权</span></a></li>
+                        <li><a target="_blank" href="http://help.chainclouds.cn/?p=785"><img src="images/tp01.png" /><span>微信服务号授权</span></a></li>
                         <li><a  target="_blank" href="http://help.chainclouds.cn/?p=652"><img src="images/tp02.png" /><span>上传并发布商品</span></a></li>
-                        <li><a href=""><img src="images/tp03.png" /><span>装修云店</span></a></li>
+                        <li><a target="_blank" href="http://help.chainclouds.cn/?p=772"><img src="images/tp03.png" /><span>装修云店</span></a></li>
                     </ul>
                 </div>
                 <div class="tagContent" id="tagContent1">
@@ -34,8 +34,8 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
                 </div>
                 <div class="tagContent" id="tagContent2">
                     <ul>
-                        <li><a href=""><img src="images/tp06.png" /><span>建立会员制度</span></a></li>
-                        <li><a href=""><img src="images/tp07.png" /><span>导入实体会员</span></a></li>
+                        <li><a target="_blank" href="http://help.chainclouds.cn/?p=713"><img src="images/tp06.png" /><span>建立会员制度</span></a></li>
+                        <li><a target="_blank" href="http://help.chainclouds.cn/?p=733"><img src="images/tp07.png" /><span>导入实体会员</span></a></li>
                     </ul>
                 </div>
                 <div class="tagContent" id="tagContent3">
@@ -43,7 +43,7 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
                         <li onmouseout="Downloadapp(false)" onmouseover="Downloadapp(true)" ><a  href=""><img class="QRcode"  src="images/erwm.png" /><img  src="images/tp08.png" /><span>下载掌柜APP</span></a>
                             
                         </li>
-                        <li><a href=""><img src="images/tp09.png" /><span>APP使用指南</span></a></li>
+                        <li><a  target="_blank" href="http://help.chainclouds.cn/?p=830"><img src="images/tp09.png" /><span>APP使用指南</span></a></li>
                     </ul>
                 </div>
             </div>
@@ -55,32 +55,30 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
    	  <div class="novice_title"><h1>常用宝典</h1><span>温故知新  渐成老手</span><a href="/Module/helpCenter/helpCenterClass.aspx">更多</a></div>
 		<div class="commonly_nr">
         	<ul class="commonly_nr2"><h2>会员活动</h2>
-            	<li><a href="">如何设置积分返现？</a></li>
-            	<li><a href="">如何创建优惠券？</a></li>
-            	<li><a href="">如何设置生日活动？</a></li>
-            	<li><a href="">如何招募线上会员？</a></li>
-            	<li><a target="_blank"  href="http://help.chainclouds.cn/?p=709">如何提升会员复购率？</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=717">如何设置积分返现？</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=803">如何创建优惠券？</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=822">如何设置生日活动？</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=820">如何招募线上会员？</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=824">如何创建营销活动？</a></li>
             </ul>
             <span></span>
         	<ul class="commonly_nr2"><h2>云店管理</h2>
-            	<li><a href="">团购</a></li>
-            	<li><a href="">秒杀</a></li>
-            	<li><a href="">退换货管理</a></li>
-            	<li><a href="">退款管理</a></li>
-            	<li><a href="">微官网</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=807">团购</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=812">秒杀</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=840">退换货管理</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=843">退款管理</a></li>
             </ul>
             <span></span>
         	<ul class="commonly_nr2"><h2>会员管理</h2>
-            	<li><a href="">卡基础设置</a></li>
-            	<li><a href="">会员标签设置</a></li>
-            	<li><a href="">会员查询</a></li>
-            	<li><a href="">会员开卡</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=874">卡基础设置</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=727">会员标签设置</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=730">会员查询</a></li>
             </ul>
             <span></span>
         	<ul class="commonly_nr2"><h2>门店实战</h2>
-            	<li><a href="">店长集客怎么玩</a></li>
-            	<li><a href="">员工如何开小店</a></li>
-            	<li><a href="">玩一场出色的异业合作</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=854">店长集客怎么玩</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=850">员工如何开小店</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=797">玩一场出色的异业合作</a></li>
             </ul>
         </div>
     </div>
@@ -98,13 +96,13 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         	<ul class="commonly_nr1"><h2>常见操作</h2>
             	<li><a target="_blank" href="http://help.chainclouds.cn/?p=690">停用离职员工</a></li>
             	<li><a target="_blank" href="http://help.chainclouds.cn/?p=693">停用已关闭门店</a></li>
-            	<li><a href="">重新授权微信</a></li>
-            	<li><a href="">解绑微信</a></li>
+            	<li><a target="_blank" href="http://open.chainclouds.com/receive">重新授权微信</a></li>
             </ul>
             <span></span>
         	<ul class="commonly_nr1"><h2>引粉秘籍</h2>
             	<li><a target="_blank" href="http://help.chainclouds.cn/?p=702">店内吸粉大法？</a></li>
             	<li><a target="_blank" href="http://help.chainclouds.cn/?p=706">9大日常粉丝维护妙招？</a></li>
+            	<li><a target="_blank" href="http://help.chainclouds.cn/?p=709">如何提升会员复购率？</a></li>
             </ul>
         </div>
     </div>
