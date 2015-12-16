@@ -197,7 +197,6 @@
                 collapsible: true,//可折叠
                 //数据来源
                 data: data.Data.ContactEventList,
-                sortName: 'Status', //排序的列
                 /*sortOrder : 'desc', //倒序
                  remoteSort : true, // 服务器排序*/
                 idField: 'ContactEventId', //主键字段
@@ -630,7 +629,7 @@
             args: {
                 bat_id:"1",
                 PageIndex: 1,
-                PageSize: 7,
+                PageSize: 10,
                 SearchColumns:{},    //查询的动态表单配置
                 OrderBy:"",           //排序字段
                 SortType: 'DESC',    //如果有提供OrderBy，SortType默认为'ASC'

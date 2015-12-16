@@ -44,7 +44,7 @@
 .jui-dialog .cancelBtn{border:none;background:#ccc;color:#fff;}
 
 .exportTable{height:75px;background:#f4f8fa;}
-.exportTable .exportBtn{display:inline-block;width:110px;height:32px;line-height:32px;margin:22px 0 0 30px;text-align:center;font-size:14px;border-radius:3px;background:#0cc;color:#f4f8fa;}
+.exportTable .exportBtn{display:none;width:110px;height:32px;line-height:32px;margin:22px 0 0 30px;text-align:center;font-size:14px;border-radius:3px;background:#0cc;color:#f4f8fa;}
 /*弹层，分页*/
 /*底部分页的重写*/
 #kkpager2{clear:both;height:30px;line-height:30px;margin-top:10px;color:#999999;font-size:14px;}

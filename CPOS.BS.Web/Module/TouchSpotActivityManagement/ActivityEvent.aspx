@@ -280,13 +280,13 @@
         }
 
         #tableWrap .datagrid-btable tr {
-            height: 71px;
+            height: 40px;
         }
 
         #tableWrap .addBtn {
             display: block;
             width: 100%;
-            height: 49px;
+            height: 39px;
             background: url(images/icon-add.png) no-repeat center center;
             cursor: pointer;
         }

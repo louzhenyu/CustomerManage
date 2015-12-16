@@ -188,12 +188,12 @@
 					/*
                     {field : 'VipCardTypeName',title : '卡类型',width:58,resizable:false,align:'center'},
 					{field : 'VipCardGradeName',title : '卡等级',width:58,resizable:false,align:'center'},
+					*/
                     {field : 'JoinCount',title : '参与人数',width:58,align:'center',resizable:false,
                         formatter:function(value,row,index){
                           return '<p class="handle joinprize"  data-index="'+index+'"  data-oprtype="joinprize">'+value+'</p>';
                         }
                     },
-					*/
                     {field : 'WinnerCount',title : '中奖人数',width:60,align:'center',resizable:false,
                         formatter:function(value,row,index){
                           return '<p class="handle winprize"  data-index="'+index+'"  data-oprtype="winprize">'+value+'</p>';
