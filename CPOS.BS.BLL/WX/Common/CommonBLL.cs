@@ -1917,6 +1917,8 @@ namespace JIT.CPOS.BS.BLL.WX
 
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM200565259", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            if (WXTMConfigData == null)
+                return new ResultEntity();
             CommonData CommonData = new CommonData();
             CommonData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             CommonData.keyword1 = new DataInfo() { value = Inout.order_no, color = WXTMConfigData.Colour1 };
@@ -1939,6 +1941,8 @@ namespace JIT.CPOS.BS.BLL.WX
         {
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00230", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            if (WXTMConfigData == null)
+                return new ResultEntity();
             IntegralChange IntegralChangeData = new IntegralChange();
             IntegralChangeData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             IntegralChangeData.FieldName = new DataInfo() { value = "更新前积分", color = WXTMConfigData.Colour1 };
@@ -1964,6 +1968,8 @@ namespace JIT.CPOS.BS.BLL.WX
         {
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM205454780", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            if (WXTMConfigData == null)
+                return new ResultEntity();
             Balance BalanceData = new Balance();
             BalanceData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             BalanceData.keyword1 = new DataInfo() { value = "客户余额账户", color = WXTMConfigData.Colour1 };
@@ -1988,6 +1994,8 @@ namespace JIT.CPOS.BS.BLL.WX
         {
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM205454780", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            if (WXTMConfigData == null)
+                return new ResultEntity();
             CashBack CashBackData = new CashBack();
             CashBackData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             CashBackData.order = new DataInfo() { value = OrderNo, color = WXTMConfigData.Colour1 };
