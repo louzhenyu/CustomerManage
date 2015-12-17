@@ -107,34 +107,34 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
                 case "events_pool":
                     content = EventsPool();
                     break;
-                case "get_prizes_winner_list":
+                case "get_prizes_winner_list": //中奖人员列表 
                     content = GetPrizesWinnerList();
                     break;
-                case "getDrawMethod":
+                case "getDrawMethod":   //抽奖方式
                     content = GetDrawMethod();
                     break;
-                case "getPersonCount":
+                case "getPersonCount":  //获取人均抽奖次数
                     content = getPersonCount();
                     break;
                 case "MobileModule":
                     content = GetMobileModule();
                     break;
-                case "getEventstypeList":
+                case "getEventstypeList":   //活动类型
                     content = GetEventsTypeList();
                     break;
-                case "getCouponType":
+                case "getCouponType":  //优惠券类型
                     content = GetCouponType();
                     break;
-                case "GetEventsTypeById":
+                case "GetEventsTypeById":  //根据id获取活动类型
                     content = GetEventsTypeById();
                     break;
-                case "eventsType_save":
+                case "eventsType_save"://活动类型保存
                     content = EventsTypeSave();
                     break;
-                case "EventsTypeRemove":
+                case "EventsTypeRemove":  //活动类型删除
                     content = EventsTypeRemove();
                     break;
-                case "CretaeWxCode":
+                case "CretaeWxCode":  //获取微信二维码
                     content = CretaeWxCode();
                     break;
             }
@@ -1104,9 +1104,14 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
 
             string EventId = FormatParamValue(Request("EventId"));
             int pageIndex = Utils.GetIntVal(FormatParamValue(Request("page"))) - 1;
+            int limit = Utils.GetIntVal(FormatParamValue(Request("limit")));
+            if (limit == 0)//根据传过来的值
+            {
+                limit = PageSize;
+            } 
 
             GetResponseParams<LLotteryLogEntity> dataList =
-                service.GetEventLotteryLog(EventId, pageIndex, PageSize);
+                service.GetEventLotteryLog(EventId, pageIndex, limit);
             IList<LLotteryLogEntity> data = new List<LLotteryLogEntity>();
             int dataTotalCount = 0;
 
@@ -2137,6 +2142,7 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
                 entity.DrawMethodName = "----请选择-----";
                 List<LEventDrawMethodEntity> list = new List<LEventDrawMethodEntity>();
                 list.Add(entity);
+                
                 foreach (LEventDrawMethodEntity item in ld)
                 {
                     list.Add(item);
@@ -2158,10 +2164,15 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
         #region MyRegion
         public string getPersonCount()
         {
+           // 原来是：   --每天抽奖次数，-1 无（限制），1 一次，2 每天一次。
+            //现在变为：仅一次： 1，每天一次2，每周一次3，无限制：4
             var responseData = new ResponseData();
             List<PersonCountEntity> list = new List<PersonCountEntity>(){
-                 new PersonCountEntity{ Id="0",Name="每天一次"},
-                 new PersonCountEntity{ Id="1",Name="仅一次"}
+               
+                 new PersonCountEntity{ Id="1",Name="仅一次"}, 
+                 new PersonCountEntity{ Id="2",Name="每天一次"},
+                   new PersonCountEntity{ Id="3",Name="每周一次"},
+                   new PersonCountEntity{ Id="4",Name="无限制"}
             };
             responseData.data = list;
             responseData.success = true;
