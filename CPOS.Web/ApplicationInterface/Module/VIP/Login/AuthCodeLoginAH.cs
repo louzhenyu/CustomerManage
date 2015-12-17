@@ -90,6 +90,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             #region 获取会员权益
             var customerBasicSettingBll = new CustomerBasicSettingBLL(CurrentUserInfo);
             var memberBenefit = customerBasicSettingBll.GetMemberBenefits(pRequest.CustomerID);
+            var bllPrize = new LPrizesBLL(CurrentUserInfo);
             #endregion
 
             switch (pRequest.Parameters.VipSource.Value)
@@ -142,12 +143,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                                 WeiXinUserId = string.IsNullOrWhiteSpace(pRequest.UserID) ? Guid.NewGuid().ToString("N") : pRequest.UserID
                             };
                             bll.Create(vipByID);
+                            #region 注册会员触点活动奖励
+                            bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
+                            #endregion
                         }
                         else if(vipByID != null)
                         {
                             vipByID.Phone = pRequest.Parameters.Mobile;
                             vipByID.Status = 2;
                             bll.Update(vipByID);
+                            #region 注册会员触点活动奖励
+                            bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
+                            #endregion
                         }
 
                         #endregion
@@ -249,6 +256,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                                 WeiXinUserId = string.IsNullOrWhiteSpace(pRequest.UserID) ? Guid.NewGuid().ToString("N") : pRequest.UserID
                             };
                             bll.Create(vipByPhone);
+                            #region 注册会员触点活动奖励
+                            bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
+                            #endregion
                         }
                         #endregion
 

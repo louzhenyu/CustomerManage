@@ -1580,10 +1580,9 @@ select @ReturnValue", pCustomerID);
         {
             var sql = new StringBuilder();
 
-            sql.Append("select count(1) from VipCouponMapping as a ");
+            sql.Append("select (1) from VipCouponMapping as a ");
             sql.Append("inner join Coupon as b on a.CouponID=b.CouponID and b.IsDelete=0 and b.Status=0 and b.EndDate>GETDATE() ");
             sql.AppendFormat("where a.IsDelete=0 and a.VIPID='{0}'", vipId);//没有被使用，并且没有过期
-
 
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql.ToString()));
         }

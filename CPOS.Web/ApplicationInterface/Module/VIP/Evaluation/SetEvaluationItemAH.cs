@@ -73,6 +73,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
                         inoutBll.Update(order, pTran);
                     }
                     pTran.Commit();//提交事物
+
+                    #region 评论触点活动奖励
+                    var bllPrize = new LPrizesBLL(CurrentUserInfo);
+                    bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Comment");
+                    #endregion
                 }
                 catch (Exception ex)
                 {

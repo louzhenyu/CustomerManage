@@ -278,6 +278,8 @@ namespace JIT.CPOS.Web.WeiXin
 
 
                 #endregion
+
+                
             }
             catch (Exception ex)
             {
@@ -1297,6 +1299,7 @@ namespace JIT.CPOS.Web.WeiXin
             {
                 #region 处理会员
                 VipBLL vipServiceUnion = new VipBLL(tmpUser);
+                var bllPrize = new LPrizesBLL(tmpUser);//触点奖励实例
                 vipInfo.WeiXinUserId = OpenID;
                 vipInfo.City = City;
                 if (Gender != string.Empty) vipInfo.Gender = Convert.ToInt32(Gender);
