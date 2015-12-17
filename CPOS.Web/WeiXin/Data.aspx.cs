@@ -139,7 +139,7 @@ namespace JIT.CPOS.Web.WeiXin
 
 
                 VipBLL vipService = new VipBLL(loggingSessionInfo);
-				var bllPrize = new LPrizesBLL(loggingSessionInfo);//触点奖励实例
+				
                 var vipCode = vipService.GetVipCode();
                 var vipCodeShort = vipCode.Substring(4).Insert(3, " ");
 
@@ -178,11 +178,6 @@ namespace JIT.CPOS.Web.WeiXin
                                 vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";
 
                                 vipService.Create(vipInfo);
-						 #region 关注触点活动奖励
-
-                        bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
-                        #endregion
-
                             }
                             else
                             {
@@ -1338,6 +1333,11 @@ namespace JIT.CPOS.Web.WeiXin
                     vipInfo.Col50 = iRad.ToString();
                     vipServiceUnion.Create(vipInfo);
                     vipId = vipInfo.VIPID;
+
+                    #region 关注触点活动奖励
+
+                    bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
+                    #endregion
                 }
                 else
                 {
