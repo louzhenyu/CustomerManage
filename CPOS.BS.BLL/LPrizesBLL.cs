@@ -256,7 +256,34 @@ namespace JIT.CPOS.BS.BLL
 
                 if (contactEvent != null)
                 {
+                    
+
                     var entityPrize = bllPrize.GetPrizesByEventId(contactEvent.ContactEventId.ToString()).FirstOrDefault();
+
+                    LPrizeWinnerBLL bllPrizeWinner = new LPrizeWinnerBLL(this.CurrentUserInfo);
+                    LPrizeWinnerEntity entityPrizeWinner = null;
+
+                    List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+                    complexCondition.Add(new EqualsCondition() { FieldName = " PrizeID", Value = strEventId });
+                    complexCondition.Add(new EqualsCondition() { FieldName = " VipID", Value = strVipId });
+
+                    List<OrderBy> lstOrder = new List<OrderBy> { };
+                    lstOrder.Add(new OrderBy() { FieldName = " CreateTime", Direction = OrderByDirections.Desc });
+
+                    entityPrizeWinner = bllPrizeWinner.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
+                    if(entityPrizeWinner!=null)
+                    {
+                        if(contactEvent.RewardNumber=="OnlyOne")
+                        {
+                            rd.PrizeName = "仅有一次奖励！";
+                            return rd;
+                        }
+                        if (contactEvent.RewardNumber == "OnceADay" && Convert.ToDateTime(entityPrizeWinner.CreateTime).Date==DateTime.Now.Date)
+                        {
+                            rd.PrizeName = "每天一次奖励！";
+                            return rd;
+                        }
+                    }
 
                     var bllPrizePool = new LPrizePoolsBLL(CurrentUserInfo);
                     var entityPrizePool = new LPrizePoolsEntity();
@@ -275,9 +302,6 @@ namespace JIT.CPOS.BS.BLL
                     {
                         #region 调用积分统一接口
                         var salesReturnBLL = new T_SalesReturnBLL(this.CurrentUserInfo);
-                        //var pTran = salesReturnBLL.GetTran();//事务
-                        //using (pTran.Connection)
-                        //{
                             VipIntegralBLL bllVipIntegral = new VipIntegralBLL(this.CurrentUserInfo);
                             var vipBLL = new VipBLL(this.CurrentUserInfo);
 
@@ -299,14 +323,10 @@ namespace JIT.CPOS.BS.BLL
                                 var CommonBLL = new CommonBLL();
                                 CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, this.CurrentUserInfo);
                             }
-
-                        //}
-
                         #endregion
                     }
                     else if (entityPrize.PrizeTypeId == "Coupon")
                     {
-                        List<OrderBy> lstOrder = new List<OrderBy> { };
                         CouponEntity entityCoupon = null;
                         CouponBLL bllCoupon = new CouponBLL(this.CurrentUserInfo);
                         entityCoupon = DataTableToObject.ConvertToList<CouponEntity>(bllCoupon.GetCouponIdByCouponTypeID(entityPrize.CouponTypeID).Tables[0]).FirstOrDefault();
@@ -341,8 +361,7 @@ namespace JIT.CPOS.BS.BLL
                         string s = "";
                     }
 
-                    LPrizeWinnerBLL bllPrizeWinner = new LPrizeWinnerBLL(this.CurrentUserInfo);
-                    LPrizeWinnerEntity entityPrizeWinner = null;
+
 
                     entityPrizeWinner = new LPrizeWinnerEntity()
                     {
@@ -360,7 +379,7 @@ namespace JIT.CPOS.BS.BLL
 
                     rd.PrizeId = entityPrize.PrizesID;
                     rd.PrizeName = entityPrize.PrizeName;
-                    rd.ResultMsg = "中奖";
+                    rd.ResultMsg = "已奖励";
                 }
             }
             catch (Exception ex)
