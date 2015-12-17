@@ -49,9 +49,9 @@ a:hover{color:#fff;}
 .dataTable th{text-align:center;font-size:14px;color:#4d4d4d;}
 .dataTable td{font-size:13px;color:#666;}
 .dataTable .tableHead{border-bottom:2px solid #07c8cf;}
-.dataTable .addBtn{display:block;width:100%;height:49px;background:url(images/icon-add.png) no-repeat center center;cursor:pointer;}
-.dataTable .edit{display:block;width:100%;height:49px;background:url(images/exit.png) no-repeat center center;cursor:pointer;}
-.dataTable .delBtn{display:block;width:100%;height:49px;background:url(images/delete.png) no-repeat center center;cursor:pointer;}
+.dataTable .addBtn{display:inline-block;  margin: 0 10px;width:20px;height:49px;background:url(images/icon-add.png) no-repeat center center;cursor:pointer;}
+.dataTable .edit{display:inline-block;  margin: 0 10px;width:100%;height:49px;background:url(images/exit.png) no-repeat center center;cursor:pointer;}
+.dataTable .delBtn{display:inline-block;  margin: 0 10px;width:20px;height:49px;background:url(images/delete.png) no-repeat center center;cursor:pointer;}
 
 .addPrizeArea{height:73px;padding:20px;border-bottom:1px solid #d0d5d8;}
 .commonHandleBtn{display:block;width:132px;height:32px;line-height:32px;text-align:center;font-size:14px;border-radius:4px;background:#07c8cf;color:#fff;}
@@ -288,10 +288,10 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                 	<tr class="tableHead">
                         <th>奖品等级</th>
                         <th>奖品名称</th>
-                        <th>数量</th>
+                        <th>奖品数量</th>
                         <th>已有生成数量</th>
-                        <th>追加</th>
-                        <th>删除</th>
+                        <th>奖品剩余数量</th>
+                        <th>操作</th>
                       </tr>
                 </thead>
                 <tbody>
@@ -374,11 +374,9 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                 	<tr class="tableHead">
                         <th>奖品等级</th>
                         <th>奖品名称</th>
-                        <th>数量</th>
-                      <%--  <th>中奖概率（%）</th>--%>
-                        <th>追加</th>
-                       <%-- <th>编辑</th>--%>
-                        <th>删除</th>
+                        <th>奖品数量</th>
+                       <th>奖品剩余数量</th>
+                        <th>操作</th>
                       </tr>
                 </thead>
                 <tbody>
@@ -781,8 +779,8 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 	<td><#=idata.PrizeName#></td>
 	<td class="numBox"><#=idata.CountTotal#></td>
 	<td><#=idata.IssuedQty#></td>
-	<td><em class="addBtn"></em></td>
-	<td><em class="delBtn"></em></td>
+	<td ><#=idata.RemainCount#></td>
+	<td><em class="addBtn"></em><em class="delBtn"></em></td>
 </tr>
 <#}#>
 </script>
@@ -795,8 +793,8 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 	<td><#=idata.PrizeLevelName#></td>
 	<td><#=idata.PrizeName#></td>
 	<td class="numBox"><#=idata.CountTotal#></td>
-	<td><em class="addBtn"></em></td>
-	<td><em class="delBtn"></em></td>
+	<td ><#=idata.RemainCount#></td>
+	<td><em class="addBtn"></em><em class="delBtn"></em></td>
 </tr>
 <#}#>
 </script>

@@ -61,6 +61,8 @@
 #kkpager2 a:hover {border: none; background: none; color: #00cccc}
 #kkpager2 span.curr {color: #00cccc; font-size: 14px; font-weight:600; border: none; background: none;}
 
+.joinprize,.winprize{  text-decoration: underline;color:#0099ff;}
+    
 </style>
 
 </asp:Content>

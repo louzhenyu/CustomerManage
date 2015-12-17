@@ -482,12 +482,14 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							textField: 'RuleName',
 							data:ruleData,
 							onSelect: function(param){
-								$('#ruleBgPic .infoBox').hide();
-								if(param.RuleId==1){
-									$('.ruleText').show();
-								}else{
-									$('.ruleImg').show();
-								}
+							    $('#ruleBgPic .infoBox').hide();
+							    if (param) {
+							        if (param.RuleId == 1) {
+							            $('.ruleText').show();
+							        } else {
+							            $('.ruleImg').show();
+							        }
+							    }
 							}
 						});
 						setTimeout(function(){$('#ruleOption').combobox('select',1);},200);
@@ -698,7 +700,12 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						     }
 
 						}
-						 $(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX.png" data-prizesid=""><em></em>谢谢您！</div>');
+						//$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX.png" data-prizesid=""><em></em>谢谢您！</div>');
+						$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX_CH.png" data-prizesid=""><em></em>谢谢您（橙黄）！</div>');
+						$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX_JH.png" data-prizesid=""><em></em>谢谢您（橘黄）！</div>');
+						$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX_QL.png" data-prizesid=""><em></em>谢谢您（浅蓝）！</div>');
+						$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX_TL.png" data-prizesid=""><em></em>谢谢您（天蓝）！</div>');
+						$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX_ZS.png" data-prizesid=""><em></em>谢谢您（紫色）！</div>');
 						 if (that.elems.activiType == 1) {
 						     $('#prizeListTable tbody').html(html);
 						 }
