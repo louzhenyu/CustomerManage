@@ -428,16 +428,17 @@
 		        valueField: 'key',
 		        textField: 'value',
 		        data: [
-                //    {
-		        //    "key": "Focus",
-		        //    "value": "关注"
-		        //}, {
-		        //    "key": "Reg",
-		        //    "value": "注册"
-		        //}, {
-		        //    "key": "Comment",
-		        //    "value": "评论"
-		        //}, {
+                    {
+		            "key": "Focus",
+		            "value": "关注"
+		        }, {
+		            "key": "Reg",
+		            "value": "注册"
+		        }, {
+		            "key": "Comment",
+		            "value": "评论"
+		        }, 
+                //{
 		        //    "key": "SignIn",
 		        //    "value": "签到"
 		        //},
@@ -595,6 +596,46 @@
 		            $ActivitySelect.hide();
 		            $("#Activity_Select").combobox({
 		                required: false
+		            });
+		        }
+		        var wd = 190, H = 32;
+		        if (data == "Focus" || data == "Reg") {
+		            //奖励次数
+		            $('#Activity_RewardNumber').combobox({
+		                width: wd,
+		                height: H,
+		                panelHeight: that.elems.panlH,
+		                valueField: 'key',
+		                textField: 'value',
+		                data: [{
+		                    "key": "OnlyOne",
+		                    "value": "仅限一次"
+		                }, {
+		                    "key": "",
+		                    "value": "请选择"
+		                }]
+		            });
+		        } else {
+		            //奖励次数
+		            $('#Activity_RewardNumber').combobox({
+		                width: wd,
+		                height: H,
+		                panelHeight: that.elems.panlH,
+		                valueField: 'key',
+		                textField: 'value',
+		                data: [{
+		                    "key": "OnlyOne",
+		                    "value": "仅限一次"
+		                }, {
+		                    "key": "OnceADay",
+		                    "value": "每天一次"
+		                }, {
+		                    "key": "unlimited",
+		                    "value": "不限次数"
+		                }, {
+		                    "key": "",
+		                    "value": "请选择"
+		                }]
 		            });
 		        }
 
