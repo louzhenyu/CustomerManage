@@ -22,7 +22,9 @@
                                    <div class="commonBtn addCategory" data-flag="add">新建分类</div>
 
                                     </div>
+                                    <div class="imgTable">
                                      <table class="dataTable" id="gridTable"></table>
+                                     </div>
                                      <div style="display: none"> <table class="dataTable" id="gridTable1"></table>
                                        </div>
                                      <div id="pageContianer">
@@ -49,7 +51,7 @@
       </div>
 
 <script id="tpl_addFrom" type="text/html">
-           <form id="addProm">
+           <form id="addFrom">
       <div class="commonSelectWrap">
       <em class="tit">分类名称：</em>
         <label class="searchInput" >

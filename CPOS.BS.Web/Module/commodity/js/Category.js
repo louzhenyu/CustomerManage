@@ -67,7 +67,7 @@
             });
             $('#win').delegate(".saveBtn","click",function(e){
 
-                if ($('#addProm').form('validate')) {
+                if ($('#addFrom').form('validate')) {
                       debugger;
                     var fields = $('#addFrom').serializeArray(); //自动序列化表单元素为JSON对象
                     that.loadData.operation(fields,that.elems.optionType,function(data){
@@ -197,6 +197,7 @@
             };
             $('#panlconent').layout('add',options);
             $('#win').window('open');
+
             that.registerUploadImgBtn();
 
                 $('#Category').combotree({
@@ -210,7 +211,8 @@
                 });
 
             if(data) {
-                $("#editLayer").find(".imgPanl img").attr("src",data.ImageUrl);
+                $("#editLayer").find(".imgPanl").html("<img src='"+data.ImageUrl+"'>");
+
             }
         },
 
@@ -240,7 +242,7 @@
             debugger;
             var uploadbutton = KE.uploadbutton({
                 button: btn,
-                width:123,
+                width:300,
                 //上传的文件类型
                 fieldName: 'imgFile',
                 isShow:true,
