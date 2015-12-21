@@ -77,7 +77,7 @@
         createSellDom: function (data) {
             var html = bd.template("tpl_commoditySellForm", data);
             $("#textList").html(html);
-            $("#textList").find(".load .easyui-numberbox").numberbox({ width: 80 });   //初始化控件。；
+            $("#textList").find(".load .easyui-numberbox").numberbox({ width: 80,max:1000000000});   //初始化控件。；
         },
 
         drawDom: function (objType, name) {
@@ -173,9 +173,14 @@
             that.elems.section.delegate("#submitBtn", "click", function (e) {
                 debugger;
                 var index = 0;
+                if($("#dataState").is(':hidden')){
+                    $("#SKUForm").form("disableValidation");//隐藏禁用，
+                }else{
+                    $("#SKUForm").form("enableValidation"); //显示就启用
+                }
                 if ($(this).data("issubMit")) {
 
-                   if( that.getAddData()) { //获取添加商品的参数，
+                    if (that.getAddData()&&$("#SKUForm").form("validate"))  { //获取添加商品的参数，
                        alert("商品修改提交中...",true);    // 不自动消失 true；
                        that.loadData.addCommodity(function (data) {
                            debugger;
@@ -388,6 +393,7 @@
                                     for (var i = 0; i < imgList.length; i++) {
                                         if (i == 0) {
                                             that.elems.editLayer.find(".imgPanl img").attr("src", imgList[i].ImageURL);
+                                            that.elems.editLayer.find(".imgPanl img").show();
                                             that.elems.editLayer.find(".imglist").append("<img class='on' src='" + imgList[i].ImageURL + "'/>"); //设置默认图片。 因为默认图片永远 都是第一个，所以就如此
                                         } else {
                                             that.elems.editLayer.find(".imglist").append("<img src='" + imgList[i].ImageURL + "'/>");
@@ -614,8 +620,8 @@
             }).delegate(".addSKU", "click", function () {  //添加sku分类事件
                 $("#dataState").fadeOut(10);
                 var long = that.elems.sku.find(".skuList").length;
-                if (long >= 2) {
-                    alert("最多只能添加2个规格");
+                if (long >= 3) {
+                    alert("最多只能添加3个规格");
                     return;
                 }
                 var html = bd.template("tpl_AddPro");
@@ -1358,7 +1364,7 @@
                         me.parents(".imgPanl").find("img").attr("src", src);
                     } else {
                         me.parents(".imgPanl").find("img").attr("src", "");
-
+                        me.parents(".imgPanl").find("img").hide();
                         self.elems.editLayer.find(".btnPanel").fadeOut();
 
                     }
@@ -1368,6 +1374,7 @@
             //上传图片并显示
             self.uploadImg(e, function (ele, data) {
                 $(ele).parent().siblings(".imgPanl").find("img").attr("src", data.file.url);
+                $(ele).parent().siblings(".imgPanl").find("img").show();
                 $(ele).parent().siblings(".imglist").find("img").removeClass("on");
                 $(ele).parent().siblings(".imglist").append('<img class="on" src="' + data.file.url + '" />');
                 self.elems.editLayer.find(".imgPanl").hover(function () {
@@ -1384,7 +1391,7 @@
         uploadImg: function (btn, callback) {
             var uploadbutton = KE.uploadbutton({
                 button: btn,
-                width:50,
+                width:150,
                 //上传的文件类型
                 fieldName: 'file',
                 //注意后面的参数，dir表示文件类型，width表示缩略图的宽，height表示高
@@ -1412,7 +1419,11 @@
             });
             debugger;
             uploadbutton.fileBox.change(function (e) {
-                uploadbutton.submit();
+                if($(".imglist").find("img").length<5){
+                    uploadbutton.submit();
+                } else{
+                    $.messager.alert("提示","上传图不可超过五张")
+                }
             });
         },
 

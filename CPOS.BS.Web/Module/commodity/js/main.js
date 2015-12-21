@@ -54,7 +54,8 @@ require.config({
         kindeditor1: '/Module/static/js/plugin/kindeditor',
         kindeditor: '/Framework/javascript/Other/kindeditor/kindeditor',
         artDialog: '/Module/static/js/plugin/artDialog',
-
+        ajaxform: '/Module/static/js/plugin/jquery.form',
+        datetimePicker: '/Module/static/js/plugin/jquery.datetimepicker',
         kkpager: '/Module/static/js/plugin/kkpager'
 
     }

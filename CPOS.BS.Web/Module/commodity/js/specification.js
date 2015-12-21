@@ -85,12 +85,13 @@
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
                 if(optType=="del") {
-                    $.messager.confirm('删除规格', '您想要删除规格？', function(r){
+                    $.messager.confirm('提示', '您想要删除规格？', function(r){
                         if (r){
                             that.loadData.operation(row,optType,function(data){
                                 alert("操作成功");
+                                that.loadPageData(e);
                             });
-                            that.loadPageData(e);
+
                         }
                     });
 
@@ -278,13 +279,13 @@
 
             //分页
             data.Data={};
-            data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
+            data.Data.TotalPageCount = data.Data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
             kkpager.generPageHtml({
                 pno: that.loadData.args.start?that.loadData.args.start+1:1,
                 mode: 'click', //设置为click模式
                 //总页码
                 total: data.Data.TotalPageCount,
-                totalRecords: data.totalCount,
+                totalRecords: data.Data.totalCount,
                 isShowTotalPage: true,
                 isShowTotalRecords: true,
                 //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click

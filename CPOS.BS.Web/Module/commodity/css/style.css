@@ -13,13 +13,11 @@
 
 .r{float: right}.l{float: left}
 
-.fontC{ width: 18px; height: 18px; margin: 0 auto; background:no-repeat center center;}
-.red{color:red}
-.delete{background-image:url(../images/delete.png)}
-.exit{background-image:url(../images/exit.png)}
-.add  {background-image:url(../images/add.png)}
-.tableWrapTextBtn   {height: 120px;padding-top: 35px;padding-left: 25px;}
 
+.red{color:red}
+
+.tableWrapTextBtn   {height: 120px;padding-top: 35px;padding-left: 25px;}
+.datagrid-header-rownumber, .datagrid-cell-rownumber{width: 40px;}
 
 
 .moreQueryWrap{float: right;margin-top: 10px;}
@@ -44,7 +42,7 @@
 .handleLayer .wrapPic .imgPanl img{width:100%;}
 .handleLayer .wrapPic .uploadBtn{float:left; position: relative; width: 123px; height: 33px; background:url(../images/uploadimg.png); cursor:pointer;margin-right: 20px;}
 .handleLayer .wrapPic .uploadBtn .ke-button-common {width:123px;height:33px;opacity:0;filter:Alpha(opacity=0);}
-.handleLayer .wrapPic .uploadBtn input{display:block;width:123px;height:33px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;left:0;}
+.handleLayer .wrapPic .uploadBtn input{display:block;width:123px;height:33px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;left:-78px;}
 
 #addProm{ margin-top: 15px;}
 .shift{display:none;position: absolute;right: 0;top: 30%;}
@@ -64,3 +62,7 @@
 #Children input{ border: 1px solid #ccc; width: 160px;}
 #Children .add{ background:none; color: #00acee; font-size: 15px; }
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none;}
+.panel.window{position:fixed !important;}
+.window-shadow{display:none !important;}
+.datagrid-cell-c1-Modify_Time{ min-width: 115px;}
+.datagrid-cell-c4-Image_Url{min-width: 80px;}

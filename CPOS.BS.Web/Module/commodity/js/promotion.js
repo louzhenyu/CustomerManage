@@ -363,7 +363,7 @@
                             }
 
                         } else {
-                            $.messager.alert("提示",data.Message);
+                            $.messager.alert("提示",data.msg);
                         }
                     }
                 });

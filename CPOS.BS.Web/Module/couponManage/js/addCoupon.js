@@ -381,6 +381,26 @@
                        })
                    }else{
                        $.messager.alert("提示","该门店无任何分销商");
+                       $("#searchGrid").datagrid({
+                           data:[],
+                           singleSelect:false,//多选
+                           frozenColumns: [
+                               [
+                                   {
+                                       field: 'ck',
+                                       width: 70,
+                                       title: '全选',
+                                       align: 'center',
+                                       checkbox: true
+                                   }
+                               ]
+                           ],//显示复选框
+                           columns: [
+                               [
+                                   {field: 'RetailTraderName',align:'left',title: '分销商名称',width:410}
+                               ]
+                           ]
+                       })
                    }
                })
 

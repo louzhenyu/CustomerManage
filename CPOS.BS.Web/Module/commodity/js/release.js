@@ -71,7 +71,7 @@
         createSellDom:function (data) {
             var html = bd.template("tpl_commoditySellForm", data);
             $("#textList").html(html);
-            $("#textList").find(".load .easyui-numberbox").numberbox({ width:80});  //初始化控件。；
+            $("#textList").find(".load .easyui-numberbox").numberbox({ width:80,max:1000000000});  //初始化控件。；
         },
 
        drawDom:function(objType,name) {
@@ -170,17 +170,23 @@
             that.elems.section.delegate("#submitBtn","click",function(e){
                 debugger;
                 var index=0;
+                if($("#dataState").is(':hidden')){
+                    $("#SKUForm").form("disableValidation");//隐藏禁用，
+                }else{
+                    $("#SKUForm").form("enableValidation"); //显示就启用
+                }
                  if($(this).data("issubMit")){
 
-                   if (that.getAddData()) { //获取添加商品的参数，
+                   if (that.getAddData()&&$("#SKUForm").form("validate")) { //获取添加商品的参数，
                        alert("商品添加提交中...");
                        that.loadData.addCommodity(function (data) {
                            window.d.close();
                            $.messager.confirm("商品操作提示", "商品已添加成功,确定要继续添加商品吗？", function (r) {
-                               if (r) {
-                                   var mid = JITMethod.getUrlParam("mid");
-                                   //location.href = "queryList.aspx?Item_Id=" + rowData.Item_Id + "&mid=" + mid;
+                               var mid = JITMethod.getUrlParam("mid");
+                               if (r) {//location.href = "queryList.aspx?Item_Id=" + rowData.Item_Id + "&mid=" + mid;
 								   location.href = "release.aspx?&mid=" + mid;
+                               }else{
+                                   location.href = "queryList.aspx?&mid=" + mid;
                                }
                            });
 
@@ -202,7 +208,7 @@
                 $.util.stopBubble(e);
             });
 
-
+            //data-flag="CarNumber"
 
             /**************** -------------------弹出窗口初始化 start****************/
             $('#win').window({
@@ -894,13 +900,13 @@
                     data:[],
                     columns: [],
                     height:0
-                })
+                });
 
                 that.optionPriceList();
             }
 
 
-         },
+        },
         //新增数据的整合
         getAddData: function () {
             $("#countRepertory").html("0");
@@ -1108,6 +1114,7 @@
                 $(this).addClass("on");
                 var src= $(this).attr("src");
                 $(this).parent().siblings(".imgPanl").find("img").attr("src",src)
+                $(this).parent().siblings(".imgPanl").find("img").show();
             });
             //设置默认和删除图片 事件绑定
             self.elems.editLayer.find(".btnPanel").delegate(".commonBtn","click",function(){
@@ -1137,7 +1144,7 @@
                       }else
                       {
                           me.parents(".imgPanl").find("img").attr("src","");
-
+                          me.parents(".imgPanl").find("img").hide();
                           self.elems.editLayer.find(".btnPanel").fadeOut();
 
                       }
@@ -1147,6 +1154,7 @@
                   //上传图片并显示
             self.uploadImg(e, function (ele, data) {
                     $(ele).parent().siblings(".imgPanl").find("img").attr("src",data.file.url);
+                    $(ele).parent().siblings(".imgPanl").find("img").show();
                     $(ele).parent().siblings(".imglist").find("img").removeClass("on");
                     $(ele).parent().siblings(".imglist").append('<img class="on" src="' + data.file.url+ '" />');
                     self.elems.editLayer.find(".imgPanl").hover(function(){
@@ -1164,7 +1172,7 @@
         uploadImg: function (btn, callback) {
             var uploadbutton = KE.uploadbutton({
                 button: btn,
-                width:50,
+                width:120,
                 //上传的文件类型
                 fieldName: 'file',
                 //注意后面的参数，dir表示文件类型，width表示缩略图的宽，height表示高
@@ -1190,9 +1198,13 @@
                     alert('自定义错误信息: ' + str);
                 }
             });
-            debugger;
+
             uploadbutton.fileBox.change(function (e) {
+            if($(".imglist").find("img").length<5){
                 uploadbutton.submit();
+            } else{
+                $.messager.alert("提示","上传图不可超过五张")
+            }
             });
         },
 

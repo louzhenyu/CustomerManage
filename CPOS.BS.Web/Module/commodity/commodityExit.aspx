@@ -40,13 +40,13 @@
                       </div>
                       <div class="commonSelectWrap">
                           <em class="tit"><span style="color: red;position: relative;">*</span>商品分类：</em>
-                          <label class="searchInput">
+                          <label class="selectBox">
                             <input data-text="商品分类" id="Category" data-options="required:true" data-flag="Item_Category_Id" name="Item_Category_Id" type="text" value="">
                           </label>
                       </div>
                       <div class="commonSelectWrap">
                           <em class="tit">商品分组：</em>
-                          <label class="searchInput">
+                          <label class="selectBox">
                             <input data-text="商品分组" id="ItemCategoryId"    data-flag="ItemCategoryId" name="ItemCategoryId" type="text" value="">
                           </label>
                       </div>
@@ -60,7 +60,7 @@
                               <div class="wrapPic">
                                  <div class="imglist"></div>
                                  <span class="uploadBtn"><input class="uploadImgBtn" type="file" /></span>
-                                 <div class="imgPanl"><img src=""> <div class="btnPanel"><div class="bg"></div><p><a data-flag="default" class="setDefault commonBtn">默认</a> <a data-flag="del" class="setDel commonBtn">删除</a></p> </div></div>
+                                 <div class="imgPanl"><img src="" style="display: none"> <div class="btnPanel"><div class="bg"></div><p><a data-flag="default" class="setDefault commonBtn">默认</a> <a data-flag="del" class="setDel commonBtn">删除</a></p> </div></div>
                                </div>
                                <div  class="txt">图片尺寸640*640</div>
                           </div>
@@ -88,11 +88,13 @@
                     <!--商品详情End-->
                    <!--销售信息-->
                    <div class="panelDiv" id="nav03" data-index="2">
+                   <form></form>
+                     <form id="SKUForm">
                       <div  data-state="商品基本信息" id="dataState">
                         <div class="commonSelectWrap">
                           <em class="tit">商品条码：</em>
                           <label class="searchInput">
-                            <input data-text="商品条码" data-flag="price" name="barcode" class="easyui-validatebox" data-options="validType:'englishCheckSub'" type="text" value="">
+                            <input data-text="商品条码" data-flag="price" name="barcode" class="easyui-validatebox" data-options="validType:['englishCheckSub','length[4,20]']" type="text" value="">
                           </label>
                       </div>
                         <div class="textList" id="textList">
@@ -163,6 +165,7 @@
 
                                                                                                      </div>
                        </div>
+                       </form>
                    </div>
                      <!--销售信息End-->
                   <div class="zsy"></div>
@@ -289,9 +292,9 @@
                                                                  <em class="tit"><#=item.item_price_type_name#>:</em>
                                                                  <label class="searchInput " style="border: none">
                                                                  <#if(item.item_price_type_code=="库存"){#>
-                                                                   <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:70,height:32" data-flag="price" name="price" type="text" value="">
+                                                                   <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="required:true,min:0,precision:0,width:70,height:32" data-flag="price" name="price" type="text" value="">
                                                                <#}else{#>
-                                                                <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:2,width:70,height:32" data-flag="price" name="price" type="text" value="">
+                                                                <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="required:true,min:0,precision:2,width:70,height:32" data-flag="price" name="price" type="text" value="">
 
                                                                <#}#>
                                                                  </label>
