@@ -245,7 +245,18 @@ namespace JIT.CPOS.BS.BLL
                 userInfo.customer_id = loggingSessionInfo.CurrentLoggingManager.Customer_Id;
                 //处理是新建还是修改
                 string strDo = string.Empty;
-                userInfo.User_Password = EncryptManager.Hash(userInfo.User_Password, HashProviderType.MD5);
+
+                if (userInfo.User_Password != null)
+                {
+                    userInfo.User_Password = EncryptManager.Hash(userInfo.User_Password, HashProviderType.MD5);
+                }
+                else { 
+                 var   userInfoOld=this.GetUserById( loggingSessionInfo,userInfo.User_Id);
+                    if(userInfoOld!=null)
+                    {
+                        userInfo.User_Password = userInfoOld.User_Password; //如果是修改的时候没有密码，就用原来老的密码
+                     }
+                }
                 if (userInfo.strDo == null)
                 {
                     if (userInfo.User_Id == null || userInfo.User_Id.Equals(""))

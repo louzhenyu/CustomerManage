@@ -218,6 +218,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             {
                 user.User_Status = "1";
             }
+            if (user_id.Trim().Length == 0 && string.IsNullOrEmpty(user.User_Password))//新增用户才需要提交密码
+            {
+                responseData.success = false;
+                responseData.msg = "用户密码不能为空";
+                return responseData.ToJSON();
+            }
+
 
             if (user_id.Trim().Length == 0)
             {
@@ -241,12 +248,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 responseData.msg = "姓名不能为空";
                 return responseData.ToJSON();
             }
-            if (user.User_Password == null || user.User_Password.Trim().Length == 0)
-            {
-                responseData.success = false;
-                responseData.msg = "用户密码不能为空";
-                return responseData.ToJSON();
-            }
+           
             //if (user.Fail_Date == null || user.Fail_Date.Trim().Length == 0)
             //{
             //    responseData.success = false;
