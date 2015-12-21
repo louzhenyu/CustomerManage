@@ -112,7 +112,7 @@
                 that.loadData.args.CouponTypeID = row.CouponTypeID;
                 if(optType=="add") {
 
-                        that.addNumber(row);
+                    that.addNumber(row);
 
                 }
 
@@ -140,13 +140,13 @@
                         return false;
                     }
                     $.messager.confirm("删除优惠券操作","确认要删除该条记录",function(r){
-                             if(r){
-                                 that.loadData.operation("",optType,function(){
-                                     alert("操作成功");
-                                     that.loadPageData()
-                                 })
+                        if(r){
+                            that.loadData.operation("",optType,function(){
+                                alert("操作成功");
+                                that.loadPageData()
+                            })
 
-                             }
+                        }
                     })
                 }
             })
@@ -180,7 +180,7 @@
             that.loadData.args.start=0;
             var fileds=$("#seach").serializeArray();
             $.each(fileds,function(i,filed){
-               that.loadData.seach[filed.name] = filed.value;
+                that.loadData.seach[filed.name] = filed.value;
             });
 
 
@@ -244,7 +244,7 @@
                     {field : 'ValidityPeriod',title : '有效期',width:200,align:'left',resizable:false
                         ,formatter:function(value ,row,index) {
                         if (!value) {
-                           return new Date(value).format("yyyy-MM-dd") + "至" + new Date(row.EndTime).format("yyyy-MM-dd");
+                            return new Date(value).format("yyyy-MM-dd") + "至" + new Date(row.EndTime).format("yyyy-MM-dd");
                         }else{
                             return row.ValidityPeriod
                         }
@@ -268,7 +268,7 @@
                         }},
 
                     {field : 'addOptdel',title : '操作',width:200,align:'center',resizable:false,
-                    formatter: function (value, row, index) {
+                        formatter: function (value, row, index) {
                             var str = "<div class='operation'><div data-index=" + index + " data-flag='add' class='btnAdd  opt' title='追加'> </div>";
                             str += "<div data-index=" + index + "  data-flag='Download' data-TypeName='" + row.CouponTypeName + "' data-TypeID='" + row.CouponTypeID + "' class='btnDownload  opt' title='下载'> </div>";
                             str += "<div data-index=" + index + " data-flag='delete' class='delete opt' title='删除'></div></div>";
@@ -291,11 +291,11 @@
                 onClickRow:function(rowindex,rowData){
 
                 },onClickCell:function(rowIndex, field, value){
-                      if(field=="addOpt"||field=="addOptdel"){    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
-                     that.elems.click=false;
-                     }else{
-                     that.elems.click=true;
-                     }
+                    if(field=="addOpt"||field=="addOptdel"){    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
+                        that.elems.click=false;
+                    }else{
+                        that.elems.click=true;
+                    }
                 }
 
             });
@@ -375,14 +375,14 @@
             GetCouponTypeList: function (callback) {
                 $.util.ajax({
                     url: "/ApplicationInterface/Gateway.ashx",
-                      data:{
-                          action:'Marketing.Coupon.GetCouponTypeList',
-                          CouponTypeName:this.seach.CouponTypeName,
-                          ParValue:this.seach.ParValue,
-                          PageIndex:this.args.PageIndex,
-                          PageSize:this.args.PageSize
+                    data:{
+                        action:'Marketing.Coupon.GetCouponTypeList',
+                        CouponTypeName:this.seach.CouponTypeName,
+                        ParValue:this.seach.ParValue,
+                        PageIndex:this.args.PageIndex,
+                        PageSize:this.args.PageSize
 
-                      },
+                    },
                     success: function (data) {
                         if (data.IsSuccess) {
                             if (callback) {
@@ -410,9 +410,9 @@
                 }
                 if(pram.length>0) {
                     $.each(pram, function (index, filed) {
-                             if(filed.value!==""){
-                                 prams.data[filed.name]=filed.value;
-                             }
+                        if(filed.value!==""){
+                            prams.data[filed.name]=filed.value;
+                        }
                     });
                 }
                 switch(operationType){

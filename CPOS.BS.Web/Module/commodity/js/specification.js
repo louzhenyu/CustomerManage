@@ -280,35 +280,36 @@
             //分页
             data.Data={};
             data.Data.TotalPageCount = data.Data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
-            kkpager.generPageHtml({
-                pno: that.loadData.args.start?that.loadData.args.start+1:1,
-                mode: 'click', //设置为click模式
-                //总页码
-                total: data.Data.TotalPageCount,
-                totalRecords: data.Data.totalCount,
-                isShowTotalPage: true,
-                isShowTotalRecords: true,
-                //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
-                //适用于不刷新页面，比如ajax
-                click: function (n) {
-                    //这里可以做自已的处理
-                    //...
-                    //处理完后可以手动条用selectPage进行页码选中切换
-                    this.selectPage(n);
-                    //让  tbody的内容变成加载中的图标
-                    //var table = $('table.dataTable');//that.tableMap[that.status];
-                    //var length = table.find("thead th").length;
-                    //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
+            if(data.Data.TotalPageCount&&data.Data.TotalPageCount>1) {
+                kkpager.generPageHtml({
+                    pno: that.loadData.args.start ? that.loadData.args.start + 1 : 1,
+                    mode: 'click', //设置为click模式
+                    //总页码
+                    total: data.Data.TotalPageCount,
+                    totalRecords: data.Data.totalCount,
+                    isShowTotalPage: true,
+                    isShowTotalRecords: true,
+                    //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
+                    //适用于不刷新页面，比如ajax
+                    click: function (n) {
+                        //这里可以做自已的处理
+                        //...
+                        //处理完后可以手动条用selectPage进行页码选中切换
+                        this.selectPage(n);
+                        //让  tbody的内容变成加载中的图标
+                        //var table = $('table.dataTable');//that.tableMap[that.status];
+                        //var length = table.find("thead th").length;
+                        //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
 
-                    that.loadMoreData(n);
-                },
-                //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
-                getHref: function (n) {
-                    return '#';
-                }
+                        that.loadMoreData(n);
+                    },
+                    //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
+                    getHref: function (n) {
+                        return '#';
+                    }
 
-            }, true);
-
+                }, true);
+            }
 
             if((that.loadData.opertionField.displayIndex||that.loadData.opertionField.displayIndex==0)){  //点击的行索引的  如果不存在表示不是显示详情的修改。
                 that.elems.tabel.find("tr").eq(that.loadData.opertionField.displayIndex).find("td").trigger("click",true);
