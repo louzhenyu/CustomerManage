@@ -34,7 +34,7 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetSkuListByItemId(string itemId)
         {
             DataSet ds = new DataSet();
-            string sql = GetSql("") + " From vw_sku a  where a.item_id = '" + itemId + "' and a.status = '1' order by a.item_code,a.barcode";
+            string sql = GetSql("") + " From vw_sku a  where a.item_id = '" + itemId + "' and a.status = '1' order by a.item_code,a.barcode,a.prop_1_detail_code,a.prop_2_detail_code,a.prop_3_detail_code";
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }

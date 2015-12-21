@@ -132,7 +132,7 @@ namespace JIT.CPOS.BS.DataAccess
                           ,(select USER_NAME From T_User where T_User.user_id = a.create_user_id) Create_User_Name 
                           ,(select USER_NAME From T_User where T_User.user_id = a.modify_user_id) Modify_User_Name 
                           ,(select item_category_name From T_Item_Category where T_Item_Category.item_category_id = a.parent_id) Parent_Name
-,isnull((  select COUNT(1) from ItemCategoryMapping  c  where c.ItemCategoryId=a.item_category_id  and c.IsDelete=0),0) as PromotionItemCount
+,isnull((  select COUNT(1) from ItemCategoryMapping  c INNER JOIN T_ITEM i ON c.ItemId=i.item_id  where c.ItemCategoryId=a.item_category_id  and c.IsDelete=0),0) as PromotionItemCount
                           From t_item_category a where a.customerId = '{0}'", this.CurrentUserInfo.CurrentLoggingManager.Customer_Id);
 
             if (status != "")
