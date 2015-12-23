@@ -30,6 +30,7 @@
 	.setUnitBtn{background:url(images/icon-tree01.png) no-repeat center center;}
 	.setUnitBtn.on{background:url(images/icon-tree02.png) no-repeat center center;}
 	
+	
 	#addProm{margin-top:50px;}
 	#win .commonSelectWrap{margin:12px 10px 10px 70px;}
 	#win .searchInput{width:232px;}
