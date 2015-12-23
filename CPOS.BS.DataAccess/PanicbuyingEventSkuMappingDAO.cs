@@ -119,7 +119,24 @@ namespace JIT.CPOS.BS.DataAccess
                         select   
                             MappingId,vw.sku_id  as SkuID 
                             ,isnull(vp.price,0)price ,ISNULL(pe.SalesPrice,0)SalesPrice
-                            ,(vw.prop_1_detail_name+vw.prop_2_detail_name+vw.prop_3_detail_name+vw.prop_4_detail_name+vw.prop_5_detail_name) SkuName
+                            ,(CASE WHEN LEN(vw.prop_1_detail_name) > 0
+                                   THEN vw.prop_1_detail_name
+                                        + CASE WHEN LEN(vw.prop_2_detail_name) > 0
+                                               THEN ',' + vw.prop_2_detail_name
+                                               ELSE ''
+                                          END + CASE WHEN LEN(vw.prop_3_detail_name) > 0
+                                                     THEN ',' + vw.prop_3_detail_name
+                                                     ELSE ''
+                                                END
+                                        + CASE WHEN LEN(vw.prop_4_detail_name) > 0
+                                               THEN ',' + vw.prop_4_detail_name
+                                               ELSE ''
+                                          END + CASE WHEN LEN(vw.prop_5_detail_name) > 0
+                                                     THEN ',' + vw.prop_5_detail_name
+                                                     ELSE ''
+                                                END
+                                   ELSE ''
+                              END ) SkuName
                             ,ISNULL(pe.Qty,0) Qty,ISNULL(pe.KeepQty,0) KeepQty,ISNULL(pe.SoldQty,0) SoldQty,
                             (ISNULL(pe.Qty,0)-ISNULL(pe.KeepQty,0)-ISNULL(pe.SoldQty,0)) InverTory,
                             (case when MappingId is null or CONVERT(NVARCHAR(50),MappingId)='' then 'false' else 'true' end)IsSelected

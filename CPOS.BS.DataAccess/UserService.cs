@@ -814,10 +814,10 @@ where a.customer_id=@CustomerId    {4} ";
         /// 判断用户名是否存在
         /// </summary>
         /// <returns></returns>
-        public bool IsExistUserCode(string userCode)
+        public bool IsExistUserCode(string strUserCode,LoggingSessionInfo loggingSessionInfo)
         {
-            string sql = "select isnull(count(*),0) from t_user a where a.user_code='" + userCode + "'";
-            var count = Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
+            string strSql = string.Format("select isnull(count(*),0) from t_user a where A.customer_id='{0}' AND A.user_code='{1}'", loggingSessionInfo.CurrentLoggingManager.Customer_Id, strUserCode);
+            var count = Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
             return count > 0 ? true : false;
         }
         #endregion

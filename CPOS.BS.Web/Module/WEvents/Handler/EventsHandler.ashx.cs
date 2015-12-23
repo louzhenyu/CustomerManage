@@ -1120,9 +1120,10 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
                 data = dataList.Params.EntityList;
                 dataTotalCount = dataList.Params.ICount;
             }
-
+            
             content = string.Format("{{\"totalCount\":{1},\"topics\":{0}}}",
-                data.ToJSON(),
+                //data.ToJSON(),
+                JsonHelper.JsonSerializer<IList<LLotteryLogEntity>>(data),
                 dataTotalCount);
 
             return content;
@@ -2121,7 +2122,7 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
             dataTotalCount = dataList.ICount;
 
             content = string.Format("{{\"totalCount\":{1},\"topics\":{0}}}",
-                data.ToJSON(),
+                JsonHelper.JsonSerializer<IList<LPrizeWinnerEntity>>(data),
                 dataTotalCount);
 
             return content;

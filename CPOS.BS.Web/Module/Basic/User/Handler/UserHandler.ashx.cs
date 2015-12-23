@@ -214,6 +214,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             }
 
             user = key.DeserializeJSONTo<UserInfo>();
+
+            if (userService.IsExistUserCode(user.User_Code, CurrentUserInfo))
+            {
+                responseData.success = false;
+                responseData.msg = "用户名已存在！";
+                return responseData.ToJSON();
+            }
             if (user.User_Status == null || user.User_Status.Trim().Length == 0)
             {
                 user.User_Status = "1";

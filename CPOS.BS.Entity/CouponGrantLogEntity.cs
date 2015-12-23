@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/7/17 14:52:46
+ * Create On	:2015/12/22 14:21:38
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -26,22 +26,10 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class LLotteryLogEntity : BaseEntity 
+    public partial class CouponGrantLogEntity : BaseEntity 
     {
         #region 属性集
-        /// <summary>
-        /// 会员名称
-        /// </summary>
-        public string VipName { get; set; }
-        /// <summary>
-        /// 总数量
-        /// </summary>
-        public int ICount { get; set; }
-        /// <summary>
-        /// 集合
-        /// </summary>
-        public IList<LLotteryLogEntity> EntityList { get; set; }
+
         #endregion
- 
     }
 }

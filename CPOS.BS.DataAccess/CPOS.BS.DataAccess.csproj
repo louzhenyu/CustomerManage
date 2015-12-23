@@ -107,6 +107,7 @@
     <Compile Include="CodeGeneration\ContactEventDAO.cs" />
     <Compile Include="CodeGeneration\ContactWeDAO.cs" />
     <Compile Include="CodeGeneration\CouponDAO.cs" />
+    <Compile Include="CodeGeneration\CouponGrantLogDAO.cs" />
     <Compile Include="CodeGeneration\CouponSourceDAO.cs" />
     <Compile Include="CodeGeneration\CouponTypeDAO.cs" />
     <Compile Include="CodeGeneration\Coupon\CouponTypeItemMappingDAO.cs" />
@@ -554,6 +555,7 @@
     <Compile Include="ContactEventDAO.cs" />
     <Compile Include="ContactWeDAO.cs" />
     <Compile Include="CouponDAO.cs" />
+    <Compile Include="CouponGrantLogDAO.cs" />
     <Compile Include="CouponSourceDAO.cs" />
     <Compile Include="CouponTypeDAO.cs" />
     <Compile Include="Coupon\CouponTypeItemMappingDAO.cs" />

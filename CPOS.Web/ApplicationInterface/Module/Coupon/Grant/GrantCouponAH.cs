@@ -33,19 +33,20 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
                 }
                 CouponBLL bll = new CouponBLL(this.CurrentUserInfo);
                 DataSet ds = bll.GetCouponDetail(pRequest.Parameters.CouponId, "");
-
                 if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0]["Status"].ToString() == "0")
                 {
 
                     if (bllVipCoupon.GrantCoupon(param.Giver, pRequest.UserID, param.CouponId) > 0)
                     {
+                        CouponGrantLogBLL bllCouponGrantLog = new CouponGrantLogBLL(this.CurrentUserInfo);
+                        bllCouponGrantLog.Create(new CouponGrantLogEntity() { CouponId = param.CouponId, FromVipId = param.Giver, ToVipId = pRequest.UserID,CouponGrantLogId=Guid.NewGuid() });
+
                         VipBLL bllVip = new VipBLL(this.CurrentUserInfo);
                         var vipInfo = bllVip.GetVipDetailByVipID(param.Giver);
                         rd.IsSuccess = true;
                         rd.Message = vipInfo.VipName + "赠送你一张" + ds.Tables[0].Rows[0]["CouponName"] + "的优惠券";
                         rd.FollowUrl = "";
                         rd.IsAccept = 0;
-
                     }
                     else
                     {
@@ -53,8 +54,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
                         rd.IsSuccess = false;
                         rd.Message = "领取失败";
                     }
-
-
                 }
                 else
                 {
@@ -62,7 +61,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
                     rd.IsSuccess = false;
                     rd.Message = "优惠券已被使用";
                 }
-
             }
             catch (Exception ex)
             {

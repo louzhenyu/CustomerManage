@@ -136,6 +136,7 @@
     <Compile Include="CodeGeneration\ContactEventBLL.cs" />
     <Compile Include="CodeGeneration\ContactWeBLL.cs" />
     <Compile Include="CodeGeneration\CouponBLL.cs" />
+    <Compile Include="CodeGeneration\CouponGrantLogBLL.cs" />
     <Compile Include="CodeGeneration\CouponSourceBLL.cs" />
     <Compile Include="CodeGeneration\CouponTypeBLL.cs" />
     <Compile Include="CodeGeneration\Coupon\CouponTypeItemMappingBLL.cs" />
@@ -590,6 +591,7 @@
     <Compile Include="ContactEventBLL.cs" />
     <Compile Include="ContactWeBLL.cs" />
     <Compile Include="CouponBLL.cs" />
+    <Compile Include="CouponGrantLogBLL.cs" />
     <Compile Include="CouponSourceBLL.cs" />
     <Compile Include="CouponTypeBLL.cs" />
     <Compile Include="Coupon\CouponTypeItemMappingBLL.cs" />

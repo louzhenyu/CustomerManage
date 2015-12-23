@@ -250,9 +250,9 @@ namespace JIT.CPOS.BS.BLL
             {
                 ContactEventEntity contactEvent = null;
                 if (strEventId != "" || strEventId.Length>0)
-                    contactEvent = bllContactEvent.QueryByEntity(new ContactEventEntity() { ShareEventId = strEventId, IsDelete = 0, Status = 2 }, null).FirstOrDefault();
+                    contactEvent = bllContactEvent.QueryByEntity(new ContactEventEntity() { ShareEventId = strEventId, IsDelete = 0, Status = 2 ,CustomerID=this.CurrentUserInfo.ClientID}, null).FirstOrDefault();
                 else
-                    contactEvent = bllContactEvent.QueryByEntity(new ContactEventEntity() { ContactTypeCode=strType,IsDelete = 0, Status = 2 }, null).FirstOrDefault();
+                    contactEvent = bllContactEvent.QueryByEntity(new ContactEventEntity() { ContactTypeCode = strType, IsDelete = 0, Status = 2, CustomerID = this.CurrentUserInfo.ClientID }, null).FirstOrDefault();
 
                 if (contactEvent != null)
                 {
@@ -350,7 +350,7 @@ namespace JIT.CPOS.BS.BLL
                         if (entityCouponType.ServiceLife!=null && entityCouponType.ServiceLife > 0)
                         {
                             entityCoupon.BeginDate = DateTime.Now.Date;
-                            entityCoupon.EndDate = DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife).Date;
+                            entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife - 1).ToString());
 
                             bllCoupon.Update(entityCoupon);
 
@@ -392,7 +392,7 @@ namespace JIT.CPOS.BS.BLL
 
         #endregion
         #region 红包 大转盘
-        public LotteryRD RedPacket(string strVipId, string strEventId)
+        public LotteryRD RedPacket(string strVipId, string strEventId,string strCustomerID)
         {
             var rd = new LotteryRD();//返回值
 
@@ -406,7 +406,7 @@ namespace JIT.CPOS.BS.BLL
 
 
 
-            LEventsEntity eventEntity = bll.QueryByEntity(new LEventsEntity() { EventID = strEventId }, null).FirstOrDefault();// bll.GetByID(strEventId);
+            LEventsEntity eventEntity = bll.QueryByEntity(new LEventsEntity() { EventID = strEventId, CustomerId = strCustomerID }, null).FirstOrDefault();// bll.GetByID(strEventId);
             if (eventEntity.EventStatus == 40 || eventEntity == null)
             {
                 rd.PrizeName = "抱歉 来晚一步 活动已经结束啦";
@@ -641,7 +641,7 @@ namespace JIT.CPOS.BS.BLL
                     if (entityCouponType.ServiceLife != null && entityCouponType.ServiceLife > 0)
                     {
                         entityCoupon.BeginDate = DateTime.Now.Date;
-                        entityCoupon.EndDate = DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife).Date;
+                        entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife-1).ToString());
 
                         bllCoupon.Update(entityCoupon);
 
