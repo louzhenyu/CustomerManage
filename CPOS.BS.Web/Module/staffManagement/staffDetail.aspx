@@ -56,6 +56,7 @@
 	.panel.layout-panel.layout-panel-south{top:280px !important;}
 	.btnWrap.staffBtn{padding:0 0 35px 0;}
     </style>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
