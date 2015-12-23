@@ -650,6 +650,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 , sales_warehouse_id
                 , Field7, DeliveryId, DefrayTypeId, Field9_begin, Field9_end, ModifyTime_begin, ModifyTime_end, "", vip_no,
                 CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort);
+            //只返回了订单列表和订单数量
             content = string.Format("{{\"totalCount\":{1},\"topics\":{0}}}",
                data.InoutInfoList.ToJSON(),
                data.ICount);
@@ -1246,7 +1247,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 string vip_no = FormatParamValue(form.vip_no);
                 string InoutSort = FormatParamValue(form.InoutSort); //排序
 
-                int maxRowCount = 10000;
+                int maxRowCount = 10000;//导出一万行
                 int startRowIndex = 0;
 
                 string key = string.Empty;
@@ -2537,13 +2538,13 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                         }
                         if (!string.IsNullOrEmpty(rParams["DeliverOrder"]))
                         {
-                            order.Field2 = rParams["DeliverOrder"];
-                            info.DeliverOrder = rParams["DeliverOrder"];
+                            order.Field2 = rParams["DeliverOrder"];//快递单号
+                            info.DeliverOrder = rParams["DeliverOrder"];//快递单号
                         }
                         if (!string.IsNullOrEmpty(rParams["DeliverCompany"]))
                         {
                             order.carrier_id = rParams["DeliverCompany"];
-                            info.DeliverCompanyID = rParams["DeliverCompany"];
+                            info.DeliverCompanyID = rParams["DeliverCompany"];//快递公司
                         }
                         if (status == "600" || !string.IsNullOrEmpty(rParams["DeliverOrder"]) || !string.IsNullOrEmpty(rParams["DeliverCompany"]))
                         {
@@ -2877,7 +2878,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 str.AppendFormat("<div style='height: 24px;'>{0}</div>", item.StatusCount);
                 str.Append("</div>");
             }
-            d.StatusManagerListHTML = str.ToString();
+            d.StatusManagerListHTML = str.ToString();//只返回了组织上面状态模块的内容
 
             responseData.data = d;
 

@@ -357,6 +357,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             var rp = pRequest.DeserializeJSONTo<APIRequest<SavePrizesRP>>();
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var bll = new LPrizesBLL(loggingSessionInfo);
+            var bllCouponType = new CouponTypeBLL(loggingSessionInfo);
+            //int CouponCount = bllCouponType.GetCouponCountByCouponTypeID(rp.Parameters.CouponTypeID);
+
+            //if (rp.Parameters.CountTotal <= CouponCount)
+            //{
+
+            //}
+
             var entity = new LPrizesEntity();
 
             entity.EventId = rp.Parameters.EventId;

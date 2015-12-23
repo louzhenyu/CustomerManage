@@ -357,6 +357,13 @@
                             }
                             return staus;
                         }
+                    },
+                    {
+                        field: 'Item_Id', title: '下载二维码', width: 80, align: 'center', resizable: false,
+                        formatter: function (value, row, index) {
+
+                            return value ? '<a target="_blank" href="/Module/Basic/Item/Handler/ItemHandler.ashx?method=download_qrcode&item_id=' + value + '&item_name=' + row.Item_Name + '"><img width="16" height="16" src="images/QRcode.png"></span>' : '';
+                        }
                     }
 
 
@@ -382,7 +389,7 @@
                      }
 
                 },onClickCell:function(rowIndex, field, value){
-                      if(field=="ck"){    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
+                    if (field == "ck" || field == "Item_Id") {    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
                      that.elems.click=false;
                      }else{
                      that.elems.click=true;

@@ -471,7 +471,8 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //×éÖ¯SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [T_Item] where 1=1  and status<>'-1' ");
+            //sql.AppendFormat("select * from [T_Item] where 1=1  and status<>'-1' ");
+            sql.AppendFormat("select * from [T_Item] where 1=1 ");//È¥µô  and status<>'-1'
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)

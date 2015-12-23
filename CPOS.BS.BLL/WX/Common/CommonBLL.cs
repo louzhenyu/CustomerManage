@@ -1889,6 +1889,8 @@ namespace JIT.CPOS.BS.BLL.WX
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00398", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
+            if(WXTMConfigData==null)
+                return new ResultEntity();
             PaySuccess PaySuccessData = new PaySuccess();
             PaySuccessData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             PaySuccessData.orderProductPrice = new DataInfo() { value = Math.Round(Inout.actual_amount??0, 2).ToString(), color = WXTMConfigData.Colour1 };
@@ -1917,6 +1919,8 @@ namespace JIT.CPOS.BS.BLL.WX
 
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM200565259", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+            if (WXTMConfigData == null)
+                return new ResultEntity();
             if (WXTMConfigData == null)
                 return new ResultEntity();
             CommonData CommonData = new CommonData();

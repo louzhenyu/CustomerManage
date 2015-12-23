@@ -98,7 +98,7 @@ namespace JIT.CPOS.BS.BLL
                 if (conversations.Entities.Length > 0)
                 {
                     TimeSpan ts = DateTime.Now - conversations.Entities[0].CreateTime.Value;
-                    if (ts.Days == 0 && ts.Hours == 0 && ts.Minutes < 60)
+                    if (ts.Days == 0 && ts.Hours == 0 && ts.Minutes < 60)//根据时间间隔获取时分秒
                     {
                         messageId = conversations.Entities[0].CSMessageID.ToString();//60分钟内的那句话的信息（超过60分钟就不取了）
                     }

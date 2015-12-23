@@ -15,7 +15,7 @@ using JIT.CPOS.BS.Web.ApplicationInterface.Base;
 using JIT.CPOS.BS.Entity;
 using System.Web.Script.Serialization;
 using JIT.Utility.DataAccess.Query;
-//using JIT.CPOS.DTO.Module.CardProduct.MakeVipCard.Request;
+using JIT.CPOS.DTO.Module.CardProduct.MakeVipCard.Request;
 using JIT.CPOS.Common;
 
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.UnitAndType

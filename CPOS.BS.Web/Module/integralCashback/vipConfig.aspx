@@ -70,7 +70,7 @@
                               <div class="checkBox" data-flag="EnableRewardCash" data-name="r1"  style="height:50px;"><em></em> <span>启用返现 </span></div>
 								<!--
                                 <div class="rowRline">
-                                        <div class="linetext"><em class="txt">  获得按金额比例计算：</em>  <input type="text" class="easyui-numberbox"  data-options="min:0,precision:0" value="" name="RewardCashPer"> % </div>
+                                        <div class="linetext"><em class="txt">  获得返现按金额比例计算：</em>  <input type="text" class="easyui-numberbox"  data-options="min:0,precision:0" value="" name="RewardCashPer"> % </div>
                                 </div>
                                 -->
                                 <div class="rowRline">

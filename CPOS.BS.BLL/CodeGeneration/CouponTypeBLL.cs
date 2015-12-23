@@ -196,7 +196,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public PagedQueryResult<CouponTypeEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-           return _currentDAO.PagedQuery(pWhereConditions,pOrderBys,pPageSize,pCurrentPageIndex);
+            return _currentDAO.PagedQuery(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
         /// <summary>

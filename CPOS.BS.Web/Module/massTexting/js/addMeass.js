@@ -59,7 +59,6 @@
 
             }).delegate("#submitBtn","click",function(){
                 var pram={};
-               
                 that.loadData.getUserListAll(function(data){
                 pram.NewsUserList=data.Data.UserList;
                 if(pram.NewsUserList.length>0) {

@@ -478,11 +478,11 @@ function fnSave() {
         if (txtRQcode != "" && txtRQcode != null) {
             var text = $("#text").val();
             if (text == "" || text == null) {
-                showError('二维码文本编辑不能为空!');
+                showError('文本编辑不能为空!');
                 return;
             }
             else if (text.length >= 1000) {
-                alert('二维码文本编辑长度不能超过1000!');
+                alert('文本编辑长度不能超过1000!');
                 return;
             }
         }

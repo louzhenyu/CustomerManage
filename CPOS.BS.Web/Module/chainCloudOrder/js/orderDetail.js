@@ -219,16 +219,17 @@
             $('#win').delegate(".saveBtn", "click", function (e) {
 
 
+                    if ($('#orderOption').form('validate')) {
+                        var fields = $('#orderOption').serializeArray(); //自动序列化表单元素为JSON对象
 
-                    var fields = $('#orderOption').serializeArray(); //自动序列化表单元素为JSON对象
+                        that.loadData.operation(fields, that.elems.optionType, function (data) {
 
-                    that.loadData.operation(fields, that.elems.optionType, function (data) {
+                            alert("操作成功");
+                            $('#win').window('close');
+                            that.loadPageData(e);
 
-                        alert("操作成功");
-                        $('#win').window('close');
-                        that.loadPageData(e);
-
-                    });
+                        });
+                    }
 
             });
             /**************** -------------------弹出窗口初始化 end****************/

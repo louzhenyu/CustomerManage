@@ -85,12 +85,13 @@ function fnGridSearch(value) {
         + "&method=PosOrder_lj";
     Ext.getStore(storeId).pageSize = JITPage.PageSize.getValue();
     Ext.getStore(storeId).proxy.extraParams = {
-        form: Ext.JSON.encode(Ext.getCmp("searchPanel").getValues())//传递参数
+        form: Ext.JSON.encode(Ext.getCmp("searchPanel").getValues())//传递参数,查询参数
         , sales_unit_id: Ext.getCmp("txtSalesUnit").jitGetValue()
         , Field7: value
     };
    // debugger;
-  //  Ext.getCmp("pageBar0").moveFirst();
+    //Ext.getCmp("pageBar0").moveFirst();
+    //fnLoadTotalCount();
    // debugger;
     Ext.getStore(storeId).load({  //store装载
         params: {},
@@ -114,7 +115,7 @@ function fnGridReload() {
 
     if (currentRecordCount == 1 && (page.store.currentPage - 1 > 0)) {
         //判断当前页只有一条记录且当前页不是第一页
-        page.store.loadPage(page.store.currentPage - 1);
+        page.store.loadPage(page.store.currentPage - 1);//重新加载页面
     } else {
         page.store.loadPage(page.store.currentPage);
     }
@@ -345,7 +346,7 @@ function fnPayStatus(val, p, r) {
                         icon: Ext.Msg.INFO,
                         fn: function () {
 
-                            fnGridReload();
+                            fnGridReload();//页面重新加载
                             Ext.getCmp("operationWin").hide();
                         }
                     });

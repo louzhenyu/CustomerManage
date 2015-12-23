@@ -40,6 +40,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
             string rst = "";
             switch (pAction)
             {
+
                 case "GetRetailTraders":// 获取某个销售员下的分销商的列表信息
                     rst = this.GetRetailTraders(pRequest);
                     break;

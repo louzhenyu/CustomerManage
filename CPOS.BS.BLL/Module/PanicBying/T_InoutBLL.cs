@@ -510,10 +510,10 @@ namespace JIT.CPOS.BS.BLL
             return RD;
         }
         //根据状态获取订单信息
-        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList, string isPayment, string orderNo,
+        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList,string isPayment, string orderNo,
             string customerId, int? pageSize, int? pageIndex, string OrderChannelID)
         {
-            return this._currentDAO.GetOrdersList(orderId, userId, orderStatusList, isPayment, orderNo, customerId, pageSize ?? 0,
+            return this._currentDAO.GetOrdersList(orderId, userId, orderStatusList,isPayment, orderNo, customerId, pageSize ?? 0,
                 pageIndex ?? 15, OrderChannelID);
         }
         //获取销售（服务）订单
@@ -522,7 +522,7 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetServiceOrderList(order_no, OrderChannelID, userId, customerId, pageSize ?? 0,
                 pageIndex ?? 15);
         }
-
+        
         //获取集客订单
         public DataSet GetCollectOrderList(string order_no, string OrderChannelID, string userId, string customerId, int? pageSize, int? pageIndex)
         {
@@ -714,7 +714,7 @@ namespace JIT.CPOS.BS.BLL
 
         public DataSet GetOrdersByVipID(string vipID, int pageIndex, int pageSize, string OrderBy, string sortType)
         {
-            return this._currentDAO.GetOrdersByVipID(vipID, pageIndex, pageSize, OrderBy, sortType);
+            return this._currentDAO.GetOrdersByVipID(vipID,pageIndex, pageSize, OrderBy, sortType);
         }
     }
 

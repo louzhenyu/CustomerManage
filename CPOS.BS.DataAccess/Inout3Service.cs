@@ -138,7 +138,7 @@ namespace JIT.CPOS.BS.DataAccess
             //        + orderSearchInfo.customer_id + "' ";
             //}
 
-            sql += string.Format(@"DECLARE @AllUnit NVARCHAR(200)
+            sql +=string.Format( @"DECLARE @AllUnit NVARCHAR(200)
 
                 CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
                  INSERT #UnitSET (UnitID)                  
@@ -1542,7 +1542,7 @@ WHERE     1=1) as t";
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public DataSet GetInoutDetailInfoByOrderId(string orderId, string strCustomerId)
+        public DataSet GetInoutDetailInfoByOrderId(string orderId,string strCustomerId)
         {
             #region
             string sql = "select a.order_detail_id "
