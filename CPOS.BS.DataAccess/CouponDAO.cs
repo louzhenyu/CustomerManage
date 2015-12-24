@@ -385,7 +385,7 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder strb = new StringBuilder();
             strb.AppendFormat(@" SELECT a.CouponID,CouponDesc,CouponCode,a.CouponTypeID,b.CouponTypeName,a.Status,convert(date,BeginDate)  BeginDate,convert(date,EndDate) EndDate,b.Discount
              ,b.ParValue,b.IsRepeatable,b.IsMixable,b.ValidPeriod,a.CoupnName as CouponName,
-             (case when BeginDate>getdate() then '-1' when EndDate='9999-12-31 00:00:00.000' then '0'  when EndDate is null then '0'  when  GETDATE() between BeginDate and  EndDate then '0' else '1' end) isexpired,
+             (case when BeginDate>getdate() then '-1' when EndDate='9999-12-31 00:00:00.000' then '0'  when EndDate is null then '0'  when  CONVERT(VARCHAR(10), GETDATE(), 120) between BeginDate and  EndDate then '0' else '1' end) isexpired,
              (case when EndDate='9999-12-31 00:00:00.000' then '1'  when EndDate is null then '1' else '0' end) iseffective,u.Comment 
             FROM Coupon a 
             INNER JOIN CouponType b ON a.CouponTypeID = b.CouponTypeID 

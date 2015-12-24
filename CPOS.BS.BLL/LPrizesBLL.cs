@@ -350,7 +350,7 @@ namespace JIT.CPOS.BS.BLL
                         if (entityCouponType.ServiceLife!=null && entityCouponType.ServiceLife > 0)
                         {
                             entityCoupon.BeginDate = DateTime.Now.Date;
-                            entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife - 1).ToString());
+                            entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife - 1).ToShortDateString() + " 23:59:59.998");
 
                             bllCoupon.Update(entityCoupon);
 
@@ -641,7 +641,7 @@ namespace JIT.CPOS.BS.BLL
                     if (entityCouponType.ServiceLife != null && entityCouponType.ServiceLife > 0)
                     {
                         entityCoupon.BeginDate = DateTime.Now.Date;
-                        entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife-1).ToString());
+                        entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife - 1).ToShortDateString() + " 23:59:59.998");
 
                         bllCoupon.Update(entityCoupon);
 
