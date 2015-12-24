@@ -24,7 +24,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
             VipCouponMappingBLL bllVipCoupon = new VipCouponMappingBLL(this.CurrentUserInfo);
             try
             {
-                if (bllVipCoupon.HadBeGranted(param.CouponId) == 0)
+                if (bllVipCoupon.HadBeGranted(param.CouponId,param.Giver) == 0)
                 {
                     rd.IsAccept = 1;
                     rd.IsSuccess = false;
