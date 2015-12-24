@@ -35,20 +35,21 @@ namespace JIT.CPOS.BS.BLL
     public partial class VipCouponMappingBLL
     {
         /// <summary>
-        /// 优惠券是否被赠送
+        /// 判断发起分享的用户的优惠券是否被赠送 
         /// </summary>
         /// <param name="strCouponId"></param>
         /// <returns></returns>
-        public int HadBeGranted(string strCouponId)
+        public int HadBeGranted(string strCouponId, string strGiver)
         {
-            return this._currentDAO.HadBeGranted(strCouponId);
+            return this._currentDAO.HadBeGranted(strCouponId, strGiver);
         }
         /// <summary>
         /// 优惠券转增
         /// </summary>
         /// <param name="strGiver">赠送者</param>
         /// <param name="strGrantee">被赠送</param>
-        /// <param name="strCouponId">优惠券ID</param>
+        /// <param name="strCouponId">优惠券ID</param> 
+        /// 
         /// <returns></returns>
         public  int  GrantCoupon(string strGiver,string strGrantee,string strCouponId)
         {

@@ -43,15 +43,16 @@ namespace JIT.CPOS.BS.DataAccess
     public partial class VipCouponMappingDAO : Base.BaseCPOSDAO, ICRUDable<VipCouponMappingEntity>, IQueryable<VipCouponMappingEntity>
     {
         /// <summary>
-        /// 判断优惠券是否被赠送
+        /// 判断发起分享的用户的优惠券是否被赠送
+        /// 
         /// </summary>
         /// <param name="strCouponId"></param>
         /// <returns></returns>
-        public int HadBeGranted(string strCouponId)
+        public int HadBeGranted(string strCouponId,string strGiver)
         {
             string strSql = string.Format(@"SELECT COUNT (1) FROM   [dbo].[VipCouponMapping] WITH(NOLOCK)
-                                            WHERE  CouponID='{0}' AND IsDelete=0 AND FromVipId IS NULL
-            ", strCouponId);
+                                            WHERE  CouponID='{0}' AND IsDelete=0 AND VIPID='{1}'
+            ", strCouponId, strGiver);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
         /// <summary>
