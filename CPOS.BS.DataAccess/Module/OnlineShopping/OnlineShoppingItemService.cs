@@ -367,10 +367,11 @@ WHERE a.item_id = '{1}' ", userId, itemId);
         #region Jermyn20131121获取 商品属性集合
         public DataSet GetItemProp1List(string itemId)
         {
-            string sql = "SELECT x.prop1DetailId,x.prop1DetailName,MAX(skuId) skuId FROM ( SELECT DISTINCT a.sku_id skuId,a.sku_prop_id1 prop1DetailId,ISNULL(b.prop_name,a.sku_prop_id1) prop1DetailName,isnull(b.display_index,0) display_index FROM dbo.T_Sku a "
+            string sql = "SELECT x.prop1DetailId,x.prop1DetailName,MAX(skuId) skuId,sum(x.Stock) Stock,sum(x.SalesCount) SalesCount FROM ( SELECT DISTINCT a.sku_id skuId,a.sku_prop_id1 prop1DetailId,ISNULL(b.prop_name,a.sku_prop_id1) prop1DetailName,isnull(b.display_index,0) display_index,c.Stock,c.SalesCount FROM dbo.T_Sku a "
                         + " LEFT JOIN dbo.T_Prop b "
                         + " ON(a.sku_prop_id1 = b.prop_id "
                         + " AND b.status = '1') "
+                        + " LEFT JOIN vw_sku_detail c ON a.sku_id=c.sku_id "
                         + " WHERE a.status = '1' "
                         + " AND a.item_id = '" + itemId + "' ) x GROUP BY x.prop1DetailId,x.prop1DetailName,x.display_index order by x.display_index ";
             return this.SQLHelper.ExecuteDataset(sql);

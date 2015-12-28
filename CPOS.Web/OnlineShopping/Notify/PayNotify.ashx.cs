@@ -238,6 +238,7 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                             //if (int.Parse(IsSuccess.ToString()) == 0) //失败
                             //    Loggers.Debug(new DebugLogInfo() { Message = string.Format("订单与分润关系处理失败:{0}", Desc) });
                             #endregion
+                             
                         }
                         else//充值订单
                         {

@@ -490,6 +490,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             var sysVipCardGradeBLL = new SysVipCardGradeBLL(loggingSessionInfo);    //获取折扣表
             var vipBLL = new VipBLL(loggingSessionInfo);
             var unitBLL = new t_unitBLL(loggingSessionInfo);
+            var inoutServiceBLL = new InoutService(loggingSessionInfo);
+            var skuPriceBLL = new T_Sku_PriceBLL(loggingSessionInfo);
+            var inoutBll = new T_InoutBLL(loggingSessionInfo);//订单业务对象实例化
+
 
             var orderId = rp.Parameters.OrderId;//订单ID
             var status = rp.Parameters.Status;  //当前状态
@@ -509,11 +513,37 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             if (tInoutEntity == null)
                 throw new APIException("此订单Id无效") { ErrorCode = 103 };
 
+            //获取订单明细
+            var inoutDetailList = inoutServiceBLL.GetInoutDetailInfoByOrderId(orderId);
+
+            #region 判断库存是否足够
+            if (tInoutEntity.OrderReasonID == "2F6891A2194A4BBAB6F17B4C99A6C6F5") //普通商品订单判断
+            {
+                foreach (var detail in inoutDetailList)
+                {
+                    //sku库存
+                    var skuStockInfo = skuPriceBLL.QueryByEntity(new T_Sku_PriceEntity() { sku_id = detail.sku_id, item_price_type_id = "77850286E3F24CD2AC84F80BC625859E", status = "1" }, null).FirstOrDefault();
+                    if (skuStockInfo != null)
+                    {
+                        int skuStock = Convert.ToInt32(skuStockInfo.sku_price.Value);
+                        int qty = Convert.ToInt32(detail.enter_qty);
+                        if (skuStock < qty)
+                            throw new APIException("库存不足") { ErrorCode = 121 };
+                    }
+                }
+            }
+            #endregion
+
             IDbTransaction tran = new TransactionHelper(loggingSessionInfo).CreateTransaction();
             using (tran.Connection)
             {
                 try
                 {
+
+                    //首次提交订单处理库存和销量
+                    if (tInoutEntity.Status == "100" && tInoutEntity.Field7 == "-99")
+                        inoutBll.SetStock(orderId, inoutDetailList, 1, loggingSessionInfo);
+
                     var flag = inoutService.UpdateOrderDeliveryStatus(orderId, status, Utils.GetNow(), null, (SqlTransaction)tran);
                     if (!flag)
                         throw new APIException("更新订单状态失败") { ErrorCode = 103 };
@@ -736,7 +766,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                         var detailInfo = new VipAmountDetailEntity()
                         {
                             Amount = -vipEndAmount,
-                            AmountSourceId = "11",
+                            AmountSourceId = "1",
                             ObjectId = orderId
                         };
                         var vipAmountDetailId= vipAmountBll.AddVipAmount(vipInfo, unitInfo,ref vipAmountEntity, detailInfo, (SqlTransaction)tran, loggingSessionInfo);
@@ -827,6 +857,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     var shopchatbll = new ShoppingCartBLL(loggingSessionInfo);
                     shopchatbll.DeleteShoppingCart(orderId);
                     #endregion
+
                 }
                 catch (Exception ex)
                 {

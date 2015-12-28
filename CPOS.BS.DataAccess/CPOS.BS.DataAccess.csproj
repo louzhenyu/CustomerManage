@@ -407,7 +407,15 @@
     <Compile Include="CodeGeneration\T_Payment_TypeDAO.cs" />
     <Compile Include="CodeGeneration\T_ItemDAO.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropDAO.cs" />
+    <Compile Include="CodeGeneration\T_Item_CategoryDAO.cs" />
+    <Compile Include="CodeGeneration\T_Item_PriceDAO.cs" />
+    <Compile Include="CodeGeneration\T_Item_Price_TypeDAO.cs" />
+    <Compile Include="CodeGeneration\T_Item_PropertyDAO.cs" />
+    <Compile Include="CodeGeneration\T_Payment_detailDAO.cs" />
+    <Compile Include="CodeGeneration\T_PropDAO.cs" />
     <Compile Include="CodeGeneration\T_SkuDAO.cs" />
+    <Compile Include="CodeGeneration\T_Sku_PriceDAO.cs" />
+    <Compile Include="CodeGeneration\T_Sku_PropertyDAO.cs" />
     <Compile Include="CodeGeneration\t_unitDAO.cs" />
     <Compile Include="CodeGeneration\T_UserDAO.cs" />
     <Compile Include="CodeGeneration\UnitCommentDAO.cs" />
@@ -919,10 +927,19 @@
     <Compile Include="T_CityDAO.cs" />
     <Compile Include="t_customerDAO.cs" />
     <Compile Include="T_InoutDAO.cs" />
-    <Compile Include="T_Payment_TypeDAO.cs" />
+   
     <Compile Include="T_ItemDAO.cs" />
     <Compile Include="T_ItemSkuPropDAO.cs" />
+    <Compile Include="T_Item_CategoryDAO.cs" />
+    <Compile Include="T_Item_PriceDAO.cs" />
+    <Compile Include="T_Item_Price_TypeDAO.cs" />
+    <Compile Include="T_Item_PropertyDAO.cs" />
+    <Compile Include="T_Payment_detailDAO.cs" />
+    <Compile Include="T_Payment_TypeDAO.cs" />
+    <Compile Include="T_PropDAO.cs" />
     <Compile Include="T_SkuDAO.cs" />
+    <Compile Include="T_Sku_PriceDAO.cs" />
+    <Compile Include="T_Sku_PropertyDAO.cs" />
     <Compile Include="t_unitDAO.cs" />
     <Compile Include="UnitCommentDAO.cs" />
     <Compile Include="UnitService.cs" />

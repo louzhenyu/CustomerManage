@@ -780,6 +780,14 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public decimal integral { get; set; }    //获得积分
             public int integralExchange { get; set; }//需要积分值
             public decimal EveryoneSalesPrice { get; set; } //人人销售价 add by donal 2014-9-22 17:24:53
+            /// <summary>
+            ///库存
+            /// </summary>
+            public int Stock { get; set; }
+            /// <summary>
+            /// 销量
+            /// </summary>
+            public int SalesCount { get; set; }
         }
         public class getItemDetailRespContentDataSalesUser
         {
@@ -831,6 +839,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string skuId { get; set; }               //sku标识
             public string prop1DetailId { get; set; }       //属性1明细标识
             public string prop1DetailName { get; set; }     //属性1明细名称
+            public int stock { get; set; }//库存
+            public int salesCount { get; set; }//销量
         }
 
         #endregion

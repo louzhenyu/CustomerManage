@@ -92,10 +92,11 @@ namespace JIT.CPOS.BS.DataAccess
 
         public DataSet GetItemProp1List(string skuId)
         {
-            string sql = "SELECT DISTINCT a.sku_id skuId,a.sku_prop_id1 prop1DetailId,ISNULL(b.prop_name,a.sku_prop_id1) prop1DetailName "
+            string sql = "SELECT DISTINCT a.sku_id skuId,a.sku_prop_id1 prop1DetailId,ISNULL(b.prop_name,a.sku_prop_id1) prop1DetailName,c.stock,c.salesCount "
                         + " FROM dbo.T_Sku a  LEFT JOIN dbo.T_Prop b "
                         + " ON(a.sku_prop_id1 = b.prop_id "
                         + " AND b.status = '1') "
+                        + " LEFT JOIN vw_sku_detail c ON a.sku_id=c.sku_id "
                         + " WHERE "
                         + " a.sku_id = '" + skuId + "' ";
             return this.SQLHelper.ExecuteDataset(sql);

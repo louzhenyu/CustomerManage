@@ -207,7 +207,7 @@ namespace JIT.CPOS.BS.DataAccess
                             inner join T_Inout_Detail c on a.order_id=c.order_id
                             inner join vw_sku d on d.sku_id=c.sku_id
                             where  b.IsDelete=0 and d.item_id='" + itemId + "' and a.vip_no='" + vipId +
-                            "' and b.EventId='" + eventId + "'group by b.EventId";
+                            "' and a.STATUS<>800 and b.EventId='" + eventId + "'group by b.EventId";
             return this.SQLHelper.ExecuteDataset(sql);
         }
 

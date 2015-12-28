@@ -741,6 +741,8 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,discountRate = a.DiscountRate ";
             sql += " ,integral = a.Integral ";
             sql += ",EveryoneSalesPrice = a.everyonesalesprice";
+            sql += ",Stock = a.Stock";
+            sql += ",SalesCount = a.SalesCount";
             sql += " FROM dbo.vw_sku_detail a ";
             sql += " WHERE a.item_id = '" + itemId + "' and a.status = '1') a order by a.salesPrice asc";          
             return this.SQLHelper.ExecuteDataset(sql);
@@ -1013,11 +1015,12 @@ namespace JIT.CPOS.BS.DataAccess
 
         public DataSet GetItemProp2List(string itemId, string propDetailId)
         {
-            string sql = "SELECT DISTINCT a.sku_id skuId,a.sku_prop_id2 prop2DetailId,ISNULL(b.prop_name,a.sku_prop_id2) prop2DetailName "
+            string sql = "SELECT DISTINCT a.sku_id skuId,a.sku_prop_id2 prop2DetailId,ISNULL(b.prop_name,a.sku_prop_id2) prop2DetailName,c.Stock,c.SalesCount"
                         + " FROM dbo.T_Sku a "
                         + " LEFT JOIN dbo.T_Prop b "
                         + " ON(a.sku_prop_id2 = b.prop_id "
                         + " AND b.status = '1') "
+                        + " LEFT JOIN vw_sku_detail c ON a.sku_Id=c.sku_Id "
                         + " WHERE a.status = '1' "
                         + " AND a.sku_prop_id1 = '" + propDetailId + "' "
                         + " AND a.item_id = '" + itemId + "'";

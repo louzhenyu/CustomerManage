@@ -21,6 +21,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
             var salesReturnBLL = new T_SalesReturnBLL(loggingSessionInfo);
             var historyBLL = new T_SalesReturnHistoryBLL(loggingSessionInfo);
             var refundOrderBLL = new T_RefundOrderBLL(loggingSessionInfo);
+            var vipAmountBLL = new VipAmountBLL(loggingSessionInfo);  //余额返现BLL实例化
+            var vipAmountDetailBLL = new VipAmountDetailBLL(loggingSessionInfo);  //余额返现BLL实例化
+
 
             var pTran = salesReturnBLL.GetTran();//事务
             T_SalesReturnEntity salesReturnEntity = null;
@@ -31,15 +34,26 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
             var vipBll = new VipBLL(loggingSessionInfo);        //会员BLL实例化
             var userBll = new T_UserBLL(loggingSessionInfo);    //店员BLL实例化
             T_UserEntity userEntity = null;   //店员信息
+            var unitBLL = new t_unitBLL(loggingSessionInfo);
 
             refundEntity = refundOrderBLL.GetByID(para.RefundID);
             userEntity = userBll.GetByID(loggingSessionInfo.UserID);
+
             using (pTran.Connection)
             {
                 try
                 {
                     if (refundEntity != null)
                     {
+
+                        //获取会员信息
+                        var vipInfo = vipBll.GetByID(refundEntity.VipID);
+                        //获取门店信息
+                        t_unitEntity unitInfo = null;
+                        if (!string.IsNullOrEmpty(refundEntity.UnitID))
+                            unitInfo = unitBLL.GetByID(refundEntity.UnitID);
+                        userEntity = userBll.GetByID(loggingSessionInfo.UserID);
+
                         refundEntity.Status = 2;//已退款
                         refundOrderBLL.Update(refundEntity,pTran);
                         salesReturnEntity = salesReturnBLL.GetByID(refundEntity.SalesReturnID);
@@ -59,6 +73,21 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                             };
                             historyBLL.Create(historyEntity, pTran);
                         }
+
+                        #region 退回集客订单分润
+                        var vipAmountEntity = vipAmountBLL.QueryByEntity(new VipAmountEntity() { VipId = vipInfo.VIPID, VipCardCode = vipInfo.VipCode }, null).FirstOrDefault();
+                        var vipAmountDetail = vipAmountDetailBLL.QueryByEntity(new VipAmountDetailEntity() { ObjectId = refundEntity.OrderID, AmountSourceId = "20" }, null).FirstOrDefault();
+                        if (vipAmountDetail != null)
+                        {
+                            var detailInfo = new VipAmountDetailEntity()
+                            {
+                                Amount = vipAmountDetail.Amount.Value,
+                                ObjectId = refundEntity.RefundID.ToString(),
+                                AmountSourceId = "25"
+                            };
+                            var vipAmountDetailId = vipAmountBLL.AddVipAmount(vipInfo, unitInfo, ref vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
+                        }
+                        #endregion
                     }
                     pTran.Commit();  //提交事物
                 }

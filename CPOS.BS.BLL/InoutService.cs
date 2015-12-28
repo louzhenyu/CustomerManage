@@ -2379,6 +2379,8 @@ namespace JIT.CPOS.BS.BLL
                 else
                 {
                     inoutInfo.purchase_unit_id = SetOrderInfo.StoreId; //到店提货的店标识
+                    inoutInfo.unit_id = SetOrderInfo.StoreId;
+                    inoutInfo.sales_unit_id = SetOrderInfo.StoreId;
                 }
                 #endregion
 

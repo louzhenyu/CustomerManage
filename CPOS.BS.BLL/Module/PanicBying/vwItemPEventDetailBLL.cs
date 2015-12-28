@@ -131,7 +131,8 @@ namespace JIT.CPOS.BS.BLL
                         BeginTime = t.BeginTime.Value.To19FormatString(),
                         EndTime = t.EndTime.Value.To19FormatString(),
                         Qty = t.Qty,
-                        OverQty = t.Qty - t.SalesQty,
+                        //OverQty = t.Qty - t.SalesQty,
+                        OverQty=t.RemainingQty,
                         StopReason = t.StopReason,
                         Status = t.Status
                     });
@@ -178,7 +179,8 @@ namespace JIT.CPOS.BS.BLL
                         BeginTime = t.BeginTime.Value.To19FormatString(),
                         EndTime = t.EndTime.Value.To19FormatString(),
                         Qty = t.Qty,
-                        OverQty = t.Qty - t.SalesQty,
+                        //OverQty = t.Qty - t.SalesQty,
+                        OverQty = t.RemainingQty,
                         StopReason = t.StopReason,
                         Status = t.Status
                     });
@@ -322,7 +324,9 @@ namespace JIT.CPOS.BS.BLL
                         {
                             skuId = t["skuId"],
                             prop1DetailId = t["prop1DetailId"],
-                            prop1DetailName = t["prop1DetailName"]
+                            prop1DetailName = t["prop1DetailName"],
+                            stock=t["stock"],
+                            salesCount=t["salesCount"]
                         }).First());
                     }
                     if (c == 0)
@@ -331,7 +335,9 @@ namespace JIT.CPOS.BS.BLL
                         {
                             skuId = t["skuId"],
                             prop1DetailId = t["prop1DetailId"],
-                            prop1DetailName = t["prop1DetailName"]
+                            prop1DetailName = t["prop1DetailName"],
+                            stock = t["stock"],
+                            salesCount = t["salesCount"]
                         }).First();
                     }
                 }

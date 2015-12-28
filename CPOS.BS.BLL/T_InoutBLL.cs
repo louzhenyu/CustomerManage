@@ -60,12 +60,13 @@ namespace JIT.CPOS.BS.BLL
             //处理积分、余额、返现和优惠券
             vipBll.ProcSetCancelOrder(loggingSessionInfo.ClientID, inoutInfo.order_id, inoutInfo.vip_no);
             //获取订单明细
-            var inoutDetailInfo = inoutDetailBLL.GetInoutDetailInfoByOrderId(inoutInfo.order_id, loggingSessionInfo.ClientID).FirstOrDefault();
+            var inoutDetailList = inoutDetailBLL.GetInoutDetailInfoByOrderId(inoutInfo.order_id, loggingSessionInfo.ClientID);
 
             #region 处理退款业务
             if (inoutInfo != null)
             {
-                if (inoutInfo.Field1 == "1" && (inoutInfo.actual_amount - inoutInfo.DeliveryAmount) > 0)//已付款,并且实付款-运费>0
+                //if (inoutInfo.Field1 == "1" && (inoutInfo.actual_amount - inoutInfo.DeliveryAmount) > 0)//已付款,并且实付款-运费>0
+                if (inoutInfo.Field1 == "1" && inoutInfo.actual_amount > 0)//已付款,并且实付款>0,未发货所以不用减运费
                 {
 
                     #region 新增退货单(默认状态为确认收货)
@@ -83,7 +84,8 @@ namespace JIT.CPOS.BS.BLL
                     salesReturnEntity.ServicesType = 1;//退货
                     salesReturnEntity.DeliveryType = 1;//快递送回;
                     salesReturnEntity.OrderID = inoutInfo.order_id;
-                    if (inoutDetailInfo != null)
+                    var inoutDetailInfo = inoutDetailList.FirstOrDefault();
+                    if (inoutDetailInfo!= null)
                     {
                         salesReturnEntity.ItemID = inoutDetailInfo.item_id;
                         salesReturnEntity.SkuID = inoutDetailInfo.sku_id;
@@ -100,7 +102,8 @@ namespace JIT.CPOS.BS.BLL
                         salesReturnEntity.Phone = inoutInfo.Field6 != null ? inoutInfo.Field6 : "";
                     }
                     salesReturnEntity.Reason = "取消订单";
-                    if (inoutInfo.actual_amount - inoutInfo.DeliveryAmount > 0)
+                    //if (inoutInfo.actual_amount - inoutInfo.DeliveryAmount > 0)
+                    if (inoutInfo.actual_amount > 0)
                         salesReturnEntity.Status = 6; //已完成（待退款）
                     else
                         salesReturnEntity.Status = 7; //已完成（已退款）
@@ -129,7 +132,8 @@ namespace JIT.CPOS.BS.BLL
                     #endregion
 
                     #region 新增退款单
-                    if (inoutInfo.actual_amount - inoutInfo.DeliveryAmount > 0)
+                    //if (inoutInfo.actual_amount - inoutInfo.DeliveryAmount > 0)
+                    if (inoutInfo.actual_amount > 0)
                     {
                         T_RefundOrderEntity refundOrderEntity = new T_RefundOrderEntity()
                         {
@@ -152,7 +156,8 @@ namespace JIT.CPOS.BS.BLL
                             PayOrderID = inoutInfo.paymentcenter_id,
                             RefundAmount = inoutInfo.total_amount,
                             ConfirmAmount = inoutInfo.total_amount,
-                            ActualRefundAmount = inoutInfo.actual_amount - inoutInfo.DeliveryAmount,//实退金额=实付款-运费
+                            //ActualRefundAmount = inoutInfo.actual_amount - inoutInfo.DeliveryAmount,//实退金额=实付款-运费
+                            ActualRefundAmount = inoutInfo.actual_amount,//实退金额=实付款
                             Points = inoutInfo.pay_points == null ? 0 : Convert.ToInt32(inoutInfo.pay_points),
                             ReturnAmount = inoutInfo.ReturnAmount,
                             Amount = inoutInfo.VipEndAmount,
@@ -166,6 +171,73 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
             #endregion
+
+            //处理销量库存业务
+            inoutBll.SetStock(orderId, inoutDetailList, 2, loggingSessionInfo);
+        }
+        /// <summary>
+        /// 处理商品销量库存
+        /// </summary>
+        /// <param name="orderId">订单ID</param>
+        /// <param name="inoutDetailList">订单明细</param>
+        /// <param name="actionType">操作类型 1=提交订单；2=取消订单</param>
+        /// <param name="loggingSessionInfo"></param>
+        public void SetStock(string orderId, IList<InoutDetailInfo> inoutDetailList, int actionType, LoggingSessionInfo loggingSessionInfo)
+        {
+            var itemPropertyBLL = new T_Item_PropertyBLL(loggingSessionInfo);
+            var skuPriceBLL = new T_Sku_PriceBLL(loggingSessionInfo);
+
+            var inoutService = new InoutService(loggingSessionInfo);
+            foreach (var item in inoutDetailList)
+            {
+                //商品总库存
+                var stockInfo = itemPropertyBLL.QueryByEntity(new T_Item_PropertyEntity() { item_id = item.item_id, prop_id = "34FF4445D39F49AD8174954D18BC1346" }, null).FirstOrDefault();
+                if (stockInfo != null)
+                {
+                    decimal stock = decimal.Parse(stockInfo.prop_value);
+                    if (actionType == 1)
+                        stock -= item.enter_qty;
+                    else if (actionType == 2)
+                        stock += item.enter_qty;
+                    stockInfo.prop_value = stock.ToString();
+                    itemPropertyBLL.Update(stockInfo);
+                }
+                //商品总销量
+                var salesCountInfo = itemPropertyBLL.QueryByEntity(new T_Item_PropertyEntity() { item_id = item.item_id, prop_id = "34FF4445D39F49AD8174954D18BC1347" }, null).FirstOrDefault();
+                if (salesCountInfo != null)
+                {
+                    decimal salesCount = decimal.Parse(salesCountInfo.prop_value);
+                    if (actionType == 1)
+                        salesCount += item.enter_qty;
+                    else if (actionType == 2)
+                        salesCount -= item.enter_qty;
+
+                    salesCountInfo.prop_value = salesCount.ToString();
+                    itemPropertyBLL.Update(salesCountInfo);
+                }
+                //sku库存
+                var skuStockInfo = skuPriceBLL.QueryByEntity(new T_Sku_PriceEntity() { sku_id = item.sku_id, item_price_type_id = "77850286E3F24CD2AC84F80BC625859E", status = "1" }, null).FirstOrDefault();
+                if (skuStockInfo != null)
+                {
+                    if (actionType == 1)
+                        skuStockInfo.sku_price -= item.enter_qty;
+                    else if (actionType == 2)
+                        skuStockInfo.sku_price += item.enter_qty;
+
+                    skuPriceBLL.Update(skuStockInfo);
+                }
+                //sku销量
+                var skuSalesCountInfo = skuPriceBLL.QueryByEntity(new T_Sku_PriceEntity() { sku_id = item.sku_id, item_price_type_id = "77850286E3F24CD2AC84F80BC625859f", status = "1" }, null).FirstOrDefault();
+                if (skuSalesCountInfo != null)
+                {
+                    if (actionType == 1)
+                        skuSalesCountInfo.sku_price += item.enter_qty;
+                    else
+                        skuSalesCountInfo.sku_price -= item.enter_qty;
+
+                    skuPriceBLL.Update(skuSalesCountInfo);
+                }
+            }
         }
     }
 }

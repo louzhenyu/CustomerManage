@@ -4174,6 +4174,9 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string skuId { get; set; } //支付方式标识
             public string prop2DetailId { get; set; } //支付产品类别
             public string prop2DetailName { get; set; }
+
+            public int Stock { get; set; }//库存
+            public int SalesCount { get; set; }//销量
         }
 
         public class getSkuProp2ListReqData : ReqData

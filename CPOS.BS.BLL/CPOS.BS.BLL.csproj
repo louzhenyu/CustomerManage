@@ -439,10 +439,19 @@
     <Compile Include="CodeGeneration\t_customerBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
-    <Compile Include="CodeGeneration\T_Payment_TypeBLL.cs" />
+
     <Compile Include="CodeGeneration\T_ItemBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
+    <Compile Include="CodeGeneration\T_Item_CategoryBLL.cs" />
+    <Compile Include="CodeGeneration\T_Item_PriceBLL.cs" />
+    <Compile Include="CodeGeneration\T_Item_Price_TypeBLL.cs" />
+    <Compile Include="CodeGeneration\T_Item_PropertyBLL.cs" />
+    <Compile Include="CodeGeneration\T_Payment_detailBLL.cs" />
+    <Compile Include="CodeGeneration\T_Payment_TypeBLL.cs" />
+    <Compile Include="CodeGeneration\T_PropBLL.cs" />
     <Compile Include="CodeGeneration\T_SkuBLL.cs" />
+    <Compile Include="CodeGeneration\T_Sku_PriceBLL.cs" />
+    <Compile Include="CodeGeneration\T_Sku_PropertyBLL.cs" />
     <Compile Include="CodeGeneration\t_unitBLL.cs" />
     <Compile Include="CodeGeneration\T_UserBLL.cs" />
     <Compile Include="CodeGeneration\UnitCommentBLL.cs" />
@@ -1000,10 +1009,19 @@
     <Compile Include="T_CityBLL.cs" />
     <Compile Include="t_customerBLL.cs" />
     <Compile Include="T_InoutBLL.cs" />
-    <Compile Include="T_Payment_TypeBLL.cs" />
+
     <Compile Include="T_ItemBLL.cs" />
     <Compile Include="T_ItemSkuPropBLL.cs" />
+    <Compile Include="T_Item_CategoryBLL.cs" />
+    <Compile Include="T_Item_PriceBLL.cs" />
+    <Compile Include="T_Item_Price_TypeBLL.cs" />
+    <Compile Include="T_Item_PropertyBLL.cs" />
+    <Compile Include="T_Payment_detailBLL.cs" />
+    <Compile Include="T_Payment_TypeBLL.cs" />
+    <Compile Include="T_PropBLL.cs" />
     <Compile Include="T_SkuBLL.cs" />
+    <Compile Include="T_Sku_PriceBLL.cs" />
+    <Compile Include="T_Sku_PropertyBLL.cs" />
     <Compile Include="t_unitBLL.cs" />
     <Compile Include="UnitCommentBLL.cs" />
     <Compile Include="UserFeedbackBLL.cs" />

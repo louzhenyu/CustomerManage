@@ -2577,6 +2577,10 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             };
                             SuccessCommonBLL.SentPaymentMessage(InoutEntity, vipInfo.WeiXinUserId, vipInfo.VIPID, CurrentUserInfo);
                             #endregion
+
+                            //处理库存和销量
+                            //var inoutDetailList = service.GetInoutDetailInfoByOrderId(orderId);
+                            //inoutBLL.SetStock(orderId, inoutDetailList, 1, CurrentUserInfo);
                         }
                         else
                         {
