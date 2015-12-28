@@ -286,7 +286,7 @@
                 mode: 'click', //设置为click模式
                 //总页码
                 total: data.Data.TotalPageCount,
-                totalRecords: data.totalCount,
+                totalRecords: data.Data.TotalCount,
                 isShowTotalPage: true,
                 isShowTotalRecords: true,
                 //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
@@ -372,7 +372,7 @@
                 Status:-1,
                 page:1,
                 start:0,
-                limit:15
+                limit:10
             },
             tag:{
                 VipId:"",

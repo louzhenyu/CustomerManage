@@ -50,7 +50,7 @@
                    </ul>
 
                 </div>
-                   <div class="imgTable"> <table class="dataTable" id="gridTable"></table>  </div>
+                   <div class=""> <table class="dataTable" id="gridTable"></table>  </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager" >

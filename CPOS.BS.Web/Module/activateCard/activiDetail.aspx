@@ -65,16 +65,16 @@
                       <div class="commonSelectWrap numberBox-100" style="clear:left">
                           <em class="tit" style="width:92px">售卡金额：</em>
                           <label class="searchInput" style="width:100px;" >
-                            <input data-text="售卡金额" data-flag="" class="easyui-numberbox" data-options="min:0,precision:2,tipPosition:'top'" name="Prices" type="text" value="">
+                            <input data-text="售卡金额" data-flag="" class="easyui-numberbox" data-options="min:0,precision:2,max:10000,tipPosition:'top'" name="Prices" type="text" value="">
                           </label>
                           <span class="monadBox">元</span>
                       </div>
                       
                       
                       <div class="commonSelectWrap numberBox-100" style="margin-left:35px;">
-                          <em class="tit" style="width:92px">积分兑换：</em>
+                          <em class="tit" style="width:92px">积分换卡：</em>
                           <label class="searchInput" style="width:100px;" >
-                            <input data-text="积分兑换" data-flag="ExchangeIntegral" class="easyui-numberbox" data-options="min:0,precision:0,tipPosition:'top'" name="ExchangeIntegral" type="text" value="">
+                            <input data-text="积分兑换" data-flag="ExchangeIntegral" class="easyui-numberbox" data-options="min:0,precision:0,max:10000,tipPosition:'top'" name="ExchangeIntegral" type="text" value="">
                           </label>
                           <span class="monadBox">积分</span>
                       </div>
@@ -114,13 +114,13 @@
                         
                         <div class="linetext" id="chargeGiveBox">
                             <div class="checkBox" data-flag="EnableRewardCash" data-name="r1"><em></em> <span>充值 </span></div>
-                            <div class="inputDiv">充值满 <input type="text" class="easyui-numberbox" name="ChargeFull" data-options="min:0,precision:0,width:120,height:32">&nbsp;送&nbsp;<input type="text"  name="ChargeGive"  class="easyui-numberbox" data-options="min:0,precision:0,max:1000,width:120,height:32"></div>
+                            <div class="inputDiv">充值满 <input type="text" class="easyui-numberbox" name="ChargeFull" data-options="min:0,precision:0,max:10000,width:120,height:32">&nbsp;送&nbsp;<input type="text"  name="ChargeGive"  class="easyui-numberbox" data-options="min:0,precision:0,max:1000,width:120,height:32"></div>
                         </div>
                         
                         
                         <div class="linetext" id="returnAmountPerBox">
                             <div class="checkBox" data-flag="ReturnAmountPer" data-name="r1"><em></em> <span>返现</span></div>
-                            <div class="inputDiv"><input type="text" name="ReturnAmountPer" class="easyui-numberbox" data-options="min:0,precision:2,max:10000,width:120,height:32"> % （获得返现的订单金额比例）
+                            <div class="inputDiv"><input type="text" name="ReturnAmountPer" class="easyui-numberbox" data-options="min:0,precision:2,max:100,width:120,height:32"> % （获得返现的订单金额比例）
                        		</div>
                         </div>
                         
@@ -133,20 +133,20 @@
                        <div class="line" id="autoUpdateBox" style="padding-bottom:20px">
                              <div class="linetext" style="width:100%">
                                 <div class="checkBox" data-flag="UpgradeAmount"><em></em> <span>累计消费金额满 </span></div>
-                                <div class="inputDiv" style="margin-left:8px;"><input type="text" class="easyui-numberbox"  name="UpgradeAmount" data-options="min:0,precision:1,width:120,height:32"> 自动升级
+                                <div class="inputDiv" style="margin-left:8px;"><input type="text" class="easyui-numberbox"  name="UpgradeAmount" data-options="min:0,precision:1,max:10000,width:120,height:32"> 自动升级
                                 </div>
                              </div>
                              
                              <div class="linetext" style="width:100%">
                                 <div class="checkBox" data-flag="UpgradePoint"><em></em> <span>累计获得积分满 </span></div>
-                                <div class="inputDiv" style="margin-left:8px;"><input type="text" class="easyui-numberbox"  name="UpgradePoint" data-options="min:0,precision:0,width:120,height:32"> 自动升级
+                                <div class="inputDiv" style="margin-left:8px;"><input type="text" class="easyui-numberbox"  name="UpgradePoint" data-options="min:0,precision:0,max:10000,width:120,height:32"> 自动升级
                                 </div>
                              </div>
                              
                              
                              <div class="linetext" style="width:100%">
                                 <div class="checkBox" data-flag="UpgradeOnceAmount"><em></em> <span>单次消费金额满 </span></div>
-                                <div class="inputDiv" style="margin-left:8px;"><input type="text" class="easyui-numberbox"  name="UpgradeOnceAmount" data-options="min:0,precision:1,width:120,height:32"> 自动升级
+                                <div class="inputDiv" style="margin-left:8px;"><input type="text" class="easyui-numberbox"  name="UpgradeOnceAmount" data-options="min:0,precision:1,max:10000,width:120,height:32"> 自动升级
                                 </div>
                              </div>
                              

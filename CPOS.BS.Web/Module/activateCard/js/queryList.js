@@ -200,7 +200,7 @@
                     },
                     {field : 'CardDiscount',title : '折扣',width:100,resizable:false,align:'center'},
 
-
+					/*
                     {field : 'PointsMultiple',title : '积分',width:100,align:'center',resizable:false,
                         formatter:function(value,row,index){
                             if(isNaN(parseInt(value))){
@@ -209,6 +209,7 @@
                                 return parseInt(value);
                             }
                         }},
+					*/	
                     {field : 'addOpt',title : '编辑',width:100,align:'center',resizable:false,
                         formatter:function(value,row,index){
                             return "<div data-index="+index+" data-flag='exit' class='exit  opt'> </div>"
