@@ -1056,9 +1056,9 @@ namespace JIT.CPOS.BS.BLL
         /// <summary>
         /// 判断用户名是否存在
         /// </summary>
-        public bool IsExistUserCode(string userCode,LoggingSessionInfo loggingSessionInfo)
+        public bool IsExistUserCode(string userCode, LoggingSessionInfo loggingSessionInfo, string strUserId)
         {
-            return userService.IsExistUserCode(userCode,loggingSessionInfo);
+            return userService.IsExistUserCode(userCode, loggingSessionInfo, strUserId);
         }
         #endregion
 

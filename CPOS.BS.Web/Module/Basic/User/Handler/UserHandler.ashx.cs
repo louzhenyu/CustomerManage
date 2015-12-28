@@ -215,7 +215,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 
             user = key.DeserializeJSONTo<UserInfo>();
 
-            if (userService.IsExistUserCode(user.User_Code, CurrentUserInfo))
+            if (userService.IsExistUserCode(user.User_Code, CurrentUserInfo, user_id))
             {
                 responseData.success = false;
                 responseData.msg = "用户名已存在！";
