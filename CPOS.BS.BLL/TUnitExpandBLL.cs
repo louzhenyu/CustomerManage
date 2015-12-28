@@ -127,7 +127,7 @@ namespace JIT.CPOS.BS.BLL
             var InoutBLL = new T_InoutBLL(this.CurrentUserInfo);
             var Result = InoutBLL.QueryByEntity(new T_InoutEntity() { order_no = OrderNo }, null).ToList();
 
-            if (Result.Count() < 0)
+            if (Result.Count() > 0)
             {
                 System.Threading.Thread.Sleep(1000);
                 ReturnOrderNo=GenerateOrderNo();

@@ -1276,6 +1276,8 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,a.create_unit_id "
                       + " ,a.unit_id "
                       + " ,(select unit_name From t_unit where unit_id = a.unit_id) unit_name "
+                      + " ,(select unit_address From t_unit where unit_id = a.unit_id) unit_address "
+                      + " ,(select unit_tel From t_unit where unit_id = a.unit_id) unit_tel "
                       + " ,a.related_unit_id "
                       + " ,a.related_unit_code "
                       + " ,a.pos_id "

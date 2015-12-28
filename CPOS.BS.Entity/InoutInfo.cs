@@ -70,6 +70,14 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public string unit_name { get; set; }
         /// <summary>
+        /// 调整单位名称
+        /// </summary>
+        public string unit_address { get; set; }
+        /// <summary>
+        /// 调整单位名称
+        /// </summary>
+        public string unit_tel { get; set; }
+        /// <summary>
         /// 相关单位标识
         /// </summary>
         public string related_unit_id { get; set; }
