@@ -372,19 +372,26 @@
                            $(".commonBtn[data-optType='payment']").show()
                        }
                    }
-                   that.loadData.opertionField.Addr=orderinfo.Field4;//配送地址
                    that.loadData.opertionField.DeliveryType=orderinfo.DeliveryName=="送货到家"?'1':'2';//配送方式
-                   that.loadData.opertionField.ReceiveMan=orderinfo.Field14;  //收件人
-                   that.loadData.opertionField.Phone=orderinfo.Field6;//手机号
-                   if(orderinfo.DeliveryName!="到店自提") {
+                   
+                   if (orderinfo.DeliveryName != "到店自提") {
                        that.loadData.opertionField.Carrier_id = orderinfo.carrier_id;//配送商id
+                       that.loadData.opertionField.ReceiveMan = orderinfo.Field14;  //收件人
+                       that.loadData.opertionField.Addr = orderinfo.Field4;//配送地址
+                       that.loadData.opertionField.Phone = orderinfo.Field6;//手机号
                    }
                    that.loadData.opertionField.DeliveryCode=orderinfo.Field2;//配送号
 
                /*    purchase_unit_id: "0da0d3a6a0d899e6d639bfbf25005300"
                    purchase_unit_name: "浙江巨圣鞋业(桥下店)"*/
+                   
+                   debugger
                    $("#orderInfo").form('load',orderinfo);
 
+
+                   if (orderinfo.DeliveryName == "到店自提") {
+                       $("#orderInfo").form('load', { Field14: '', Field6: '', Field4: '' });
+                   }
 
                    that.elems.operation.show();
                })
@@ -762,6 +769,27 @@
                 });
             },
             saveDeliveryInfo: function (callback) {
+
+                if (this.opertionField.ReceiveMan == "" )
+                {
+                    alert("联系人不能为空！");
+                    return;
+                }
+
+                if ( this.opertionField.Phone=="") {
+                    alert("手机不能为空！");
+                    return;
+                }
+
+             
+
+
+                if (this.opertionField.Addr == "") {
+                    alert("地址不能为空！");
+                    return;
+                }
+
+
                 $.util.oldAjax({
                     url: "/Module/Order/InoutOrders/Handler/Inout3Handler.ashx",
                     data: {

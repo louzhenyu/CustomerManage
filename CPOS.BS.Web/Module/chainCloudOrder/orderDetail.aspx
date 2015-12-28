@@ -331,7 +331,18 @@
                               </div>
                            </div>
 
-
+                           <div class="commonSelectWrap">
+                              <em class="tit">门店电话:</em>
+                              <div class="searchInput">
+                               <input type="text"  class="easyui-validatebox"   readonly="readonly"data-options="disabled:true" name="unit_tel"/>
+                              </div>
+                           </div>
+                           <div class="commonSelectWrap">
+                              <em class="tit">门店地址:</em>
+                              <div class="searchInput">
+                               <input type="text"  class="easyui-validatebox"   readonly="readonly"data-options="disabled:true" name="unit_address"/>
+                              </div>
+                           </div>
                        </div>
                   </div>
                   <form></form>
@@ -346,13 +357,13 @@
                       <div class="commonSelectWrap">
                          <em class="tit">收件人:</em>
                          <div class="searchInput">
-                          <input type="text"  class="easyui-validatebox" data-options="width:160,height:32" name="ReceiveMan"/>
+                          <input type="text"  class="easyui-validatebox" placeholder="请输入真实姓名" data-options="width:160,height:32" name="ReceiveMan"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
                          <em class="tit">手机:</em>
                          <div class="searchInput">
-                          <input type="text"    class="easyui-validatebox" data-options="width:160,height:32" name="Phone"/>
+                          <input type="text"    class="easyui-validatebox" placeholder="请输入手机号码" data-options="width:160,height:32" name="Phone"/>
                          </div>
                       </div>
 
@@ -372,7 +383,7 @@
                       <div class="commonSelectWrap">
                          <em class="tit">地址:</em>
                          <div class="searchInput" style="width: 459px;">
-                          <input type="text"  class="easyui-validatebox" data-options="width:459" name="Addr"/>
+                          <input type="text"  class="easyui-validatebox"  placeholder="请输入有效地址" data-options="width:459" name="Addr"/>
                          </div>
                       </div>
                       </div>
@@ -384,7 +395,18 @@
                               </div>
                            </div>
 
-
+                           <div class="commonSelectWrap">
+                              <em class="tit">门店电话:</em>
+                              <div class="searchInput">
+                               <input type="text"  class="easyui-validatebox"   readonly="readonly"data-options="disabled:true" name="unit_tel"/>
+                              </div>
+                           </div>
+                           <div class="commonSelectWrap">
+                              <em class="tit">门店地址:</em>
+                              <div class="searchInput">
+                               <input type="text"  class="easyui-validatebox"   readonly="readonly"data-options="disabled:true" name="unit_address"/>
+                              </div>
+                           </div>
                        </div>
                  </form>
 

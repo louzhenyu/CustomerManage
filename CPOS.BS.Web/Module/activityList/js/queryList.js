@@ -16,7 +16,6 @@
 			dataMessage2:$(".dataMessage2"),
             vipSourceId:'',
             click:true,
-            dataMessage:  $("#pageContianer").find(".dataMessage"),
             panlH:116                           // 下来框统一高度
         },
         detailDate:{},
@@ -93,11 +92,13 @@
 			$('.jui-dialog-close').bind('click',function(){
 				$('.jui-mask').hide();
 				$('.jui-dialog-table').hide();
+				that.loadMoreData(that.loadData.args.PageIndex);
 			})
 			
 			$('.jui-dialog-table .saveBtn').bind('click',function(){
 				$('.jui-mask').hide();
 				$('.jui-dialog-table').hide();
+				that.loadMoreData(that.loadData.args.PageIndex);
 			})
 			//跳转详情页
 			that.elems.tabelWrap.delegate("tr","click",function(e){

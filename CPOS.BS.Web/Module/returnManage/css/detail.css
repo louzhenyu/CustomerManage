@@ -1,10 +1,10 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
 
-.optionBtn{padding-top: 20px;  border: solid  1px #eee; border-bottom:none;}
-.optionBtn .commonBtn{ width:99px; background: #00cccc;line-height: 32px; height:32px; float: left; margin-left:20px; padding:0 12px;}
+.optionBtn{ border-bottom:none;}
+.optionBtn .commonBtn{ width:99px; background: #00cccc;line-height: 32px; height:32px; float: left; margin: auto 0 auto 20px; padding:0 12px;}
 .optionBtn  p{ padding-left: 55px; color: #07c8cf; font-size: 16px;}
 .queryTermArea{border-bottom:1px solid #07c8cf;padding-left: 0; padding-right:0}
 .moreQueryWrap{ float: left;margin-top: 12px;}
@@ -20,6 +20,7 @@
 .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
 .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
 .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.commonSelectWrap .tit{ color:#9f9f9f }
 
 .panlDiv .commonSelectWrap .searchInput{ border-width:0;}
 
@@ -32,6 +33,9 @@
 .panlDiv .panlL{ float: left; width: auto;}
 .panlDiv .panlR{float: left; margin-left: 65px;}
 .panlDiv .panlL .commonSelectWrap{ display: block; float: none;}
+
+#salesReturnInfo .panlDivhead{margin-left: 0px;}
+#salesReturnInfo .panlTexthead{margin-left: 35px;}
 
 .fontC{width: 56px; text-align: left; float: left;}
 .updateBtn{ float: right; width: 160px; margin-right: 65px;}

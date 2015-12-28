@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/returnManage/css/detail.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-
+   
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -30,8 +30,8 @@
              <div class="tablewrap">
              <form></form>
              <form id="salesReturnInfo">
-                <div class="panlDiv">
-                          <div class="panlText">
+                <div class="panlDiv  panlDivhead">
+                          <div class="panlText panlTexthead">
                                    <div class="commonSelectWrap">
                                       <em class="tit">退款单号:</em>
                                       <div class="searchInput">

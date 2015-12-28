@@ -162,14 +162,14 @@ input{border:1px solid #ccc;border-radius:2px;width:120px;height:33px;height:31p
 .jui-dialog-addRule-edit .editArea.pl{height:45px;margin-left:32px;padding-left:210px;border-bottom:1px solid #e0e0e0;}
 /*弹层，添加商品*/
 .jui-dialog.jui-dialog-addShop{width:896px;height:500px;margin:-250px 0 0 -448px;}
-.jui-dialog-addShop .contentArea{width:730px;min-height:300px;margin:0 auto;}
+.jui-dialog-addShop .contentArea{width:730px;min-height:300px;margin:0 auto;border-left: 0px;}
 .jui-dialog-addShop .searchWrap{height:35px;margin:30px 0 25px 0;}
 .jui-dialog-addShop .searchWrap .tit{float:left;font:16px/35px "黑体";color:#404853;}
 .jui-dialog-addShop .selectBox{position:relative;float:left;width:152px;height:35px;margin:0 25px;border:1px solid #ccc;cursor:pointer;}
 .jui-dialog-addShop .selectBox em{float:right;width:28px;height:23px;margin-top:6px;border-left:1px solid #ccc;background:url(images/selectIcon.png) no-repeat center center;}
 .jui-dialog-addShop .selectBox p{margin-right:28px;line-height:35px;text-indent:8px;font-size:14px;}
 .jui-dialog-addShop .selectBox:hover .dropList{display:block;}
-.jui-dialog-addShop .dropList{display:none;position:absolute;top:34px;*top:36px;left:-1px;width:152px;border-left:1px solid #ccc;border-right:1px solid #ccc;background:#f1f1f1;}
+.jui-dialog-addShop .dropList{display:none;position:absolute;top:34px;*top:36px;left:-1px;width:152px;border-left:1px solid #ccc;border-right:1px solid #ccc;background:#f1f1f1;overflow-y: auto;}
 .jui-dialog-addShop .dropList span{display:block;height:35px;line-height:35px;text-align:center;font-size:14px;border-bottom:1px solid #ccc;}
 .jui-dialog-addShop .dropList span:hover{background:#f8f8f8;}
 .jui-dialog-addShop .inputBox{float:left;width:345px;height:35px;margin-right:25px;border:1px solid #ccc;border-radius:5px;}
