@@ -662,7 +662,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                       + " left join vw_sku b "
                       + " on(a.sku_id = b.sku_id) "
                       + " inner join t_inout c "
-                      + @" on(a.order_id = c.order_id)  inner join vw_item_detail d on d.item_id=b.item_id  where a.order_id= '" + orderId + "' order by b.item_code";
+                      + @" on(a.order_id = c.order_id)  left join vw_item_detail d on d.item_id=b.item_id  where a.order_id= '" + orderId + "' order by b.item_code";
             #endregion
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
