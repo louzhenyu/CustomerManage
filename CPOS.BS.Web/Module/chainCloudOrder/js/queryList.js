@@ -274,7 +274,7 @@
                     {field : 'vip_name',title : '会员信息',width:120,align:'left',resizable:false,
                         formatter:function(value,row,index){
 
-                            return "<p>"+value+"</p><p>"+row.linkTel+"</p>";
+                            return "<p>"+value+"</p><p>"+(row.vipPhone || '')+"</p>";
 
                         }
                     },
@@ -301,7 +301,7 @@
                         styler: function(index,row){
                             /* status: "700"
                              status_desc: "已完成"*/
-                            return 'color: #fc7a52;';    // rowStyle是一个已经定义了的ClassName(类名)
+                            return 'color: #fc7a52;';    //rowStyle是一个已经定义了的ClassName(类名)
 
                         }
 

@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
-    <title> 订单详情</title>
+    <title>订单详情</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/chainCloudOrder/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
@@ -55,6 +55,7 @@
                          <div class="searchInput">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="order_no"/>
                          </div>
+                         
                       </div>
                       <div class="commonSelectWrap">
                          <em class="tit">订单状态:</em>
@@ -175,8 +176,8 @@
                       <div class="actuallyDetailBox">	
                           <div class="commonSelectWrap">
                              <em class="tit"><div class="Paystatus" style="display: inline-block;">实付金额:</div><span>￥</span></em>
-                             <div class="searchInput" style="width:40px;margin-left:-3px;">
-                              <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="actual_amount" style="color:#fc7a52;">
+                             <div class="searchInput" style="margin-left:-3px;">
+                              <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="actual_amount" style="color:#fc7a52;"/>
                              </div>
                           </div>
                           <div class="actuallyDetail">
@@ -251,6 +252,14 @@
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="payment_name"/>
                          </div>
                       </div>
+                      
+                      <div class="commonSelectWrap">
+                         <em class="tit">商户订单号:</em>
+                         <div class="searchInput wh80" >
+                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="paymentcenter_id"/>
+                         </div>
+                      </div>
+                      
                  </div><!--clearfix END-->
                  </div><!--panlDiv 支付信息  END-->
                  
@@ -414,14 +423,14 @@
                 </div>  <!--panlDiv 配送信息  END-->
             </form>
 
-                <div class="panlDiv">
+                <div class="panlDiv cursorDef">
                  <div class="title">商品信息</div>
                  <div class="panlText" id="tableWrap">
                   <div class="table" id="commodity"></div>
 
                  </div>
                 </div>  <!--panlDiv 商品信息  END-->
-                 <div class="panlDiv">
+                 <div class="panlDiv cursorDef" >
                                  <div class="title">订单操作记录
                                  </div>
                                  <div class="panlText">

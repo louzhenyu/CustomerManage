@@ -22,13 +22,13 @@
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">订单编号：</em>
                                                       <label class="searchInput" style="width: 487px;">
-                                                          <input data-text="订单编号" data-flag="order_no" name="order_no" type="text" value="">
+                                                          <input data-text="订单编号" data-flag="order_no" name="order_no" type="text" value="" placeholder="请输入">
                                                       </label>
                                                   </div>
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">会员：</em>
                                                       <div class="searchInput">
-                                                                <input  name="vip_no" data-text="会员" data-flag="vip_no" type="text" value="">
+                                                                <input  name="vip_no" data-text="会员" data-flag="vip_no" type="text" value=""  placeholder="请输入">
                                                       </div>
                                                   </div>
                                                   <div class="commonSelectWrap">

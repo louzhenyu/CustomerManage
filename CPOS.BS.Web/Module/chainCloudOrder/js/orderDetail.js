@@ -17,6 +17,7 @@
             commodity:$("#commodity"),        //商品列表
             StatusList:$("#StatusList"),        //操作记录     GetInoutStatusList
             panlH: 116                           // 下来框统一高度
+			
         },
         detailDate: {},
         ValueCard: '',//储值卡号
@@ -56,11 +57,6 @@
                     }
                 }
             });
-
-
-
-
-
         },
         initEvent: function () {
             var that = this;
@@ -84,7 +80,6 @@
                    }
 
                 }
-
             });
             that.elems.updateBtn.delegate(".commonBtn", "click", function (e) {
                 var me=$(this)
