@@ -56,6 +56,10 @@ namespace JIT.CPOS.BS.Entity
         /// from JIT 接口调用凭证 Add by Henry 2015-2-2
         /// </summary>
         public string JsApiTicket { get; set; }
+        /// <summary>
+        /// 是否支持微信支付(0=不支持；1=支持）
+        /// </summary>
+        public int? IsPayments { get; set; }
         #endregion
     }
 }

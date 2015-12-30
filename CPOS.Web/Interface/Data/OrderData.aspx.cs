@@ -714,7 +714,7 @@ namespace JIT.CPOS.Web.Interface.Data
                 #endregion
 
                 customerId = reqObj.common.customerId;
-                LoggingSessionInfo loggingSessionInfo=null;
+                LoggingSessionInfo loggingSessionInfo = null;
                 if (!string.IsNullOrEmpty(reqObj.common.userId))
                     loggingSessionInfo = Default.GetBSLoggingSession(customerId, reqObj.common.userId, reqObj.common.IsAtoC);
                 else
@@ -741,7 +741,7 @@ namespace JIT.CPOS.Web.Interface.Data
                     var result = server.SetVirtualOrderInfo(ToStr(reqObj.special.orderId)
                                                         , ToStr(reqObj.common.customerId)
                                                         , ToStr(reqObj.special.unitId)
-                                                        //, ToStr(reqObj.common.userId)  //Henry 
+                        //, ToStr(reqObj.common.userId)  //Henry 
                                                         , ToStr(loggingSessionInfo.UserID)
                                                         , ToStr(reqObj.special.dataFromId)
                                                         , amount.ToString(), "", "", ToStr(loggingSessionInfo.UserID));
@@ -841,9 +841,26 @@ namespace JIT.CPOS.Web.Interface.Data
                         itemNameList = itemNameList.Replace("+", "");
                         itemNameList = itemNameList.Replace(" ", "-");
 
+                        #region 处理多号运营支付问题
 
+                        var appInterfaceBLL = new WApplicationInterfaceBLL(loggingSessionInfo);
+                        var wxUserBLL = new WXUserInfoBLL(loggingSessionInfo);
+                        var appInterfaceInfo = appInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = loggingSessionInfo.ClientID, IsPayments = 1 }, null).FirstOrDefault();
+                        string payNotice = string.Empty;
+                        if (appInterfaceInfo != null)
+                        {
+                            var wxUserInfo = wxUserBLL.QueryByEntity(new WXUserInfoEntity() { VipID = reqObj.common.userId, WeiXin = appInterfaceInfo.WeiXinID }, null).FirstOrDefault();
+                            if (wxUserInfo != null)
+                            {
+                                reqObj.common.openId = wxUserInfo.WeiXinUserID;//将可以支付的公众号用户的OpenId传过去支付
+                            }
+                            else
+                            {
+                                payNotice="请关注"+appInterfaceInfo.WeiXinName+"完成微信支付，此公众号/服务号配置了微信支付";
+                            }
+                        }
 
-
+                        #endregion
 
                         var para = new
                         {
@@ -858,7 +875,7 @@ namespace JIT.CPOS.Web.Interface.Data
                             DynamicID = reqObj.special.dynamicId,
                             DynamicIDType = reqObj.special.dynamicIdType,
                             Paras = dic,
-                            OpenId=reqObj.common.openId,
+                            OpenId = reqObj.common.openId,
                             ClientIP = pBillCreateIP
                         };
 
@@ -898,6 +915,8 @@ namespace JIT.CPOS.Web.Interface.Data
                             respData.content.ResultCode = payres.ResultCode;
                             respData.content.Message = payres.Message;
                             respData.content.WXPackage = payres.Datas.WXPackage;
+                            respData.content.PayNotice = payNotice;
+
                             new OnlineShoppingItemBLL(loggingSessionInfo).SetOrderPayCenterCode(reqObj.special.orderId, payres.Datas.OrderID);
                         }
                         else
@@ -939,6 +958,7 @@ namespace JIT.CPOS.Web.Interface.Data
             public string QrCodeUrl { get; set; }       //线下支付预支付订单生成的二维码URL(AliPayOffline支付)
             public string Message { get; set; }         //返回的信息,如发生错误时返回错误信息
             public string WXPackage { get; set; }       //微信返回包信息
+            public string PayNotice { get; set; }       //返回的提示信息
 
             public string WeiXinPreOrderContent { get; set; }
         }

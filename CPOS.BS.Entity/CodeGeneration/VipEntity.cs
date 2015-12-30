@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-8-14 20:18:26
+ * Create On	:2015-11-25 18:26:47
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -527,6 +527,10 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public Int32? IsSotre { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public String UnionID { get; set; }
 
         #endregion
 

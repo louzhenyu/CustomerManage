@@ -102,6 +102,7 @@ namespace JIT.CPOS.Web.WeiXin
                 string qrcode_id = Request["qrcode_id"];    //门店转换id
 
                 string headimgurl = Request["headimgurl"];
+                string unionid = Request["unionid"]; //多个公众账号唯一标识
 
                 #region 1.头像处理
                 if (headimgurl == null || headimgurl.Equals(""))
@@ -166,18 +167,41 @@ namespace JIT.CPOS.Web.WeiXin
                             vipInfo.VipName = VipName;
                             //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用
                             vipInfo.WeiXin = WeiXin;
+                            vipInfo.UnionID = unionid;
                             vipInfo.VipSourceId = "3";//是否需要把这个去掉，因为VipSourceId=13也会走到这里
                             vipInfo.HeadImgUrl = headimgurl;
-                            var vipObj = vipService.QueryByEntity(vipQueryInfo, null);  
-                            //var vipObj = vipService.QueryByEntity(new VipEntity() { WeiXinUserId = OpenID }, null);
+                            var vipObj = vipService.QueryByEntity(vipQueryInfo, null);
                             if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                             {
                                 vipInfo.Status = 1;
                                 vipInfo.VIPID = Guid.NewGuid().ToString().Replace("-", "");
                                 vipInfo.VipCode = vipCode;
                                 vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";
+                                //根据UnionID判断已关注其他绑定公众号
+                                if (!string.IsNullOrEmpty(vipInfo.UnionID))
+                                {
+                                    var vipUnionInfo = vipService.QueryByEntity(new VipEntity() {UnionID = vipInfo.UnionID }, null).FirstOrDefault();
+                                    if (vipUnionInfo == null)//首次关注
+                                    {
+                                        vipService.Create(vipInfo);
+                                    }
+                                    //已关注了绑定公众号中的其他公众号
+                                    WXUserInfoBLL wxUserInfoBLL = new WXUserInfoBLL(loggingSessionInfo);
+                                    var wxUserInfoEntity = new WXUserInfoEntity()
+                                    {
+                                        VipID = vipUnionInfo == null ? vipInfo.VIPID : vipUnionInfo.VIPID,
+                                        WeiXin = vipInfo.WeiXin,
+                                        WeiXinUserID = vipInfo.WeiXinUserId,
+                                        UnionID = vipInfo.UnionID,
+                                        CustomerID = loggingSessionInfo.ClientID
+                                    };
+                                    wxUserInfoBLL.Create(wxUserInfoEntity);
+                                }
+                                else //未绑定多个公众号
+                                {
+                                    vipService.Create(vipInfo);
+                                }
 
-                                vipService.Create(vipInfo);
                             }
                             else
                             {
@@ -225,7 +249,7 @@ namespace JIT.CPOS.Web.WeiXin
                 });
 
                 //插入业务系统
-                customerIdUnoin = SetCustomerVipInfo(loggingSessionInfo, WeiXin, OpenID, City, IsShow, VipName, Gender, qrcode, null, null, headimgurl, qrcode_id, out VipIdTmp);
+                customerIdUnoin = SetCustomerVipInfo(loggingSessionInfo, WeiXin, OpenID, City, IsShow, VipName, Gender, qrcode, null, null, headimgurl, qrcode_id, unionid, out VipIdTmp);
 
                 Loggers.Debug(new DebugLogInfo()
                 {
@@ -255,7 +279,7 @@ namespace JIT.CPOS.Web.WeiXin
                 {
                     Message = "三维码扫描---：" + qrcode_id + "------" + customerIdUnoin
                 });
-
+                //处理扫描静态二维码事件****
                 eventsBll.SendQrCodeWxMessage(loggingSessionInfo, customerIdUnoin, WeiXin, qrcode_id, OpenID, HttpContext.Current);
 
                 #region 云店处理 Add Henry
@@ -424,7 +448,7 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     integralRuleData = integralRuleDataList[0];
-                    integralValue =int.Parse(integralRuleData.Integral);
+                    integralValue = int.Parse(integralRuleData.Integral);
                 }
             }
 
@@ -448,7 +472,7 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     integralRuleData = integralRuleDataList[0];
-                    highIntegralValue =int.Parse(integralRuleData.Integral);
+                    highIntegralValue = int.Parse(integralRuleData.Integral);
                 }
             }
 
@@ -491,7 +515,7 @@ namespace JIT.CPOS.Web.WeiXin
                     vipIntegralEntity.VipID = tmpVipId;
                     vipIntegralEntity.InIntegral = vipIntegralDataList[0].InIntegral + tmpIntegralValue; ; // 增加积分
                     //vipIntegralEntity.OutIntegral = 0; //消费积分
-                    vipIntegralEntity.EndIntegral =  vipIntegralDataList[0].EndIntegral + tmpIntegralValue; //积分余额
+                    vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral + tmpIntegralValue; //积分余额
                     //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
                     vipIntegralEntity.ValidIntegral = vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
                     //vipIntegralBLL.Update(vipIntegralEntity, false);
@@ -566,11 +590,11 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     vipIntegralEntity.VipID = tmpVipId;
-                    vipIntegralEntity.InIntegral =vipIntegralDataList[0].InIntegral + tmpIntegralValue; // 增加积分
+                    vipIntegralEntity.InIntegral = vipIntegralDataList[0].InIntegral + tmpIntegralValue; // 增加积分
                     //vipIntegralEntity.OutIntegral = 0; //消费积分
-                    vipIntegralEntity.EndIntegral =vipIntegralDataList[0].EndIntegral + tmpIntegralValue; //积分余额
+                    vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral + tmpIntegralValue; //积分余额
                     //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
-                    vipIntegralEntity.ValidIntegral =vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
+                    vipIntegralEntity.ValidIntegral = vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
                     //vipIntegralBLL.Update(vipIntegralEntity, false);
                 }
 
@@ -767,7 +791,7 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     integralRuleData = integralRuleDataList[0];
-                    highIntegralValue =int.Parse(integralRuleData.Integral);
+                    highIntegralValue = int.Parse(integralRuleData.Integral);
                 }
             }
             #endregion
@@ -809,9 +833,9 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     vipIntegralEntity.VipID = tmpVipId;
-                    vipIntegralEntity.InIntegral =  vipIntegralDataList[0].InIntegral+ tmpIntegralValue; ; // 增加积分
+                    vipIntegralEntity.InIntegral = vipIntegralDataList[0].InIntegral + tmpIntegralValue; ; // 增加积分
                     //vipIntegralEntity.OutIntegral = 0; //消费积分
-                    vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral+ tmpIntegralValue; //积分余额
+                    vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral + tmpIntegralValue; //积分余额
                     //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
                     vipIntegralEntity.ValidIntegral = vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
                     //vipIntegralBLL.Update(vipIntegralEntity, false);
@@ -889,9 +913,9 @@ namespace JIT.CPOS.Web.WeiXin
                 else
                 {
                     vipIntegralEntity.VipID = tmpVipId;
-                    vipIntegralEntity.InIntegral = vipIntegralDataList[0].InIntegral+ tmpIntegralValue; // 增加积分
+                    vipIntegralEntity.InIntegral = vipIntegralDataList[0].InIntegral + tmpIntegralValue; // 增加积分
                     //vipIntegralEntity.OutIntegral = 0; //消费积分
-                    vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral+ tmpIntegralValue; //积分余额
+                    vipIntegralEntity.EndIntegral = vipIntegralDataList[0].EndIntegral + tmpIntegralValue; //积分余额
                     //vipIntegralEntity.InvalidIntegral = 0; // 累计失效积分
                     vipIntegralEntity.ValidIntegral = vipIntegralDataList[0].ValidIntegral + tmpIntegralValue; // 当前有效积分
                     //vipIntegralBLL.Update(vipIntegralEntity, false);
@@ -1247,6 +1271,7 @@ namespace JIT.CPOS.Web.WeiXin
                                         , string couponNewFilePath
                                         , string headimgurl
                                         , string qrcode_id
+                                        , string unionid
                                         , out string vipId
                                         )
         {
@@ -1263,10 +1288,13 @@ namespace JIT.CPOS.Web.WeiXin
             string customerIdUnoin = string.Empty;
             string unitName = string.Empty;
 
-            vipQueryInfo.WeiXinUserId = OpenID;
-            vipQueryInfo.WeiXin = WeiXin;
             WMenuBLL menuServer = new WMenuBLL(AploggingSessionInfo);
             customerIdUnoin = menuServer.GetCustomerIdByWx(WeiXin);
+
+            vipQueryInfo.WeiXinUserId = OpenID;
+            vipQueryInfo.WeiXin = WeiXin;
+            vipQueryInfo.ClientID = customerIdUnoin;
+
             var tmpUser = Default.GetBSLoggingSession(customerIdUnoin, "1");
 
             #region 处理日志
@@ -1313,8 +1341,7 @@ namespace JIT.CPOS.Web.WeiXin
                 vipInfo.VipSourceId = "3";
                 vipInfo.HeadImgUrl = headimgurl;
 
-                //var vipObj = vipServiceUnion.QueryByEntity(vipQueryInfo, null);
-                var vipObj = vipServiceUnion.QueryByEntity(new VipEntity() { WeiXinUserId = OpenID }, null);
+                var vipObj = vipServiceUnion.QueryByEntity(vipQueryInfo, null);
                 if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                 {
                     if (vipInfo.VIPID == null || vipInfo.VIPID.Equals(""))
@@ -1325,13 +1352,38 @@ namespace JIT.CPOS.Web.WeiXin
                     {
                         vipInfo.VipCode = vipServiceUnion.GetVipCode();
                     }
-                   // vipInfo.Col49 = qrcode;//应该放在这里****
+                    // vipInfo.Col49 = qrcode;//应该放在这里****
                     vipInfo.ClientID = tmpUser.CurrentUser.customer_id;
                     vipInfo.Status = 1;
                     vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";
+                    vipInfo.UnionID = unionid;
                     //if(qrcode_id != null && !qrcode_id.Equals(""))
                     vipInfo.Col50 = iRad.ToString();
-                    vipServiceUnion.Create(vipInfo);
+
+                    //根据UnionID判断已关注其他绑定公众号
+                    if (!string.IsNullOrEmpty(vipInfo.UnionID))
+                    {
+                        var vipUnionInfo = vipServiceUnion.QueryByEntity(new VipEntity() { ClientID = tmpUser.CurrentUser.customer_id, UnionID = vipInfo.UnionID }, null).FirstOrDefault();
+                        if (vipUnionInfo == null)//首次关注
+                        {
+                            vipServiceUnion.Create(vipInfo);
+                        }
+                        //已关注了绑定公众号中的其他公众号
+                        WXUserInfoBLL wxUserInfoBLL = new WXUserInfoBLL(tmpUser);
+                        var wxUserInfoEntity = new WXUserInfoEntity()
+                        {
+                            VipID = vipUnionInfo == null ? vipInfo.VIPID : vipUnionInfo.VIPID,
+                            WeiXin = vipInfo.WeiXin,
+                            WeiXinUserID = vipInfo.WeiXinUserId,
+                            UnionID = vipInfo.UnionID,
+                            CustomerID = tmpUser.CurrentUser.customer_id
+                        };
+                        wxUserInfoBLL.Create(wxUserInfoEntity);
+                    }
+                    else //未绑定多个公众号
+                    {
+                        vipServiceUnion.Create(vipInfo);
+                    }
                     vipId = vipInfo.VIPID;
 
                     #region 关注触点活动奖励
@@ -1366,7 +1418,7 @@ namespace JIT.CPOS.Web.WeiXin
                     vipInfo.VipPasswrod = "e10adc3949ba59abbe56e057f20f883e";
                     vipInfo.Col49 = iRad.ToString();
                     vipInfo.IsDelete = 0;//设为没有被删除***
-                 
+
                     vipServiceUnion.Update(vipInfo, false);
                 }
                 #endregion
@@ -1417,12 +1469,12 @@ namespace JIT.CPOS.Web.WeiXin
                 {
                     vipDCodeInfo.Status = "1";
                     vipDCodeInfo.OpenId = OpenID;
-                    vipDCodeInfo.DCodeId = qrcode_id;
+                    vipDCodeInfo.DCodeId = qrcode_id;//类似50007094的文字
                     unitId = vipDCodeInfo.UnitId;
                     vipDCodeInfo.VipId = vipId;
                     vipDCodeServer.Update(vipDCodeInfo);
                     SetUserUnitMapping(vipInfo.VIPID, unitId, tmpUser);
-                    #region 邹坤 2014-10-11 处理动态二维码分类业务
+                    #region 邹坤 2014-10-11 处理动态二维码分类业务****
                     switch (vipDCodeInfo.DCodeType)
                     {
                         //case 1: //返利集客员工二维码，已经做好

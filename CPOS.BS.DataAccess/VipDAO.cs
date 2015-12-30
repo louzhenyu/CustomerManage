@@ -629,7 +629,7 @@ namespace JIT.CPOS.BS.DataAccess
                             Col2,Col3,Col4,Col5,Col6,Col7,Col8,Col9,Col10,Col11,Col12,Col13,Col14,Col15,Col16,Col17,Col18,Col19,
                             Col20,Col21,Col22,Col23,Col24,Col25,Col26,Col27,Col28,Col29,Col30,Col31,Col32,Col33,Col34,Col35,Col36,Col37,Col38,Col39,Col40,Col41,Col42,
                             Col43,Col44,Col45,Col46,Col47,Col48,Col49,Col50,
-                            isActivate,VIPImportID,VipRealName,ShareVipId,SetoffUserId,ShareUserId ) "
+                            isActivate,VIPImportID,VipRealName,ShareVipId,SetoffUserId,ShareUserId,UnionID ) "
                          + @" SELECT a.VIPID,a.VipName,a.VipLevel,a.VipCode,a.WeiXin,a.WeiXinUserId,a.Gender,a.Age,
                             a.Phone,a.SinaMBlog,a.TencentMBlog,a.Birthday,a.Qq,a.Email,a.Status,
                             a.VipSourceId,a.Integration,a.ClientID,a.RecentlySalesTime,a.RegistrationTime,a.CreateTime,a.CreateBy,a.LastUpdateTime,
@@ -637,7 +637,7 @@ namespace JIT.CPOS.BS.DataAccess
                             a.CouponInfo,a.PurchaseAmount,a.PurchaseCount,a.DeliveryAddress,a.Longitude,a.Latitude,a.VipPasswrod,a.HeadImgUrl,a.Col1,
                             a.Col2,a.Col3,a.Col4,a.Col5,a.Col6,a.Col7,a.Col8,a.Col9,a.Col10,a.Col11,a.Col12,a.Col13,a.Col14,a.Col15,a.Col16,a.Col17,a.Col18,a.Col19,a.Col20,a.Col21,a.Col22,
                             a.Col23,a.Col24,a.Col25,a.Col26,a.Col27,a.Col28,a.Col29,a.Col30,a.Col31,a.Col32,a.Col33,a.Col34,a.Col35,a.Col36,a.Col37,a.Col38,a.Col39,a.Col40,a.Col41,a.Col42,a.Col43,a.Col44,a.Col45,a.Col46,
-                            a.Col47,a.Col48,a.Col49,a.Col50,a.isActivate,a.VIPImportID,a.VipRealName,a.ShareVipId,a.SetoffUserId,a.ShareUserId
+                            a.Col47,a.Col48,a.Col49,a.Col50,a.isActivate,a.VIPImportID,a.VipRealName,a.ShareVipId,a.SetoffUserId,a.ShareUserId,a.UnionID
                             FROM cpos_ap.dbo.vip a "
                          + " LEFT JOIN vip b ON(a.WeiXinUserId = b.WeiXinUserId and b.isdelete='0') "
                          + " WHERE 1=1 ";

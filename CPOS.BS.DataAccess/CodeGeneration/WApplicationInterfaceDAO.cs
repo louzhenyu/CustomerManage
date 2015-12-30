@@ -70,7 +70,7 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            
+
             //初始化固定字段
             pEntity.CreateTime = DateTime.Now;
             pEntity.CreateBy = CurrentUserInfo.UserID;
@@ -81,12 +81,12 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [WApplicationInterface](");
             strSql.Append(@"[WeiXinName],[WeiXinID],[URL],[Token],[AppID],[AppSecret],[ServerIP],[FileAddress],[IsHeight],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[LoginUser],[LoginPass],[CustomerId],[WeiXinTypeId],[AuthUrl],[RequestToken],[ExpirationTime],[IsMoreCS],[ApplicationId]
-                    ,[PrevEncodingAESKey],[CurrentEncodingAESKey],[EncryptType])");
+                    ,[PrevEncodingAESKey],[CurrentEncodingAESKey],[EncryptType],[IsPayments] )");
             strSql.Append(" values (");
             strSql.Append(@"@WeiXinName,@WeiXinID,@URL,@Token,@AppID,@AppSecret,@ServerIP,@FileAddress,@IsHeight,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@LoginUser,@LoginPass,@CustomerId,@WeiXinTypeId,@AuthUrl,@RequestToken,@ExpirationTime,@IsMoreCS,@ApplicationId
-                        ,@PrevEncodingAESKey,@CurrentEncodingAESKey,@EncryptType)");            
+                        ,@PrevEncodingAESKey,@CurrentEncodingAESKey,@EncryptType,@IsPayments )");
 
-			string pkString = pEntity.ApplicationId;
+            string pkString = pEntity.ApplicationId;
 
             SqlParameter[] parameters = 
             {
@@ -116,41 +116,42 @@ namespace JIT.CPOS.BS.DataAccess
                     //加密所需字段，2014-10-21 zoukun
                     new SqlParameter("@PrevEncodingAESKey",SqlDbType.VarChar),
                     new SqlParameter("@CurrentEncodingAESKey",SqlDbType.VarChar),
-                    new SqlParameter("@EncryptType",SqlDbType.Int)
+                    new SqlParameter("@EncryptType",SqlDbType.Int),
+                    new SqlParameter("@IsPayments",SqlDbType.Int)
             };
-			parameters[0].Value = pEntity.WeiXinName;
-			parameters[1].Value = pEntity.WeiXinID;
-			parameters[2].Value = pEntity.URL;
-			parameters[3].Value = pEntity.Token;
-			parameters[4].Value = pEntity.AppID;
-			parameters[5].Value = pEntity.AppSecret;
-			parameters[6].Value = pEntity.ServerIP;
-			parameters[7].Value = pEntity.FileAddress;
-			parameters[8].Value = pEntity.IsHeight;
-			parameters[9].Value = pEntity.CreateTime;
-			parameters[10].Value = pEntity.CreateBy;
-			parameters[11].Value = pEntity.LastUpdateBy;
-			parameters[12].Value = pEntity.LastUpdateTime;
-			parameters[13].Value = pEntity.IsDelete;
-			parameters[14].Value = pEntity.LoginUser;
-			parameters[15].Value = pEntity.LoginPass;
-			parameters[16].Value = pEntity.CustomerId;
-			parameters[17].Value = pEntity.WeiXinTypeId;
-			parameters[18].Value = pEntity.AuthUrl;
-			parameters[19].Value = pEntity.RequestToken;
-			parameters[20].Value = pEntity.ExpirationTime;
-			parameters[21].Value = pEntity.IsMoreCS;
-			parameters[22].Value = pkString;
+            parameters[0].Value = pEntity.WeiXinName;
+            parameters[1].Value = pEntity.WeiXinID;
+            parameters[2].Value = pEntity.URL;
+            parameters[3].Value = pEntity.Token;
+            parameters[4].Value = pEntity.AppID;
+            parameters[5].Value = pEntity.AppSecret;
+            parameters[6].Value = pEntity.ServerIP;
+            parameters[7].Value = pEntity.FileAddress;
+            parameters[8].Value = pEntity.IsHeight;
+            parameters[9].Value = pEntity.CreateTime;
+            parameters[10].Value = pEntity.CreateBy;
+            parameters[11].Value = pEntity.LastUpdateBy;
+            parameters[12].Value = pEntity.LastUpdateTime;
+            parameters[13].Value = pEntity.IsDelete;
+            parameters[14].Value = pEntity.LoginUser;
+            parameters[15].Value = pEntity.LoginPass;
+            parameters[16].Value = pEntity.CustomerId;
+            parameters[17].Value = pEntity.WeiXinTypeId;
+            parameters[18].Value = pEntity.AuthUrl;
+            parameters[19].Value = pEntity.RequestToken;
+            parameters[20].Value = pEntity.ExpirationTime;
+            parameters[21].Value = pEntity.IsMoreCS;
+            parameters[22].Value = pkString;
             parameters[23].Value = pEntity.PrevEncodingAESKey;
             parameters[24].Value = pEntity.CurrentEncodingAESKey;
             parameters[25].Value = pEntity.EncryptType;
-
+            parameters[26].Value = pEntity.IsPayments;
             //执行并将结果回写
             int result;
             if (pTran != null)
-               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
             pEntity.ApplicationId = pkString;
         }
 
@@ -210,70 +211,72 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(WApplicationInterfaceEntity pEntity , IDbTransaction pTran)
+        public void Update(WApplicationInterfaceEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity,true,pTran);
+            Update(pEntity, true, pTran);
         }
-        public void Update(WApplicationInterfaceEntity pEntity , bool pIsUpdateNullField, IDbTransaction pTran)
+        public void Update(WApplicationInterfaceEntity pEntity, bool pIsUpdateNullField, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.ApplicationId==null)
+            if (pEntity.ApplicationId == null)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
-             //初始化固定字段
+            //初始化固定字段
             pEntity.LastUpdateTime = DateTime.Now;
             pEntity.LastUpdateBy = CurrentUserInfo.UserID;
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [WApplicationInterface] set ");
-            if (pIsUpdateNullField || pEntity.WeiXinName!=null)
-                strSql.Append( "[WeiXinName]=@WeiXinName,");
-            if (pIsUpdateNullField || pEntity.WeiXinID!=null)
-                strSql.Append( "[WeiXinID]=@WeiXinID,");
-            if (pIsUpdateNullField || pEntity.URL!=null)
-                strSql.Append( "[URL]=@URL,");
-            if (pIsUpdateNullField || pEntity.Token!=null)
-                strSql.Append( "[Token]=@Token,");
-            if (pIsUpdateNullField || pEntity.AppID!=null)
-                strSql.Append( "[AppID]=@AppID,");
-            if (pIsUpdateNullField || pEntity.AppSecret!=null)
-                strSql.Append( "[AppSecret]=@AppSecret,");
-            if (pIsUpdateNullField || pEntity.ServerIP!=null)
-                strSql.Append( "[ServerIP]=@ServerIP,");
-            if (pIsUpdateNullField || pEntity.FileAddress!=null)
-                strSql.Append( "[FileAddress]=@FileAddress,");
-            if (pIsUpdateNullField || pEntity.IsHeight!=null)
-                strSql.Append( "[IsHeight]=@IsHeight,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.LoginUser!=null)
-                strSql.Append( "[LoginUser]=@LoginUser,");
-            if (pIsUpdateNullField || pEntity.LoginPass!=null)
-                strSql.Append( "[LoginPass]=@LoginPass,");
-            if (pIsUpdateNullField || pEntity.CustomerId!=null)
-                strSql.Append( "[CustomerId]=@CustomerId,");
-            if (pIsUpdateNullField || pEntity.WeiXinTypeId!=null)
-                strSql.Append( "[WeiXinTypeId]=@WeiXinTypeId,");
-            if (pIsUpdateNullField || pEntity.AuthUrl!=null)
-                strSql.Append( "[AuthUrl]=@AuthUrl,");
-            if (pIsUpdateNullField || pEntity.RequestToken!=null)
-                strSql.Append( "[RequestToken]=@RequestToken,");
-            if (pIsUpdateNullField || pEntity.ExpirationTime!=null)
-                strSql.Append( "[ExpirationTime]=@ExpirationTime,");
-            if (pIsUpdateNullField || pEntity.IsMoreCS!=null)
-                strSql.Append( "[IsMoreCS]=@IsMoreCS,");
+            if (pIsUpdateNullField || pEntity.WeiXinName != null)
+                strSql.Append("[WeiXinName]=@WeiXinName,");
+            if (pIsUpdateNullField || pEntity.WeiXinID != null)
+                strSql.Append("[WeiXinID]=@WeiXinID,");
+            if (pIsUpdateNullField || pEntity.URL != null)
+                strSql.Append("[URL]=@URL,");
+            if (pIsUpdateNullField || pEntity.Token != null)
+                strSql.Append("[Token]=@Token,");
+            if (pIsUpdateNullField || pEntity.AppID != null)
+                strSql.Append("[AppID]=@AppID,");
+            if (pIsUpdateNullField || pEntity.AppSecret != null)
+                strSql.Append("[AppSecret]=@AppSecret,");
+            if (pIsUpdateNullField || pEntity.ServerIP != null)
+                strSql.Append("[ServerIP]=@ServerIP,");
+            if (pIsUpdateNullField || pEntity.FileAddress != null)
+                strSql.Append("[FileAddress]=@FileAddress,");
+            if (pIsUpdateNullField || pEntity.IsHeight != null)
+                strSql.Append("[IsHeight]=@IsHeight,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy != null)
+                strSql.Append("[LastUpdateBy]=@LastUpdateBy,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
+                strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.LoginUser != null)
+                strSql.Append("[LoginUser]=@LoginUser,");
+            if (pIsUpdateNullField || pEntity.LoginPass != null)
+                strSql.Append("[LoginPass]=@LoginPass,");
+            if (pIsUpdateNullField || pEntity.CustomerId != null)
+                strSql.Append("[CustomerId]=@CustomerId,");
+            if (pIsUpdateNullField || pEntity.WeiXinTypeId != null)
+                strSql.Append("[WeiXinTypeId]=@WeiXinTypeId,");
+            if (pIsUpdateNullField || pEntity.AuthUrl != null)
+                strSql.Append("[AuthUrl]=@AuthUrl,");
+            if (pIsUpdateNullField || pEntity.RequestToken != null)
+                strSql.Append("[RequestToken]=@RequestToken,");
+            if (pIsUpdateNullField || pEntity.ExpirationTime != null)
+                strSql.Append("[ExpirationTime]=@ExpirationTime,");
+            if (pIsUpdateNullField || pEntity.IsMoreCS != null)
+                strSql.Append("[IsMoreCS]=@IsMoreCS,");
             if (pIsUpdateNullField || pEntity.PrevEncodingAESKey != null)
                 strSql.Append("[PrevEncodingAESKey]=@PrevEncodingAESKey,");
             if (pIsUpdateNullField || pEntity.CurrentEncodingAESKey != null)
                 strSql.Append("[CurrentEncodingAESKey]=@CurrentEncodingAESKey,");
             if (pIsUpdateNullField || pEntity.EncryptType != null)
-                strSql.Append("[EncryptType]=@EncryptType");
+                strSql.Append("[EncryptType]=@EncryptType,");
+            if (pIsUpdateNullField || pEntity.IsPayments != null)
+                strSql.Append("[IsPayments]=@IsPayments ");
             if (strSql.ToString().EndsWith(","))
                 strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where ApplicationId=@ApplicationId ");
@@ -302,31 +305,34 @@ namespace JIT.CPOS.BS.DataAccess
                     //加密字段 2014-10-21 zoukun
                     new SqlParameter("@PrevEncodingAESKey",SqlDbType.VarChar),
                     new SqlParameter("@CurrentEncodingAESKey",SqlDbType.VarChar),
-                    new SqlParameter("@EncryptType",SqlDbType.Int)
+                    new SqlParameter("@EncryptType",SqlDbType.Int),
+                    new SqlParameter("@IsPayments",SqlDbType.Int)
+
             };
-			parameters[0].Value = pEntity.WeiXinName;
-			parameters[1].Value = pEntity.WeiXinID;
-			parameters[2].Value = pEntity.URL;
-			parameters[3].Value = pEntity.Token;
-			parameters[4].Value = pEntity.AppID;
-			parameters[5].Value = pEntity.AppSecret;
-			parameters[6].Value = pEntity.ServerIP;
-			parameters[7].Value = pEntity.FileAddress;
-			parameters[8].Value = pEntity.IsHeight;
-			parameters[9].Value = pEntity.LastUpdateBy;
-			parameters[10].Value = pEntity.LastUpdateTime;
-			parameters[11].Value = pEntity.LoginUser;
-			parameters[12].Value = pEntity.LoginPass;
-			parameters[13].Value = pEntity.CustomerId;
-			parameters[14].Value = pEntity.WeiXinTypeId;
-			parameters[15].Value = pEntity.AuthUrl;
-			parameters[16].Value = pEntity.RequestToken;
-			parameters[17].Value = pEntity.ExpirationTime;
-			parameters[18].Value = pEntity.IsMoreCS;
-			parameters[19].Value = pEntity.ApplicationId;
+            parameters[0].Value = pEntity.WeiXinName;
+            parameters[1].Value = pEntity.WeiXinID;
+            parameters[2].Value = pEntity.URL;
+            parameters[3].Value = pEntity.Token;
+            parameters[4].Value = pEntity.AppID;
+            parameters[5].Value = pEntity.AppSecret;
+            parameters[6].Value = pEntity.ServerIP;
+            parameters[7].Value = pEntity.FileAddress;
+            parameters[8].Value = pEntity.IsHeight;
+            parameters[9].Value = pEntity.LastUpdateBy;
+            parameters[10].Value = pEntity.LastUpdateTime;
+            parameters[11].Value = pEntity.LoginUser;
+            parameters[12].Value = pEntity.LoginPass;
+            parameters[13].Value = pEntity.CustomerId;
+            parameters[14].Value = pEntity.WeiXinTypeId;
+            parameters[15].Value = pEntity.AuthUrl;
+            parameters[16].Value = pEntity.RequestToken;
+            parameters[17].Value = pEntity.ExpirationTime;
+            parameters[18].Value = pEntity.IsMoreCS;
+            parameters[19].Value = pEntity.ApplicationId;
             parameters[20].Value = pEntity.PrevEncodingAESKey;
             parameters[21].Value = pEntity.CurrentEncodingAESKey;
             parameters[22].Value = pEntity.EncryptType;
+            parameters[23].Value = pEntity.IsPayments;
 
             //执行语句
             int result = 0;
@@ -340,11 +346,11 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(WApplicationInterfaceEntity pEntity )
+        public void Update(WApplicationInterfaceEntity pEntity)
         {
-            Update(pEntity ,true);
+            Update(pEntity, true);
         }
-        public void Update(WApplicationInterfaceEntity pEntity ,bool pIsUpdateNullField )
+        public void Update(WApplicationInterfaceEntity pEntity, bool pIsUpdateNullField)
         {
             this.Update(pEntity, pIsUpdateNullField, null);
         }
@@ -368,12 +374,12 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.ApplicationId==null)
+            if (pEntity.ApplicationId == null)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.ApplicationId, pTran);           
+            this.Delete(pEntity.ApplicationId, pTran);
         }
 
         /// <summary>
@@ -384,7 +390,7 @@ namespace JIT.CPOS.BS.DataAccess
         public void Delete(object pID, IDbTransaction pTran)
         {
             if (pID == null)
-                return ;   
+                return;
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [WApplicationInterface] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where ApplicationId=@ApplicationId;");
@@ -397,10 +403,10 @@ namespace JIT.CPOS.BS.DataAccess
             //执行语句
             int result = 0;
             if (pTran != null)
-                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
-            return ;
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+            return;
         }
 
         /// <summary>
@@ -418,7 +424,7 @@ namespace JIT.CPOS.BS.DataAccess
                 //参数校验
                 if (item == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.ApplicationId==null)
+                if (item.ApplicationId == null)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
@@ -432,7 +438,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(WApplicationInterfaceEntity[] pEntities)
-        { 
+        {
             Delete(pEntities, null);
         }
 
@@ -442,7 +448,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pIDs">标识符值数组</param>
         public void Delete(object[] pIDs)
         {
-            Delete(pIDs,null);
+            Delete(pIDs, null);
         }
 
         /// <summary>
@@ -450,24 +456,24 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran) 
+        public void Delete(object[] pIDs, IDbTransaction pTran)
         {
-            if (pIDs == null || pIDs.Length==0)
-                return ;
+            if (pIDs == null || pIDs.Length == 0)
+                return;
             //组织参数化SQL
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("'{0}',",item.ToString());
+                primaryKeys.AppendFormat("'{0}',", item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [WApplicationInterface] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy='"+CurrentUserInfo.UserID+"',IsDelete=1 where ApplicationId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [WApplicationInterface] set LastUpdateTime='" + DateTime.Now.ToString() + "',LastUpdateBy='" + CurrentUserInfo.UserID + "',IsDelete=1 where ApplicationId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
-            int result = 0;   
+            int result = 0;
             if (pTran == null)
                 result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
         }
         #endregion
 
@@ -532,7 +538,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pOrderBys)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
                     }
@@ -551,7 +557,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pWhereConditions)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
                         totalCountSql.AppendFormat(" and {0}", item.GetExpression());
@@ -560,7 +566,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
-            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
             PagedQueryResult<WApplicationInterfaceEntity> result = new PagedQueryResult<WApplicationInterfaceEntity>();
             List<WApplicationInterfaceEntity> list = new List<WApplicationInterfaceEntity>();
@@ -592,7 +598,7 @@ namespace JIT.CPOS.BS.DataAccess
         public WApplicationInterfaceEntity[] QueryByEntity(WApplicationInterfaceEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
-            return Query(queryWhereCondition,  pOrderBys);            
+            return Query(queryWhereCondition, pOrderBys);
         }
 
         /// <summary>
@@ -603,7 +609,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<WApplicationInterfaceEntity> PagedQueryByEntity(WApplicationInterfaceEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
+            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
@@ -615,54 +621,54 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <returns></returns>
         protected IWhereCondition[] GetWhereConditionByEntity(WApplicationInterfaceEntity pQueryEntity)
-        { 
+        {
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.ApplicationId!=null)
+            if (pQueryEntity.ApplicationId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ApplicationId", Value = pQueryEntity.ApplicationId });
-            if (pQueryEntity.WeiXinName!=null)
+            if (pQueryEntity.WeiXinName != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "WeiXinName", Value = pQueryEntity.WeiXinName });
-            if (pQueryEntity.WeiXinID!=null)
+            if (pQueryEntity.WeiXinID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "WeiXinID", Value = pQueryEntity.WeiXinID });
-            if (pQueryEntity.URL!=null)
+            if (pQueryEntity.URL != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "URL", Value = pQueryEntity.URL });
-            if (pQueryEntity.Token!=null)
+            if (pQueryEntity.Token != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Token", Value = pQueryEntity.Token });
-            if (pQueryEntity.AppID!=null)
+            if (pQueryEntity.AppID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "AppID", Value = pQueryEntity.AppID });
-            if (pQueryEntity.AppSecret!=null)
+            if (pQueryEntity.AppSecret != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "AppSecret", Value = pQueryEntity.AppSecret });
-            if (pQueryEntity.ServerIP!=null)
+            if (pQueryEntity.ServerIP != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ServerIP", Value = pQueryEntity.ServerIP });
-            if (pQueryEntity.FileAddress!=null)
+            if (pQueryEntity.FileAddress != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "FileAddress", Value = pQueryEntity.FileAddress });
-            if (pQueryEntity.IsHeight!=null)
+            if (pQueryEntity.IsHeight != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsHeight", Value = pQueryEntity.IsHeight });
-            if (pQueryEntity.CreateTime!=null)
+            if (pQueryEntity.CreateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.CreateBy!=null)
+            if (pQueryEntity.CreateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateBy!=null)
+            if (pQueryEntity.LastUpdateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
-            if (pQueryEntity.LastUpdateTime!=null)
+            if (pQueryEntity.LastUpdateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.IsDelete!=null)
+            if (pQueryEntity.IsDelete != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
-            if (pQueryEntity.LoginUser!=null)
+            if (pQueryEntity.LoginUser != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LoginUser", Value = pQueryEntity.LoginUser });
-            if (pQueryEntity.LoginPass!=null)
+            if (pQueryEntity.LoginPass != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LoginPass", Value = pQueryEntity.LoginPass });
-            if (pQueryEntity.CustomerId!=null)
+            if (pQueryEntity.CustomerId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
-            if (pQueryEntity.WeiXinTypeId!=null)
+            if (pQueryEntity.WeiXinTypeId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "WeiXinTypeId", Value = pQueryEntity.WeiXinTypeId });
-            if (pQueryEntity.AuthUrl!=null)
+            if (pQueryEntity.AuthUrl != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "AuthUrl", Value = pQueryEntity.AuthUrl });
-            if (pQueryEntity.RequestToken!=null)
+            if (pQueryEntity.RequestToken != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "RequestToken", Value = pQueryEntity.RequestToken });
-            if (pQueryEntity.ExpirationTime!=null)
+            if (pQueryEntity.ExpirationTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ExpirationTime", Value = pQueryEntity.ExpirationTime });
-            if (pQueryEntity.IsMoreCS!=null)
+            if (pQueryEntity.IsMoreCS != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsMoreCS", Value = pQueryEntity.IsMoreCS });
             if (pQueryEntity.PrevEncodingAESKey != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "PrevEncodingAESKey", Value = pQueryEntity.PrevEncodingAESKey });
@@ -670,6 +676,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CurrentEncodingAESKey", Value = pQueryEntity.CurrentEncodingAESKey });
             if (pQueryEntity.EncryptType != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EncryptType", Value = pQueryEntity.EncryptType });
+            if (pQueryEntity.IsPayments != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsPayments", Value = pQueryEntity.IsPayments });
 
             return lstWhereCondition.ToArray();
         }
@@ -685,98 +693,98 @@ namespace JIT.CPOS.BS.DataAccess
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["ApplicationId"] != DBNull.Value)
-			{
-				pInstance.ApplicationId =  Convert.ToString(pReader["ApplicationId"]);
-			}
-			if (pReader["WeiXinName"] != DBNull.Value)
-			{
-				pInstance.WeiXinName =  Convert.ToString(pReader["WeiXinName"]);
-			}
-			if (pReader["WeiXinID"] != DBNull.Value)
-			{
-				pInstance.WeiXinID =  Convert.ToString(pReader["WeiXinID"]);
-			}
-			if (pReader["URL"] != DBNull.Value)
-			{
-				pInstance.URL =  Convert.ToString(pReader["URL"]);
-			}
-			if (pReader["Token"] != DBNull.Value)
-			{
-				pInstance.Token =  Convert.ToString(pReader["Token"]);
-			}
-			if (pReader["AppID"] != DBNull.Value)
-			{
-				pInstance.AppID =  Convert.ToString(pReader["AppID"]);
-			}
-			if (pReader["AppSecret"] != DBNull.Value)
-			{
-				pInstance.AppSecret =  Convert.ToString(pReader["AppSecret"]);
-			}
-			if (pReader["ServerIP"] != DBNull.Value)
-			{
-				pInstance.ServerIP =  Convert.ToString(pReader["ServerIP"]);
-			}
-			if (pReader["FileAddress"] != DBNull.Value)
-			{
-				pInstance.FileAddress =  Convert.ToString(pReader["FileAddress"]);
-			}
-			if (pReader["IsHeight"] != DBNull.Value)
-			{
-				pInstance.IsHeight =   Convert.ToInt32(pReader["IsHeight"]);
-			}
-			if (pReader["CreateTime"] != DBNull.Value)
-			{
-				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
-			}
-			if (pReader["CreateBy"] != DBNull.Value)
-			{
-				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
-			}
-			if (pReader["LastUpdateBy"] != DBNull.Value)
-			{
-				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
-			}
-			if (pReader["LastUpdateTime"] != DBNull.Value)
-			{
-				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
-			}
-			if (pReader["IsDelete"] != DBNull.Value)
-			{
-				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
-			}
-			if (pReader["LoginUser"] != DBNull.Value)
-			{
-				pInstance.LoginUser =  Convert.ToString(pReader["LoginUser"]);
-			}
-			if (pReader["LoginPass"] != DBNull.Value)
-			{
-				pInstance.LoginPass =  Convert.ToString(pReader["LoginPass"]);
-			}
-			if (pReader["CustomerId"] != DBNull.Value)
-			{
-				pInstance.CustomerId =  Convert.ToString(pReader["CustomerId"]);
-			}
-			if (pReader["WeiXinTypeId"] != DBNull.Value)
-			{
-				pInstance.WeiXinTypeId =  Convert.ToString(pReader["WeiXinTypeId"]);
-			}
-			if (pReader["AuthUrl"] != DBNull.Value)
-			{
-				pInstance.AuthUrl =  Convert.ToString(pReader["AuthUrl"]);
-			}
-			if (pReader["RequestToken"] != DBNull.Value)
-			{
-				pInstance.RequestToken =  Convert.ToString(pReader["RequestToken"]);
-			}
-			if (pReader["ExpirationTime"] != DBNull.Value)
-			{
-				pInstance.ExpirationTime =  Convert.ToDateTime(pReader["ExpirationTime"]);
-			}
-			if (pReader["IsMoreCS"] != DBNull.Value)
-			{
-				pInstance.IsMoreCS =   Convert.ToInt32(pReader["IsMoreCS"]);
-			}
+            if (pReader["ApplicationId"] != DBNull.Value)
+            {
+                pInstance.ApplicationId = Convert.ToString(pReader["ApplicationId"]);
+            }
+            if (pReader["WeiXinName"] != DBNull.Value)
+            {
+                pInstance.WeiXinName = Convert.ToString(pReader["WeiXinName"]);
+            }
+            if (pReader["WeiXinID"] != DBNull.Value)
+            {
+                pInstance.WeiXinID = Convert.ToString(pReader["WeiXinID"]);
+            }
+            if (pReader["URL"] != DBNull.Value)
+            {
+                pInstance.URL = Convert.ToString(pReader["URL"]);
+            }
+            if (pReader["Token"] != DBNull.Value)
+            {
+                pInstance.Token = Convert.ToString(pReader["Token"]);
+            }
+            if (pReader["AppID"] != DBNull.Value)
+            {
+                pInstance.AppID = Convert.ToString(pReader["AppID"]);
+            }
+            if (pReader["AppSecret"] != DBNull.Value)
+            {
+                pInstance.AppSecret = Convert.ToString(pReader["AppSecret"]);
+            }
+            if (pReader["ServerIP"] != DBNull.Value)
+            {
+                pInstance.ServerIP = Convert.ToString(pReader["ServerIP"]);
+            }
+            if (pReader["FileAddress"] != DBNull.Value)
+            {
+                pInstance.FileAddress = Convert.ToString(pReader["FileAddress"]);
+            }
+            if (pReader["IsHeight"] != DBNull.Value)
+            {
+                pInstance.IsHeight = Convert.ToInt32(pReader["IsHeight"]);
+            }
+            if (pReader["CreateTime"] != DBNull.Value)
+            {
+                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
+            }
+            if (pReader["CreateBy"] != DBNull.Value)
+            {
+                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
+            }
+            if (pReader["LastUpdateBy"] != DBNull.Value)
+            {
+                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
+            }
+            if (pReader["LastUpdateTime"] != DBNull.Value)
+            {
+                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
+            }
+            if (pReader["IsDelete"] != DBNull.Value)
+            {
+                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
+            }
+            if (pReader["LoginUser"] != DBNull.Value)
+            {
+                pInstance.LoginUser = Convert.ToString(pReader["LoginUser"]);
+            }
+            if (pReader["LoginPass"] != DBNull.Value)
+            {
+                pInstance.LoginPass = Convert.ToString(pReader["LoginPass"]);
+            }
+            if (pReader["CustomerId"] != DBNull.Value)
+            {
+                pInstance.CustomerId = Convert.ToString(pReader["CustomerId"]);
+            }
+            if (pReader["WeiXinTypeId"] != DBNull.Value)
+            {
+                pInstance.WeiXinTypeId = Convert.ToString(pReader["WeiXinTypeId"]);
+            }
+            if (pReader["AuthUrl"] != DBNull.Value)
+            {
+                pInstance.AuthUrl = Convert.ToString(pReader["AuthUrl"]);
+            }
+            if (pReader["RequestToken"] != DBNull.Value)
+            {
+                pInstance.RequestToken = Convert.ToString(pReader["RequestToken"]);
+            }
+            if (pReader["ExpirationTime"] != DBNull.Value)
+            {
+                pInstance.ExpirationTime = Convert.ToDateTime(pReader["ExpirationTime"]);
+            }
+            if (pReader["IsMoreCS"] != DBNull.Value)
+            {
+                pInstance.IsMoreCS = Convert.ToInt32(pReader["IsMoreCS"]);
+            }
             //if (pReader["PrevEncodingAESKey"] != DBNull.Value)
             //{
             //    pInstance.PrevEncodingAESKey = Convert.ToString(pReader["PrevEncodingAESKey"]);
@@ -789,7 +797,10 @@ namespace JIT.CPOS.BS.DataAccess
             //{
             //    pInstance.EncryptType = Convert.ToInt32(pReader["EncryptType"]);
             //}
-
+            if (pReader["IsPayments"] != DBNull.Value)
+            {
+                pInstance.IsPayments = Convert.ToInt32(pReader["IsPayments"]);
+            }
         }
         #endregion
     }

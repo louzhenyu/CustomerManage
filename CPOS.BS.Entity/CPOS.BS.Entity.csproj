@@ -375,7 +375,8 @@
     <Compile Include="CodeGeneration\WXSalesPolicyRateEntity.cs" />
     <Compile Include="CodeGeneration\WXSalesPolicyRateObjectMappingEntity.cs" />
     <Compile Include="CodeGeneration\WXSalesPushLogEntity.cs" />
-    <Compile Include="CodeGeneration\WXTMConfigEntity.cs" />
+    <Compile Include="CodeGeneration\WXUserInfoEntity.cs" />
+ <Compile Include="CodeGeneration\WXTMConfigEntity.cs" />
     <Compile Include="ContactEventEntity.cs" />
     <Compile Include="CouponGrantLogEntity.cs" />
     <Compile Include="CouponSourceEntity.cs" />
@@ -1153,6 +1154,7 @@
     <Compile Include="WX\UploadMediaEntity.cs" />
     <Compile Include="WX\UserInfoEntity.cs" />
     <Compile Include="WX\WeiXinEntity.cs" />
+    <Compile Include="WX\WXUserInfoEntity.cs" />
     <Compile Include="ZCourseApplyEntity.cs" />
     <Compile Include="ZCourseEntity.cs" />
     <Compile Include="ZCourseNewsMappingEntity.cs" />

@@ -46,9 +46,10 @@ namespace JIT.CPOS.BS.Entity
         /// <param name="pPageParamJson">URL参数JSON</param>
         /// <param name="pCustomerId">客户ID</param>
         /// <param name="pApplicationId">微信接口ID</param>
+        /// <param name="weixinId">微信ID</param>
         /// <param name="IsAuth">是否认证</param>
         /// <returns>动态生成的URL</returns>
-        public string GetUrl(string pPageParamJson, string pCustomerId, string pApplicationId)
+        public string GetUrl(string pPageParamJson, string pCustomerId, string pApplicationId, string weixinId)
         {
             string URL = string.Empty;
 
@@ -90,13 +91,12 @@ namespace JIT.CPOS.BS.Entity
             if (IsAuth == 1)
             {
                 //需要认证
-                URL = string.Format("http://{0}/WXOAuth/AuthUniversal.aspx?customerId={1}&goUrl={2}", Domain.Trim('/'), pCustomerId, string.Format("{0}{1}", Domain.Trim('/'), urlTemplate));
-               // URL = string.Format("http://{0}/WXOAuth/AuthUniversal.aspx?customerId={1}&goUrl={2}", Domain.Trim('/'), pCustomerId, HttpUtility.UrlEncode(string.Format("{0}{1}", Domain.Trim('/'), urlTemplate)));
+                URL = string.Format("http://{0}/WXOAuth/AuthUniversal.aspx?customerId={1}&goUrl={2}&applicationId={3}&weixinId={4}", Domain.Trim('/'), pCustomerId, string.Format("{0}{1}", Domain.Trim('/'), urlTemplate), pApplicationId, weixinId);               // URL = string.Format("http://{0}/WXOAuth/AuthUniversal.aspx?customerId={1}&goUrl={2}", Domain.Trim('/'), pCustomerId, HttpUtility.UrlEncode(string.Format("{0}{1}", Domain.Trim('/'), urlTemplate)));
             }
             else
             {
                 //不需要认证
-                URL = string.Format("http://{0}/WXOAuth/NoAuthGoto.aspx?customerId={1}&goUrl={2}", Domain.Trim('/'), pCustomerId, string.Format("{0}{1}", Domain.Trim('/'), urlTemplate.Trim('/')));
+                URL = string.Format("http://{0}/WXOAuth/NoAuthGoto.aspx?customerId={1}&goUrl={2}&applicationId={3}&weixinId={4}", Domain.Trim('/'), pCustomerId, string.Format("{0}{1}", Domain.Trim('/'), urlTemplate.Trim('/')), pApplicationId, weixinId);
               //  URL = string.Format("http://{0}/WXOAuth/NoAuthGoto.aspx?customerId={1}&goUrl={2}", Domain.Trim('/'), pCustomerId, HttpUtility.UrlEncode(string.Format("{0}{1}", Domain.Trim('/'), urlTemplate.Trim('/'))));
             }
             #endregion

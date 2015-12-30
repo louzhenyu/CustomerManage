@@ -533,7 +533,7 @@ namespace JIT.CPOS.BS.BLL
                 }
                 if (!DicVersion.Keys.Contains("AJAX_PARAMS"))
                 {
-                     DicVersion.Add("AJAX_PARAMS", "openId,customerId,userId,locale");
+                     DicVersion.Add("AJAX_PARAMS", "openId,customerId,applicationId,userId,locale");
                 }
                 if (!DicVersion.Keys.Contains("APP_JSLIB"))
                 {
@@ -570,7 +570,7 @@ namespace JIT.CPOS.BS.BLL
             }
             else
             {
-                DicVersion.Add("AJAX_PARAMS", "openId,customerId,userId,locale");
+                DicVersion.Add("AJAX_PARAMS", "openId,customerId,applicationId,userId,locale");
                 DicVersion.Add("APP_JSLIB", "jquery");
                 //DicVersion.Add("APP_TYPE", APP_TYPE);
                 DicVersion.Add("APP_DEBUG", false);

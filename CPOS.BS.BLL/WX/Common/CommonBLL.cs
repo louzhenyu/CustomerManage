@@ -578,6 +578,7 @@ namespace JIT.CPOS.BS.BLL.WX
                     BaseService.WriteLogWeixin("userInfo.city:  " + userInfo.city);
                     BaseService.WriteLogWeixin("userInfo.language:  " + userInfo.language);
                     BaseService.WriteLogWeixin("userInfo.headimgurl:  " + userInfo.headimgurl);
+                    BaseService.WriteLogWeixin("userInfo.unionid:  " + userInfo.unionid);
 
                     string webUrl = ConfigurationManager.AppSettings["website_url3"];
                     var qrcode = webUrl + "/Member.aspx?weixin_id=" + weixinID + "&open_id=" + openID;
@@ -594,6 +595,8 @@ namespace JIT.CPOS.BS.BLL.WX
                     uri += "&isShow=" + HttpUtility.UrlEncode(isShow);
                     uri += "&qrcode=" + HttpUtility.UrlEncode(qrcode);
                     uri += "&qrcode_id=" + HttpUtility.UrlEncode(qrcodeId);
+                    uri += "&unionid=" + HttpUtility.UrlEncode(userInfo.unionid);
+
                     string method = "GET";
                     string data = CommonBLL.GetRemoteData(uri, method, string.Empty);
 
@@ -1052,7 +1055,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="loggingSessionInfo"></param>
         /// <param name="vipCode">当前VIP表vipCode的最大值</param>
         /// <returns></returns>
-        public bool ImportUserInfo(string appId, string appSecret, string weixinId, LoggingSessionInfo loggingSessionInfo, int vipCode)
+        public bool ImportUserInfo(string appId, string appSecret, string weixinId, LoggingSessionInfo loggingSessionInfo, int vipCode, int appCount)
         {
             try
             {
@@ -1129,27 +1132,70 @@ namespace JIT.CPOS.BS.BLL.WX
                         case 7: code += "0"; break;
                     }
 
+                    var vipBLL = new VipBLL(loggingSessionInfo);
+                    var wxUserInfoBLL = new WXUserInfoBLL(loggingSessionInfo);
                     foreach (var item in userInfoList)
                     {
-                        var nickname = item.nickname.Replace("'", "''");
-                        var city = item.country + " " + item.province + " " + item.city;
-                        var tempCode = code + count;
-                        count++;
+                        var wxUserInfo = wxUserInfoBLL.QueryByEntity(new WXUserInfoEntity() { CustomerID = loggingSessionInfo.ClientID, WeiXinUserID = item.openid }, null).FirstOrDefault();
+                        VipEntity vipInfo = null;
+                        if (wxUserInfo != null)
+                            vipInfo = vipBLL.GetByID(wxUserInfo.VipID);
+                        else
+                            vipInfo = vipBLL.QueryByEntity(new VipEntity() { ClientID = loggingSessionInfo.ClientID, WeiXinUserId = item.openid }, null).FirstOrDefault();
 
-                        sql += " INSERT INTO dbo.Vip( ";
-                        sql += " VIPID ,VipName ,VipLevel ,VipCode , ";
-                        sql += " WeiXin ,WeiXinUserId ,Gender ,Status , ";
-                        sql += " VipSourceId ,ClientID ,CreateTime ,CreateBy , ";
-                        sql += " LastUpdateTime ,LastUpdateBy ,IsDelete ,City ,HeadImgUrl) ";
-                        sql += " VALUES  ( ";
-                        sql += " REPLACE(NEWID(),'-','') , '" + item.nickname + "', 1, '" + tempCode + "', ";
-                        sql += " '" + weixinId + "','" + item.openid + "','" + item.sex + "','1', ";
-                        sql += " '3','86a575e616044da3ac2c3ab492e44445', GETDATE(), '1', ";
-                        sql += " GETDATE(), '1', 0, '" + city + "','" + item.headimgurl + "' ";
-                        sql += " ) ";
+                        if (vipInfo == null)
+                        {
+                            //新增会员信息
+                            var nickname = item.nickname.Replace("'", "");
+                            var city = item.country + " " + item.province + " " + item.city;
+                            var tempCode = code + count;
+                            count++;
+
+                            sql += "   DECLARE @VipID" + tempCode + " varchar(50) SET @VipID" + tempCode + "=REPLACE(NEWID(),'-','') ";
+                            sql += " INSERT INTO dbo.Vip( ";
+                            sql += " VIPID ,VipName ,VipLevel ,VipCode , ";
+                            sql += " WeiXin ,WeiXinUserId ,Gender ,Status , ";
+                            sql += " VipSourceId ,ClientID ,CreateTime ,CreateBy , ";
+                            sql += " LastUpdateTime ,LastUpdateBy ,IsDelete ,City ,HeadImgUrl,UnionID) ";
+                            sql += " VALUES  ( ";
+                            sql += " @VipID" + tempCode + ", '" + nickname + "', 1, '" + tempCode + "', ";
+                            sql += " '" + weixinId + "','" + item.openid + "','" + item.sex + "','1', ";
+                            sql += " '3','" + loggingSessionInfo.ClientID + "' ,GETDATE(), '1', ";
+                            sql += " GETDATE(), '1', 0, '" + city + "','" + item.headimgurl + "','" + item.unionid + "' ";
+                            sql += " ) ";
+
+                            if (appCount > 1)
+                            {
+                                sql += " insert into wxuserinfo ";
+                                sql += " (WXUserID,VipID,WeiXin,WeiXinUserID,UnionID,CustomerID,CreateTime,CreateBy,LastUpdateTime,LastUpdateBy,IsDelete)  ";
+                                sql += " values ( ";
+                                sql += " newid(),@vipid" + tempCode + ",'" + weixinId + "','" + item.openid + "','" + item.unionid + "','" + loggingSessionInfo.ClientID + "',getdate(),'sys',getdate(),'sys',0";
+                                sql += " ) ";
+                            }
+                        }
+                        else
+                        {
+                            //修改会员信息
+                            var nickname = item.nickname.Replace("'", "");
+                            var city = item.country + " " + item.province + " " + item.city;
+
+                            sql += " UPDATE Vip SET VipName='" + nickname + "',City='" + city + "',HeadImgUrl='" + item.headimgurl + "',UnionID='" + item.unionid + "',LastUpdateTime = GetDate() WHERE vipid='" + vipInfo.VIPID + "' ";
+
+                            if (appCount > 1)
+                            {
+                                if (wxUserInfo == null)
+                                {
+                                    sql += " insert into wxuserinfo ";
+                                    sql += " (WXUserID,VipID,WeiXin,WeiXinUserID,UnionID,CustomerID,CreateTime,CreateBy,LastUpdateTime,LastUpdateBy,IsDelete)  ";
+                                    sql += " values ( ";
+                                    sql += " newid(),'" + vipInfo.VIPID + "','" + weixinId + "','" + item.openid + "','" + item.unionid + "','" + loggingSessionInfo.ClientID + "',getdate(),'sys',getdate(),'sys',0";
+                                    sql += " ) ";
+                                }
+                            }
+                        }
                     }
 
-                    DefaultSQLHelper sqlHelper = new DefaultSQLHelper(loggingSessionInfo.Conn);
+                    DefaultSQLHelper sqlHelper = new DefaultSQLHelper(loggingSessionInfo.CurrentLoggingManager.Connection_String);
 
                     BaseService.WriteLogWeixin("sql:  " + sql);
                     var result = sqlHelper.ExecuteScalar(sql);
@@ -1159,6 +1205,7 @@ namespace JIT.CPOS.BS.BLL.WX
                     BaseService.WriteLogWeixin("结束时间:  " + endTime);
                     BaseService.WriteLogWeixin("总共耗时:  " + (endTime - startTime));
 
+                    userList.RemoveAt(0);
                     var tmp = string.Empty;
                 }
 
@@ -1893,7 +1940,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 return new ResultEntity();
             PaySuccess PaySuccessData = new PaySuccess();
             PaySuccessData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
-            PaySuccessData.orderProductPrice = new DataInfo() { value = Math.Round(Inout.actual_amount??0, 2).ToString(), color = WXTMConfigData.Colour1 };
+            PaySuccessData.orderProductPrice = new DataInfo() { value = Math.Round(Inout.actual_amount ?? 0, 2).ToString(), color = WXTMConfigData.Colour1 };
             PaySuccessData.orderProductName = new DataInfo() { value = "商品名称", color = WXTMConfigData.Colour2 };
             PaySuccessData.orderAddress = new DataInfo() { value = Inout.Field4, color = WXTMConfigData.Colour3 };
             PaySuccessData.orderName = new DataInfo() { value = Inout.order_no, color = WXTMConfigData.Colour3 };
@@ -1941,7 +1988,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="OpenID"></param>
         /// <param name="loggingSessionInfo"></param>
         /// <returns></returns>
-        public ResultEntity PointsChangeMessage(string OldIntegration, VipEntity vipInfo,string ChangeIntegral, string OpenID, LoggingSessionInfo loggingSessionInfo)
+        public ResultEntity PointsChangeMessage(string OldIntegration, VipEntity vipInfo, string ChangeIntegral, string OpenID, LoggingSessionInfo loggingSessionInfo)
         {
             var CommonBLL = new JIT.CPOS.BS.BLL.WX.CommonBLL();
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00230", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
@@ -1979,8 +2026,8 @@ namespace JIT.CPOS.BS.BLL.WX
             BalanceData.keyword1 = new DataInfo() { value = "客户余额账户", color = WXTMConfigData.Colour1 };
             BalanceData.keyword2 = new DataInfo() { value = detailInfo.Reason, color = WXTMConfigData.Colour2 };
             BalanceData.keyword3 = new DataInfo() { value = OrderNo, color = WXTMConfigData.Colour2 };
-            BalanceData.keyword4 = new DataInfo() { value = Math.Round(detailInfo.Amount??0, 2).ToString(), color = WXTMConfigData.Colour3 };
-            BalanceData.keyword5 = new DataInfo() { value = Math.Round(vipAmountEntity.EndAmount??0, 2).ToString(), color = WXTMConfigData.Colour3 };
+            BalanceData.keyword4 = new DataInfo() { value = Math.Round(detailInfo.Amount ?? 0, 2).ToString(), color = WXTMConfigData.Colour3 };
+            BalanceData.keyword5 = new DataInfo() { value = Math.Round(vipAmountEntity.EndAmount ?? 0, 2).ToString(), color = WXTMConfigData.Colour3 };
             BalanceData.remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
             return SendMatchWXTemplateMessage(null, BalanceData, null, null, null, "10", OpenID, VipID, loggingSessionInfo);
@@ -2003,8 +2050,8 @@ namespace JIT.CPOS.BS.BLL.WX
             CashBack CashBackData = new CashBack();
             CashBackData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             CashBackData.order = new DataInfo() { value = OrderNo, color = WXTMConfigData.Colour1 };
-            CashBackData.money = new DataInfo() { value = Math.Round(money??0, 2).ToString(), color = WXTMConfigData.Colour2 };
-            CashBackData.remark = new DataInfo() { value = WXTMConfigData.RemarkText+DateTime.Now.ToString("yyyy-MM-dd"), color = WXTMConfigData.RemarkColour };
+            CashBackData.money = new DataInfo() { value = Math.Round(money ?? 0, 2).ToString(), color = WXTMConfigData.Colour2 };
+            CashBackData.remark = new DataInfo() { value = WXTMConfigData.RemarkText + DateTime.Now.ToString("yyyy-MM-dd"), color = WXTMConfigData.RemarkColour };
 
             return SendMatchWXTemplateMessage(null, null, CashBackData, null, null, "12", OpenID, VipID, loggingSessionInfo);
         }

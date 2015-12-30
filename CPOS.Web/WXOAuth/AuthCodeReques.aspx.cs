@@ -82,7 +82,7 @@ namespace JIT.CPOS.Web.WXOAuth
                         });
                         byte[] buff1 = Convert.FromBase64String(state);
                         state = Encoding.UTF8.GetString(buff1);
-                        state = HttpUtility.UrlDecode(state, Encoding.UTF8);
+                        state = HttpUtility.UrlDecode(state, Encoding.UTF8);//转码
                         string[] array = state.Split(',');
                         customerId = array[1];
                         applicationId = array[2];
@@ -133,7 +133,7 @@ namespace JIT.CPOS.Web.WXOAuth
                     {
                         Message = "3xx: OpenID:" + openId
                     });
-                    PageRedict(openId,token);
+                    PageRedict(applicationId, openId, token);//页面跳转，带着获取的openid和token
                 }
                 #endregion
             }
@@ -161,33 +161,33 @@ namespace JIT.CPOS.Web.WXOAuth
         /// 页面跳转
         /// </summary>
         /// <param name="openId"></param>
-        private void PageRedict(string openId,string token)
+        private void PageRedict(string applicationId, string openId,string token)
         {
 
-            if (goUrl.IndexOf("HtmlApp/Lj/auth.html?pageName=GoodsList")>0)
-            {
-                goUrl = goUrl.Replace("HtmlApp/Lj/auth.html?pageName=GoodsList", "HtmlApps/auth.html?pageName=GoodsList");
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = string.Format("url替换：old={0};new={1};", "HtmlApp/Lj/auth.html?pageName=GoodsList", "HtmlApps/auth.html?pageName=GoodsList")
-                });
-            }
-            if (goUrl.IndexOf("HtmlApp/Lj/auth.html?pageName=MyOrder") > 0)
-            {
-                goUrl = goUrl.Replace("HtmlApp/Lj/auth.html?pageName=MyOrder", "HtmlApps/auth.html?pageName=MyOrder");
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = string.Format("url替换：old={0};new={1};", "HtmlApp/Lj/auth.html?pageName=MyOrder", "HtmlApps/auth.html?pageName=MyOrder")
-                });
-            }
-            if (goUrl.IndexOf("HtmlApp/Lj/auth.html?pageName=JiFenShop") > 0)
-            {
-                goUrl = goUrl.Replace("HtmlApp/Lj/auth.html?pageName=JiFenShop", "HtmlApps/auth.html?pageName=JiFenShop");
-                Loggers.Debug(new DebugLogInfo()
-                {
-                    Message = string.Format("url替换：old={0};new={1};", "HtmlApp/Lj/auth.html?pageName=JiFenShop", "HtmlApps/auth.html?pageName=JiFenShop")
-                });
-            }
+            //if (goUrl.IndexOf("HtmlApp/Lj/auth.html?pageName=GoodsList")>0)
+            //{
+            //    goUrl = goUrl.Replace("HtmlApp/Lj/auth.html?pageName=GoodsList", "HtmlApps/auth.html?pageName=GoodsList");
+            //    Loggers.Debug(new DebugLogInfo()
+            //    {
+            //        Message = string.Format("url替换：old={0};new={1};", "HtmlApp/Lj/auth.html?pageName=GoodsList", "HtmlApps/auth.html?pageName=GoodsList")
+            //    });
+            //}
+            //if (goUrl.IndexOf("HtmlApp/Lj/auth.html?pageName=MyOrder") > 0)
+            //{
+            //    goUrl = goUrl.Replace("HtmlApp/Lj/auth.html?pageName=MyOrder", "HtmlApps/auth.html?pageName=MyOrder");
+            //    Loggers.Debug(new DebugLogInfo()
+            //    {
+            //        Message = string.Format("url替换：old={0};new={1};", "HtmlApp/Lj/auth.html?pageName=MyOrder", "HtmlApps/auth.html?pageName=MyOrder")
+            //    });
+            //}
+            //if (goUrl.IndexOf("HtmlApp/Lj/auth.html?pageName=JiFenShop") > 0)
+            //{
+            //    goUrl = goUrl.Replace("HtmlApp/Lj/auth.html?pageName=JiFenShop", "HtmlApps/auth.html?pageName=JiFenShop");
+            //    Loggers.Debug(new DebugLogInfo()
+            //    {
+            //        Message = string.Format("url替换：old={0};new={1};", "HtmlApp/Lj/auth.html?pageName=JiFenShop", "HtmlApps/auth.html?pageName=JiFenShop")
+            //    });
+            //}
 
             var decodeUrl = HttpUtility.UrlDecode(goUrl);
             if (!decodeUrl.StartsWith("http://"))
@@ -294,11 +294,11 @@ namespace JIT.CPOS.Web.WXOAuth
                     Random rad = new Random();
                     if (goUrl.IndexOf("?") > 0)
                     {
-                        goUrl = goUrl + "&customerId=" + customerId + "&openId=" + openId + "&userId=" + vipInfotmp.VIPID + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
+                        goUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfotmp.VIPID + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
                     }
                     else
                     {
-                        goUrl = goUrl + "?customerId=" + customerId + "&openId=" + openId + "&userId=" + vipInfotmp.VIPID + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
+                        goUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfotmp.VIPID + "&CheckOAuth=unAttention" + "&rid=" + rad.Next(1000, 100000) + "";
                     }
                     Loggers.Debug(new DebugLogInfo()
                     {
@@ -320,11 +320,11 @@ namespace JIT.CPOS.Web.WXOAuth
 
                     if (goUrl.IndexOf("?") > 0)
                     {
-                        strGotoUrl = goUrl + "&customerId=" + customerId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
+                        strGotoUrl = goUrl + "&customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
                     }
                     else
                     {
-                        strGotoUrl = goUrl + "?customerId=" + customerId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
+                        strGotoUrl = goUrl + "?customerId=" + customerId + "&applicationId=" + applicationId + "&openId=" + openId + "&userId=" + vipInfo.VIPID + "&rid=" + rad.Next(1000, 100000) + "";
                     }
                     Response.Write(strGotoUrl);
                     Loggers.Debug(new DebugLogInfo()

@@ -214,7 +214,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                     if (page != null)
                     {
                         //获取生成的URL
-                        menuUrl = page.GetUrl(pageParamJson, CurrentUserInfo.ClientID, applicationId);
+                        menuUrl = page.GetUrl(pageParamJson, CurrentUserInfo.ClientID, applicationId, weixinId);
                     }
                     else
                     {

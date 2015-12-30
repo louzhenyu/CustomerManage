@@ -549,7 +549,8 @@
     <Compile Include="CodeGeneration\WXSalesPolicyRateDAO.cs" />
     <Compile Include="CodeGeneration\WXSalesPolicyRateObjectMappingDAO.cs" />
     <Compile Include="CodeGeneration\WXSalesPushLogDAO.cs" />
-    <Compile Include="CodeGeneration\WXTMConfigDAO.cs" />
+    <Compile Include="CodeGeneration\WXUserInfoDAO.cs" />
+ <Compile Include="CodeGeneration\WXTMConfigDAO.cs" />
     <Compile Include="CodeGeneration\ZCourseApplyDAO.cs" />
     <Compile Include="CodeGeneration\ZCourseDAO.cs" />
     <Compile Include="CodeGeneration\ZCourseNewsMappingDAO.cs" />
@@ -1066,6 +1067,7 @@
     <Compile Include="WXSalesPolicyRateDAO.cs" />
     <Compile Include="WXSalesPolicyRateObjectMappingDAO.cs" />
     <Compile Include="WXSalesPushLogDAO.cs" />
+    <Compile Include="WXUserInfoDAO.cs" />
     <Compile Include="WXTMConfigDAO.cs" />
     <Compile Include="ZCourseApplyDAO.cs" />
     <Compile Include="ZCourseDAO.cs" />

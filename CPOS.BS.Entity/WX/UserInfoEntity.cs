@@ -54,6 +54,10 @@ namespace JIT.CPOS.BS.Entity.WX
         /// 用户头像
         /// </summary>
         public string headimgurl { get; set; }
+        /// <summary>
+        /// 绑定多公众号后的唯一标识
+        /// </summary>
+        public string unionid { get; set; }
 
         /// <summary>
         /// 批次号

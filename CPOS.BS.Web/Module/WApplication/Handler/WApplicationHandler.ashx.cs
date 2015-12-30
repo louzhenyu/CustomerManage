@@ -208,6 +208,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
                 case "import":
                     content = Bulkimport();
                     break;
+                case "ImportWXUser":
+                    content = ImportWXUser();
+                    break;
             }
             pContext.Response.Write(content);
             pContext.Response.End();
@@ -2623,6 +2626,49 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
                 JIT.CPOS.BS.BLL.WX.CommonBLL bll = new BLL.WX.CommonBLL();
                 int Length =Convert.ToInt32(VipCode.Replace("Vip", ""));
                 bool bl = bll.NewImportUserInfo(appId, appSecret, weixinId, this.CurrentUserInfo, Length);
+                if (bl == true)
+                {
+                    responseData.success = true;
+                    responseData.msg = "批量导入成功";
+                }
+            }
+            catch (Exception)
+            {
+                responseData.success = false;
+                responseData.msg = "批量导入失败";
+                return responseData.ToJSON();
+            }
+
+            return responseData.ToJSON();
+        }
+        #endregion
+
+        #region 导入和更新公众号会员信息
+        public string ImportWXUser()
+        {
+            var appInterfaceBLL = new WApplicationInterfaceBLL(this.CurrentUserInfo);
+            VipBLL Vip = new VipBLL(this.CurrentUserInfo);
+            JIT.CPOS.BS.BLL.WX.CommonBLL bll = new BLL.WX.CommonBLL();
+
+            var responseData = new ResponseData();
+            responseData.success = false;
+            responseData.msg = "批量导入失败";
+            try
+            {
+                string appId = string.Empty;
+                string appSecret = string.Empty;
+                string weixinId = string.Empty;
+                bool bl = false;
+
+                var appInterfaceList = appInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = CurrentUserInfo.ClientID }, null);
+
+                foreach (var item in appInterfaceList)
+                {
+                    string VipCode = Vip.GetMaxVipCode();
+                    int Length = Convert.ToInt32(VipCode.Replace("Vip", ""));
+                    bl = bll.ImportUserInfo(item.AppID, item.AppSecret, item.WeiXinID, this.CurrentUserInfo, Length, appInterfaceList.Count());
+                }
+                
                 if (bl == true)
                 {
                     responseData.success = true;
