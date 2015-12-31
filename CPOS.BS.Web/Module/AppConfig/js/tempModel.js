@@ -122,7 +122,7 @@
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
 											        <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%>>选择链接到的模块</option>\
-												    <option value ="cg-1" <%if(idata.typeId==1){%>selected="selected"<%}%>>商品类型</option>\
+												    <option value ="cg-1" <%if(idata.typeId==1){%>selected="selected"<%}%>>商品品类</option>\
 												    <option value ="cg-2"<%if(idata.typeId==2){%>selected="selected"<%}%>>产品</option>\
 												    <option value ="cg-3"<%if(idata.typeId==3){%>selected="selected"<%}%>>自定义链接</option>\
 												   <option value ="cg-31"<%if(idata.typeId==31){%>selected="selected"<%}%>>首页</option>\
@@ -154,7 +154,7 @@
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
 											    <option value ="cg-null">选择链接到的模块</option>\
-												    <option value ="cg-1">商品类型</option>\
+												    <option value ="cg-1">商品品类</option>\
 												    <option value ="cg-2">产品</option>\
 												    <option value ="cg-3">自定义链接</option>\
 												    <option value ="cg-31">首页</option>\
@@ -570,7 +570,7 @@
 							<span class="jsSaveADBtn">保存</span>\
 						</div>\
 					</div>\
-					<div class="hint"><b> 图片:</b><span>支持格式jpg、jpeg、png，建议尺寸640px*212px，200KB以内</span></div>\
+					<div class="hint"><b> 图片:</b><span>支持格式jpg、jpeg、png，建议尺寸640px*262px，200KB以内</span></div>\
 					',
         // 右侧广告详细项
         adItemListTemp: '<%if(list&&list.length){\
@@ -588,7 +588,7 @@
 									<p class="typeContainer mb-15">\
 									<select class="jsTypeSelect">\
 									<option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >选择链接到的模块</option>\
-									   <option value ="cg-1"  <%if(idata.typeId==1){%>selected="selected"<%}%> >商品类型</option>\
+									   <option value ="cg-1"  <%if(idata.typeId==1){%>selected="selected"<%}%> >商品品类</option>\
 										<option value ="cg-2" <%if(idata.typeId==2){%>selected="selected"<%}%> >商品</option>\
 										<option value ="cg-4" <%if(idata.typeId==4){%>selected="selected"<%}%> >商品分组</option>\
 										<option value ="cg-3" <%if(idata.typeId==3){%>selected="selected"<%}%> >自定义链接</option>\
@@ -617,7 +617,7 @@
 									<p class="typeContainer mb-15">\
 									<select class="jsTypeSelect">\
 									<option value ="cg-null"  >选择链接到的模块</option>\
-									   <option value ="cg-1"  >商品类型</option>\
+									   <option value ="cg-1"  >商品品类</option>\
 										<option value ="cg-2" >商品</option>\
 										<option value ="cg-4"  >商品分组</option>\
 										<option value ="cg-3" >自定义链接</option>\
@@ -814,7 +814,7 @@
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
 											       <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >选择链接到的模块</option>\
-												    <option value ="cg-1"<%if(idata.typeId==1){%>selected="selected"<%}%>>商品类型</option>\
+												    <option value ="cg-1"<%if(idata.typeId==1){%>selected="selected"<%}%>>商品品类</option>\
 												    <option value ="cg-2"<%if(idata.typeId==2){%>selected="selected"<%}%>>产品</option>\
 												    <option value ="cg-3" <%if(idata.typeId==3){%>selected="selected"<%}%> >自定义链接</option>\
 											    </select>\
@@ -848,7 +848,7 @@
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
 											    <option value ="cg-null"  selected="selected">选择链接到的模块</option>\
-												    <option value ="cg-1">商品类型</option>\
+												    <option value ="cg-1">商品品类</option>\
 												    <option value ="cg-2">产品</option>\
 													<option value ="cg-3">自定义链接</option>\
 											    </select>\
@@ -897,7 +897,7 @@
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
 													<option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >选择链接到的模块</option>\
-									   				<option value ="cg-1"  <%if(idata.typeId==1){%>selected="selected"<%}%> >商品类型</option>\
+									   				<option value ="cg-1"  <%if(idata.typeId==1){%>selected="selected"<%}%> >商品品类</option>\
 													<option value ="cg-2" <%if(idata.typeId==2){%>selected="selected"<%}%> >商品</option>\
 													<option value ="cg-3" <%if(idata.typeId==3){%>selected="selected"<%}%> >自定义链接</option>\
 													 <option value ="cg-33" <%if(idata.typeId==33){%>selected="selected"<%}%> >购物车</option>\
@@ -926,7 +926,7 @@
                                                 <p class="typeContainer mb-15">\
                                                 <select class="jsTypeSelect">\
 													<option value ="cg-null"  >选择链接到的模块</option>\
-									   				<option value ="cg-1"  >商品类型</option>\
+									   				<option value ="cg-1"  >商品品类</option>\
 													<option value ="cg-2" >商品</option>\
 													<option value ="cg-3" >自定义链接</option>\
 													 <option value ="cg-33">购物车</option>\
@@ -1153,7 +1153,7 @@
 							<p class="typeContainer mb-15">\
 					          <select class="jsTypeSelect" style="width: 420px;">\
 											       <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >选择链接到的模块</option>\
-												    <option value ="cg-1"    <%if(idata.typeId==1){%>selected="selected"<%}%>>商品类型</option>\
+												    <option value ="cg-1"    <%if(idata.typeId==1){%>selected="selected"<%}%>>商品品类</option>\
 												    <option value ="cg-4"    <%if(idata.typeId==4){%>selected="selected"<%}%> >商品分组</option>\
 											    </select>\
 											    </p>\
@@ -1170,7 +1170,7 @@
 							<p class="typeContainer mb-15">\
 					          <select class="jsTypeSelect" style="width: 420px;">\
 											       <option value ="cg-null">选择链接到的模块</option>\
-												    <option value ="cg-1"  >商品类型</option>\
+												    <option value ="cg-1"  >商品品类</option>\
 												    <option value ="cg-4" >商品分组</option>\
 											    </select>\
 											    </p>\

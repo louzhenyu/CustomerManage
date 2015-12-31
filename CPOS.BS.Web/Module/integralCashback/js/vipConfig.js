@@ -140,6 +140,8 @@
                            if (configData[i].SettingCode == "RewardsType") {
                                var selectr = "[data-rewardstype='" + configData[i].SettingValue + "']";
                                $(selectr).trigger("click");
+                           }else{
+                               $("[data-rewardstype='0']").trigger("click");
                            }
                        }
                        //EnableIntegral 积分  // EnableRewardCash 返现
