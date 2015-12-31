@@ -358,13 +358,13 @@
                             return staus;
                         }
                     },
-                    {
+                  /*  {
                         field: 'Item_Id', title: '下载二维码', width: 80, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
 
                             return value ? '<a target="_blank" href="/Module/Basic/Item/Handler/ItemHandler.ashx?method=download_qrcode&item_id=' + value + '&item_name=' + row.Item_Name + '"><img width="16" height="16" src="images/QRcode.png"></span>' : '';
                         }
-                    }
+                    }*/
 
 
                 ]],
