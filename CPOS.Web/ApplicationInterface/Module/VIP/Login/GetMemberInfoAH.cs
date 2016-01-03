@@ -25,7 +25,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             if (!string.IsNullOrEmpty(pRequest.Parameters.SearchFlag))
             {
                 List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
-                complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = CurrentUserInfo.ClientID });
+                complexCondition.Add(new EqualsCondition() { FieldName = "ClientID", Value = CurrentUserInfo.ClientID });
                 var cond1 = new LikeCondition() { FieldName = "VipName", Value = "%" + pRequest.Parameters.SearchFlag + "%" };
                 var cond2 = new LikeCondition() { FieldName = "VipRealName", Value = "%" + pRequest.Parameters.SearchFlag + "%" };
                 var com1 = new ComplexCondition() { Left = cond1, Right = cond2, Operator = LogicalOperators.Or };
