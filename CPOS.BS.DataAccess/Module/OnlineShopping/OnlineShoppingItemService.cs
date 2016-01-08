@@ -135,7 +135,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,salesCount = (CASE WHEN ISNUMERIC(a.Qty) = 1 THEN CONVERT(DECIMAL, a.Qty) ELSE 0 END) - a.OverCount ";
             sql += " ,endTime = a.EndTime";
             sql += " ,EveryoneSalesPrice = a.EveryoneSalesPrice";
-            sql += ",CASE ISNULL(vIsstore.vipStoreID,'')  WHEN '' THEN 0 ELSE 1 END AS isStore ";
+            //sql += ",CASE ISNULL(vIsstore.vipStoreID,'')  WHEN '' THEN 0 ELSE 1 END AS isStore ";
             sql += " ,ReturnAmount = a.ReturnAmount";
             sql += @",UnixLocalTime=DATEDIFF(MINUTE,'1900-01-01',GETDATE() ) 
                     ,UnixBeginTime=DATEDIFF(MINUTE,'1900-01-01',a.BeginTime ) 

@@ -43,7 +43,22 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         if (para.PrizeType == "Point")
                             contactEvent.Integral = para.Integral;
                         if (para.PrizeType == "Coupon")
+                        {
                             contactEvent.CouponTypeID = para.CouponTypeID;
+                            var bllCoupon = new CouponBLL(loggingSessionInfo);
+                            var bllPrizes = new LPrizesBLL(loggingSessionInfo);
+                            string strCouponTypeID = para.CouponTypeID;
+                            //优惠券未被使用了的数量
+                            int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                            if (intUnUsedCouponCount < para.PrizeCount)
+                            {
+
+                                rd.Success = false;
+                                rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
+
+                                return rd;
+                            }
+                        }
                         if (para.PrizeType == "Chance")
                         {
                             contactEvent.EventId = para.EventId;
@@ -78,7 +93,22 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     if (para.PrizeType == "Point")
                         entityContactEvent.Integral = para.Integral;
                     if (para.PrizeType == "Coupon")
+                    {
                         entityContactEvent.CouponTypeID = para.CouponTypeID;
+                        var bllCoupon = new CouponBLL(loggingSessionInfo);
+                        var bllPrizes = new LPrizesBLL(loggingSessionInfo);
+                        string strCouponTypeID = para.CouponTypeID;
+                        //优惠券未被使用了的数量
+                        int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                        if (intUnUsedCouponCount < para.PrizeCount)
+                        {
+
+                            rd.Success = false;
+                            rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
+
+                            return rd;
+                        }
+                    }
                     if (para.PrizeType == "Chance")
                     {
                         entityContactEvent.EventId = para.EventId;

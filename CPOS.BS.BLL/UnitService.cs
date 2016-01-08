@@ -941,7 +941,7 @@ namespace JIT.CPOS.BS.BLL
             try
             {
                 dt = ds.Tables[0];
-                string connString = loggingSessionInfo.Conn;// System.Configuration.ConfigurationManager.AppSettings["Conn_alading"]; //@"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
+                string connString = loggingSessionInfo.CurrentLoggingManager.Connection_String;// System.Configuration.ConfigurationManager.AppSettings["Conn_alading"]; //@"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
                 SqlConnection connSql = new SqlConnection(connString);
                 connSql.Open();
                 DataRow dr = null;
