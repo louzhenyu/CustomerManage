@@ -20,6 +20,7 @@ using JIT.Utility.DataAccess;
 using JIT.Utility.Cache2;
 using System.Text.RegularExpressions;
 using JIT.CPOS.Common;
+using System.Xml;
 
 namespace JIT.CPOS.BS.BLL.WX
 {
@@ -63,7 +64,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 postStream.Write(buffer, 0, buffer.Length);
                 postStream.Close();
             }
-            HttpWebResponse resp = req.GetResponse() as HttpWebResponse;
+            HttpWebResponse resp = req.GetResponse() as HttpWebResponse;//提交参数，获取结果
             Encoding enc = System.Text.Encoding.GetEncoding("UTF-8");
             StreamReader loResponseStream = new StreamReader(resp.GetResponseStream(), enc);
             respData = loResponseStream.ReadToEnd();
@@ -117,12 +118,12 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <returns></returns>
         private bool CheckSignature(HttpContext httpContext, string token)
         {
-            var signature = httpContext.Request["signature"].ToString();
+            var signature = httpContext.Request["signature"].ToString(); //获取到signature
             var timestamp = httpContext.Request["timestamp"].ToString();
             var nonce = httpContext.Request["nonce"].ToString();
 
             BaseService.WriteLogWeixin("token = " + token);
-            BaseService.WriteLogWeixin("加密前的 signature = " + signature + "   \n");
+            BaseService.WriteLogWeixin("微信传过来的 signature = " + signature + "   \n");
 
             //字典排序
             string[] ArrTmp = { token, timestamp, nonce };
@@ -133,7 +134,7 @@ namespace JIT.CPOS.BS.BLL.WX
             tmpStr = System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(tmpStr, "SHA1");
             tmpStr = tmpStr.ToLower();
 
-            BaseService.WriteLogWeixin("加密后的 signature = " + tmpStr + "   \n");
+            BaseService.WriteLogWeixin("本地加密生成的 signature = " + tmpStr + "   \n");
 
             if (tmpStr == signature)
             {
@@ -161,17 +162,17 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <returns></returns>
         public AccessTokenEntity GetAccessTokenByCache(string appID, string appSecret, LoggingSessionInfo loggingSessionInfo)
         {
-            MarketSendLogBLL logServer = new MarketSendLogBLL(loggingSessionInfo);
-            MarketSendLogEntity logInfo = new MarketSendLogEntity();
-            logInfo.LogId = BaseService.NewGuidPub();
-            logInfo.VipId = appID;
-            logInfo.MarketEventId = appSecret;
-            logInfo.TemplateContent = loggingSessionInfo.CurrentUser.customer_id.ToString();
-            logInfo.IsSuccess = 1;
-            logInfo.SendTypeId = "2";
-            logInfo.CreateTime = System.DateTime.Now;
+            //MarketSendLogBLL logServer = new MarketSendLogBLL(loggingSessionInfo);
+            //MarketSendLogEntity logInfo = new MarketSendLogEntity();
+            //logInfo.LogId = BaseService.NewGuidPub();
+            //logInfo.VipId = appID;
+            //logInfo.MarketEventId = appSecret;
+            //logInfo.TemplateContent = loggingSessionInfo.CurrentUser.customer_id.ToString();
+            //logInfo.IsSuccess = 1;
+            //logInfo.SendTypeId = "2";
+            //logInfo.CreateTime = System.DateTime.Now;
 
-            logServer.Create(logInfo);
+            //logServer.Create(logInfo);
 
             WApplicationInterfaceBLL wApplicationInterfaceBLL = new WApplicationInterfaceBLL(loggingSessionInfo);
             WApplicationInterfaceEntity appObj = null;
@@ -212,7 +213,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 appObj = appList[0];
                 //throw new Exception("未查询到公众号");
             }
-            AccessTokenEntity accessToken = null;
+            var accessToken = new AccessTokenEntity();
             if (appObj.ExpirationTime == null || appObj.ExpirationTime <= DateTime.Now)
             {
                 BaseService.WriteLogWeixin("获取凭证接口： ");
@@ -220,12 +221,31 @@ namespace JIT.CPOS.BS.BLL.WX
                 BaseService.WriteLogWeixin("appSecret： " + appSecret);
                 string uri = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + appID + "&secret=" + appSecret;
                 string method = "GET";
-                string data = GetRemoteData(uri, method, string.Empty);
+                string data = string.Empty;
+                OpenAccessTokenEntity openAccessToken;
+                //调用微信登录授权接口刷新凭证
+                if (string.IsNullOrEmpty(appSecret))
+                {
+                    var openOAuthUrl = string.IsNullOrEmpty(ConfigurationManager.AppSettings["openOAuthUrl"]) ? "http://open.chainclouds.com" : ConfigurationManager.AppSettings["openOAuthUrl"];
+                    var openuri = openOAuthUrl + "/OpenOAuth/RefreshAuthorizerAccessToken?authorizerId=" + appID;
+                    var opendata = GetRemoteData(openuri, method, string.Empty);
+                    openAccessToken = opendata.DeserializeJSONTo<OpenAccessTokenEntity>();
+                    accessToken.access_token = openAccessToken.authorizer_access_token;
+                    accessToken.expires_in = openAccessToken.expires_in;
+                    accessToken.errcode = openAccessToken.errcode;
+                    accessToken.errmsg = openAccessToken.errmsg;
+                }
+                else
+                {
+                    data = GetRemoteData(uri, method, string.Empty);
+                    accessToken = data.DeserializeJSONTo<AccessTokenEntity>();
+                }
+
 
                 BaseService.WriteLogWeixin("调用获取凭证接口返回值： " + data);
                 Loggers.Debug(new DebugLogInfo() { Message = "调用获取凭证接口返回值： " + data });
 
-                accessToken = data.DeserializeJSONTo<AccessTokenEntity>();
+
                 //AccessTokenEntity accessToken = new AccessTokenEntity();
                 //accessToken.access_token = "jDsQzSF8o68i-YqVyNZUaorxpA4-EMhliWBi5Y1XKNuHB_bjGS3UYlwc_G5iHkv_FKdbheftp_FMZk1StB7gfSFkkjnKZGJP78fZ104DsSXw-6WzNl_Os_HnbEoonx9Sz2mcxSJMssZ02WndXZfedw";
                 //accessToken.expires_in = "7200";
@@ -242,15 +262,15 @@ namespace JIT.CPOS.BS.BLL.WX
 
                 Loggers.Debug(new DebugLogInfo() { Message = "使用未过期的access token:" + appObj.RequestToken + ", 到期时间：" + appObj.ExpirationTime });
             }
-            logInfo.LogId = BaseService.NewGuidPub();
-            logInfo.VipId = appObj.AppID;
-            logInfo.MarketEventId = appObj.AppSecret;
-            logInfo.TemplateContent = appObj.RequestToken;
-            logInfo.IsSuccess = 1;
-            logInfo.SendTypeId = "2";
-            logInfo.WeiXinUserId = appObj.WeiXinID;
+            //logInfo.LogId = BaseService.NewGuidPub();
+            //logInfo.VipId = appObj.AppID;
+            //logInfo.MarketEventId = appObj.AppSecret;
+            //logInfo.TemplateContent = appObj.RequestToken;
+            //logInfo.IsSuccess = 1;
+            //logInfo.SendTypeId = "2";
+            //logInfo.WeiXinUserId = appObj.WeiXinID;
 
-            logServer.Create(logInfo);
+            //logServer.Create(logInfo);
             return accessToken;
         }
 
@@ -459,7 +479,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="weixinID">开发者微信号</param>
         /// <param name="openID">接收方帐号（收到的OpenID）</param>
         /// <param name="content">文本消息内容</param>
-        public void ResponseTextMessage(string weixinID, string openID, string content, HttpContext httpContext)
+        public void ResponseTextMessage(string weixinID, string openID, string content, HttpContext httpContext, RequestParams requestParams)
         {
             var response = "<xml>";
             response += "<ToUserName><![CDATA[" + openID + "]]></ToUserName>";
@@ -469,8 +489,11 @@ namespace JIT.CPOS.BS.BLL.WX
             response += "<Content><![CDATA[" + content + "]]></Content> ";
             response += "<FuncFlag>0</FuncFlag>";
             response += "</xml>";
+            BaseService.WriteLogWeixin("加密前:  " + response);
+            //安全模式下加密
+            response = WXEncryptMsg(requestParams, response);
 
-            BaseService.WriteLogWeixin("公众平台返回给用户的文本消息:  " + response);
+
             BaseService.WriteLogWeixin("回复文本消息结束-------------------------------------------\n");
 
             httpContext.Response.Write(response);
@@ -486,7 +509,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="weixinID">开发者微信号</param>
         /// <param name="openID">接收方帐号（收到的OpenID）</param>
         /// <param name="content">文本消息内容</param>
-        public void ResponseImageMessage(string weixinID, string openID, string mediaID, HttpContext httpContext)
+        public void ResponseImageMessage(string weixinID, string openID, string mediaID, HttpContext httpContext, RequestParams requestParams)
         {
             var response = "<xml>";
             response += "<ToUserName><![CDATA[" + openID + "]]></ToUserName>";
@@ -499,7 +522,10 @@ namespace JIT.CPOS.BS.BLL.WX
             response += "<FuncFlag>0</FuncFlag>";
             response += "</xml>";
 
-            BaseService.WriteLogWeixin("公众平台返回给用户的图片消息:  " + response);
+            BaseService.WriteLogWeixin("加密前:  " + response);
+            //安全模式下加密
+            response = WXEncryptMsg(requestParams, response);
+
             BaseService.WriteLogWeixin("回复图片消息结束-------------------------------------------\n");
 
             httpContext.Response.Write(response);
@@ -515,7 +541,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="weixinID">开发者微信号</param>
         /// <param name="openID">接收方帐号（收到的OpenID）</param>
         /// <param name="newsList">图文消息实体类集合</param>
-        public void ResponseNewsMessage(string weixinID, string openID, List<WMaterialTextEntity> newsList, HttpContext httpContext)
+        public void ResponseNewsMessage(string weixinID, string openID, List<WMaterialTextEntity> newsList, HttpContext httpContext, RequestParams requestParams)
         {
             if (newsList != null && newsList.Count > 0)
             {
@@ -541,8 +567,13 @@ namespace JIT.CPOS.BS.BLL.WX
                 response += "<FuncFlag>1</FuncFlag>";
                 response += "</xml>";
 
-                BaseService.WriteLogWeixin("公众平台返回给用户的图文消息:  " + response);
+                BaseService.WriteLogWeixin("加密前:  " + response);
+                //安全模式下加密
+                response = WXEncryptMsg(requestParams, response);
+
                 BaseService.WriteLogWeixin("回复图文消息结束-------------------------------------------\n");
+
+
 
                 httpContext.Response.Write(response);
             }
@@ -580,10 +611,8 @@ namespace JIT.CPOS.BS.BLL.WX
                     BaseService.WriteLogWeixin("userInfo.headimgurl:  " + userInfo.headimgurl);
                     BaseService.WriteLogWeixin("userInfo.unionid:  " + userInfo.unionid);
 
-                    string webUrl = ConfigurationManager.AppSettings["website_url3"];
+                    string webUrl = ConfigurationManager.AppSettings["website_WWW"];
                     var qrcode = webUrl + "/Member.aspx?weixin_id=" + weixinID + "&open_id=" + openID;
-
-                    webUrl = ConfigurationManager.AppSettings["website_WWW"];
 
                     string uri = webUrl + "/weixin/data.aspx?datatype=SignIn";//调用用户关注事件
                     uri += "&openID=" + HttpUtility.UrlEncode(openID);
@@ -596,6 +625,8 @@ namespace JIT.CPOS.BS.BLL.WX
                     uri += "&qrcode=" + HttpUtility.UrlEncode(qrcode);
                     uri += "&qrcode_id=" + HttpUtility.UrlEncode(qrcodeId);
                     uri += "&unionid=" + HttpUtility.UrlEncode(userInfo.unionid);
+                    //  uri += "&unionid=" + HttpUtility.UrlEncode(request);
+
 
                     string method = "GET";
                     string data = CommonBLL.GetRemoteData(uri, method, string.Empty);
@@ -1936,7 +1967,7 @@ namespace JIT.CPOS.BS.BLL.WX
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00398", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
-            if(WXTMConfigData==null)
+            if (WXTMConfigData == null)
                 return new ResultEntity();
             PaySuccess PaySuccessData = new PaySuccess();
             PaySuccessData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
@@ -2127,6 +2158,183 @@ namespace JIT.CPOS.BS.BLL.WX
         #endregion
 
 
+
+
+        #region 消息加解密
+        //消息解密
+        /// <summary>
+        /// 在安全模式或兼容模式下，url上会新增两个参数encrypt_type和msg_signature。encrypt_type表示加密类型，msg_signature:表示对消息体的签名。
+        /// url上无encrypt_type参数或者其值为raw时表示为不加密；encrypt_type为aes时，表示aes加密（暂时只有raw和aes两种值)。
+        /// 公众帐号开发者根据此参数来判断微信公众平台发送的消息是否加密。
+        /// </summary>
+        /// <param name="httpContext"></param>
+        /// <param name="postStr"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        public string WXDecryptMsg(HttpContext httpContext, string postStr, WApplicationInterfaceEntity wAppEntity, LoggingSessionInfo loggingSessionInfo, out int ret, out string TrueEncodingAESKey)//传入token
+        {
+            //需要验证msg_signature
+            //如果encrypt_type和原来公众号里存的加密方式不一样了，是否需要修改数据库里的记录，看看后面回复信息时是否需要！！
+            var timestamp = httpContext.Request["timestamp"] == null ? "" : httpContext.Request["timestamp"].ToString();
+            var nonce = httpContext.Request["nonce"] == null ? "" : httpContext.Request["nonce"].ToString();
+            BaseService.WriteLogWeixin("时间戳timestamp:  " + timestamp);
+            BaseService.WriteLogWeixin("消息体的签名nonce:  " + nonce);
+            //新增加的encrypt_type和msg_signature
+            var encrypt_type = httpContext.Request["encrypt_type"] == null ? "raw" : httpContext.Request["encrypt_type"].ToString();//encrypt_type如果为空就设为未加密
+            var msg_signature = httpContext.Request["msg_signature"] == null ? "" : httpContext.Request["msg_signature"].ToString();//明文模式下没有加密消息签名
+            BaseService.WriteLogWeixin("加密类型encrypt_type:  " + encrypt_type);
+            BaseService.WriteLogWeixin("消息体的签名msg_signature:  " + msg_signature);
+            //获取xml信息
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(postStr);
+
+            XmlNodeList list = doc.GetElementsByTagName("xml");
+            XmlNode xn = list[0];
+            var application = new WApplicationInterfaceBLL(loggingSessionInfo);
+            //如果数据库存的加密方式和查询到的
+            int EncryptType = 0;//默认明文
+            if (encrypt_type == "aes")  //为了兼容之前的商户，最好更新数据，
+            {
+                var openIDNode = xn.SelectSingleNode("//FromUserName");
+                if (openIDNode != null)
+                {
+                    EncryptType = 1;//兼容模式下，既有加密的数据，又有没加密的数据
+                }
+                else
+                {
+                    EncryptType = 2;//安全模式
+                }
+            }
+            else if (encrypt_type == "raw")
+            {
+                EncryptType = 0;
+            }
+            /// <summary>
+            /// 消息加密类型0:默认明文模式，不加密，1:兼容模式，接收的消息包含明文和密文，
+            /// 发送消息可以使用密文或明文，但不能同时使用
+            /// 2:安全模式，采用AES加密
+            /// </summary>
+            if (wAppEntity.EncryptType != EncryptType)
+            {
+                wAppEntity.EncryptType = EncryptType;//加密模式
+                application.Update(wAppEntity, false);
+            }
+            //    出于安全考虑，公众平台网站提供了修改EncodingAESKey的功能（在EncodingAESKey可能泄漏时进行修改），所以建议公众账号保存当前的和上一次的EncodinAESKey，若当前EncodingAESKey解密失败，则尝试用上一次的EncodingAESKey的解密。回包时，用哪个Key解密成功，则用此Key加密对应的回包 
+            TrueEncodingAESKey = "";
+            ret = 0;
+            string Token = wAppEntity.Token;
+            string CurrentEncodingAESKey = wAppEntity.CurrentEncodingAESKey;
+            string PrevEncodingAESKey = wAppEntity.PrevEncodingAESKey;
+            string AppID = wAppEntity.AppID;
+
+
+
+
+            if (EncryptType == 2)//安全模式下需要解密,安全模式才需要加密，兼容模式不需要加密
+            {
+                //如果授权给开放平台了，就用开放平台的
+                if (!string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid))
+                {
+                    Token = wAppEntity.OpenToken;
+                    CurrentEncodingAESKey = wAppEntity.OpenCurrentEncodingAESKey;
+                    PrevEncodingAESKey = wAppEntity.OpenPrevEncodingAESKey;
+                    AppID = wAppEntity.OpenAppID;
+                }
+
+                string sMsg = "";  //解析之后的明文
+                //当前的加密key不行，就试试上一次的加密key，如果再不行，就失败了
+                JIT.CPOS.BS.BLL.WX.WXBizMsgCrypt wxcpt = new JIT.CPOS.BS.BLL.WX.WXBizMsgCrypt(Token, CurrentEncodingAESKey, AppID);
+
+                ret = wxcpt.DecryptMsg(msg_signature, timestamp, nonce, postStr, ref sMsg);
+                if (ret != 0)
+                {
+                    System.Console.WriteLine("当前EncodingAESKey 错误ERR: Decrypt fail, ret: " + ret);
+                    //使用上一次的EncodingAESKey
+                    JIT.CPOS.BS.BLL.WX.WXBizMsgCrypt wxcptOld = new JIT.CPOS.BS.BLL.WX.WXBizMsgCrypt(Token, PrevEncodingAESKey, AppID);
+                    ret = wxcpt.DecryptMsg(msg_signature, timestamp, nonce, postStr, ref sMsg);
+                    System.Console.WriteLine("上一次EncodingAESKey 错误ERR: Decrypt fail, ret: " + ret);
+                    if (ret == 0)//如果原来的PrevEncodingAESKey就用原来的
+                    {
+                        TrueEncodingAESKey = PrevEncodingAESKey;
+                    }
+                }
+                else if (ret == 0)//等于0时，把用于后面加密的key设为当前EncodingAESKey
+                {
+                    TrueEncodingAESKey = CurrentEncodingAESKey;
+                }
+
+                postStr = sMsg;
+                BaseService.WriteLogWeixin("使用当前和上次EncodingAESKey解密后 ret: " + postStr);
+            }
+            else if (EncryptType == 1 || EncryptType == 0)//兼容模式和明文模式不需要解密
+            {//raw明文方式下直接返回数据
+                // return postStr;
+            }
+
+            return postStr;
+        }
+
+        public string WXEncryptMsg(RequestParams requestParams, string response)
+        {
+            if (requestParams.EncryptType == 2)
+            {
+                JIT.CPOS.BS.BLL.WX.WXBizMsgCrypt wxcpt = new JIT.CPOS.BS.BLL.WX.WXBizMsgCrypt(requestParams.Token, requestParams.TrueEncodingAESKey, requestParams.AppID);
+                string sEncryptMsg = ""; //xml格式的密文
+                int ret = wxcpt.EncryptMsg(response, requestParams.Timestamp, requestParams.Nonce, ref sEncryptMsg);
+                if (ret != 0)
+                {
+                    BaseService.WriteLogWeixin("请求参数:" + requestParams.ToJSON());
+                }
+                response = sEncryptMsg;
+                BaseService.WriteLogWeixin("安全模式下的加密信息sEncryptMsg：" + response);
+            }
+
+            return response;
+        }
+
+        #endregion 消息加解密
+
+        #region 微信回调时，根据微信id获取微信信息
+        public WApplicationInterfaceEntity GetWAppEntity(string postStr, out  LoggingSessionInfo LoggingSessionInfo)
+        {
+            //获取xml信息
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(postStr);
+
+            XmlNodeList list = doc.GetElementsByTagName("xml");
+            XmlNode xn = list[0];
+            string weixinID = xn.SelectSingleNode("//ToUserName").InnerText;    //开发者微信号
+            //根据weixinid获取商户信息和相关wapplicationinterface信息
+            //    LoggingSessionInfo
+            LoggingSessionInfo = BaseService.GetWeixinLoggingSession(weixinID);//获取登陆信息
+            var application = new WApplicationInterfaceBLL(LoggingSessionInfo);
+            var appEntitys = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = weixinID, IsDelete = 0, CustomerId = LoggingSessionInfo.ClientID }, null);
+            var wapentity = new WApplicationInterfaceEntity();
+            if (appEntitys != null && appEntitys.Length > 0)
+            {
+                wapentity = appEntitys.FirstOrDefault();
+                //BaseService.WriteLogWeixin("通过微信类型生成对应的业务处理类");
+                //BaseService.WriteLogWeixin("WeiXinTypeId(微信类型):  " + wapentity.WeiXinTypeId);
+            }
+
+            //下面的取开发平台的放在解密的代码里，因为明文用不到
+            //如果公众帐号授权给第三方平台管理了
+            if (!string.IsNullOrEmpty(wapentity.OpenOAuthAppid))
+            {
+                DataSet WXOpenOAuthDs = application.GetWXOpenOAuth(wapentity.OpenOAuthAppid);
+                if (WXOpenOAuthDs.Tables != null && WXOpenOAuthDs.Tables != null && WXOpenOAuthDs.Tables.Count != 0 && WXOpenOAuthDs.Tables[0].Rows.Count != 0)
+                {
+                    DataRow WXOpenOAuthDr = WXOpenOAuthDs.Tables[0].Rows[0];
+                    wapentity.OpenToken = WXOpenOAuthDr["Token"] == null ? "" : WXOpenOAuthDr["Token"].ToString();
+                    wapentity.OpenPrevEncodingAESKey = WXOpenOAuthDr["PrevEncodingAESKey"] == null ? "" : WXOpenOAuthDr["PrevEncodingAESKey"].ToString();
+                    wapentity.OpenCurrentEncodingAESKey = WXOpenOAuthDr["EncodingAESKey"] == null ? "" : WXOpenOAuthDr["EncodingAESKey"].ToString();
+                    wapentity.OpenAppID = WXOpenOAuthDr["Appid"] == null ? "" : WXOpenOAuthDr["Appid"].ToString();
+                }
+            }
+            return wapentity;
+        }
+
+        #endregion
 
 
     }

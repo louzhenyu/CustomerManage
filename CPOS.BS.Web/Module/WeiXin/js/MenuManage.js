@@ -1220,7 +1220,8 @@
                         that.saveType = "add";  //删除完设置为add保存
                         //用来删除
                         that.elems.delBtn.attr("data-menu", "");
-                        that.fillContent();
+                        //that.fillContent();
+                        that.elems.weixinList.trigger("change");
                         that.clearInput();
                         alert("菜单<" + dataMenuJson.Name + ">删除成功!");
 
@@ -1777,7 +1778,8 @@
                             if (page.level == 1) {
                                 that.menuName = title;
                             }
-                            that.fillContent();
+                           //that.fillContent();
+                            that.elems.weixinList.trigger("change");
                             that.clearInput();
                         }
                         else {

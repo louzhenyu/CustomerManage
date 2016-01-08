@@ -16,6 +16,7 @@ using System.Net;
 using JIT.CPOS.BS.Entity.Interface;
 using JIT.CPOS.Common;
 using JIT.Utility.Web;
+using JIT.CPOS.BS.DataAccess;
 
 namespace JIT.CPOS.BS.BLL.WX
 {
@@ -30,7 +31,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="strState">重定向后会带上state参数，开发者可以填写a-zA-Z0-9的参数值</param>
         /// <param name="Response"></param>
         /// <param name="scope">应用授权作用域，snsapi_base （不弹出授权页面，直接跳转，只能获取用户openid），snsapi_userinfo （弹出授权页面，可通过openid拿到昵称、性别、所在地。并且，即使在未关注的情况下，只要用户授权，也能获取其信息）默认为snsapi_base</param>
-        public void GetOAuthCode(string strAppId, string strRedirectUri, string strState, HttpResponse Response, string scope = null)
+        public void GetOAuthCode(string strAppId, string strRedirectUri, string strState, HttpResponse Response, string scope = null, string openOAuthAppid = null)
         {
             try
             {
@@ -48,7 +49,16 @@ namespace JIT.CPOS.BS.BLL.WX
                     }
                 }
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
-                string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + strAppId + "&redirect_uri=" + HttpUtility.UrlEncode(strRedirectUri) + "&response_type=code&scope=" + scope + "&state=" + strState + "#wechat_redirect";
+                string url = string.Empty;
+                if (!string.IsNullOrEmpty(openOAuthAppid))
+                {
+                    url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + strAppId + "&redirect_uri=" + HttpUtility.UrlEncode(strRedirectUri) + "&response_type=code&scope=" + scope + "&state=" + strState + "&component_appid=" + openOAuthAppid + "#wechat_redirect";
+                }
+                else
+                {
+                    url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + strAppId + "&redirect_uri=" + HttpUtility.UrlEncode(strRedirectUri) + "&response_type=code&scope=" + scope + "&state=" + strState + "#wechat_redirect";
+                }
+                //string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + strAppId + "&redirect_uri=" + HttpUtility.UrlEncode(strRedirectUri) + "&response_type=code&scope=" + scope + "&state=" + strState + "&component_appid=wx691c2f2bbac04b4b#wechat_redirect";
                 //string url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + strAppId + "&redirect_uri=" + HttpUtility.UrlEncode(strRedirectUri) + "&response_type=code&scope=" + scope + "";
                 //string postString = "state=" + strState + "#wechat_redirect";
                 //string method = "POST";
@@ -83,7 +93,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="loggingSessionInfo"></param>
         /// <param name="iRad"></param>
         /// <returns></returns>
-        public string GetAccessToken(string code, string strAppId, string strAppSecret, LoggingSessionInfo loggingSessionInfo, int iRad, out string token)
+        public string GetAccessToken(string code, string strAppId, string strAppSecret, LoggingSessionInfo loggingSessionInfo, int iRad, out string token, string openOAuthAppid = null)
         {
             MarketSendLogBLL sendServer = new MarketSendLogBLL(loggingSessionInfo);
             MarketSendLogEntity sendInfo = new MarketSendLogEntity();
@@ -119,22 +129,37 @@ namespace JIT.CPOS.BS.BLL.WX
                     // 注意这种拼字符串的ContentType
                     myWebClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
                     // 转化成二进制数组
-                    var postData = "appid=" + strAppId + "&secret=" + strAppSecret + "&code=" + code + "&grant_type=authorization_code";
-                    sendInfo.LogId = BaseService.NewGuidPub();
-                    sendInfo.IsSuccess = 1;
-                    sendInfo.MarketEventId = "GetAccessToken-2";
-                    sendInfo.SendTypeId = "200";
-                    sendInfo.Phone = iRad.ToString();
-                    sendInfo.TemplateContent = string.Format("{0}", postData);
-                    sendInfo.VipId = code;
-                    sendInfo.WeiXinUserId = "GetAccessToken-Para";
-                    sendInfo.CreateTime = System.DateTime.Now;
-                    sendServer.Create(sendInfo);
+                    var postData = string.Empty;
+                    if (string.IsNullOrEmpty(strAppSecret))//已登录授权了
+                    {
+                        openOAuthAppid = !string.IsNullOrEmpty(openOAuthAppid) ? openOAuthAppid : "wx691c2f2bbac04b4b";
+                        var openOAuthUrl = string.IsNullOrEmpty(ConfigurationManager.AppSettings["openOAuthUrl"]) ? "http://open.chainclouds.com" : ConfigurationManager.AppSettings["openOAuthUrl"];
+                        var openuri = openOAuthUrl + "/OpenOAuth/GetComponentAccessToken";
+                        var opendata = CommonBLL.GetRemoteData(openuri, "GET", string.Empty).Replace("\"", "");
+                        var url2 = "https://api.weixin.qq.com/sns/oauth2/component/access_token?appid="+ strAppId + "&code=" + code + "&grant_type=authorization_code&component_appid=" + openOAuthAppid + "&component_access_token=" + opendata + "";
+                        opendata = CommonBLL.GetRemoteData(url2, "GET", string.Empty);
+                        data = opendata;
+                    }
+                    else
+                    {
+                        postData = "appid=" + strAppId + "&secret=" + strAppSecret + "&code=" + code + "&grant_type=authorization_code";
+                        sendInfo.LogId = BaseService.NewGuidPub();
+                        sendInfo.IsSuccess = 1;
+                        sendInfo.MarketEventId = "GetAccessToken-2";
+                        sendInfo.SendTypeId = "200";
+                        sendInfo.Phone = iRad.ToString();
+                        sendInfo.TemplateContent = string.Format("{0}", postData);
+                        sendInfo.VipId = code;
+                        sendInfo.WeiXinUserId = "GetAccessToken-Para";
+                        sendInfo.CreateTime = System.DateTime.Now;
+                        sendServer.Create(sendInfo);
 
-                    byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-                    // 上传数据，并获取返回的二进制数据.
-                    byte[] responseArray = myWebClient.UploadData(url, "POST", byteArray);
-                    data = System.Text.Encoding.UTF8.GetString(responseArray);
+                        byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+                        // 上传数据，并获取返回的二进制数据.
+                        byte[] responseArray = myWebClient.UploadData(url, "POST", byteArray);
+                        data = System.Text.Encoding.UTF8.GetString(responseArray);
+                    }
+                    
                     if (data.IndexOf("errcode") > 1)
                     {
                         var sendObjList1 = sendServer.QueryByEntity(new MarketSendLogEntity
@@ -251,9 +276,14 @@ namespace JIT.CPOS.BS.BLL.WX
                 string status = "0";
                 VipBLL server = new VipBLL(loggingSessionInfo);
                 WXUserInfoBLL wxUserInfoBLL = new WXUserInfoBLL(loggingSessionInfo);
-                var vipObjs = server.QueryByEntityAbsolute(new VipEntity
+                //var vipObjs = server.QueryByEntityAbsolute(new VipEntity
+                //{
+                //    WeiXinUserId = OpenId
+                //}, null);
+                var vipObjs = server.QueryByEntity(new VipEntity
                 {
-                    WeiXinUserId = OpenId
+                    WeiXinUserId = OpenId,
+                    ClientID = loggingSessionInfo.ClientID
                 }, null);
 
                 if (vipObjs == null || vipObjs.Length == 0 || vipObjs[0] == null)
@@ -299,6 +329,61 @@ namespace JIT.CPOS.BS.BLL.WX
                     vipId = vipObjs[0].VIPID;
                     status = vipObjs[0].Status.ToString();
                     vipInfo = vipObjs[0];
+                    //获取UnionID
+                    if (string.IsNullOrEmpty(vipInfo.UnionID))
+                    {
+                        var vipService = new VipBLL(loggingSessionInfo);
+                        var vipEntity = new VipEntity();
+                        var commonBll = new CommonBLL();
+                        var application = new WApplicationInterfaceDAO(loggingSessionInfo);
+                        var appEntity = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = vipInfo.WeiXin, CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+                        if (appEntity != null)
+                        {
+                            //获取调用微信接口的凭证
+                            var accessToken = commonBll.GetAccessTokenByCache(appEntity.AppID, appEntity.AppSecret, loggingSessionInfo);
+                            //通过openID获取用户信息
+                            var userInfo = commonBll.GetUserInfo(accessToken.access_token, vipInfo.WeiXinUserId);
+                            if (!string.IsNullOrEmpty(userInfo.unionid))
+                            {
+                                var vipEntitys = vipService.QueryByEntity(new VipEntity { UnionID = userInfo.unionid, ClientID = loggingSessionInfo.ClientID }, null);
+                                if (vipEntitys != null && vipEntitys.Length > 0)//已经存在有UnionID的数据
+                                {
+                                    var wxUserInfo = wxUserInfoBLL.QueryByEntity(new WXUserInfoEntity() { CustomerID = loggingSessionInfo.ClientID, VipID = vipEntitys[0].VIPID, WeiXinUserID = OpenId, UnionID = userInfo.unionid }, null).FirstOrDefault();
+                                    if (wxUserInfo == null)
+                                    {
+                                        var wxuiEntity = new WXUserInfoEntity()
+                                        {
+                                            WXUserID = Guid.NewGuid(),
+                                            VipID = vipEntitys[0].VIPID,//vipInfo.VIPID,
+                                            WeiXin = vipInfo.WeiXin,
+                                            WeiXinUserID = vipInfo.WeiXinUserId,
+                                            UnionID = userInfo.unionid,
+                                            CustomerID = vipInfo.ClientID,
+                                            CreateBy = "auth",
+                                            LastUpdateBy = "auth"
+                                        };
+                                        wxUserInfoBLL.Create(wxuiEntity);
+                                    }
+
+                                    //删除冗余vip记录
+                                    vipInfo.LastUpdateBy = "auth-delete";
+                                    vipService.Delete(vipInfo);
+                                }
+                                else
+                                {
+                                    //更新微信用户信息
+                                    vipInfo.VipName = userInfo.nickname;
+                                    vipInfo.City = userInfo.city;
+                                    vipInfo.Gender = Convert.ToInt32(userInfo.sex);
+                                    vipInfo.HeadImgUrl = userInfo.headimgurl;
+                                    vipInfo.UnionID = userInfo.unionid;
+                                    server.Update(vipInfo);
+                                }
+                                
+                            }
+                        }
+                        
+                    }
                 }
                 return vipInfo;
 

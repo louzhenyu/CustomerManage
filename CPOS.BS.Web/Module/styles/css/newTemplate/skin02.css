@@ -54,7 +54,7 @@
 
 
 .commonHeader .handleWrap .unitName{ line-height: 67px; height: 67px; margin-top: 2.5px;}
-.commonHeader .logoWrap{float:left; width: 187px;height: 67px; /* margin-top:-3px; *//* line-height: 67px; */background: url(../../images/newTemplate/logo.png)  no-repeat center center;}
+.commonHeader .logoWrap{float:left; width: 187px;height: 67px;  /* margin-top:-3px; *//* line-height: 67px; */background: url(../../images/newTemplate/logo.png)  no-repeat center center;}
 /****头部，导航****/
 .commonNav { padding-left: 18px; display: none;}
 .commonNav li {padding: 0 18px; text-indent:0px; display: block; height: 67px; line-height: 67px; text-align:left; margin:0 auto; }

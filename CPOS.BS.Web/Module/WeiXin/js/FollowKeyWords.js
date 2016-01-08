@@ -388,7 +388,10 @@
                         var obj = {
                             itemList: data.Data.KeyWordList
                         };
-                        that.ReplyId = data.Data.KeyWordList.ReplyId;
+                        debugger;
+                        if (data.Data.KeyWordList && data.Data.KeyWordList.ReplyId) {
+                            that.ReplyId = data.Data.KeyWordList.ReplyId;
+                        }
                         that.showElementsByMessageType(obj.itemList);
                     });
                     //获得微信菜单列表
@@ -883,8 +886,12 @@
                 if (typeof keyInfo == 'number') {
                     messageType = keyInfo;
                 } else {
-                    flag = true;
-                    messageType = keyInfo.ReplyType;
+                    messageType =1;
+                    if(keyInfo&&keyInfo.ReplyType){
+                        flag = true;
+                        messageType=keyInfo.ReplyType
+                    }
+
                 }
                 switch (messageType - 0) {
                     case 0:
@@ -991,6 +998,24 @@
                 //关键字查询事件
                 this.elems.keyQuery.click(function () {
                     that.getKeyWords();
+                });
+                that.elems.weixinAccount.delegate(".selectBox","change",function(e){
+
+                    var me=$(this);
+                    if(me.val()) {
+                        that.applicationId = me.val();
+
+                        that.loadData.getDefaultKeyword(function (data) {
+                            var obj = {
+                                itemList: data.Data.KeyWordList
+                            };
+                            debugger;
+                            if (data.Data.KeyWordList && data.Data.KeyWordList.ReplyId) {
+                                that.ReplyId = data.Data.KeyWordList.ReplyId;
+                            }
+                            that.showElementsByMessageType(obj.itemList);
+                        });
+                    }
                 });
                 //点击关键字显示详细内容
                 this.elems.keywordsTable.delegate("tr", "click", function (e) {
@@ -1456,6 +1481,16 @@
                         if (data.ResultCode == 0) {
                             that.saveType = "";  //设置为不是添加的
                             page.ReplyId = data.Data.ReplyId;
+                            that.loadData.getDefaultKeyword(function (data) {
+                                var obj = {
+                                    itemList: data.Data.KeyWordList
+                                };
+                                debugger;
+                                if (data.Data.KeyWordList && data.Data.KeyWordList.ReplyId) {
+                                    that.ReplyId = data.Data.KeyWordList.ReplyId;
+                                }
+                                that.showElementsByMessageType(obj.itemList);
+                            });
                             alert("保存成功!");
                         }
                         else {

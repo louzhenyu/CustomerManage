@@ -33,9 +33,11 @@ function SetLogoInfo() {
             //  debugger;
             logo.attr('alt', data.data.loadInfo.customerName);
             logo.closest('a').attr('title', data.data.loadInfo.customerName);
-
+            if (data.data.loadInfo.BusinessLogo) {
+                $(".logoWrap").css({ 'background-image': 'url("' + data.data.loadInfo.BusinessLogo + '")' });
+            }
             $('#unitName').html(data.data.loadInfo.customerName); //title是全称html是简写名;        
-
+            //window.customerNameAttr=data.data.loadInfo.customerName;
             var str = $("#lblLoginUserName").html();
             var UnitName = window.UnitShortName ? window.UnitShortName : window.UnitName;
             window.UserName = str;
@@ -91,9 +93,9 @@ function SetLogoInfo() {
             menuZoom();
 
 
-            $(window).resize(function () {
-                menuZoom();
-            });
+            /*   $(window).resize(function () {
+            menuZoom();
+            });*/
 
         }
     });

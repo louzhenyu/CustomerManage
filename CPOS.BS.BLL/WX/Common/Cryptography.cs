@@ -7,7 +7,7 @@ using System.IO;
 using System.Net;
 namespace JIT.CPOS.BS.BLL.WX
 {
-    public class Cryptography
+   public  class Cryptography
     {
         public static UInt32 HostToNetworkOrder(UInt32 inval)
         {

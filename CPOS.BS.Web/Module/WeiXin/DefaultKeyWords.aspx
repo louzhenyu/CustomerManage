@@ -24,7 +24,7 @@
 	<div class="commonTitleWrap" id="weixinAccount">
     	<h2>微信账号</h2>
         <select class="selectBox">
-         <%--   <option selected>杰亦特微信账号</option>--%>
+            <option selected>杰亦特微信账号</option>
         </select>
     </div>
     

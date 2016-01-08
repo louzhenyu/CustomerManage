@@ -827,6 +827,15 @@
                         that.getKeyWords();
                     }
                 });
+                that.elems.weixinAccount.delegate(".selectBox","change",function(e){
+
+                    var me=$(this);
+                    if(me.val()) {
+                        that.applicationId = me.val();
+
+                        that.getKeyWords();
+                    }
+                });
                 //关键字查询事件
                 this.elems.keyQuery.click(function () {
                     that.getKeyWords();
@@ -1345,7 +1354,8 @@
                             alert("关键字<" + keyword + ">保存成功!");
                             //用来删除
                             that.elems.saveData.removeAttr("data-keyword");
-                            that.fillContent();
+                            //that.fillContent();
+                            that.getKeyWords();
                             that.clearInput();
                         }
                         else {

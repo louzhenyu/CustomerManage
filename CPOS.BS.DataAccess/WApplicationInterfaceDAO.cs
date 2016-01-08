@@ -253,7 +253,7 @@ namespace JIT.CPOS.BS.DataAccess
         }
 
         /// <summary>
-        /// 获取奥斯认证会员中心链接地址
+        /// 获取oauth认证会员中心链接地址
         /// </summary>
         /// <param name="OpenID"></param>
         /// <returns></returns>
@@ -271,5 +271,23 @@ namespace JIT.CPOS.BS.DataAccess
             }
             return Url;
         }
+
+        /// <summary>
+        /// 根据开放平台id获取相关信息
+        /// </summary>
+        /// <param name="OpenID"></param>
+        /// <returns></returns>
+        public DataSet GetWXOpenOAuth(string OpenOAuthID)
+        {
+            var paras = new List<SqlParameter>
+            {
+                new SqlParameter(){ParameterName="@OpenOAuthAppid",Value=OpenOAuthID},
+
+            };
+            var sbSQL = new StringBuilder();
+            sbSQL.Append("select * from cpos_ap..WXOpenOAuth  where  IsDelete=0 and Appid=@OpenOAuthAppid  ");
+            return SQLHelper.ExecuteDataset(CommandType.Text, sbSQL.ToString(), paras.ToArray());
+        }
+
     }
 }

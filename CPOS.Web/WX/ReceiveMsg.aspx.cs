@@ -33,24 +33,47 @@ namespace JIT.CPOS.Web.WX
             try
             {
                 var httpContext = param_context;
-
-                if (!string.IsNullOrEmpty(httpContext.Request["echoStr"]))
-                {
-                    //用于进行微信平台token验证
-                    new CommonBLL().ValidToken(httpContext, Config.TOKEN);
-                }
-
+                string url = HttpContext.Current.Request.Url.ToString();
+                BaseService.WriteLogWeixin("  请求的url:" + url);
                 if (httpContext.Request.HttpMethod.ToLower() == "post")
-                {
+                {                   
                     //把HTTP请求转换为字符串
                     string postStr = new BaseService().ConvertHttpContextToString(httpContext);
-
-                    BaseService.WriteLogWeixin("post string:" + postStr);
-
                     if (!string.IsNullOrEmpty(postStr))
                     {
+                        //获取微信公众号信息
+                        LoggingSessionInfo loggingSessionInfo = null;//这里取过之后，后面不用重复取
+                        WApplicationInterfaceEntity wAppEntity = new CommonBLL().GetWAppEntity(postStr,out loggingSessionInfo);
+                        string token = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.Token : wAppEntity.OpenToken;//如果开放授权给开放平台了就用开放平台的token
+                        if (wAppEntity == null || string.IsNullOrEmpty(token))
+                        {
+                            return;
+                        }
+
+                        if (!string.IsNullOrEmpty(httpContext.Request["echoStr"]))
+                        {
+                            //用于进行微信平台token验证
+                            new CommonBLL().ValidToken(httpContext, token);//Config.TOKEN配置的token，其实应该是每个客户都有自己的token，配置在数据库里，然后取出来
+                        }
+
+
+
+                        //在这里要进行加解密，用接收过来信息的ToUserName（公众号的为weixinid，例如： gh_9cbe4cd7941a）
+                        int ret = 0;//解密情况
+                        string TrueEncodingAESKey = "";//如果是安全模式，后面回复信息时，加密的key
+                       // int EncryptType = 0;
+                        //string appid = "";
+                        //Config.TOKEN 替换为wAppEntity.Token
+                        postStr = new CommonBLL().WXDecryptMsg(httpContext, postStr,wAppEntity,loggingSessionInfo ,out  ret, out  TrueEncodingAESKey);
+                      //  BaseService.WriteLogWeixin("  解密后post string:" + postStr);
+                        if (ret != 0)
+                        {
+                            System.Console.WriteLine("解密出现错误 ret: " + ret);
+                            return;
+                        }
+
                         //设置请求参数
-                        var requestParams = SetRequestParams(postStr);
+                        var requestParams = SetRequestParams(postStr, TrueEncodingAESKey, httpContext,loggingSessionInfo, wAppEntity);
                         BaseService.WriteLogWeixin("请求参数:" + requestParams.ToJSON());
 
                         //响应微信平台推送消息
@@ -67,9 +90,8 @@ namespace JIT.CPOS.Web.WX
         #endregion
 
         #region 设置请求参数
-
         //设置请求参数
-        private RequestParams SetRequestParams(string postStr)
+        private RequestParams SetRequestParams(string postStr, string _TrueEncodingAESKey,  HttpContext httpContext, LoggingSessionInfo loggingSessionInfo,WApplicationInterfaceEntity wAppEntity)
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(postStr);
@@ -85,13 +107,22 @@ namespace JIT.CPOS.Web.WX
             BaseService.WriteLogWeixin("ToUserName(开发者微信号):  " + weixinID);
             BaseService.WriteLogWeixin("MsgType(消息类型):  " + msgType);
 
+            var timestamp = httpContext.Request["timestamp"] == null ? "" : httpContext.Request["timestamp"].ToString();
+            var nonce = httpContext.Request["nonce"] == null ? "" : httpContext.Request["nonce"].ToString();
+
             var requestParams = new RequestParams()
             {
                 OpenId = openID,
                 WeixinId = weixinID,
                 MsgType = msgType,
                 XmlNode = xn,
-                LoggingSessionInfo = BaseService.GetWeixinLoggingSession(weixinID)
+                LoggingSessionInfo = loggingSessionInfo,//BaseService.GetWeixinLoggingSession(weixinID),
+                TrueEncodingAESKey = _TrueEncodingAESKey,
+                Token = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.Token : wAppEntity.OpenToken,//如果授权给公众平台了，就用公众平台的token
+                AppID =  string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.AppID : wAppEntity.OpenAppID,
+                EncryptType = (int)wAppEntity.EncryptType,
+                Timestamp = timestamp,
+                Nonce = nonce
             };
 
             return requestParams;
@@ -158,5 +189,8 @@ namespace JIT.CPOS.Web.WX
         }
 
         #endregion
+
+
+
     }
 }

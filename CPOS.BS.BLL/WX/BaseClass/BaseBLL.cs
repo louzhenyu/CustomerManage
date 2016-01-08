@@ -9,6 +9,7 @@ using JIT.CPOS.BS.Entity.WX;
 using JIT.CPOS.Common;
 using System;
 using JIT.Utility.Log;
+using JIT.CPOS.BS.BLL.WX.Enum;
 
 namespace JIT.CPOS.BS.BLL.WX
 {
@@ -75,7 +76,7 @@ namespace JIT.CPOS.BS.BLL.WX
                     if (vipDcodeEntity == null)
                     {
                         HandlerText();
-                        GetIsMoreCS(content); //多客服                       
+                        GetIsMoreCS(content); //多客服     (客服应该不需要加密吧)                  
                     }
                     else
                     {
@@ -390,8 +391,10 @@ namespace JIT.CPOS.BS.BLL.WX
             response += "<Content><![CDATA[" + content + "]]></Content> ";
             response += "<FuncFlag>0</FuncFlag>";
             response += "</xml>";
+            BaseService.WriteLogWeixin("加密前:  " + response);
+            //安全模式下加密
+            response =new CommonBLL().WXEncryptMsg(requestParams, response);          
 
-            BaseService.WriteLogWeixin("公众平台返回给用户的文本消息:  " + response);
             BaseService.WriteLogWeixin("回复文本消息结束--------测试已经调用多客服方法。-----------------------------------\n");
 
             httpContext.Response.Write(response);
@@ -617,7 +620,8 @@ namespace JIT.CPOS.BS.BLL.WX
             {
                 //关注
                 case EventType.SUBSCRIBE:
-                    BaseService.WriteLogWeixin("用户加关注！");
+                    BaseService.WriteLogWeixin("用户加关注！"); // /****/虽然是用户关注，但也分为两种情况：搜索关注，扫二维码关注。扫二维码关注，eventkey不为空
+                    //和普通的扫码得到的key不一样： qrscene_114，前面带了 qrscene_
                     #region test sending template message to new vip
                     //if (null != vip)
                     //{
@@ -799,13 +803,14 @@ namespace JIT.CPOS.BS.BLL.WX
             #region 动态处理事件KEY值
 
             var menuDAO = new WMenuDAO(requestParams.LoggingSessionInfo);
-            var ds = menuDAO.GetMenusByKeyJermyn(requestParams.WeixinId, eventKey);
+            var ds = menuDAO.GetMenusByKeyJermyn(requestParams.WeixinId, eventKey);//根据事件KEY值去取对应的微信按钮
 
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
                 string typeId = ds.Tables[0].Rows[0]["MaterialTypeId"].ToString();  //素材类型
                 string Text = ds.Tables[0].Rows[0]["Text"].ToString();  //素材ID
                 string menuId = ds.Tables[0].Rows[0]["Id"].ToString();        //模型ID
+                string ImageId = ds.Tables[0].Rows[0]["ImageId"].ToString(); 
 
                 BaseService.WriteLogWeixin("typeId：" + typeId);
                 BaseService.WriteLogWeixin("menuId：" + menuId);
@@ -821,8 +826,13 @@ namespace JIT.CPOS.BS.BLL.WX
                         //ReplyNews(materialId);
                         ReplyNewsJermyn(menuId, 2, 2);
                         break;
+                    case MaterialType.IMAGE:         //回复文字消息 
+                        //ReplyText(materialId);
+                        ReplyImage(ImageId);
+                        break;
                     default:
                         break;
+
                 }
             }
 
@@ -848,6 +858,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 BaseService.WriteLogWeixin("qrcodeId:  " + eventKey);
 
                 //保存用户信息
+                // /// <param name="isShow">1： 关注  0： 取消关注</param>
                 commonService.SaveUserInfo(requestParams.OpenId, requestParams.WeixinId, "1", entity.AppID, entity.AppSecret, eventKey, requestParams.LoggingSessionInfo);
 
                 #region　微信扫描二维码 回复消息 update by wzq 20140731
@@ -878,7 +889,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 BaseService.WriteLogWeixin("开始推送消息Wzq");
 
                 eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, eventKey,
-                    requestParams.OpenId, this.httpContext);
+                    requestParams.OpenId, this.httpContext,requestParams);
 
                 BaseService.WriteLogWeixin("推送消息成功Wzq");
                 #endregion
@@ -902,7 +913,7 @@ namespace JIT.CPOS.BS.BLL.WX
             {
                 var content = dsMaterialWriting.Tables[0].Rows[0]["Content"].ToString();
 
-                commonService.ResponseTextMessage(requestParams.WeixinId, requestParams.OpenId, content, httpContext);
+                commonService.ResponseTextMessage(requestParams.WeixinId, requestParams.OpenId, content, httpContext,requestParams);
             }
         }
 
@@ -918,8 +929,23 @@ namespace JIT.CPOS.BS.BLL.WX
             //{
             //    var content = dsMaterialWriting.Tables[0].Rows[0]["Content"].ToString();
 
-            commonService.ResponseTextMessage(requestParams.WeixinId, requestParams.OpenId, Text, httpContext);
+            commonService.ResponseTextMessage(requestParams.WeixinId, requestParams.OpenId, Text, httpContext, requestParams);
             //}
+        }
+        public void ReplyImage(string ImageId)
+        {
+               var wMaterialImageBll = new WMaterialImageBLL(requestParams.LoggingSessionInfo);
+            var wMaterialImageEntity = wMaterialImageBll.GetByID(ImageId);
+           
+                  var commonService = new CommonBLL();
+                  var appService = new WApplicationInterfaceBLL(requestParams.LoggingSessionInfo);
+                  var appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = requestParams.WeixinId }, null).FirstOrDefault();
+                  var accessToken = commonService.GetAccessTokenByCache(appEntity.AppID, appEntity.AppSecret, requestParams.LoggingSessionInfo);
+
+                  UploadMediaEntity media = commonService.UploadMediaFile(accessToken.access_token, wMaterialImageEntity.ImageUrl, MediaType.Image);
+
+                  commonService.ResponseImageMessage(requestParams.WeixinId, requestParams.OpenId, media.media_id, httpContext,requestParams);
+         
         }
 
         #endregion
@@ -969,7 +995,7 @@ namespace JIT.CPOS.BS.BLL.WX
                     });
                 }
 
-                commonService.ResponseNewsMessage(requestParams.WeixinId, requestParams.OpenId, newsList, httpContext);
+                commonService.ResponseNewsMessage(requestParams.WeixinId, requestParams.OpenId, newsList, httpContext,requestParams);
             }
         }
 
@@ -1018,7 +1044,7 @@ namespace JIT.CPOS.BS.BLL.WX
                     });
                 }
 
-                commonService.ResponseNewsMessage(requestParams.WeixinId, requestParams.OpenId, newsList, httpContext);
+                commonService.ResponseNewsMessage(requestParams.WeixinId, requestParams.OpenId, newsList, httpContext,requestParams);
             }
         }
         #endregion

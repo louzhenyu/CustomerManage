@@ -103,6 +103,50 @@ namespace JIT.CPOS.Web.WeiXin
 
                 string headimgurl = Request["headimgurl"];
                 string unionid = Request["unionid"]; //多个公众账号唯一标识
+                //这里加密，只能取当前的了
+                LoggingSessionInfo customerLogging = BaseService.GetWeixinLoggingSession(WeiXin);
+                var application = new WApplicationInterfaceBLL(customerLogging);
+                var appEntitys = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = WeiXin }, null);
+
+                //下面的取开发平台的放在解密的代码里，因为明文用不到
+                //如果公众帐号授权给第三方平台管理了
+            var    wAppEntity=appEntitys[0];
+            if (!string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid))
+                {
+                    DataSet WXOpenOAuthDs = application.GetWXOpenOAuth(wAppEntity.OpenOAuthAppid);
+                    if (WXOpenOAuthDs.Tables != null && WXOpenOAuthDs.Tables != null && WXOpenOAuthDs.Tables.Count != 0 && WXOpenOAuthDs.Tables[0].Rows.Count != 0)
+                    {
+                        DataRow WXOpenOAuthDr = WXOpenOAuthDs.Tables[0].Rows[0];
+                        wAppEntity.OpenToken = WXOpenOAuthDr["Token"] == null ? "" : WXOpenOAuthDr["Token"].ToString();
+                        wAppEntity.OpenPrevEncodingAESKey = WXOpenOAuthDr["PrevEncodingAESKey"] == null ? "" : WXOpenOAuthDr["PrevEncodingAESKey"].ToString();
+                        wAppEntity.OpenCurrentEncodingAESKey = WXOpenOAuthDr["EncodingAESKey"] == null ? "" : WXOpenOAuthDr["EncodingAESKey"].ToString();
+                        wAppEntity.OpenAppID = WXOpenOAuthDr["Appid"] == null ? "" : WXOpenOAuthDr["Appid"].ToString();
+                    }
+                }
+
+                //生成时间戳
+                  System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));  
+                int timestamp= (int)(DateTime.Now - startTime).TotalSeconds; 
+                //生成随机数
+                Random ran = new Random();
+                int RandKey = ran.Next(10000, 99999);
+                int RandKey2 = ran.Next(10000, 99999);
+                string nonce = RandKey.ToString() + RandKey2.ToString();
+
+                var requestParams = new RequestParams()
+            {
+                OpenId = OpenID,
+                WeixinId = WeiXin,
+                //MsgType = msgType,
+                //XmlNode = xn,
+                LoggingSessionInfo = BaseService.GetWeixinLoggingSession(WeiXin),
+                TrueEncodingAESKey = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.CurrentEncodingAESKey : wAppEntity.OpenCurrentEncodingAESKey, //appEntitys[0].CurrentEncodingAESKey,
+                Token = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.Token : wAppEntity.OpenToken,//如果授权给公众平台了，就用公众平台的token
+                AppID = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.AppID : wAppEntity.OpenAppID,
+                EncryptType = wAppEntity.EncryptType == null ? 0 : (int)wAppEntity.EncryptType,
+                Timestamp=timestamp.ToString(),
+                Nonce=nonce
+            };
 
                 #region 1.头像处理
                 if (headimgurl == null || headimgurl.Equals(""))
@@ -280,7 +324,7 @@ namespace JIT.CPOS.Web.WeiXin
                     Message = "三维码扫描---：" + qrcode_id + "------" + customerIdUnoin
                 });
                 //处理扫描静态二维码事件****
-                eventsBll.SendQrCodeWxMessage(loggingSessionInfo, customerIdUnoin, WeiXin, qrcode_id, OpenID, HttpContext.Current);
+                eventsBll.SendQrCodeWxMessage(loggingSessionInfo, customerIdUnoin, WeiXin, qrcode_id, OpenID, HttpContext.Current,requestParams);
 
                 #region 云店处理 Add Henry
                 var wAppBll = new WApplicationInterfaceBLL(loggingSessionInfo);       //实例化微信公众号信息BLL

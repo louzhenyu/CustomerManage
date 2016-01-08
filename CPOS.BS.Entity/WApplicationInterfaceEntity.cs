@@ -36,17 +36,17 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 前一次的消息加密key
         /// </summary>
-        public string PrevEncodingAESKey { get; set; }
+  //      public string PrevEncodingAESKey { get; set; }
         /// <summary>
         /// 当前使用的消息加密key
         /// </summary>
-        public string CurrentEncodingAESKey { get; set; }
+     //   public string CurrentEncodingAESKey { get; set; }
         /// <summary>
         /// 消息加密类型0:默认明文模式，不加密，1:兼容模式，接收的消息包含明文和密文，
         /// 发送消息可以使用密文或明文，但不能同时使用
         /// 2:安全模式，采用AES加密
         /// </summary>
-        public int? EncryptType { get; set; }
+       // public int? EncryptType { get; set; }
 
         /// <summary>
         /// from JIT  Add by Henry 2015-2-2
@@ -59,7 +59,15 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 是否支持微信支付(0=不支持；1=支持）
         /// </summary>
-        public int? IsPayments { get; set; }
+      //  public int? IsPayments { get; set; }
+
+        public string OpenToken { get; set; }
+        public string OpenPrevEncodingAESKey { get; set; }
+        public string OpenCurrentEncodingAESKey { get; set; }
+        public string OpenAppID { get; set; }
+
+
+
         #endregion
     }
 }

@@ -18,7 +18,7 @@ using System.Security.Cryptography;
 //-40010 :  base64解密异常
 namespace JIT.CPOS.BS.BLL.WX
 {
-    public class WXBizMsgCrypt
+   public  class WXBizMsgCrypt
     {
         string m_sToken;
         string m_sEncodingAESKey;

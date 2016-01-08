@@ -1143,6 +1143,9 @@
     <Compile Include="WX\BaseClass\SubscriptionBLL.cs" />
     <Compile Include="WX\Common\AuthBLL.cs" />
     <Compile Include="WX\BaseClass\BaseBLL.cs" />
+    <Compile Include="WX\Common\Cryptography.cs" />
+    <Compile Include="WX\Common\Sample.cs" />
+    <Compile Include="WX\Common\WXBizMsgCrypt.cs" />
     <Compile Include="WX\Entities\WeixinTemplateMessage.cs" />
     <Compile Include="WX\Factory\CertificationFactory.cs" />
     <Compile Include="WX\Factory\ServiceFactory.cs" />

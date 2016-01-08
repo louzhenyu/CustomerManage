@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 	<title>页面详情页</title>
 	<link rel="stylesheet" href="css/global.css" />
-    <link rel="stylesheet" href="css/style.css?v=0.3" />
+    <link rel="stylesheet" href="css/style.css?v=0.5" />
     <style>
 
         .qb_WeixinService {display:none;  width: 794px;position: fixed; top: 50%;left: 45%;margin: -245px 0 0 -347px;background: rgba(0,0,0,0.5);z-index: 9999;}
@@ -146,11 +146,12 @@
         <div class="quick_top">绑定微信帐号<a href="javascript:;" class="WeixinServicecloseBtn"><img src="images/close.png" /></a></div>
         
             <div class="quick_center">
-                <div class="quick_centernr">
-                    <div class="found">
+                <div class="quick_centernr ">
+                    <div class="found" >
                         <br />
                        <p>如果您已有<font>微信公众服务号并已通过实名认证</font>，请与连锁掌柜打通吧。</p><br /><br /><br />
-                        <a target="_blank"  href="http://open.chainclouds.com/receive"><img src="images/weixinset.png" /></a><br />
+                        <iframe id="receive" scrolling="no" src="http://open.chainclouds.com/receive" ></iframe>
+                        <img src="images/weixinset.png" /><br />
                         如果你还没有微信公众服务号，可以<a target="_blank"  href="https://mp.weixin.qq.com/cgi-bin/readtemplate?t=register/step1_tmpl&lang=zh_CN">点击注册</a><br /><br /><br /><br />
                         绑定微信服务号，将可使用连锁掌柜所有功能，<a target="_blank"  href="\Module\helpCenter\helpCenterClass.aspx">了解所有功能</a><br />
                         请注意是微信公众服务号，不是订阅号哦，<a target="_blank"  href="http://kf.qq.com/faq/140806zARbmm140826M36RJF.html">有何区别？</a>

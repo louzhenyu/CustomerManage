@@ -34,6 +34,7 @@ using JIT.CPOS.DTO.Base;
 using System.Data.SqlClient;
 using JIT.CPOS.Common;
 using System.Configuration;
+using JIT.CPOS.BS.Entity.WX;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -881,8 +882,8 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetBootUrlByEventId(eventId);
         }
 
-        public void SendQrCodeWxMessage(LoggingSessionInfo loggingSessionInfo, string customerId, 
-            string weixinId,string qrCode,string openId, HttpContext httpContext)
+        public void SendQrCodeWxMessage(LoggingSessionInfo loggingSessionInfo, string customerId,
+            string weixinId, string qrCode, string openId, HttpContext httpContext, RequestParams requestParams)
         {
 
             try
@@ -1011,7 +1012,7 @@ namespace JIT.CPOS.BS.BLL
                     if (weixinId != "")//处理素材的
                     {
                         QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
-                            weixinId, 4, openId, httpContext);
+                            weixinId, 4, openId, httpContext, requestParams);
                     }
                 }
             }
@@ -1026,7 +1027,7 @@ namespace JIT.CPOS.BS.BLL
 
 
         public void QrCodeHandlerText(string content, LoggingSessionInfo loggingSessionInfo,
-            string weixinId, int keywordType, string openId, HttpContext httpContext)
+            string weixinId, int keywordType, string openId, HttpContext httpContext, RequestParams requestParams)
         {
             var keywordDAO = new WKeywordReplyDAO(loggingSessionInfo);
 
@@ -1052,11 +1053,11 @@ namespace JIT.CPOS.BS.BLL
                 switch (typeId)
                 {
                     case MaterialType.TEXT:         //回复文字消息 
-                        commonService.ResponseTextMessage(weixinId, openId, Text, httpContext);
+                        commonService.ResponseTextMessage(weixinId, openId, Text, httpContext, requestParams);
                         break;
                     case MaterialType.IMAGE_TEXT:   //回复图文消息 
                         //ReplyNews(materialId);
-                        ReplyNewsJermyn(ReplyId, keywordType, 1, openId, weixinId, loggingSessionInfo, httpContext);
+                        ReplyNewsJermyn(ReplyId, keywordType, 1, openId, weixinId, loggingSessionInfo, httpContext, requestParams);
                         break;
                     default:
                         break;
@@ -1065,7 +1066,7 @@ namespace JIT.CPOS.BS.BLL
         }
 
         public void ReplyNewsJermyn(string objectId, int KeywordType, int ObjectDataFrom, string openId,
-            string weixinId, LoggingSessionInfo loggingSessionInfo, HttpContext httpContext)
+            string weixinId, LoggingSessionInfo loggingSessionInfo, HttpContext httpContext, RequestParams requestParams)
         {
             var dsMaterialText = new WMaterialTextDAO(loggingSessionInfo).GetMaterialTextByIDJermyn(objectId, ObjectDataFrom);
 
@@ -1104,7 +1105,7 @@ namespace JIT.CPOS.BS.BLL
                     });
                 }
                 var commonService = new CommonBLL();
-                commonService.ResponseNewsMessage(weixinId, openId, newsList, httpContext);
+                commonService.ResponseNewsMessage(weixinId, openId, newsList, httpContext, requestParams);
             }
         }
 

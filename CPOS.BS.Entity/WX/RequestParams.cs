@@ -31,5 +31,14 @@ namespace JIT.CPOS.BS.Entity.WX
         /// 用户登录信息
         /// </summary>
         public LoggingSessionInfo LoggingSessionInfo { get; set; }
+        public string TrueEncodingAESKey { get; set; }
+        public string Token { get; set; }
+        public string AppID { get; set; }
+        public int EncryptType { get; set; }
+
+        public string Timestamp { get; set; }
+
+        public string Nonce { get; set; }
+
     }
 }

@@ -34,7 +34,9 @@ function SetLogoInfo() {
             logo.closest('a').attr('title', data.data.loadInfo.customerName);
 
             $('#unitName').html(data.data.loadInfo.customerName); //title是全称html是简写名;        
-
+            if (data.data.loadInfo.BusinessLogo) {
+                $(".logoWrap").css({ 'background-image': 'url("' + data.data.loadInfo.BusinessLogo + '")' });
+            }
             var str = $("#lblLoginUserName").html();
             var UnitName = window.UnitShortName ? window.UnitShortName : window.UnitName;
             window.UserName = str;

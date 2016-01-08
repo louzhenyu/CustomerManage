@@ -1,7 +1,10 @@
 ﻿define(['jquery', 'tools', 'highcharts', 'langzh_CN', 'easyui', 'mustache'], function ($, temp) {
     var page = {
         init: function () {
-			var that = this;
+            var that = this;
+
+            $("#receive").attr("src", "http://open.chainclouds.com/receive?clientid=" + window.clientID);
+
 			that.isNavigator();
         },
 		isNavigator:function(){

@@ -88,7 +88,7 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                             );
 
                         BaseService.WriteLogWeixin("发送微信消息：---------------");
-                        commonService.ResponseTextMessage(requestParams.WeixinId, requestParams.OpenId, content, httpContext);
+                        commonService.ResponseTextMessage(requestParams.WeixinId, requestParams.OpenId, content, httpContext,requestParams);
                         BaseService.WriteLogWeixin("发送微信消息完成：---------------");
 
                         MarketSendLogBLL marketSendLogBLL = new BLL.MarketSendLogBLL(requestParams.LoggingSessionInfo);
@@ -171,7 +171,7 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                         });
                     }
 
-                    commonService.ResponseNewsMessage(requestParams.WeixinId, requestParams.OpenId, newsList, httpContext);
+                    commonService.ResponseNewsMessage(requestParams.WeixinId, requestParams.OpenId, newsList, httpContext, requestParams);
                 }
             }
         }

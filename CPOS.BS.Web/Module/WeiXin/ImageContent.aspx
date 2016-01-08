@@ -25,7 +25,7 @@
             <span class="tit">微信账号</span>
             <div class="handleWrap">
                 <select class="selectBox weirdBox">
-                  <%--  <option selected>杰亦特微信账号</option>--%>
+                    <option selected>杰亦特微信账号</option>
                 </select>
             </div>
         </div>

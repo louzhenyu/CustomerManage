@@ -50,7 +50,7 @@ function fnDelete(id) {
                 method: 'POST',
                 success: function (response, opts) {
                     var jdata = Ext.JSON.decode(response.responseText);
-                    if (jdata.success) {
+                    if (jdata.success&&jdata.success!="false") {
                         Ext.Msg.show({
                             title: '提示',
                             msg: '删除成功',

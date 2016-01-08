@@ -155,3 +155,6 @@ body{font-family:"微软雅黑";}
 .handleBtnBox .prevStep{border:1px solid #0cc;backkground:#fff;color:#0cc;}
 .handleBtnBox .finishStep{background:#fc7a52;color:#fff;}
 .stepBox{height:425px;overflow:hidden;display:none;}
+
+#receive {  width: 230px;  height: 60px;  overflow: hidden;  margin: 0px auto; position: absolute;  left: 284px;}
+.receivecontent {padding:0px;margin:0px;}

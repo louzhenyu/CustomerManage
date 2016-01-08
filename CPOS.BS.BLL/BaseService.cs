@@ -316,7 +316,7 @@ namespace JIT.CPOS.BS.BLL
             stream.Read(bt, 0, (int)stream.Length);
             string postStr = System.Text.Encoding.UTF8.GetString(bt);
 
-            BaseService.WriteLogWeixin("postStr:  " + postStr);
+            BaseService.WriteLogWeixin("解密前 postStr:  " + postStr);
 
             return postStr;
         }
@@ -332,7 +332,7 @@ namespace JIT.CPOS.BS.BLL
             LoggingSessionInfo loggingSessionInfo = GetLoggingSession();
 
             var server = new WMenuDAO(loggingSessionInfo);
-            string conn = server.GetCustomerConn(weixinID);
+            string conn = server.GetCustomerConn(weixinID);//通过微信id
             string customerId = server.GetCustomerID(weixinID);
 
             loggingSessionInfo.Conn = conn;
@@ -361,7 +361,7 @@ namespace JIT.CPOS.BS.BLL
 
             loggingSessionInfo.UserID = loggingSessionInfo.CurrentUser.User_Id;
             loggingSessionInfo.ClientID = customerId;
-            loggingSessionInfo.Conn = ConfigurationManager.AppSettings["Conn"].Trim();
+            loggingSessionInfo.Conn = ConfigurationManager.AppSettings["Conn"].Trim();//这里没有什么作用
 
             loggingSessionInfo.CurrentLoggingManager = new LoggingManager();
             loggingSessionInfo.CurrentLoggingManager.Connection_String = loggingSessionInfo.Conn;

@@ -47,6 +47,7 @@ namespace JIT.CPOS.Web.WXOAuth
             {
                 Random rad = new Random();
                 int iRad = rad.Next(1000, 100000);
+                var openOAuthAppid = string.Empty;
                 if (!string.IsNullOrEmpty(Request["state"]))
                 {
                     #region state不为空
@@ -97,20 +98,24 @@ namespace JIT.CPOS.Web.WXOAuth
                 }
                 else
                 {
+                    
                     #region 参数
                     //判断客户ID是否传递
                     if (!string.IsNullOrEmpty(Request["customerId"]))
                     {
                         customerId = Request["customerId"];
+                        loggingSessionInfo = Default.GetBSLoggingSession(customerId, "AuthUniversal");
                     }
                     else
                     {
                         Response.Write("<br>");
                         Response.Write("没有获取客户标识");
                     }
-                    if (!string.IsNullOrEmpty(Request["applicationId"]))
+                    if (!string.IsNullOrEmpty(Request["applicationId"]))//微信菜单传来了applicationId，微信信息的唯一标识
                     {
                         applicationId = Request["applicationId"];
+                        var wailist = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity { ApplicationId = applicationId, CustomerId = customerId }, null).FirstOrDefault();
+                        openOAuthAppid = wailist != null ? wailist.OpenOAuthAppid : string.Empty;
                     }
                     else
                     {
@@ -174,7 +179,7 @@ namespace JIT.CPOS.Web.WXOAuth
                 Response.Write("<br>");
                 Response.Write("goUrl:" + goUrl);
                 //Response.End();
-                loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
+                //loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
 
                 GetKeyByApp();
                 string code = Request["code"];
@@ -214,13 +219,25 @@ namespace JIT.CPOS.Web.WXOAuth
                     {
                         Message = string.Format("goUrl:{0},strRedirectUri:{1}",goUrl,strRedirectUri)
                     });
-                    authBll.GetOAuthCode(strAppId, strRedirectUri, strState, this.Response, scope);
+                    //获取code    ，然后跳到下一步页面获取acces_token,openid
+                    if (!string.IsNullOrEmpty(openOAuthAppid))
+                    {
+                        authBll.GetOAuthCode(strAppId, strRedirectUri, strState, this.Response, scope, openOAuthAppid);
+                    }
+                    else
+                    {
+                        authBll.GetOAuthCode(strAppId, strRedirectUri, strState, this.Response, scope);//strRedirectUri是WXOAuth/AuthCodeReques.aspx，strState包含goUrl，并且跳转页面
+                    }
                 }
                 else
                 {
                     Response.Write("存在code:" + code);
                     string token = "";
-                    string openId = authBll.GetAccessToken(code, strAppId, strAppSecret, loggingSessionInfo, iRad, out token);
+                    string openId = string.Empty;
+                    if (!string.IsNullOrEmpty(openOAuthAppid))
+                        openId = authBll.GetAccessToken(code, strAppId, strAppSecret, loggingSessionInfo, iRad, out token, openOAuthAppid);
+                    else
+                        openId = authBll.GetAccessToken(code, strAppId, strAppSecret, loggingSessionInfo, iRad, out token);
                     Response.Write("<br>");
                     Response.Write("OpenID:" + openId);
                     PageRedict(openId);

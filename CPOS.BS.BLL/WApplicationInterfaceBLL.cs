@@ -130,5 +130,11 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetOsVipMemberCentre(OpenID);
         }
+
+        public DataSet GetWXOpenOAuth(string OpenOAuthAppid)
+        {
+            return this._currentDAO.GetWXOpenOAuth(OpenOAuthAppid);
+        }
+
     }
 }

@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/6/16 18:04:02
+ * Create On	:2015-12-31 12:20:35
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -105,11 +105,6 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public DateTime? LastUpdateTime { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
 		public Int32? IsDelete { get; set; }
 
 		/// <summary>
@@ -151,6 +146,36 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsMoreCS { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String PrevEncodingAESKey { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CurrentEncodingAESKey { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? EncryptType { get; set; }
+
+		/// <summary>
+		/// 是否支持微信支付(0=不支持；1=支持）
+		/// </summary>
+		public Int32? IsPayments { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public DateTime? LastUpdateTime { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String OpenOAuthAppid { get; set; }
 
 
         #endregion

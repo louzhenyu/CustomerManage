@@ -1,0 +1,26 @@
+@charset "utf-8";
+.title{ font-size: 18px; padding-left: 45px; height: 65px;line-height: 65px;}
+
+.lineTitle{padding-left: 53px; height: 53px;border-bottom:1px solid #e5e5e5; border-top: 1px solid #e5e5e5}
+.borderTS{ border-top-style: dashed; }
+.lineTitle .tit{ height:15px;line-height: 15px; border-left: 4px solid #00cccc; margin-top:19px;padding-left:10px;display: block; font-size: 16px; color: #666;}
+/*上传*/
+.ke-button-common{display: none;}
+.ke-upload-area{ width:180px;}
+.ke-upload-file{opacity:0; left: -90px;position: absolute;top: 0;}
+.jsUploadBtn{ position:absolute; top:0; left:0;}
+
+
+.panelText{display:inline-block; padding-top: 30px;padding-bottom: 30px;}
+.panelText .lineText{width:100%; position: relative; line-height: 33px;display: inline-block; padding-top: 10px; padding-bottom: 10px;}
+.panelText .lineText .tit{ font-size: 15px; color:#666; text-align: right; width: 125px; height:33px; float: left;}
+.panelText .lineText .inputBox{ position: relative; min-width: 300px;line-height: 33px; float: left; padding-left: 10px; width: auto; display: block;}
+.panelText .lineText .inputBox input{ width: 100%; height: 33px; line-height: 33px;}
+.panelText .lineText .inputBox textarea{ width: 150%; height: 100px; border: 1px solid #d0d5d8;}
+.panelText .lineText .inputBox .long {width: 170%;}
+.panelText .lineText .logo{width: 214px; height: 67px; border: 1px solid #d0d5d8; text-align: center; vertical-align: middle; line-height: 67px; display: table-cell;}
+.panelText .lineText .logo img {max-width:100%;max-height:100%}
+.panelText .lineText .uploadBtn{ width: 70px;height: 32px; border-radius: 3px; float:left; line-height: 32px; font-size:14px; color: #fff; background: #00cccc; text-align: center;}
+.panelText .lineText .uploadTip{position: absolute; left: 235px;bottom: 0;width: 330px;height: 32px;}
+.panelText .lineText .uploadTip .tip{font-size: 14px; color: #fe0000; line-height: 33px; padding-left: 50px; background: url("../images/tips.png") no-repeat left center; display: inline-block; float: right;}
+     .subMitButton{ width: 152px; height: 43px; margin: 0 auto;line-height: 43px; font-size: 18px; border-radius: 32px;}

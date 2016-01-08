@@ -9,6 +9,7 @@ namespace JIT.CPOS.BS.BLL.WX.Const
         /// <summary>
         /// 微信平台验证token
         /// </summary>
-        public const string TOKEN = "jitmarketing";
+      public const string TOKEN = "jitmarketing";
+     //   public const string TOKEN = "zmindclouds";
     }
 }
