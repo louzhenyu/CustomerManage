@@ -744,7 +744,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //×éÖ¯SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [Coupon] where isdelete=0 ");
+            sql.AppendFormat("select * from [Coupon] WITH(NOLOCK) where isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)

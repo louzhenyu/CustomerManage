@@ -1,4 +1,4 @@
-﻿define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform', 'datetimePicker'], function () {
+﻿define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui','datetimePicker'], function () {
     var page =
         {
 			saveDataInfo: {},
@@ -40,12 +40,16 @@
                     //动态的填充弹出层里面的内容展示
                     this.loadPopUp(type);
                     this.elems.chooseEventsDiv.show();
+
                 }
+
             },
             //显示弹层
             showElements: function (selector) {
                 this.elems.uiMask.show();
                 $(selector).slideDown(500);
+				var tops=$(document).scrollTop()+70;
+				$(".jui-dialog").css({"top":tops+"px"})
             },
             hideElements: function (selector) {
                 this.elems.uiMask.fadeIn(500);
@@ -143,7 +147,7 @@
 				});
 				
 				//编辑操作
-				$('#dispatchingList').delegate('.operateWrap','click',function(e){
+				$('.tableWrap').delegate('.operateWrap','click',function(e){
 					var $this = $(this);
 					$tr = $('.unstart',$this.parent());
 					var deliveryId = that.elems.dataObj.typeid = $this.data('typeid');
@@ -307,9 +311,44 @@
 					success: function (data) {
 						var data = JSON.parse(data);
 						if ( data.IsSuccess == true) {
-							var list = data.Data.DeliveryList;
-							var html = bd.template("tpl_dispatchingList", { list: list })
-							$("#dispatchingList").html(html);
+
+							$("#dispatchingList").datagrid({
+								method: 'post',
+								iconCls: 'icon-list', //图标
+								singleSelect: true, //单选
+								// height : 332, //高度
+								fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+								striped: true, //奇偶行颜色不同
+								collapsible: true,//可折叠
+								//数据来源
+								data: data.Data.DeliveryList,
+								/*sortName : 'MembershipTime', //排序的列*/
+								sortOrder: 'desc', //倒序
+								remoteSort: true, // 服务器排序
+								idField: 'OrderID', //主键字段
+
+								columns: [[
+
+									{field: 'deliveryName', title: '配送方式', width: 196, align: 'left', resizable: false},
+									{field: 'IsOpen', title: '状态', width: 182, align: 'left', resizable: false,
+										formatter:function(value ,row,index){
+
+											if(value){
+												return '<div class="unstart">已启用</div>'
+											}else{
+												return '<div class="unstart blue">未启用</div>'
+											}
+										}
+									},
+									{
+										field: 'deliveryId', title: '编辑', width: 46, align: 'left', resizable: false,
+										formatter: function (value, row, index) {
+
+											return '<div class="operateWrap" title="编辑" data-typeid="'+value+'" ><span class="editIcon"></span></div>';
+										}
+									}
+								]]
+							});
 							if (callback) {
 								callback(data);
 							}

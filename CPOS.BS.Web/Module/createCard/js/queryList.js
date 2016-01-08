@@ -281,6 +281,8 @@
                                 if(newValue.indexOf("-")==-1){
                                     str = newValue.substr(0, 4) + "-" + newValue.substr(4, 2) + "-" + newValue.substr(6, 2);
                                     $('#birthday').datebox('setValue', str);
+                                }else{
+                                    console.log(str);
                                 }
                             }
                         } else{
@@ -533,6 +535,9 @@
                            isSubmit=false;  //以后拓展用
                            return false;
                        }
+                        if($('#birthday').datebox('getText')!= prams.data["Birthday"]){
+                            prams.data["Birthday"]=$('#birthday').datebox('getText');
+                        }
 
                         break;
                     case "sales":prams.data.action="UpdateSalesPromotion";  //更改促销分组

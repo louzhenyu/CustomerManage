@@ -117,7 +117,7 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[18].Value = pkString;
 
 
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             //var result = sqlHelper.ExecuteScalar(sql);
             //return result == null || result == DBNull.Value ? string.Empty : result.ToString();
@@ -223,7 +223,7 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[14].Value = pEntity.Status;
             parameters[15].Value = pEntity.RetailTraderID;
 
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             //执行语句
             //int result = 0;
@@ -293,7 +293,7 @@ namespace JIT.CPOS.BS.DataAccess
                 sql += " and a.RetailTraderID=@RetailTraderID";
             }
             //DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());    //计算总行数          
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             DataSet ds = sqlHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());
            return ds;

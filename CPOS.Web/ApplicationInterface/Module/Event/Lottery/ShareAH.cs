@@ -21,7 +21,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             var bllPrize=new LPrizesBLL(this.CurrentUserInfo);
             var para = pRequest.Parameters;
 
-            if(para.EventId!=null && para.EventId.ToString()!="")
+            if (para.EventId != null && para.EventId != "")
             {
                 try
                 {

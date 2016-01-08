@@ -27,6 +27,12 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class MHCategoryAreaDAO
     {
+       
+        /// <summary>
+        /// 根据GroupId获取ObjectTypeId
+        /// </summary>
+        /// <param name="intGroupId"></param>
+        /// <returns></returns>
         public int GetObjectTypeIDByGroupId(int intGroupId)
         {
             string strSql = string.Format("SELECT TOP 1 ObjectTypeId FROM MHCategoryArea WHERE GroupId='{0}' ", intGroupId);

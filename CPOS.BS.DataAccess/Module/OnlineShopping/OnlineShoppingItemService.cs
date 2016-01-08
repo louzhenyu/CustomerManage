@@ -41,7 +41,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="isStore"></param>
         /// <param name="socialSalesType">类型(0=按订单；1=按商品)</param>
         /// <returns></returns>
-        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType)
+        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType, string strSortName, string strSort)
         {
             //page = page < 0 ? 0 : page;
             page = page <= 0 ? 0 : page;
@@ -62,7 +62,7 @@ namespace JIT.CPOS.BS.DataAccess
              */
 
             StringBuilder dbdSql = new StringBuilder();
-            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy, ChannelId, socialSalesType,isStore));
+            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy, ChannelId, socialSalesType,  strSortName, strSort,isStore));
             dbdSql.Append(" select *,CASE WHEN a.EventTypeId IS NULL THEN 'GoodsDetail'  ELSE 'GroupGoodsDetail'		END	 GoodsType From #tmp a where 1=1 ");
 
             dbdSql.Append(string.Format(@" and a.displayIndex between '{0}' and '{1}' order by a.displayindex;", beginSize, endSize));
@@ -96,13 +96,14 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="isStore"></param>
         /// <param name="socialSalesType">类型(0=按订单；1=按商品)</param>
         /// <returns></returns>
-        public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId, string isGroupBy, string channelId,int socialSalesType,int isStore = 0)
+        public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId, string isGroupBy, string channelId, int socialSalesType, string strSortName,string strSort, int isStore = 0)
         {
 
-            string sql = @"SELECT   displayIndex = Row_number() over(order by isnull(t.ItemDisplayIndex,0),t.BeginTime DESC) ,* 
-            into #tmp 
-            FROM 
-            (";
+            //string sql = @"SELECT   displayIndex = Row_number() over(order by isnull(t.ItemDisplayIndex,0),t.BeginTime DESC) ,* 
+            string sql = @"SELECT   displayIndex = Row_number() over(order by t."+strSortName+" "+strSort+" ) ,* ";
+            sql += " into #tmp ";
+            sql += " FROM ";
+            sql += " (";
             sql += " SELECT itemId = a.item_id ";
             sql += " ,itemName = a.item_name ";
             sql += " ,imageUrl = a.imageUrl ";
@@ -141,7 +142,8 @@ namespace JIT.CPOS.BS.DataAccess
                     ,UnixEndTime=DATEDIFF(MINUTE,'1900-01-01',a.EndTime ) ";
             //sql += " into #tmp ";
             sql += ",d.EventId";
-            sql+=",d.EventTypeId";
+            sql += ",d.EventTypeId";
+            sql += ",a.create_time";
             sql += " FROM dbo.vw_item_detail a ";
 
             //if (!string.IsNullOrEmpty(itemTypeId))

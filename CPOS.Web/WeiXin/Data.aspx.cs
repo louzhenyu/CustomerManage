@@ -1366,7 +1366,12 @@ namespace JIT.CPOS.Web.WeiXin
                         var vipUnionInfo = vipServiceUnion.QueryByEntity(new VipEntity() { ClientID = tmpUser.CurrentUser.customer_id, UnionID = vipInfo.UnionID }, null).FirstOrDefault();
                         if (vipUnionInfo == null)//首次关注
                         {
+
                             vipServiceUnion.Create(vipInfo);
+                            #region 关注触点活动奖励
+
+                            bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
+                            #endregion
                         }
                         //已关注了绑定公众号中的其他公众号
                         WXUserInfoBLL wxUserInfoBLL = new WXUserInfoBLL(tmpUser);

@@ -52,5 +52,6 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.ExistsContact(entityContact);
         }
+
     }
 }

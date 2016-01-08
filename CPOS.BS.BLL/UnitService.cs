@@ -941,7 +941,7 @@ namespace JIT.CPOS.BS.BLL
             try
             {
                 dt = ds.Tables[0];
-                string connString = System.Configuration.ConfigurationManager.AppSettings["Conn_alading"]; //@"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
+                string connString = loggingSessionInfo.Conn;// System.Configuration.ConfigurationManager.AppSettings["Conn_alading"]; //@"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
                 SqlConnection connSql = new SqlConnection(connString);
                 connSql.Open();
                 DataRow dr = null;
@@ -972,17 +972,28 @@ namespace JIT.CPOS.BS.BLL
                     columns1.Add("ErrCount", typeof(Int16));
                     row = tableCount.NewRow();
                     row["TotalCount"] = "0";
-                    row["ErrCount"] = "0";
+                    row["ErrCount"] = dt.Rows.Count.ToString();
                     tableCount.Rows.Add(row);
                     dsResult.Tables.Add(tableCount);
                 }
             }
             catch (Exception ex)
             {
+                dsResult = new DataSet();
                 DataRow row = table.NewRow();
                 row["ErrMsg"] = ex.Message.ToString();
                 table.Rows.Add(row);
                 dsResult.Tables.Add(table);
+
+                DataTable tableCount = new DataTable("Count");
+                DataColumnCollection columns1 = tableCount.Columns;
+                columns1.Add("TotalCount", typeof(Int16));
+                columns1.Add("ErrCount", typeof(Int16));
+                row = tableCount.NewRow();
+                row["TotalCount"] = "0";
+                row["ErrCount"] = "0";
+                tableCount.Rows.Add(row);
+                dsResult.Tables.Add(tableCount);
             }
 
             return dsResult;
@@ -1015,6 +1026,9 @@ namespace JIT.CPOS.BS.BLL
 
             return dsResult;
         }
+
+            
+        
 
         #endregion
 

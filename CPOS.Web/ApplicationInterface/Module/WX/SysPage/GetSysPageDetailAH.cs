@@ -35,7 +35,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
         {
             GetSysPageDetailRD rd = new GetSysPageDetailRD();
             var userInfo = this.CurrentUserInfo;
-            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["APConn"];
+            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["Conn_ap"];
             SysPageBLL PageBLL = new SysPageBLL(userInfo);
 
             SysModulePageMappingBLL ModulePageMappingBLL = new SysModulePageMappingBLL(userInfo);

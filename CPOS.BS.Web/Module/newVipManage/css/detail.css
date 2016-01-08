@@ -27,7 +27,7 @@
 /*菜单*/
 .subMenu{height:50px;padding-left:40px;background:#fff; border-top: 1px solid #d0d5d8;border-bottom:1px solid #d0d5d8 }
 .subMenu li{float:left;height:25px;width:85px; margin-top:12px; font-size: 14px; margin-right: 35px; text-align:center;line-height:25px;color:#4d4d4d;cursor:pointer;}
-.subMenu li.on {color: #07c8cf; border-bottom:1px solid #00cccc;}
+.subMenu li.on {color: #07c8cf; border-bottom:1px solid #00cccc; background-color:#fafafa;}
  /*tab选项卡公共样式*/
 .commonSelectWrap .bonone{ border: 1px solid transparent;}
 .R{ float:right} .L{ float: left}  .txtCenter{ text-align: center}
@@ -113,3 +113,4 @@
 
 #win .commonSelectWrap .hint{ position: absolute; left: 300px; width: 300px; font-size: 14px; color: #07c8cf; }
 .commonSelectWrap .selectBox.bigColor input{ font-size: 18px; font-weight: 800; color: #fb7a52;}
+.cursorDef .fontC{ cursor: pointer;}

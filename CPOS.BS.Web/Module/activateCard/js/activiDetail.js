@@ -124,7 +124,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                             if(flag!="#nav01") {
                                 if (!that.loadData.args.imgSrc) {
                                     issubmit = false;
-                                    alert("请上传一张商品图片");
+                                    alert("请上传一张卡类型图片");
                                 }
                                 if(issubmit) {
 									//TODO:wlong

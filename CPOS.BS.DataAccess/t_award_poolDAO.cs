@@ -42,6 +42,15 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class t_award_poolDAO : Base.BaseCPOSDAO, ICRUDable<t_award_poolEntity>, IQueryable<t_award_poolEntity>
     {
-       
+        /// <summary>
+        /// 根据EventId 获取PrizeId
+        /// </summary>
+        /// <param name="strEventId"></param>
+        /// <returns></returns>
+       public DataSet GetPrizeByEventId(string strEventId)
+        {
+            string strSql = string.Format("SELECT TOP 1* FROM dbo.t_award_pool with(nolock) WHERE EventId='{0}'	AND GETDATE()>ReleaseTime AND Balance=0", strEventId);
+            return SQLHelper.ExecuteDataset(strSql);
+        }
     }
 }

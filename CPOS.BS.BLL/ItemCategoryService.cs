@@ -673,7 +673,7 @@ namespace JIT.CPOS.BS.BLL
             itemCategoryService.DeleteMHSearchAreaData(customerId);
         }
 
-
+       
 
 
         public DataSet GetItemCategoryInfoList(string customerId)

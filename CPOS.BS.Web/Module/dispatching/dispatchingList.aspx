@@ -9,6 +9,7 @@
     <link href="../static/css/jquery.datetimepicker.css" rel="stylesheet" type="text/css" />
     <style>
 	/***弹出，创建版块，创建期刊***/
+	.dataTable tbody td{ height: 50px;}
 	.jui-dialog{display:none;}
 	.jui-dialog-dispatching{width:760px;min-height:468px;top:50px;margin-left:-380px;}
 	.jui-dialog-dispatching .dispatchingContent{padding:30px 35px;}
@@ -20,7 +21,7 @@
 	.jui-dialog-dispatching .searchInput input{height:32px;}
 	.jui-dialog-dispatching .searchInput input[disabled='disabled'],
 	.jui-dialog-dispatching .searchInput textarea[disabled='disabled']{background:#ccc;}
-	.jui-dialog-dispatching .btnWrap .commonBtn{width:80px;height:27px;line-height:27px;margin-top:20px;}
+	.jui-dialog-dispatching .btnWrap .commonBtn{height:44px;line-height:44px;margin-top:20px;}
 	.jui-dialog-dispatching .cancelBtn{margin-left:60px;}
 	
 	.jui-dialog-dispatching .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(images/radio.png) no-repeat left center;cursor:pointer;}
@@ -28,13 +29,10 @@
 	
 	.jui-dialog-dispatching .uploadFileBox,.jui-dialog-dispatching .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
 	
-	#CupWap_certificatecilepath_upload{display:none;position:absolute;top:0;left:0;width:90px;height:32px;}
-	
-	.dataTable{border:none;}
-	.dataTable .title{height:58px;line-height:56px;border-bottom:2px solid #00cccb;}
-	.dataTable tr{height:91px;line-height:90px;border-bottom:1px solid #7fe6e5;}
-	.dataTable tbody tr:hover{background:#f2fcfd;}
-	.dataTable .operateWrap .editIcon{background:url(images/exit.png) no-repeat center center;}
+
+	.tableWrap{border:none;}
+
+	.tableWrap .operateWrap .editIcon{display:block;background:url(images/exit.png) no-repeat center center; width: 18px; height: 18px;}
 	
 	.radio em{  height: 28px;   width: 28px; background: url("../../images/newTemplate/radio.png") center center no-repeat; float: left; }
 .radio.on em{ background-image: url("../../images/newTemplate/radioOn.png")}
@@ -46,34 +44,20 @@
 
 <div class="dispatchingListArea" id="section" data-js="js/dispatchingList">
     <div class="tableWrap">
-        <!-- 已确认名单表格 -->
+       <!-- &lt;!&ndash; 已确认名单表格 &ndash;&gt;
         <table class="dataTable" style="display:inline-table;">
             <thead>
                 <tr class="title">
-                    <th width="40%">配送方式</th>
+                    <th width="20%">配送方式</th>
                     <th width="40%">状态</th>
                     <th width="20%">编辑</th>
                 </tr>
             </thead>
             <tbody id="dispatchingList">
-                <tr>
-                    <td class="checkBox"><em></em></td>
-                    <td class="operateWrap" title="编辑" data-pay="alipaydispatching">
-                        <span class="editIcon"></span>
-                    </td>
-                    <td>送货到家</td>
-                    <td class="unstart">已启用</td>
-                </tr>
-                <tr>
-                    <td class="checkBox"><em></em></td>
-                    <td class="operateWrap" title="编辑" data-pay="wechatdispatching">
-                        <span class="editIcon"></span>
-                    </td>
-                    <td>到店提货</td>
-                    <td class="unstart blue">未启用</td>
-                </tr>
+
             </tbody>
-        </table>
+        </table>-->
+        <div id="dispatchingList"></div>
     </div>
 </div>
 <div id="kkpager" style="padding-right:35px;text-align:right;"></div>
@@ -172,5 +156,6 @@
     <#}#>
 </script>
 
-<script type="text/javascript" src="/Module/static/js/lib/require.min.js" defer async="true" data-main="/Module/dispatching/js/main.js"></script>
+      <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
+            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

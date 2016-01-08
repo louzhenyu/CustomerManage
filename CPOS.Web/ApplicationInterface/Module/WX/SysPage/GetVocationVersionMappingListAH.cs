@@ -36,7 +36,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
         {
             GetVocationVersionMappingListRD rddata = new GetVocationVersionMappingListRD();
             var userInfo = this.CurrentUserInfo;
-            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["APConn"];
+            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["Conn_ap"];
             SysPageBLL PageBLL = new SysPageBLL(userInfo);
 
             int PageIndex = Convert.ToInt32(pRequest.Parameters.PageIndex - 1) < 0 ? 0 : Convert.ToInt32(pRequest.Parameters.PageIndex);

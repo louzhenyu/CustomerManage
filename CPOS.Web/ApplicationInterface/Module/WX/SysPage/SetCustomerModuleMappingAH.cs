@@ -35,7 +35,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
             SetCustomerModuleMappingRD rd = new SetCustomerModuleMappingRD();
             var para = pRequest.Parameters;
             var userInfo = this.CurrentUserInfo;
-            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["APConn"];
+            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["Conn_ap"];
             CustomerModuleMappingBLL bll = new CustomerModuleMappingBLL(userInfo);
             CustomerModuleMappingEntity entity = new CustomerModuleMappingEntity();
             string strArrVocaverMappingID = para.VocaVerMappingID.ToString();

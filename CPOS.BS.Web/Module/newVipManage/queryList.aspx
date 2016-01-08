@@ -20,7 +20,7 @@
                     <form id="seach">
                     <div class="commonSelectWrap">
                      <em class="tit">会员编号</em>
-                    <div class="searchInput"><input type="text" name="VipCardCode"  placeholder="请输入" value=""/> </div>
+                    <div class="searchInput"><input type="text" name="VipCardCode"  placeholder="请输入卡号" value=""/> </div>
 </div><!--commonSelectWrap-->
                      <div class="commonSelectWrap">
                       <em class="tit">会员姓名</em>
@@ -28,7 +28,7 @@
  </div><!--commonSelectWrap-->
                       <div class="commonSelectWrap">
                        <em class="tit">手机号</em>
-                      <div class="searchInput"><input type="text"  name="Phone" placeholder="请输入" value=""/> </div>
+                      <div class="searchInput"><input type="text"  name="Phone" placeholder="请输入手机号" value=""/> </div>
   </div><!--commonSelectWrap-->
                     </form>
 

@@ -2402,7 +2402,9 @@
                       break;
                     case "VipCardUpdate":
 
-                        prams.data.action="VIP.VipAmount.SetVipAmount";
+
+
+
                         $.each(pram,function(index,field){
 
                             prams.data[field.name]=field.value;
@@ -2434,6 +2436,11 @@
                         prams.data["VipCardID"]= this.args.VipCardId;
                         prams.data["OperationType"]= this.args.OperationType;
 						prams.data["AmountSourceID"]= '23';
+                        if(this.args.OperationType==1) {  //累计积分，余额  返现, 调用接口，
+                            prams.data.action = "VIP.VipAmount.SetVipAmount";
+                        }else {
+                            prams.data.action = "VIP.VIPCard.SetVipCard";
+                        }
 
                         break;
 					case "VipCashUpdate":

@@ -325,7 +325,6 @@
         });
        },
         downloadFile:function (fileName, content){
-
                     var aLink = document.createElement('a');
                     //var blob = new Blob([content]);
                     var evt = document.createEvent("HTMLEvents");
@@ -601,8 +600,9 @@
 
 
                 switch(operationType){
-                    case "status":prams.data.action="ToggleRetailStatus";  //停用启用
-                        prams.data=pram;
+                    case "status":
+						prams.data=pram;
+						prams.data.action="ToggleRetailStatus";//停用启用
                         prams.data.Status=pram.Status==0?"1":"0";
                         break;
                     case "setReward":

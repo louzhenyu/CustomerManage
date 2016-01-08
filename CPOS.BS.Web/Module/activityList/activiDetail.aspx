@@ -210,7 +210,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                     <div class="selectBox" style="width:400px">
                       <input type="text" id="startDate"  class="easyui-datebox" name="BeginTime"   data-options="required:true,width:160,height:32"/>
                       &nbsp;&nbsp;至&nbsp;&nbsp;
-                      <input type="text" id="endDate" class="easyui-datebox" name="EndTime" validType="compareDate[$('#startDate').datebox('getText'),'结束时间不能小于开始时间']" data-options="required:true,width:160,height:32"/>
+                      <input type="text" id="endDate" class="easyui-datebox" name="EndTime" validType="compareEqualityDate[$('#startDate').datebox('getText'),'结束时间不能小于开始时间']" data-options="required:true,width:160,height:32"/>
                     </div>
                   </div>
                   <div class="commonSelectWrap" style="height:auto;"> <em class="tit">活动内容：</em>

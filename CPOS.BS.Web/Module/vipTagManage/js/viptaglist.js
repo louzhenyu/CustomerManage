@@ -251,15 +251,8 @@
 
                 columns : [[
 
-                    {field : 'TypeName',title : '标签分类',width:100,align:'left',resizable:false,
-                        formatter:function(value ,row,index){
-                            var long=12;
-                            if(value&&value.length>long){
-                                return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
-                            }else{
-                                return '<div class="rowText">'+value+'</div>'
-                            }
-                        }
+                    {field : 'TypeName',title : '标签分类',width:160,align:'left',resizable:false,
+
                     },
                     {field : 'TagsList',title : '标签名',width:220,align:'left',resizable:false,
                         formatter:function(valueList ,row,index){
@@ -297,21 +290,36 @@
 
                 },
                 onClickRow:function(rowindex,rowData){
-                    /*  debugger;
+                      debugger;
                      if(that.elems.click){
-                     that.elems.click = true;
-                     debugger;
-                     var index=rowindex, nodeData=rowData;
-                     var mid = JITMethod.getUrlParam("mid");
-                     location.href = "CarOrderDetail.aspx?OrderID=" + rowData.OrderID + "&vipId=" + rowData.VipID+"&UnitID="+rowData.UnitID + "&mid=" + mid;
-                     }*/
+                         that.elems.optionType="exit";
+                         that.update();
+                         var row=rowData;
+
+                         if(row.TagsList&&row.TagsList.length>0){
+                             row.TagsId=row.TagsList[0].TagsId;
+                             row.TagsName=row.TagsList[0].TagsName;
+                             $('#addProm').form('load',row);
+                             for(var i=1;i<row.TagsList.length;i++){
+                                 var html = bd.template('tpl_List',row.TagsList[i]);
+                                 $("#TagsList").find(".mainpanl").append(html);
+                                 $("#TagsList").find(".mainpanl .easyui-validatebox").validatebox({
+                                     validType: 'stringCheck'
+                                 });
+
+                             }
+                         }else{
+                             $('#addProm').form('load',row);
+                         }
+                         that.bindEvent();
+                     }
 
                 },onClickCell:function(rowIndex, field, value){
-                    /*  if(field=="OrderID"){
+                      if(field=="isParent"){
                      that.elems.click=false;
                      }else{
                      that.elems.click=true;
-                     }*/
+                     }
                 }
 
             });
@@ -370,7 +378,7 @@
             args: {
                 bat_id:"2",
                 PageIndex:1,
-                PageSize: 5,
+                PageSize: 10,
                 Status:-1,
                 page:1,
                 start:0,

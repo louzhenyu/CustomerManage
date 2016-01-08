@@ -37,5 +37,19 @@ namespace JIT.CPOS.BS.BLL
         //{
         //    this._currentDAO.CheckUserIsWinner(strVipId, strEventId);
         //}
+        /// <summary>
+        /// 根据EventId 获取PrizeId
+        /// </summary>
+        /// <param name="strEventId"></param>
+        /// <returns></returns>
+        //public t_award_poolEntity GetPrizeByEventId(string strEventId)
+        //{
+        //    return DataTableToObject.ConvertToObject<t_award_poolEntity>(this._currentDAO.GetPrizeByEventId(strEventId).Tables[0].Rows[0]);
+        //}
+        public DataSet GetPrizeByEventId(string strEventId)
+        {
+            return this._currentDAO.GetPrizeByEventId(strEventId);
+        }
+
     }
 }

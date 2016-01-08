@@ -21,7 +21,6 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         public MHSearchAreaEntity search { get; set; } //搜索框
         public followInfo follow { get; set; }//立即关注
         public string sortActionJson { get; set; } //整体排序字段
-
         public bool Success { get; set; }
         public string ErrMsg { get; set; }
     }
@@ -139,7 +138,7 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         /// <summary>
         /// 是否开始 0:未开始 1:已开始 2:结束
         /// </summary>
-        public int IsStart { get; set; }
+        public int IsStart { get; set; } 
         /// <summary>
         /// 上架时间(格式：yyyy-MM-dd HH:mm:ss)
         /// </summary>
@@ -272,7 +271,6 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         /// 商品折扣		【必须】
         /// </summary>
         public string DiscountRate { get; set; }
-
 
     }
 }

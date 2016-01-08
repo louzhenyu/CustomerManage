@@ -25,11 +25,9 @@
 	
 	#CupWap_certificatecilepath_upload{display:none;position:absolute;top:0;left:0;width:90px;height:32px;}
 	
-	.dataTable{border:none;}
-	.dataTable .title{height:58px;line-height:56px;border-bottom:2px solid #00cccb;}
-	.dataTable tr{height:91px;line-height:90px;border-bottom:1px solid #7fe6e5;}
-	.dataTable tbody tr:hover{background:#f2fcfd;}
-	.dataTable .operateWrap .editIcon{background:url(images/exit.png) no-repeat center center;}
+	.tableWrap{border:none;}
+
+	.tableWrap .operateWrap .editIcon{background:url(images/exit.png) no-repeat center center; width: 18px;height: 18px; display: block;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -39,7 +37,7 @@
 <div class="payMentListArea" id="section" data-js="js/payMentList">
     <div class="tableWrap">
         <!-- 已确认名单表格 -->
-        <table class="dataTable" style="display:inline-table;">
+     <!--   <table class="dataTable" style="display:inline-table;">
             <thead>
                 <tr class="title">
                     <th width="40%">支付方式</th>
@@ -52,7 +50,8 @@
                     <td colspan="5"><img src="../static/images/loading.gif" width="32" height="32" alt="loading" /></td>
                 </tr>
             </tbody>
-        </table>
+        </table>-->
+        <div id="payMentList"></div>
     </div>
 </div>
 <div id="kkpager" style="padding-right:35px;text-align:right;"></div>
@@ -377,5 +376,6 @@
     <#}#>
 </script>
 
-<script type="text/javascript" src="/Module/static/js/lib/require.min.js" defer async="true" data-main="/Module/PayMent/js/main.js"></script>
+   <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
+        defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

@@ -38,7 +38,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
             EmptyResponseData eData = new EmptyResponseData();
             var para = pRequest.Parameters;
             var userInfo = this.CurrentUserInfo;
-            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["APConn"];
+            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["Conn_ap"];
             SysModulePageMappingBLL bll = new SysModulePageMappingBLL(userInfo);
             SysModulePageMappingEntity entity = new SysModulePageMappingEntity();
 

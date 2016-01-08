@@ -1159,6 +1159,7 @@ namespace JIT.CPOS.BS.DataAccess
             var ds = this.SQLHelper.ExecuteDataset(sql.ToString());
             return ds;
         }
+
         /// <summary>
         /// 根据活动id EventId获取参加活动的商品
         /// </summary>
@@ -1171,8 +1172,6 @@ namespace JIT.CPOS.BS.DataAccess
         {
             int beginSize = pageIndex * pageSize + 1;
             int endSize = pageIndex * pageSize + pageSize;
-
-
             var sql = new StringBuilder(500);
             sql.Append(" SELECT  L.EventId,L.ItemID,L.ItemName,L.ImageUrl,L.SalesPrice,L.Price,displayindex =ROW_NUMBER()  OVER(ORDER BY ItemName) ");
             sql.Append(" INTO #tmp ");

@@ -125,7 +125,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     entityContactEvent.CustomerID = CurrentUserInfo.ClientID;
                     entityContactEvent.RewardNumber = para.RewardNumber;
                     //开始日期是当天的 状态直接变为运行中
-                    if (DateTime.Compare(Convert.ToDateTime(para.BeginDate),Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))==0)
+                    if (DateTime.Compare(Convert.ToDateTime(para.BeginDate), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <= 0 && DateTime.Compare(Convert.ToDateTime(para.EndDate), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) >= 0)
                     {
                         entityContactEvent.Status = 2;
                     }

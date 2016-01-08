@@ -273,7 +273,7 @@ namespace JIT.CPOS.BS.DataAccess
                 + " (SELECT CustomerId FROM dbo.TCustomerWeiXinMapping WHERE WeiXinId = '{0}' AND IsDelete = 0) ",
                 weixinID);
 
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             var result = sqlHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();
@@ -295,7 +295,7 @@ namespace JIT.CPOS.BS.DataAccess
                     "SELECT CustomerId FROM dbo.TCustomerWeiXinMapping WHERE WeiXinId = '{0}' AND IsDelete = 0",
                     weixinID);
 
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             var result = sqlHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();
@@ -315,7 +315,7 @@ namespace JIT.CPOS.BS.DataAccess
             string sql = string.Format("SELECT customer_id FROM dbo.t_customer WHERE customer_code = '{0}'",
                 customerCode);
 
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             var result = sqlHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();
@@ -330,7 +330,7 @@ namespace JIT.CPOS.BS.DataAccess
             string sql = string.Format(
                 "select CustomerId FROM dbo.TCustomerWeiXinMapping WHERE WeiXinId = '{0}' AND IsDelete = 0  ", weixinID);
 
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             var result = sqlHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();

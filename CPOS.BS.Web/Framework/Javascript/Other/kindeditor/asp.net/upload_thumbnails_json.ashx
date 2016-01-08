@@ -112,16 +112,39 @@ public class UploadThumbnails : IHttpHandler
         string smillUrl = "";
         if (context.Request.QueryString["dir"] == "image")
         {
+            //获得原始图片的宽和高
+            System.Drawing.Image originalImage = System.Drawing.Image.FromFile(filePath);
+            int ow = originalImage.Width;
+            int oh = originalImage.Height;
+            //先判断原图实际大小是否和要求的大小一致？
+            if (context.Request.QueryString["originalWidth"] != null)
+            {
+                int originalWidth = Convert.ToInt32(context.Request.QueryString["originalWidth"]);
+                if (originalWidth != ow)
+                {
+                    showError("原图宽度不符合要求。");
+                }
+            }
+            if (context.Request.QueryString["originalHeight"] != null)
+            {
+                int originalHeight = Convert.ToInt32(context.Request.QueryString["originalHeight"]);
+                if (originalHeight != oh)
+                {
+                    showError("原图高度不符合要求。");
+                }
+            }
+            
+            
             //请求中有width这个参数表示图片需要进行处理
             if (context.Request.QueryString["width"] != null)
             {   //缩略图相对地址
                 thumbfilePath = dirPath + "Thumb" + newFileName;
                 int width = Convert.ToInt32(context.Request.QueryString["width"]);
                 int height = Convert.ToInt32(context.Request.QueryString["height"]);
-                //获得原始图片的宽和高
-                System.Drawing.Image originalImage = System.Drawing.Image.FromFile(filePath);
-                int ow = originalImage.Width;
-                int oh = originalImage.Height;
+       
+                
+                
+                
                 //如果原图的尺寸比缩略图要求的尺寸小,则不进行任何处理
                 if (ow <= width && oh <= height)
                 {

@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/11/6 8:56:56
+ * Create On	:2015/11/4 14:35:50
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [MHFollow](");
-            strSql.Append("[TypeId],[Title],[TextId],[TextTitle],[Url],[HomeId],[CustomerID],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[FollowId])");
+            strSql.Append("[Title],[TextId],[TextTitle],[Url],[TypeId],[HomeId],[CustomerID],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[FollowId])");
             strSql.Append(" values (");
-            strSql.Append("@TypeId,@Title,@TextId,@TextTitle,@Url,@HomeId,@CustomerID,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@FollowId)");            
+            strSql.Append("@Title,@TextId,@TextTitle,@Url,@TypeId,@HomeId,@CustomerID,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@FollowId)");            
 
 			Guid? pkGuid;
 			if (pEntity.FollowId == null)
@@ -93,11 +93,11 @@ namespace JIT.CPOS.BS.DataAccess
 
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@TypeId",SqlDbType.Int),
 					new SqlParameter("@Title",SqlDbType.NVarChar),
 					new SqlParameter("@TextId",SqlDbType.NVarChar),
 					new SqlParameter("@TextTitle",SqlDbType.NVarChar),
 					new SqlParameter("@Url",SqlDbType.NVarChar),
+					new SqlParameter("@TypeId",SqlDbType.Int),
 					new SqlParameter("@HomeId",SqlDbType.NVarChar),
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@CreateBy",SqlDbType.VarChar),
@@ -107,11 +107,11 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@FollowId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.TypeId;
-			parameters[1].Value = pEntity.Title;
-			parameters[2].Value = pEntity.TextId;
-			parameters[3].Value = pEntity.TextTitle;
-			parameters[4].Value = pEntity.Url;
+			parameters[0].Value = pEntity.Title;
+            parameters[1].Value = pEntity.TextId;
+            parameters[2].Value = pEntity.TextTitle;
+			parameters[3].Value = pEntity.Url;
+			parameters[4].Value = pEntity.TypeId;
 			parameters[5].Value = pEntity.HomeId;
 			parameters[6].Value = pEntity.CustomerID;
 			parameters[7].Value = pEntity.CreateBy;
@@ -188,7 +188,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(MHFollowEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity , pTran,false);
+            Update(pEntity , pTran,true);
         }
 
         /// <summary>
@@ -214,16 +214,16 @@ namespace JIT.CPOS.BS.DataAccess
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [MHFollow] set ");
-                        if (pIsUpdateNullField || pEntity.TypeId!=null)
-                strSql.Append( "[TypeId]=@TypeId,");
-            if (pIsUpdateNullField || pEntity.Title!=null)
+                        if (pIsUpdateNullField || pEntity.Title!=null)
                 strSql.Append( "[Title]=@Title,");
             if (pIsUpdateNullField || pEntity.TextId!=null)
                 strSql.Append( "[TextId]=@TextId,");
-            if (pIsUpdateNullField || pEntity.TextTitle!=null)
-                strSql.Append( "[TextTitle]=@TextTitle,");
+            if (pIsUpdateNullField || pEntity.TextTitle != null)
+                strSql.Append("[TextTitle]=@TextTitle,");
             if (pIsUpdateNullField || pEntity.Url!=null)
                 strSql.Append( "[Url]=@Url,");
+            if (pIsUpdateNullField || pEntity.TypeId!=null)
+                strSql.Append( "[TypeId]=@TypeId,");
             if (pIsUpdateNullField || pEntity.HomeId!=null)
                 strSql.Append( "[HomeId]=@HomeId,");
             if (pIsUpdateNullField || pEntity.CustomerID!=null)
@@ -235,22 +235,22 @@ namespace JIT.CPOS.BS.DataAccess
             strSql.Append(" where FollowId=@FollowId ");
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@TypeId",SqlDbType.Int),
 					new SqlParameter("@Title",SqlDbType.NVarChar),
 					new SqlParameter("@TextId",SqlDbType.NVarChar),
 					new SqlParameter("@TextTitle",SqlDbType.NVarChar),
 					new SqlParameter("@Url",SqlDbType.NVarChar),
+					new SqlParameter("@TypeId",SqlDbType.Int),
 					new SqlParameter("@HomeId",SqlDbType.NVarChar),
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@FollowId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.TypeId;
-			parameters[1].Value = pEntity.Title;
-			parameters[2].Value = pEntity.TextId;
-			parameters[3].Value = pEntity.TextTitle;
-			parameters[4].Value = pEntity.Url;
+			parameters[0].Value = pEntity.Title;
+			parameters[1].Value = pEntity.TextId;
+            parameters[2].Value = pEntity.TextTitle;
+			parameters[3].Value = pEntity.Url;
+			parameters[4].Value = pEntity.TypeId;
 			parameters[5].Value = pEntity.HomeId;
 			parameters[6].Value = pEntity.CustomerID;
 			parameters[7].Value = pEntity.LastUpdateBy;
@@ -543,16 +543,14 @@ namespace JIT.CPOS.BS.DataAccess
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
             if (pQueryEntity.FollowId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "FollowId", Value = pQueryEntity.FollowId });
-            if (pQueryEntity.TypeId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TypeId", Value = pQueryEntity.TypeId });
             if (pQueryEntity.Title!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Title", Value = pQueryEntity.Title });
             if (pQueryEntity.TextId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "TextId", Value = pQueryEntity.TextId });
-            if (pQueryEntity.TextTitle!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TextTitle", Value = pQueryEntity.TextTitle });
             if (pQueryEntity.Url!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Url", Value = pQueryEntity.Url });
+            if (pQueryEntity.TypeId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "TypeId", Value = pQueryEntity.TypeId });
             if (pQueryEntity.HomeId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "HomeId", Value = pQueryEntity.HomeId });
             if (pQueryEntity.CustomerID!=null)
@@ -586,10 +584,6 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.FollowId =  (Guid)pReader["FollowId"];
 			}
-			if (pReader["TypeId"] != DBNull.Value)
-			{
-				pInstance.TypeId =   Convert.ToInt32(pReader["TypeId"]);
-			}
 			if (pReader["Title"] != DBNull.Value)
 			{
 				pInstance.Title =  Convert.ToString(pReader["Title"]);
@@ -598,13 +592,17 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.TextId =  Convert.ToString(pReader["TextId"]);
 			}
-			if (pReader["TextTitle"] != DBNull.Value)
-			{
-				pInstance.TextTitle =  Convert.ToString(pReader["TextTitle"]);
-			}
+            if (pReader["TextTitle"] != DBNull.Value)
+            {
+                pInstance.TextTitle = Convert.ToString(pReader["TextTitle"]);
+            }
 			if (pReader["Url"] != DBNull.Value)
 			{
 				pInstance.Url =  Convert.ToString(pReader["Url"]);
+			}
+			if (pReader["TypeId"] != DBNull.Value)
+			{
+				pInstance.TypeId =   Convert.ToInt32(pReader["TypeId"]);
 			}
 			if (pReader["HomeId"] != DBNull.Value)
 			{

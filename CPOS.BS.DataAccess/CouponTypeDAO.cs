@@ -185,5 +185,15 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(sql);
         }
         #endregion
+        /// <summary>
+        /// 根据CouponTypeID获取生成了多少券
+        /// </summary>
+        /// <param name="strCouponTypeID"></param>
+        /// <returns></returns>
+        public int GetCouponCountByCouponTypeID(string strCouponTypeID)
+        {
+            string strSql = string.Format("SELECT IssuedQty FROM CouponType WHERE CouponTypeID='{0}'", strCouponTypeID);
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+        }
     }
 }

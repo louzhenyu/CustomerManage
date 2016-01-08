@@ -277,7 +277,7 @@ namespace JIT.CPOS.BS.DataAccess
         #endregion
         public DataSet GetCouponTypeIDByPrizeId(string strPrizesID)
         {
-            string strSql = string.Format("SELECT top 1 l.*,CouponTypeID,Location FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID LEFT JOIN dbo.LPrizeLocation lc WITH(NOLOCK) ON l.PrizesID=lc.PrizeID where l.PrizesID='{0}' ORDER BY NEWID()", strPrizesID);
+            string strSql = string.Format("SELECT top 1 l.*,CouponTypeID,Location FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID LEFT JOIN dbo.LPrizeLocation lc WITH(NOLOCK) ON l.PrizesID=lc.PrizeID where l.PrizesID='{0}' ", strPrizesID);
             return this.SQLHelper.ExecuteDataset(strSql);
 
         }
@@ -292,5 +292,6 @@ namespace JIT.CPOS.BS.DataAccess
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql) == null ? "0" : this.SQLHelper.ExecuteScalar(strSql).ToString());
 
         }
+ 
     }
 }

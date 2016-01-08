@@ -768,7 +768,8 @@ where a.customer_id=@CustomerId    {4} ";
                       + " , e.role_code RoleCode"
                       + " , a.default_flag DefaultFlag"
                       + " , e.role_name as  RoleName"
-                      + " , c.unit_code + ' - ' + c.unit_name as  UnitName"
+                  //    + " , c.unit_code + ' - ' + c.unit_name as  UnitName"
+                  +",c.unit_name as  UnitName"
                       + " , d.user_name UserName"
                       + " , f.def_app_name as  ApplicationDescription"
                       + " from t_user_role a "
@@ -1045,7 +1046,7 @@ where a.customer_id=@CustomerId    {4} ";
         }
 
         #region 导入用户信息
-
+      
         /// 导入用户临时表
         /// </summary>
         /// <param name="dr"></param>
@@ -1072,6 +1073,8 @@ where a.customer_id=@CustomerId    {4} ";
             return ds;
         }
         #endregion
+
+
 
     }
 }

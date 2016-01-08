@@ -366,6 +366,22 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             //}
 
             var entity = new LPrizesEntity();
+            var rd = new EmptyRD();
+
+            if(rp.Parameters.PrizeTypeId=="Coupon")
+            {
+                var bllCoupon = new CouponBLL(loggingSessionInfo);
+                var bllPrizes = new LPrizesBLL(loggingSessionInfo);
+                string strCouponTypeID = rp.Parameters.CouponTypeID;
+                //优惠券未被使用了的数量
+                int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                if (intUnUsedCouponCount < rp.Parameters.CountTotal)
+                {
+
+                    var errRsp = new ErrorResponse(-1, "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
+                    return errRsp.ToJSON();
+                }
+            }
 
             entity.EventId = rp.Parameters.EventId;
             entity.PrizeLevel = rp.Parameters.PrizeLevel;
@@ -380,8 +396,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             entity.PrizesID = Guid.NewGuid().ToString();
             bll.SavePrize(entity);
 
-            var rd = new EmptyRD();
-            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            var rsp  = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
         #endregion 

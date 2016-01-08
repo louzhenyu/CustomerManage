@@ -19,7 +19,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
     {
         protected override GrantCouponRD ProcessRequest(DTO.Base.APIRequest<GrantCouponRP> pRequest)
         {
-            var rd = new GrantCouponRD();//返回值
+            var rd = new GrantCouponRD();//返回值 
             var param=pRequest.Parameters;
             VipCouponMappingBLL bllVipCoupon = new VipCouponMappingBLL(this.CurrentUserInfo);
             try

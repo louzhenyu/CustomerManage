@@ -86,7 +86,7 @@ namespace CPOS.SendMarketingMessage
                 "select 'user id='+a.db_user+';password='+a.db_pwd+';data source='+a.db_server+';database='+a.db_name+';' conn " +
                 " from t_customer_connect a where a.customer_id='{0}' ",
                 customerId);
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             var result = sqlHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();

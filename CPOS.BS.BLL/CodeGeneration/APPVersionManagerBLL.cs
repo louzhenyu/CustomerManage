@@ -38,7 +38,7 @@ namespace JIT.CPOS.BS.BLL
     {
         private BasicUserInfo CurrentUserInfo;
         private APPVersionManagerDAO _currentDAO;
-        private string connectionString = ConfigurationManager.AppSettings["APConn"];//  这里使用的是固定的，运营商管理平台的数据库链接。
+        private string connectionString = ConfigurationManager.AppSettings["Conn_ap"];//  这里使用的是固定的，运营商管理平台的数据库链接。
         #region 构造函数
         /// <summary>
         /// 构造函数 

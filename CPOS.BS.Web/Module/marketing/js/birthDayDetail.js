@@ -452,12 +452,12 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                if(that.loadData.args.ActivityID) {
                    that.loadData.getActivityDeatil(function (data) {
                        window.StartTime=data.Data.StartTime;
-                       if (data.Data && data.Data.IsLongTime==0) {
+                       if (data.Data && data.Data.IsLongTime==1) {
                            if(!$('.checkBox[data-filed="IsLongTime"]').hasClass('on')){
                                $('.checkBox[data-filed="IsLongTime"]').trigger("click");
                            }
 
-                       }else if(data.Data && data.Data.IsLongTime==1){
+                       }else if(data.Data && data.Data.IsLongTime==0){
                            if($('.checkBox[data-filed="IsLongTime"]').hasClass('on')){
                                $('.checkBox[data-filed="IsLongTime"]').trigger("click");
                            }
@@ -804,7 +804,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                   switch (operationType){
                       case "SetActivity" :
                           prams.data.action = "Marketing.Activity.SetActivity";
-                          prams.data["IsLongTime"]=$('[data-filed="IsLongTime"].on').length?0:1; //1:不是 0：是
+                          prams.data["IsLongTime"]=$('[data-filed="IsLongTime"].on').length?1:0; //0:不是 1：是
                           break;
                       case "addCoupon":
                           prams.data.action="Marketing.Activity.SetPrizes";

@@ -47,7 +47,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             string sql = string.Format("select * from dbo.t_customer where customer_code='{0}'"
                 ,customerCode.Replace("'","''"));
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             using (SqlDataReader rdr = sqlHelper.ExecuteReader(sql))
             {
@@ -73,7 +73,7 @@ namespace JIT.CPOS.BS.DataAccess
             //组织SQL
             StringBuilder sql = new StringBuilder();
             sql.AppendFormat("select * from [t_customer] where customer_id='{0}'  ", id.ToString());
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             //读取数据
             t_customerEntity m = null;

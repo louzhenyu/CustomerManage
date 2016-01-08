@@ -20,7 +20,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
         protected override LotteryRD ProcessRequest(DTO.Base.APIRequest<LotteryRP> pRequest)
         {
             var rd = new LotteryRD();//返回值
-
             return rd;
         }
     }

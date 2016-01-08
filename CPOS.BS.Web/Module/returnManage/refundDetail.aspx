@@ -126,9 +126,9 @@
                  </div>
                  <div class="panlText ">
 
-                      <div class="commonSelectWrap showItem">
-                         <em class="tit">商品名称:</em>
-                         <div class="searchInput">
+                      <div class="commonSelectWrap showItem" style="width: 100%; min-width: 300px;">
+                         <em class="tit" style="min-width:60px;">商品名称:</em>
+                         <div class="searchInput" style="width: 80%;">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="ItemName"/>
                          </div>
                       </div>

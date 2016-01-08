@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/11/6 8:56:56
+ * Create On	:2015/11/4 14:35:50
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -43,11 +43,6 @@ namespace JIT.CPOS.BS.Entity
 		public Guid? FollowId { get; set; }
 
 		/// <summary>
-		/// 3:链接,35图文
-		/// </summary>
-		public Int32? TypeId { get; set; }
-
-		/// <summary>
 		/// 
 		/// </summary>
 		public String Title { get; set; }
@@ -56,16 +51,19 @@ namespace JIT.CPOS.BS.Entity
 		/// 对应的图文信息的TextId
 		/// </summary>
 		public String TextId { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String TextTitle { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public String TextTitle { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>
 		public String Url { get; set; }
+
+		/// <summary>
+		/// 3:链接,35图文
+		/// </summary>
+		public Int32? TypeId { get; set; }
 
 		/// <summary>
 		/// 

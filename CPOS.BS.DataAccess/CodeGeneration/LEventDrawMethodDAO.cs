@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2014/5/8 15:11:12
+ * Create On	:2015-8-18 16:58:06
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -38,7 +38,7 @@ namespace JIT.CPOS.BS.DataAccess
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class LEventDrawMethodDAO : BaseCPOSDAO, ICRUDable<LEventDrawMethodEntity>, IQueryable<LEventDrawMethodEntity>
+    public partial class LEventDrawMethodDAO : Base.BaseCPOSDAO, ICRUDable<LEventDrawMethodEntity>, IQueryable<LEventDrawMethodEntity>
     {
         #region 构造函数
         /// <summary>
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [LEventDrawMethod](");
-            strSql.Append("[DrawMethodName],[DrawMethodRemark],[Url],[AuthUrl],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[DrawMethodID])");
+            strSql.Append("[DrawMethodName],[DrawMethodRemark],[Url],[AuthUrl],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[DrawMethodCode],[EventTypeId],[DrawMethodID])");
             strSql.Append(" values (");
-            strSql.Append("@DrawMethodName,@DrawMethodRemark,@Url,@AuthUrl,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@DrawMethodID)");            
+            strSql.Append("@DrawMethodName,@DrawMethodRemark,@Url,@AuthUrl,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@DrawMethodCode,@EventTypeId,@DrawMethodID)");            
 
 			int? pkInt = pEntity.DrawMethodID;
 
@@ -98,6 +98,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@DrawMethodCode",SqlDbType.NVarChar),
+					new SqlParameter("@EventTypeId",SqlDbType.NVarChar),
 					new SqlParameter("@DrawMethodID",SqlDbType.Int)
             };
 			parameters[0].Value = pEntity.DrawMethodName;
@@ -109,7 +111,9 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[6].Value = pEntity.LastUpdateBy;
 			parameters[7].Value = pEntity.LastUpdateTime;
 			parameters[8].Value = pEntity.IsDelete;
-			parameters[9].Value = pkInt;
+			parameters[9].Value = pEntity.DrawMethodCode;
+			parameters[10].Value = pEntity.EventTypeId;
+			parameters[11].Value = pkInt;
 
             //执行并将结果回写
             int result;
@@ -214,7 +218,11 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.DrawMethodCode!=null)
+                strSql.Append( "[DrawMethodCode]=@DrawMethodCode,");
+            if (pIsUpdateNullField || pEntity.EventTypeId!=null)
+                strSql.Append( "[EventTypeId]=@EventTypeId");
             strSql.Append(" where DrawMethodID=@DrawMethodID ");
             SqlParameter[] parameters = 
             {
@@ -224,6 +232,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@AuthUrl",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@DrawMethodCode",SqlDbType.NVarChar),
+					new SqlParameter("@EventTypeId",SqlDbType.NVarChar),
 					new SqlParameter("@DrawMethodID",SqlDbType.Int)
             };
 			parameters[0].Value = pEntity.DrawMethodName;
@@ -232,7 +242,9 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[3].Value = pEntity.AuthUrl;
 			parameters[4].Value = pEntity.LastUpdateBy;
 			parameters[5].Value = pEntity.LastUpdateTime;
-			parameters[6].Value = pEntity.DrawMethodID;
+			parameters[6].Value = pEntity.DrawMethodCode;
+			parameters[7].Value = pEntity.EventTypeId;
+			parameters[8].Value = pEntity.DrawMethodID;
 
             //执行语句
             int result = 0;
@@ -538,6 +550,10 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.DrawMethodCode!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DrawMethodCode", Value = pQueryEntity.DrawMethodCode });
+            if (pQueryEntity.EventTypeId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventTypeId", Value = pQueryEntity.EventTypeId });
 
             return lstWhereCondition.ToArray();
         }
@@ -592,6 +608,14 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["DrawMethodCode"] != DBNull.Value)
+			{
+				pInstance.DrawMethodCode =  Convert.ToString(pReader["DrawMethodCode"]);
+			}
+			if (pReader["EventTypeId"] != DBNull.Value)
+			{
+				pInstance.EventTypeId =  Convert.ToString(pReader["EventTypeId"]);
 			}
 
         }

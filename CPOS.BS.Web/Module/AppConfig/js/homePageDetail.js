@@ -502,7 +502,7 @@
                                  self.DeleteItemCategoryArea(gid, function () {
                                      $this.parents(".action").remove();
                                      self.stopBubble(e);
-                                     self.sortAction();
+                                     self.sortAction(true);
                                  });
                              } else {
                                  $this.parents(".action").remove();
@@ -1664,6 +1664,7 @@
             var flag = true;
             //debugger;
             if (self.currentEditData && self.currentEditData.modelTypeId) {
+                model.CategoryAreaGroupId = self.currentEditData.CategoryAreaGroupId;
                 model.groupId = self.currentEditData.CategoryAreaGroupId;
                 model.id = self.currentEditData.modelTypeId;
                 model.name = self.currentEditData.modelTypeName;

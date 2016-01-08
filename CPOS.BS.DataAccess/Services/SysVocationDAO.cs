@@ -72,7 +72,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             //Ö´ÐÐSQL
             List<SysVocationEntity> list = new List<SysVocationEntity>();
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
 
             using (SqlDataReader rdr = sqlHelper.ExecuteReader(sql.ToString()))

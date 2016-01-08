@@ -70,26 +70,26 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            
+
             //初始化固定字段
-			pEntity.IsDelete=0;
-			pEntity.CreateTime=DateTime.Now;
-			pEntity.LastUpdateTime=pEntity.CreateTime;
-			pEntity.CreateBy=CurrentUserInfo.UserID;
-			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+            pEntity.IsDelete = 0;
+            pEntity.CreateTime = DateTime.Now;
+            pEntity.LastUpdateTime = pEntity.CreateTime;
+            pEntity.CreateBy = CurrentUserInfo.UserID;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
 
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [ContactEvent](");
             strSql.Append("[ContactTypeCode],[ContactEventName],[BeginDate],[EndDate],[PrizeType],[PrizeCount],[Integral],[CouponTypeID],[EventId],[ChanceCount],[ShareEventId],[RewardNumber],[Status],[IsDelete],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[ContactEventId])");
             strSql.Append(" values (");
-            strSql.Append("@ContactTypeCode,@ContactEventName,@BeginDate,@EndDate,@PrizeType,@PrizeCount,@Integral,@CouponTypeID,@EventId,@ChanceCount,@ShareEventId,@RewardNumber,@Status,@IsDelete,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@ContactEventId)");            
+            strSql.Append("@ContactTypeCode,@ContactEventName,@BeginDate,@EndDate,@PrizeType,@PrizeCount,@Integral,@CouponTypeID,@EventId,@ChanceCount,@ShareEventId,@RewardNumber,@Status,@IsDelete,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@ContactEventId)");
 
-			Guid? pkGuid;
-			if (pEntity.ContactEventId == null)
-				pkGuid = Guid.NewGuid();
-			else
-				pkGuid = pEntity.ContactEventId;
+            Guid? pkGuid;
+            if (pEntity.ContactEventId == null)
+                pkGuid = Guid.NewGuid();
+            else
+                pkGuid = pEntity.ContactEventId;
 
             SqlParameter[] parameters = 
             {
@@ -114,33 +114,33 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@ContactEventId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.ContactTypeCode;
-			parameters[1].Value = pEntity.ContactEventName;
-			parameters[2].Value = pEntity.BeginDate;
-			parameters[3].Value = pEntity.EndDate;
-			parameters[4].Value = pEntity.PrizeType;
-			parameters[5].Value = pEntity.PrizeCount;
-			parameters[6].Value = pEntity.Integral;
-			parameters[7].Value = pEntity.CouponTypeID;
-			parameters[8].Value = pEntity.EventId;
-			parameters[9].Value = pEntity.ChanceCount;
-			parameters[10].Value = pEntity.ShareEventId;
-			parameters[11].Value = pEntity.RewardNumber;
-			parameters[12].Value = pEntity.Status;
-			parameters[13].Value = pEntity.IsDelete;
-			parameters[14].Value = pEntity.CustomerID;
-			parameters[15].Value = pEntity.CreateTime;
-			parameters[16].Value = pEntity.CreateBy;
-			parameters[17].Value = pEntity.LastUpdateTime;
-			parameters[18].Value = pEntity.LastUpdateBy;
-			parameters[19].Value = pkGuid;
+            parameters[0].Value = pEntity.ContactTypeCode;
+            parameters[1].Value = pEntity.ContactEventName;
+            parameters[2].Value = pEntity.BeginDate;
+            parameters[3].Value = pEntity.EndDate;
+            parameters[4].Value = pEntity.PrizeType;
+            parameters[5].Value = pEntity.PrizeCount;
+            parameters[6].Value = pEntity.Integral;
+            parameters[7].Value = pEntity.CouponTypeID;
+            parameters[8].Value = pEntity.EventId;
+            parameters[9].Value = pEntity.ChanceCount;
+            parameters[10].Value = pEntity.ShareEventId;
+            parameters[11].Value = pEntity.RewardNumber;
+            parameters[12].Value = pEntity.Status;
+            parameters[13].Value = pEntity.IsDelete;
+            parameters[14].Value = pEntity.CustomerID;
+            parameters[15].Value = pEntity.CreateTime;
+            parameters[16].Value = pEntity.CreateBy;
+            parameters[17].Value = pEntity.LastUpdateTime;
+            parameters[18].Value = pEntity.LastUpdateBy;
+            parameters[19].Value = pkGuid;
 
             //执行并将结果回写
             int result;
             if (pTran != null)
-               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
             pEntity.ContactEventId = pkGuid;
         }
 
@@ -200,9 +200,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(ContactEventEntity pEntity , IDbTransaction pTran)
+        public void Update(ContactEventEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity , pTran,true);
+            Update(pEntity, pTran, true);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(ContactEventEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
+        public void Update(ContactEventEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
@@ -219,46 +219,46 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
-             //初始化固定字段
-			pEntity.LastUpdateTime=DateTime.Now;
-			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+            //初始化固定字段
+            pEntity.LastUpdateTime = DateTime.Now;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
 
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [ContactEvent] set ");
-                        if (pIsUpdateNullField || pEntity.ContactTypeCode!=null)
-                strSql.Append( "[ContactTypeCode]=@ContactTypeCode,");
-            if (pIsUpdateNullField || pEntity.ContactEventName!=null)
-                strSql.Append( "[ContactEventName]=@ContactEventName,");
-            if (pIsUpdateNullField || pEntity.BeginDate!=null)
-                strSql.Append( "[BeginDate]=@BeginDate,");
-            if (pIsUpdateNullField || pEntity.EndDate!=null)
-                strSql.Append( "[EndDate]=@EndDate,");
-            if (pIsUpdateNullField || pEntity.PrizeType!=null)
-                strSql.Append( "[PrizeType]=@PrizeType,");
-            if (pIsUpdateNullField || pEntity.PrizeCount!=null)
-                strSql.Append( "[PrizeCount]=@PrizeCount,");
-            if (pIsUpdateNullField || pEntity.Integral!=null)
-                strSql.Append( "[Integral]=@Integral,");
-            if (pIsUpdateNullField || pEntity.CouponTypeID!=null)
-                strSql.Append( "[CouponTypeID]=@CouponTypeID,");
-            if (pIsUpdateNullField || pEntity.EventId!=null)
-                strSql.Append( "[EventId]=@EventId,");
-            if (pIsUpdateNullField || pEntity.ChanceCount!=null)
-                strSql.Append( "[ChanceCount]=@ChanceCount,");
-            if (pIsUpdateNullField || pEntity.ShareEventId!=null)
-                strSql.Append( "[ShareEventId]=@ShareEventId,");
-            if (pIsUpdateNullField || pEntity.RewardNumber!=null)
-                strSql.Append( "[RewardNumber]=@RewardNumber,");
-            if (pIsUpdateNullField || pEntity.Status!=null)
-                strSql.Append( "[Status]=@Status,");
-            if (pIsUpdateNullField || pEntity.CustomerID!=null)
-                strSql.Append( "[CustomerID]=@CustomerID,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
+            if (pIsUpdateNullField || pEntity.ContactTypeCode != null)
+                strSql.Append("[ContactTypeCode]=@ContactTypeCode,");
+            if (pIsUpdateNullField || pEntity.ContactEventName != null)
+                strSql.Append("[ContactEventName]=@ContactEventName,");
+            if (pIsUpdateNullField || pEntity.BeginDate != null)
+                strSql.Append("[BeginDate]=@BeginDate,");
+            if (pIsUpdateNullField || pEntity.EndDate != null)
+                strSql.Append("[EndDate]=@EndDate,");
+            if (pIsUpdateNullField || pEntity.PrizeType != null)
+                strSql.Append("[PrizeType]=@PrizeType,");
+            if (pIsUpdateNullField || pEntity.PrizeCount != null)
+                strSql.Append("[PrizeCount]=@PrizeCount,");
+            if (pIsUpdateNullField || pEntity.Integral != null)
+                strSql.Append("[Integral]=@Integral,");
+            if (pIsUpdateNullField || pEntity.CouponTypeID != null)
+                strSql.Append("[CouponTypeID]=@CouponTypeID,");
+            if (pIsUpdateNullField || pEntity.EventId != null)
+                strSql.Append("[EventId]=@EventId,");
+            if (pIsUpdateNullField || pEntity.ChanceCount != null)
+                strSql.Append("[ChanceCount]=@ChanceCount,");
+            if (pIsUpdateNullField || pEntity.ShareEventId != null)
+                strSql.Append("[ShareEventId]=@ShareEventId,");
+            if (pIsUpdateNullField || pEntity.RewardNumber != null)
+                strSql.Append("[RewardNumber]=@RewardNumber,");
+            if (pIsUpdateNullField || pEntity.Status != null)
+                strSql.Append("[Status]=@Status,");
+            if (pIsUpdateNullField || pEntity.CustomerID != null)
+                strSql.Append("[CustomerID]=@CustomerID,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
+                strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy != null)
+                strSql.Append("[LastUpdateBy]=@LastUpdateBy");
             strSql.Append(" where ContactEventId=@ContactEventId ");
             SqlParameter[] parameters = 
             {
@@ -280,23 +280,23 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@ContactEventId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.ContactTypeCode;
-			parameters[1].Value = pEntity.ContactEventName;
-			parameters[2].Value = pEntity.BeginDate;
-			parameters[3].Value = pEntity.EndDate;
-			parameters[4].Value = pEntity.PrizeType;
-			parameters[5].Value = pEntity.PrizeCount;
-			parameters[6].Value = pEntity.Integral;
-			parameters[7].Value = pEntity.CouponTypeID;
-			parameters[8].Value = pEntity.EventId;
-			parameters[9].Value = pEntity.ChanceCount;
-			parameters[10].Value = pEntity.ShareEventId;
-			parameters[11].Value = pEntity.RewardNumber;
-			parameters[12].Value = pEntity.Status;
-			parameters[13].Value = pEntity.CustomerID;
-			parameters[14].Value = pEntity.LastUpdateTime;
-			parameters[15].Value = pEntity.LastUpdateBy;
-			parameters[16].Value = pEntity.ContactEventId;
+            parameters[0].Value = pEntity.ContactTypeCode;
+            parameters[1].Value = pEntity.ContactEventName;
+            parameters[2].Value = pEntity.BeginDate;
+            parameters[3].Value = pEntity.EndDate;
+            parameters[4].Value = pEntity.PrizeType;
+            parameters[5].Value = pEntity.PrizeCount;
+            parameters[6].Value = pEntity.Integral;
+            parameters[7].Value = pEntity.CouponTypeID;
+            parameters[8].Value = pEntity.EventId;
+            parameters[9].Value = pEntity.ChanceCount;
+            parameters[10].Value = pEntity.ShareEventId;
+            parameters[11].Value = pEntity.RewardNumber;
+            parameters[12].Value = pEntity.Status;
+            parameters[13].Value = pEntity.CustomerID;
+            parameters[14].Value = pEntity.LastUpdateTime;
+            parameters[15].Value = pEntity.LastUpdateBy;
+            parameters[16].Value = pEntity.ContactEventId;
 
             //执行语句
             int result = 0;
@@ -310,7 +310,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(ContactEventEntity pEntity )
+        public void Update(ContactEventEntity pEntity)
         {
             this.Update(pEntity, null);
         }
@@ -339,7 +339,7 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.ContactEventId.Value, pTran);           
+            this.Delete(pEntity.ContactEventId.Value, pTran);
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace JIT.CPOS.BS.DataAccess
         public void Delete(object pID, IDbTransaction pTran)
         {
             if (pID == null)
-                return ;   
+                return;
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [ContactEvent] set  isdelete=1 where ContactEventId=@ContactEventId;");
@@ -361,10 +361,10 @@ namespace JIT.CPOS.BS.DataAccess
             //执行语句
             int result = 0;
             if (pTran != null)
-                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
-            return ;
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+            return;
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(ContactEventEntity[] pEntities)
-        { 
+        {
             Delete(pEntities, null);
         }
 
@@ -406,7 +406,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pIDs">标识符值数组</param>
         public void Delete(object[] pIDs)
         {
-            Delete(pIDs,null);
+            Delete(pIDs, null);
         }
 
         /// <summary>
@@ -414,24 +414,24 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran) 
+        public void Delete(object[] pIDs, IDbTransaction pTran)
         {
-            if (pIDs == null || pIDs.Length==0)
-                return ;
+            if (pIDs == null || pIDs.Length == 0)
+                return;
             //组织参数化SQL
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("'{0}',",item.ToString());
+                primaryKeys.AppendFormat("'{0}',", item.ToString());
             }
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [ContactEvent] set  isdelete=1 where ContactEventId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
-            int result = 0;   
+            int result = 0;
             if (pTran == null)
                 result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
         }
         #endregion
 
@@ -496,7 +496,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pOrderBys)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
                     }
@@ -515,7 +515,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pWhereConditions)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
                         totalCountSql.AppendFormat(" and {0}", item.GetExpression());
@@ -524,7 +524,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
-            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
             PagedQueryResult<ContactEventEntity> result = new PagedQueryResult<ContactEventEntity>();
             List<ContactEventEntity> list = new List<ContactEventEntity>();
@@ -556,7 +556,7 @@ namespace JIT.CPOS.BS.DataAccess
         public ContactEventEntity[] QueryByEntity(ContactEventEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
-            return Query(queryWhereCondition,  pOrderBys);            
+            return Query(queryWhereCondition, pOrderBys);
         }
 
         /// <summary>
@@ -567,7 +567,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<ContactEventEntity> PagedQueryByEntity(ContactEventEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
+            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
@@ -579,48 +579,48 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <returns></returns>
         protected IWhereCondition[] GetWhereConditionByEntity(ContactEventEntity pQueryEntity)
-        { 
+        {
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.ContactEventId!=null)
+            if (pQueryEntity.ContactEventId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ContactEventId", Value = pQueryEntity.ContactEventId });
-            if (pQueryEntity.ContactTypeCode!=null)
+            if (pQueryEntity.ContactTypeCode != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ContactTypeCode", Value = pQueryEntity.ContactTypeCode });
-            if (pQueryEntity.ContactEventName!=null)
+            if (pQueryEntity.ContactEventName != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ContactEventName", Value = pQueryEntity.ContactEventName });
-            if (pQueryEntity.BeginDate!=null)
+            if (pQueryEntity.BeginDate != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "BeginDate", Value = pQueryEntity.BeginDate });
-            if (pQueryEntity.EndDate!=null)
+            if (pQueryEntity.EndDate != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EndDate", Value = pQueryEntity.EndDate });
-            if (pQueryEntity.PrizeType!=null)
+            if (pQueryEntity.PrizeType != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "PrizeType", Value = pQueryEntity.PrizeType });
-            if (pQueryEntity.PrizeCount!=null)
+            if (pQueryEntity.PrizeCount != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "PrizeCount", Value = pQueryEntity.PrizeCount });
-            if (pQueryEntity.Integral!=null)
+            if (pQueryEntity.Integral != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Integral", Value = pQueryEntity.Integral });
-            if (pQueryEntity.CouponTypeID!=null)
+            if (pQueryEntity.CouponTypeID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponTypeID", Value = pQueryEntity.CouponTypeID });
-            if (pQueryEntity.EventId!=null)
+            if (pQueryEntity.EventId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventId", Value = pQueryEntity.EventId });
-            if (pQueryEntity.ChanceCount!=null)
+            if (pQueryEntity.ChanceCount != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ChanceCount", Value = pQueryEntity.ChanceCount });
-            if (pQueryEntity.ShareEventId!=null)
+            if (pQueryEntity.ShareEventId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ShareEventId", Value = pQueryEntity.ShareEventId });
-            if (pQueryEntity.RewardNumber!=null)
+            if (pQueryEntity.RewardNumber != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "RewardNumber", Value = pQueryEntity.RewardNumber });
-            if (pQueryEntity.Status!=null)
+            if (pQueryEntity.Status != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Status", Value = pQueryEntity.Status });
-            if (pQueryEntity.IsDelete!=null)
+            if (pQueryEntity.IsDelete != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
-            if (pQueryEntity.CustomerID!=null)
+            if (pQueryEntity.CustomerID != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
-            if (pQueryEntity.CreateTime!=null)
+            if (pQueryEntity.CreateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.CreateBy!=null)
+            if (pQueryEntity.CreateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateTime!=null)
+            if (pQueryEntity.LastUpdateTime != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.LastUpdateBy!=null)
+            if (pQueryEntity.LastUpdateBy != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
 
             return lstWhereCondition.ToArray();
@@ -637,86 +637,86 @@ namespace JIT.CPOS.BS.DataAccess
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["ContactEventId"] != DBNull.Value)
-			{
-				pInstance.ContactEventId =  (Guid)pReader["ContactEventId"];
-			}
-			if (pReader["ContactTypeCode"] != DBNull.Value)
-			{
-				pInstance.ContactTypeCode =  Convert.ToString(pReader["ContactTypeCode"]);
-			}
-			if (pReader["ContactEventName"] != DBNull.Value)
-			{
-				pInstance.ContactEventName =  Convert.ToString(pReader["ContactEventName"]);
-			}
-			if (pReader["BeginDate"] != DBNull.Value)
-			{
-				pInstance.BeginDate =  Convert.ToDateTime(pReader["BeginDate"]);
-			}
-			if (pReader["EndDate"] != DBNull.Value)
-			{
-				pInstance.EndDate =  Convert.ToDateTime(pReader["EndDate"]);
-			}
-			if (pReader["PrizeType"] != DBNull.Value)
-			{
-				pInstance.PrizeType =  Convert.ToString(pReader["PrizeType"]);
-			}
-			if (pReader["PrizeCount"] != DBNull.Value)
-			{
-				pInstance.PrizeCount =   Convert.ToInt32(pReader["PrizeCount"]);
-			}
-			if (pReader["Integral"] != DBNull.Value)
-			{
-				pInstance.Integral =   Convert.ToInt32(pReader["Integral"]);
-			}
-			if (pReader["CouponTypeID"] != DBNull.Value)
-			{
-				pInstance.CouponTypeID =  Convert.ToString(pReader["CouponTypeID"]);
-			}
-			if (pReader["EventId"] != DBNull.Value)
-			{
-				pInstance.EventId =  Convert.ToString(pReader["EventId"]);
-			}
-			if (pReader["ChanceCount"] != DBNull.Value)
-			{
-				pInstance.ChanceCount =   Convert.ToInt32(pReader["ChanceCount"]);
-			}
-			if (pReader["ShareEventId"] != DBNull.Value)
-			{
-				pInstance.ShareEventId =  Convert.ToString(pReader["ShareEventId"]);
-			}
-			if (pReader["RewardNumber"] != DBNull.Value)
-			{
-				pInstance.RewardNumber =  Convert.ToString(pReader["RewardNumber"]);
-			}
-			if (pReader["Status"] != DBNull.Value)
-			{
-				pInstance.Status =   Convert.ToInt32(pReader["Status"]);
-			}
-			if (pReader["IsDelete"] != DBNull.Value)
-			{
-				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
-			}
-			if (pReader["CustomerID"] != DBNull.Value)
-			{
-				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
-			}
-			if (pReader["CreateTime"] != DBNull.Value)
-			{
-				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
-			}
-			if (pReader["CreateBy"] != DBNull.Value)
-			{
-				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
-			}
-			if (pReader["LastUpdateTime"] != DBNull.Value)
-			{
-				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
-			}
-			if (pReader["LastUpdateBy"] != DBNull.Value)
-			{
-				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
-			}
+            if (pReader["ContactEventId"] != DBNull.Value)
+            {
+                pInstance.ContactEventId = (Guid)pReader["ContactEventId"];
+            }
+            if (pReader["ContactTypeCode"] != DBNull.Value)
+            {
+                pInstance.ContactTypeCode = Convert.ToString(pReader["ContactTypeCode"]);
+            }
+            if (pReader["ContactEventName"] != DBNull.Value)
+            {
+                pInstance.ContactEventName = Convert.ToString(pReader["ContactEventName"]);
+            }
+            if (pReader["BeginDate"] != DBNull.Value)
+            {
+                pInstance.BeginDate = Convert.ToDateTime(pReader["BeginDate"]);
+            }
+            if (pReader["EndDate"] != DBNull.Value)
+            {
+                pInstance.EndDate = Convert.ToDateTime(pReader["EndDate"]);
+            }
+            if (pReader["PrizeType"] != DBNull.Value)
+            {
+                pInstance.PrizeType = Convert.ToString(pReader["PrizeType"]);
+            }
+            if (pReader["PrizeCount"] != DBNull.Value)
+            {
+                pInstance.PrizeCount = Convert.ToInt32(pReader["PrizeCount"]);
+            }
+            if (pReader["Integral"] != DBNull.Value)
+            {
+                pInstance.Integral = Convert.ToInt32(pReader["Integral"]);
+            }
+            if (pReader["CouponTypeID"] != DBNull.Value)
+            {
+                pInstance.CouponTypeID = Convert.ToString(pReader["CouponTypeID"]);
+            }
+            if (pReader["EventId"] != DBNull.Value)
+            {
+                pInstance.EventId = Convert.ToString(pReader["EventId"]);
+            }
+            if (pReader["ChanceCount"] != DBNull.Value)
+            {
+                pInstance.ChanceCount = Convert.ToInt32(pReader["ChanceCount"]);
+            }
+            if (pReader["ShareEventId"] != DBNull.Value)
+            {
+                pInstance.ShareEventId = Convert.ToString(pReader["ShareEventId"]);
+            }
+            if (pReader["RewardNumber"] != DBNull.Value)
+            {
+                pInstance.RewardNumber = Convert.ToString(pReader["RewardNumber"]);
+            }
+            if (pReader["Status"] != DBNull.Value)
+            {
+                pInstance.Status = Convert.ToInt32(pReader["Status"]);
+            }
+            if (pReader["IsDelete"] != DBNull.Value)
+            {
+                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
+            }
+            if (pReader["CustomerID"] != DBNull.Value)
+            {
+                pInstance.CustomerID = Convert.ToString(pReader["CustomerID"]);
+            }
+            if (pReader["CreateTime"] != DBNull.Value)
+            {
+                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
+            }
+            if (pReader["CreateBy"] != DBNull.Value)
+            {
+                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
+            }
+            if (pReader["LastUpdateTime"] != DBNull.Value)
+            {
+                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
+            }
+            if (pReader["LastUpdateBy"] != DBNull.Value)
+            {
+                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
+            }
 
         }
         #endregion

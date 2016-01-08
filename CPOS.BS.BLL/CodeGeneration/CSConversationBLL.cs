@@ -35,7 +35,7 @@ namespace JIT.CPOS.BS.BLL
     public partial class CSConversationBLL
     {
         private LoggingSessionInfo CurrentUserInfo;
-        private CSConversationDAO _currentDAO;
+        public CSConversationDAO _currentDAO;
         #region 构造函数
         /// <summary>
         /// 构造函数 

@@ -91,11 +91,11 @@ select @cnt=count(*)
         #region GetLEventsType
         public DataSet GetLEventsType()
         {
+            //为什么取Lower的
             string pSql = string.Format(@"select Lower(EventTypeID)as EventTypeID,Title from LEventsType where ClientID='{0}'
                             and IsDelete=0 order by CreateTime ", CurrentUserInfo.ClientID);
             return GetAll(pSql);
         }
-
         public DataSet GetLEventsType2()
         {
             //为什么取Lower的

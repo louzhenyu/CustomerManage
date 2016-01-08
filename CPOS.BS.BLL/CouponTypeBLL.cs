@@ -78,5 +78,14 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetCouponTypeCount();
         }
+        /// <summary>
+        /// 根据CouponTypeID获取生成了多少券
+        /// </summary>
+        /// <param name="strCouponTypeID"></param>
+        /// <returns></returns>
+        public int GetCouponCountByCouponTypeID(string strCouponTypeID)
+        {
+            return this._currentDAO.GetCouponCountByCouponTypeID(strCouponTypeID);
+        }
     }
 }

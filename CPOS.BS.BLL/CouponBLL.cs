@@ -820,9 +820,19 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="couponTypeID"></param>
         /// <returns></returns>
+        public List<CouponEntity> GetCouponBycouponType(string couponTypeID)
+        {
+            return DataTableToObject.ConvertToList<CouponEntity>(this._currentDAO.GetCouponBycouponType(couponTypeID).Tables[0]); ;
+        }
+
+        /// <summary>
+        /// 根据优惠券类型获取优惠券
+        /// </summary>
+        /// <param name="couponTypeID"></param>
+        /// <returns></returns>
         public DataSet GetCouponIDBycouponType(string couponTypeID)
         {
-            return this._currentDAO.GetCouponIDBycouponType(couponTypeID);
+            return this._currentDAO.GetCouponIDBycouponType(couponTypeID) ;
         }
 
         /// <summary>
@@ -833,6 +843,15 @@ namespace JIT.CPOS.BS.BLL
         public DataSet GetCouponIdByCouponTypeID(string strCouponTypeId)
         {
             return this._currentDAO.GetCouponIdByCouponTypeID(strCouponTypeId);
+        }
+        /// <summary>
+        /// 优惠券剩余数量
+        /// </summary>
+        /// <param name="strCouponTypeId"></param>
+        /// <returns></returns>
+        public int GetCouponCountByCouponTypeID(string strCouponTypeId)
+        {
+            return this._currentDAO.GetCouponCountByCouponTypeID(strCouponTypeId);
         }    
 
     }

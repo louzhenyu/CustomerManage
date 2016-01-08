@@ -47,7 +47,7 @@ namespace JIT.CPOS.BS.DataAccess
             List<MHItemAreaEntity> list = new List<MHItemAreaEntity> { };
             string sql = string.Format(@"select a.*,b.ItemName,b.ImageUrl,b.Price,b.SalesPrice,b.AddedTime,b.EndTime,b.BeginTime,b.EventTypeID
                                         from MHItemArea a left join vwPEventItemDetail b on a.EventId=b.EventId and a.ItemId=b.ItemID
-                                        inner join MobileHome c on a.HomeID =c.HomeID and c.isdelete=0  AND c.IsActivate=1
+                                        left join MobileHome c on a.HomeID =c.HomeID and c.isdelete=0  AND c.IsActivate=1
                                         where c.CustomerID='{0}'  AND c.IsActivate=1 and a.isdelete=0 and datediff(day,getdate(),b.EndTime )>=0	
             ", this.CurrentUserInfo.ClientID);//datediff(day,getdate(),b.EndTime )>=0	活动结束时间包含选中的那天
             using (var rd = this.SQLHelper.ExecuteReader(sql))

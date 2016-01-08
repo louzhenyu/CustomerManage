@@ -108,7 +108,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
                 Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置
 
-                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId, reqObj.special.isStore,int.Parse(htSetting["socialSalesType"].ToString()));
+                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId, reqObj.special.isStore, int.Parse(htSetting["socialSalesType"].ToString()), reqObj.special.sortName == null ? "create_time" : reqObj.special.sortName, reqObj.special.sort == null ? "desc" : reqObj.special.sort);
                 sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取所有藏商品列表，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
 
                 if (dsItems != null && dsItems.Tables.Count > 0 && dsItems.Tables[0].Rows.Count > 0)
@@ -235,9 +235,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             private string imageurl;
             public string imageUrl
             {
-                get { return this.imageurl; }
+                get { return imageurl; }  //请求图片缩略图 
                 set { imageurl = ImagePathUtil.GetImagePathStr(value, "240"); }
-
             }
 
             private string imageurl2;
@@ -304,6 +303,9 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string isGroupBy { get; set; }   //是否获取团购商品列表 1=是，否则不是
 
             public int isStore { get; set; } //是否我的小店商品
+
+            public string sortName { get; set; }//排序字段 salesQty，create_time，salesPrice
+            public string sort { get; set; }//排序类型  desc  asc
         }
         #endregion
 

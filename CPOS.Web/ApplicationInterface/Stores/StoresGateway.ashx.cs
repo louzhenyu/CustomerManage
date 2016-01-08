@@ -138,8 +138,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     JIT.CPOS.BS.BLL.WX.CommonBLL commonServer = new JIT.CPOS.BS.BLL.WX.CommonBLL();
                     imageUrl = commonServer.GetQrcodeUrl(wxObj[0].AppID
                         , wxObj[0].AppSecret
-                        , rpVipDCode.ToString("")
-                        , iResult, loggingSessionInfo);
+                        , rpVipDCode.ToString("")//二维码类型  0： 临时二维码  1：永久二维码
+                        , iResult, loggingSessionInfo);//iResult作为场景值ID，临时二维码时为32位整型，永久二维码时只支持1--100000
                     if (imageUrl != null && !imageUrl.Equals(""))
                     {
                         CPOS.Common.DownloadImage downloadServer = new DownloadImage();
@@ -169,7 +169,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     {
                         var userQrcodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
                         var userQrCode = new WQRCodeManagerEntity();
-                        userQrCode.QRCode = iResult.ToString();
+                        userQrCode.QRCode = iResult.ToString();//记录传过去的二维码场景值
                         userQrCode.QRCodeTypeId = userQrType[0].QRCodeTypeId;
                         userQrCode.IsUse = 1;
                         userQrCode.CustomerId = loggingSessionInfo.ClientID;
@@ -186,7 +186,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     #region 创建临时匹配表
                     VipDCodeBLL vipDCodeServer = new VipDCodeBLL(loggingSessionInfo);
                     VipDCodeEntity info = new VipDCodeEntity();
-                    info.DCodeId = iResult.ToString();
+                    info.DCodeId = iResult.ToString();//记录传过去的二维码场景值****（保存到数据库时没加空格）
                     info.CustomerId = customerId;
                     VipBLL vipBll = new VipBLL(loggingSessionInfo);
                     info.UnitId = string.IsNullOrEmpty(RP.Parameters.unitId) ? vipBll.GetUnitByUserId(RP.UserID) : RP.Parameters.unitId; //获取会集店
@@ -205,7 +205,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 if (RP.Parameters.VipDCode == 9)
                     RD.paraTmp = iResult.ToString("");
                 else
-                    RD.paraTmp = iResult.ToString().Insert(4, " "); //加空格
+                    RD.paraTmp = iResult.ToString().Insert(4, " "); //加空格，加空格有什么作用？
             }
             catch (Exception ex)
             {
@@ -260,7 +260,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
         }
         #endregion
 
-        #region  根据动态二维码获取用户信息
+        #region  根据动态二维码获取用户信息，只有 一个参数paraTmp，没有会员的标识
         public string getDimensionalCodeByVipInfo(string pRequest)
         {
             string content = string.Empty;
@@ -297,7 +297,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 VipDCodeEntity info = new VipDCodeEntity();
                 //由于CodeId有重复的概率，因此只取出最新的一条记录
                 info = vipDCodeServer.QueryByEntity(
-                    new VipDCodeEntity() { DCodeId = ToStr(RP.Parameters.special.paraTmp.Replace(" ", "")) }
+                    new VipDCodeEntity() { DCodeId = ToStr(RP.Parameters.special.paraTmp.Replace(" ", "")) }//又去掉了中间的空格
                     , new OrderBy[] { new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }
                     )[0];
                 string status = string.Empty;
@@ -342,15 +342,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
 #region 总部会员可以被门店集客
                     var unitBll = new t_unitBLL(loggingSessionInfo);
                     UnitService unitServer = new UnitService(loggingSessionInfo);
-                    var tempUnit = unitBll.GetByID(vipInfo.CouponInfo);
+                    var tempUnit = unitBll.GetByID(vipInfo.CouponInfo);//获取会员目前的会籍店
                     if (tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
                     {
-                        var tt = vipBll.GetUnitByUserId(RP.UserID);//获取会集店
+                        var tt = vipBll.GetUnitByUserId(RP.UserID);//获取员工的会集店****
                         if (!string.IsNullOrEmpty(tt))
                         {
                             vipInfo.CouponInfo = tt;//设为门店
                             vipInfo.SetoffUserId = RP.UserID;//设为门店员工
-                            vipInfo.Col21 = DateTime.Now.ToString();//集客时间
+                            vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
                             vipBll.Update(vipInfo);
                         }
                         

@@ -258,7 +258,7 @@ namespace JIT.CPOS.Web
 
             loggingSessionInfo.UserID = loggingSessionInfo.CurrentUser.User_Id;
             loggingSessionInfo.ClientID = "";
-            loggingSessionInfo.Conn = ConfigurationManager.AppSettings["APConn"];
+            loggingSessionInfo.Conn = ConfigurationManager.AppSettings["Conn_ap"];
 
             loggingSessionInfo.CurrentLoggingManager = new LoggingManager();
             loggingSessionInfo.CurrentLoggingManager.Connection_String = loggingSessionInfo.Conn;
@@ -363,7 +363,7 @@ namespace JIT.CPOS.Web
                 "select 'user id='+a.db_user+';password='+a.db_pwd+';data source='+a.db_server+';database='+a.db_name+';' conn " +
                 " from t_customer_connect a where a.customer_id='{0}' ",
                 customerId);
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             var result = sqlHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();
@@ -374,7 +374,7 @@ namespace JIT.CPOS.Web
             string sql = string.Format(
                 "select a.customer_name from t_customer a where a.customer_id='{0}' ",
                 customerId);
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             var result = sqlHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();
@@ -409,7 +409,7 @@ namespace JIT.CPOS.Web
                 "select top 1 customer_id " +
                 " from t_customer a where a.customer_code='{0}' ",
                 customerCode);
-            string conn = ConfigurationManager.AppSettings["APConn"];
+            string conn = ConfigurationManager.AppSettings["Conn_ap"];
             DefaultSQLHelper sqlHelper = new DefaultSQLHelper(conn);
             var result = sqlHelper.ExecuteScalar(sql);
             return result == null || result == DBNull.Value ? string.Empty : result.ToString();

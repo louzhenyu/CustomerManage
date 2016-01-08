@@ -653,6 +653,9 @@ SELECT count(1) as mhcategoryarea FROM dbo.MHCategoryArea WHERE ObjectId='{0}' A
             string customerId = this.CurrentUserInfo.ClientID;
             string userId = this.CurrentUserInfo.UserID;
             string sql = string.Format(@"DELETE MHCategoryArea  where GroupId={0} and HomeId='{1}'", groupId,strHomeId);
+//            string sql = string.Format(@"update a set isdelete = 1,LastUpdateBy ='{0}' ,LastUpdateTime =getdate()  
+//                    from MHCategoryArea a,MobileHome b where a.HomeId = b.HomeId 
+//                    and a.GroupId={1} and b.customerId = '{2}' and a.HomeId='{3}'", userId, groupId, customerId,strHomeId);
             this.SQLHelper.ExecuteNonQuery(sql);
         }
 

@@ -35,7 +35,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
             SetSysPageRD rd = new SetSysPageRD();
             var para = pRequest.Parameters;
             var userInfo = this.CurrentUserInfo;
-            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["APConn"];
+            userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["Conn_ap"];
             SysPageBLL sysPageBLL = new SysPageBLL(userInfo);
             SysPageEntity sysPageEntity = new SysPageEntity();
             JsonValveDeserializeDoc(para.PageJson, sysPageEntity);

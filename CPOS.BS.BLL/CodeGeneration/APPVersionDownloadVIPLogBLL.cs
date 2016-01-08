@@ -38,7 +38,7 @@ namespace JIT.CPOS.BS.BLL
     {
         private BasicUserInfo CurrentUserInfo;
         private APPVersionDownloadVIPLogDAO _currentDAO;
-        private string connectionString = ConfigurationManager.AppSettings["APConn"];
+        private string connectionString = ConfigurationManager.AppSettings["Conn_ap"];
         #region 构造函数
         /// <summary>
         /// 构造函数 

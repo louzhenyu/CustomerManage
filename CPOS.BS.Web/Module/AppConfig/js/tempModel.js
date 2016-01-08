@@ -304,7 +304,7 @@
 		</div>\
                 </div>',
         entranceModel: '<p class="space"></p>\
-        <div class="jsListItem commonSelectArea" data-type="rightEntranceTemp" data-key="<%=key%>"  data-model="entrance">\
+        <div class="jsListItem commonSelectArea" data-type="rightEntranceTemp" data-key="<%=key%>"  data-groupid="<%=CategoryAreaGroupId%>" data-model="entrance">\
                             <div class="navPicArea">\
                             <%var t=8; if(listLength){ %>\
                             <% t=listLength; %>\

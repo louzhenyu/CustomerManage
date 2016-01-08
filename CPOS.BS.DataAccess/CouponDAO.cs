@@ -392,7 +392,7 @@ namespace JIT.CPOS.BS.DataAccess
             LEFT JOIN CouponSource c ON b.CouponSourceID = c.CouponSourceID 
             INNER JOIN dbo.VipCouponMapping d ON a.CouponID = d.CouponID 
             LEFT JOIN couponUse u on  a.CouponID=u.CouponID 
-            WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0 AND a.Status=0 and a.EndDate > GETDATE() 
+            WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0 AND a.Status=0 and convert(varchar(10),a.EndDate,120) >= convert(varchar(10),getdate(),120)  
             AND NOT EXISTS(SELECT 1 FROM TOrderCouponMapping t WHERE t.IsDelete = 0 AND t.CouponId = a.CouponId) 
             AND d.VIPID = '{0}'
             ", vipID);
@@ -696,11 +696,25 @@ namespace JIT.CPOS.BS.DataAccess
 
             return dataSet;
         }
+        /// <summary>
+        /// 查询未被绑定用户的优惠券
+        /// </summary>
+        /// <param name="strCouponTypeId"></param>
+        /// <returns></returns>
         public DataSet GetCouponIdByCouponTypeID(string strCouponTypeId)
         {
-            string strSql = string.Format("select top 1 a. * from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
+            string strSql = string.Format("select top 1  a. * from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
             return this.SQLHelper.ExecuteDataset(strSql);
         }
-
-    }
+        /// <summary>
+        /// 优惠券剩余数量
+        /// </summary>
+        /// <param name="strCouponTypeId"></param>
+        /// <returns></returns>
+        public int GetCouponCountByCouponTypeID(string strCouponTypeId)
+        {
+            string strSql = string.Format("select  count(1)CouponCount from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
+            return Convert.ToInt16(this.SQLHelper.ExecuteScalar(strSql));
+        }
+     }
 }

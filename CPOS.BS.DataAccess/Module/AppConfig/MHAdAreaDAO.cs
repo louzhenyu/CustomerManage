@@ -101,6 +101,7 @@ namespace JIT.CPOS.BS.DataAccess
             //
             return list.ToArray();
         }
+        
         public MHAdAreaEntity[] GetAdByHomeId(string strHomeId)
         {
             StringBuilder sql = new StringBuilder();
@@ -120,6 +121,16 @@ namespace JIT.CPOS.BS.DataAccess
             return list.ToArray();
         }
         #endregion
+
+        #region 删除广告数据
+        public int DeleteAdByHomeId(string strHomeId)
+        {
+            string strSql = string.Format("Delete [dbo].[MHAdArea] where [HomeId]='{0}'", strHomeId);
+            return Convert.ToInt32(SQLHelper.ExecuteScalar(strSql));
+        }
+
+        #endregion
+
 
         #region 获取活动区域数据
 
@@ -245,7 +256,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " , imageUrl = a.ImageUrlObject ";
             sql += " , navName,url";
             sql += " , objectId = a.ObjectId ";
-            sql += " , typeId = a.ObjectTypeId,GroupId ";
+            sql += " , typeId = a.ObjectTypeId ";
             sql += " , objectName = CASE a.ObjectTypeId ";
             sql += " WHEN 1 THEN (SELECT b.item_category_name FROM dbo.T_Item_Category b WHERE b.item_category_id = a.ObjectId and bat_id=1) ";
             sql += " WHEN 2 THEN (SELECT b.item_name FROM dbo.T_Item b WHERE b.item_id = a.ObjectId) ";
@@ -315,7 +326,6 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,CASE WHEN b.Price IS NOT NULL AND b.Price<>0 AND b.SalesPrice<>b.Price THEN CAST(CAST(b.SalesPrice*10/b.Price AS DECIMAL(18,1)) AS NVARCHAR(10))+'折' WHEN b.Price IS  NULL OR b.Price=0 OR b.SalesPrice=b.Price THEN '' END DiscountRate";
             sql += " ,b.item_id AS ItemID,b.item_name AS ItemName,b.imageUrl ImageUrl";
             sql += " ,(  select  prop_value  from  t_prop as tp left join T_Item_Property  as tip on tip.prop_id=tp.prop_id where  tp.prop_code ='SalesCount' and item_id=b.item_id ) SalesCount";
-
             sql += " FROM dbo.MHCategoryArea a ";
             sql += "    INNER JOIN [ItemCategoryMapping] c ON a.ObjectId=c.ItemCategoryId AND c.IsDelete=0";
             sql += "  INNER JOIN [vw_item_detail] b ON c.Itemid=b.item_id  AND b.IsDelete=0";
@@ -375,7 +385,16 @@ namespace JIT.CPOS.BS.DataAccess
             ls.Add(new SqlParameter("@GroupId", GroupID));
             this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql, ls.ToArray());
         }
-        public void DeleteCategoryGroupByGroupIdandCustomerId(int GroupId, string customerId,string strHomeId)
+        public void DeleteCategoryGroupByGroupIdandCustomerId(int GroupID, string customerId)
+        {
+            string sql = string.Empty;
+            List<SqlParameter> ls = new List<SqlParameter>();
+            sql = @"delete from MHCategoryAreaGroup where customerId=@customerId and GroupValue=@GroupValue";
+            ls.Add(new SqlParameter("@customerId", customerId));
+            ls.Add(new SqlParameter("@GroupValue", GroupID));
+            this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql, ls.ToArray());
+        }
+        public void DeleteCategoryGroupByGroupIdandCustomerId(int GroupId, string customerId, string strHomeId)
         {
             string sql = string.Empty;
             List<SqlParameter> ls = new List<SqlParameter>();

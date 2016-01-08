@@ -81,7 +81,7 @@ namespace JIT.CPOS.BS.BLL
             conversationEntity.IsCS = isCS;
             conversationEntity.CreateTime = DateTime.Now;
             conversationEntity.IsDelete = 0;
-            if (!string.IsNullOrEmpty(messageId) && messageTypeId == "5")
+            if (!string.IsNullOrEmpty(messageId) && messageTypeId == "5")//主动推送客服信息？
             {
                 new PushMessageType5(loggingSessionInfo).PushMessage(conversationEntity);
                 return;
@@ -104,7 +104,7 @@ namespace JIT.CPOS.BS.BLL
                     }
                 }
             }
-            //下面这段主要对员工起作用的
+            //下面这段主要对员工起作用的(对会员也可以，会员是上面的数据)
             if (!string.IsNullOrEmpty(messageId))//取到相关1小时内的信息()
             {
                 conversationEntity.CSMessageID = Guid.Parse(messageId);//用1小时内会话的messageid
@@ -120,7 +120,7 @@ namespace JIT.CPOS.BS.BLL
                 messageEntity.Content = messageContent;
                 messageEntity.CSObjectID = objectId;
                 messageEntity.CSServiceTypeID = serviceTypeId;
-                messageEntity.MemberID = userId;
+                messageEntity.MemberID = userId;  //如果是员工发起的，就村员工的值
                 messageEntity.MemberName = person != null ? person.VipName : "";
                 messageEntity.ClientID = loggingSessionInfo.ClientID;
                 messageEntity.CreateTime = DateTime.Now;

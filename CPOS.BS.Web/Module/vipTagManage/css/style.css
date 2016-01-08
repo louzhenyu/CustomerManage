@@ -13,11 +13,8 @@
 
 .r{float: right}.l{float: left}
 
-.fontC{ width: 18px; height: 18px; margin: 0 auto; background:no-repeat center center;}
 .red{color:red}
-.delete{background-image:url(../images/delete.png)}
-.exit{background-image:url(../images/exit.png)}
-.add  {background-image:url(../images/add.png)}
+
 .tableWrapTextBtn   {height: 120px;padding-top: 35px;padding-left: 25px;}
 
 

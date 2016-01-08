@@ -1,4 +1,4 @@
-﻿define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform'], function () {
+﻿define(['tools', 'template', 'kkpager', 'artDialog', 'json2','easyui', 'ajaxform'], function () {
     var page =
         {
             notifyUrl: '',
@@ -50,6 +50,8 @@
             showElements: function (selector) {
                 this.elems.uiMask.show();
                 $(selector).slideDown(500);
+                var tops=$(document).scrollTop()+70;
+                $(".jui-dialog").css({"top":tops+"px"})
             },
             hideElements: function (selector) {
                 this.elems.uiMask.fadeIn(500);
@@ -141,7 +143,7 @@
                 });
 
                 //编辑操作
-                $('#payMentList').delegate('.operateWrap', 'click', function (e) {
+                $('.tableWrap').delegate('.operateWrap', 'click', function (e) {
                     var $this = $(this);
                     $tr = $('.unstart', $this.parent());
                     that.elems.dataObj.typecode = $this.data('typecode');
@@ -460,8 +462,55 @@
                     success: function (data) {
                         var data = JSON.parse(data),
 							list = data.topics;
-                        var html = bd.template("tpl_payMentList", { list: list })
-                        $("#payMentList").html(html);
+                       /* var html = bd.template("tpl_payMentList", { list: list })
+                        $("#payMentList").html(html);*/
+                        $("#payMentList").datagrid({
+                            method: 'post',
+                            iconCls: 'icon-list', //图标
+                            singleSelect: true, //单选
+                            // height : 332, //高度
+                            fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                            striped: true, //奇偶行颜色不同
+                            collapsible: true,//可折叠
+                            //数据来源
+                            data: list,
+                            /*sortName : 'MembershipTime', //排序的列*/
+                            sortOrder: 'desc', //倒序
+                            remoteSort: true, // 服务器排序
+                            idField: 'OrderID', //主键字段
+
+                            columns: [[
+
+                                {field: 'PaymentTypeName', title: '配送方式', width: 196, align: 'left', resizable: false,
+                                    formatter:function(value ,row,index){
+
+                                        if(row.IsNativePay==0){
+                                            return '平台'+value
+                                        }else{
+                                            return value
+                                        }
+                                    }
+                                },
+                                {field: 'IsOpen', title: '状态', width: 182, align: 'left', resizable: false,
+                                    formatter:function(value ,row,index){
+
+                                        if(value=='true'){
+                                            return '<div class="unstart">已启用</div>'
+                                        }else{
+                                            return '<div class="unstart blue">未启用</div>'
+                                        }
+                                    }
+                                },
+                                {
+                                    field: 'deliveryId', title: '编辑', width: 46, align: 'left', resizable: false,
+                                    formatter: function (value, row, index) {
+                                        debugger;
+                                      var obj= "{'IsOpen':"+row.IsOpen+",'IsDefault':"+row.IsDefault+",'IsCustom':"+row.IsCustom+",'IsNativePay':"+row.IsNativePay+"}";
+                                        return '<div class="operateWrap" title="编辑" data-usertype="'+obj+'" data-typecode="'+row.PaymentTypeCode+'" data-typeid="'+row.PaymentTypeID+'" data-channelid="'+row.ChannelId+'" > <span class="editIcon"></span> </td>';
+                                    }
+                                }
+                            ]]
+                        });
                         if (data.totalCount > 0) {
                             //表示成功
                             if (callback) {

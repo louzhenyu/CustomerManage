@@ -20,17 +20,17 @@
             <form id="queryFrom">
             <div class="commonSelectWrap">
                 <em class="tit">年份：</em>
-                <label class="searchInput"><input id="Year"  name="Year" class="easyui-combobox" type="text" ></label>
+                <label class="selectBox"><input id="Year"  name="Year" class="easyui-combobox" type="text" ></label>
             </div>
             <div class="commonSelectWrap">
                             <em class="tit">月份：</em>
-                            <label class="searchInput"><input class="easyui-combobox" id="Month" name="Month" type="text" ></label>
+                            <label class="selectBox"><input class="easyui-combobox" id="Month" name="Month" type="text" ></label>
                         </div>
             <div class="commonSelectWrap">
                 <em class="tit">商家名称：</em>
                 <label class="searchInput"><input   name="SellerOrRetailName" type="text" value=""></label>
             </div>
-
+              <a href="javascript:;" class="commonBtn queryBtn">查询</a>
              <div class="commonSelectWrap">
                              <em class="tit">门店：</em>
                              <div class="selectBox bordernone">
@@ -49,7 +49,7 @@
                </div>
              </form>
 
-              <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+
         </div>
 
         <!--表格操作按钮-->
