@@ -316,8 +316,6 @@ namespace JIT.CPOS.BS.BLL
             stream.Read(bt, 0, (int)stream.Length);
             string postStr = System.Text.Encoding.UTF8.GetString(bt);
 
-            BaseService.WriteLogWeixin("解密前 postStr:  " + postStr);
-
             return postStr;
         }
 
@@ -381,10 +379,13 @@ namespace JIT.CPOS.BS.BLL
         public static void WriteLog(string strMemo)
         {
             string date = DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString();
-            string filename = "C:/WEBHOME/logs/cpos/" + date + ".txt";
+            var platform = "cpos";
+            string dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "WEBHOME/logs/" + platform + "/";//当前项目的目录路径
 
-            if (!System.IO.Directory.Exists("C:/WEBHOME/logs/cpos/"))
-                System.IO.Directory.CreateDirectory("C:/WEBHOME/logs/cpos/");
+            string filename = dirPath + date + ".txt";
+
+            if (!System.IO.Directory.Exists(dirPath))
+                System.IO.Directory.CreateDirectory(dirPath);
 
             System.IO.StreamWriter sr = null;
 
@@ -421,10 +422,12 @@ namespace JIT.CPOS.BS.BLL
             var platform = "weixin";
 
             string date = DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString();
-            string filename = "C:/WEBHOME/logs/" + platform + "/" + date + ".txt";
+          // string dirPath = HttpContext.Current.Server.MapPath("WEBHOME/logs/" + platform + "/");//当前项目的目录路径
+            string dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "WEBHOME/logs/" + platform + "/";
+            string filename =  dirPath+ date + ".txt";
 
-            if (!System.IO.Directory.Exists("C:/WEBHOME/logs/" + platform + "/"))
-                System.IO.Directory.CreateDirectory("C:/WEBHOME/logs/" + platform + "/");
+            if (!System.IO.Directory.Exists(dirPath))
+                System.IO.Directory.CreateDirectory(dirPath);
 
             System.IO.StreamWriter sr = null;
 

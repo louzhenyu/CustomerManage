@@ -35,49 +35,58 @@ namespace JIT.CPOS.Web.WX
                 var httpContext = param_context;
                 string url = HttpContext.Current.Request.Url.ToString();
                 BaseService.WriteLogWeixin("  请求的url:" + url);
+                BaseService.WriteLogWeixin("  请求方式:" + httpContext.Request.HttpMethod.ToLower());
+                //把HTTP请求转换为字符串
+                string postStr = new BaseService().ConvertHttpContextToString(httpContext);
+                BaseService.WriteLogWeixin("  解密前postStr：" + postStr);
                 if (httpContext.Request.HttpMethod.ToLower() == "post")
-                {                   
-                    //把HTTP请求转换为字符串
-                    string postStr = new BaseService().ConvertHttpContextToString(httpContext);
+                {                  
                     if (!string.IsNullOrEmpty(postStr))
                     {
                         //获取微信公众号信息
                         LoggingSessionInfo loggingSessionInfo = null;//这里取过之后，后面不用重复取
-                        WApplicationInterfaceEntity wAppEntity = new CommonBLL().GetWAppEntity(postStr,out loggingSessionInfo);
+                        WApplicationInterfaceEntity wAppEntity = new CommonBLL().GetWAppEntity(postStr, out loggingSessionInfo);
                         string token = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.Token : wAppEntity.OpenToken;//如果开放授权给开放平台了就用开放平台的token
                         if (wAppEntity == null || string.IsNullOrEmpty(token))
                         {
                             return;
                         }
-
                         if (!string.IsNullOrEmpty(httpContext.Request["echoStr"]))
                         {
                             //用于进行微信平台token验证
                             new CommonBLL().ValidToken(httpContext, token);//Config.TOKEN配置的token，其实应该是每个客户都有自己的token，配置在数据库里，然后取出来
                         }
-
-
+                        #region
 
                         //在这里要进行加解密，用接收过来信息的ToUserName（公众号的为weixinid，例如： gh_9cbe4cd7941a）
                         int ret = 0;//解密情况
                         string TrueEncodingAESKey = "";//如果是安全模式，后面回复信息时，加密的key
-                       // int EncryptType = 0;
+                        // int EncryptType = 0;
                         //string appid = "";
                         //Config.TOKEN 替换为wAppEntity.Token
-                        postStr = new CommonBLL().WXDecryptMsg(httpContext, postStr,wAppEntity,loggingSessionInfo ,out  ret, out  TrueEncodingAESKey);
+                        postStr = new CommonBLL().WXDecryptMsg(httpContext, postStr, wAppEntity, loggingSessionInfo, out  ret, out  TrueEncodingAESKey);
                       //  BaseService.WriteLogWeixin("  解密后post string:" + postStr);
                         if (ret != 0)
                         {
-                            System.Console.WriteLine("解密出现错误 ret: " + ret);
+                            BaseService.WriteLogWeixin("解密出现错误 ret: " + ret);
                             return;
                         }
 
                         //设置请求参数
-                        var requestParams = SetRequestParams(postStr, TrueEncodingAESKey, httpContext,loggingSessionInfo, wAppEntity);
+                        var requestParams = SetRequestParams(postStr, TrueEncodingAESKey, httpContext, loggingSessionInfo, wAppEntity);
                         BaseService.WriteLogWeixin("请求参数:" + requestParams.ToJSON());
 
                         //响应微信平台推送消息
                         ResponseMsg(httpContext, requestParams);
+                        #endregion
+                    }
+                }
+                else//专门用于微信公众号里“填写服务器配置”，这时候向这个url传递的方式是get，没有weixinid，无法从数据库里取数据
+                {
+                    if (!string.IsNullOrEmpty(httpContext.Request["echoStr"]))
+                    {
+                        //用于进行微信平台token验证
+                        new CommonBLL().ValidToken(httpContext, Config.TOKEN);//Config.TOKEN配置的token，其实应该是。每个客户都有自己的token，配置在数据库里，然后取出来
                     }
                 }
             }
