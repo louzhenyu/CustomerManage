@@ -23,6 +23,8 @@
             tagList:[]                              //标签列表
         },
         init: function () {
+
+                $('#wxAuth').attr("src","http://open.chainclouds.com/receive?clientid="+window.clientID);
             this.initEvent();
             this.loadPageData();
 
@@ -47,8 +49,10 @@
                 $.util.stopBubble(e);
 
             });
-            that.elems.operation.delegate(".commonBtn","click",function(e){
-                window.open(window.weixinUrl);
+
+
+            that.elems.operation.delegate(".optionBtn","click",function(e){
+               // window.open(window.weixinUrl);
                 $.messager.confirm("提示","确定绑定微信绑定完成",function(r){
 
                     that.loadPageData();
@@ -84,6 +88,7 @@
                     that.loadData.operation(fields,that.elems.optionType,function(data){
                         $('#win').window('close');
                         alert("操作成功");
+
                         that.loadPageData(e);
 
                     });
@@ -240,11 +245,7 @@
                                 return "否";
                             }
                         }},
-                    {field : 'CreateTime',title : '授权时间',width:80,resizable:false,align:'center',
-                      formatter:function(value,row,index){
-                          return  new Date(value).format("yyyy-MM-dd hh:mm:ss")
-                      }
-                    },
+                    {field : 'CreateTime',title : '授权时间',width:80,resizable:false,align:'center'},
                     {field : 'CreateByName',title : '授权人',width:60,resizable:false,align:'center'},
 
                     {field : 'CreateBy',title : '操作',width:30,align:'center',resizable:false,

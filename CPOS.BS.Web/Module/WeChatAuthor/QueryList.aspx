@@ -45,7 +45,12 @@
                 </div>
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
-                 <div class="commonBtn sales" data-flag="add" id="sales"> 绑定微信账号</div>
+                 <div class="commonBtn sales" data-flag="add" id="sales"> 绑定微信账号
+                 <div class="authBtn">
+                  <iframe id="wxAuth"  width="180px" height="50px" scrolling="0" frameborder="0" src=""></iframe>
+                 </div>
+
+                 </div>
 
 
                 </div>
@@ -64,6 +69,8 @@
             </div>
         </div>
        <div style="display: none">
+
+
       <div id="win" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
       		<div class="easyui-layout" data-options="fit:true" id="panlconent">
 
