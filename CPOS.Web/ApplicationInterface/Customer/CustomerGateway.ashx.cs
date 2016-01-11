@@ -150,9 +150,35 @@ namespace JIT.CPOS.Web.ApplicationInterface
         public string getJsApiConfig(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<WeiXinConfigRq>>();
+            if (string.IsNullOrEmpty(rp.OpenID))//OpenID为空立刻返回空数据，让前端跳转高级auth认证
+            {
+                return new SuccessResponse<IAPIResponseData>(new XeiXinJsApiConfig()).ToJSON();
+            }
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
             var appService = new WApplicationInterfaceBLL(loggingSessionInfo);
-            var appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = rp.CustomerID }, null)[0];
+            var wxUserInfoBLL = new WXUserInfoBLL(loggingSessionInfo);
+            var vipService = new VipBLL(loggingSessionInfo);
+            var appEntity = new WApplicationInterfaceEntity();
+
+            var vipEntitys = vipService.QueryByEntity(new VipEntity { WeiXinUserId = rp.OpenID, ClientID = loggingSessionInfo.ClientID }, null);
+            if (vipEntitys != null && vipEntitys.Length > 0)
+            {
+                appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = vipEntitys[0].WeiXin,CustomerId = rp.CustomerID }, null).FirstOrDefault();
+            }
+            else
+            {
+                //优先从支持多号运营的表中取
+                var wxUserInfo = wxUserInfoBLL.QueryByEntity(new WXUserInfoEntity() { CustomerID = loggingSessionInfo.ClientID, WeiXinUserID = rp.OpenID }, null).FirstOrDefault();
+                if (wxUserInfo != null)
+                {
+                    appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = wxUserInfo.WeiXin, CustomerId = rp.CustomerID }, null).FirstOrDefault();
+                }
+            }
+            //返回空数据，让前端跳转高级auth认证
+            if (string.IsNullOrEmpty(appEntity.AppID))
+            {
+                return new SuccessResponse<IAPIResponseData>(new XeiXinJsApiConfig()).ToJSON();
+            }
             string timestamp = ((long)((DateTime.Now - new DateTime(1970, 1, 1)).TotalSeconds)).ToString();
             string nonceStr = Guid.NewGuid().ToString("N").Substring(0, 16);
             XeiXinJsApiConfig config = new XeiXinJsApiConfig()
