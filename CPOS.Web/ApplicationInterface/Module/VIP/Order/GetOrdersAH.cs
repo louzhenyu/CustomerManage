@@ -50,7 +50,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Order
 
             if (!string.IsNullOrEmpty(pRequest.Parameters.UnitID))
             {
-                if (rd.Orders!=null)
+                UnitService unitServer = new UnitService(CurrentUserInfo);
+                   var unitId = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
+                if (rd.Orders!=null&&pRequest.Parameters.UnitID!=unitId)
                 {
                     rd.Orders = rd.Orders.Where(p => p.purchase_unit_id == pRequest.Parameters.UnitID).ToArray();
                 }
