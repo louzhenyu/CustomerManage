@@ -193,7 +193,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sql += string.Format(" inner join (select CategoryID from fnGetChildCategoryByID('{0}',1)) e on a.item_category_id=e.CategoryID ", itemTypeId);
             }
-            sql += " WHERE 1 = 1 and item_category_id='-1' and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
+            sql += " WHERE 1 = 1 and item_category_id<>'-1' and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
             if (!string.IsNullOrEmpty(itemName))
             {
                 sql += " AND (a.item_name LIKE '%" + itemName + "%' OR a.prop_2_detail_name LIKE '%" + itemName + "%' OR a.sku_prop_id3 LIKE '%" + itemName + "%') "; //通过商品名、颜色、材质查询
