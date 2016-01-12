@@ -110,8 +110,16 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,imageUrl2 = a.imageUrl2 ";
             sql += " ,imageUrl3 = a.imageUrl3 ";
             sql += " ,TargetUrl='aldlinks://product/list/' ";
-            sql += " ,price = CASE WHEN D.ItemId IS  NULL THEN A.Price ELSE D.Price  END";//" ,price = a.Price ";
-            sql += " ,salesPrice = CASE WHEN D.ItemId IS  NULL THEN A.SalesPrice  ELSE D.SalesPrice   END"; //" ,salesPrice = a.SalesPrice ";
+            if (channelId == "6" || channelId == "10")
+            {
+                sql += " ,price = a.Price ";
+                sql += " ,salesPrice = a.SalesPrice ";
+            }
+            else
+            {
+                sql += " ,price = CASE WHEN D.ItemId IS  NULL THEN A.Price ELSE D.Price  END";//" ,price = a.Price ";
+                sql += " ,salesPrice = CASE WHEN D.ItemId IS  NULL THEN A.SalesPrice  ELSE D.SalesPrice   END"; //" ,salesPrice = a.SalesPrice ";
+            }
             sql += " ,ItemDisplayIndex ";
             sql += " ,BeginTime";
             sql += " ,discountRate = a.DiscountRate ";
@@ -144,6 +152,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += ",d.EventId";
             sql += ",d.EventTypeId";
             sql += ",a.create_time";
+            sql += ",a.modify_time";
             sql += " FROM dbo.vw_item_detail a ";
 
             //if (!string.IsNullOrEmpty(itemTypeId))
@@ -184,7 +193,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sql += string.Format(" inner join (select CategoryID from fnGetChildCategoryByID('{0}',1)) e on a.item_category_id=e.CategoryID ", itemTypeId);
             }
-            sql += " WHERE 1 = 1 and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
+            sql += " WHERE 1 = 1 and item_category_id='-1' and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
             if (!string.IsNullOrEmpty(itemName))
             {
                 sql += " AND (a.item_name LIKE '%" + itemName + "%' OR a.prop_2_detail_name LIKE '%" + itemName + "%' OR a.sku_prop_id3 LIKE '%" + itemName + "%') "; //通过商品名、颜色、材质查询

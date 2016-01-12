@@ -24,6 +24,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
             VipCouponMappingBLL bllVipCoupon = new VipCouponMappingBLL(this.CurrentUserInfo);
             try
             {
+                var customerBasicSettingBLL = new CustomerBasicSettingBLL(this.CurrentUserInfo);
+                var ResultList = customerBasicSettingBLL.GetBusinessBasisConfigInfo(CurrentUserInfo.ClientID);
+                DataRow dr = customerBasicSettingBLL.GetCustomerInfo(CurrentUserInfo.ClientID).Tables[0].Rows[0];
+                rd.CustomerName = dr["customer_name"].ToString();//商户昵称
+                rd.FollowUrl = ResultList.FirstOrDefault(m => m.SettingCode.Equals("GuideLinkUrl")) == null ? "" : ResultList.FirstOrDefault(m => m.SettingCode.Equals("GuideLinkUrl")).SettingValue;//引导链接
+                rd.GuideQRCode = ResultList.FirstOrDefault(m => m.SettingCode.Equals("GuideQRCode")) == null ? "" : ResultList.FirstOrDefault(m => m.SettingCode.Equals("GuideQRCode")).SettingValue;//引导二维码
+
+
                 if (bllVipCoupon.HadBeGranted(param.CouponId,param.Giver) == 0)
                 {
                     rd.IsAccept = 1;
@@ -40,12 +48,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
                     {
                         CouponGrantLogBLL bllCouponGrantLog = new CouponGrantLogBLL(this.CurrentUserInfo);
                         bllCouponGrantLog.Create(new CouponGrantLogEntity() { CouponId = param.CouponId, FromVipId = param.Giver, ToVipId = pRequest.UserID,CouponGrantLogId=Guid.NewGuid() });
+                     
 
                         VipBLL bllVip = new VipBLL(this.CurrentUserInfo);
                         var vipInfo = bllVip.GetVipDetailByVipID(param.Giver);
                         rd.IsSuccess = true;
                         rd.Message = vipInfo.VipName + "赠送你一张" + ds.Tables[0].Rows[0]["CouponName"] + "的优惠券";
-                        rd.FollowUrl = "";
                         rd.IsAccept = 0;
                     }
                     else
