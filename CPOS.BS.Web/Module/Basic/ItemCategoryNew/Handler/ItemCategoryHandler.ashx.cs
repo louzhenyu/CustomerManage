@@ -64,30 +64,52 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
             var bll = new ItemCategoryService(this.CurrentUserInfo);
             var id = this.Request("id");
             var status = this.Request("status");
+            var bat_id = this.Request("bat_id");
             if (!string.IsNullOrWhiteSpace(id))
             {
                 var bllItem = new ItemService(this.CurrentUserInfo);
-                if (bllItem.SearchItemList(null, null, id, null, null, null, 1, 0) != null)//判断该分类下是否有商品
+                if (bllItem.GetItemCountByCategory(id, bat_id) > 0)
+                {
+                    rsp.success = false;
+                    rsp.msg = "该" + bat_id =="1"?"分类":"分组"+ "下有商品，请先处理商品状态";
+                }
+                else
                 {
                     bll.SetItemCategoryStatus(CurrentUserInfo, id, status, out checkRes);
 
                     if (!string.IsNullOrEmpty(checkRes))
                     {
-                        // res = "{success:false,msg:\"" + checkRes + "\"}";
                         rsp.success = false;
                         rsp.msg = checkRes;
                     }
                     else
                     {
-                        // res = "{success:true}";
                         rsp.success = true;
                     }
                 }
-                else
-                {
-                    rsp.success = false;
-                    rsp.msg = "该分类下有商品，请先处理商品状态";
-                }
+                #region 原来逻辑  20160103 wujx 屏蔽
+                //if (bllItem.SearchItemList(null, null, id, null, null, null, 1, 0) != null)//判断该分类下是否有商品
+                //{
+                //    bll.SetItemCategoryStatus(CurrentUserInfo, id, status, out checkRes);
+
+                //    if (!string.IsNullOrEmpty(checkRes))
+                //    {
+                //        // res = "{success:false,msg:\"" + checkRes + "\"}";
+                //        rsp.success = false;
+                //        rsp.msg = checkRes;
+                //    }
+                //    else
+                //    {
+                //        // res = "{success:true}";
+                //        rsp.success = true;
+                //    }
+                //}
+                //else
+                //{
+                //    rsp.success = false;
+                //    rsp.msg = "该分类下有商品，请先处理商品状态";
+                //}
+                #endregion
             }
             return rsp.ToJSON();
         }

@@ -266,7 +266,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 eventEntity.EventStatus = 20;//10=未开始,20=运行中,30=暂停,40=结束
 
             }
-            else
+            else if (DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.EndTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <0)
+            {
+                eventEntity.EventStatus = 40;//10=未开始,20=运行中,30=暂停,40=结束
+
+            }
+            else if (DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.BeginTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))>0)
             {
                 eventEntity.EventStatus = 10;//10=未开始,20=运行中,30=暂停,40=结束
 
@@ -358,13 +363,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var bll = new LPrizesBLL(loggingSessionInfo);
             var bllCouponType = new CouponTypeBLL(loggingSessionInfo);
-            //int CouponCount = bllCouponType.GetCouponCountByCouponTypeID(rp.Parameters.CouponTypeID);
-
-            //if (rp.Parameters.CountTotal <= CouponCount)
-            //{
-
-            //}
-
             var entity = new LPrizesEntity();
             var rd = new EmptyRD();
 
@@ -405,13 +403,31 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<AppendPrizeRP>>();
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            var bll = new LPrizesBLL(loggingSessionInfo);
+            var bllPrizes = new LPrizesBLL(loggingSessionInfo);
+
+
+            if(!string.IsNullOrEmpty(rp.Parameters.CouponTypeID))
+            {
+
+                var bllCoupon = new CouponBLL(loggingSessionInfo);
+                string strCouponTypeID = rp.Parameters.CouponTypeID;
+                //优惠券未被使用了的数量
+                int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                int intHaveCout =(int)bllPrizes.GetByID(rp.Parameters.PrizesId).CountTotal;
+                if (intUnUsedCouponCount < (rp.Parameters.CountTotal + intHaveCout))
+                {
+
+                    var errRsp = new ErrorResponse(-1, "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
+                    return errRsp.ToJSON();
+                }
+            }
+            
             var entity = new LPrizesEntity();
             entity.EventId = rp.Parameters.EventId;
             entity.CountTotal = rp.Parameters.CountTotal;
             entity.PrizesID = rp.Parameters.PrizesId;
             entity.LastUpdateBy = loggingSessionInfo.UserID;
-            bll.AppendPrize(entity);
+            bllPrizes.AppendPrize(entity);
 
             var rd = new EmptyRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -1524,7 +1540,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
     {
 
         public string PrizesId { get; set; }
-
+        public string CouponTypeID { get; set; }
         public int CountTotal { get; set; }
         public string EventId { get; set; }
         public string PrizeType { get; set; }

@@ -37,6 +37,29 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     if (para.Method == "Append")
                     {
                         contactEvent.PrizeCount = (contactEvent.PrizeCount == null ? 0 : contactEvent.PrizeCount) + para.PrizeCount;
+                        LPrizesBLL bllPrize = new LPrizesBLL(loggingSessionInfo);
+                        var entityPrize = bllPrize.QueryByEntity(new LPrizesEntity() { EventId = para.ContactEventId, IsDelete = 0 }, null).FirstOrDefault();
+
+                        if (!string.IsNullOrEmpty(para.CouponTypeID))
+                        {
+
+                            var bllCoupon = new CouponBLL(loggingSessionInfo);
+                            string strCouponTypeID = para.CouponTypeID;
+                            //优惠券未被使用了的数量
+                            int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                            int intHaveCout = (int)entityPrize.CountTotal;
+                            if (intUnUsedCouponCount < (para.PrizeCount + intHaveCout))
+                            {
+
+                                rd.Success = false;
+                                rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
+                                return rd;
+                            }
+                        }
+
+                        entityPrize.CountTotal = para.PrizeCount;
+                        entityPrize.LastUpdateBy = loggingSessionInfo.UserID;
+                        bllPrize.AppendPrize(entityPrize);
                     }
                     else
                     {

@@ -1422,5 +1422,27 @@ namespace JIT.CPOS.BS.DataAccess
 
         //新版本保存商品信息
 
+        /// <summary>
+        /// 根据分组Id查询是否有关联商品
+        /// </summary>
+        /// <param name="strCategoryId"></param>
+        /// <param name="strBatId">1:分类，2：分组</param>
+        /// <returns></returns>
+        public int GetItemCountByCategory(string strCategoryId,string strBatId)
+        {
+
+            string strSql = "";
+            if (strBatId == "2")//分组
+            {
+                strSql = string.Format("SELECT COUNT(1) FROM ItemCategoryMapping WHERE IsDelete=0 AND ItemCategoryId='{0}'", strCategoryId);
+            }
+            else//分类
+            {
+                strSql = string.Format("SELECT COUNT(1) FROM T_Item WHERE status=1 AND item_category_id='{0}'", strCategoryId);
+
+            }
+
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+        }
     }
 }

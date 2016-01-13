@@ -941,5 +941,15 @@ namespace JIT.CPOS.BS.BLL
 
         //更新上下架状态
 
+        /// <summary>
+        /// 根据分组Id查询是否有关联商品
+        /// </summary>
+        /// <param name="strCategoryId"></param>
+        /// <param name="strBatId">1:分类，2：分组</param>
+        /// <returns></returns>
+        public int GetItemCountByCategory(string strCategoryId, string strBatId)
+        {
+            return itemService.GetItemCountByCategory(strCategoryId, strBatId);
+        }
     }
 }

@@ -556,5 +556,18 @@ order by create_time asc
             return ds;
         }
         #endregion
+
+        #region  获取门店下是否有角色关联
+        /// <summary>
+        /// 获取门店下是否有角色关联
+        /// </summary>
+        /// <param name="strUnit"></param>
+        /// <returns></returns>
+        public int GetRoleCountByUnit(string strUnitId)
+        {
+            string strSql = string.Format(@"SELECT COUNT(1)  FROM dbo.T_User_Role  WHERE status=1 AND unit_id='{0}'", strUnitId);
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+        }
+        #endregion 
     }
 }

@@ -200,5 +200,18 @@ namespace JIT.CPOS.BS.BLL
             return roleService.GetRoleList();
         }
         #endregion
+
+        #region  获取门店下是否有角色关联
+        /// <summary>
+        /// 获取门店下是否有角色关联
+        /// </summary>
+        /// <param name="strUnit"></param>
+        /// <returns></returns>
+        public int GetRoleCountByUnit(string strUnitId)
+        {
+
+            return this.roleService.GetRoleCountByUnit(strUnitId);
+        }
+        #endregion 
     }
 }

@@ -579,6 +579,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
         public string DeleteData()
         {
             var service = new UnitService(CurrentUserInfo);
+            var serviceUnit = new RoleService(CurrentUserInfo);
 
             string content = string.Empty;
             string error = "";
@@ -596,6 +597,12 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 {
                     responseData.success = false;
                     responseData.msg = "ID不能为空";
+                    return responseData.ToJSON();
+                }
+                if (serviceUnit.GetRoleCountByUnit(key)>0)
+                {
+                    responseData.success = false;
+                    responseData.msg = "门店关联了员工,请勿删除！";
                     return responseData.ToJSON();
                 }
                 if (!string.IsNullOrEmpty(Request("IsDelete")) && Request("IsDelete").ToString() == "1")

@@ -66,5 +66,29 @@ namespace JIT.CPOS.BS.DataAccess
             this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql, ls.ToArray());    //计算总行数
            
         }
+        /// <summary>
+          /// 商品列表带分润价格
+        /// </summary>
+        /// <param name="strCustomerID"></param>
+        /// <param name="intPageSize"></param>
+        /// <param name="intPageIndex"></param>
+        /// <returns></returns>
+          public DataSet GetItemListWithSharePrice(string strCustomerID,string strRetailTraderID, int intPageIndex, int intPageSize)
+          {
+
+              
+              var strSql = new StringBuilder();
+              strSql.Append("SELECT * FROM (");
+              strSql.Append("  SELECT	i.item_id ItemId,i.item_name ItemName,i.SalesPrice,i.salesQty");
+              strSql.Append("  ,CAST(i.SalesPrice * ( CASE WHEN s.ItemSalsePriceRate IS NULL THEN 1 WHEN s.ItemSalsePriceRate = 0 THEN 1 ELSE s.ItemSalsePriceRate*0.01 END ) AS DECIMAL(18,2)) SharePrice ");
+              strSql.Append("  ,CASE WHEN r.ItemId IS NULL THEN 0 ELSE 1 END  IsCheck,");
+              strSql.Append("  ,ROW_NUMBER() OVER(ORDER BY i.CreateTime DESC) num");
+              strSql.Append("   FROM dbo.[vw_item_detail] i ");
+              strSql.AppendFormat("   LEFT JOIN dbo.SysRetailRewardRule s ON i.CustomerId=s.CustomerId AND s.CooperateType='Sales'  AND s.RewardTypeCode='Sales' AND s.IsDelete=0 AND s.RetailTraderID='{0}'", strRetailTraderID);
+              strSql.Append(" LEFT JOIN RetailTraderItemMapping r ON i.item_id=r.ItemId AND i.CustomerId=r.CustomerID");
+              strSql.AppendFormat(" WHERE  i.CustomerId ='{0}' and  s.CustomerId='{1}'AND i.IsDelete=0", strCustomerID, strCustomerID);
+              strSql.AppendFormat(") A WHERE A.num >={0} and A.num<={1}", ((intPageIndex - 1) * intPageSize) + 1, intPageIndex * intPageSize);
+              return SQLHelper.ExecuteDataset(strSql.ToString());
+          }
     }
 }
