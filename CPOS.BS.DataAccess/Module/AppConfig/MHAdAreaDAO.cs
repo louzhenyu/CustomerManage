@@ -292,7 +292,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,b.Price,b.SalesPrice";
             sql += " ,CASE WHEN b.Price IS NOT NULL AND b.Price<>0 AND b.SalesPrice<>b.Price THEN CAST(CAST(b.SalesPrice*10/b.Price AS DECIMAL(18,1)) AS NVARCHAR(10))+'уш' WHEN b.Price IS  NULL OR b.Price=0 OR b.SalesPrice=b.Price THEN '' END DiscountRate";
             sql += " ,b.item_id AS ItemID,b.item_name AS ItemName,b.imageUrl ImageUrl";
-            sql += " ,(  select  prop_value  from  t_prop as tp left join T_Item_Property  as tip on tip.prop_id=tp.prop_id where  tp.prop_code ='SalesCount' and item_id=b.item_id ) SalesCount";
+            sql += " ,(  select  Cast(prop_value as DECIMAL) prop_value   from  t_prop as tp left join T_Item_Property  as tip on tip.prop_id=tp.prop_id where  tp.prop_code ='SalesCount' and item_id=b.item_id ) SalesCount";
 
             sql += " FROM dbo.MHCategoryArea a ";
             sql += "  INNER JOIN [vw_item_detail] b ON a.ObjectId=b.item_category_id ";
@@ -325,7 +325,8 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,b.Price,b.SalesPrice";
             sql += " ,CASE WHEN b.Price IS NOT NULL AND b.Price<>0 AND b.SalesPrice<>b.Price THEN CAST(CAST(b.SalesPrice*10/b.Price AS DECIMAL(18,1)) AS NVARCHAR(10))+'уш' WHEN b.Price IS  NULL OR b.Price=0 OR b.SalesPrice=b.Price THEN '' END DiscountRate";
             sql += " ,b.item_id AS ItemID,b.item_name AS ItemName,b.imageUrl ImageUrl";
-            sql += " ,(  select  prop_value  from  t_prop as tp left join T_Item_Property  as tip on tip.prop_id=tp.prop_id where  tp.prop_code ='SalesCount' and item_id=b.item_id ) SalesCount";
+            sql += " ,(  select  Cast(prop_value as DECIMAL) prop_value   from  t_prop as tp left join T_Item_Property  as tip on tip.prop_id=tp.prop_id where  tp.prop_code ='SalesCount' and item_id=b.item_id ) SalesCount";
+
             sql += " FROM dbo.MHCategoryArea a ";
             sql += "    INNER JOIN [ItemCategoryMapping] c ON a.ObjectId=c.ItemCategoryId AND c.IsDelete=0";
             sql += "  INNER JOIN [vw_item_detail] b ON c.Itemid=b.item_id  AND b.IsDelete=0";
