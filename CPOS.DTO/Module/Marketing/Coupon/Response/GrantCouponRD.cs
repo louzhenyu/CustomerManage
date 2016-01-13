@@ -14,6 +14,9 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Response
         public string Message { get; set; }
 
         public string FollowUrl { get; set; }
+
+        public string GuideQRCode { get; set; }
+        public string CustomerName { get; set; }
         /// <summary>
         /// 是否被领券
         /// </summary>
