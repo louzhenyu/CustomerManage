@@ -44,6 +44,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             T_InoutBLL _TInoutbll = new T_InoutBLL(this.CurrentUserInfo);                   //订单表
             TInoutStatusBLL _TInoutStatusBLL = new TInoutStatusBLL(this.CurrentUserInfo);   //日志表
             VipIntegralBLL vipIntegralBLL = new VipIntegralBLL(this.CurrentUserInfo);       //会员业务对象实例化
+            var UserBLL = new T_UserBLL(this.CurrentUserInfo);                        //员工实例
 
             string OrderID = pRequest.Parameters.OrderID;               //订单ID
             string ActionCode = pRequest.Parameters.ActionCode;         //订单操作码(当前订单状态码作为操作码)
@@ -109,13 +110,27 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     #endregion
 
                     #region 2.根据订单ID更新订单日志表中数据
+
+                    string CreateName = "";
+                    if (pRequest.ChannelId != "2")
+                    {
+                        var UserData = UserBLL.GetByID(this.CurrentUserInfo.CurrentUser.User_Id);
+                        CreateName = "[" + UserData == null ? "" : UserData.user_name + "]";
+                    }
+                    else
+                    {
+                        CreateName = "[操作人:用户]";
+                    }
+
+
+
                     var _TInoutStatusEntity = new TInoutStatusEntity()
                     {
                         InoutStatusID = Guid.NewGuid(),
                         OrderID = OrderID,                         //订单ID
                         OrderStatus = Convert.ToInt32(ActionCode),   //状态码
                         //StatusRemark = "订单状态从" + Updatebeforestatus + "变为" + GetStatusDesc(ActionCode) + "[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]",               //状态更新描述
-                        StatusRemark = "订单状态从" + Updatebeforestatus + "变为" + GetStatusDesc(ActionCode) + "[操作人:用户]",               //状态更新描述
+                        StatusRemark = "订单状态从" + Updatebeforestatus + "变为" + GetStatusDesc(ActionCode) + CreateName,               //状态更新描述
                         CustomerID = CurrentUserInfo.ClientID        //客户ID
                     };
                     _TInoutStatusBLL.Create(_TInoutStatusEntity, tran);  //用事物更新，向日志表(TInoutStatus)中插入一条数据
@@ -133,13 +148,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                         //物流公司
                         string LogisticsName = inoutService.GetCompanyName(entity.carrier_id);
 
-                        var InoutInfo = new InoutInfo()
-                        {
-                            order_no = entity.order_no,
-                            carrier_name = LogisticsName,
-                            vipId = entity.vip_no,
-                            Field2 = entity.Field2
-                        };
+                    var InoutInfo = new InoutInfo()
+                    {
+                        order_no = entity.order_no,
+                        carrier_name = LogisticsName,
+                        vipId = entity.vip_no,
+                        Field2 = entity.Field2
+                    };
 
                         var CommonBLL = new CommonBLL();
                         CommonBLL.SentShipMessage(InoutInfo, vipInfo.WeiXinUserId, InoutInfo.vip_no, CurrentUserInfo);

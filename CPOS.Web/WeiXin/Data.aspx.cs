@@ -1432,6 +1432,10 @@ namespace JIT.CPOS.Web.WeiXin
                     else //未绑定多个公众号
                     {
                         vipServiceUnion.Create(vipInfo);
+                        #region 关注触点活动奖励
+
+                        bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
+                        #endregion
                     }
                     vipId = vipInfo.VIPID;
 

@@ -258,8 +258,9 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
             //微信分享页面
             if (!string.IsNullOrWhiteSpace(entity4.ShareWeixinPage))
             {
-                list.Add(new CustomerBasicSettingEntity(){
-                    SettingCode ="ShareWeixinPage",
+                list.Add(new CustomerBasicSettingEntity()
+                {
+                    SettingCode = "ShareWeixinPage",
                     SettingValue = entity4.ShareWeixinPage
                 });
             }
@@ -268,11 +269,11 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
             int i = customerBasicSettingBLL.SaveustomerBasicrInfo(list);
             #region 配送费保存
 
-            decimal AmountEnd =0;
+            decimal AmountEnd = 0;
             decimal DeliveryAmount = 0;
 
-            decimal.TryParse(entity3.AmountEnd,out AmountEnd);
-            decimal.TryParse(entity3.DeliveryAmount,out DeliveryAmount);
+            decimal.TryParse(entity3.AmountEnd, out AmountEnd);
+            decimal.TryParse(entity3.DeliveryAmount, out DeliveryAmount);
 
             if (AmountEnd != 0 && DeliveryAmount != 0)
             // 如果页面有配送费才做保存
@@ -303,7 +304,7 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
                     deliveryStrategyBll.Create(deliveryStrategyEntity);
                 }
             }
-            
+
             #endregion
             if (i > 0)
             {
@@ -347,7 +348,16 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
               };
             DataRow dr = customerBasicSettingBLL.GetCustomerInfo(CurrentUserInfo.ClientID).Tables[0].Rows[0];
             custome.customerCode = dr["customer_code"].ToString();
-            custome.customerName = dr["customer_name"].ToString();
+
+            //商户简称
+            var ShortNameData = customerBasicSettingBLL.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = this.CurrentUserInfo.ClientID, SettingCode = "CustomerShortName" }, null).FirstOrDefault();
+            if (ShortNameData == null)
+                custome.customerName = dr["customer_name"].ToString();
+            else
+                custome.customerName = ShortNameData.SettingValue;
+            //商户Logo
+            var Data = customerBasicSettingBLL.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = this.CurrentUserInfo.ClientID, SettingCode = "WebLogo" }, null).FirstOrDefault();
+            custome.BusinessLogo = Data == null ? "" : Data.SettingValue;
             return custome;
         }
 
@@ -426,6 +436,8 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
         public string customerName { set; get; }
         //用户标识
         public string customerID { set; get; }
+        //商户公司Logo
+        public string BusinessLogo { get; set; }
     }
     public class CustomerBasicCodeInfo
     {
@@ -464,7 +476,7 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
         public string IsAllAccessoriesStores { set; get; }
         public string DeliveryStrategy { set; get; }//配送费描述
         public string AmountEnd { set; get; }//大于等于AmountEnd，配送费
-        public string DeliveryAmount { set;get; } //配送费  
+        public string DeliveryAmount { set; get; } //配送费  
 
         public string ShareWeixinPage { set; get; } //微信分享页面
     }

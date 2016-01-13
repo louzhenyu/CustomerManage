@@ -6336,6 +6336,8 @@
     <Compile Include="ApplicationInterface\Events\EventsGateway.ashx.cs">
       <DependentUpon>EventsGateway.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\Basic\Customer\GetBusinessBasisConfigInfoAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Basic\Customer\SetBusinessBasisConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Customer\SetRewardsSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Customer\SetSalesSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Menu\GetFunctionListAH.cs" />

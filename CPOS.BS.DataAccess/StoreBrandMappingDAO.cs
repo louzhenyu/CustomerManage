@@ -50,7 +50,7 @@ namespace JIT.CPOS.BS.DataAccess
             , string Latitude)
         {
             string sql = GetStoreListByItemSql(ItemId, Longitude, Latitude);
-            sql += " select count(*) From #tmp ; ";
+            sql += " select count(*) From #tmp ; drop table #tmp ";
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
         }
 
@@ -65,7 +65,7 @@ namespace JIT.CPOS.BS.DataAccess
             DataSet ds = new DataSet();
             string sql = GetStoreListByItemSql(ItemId, Longitude, Latitude);
             sql += " select * From #tmp a where 1=1 and a.displayindex between '" +
-                beginSize + "' and '" + endSize + "' order by  a.displayindex ";
+                beginSize + "' and '" + endSize + "' order by  a.displayindex;  drop table #tmp ";
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
@@ -82,7 +82,7 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,isnull(a.longitude,0) Longitude "
                         + " ,isnull(a.dimension,0) Latitude "
                         + " ,case when '" + Latitude + "' = '0' and '" + Longitude + "' = '0' then '0' else ABS(dbo.DISTANCE_TWO_POINTS(" + Convert.ToDouble(Latitude) + "," + Convert.ToDouble(Longitude) + ",a.dimension,a.longitude)) end Distance "
-                        + " FROM (select * From dbo.t_unit where type_id ='EB58F1B053694283B2B7610C9AAD2742' and status='1' and customer_id = '" + this.CurrentUserInfo.CurrentUser.customer_id + "' ) a ";
+                        + " FROM (select * From dbo.t_unit where type_id =(select top 1 type_id from T_Type where customer_id = '" + this.CurrentUserInfo.CurrentUser.customer_id + "' and type_code='це╣Й') and status='1' and customer_id = '" + this.CurrentUserInfo.CurrentUser.customer_id + "' ) a ";
             if (ItemId != null && !ItemId.Equals(""))
             {
                 sql += " INNER JOIN ItemStoreMapping b "

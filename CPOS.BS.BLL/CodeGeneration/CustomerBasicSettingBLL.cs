@@ -274,5 +274,30 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetIsAld();
         }
         #endregion
+
+        #region 获取商户基础配置信息
+        /// <summary>
+        /// 获取当前商户的基础配置信息
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public List<CustomerBasicSettingEntity> GetBusinessBasisConfigInfo(string customerID)
+        {
+            //查询参数
+            List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+            complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = customerID });
+            StringBuilder WhereStr = new StringBuilder();
+            /*Modified by sun@2016-01-06*/
+            //WhereStr.Append(" (SettingCode='BusinessNickname' or SettingCode='BusinessLogo' or SettingCode='CustomerPhone' ");
+            WhereStr.Append(" (SettingCode='CustomerShortName' or SettingCode='WebLogo' or SettingCode='CustomerPhone' ");
+            /*Modified by sun@2016-01-06*/
+            //WhereStr.Append("or SettingCode='ShareTitle' or SettingCode='ShareImageUrl' or SettingCode='ShareContent' ");
+            WhereStr.Append("or SettingCode='ForwardingMessageTitle' or SettingCode='ForwardingMessageLogo' or SettingCode='ForwardingMessageSummary' ");
+            WhereStr.Append("or SettingCode='GuideLinkUrl' or SettingCode='GuideQRCode' or SettingCode='CustomerGreeting') ");
+            complexCondition.Add(new DirectCondition(WhereStr.ToString()));
+
+            return this._currentDAO.Query(complexCondition.ToArray(), null).ToList();
+        }
+        #endregion
     }
 }
