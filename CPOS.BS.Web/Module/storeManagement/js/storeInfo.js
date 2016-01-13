@@ -81,6 +81,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				fields = $('#nav0_1').serializeArray(),
 				typeArray = {},
 				$storePicBox = $('.storePicBox .picBox img'),
+				coordArray = [],
 				imageUrlArray = [];
 			//console.log(fields);
 			for(var i=0;i<fields.length;i++){
@@ -88,6 +89,13 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				typeArray[obj['name']] = obj['value'];
 			}
 			
+			if(typeArray.longitude){
+				coordArray = typeArray.longitude.split(',');
+				typeArray['longitude'] = coordArray[0];
+				typeArray['dimension'] = coordArray[1];
+			}else{
+				typeArray['dimension'] = '';
+			}
 			for(var j=0;j<$storePicBox.length;j++){
 				imageUrlArray[j] = {
 					"ImageId":"",
@@ -99,7 +107,6 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			typeArray['ItemImageList'] = imageUrlArray;
 			prams.unit = typeArray;
 			prams.unit.Id = '';
-			prams.unit.dimension = '';
 			prams.unit.MaxWQRCod = '';
 			prams.unit.WXCodeImageUrl = '';
 			prams.unit.text = '';

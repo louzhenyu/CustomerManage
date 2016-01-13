@@ -30,9 +30,10 @@
 	.setUnitBtn{background:url(images/icon-tree01.png) no-repeat center center;}
 	.setUnitBtn.on{background:url(images/icon-tree02.png) no-repeat center center;}
 	
-	#addProm{margin-top:50px;}
+	#addProm{margin-top:35px;}
 	#win .commonSelectWrap{margin:12px 10px 10px 70px;}
 	#win .searchInput{width:232px;}
+	.tooltip-right{display:none;}
 	.textbox-invalid{border:none;background:none;}
 	.limitsTreeBox{height:200px;width:460px;margin-left:110px;border:1px solid #d0d5d8;border-radius:3px;overflow-x:auto;}
 	#btnWrap{height:60px !important;}
@@ -78,7 +79,7 @@
                               <div class="commonSelectWrap">
                                   <em class="tit">姓名：</em>
                                   <label class="searchInput" style="width:232px;">
-                                      <input data-text="姓名" class="easyui-validatebox" data-flag="user_name" name="User_Name" id="user_name" type="text" value="" data-options="required:true" placeholder="请输入">
+                                      <input data-text="姓名" class="easyui-validatebox" name="User_Name" id="user_name" type="text" value="" data-options="required:true" placeholder="请输入">
                                   </label>
                               </div>
                               
@@ -143,7 +144,7 @@
 				<div class="commonSelectWrap">
 				  <em class="tit">单位：</em>
 					<label class="searchInput clearBorder">
-					  <input data-text="单位" class="easyui-combobox" id="type_id" data-options="required:true"  name="UnitId" type="text" value="" placeholder="请选择" validType='selectIndex'>
+					  <input data-text="单位" class="easyui-combobox" id="type_id" data-options="required:true,invalidMessage:'必填'"  name="UnitId" type="text" value="" validType='selectIndex'>
 				   </label>
 				</div>
 				
@@ -151,19 +152,18 @@
 				<div class="commonSelectWrap">
 					<em class="tit">系统：</em>
 					<label class="searchInput clearBorder">
-					  <input data-text="系统" class="easyui-combobox" id="app_sys_id" data-options="required:true" name="app_sys_id" type="text" value="" placeholder="请选择"  validType='selectIndex'>
+					  <input data-text="系统" class="easyui-combobox" id="app_sys_id" data-options="required:true,invalidMessage:'必填'" name="app_sys_id" type="text" value=""  validType='selectIndex'>
 					</label>
 				</div>
 				
-				
 				<div class="commonSelectWrap">
 				  <em class="tit">角色：</em>
-					<label class="searchInput clearBorder">
-					  <input data-text="角色" class="easyui-combobox" id="role_id" data-options="required:true"  name="RoleId" type="text" value="" placeholder="请选择" validType='selectIndex'>
+				   <label class="searchInput clearBorder" id="roleIdBox">
+					  <input data-text="角色" class="easyui-combobox" id="role_id" data-options="required:true,invalidMessage:'必填'"  name="RoleId" type="text" value="" validType='selectIndex'>
 				   </label>
 				</div>
 				<p class="tipBox">角色是根据系统模块显示的，请先选择系统再选择角色。</p>
-
+				
 			</form>
 		</script>
         

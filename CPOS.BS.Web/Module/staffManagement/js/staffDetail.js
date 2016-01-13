@@ -34,7 +34,15 @@
         },
         initEvent: function () {
             var that = this;
-			
+			$('body').delegate('.commonSelectWrap','click',function(){
+				$('.tooltip-right').hide();
+			})
+			/*待开发
+			$('#roleIdBox').delegate('input','click',function(){
+				alert(1);
+				$('.tooltip-right').hide();
+			})
+			*/
 			//添加角色保存数据
             $('#win').delegate(".saveBtn","click",function(e){
                 if($('#addProm').form('validate')) {

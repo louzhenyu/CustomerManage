@@ -164,7 +164,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-  <div class="allPage" id="section" data-js="js/storeInfo.js?ver=0.3"> 
+  <div class="allPage" id="section" data-js="js/storeInfo.js?ver=0.4"> 
     <!-- 内容区域 -->
     <div class="contentArea-info">
       <!--个别信息查询-->
