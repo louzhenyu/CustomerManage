@@ -589,7 +589,7 @@ namespace JIT.CPOS.BS.BLL
                         var vipSalesVipInfo = vipBll.GetByID(orderInfo.sales_user);
                         //账户余额和返现
                         var vipSalesAmountEntity = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = vipSalesVipInfo.VIPID, VipCardCode = vipSalesVipInfo.VipCode }, null).FirstOrDefault();
-                        var vipAmountDetailId = vipAmountBll.AddVipAmount(vipInfo, unitInfo, ref vipSalesAmountEntity, detailInfo, tran, this.CurrentUserInfo);
+                        var vipAmountDetailId = vipAmountBll.AddVipAmount(vipSalesVipInfo, unitInfo, ref vipSalesAmountEntity, detailInfo, tran, this.CurrentUserInfo);
                         if (!string.IsNullOrWhiteSpace(vipAmountDetailId) && orderInfo.data_from_id == "16")
                         {//发送微信账户余额变动模板消息
 
