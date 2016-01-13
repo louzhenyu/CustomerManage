@@ -26,8 +26,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
             {
                 var customerBasicSettingBLL = new CustomerBasicSettingBLL(this.CurrentUserInfo);
                 var ResultList = customerBasicSettingBLL.GetBusinessBasisConfigInfo(CurrentUserInfo.ClientID);
-                DataRow dr = customerBasicSettingBLL.GetCustomerInfo(CurrentUserInfo.ClientID).Tables[0].Rows[0];
-                rd.CustomerName = dr["customer_name"].ToString();//商户昵称
+
+                rd.CustomerName = ResultList.FirstOrDefault(m => m.SettingCode.Equals("CustomerShortName")) == null ? "" : ResultList.FirstOrDefault(m => m.SettingCode.Equals("CustomerShortName")).SettingValue;//引导二维码
                 rd.FollowUrl = ResultList.FirstOrDefault(m => m.SettingCode.Equals("GuideLinkUrl")) == null ? "" : ResultList.FirstOrDefault(m => m.SettingCode.Equals("GuideLinkUrl")).SettingValue;//引导链接
                 rd.GuideQRCode = ResultList.FirstOrDefault(m => m.SettingCode.Equals("GuideQRCode")) == null ? "" : ResultList.FirstOrDefault(m => m.SettingCode.Equals("GuideQRCode")).SettingValue;//引导二维码
 
