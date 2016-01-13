@@ -37,11 +37,18 @@ define(['jquery','tools','template', 'kindeditor',"easyui"], function ($) {
         },
         // 初始化页面数据
         loadPageData:function(){
-            $("#customerName").html($("#unitName").html())
+
             self.loadData.GetBusinessBasisConfigInfo(function(data){
+
+                if(data.Data.CustomerShortName){
+                    $("#unitName").html(data.Data.CustomerShortName);
+                }else{
+                    data.Data.CustomerShortName=data.Data.customer_name
+                }
                 $('#setForm').form('load',data.Data);
-                if (data.Data["BusinessLogo"] ) {
-                    $(".logoWrap").css({ 'background-image': 'url("' + data.Data["BusinessLogo"]  + '")' });
+                $("#customerName").html(data.Data.customer_name);
+                if (data.Data["WebLogo"] ) {
+                    $(".logoWrap").css({ 'background-image': 'url("' + data.Data["WebLogo"]  + '")' });
                 }
                     $("[data-name].logo").each(function() {
                         var name = $(this).data("name")
@@ -122,7 +129,7 @@ define(['jquery','tools','template', 'kindeditor',"easyui"], function ($) {
                  if(url!="images/imgDefault.png"){
                      prams.data[name]=url;
                  }else {
-                     if (name == "BusinessLogo") {
+                     if (name == "WebLogo") {
                          $.messager.alert("提示", "商户Logo为没有上传图片");
                          isSubmit = false;
                          return false;

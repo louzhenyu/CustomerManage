@@ -24,7 +24,7 @@
         },
         init: function () {
 
-                $('#wxAuth').attr("src","http://open.chainclouds.com/receive?clientid="+window.clientID);
+                $('#wxAuth').attr("src",window.weixinUrl);
             this.initEvent();
             this.loadPageData();
 
