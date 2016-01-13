@@ -27,7 +27,7 @@
     <div class="lineText">
     <em class="tit">商户简称:</em>
     <div class="inputBox">
-    <input type="text" class="easyui-validatebox" name="CustomerShortName" data-options="required:true,validType:'maxLength[10]'" placeholder="请输入"/>
+    <input type="text" class="easyui-validatebox" name="BusinessNickname" data-options="required:true,validType:'maxLength[10]'" placeholder="请输入"/>
     </div> <!--inputBox-->
 </div><!--lineText-->
 
@@ -35,7 +35,7 @@
     <div class="lineText">
     <em class="tit">LOGO:</em>
     <div class="inputBox">
-      <div class="logo" style="background-color: #00cccc;" data-name="WebLogo"><img src="images/imgDefault.png"></div>
+      <div class="logo" style="background-color: #00cccc;" data-name="BusinessLogo"><img src="images/imgDefault.png"></div>
       <div class="uploadTip">
         <div class="uploadBtn btn">
             <em class="upTip">上传</em>
@@ -61,13 +61,13 @@
     <div class="lineText">
     <em class="tit">分享标题:</em>
     <div class="inputBox">
-    <input type="text" placeholder="请输入" class="easyui-validatebox" data-options="validType:'maxLength[30]'"  name="ForwardingMessageTitle"/>
+    <input type="text" placeholder="请输入" class="easyui-validatebox" data-options="validType:'maxLength[30]'"  name="ShareTitle"/>
     </div> <!--inputBox-->
 </div><!--lineText-->
     <div class="lineText">
     <em class="tit" >分享图标:</em>
     <div class="inputBox">
-      <div class="logo" data-name="ForwardingMessageLogo" style="width: 90px; height: 90px;"><img src="images/imgDefault.png"></div>
+      <div class="logo" data-name="ShareImageUrl" style="width: 90px; height: 90px;"><img src="images/imgDefault.png"></div>
       <div class="uploadTip" style="left: 110px;">
         <div class="uploadBtn btn">
             <em class="upTip">上传</em>
@@ -80,7 +80,7 @@
     <div class="lineText">
     <em class="tit">分享摘要:</em>
     <div class="inputBox">
-    <textarea placeholder="请输入" name="ForwardingMessageSummary"  class="easyui-validatebox" data-options="validType:'maxLength[300]'"></textarea>
+    <textarea placeholder="请输入" name="ShareContent"  class="easyui-validatebox" data-options="validType:'maxLength[300]'"></textarea>
     </div> <!--inputBox-->
 </div><!--lineText-->
 
@@ -93,7 +93,7 @@
     <div class="lineText">
     <em class="tit">引导关注链接:</em>
     <div class="inputBox">
-    <input type="text"  placeholder="请输入" name="GuideLinkUrl"  class="easyui-validatebox long"  data-options="validType:'url'"/>
+    <input type="text"  placeholder="请输入" name="GuideLinkUrl"  class="easyui-validatebox long"/>
     </div> <!--inputBox-->
 </div><!--lineText-->
     <div class="lineText">
@@ -105,7 +105,7 @@
             <em class="upTip">上传</em>
              <div class="jsUploadBtn" ></div>
          </div><!--uploadBtn-->
-         <div class="tip">请上传微信公众号二维码 建议尺寸500px*500px，50KB以内</div>
+         <div class="tip">请上传微信公众好二维码 建议尺寸500px*500px，50KB以内</div>
          </div> <!--uploadTip-->
     </div> <!--inputBox-->
 </div><!--lineText-->

@@ -32,9 +32,7 @@ function SetLogoInfo() {
             //  debugger;
             logo.attr('alt', data.data.loadInfo.customerName);
             logo.closest('a').attr('title', data.data.loadInfo.customerName);
-            if (data.data.loadInfo.BusinessLogo) {
-                $(".logoWrap").css({ 'background-image': 'url("' + data.data.loadInfo.BusinessLogo + '")' });
-            }
+
             $('#unitName').html(data.data.loadInfo.customerName); //title是全称html是简写名;        
             if (data.data.loadInfo.BusinessLogo) {
                 $(".logoWrap").css({ 'background-image': 'url("' + data.data.loadInfo.BusinessLogo + '")' });
