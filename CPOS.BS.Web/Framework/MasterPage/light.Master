@@ -322,7 +322,7 @@
                 window.RoleCode = '<%=RoleCode%>';
                 window.RoleName = '<%=RoleName%>';
                 window.staticUrl = '<%=StaticUrl%>';
-                window.weixinUrl = "http://open.chainclouds.com/receive?clientid=" + window.clientID;
+                window.weixinUrl = "http://test.open.chainclouds.cn/receive?clientid=" + window.clientID;
                 $(".session1").text((window.clientID));
                 //     console.log($(".session1").text());
             });
