@@ -19,6 +19,8 @@ using JIT.Utility.Log;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.Web.Module.WEvents.Handler;
 using JIT.Utility.DataAccess.Query;
+using System.Globalization;
+using System.Drawing;
 
 namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
 {
@@ -79,7 +81,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
             string weixinDomain = ConfigurationManager.AppSettings["original_url"];
             string sourcePath = this.CurrentContext.Server.MapPath("/QRCodeImage/qrcode.jpg");
             string targetPath = this.CurrentContext.Server.MapPath("/QRCodeImage/");
-            string currentDomain = this.CurrentContext.Request.Url.Host;
+            string currentDomain = this.CurrentContext.Request.Url.Host;//当前项目域名
             string itemId = FormatParamValue(Request("item_id"));//商品ID
             string itemName = FormatParamValue(Request("item_name"));//商品名
             string imageURL;
@@ -90,11 +92,41 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
 
             if (objectImagesEntityArray.Length == 0)
             {
-                imageURL = Utils.GenerateQRCode(weixinDomain + "/HtmlApps/Auth.html?pageName=GoodsDetail&rootPage=true&customerId=" + CurrentUserInfo.ClientID + "&goodsId=" + itemId, currentDomain, sourcePath, targetPath);
+                //http://api.dev.chainclouds.com
+                //    http://api.dev.chainclouds.com/WXOAuth/AuthUniversal.aspx?customerId=049b0a8f641f4ca7b17b0b7b6291de1f&applicationId=1D7A01FC1E7D41ECBAC2696D0D363315&goUrl=api.dev.chainclouds.com/HtmlApps/html/public/shop/goods_detail.html?rootPage=true&rootPage=true&goodsId=DBF5326F4C5B4B0F8508AB54B0B0EBD4&ver=1448273310707&scope=snsapi_userinfo
+
+                string itemUrl = weixinDomain + "/WXOAuth/AuthUniversal.aspx?customerId=" + CurrentUserInfo.ClientID
+                    + "&goUrl=" + weixinDomain + "/HtmlApps/html/public/shop/goods_detail.html?goodsId="
+                    + itemId + "&scope=snsapi_userinfo";
+
+                //  string itemUrl = "http://localhost:1950/" + "/WXOAuth/AuthUniversal.aspx?customerId=" + CurrentUserInfo.ClientID
+                //      + "&goUrl=" + weixinDomain + "/HtmlApps/html/public/shop/goods_detail.html?rootPage=true&rootPage=true&goodsId="
+                //      + itemId + "&scope=snsapi_userinfo";
+                ////原来的老页面  weixinDomain + "/HtmlApps/Auth.html?pageName=GoodsDetail&rootPage=true&customerId=" + CurrentUserInfo.ClientID + "&goodsId=" + itemId
+                imageURL = Utils.GenerateQRCode(itemUrl, currentDomain, sourcePath, targetPath);
+
+                //如果名称不为空，就把图片放在一定的背景下面
+                if (!string.IsNullOrEmpty(itemName))
+                {
+                    //  string apiDomain = ConfigurationManager.AppSettings["original_url"];
+                    if (imageURL.IndexOf("http://") < 0)
+                    {
+                        imageURL = "http://" + imageURL;
+                    }
+                    imageURL = CombinImage(weixinDomain + @"/HeadImage/qrcodeBack.jpg", imageURL, itemName);
+                }
+
                 //把下载下来的图片的地址存到ObjectImages
-                objectImagesBLL.Create(new ObjectImagesEntity() { ImageId = Utils.NewGuid(),
-                    CustomerId = CurrentUserInfo.ClientID, ImageURL = imageURL, ObjectId = itemId, Title = itemName
-                    , Description = "自动生成的产品二维码" });
+                objectImagesBLL.Create(new ObjectImagesEntity()
+                {
+                    ImageId = Utils.NewGuid(),
+                    CustomerId = CurrentUserInfo.ClientID,
+                    ImageURL = imageURL,
+                    ObjectId = itemId,
+                    Title = itemName
+                    ,
+                    Description = "自动生成的产品二维码"
+                });
 
                 Loggers.Debug(new DebugLogInfo() { Message = "二维码已生成，imageURL:" + imageURL });
             }
@@ -102,8 +134,18 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
             {
                 imageURL = objectImagesEntityArray[0].ImageURL;
             }
+            string imagePath = "";
+            if (imageURL.IndexOf("HeadImage") > -1)
+            {
+                string dirPath = System.AppDomain.CurrentDomain.BaseDirectory;
+                var imageName = imageURL.Substring(imageURL.IndexOf("HeadImage")).Replace("/", @"\");
+                imagePath = dirPath + imageName;//整个
+            }
+            else
+            {  //兼容老的存放地址
+                imagePath = targetPath + imageURL.Substring(imageURL.LastIndexOf("/"));
+            }
 
-            string imagePath = targetPath + imageURL.Substring(imageURL.LastIndexOf("/"));
             Loggers.Debug(new DebugLogInfo() { Message = "二维码路径，imagePath:" + imageURL });
 
             try
@@ -133,6 +175,87 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
                 CurrentContext.Response.End();
             }
         }
+
+
+        public static string CombinImage(string imgBack, string destImg, string strData)
+        {
+            //1、上面的图片部分
+            HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(destImg);
+            WebResponse response_qrcode = null;
+            Stream qrcode_stream = null;
+            response_qrcode = request_qrcode.GetResponse();
+            qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
+
+
+            Bitmap _bmpQrcode1 = new Bitmap(qrcode_stream);//把流转换成Bitmap
+            Bitmap _bmpQrcode = new Bitmap(_bmpQrcode1, 327, 327);//缩放图片           
+            //把二维码由八位的格式转为24位的
+            Bitmap bmpQrcode = new Bitmap(_bmpQrcode.Width, _bmpQrcode.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb); //并用上面图片的尺寸做了一个位图
+            //用上面空的位图生成了一个空的画板
+            Graphics g3 = Graphics.FromImage(bmpQrcode);
+            g3.DrawImageUnscaled(_bmpQrcode, 0, 0);//把原来的图片画了上去
+
+
+            //2、背景部分
+            HttpWebRequest request_backgroup = (HttpWebRequest)WebRequest.Create(imgBack);
+            WebResponse response_keleyi = null;
+            Stream backgroup_stream = null;
+            response_keleyi = request_backgroup.GetResponse();
+            backgroup_stream = response_keleyi.GetResponseStream();//把背景图片转换成流
+
+            Bitmap bmp = new Bitmap(backgroup_stream);
+            Graphics g = Graphics.FromImage(bmp);//生成背景图片的画板
+
+            //3、画上文字
+            //  String str = "文峰美容";
+            System.Drawing.Font font = new System.Drawing.Font("黑体", 25);
+            SolidBrush sbrush = new SolidBrush(Color.White);
+            SizeF sizeText = g.MeasureString(strData, font);
+
+            g.DrawString(strData, font, sbrush, (bmp.Width - sizeText.Width) / 2, 490);
+
+
+            // g.DrawString(str, font, sbrush, new PointF(82, 490));
+
+
+            g.DrawImage(bmp, 0, 0, bmp.Width, bmp.Height);//又把背景图片的位图画在了背景画布上。必须要这个，否则无法处理阴影
+
+            //4.合并图片
+            g.DrawImage(bmpQrcode, 130, 118, bmpQrcode.Width, bmpQrcode.Height);
+
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            System.Drawing.Image newImg = Image.FromStream(ms);//生成的新的图片
+            //把新图片保存下来
+            string DownloadUrl = ConfigurationManager.AppSettings["website_WWW"];
+            string host = DownloadUrl + "/HeadImage/";
+            //创建下载根文件夹
+            //var dirPath = @"C:\DownloadFile\";
+            var dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "HeadImage\\";
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+            //根据年月日创建下载子文件夹
+            var ymd = DateTime.Now.ToString("yyyyMMdd", DateTimeFormatInfo.InvariantInfo);
+            dirPath += ymd + @"\";
+            host += ymd + "/";
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+
+            //下载到本地文件
+            var fileExt = Path.GetExtension(destImg).ToLower();
+            var newFileName = DateTime.Now.ToString("yyyyMMddHHmmss_ffff", DateTimeFormatInfo.InvariantInfo) + ".jpg";//+ fileExt;
+            var filePath = dirPath + newFileName;
+            host += newFileName;
+
+            newImg.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            return host;
+        }
+
 
         #region GetItemListData
         /// <summary>
@@ -352,7 +475,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
                 return responseData.ToJSON();
             }
 
-            if (obj.SkuList != null && obj.SkuList.Count > 0)
+            if (obj.SkuList != null && obj.SkuList.Count > 0)//在单个的时候都已经添加过了
             {
                 foreach (var tmpSku in obj.SkuList)
                 {

@@ -89,7 +89,7 @@ namespace JIT.CPOS.BS.Web.Module.WMaterialText.Handler
                 var entity = server.QueryByEntity(new WMenuMTextMappingEntity { TextId = textID ,IsDelete=0},                              null).FirstOrDefault();
                 if (entity != null)
                 {
-                    return string.Format("{{\"success\":'true',\"msg\":\"图文信息已被引用,不能删除\"}}");
+                    return string.Format("{{\"success\":'false',\"msg\":\"图文信息已被引用,不能删除\"}}");
 
                 }
 
@@ -99,7 +99,7 @@ namespace JIT.CPOS.BS.Web.Module.WMaterialText.Handler
             }
             catch (Exception)
             {
-                return string.Format("{{\"success\":'false'}}");
+                return string.Format("{{\"success\":'false',\"msg\":\"操作异常，删除失败\"}}");
                 throw;
             }
 

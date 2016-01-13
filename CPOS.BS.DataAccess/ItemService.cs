@@ -42,7 +42,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql = sql + "select "
                       + " a.item_id "
                       + " ,a.item_category_id "
-                      + ",(select top 1 ImageURL from objectimages b where b.ObjectId=a.item_id  and isdelete=0 order by displayindex) as  Image_Url"
+                      + ",(select top 1 ImageURL from objectimages b where b.ObjectId=a.item_id  and isdelete=0 and Description != '自动生成的产品二维码' order by displayindex ) as  Image_Url"
                       + " ,a.item_code "
                       + " ,a.item_name "
                       + " ,a.item_name_en "
