@@ -404,6 +404,8 @@ namespace JIT.CPOS.BS.BLL
             var vipCardBLL = new VipCardBLL(CurrentUserInfo);
             var vipCardRuleBLL = new VipCardRuleBLL(CurrentUserInfo);
 
+            var userBLL = new T_UserBLL(CurrentUserInfo);
+
             //获取会员信息
             var vipInfo = vipBll.GetByID(orderInfo.vip_no);
             //获取门店信息
@@ -574,28 +576,51 @@ namespace JIT.CPOS.BS.BLL
                 {
                     if (int.Parse(htSetting["enableVipSales"].ToString()) > 0)//启用会员小店
                         totalAmount += actualAmount * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100);
+
+                    if (totalAmount > 0)
+                    {
+                        var detailInfo = new VipAmountDetailEntity()
+                        {
+                            Amount = totalAmount,
+                            AmountSourceId = "10",
+                            ObjectId = orderInfo.order_id
+                        };
+
+                        var vipSalesVipInfo = vipBll.GetByID(orderInfo.sales_user);
+                        //账户余额和返现
+                        var vipSalesAmountEntity = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = vipSalesVipInfo.VIPID, VipCardCode = vipSalesVipInfo.VipCode }, null).FirstOrDefault();
+                        var vipAmountDetailId = vipAmountBll.AddVipAmount(vipInfo, unitInfo, ref vipSalesAmountEntity, detailInfo, tran, this.CurrentUserInfo);
+                        if (!string.IsNullOrWhiteSpace(vipAmountDetailId) && orderInfo.data_from_id == "16")
+                        {//发送微信账户余额变动模板消息
+
+                            var CommonBLL = new CommonBLL();
+                            CommonBLL.BalanceChangedMessage(orderInfo.order_no, vipSalesAmountEntity, detailInfo, vipSalesVipInfo.WeiXinUserId, orderInfo.vip_no, this.CurrentUserInfo);
+                        }
+                    }
+
                 }
                 else if (orderInfo.data_from_id == "17") //员工小店
                 {
                     if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
                         totalAmount += actualAmount * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100);
-                }
-            }
-            if (totalAmount > 0)
-            {
-                var detailInfo = new VipAmountDetailEntity()
-                {
-                    Amount = totalAmount,
-                    AmountSourceId = "10",
-                    ObjectId = orderInfo.order_id
-                };
-                //变更余额和余额记录
-                var vipAmountDetailId= vipAmountBll.AddVipAmount(vipInfo, unitInfo, ref vipAmountEntity, detailInfo, tran, this.CurrentUserInfo);
-                if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
-                {//发送微信账户余额变动模板消息
 
-                    var CommonBLL = new CommonBLL();
-                    CommonBLL.BalanceChangedMessage(orderInfo.order_no, vipAmountEntity, detailInfo, vipInfo.WeiXinUserId, orderInfo.vip_no, this.CurrentUserInfo);
+                    if (totalAmount > 0)
+                    {
+                        var detailInfo = new VipAmountDetailEntity()
+                        {
+                            Amount = totalAmount,
+                            AmountSourceId = "10",
+                            ObjectId = orderInfo.order_id
+                        };
+
+                        var employeeSalesUserInfo= userBLL.GetByID(orderInfo.sales_user);
+                        vipInfo.VIPID = employeeSalesUserInfo.user_id;
+                        vipInfo.VipCode = employeeSalesUserInfo.user_code;
+                        //账户余额和返现
+                        var vipSalesAmountEntity = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = employeeSalesUserInfo.user_id }, null).FirstOrDefault();
+                        vipAmountBll.AddVipAmount(vipInfo, unitInfo, ref vipSalesAmountEntity, detailInfo, tran, this.CurrentUserInfo);
+                    }
+
                 }
             }
             #endregion
