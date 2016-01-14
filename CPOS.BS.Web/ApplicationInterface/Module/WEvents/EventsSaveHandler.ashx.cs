@@ -459,27 +459,53 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             var rp = pRequest.DeserializeJSONTo<APIRequest<ImageObjectRP>>();
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
 
-            var imageEntity = new ObjectImagesEntity();
-            var imageBll = new ObjectImagesBLL(loggingSessionInfo);
-            if (rp.Parameters.ItemImageList.Count > 0)
+            if (rp.Parameters.DrawMethod == "5")
             {
-                imageBll.DeleteByObjectID(rp.Parameters.EventId);
-
-                foreach (var i in rp.Parameters.ItemImageList)
+                T_QN_ActivityQuestionnaireMappingBLL bllAQM = new T_QN_ActivityQuestionnaireMappingBLL(loggingSessionInfo);
+                T_QN_ActivityQuestionnaireMappingEntity entityAQM =bllAQM.QueryByEntity(new T_QN_ActivityQuestionnaireMappingEntity() { ActivityID = rp.Parameters.EventId }, null).FirstOrDefault();
+                if (entityAQM == null)
                 {
-                    imageEntity.ImageURL = i.ImageURL;
-                    imageEntity.ObjectId = rp.Parameters.EventId;
-                    imageEntity.CreateBy = loggingSessionInfo.UserID;
-                    imageEntity.ImageId = Guid.NewGuid().ToString();
-                    imageEntity.BatId = i.BatId;
-                    imageEntity.RuleId = rp.Parameters.RuleId?? 1;
-                    imageEntity.RuleContent = rp.Parameters.RuleContent;
-                    imageEntity.IsDelete = 0;
-                    imageEntity.CustomerId = loggingSessionInfo.ClientID;
-                    imageBll.Create(imageEntity);
+
+                    entityAQM = new T_QN_ActivityQuestionnaireMappingEntity();
+                    entityAQM.ActivityID = rp.Parameters.EventId;
+                    entityAQM.ActivityName = rp.Parameters.EventName;
+                    entityAQM.QuestionnaireID = rp.Parameters.QuestionnaireID;
+                    entityAQM.QuestionnaireName = rp.Parameters.QuestionnaireName;
+                    entityAQM.Status = 0;
+                    bllAQM.Create(entityAQM, null);
+                }
+                else
+                {
+               
+                    entityAQM.QuestionnaireID = rp.Parameters.QuestionnaireID;
+                    entityAQM.QuestionnaireName = rp.Parameters.QuestionnaireName;
+                    bllAQM.Update(entityAQM, null);
+                }
+            }
+            else
+            {
+                var imageEntity = new ObjectImagesEntity();
+                var imageBll = new ObjectImagesBLL(loggingSessionInfo);
+                if (rp.Parameters.ItemImageList.Count > 0)
+                {
+                    imageBll.DeleteByObjectID(rp.Parameters.EventId);
+
+                    foreach (var i in rp.Parameters.ItemImageList)
+                    {
+                        imageEntity.ImageURL = i.ImageURL;
+                        imageEntity.ObjectId = rp.Parameters.EventId;
+                        imageEntity.CreateBy = loggingSessionInfo.UserID;
+                        imageEntity.ImageId = Guid.NewGuid().ToString();
+                        imageEntity.BatId = i.BatId;
+                        imageEntity.RuleId = rp.Parameters.RuleId ?? 1;
+                        imageEntity.RuleContent = rp.Parameters.RuleContent;
+                        imageEntity.IsDelete = 0;
+                        imageEntity.CustomerId = loggingSessionInfo.ClientID;
+                        imageBll.Create(imageEntity);
+
+                    }
 
                 }
-
             }
             var rd = new EmptyRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -504,14 +530,25 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 {
                     rd.PrizeList = DataTableToObject.ConvertToList<Prize>(ds.Tables[0]);
                 }
-
-                DataSet dsImage = bllImage.GetObjectImagesByEventId(rp.Parameters.EventId);
-                if (dsImage.Tables != null && dsImage.Tables.Count > 0 && dsImage.Tables[0] != null && dsImage.Tables[0].Rows.Count > 0)
+                if (rp.Parameters.DrawMethod == "5")
                 {
-                    rd.ImageList = DataTableToObject.ConvertToList<ObjectImagesEntity>(dsImage.Tables[0]);
+                    T_QN_ActivityQuestionnaireMappingBLL bllAQM = new T_QN_ActivityQuestionnaireMappingBLL(loggingSessionInfo);
+                    var entityAQM=bllAQM.QueryByEntity(new T_QN_ActivityQuestionnaireMappingEntity() { ActivityID = rp.Parameters.EventId, IsDelete = 0 },null).FirstOrDefault();
+                    if (entityAQM!=null)
+                    {
+                        rd.QuestionnaireID = entityAQM.QuestionnaireID;
+                    }
+                }
+                else
+                {
+                    DataSet dsImage = bllImage.GetObjectImagesByEventId(rp.Parameters.EventId);
+                    if (dsImage.Tables != null && dsImage.Tables.Count > 0 && dsImage.Tables[0] != null && dsImage.Tables[0].Rows.Count > 0)
+                    {
+                        rd.ImageList = DataTableToObject.ConvertToList<ObjectImagesEntity>(dsImage.Tables[0]);
 
-                    rd.RuleId = Convert.ToInt32(dsImage.Tables[0].Rows[0]["RuleId"].ToString() == "" ? "0" : dsImage.Tables[0].Rows[0]["RuleId"].ToString());
-                    rd.RuleContent = dsImage.Tables[0].Rows[0]["RuleContent"].ToString();
+                        rd.RuleId = Convert.ToInt32(dsImage.Tables[0].Rows[0]["RuleId"].ToString() == "" ? "0" : dsImage.Tables[0].Rows[0]["RuleId"].ToString());
+                        rd.RuleContent = dsImage.Tables[0].Rows[0]["RuleContent"].ToString();
+                    }
                 }
             }
 
@@ -1453,6 +1490,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
     public class ImageObjectRP : IAPIRequestParameter
     {
         public string EventId { get; set; }
+        public string EventName { get; set; }
+        public string QuestionnaireID { get; set; }
+        public string QuestionnaireName { get; set; }
+
+        public string DrawMethod { get; set; }
         public int? RuleId { get; set; }
         public string RuleContent { get; set; }
         public List<ObjectImage> ItemImageList { get; set; }
@@ -1464,6 +1506,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
     public class SavePrizesRP : IAPIRequestParameter
     {
         public string EventId { get; set; }
+        public string DrawMethod { get; set; }
         public string PrizesId { get; set; }
         /// <summary>
         /// 奖品名称
@@ -1505,7 +1548,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
     {
         public int RuleId { get; set; }
         public string RuleContent { get; set; }
-
+        public string QuestionnaireID { get; set; }
         public List<Prize> PrizeList { get; set; }
         public List<ObjectImagesEntity> ImageList { get; set; }
     }
