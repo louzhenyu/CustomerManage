@@ -442,7 +442,17 @@
 
     <Compile Include="CodeGeneration\T_ItemBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
-    <Compile Include="CodeGeneration\T_Item_CategoryBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_ActivityQuestionnaireMappingBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_OptionBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireAnswerRecordBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireOptionCountBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionNaireQuestionMappingBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionPicBLL.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_ScoreRecoveryInformationBLL.cs" />
+
+  <Compile Include="CodeGeneration\T_Item_CategoryBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_PriceBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_Price_TypeBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_PropertyBLL.cs" />
@@ -1013,7 +1023,16 @@
 
     <Compile Include="T_ItemBLL.cs" />
     <Compile Include="T_ItemSkuPropBLL.cs" />
-    <Compile Include="T_Item_CategoryBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_ActivityQuestionnaireMappingBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_OptionBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionnaireAnswerRecordBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionnaireBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionnaireOptionCountBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionNaireQuestionMappingBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionPicBLL.cs" />
+    <Compile Include="Questionnaire\T_QN_ScoreRecoveryInformationBLL.cs" />
+ <Compile Include="T_Item_CategoryBLL.cs" />
     <Compile Include="T_Item_PriceBLL.cs" />
     <Compile Include="T_Item_Price_TypeBLL.cs" />
     <Compile Include="T_Item_PropertyBLL.cs" />

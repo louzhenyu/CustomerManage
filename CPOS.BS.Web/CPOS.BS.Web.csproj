@@ -6392,6 +6392,16 @@
     <Compile Include="ApplicationInterface\Module\Basic\Holiday\DeleteHolidayAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Holiday\GetHolidayListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Holiday\SetHoliday.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\DelQuestionnaireAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireInforAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireOptionInforAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetScoreRecoveryInformationListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\SetQuestionnaireListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\ScoreRecoveryInformation\DelScoreRecoveryAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\ScoreRecoveryInformation\SetScoreRecoveryAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\StoresReport\GetDayReconciliationAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\StoresReport\GetDayVendingCountAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\VipReport\GetVipBirthdayCountAH.cs" />

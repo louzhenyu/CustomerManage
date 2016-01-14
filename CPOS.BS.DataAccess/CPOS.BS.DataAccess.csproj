@@ -407,7 +407,16 @@
     <Compile Include="CodeGeneration\T_Payment_TypeDAO.cs" />
     <Compile Include="CodeGeneration\T_ItemDAO.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropDAO.cs" />
-    <Compile Include="CodeGeneration\T_Item_CategoryDAO.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_ActivityQuestionnaireMappingDAO.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_OptionDAO.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionDAO.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireAnswerRecordDAO.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireDAO.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionnaireOptionCountDAO.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionNaireQuestionMappingDAO.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionPicDAO.cs" />
+    <Compile Include="CodeGeneration\Questionnaire\T_QN_ScoreRecoveryInformationDAO.cs" />
+   <Compile Include="CodeGeneration\T_Item_CategoryDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_PriceDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_Price_TypeDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_PropertyDAO.cs" />
@@ -931,6 +940,15 @@
    
     <Compile Include="T_ItemDAO.cs" />
     <Compile Include="T_ItemSkuPropDAO.cs" />
+    <Compile Include="Questionnaire\T_QN_ActivityQuestionnaireMappingDAO.cs" />
+    <Compile Include="Questionnaire\T_QN_OptionDAO.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionDAO.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionnaireAnswerRecordDAO.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionnaireDAO.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionnaireOptionCountDAO.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionNaireQuestionMappingDAO.cs" />
+    <Compile Include="Questionnaire\T_QN_QuestionPicDAO.cs" />
+    <Compile Include="Questionnaire\T_QN_ScoreRecoveryInformationDAO.cs" />
     <Compile Include="T_Item_CategoryDAO.cs" />
     <Compile Include="T_Item_PriceDAO.cs" />
     <Compile Include="T_Item_Price_TypeDAO.cs" />

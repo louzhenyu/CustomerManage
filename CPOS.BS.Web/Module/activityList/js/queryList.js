@@ -64,7 +64,13 @@
 					var date = new Date();
                     new Image().src=row.ImageUrl;
                     that.downloadFile(date.getTime()+'.jpg',row.ImageUrl);
-                }
+				}
+
+				if (optType == "detail") {
+				    var mid = JITMethod.getUrlParam("mid");
+				    location.href = "/Module/QuestionnaireNews/QuestionnaireInforDetail.aspx?EventID=" + row.EventID + "&mid=" + mid;
+				}
+
 				if((optType=="joinprize" || optType=="winprize")  && $this.text() != '0'){
 					that.loadData2.action = (optType=="joinprize") ? 'events_lotterylog_list_query' : 'get_prizes_winner_list';
 					
@@ -201,24 +207,28 @@
                         }
 					},
                     {field : 'Status',title : '状态',width:40,align:'center',resizable:false,align:'center'},
-                    {field : 'EventID',title : '操作',width:30,align:'center',resizable:false,
-                        formatter:function(value ,row,index){
+                    {field : 'EventID',title : '操作',width:50,align:'center',resizable:false,
+                    formatter: function (value, row, index) {
+                        var ophtml = "";
 							var status = row.Status;
 							if(status=='未开始'){
-								return '<p class="handle delete" data-index="'+index+'" data-oprtype="delete"></p>';
+							    ophtml= '<p class="handle delete" title="删除" data-index="'+index+'" data-oprtype="delete"></p>';
 							}else if(status=='运行中'){
-								return '<p class="handle running" data-index="'+index+'" data-oprtype="running"></p>';
+							    ophtml = '<p class="handle running" title="暂停" data-index="' + index + '" data-oprtype="running"></p>';
 							}else if(status=='暂停'){
-								return '<p class="handle pause" data-index="'+index+'" data-oprtype="pause"></p>';
+							    ophtml = '<p class="handle pause" title="启动" data-index="' + index + '" data-oprtype="pause"></p>';
 							}else if(status=='结束'){
-								return '';
+							    ophtml = '';
 							}
+
+							if (row.DrawMethodName == "花样问卷")
+							{
+							    ophtml += '<p class="handle detail"  title="问卷详情" data-index="' + index + '" data-oprtype="detail"></p>';
+							}
+
+							ophtml += '<p class="handle down" title="下载二维码图片" data-index="' + index + '" data-oprtype="down"></p>';
+							return ophtml;
                             
-                        }
-                    },
-                    {field : 'ImageUrl',title : '二维码',width:30,align:'center',resizable:false,
-                        formatter:function(value ,row,index){
-                            return '<p class="handle down" data-index="'+index+'" data-oprtype="down"></p>';
                         }
                     }
                 ]],

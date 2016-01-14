@@ -1,0 +1,212 @@
+﻿@charset "utf-8";
+
+
+/*导航标题*/
+.blueline{border: 1px solid #00cccb; width: 59px; display: inline-block;}
+.grayline{border: 1px solid #cccccc; width: 59px; display: inline-block;}
+.navhead{padding: 10px 20px 20px 20px; text-align: center; display: inline-block; width: 100%; border-bottom: 1px dashed #dbdbdb;}
+.navhead img{margin: 10px; width: 34px;}
+.navcontent{display: inline-block;}
+.bluetext{color: #00cccb;}
+/*问卷内容*/
+.Questionnairebody.tableWrap{padding-top: 50px; display: inline-block; width: 100%;}
+/*内容公共*/
+.step{display:none;}
+.step1{display:block;}
+.ordernumber{float: left; width: 180px;}
+.commonSelectWrap{width: 100%; margin-top: 25px;}
+.commonHandleBtn.uploadImgBtn{background: url(/module/QuestionnaireNews/images/uploadImgBtn.png) no-repeat 0 0; cursor: pointer;}
+.commonHandleBtn{display: block; width: 132px; height: 32px; line-height: 32px; text-align: center; font-size: 14px; border-radius: 4px; background: #07c8cf; color: #fff;}
+.commonSelectWrap .infoBox{margin-left: 130px;}
+.uploadItem .exp{padding-top: 7px; font-size: 13px; color: #999;}
+form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
+.ke-button-common .ke-button{width: 0px;}
+.checkBox{cursor: pointer;}
+.colorplan img{margin-right: 20px; cursor: pointer; margin-left: 5px;}
+.lineTitle  .tips{color:red; text-align: left; display: inline-block;  font-size: 14px;}
+.lineTitle .tips span{color:white; background-color:red; border-radius:5px; padding:2px 10px; margin:0px 10px 0px 0px;}
+.lineTitle  .ScoreRange {display: inline-block;  float: right;  margin-right: 200px;}
+.lineTitle  .ScoreRange span{color:red;}
+/*颜色板*/
+.Colorplate{position: absolute; border: 2px solid #d1d1d1; width: 394px; z-index: 10; background-color: #fff; padding: 10px; left: 309px; top: -24px; display: none;} .Colorplate div{width: 35px; height: 35px; float: left; margin: 1px; border-radius: 4px; border: 1px solid #f0f0f0; cursor: pointer; text-align: center; line-height: 35px;}
+/*问卷内容--开始页*/
+.startbtn{position: absolute; top: 330px; right: 27px; width: 172px; text-align: center; background-color: #fc9a01; border-radius: 5px; line-height: 30px; color: #fff;height: 30px;}
+.startimg{float: left; width: 38%; text-align: right; position: relative;}
+.StartBG{width: 225px;}
+._BGImageSrc{position: absolute; width: 195px; right: 15px; top: 93px; height: 308px;}
+.startpageContent{float: left; width: 62%;}
+.ruleText textarea{width: 252px; height: 111px; padding: 5px; border: 1px solid #d0d5d8; border-radius: 3px;}
+.regular{position: absolute; right: 26px; top: 371px; color: #fc9a01;}
+.rulebtn{width: 100px; margin-left: 130px;}
+/*问卷内容--模板选择页*/
+.modeltype{width:100%; text-align: center;}
+.modeltypeimg{width: 225px; margin:0px 50px;  cursor: pointer;}
+.modeltype .model{display: inline-block;}
+.radio span{margin: 20px 0 0 108px;cursor:pointer;}
+
+
+/*问卷内容--问卷编辑页*/
+.topDashed{border-top-style: dashed;}
+.lineTitle{height: 50px; line-height: 50px; padding-left: 30px; font-size: 16px; color: #333; background-color: #fafafa; border: 1px solid #e0e0e0; border-left: none; border-right: none;}
+.linePanel{display: inline-block; margin-bottom: 15px;}
+.firstTile{border-top: 0px;}
+.lineTitle em{display: block; width: 4px; height: 18px; margin-top: 16px; background-color: #00cccc; margin-right: 10px; float: left;}
+.commonOptsBtn{text-align: center; border: 1px solid #d0d5d8; width: 490px; margin-left: 29px; margin-top: 24px; display: inline-block; border-radius: 5px; display: block;}
+.commonOptsBtn .icon{margin: -14px auto 0px auto; background: url("../images/upJiantou.png") no-repeat center center; height: 14px;}
+.commonOptsBtn p{font-size: 14px; color: #666; line-height: 36px; background-color: #f3f3f5; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom: 1px solid #d0d5d8; padding-left: 20px; text-align: left;}
+.commonOptsBtn .listAdd{width: 470px; margin: 13px auto; display: inline-block;}
+.commonOptsBtn .addBtn{cursor: pointer; border-radius: 3px; min-width: 84px; color: #fff; margin-bottom: 10px; font-size: 14px; line-height: 32px; height: 32px; background: #00cccc; margin-left: 10px; float: left;}
+.questionlist{width: 490px; display: inline-block; position:relative;}
+.question{display: inline-block; float: left; margin: 29px 29px 0px 29px; width: 100%; border: 1px solid #d0d5d8; border-radius: 5px;}
+.questiontitle{background: #f3f3f5; line-height: 45px; font-size: 14px; padding: 0px 16px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom: 1px solid #d0d5d8;cursor:pointer;}
+.questiontitle span{float: right; margin: 4px;}
+.questiontitle span img{padding: 10px;cursor: pointer;}
+.questionlist .select{border: 2px dashed #00cccc; z-index: 10;}
+
+
+
+
+.handleLayer{text-align: center; background: #fff; float: left; width: 550px; min-height: 155px; position: absolute; border: 1px solid #d0d5d8; margin-bottom: 29px; border-radius: 5px; left: 550px;}
+
+
+.handleLayer .option{ margin:0 auto; width: 90%;  height: 56px}
+.handleLayer .title{float:left;line-height:72px;font-weight:500;  font-size: 18px}
+.handleLayer .arrows{position: absolute;top:26px; left: -14px;}
+.handleLayer .uploadArea{margin-top:30px; position: relative;}
+.handleLayer .wrapBtn{float:right; margin-top: 20px;}
+.handleLayer .wrapBtn span{float:right;width:80px;height:32px;line-height:32px;margin-left:20px;border-radius:4px;text-align:center;background:#ccc;color:#fff; cursor:pointer;}
+.handleLayer .wrapBtn span:nth-last-of-type(1){ background-color:#00cccc;}
+
+.handleLayer .delBtn{display:none;height:30px; width:30px;position: absolute; top:-15px; right: -15px;background: url("../images/handleLayer/close.png") no-repeat center center;  }
+.handleLayer .uploadArea:hover .delBtn{display: block;}
+.handleLayer .wrapPic{float:left;}
+.handleLayer .wrapPic .imgmessage{display: block; text-align: left; color: #999;  line-height: 23px;  padding-top: 7px;  font-size: 14px;}
+.handleLayer .wrapPic .size{display:block;width:50%;margin:15% auto;}
+.handleLayer .wrapPic p{width:130px;max-height:124px;min-height:88px;border:1px solid #cfcedc;color:#333;overflow:hidden;}
+.handleLayer .wrapPic p img{width:100%;}
+.handleLayer .wrapPic .uploadBtn{display:block;position:relative;width:95px;height:32px;line-height:32px;margin:10px auto;text-align:center;border-radius:4px;background:#00cccc;color:#fff; cursor:pointer;}
+.handleLayer .wrapPic .uploadBtn .input{display:block;width:95px;height:32px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;left:0;}
+.handleLayer .wrapInput{float:left;  width: 80%;}
+.handleLayer .wrapInput textarea{  width: 90%;  border: 1px solid #d0d5d8;  height: 80px;  border-radius: 5px;  margin: 10px 0px;}
+.handleLayer .wrapInput span{padding:0px;margin-left:15px;}
+.handleLayer .wrapInput .typeContainer{position: relative;}
+.handleLayer .wrapInput select{width: 340px;height:32px;padding-left:10px;border:1px solid #cfcedc;border-radius:4px;background:#fff;color:#333;}
+.handleLayer .wrapInput .delIcon{display:none;height:30px; width:30px;position: absolute; top:-15px; right: -15px;background: url("../images/handleLayer/close.png") no-repeat center center;  }
+.handleLayer .wrapTit{ float: left; font-size: 14px; width: 72px; text-align: left;}
+.handleLayer .wrapInput select{ background: url("../images/handleLayer/select.png") no-repeat 98% center;}
+.handleLayer .uploadimg{ background-color: #f7f7f7; border: 1px solid #ced6d8;width: 200px; height: 80px;display: inline-block;position: relative;}
+.handleLayer .uploadimg .img{ width: 198px; height: 78px;position: absolute;  z-index: 2;  top: 0px;  right: 0px;}
+
+.handleLayer .wrapPic .uploadbtnleft {  float: none; display: inline-block;margin-left: 20px;margin-bottom: 0px;vertical-align: bottom;}
+
+.handleLayer .concise{ border: none; margin-top:0;}
+
+.handleLayer .hint{ width: 80%; margin: 0 auto; height: 65px;font-size: 14px; line-height: 65px; display: flex; text-align: left;}
+.handleLayer .hint b{ color: #333; float: left; width: 50px;}
+.handleLayer .hint span{ color: #999; float: left; line-height: 23px; width: 100%; padding-top: 21px;}
+.handleLayer .wrapInput input{float:left;width: 100%;}
+.handleLayer .wrapInput .infoContainer input.jsNameInput{width: 80%;margin-right: 15px; }
+.handleLayer .wrapInput .optiontext{width:180px}
+.handleLayer .wrapInput .option{width:100%}
+.handleLayer .wrapInput .addroption{  display: inline-block;  width: 195px;float:left;  height: 47px;}
+.handleLayer .wrapInput .operationbtn .delbtn{float: right; background: #fb7a52;}
+.handleLayer .wrapInput .operationbtn span{float: left; width: 80px; height: 32px; line-height: 32px; margin-left: 20px; border-radius: 4px; text-align: center; background: #00cccc; color: #fff; cursor: pointer;}
+
+.handleLayer .wrapInput .tagBtn{display:inline-block;width:50px;height:32px;line-height:32px;text-align:center;border-radius:4px;background:#00cccc;color:#fff; cursor:pointer;float: right;}
+.handleLayer .addLayerBtn{height:100px;margin-top:30px;}
+.handleLayer .wrapRadio{ width: 82%; margin: 0 auto;font-size: 18px; color: #666;  float: left;}
+.handleLayer .wrapRadio div{ float: left; margin-left:8px; }
+.handleLayer .wrapRadio span{font-size:15px;}
+.handleLayer .wrapRadio .checkBox  .numberbox{width: 50px;  float: left;  height: 30px;  margin: 0px;}
+.handleLayer .wrapRadio input{width:50px;  float: left;}
+.handleLayer .wrapRadio div{margin:0;}
+.handleLayer .wrapRadio .checkBox { margin-top: 6px; width: 50%;margin-bottom: 18px;}
+.handleLayer .wrapRadio .checkBoxwidth {width: 100%;}
+.handleLayer .wrapRadio .checkBox span{ float: left;margin-left: 8px;padding:0px}
+
+.handleLayer .wrapPics{float: left; width: 80%;}
+.handleLayer .wrapPics .editimgoption{display: inline-block; width: 400px; background-color: #f8f8f8; padding: 16px; margin: 10px 0px; border-radius: 5px; border: 1px solid #e9e9e9;position: relative;}
+.handleLayer .wrapPics .editimgoption img{width:100px; height: 100px;float: left; margin-right: 20px;  border: 1px solid #d5d0d8;}
+.handleLayer .wrapPics .editimgoption .optionclose{position: absolute; top: -11px; right: -11px; background-color: #fff; cursor: pointer; border-radius: 50px;display:none;}
+.handleLayer .wrapPics .editimgoption .optionclose img{width: 22px; height: 22px; float: none; margin: 0px;  border: 0px;}
+.handleLayer .wrapPics .editimgoptioninput{display: table-cell; height: 100px; vertical-align: middle;}
+.handleLayer .wrapPics .editimgoptioninput input{width:230px;}
+.handleLayer .wrapPics .addeditimgoption{cursor: pointer; display: block; height: 59px; border: 3px dashed #e1e1e1; border-radius: 5px; margin: 10px 0px; padding: 15px;position: absolute; width: 400px;}
+.handleLayer .wrapPics .addeditimgoption img{width:22px; background-color: #00cccb; border-radius: 50px; margin: 0px 10px;}
+.handleLayer .wrapPics .addeditimgoptionbtn{cursor: pointer; display: block; height: 59px;  border-radius: 5px; margin: 10px 0px; padding: 15px;}
+.handleLayer .wrapPics .alertmessage{margin: 10px 0px;}
+.handleLayer .wrapPics .alertmessage .tips{color:red; text-align: left; display: block; margin: 10px 0px; font-size: 14px;}
+.handleLayer .wrapPics .alertmessage .tips span{color:white; background-color:red; border-radius:5px; padding:2px 10px; margin:0px 10px 0px 0px;}
+.handleLayer .wrapPics .imgmessage{display: block; text-align: left; color: #999;  line-height: 23px;  padding-top: 7px;  font-size: 14px;}
+.optiondelete {display:none;}
+.handleLayer .wrapPics .optiondelete {display:none;}
+
+.Separateline{display: block; width: 90%; margin: 25px auto 0 auto; border-bottom: 1px solid #ccc;}
+.jsAreaTitle{width: 90%; margin: 0 auto; padding: 25px 0px 5px 0px; display: inline-block;}
+.jsAreaTitle .tit{width: 72px; font-size: 14px; float: left; line-height: 36px;}
+.Imgoption{display: inline-block; width: 145px;   padding: 0px 10px 10px 0px;float: left;cursor:pointer;}
+.Imgoption img{width:100px; height: 100px; border: 1px solid #d5d0d8; margin-bottom: 10px;}
+
+.questionbody{padding: 15px;cursor:pointer;}
+.questionbody textarea{width: 90%; border: 1px solid #d0d5d8; height: 80px; border-radius: 5px;margin: 10px 0px;}
+.questionbody .radio{display: inline-block;min-width: 100px;}
+.questionbody .checkBox{display: inline-block;  height: auto;min-width: 100px;}
+.questionbody .qtext{margin: 10px 0px;cursor:pointer;}
+.questionbody .titletext{width: 85%;}
+.questionbody .qtext span{padding:0px 5px;}
+.questionbody .qtext img{max-width : 200px; display: block;  margin: 10px;  border: 1px solid #d5d0d8;  margin-bottom: 10px;max-height: 80px;}
+.questionbody .red{color:red}
+.questionbody .showaddress {display:inline-block}
+
+/*问卷内容--问卷设置得分*/
+.OptionScorelinePanel {display: inline-block;  margin-bottom: 15px;width:100%;}
+.OptionScoreitem { display: inline-block;  width: 100%;  border-bottom: 1px solid #e0e0e0;}
+.OptionScoreContent {  float: left;  width: 100%;  display: block; }
+.OptionScoreContent .titleoptionitem {line-height: 36px;  font-size: 17px;  font-weight: 600;   display: inline-block;  width: 100%;}
+.OptionScoreContent .titleoptionitem span{color:red}
+.OptionScoreContent .titleoptionitem .title{  float: left;  width: 70%;padding: 10px 0px 0px 40px; }
+.OptionScoreContent .titleoptionitem .titleEdit{  float: right;  width: 30%;color: #666;background-color: #f2f2f2;    padding: 10px 0px 0px 25px;}
+.OptionScoreContent .optionitem .radio{  display: inline-block;  width: 70%;padding-left: 40px;  float: left;  padding-top: 5px;}
+.OptionScoreContent .checkBox{  display: inline-block;  width: 70%;padding-left: 40px;  float: left;  padding-top: 5px;}
+.OptionScoreContent .optionitem .setoption{  display: inline-block;width: 30%;  background-color: #f2f2f2;  float: right;height: 40px;padding: 1px 0px 1px 25px;    }
+.OptionScoreContent .optionitem .setoption input{width: 100px;}
+.OptionScoreContent .optionitem .setoption .checkBox{  width: 130px;padding: 0px;}
+.OptionScoreContent .selecedcolor {background-color: #ccf6f5; }
+.OptionScoreContent .optionitem {  display: block;  height: 40px;   font-size: 17px; }
+
+/*问卷内容--得分描述*/
+.tableWrap .optionBtn {    background-color: #fff;    font-size: 16px;line-height: 27px;height: 72px;}
+.tableWrap .optionBtn span{ color: red;}
+.tableWrap .optionBtn .descbtn {width: 123px;  font-size: 15px;  line-height: 26px;  margin-right: 20px;}
+.tableWrap .optionBtn .descbtn span{font-size: 22px;  padding-right: 4px;color: #fff;}
+
+.jui-dialog-describe {top: 20%;  left: 35%;width:493px;height:443px;}
+.jui-dialog-describe .msimg {display: inline-block;  float: left;}
+.jui-dialog-describe .msimg img{  border: 1px solid #d7d7d7;margin-right:10px;width: 149px; height: 114px;}
+.jui-dialog-describe .uploadItem{height: 95px;}
+
+.jui-dialog-describe .uploadItem a{  display: block; float: left;  margin-top: 82px;}
+.jui-dialog-describe .uploadItem .exp{  display: inline-block;}
+
+
+.jui-dialog-describe .commonHandleBtn.uploadImgBtn{display: block; float: left;  margin-top: 82px;}
+
+
+/*问卷内容--设置微信端结果页*/
+.Endbtn{position: absolute; top: 330px; right: 27px; width: 172px; text-align: center; background-color: #ffcc00; border-radius: 5px; line-height: 30px; color: #fff;}
+.Endimg{float: left; width: 38%; text-align: right; position: relative;}
+.EndBG{width: 225px;}
+.end_BGImageSrc{position: absolute; width: 195px; right: 15px; top: 93px; height: 308px;}
+.EndpageContent{float: left; width: 62%;}
+.endpagetext {position: absolute;  width: 130px;  top: 200px;  right: 55px;  font-size: 20px; line-height: 30px;  font-weight: 600;}
+
+/*内容操作按钮 */
+.btnWrap{padding: 55px 0 30px 0; text-align: center;}
+.commonStepBtn{display: inline-block; width: 148px; height: 43px; line-height: 43px; text-align: center; font-size: 15px; border-radius: 22px; background: #fc7a52; color: #fff;}
+.commonStepBtn:hover{color:#fff}
+
+.nextStepBtn{background: #fc7a52; border: 1px solid #fc7a52;}
+.startStepbtn {display: inline-block; width: 148px; height: 43px; line-height: 43px; text-align: center; font-size: 15px; border-radius: 22px; background: #fc7a52; color: #fff;}
+.startStepbtn:hover {color:#fc7a52 }
+.startStepbtn,.prevStepBtn{background: #fff; border: 1px solid #fc7a52; color: #fc7a52;}
+.prevStepBtn:hover{ color: #fc7a52;}

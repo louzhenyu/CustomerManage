@@ -145,6 +145,9 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 .jui-dialog .commonBtn{width:150px;height:45px;line-height:45px;}
 .jui-dialog .cancelBtn{border:none;background:#ccc;color:#fff;}
 
+/*问卷奖品配置，弹出*/
+.jui-dialog-Questionnaire{width:636px;height:470px;position:fixed;top:90px;margin-left:-318px;}
+
 /*大转盘奖品配置，弹出*/
 .jui-dialog-LuckyTurntable{width:636px;height:530px;position:fixed;top:90px;margin-left:-318px;}
 .jui-dialog-LuckyTurntable .LuckyTurntableLeft {float:left}
@@ -213,7 +216,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                       <input type="text" id="endDate" class="easyui-datebox" name="EndTime" validType="compareEqualityDate[$('#startDate').datebox('getText'),'结束时间不能小于开始时间']" data-options="required:true,width:160,height:32"/>
                     </div>
                   </div>
-                  <div class="commonSelectWrap" style="height:auto;"> <em class="tit">活动内容：</em>
+                  <div class="commonSelectWrap" style="height:auto;  display: none;"> <em class="tit">活动内容：</em>
                     <label class="searchInput" style="width:926px;height:100px">
                       <textarea data-text="活动内容" class="easyui-validatebox" id="" data-flag="item_content" name="Content"  data-options="" value=""></textarea>
                     </label>
@@ -239,7 +242,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                 -->
                 <p class="titleItem">活动设置</p>
                 <div class="inlineBlockArea">
-                  <div class="commonSelectWrap">
+                  <div class="commonSelectWrap" style="display: none;">
                   	<em class="tit">活动类型：</em>
                     <span class="gameAction" data-id="081AEC92-CC16-4041-9496-B4F6BC3B11FC">游戏活动</span>
                     <!--
@@ -286,7 +289,6 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
               <table class="dataTable" id="prizeListTable">
               	<thead>
                 	<tr class="tableHead">
-                        <th>奖品等级</th>
                         <th>奖品名称</th>
                         <th>奖品数量</th>
                         <th>已有生成数量</th>
@@ -525,6 +527,42 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
             	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
             </div>
           </form>
+
+
+            <!--问卷-->
+            <form id="Questionnaire_form"  class="Questionnaire PrizeSet" >
+            <div class="borderArea">
+              <div class="addPrizeArea">
+              		<a href="javascript:;" class="commonHandleBtn" id="QuestionnaireaddBtn">+添加奖品</a>
+              </div>
+              <table class="dataTable" id="QuestionnaireTable">
+              	<thead>
+                	<tr class="tableHead">
+                        <th>奖品名称</th>
+                        <th>奖品数量</th>
+                        <th>已有生成数量</th>
+                        <th>奖品剩余数量</th>
+                        <th>操作</th>
+                      </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+              </table>
+              
+              <div class="activityConfigArea">
+              		  
+                    选择表单：<input id="Questionnaires" class="easyui-combobox" data-options="required:true,width:190,height:32"  type="text" />
+              </div>
+              
+            </div>
+            <div class="btnWrap">
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="#nav01">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            </div>
+          </form>
+
+
         </div>
         <!--奖品配置End--> 
         
@@ -586,12 +624,12 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
     </div>
     <div class="redPackageContent">
     	<form id="addPrizeForm">
-        <div class="commonSelectWrap">
+       <%-- <div class="commonSelectWrap">
             <em class="tit">奖品等级：</em>
             <label class="searchInput clearBorder">
               <input data-text="奖品等级" class="easyui-combobox" id="prizeLevel" data-options="required:true,width:190,height:32" data-flag="" name="PrizeLevel" type="text" value="">
             </label>
-        </div>
+        </div>--%>
         
         <div class="commonSelectWrap">
             <em class="tit">奖品选择：</em>
@@ -730,6 +768,66 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
     </div>
 </div>
 
+
+    <!--问卷奖品，弹出-->
+<div class="jui-dialog jui-dialog-Questionnaire" style="display:none">
+	<div class="jui-dialog-tit">
+    	<h2>奖品配置</h2>
+        <span class="jui-dialog-close"></span>
+    </div>
+    <div class="QuestionnaireContent">
+    	<form id="Questionnaire">
+       
+        
+        <div class="commonSelectWrap">
+            <em class="tit">奖品选择：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品选择" class="easyui-combobox" id="questprizeOption" data-options="required:true,width:190,height:32" data-flag="" name="PrizeTypeId" type="text" value="">
+            </label>
+        </div>
+        
+        <div class="commonSelectWrap" id="_questcouponOption">
+            <em class="tit">优惠券：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="优惠券" class="easyui-combobox" id="questcouponOption" data-options="width:190,height:32" data-flag="" name="CouponTypeID" type="text" value="">
+            </label>
+        </div>
+        
+        
+        <div class="commonSelectWrap"  id="_questintegralItem" style="display:none">
+        	<em class="tit">积分：</em>
+            <label class="selectBox">
+              <input data-text="积分"  class="easyui-numberbox" data-options="width:190,height:32,min:0,precision:0" id="Text4" name="Point"  type="text" value="">
+            </label>
+        </div>
+        
+        
+        
+        <div class="commonSelectWrap">
+            <em class="tit">奖品名称：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品名称" class="easyui-validatebox" id="Text5" data-options="required:true,width:190,height:32" data-flag="" name="PrizeName" type="text" value="">
+            </label>
+        </div>
+      
+        <div class="commonSelectWrap">
+            <em class="tit">奖品总数量：</em>
+            <label class="searchInput clearBorder">
+              <input data-text="奖品总数量" class="easyui-numberbox" id="Text6" data-options="required:true,width:190,height:32" data-flag="" name="CountTotal" type="text" value="">
+            </label>
+        </div>
+        
+        <p class="hint-exp">提示：奖品数量不能超过券的生成数量！</p>
+        </form>
+        
+        <div class="btnWrap">
+        	<a href="javascript:;" class="commonBtn saveBtn">保存</a>
+            <a href="javascript:;" class="commonBtn cancelBtn" style="margin-left:16px;">取消</a>
+        </div>
+    </div>
+</div>
+
+
      <!--大转盘奖品选择，弹出-->
 <div class="jui-dialog jui-dialog-Prizeselect" style="display:none">
 	<div class="jui-dialog-tit">
@@ -775,8 +873,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 <script id="tpl_prizeList" type="text/html">
 <#for(var i=0,idata;i<PrizeList.length;i++){ idata=PrizeList[i];#>
 <tr data-eventid="<#=idata.EventId#>" data-prizesid="<#=idata.PrizesID#>" data-num="<#=idata.CountTotal#>">
-	<td><#=idata.PrizeLevelName#></td>
-	<td><#=idata.PrizeName#></td>
+	<td><#=idata.PrizeName#><span style="display:none"><input class="Prizedata" data-coupontypeid="<#=idata.CouponTypeID #>" type="hidden" /></span></td>
 	<td class="numBox"><#=idata.CountTotal#></td>
 	<td><#=idata.IssuedQty#></td>
 	<td ><#=idata.RemainCount#></td>
@@ -790,7 +887,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 <script id="tpl_LuckyTurnprizeList" type="text/html">
 <#for(var i=0,idata;i<PrizeList.length;i++){ idata=PrizeList[i];#>
 <tr data-eventid="<#=idata.EventId#>" data-prizesid="<#=idata.PrizesID#>" data-num="<#=idata.CountTotal#>">
-	<td><#=idata.PrizeLevelName#></td>
+	<td><#=idata.PrizeLevelName#><span style="display:none"><input class="Prizedata" data-coupontypeid="<#=idata.CouponTypeID #>" type="hidden" /></span></td>
 	<td><#=idata.PrizeName#></td>
 	<td class="numBox"><#=idata.CountTotal#></td>
 	<td ><#=idata.RemainCount#></td>

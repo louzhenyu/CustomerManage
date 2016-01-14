@@ -16,9 +16,11 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             loadAlert:null,
             priceFilde:"item_price_type_name_",//数据库价格相关的字段，一般有销量库存，价格实体价格
             allData:{}, //页面所有存放对象基础数据
-			eventId:$.util.getUrlParam('EventID'),
+            eventId: $.util.getUrlParam('EventID'),
+            eventName:"",
+            DrawMethod:1,
 			jsonParams: {},
-			activiType: 1, //活动类型1:红包，2：大转盘，3：刮刮卡
+			activiType: 1, //活动类型1:红包，2：大转盘，3：刮刮卡,4:问卷
 			Prizeindex: 1, //大转盘奖项index
 			domain:''
         },
@@ -75,6 +77,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					          if(prams.PointsLottery == ''){
 					              prams.PointsLottery = 0;
 					          }
+
 					          that.setFirstStep(prams, function (DrawMethodId) {
 					              that.elems.optPanel.find("li").removeClass("on");
 					              that.elems.optPanel.find("li").eq(1).addClass("on");
@@ -85,7 +88,22 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					                  that.LuckyTurntable();
 					              //} else if (DrawMethodId == 1) {
 					              //    that.elems.activiType = 3;
-					              //    that.ScratchCard();
+					            //    that.ScratchCard();
+					                } else if (DrawMethodId == 5) {
+					                that.elems.activiType = 4;
+					                that.Questionnaire();
+					                that.getQuestionnaireList(function (data) {
+					                    $("#Questionnaires").combobox({
+					                        width: 132,
+					                        height: 34,
+					                        panelHeight: that.elems.panlH,
+					                        lines: true,
+					                        valueField: 'QuestionnaireID',
+					                        textField: 'QuestionnaireName',
+					                        data: data.Data.QuestionnaireList
+					                    });
+					                });
+
 					              }else{
 					                  $(".PrizeSet").hide();
 					                  $("#nav0_2").show();
@@ -207,6 +225,24 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					              var imgjson= Ext.decode(imgjsonstr);
 					              that.SavePrizeLocation(imgjson);
 					          }
+
+                              //花样问卷
+					          if (that.elems.activiType == 4) {
+					              var QN_text = $('#Questionnaires').combobox('getText');
+                                      QN_value = $('#Questionnaires').combobox('getValue');
+                                      leng = $('#QuestionnaireTable tbody tr td').length > 1;
+
+					              if (!leng) {
+					                  return $.messager.alert("提示", '请添加奖品信息！');
+					              } else if (!QN_value || QN_value=="") {
+					                  return $.messager.alert("提示", '请选择表单！');
+					              } 
+					              array = [
+                                             
+					              ];
+
+					              that.setSaveWxPrize(array, 1, "", QN_value, QN_text);
+					          }
 					          
 						}
 					  	that.elems.optPanel.find("li").removeClass("on");
@@ -265,6 +301,15 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
                 $('.jui-mask').show();
                 $('.jui-dialog-LuckyTurntable').show();
             });
+
+            //问卷奖品配置模块
+            $('#QuestionnaireaddBtn').bind('click', function () {
+
+                $("#Questionnaire").form('clear');
+                $('.jui-mask').show();
+                $('.jui-dialog-Questionnaire').show();
+            });
+
 			//上传图片路由
 			that.registerUploadImgBtn();
 			
@@ -294,6 +339,26 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					//console.log(prams);
 					that.setSavePrize(prams);
 				}
+			});
+            //问卷
+			$('.jui-dialog-Questionnaire .saveBtn').bind('click', function () {
+			    //保存奖品
+			    if ($('#Questionnaire').form('validate')) {//a03d28e78b2c18104d4812ba18a5c69b
+			        var prams = { action: 'SavePrize', EventId: that.elems.eventId },
+						fields = $('#Questionnaire').serializeArray();
+			        //console.log(fields);
+			        for (var i = 0; i < fields.length; i++) {
+			            var obj = fields[i];
+			            prams[obj['name']] = obj['value'];
+
+			            if (obj['name'] == 'Point' && obj['value'] == '') {
+			                prams[obj['name']] = 0;
+			            }
+
+			        }
+			        //console.log(prams);
+			        that.setSavePrize(prams);
+			    }
 			});
 
             //大转盘奖品选择提交
@@ -343,12 +408,13 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             //大转盘保存奖品end
 			
 			//追加
-			$('#prizeListTable,#LuckyTurnListTable').delegate('.addBtn', 'click', function () {
+			$('#prizeListTable,#LuckyTurnListTable,#QuestionnaireTable').delegate('.addBtn', 'click', function () {
 				var $this = $(this),
 					$tr = $this.parents('tr'),
 					$num = $('.numBox',$tr),
 					num = $num.text()-0,
 					prizesId = $tr.data('prizesid');
+				var CouponTypeID = $tr.find(".Prizedata").data("coupontypeid");
 				$('.jui-mask').show();
 				$('.jui-dialog-prizeCountAdd').show();
 				$('.jui-dialog-prizeCountAdd .saveBtn').unbind('click');
@@ -362,7 +428,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							action: 'AppendPrize',
 							EventId: that.elems.eventId,
 							CountTotal: addNum,
-							PrizesID: prizesId
+							PrizesID: prizesId,
+							CouponTypeID: CouponTypeID
 						},
 						success: function(data){
 							if(data.IsSuccess && data.ResultCode == 0) {
@@ -382,7 +449,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			
 			
 			//删除
-			$('#prizeListTable,#LuckyTurnListTable').delegate('.delBtn', 'click', function () {
+			$('#prizeListTable,#LuckyTurnListTable,#QuestionnaireTable').delegate('.delBtn', 'click', function () {
 				var $this = $(this),
 					$tr = $this.parents('tr'),
 					prizesId = $tr.data('prizesid');
@@ -595,12 +662,16 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 		setFirstStep:function(params,callback){
 			var that = this;
 			$.util.ajax({
-				url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
+			    url: that.elems.domain + "/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
+			    async: false,
 				data: params,
 				success: function(data){
 					if(data.IsSuccess && data.ResultCode == 0) {
-						//设置eventId
-						that.elems.eventId = data.Data.EventId;
+					    //设置eventId
+					    debugger;
+					    that.elems.eventId = data.Data.EventId;
+					    that.elems.DrawMethod = params.DrawMethodId;
+					    that.elems.eventName = params.Title;
 						if(callback){
 						    callback(params.DrawMethodId);
 						}
@@ -626,7 +697,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						
 					    //只显示大转盘和红包 start(要显示全部请把这段代码删除)
 						LEventDrawMethodList = 
-                            [{DrawMethodID:'2',DrawMethodName:'大转盘'},{DrawMethodID:'4',DrawMethodName:'红包'}]
+                            [{ DrawMethodID: '2', DrawMethodName: '大转盘' }, { DrawMethodID: '4', DrawMethodName: '红包' }, { DrawMethodID: '5', DrawMethodName: '花样问卷' }]
 					    
                         //只显示大转盘和红包end
                         
@@ -637,7 +708,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							lines:true,
 							valueField: 'DrawMethodID',
 							textField: 'DrawMethodName',
-							data:LEventDrawMethodList
+							data: LEventDrawMethodList,
+							onSelect: function (param) {
+							    
+							}
 						});
 						
 					}else{
@@ -654,6 +728,13 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 
 
 		},
+        //问卷
+		Questionnaire: function () {
+		    $(".PrizeSet").hide();
+		    $("#Questionnaire_form").show();
+
+
+		},
         //刮刮卡
 		ScratchCard: function () {
 		    $(".PrizeSet").hide();
@@ -662,13 +743,15 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 
 		},
         //获取奖品配置列表isLoadAll:是否初始化所有数据（否则只初始化奖品列表数据）
-		getPrizeList:function(isLoadAll){
+		getPrizeList: function (isLoadAll) {
+		    debugger;
 			var that = this;
 			$.util.ajax({
 				url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
 				data: {
 					action: 'GetStep2Info',
-					EventID: that.elems.eventId
+					EventID: that.elems.eventId,
+					DrawMethod: that.elems.DrawMethod
 				},
 				success: function (data) {
 				    debugger;
@@ -682,7 +765,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 
 						$(".PrizeseOption").html('');
 						if (prizeList) {
-						    if (that.elems.activiType == 1) {
+						    if (that.elems.activiType == 1 || that.elems.activiType == 4) {
 						        html = bd.template("tpl_prizeList", result);
 						    }
 
@@ -691,6 +774,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						        html = bd.template("tpl_LuckyTurnprizeList", result);
 
 						    }
+
 
 						    that.GetPrizeLocationList();
 
@@ -713,6 +797,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						 if (that.elems.activiType == 2) {
 						     $('#LuckyTurnListTable tbody').html(html);
 						 }
+
+						 if (that.elems.activiType == 4) {
+						     $('#QuestionnaireTable tbody').html(html);
+						 }
                          
 					    //初始化奖品列表数据end
 
@@ -722,6 +810,13 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						     $(".PrizeseOption .radio").removeClass("on");
 						     $this.addClass("on");
 						 });
+
+						 if (that.elems.activiType == 4) {
+						     debugger;
+						     if (result.QuestionnaireID && result.QuestionnaireID != "") {
+						         $("#Questionnaires").combobox("setValue", result.QuestionnaireID);
+						     }
+						 }
 
 					    //初始化图片数据start
 						 if (isLoadAll) {
@@ -881,6 +976,33 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						});
 
 					    //大转盘end
+
+
+					    //问卷start
+						$('#questprizeOption').combobox({
+						    width: 190,
+						    height: that.elems.height,
+						    panelHeight: that.elems.panlH,
+						    lines: true,
+						    valueField: 'PrizeTypeCode',
+						    textField: 'PrizeTypeName',
+						    data: PrizeTypeList,
+						    onSelect: function (param) {
+						        var $couponItem = $('#_questcouponOption'),
+									$integralItem = $('#_questintegralItem');
+						        $couponItem.hide();
+						        $integralItem.hide();
+						        if (param.PrizeTypeCode == 'Point') {
+						            $integralItem.show();
+						        } else if (param.PrizeTypeCode == 'Coupon') {
+						            //获取优惠券列表
+						            that.getCouponList();
+						            $couponItem.show();
+						        }
+						    }
+						});
+
+					    //问卷end
 					}else{
 						alert(data.Message);
 					}
@@ -910,6 +1032,16 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						});
 
 						$('#LTcouponOption').combobox({
+						    width: 190,
+						    height: that.elems.height,
+						    panelHeight: that.elems.panlH,
+						    lines: true,
+						    valueField: 'CouponTypeID',
+						    textField: 'CouponTypeName',
+						    data: CouponTypeList
+						});
+
+						$('#questcouponOption').combobox({
 						    width: 190,
 						    height: that.elems.height,
 						    panelHeight: that.elems.panlH,
@@ -1069,16 +1201,20 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
                 uploadbutton.submit();
             });
         },
-		setSaveWxPrize:function(param,ruleId,ruleContent){
+        setSaveWxPrize: function (param, ruleId, ruleContent, QuestionnaireID, QuestionnaireName) {
 			var that = this;
 			$.util.ajax({
 				url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
 				data: {
 					action : 'SaveEventStep2',
-					EventID : that.elems.eventId,
+					EventID: that.elems.eventId,
+					EventName: that.elems.eventName,
 					ItemImageList : param,
 					RuleContent:ruleContent,
-					RuleId:ruleId
+					RuleId: ruleId,
+					DrawMethod: that.elems.DrawMethod,
+					QuestionnaireID: QuestionnaireID,
+					QuestionnaireName: QuestionnaireName
 				},
 				success: function(data){
 					if(data.IsSuccess && data.ResultCode == 0){
@@ -1106,6 +1242,31 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 		                }
 		            }
 		        });
+		},
+		getQuestionnaireList: function (callback) {//获取问卷数据
+		    debugger;
+		    var that = this;
+		    $.util.ajax({
+		        url: "/ApplicationInterface/Gateway.ashx",
+		        async: false,
+		        data: {
+		            action: 'Questionnaire.Questionnaire.GetQuestionnaireList',
+		            PageSize: 100,
+		            PageIndex: 1
+		        },
+		        success: function (data) {
+		            if (data.IsSuccess && data.ResultCode == 0) {
+		                var result = data.Data;
+		                if (callback) {
+		                    callback(data);
+		                }
+
+		            } else {
+		                debugger;
+		                alert(data.Message);
+		            }
+		        }
+		    });
 		},
 		GetPrizeLocationList: function () {//根据EventID获取奖品位置列表
 		    var that = this;

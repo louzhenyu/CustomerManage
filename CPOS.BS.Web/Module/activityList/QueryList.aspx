@@ -13,9 +13,10 @@
 .commonSelectWrap .tit{width:102px;}
 .moreQueryWrap .queryBtn{width:72px;margin:3px 70px 0 0;}
 
-.datagrid-btable .handle{width:100%;height:39px;line-height:38px;cursor:pointer;}
+.datagrid-btable .handle{width:25px;height:39px;line-height:38px;cursor:pointer;  display: inline-block;}
 .datagrid-btable .delete{background:url(images/delete.png) no-repeat center center;}
 .datagrid-btable .running{background:url(images/running.png) no-repeat center center;}
+.datagrid-btable .detail{background:url(images/detail.png) no-repeat center center;}
 .datagrid-btable .pause{background:url(images/pause.png) no-repeat center center;}
 .datagrid-btable .down{background-repeat:no-repeat;background-position:center center;}
 

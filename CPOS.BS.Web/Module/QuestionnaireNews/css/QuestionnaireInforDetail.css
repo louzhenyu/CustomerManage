@@ -1,0 +1,43 @@
+﻿@charset "utf-8";
+
+.inlineBlockArea {display: inline-block;width: 100%;padding: 21px 0;min-width: 1000px;}
+
+.commonSelectWrap {  height: auto;  width: 100%;  margin: 20px;}
+.leftContent { width: 50%;float: left;}
+.leftContent .title {margin: 20px;font-size: 20px;color: #666;}
+.leftContent .title span{}
+.leftContent .optinlist {}
+.leftContent .optinlist .option {  padding: 10px;  font-size: 16px;}
+.leftContent .optinlist .option div {display:inline-block;width:80%;margin: 0px 8px;background-color: #ebebeb;border-radius: 20px; }
+.leftContent .optinlist .option span{  background-color: red;display: inline-block;height: 15px;width: 50%;border-radius: 10px;background-image:url(../images/optionbgcolor.png);  }
+.leftContent .optinlist .option:nth-of-type(1) span{background-color: #c6e48c;}
+.leftContent .optinlist .option:nth-of-type(2) span{background-color: #95c6ef;}
+.leftContent .optinlist .option:nth-of-type(3) span{background-color: #ffca60;}
+.leftContent .optinlist .option:nth-of-type(4) span{background-color: #fc958c;}
+.leftContent .optinlist .option:nth-of-type(5) span{background-color: #ffca60;}
+.leftContent .optinlist .option:nth-of-type(6) span{background-color: #0026ff;}
+.leftContent .optinlist .option:nth-of-type(7) span{background-color: #b200ff;}
+.leftContent .optinlist .option:nth-of-type(8) span{background-color: #ffd800;}
+.rightContent { width: 50%;float: left;}
+.rightContent .title {padding: 20px;font-size: 20px;color: #666;  width: 80%;border: 1px solid #e5e5e5;  background-color: #ebebeb;}
+.rightContent .title span{float: right;}
+.rightContent .optinlist {}
+.rightContent .optinlist .option {  padding: 10px;  font-size: 16px;  width: 80%;border: 1px solid #e5e5e5;border-top: none;}
+.rightContent .optinlist .option span{float: right;}
+
+
+.navtit{float: left;width: 50%;font-size: 20px;cursor: pointer;text-align: center;line-height: 75px;  border: 1px solid #d8d8d8;}
+
+.navtit:nth-of-type(1){border-top-left-radius: 20px;}
+.navtit:nth-of-type(2){border-top-right-radius: 20px;}
+.selected {background-color:#fbfbfb;}
+.queryTermArea{display: inline-block; width: 100%;padding: 0px;background-color:#f2f2f2;border-top-left-radius: 20px;border-top-right-radius: 20px;}
+.contentArea_quetion {  width: 95%;margin: 31px auto;border: 1px solid #d8d8d8;  border-top-left-radius: 20px;border-top-right-radius: 20px;}
+.questiontitle {  display: block;line-height: 50px;background-color: #fafafa;border: 1px solid #d8d8d8;  font-size: 20px;padding-left: 40px;}
+.questiontitle span{display: block;
+  width: 8px;
+  height: 18px;
+  margin-top: 16px;
+  background-color: #00cccc;
+  margin-right: 10px;
+  float: left;}
