@@ -2192,6 +2192,7 @@
     </Compile>
     <Compile Include="ApplicationInterface\Module\Coupon\Grant\GrantCouponAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetApiVipServicesLogListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetCustomerBasicSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\SetApiVipServicesLogAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\ContactPrizeAH.cs" />
