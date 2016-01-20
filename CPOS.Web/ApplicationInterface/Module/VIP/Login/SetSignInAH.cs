@@ -79,7 +79,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             rd.CustomerId = customerId;
 
             #endregion
-
+            //如果状态不等于1，就说明已经停用，
+            if (rd.Status != 1)
+            {
+                throw new APIException("该员工已经被停用，请联系管理员") { ErrorCode = Error_Password_InValid };
+            }
 
 
             #region 获取角色列表
