@@ -112,6 +112,7 @@
                                                    <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="ReturnAmount"/>
 
                                                 </div>
+                                                <p class="fontColor">(*请在支付宝或者微信支付中输入此单号查询完成退款)</p>
                                             </div>
 
 
