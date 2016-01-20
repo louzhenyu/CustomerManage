@@ -50,8 +50,18 @@
             });
             that.elems.operation.delegate("li","click",function(e){
                 that.elems.operation.find("li").removeClass("on");
+                $(".optionCheck").hide();
+                var value=$(this).data("field7").toString();
+                $(".optionCheck").each(function(){
+                    console.log($(this).data("show"));
+                   if($.inArray(value, $(this).data("show").split(","))!=-1){
+                       $(this).show();
+                   }
+                });
                 $(this).addClass("on");
                 that.loadPageData();
+
+
             });
             that.elems.optionBtn.delegate(".commonBtn","click",function(e){
               var type=$(this).data("flag");
@@ -64,7 +74,7 @@
 
                 }
                 if(type=="add"){
-                    that.cancelOrder();
+                    //that.cancelOrder();
                     if(that.elems.tabel.datagrid("getChecked").length>0){
                         that.cancelOrder();
                     }  else{
@@ -72,6 +82,32 @@
                     }
 
                 }
+                if(type=="batch"){
+                    that.elems["isHide"]=false;
+                    if(that.elems.tabel.datagrid("getChecked").length>0){
+                           $(this).find(".panelTab").show();
+                    }else{
+                        alert("至少选择一笔订单");
+                    }
+                }
+            }).delegate(".panelTab","mouseleave",function(){
+                   $(this).hide();
+            }).delegate(".panelTab p","mouseleave",function(){
+                    //$(this).parent().find("p").removeClass("on");
+                $(this).removeClass("on");
+            }).delegate(".panelTab p","mouseenter",function(e){
+
+                //$(this).addClass("on");
+                $(this).addClass("on");
+            }).delegate(".panelTab p","click",function(){
+                that.elems.optionType=$(this).data("optiontype");
+               var data= that.elems.tabel.datagrid("getChecked");
+                that.loadData.operation(data,that.elems.optionType,function(data){
+                    alert(data.Data.Message);
+                    //$('#win').window('close');
+                    that.loadPageData();
+
+                });
             });
             $('#sales').tooltip({
                 content: function(){
@@ -109,7 +145,7 @@
                 }]
             });
 
-            that.loadData.getFromList(function(data){
+            that.loadData.getPayMentList(function(data){
                 debugger;
                 data.topics.push({ "PaymentTypeID": -1, PaymentTypeName: "请选择", "selected": true });
 
@@ -125,9 +161,9 @@
                     width:wd,
                     height:H,
                     panelHeight:that.elems.panlH,
-                    valueField: 'Id',
-                    textField: 'Description',
-                    data:data.data
+                    valueField: 'PaymentTypeID',
+                    textField: 'PaymentTypeName',
+                    data:data.topics
                 });
             });
 
@@ -281,7 +317,7 @@
                             }
                         }
                     },
-                    {field : 'DeliveryName',title : '配送方式',width:120,align:'center',resizable:false},
+                    /*{field : 'DeliveryName',title : '配送方式',width:120,align:'center',resizable:false},*/
                     {field : 'vip_name',title : '会员信息',width:120,align:'left',resizable:false,
                         formatter:function(value,row,index){
 
@@ -290,7 +326,7 @@
                         }
                     },
 
-                    {field : 'data_from_name',title : '订单渠道',width:100,align:'left',resizable:false},
+                    /*{field : 'data_from_name',title : '订单渠道',width:100,align:'left',resizable:false},*/
                     {field : 'Field1',title : '付款状态',width:100,align:'left',resizable:false,
                         styler: function(index,row){
                             /* status: "700"
@@ -429,7 +465,7 @@
         cancelOrder:function(data){
             var that=this;
             that.elems.optionType="setunit";
-            $('#win').window({title:"取消订单",width:360,height:260});
+            $('#win').window({title:"选择配送门店",width:360,height:260});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_setUnit');
@@ -512,10 +548,18 @@
             },
             //导出订单列表
             exportOderList: function () {
+                page.setCondition();
                 var getUrl = '/Module/Order/InoutOrders/Handler/Inout3Handler.ashx?method=Export_lj&Field7='+this.args.Field7+'&param='+JSON.stringify(this.seach.form);//&req=';
+                getUrl+="&start="+this.args.start;
+                getUrl+="&limit="+5000*15;
+                getUrl+="&sales_unit_id="+this.seach.sales_unit_id;
                 var data = {
-                    Field7:this.args.Field7,
-                    param:this.seach.form
+                    sales_unit_id:this.seach.sales_unit_id,
+                    Field7:this.seach.Field7,
+                    page:5000,
+                    start:this.args.start,
+                    limit:5000*15,
+                    form:this.seach.form
                 };
                 this.exportExcel(data, getUrl);
             },
@@ -564,6 +608,33 @@
                     }
                 });
             },
+            getPayMentList: function (callback) {   //获取支付方式
+                $.util.oldAjax({
+                    url: "/Module/PayMent/Handler/PayMentHander.ashx",
+                    data:{
+                        QueryStringData:{
+                            mid:__mid
+                        },
+                        form:{
+                            "Payment_Type_Name": "",
+                            "Payment_Type_Code": "",
+                            "IsOpen":"true"
+                        },
+                        page: 1,
+
+                        action:"getPayMentTypePage"
+                    },
+                    success: function (data) {
+                        if (data) {
+                            if (callback)
+                                callback(data);
+                        }
+                        else {
+                            alert("支付方式加载异常");
+                        }
+                    }
+                });
+            },
             get_unit_tree: function (callback) {
                 $.ajax({
                     url: "/Framework/Javascript/Biz/Handler/UnitSelectTreeHandler.ashx?method=get_unit_tree&parent_id=&_dc=1433225205961&node="+this.getUitTree.node+"&multiSelect=false&isSelectLeafOnly=false&isAddPleaseSelectItem=false&pleaseSelectText=--%E8%AF%B7%E9%80%89%E6%8B%A9--&pleaseSelectID=-2",
@@ -584,39 +655,74 @@
             operation:function(pram,operationType,callback){
                 debugger;
                 var prams={data:{action:"",QueryStringData:{}}};
-                prams.url="/Module/Order/InoutOrders/Handler/Inout3Handler.ashx";
+
                 //根据不同的操作 设置不懂请求路径和 方法
+               if(operationType=="setunit") {
+                   prams.url="/Module/Order/InoutOrders/Handler/Inout3Handler.ashx";
+                   $.each(pram.fields, function (index, filed) {
 
-                $.each(pram.fields,function (index,filed) {
-
-                    prams.data.QueryStringData[filed.name] = filed.value;
-                });
-                if(pram.rowData.length>0){
-                    prams.data.QueryStringData["orderList"]="'"+pram.rowData[0].order_no+"'";
-                    for(var i=1;i<pram.rowData.length;i++){
-                        prams.data.QueryStringData["orderList"]+=","+"'"+pram.rowData[0].order_no+"'";
-                    }
-                }
+                       prams.data.QueryStringData[filed.name] = filed.value;
+                   });
+                   if (pram.rowData.length > 0) {
+                       prams.data.QueryStringData["orderList"] = "'" + pram.rowData[0].order_no + "'";
+                       for (var i = 1; i < pram.rowData.length; i++) {
+                           prams.data.QueryStringData["orderList"] += "," + "'" + pram.rowData[0].order_no + "'";
+                       }
+                   }
+               } else{
+                   prams={data:{action:"",OrderList:[]}};
+                   prams.url="/ApplicationInterface/Gateway.ashx"
+                   if (pram.length > 0) {
+                       for (var i = 0; i < pram.length; i++) {
+                           prams.data.OrderList.push({OrderID:pram[i].order_id,Status:pram[i].status});
+                       }
+                   }
+               }
+                var isSubMit=true;
                 switch(operationType){
-                    case "setunit":prams.data.action="SetUnit";  //上架
+                    case "setunit":prams.data.action="SetUnit";
+                        isSubMit=false;
                         break;
-
+                    case "audit":prams.data.action="Order.OperatingOrder.BatchCheckOrder";   //审核
+                        break;
+                    case "shipments":prams.data.action="Order.OperatingOrder.BatchInvalidShip";   //发货
+                        break;
+                    case "cancel":prams.data.action="Order.OperatingOrder.BatchInvalidOrder";   //取消
+                        break;
                 }
+                if(isSubMit) {
+                    $.util.ajax({
+                        url: prams.url,
+                        data: prams.data,
+                        success: function (data) {
+                            if (data.IsSuccess) {
+                                if (callback) {
+                                    callback(data);
+                                }
 
-
-                $.util.oldAjax({
-                    url: prams.url,
-                    data:prams.data,
-                    success: function (data) {
-                        if (data.success ) {
-                            if (callback) {
-                                callback(data);
+                            } else {
+                                $.messager.alert("操作失败提示", data.Message);
                             }
-                        } else {
-                            $.messager.alert("提示",data.msg);
+                        }, error: function (data) {
+                            $.messager.alert("操作失败提示", data.Message);
+                            console.log("日志:" + operationType + "请求接口异常");
                         }
-                    }
-                });
+                    });
+                }else {
+                    $.util.oldAjax({
+                        url: prams.url,
+                        data: prams.data,
+                        success: function (data) {
+                            if (data.success) {
+                                if (callback) {
+                                    callback(data);
+                                }
+                            } else {
+                                $.messager.alert("提示", data.msg);
+                            }
+                        }
+                    });
+                }
             }
 
 

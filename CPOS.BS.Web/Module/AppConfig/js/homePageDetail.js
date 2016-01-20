@@ -3310,9 +3310,17 @@
                                     self.ele.activityLayer.hide();
                                     self.mask.hide();
                                     $.messager.confirm("提示","没有对应的活动分组，确认添加新的活动分组吗？",function(r){
-                                              if(r){
-                                                  location.href = "/module/GroupBuy/GroupList.aspx?pageType="+self.categoryLayer.shopType+"&mid="+ $.util.getUrlParam("mid")
-                                              }
+                                        if (r) {
+                                            var pageName = "";
+                                            if (self.categoryLayer.shopType == 1) {
+                                                pageName = "团购";
+                                            }
+
+                                            if (self.categoryLayer.shopType == 2) {
+                                                pageName = "抢购";
+                                            }
+                                            location.href = "/module/GroupBuy/GroupList.aspx?pageType=" + self.categoryLayer.shopType + "&mid=" + $.util.getUrlParam("mid") + "&pageName=" + pageName;
+                                        }
                                     })
                                 }
                                 $("#layerActivityLayer").html(html);
