@@ -6,12 +6,12 @@
     <title>配送商管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="css/style.css?v=0.4" rel="stylesheet" type="text/css" />
+    <link href="css/style.css?v=0.5" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.3">
+        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.4">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
@@ -62,7 +62,7 @@
             <div class="commonSelectWrap selectName">
             <em class="tit"></em>
                                       <div class="selectBox">
-                                         <input type="text" name="LogisticsID" id="selectList" data-options="width:160,height:32,required:true,editable:false" class="easyui-combobox"  />
+                                         <input type="text" name="LogisticsID" id="selectList" data-options="width:160,height:32,required:true,editable:false" class="easyui-combobox"/>
                                      </div>
                                  </div>
           <div class="commonSelectWrap">

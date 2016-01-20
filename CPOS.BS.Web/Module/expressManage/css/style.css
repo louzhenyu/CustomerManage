@@ -12,3 +12,5 @@
 #kkpager{ clear:none}
 .commonSelectWrap .wh80{ width: 80px;}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+#addExpress{padding:0 50px;}
+#addExpress .commonSelectWrap{display:block;float:none;}

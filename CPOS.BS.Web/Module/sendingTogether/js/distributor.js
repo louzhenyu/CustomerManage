@@ -55,14 +55,7 @@
                     //idField : 'Item_Id', //主键字段
                     /*  pageNumber:1,*/
                     columns : [[
-
-                        {field : 'RetailTraderID',title : '操作',width:200,align:'center',resizable:false,
-                            formatter:function(value ,row,index){
-                               var status=row.Status==1?"停用":'启用'; //操作按钮文字 如果为1 分销商是正常 需要停用。反之亦然
-                                return '<div class="rowText" data-index="'+index+'"> <em class="fontC"data-opttype="status">'+status+'</em> <em class="fontC" data-opttype="setReward">设置奖励</em></div>'
-                            }
-                        },
-                        {field : 'RetailTraderName',title : '商家名称',width:301,align:'left',resizable:false,
+                        {field : 'RetailTraderName',title : '商家名称',width:200,align:'left',resizable:false,
                             formatter:function(value ,row,index){
                                 var long=56;
                                 if(value&&value.length>long){
@@ -73,7 +66,7 @@
                             }
                         },
 
-                        {field : 'RetailTraderAddress',title : '地址',width:301,align:'left',resizable:false,
+                        {field : 'RetailTraderAddress',title : '地址',width:250,align:'left',resizable:false,
                             formatter:function(value ,row,index){
                                 var long=56;
                                 if(value&&value.length>long){
@@ -84,20 +77,22 @@
                             }
                         },
 
-                        {field : 'RetailTraderMan',title:"联系人",width:200,align:'center',resizable:false},
-                        {field : 'VipCount',title : '会员数',width:100,align:'center',resizable:false},
-                        {field : 'EndAmount',title : '余额(元)',width:100,align:'center',resizable:false},
-                        {field : 'CooperateType',title : '活动类型',width:100,align:'center',resizable:false,
+                        {field : 'RetailTraderMan',title:"联系人",width:80,align:'center',resizable:false},
+                        {field : 'VipCount',title : '集客数',width:80,align:'center',resizable:false},
+                        {field : 'EndAmount',title : '可提现金额',width:100,align:'center',resizable:false},
+                        {field : 'CooperateTypeDesc',title : '活动类型',width:220,align:'center',resizable:false,
                             formatter:function(value ,row,index){
-                                var status="";
+								/*
+								var status="";
                                 switch (value){
                                     case "TwoWay": status="互相集客" ;break;
                                     case "OneWay" : status="单向集客" ;break;
                                 }
-                                return status;
+								*/
+                                return value;
                             }
                         },
-                        {field : 'UnitName',title : '所属门店',width:281,align:'center',resizable:false,
+                        {field : 'UnitName',title : '所属门店',width:150,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                             var long=16;
                             if(value&&value.length>long){
@@ -117,12 +112,20 @@
                                 return "<p style='color: #fc7a52'> "+status+" </p>";
                             }
                         },
+						{field : 'RetailTraderID',title : '操作',width:200,align:'center',resizable:false,
+                            formatter:function(value ,row,index){
+                               var status=row.Status==1?"停用":'启用', //操作按钮文字 如果为1 分销商是正常 需要停用。反之亦然
+							   	   iconSrc=row.Status==1?"images/icon-pause.png":'images/icon-start.png';
+                                return '<div class="rowText" data-index="'+index+'"> <em class="fontC" data-opttype="status" title="'+status+'">'+'<img src="'+iconSrc+'">'+'</em> <em class="fontC" data-opttype="setReward" title="设置奖励"><img src="images/icon-setting.png"></em><em data-index="'+index+'" title="分销二维码下载"><span class="fontC" data-opttype="down"><img src="images/icon-qrDown.png"></span></em><em data-index="'+index+'" title="全部分销商品下载"><span class="fontC" data-opttype="packdown"><img src="images/icon-packDown.png"></span></em></div>'
+                            }
+                        }
+						/*
                         {field : 'QRImageUrl',title : '二维码',width:100,align:'center',resizable:false
                             ,formatter:function(value ,row,index){
                             return '<div class="rowText" data-index="'+index+'" ><div class="fontC" data-opttype="down">下载</div></div>';
                         }
                         }
-
+						*/
 
 
 
@@ -192,13 +195,15 @@
         },
         windowsLoadData:function(type){
             var that=this;
-            if(type.toLocaleLowerCase()=="oneway") {
+            if(type.toLocaleLowerCase()=="oneway"){
+				that.loadData.args.CooperateType="oneway" ;
                 that.loadData.GetSysRetailRewardRule(function (data) {
                     debugger;
                     if (data.Data.SysRetailRewardRuleList && data.Data.SysRetailRewardRuleList.length > 0) {
                         var SysRetailRewardRuleList = data.Data.SysRetailRewardRuleList;
                         var fields = $("#addOneWay").serializeArray();
-                        var loadData = {}
+                        var loadData = {},
+							loadData2={};
                         $.each(fields, function (index, field) {
                             for (var i = 0; i < SysRetailRewardRuleList.length; i++) {
                                 var item = SysRetailRewardRuleList[i];
@@ -212,8 +217,15 @@
                                     if (field.name.indexOf("RetailRewardRuleID") != -1) {  //不同类别的分销商奖励
                                         loadData[field.name] = SysRetailRewardRuleList[i]["RetailRewardRuleID"];
                                     }
-
                                 }
+								//是否选择引流 或者 销售模块
+								if(item.CooperateType == 'Sales' && item.Status == 1){
+									loadData2 = item;
+									$('#marketTag').addClass('on');
+								}
+								if(item.CooperateType == 'OneWay'){
+									$('#drainageTag').addClass('on');
+								}
 
                             }
 
@@ -222,6 +234,7 @@
 
                         debugger;
                         $("#addOneWay").form('load', loadData);
+						$('#addSalseWay').form('load',loadData2);
 
                     }
                     $("[data-show='oneway'].radio").trigger("click");
@@ -234,7 +247,8 @@
                     if (data.Data.SysRetailRewardRuleList && data.Data.SysRetailRewardRuleList.length > 0) {
                         var SysRetailRewardRuleList = data.Data.SysRetailRewardRuleList;
                         var fields = $("#addTwoWay").serializeArray();
-                        var  loadData={}
+                        var loadData={},
+							loadData2={};
                         $.each(fields, function (index, field) {
                             for (var i = 0; i < SysRetailRewardRuleList.length; i++) {
                                 var item = SysRetailRewardRuleList[i];
@@ -250,6 +264,14 @@
                                     }
 
                                 }
+								//是否选择引流 或者 销售模块
+								if(item.CooperateType == 'Sales' && item.Status == 1){
+									loadData2 = item;
+									$('#marketTag').addClass('on');
+								}
+								if(item.CooperateType == 'TwoWay'){
+									$('#drainageTag').addClass('on');
+								}
 
                             }
 
@@ -258,6 +280,7 @@
 
                         debugger;
                         $("#addTwoWay").form('load',loadData);
+						$('#addSalseWay').form('load',loadData2);
 
                     }
                     $("[data-show='twoway'].radio").trigger("click");
@@ -267,7 +290,7 @@
         setReward:function(data){
             var that=this;
             that.elems.optionType="setReward";
-            $('#win').window({title:"分销商设置奖励",width:656,height:530,top: ($(window).height()-530)/2, left:($(window).width()-656)/2});
+            $('#win').window({title:"奖励设置",width:725,height:753,top:50,left:($(window).width()-725)/2});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_setReward');
@@ -280,7 +303,11 @@
             $('#win').window('open');
               debugger;
            that.loadData.args.RetailTraderID=data.RetailTraderID;
-            that.windowsLoadData(data.CooperateType);//表单赋值
+		   
+		   setTimeout(function(){
+		   	  that.windowsLoadData(data.CooperateType);//表单赋值
+		   },1000);
+           
 
 
         },
@@ -336,6 +363,21 @@
         },
         initEvent: function () {
             var that=this;
+			//奖励设置-监听复选框事件
+			$('#win').delegate('.checkBoxTag','click',function(){
+				var $this = $(this);
+				if($this.hasClass('on')){
+					$this.removeClass('on');
+				}else{
+					$this.addClass('on');
+				}
+			});
+			
+			
+			
+			
+			
+			
             $("#cc").combobox({//
                 valueField:'id',
                 textField:'text',
@@ -439,17 +481,23 @@
             $('#win').delegate(".saveBtn","click",function(e){
                 debugger
                 var type=$("[data-cooperatetype].on").data("cooperatetype"), fields=[],isSubmit=false;
-                if(type=="OneWay"){
-                    if($("#addOneWay").form("validate")){
-                        isSubmit=true;
-                        fields=$("#addOneWay").serializeArray();
-                    }
-                }else if(type=="TwoWay") {
-                    if ($("#addTwoWay").form("validate")) {
-                        isSubmit = true;
-                        fields = $("#addTwoWay").serializeArray();
-                    }
-                }
+				if($('#drainageTag').hasClass('on')){
+					if(type=="OneWay"){
+						if($("#addOneWay").form("validate")){
+							isSubmit=true;
+							fields=$("#addOneWay").serializeArray();
+						}
+					}else if(type=="TwoWay") {
+						if ($("#addTwoWay").form("validate")) {
+							isSubmit = true;
+							fields = $("#addTwoWay").serializeArray();
+						}
+					}
+				}
+				
+				if($('#marketTag').hasClass('on')){
+				    isSubmit = true;
+			    }
 
                 if(isSubmit) {
                     that.loadData.operation(fields, that.elems.optionType, function () {
@@ -457,7 +505,12 @@
                         $("#win").window("close");
                         that.renderTable();
                     })
-                }
+                }else{
+					$('.tipsBottomBox').show();
+			   		setTimeout(function(){
+						$('.tipsBottomBox').hide();
+					},1000);
+			   }
 
             });
             /**************** -------------------弹出窗口初始化 end****************/
@@ -491,6 +544,15 @@
                         //that.saveit(downloadFile);
                         that.downloadFile('1111111.jpg',row.QRImageUrl);
                         break;
+						
+					case "packdown"://全部分销商品下载
+                       // window.location.href=row.QRImageUrl;
+                        new Image().src=row.QRImageUrl;
+                       //that.saveit('images/duihao.png');
+
+                        //that.saveit(downloadFile);
+                        that.downloadFile('222222.jpg',row.QRImageUrl);
+                        break;
                 }
 
             });
@@ -503,7 +565,7 @@
             args: {
                 bat_id:"1",
                 PageIndex: 1,
-                PageSize:15,
+                PageSize:10,
                 RetailTraderID:'',
                 bat_id:"1",
                 CooperateType:"OneWay",
@@ -593,7 +655,8 @@
             },
             operation:function(pram,operationType,callback){
                 debugger;
-                var prams={data:{action:""}};
+                var prams={data:{action:""}},
+					SysRetailRewardRuleList = [];
                 prams.url="/ApplicationInterface/AllWin/RetailTrader.ashx";
                 //根据不同的操作 设置不懂请求路径和 方法
 
@@ -611,31 +674,60 @@
                         //根据不同的操作 设置不懂请求路径和 方法
 
                         prams.data["IsTemplate"]="0";    //模板保存
-                        var SysRetailRewardRuleList=[
-                            {"RewardTypeName":"首次关注奖励","RewardTypeCode":"FirstAttention","AmountOrPercent":"1"},
-                            {"RewardTypeName":"首笔交易奖励","RewardTypeCode":"FirstTrade","AmountOrPercent":"2"},
-                            {"RewardTypeName":"会员关注3个月内消费获得奖励","RewardTypeCode":"AttentThreeMonth","AmountOrPercent":"2"}
-                        ];
-
-                        prams.data["CooperateType"]=$("[data-cooperatetype].on").data("cooperatetype");
-                        $.each(pram, function (index, field) {
-                            //   "SellUserReward":"5","RetailTraderReward":"5",
-                            for(var i=0;i<SysRetailRewardRuleList.length;i++){
-                                var item= SysRetailRewardRuleList[i];
-                                if(field.name.indexOf(item.RewardTypeCode)!=-1){    //确定是那个类别的
-                                    if(field.name.indexOf("SellUserReward")!=-1) {         //不同类别的销售员奖励
-                                        SysRetailRewardRuleList[i]["SellUserReward"]=field.value;
-                                    }
-                                    if(field.name.indexOf("RetailTraderReward")!=-1) {  //不同类别的分销商奖励
-                                        SysRetailRewardRuleList[i]["RetailTraderReward"]=field.value;
-                                    }
-                                    if (field.name.indexOf("RetailRewardRuleID") != -1) {  //不同分销商的不同类别奖励模板ID
-                                        SysRetailRewardRuleList[i]["RetailRewardRuleID"]=field.value;
-                                    }
-                                }
-
-                            }
-                        });
+						//判断是否选择引流模块
+						if($('#drainageTag').hasClass('on')){
+							var cooperateType = $("[data-cooperatetype].on").data("cooperatetype");
+							SysRetailRewardRuleList=[
+								{"CooperateType":cooperateType,"RewardTypeName":"首次关注奖励","RewardTypeCode":"FirstAttention","AmountOrPercent":"1"},
+								{"CooperateType":cooperateType,"RewardTypeName":"首笔交易奖励","RewardTypeCode":"FirstTrade","AmountOrPercent":"2"},
+								{"CooperateType":cooperateType,"RewardTypeName":"会员关注3个月内消费获得奖励","RewardTypeCode":"AttentThreeMonth","AmountOrPercent":"2"}
+							];
+	
+							//prams.data["CooperateType"]=$("[data-cooperatetype].on").data("cooperatetype");
+							$.each(pram, function (index, field) {
+								//   "SellUserReward":"5","RetailTraderReward":"5",
+								for(var i=0;i<SysRetailRewardRuleList.length;i++){
+									var item= SysRetailRewardRuleList[i];
+									if(field.name.indexOf(item.RewardTypeCode)!=-1){    //确定是那个类别的
+										if(field.name.indexOf("SellUserReward")!=-1) {         //不同类别的销售员奖励
+											SysRetailRewardRuleList[i]["SellUserReward"]=field.value;
+										}
+										if(field.name.indexOf("RetailTraderReward")!=-1) {  //不同类别的分销商奖励
+											SysRetailRewardRuleList[i]["RetailTraderReward"]=field.value;
+										}
+										if (field.name.indexOf("RetailRewardRuleID") != -1) {  //不同分销商的不同类别奖励模板ID
+											SysRetailRewardRuleList[i]["RetailRewardRuleID"]=field.value;
+										}
+									}
+	
+								}
+							});
+						}
+						
+						
+						
+						//判断是否选择销售模块
+						//if($('#marketTag').hasClass('on')){
+						   if($('#addSalseWay').form("validate")) {
+							   var salseField = $("#addSalseWay").serializeArray(),
+								   saleaObj = {"CooperateType":"Sales","RewardTypeName":"销售奖励","RewardTypeCode":"Sales","AmountOrPercent":"2"};
+							   if($('#marketTag').hasClass('on')){
+								   $.each(salseField,function(index,field) {
+										saleaObj[field.name] = field.value;
+								   });
+							   }else{
+								   $.each(salseField,function(index,field) {
+										saleaObj[field.name] = 0;
+								   });
+							   }	   
+							   
+							   SysRetailRewardRuleList.push(saleaObj);
+						   }
+						//}
+						//console.log(SysRetailRewardRuleList);
+						
+						
+						
                         prams.data["SysRetailRewardRuleList"]= SysRetailRewardRuleList;
 
                         prams.data["RetailTraderID"]=this.args.RetailTraderID;

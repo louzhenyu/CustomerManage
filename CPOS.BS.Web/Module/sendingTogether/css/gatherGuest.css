@@ -2,15 +2,14 @@
 
 
 
-.listBtn{ width: 170px; height: 50px; float: left;cursor: pointer; text-align: center; line-height: 23px; color: #666; font-size: 16px; background: #fff; position: relative; margin-left: 50px; border:1px solid #e1e1e1 }
-.listBtn .on{ background:url("../images/duihao.png") no-repeat; width: 18px; height: 18px; position:absolute; right: 0; bottom: 0;display: none}
+.listBtn{height:59px;line-height:58px;padding-left:30px;float:left;cursor:pointer;color:#999;font-size:16px;margin-right:25px;background:url(../images/icon-unradio.png) no-repeat left center;}
+.listBtn.show{background:url(../images/icon-radioed.png) no-repeat left center;}
 
-.listBtn.show{ border-color: #07c8cf}
-.listBtn.show .on{ display: block;}
-
-.panlDiv{border-bottom: 1px solid #d0d5d8;width: 100%; float: left; padding: 5px 0}
+.panlDiv{border-bottom: 1px solid #d0d5d8;width: 100%; float: left; padding: 5px 0;padding:10px 10px 15px 0px}
+#simpleQuery{border-bottom: 1px solid #d0d5d8;}
+.panlDiv:nth-last-of-type(1){border-bottom:none;}
 .panlDiv .title{ line-height: 50px;font-size: 16px;}
-.panlDiv .commonSelectWrap{ display: block;  margin-right:45px; line-height: 33px}
+.panlDiv .commonSelectWrap{ display: block;  margin-left:53px; line-height: 33px}
 .panlDiv .commonSelectWrap .searchInput{ margin-right: 8px; border:none;}
 .panlDiv .commonSelectWrap .tit{ width: auto;}
 .panlDiv .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
@@ -21,12 +20,14 @@
 .panlDiv .commonSelectWrap .tit .checkBox{float: right}
 .pl_45{padding-left:45px;}
 /*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
-.panlDiv   .explain{ color: #fc7a52; font-size: 14px;}
+.panlDiv   .explain{padding-left:50px;color:#fe2222;font-size:14px;font-family:"黑体";background:url(../images/icon-tips.png) no-repeat left center;}
 .panlDiv .lineH30{ line-height: 30px;}
-
 .Wrap{ display: none;}
-
-
 .bordernone{ border: none;}
-
 .panlDiv .datagrid-header-row{ display: none}
+
+.titleBar{display:inline-block;width:100%;height:53px;line-height:52px;padding-left:30px;font-size:16px;border-top:1px solid #e1e7ea;border-bottom:1px solid #e1e7ea;background:#fafafa;color:#666;}
+.checkBoxTag{display:inline-block;cursor:pointer;}
+.checkBoxTag em{float:left;width:35px;height:52px;background:url(../images/icon-uncheck.png) no-repeat left center;}
+.checkBoxTag.on em{background:url(../images/icon-checked.png) no-repeat left center;}
+.salesWrapArea{padding:5px 0 5px 30px;display:inline-block;width:100%;border-bottom:1px solid #e1e7ea;}

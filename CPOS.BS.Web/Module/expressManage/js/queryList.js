@@ -143,8 +143,8 @@
         },
         update:function(){
             var that=this;
-            $('#win').window({title:"配送商信息",width:330,height:360,top:($(window).height() - 330) * 0.5,
-                left:($(window).width() - 330) * 0.5});
+            $('#win').window({title:"配送商信息",width:450,height:360,top:($(window).height() - 330) * 0.5,
+                left:($(window).width() - 450) * 0.5});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_addExpress');
