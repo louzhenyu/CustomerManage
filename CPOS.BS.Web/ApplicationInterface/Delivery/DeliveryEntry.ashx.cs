@@ -252,14 +252,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Delivery
                 CustomerDeliveryStrategyBLL deliveryStrategyBLL = new CustomerDeliveryStrategyBLL(loggingSessionInfo);
                 CustomerBasicSettingBLL basicSettingBLL = new CustomerBasicSettingBLL(loggingSessionInfo);
 
-                if (rp.Parameters.AmountEnd<=0)
-                {
-                    throw new APIException("请求参数中AmountEnd值为空,或者不正确") { ErrorCode = 123 };
-                }
-                if (rp.Parameters.DeliveryAmount<=0)
-                {
-                    throw new APIException("请求参数中DeliveryAmount值为空,或者不正确") { ErrorCode = 124 };
-                }
+                //if (rp.Parameters.AmountEnd<=0)
+                //{
+                //    throw new APIException("请求参数中AmountEnd值为空,或者不正确") { ErrorCode = 123 };
+                //}
+                //if (rp.Parameters.DeliveryAmount<=0)
+                //{
+                //    throw new APIException("请求参数中DeliveryAmount值为空,或者不正确") { ErrorCode = 124 };
+                //}
                 if (rp.Parameters.Status!=0&&rp.Parameters.Status!=1)
                 {
                     throw new APIException("请求参数中Status值为空,或者不正确") { ErrorCode = 125 };
