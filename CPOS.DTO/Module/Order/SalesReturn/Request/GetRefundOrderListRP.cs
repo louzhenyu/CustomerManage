@@ -13,6 +13,14 @@ namespace JIT.CPOS.DTO.Module.Order.SalesReturn.Request
 
         public string RefundNo { get; set; }
         public int Status { get; set; }
+        /// <summary>
+        /// 商户ID
+        /// </summary>
+        public string paymentcenterId { get; set; }
+        /// <summary>
+        /// 支付方式
+        /// </summary>
+        public string payId { get; set; }
         public void Validate()
         {
 

@@ -16,37 +16,41 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
     public class GetSalesReturnListAH : BaseActionHandler<GetSalesReturnListRP, GetSalesReturnListRD>
     {
         protected override GetSalesReturnListRD ProcessRequest(DTO.Base.APIRequest<GetSalesReturnListRP> pRequest)
-        {
+         {
             var rd = new GetSalesReturnListRD();
             var para = pRequest.Parameters;
 
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var salesReturnBLL = new T_SalesReturnBLL(loggingSessionInfo);
-
+            var T_InoutBLL = new T_InoutBLL(loggingSessionInfo);
             var inoutService = new InoutService(loggingSessionInfo);
             var tInoutDetailBll = new TInoutDetailBLL(loggingSessionInfo);
 
             //查询参数
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
-            complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
+            complexCondition.Add(new EqualsCondition() { FieldName = "r.CustomerID", Value = loggingSessionInfo.ClientID });
 
             if (!string.IsNullOrEmpty(para.SalesReturnNo))
-                complexCondition.Add(new LikeCondition() { FieldName = "SalesReturnNo", Value = "%" + para.SalesReturnNo + "%" });
+                complexCondition.Add(new LikeCondition() { FieldName = "r.SalesReturnNo", Value = "%" + para.SalesReturnNo + "%" });
             if (para.DeliveryType > 0)
-                complexCondition.Add(new EqualsCondition() { FieldName = "DeliveryType", Value = para.DeliveryType });
+                complexCondition.Add(new EqualsCondition() { FieldName = "r.DeliveryType", Value = para.DeliveryType });
             if (para.Status > 0 && para.Status < 8)
-                complexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = para.Status });
+                complexCondition.Add(new EqualsCondition() { FieldName = "r.Status", Value = para.Status });
             else if(para.Status==8)//包含待退款和已退款
             {
                 string[] statusArr = new string[] { "6", "7" };
-                complexCondition.Add(new InCondition<string>() { FieldName = "Status", Values = statusArr });
+                complexCondition.Add(new InCondition<string>() { FieldName = "r.Status", Values = statusArr });
             }
+            if (!string.IsNullOrEmpty(para.paymentcenterId))
+                complexCondition.Add(new EqualsCondition() { FieldName = "t.paymentcenter_id", Value = para.paymentcenterId });
+            if (!string.IsNullOrEmpty(para.payId))
+                complexCondition.Add(new EqualsCondition() { FieldName = "p.Payment_Type_Id", Value = para.payId });
             //门店过滤处理
 
 
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
-            lstOrder.Add(new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc });
+            lstOrder.Add(new OrderBy() { FieldName = "r.CreateTime", Direction = OrderByDirections.Desc });
 
             var tempList = salesReturnBLL.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize, para.PageIndex);
             rd.TotalPageCount = tempList.PageCount;
@@ -78,6 +82,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 salesReturnInfo.VipName = item.VipName;
                 salesReturnInfo.DeliveryType = item.DeliveryType;
                 salesReturnInfo.CreateTime = item.CreateTime.Value.ToString("yyyy-MM-dd HH:mm");
+                //商户单号，支付方式
+                salesReturnInfo.paymentcenterId = item.paymentcenterId;
+                salesReturnInfo.paymentName = item.PayTypeName;
                 //if (drSku.Count() > 0)
                 //{
                 //    skuDetail = new SkuDetailInfo();

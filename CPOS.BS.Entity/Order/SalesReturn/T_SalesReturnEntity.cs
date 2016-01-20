@@ -31,7 +31,14 @@ namespace JIT.CPOS.BS.Entity
         #region 属性集
         public string OrderNo { get; set; }
         public string VipName { get; set; }
+        /// <summary>
+        /// 支付方式
+        /// </summary>
         public string PayTypeName { get; set; }
+        /// <summary>
+        /// 商户单号
+        /// </summary>
+        public string paymentcenterId { get; set; }
         #endregion
     }
 }

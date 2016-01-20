@@ -41,6 +41,182 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class T_InoutBLL
     {
+
+        #region 订单批量操作
+        /// <summary>
+        /// 批量审核
+        /// </summary>
+        /// <param name="OrderID"></param>
+        public int BatchCheckOrder(List<string> OrderIdList, string Remark, LoggingSessionInfo LoggingSessionInfo)
+        {
+            var UpdateOrderList = new List<InoutInfo>();
+            foreach (var item in OrderIdList)
+            {
+                var result = this._currentDAO.GetByID(item);
+                if (result != null)
+                {
+                    var Entity = new InoutInfo()
+                    {
+                        order_id = result.order_id,
+                        Field2 = result.Field2,
+                        carrier_id = result.carrier_id,
+                        status = "500",
+                        status_desc = "未发货"
+                    };
+                    UpdateOrderList.Add(Entity);
+                }
+            }
+            //更新订单状态
+            int Num = this._currentDAO.BatchChangeOrderStatus(UpdateOrderList);
+
+            if (Num > 0)
+            {//添加状态操作记录
+                var inoutStatus = new TInoutStatusBLL(LoggingSessionInfo);
+                foreach (var itemes in UpdateOrderList)
+                {
+                    var info = new TInoutStatusEntity()
+                    {
+                        InoutStatusID = Guid.Parse(Utils.NewGuid()),
+                        OrderID = itemes.order_id,
+                        CustomerID = LoggingSessionInfo.ClientID,
+                        Remark = Remark,
+                        OrderStatus = 500,
+                        StatusRemark = "订单状态从未审核变为未发货[操作人:" + LoggingSessionInfo.CurrentUser.User_Name + "]"
+
+                    };
+                    //执行
+                    inoutStatus.Create(info);
+                }
+                //
+                Num = UpdateOrderList.Count();
+            }
+            return Num;
+        }
+        /// <summary>
+        /// 批量取消(作废)
+        /// </summary>
+        /// <param name="OrderID"></param>
+        public int BatchInvalidOrder(List<InoutInfo> OrderList, string Remark, LoggingSessionInfo LoggingSessionInfo)
+        {
+            var UpdateOrderList = new List<InoutInfo>();
+            foreach (var item in OrderList)
+            {
+                var result = this._currentDAO.GetByID(item.order_id);
+                if (result != null)
+                {
+                    var Entity = new InoutInfo()
+                    {
+                        order_id = result.order_id,
+                        Field2 = result.Field2,
+                        carrier_id = result.carrier_id,
+                        status = "800",
+                        status_desc = "已取消",
+                        OldStatusDesc = item.OldStatusDesc
+                    };
+                    UpdateOrderList.Add(Entity);
+                }
+            }
+            //更新订单状态
+            int Num = this._currentDAO.BatchChangeOrderStatus(UpdateOrderList);
+
+            if (Num > 0)
+            {//添加状态操作记录
+                var inoutStatus = new TInoutStatusBLL(LoggingSessionInfo);
+                foreach (var itemes in UpdateOrderList)
+                {
+                    var info = new TInoutStatusEntity()
+                    {
+                        InoutStatusID = Guid.Parse(Utils.NewGuid()),
+                        OrderID = itemes.order_id,
+                        CustomerID = LoggingSessionInfo.ClientID,
+                        Remark = Remark,
+                        OrderStatus = 800,
+                        StatusRemark = "订单状态从" + itemes.OldStatusDesc+ "变为已取消[操作人:" + LoggingSessionInfo.CurrentUser.User_Name + "]"
+                    };
+                    //执行
+                    inoutStatus.Create(info);
+
+                    //执行取消订单业务
+                    SetCancelOrder(itemes.order_id, 0, LoggingSessionInfo);
+                }
+                //
+                Num = UpdateOrderList.Count();
+            }
+            return Num;
+        }
+
+        /// <summary>
+        /// 批量发货
+        /// </summary>
+        /// <param name="OrderID"></param>
+        public int BatchInvalidShip(List<InoutInfo> OrderList, string Remark, LoggingSessionInfo LoggingSessionInfo)
+        {
+            var UpdateOrderList = new List<InoutInfo>();
+            foreach (var item in OrderList)
+            {
+                var result = this._currentDAO.GetByID(item.order_id);
+                if (result != null)
+                {
+                    var Entity = new InoutInfo()
+                    {
+                        order_id = result.order_id,
+                        Field2 = item.Field2,
+                        carrier_id = item.carrier_id,
+                        status = "600",
+                        status_desc = "已发货"
+                    };
+                    UpdateOrderList.Add(Entity);
+                }
+            }
+            //更新订单状态
+            int Num = this._currentDAO.BatchChangeOrderStatus(UpdateOrderList);
+
+            if (Num > 0)
+            {//添加状态操作记录
+                var inoutStatus = new TInoutStatusBLL(LoggingSessionInfo);
+                var vipBll = new VipBLL(LoggingSessionInfo);
+                var inoutService = new Inout3Service(LoggingSessionInfo);
+                var CommonBLL = new CommonBLL();
+                foreach (var itemes in UpdateOrderList)
+                {
+                    var info = new TInoutStatusEntity()
+                    {
+                        InoutStatusID = Guid.Parse(Utils.NewGuid()),
+                        OrderID = itemes.order_id,
+                        CustomerID = LoggingSessionInfo.ClientID,
+                        Remark = Remark,
+                        OrderStatus = 600,
+                        StatusRemark = "订单状态从未发货变为已发货[操作人:" + LoggingSessionInfo.CurrentUser.User_Name + "]"
+                    };
+                    //执行
+                    inoutStatus.Create(info);
+
+                    #region 发送微信模板消息
+                    //获取订单
+                    var OerderInfoData = this._currentDAO.GetByID(itemes.order_id);
+                    if (OerderInfoData != null)
+                    {
+                        //获取会员信息
+                        var vipInfo = vipBll.GetByID(OerderInfoData.vip_no);
+                        if (vipInfo != null)
+                        {
+                            //物流公司
+                            itemes.carrier_name = "";//inoutService.GetCompanyName(itemes.carrier_id);
+                            CommonBLL.SentShipMessage(itemes, vipInfo.WeiXinUserId, itemes.vip_no, LoggingSessionInfo);
+                        }
+                    }
+                    #endregion
+                }
+                //
+                Num = UpdateOrderList.Count();
+            }
+            return Num;
+        }
+        #endregion
+
+
+
+
         public string SetOrderInfo(SetOrderInfoReqPara para)
         {
             var loggingSessionInfo = this.CurrentUserInfo as LoggingSessionInfo;
@@ -510,10 +686,10 @@ namespace JIT.CPOS.BS.BLL
             return RD;
         }
         //根据状态获取订单信息
-        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList,string isPayment, string orderNo,
+        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList, string isPayment, string orderNo,
             string customerId, int? pageSize, int? pageIndex, string OrderChannelID)
         {
-            return this._currentDAO.GetOrdersList(orderId, userId, orderStatusList,isPayment, orderNo, customerId, pageSize ?? 0,
+            return this._currentDAO.GetOrdersList(orderId, userId, orderStatusList, isPayment, orderNo, customerId, pageSize ?? 0,
                 pageIndex ?? 15, OrderChannelID);
         }
         //获取销售（服务）订单
@@ -522,7 +698,7 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetServiceOrderList(order_no, OrderChannelID, userId, customerId, pageSize ?? 0,
                 pageIndex ?? 15);
         }
-        
+
         //获取集客订单
         public DataSet GetCollectOrderList(string order_no, string OrderChannelID, string userId, string customerId, int? pageSize, int? pageIndex)
         {
@@ -714,7 +890,7 @@ namespace JIT.CPOS.BS.BLL
 
         public DataSet GetOrdersByVipID(string vipID, int pageIndex, int pageSize, string OrderBy, string sortType)
         {
-            return this._currentDAO.GetOrdersByVipID(vipID,pageIndex, pageSize, OrderBy, sortType);
+            return this._currentDAO.GetOrdersByVipID(vipID, pageIndex, pageSize, OrderBy, sortType);
         }
     }
 

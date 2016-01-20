@@ -210,11 +210,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                         AmountSourceId = "21",
                                         ObjectId = refundEntity.RefundID.ToString()
                                     };
-                                    var vipAmountDetailId= vipAmountBLL.AddVipAmount(vipInfo, unitInfo,ref vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
+                                    var vipAmountDetailId = vipAmountBLL.AddVipAmount(vipInfo, unitInfo, ref vipAmountEntity, detailInfo, pTran, loggingSessionInfo);
                                     if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
                                     {//发送微信账户余额变动模板消息
                                         var CommonBLL = new CommonBLL();
-                                        CommonBLL.BalanceChangedMessage(inoutInfo.order_no, vipAmountEntity, detailInfo, vipInfo.WeiXinUserId,vipInfo.VIPID, loggingSessionInfo);
+                                        CommonBLL.BalanceChangedMessage(inoutInfo.order_no, vipAmountEntity, detailInfo, vipInfo.WeiXinUserId, vipInfo.VIPID, loggingSessionInfo);
                                     }
                                 }
                                 //退货返回返现
@@ -226,7 +226,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                         ObjectId = refundEntity.RefundID.ToString(),
                                         AmountSourceId = "22"
                                     };
-                                    var vipAmountDetailId= vipAmountBLL.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity,ref detailInfo, pTran, loggingSessionInfo);
+                                    var vipAmountDetailId = vipAmountBLL.AddReturnAmount(vipInfo, unitInfo, vipAmountEntity, ref detailInfo, pTran, loggingSessionInfo);
                                     if (!string.IsNullOrWhiteSpace(vipAmountDetailId))
                                     {//发送返现到账通知微信模板消息
                                         var CommonBLL = new CommonBLL();
@@ -247,7 +247,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                     string OldIntegral = (vipInfo.Integration ?? 0).ToString();
                                     //变动积分
                                     string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
-                                    var vipIntegralDetailId = vipIntegralBLL.AddIntegral(ref vipInfo, unitInfo,  IntegralDetail, pTran, loggingSessionInfo);
+                                    var vipIntegralDetailId = vipIntegralBLL.AddIntegral(ref vipInfo, unitInfo, IntegralDetail, pTran, loggingSessionInfo);
                                     //发送微信积分变动通知模板消息
                                     if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
                                     {
@@ -331,6 +331,23 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                 historyBLL.Create(historyEntity, pTran);
                             }
                             salesReturnBLL.Update(salesReturnEntity, pTran);
+                            #endregion
+                            break;
+                        case 6:
+                            #region 取消
+                            salesReturnEntity.Status = 2;//取消申请
+                            salesReturnBLL.Update(salesReturnEntity, pTran);
+                            historyEntity = new T_SalesReturnHistoryEntity()
+                            {
+                                SalesReturnID = salesReturnEntity.SalesReturnID,
+                                OperationType = 2,
+                                OperationDesc = "取消申请",
+                                OperatorID = CurrentUserInfo.UserID,
+                                HisRemark = para.Desc,
+                                OperatorName = userEntity.user_name,
+                                OperatorType = 0
+                            };
+                            historyBLL.Create(historyEntity, pTran);
                             #endregion
                             break;
                         default:

@@ -209,7 +209,10 @@ namespace JIT.CPOS.BS.BLL
         }
 
         //返回订单数据的优化接口，不返回各种状态订单数量
-        public InoutInfo SearchInoutInfo_lj2(string PayStatus
+        public InoutInfo SearchInoutInfo_lj2(
+                                     string paymentcenter_id
+                                    , string PayId
+                                    , string PayStatus
                                     , string order_no
                                     , string order_reason_type_id
                                     , string sales_unit_id
@@ -270,41 +273,43 @@ namespace JIT.CPOS.BS.BLL
             orderSearchInfo.vip_no = vipId;
             orderSearchInfo.path_unit_id = path_unit_id;
             orderSearchInfo.timestamp = timestamp;
-
             orderSearchInfo.PayStatus = PayStatus;
+            //商户订单号，支付方式
+            orderSearchInfo.paymentcenter_id = paymentcenter_id;
+            orderSearchInfo.PayId = PayId;
 
             inoutInfo = SearchInoutInfo_lj2(orderSearchInfo, getDetail);
             return inoutInfo;
         }
 
         //优化，仅返回各种订单的数量
-             public InoutInfo SearchInoutInfo_lj3(string PayStatus
-                                       , string order_no
-                                       , string order_reason_type_id
-                                       , string sales_unit_id
-                                       , string warehouse_id
-                                       , string purchase_unit_id
-                                       , string status
-                                       , string order_date_begin  //成交日期
-                                       , string order_date_end    //成交日期
-                                       , string complete_date_begin   //结束日期
-                                       , string complete_date_end
-                                       , string data_from_id
-                                       , string ref_order_no
-                                       , string order_type_id
-                                       , string red_falg
-                                       , int maxRowCount
-                                       , int startRowIndex
-                                       , string purchase_warehouse_id
-                                       , string sales_warehouse_id
-                                       , string DeliveryStatus
-                                       , string DeliveryId
-                                       , string DefrayTypeId
-                                       , string DeliveryDateBegin   //配送日期
-                                       , string DeliveryDateEnd    //
-                                       , string CancelDateBegin
-                                       , string CancelDateEnd, string order_id, string vipId,
-            string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
+        public InoutInfo SearchInoutInfo_lj3(string PayStatus
+                                  , string order_no
+                                  , string order_reason_type_id
+                                  , string sales_unit_id
+                                  , string warehouse_id
+                                  , string purchase_unit_id
+                                  , string status
+                                  , string order_date_begin  //成交日期
+                                  , string order_date_end    //成交日期
+                                  , string complete_date_begin   //结束日期
+                                  , string complete_date_end
+                                  , string data_from_id
+                                  , string ref_order_no
+                                  , string order_type_id
+                                  , string red_falg
+                                  , int maxRowCount
+                                  , int startRowIndex
+                                  , string purchase_warehouse_id
+                                  , string sales_warehouse_id
+                                  , string DeliveryStatus
+                                  , string DeliveryId
+                                  , string DefrayTypeId
+                                  , string DeliveryDateBegin   //配送日期
+                                  , string DeliveryDateEnd    //
+                                  , string CancelDateBegin
+                                  , string CancelDateEnd, string order_id, string vipId,
+       string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
         {
             InoutInfo inoutInfo = new InoutInfo();
             OrderSearchInfo orderSearchInfo = new OrderSearchInfo();
@@ -825,7 +830,7 @@ namespace JIT.CPOS.BS.BLL
                 {
                     foreach (var item in inoutInfoList)
                     {
-                        item.InoutDetailList = GetInoutDetailInfoByOrderId(item.order_id,loggingSessionInfo.CurrentLoggingManager.Customer_Id); //根据订单的ID取数据，查找详细信息
+                        item.InoutDetailList = GetInoutDetailInfoByOrderId(item.order_id, loggingSessionInfo.CurrentLoggingManager.Customer_Id); //根据订单的ID取数据，查找详细信息
                     }
                 }
 
@@ -837,7 +842,7 @@ namespace JIT.CPOS.BS.BLL
                 throw (ex);
             }
         }
-       //优化后获取订单数据的，去出了获取各种状态订单数量的接口
+        //优化后获取订单数据的，去出了获取各种状态订单数量的接口
         public InoutInfo SearchInoutInfo_lj2(OrderSearchInfo orderSearchInfo, bool getDetail = false)
         {
 
@@ -848,7 +853,7 @@ namespace JIT.CPOS.BS.BLL
                 inoutInfo.StatusManagerList = new List<StatusManager>();
                 //大问题*****PosOrder_lj，GetPosOrderTotalCount_lj两个方法都调用了这个方法，而且是在一个接口里使用。
                 //获取不同状态订单数量
-               
+
                 #region 获取POS小票的不同单据数量 Jermyn20130906
                 /**
                 //
@@ -900,7 +905,7 @@ namespace JIT.CPOS.BS.BLL
                     }
                 }
                  * **/
-                
+
                 #endregion
                 //获取总数量
                 // int iCount = inoutService.SearchInoutCount(orderSearchInfo);//cSqlMapper.Instance(loggingSessionInfo.CurrentLoggingManager).QueryForObject<int>("Inout.SearchCount", orderSearchInfo);
@@ -944,7 +949,7 @@ namespace JIT.CPOS.BS.BLL
                 inoutInfo.StatusManagerList = new List<StatusManager>();
                 //大问题*****PosOrder_lj，GetPosOrderTotalCount_lj两个方法都调用了这个方法，而且是在一个接口里使用。
                 //获取不同状态订单数量
-             
+
                 #region 获取POS小票的不同单据数量 Jermyn20130906
                 //
                 if (orderSearchInfo != null
@@ -995,7 +1000,7 @@ namespace JIT.CPOS.BS.BLL
                     }
                 }
 
-               
+
                 #endregion
                 /**
                 //获取总数量
@@ -1198,7 +1203,7 @@ namespace JIT.CPOS.BS.BLL
                         var tempAmount = inoutInfo.actual_amount - inoutInfo.DeliveryAmount; //应付-运费后的应付金额
                         vipDiscount = tempAmount / (inoutInfo.discount_rate / 100) - tempAmount;// (应付-运费)/折扣率=去除折扣后实付Y；Y-包含折扣的实付=会员折扣
                     }
-                    inoutInfo.VipDiscount = -Math.Round(vipDiscount,2);
+                    inoutInfo.VipDiscount = -Math.Round(vipDiscount, 2);
 
                 }
                 inoutInfo.InoutDetailList = GetInoutDetailInfoByOrderId(orderId, loggingSessionInfo.CurrentLoggingManager.Customer_Id);//获取明细信息
@@ -1240,7 +1245,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="orderId"></param>
         /// <returns></returns>
-        public IList<InoutDetailInfo> GetInoutDetailInfoByOrderId(string orderId,string strCustomerId)
+        public IList<InoutDetailInfo> GetInoutDetailInfoByOrderId(string orderId, string strCustomerId)
         {
             try
             {

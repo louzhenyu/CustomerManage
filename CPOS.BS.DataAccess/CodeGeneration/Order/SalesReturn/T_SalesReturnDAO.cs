@@ -543,9 +543,12 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [SalesReturnID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [T_SalesReturn] where 1=1  and isdelete=0 ");
+            pagedSql.AppendFormat(@") as ___rn,r.*,t.paymentcenter_id,p.Payment_Type_Name from [T_SalesReturn] as r left join t_inout as t on r.OrderID=t.order_id  
+                                    left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0  where 1=1  and r.isdelete=0 ");
+
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [T_SalesReturn] where 1=1  and isdelete=0 ");
+            totalCountSql.AppendFormat(@"select count(1) from [T_SalesReturn] as r left join t_inout as t on r.OrderID=t.order_id 
+                                          left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0  where 1=1  and r.isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -570,6 +573,16 @@ namespace JIT.CPOS.BS.DataAccess
                 {
                     T_SalesReturnEntity m;
                     this.Load(rdr, out m);
+
+                    if (rdr["paymentcenter_id"] != DBNull.Value)
+                    {
+                        m.paymentcenterId = Convert.ToString(rdr["paymentcenter_id"]);
+                    }
+                    if (rdr["Payment_Type_Name"] != DBNull.Value)
+                    {
+                        m.PayTypeName = Convert.ToString(rdr["Payment_Type_Name"]);
+                    }
+
                     list.Add(m);
                 }
             }
@@ -712,18 +725,6 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["OrderID"] != DBNull.Value)
 			{
 				pInstance.OrderID =  Convert.ToString(pReader["OrderID"]);
-                var inoutDAO = new T_InoutDAO(CurrentUserInfo);
-                var inoutInfo = inoutDAO.GetByID(pInstance.OrderID);
-                if (inoutInfo != null)
-                {
-                    pInstance.OrderNo = inoutInfo.order_no;
-                    var paymentTypeDAO = new TPaymentTypeDAO(CurrentUserInfo);
-                    var paymentTypeInfo = paymentTypeDAO.GetByID(inoutInfo.pay_id);
-                    if (paymentTypeInfo != null)
-                    {
-                        pInstance.PayTypeName = paymentTypeInfo.PaymentTypeName;//支付方式名称
-                    }
-                }
 			}
 			if (pReader["ItemID"] != DBNull.Value)
 			{
@@ -805,7 +806,14 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
 			}
-
+            //if (pReader["paymentcenter_id"] != DBNull.Value)
+            //{
+            //    pInstance.paymentcenterId = Convert.ToString(pReader["paymentcenter_id"]);
+            //}
+            //if (pReader["Payment_Type_Name"] != DBNull.Value)
+            //{
+            //    pInstance.PayTypeName = Convert.ToString(pReader["Payment_Type_Name"]);
+            //}
         }
         #endregion
     }

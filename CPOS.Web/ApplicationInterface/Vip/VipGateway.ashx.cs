@@ -2214,7 +2214,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// <summary>
         /// 活动ID
         /// </summary>
-        public string EventId { get; set; }
+        public string EventId { get; set; }      
         public void Validate()
         {
         }

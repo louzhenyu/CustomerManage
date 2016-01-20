@@ -2198,7 +2198,7 @@
     </Compile>
     <Compile Include="ApplicationInterface\Module\Coupon\Grant\GrantCouponAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetApiVipServicesLogListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetCustomerBasicSettingAH.cs" />
+
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\SetApiVipServicesLogAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerBasicSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
@@ -2224,11 +2224,12 @@
     <Compile Include="ApplicationInterface\Module\NewAppContent\NewWXGateway.ashx.cs">
       <DependentUpon>NewWXGateway.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\Order\Delivery\GetVipAddressInfoAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Logistics\GetLogisticsCompanyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\SetSalesReturnAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\ShoppingCart\RemoveShoppingCartAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\SetQuestionnaireAnswerRecordAH.cs" />
     <Compile Include="ApplicationInterface\Module\Test\Test\TestAH.cs" />

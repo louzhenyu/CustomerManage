@@ -115,7 +115,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     if (pRequest.ChannelId != "2")
                     {
                         var UserData = UserBLL.GetByID(this.CurrentUserInfo.CurrentUser.User_Id);
-                        CreateName = "[" + UserData == null ? "" : UserData.user_name + "]";
+                        CreateName = string.Format("[操作人:{0}]", (UserData == null ? "" : UserData.user_name));
                     }
                     else
                     {

@@ -66,7 +66,6 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String OrderID { get; set; }
-
 		/// <summary>
 		/// 
 		/// </summary>

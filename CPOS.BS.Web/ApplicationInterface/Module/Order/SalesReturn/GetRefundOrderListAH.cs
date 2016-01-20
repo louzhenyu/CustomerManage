@@ -25,19 +25,22 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
 
             //查询参数
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
-            complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
+            complexCondition.Add(new EqualsCondition() { FieldName = "a.CustomerID", Value = loggingSessionInfo.ClientID });
 
             if (!string.IsNullOrEmpty(para.RefundNo))
-                complexCondition.Add(new LikeCondition() { FieldName = "RefundNo", Value = "%" + para.RefundNo + "%" });
+                complexCondition.Add(new LikeCondition() { FieldName = "a.RefundNo", Value = "%" + para.RefundNo + "%" });
 
             if (para.Status > 0)
-                complexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = para.Status });
-            
+                complexCondition.Add(new EqualsCondition() { FieldName = "a.Status", Value = para.Status });
+            if (!string.IsNullOrEmpty(para.paymentcenterId))
+                complexCondition.Add(new EqualsCondition() { FieldName = "t.paymentcenterId", Value = para.paymentcenterId });
+            if (!string.IsNullOrEmpty(para.payId))
+                complexCondition.Add(new EqualsCondition() { FieldName = "t.pay_Id", Value = para.payId });
             //门店过滤处理
 
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
-            lstOrder.Add(new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc });
+            lstOrder.Add(new OrderBy() { FieldName = "a.CreateTime", Direction = OrderByDirections.Desc });
 
             var tempList = refundOrderBLL.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize, para.PageIndex);
             rd.RefundOrderList = tempList.Entities.Select(t => new RefundOrderInfo()
@@ -47,7 +50,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 VipName = t.VipName,
                 ActualRefundAmount = t.ActualRefundAmount,
                 Status = t.Status,
-                CreateTime = t.CreateTime.Value.ToString("yyyy-MM-dd HH:mm")
+                CreateTime = t.CreateTime.Value.ToString("yyyy-MM-dd HH:mm"),
+                paymentcenterId=t.PayOrderID,
+                paymentName=t.PayTypeName
             }).ToArray();
 
             rd.TotalCount = tempList.RowCount;

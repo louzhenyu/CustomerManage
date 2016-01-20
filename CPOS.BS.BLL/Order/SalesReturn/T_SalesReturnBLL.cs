@@ -48,5 +48,17 @@ namespace JIT.CPOS.BS.BLL
             var salesReturnList = this._currentDAO.QueryByEntity(new T_SalesReturnEntity() {OrderID= orderId,SkuID= skuId}, null);
             return salesReturnList.Count();
         }
+        /// <summary>
+        /// 条件获取退货单
+        /// </summary>
+        /// <param name="SalesReturnNo">退货单号</param>
+        /// <param name="DeliveryType">配送凡是</param>
+        /// <param name="Status">状态</param>
+        /// <param name="paymentcenterId">商户单号</param>
+        /// <param name="payId">支付方式</param>
+        /// <returns></returns>
+        public DataSet GetWhereSalesReturnOrder(string SalesReturnNo, int DeliveryType, int Status, string paymentcenterId, string payId) {
+            return this._currentDAO.GetWhereSalesReturnOrder(SalesReturnNo, DeliveryType, Status, paymentcenterId, payId);
+        }
     }
 }

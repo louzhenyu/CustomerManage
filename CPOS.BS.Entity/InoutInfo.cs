@@ -13,6 +13,7 @@ namespace JIT.CPOS.BS.Entity
     [XmlRootAttribute("data")]
     public class InoutInfo
     {
+
         /// <summary>
         /// 入出库单主标识 (必须)
         /// </summary>
@@ -566,6 +567,8 @@ namespace JIT.CPOS.BS.Entity
         /// 商户订单号
         /// </summary>
         public string paymentcenter_id { get; set; }
+
+        public string OldStatusDesc { get; set; }
 
     }
 

@@ -27,11 +27,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.SalesReturn
 
             //查询参数
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
-            complexCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = CurrentUserInfo.UserID });
+            complexCondition.Add(new EqualsCondition() { FieldName = "r.VipID", Value = CurrentUserInfo.UserID });
 
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
-            lstOrder.Add(new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc });
+            lstOrder.Add(new OrderBy() { FieldName = "r.CreateTime", Direction = OrderByDirections.Desc });
 
             var tempList = salesReturnBLL.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize, para.PageIndex+1);
             rd.TotalPageCount = tempList.PageCount;

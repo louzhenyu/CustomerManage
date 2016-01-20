@@ -41,7 +41,11 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public DataSet GetWhereRefundOrder(int Status, string CustomerID)
         {
-            return this._currentDAO.GetWhereRefundOrder(Status, CustomerID);
+            return this._currentDAO.GetWhereRefundOrder(null,null,null,Status, CustomerID);
+        }
+        public DataSet GetWhereRefundOrder(string RefundNo, string paymentcenterId, string payId, int Status, string CustomerID)
+        {
+            return this._currentDAO.GetWhereRefundOrder(RefundNo,paymentcenterId,payId,Status, CustomerID);
         }
     }
 }

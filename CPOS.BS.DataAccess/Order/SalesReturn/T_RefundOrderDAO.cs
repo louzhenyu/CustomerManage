@@ -49,17 +49,27 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="Status"></param>
         /// <param name="CustomerID"></param>
         /// <returns></returns>
-        public DataSet GetWhereRefundOrder(int Status, string CustomerID)
+        public DataSet GetWhereRefundOrder(string RefundNo, string paymentcenterId, string payId, int Status, string CustomerID)
         {
             StringBuilder StrSql = new StringBuilder();
             StrSql.Append("select a.RefundNo as '订单号',a.ActualRefundAmount as '退款金额',b.VipName as '会员名称',");
-            StrSql.Append("case a.[Status] when 1 then '待退款' when 2 then'已完成' else '' end as '订单状态',a.CreateTime as '创建时间' from T_RefundOrder as a ");
+            StrSql.Append("case a.[Status] when 1 then '待退款' when 2 then'已完成' else '' end as '订单状态',a.CreateTime as '创建时间',t.paymentcenter_id as '商户单号',p.Payment_Type_Name as '支付方式' from T_RefundOrder as a ");
+            StrSql.Append("left join t_inout as t on a.OrderID=t.order_id ");
+            StrSql.Append("left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0 ");
             StrSql.AppendFormat("left join Vip as b on a.VipID=b.VIPID and b.IsDelete=0 where a.IsDelete=0 and a.CustomerID='{0}' ", CustomerID);
+            //条件
+            if (!string.IsNullOrWhiteSpace(RefundNo))
+                StrSql.AppendFormat("and a.RefundNo='{0}' ", RefundNo);
+            if (!string.IsNullOrWhiteSpace(paymentcenterId))
+                StrSql.AppendFormat("and t.paymentcenter_id='{0}' ", paymentcenterId);
+            if (!string.IsNullOrWhiteSpace(payId))
+                StrSql.AppendFormat("and t.pay_id='{0}' ", payId);
             if (Status > 0)
             {
-                StrSql.AppendFormat("and a.[Status]={0}", Status);
+                StrSql.AppendFormat("and a.[Status]={0} ", Status);
             }
-
+            //排序
+            StrSql.Append("order by a.CreateTime desc");
             return this.SQLHelper.ExecuteDataset(StrSql.ToString());
         }
     }

@@ -579,9 +579,17 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [RefundID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [T_RefundOrder] where 1=1  and isdelete=0 ");
+            pagedSql.AppendFormat(@") as ___rn,a.*,b.VipName,t.paymentcenter_id,p.Payment_Type_Name from [T_RefundOrder] as a  
+                                    left join t_inout as t on a.OrderID=t.order_id  
+                                    left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0  
+                                    left join Vip as b on a.VipID=b.VIPID and b.IsDelete=0   
+                                    where 1=1  and a.isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [T_RefundOrder] where 1=1  and isdelete=0 ");
+            totalCountSql.AppendFormat(@"select count(1) from [T_RefundOrder] as a 
+                                        left join t_inout as t on a.OrderID=t.order_id  
+                                        left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0  
+                                        left join Vip as b on a.VipID=b.VIPID and b.IsDelete=0   
+                                        where 1=1  and a.isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -606,6 +614,18 @@ namespace JIT.CPOS.BS.DataAccess
                 {
                     T_RefundOrderEntity m;
                     this.Load(rdr, out m);
+                    if (rdr["Payment_Type_Name"] != DBNull.Value)
+                    {
+                        m.PayTypeName = Convert.ToString(rdr["Payment_Type_Name"]);
+                    }
+                    if (rdr["paymentcenter_id"] != DBNull.Value)
+                    {
+                        m.PayOrderID = Convert.ToString(rdr["paymentcenter_id"]);
+                    }
+                    if (rdr["VipName"] != DBNull.Value)
+                    {
+                        m.VipName = Convert.ToString(rdr["VipName"]);
+                    }
                     list.Add(m);
                 }
             }
@@ -760,19 +780,13 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["OrderID"] != DBNull.Value)
 			{
 				pInstance.OrderID =  Convert.ToString(pReader["OrderID"]);
+                
                 var inoutDAO = new T_InoutDAO(CurrentUserInfo);
                 var inoutInfo = inoutDAO.GetByID(pInstance.OrderID);
                 if (inoutInfo != null)
                 {
                     pInstance.OrderNo = inoutInfo.order_no;//订单号
-                    pInstance.PayOrderID = inoutInfo.paymentcenter_id;//支付回调标识
-
-                    var paymentTypeDAO = new TPaymentTypeDAO(CurrentUserInfo);
-                    var paymentTypeInfo = paymentTypeDAO.GetByID(inoutInfo.pay_id);
-                    if (paymentTypeInfo != null)
-                    {
-                        pInstance.PayTypeName = paymentTypeInfo.PaymentTypeName;//支付方式名称
-                    }
+                    pInstance.PayOrderID = inoutInfo.paymentcenter_id;//支付回调标识,商户单号
                 }
 			}
 			if (pReader["ItemID"] != DBNull.Value)

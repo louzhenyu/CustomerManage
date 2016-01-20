@@ -32,10 +32,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
 
             if (salesReturnEntity != null)
             {
+                var orderInfo = inoutBLL.GetByID(salesReturnEntity.OrderID);
+
                 rd.SalesReturnID = salesReturnEntity.SalesReturnID.ToString();
                 rd.SalesReturnNo = salesReturnEntity.SalesReturnNo;
                 rd.OrderID = salesReturnEntity.OrderID;
-                rd.OrderNo = salesReturnEntity.OrderNo;
+
+                rd.OrderNo = orderInfo.order_no;
+
                 rd.Status = salesReturnEntity.Status;
                 rd.DeliveryType = salesReturnEntity.DeliveryType;
                 rd.Reason = salesReturnEntity.Reason;
@@ -44,7 +48,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 rd.Contacts = salesReturnEntity.Contacts;
                 rd.Phone = salesReturnEntity.Phone;
                 rd.Address = string.Empty;
-                var orderInfo = inoutBLL.GetByID(salesReturnEntity.OrderID);
+                
                 if (orderInfo != null)
                     rd.Address = orderInfo.Field4;
                 rd.ServicesType = salesReturnEntity.ServicesType;

@@ -729,6 +729,7 @@
     <Content Include="Module\Basic\Unit\css\keywords.css" />
     <Content Include="Module\chainCloudOrder\css\style.css" />
     <Content Include="Module\chainCloudOrder\images\arr.png" />
+    <Content Include="Module\chainCloudOrder\images\商品.png" />
     <Content Include="Module\chainCloudOrder\js\orderDetail.js" />
     <Content Include="Module\chainCloudOrder\js\queryList.js" />
     <Content Include="Module\chainCloudOrder\orderDetail.aspx" />
@@ -6354,6 +6355,7 @@
     <Compile Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeTreeHandler.ashx.cs">
       <DependentUpon>UnitTypeTreeHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\Basic\Unit\GetUnitInfoAH.cs" />
     <Compile Include="ApplicationInterface\Module\CardProduct\MakeVipCard\GetMakeVipCardListAH.cs" />
     <Compile Include="ApplicationInterface\Module\CardProduct\MakeVipCard\ImportVipCardISNAH.cs" />
     <Compile Include="ApplicationInterface\Module\CardProduct\MakeVipCard\MakeVipCardAH.cs" />
@@ -6383,6 +6385,10 @@
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\GetActivityListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Logistics\GetLogisticsCompanyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Logistics\SetLogisticsCompanyAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\OperatingOrder\BatchCheckOrderAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\OperatingOrder\BatchInvalidOrderAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\OperatingOrder\BatchInvalidShipAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\SalesReturn\CancelSalesReturnAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\DownLoadSales.ashx.cs">
       <DependentUpon>DownLoadSales.ashx</DependentUpon>
     </Compile>

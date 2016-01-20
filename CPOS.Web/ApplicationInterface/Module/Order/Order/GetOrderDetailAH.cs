@@ -82,7 +82,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 if (deliveryId == "1")
                 {
                     var logisticsCompanyBLL = new T_LogisticsCompanyBLL(this.CurrentUserInfo);
-                    var logCompInfo = logisticsCompanyBLL.GetByID(carrierId);
+                    Guid m_carrierId = Guid.Parse(carrierId);
+                    var logCompInfo = logisticsCompanyBLL.GetByID(m_carrierId);
                     if (logCompInfo != null)
                     {
                         rd.OrderListInfo.CarrierID = carrierId;

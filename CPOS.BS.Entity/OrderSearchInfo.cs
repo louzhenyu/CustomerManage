@@ -155,5 +155,13 @@ namespace JIT.CPOS.BS.Entity
         /// 付款状态(jifeng.cao 20140320)
         /// </summary>
         public string PayStatus { get; set; }
+        /// <summary>
+        /// 商户订单号
+        /// </summary>
+        public string paymentcenter_id { get; set; }
+        /// <summary>
+        /// 支付方式ID
+        /// </summary>
+        public string PayId { get; set; }
     }
 }

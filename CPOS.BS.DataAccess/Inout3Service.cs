@@ -560,7 +560,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,(select reason_type_code From T_Order_Reason_Type where reason_type_id = a.order_reason_id) order_reason_code "
                       + " ,(select order_type_name From T_Order_Type where order_type_id = a.order_type_id) order_type_name "
                       + " ,(select reason_type_name From T_Order_Reason_Type where reason_type_id = a.order_reason_id) order_reason_name "
-                      + " ,(select payment_type_name From T_Payment_Type where payment_type_id = a.Field11) payment_name "
+                      + " ,(select payment_type_name From T_Payment_Type where payment_type_id = a.pay_id) payment_name "
                       + " ,(select unit_name From t_unit where unit_id = a.create_unit_id) create_unit_name "
                       + " ,(select USER_NAME From T_User where user_id = a.create_user_id) create_user_name "
                       + " ,(select USER_NAME From T_User where user_id = a.modify_user_id) modify_user_name "
@@ -595,8 +595,9 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field18 "
                         + " ,a.Field19 "
                         + " ,a.Field20 "
+                        + " ,a.paymentcenter_id"
                         + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"
-                        + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.Field11 ) DefrayTypeName "
+                        + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.pay_id ) DefrayTypeName "
                 //有一个客户，时间里含有.却没有带毫秒
                         + @" ,dbo.Datetotimestamp(replace(case when a.modify_time like '%.' then REPLACE(a.modify_time,'.','') 
                                         when a.modify_time IS null then '1975/01/01' else a.modify_time end ,'.000','')) timestamp "
@@ -859,6 +860,17 @@ namespace JIT.CPOS.BS.DataAccess
                 }
             }
 
+            //商户单号
+            if (!string.IsNullOrWhiteSpace(orderSearchInfo.paymentcenter_id))
+            {
+                sql = pService.GetLinkSql(sql, "a.paymentcenter_id", orderSearchInfo.paymentcenter_id, "=");
+            }
+            //支付方式
+            if (!string.IsNullOrWhiteSpace(orderSearchInfo.PayId))
+            {
+                sql = pService.GetLinkSql(sql, "a.pay_id", orderSearchInfo.PayId, "=");
+            }
+
             sql = pService.GetLinkSql(sql, "a.order_id", orderSearchInfo.order_id, "%");
             sql = pService.GetLinkSql(sql, "a.customer_id", orderSearchInfo.customer_id, "=");//原来是%
             sql = pService.GetLinkSql(sql, "a.order_no", orderSearchInfo.order_no, "%");
@@ -867,11 +879,11 @@ namespace JIT.CPOS.BS.DataAccess
             sql = pService.GetLinkSql(sql, "a.unit_id", orderSearchInfo.unit_id, "=");
             if (!string.IsNullOrEmpty(orderSearchInfo.order_date_begin))//判断是否为空
             {
-                sql = pService.GetLinkSql(sql, "a.order_date", orderSearchInfo.order_date_begin, ">=");  //订单开始日期
+                sql = pService.GetLinkSql(sql, "a.create_time", orderSearchInfo.order_date_begin, ">=");  //订单开始日期
             }
             if (!string.IsNullOrEmpty(orderSearchInfo.order_date_end))
             {
-                sql = pService.GetLinkSql(sql, "a.order_date", orderSearchInfo.order_date_end, "<=");  //订单开始日期
+                sql = pService.GetLinkSql(sql, "a.create_time", orderSearchInfo.order_date_end, "<=");  //订单开始日期
             }
             if (!string.IsNullOrEmpty(orderSearchInfo.complete_date_begin))
             {

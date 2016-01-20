@@ -20,5 +20,13 @@ namespace JIT.CPOS.DTO.Module.Order.SalesReturn.Response
         public string VipName { get; set; }
         public int? Status { get; set; }
         public string CreateTime { get; set; }
+        /// <summary>
+        /// 商户单号
+        /// </summary>
+        public string paymentcenterId { get; set; }
+        /// <summary>
+        /// 支付方式
+        /// </summary>
+        public string paymentName { get; set; }
     }
 }

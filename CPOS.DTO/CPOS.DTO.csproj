@@ -85,6 +85,8 @@
     <Compile Include="Module\Basic\MessageTemplate\Request\GetMessageTemplateListRP.cs" />
     <Compile Include="Module\Basic\MessageTemplate\Request\SetMessageTemplateRP.cs" />
     <Compile Include="Module\Basic\MessageTemplate\Response\GetMessageTemplateListRD.cs" />
+    <Compile Include="Module\Basic\Unit\Request\GetUnitInfoRP.cs" />
+    <Compile Include="Module\Basic\Unit\Response\GetUnitInfoRD.cs" />
     <Compile Include="Module\CardProduct\MakeVipCard\Request\ExportVipCardCodeRP.cs" />
     <Compile Include="Module\CardProduct\MakeVipCard\Request\GetMakeVipCardListRP.cs" />
     <Compile Include="Module\CardProduct\MakeVipCard\Request\ImportVipCardISNRP.cs" />
@@ -135,10 +137,17 @@
     <Compile Include="Module\Marketing\Activity\Response\GetActivityListRD.cs" />
     <Compile Include="Module\Marketing\Activity\Response\GetCardholderCountRD.cs" />
     <Compile Include="Module\Marketing\Activity\Response\PrizesInfo.cs" />
+    <Compile Include="Module\Order\Delivery\Request\GetVipAddressInfoRP.cs" />
+    <Compile Include="Module\Order\Delivery\Response\GetVipAddressInfoRD.cs" />
     <Compile Include="Module\Order\Logistics\Request\GetLogisticsCompanyRP.cs" />
     <Compile Include="Module\Order\Logistics\Request\SetLogisticsCompanyRP.cs" />
     <Compile Include="Module\Order\Logistics\Response\GetLogisticsCompanyRD.cs" />
+    <Compile Include="Module\Order\Order\Request\BatchCheckOrderRP.cs" />
+    <Compile Include="Module\Order\Order\Request\BatchInvalidOrderRP.cs" />
+    <Compile Include="Module\Order\Order\Request\BatchInvalidShipRP.cs" />
     <Compile Include="Module\Order\Order\Request\ExportSalesReturnExcelRD.cs" />
+    <Compile Include="Module\Order\Order\Request\RemoveShoppingCartRP.cs" />
+    <Compile Include="Module\Order\Order\Response\OrderOperationRD.cs" />
     <Compile Include="Module\Order\SalesReturn\Request\GetRefundOrderDetailRP.cs" />
     <Compile Include="Module\Order\SalesReturn\Request\GetRefundOrderListRP.cs" />
     <Compile Include="Module\Order\SalesReturn\Request\GetSalesReturnDetailRP.cs" />

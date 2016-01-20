@@ -728,7 +728,13 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 key = Request("id").ToString().Trim();
             }
 
+            //商户订单号，支付方式
+            string paymentcenter_id = FormatParamValue(form.paymentcenter_id);
+            string PayId = FormatParamValue(form.Field11);
+
             data = inoutService.SearchInoutInfo_lj2(
+                paymentcenter_id,
+                PayId,
                 PayStatus,
                 order_no,
                 order_reason_type_id,
@@ -1219,36 +1225,35 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                     order_reason_type_id = FormatParamValue(form.order_reason_id);
                 }
 
-                string order_no = form.order_no;
-                //string sales_unit_id = form.sales_unit_id; //"0d2bf77f765849249a0270c0a07fef07";//
-                string warehouse_id = null;//form.warehouse_id;//Request("warehouse_id");//
-                //string purchase_unit_id = form.purchase_unit_id;
-                string status = null;//form.status;
-                string order_date_begin = form.order_date_begin;
-                string order_date_end = form.order_date_end;
-                string complete_date_begin = null;//FormatParamValue(form.complete_date_begin);
-                string complete_date_end = null;//FormatParamValue(form.complete_date_end);
-                string data_from_id = null;//FormatParamValue(form.data_from_id);
-                string ref_order_no = null;//FormatParamValue(form.ref_order_no);
-
-                string Field7 = FormatParamValue(Request("Field7"));
-                string DefrayTypeId = null;//FormatParamValue(form.DefrayTypeId);
-                string DeliveryId = null;//FormatParamValue(form.DeliveryId);
-
-                string Field9_begin = form.Field9_begin;
-                string Field9_end = form.Field9_end;
-                string ModifyTime_begin = form.ModifyTime_begin;  //修改时间
-                string ModifyTime_end = form.ModifyTime_end;
                 string PayStatus = FormatParamValue(form.Field1);
 
-                string purchase_warehouse_id = null;//FormatParamValue(form.purchase_warehouse_id);
-                string sales_warehouse_id = null;//FormatParamValue(form.sales_warehouse_id);
+                string order_no = FormatParamValue(form.order_no);
+                //string sales_unit_id = form.sales_unit_id; //"0d2bf77f765849249a0270c0a07fef07";//
+                string warehouse_id = FormatParamValue(form.warehouse_id);//Request("warehouse_id");//
+                //string purchase_unit_id = form.purchase_unit_id;
+                string status = FormatParamValue(form.status);
+                string order_date_begin = FormatParamValue(form.order_date_begin);
+                string order_date_end = FormatParamValue(form.order_date_end);
+                string complete_date_begin = FormatParamValue(form.complete_date_begin);
+                string complete_date_end = FormatParamValue(form.complete_date_end);
+                string data_from_id = FormatParamValue(form.data_from_id);
+                string ref_order_no = FormatParamValue(form.ref_order_no);
 
+                string Field7 = FormatParamValue(Request("Field7"));
+                string DefrayTypeId = FormatParamValue(form.DefrayTypeId);
+                string DeliveryId = FormatParamValue(form.DeliveryId);
+
+                string Field9_begin = FormatParamValue(form.Field9_begin);
+                string Field9_end = FormatParamValue(form.Field9_end);
+                string ModifyTime_begin = FormatParamValue(form.ModifyTime_begin);
+                string ModifyTime_end = FormatParamValue(form.ModifyTime_end);
+
+                string purchase_warehouse_id = FormatParamValue(form.purchase_warehouse_id);
+                string sales_warehouse_id = FormatParamValue(form.sales_warehouse_id);
                 string vip_no = FormatParamValue(form.vip_no);
                 string InoutSort = FormatParamValue(form.InoutSort); //排序
-
-                int maxRowCount = 10000;//导出一万行
-                int startRowIndex = 0;
+                int maxRowCount = Utils.GetIntVal(Request("limit"));
+                int startRowIndex = Utils.GetIntVal(Request("start"));
 
                 string key = string.Empty;
                 if (Request("id") != null && Request("id") != string.Empty)
@@ -1256,28 +1261,34 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                     key = Request("id").ToString().Trim();
                 }
 
-                data = inoutService.SearchInoutInfo_lj(
-                    PayStatus,
-                    order_no,
-                    order_reason_type_id,
-                    sales_unit_id,
-                    warehouse_id,
-                    purchase_unit_id,
-                    status,
-                    order_date_begin,
-                    order_date_end,
-                    complete_date_begin,
-                    complete_date_end,
-                    data_from_id,
-                    ref_order_no,
-                    order_type_id,
-                    red_flag,
-                    maxRowCount,
-                    startRowIndex
-                    , purchase_warehouse_id
-                    , sales_warehouse_id
-                    , Field7, DeliveryId, DefrayTypeId, Field9_begin, Field9_end, ModifyTime_begin, ModifyTime_end, "", vip_no,
-                    CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort, true);
+                //商户订单号，支付方式
+                string paymentcenter_id = FormatParamValue(form.paymentcenter_id);
+                string PayId = FormatParamValue(form.Field11);
+
+                data = inoutService.SearchInoutInfo_lj2(
+                    paymentcenter_id,
+                PayId,
+                PayStatus,
+                order_no,
+                order_reason_type_id,
+                sales_unit_id,
+                warehouse_id,
+                purchase_unit_id,
+                status,
+                order_date_begin,
+                order_date_end,
+                complete_date_begin,
+                complete_date_end,
+                data_from_id,
+                ref_order_no,
+                order_type_id,
+                red_flag,
+                maxRowCount,
+                startRowIndex
+                , purchase_warehouse_id
+                , sales_warehouse_id
+                , Field7, DeliveryId, DefrayTypeId, Field9_begin, Field9_end, ModifyTime_begin, ModifyTime_end, "", vip_no,
+                CurrentUserInfo.CurrentUserRole.UnitId, null, InoutSort, true);
                 #endregion
                 string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                 Aspose.Cells.License lic = new Aspose.Cells.License();
@@ -1373,6 +1384,14 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 cells[1, 13].SetStyle(style2);
                 cells[1, 14].PutValue("来源");
                 cells[1, 14].SetStyle(style2);
+                cells[1, 15].PutValue("商户单号");
+                cells[1, 15].SetStyle(style2);
+                cells[1, 16].PutValue("支付方式");
+                cells[1, 16].SetStyle(style2);
+                cells[1, 17].PutValue("联系人");
+                cells[1, 17].SetStyle(style2);
+                cells[1, 18].PutValue("联系人电话");
+                cells[1, 18].SetStyle(style2);
                 //cells[1, 13].PutValue("操作人");
                 //cells[1, 13].SetStyle(style2);
                 cells.SetRowHeight(1, 25);
@@ -1413,13 +1432,18 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                     cells[2 + i, 7].PutValue(data.InoutInfoList[i].create_time);
                     cells[2 + i, 7].SetStyle(style3);
 
-                    cells[2 + i, 8].PutValue(data.InoutInfoList[i].DefrayTypeName);
+                    cells[2 + i, 8].PutValue(data.InoutInfoList[i].payment_name);
                     cells[2 + i, 8].SetStyle(style3);
 
                     cells[2 + i, 9].PutValue(data.InoutInfoList[i].DeliveryName);
                     cells[2 + i, 9].SetStyle(style3);
 
-                    cells[2 + i, 10].PutValue(data.InoutInfoList[i].Field9);
+                    string Time = "";
+                    if (!string.IsNullOrWhiteSpace(data.InoutInfoList[i].Field9))
+                    {
+                        Time = Convert.ToDateTime(data.InoutInfoList[i].Field9).ToString("yyyy-MM-dd HH:mm:ss");
+                    }
+                    cells[2 + i, 10].PutValue(Time);
                     cells[2 + i, 10].SetStyle(style3);
 
                     cells[2 + i, 11].PutValue(data.InoutInfoList[i].address);
@@ -1433,6 +1457,27 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
 
                     cells[2 + i, 14].PutValue(data.InoutInfoList[i].data_from_name);
                     cells[2 + i, 14].SetStyle(style3);
+
+                    cells[2 + i, 15].PutValue(data.InoutInfoList[i].paymentcenter_id);//商户单号
+                    cells[2 + i, 15].SetStyle(style3);
+
+                    cells[2 + i, 16].PutValue(data.InoutInfoList[i].payment_name);//支付方式名称
+                    cells[2 + i, 16].SetStyle(style3);
+
+                    string VipName = "";
+                    if (!string.IsNullOrWhiteSpace(data.InoutInfoList[i].linkMan))
+                        VipName = data.InoutInfoList[i].linkMan;
+                    else
+                        VipName = data.InoutInfoList[i].vip_name;
+                    cells[2 + i, 17].PutValue(VipName);//联系人
+                    cells[2 + i, 17].SetStyle(style3);
+                    string Phone = "";
+                    if (!string.IsNullOrWhiteSpace(data.InoutInfoList[i].linkTel))
+                        Phone = data.InoutInfoList[i].linkTel;
+                    else
+                        Phone = data.InoutInfoList[i].vipPhone;
+                    cells[2 + i, 18].PutValue(Phone);//联系人电话
+                    cells[2 + i, 18].SetStyle(style3);
 
                     //cells[2 + i, 13].PutValue(data.InoutInfoList[i].create_user_name);
                     //cells[2 + i, 13].SetStyle(style3);
@@ -2421,9 +2466,10 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             {
                 dict.Add("Field5", parms["PostCode"]);
             }
-            if (parms["Carrier_id"] != null)
+            if (!string.IsNullOrWhiteSpace(parms["Carrier_id"]))
             {
-                dict.Add("Carrier_id", parms["Carrier_id"]);
+                if (parms["DeliveryType"] == "1")
+                    dict.Add("Carrier_id", parms["Carrier_id"]);
             }
             if (parms["DeliveryCode"] != null)
             {
@@ -2440,6 +2486,15 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             if (parms["DeliveryType"] != null)
             {
                 dict.Add("Field8", parms["DeliveryType"]);
+            }
+
+            if (!string.IsNullOrWhiteSpace(parms["UnitId"]))
+            {//门店ID
+                dict.Add("unit_id", parms["UnitId"]);
+                dict.Add("sales_unit_id", parms["UnitId"]);
+                dict.Add("purchase_unit_id", parms["UnitId"]);
+                if (parms["DeliveryType"] == "2")
+                    dict.Add("Carrier_id", parms["UnitId"]);
             }
             new Inout3Service(CurrentUserInfo).SaveDeliveryInfo(dict, parms["order_id"]);
             return new ResponseData
@@ -2556,7 +2611,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
 
                         info.OrderStatus = int.Parse(status);
 
-                        string statusDesc=GetStatusDesc(status);//变更后的状态名称
+                        string statusDesc = GetStatusDesc(status);//变更后的状态名称
 
                         if (info.OrderStatus == 10000)
                         {
@@ -2569,10 +2624,11 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             var vipBll = new VipBLL(CurrentUserInfo);
                             var vipInfo = vipBll.GetByID(order.vip_no);
                             var SuccessCommonBLL = new CommonBLL();
-                            var InoutEntity = new T_InoutEntity() {
+                            var InoutEntity = new T_InoutEntity()
+                            {
                                 actual_amount = order.actual_amount == null ? 0 : order.actual_amount,
-                                Field4=order.Field4,
-                                order_no=order.order_no
+                                Field4 = order.Field4,
+                                order_no = order.order_no
                             };
                             SuccessCommonBLL.SentPaymentMessage(InoutEntity, vipInfo.WeiXinUserId, vipInfo.VIPID, CurrentUserInfo);
                             #endregion
@@ -2591,13 +2647,13 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
 
                         #region 处理积分返现和退款
 
-                        if (statusDesc=="已取消")//取消订单
+                        if (statusDesc == "已取消")//取消订单
                         {
                             //执行取消订单业务 reconstruction By Henry 2015-10-20
-                            inoutBLL.SetCancelOrder(orderId,0,CurrentUserInfo);
+                            inoutBLL.SetCancelOrder(orderId, 0, CurrentUserInfo);
                         }
 
-                        
+
                         #endregion
 
                         #region 处理订单发货发送微信模板消息
@@ -2608,7 +2664,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             var vipInfo = vipBll.GetByID(order.vip_no);
                             //物流公司
                             order.carrier_name = inoutService.GetCompanyName(order.carrier_id);
-                            
+
                             var CommonBLL = new CommonBLL();
                             CommonBLL.SentShipMessage(order, vipInfo.WeiXinUserId, order.vip_no, CurrentUserInfo);
                         }
@@ -2622,7 +2678,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             }
             return res.ToJSON();
         }
-        
+
         #endregion
 
         #region 上传文件
@@ -3143,6 +3199,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
         public string ModifyTime_end;
         public string InoutSort;
         public string Field1;
+        public string paymentcenter_id;//商户单号
+        public string Field11;//支付方式
     }
     #endregion
 }
