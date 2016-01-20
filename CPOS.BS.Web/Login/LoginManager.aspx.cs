@@ -109,6 +109,12 @@ namespace JIT.CPOS.BS.Web.Login
                     Response.End();
                 }
             }
+            else {
+                //PageLog.Current.Write(ex);
+                Response.Write("该用户没有权限登录管理平台");
+                Response.End();
+            }
+
 
 
             //this.Session["UserInfo"] = login_user;

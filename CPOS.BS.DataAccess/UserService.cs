@@ -255,6 +255,21 @@ where a.customer_id=@CustomerId    {4} ";
             sql = sql + " select @iCount = COUNT(*) From @TmpTable; ";
             **/
             string sql="";//初始化
+            sql += @"  DECLARE @News3 table 
+( 
+ user_id varchar(100)
+ );
+
+            with temp3 ( user_id)
+                            as
+                            (
+                                select x.user_id from t_user_role x
+                                inner join T_Role  y on x.role_id=y.role_id  
+                                where y.role_code='Administrator'
+                            )
+       insert into @News3 select * from temp3";
+
+
              if (_ht["para_unit_id"].ToString() != "")
              {
                  sql += @"   DECLARE @News table 
@@ -303,7 +318,7 @@ where a.customer_id=@CustomerId    {4} ";
 	                 select user_id 
 	                   from  T_User_Role c inner join temp d     ----在前面就把需要计算的数据先算好了，就不要再每次取数据时再取了
 	                   ON d.dst_unit_id = c.unit_id)                            
-	                   and a.User_Status = '1' 
+	                  ----- and a.User_Status = '1'   ---让停用的显示出来，现在删除就直接物理删除了
 	                   and a.customer_id = '" + _ht["CustomerId"].ToString() + "'";
              sql = pService.GetLinkSql(sql, "a.User_Name", _ht["UserName"].ToString(), "%");
              sql = pService.GetLinkSql(sql, "a.User_Code", _ht["UserCode"].ToString(), "%");
@@ -322,6 +337,8 @@ where a.customer_id=@CustomerId    {4} ";
 	                   from  T_User_Role c inner join @News d     ----在前面就把需要计算的数据先算好了，就不要再每次取数据时再取了
 	                   ON d.dst_unit_id = c.unit_id)    ";
              }
+            //不要是超级管理员
+             sql += @" and a.user_id   not in  (select user_id from @News3)";
 
 	    
  	  sql+=" select @iCount = COUNT(*) From @TmpTable ";

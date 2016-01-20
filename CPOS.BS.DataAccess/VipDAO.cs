@@ -1412,7 +1412,7 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder sql = new StringBuilder();
             sql.Append(" select 1 from t_user where customer_id = @pCustomerId and ");
-            sql.Append(" (user_code = @pUserName or user_telephone = @pUserName)");
+            sql.Append(" (user_code = @pUserName or user_telephone = @pUserName) ");
 
             int result = Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text, sql.ToString(), paras.ToArray()));
 

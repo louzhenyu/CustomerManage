@@ -485,7 +485,8 @@ namespace JIT.CPOS.BS.DataAccess
         private int GetUserCountByRoleId(string role_id)
         {
             DataSet ds = new DataSet();
-            string sql = "select isnull(count(*),0) count from t_user_role where role_id='"+role_id+"' and status = '1'";
+            string sql = @"select isnull(count(1),0) count from t_user_role a inner join t_user  b on a.user_id=b.user_id   
+                                where   role_id='" + role_id + "' and a.status = '1' and b.user_status='1' ";
             ds = this.SQLHelper.ExecuteDataset(sql);
             int i = 0;
             if (ds != null && ds.Tables != null && ds.Tables.Count > 0)

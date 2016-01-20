@@ -181,7 +181,7 @@ namespace JIT.CPOS.BS.DataAccess
                   + " on(a.role_id = d.role_id) "
                   + " where 1=1 and a.[status] = '1' "
                   + " and d.row_no  >= '" + _ht["StartRow"].ToString() + "' and  d.row_no <= '" + _ht["EndRow"] + "'  "
-                  + " order by a.def_app_id, a.role_code ;";
+                  + " order  by a.modify_time desc ;";   // by a.def_app_id, a.role_code 
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
@@ -195,7 +195,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " Declare @iCount int; "
                       + " insert into @TmpTable(role_id,row_no) "
                       + " select a.role_id "
-                      + " ,row_no=row_number() over(order by a.role_code) "
+                      + " ,row_no=row_number() over(order by a.modify_time desc) "
                       + " From t_role a "
                       + " where 1=1 and a.[status] = '1' ";
             PublicService pService = new PublicService();
@@ -203,6 +203,8 @@ namespace JIT.CPOS.BS.DataAccess
             sql = pService.GetLinkSql(sql, "a.Customer_Id", _ht["CustomerId"].ToString(), "=");
             sql = pService.GetLinkSql(sql, "a.role_name", _ht["role_name"]==null?"": _ht["role_name"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.type_id", _ht["type_id"] == null ? "" : _ht["type_id"].ToString(), "=");
+            sql = pService.GetLinkSql(sql, "a.type_id", _ht["type_id"] == null ? "" : _ht["type_id"].ToString(), "=");
+            sql += " and a.role_code!='Administrator'";//不显示超级管理员
             if (string.IsNullOrEmpty(_ht["UserID"].ToString()))
             {
                 sql += @" and  a.org_level >=( select min(z.type_level)  from T_User_Role x inner join t_role y 
