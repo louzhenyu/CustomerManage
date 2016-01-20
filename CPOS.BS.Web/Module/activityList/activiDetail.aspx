@@ -63,7 +63,7 @@ a:hover{color:#fff;}
 .activityConfigArea{height:585px;padding:28px 0px 5px 70px;}
 .activityConfigArea .examplePic,.activityConfigArea .createPic{float:left;width:324px;height:506px;border:3px solid #ccc;border-radius:5px;}
 .activityConfigArea .createPicBox{float:left;width:324px;}
-.activityConfigArea .redPackPrize{position:absolute;bottom:105px;left:37px;width:250px;height:148px;}
+.activityConfigArea .redPackPrize{position: absolute;bottom: 61px;left: 50%;width: 210px;margin-left: -105px;}
 .activityConfigArea .redPackPrize img{width:100%;}
 .activityConfigArea .uploadPicBox{float:left;width:368px;height:506px;}
 .activityConfigArea .createPic>img,.createPic .logoPic img{width:100%;height:auto;}
@@ -75,8 +75,10 @@ a:hover{color:#fff;}
 .uploadItem .exp{padding-top:7px;font-size:13px;color:#999;}
 .createPic{position:relative;background:#f1f1f1 url(images/icon-red.jpg) no-repeat center 150px;}
 .createPic .logoPic{position:absolute;top:15px;left:15px;width:50px;height:50px;}
-.createPic .getRedBtn{display:block;position:absolute;bottom:40px;left:50%;margin-left:-126px;width:252px;height:42px;}
+.createPic .getRedBtn{display: block;position: absolute;bottom: 15%;left: 50%;margin-left: -105px;width: 210px;height:285px;}
 .createPic .getRedBtn img{width:100%;}
+.createPic .Redrule {position: absolute;bottom: 0px;line-height: 37px;text-align: center;color: #fff;font-weight: 600;font-size: 13px;right: 0px;  margin-right: 10px;}
+.createPic .getRedBtn .OpenRedBtn{position: absolute;top: 50%;background-color: #ffea58;width: 70%;line-height: 37px;text-align: center;left: 50%; margin-left: -35%;color: #d13820;font-weight: 900;border-radius: 4px;font-size: 16px;}
 .gameAction{line-height:33px;font-size:14px;width:168px;margin-left:120px;display:block;color:#4d4d4d;}
 .seeRedBtn{display:inline-block;width:100%;padding:17px 0;text-align:center;font-size:15px;color:#0098ff;cursor:pointer;}
 
@@ -312,13 +314,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                             </div>
                         </div>
                         
-                        <div id="backBgPic" class="uploadItem" data-url="" data-batid="BackGround">
-                        	<p class="tit">领取后背景颜色：</p>
-                            <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
-                                <p class="exp">(建议尺寸640*1008 大小为200K)</p>
-                            </div>
-                        </div>
+                       
                         
                         <div id="logoBgPic" class="uploadItem" data-flag=3  data-url="" data-batid="Logo">
                         	<p class="tit">logo图片：</p>
@@ -347,10 +343,9 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <div class="createPic">
                             <p class="logoPic"><img id="logoPic" src="images/icon-log.png" /></p>
                             <img id="redBgPic" src="" />
-                            <span class="getRedBtn getRedBackBtn"><img src="images/get-red-btn.png" /></span>
+                            <span class="getRedBtn getRedBackBtn"><img src="images/Redbg.png" /><span class="Redrule">活动规则></span><div class="OpenRedBtn">打开红包</div></span>
                             <div class="backAction hide">
-                            <p class="redPackPrize"><img src="images/redpackBackText.png" /></p>
-                            <span class="getRedBtn"><img src="images/shareBtn.png" /></span>
+                            <p class="redPackPrize"><img src="images/backRedbg.png" /></p>
                             </div>
                         </div>
                         <span class="seeRedBtn">查看领取后页面</span>

@@ -51,8 +51,8 @@
                  </div>
 
                  </div>
-
-
+                <div class="commonBtn sales ImportWXUser" data-flag="ImportWXUser" id="Div1"> 拉取微信粉丝
+                </div>
                 </div>
                    <div  id="gridTable" class="gridLoading">
                          <div  class="loading">
@@ -100,6 +100,15 @@
                                </div>
                 </div>
             </div>
+                </form>
+                </script>
+    <!--拉取微信粉丝-->
+         <script id="tpl_ImportWXUser" type="text/html">
+            <form id="Form1">
+
+                            <div class="loadImg"><img src="../WeChatAuthor/images/loading.gif" /><br/>拉取中…</div>
+                   <div class="PromptInfor">拉取时间可能较长，请耐心等待，您可以进行其他操作，可在会员管理中查看结果。</div>
+            
                 </form>
                 </script>
 

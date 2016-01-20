@@ -10,3 +10,6 @@
 .unbundling{background-image:url(../images/bind.png); width: 16px; height: 16px; margin: 0 auto;}
 
 .optionBtn .sales .authBtn{ position: absolute; top:-10px;left:-10px;opacity:0}
+
+.loadImg{  text-align: center; line-height: 39px;font-size: 17px;margin: 30px;}
+.PromptInfor{ width: 90%;margin: 0px auto;font-size: 14px;color: #797979;font-weight: 600;}

@@ -52,12 +52,31 @@
 
 
             that.elems.operation.delegate(".optionBtn","click",function(e){
-               // window.open(window.weixinUrl);
+                // window.open(window.weixinUrl);
                 $.messager.confirm("提示","确定绑定微信绑定完成",function(r){
 
                     that.loadPageData();
 
                 });
+            });
+
+            that.elems.operation.delegate(".ImportWXUser", "click", function (e) {
+                
+
+                $('#win').window({ title: "提示", width: 622, height: 330 });
+
+                //改变弹框内容，调用百度模板显示不同内容
+                $('#panlconent').layout('remove', 'center');
+                var html = bd.template('tpl_ImportWXUser');
+                var options = {
+                    region: 'center',
+                    content: html
+                };
+                $('#panlconent').layout('add', options);
+                $('#win').window('open')
+                $(".cancelBtn").hide();
+                that.ImportWXUser();
+
             });
             /**************** -------------------弹出easyui 控件 start****************/
             var  wd=160,H=32;
@@ -81,18 +100,7 @@
             });
             $('#win').delegate(".saveBtn","click",function(e){
 
-                if ($('#optionForm').form('validate')) {
-
-                    var fields = $('#optionForm').serializeArray(); //自动序列化表单元素为JSON对象
-
-                    that.loadData.operation(fields,that.elems.optionType,function(data){
-                        $('#win').window('close');
-                        alert("操作成功");
-
-                        that.loadPageData(e);
-
-                    });
-                }
+                $('#win').window('close');
             });
             /**************** -------------------弹出窗口初始化 end****************/
 
@@ -109,6 +117,9 @@
                         that.addNumber(row);
 
                 }
+
+                
+
                 if(optType=="delete"){
                     if (row.BeginTime&&row.EndTime) {
                         var Begindate = Date.parse(new Date(row.BeginTime).format("yyyy-MM-dd").replace(/-/g, "/"));
@@ -325,6 +336,32 @@
             that.loadData.WApplicationList(function(data){
                 that.renderTable(data);
             });
+        },
+        //活动方式
+        ImportWXUser: function () {
+            var that = this;
+            $.util.oldAjax({
+            url: "/Module/WApplication/Handler/WApplicationHandler.ashx",
+            data:{
+                action:'ImportWXUser'
+
+            },
+            success: function (data) {
+                if (data) {
+                    if (data.success) {
+                                
+                    }
+                } else {
+                    alert(data.msg);
+                }
+            },
+            complete: function () {
+                setTimeout(function () {
+                    $('#win').window('close');
+
+                }, 2000);
+            }
+        });
         },
 
 

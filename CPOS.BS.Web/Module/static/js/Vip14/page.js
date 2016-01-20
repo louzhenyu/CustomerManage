@@ -3,7 +3,7 @@
         init: function () {
             var that = this;
 
-            $("#receive").attr("src", "http://open.chainclouds.com/receive?clientid=" + window.clientID);
+            $("#receive").attr("src", window.weixinUrl);
 
 			that.isNavigator();
         },

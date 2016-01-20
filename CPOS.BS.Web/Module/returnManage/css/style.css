@@ -9,7 +9,7 @@
 .optionBtn li{cursor: pointer; font-size: 15px; color: #999; float: left; padding-left: 35px; float: left; line-height:64px; }
 .optionBtn li.on{color: #07c8cf}
 .optionBtn li.on em{border-bottom: 2px #07c8cf solid;}
-.moreQueryWrap{ float: left;margin-top: 12px;}
+.moreQueryWrap{ float: left;margin-top: 12px;  height: 33px;margin: 10px 10px 10px 0;}
 .rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left; color: #999;}
 .rowText p{ color: #666;}
 .imgTable .datagrid-row-checked {background-color:#b2f0f0;}

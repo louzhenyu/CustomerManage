@@ -156,5 +156,5 @@ body{font-family:"微软雅黑";}
 .handleBtnBox .finishStep{background:#fc7a52;color:#fff;}
 .stepBox{height:425px;overflow:hidden;display:none;}
 
-#receive {  width: 230px;  height: 60px;  overflow: hidden;  margin: 0px auto; position: absolute;  left: 284px;}
+#receive {   width: 270px;  height: 60px;  overflow: hidden;  margin: 0px auto;  position: absolute;  left: 273px;}
 .receivecontent {padding:0px;margin:0px;}

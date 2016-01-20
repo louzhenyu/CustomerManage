@@ -111,7 +111,16 @@
 
             that.loadData.getFromList(function(data){
                 debugger;
-                data.data.push({"Id":-1,Description:"请选择","selected":true});
+                data.topics.push({ "PaymentTypeID": -1, PaymentTypeName: "请选择", "selected": true });
+
+                for (i = 0; i < data.topics.length; i++)
+                {
+                    if (data.topics[i].PaymentTypeCode == "CCAlipayWap")
+                    {
+                        data.topics[i].PaymentTypeName = "平台支付宝支付(连锁掌柜)";
+                    }
+                }
+
                 $('#txtDataFromID').combobox({
                     width:wd,
                     height:H,

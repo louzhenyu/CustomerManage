@@ -125,7 +125,6 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					          if (that.elems.activiType == 1) {
 					              var logo = $('#logoBgPic').data('url'),
                                       beforeGround = $('#beforeBgPic').data('url'),
-                                      backGround = $('#backBgPic').data('url'),
                                       rule = $('#ruleBgPic').data('url'),
                                       ruleContent = $('.ruleText textarea').val(),
                                       ruleFlag = $('#ruleOption').combobox('getValue');
@@ -135,8 +134,6 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					                  return $.messager.alert("提示", '请添加奖品信息！');
 					              } else if (!beforeGround) {
 					                  return $.messager.alert("提示", '请上传领取前背景图片！');
-					              } else if (!backGround) {
-					                  return $.messager.alert("提示", '请上传领取后背景图片！');
 					              } else if (!logo) {
 					                  return $.messager.alert("提示", '请上传logo图片！');
 					              } else if (ruleFlag == 1 && !ruleContent) {
@@ -154,7 +151,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
                                                   "BatId": "BeforeGround"
                                               },
                                               {
-                                                  "ImageURL": backGround,
+                                                  "ImageURL": "",
                                                   "BatId": "BackGround"
                                               },
                                               {
@@ -483,11 +480,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			
 			//查看领取后页面
 			$('.seeRedBtn').bind('click',function(){
-				var $this = $(this),
-					beforeBgPic = $('#beforeBgPic').data('url'),
-					backBgPic = $('#backBgPic').data('url');
+			    var $this = $(this),
+					beforeBgPic = $('#beforeBgPic').data('url');
 				if($this.text()=='查看领取后页面'){
-					$('#redBgPic').attr('src',backBgPic);
+				    $('#redBgPic').attr('src', beforeBgPic);
 					$('.getRedBackBtn').hide();
 					
 					$('.backAction').show();
@@ -832,8 +828,6 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						                 } else if (imageList[i].BatId == 'BeforeGround') {
 						                     $('#beforeBgPic').data('url', imageList[i].ImageURL);
 						                     $('#redBgPic').attr('src', imageList[i].ImageURL);
-						                 } else if (imageList[i].BatId == 'BackGround') {
-						                     $('#backBgPic').data('url', imageList[i].ImageURL);
 						                 } else if (imageList[i].BatId == 'Rule') {
 						                     $('#ruleBgPic').data('url', imageList[i].ImageURL);
 						                 }

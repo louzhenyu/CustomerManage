@@ -407,13 +407,13 @@
                            <div class="commonSelectWrap">
                               <em class="tit">门店电话:</em>
                               <div class="searchInput">
-                               <input type="text"  class="easyui-validatebox"   readonly="readonly"data-options="disabled:true" name="unit_tel"/>
+                               <input type="text" id="unitphone"  class="easyui-validatebox"   readonly="readonly" data-options="disabled:true" name="Phone"/>
                               </div>
                            </div>
                            <div class="commonSelectWrap">
                               <em class="tit">门店地址:</em>
                               <div class="searchInput">
-                               <input type="text"  class="easyui-validatebox"   readonly="readonly"data-options="disabled:true" name="unit_address"/>
+                               <input type="text" id="UnitAddr"   class="easyui-validatebox"   readonly="readonly" data-options="disabled:true" name="Addr"/>
                               </div>
                            </div>
                        </div>
