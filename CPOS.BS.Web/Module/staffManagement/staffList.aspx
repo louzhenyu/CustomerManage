@@ -86,7 +86,7 @@
                 </div>
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
-                	<div class="commonBtn" id="addUserBtn">新增用户</div>
+                	<div class="commonBtn" id="addUserBtn">新增员工</div>
                     <div class="importBtn"  id="inportvipmanageBtn"></div>
                     <div class="exportBtn" style="display:none"></div>
                 </div>

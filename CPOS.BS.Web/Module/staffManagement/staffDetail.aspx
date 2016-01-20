@@ -59,7 +59,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/staffDetail.js?ver=0.3">
+        <div class="allPage" id="section" data-js="js/staffDetail.js?ver=0.4">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
             	<div class="bigTitle">新建用户</div>

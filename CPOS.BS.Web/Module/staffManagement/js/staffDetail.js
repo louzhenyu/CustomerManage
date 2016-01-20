@@ -32,6 +32,28 @@
             this.initEvent();
             this.loadPageData();
         },
+		bindSaveBtn: function(){
+			var that = this;
+			$('#staffSaveBtn').bind('click',function(){
+				if($('#seach').form('validate')) {
+					if($('.setUnitBtn.on').length==0){
+						alert('至少一个设为所属单位！');
+						return false;
+					}
+					$('#staffSaveBtn').unbind('click');
+                    var fields = $('#seach').serializeArray(),
+						obj = {}; //自动序列化表单元素为JSON对象
+					$.each(fields,function(i,para){
+						//params.value=params.value=="0"?"":params.value;
+						obj[para.name]=para.value;
+					});
+					obj["userRoleInfoList"] = $('#gridTable').datagrid('getData').rows;
+					
+					that.setStaffSave(obj);
+					
+				}
+			});
+		},
         initEvent: function () {
             var that = this;
 			$('body').delegate('.commonSelectWrap','click',function(){
@@ -110,24 +132,7 @@
 			
 			
 			//最后的保存
-			$('#staffSaveBtn').on('click',function(){
-				if($('#seach').form('validate')) {
-					if($('.setUnitBtn.on').length==0){
-						alert('至少一个设为所属单位！');
-						return false;
-					}
-                    var fields = $('#seach').serializeArray(),
-						obj = {}; //自动序列化表单元素为JSON对象
-					$.each(fields,function(i,para){
-						//params.value=params.value=="0"?"":params.value;
-						obj[para.name]=para.value;
-					});
-					obj["userRoleInfoList"] = $('#gridTable').datagrid('getData').rows;
-					
-					that.setStaffSave(obj);
-					
-				}
-			});
+			that.bindSaveBtn();
 			
 			
 			
@@ -413,6 +418,7 @@
 						window.history.go(-1);
 					}else{
 						alert(data.msg);
+						that.bindSaveBtn();
 					}
 				}
 			});

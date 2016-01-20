@@ -198,7 +198,7 @@
 
 				//点击保存按钮
 				$('.jui-dialog').delegate('.saveBtn','click',function(){
-					var REG_INT = /^[1-9]\d*$/;
+					var REG_INT = /^[0-9]\d*$/;
 					var $this = $(this),
 						dateStr = '1970-01-01T',
 						status = that.saveDataInfo.Status,
@@ -236,18 +236,20 @@
 								that.alert('默认配送费为小于或等于1000的整数！');
 								return ;
 							}
-							
+							/*
 							if(!REG_INT.test(parseInt($("#dispatching_mincost").val()))){
-								that.alert('订单金额为大于的整数！');
+								that.alert('！');
 								return ;
-							}else if(parseInt($("#dispatching_mincost").val())>1000){
+							}
+							*/
+							if(parseInt($("#dispatching_mincost").val())>1000){
 								that.alert('订单金额为小于或等于1000的整数！');
 								return ;
 							}
 							
 							obj.Parameters.Description = $('#dispatching_describe').val(); //配送描述
 							obj.Parameters.DeliveryAmount = $('#dispatching_cost').val();//默认配送费
-							obj.Parameters.AmountEnd = $('#dispatching_mincost').val();//免配送费最低订单金额
+							obj.Parameters.AmountEnd = $('#dispatching_mincost').val()||0 ;//免配送费最低订单金额
 						}else if(deliveryId=='2'){
 							if($("#dispatching_stockup").val() == ''){
 								that.alert('备货期不能为空！');
