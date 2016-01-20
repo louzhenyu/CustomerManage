@@ -268,9 +268,11 @@
                 columns : [[
 
 
-                    {field : 'order_no',title : '订单编号',width:120,resizable:false,align:'center'},
-                    {field : 'total_amount',title : '订单金额(元)',width:120,resizable:false,align:'center'},
-                    {field : 'total_qty',title : '商品数量',width:58,align:'center',resizable:false,
+                    {field : 'order_no',title : '订单编号',width:140,resizable:false,align:'center'},
+                    {field : 'paymentcenter_id',title : '商户单号',width:100,resizable:false,align:'left'},
+                    {field : 'total_amount',title : '订单金额(元)',width:100,resizable:false,align:'center'},
+                    {field : 'payment_name',title : '支付方式',width:100,align:'center',resizable:false},
+                    {field : 'total_qty',title : '商品数量',width:100,align:'center',resizable:false,
                         formatter:function(value,row,index){
                             if(isNaN(parseInt(value))){
                                 return 0;

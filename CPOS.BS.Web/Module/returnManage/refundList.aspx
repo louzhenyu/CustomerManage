@@ -22,11 +22,22 @@
 
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">退款单号：</em>
-                                                      <label class="searchInput" style="width: 388px;">
+                                                      <label class="searchInput">
                                                           <input data-text="退款单号" data-flag="item_name" name="RefundNo" type="text" value="">
                                                       </label>
                                                   </div>
-
+                                                   <div class="commonSelectWrap">
+                                                       <em class="tit">商户单号：</em>
+                                                       <div class="searchInput">
+                                                          <input  name="paymentcenterId" data-text="会员" data-flag="vip_no" type="text" value=""  placeholder="请输入">
+                                                       </div>
+                                                   </div>
+                                                    <div class="commonSelectWrap">
+                                                       <em class="tit" >支付方式：</em>
+                                                     <div class="selectBox">
+                                                                <select id="txtDataFromID" name="payId"></select>
+                                                      </div>
+                                                    </div>
                                                   <div class="moreQueryWrap">
                                                                              <a href="javascript:;" class="commonBtn queryBtn">查询</a>
                                                                            </div>
@@ -39,7 +50,7 @@
                 </div>
                 <div class="tableWrap" id="tableWrap">
                     <div class="outoptionBtn ">
-                    <div class="commonBtn sales" data-flag="export">导出退款单</div>
+                    <div class="commonBtn  export" data-flag="export">导出</div>
                   </div>
 
                 <div class="optionBtn" id="opt">

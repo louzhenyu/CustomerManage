@@ -336,7 +336,7 @@
                            <div class="commonSelectWrap">
                               <em class="tit">服务门店:</em>
                               <div class="searchInput">
-                               <input type="text"  class="easyui-validatebox"   readonly="readonly"data-options="disabled:true" name="purchase_unit_name"/>
+                               <input type="text"   class="easyui-validatebox"   readonly="readonly" data-options="disabled:true" name="purchase_unit_name"/>
                               </div>
                            </div>
 
@@ -399,8 +399,8 @@
                        <div data-flag="到店自提"  style="display: none">
                            <div class="commonSelectWrap">
                               <em class="tit">服务门店:</em>
-                              <div class="searchInput">
-                               <input type="text"  class="easyui-validatebox"  data-options="disabled:true" readonly="readonly" name="purchase_unit_name"/>
+                              <div class="selectBox">
+                               <input type="text" id="setUnitId"  class="easyui-combotree"  data-options="width:160,height:32" name="purchase_unit_id"/>
                               </div>
                            </div>
 

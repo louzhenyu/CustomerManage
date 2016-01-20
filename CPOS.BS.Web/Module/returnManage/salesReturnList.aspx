@@ -22,7 +22,7 @@
 
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">退货单号：</em>
-                                                      <label class="searchInput" style="width: 288px;">
+                                                      <label class="searchInput" >
                                                           <input data-text="退货单号" data-flag="item_name" name="SalesReturnNo" type="text" value="">
                                                       </label>
                                                   </div>
@@ -32,9 +32,21 @@
                                                                 <select id="DeliveryType" name="DeliveryType"></select>
                                                       </div>
                                                   </div>
-                                                  <div class="moreQueryWrap">
-                                                                             <a href="javascript:;" class="commonBtn queryBtn">查询</a>
-                                                                           </div>
+                                                         <div class="commonSelectWrap">
+                                                                                  <em class="tit">商户单号：</em>
+                                                                                  <div class="searchInput">
+                                                                                            <input  name="paymentcenterId" data-text="会员" data-flag="vip_no" type="text" value=""  placeholder="请输入">
+                                                                                  </div>
+                                                                              </div>
+                                                                             <div class="moreQueryWrap">
+                                                                                 <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+                                                                              </div>
+                                                                              <div class="commonSelectWrap">
+                                                                                  <em class="tit" >支付方式：</em>
+                                                                                  <div class="selectBox">
+                                                                                           <select id="txtDataFromID" name="payId"></select>
+                                                                                  </div>
+                                                                              </div>
                                                   </form>
 
                         </div>
@@ -43,6 +55,9 @@
 
                 </div>
                 <div class="tableWrap" id="tableWrap">
+                                   <div class="outoptionBtn ">
+                                    <div class="commonBtn  export" data-flag="export">导出</div>
+                                  </div>
                 <div class="optionBtn" id="opt">
                    <ul><li data-status="0" class="on"><em> 全部 </em></li>
                         <li data-status="1"><em>待审核 </em></li>
@@ -54,7 +69,8 @@
                    </ul>
 
                 </div>
-                   <div class="imgTable"> <table class="dataTable" id="gridTable"></table>  </div>
+                   <div class="imgTable">
+                    <table class="dataTable" id="gridTable"></table>  </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager" >

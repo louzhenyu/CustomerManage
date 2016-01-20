@@ -103,9 +103,33 @@
             });
 
 
+
+            $('#txtDataFromID').combobox({
+                width:wd,
+                height:H,
+                panelHeight:that.elems.panlH,
+                valueField: 'id',
+                textField: 'text',
+                data:[{
+                    "id":0,
+                    "text":"请选择"
+
+                }]
+            });
             /**************** -------------------弹出easyui 控件  End****************/
 
-
+            that.loadData.getPayMentList(function(data){
+                debugger;
+                data.topics.push({"PaymentTypeID":-1,PaymentTypeName:"请选择","selected":true});
+                $('#txtDataFromID').combobox({
+                    width:wd,
+                    height:H,
+                    panelHeight:that.elems.panlH,
+                    valueField: 'PaymentTypeID',
+                    textField: 'PaymentTypeName',
+                    data:data.topics
+                });
+            });
                 }]
             });
             /**************** -------------------弹出easyui 控件  End****************/
@@ -187,7 +211,7 @@
             var fileds=$("#seach").serializeArray();
             $.each(fileds,function(i,filed){
 
-                that.loadData.seach[filed.name]=filed.value;
+                that.loadData.seach[filed.name]=filed.value==-1 ? "" : filed.value;
             });
             that.loadData.seach.Status=that.elems.operation.find("li.on").data("status")
 
@@ -236,6 +260,7 @@
                 columns : [[
 
                     {field : 'RefundNo',title : '退款单号',width:165,align:'left',resizable:false},
+                    {field : 'paymentcenterId',title : '商户单号',width:58,resizable:false,align:'center'},
                     {field : 'ActualRefundAmount',title : '实退金额(元)',width:58,align:'center',resizable:false,
                         formatter:function(value,row,index){
                            if(isNaN(parseInt(value))){
@@ -247,7 +272,7 @@
                     },
                     {field : 'VipName',title : '会员名称',width:90,align:'center',resizable:false},
 
-
+                    {field : 'paymentName',title : '支付方式',width:90,align:'center',resizable:false},
 
                     {field : 'Status',title : '退款状态',width:80,align:'center',resizable:false,
                         formatter:function(value ,row,index){
@@ -364,7 +389,7 @@
             this.loadData.tag.orderID=data.OrderID;
             $('#win').window('open');
         },
-        //导出退款单
+     /*   //导出退款单
         ExportSalesReturnExcel: function (status)
         {
             var method = "";
@@ -382,7 +407,30 @@
             
             
         }
-        ,
+        ,*/
+        //根据form数据 和 请求地址 导出数据到表格
+        exportExcel: function (data, url) {
+            var dataLink = JSON.stringify(data);
+            var form = $('<form>');
+            form.attr('style', 'display:none;');
+            form.attr('target', '');
+            form.attr('method', 'post');
+            form.attr('action', url);
+            var input1 = $('<input>');
+            input1.attr('type', 'hidden');
+            input1.attr('name', 'req');
+            input1.attr('value', dataLink);
+            $('body').append(form);
+            form.append(input1);
+            form.submit();
+            form.remove();
+        },
+        //导出退款列表
+        ExportSalesReturnExcel: function () {
+            page.setCondition();
+            var getUrl = '/ApplicationInterface/Module/Order/SalesReturn/DownLoadSales.ashx?method=ExportDownLoadRefund&para='+JSON.stringify(this.loadData.seach);//&req=';
+            this.exportExcel(this.loadData.seach, getUrl);
+        },
         loadData: {
             args: {
                 bat_id:"1",
@@ -406,7 +454,33 @@
 
             },
             opertionField:{},
+            getPayMentList: function (callback) {   //获取支付方式
+                $.util.oldAjax({
+                    url: "/Module/PayMent/Handler/PayMentHander.ashx",
+                    data:{
+                        QueryStringData:{
+                            mid:__mid
+                        },
+                        form:{
+                            "Payment_Type_Name": "",
+                            "Payment_Type_Code": "",
+                            "IsOpen":"true"
+                        },
+                        page: 1,
 
+                        action:"getPayMentTypePage"
+                    },
+                    success: function (data) {
+                        if (data) {
+                            if (callback)
+                                callback(data);
+                        }
+                        else {
+                            alert("支付方式加载异常");
+                        }
+                    }
+                });
+            },
             getRefundOrderList: function (callback) {
                 $.util.ajax({
                     url: "/ApplicationInterface/Gateway.ashx",
@@ -414,6 +488,8 @@
                           action:'Order.SalesReturn.GetRefundOrderList',
                           RefundNo:this.seach.RefundNo,
                           Status:this.seach.Status,
+                          paymentcenterId: this.seach.paymentcenterId ,
+                          payId:this.seach.payId,
                           PageSize:this.args.PageSize,
                           PageIndex:this.args.PageIndex
                       },

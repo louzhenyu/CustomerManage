@@ -47,6 +47,15 @@
                 $.util.stopBubble(e);
 
             });
+            //导出退款单
+            that.elems.tabelWrap.delegate(".commonBtn", "click", function (e) {
+
+                var optType = $(this).data("flag");
+                if(optType=="export")
+                {
+                    that.ExportSalesReturnExcel(that.elems.operation.find("li.on").data("status"));
+                }
+            });
             that.elems.operation.delegate("li","click",function(e){
                 that.elems.operation.find("li").removeClass("on");
                 $(this).addClass("on");
@@ -92,13 +101,32 @@
                 }]
             });
 
+            $('#txtDataFromID').combobox({
+                width:wd,
+                height:H,
+                panelHeight:that.elems.panlH,
+                valueField: 'id',
+                textField: 'text',
+                data:[{
+                    "id":0,
+                    "text":"请选择"
 
+                }]
+            });
             /**************** -------------------弹出easyui 控件  End****************/
 
             that.loadData.getPayMentList(function(data){
                 debugger;
-                data.topics.push({ "PaymentTypeID": -1, PaymentTypeName: "请选择", "selected": true });
-
+                data.topics.push({"PaymentTypeID":-1,PaymentTypeName:"请选择","selected":true});
+                $('#txtDataFromID').combobox({
+                    width:wd,
+                    height:H,
+                    panelHeight:that.elems.panlH,
+                    valueField: 'PaymentTypeID',
+                    textField: 'PaymentTypeName',
+                    data:data.topics
+                });
+            });
                 for (i = 0; i < data.topics.length; i++) {
                     if (data.topics[i].PaymentTypeCode == "CCAlipayWap") {
                         data.topics[i].PaymentTypeName = "平台支付宝支付(连锁掌柜)";
@@ -174,7 +202,7 @@
             var fileds=$("#seach").serializeArray();
             $.each(fileds, function (i, filed) {
                 if(filed.value||filed.value=="") {
-                    that.loadData.seach[filed.name] = filed.value;
+                    that.loadData.seach[filed.name] = filed.value==-1 ? "" : filed.value;
                 }
             });
 
@@ -192,6 +220,29 @@
             $.util.stopBubble(e);
         },
 
+    //根据form数据 和 请求地址 导出数据到表格
+    exportExcel: function (data, url) {
+        var dataLink = JSON.stringify(data);
+        var form = $('<form>');
+        form.attr('style', 'display:none;');
+        form.attr('target', '');
+        form.attr('method', 'post');
+        form.attr('action', url);
+        var input1 = $('<input>');
+        input1.attr('type', 'hidden');
+        input1.attr('name', 'req');
+        input1.attr('value', dataLink);
+        $('body').append(form);
+        form.append(input1);
+        form.submit();
+        form.remove();
+    },
+    //导出退货列表
+    ExportSalesReturnExcel: function () {
+        this.setCondition();
+        var getUrl = '/ApplicationInterface/Module/Order/SalesReturn/DownLoadSales.ashx?method=ExportDownLoadSalesReturnOrderList&para='+JSON.stringify(this.loadData.seach);//;
+        this.exportExcel(this.loadData.seach, getUrl);
+    },
         //渲染tabel
         renderTable: function (data) {
             debugger;
@@ -235,8 +286,9 @@
                             }
                         }
                     },
-                    {field : 'SalesPrice',title : '单价(元)',width:58,resizable:false,align:'center'},
-                    {field : 'Qty',title : '数量',width:58,align:'center',resizable:false,
+                    {field : 'paymentcenterId',title : '商户单号',width:58,resizable:false,align:'center'},
+                    {field : 'VipName',title : '会员名称',width:90,align:'center',resizable:false},
+                   /* {field : 'DeliveryType',title : '数量',width:58,align:'center',resizable:false,
                         formatter:function(value,row,index){
                            if(isNaN(parseInt(value))){
                              return 0;
@@ -244,8 +296,8 @@
                               return parseInt(value);
                            }
                         }
-                    },
-                    {field : 'VipName',title : '会员',width:90,align:'center',resizable:false},
+                    },*/
+
                     {field : 'DeliveryType',title : '配送方式',width:120,align:'center',resizable:false,
                      formatter:function(value,row,index){
                          var staus="";
@@ -279,6 +331,7 @@
                         }
 
                     },
+                    {field : 'paymentName',title : '支付方式',width:90,align:'center',resizable:false},
                     {field : 'CreateTime',title : '申请日期',width:80,align:'center',resizable:false}
 
                 ]],
@@ -386,7 +439,33 @@
                 Status:0
             },
             opertionField:{},
+            getPayMentList: function (callback) {   //获取支付方式
+                $.util.oldAjax({
+                    url: "/Module/PayMent/Handler/PayMentHander.ashx",
+                    data:{
+                        QueryStringData:{
+                            mid:__mid
+                        },
+                        form:{
+                            "Payment_Type_Name": "",
+                            "Payment_Type_Code": "",
+                            "IsOpen":"true"
+                        },
+                        page: 1,
 
+                        action:"getPayMentTypePage"
+                    },
+                    success: function (data) {
+                        if (data) {
+                            if (callback)
+                                callback(data);
+                        }
+                        else {
+                            alert("支付方式加载异常");
+                        }
+                    }
+                });
+            },
             getSalesReturnList: function (callback) {
                 $.util.ajax({
                     url: "/ApplicationInterface/Gateway.ashx",
@@ -395,6 +474,8 @@
                           SalesReturnNo:this.seach.SalesReturnNo,
                           DeliveryType:this.seach.DeliveryType,
                           Status:this.seach.Status,
+                          paymentcenterId: this.seach.paymentcenterId ,
+                          payId:this.seach.payId,
                           PageSize:this.args.PageSize,
                           PageIndex:this.args.PageIndex
                       },

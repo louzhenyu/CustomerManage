@@ -45,6 +45,8 @@ require.config({
         drag: '/Module/static/js/plugin/jquery.drag',
         tools: '/Module/static/js/lib/tools-lib',
         template: '/Module/static/js/lib/bdTemplate',
+        artTemplate: '/Module/static/js/plugin/template',
+        customerTemp: '/Module/homeIndex/js/tempModel',//微官网配置模板
         easyui: '/Module/static/js/lib/jquery.easyui.min',
         langzh_CN: '/Module/static/js/lib/easyui-lang-zh_CN',
         validator: '/Module/static/js/lib/validator',

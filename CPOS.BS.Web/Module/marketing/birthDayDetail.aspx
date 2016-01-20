@@ -80,7 +80,7 @@
                                 <div class="inputDiv">
                                     <div class="checkBox" data-filed="PointsMultiple" data-name="numberBox">
                                         <em></em><span>消费获赠</span></div>
-                                    <input type="text" data-name="PointsMultiple" name="PointsMultiple" class="easyui-numberbox" data-options="min:0,precision:0,max:10000,width:120,height:32">倍积分
+                                    <input type="text" data-name="PointsMultiple" name="PointsMultiple" class="easyui-numberbox" data-options="min:1,precision:0,max:10000,width:120,height:32">倍积分
                                     <span class="hint">提示：多倍积分将以您的【积分返现配置】的设置为基础值。</span>
                                 </div>
                                 <!--inputDiv-->

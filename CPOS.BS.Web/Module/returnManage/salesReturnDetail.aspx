@@ -20,10 +20,7 @@
                      <div class="commonBtn icon close" data-status="2"  data-showstaus="1,3" >审核不通过</div>
                       <div class="commonBtn icon" data-status="3" data-showstaus="4,5">确认收货</div>
                       <div class="commonBtn icon close" data-status="4" data-showstaus="4,5">拒绝收货</div>
-                     <!-- <div class="commonBtn" data-status="2" data-showstaus="1,3,4,5"  >取消申请</div>-->
-
-
-
+                      <div class="commonBtn" data-status="6" data-showstaus="1,3,4,5"  >取消</div>
 
                </div>
                 </div>

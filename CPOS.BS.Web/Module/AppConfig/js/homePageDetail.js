@@ -2973,7 +2973,7 @@
 
                                     }, true);
 
-                                    self.ele.materialTextList.find('.pageContianer').hide();
+                                    self.ele.materialTextList.find('.pageContianer').show();
                                 } else {
                                     self.ele.materialTextList.find('.pageContianer').hide();
                                 }
@@ -3138,7 +3138,7 @@
 
                                 }, true);
 
-                                self.ele.productLayer.find('.pageContianer').hide();
+                                self.ele.productLayer.find('.pageContianer').show();
                             } else {
                                 self.ele.editLayer.find('.pageContianer').hide();
                             }
@@ -3201,7 +3201,7 @@
 
                                         }, true);
 
-                                        self.ele.productLayer.find('.pageContianer').hide();
+                                        self.ele.productLayer.find('.pageContianer').show();
                                     } else {
                                         self.ele.editLayer.find('.pageContianer').hide();
                                     }

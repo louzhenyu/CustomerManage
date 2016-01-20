@@ -8,7 +8,18 @@
 .optionBtn li.on em{border-bottom: 2px #07c8cf solid;}
 
 .optionBtn{height:65px; padding-top: 15px;  border: solid  1px #eee; border-bottom:none;}
-.optionBtn .commonBtn{ width:99px; background: #00cccc;line-height: 32px; height:32px; float: left; margin-left:20px; padding:0 12px;}
+.optionBtn .commonBtn{ width:99px; background-color: #00cccc;line-height: 32px; height:32px; float: left; margin-left:20px; padding:0 12px;}
+.optionBtn .batch{ position:relative;background:url("../images/jiantouD.png") 90% center no-repeat #00cccc;}
+.optionBtn .export{float: right; margin-right: 35px; width: 83px; text-align:right;background: url("../images/Share.png") #82ba38 no-repeat 14px center ; padding-right: 18px; }
+.panelTab{display: none; position: absolute; top:0; left: 0; background-color:#fff;width: 108px; border: 1px solid #d0d5d8; border-radius: 3px;}
+.panelTab p{border-bottom: 1px solid #d0d5d8; display: inline-block; color:#999; height: 33px; line-height:33px;padding-right: 10px; text-align: right; background: 10px center no-repeat  ; width: 100%;   }
+.panelTab p.on{ color: #00cccc;}
+.panelTab p.check01{ background-image: url("../images/check01.png")  }
+.panelTab p.check02{ background-image: url("../images/check02.png") }
+.panelTab p.check03{ background-image: url("../images/check03.png") }
+.panelTab p.check01.on{ background-image: url("../images/check_01.png") }
+.panelTab p.check02.on{ background-image: url("../images/check_02.png") }
+.panelTab p.check03.on{ background-image: url("../images/check_03.png") }
 .queryTermArea{border-bottom:1px solid #07c8cf;padding-left: 0; padding-right:0}
 .moreQueryWrap{ float: left;margin-top: 12px;}
 .moreQueryWrap .queryBtn{ width: 58px;}
