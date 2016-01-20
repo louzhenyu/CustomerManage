@@ -365,6 +365,7 @@ as CollectIncome");
             //, '700','800'
             sql.AppendFormat("  {0}", sqlWhere);
             sql.Append(" ) t where t._row>@pPageIndex*@pPageSize and t._row<=(@pPageIndex+1)*@pPageSize");
+            sql.Append("  ORDER BY create_time DESC ");
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
 
