@@ -2674,10 +2674,11 @@ select @ReturnValue", pCustomerID);
         public void insertToSql(DataRow dr, int column_count, SqlConnection conn, string strCustomerId, string strCreateUserId)
         {
 
-            string sql = "insert into [ImportUserTemp] values";
+            string sql = "insert into [ImportVipTemp] values";
             sql += "('" + dr[0].ToString() + "','" + dr[1].ToString() + "','" + dr[2].ToString() + "','" + dr[3].ToString() + "','" + dr[4].ToString() + "',";
-            sql += "'" + dr[5].ToString() + "','" + dr[6].ToString() + "',";
-            sql += "'" + strCustomerId + "','" + strCreateUserId + "')";
+            sql += "'" + dr[5].ToString() + "','" + dr[6].ToString() + "','" + dr[7].ToString() + "','" + dr[8].ToString() + "','" + dr[9].ToString() + "',";
+            sql += "'" + dr[10].ToString() + "','" + dr[11].ToString() + "','" + dr[12].ToString() + "','" + dr[13].ToString() + "','" + dr[14].ToString() + "','" + dr[15].ToString() + "','" + dr[16].ToString() + "',";
+            sql += "'" + strCreateUserId + "'£¬'" + strCustomerId + "')";
             SqlCommand cmd = new SqlCommand(sql, conn);
             cmd.ExecuteNonQuery();
         }
@@ -2687,7 +2688,7 @@ select @ReturnValue", pCustomerID);
         /// <returns></returns>
         public DataSet ExcelImportToDB()
         {
-            string sql = "Proc_ExcelImportToUser";
+            string sql = "Proc_ExcelImportToVip";
             var ds = this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, sql);
             return ds;
         }

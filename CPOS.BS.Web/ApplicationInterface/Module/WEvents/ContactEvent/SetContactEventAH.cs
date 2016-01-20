@@ -101,6 +101,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                             bllEvent.UpdateEventIsShare(para.ShareEventId);
 
                     }
+
+
                     bllContactEvent.Update(contactEvent);
                     rd.ContactEventId = para.ContactEventId.ToString();
                     rd.ErrMsg = "操作成功";

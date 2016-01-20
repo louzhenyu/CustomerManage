@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [SysRetailRewardRule](");
-            strSql.Append("[CooperateType],[RewardTypeName],[RewardTypeCode],[SellUserReward],[IsTemplate],[RetailTraderReward],[CreateTime],[AmountOrPercent],[CreateBy],[LastUpdateBy],[LastUpdateTime],[Status],[IsDelete],[CustomerId],[BeginTime],[EndTime],[RetailTraderID],[RetailRewardRuleID])");
+            strSql.Append("[CooperateType],[RewardTypeName],[RewardTypeCode],[SellUserReward],[IsTemplate],[RetailTraderReward],[ItemSalesPriceRate],[CreateTime],[AmountOrPercent],[CreateBy],[LastUpdateBy],[LastUpdateTime],[Status],[IsDelete],[CustomerId],[BeginTime],[EndTime],[RetailTraderID],[RetailRewardRuleID])");
             strSql.Append(" values (");
-            strSql.Append("@CooperateType,@RewardTypeName,@RewardTypeCode,@SellUserReward,@IsTemplate,@RetailTraderReward,@CreateTime,@AmountOrPercent,@CreateBy,@LastUpdateBy,@LastUpdateTime,@Status,@IsDelete,@CustomerId,@BeginTime,@EndTime,@RetailTraderID,@RetailRewardRuleID)");            
+            strSql.Append("@CooperateType,@RewardTypeName,@RewardTypeCode,@SellUserReward,@IsTemplate,@RetailTraderReward,@ItemSalesPriceRate,@CreateTime,@AmountOrPercent,@CreateBy,@LastUpdateBy,@LastUpdateTime,@Status,@IsDelete,@CustomerId,@BeginTime,@EndTime,@RetailTraderID,@RetailRewardRuleID)");            
 
 			string pkString = pEntity.RetailRewardRuleID;
 
@@ -95,6 +95,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@SellUserReward",SqlDbType.Decimal),
 					new SqlParameter("@IsTemplate",SqlDbType.Int),
 					new SqlParameter("@RetailTraderReward",SqlDbType.Decimal),
+					new SqlParameter("@ItemSalesPriceRate",SqlDbType.Decimal),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@AmountOrPercent",SqlDbType.Int),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
@@ -114,18 +115,19 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[3].Value = pEntity.SellUserReward;
 			parameters[4].Value = pEntity.IsTemplate;
 			parameters[5].Value = pEntity.RetailTraderReward;
-			parameters[6].Value = pEntity.CreateTime;
-			parameters[7].Value = pEntity.AmountOrPercent;
-			parameters[8].Value = pEntity.CreateBy;
-			parameters[9].Value = pEntity.LastUpdateBy;
-			parameters[10].Value = pEntity.LastUpdateTime;
-			parameters[11].Value = pEntity.Status;
-			parameters[12].Value = pEntity.IsDelete;
-			parameters[13].Value = pEntity.CustomerId;
-			parameters[14].Value = pEntity.BeginTime;
-			parameters[15].Value = pEntity.EndTime;
-			parameters[16].Value = pEntity.RetailTraderID;
-			parameters[17].Value = pkString;
+            parameters[6].Value = pEntity.ItemSalesPriceRate;
+			parameters[7].Value = pEntity.CreateTime;
+			parameters[8].Value = pEntity.AmountOrPercent;
+			parameters[9].Value = pEntity.CreateBy;
+			parameters[10].Value = pEntity.LastUpdateBy;
+			parameters[11].Value = pEntity.LastUpdateTime;
+			parameters[12].Value = pEntity.Status;
+			parameters[13].Value = pEntity.IsDelete;
+			parameters[14].Value = pEntity.CustomerId;
+			parameters[15].Value = pEntity.BeginTime;
+			parameters[16].Value = pEntity.EndTime;
+			parameters[17].Value = pEntity.RetailTraderID;
+			parameters[18].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -231,6 +233,8 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[IsTemplate]=@IsTemplate,");
             if (pIsUpdateNullField || pEntity.RetailTraderReward!=null)
                 strSql.Append( "[RetailTraderReward]=@RetailTraderReward,");
+            if (pIsUpdateNullField || pEntity.ItemSalesPriceRate != null)
+                strSql.Append("[ItemSalesPriceRate]=@ItemSalesPriceRate,");
             if (pIsUpdateNullField || pEntity.AmountOrPercent!=null)
                 strSql.Append( "[AmountOrPercent]=@AmountOrPercent,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
@@ -256,6 +260,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@SellUserReward",SqlDbType.Decimal),
 					new SqlParameter("@IsTemplate",SqlDbType.Int),
 					new SqlParameter("@RetailTraderReward",SqlDbType.Decimal),
+					new SqlParameter("@ItemSalesPriceRate",SqlDbType.Decimal),
 					new SqlParameter("@AmountOrPercent",SqlDbType.Int),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
@@ -271,16 +276,17 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[2].Value = pEntity.RewardTypeCode;
 			parameters[3].Value = pEntity.SellUserReward;
 			parameters[4].Value = pEntity.IsTemplate;
-			parameters[5].Value = pEntity.RetailTraderReward;
-			parameters[6].Value = pEntity.AmountOrPercent;
-			parameters[7].Value = pEntity.LastUpdateBy;
-			parameters[8].Value = pEntity.LastUpdateTime;
-			parameters[9].Value = pEntity.Status;
-			parameters[10].Value = pEntity.CustomerId;
-			parameters[11].Value = pEntity.BeginTime;
-			parameters[12].Value = pEntity.EndTime;
-			parameters[13].Value = pEntity.RetailTraderID;
-			parameters[14].Value = pEntity.RetailRewardRuleID;
+            parameters[5].Value = pEntity.RetailTraderReward;
+            parameters[6].Value = pEntity.ItemSalesPriceRate;
+			parameters[7].Value = pEntity.AmountOrPercent;
+			parameters[8].Value = pEntity.LastUpdateBy;
+			parameters[9].Value = pEntity.LastUpdateTime;
+			parameters[10].Value = pEntity.Status;
+			parameters[11].Value = pEntity.CustomerId;
+			parameters[12].Value = pEntity.BeginTime;
+			parameters[13].Value = pEntity.EndTime;
+			parameters[14].Value = pEntity.RetailTraderID;
+			parameters[15].Value = pEntity.RetailRewardRuleID;
 
             //执行语句
             int result = 0;
@@ -580,6 +586,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsTemplate", Value = pQueryEntity.IsTemplate });
             if (pQueryEntity.RetailTraderReward!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "RetailTraderReward", Value = pQueryEntity.RetailTraderReward });
+            if (pQueryEntity.ItemSalesPriceRate != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemSalesPriceRate", Value = pQueryEntity.ItemSalesPriceRate });
             if (pQueryEntity.CreateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
             if (pQueryEntity.AmountOrPercent!=null)
@@ -645,6 +653,10 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.RetailTraderReward =  Convert.ToDecimal(pReader["RetailTraderReward"]);
 			}
+            if (pReader["ItemSalesPriceRate"] != DBNull.Value)
+            {
+                pInstance.ItemSalesPriceRate = Convert.ToDecimal(pReader["ItemSalesPriceRate"]);
+            }
 			if (pReader["CreateTime"] != DBNull.Value)
 			{
 				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);

@@ -376,6 +376,7 @@
     <Compile Include="CodeGeneration\ReservationStoreBLL.cs" />
     <Compile Include="CodeGeneration\ReservationStoreServiceMappingBLL.cs" />
     <Compile Include="CodeGeneration\ReservationWorkCalendarBLL.cs" />
+    <Compile Include="CodeGeneration\RetailTraderItemMappingBLL.cs" />
     <Compile Include="CodeGeneration\RouteBLL.cs" />
     <Compile Include="CodeGeneration\RouteCycleMappingBLL.cs" />
     <Compile Include="CodeGeneration\RoutePOPMappingBLL.cs" />
@@ -956,6 +957,7 @@
     <Compile Include="ReservationStoreBLL.cs" />
     <Compile Include="ReservationStoreServiceMappingBLL.cs" />
     <Compile Include="ReservationWorkCalendarBLL.cs" />
+    <Compile Include="RetailTraderItemMappingBLL.cs" />
     <Compile Include="RoleMenuService.cs" />
     <Compile Include="RoleService.cs" />
     <Compile Include="Order\SalesReturn\T_RefundOrderBLL.cs" />

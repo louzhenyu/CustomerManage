@@ -20,6 +20,14 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Request
         public int ServiceLife { get; set; }
         public int SuitableForStore { get; set; }
         public ObjectInfo[] ObjectIDList { get; set; }
+        /// <summary>
+        /// 绑定商品的类型Sku,Item,Group,Category
+        /// </summary>
+        public string BindType { get; set; }
+        /// <summary>
+        /// 绑定商品的类型对应的ID
+        /// </summary>
+        public ObjectInfo[] BindTypeIdList { get; set; }
         public void Validate()
         {
 
@@ -29,4 +37,5 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Request
     {
         public string ObjectID { get; set; }
     }
+    
 }

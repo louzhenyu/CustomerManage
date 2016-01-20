@@ -32,6 +32,10 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理：  
     /// </summary>
     public partial class T_Item_CategoryBLL
-    {  
+    {
+        public DataSet GetCategoryByCustomerId(string strCustomerId, string strBatId)
+        {
+          return  this._currentDAO.GetCategoryByCustomerId(strCustomerId, strBatId);
+        }
     }
 }

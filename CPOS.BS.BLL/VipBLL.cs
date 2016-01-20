@@ -1656,8 +1656,15 @@ namespace JIT.CPOS.BS.BLL
         public DataSet ExcelToDb(string strPath, LoggingSessionInfo CurrentUserInfo)
         {
             DataSet ds; //要插入的数据  
-            DataSet dsResult = null; //要插入的数据  
+            DataSet dsResult = new DataSet(); //要插入的数据  
             DataTable dt;
+
+            DataTable table = new DataTable("Error");
+            //获取列集合,添加列  
+            DataColumnCollection columns = table.Columns;
+            columns.Add("ErrMsg", typeof(String));
+
+
 
             string strConn = "Provider=Microsoft.Ace.OleDb.12.0;" + "data source=" + strPath + ";Extended Properties='Excel 12.0; HDR=Yes; IMEX=1'";
             OleDbConnection conn = new OleDbConnection(strConn); //连接excel              
@@ -1675,26 +1682,66 @@ namespace JIT.CPOS.BS.BLL
             ds = new DataSet();
             myCommand.Fill(ds);
             conn.Close();
+
+
             try
             {
+                
                 dt = ds.Tables[0];
-                string connString = @"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
+                string connString = CurrentUserInfo.Conn; //System.Configuration.ConfigurationManager.AppSettings["Conn_alading"]; //@"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
                 SqlConnection connSql = new SqlConnection(connString);
                 connSql.Open();
                 DataRow dr = null;
                 int C_Count = dt.Columns.Count;//获取列数  
-                for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
+                if (C_Count == 16)
                 {
-                    dr = dt.Rows[i];
-                    this._currentDAO.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
-                }
+                    for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
+                    {
+                        dr = dt.Rows[i];
+                        this._currentDAO.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                    }
 
-                connSql.Close();
-                //临时表导入正式表
-                dsResult = this._currentDAO.ExcelImportToDB();
+                    connSql.Close();
+                    //临时表导入正式表
+                    dsResult = this._currentDAO.ExcelImportToDB();
+                }
+                else
+                {
+
+                    DataRow row = table.NewRow();
+                    row["ErrMsg"] = "模板列数不对";
+                    table.Rows.Add(row);
+                    dsResult.Tables.Add(table);
+
+                    DataTable tableCount = new DataTable("Count");
+                    DataColumnCollection columns1 = tableCount.Columns;
+                    columns1.Add("TotalCount", typeof(Int16));
+                    columns1.Add("ErrCount", typeof(Int16));
+                    row = tableCount.NewRow();
+                    row["TotalCount"] = "0";
+                    row["ErrCount"] = dt.Rows.Count.ToString();
+                    tableCount.Rows.Add(row);
+                    dsResult.Tables.Add(tableCount);
+
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                dsResult = new DataSet();
+                DataRow row = table.NewRow();
+                row["ErrMsg"] = ex.Message.ToString();
+                table.Rows.Add(row);
+                dsResult.Tables.Add(table);
+
+                DataTable tableCount = new DataTable("Count");
+                DataColumnCollection columns1 = tableCount.Columns;
+                columns1.Add("TotalCount", typeof(Int16));
+                columns1.Add("ErrCount", typeof(Int16));
+                row = tableCount.NewRow();
+                row["TotalCount"] = "0";
+                row["ErrCount"] = "0";
+                tableCount.Rows.Add(row);
+                dsResult.Tables.Add(tableCount);
             }
 
             return dsResult;

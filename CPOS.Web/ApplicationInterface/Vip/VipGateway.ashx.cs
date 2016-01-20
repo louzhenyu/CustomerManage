@@ -963,10 +963,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             }
             //查找商品，并且查找商品对应的唯一的sku
             T_ItemBLL t_ItemBLL = new T_ItemBLL(loggingSessionInfo);
-            T_ItemEntity ItemEn = t_ItemBLL.GetByID(CouponTypeItemMappingEn.item_id);
+            T_ItemEntity ItemEn = t_ItemBLL.GetByID(CouponTypeItemMappingEn.ObjectId);
             T_SkuBLL t_SkuBLL = new T_SkuBLL(loggingSessionInfo);
             T_SkuEntity t_SkuTemp = new T_SkuEntity();
-            t_SkuTemp.item_id = CouponTypeItemMappingEn.item_id;
+            t_SkuTemp.item_id = CouponTypeItemMappingEn.ObjectId;
             var t_SkuList = t_SkuBLL.QueryByEntity(t_SkuTemp, null);
             T_SkuEntity t_SkuEn = null;
             if (t_SkuList != null && t_SkuList.Length != 0)

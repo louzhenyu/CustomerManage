@@ -42,6 +42,10 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class T_Item_CategoryDAO : Base.BaseCPOSDAO, ICRUDable<T_Item_CategoryEntity>, IQueryable<T_Item_CategoryEntity>
     {
-        
+        public DataSet GetCategoryByCustomerId(string strCustomerId,string strBatId)
+        {
+            string strSql = string.Format("SELECT item_category_id id,item_category_name text,'close' state,'true' checked FROM dbo.T_Item_Category WHERE CustomerId = '{0}' AND status=1 AND bat_id='{1}'", strCustomerId,strBatId);
+            return this.SQLHelper.ExecuteDataset(strSql);
+        }
     }
 }

@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/5/24 21:31:17
+ * Create On	:2016/1/8 17:55:51
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [RetailTrader](");
-            strSql.Append("[RetailTraderCode],[RetailTraderName],[RetailTraderLogin],[RetailTraderPass],[RetailTraderType],[RetailTraderMan],[RetailTraderPhone],[RetailTraderAddress],[CooperateType],[SellUserID],[UnitID],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[Status],[RetailTraderID])");
+            strSql.Append("[RetailTraderCode],[RetailTraderName],[RetailTraderLogin],[RetailTraderPass],[RetailTraderType],[RetailTraderMan],[RetailTraderPhone],[RetailTraderAddress],[CooperateType],[SalesType],[SellUserID],[UnitID],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[Status],[RetailTraderID])");
             strSql.Append(" values (");
-            strSql.Append("@RetailTraderCode,@RetailTraderName,@RetailTraderLogin,@RetailTraderPass,@RetailTraderType,@RetailTraderMan,@RetailTraderPhone,@RetailTraderAddress,@CooperateType,@SellUserID,@UnitID,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@Status,@RetailTraderID)");            
+            strSql.Append("@RetailTraderCode,@RetailTraderName,@RetailTraderLogin,@RetailTraderPass,@RetailTraderType,@RetailTraderMan,@RetailTraderPhone,@RetailTraderAddress,@CooperateType,@SalesType,@SellUserID,@UnitID,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@Status,@RetailTraderID)");            
 
 			string pkString = pEntity.RetailTraderID;
 
@@ -98,6 +98,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@RetailTraderPhone",SqlDbType.NVarChar),
 					new SqlParameter("@RetailTraderAddress",SqlDbType.NVarChar),
 					new SqlParameter("@CooperateType",SqlDbType.NVarChar),
+					new SqlParameter("@SalesType",SqlDbType.NVarChar),
 					new SqlParameter("@SellUserID",SqlDbType.NVarChar),
 					new SqlParameter("@UnitID",SqlDbType.NVarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
@@ -118,16 +119,17 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[6].Value = pEntity.RetailTraderPhone;
 			parameters[7].Value = pEntity.RetailTraderAddress;
 			parameters[8].Value = pEntity.CooperateType;
-			parameters[9].Value = pEntity.SellUserID;
-			parameters[10].Value = pEntity.UnitID;
-			parameters[11].Value = pEntity.CreateTime;
-			parameters[12].Value = pEntity.CreateBy;
-			parameters[13].Value = pEntity.LastUpdateBy;
-			parameters[14].Value = pEntity.LastUpdateTime;
-			parameters[15].Value = pEntity.IsDelete;
-			parameters[16].Value = pEntity.CustomerId;
-			parameters[17].Value = pEntity.Status;
-			parameters[18].Value = pkString;
+			parameters[9].Value = pEntity.SalesType;
+			parameters[10].Value = pEntity.SellUserID;
+			parameters[11].Value = pEntity.UnitID;
+			parameters[12].Value = pEntity.CreateTime;
+			parameters[13].Value = pEntity.CreateBy;
+			parameters[14].Value = pEntity.LastUpdateBy;
+			parameters[15].Value = pEntity.LastUpdateTime;
+			parameters[16].Value = pEntity.IsDelete;
+			parameters[17].Value = pEntity.CustomerId;
+			parameters[18].Value = pEntity.Status;
+			parameters[19].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -239,20 +241,20 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[RetailTraderAddress]=@RetailTraderAddress,");
             if (pIsUpdateNullField || pEntity.CooperateType!=null)
                 strSql.Append( "[CooperateType]=@CooperateType,");
+            if (pIsUpdateNullField || pEntity.SalesType!=null)
+                strSql.Append( "[SalesType]=@SalesType,");
             if (pIsUpdateNullField || pEntity.SellUserID!=null)
                 strSql.Append( "[SellUserID]=@SellUserID,");
             if (pIsUpdateNullField || pEntity.UnitID!=null)
                 strSql.Append( "[UnitID]=@UnitID,");
-         
-            if (pIsUpdateNullField || pEntity.CustomerId!=null)
-                strSql.Append( "[CustomerId]=@CustomerId,");
+            if (pIsUpdateNullField || pEntity.CustomerId != null)
+                strSql.Append("[CustomerId]=@CustomerId,");
             if (pIsUpdateNullField || pEntity.Status != null)
                 strSql.Append("[Status]=@Status,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
-
             strSql.Append(" where RetailTraderID=@RetailTraderID ");
             SqlParameter[] parameters = 
             {
@@ -265,6 +267,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@RetailTraderPhone",SqlDbType.NVarChar),
 					new SqlParameter("@RetailTraderAddress",SqlDbType.NVarChar),
 					new SqlParameter("@CooperateType",SqlDbType.NVarChar),
+					new SqlParameter("@SalesType",SqlDbType.NVarChar),
 					new SqlParameter("@SellUserID",SqlDbType.NVarChar),
 					new SqlParameter("@UnitID",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
@@ -282,13 +285,14 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[6].Value = pEntity.RetailTraderPhone;
 			parameters[7].Value = pEntity.RetailTraderAddress;
 			parameters[8].Value = pEntity.CooperateType;
-			parameters[9].Value = pEntity.SellUserID;
-			parameters[10].Value = pEntity.UnitID;
-			parameters[11].Value = pEntity.LastUpdateBy;
-			parameters[12].Value = pEntity.LastUpdateTime;
-			parameters[13].Value = pEntity.CustomerId;
-			parameters[14].Value = pEntity.Status;
-			parameters[15].Value = pEntity.RetailTraderID;
+			parameters[9].Value = pEntity.SalesType;
+			parameters[10].Value = pEntity.SellUserID;
+			parameters[11].Value = pEntity.UnitID;
+			parameters[12].Value = pEntity.LastUpdateBy;
+			parameters[13].Value = pEntity.LastUpdateTime;
+			parameters[14].Value = pEntity.CustomerId;
+			parameters[15].Value = pEntity.Status;
+			parameters[16].Value = pEntity.RetailTraderID;
 
             //执行语句
             int result = 0;
@@ -594,6 +598,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "RetailTraderAddress", Value = pQueryEntity.RetailTraderAddress });
             if (pQueryEntity.CooperateType!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CooperateType", Value = pQueryEntity.CooperateType });
+            if (pQueryEntity.SalesType!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SalesType", Value = pQueryEntity.SalesType });
             if (pQueryEntity.SellUserID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SellUserID", Value = pQueryEntity.SellUserID });
             if (pQueryEntity.UnitID!=null)
@@ -666,6 +672,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["CooperateType"] != DBNull.Value)
 			{
 				pInstance.CooperateType =  Convert.ToString(pReader["CooperateType"]);
+			}
+			if (pReader["SalesType"] != DBNull.Value)
+			{
+				pInstance.SalesType =  Convert.ToString(pReader["SalesType"]);
 			}
 			if (pReader["SellUserID"] != DBNull.Value)
 			{

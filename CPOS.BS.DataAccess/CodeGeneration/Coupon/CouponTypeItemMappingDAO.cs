@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-9-26 12:09:13
+ * Create On	:2015/12/17 15:48:05
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [CouponTypeItemMapping](");
-            strSql.Append("[CouponTypeID],[item_id],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[MappingID])");
+            strSql.Append("[CouponTypeID],[BindType],[ObjectId],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[MappingID])");
             strSql.Append(" values (");
-            strSql.Append("@CouponTypeID,@item_id,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@MappingID)");            
+            strSql.Append("@CouponTypeID,@BindType,@ObjectId,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@MappingID)");            
 
 			Guid? pkGuid;
 			if (pEntity.MappingID == null)
@@ -94,7 +94,8 @@ namespace JIT.CPOS.BS.DataAccess
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier),
-					new SqlParameter("@item_id",SqlDbType.NVarChar),
+					new SqlParameter("@BindType",SqlDbType.NVarChar),
+					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
@@ -104,14 +105,15 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@MappingID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.CouponTypeID;
-			parameters[1].Value = pEntity.item_id;
-			parameters[2].Value = pEntity.LastUpdateTime;
-			parameters[3].Value = pEntity.LastUpdateBy;
-			parameters[4].Value = pEntity.CreateTime;
-			parameters[5].Value = pEntity.CreateBy;
-			parameters[6].Value = pEntity.IsDelete;
-			parameters[7].Value = pEntity.CustomerId;
-			parameters[8].Value = pkGuid;
+			parameters[1].Value = pEntity.BindType;
+			parameters[2].Value = pEntity.ObjectId;
+			parameters[3].Value = pEntity.LastUpdateTime;
+			parameters[4].Value = pEntity.LastUpdateBy;
+			parameters[5].Value = pEntity.CreateTime;
+			parameters[6].Value = pEntity.CreateBy;
+			parameters[7].Value = pEntity.IsDelete;
+			parameters[8].Value = pEntity.CustomerId;
+			parameters[9].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -207,8 +209,10 @@ namespace JIT.CPOS.BS.DataAccess
             strSql.Append("update [CouponTypeItemMapping] set ");
                         if (pIsUpdateNullField || pEntity.CouponTypeID!=null)
                 strSql.Append( "[CouponTypeID]=@CouponTypeID,");
-            if (pIsUpdateNullField || pEntity.item_id!=null)
-                strSql.Append( "[item_id]=@item_id,");
+            if (pIsUpdateNullField || pEntity.BindType!=null)
+                strSql.Append( "[BindType]=@BindType,");
+            if (pIsUpdateNullField || pEntity.ObjectId!=null)
+                strSql.Append( "[ObjectId]=@ObjectId,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
@@ -219,18 +223,20 @@ namespace JIT.CPOS.BS.DataAccess
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier),
-					new SqlParameter("@item_id",SqlDbType.NVarChar),
+					new SqlParameter("@BindType",SqlDbType.NVarChar),
+					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
 					new SqlParameter("@MappingID",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.CouponTypeID;
-			parameters[1].Value = pEntity.item_id;
-			parameters[2].Value = pEntity.LastUpdateTime;
-			parameters[3].Value = pEntity.LastUpdateBy;
-			parameters[4].Value = pEntity.CustomerId;
-			parameters[5].Value = pEntity.MappingID;
+			parameters[1].Value = pEntity.BindType;
+			parameters[2].Value = pEntity.ObjectId;
+			parameters[3].Value = pEntity.LastUpdateTime;
+			parameters[4].Value = pEntity.LastUpdateBy;
+			parameters[5].Value = pEntity.CustomerId;
+			parameters[6].Value = pEntity.MappingID;
 
             //执行语句
             int result = 0;
@@ -520,8 +526,10 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "MappingID", Value = pQueryEntity.MappingID });
             if (pQueryEntity.CouponTypeID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponTypeID", Value = pQueryEntity.CouponTypeID });
-            if (pQueryEntity.item_id!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "item_id", Value = pQueryEntity.item_id });
+            if (pQueryEntity.BindType!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BindType", Value = pQueryEntity.BindType });
+            if (pQueryEntity.ObjectId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ObjectId", Value = pQueryEntity.ObjectId });
             if (pQueryEntity.LastUpdateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
             if (pQueryEntity.LastUpdateBy!=null)
@@ -557,9 +565,13 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.CouponTypeID =  (Guid)pReader["CouponTypeID"];
 			}
-			if (pReader["item_id"] != DBNull.Value)
+			if (pReader["BindType"] != DBNull.Value)
 			{
-				pInstance.item_id =  Convert.ToString(pReader["item_id"]);
+				pInstance.BindType =  Convert.ToString(pReader["BindType"]);
+			}
+			if (pReader["ObjectId"] != DBNull.Value)
+			{
+				pInstance.ObjectId =  Convert.ToString(pReader["ObjectId"]);
 			}
 			if (pReader["LastUpdateTime"] != DBNull.Value)
 			{

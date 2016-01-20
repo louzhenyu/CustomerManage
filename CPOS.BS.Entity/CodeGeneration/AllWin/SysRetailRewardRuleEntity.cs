@@ -70,7 +70,8 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Decimal? RetailTraderReward { get; set; }
+        public Decimal? RetailTraderReward { get; set; }
+        public Decimal? ItemSalesPriceRate { get; set; }
 
 		/// <summary>
 		/// 

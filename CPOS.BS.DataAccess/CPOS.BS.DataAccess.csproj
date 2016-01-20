@@ -341,6 +341,7 @@
     <Compile Include="CodeGeneration\ReservationStoreDAO.cs" />
     <Compile Include="CodeGeneration\ReservationStoreServiceMappingDAO.cs" />
     <Compile Include="CodeGeneration\ReservationWorkCalendarDAO.cs" />
+    <Compile Include="CodeGeneration\RetailTraderItemMappingDAO.cs" />
     <Compile Include="CodeGeneration\RouteCycleMappingDAO.cs" />
     <Compile Include="CodeGeneration\RouteDAO.cs" />
     <Compile Include="CodeGeneration\RoutePOPMappingDAO.cs" />
@@ -835,6 +836,7 @@
     <Compile Include="Order\SalesReturn\T_RefundOrderDAO.cs" />
     <Compile Include="Order\SalesReturn\T_SalesReturnDAO.cs" />
     <Compile Include="Order\SalesReturn\T_SalesReturnHistoryDAO.cs" />
+    <Compile Include="RetailTraderItemMappingDAO.cs" />
     <Compile Include="Services\RechargeStrategyDAO.cs" />
     <Compile Include="Services\SysVocationDAO.cs" />
     <Compile Include="Services\UnitDAO.cs" />

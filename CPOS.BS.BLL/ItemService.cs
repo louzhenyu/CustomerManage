@@ -940,7 +940,15 @@ namespace JIT.CPOS.BS.BLL
         #endregion
 
         //更新上下架状态
-
+        /// <summary>
+        /// 根据分类类型(分类，分组)获取商品信息
+        /// </summary>
+        /// <param name="strBat_id">2:分组1:分类</param>
+        /// <returns></returns>
+        public DataSet GetItemTreeByCategoryType(string strBat_id)
+        {
+            return itemService.GetItemTreeByCategoryType(strBat_id);
+        }
         /// <summary>
         /// 根据分组Id查询是否有关联商品
         /// </summary>

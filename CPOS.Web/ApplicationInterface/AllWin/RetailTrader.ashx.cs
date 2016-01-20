@@ -513,9 +513,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
         public int Month { get; set; }
         public int Day { get; set; }
         public string formatDate { get; set; }
+        /// <summary>
+        /// 引流
+        /// </summary>
         public decimal DayAmount { get; set; }
         public decimal DayVipAmount { get; set; }
         public decimal DayTradeAmount { get; set; }
+        /// <summary>
+        /// 销售
+        /// </summary>
+        public decimal DaySalesAmount { get; set; }
         public string myDate { get; set; }
     }
 

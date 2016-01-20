@@ -423,8 +423,26 @@ select RetailTraderID  into #TempTable	 from  #TmpTBL L , #UnitSET R where L.IsD
 		,(select top 1  ImageURL from ObjectImages z where z.ObjectId=convert(nvarchar(50), a.RetailTraderID) and z.IsDelete=0) ImageURL
      ,isnull((select COUNT(1) from vip where Col20=a.RetailTraderID),0) as VipCount 
     ,(case status when '1' then '正常' else '停用' end)   StatusDesc
-,( case CooperateType when 'OneWay' then '单向集客' else '互相集客' end ) CooperateTypeDesc
-,( select  top 1 isnull(EndAmount,0) from VipAmount where VipId=a.RetailTraderID ) as EndAmount
+,( STUFF(( SELECT    ','
+                                        + CASE WHEN t.CooperateType = 'OneWay'
+                                               THEN '单向集客'
+                                               WHEN t.CooperateType = 'TwoWay'
+                                               THEN '互相集客'
+                                               WHEN t.CooperateType = 'Sales'
+                                               THEN '销售'
+                                               ELSE t.CooperateType
+                                          END
+                              FROM      ( SELECT DISTINCT
+                                                    CooperateType ,
+                                                    RetailTraderID
+                                          FROM      dbo.SysRetailRewardRule
+                                            WHERE IsDelete=0 AND Status=1
+                                        ) t
+                              WHERE     a.RetailTraderID = t.RetailTraderID
+                            FOR
+                              XML PATH('')
+                            ), 1, 1, '') ) CooperateTypeDesc
+,( select  top 1 isnull(EndAmount,0) from VipWithdrawDeposit where VipId=a.RetailTraderID ) as EndAmount
 ,isnull((select ImageUrl from WQRCodeManager x where x.ObjectId=a.RetailTraderID),'') as QRImageUrl
                                     from RetailTrader a 
  inner join #TempTable f on a.RetailTraderID=f.RetailTraderID
@@ -602,10 +620,11 @@ and b.vipid=@UserID  and isdelete=0
 
 
             string sql = @" select convert(int,datename(year,CreateTime)) as Year
-,convert(int,datename(month,CreateTime)) as Month
-, isnull(sum(case AmountSourceID when 17 then Amount when 14 then Amount when 15 then Amount else 0 end ),0)  as MonthAmount
+                ,convert(int,datename(month,CreateTime)) as Month
+                ,isnull(sum(case AmountSourceID when 17 then Amount when 14 then Amount when 15 then Amount else 0 end ),0)  as MonthAmount
                 ,isnull(sum(case AmountSourceID when 17 then Amount else 0 end ),0) as MonthVipAmount
-              ,  isnull(sum(case AmountSourceID when 14 then Amount when 15 then Amount else 0 end ),0) as MonthTradeAmount
+                ,isnull(sum(case AmountSourceID when 14 then Amount when 15 then Amount else 0 end ),0) as MonthTradeAmount
+                ,ISNULL(SUM(CASE AmountSourceId WHEN 18 THEN Amount ELSE 0 END), 0) AS MonthSalesAmount 
                 from  VipAmountDetail b 
                 where 1=1  
                 and b.vipid=@UserID ";
@@ -630,12 +649,13 @@ and b.vipid=@UserID  and isdelete=0
 
 
             string sql = @" select convert(int,datename(year,CreateTime)) as Year
-,convert(int,datename(month,CreateTime)) as Month
-,convert(int,datename(day,CreateTime)) as Day
-,CONVERT(varchar(100), b.CreateTime, 23) as formatDate
-, isnull(sum(case AmountSourceID when 17 then Amount when 14 then Amount when 15 then Amount else 0 end ),0)  as DayAmount
+                ,convert(int,datename(month,CreateTime)) as Month
+                ,convert(int,datename(day,CreateTime)) as Day
+                ,CONVERT(varchar(100), b.CreateTime, 23) as formatDate
+                ,isnull(sum(case AmountSourceID when 17 then Amount when 14 then Amount when 15 then Amount else 0 end ),0)  as DayAmount
                 ,isnull(sum(case AmountSourceID when 17 then Amount else 0 end ),0) as DayVipAmount
-              ,  isnull(sum(case AmountSourceID when 14 then Amount when 15 then Amount else 0 end ),0) as DayTradeAmount
+                ,isnull(sum(case AmountSourceID when 14 then Amount when 15 then Amount else 0 end ),0) as DayTradeAmount
+                ,ISNULL(SUM(CASE AmountSourceId WHEN 18 THEN Amount ELSE 0 END), 0) AS DaySalesAmount 
                 from  VipAmountDetail b 
                 where 1=1  
                 and b.vipid=@UserID ";

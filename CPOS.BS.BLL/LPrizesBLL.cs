@@ -467,12 +467,7 @@ namespace JIT.CPOS.BS.BLL
 
             t_award_poolEntity awardEntity = null;
             DataSet dsAwardEntity = new DataSet();
-            //List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
-            //if (!string.IsNullOrEmpty(strEventId))
-            //    complexCondition.Add(new EqualsCondition() { FieldName = " EventId", Value = strEventId });
-            //complexCondition.Add(new DirectCondition("releasetime<='" + DateTime.Now + "' and balance=0 "));
-            //List<OrderBy> lstOrder = new List<OrderBy> { };
-            //lstOrder.Add(new OrderBy() { FieldName = " releasetime", Direction = OrderByDirections.Desc });
+
 
             lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
             switch (eventEntity.PersonCount)
@@ -519,7 +514,32 @@ namespace JIT.CPOS.BS.BLL
 
             }
             #endregion
-           
+
+            VipIntegralBLL bllVipIntegral = new VipIntegralBLL(this.CurrentUserInfo);
+            VipIntegralDetailEntity IntegralDetail = new VipIntegralDetailEntity();
+            if (eventEntity.PointsLottery > 0)
+            {
+                //扣除参与积分
+                IntegralDetail = new VipIntegralDetailEntity()
+                {
+                    Integral = -eventEntity.PointsLottery,
+                    IntegralSourceID = "24",
+                    ObjectId = "",
+                    UnitID = vipInfo.CouponInfo
+                };
+                //变动前积分
+                string OldIntegral = (vipInfo.Integration ?? 0).ToString();
+                //变动积分
+                string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
+                var vipIntegralDetailId = bllVipIntegral.AddIntegral(ref vipInfo, null, IntegralDetail, null, this.CurrentUserInfo);
+                //发送微信积分变动通知模板消息
+                if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                {
+                    var CommonBLL = new CommonBLL();
+                    CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, this.CurrentUserInfo);
+                }
+            }
+
             //抽奖记录
             lotteryEntityNew = new LLotteryLogEntity()
             {
@@ -555,30 +575,7 @@ namespace JIT.CPOS.BS.BLL
                 //var prize = bllPrize.GetCouponTypeIDByPrizeId(awardEntity.PrizesID);
                 var prize = DataTableToObject.ConvertToList<LPrizesEntity>(bllPrize.GetCouponTypeIDByPrizeId(awardEntity.PrizesID).Tables[0]).FirstOrDefault();
                
-                VipIntegralBLL bllVipIntegral = new VipIntegralBLL(this.CurrentUserInfo);
-                VipIntegralDetailEntity IntegralDetail = new VipIntegralDetailEntity();
-                if (eventEntity.PointsLottery > 0)
-                {
-                    //扣除参与积分
-                    IntegralDetail = new VipIntegralDetailEntity()
-                    {
-                        Integral = -eventEntity.PointsLottery,
-                        IntegralSourceID = "24",
-                        ObjectId = "",
-                        UnitID=vipInfo.CouponInfo
-                    };
-                    //变动前积分
-                    string OldIntegral = (vipInfo.Integration ?? 0).ToString();
-                    //变动积分
-                    string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
-                    var vipIntegralDetailId = bllVipIntegral.AddIntegral(ref vipInfo, null, IntegralDetail, null, this.CurrentUserInfo);
-                    //发送微信积分变动通知模板消息
-                    if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
-                    {
-                        var CommonBLL = new CommonBLL();
-                        CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, this.CurrentUserInfo);
-                    }
-                }
+               
                 if (prize.PrizeTypeId == "Point")
                 {
                     #region 调用积分统一接口

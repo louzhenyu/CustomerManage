@@ -22,6 +22,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
             var couponTypeBLL = new CouponTypeBLL(loggingSessionInfo);
             var couponBLL = new CouponBLL(loggingSessionInfo);
             var couponTypeUnitMappingBLL = new CouponTypeUnitMappingBLL(loggingSessionInfo);
+            CouponTypeItemMappingBLL bllCouponTypeItemMapping = new CouponTypeItemMappingBLL(loggingSessionInfo);
+            CouponTypeItemMappingEntity entityCouponTypeItemMapping = null;
+
             var pTran = couponTypeBLL.GetTran();//事务 
             using (pTran.Connection)
             {
@@ -67,6 +70,19 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                                 couponTypeUnitMappingBLL.Create(mapping, pTran);
                             }
                         }
+                        if (para.BindTypeIdList != null)
+                        {
+                            foreach (var objId in para.BindTypeIdList)
+                            {
+                                entityCouponTypeItemMapping = new CouponTypeItemMappingEntity()
+                                {
+                                    CouponTypeID = couponTypeEntity.CouponTypeID,
+                                    BindType = para.BindType,
+                                    ObjectId = objId.ObjectID
+                                };
+                                bllCouponTypeItemMapping.Create(entityCouponTypeItemMapping);
+                            }
+                        }
                     }
                     else//追加优惠券
                     {
@@ -74,6 +90,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                         couponTypeEntity.IssuedQty += para.IssuedQty;
                         couponTypeBLL.Update(couponTypeEntity);
                     }
+         
                     pTran.Commit();//提交事物
 
                     //批量生成券

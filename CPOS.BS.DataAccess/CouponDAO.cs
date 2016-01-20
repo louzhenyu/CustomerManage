@@ -714,7 +714,7 @@ namespace JIT.CPOS.BS.DataAccess
         public int GetCouponCountByCouponTypeID(string strCouponTypeId)
         {
             string strSql = string.Format("select  count(1)CouponCount from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
-            return Convert.ToInt16(this.SQLHelper.ExecuteScalar(strSql));
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
      }
 }

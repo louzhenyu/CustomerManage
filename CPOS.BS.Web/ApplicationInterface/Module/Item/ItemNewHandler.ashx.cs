@@ -121,7 +121,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             return rsp.ToJSON();
         }
         #endregion
-
         #region 保存商品信息
         public string SaveItemData(string pRequest)
         {
@@ -235,13 +234,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
         }
 
         #endregion
-
-
-
-
-
-
-
         #region  更新促销分组
         public string UpdateSalesPromotion(string pRequest)
         {
@@ -302,8 +294,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             return rsp.ToJSON();
         }
         #endregion
-
-
         #region  保存sku
         public string SaveSku(string pRequest)
         {
@@ -465,7 +455,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             return rsp.ToJSON();
         }
         #endregion
-
         #region  获取sku数据
         public string GetSkuList(string pRequest)
         {
@@ -503,11 +492,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             return rsp.ToJSON();
         }
         #endregion
-
-
-
-
-
         #region  保存交换后的分类商品分类的顺序
 
         public string CategorySort(string pRequest)

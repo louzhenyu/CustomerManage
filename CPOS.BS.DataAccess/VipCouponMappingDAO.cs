@@ -44,7 +44,6 @@ namespace JIT.CPOS.BS.DataAccess
     {
         /// <summary>
         /// 判断发起分享的用户的优惠券是否被赠送
-        /// 
         /// </summary>
         /// <param name="strCouponId"></param>
         /// <returns></returns>

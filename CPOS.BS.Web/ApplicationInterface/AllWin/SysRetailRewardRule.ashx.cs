@@ -49,7 +49,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                 case "GetSysRetailRewardRule":// 获取奖励模板数据（/或者某个分销商的数据）
                     rst = this.GetSysRetailRewardRule(pRequest);
                     break;
-
+        
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
                     {
@@ -72,10 +72,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
             {
                 throw new APIException("缺少参数【IsTemplate】或参数值为空") { ErrorCode = 135 };
             }
-            if ( string.IsNullOrEmpty(  rp.Parameters.CooperateType))
-            {
-                throw new APIException("缺少参数【CooperateType】或参数值为空") { ErrorCode = 135 };
-            }
+            //if (string.IsNullOrEmpty(rp.Parameters.CooperateType))
+            //{
+            //    throw new APIException("缺少参数【CooperateType】或参数值为空") { ErrorCode = 135 };
+            //}
             if (rp.Parameters.IsTemplate == 0 && string.IsNullOrEmpty(rp.Parameters.RetailTraderID))
             {
                 throw new APIException("缺少参数【RetailTraderID】或参数值为空") { ErrorCode = 135 };
@@ -85,43 +85,72 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                 throw new APIException("缺少参数【SysRetailRewardRuleList】或参数值为空") { ErrorCode = 135 };
             }
 
+            //如果是分销商，需要改变分销商的相关数据
+            RetailTraderBLL _RetailTraderBLL = new RetailTraderBLL(loggingSessionInfo);
 
             //先要删除相关的数据
             //如果是模板的就设置该合作方式下的分销商的上次使用的相关数据为已经被删除isdelete=0                
             //如果是分销商，就删除该分销商下上次使用的相关数据。            
-            bll.UpdateSysRetailRewardRule(rp.Parameters.IsTemplate, rp.Parameters.CooperateType, rp.Parameters.RetailTraderID,loggingSessionInfo.ClientID);
-
-          
-            //如果是分销商，需要改变分销商的相关数据
-            RetailTraderBLL _RetailTraderBLL = new RetailTraderBLL(loggingSessionInfo);
-            if (rp.Parameters.IsTemplate == 0 && !string.IsNullOrEmpty(rp.Parameters.RetailTraderID))//
+            //bll.UpdateSysRetailRewardRule(rp.Parameters.IsTemplate, rp.Parameters.CooperateType, rp.Parameters.RetailTraderID, loggingSessionInfo.ClientID);
+            if (rp.Parameters.IsTemplate==0)//非模板时
             {
-                RetailTraderEntity en = new RetailTraderEntity();
-                en.RetailTraderID = rp.Parameters.RetailTraderID;
-                en.CooperateType = rp.Parameters.CooperateType;//修改合作方式
-                _RetailTraderBLL.Update(en, null, false);//不更新空的
+                 bll.UpdateSysRetailRewardRule(rp.Parameters.IsTemplate, "","", rp.Parameters.RetailTraderID, loggingSessionInfo.ClientID);
+        
+                //RetailTraderEntity enRT = new RetailTraderEntity();
+                //enRT.RetailTraderID = rp.Parameters.RetailTraderID;
+                //enRT.CooperateType = "";//修改合作方式
+                //enRT.SalesType = "";//修改销售方式
+                //_RetailTraderBLL.Update(enRT, null, false);//不更新空的
             }
+         
+        
 
             //获取分销商的信息，loggingSessionInfo.ClientID
             foreach (var item in rp.Parameters.SysRetailRewardRuleList)
             {
+                if (rp.Parameters.IsTemplate == 0 && !string.IsNullOrEmpty(rp.Parameters.RetailTraderID))//
+                {
+                    if (item.CooperateType != "Sales")
+                    {
+                        RetailTraderEntity enRT = new RetailTraderEntity();
+                        enRT.RetailTraderID = rp.Parameters.RetailTraderID;
+                        enRT.CooperateType = item.CooperateType;//修改合作方式
+                        _RetailTraderBLL.Update(enRT, null, false);//不更新空的
+                    }
+                    else
+                    {
+                        RetailTraderEntity enRT = new RetailTraderEntity();
+                        enRT.RetailTraderID = rp.Parameters.RetailTraderID;
+                        enRT.SalesType = item.CooperateType;//修改销售方式
+                        _RetailTraderBLL.Update(enRT, null, false);//不更新空的
+                    }
+                }
+                if (rp.Parameters.IsTemplate == 1)//为模板时
+                {
+                    bll.UpdateSysRetailRewardRule(rp.Parameters.IsTemplate, item.CooperateType, item.RewardTypeCode, rp.Parameters.RetailTraderID, loggingSessionInfo.ClientID);
+                }
                 SysRetailRewardRuleEntity en = new SysRetailRewardRuleEntity();
                 en.RetailRewardRuleID = Guid.NewGuid().ToString();//每次都创建新的
-                en.CooperateType = rp.Parameters.CooperateType;//合作方式
+                en.CooperateType = item.CooperateType;//合作方式
 
                 en.RewardTypeName = item.RewardTypeName;
                 en.RewardTypeCode = item.RewardTypeCode;
                 en.IsTemplate = rp.Parameters.IsTemplate;//是否模板
                 en.SellUserReward = item.SellUserReward;               
                 en.RetailTraderReward = item.RetailTraderReward;
+                en.ItemSalesPriceRate = (item.ItemSalesPriceRate == null ? 0 : item.ItemSalesPriceRate);//销售设置
                 en.AmountOrPercent = item.AmountOrPercent;
 
                 en.CreateTime = DateTime.Now;
                 en.CreateBy = loggingSessionInfo.UserID;
                 en.LastUpdateTime = DateTime.Now;
-                en.LastUpdateBy = loggingSessionInfo.UserID;             
-             
-                en.Status = "1";
+                en.LastUpdateBy = loggingSessionInfo.UserID;
+                if (item.CooperateType == "Sales" && item.ItemSalesPriceRate == 0)
+                {
+                    en.Status = "0";
+                }
+                else
+                    en.Status = "1";
                 en.IsDelete = 0;
                 en.CustomerId = loggingSessionInfo.ClientID;
                 
@@ -139,11 +168,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
             return rsp.ToJSON();
         }
         #endregion
-
-
         
-
-                   #region   获取奖励规则
+        #region   获取奖励规则
         public string GetSysRetailRewardRule(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<SaveRetailRewardRuleRP>>();
@@ -177,28 +203,29 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                 en.IsDelete=0;
                 en.CustomerId = loggingSessionInfo.ClientID;//不要少写了CustomerId
                 //获取奖励模板
-                ds=bll.QueryByEntity(en, null);
+                ds = bll.GetSysRetailRewardRule(en);
+                //ds=bll.QueryByEntity(en, null);
             }
             else {
                 SysRetailRewardRuleEntity en = new SysRetailRewardRuleEntity();
                 en.IsTemplate=0;
-                en.CooperateType=rp.Parameters.CooperateType;
+                //en.CooperateType=rp.Parameters.CooperateType;
                 en.RetailTraderID = rp.Parameters.RetailTraderID;
                 en.IsDelete=0;
                 en.CustomerId = loggingSessionInfo.ClientID;//不要少写了CustomerId
                 //获取奖励模板
-                ds = bll.QueryByEntity(en, null);
+                ds = bll.GetSysRetailRewardRule(en);
                 //如果该分销商没有奖励规则，就取他所属的合作类型的奖励模板的数据
-                if (ds == null || ds.Count() <= 0)
-                {
-                    SysRetailRewardRuleEntity en2 = new SysRetailRewardRuleEntity();
-                    en2.IsTemplate = 1;
-                    en2.CooperateType = rp.Parameters.CooperateType;
-                    en2.IsDelete = 0;
-                    en2.CustomerId = loggingSessionInfo.ClientID;//不要少写了CustomerId
-                    //获取奖励模板
-                    ds = bll.QueryByEntity(en2, null);
-                }
+                //if (ds == null || ds.Count() <= 0)
+                //{
+                //    SysRetailRewardRuleEntity en2 = new SysRetailRewardRuleEntity();
+                //    en2.IsTemplate = 1;
+                //    en2.CooperateType = rp.Parameters.CooperateType;
+                //    en2.IsDelete = 0;
+                //    en2.CustomerId = loggingSessionInfo.ClientID;//不要少写了CustomerId
+                //    //获取奖励模板
+                //    ds = bll.GetSysRetailRewardRule(en2);
+                //}
 
             }
 
@@ -211,7 +238,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
         }
         #endregion
 
-
+      
     }
     public class SaveRetailRewardRuleRP : IAPIRequestParameter
     {
@@ -265,6 +292,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
         /// </summary>
 
         public Decimal? RetailTraderReward { get; set; }
+        public Decimal? ItemSalesPriceRate { get; set; }
    
         public Int32? AmountOrPercent { get; set; }
 
@@ -289,7 +317,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
 
 
     }
-
 
 
 }

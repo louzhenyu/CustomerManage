@@ -2277,7 +2277,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 }));
 
                 content.eventList = eventList;
-                content.totalCount = eventList.Count;
+                content.totalCount = tempEvent.RowCount;
 
                 responseData.success = true;
                 responseData.data = content;

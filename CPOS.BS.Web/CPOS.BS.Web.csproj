@@ -6363,6 +6363,9 @@
     <Compile Include="ApplicationInterface\Module\Item\ItemNewHandler.ashx.cs">
       <DependentUpon>ItemNewHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\Item\ItemTreeHandler.ashx.cs">
+      <DependentUpon>ItemTreeHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\SetActivityStateAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\DelPrizesDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\GetCardholderCountAH.cs" />
@@ -6479,6 +6482,7 @@
     <Content Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
     <Content Include="ApplicationInterface\Module\Order\SalesReturn\DownLoadSales.ashx" />
+    <Content Include="ApplicationInterface\Module\Item\ItemTreeHandler.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />

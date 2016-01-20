@@ -87,7 +87,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " From T_Item a "
                       + "inner join @TmpTable b "
                       + "on(a.Item_Id = b.Item_Id) "
-                      + "where 1=1 "
+                      + "where 1=1 and a.item_category_id<>'-1' "
                       + "and b.row_no  > '" + _ht["StartRow"].ToString() + "' and  b.row_no <= '" + _ht["EndRow"] + "' order by a.modify_time desc";//item_code
             #endregion
             ds = this.SQLHelper.ExecuteDataset(sql);
@@ -1421,7 +1421,22 @@ namespace JIT.CPOS.BS.DataAccess
 
 
         //新版本保存商品信息
-
+        /// <summary>
+        /// 根据分类类型(分类，分组)获取商品信息
+        /// </summary>
+        /// <param name="strBat_id">2:分组1:分类</param>
+        /// <returns></returns>
+        public DataSet GetItemTreeByCategoryType(string strBat_id)
+        {
+            var strSql = new StringBuilder();
+            strSql.Append("SELECT  B.ItemCategoryId ParentId,a.item_id id,a.item_name text,'close' state");
+            strSql.Append(" FROM    dbo.T_Item A ");
+            strSql.Append(" INNER JOIN dbo.ItemCategoryMapping B ON A.item_id = B.ItemId ");
+            strSql.AppendFormat(" INNER JOIN dbo.T_Item_Category c ON b.ItemCategoryId=c.item_category_id AND c.status='1' AND c.bat_id='{0}' ", strBat_id);
+            strSql.AppendFormat(" WHERE B.IsDelete=0 AND a.status='1' AND a.CustomerId='{0}'",loggingSessionInfo.ClientID);
+            strSql.Append(" ORDER BY C.create_time DESC");
+            return this.SQLHelper.ExecuteDataset(strSql.ToString());
+        }
         /// <summary>
         /// 根据分组Id查询是否有关联商品
         /// </summary>

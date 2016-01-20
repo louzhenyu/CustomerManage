@@ -15,6 +15,11 @@ using JIT.CPOS.BS.Entity.User;
 using JIT.CPOS.BS.Entity.Pos;
 using System.Collections;
 using CPOS.Common;
+using JIT.CPOS.BS.Web.Base.Excel;
+using Aspose.Cells;
+using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.BS.Web.Module.Basic.VIP.Handler
 {
@@ -43,6 +48,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.VIP.Handler
                     break;
                 case "vip_delete":
                     content = VipDeleteData();
+                    break;
+                case "ImportVip":
+                    content = ImportVip();
                     break;
             }
             pContext.Response.Write(content);
@@ -207,17 +215,49 @@ namespace JIT.CPOS.BS.Web.Module.Basic.VIP.Handler
         public string ImportVip()
         {
             var responseData = new ResponseData();
-            var vipBLL = new VipBLL(CurrentUserInfo);
-
+            var userService = new cUserService(CurrentUserInfo);
             ExcelHelper excelHelper = new ExcelHelper();
-            string strPath = excelHelper.UploadExcel();//上传文件
-            if (strPath.Length > 0)
+           
+            if (Request("filePath") != null && Request("filePath").ToString() != "")
             {
                 try
                 {
-                    responseData.data = vipBLL.ExcelToDb(strPath, CurrentUserInfo);
+                    var rp = new ImportRP();
+                    string strPath = Request("filePath").ToString();
+                    string strFileName = string.Empty;
+                    DataSet ds = userService.ExcelToDb(HttpContext.Current.Server.MapPath(strPath), CurrentUserInfo);
+                    if (ds != null && ds.Tables.Count > 1 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                    {
+
+                        Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(ds.Tables[0], 0);
+                        string savePath = HttpContext.Current.Server.MapPath(@"~/File/ErrFile/User");
+                        if (!System.IO.Directory.Exists(savePath))
+                        {
+                            System.IO.Directory.CreateDirectory(savePath);
+                        }
+                        strFileName = "\\Vip错误信息导出" + DateTime.Now.ToFileTime() + ".xls";
+                        savePath = savePath + strFileName;
+                        wb.Save(savePath);//保存Excel文件   
+                        rp = new ImportRP()
+                        {
+                            Url = "/File/ErrFile/Vip" + strFileName,
+                            TotalCount = Convert.ToInt32(ds.Tables[1].Rows[0]["TotalCount"].ToString()),
+                            ErrCount = Convert.ToInt32(ds.Tables[1].Rows[0]["ErrCount"].ToString())
+                        };
+                    }
+                    else
+                    {
+                        rp = new ImportRP()
+                        {
+                            Url = "",
+                            TotalCount = Convert.ToInt32(ds.Tables[1].Rows[0]["TotalCount"].ToString()),
+                            ErrCount = Convert.ToInt32(ds.Tables[1].Rows[0]["ErrCount"].ToString())
+                        };
+
+                        responseData.success = true;
+                    }
                     responseData.success = true;
-                    responseData.msg = "操作成功";
+                    responseData.data = rp;
                 }
                 catch (Exception err)
                 {
@@ -225,11 +265,16 @@ namespace JIT.CPOS.BS.Web.Module.Basic.VIP.Handler
                     responseData.msg = err.Message.ToString();
                 }
             }
-            return "";
+            return responseData.ToJSON();
         }
         #endregion
     }
-
+    public class ImportRP
+    {
+        public string Url { get; set; }
+        public int TotalCount { get; set; }
+        public int ErrCount { get; set; }
+    }
     #region QueryEntity
     public class VipQueryEntity
     {

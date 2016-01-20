@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/12/17 15:48:05
+ * Create On	:2015/12/31 15:46:19
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,13 +25,13 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class CouponTypeItemMappingEntity : BaseEntity 
+    public partial class RetailTraderItemMappingEntity : BaseEntity 
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public CouponTypeItemMappingEntity()
+        public RetailTraderItemMappingEntity()
         {
         }
         #endregion     
@@ -40,32 +40,27 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Guid? MappingID { get; set; }
+		public Guid? MappingId { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Guid? CouponTypeID { get; set; }
-
-		/// <summary>
-        /// Sku,Item,Group,Category
-		/// </summary>
-		public String BindType { get; set; }
+		public String RetailTraderId { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String ObjectId { get; set; }
+		public String ItemId { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public DateTime? LastUpdateTime { get; set; }
+		public Int32? IsDelete { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String LastUpdateBy { get; set; }
+		public String CustomerID { get; set; }
 
 		/// <summary>
 		/// 
@@ -80,12 +75,12 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? IsDelete { get; set; }
+		public DateTime? LastUpdateTime { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String CustomerId { get; set; }
+		public String LastUpdateBy { get; set; }
 
 
         #endregion

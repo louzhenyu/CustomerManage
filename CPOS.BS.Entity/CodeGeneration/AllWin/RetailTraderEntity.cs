@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/5/24 21:31:17
+ * Create On	:2016/1/8 17:55:51
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -86,6 +86,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String CooperateType { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String SalesType { get; set; }
 
 		/// <summary>
 		/// 

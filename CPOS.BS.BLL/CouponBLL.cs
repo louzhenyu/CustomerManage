@@ -836,7 +836,7 @@ namespace JIT.CPOS.BS.BLL
         }
 
         /// <summary>
-        /// 抽奖活动根据CouponTypeId获取优惠券
+        /// 根据CouponTypeId获取优惠券
         /// </summary>
         /// <param name="strCouponTypeId"></param>
         /// <returns></returns>

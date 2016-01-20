@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/11/25 15:01:58
+ * Create On	:2015/12/31 15:46:19
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,26 +25,26 @@ using JIT.Utility.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.Log;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.DataAccess
 {
     /// <summary>
     /// 数据访问：  
-    /// 表ObjectImages的数据访问类     
+    /// 表RetailTraderItemMapping的数据访问类     
     /// 1.实现ICRUDable接口
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class ObjectImagesDAO : Base.BaseCPOSDAO, ICRUDable<ObjectImagesEntity>, IQueryable<ObjectImagesEntity>
+    public partial class RetailTraderItemMappingDAO : Base.BaseCPOSDAO, ICRUDable<RetailTraderItemMappingEntity>, IQueryable<RetailTraderItemMappingEntity>
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public ObjectImagesDAO(LoggingSessionInfo pUserInfo)
+        public RetailTraderItemMappingDAO(LoggingSessionInfo pUserInfo)
             : base(pUserInfo)
         {
         }
@@ -55,7 +55,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 创建一个新实例
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Create(ObjectImagesEntity pEntity)
+        public void Create(RetailTraderItemMappingEntity pEntity)
         {
             this.Create(pEntity, null);
         }
@@ -65,62 +65,53 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Create(ObjectImagesEntity pEntity, IDbTransaction pTran)
+        public void Create(RetailTraderItemMappingEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
             
             //初始化固定字段
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into [ObjectImages](");
-            strSql.Append("[ObjectId],[ImageURL],[DisplayIndex],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[Title],[Description],[ImageId],[BatId],[RuleId],[RuleContent])");
+            strSql.Append("insert into [RetailTraderItemMapping](");
+            strSql.Append("[RetailTraderId],[ItemId],[IsDelete],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[MappingId])");
             strSql.Append(" values (");
-            strSql.Append("@ObjectId,@ImageURL,@DisplayIndex,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@Title,@Description,@ImageId,@BatId,@RuleId,@RuleContent)");            
+            strSql.Append("@RetailTraderId,@ItemId,@IsDelete,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@MappingId)");            
 
-			string pkString = pEntity.ImageId;
+			Guid? pkGuid;
+			if (pEntity.MappingId == null)
+				pkGuid = Guid.NewGuid();
+			else
+				pkGuid = pEntity.MappingId;
 
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
-					new SqlParameter("@ImageURL",SqlDbType.NVarChar),
-					new SqlParameter("@DisplayIndex",SqlDbType.Int),
-					new SqlParameter("@CreateTime",SqlDbType.DateTime),
-					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
-					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@RetailTraderId",SqlDbType.NVarChar),
+					new SqlParameter("@ItemId",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
-					new SqlParameter("@Title",SqlDbType.NVarChar),
-					new SqlParameter("@Description",SqlDbType.NVarChar),
-					new SqlParameter("@ImageId",SqlDbType.NVarChar),
-					new SqlParameter("@BatId",SqlDbType.NVarChar),
-					new SqlParameter("@RuleId",SqlDbType.Int),
-					new SqlParameter("@RuleContent",SqlDbType.NVarChar)
-
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
+					new SqlParameter("@CreateTime",SqlDbType.DateTime),
+					new SqlParameter("@CreateBy",SqlDbType.VarChar),
+					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
+					new SqlParameter("@MappingId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.ObjectId;
-			parameters[1].Value = pEntity.ImageURL;
-			parameters[2].Value = pEntity.DisplayIndex;
-			parameters[3].Value = pEntity.CreateTime;
-			parameters[4].Value = pEntity.CreateBy;
-			parameters[5].Value = pEntity.LastUpdateBy;
+			parameters[0].Value = pEntity.RetailTraderId;
+			parameters[1].Value = pEntity.ItemId;
+			parameters[2].Value = pEntity.IsDelete;
+			parameters[3].Value = pEntity.CustomerID;
+			parameters[4].Value = pEntity.CreateTime;
+			parameters[5].Value = pEntity.CreateBy;
 			parameters[6].Value = pEntity.LastUpdateTime;
-			parameters[7].Value = pEntity.IsDelete;
-			parameters[8].Value = pEntity.CustomerId;
-			parameters[9].Value = pEntity.Title;
-			parameters[10].Value = pEntity.Description;
-            parameters[11].Value = pkString;
-            parameters[12].Value = pEntity.BatId;
-            parameters[13].Value = pEntity.RuleId;
-            parameters[14].Value = pEntity.RuleContent;
-
+			parameters[7].Value = pEntity.LastUpdateBy;
+			parameters[8].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -128,14 +119,14 @@ namespace JIT.CPOS.BS.DataAccess
                result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
                result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
-            pEntity.ImageId = pkString;
+            pEntity.MappingId = pkGuid;
         }
 
         /// <summary>
         /// 根据标识符获取实例
         /// </summary>
         /// <param name="pID">标识符的值</param>
-        public ObjectImagesEntity GetByID(object pID)
+        public RetailTraderItemMappingEntity GetByID(object pID)
         {
             //参数检查
             if (pID == null)
@@ -143,9 +134,9 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [ObjectImages] where ImageId='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [RetailTraderItemMapping] where MappingId='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
-            ObjectImagesEntity m = null;
+            RetailTraderItemMappingEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
@@ -162,18 +153,18 @@ namespace JIT.CPOS.BS.DataAccess
         /// 获取所有实例
         /// </summary>
         /// <returns></returns>
-        public ObjectImagesEntity[] GetAll()
+        public RetailTraderItemMappingEntity[] GetAll()
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [ObjectImages] where isdelete=0 order by createtime desc");
+            sql.AppendFormat("select * from [RetailTraderItemMapping] where 1=1  and isdelete=0");
             //读取数据
-            List<ObjectImagesEntity> list = new List<ObjectImagesEntity>();
+            List<RetailTraderItemMappingEntity> list = new List<RetailTraderItemMappingEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    ObjectImagesEntity m;
+                    RetailTraderItemMappingEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -187,79 +178,59 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(ObjectImagesEntity pEntity , IDbTransaction pTran)
+        public void Update(RetailTraderItemMappingEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity,true,pTran);
+            Update(pEntity , pTran,true);
         }
-        public void Update(ObjectImagesEntity pEntity , bool pIsUpdateNullField, IDbTransaction pTran)
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        /// <param name="pEntity">实体实例</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(RetailTraderItemMappingEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.ImageId==null)
+            if (!pEntity.MappingId.HasValue)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
              //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update [ObjectImages] set ");
-            if (pIsUpdateNullField || pEntity.ObjectId!=null)
-                strSql.Append( "[ObjectId]=@ObjectId,");
-            if (pIsUpdateNullField || pEntity.ImageURL!=null)
-                strSql.Append( "[ImageURL]=@ImageURL,");
-            if (pIsUpdateNullField || pEntity.DisplayIndex!=null)
-                strSql.Append( "[DisplayIndex]=@DisplayIndex,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
-                strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
+            strSql.Append("update [RetailTraderItemMapping] set ");
+                        if (pIsUpdateNullField || pEntity.RetailTraderId!=null)
+                strSql.Append( "[RetailTraderId]=@RetailTraderId,");
+            if (pIsUpdateNullField || pEntity.ItemId!=null)
+                strSql.Append( "[ItemId]=@ItemId,");
+            if (pIsUpdateNullField || pEntity.CustomerID!=null)
+                strSql.Append( "[CustomerID]=@CustomerID,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.CustomerId!=null)
-                strSql.Append( "[CustomerId]=@CustomerId,");
-            if (pIsUpdateNullField || pEntity.Title!=null)
-                strSql.Append( "[Title]=@Title,");
-            if (pIsUpdateNullField || pEntity.Description!=null)
-                strSql.Append( "[Description]=@Description,");
-
-            if (pIsUpdateNullField || pEntity.BatId != null)
-                strSql.Append("[BatId]=@BatId,");
-            if (pIsUpdateNullField || pEntity.RuleId != null)
-                strSql.Append("[RuleId]=@RuleId,");
-            if (pIsUpdateNullField || pEntity.RuleContent != null)
-                strSql.Append("[RuleContent]=@RuleContent");
-            if (strSql.ToString().EndsWith(","))
-                strSql.Remove(strSql.Length - 1, 1);
-            strSql.Append(" where ImageId=@ImageId ");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
+            strSql.Append(" where MappingId=@MappingId ");
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@ObjectId",SqlDbType.NVarChar),
-					new SqlParameter("@ImageURL",SqlDbType.NVarChar),
-					new SqlParameter("@DisplayIndex",SqlDbType.Int),
-					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
+					new SqlParameter("@RetailTraderId",SqlDbType.NVarChar),
+					new SqlParameter("@ItemId",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
-					new SqlParameter("@Title",SqlDbType.NVarChar),
-					new SqlParameter("@Description",SqlDbType.NVarChar),
-					new SqlParameter("@BatId",SqlDbType.NVarChar),
-					new SqlParameter("@RuleId",SqlDbType.Int),
-					new SqlParameter("@RuleContent",SqlDbType.NVarChar),
-					new SqlParameter("@ImageId",SqlDbType.NVarChar)
+					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
+					new SqlParameter("@MappingId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.ObjectId;
-			parameters[1].Value = pEntity.ImageURL;
-			parameters[2].Value = pEntity.DisplayIndex;
-			parameters[3].Value = pEntity.LastUpdateBy;
-			parameters[4].Value = pEntity.LastUpdateTime;
-			parameters[5].Value = pEntity.CustomerId;
-			parameters[6].Value = pEntity.Title;
-            parameters[7].Value = pEntity.Description;
-            parameters[8].Value = pEntity.BatId;
-            parameters[9].Value = pEntity.RuleId;
-            parameters[10].Value = pEntity.RuleContent;
-			parameters[11].Value = pEntity.ImageId;
+			parameters[0].Value = pEntity.RetailTraderId;
+			parameters[1].Value = pEntity.ItemId;
+			parameters[2].Value = pEntity.CustomerID;
+			parameters[3].Value = pEntity.LastUpdateTime;
+			parameters[4].Value = pEntity.LastUpdateBy;
+			parameters[5].Value = pEntity.MappingId;
 
             //执行语句
             int result = 0;
@@ -273,20 +244,16 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(ObjectImagesEntity pEntity )
+        public void Update(RetailTraderItemMappingEntity pEntity )
         {
-            Update(pEntity ,true);
-        }
-        public void Update(ObjectImagesEntity pEntity ,bool pIsUpdateNullField )
-        {
-            this.Update(pEntity, pIsUpdateNullField, null);
+            this.Update(pEntity, null);
         }
 
         /// <summary>
         /// 删除
         /// </summary>
         /// <param name="pEntity"></param>
-        public void Delete(ObjectImagesEntity pEntity)
+        public void Delete(RetailTraderItemMappingEntity pEntity)
         {
             this.Delete(pEntity, null);
         }
@@ -296,17 +263,17 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(ObjectImagesEntity pEntity, IDbTransaction pTran)
+        public void Delete(RetailTraderItemMappingEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (pEntity.ImageId==null)
+            if (!pEntity.MappingId.HasValue)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.ImageId, pTran);           
+            this.Delete(pEntity.MappingId.Value, pTran);           
         }
 
         /// <summary>
@@ -320,12 +287,10 @@ namespace JIT.CPOS.BS.DataAccess
                 return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [ObjectImages] set LastUpdateTime=@LastUpdateTime,LastUpdateBy=@LastUpdateBy,IsDelete=1 where ImageId=@ImageId;");
+            sql.AppendLine("update [RetailTraderItemMapping] set  isdelete=1 where MappingId=@MappingId;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@LastUpdateTime",SqlDbType=SqlDbType.DateTime,Value=DateTime.Now},
-                new SqlParameter{ParameterName="@LastUpdateBy",SqlDbType=SqlDbType.VarChar,Value=Convert.ToString(CurrentUserInfo.UserID)},
-                new SqlParameter{ParameterName="@ImageId",SqlDbType=SqlDbType.VarChar,Value=pID}
+                new SqlParameter{ParameterName="@MappingId",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
             };
             //执行语句
             int result = 0;
@@ -341,21 +306,21 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(ObjectImagesEntity[] pEntities, IDbTransaction pTran)
+        public void Delete(RetailTraderItemMappingEntity[] pEntities, IDbTransaction pTran)
         {
             //整理主键值
             object[] entityIDs = new object[pEntities.Length];
             for (int i = 0; i < pEntities.Length; i++)
             {
-                var item = pEntities[i];
+                var pEntity = pEntities[i];
                 //参数校验
-                if (item == null)
+                if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (item.ImageId==null)
+                if (!pEntity.MappingId.HasValue)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = item.ImageId;
+                entityIDs[i] = pEntity.MappingId;
             }
             Delete(entityIDs, pTran);
         }
@@ -364,7 +329,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 批量删除
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
-        public void Delete(ObjectImagesEntity[] pEntities)
+        public void Delete(RetailTraderItemMappingEntity[] pEntities)
         { 
             Delete(pEntities, null);
         }
@@ -394,7 +359,7 @@ namespace JIT.CPOS.BS.DataAccess
                 primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [ObjectImages] set LastUpdateTime='"+DateTime.Now.ToString()+"',LastUpdateBy='"+CurrentUserInfo.UserID+"',IsDelete=1 where ImageId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [RetailTraderItemMapping] set  isdelete=1 where MappingId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
             int result = 0;   
             if (pTran == null)
@@ -411,11 +376,11 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pWhereConditions">筛选条件</param>
         /// <param name="pOrderBys">排序</param>
         /// <returns></returns>
-        public ObjectImagesEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        public RetailTraderItemMappingEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [ObjectImages] where isdelete=0 ");
+            sql.AppendFormat("select * from [RetailTraderItemMapping] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -433,12 +398,12 @@ namespace JIT.CPOS.BS.DataAccess
                 sql.Remove(sql.Length - 1, 1);
             }
             //执行SQL
-            List<ObjectImagesEntity> list = new List<ObjectImagesEntity>();
+            List<RetailTraderItemMappingEntity> list = new List<RetailTraderItemMappingEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    ObjectImagesEntity m;
+                    RetailTraderItemMappingEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -454,7 +419,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<ObjectImagesEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<RetailTraderItemMappingEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             //组织SQL
             StringBuilder pagedSql = new StringBuilder();
@@ -474,11 +439,11 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
             {
-                pagedSql.AppendFormat(" [ImageId] desc"); //默认为主键值倒序
+                pagedSql.AppendFormat(" [MappingId] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [ObjectImages] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [RetailTraderItemMapping] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [ObjectImages] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [RetailTraderItemMapping] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -495,13 +460,13 @@ namespace JIT.CPOS.BS.DataAccess
             //取指定页的数据
             pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
-            PagedQueryResult<ObjectImagesEntity> result = new PagedQueryResult<ObjectImagesEntity>();
-            List<ObjectImagesEntity> list = new List<ObjectImagesEntity>();
+            PagedQueryResult<RetailTraderItemMappingEntity> result = new PagedQueryResult<RetailTraderItemMappingEntity>();
+            List<RetailTraderItemMappingEntity> list = new List<RetailTraderItemMappingEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    ObjectImagesEntity m;
+                    RetailTraderItemMappingEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -522,7 +487,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public ObjectImagesEntity[] QueryByEntity(ObjectImagesEntity pQueryEntity, OrderBy[] pOrderBys)
+        public RetailTraderItemMappingEntity[] QueryByEntity(RetailTraderItemMappingEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return Query(queryWhereCondition,  pOrderBys);            
@@ -534,7 +499,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public PagedQueryResult<ObjectImagesEntity> PagedQueryByEntity(ObjectImagesEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<RetailTraderItemMappingEntity> PagedQueryByEntity(RetailTraderItemMappingEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
@@ -547,36 +512,29 @@ namespace JIT.CPOS.BS.DataAccess
         /// 根据实体非Null属性生成查询条件。
         /// </summary>
         /// <returns></returns>
-        protected IWhereCondition[] GetWhereConditionByEntity(ObjectImagesEntity pQueryEntity)
+        protected IWhereCondition[] GetWhereConditionByEntity(RetailTraderItemMappingEntity pQueryEntity)
         { 
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.ImageId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ImageId", Value = pQueryEntity.ImageId });
-            if (pQueryEntity.ObjectId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ObjectId", Value = pQueryEntity.ObjectId });
-            if (pQueryEntity.ImageURL!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ImageURL", Value = pQueryEntity.ImageURL });
-            if (pQueryEntity.DisplayIndex!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DisplayIndex", Value = pQueryEntity.DisplayIndex });
+            if (pQueryEntity.MappingId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "MappingId", Value = pQueryEntity.MappingId });
+            if (pQueryEntity.RetailTraderId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "RetailTraderId", Value = pQueryEntity.RetailTraderId });
+            if (pQueryEntity.ItemId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemId", Value = pQueryEntity.ItemId });
+            if (pQueryEntity.IsDelete!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.CustomerID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
             if (pQueryEntity.CreateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
             if (pQueryEntity.CreateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateBy!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.LastUpdateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.IsDelete!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
-            if (pQueryEntity.CustomerId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
-            if (pQueryEntity.Title!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Title", Value = pQueryEntity.Title });
-            if (pQueryEntity.Description!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Description", Value = pQueryEntity.Description });
-            if (pQueryEntity.BatId != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BatId", Value = pQueryEntity.BatId });
+            if (pQueryEntity.LastUpdateBy!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
+
             return lstWhereCondition.ToArray();
         }
         /// <summary>
@@ -584,28 +542,32 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(SqlDataReader pReader, out ObjectImagesEntity pInstance)
+        protected void Load(IDataReader pReader, out RetailTraderItemMappingEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
-            pInstance = new ObjectImagesEntity();
+            pInstance = new RetailTraderItemMappingEntity();
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["ImageId"] != DBNull.Value)
+			if (pReader["MappingId"] != DBNull.Value)
 			{
-				pInstance.ImageId =  Convert.ToString(pReader["ImageId"]);
+				pInstance.MappingId =  (Guid)pReader["MappingId"];
 			}
-			if (pReader["ObjectId"] != DBNull.Value)
+			if (pReader["RetailTraderId"] != DBNull.Value)
 			{
-				pInstance.ObjectId =  Convert.ToString(pReader["ObjectId"]);
+				pInstance.RetailTraderId =  Convert.ToString(pReader["RetailTraderId"]);
 			}
-			if (pReader["ImageURL"] != DBNull.Value)
+			if (pReader["ItemId"] != DBNull.Value)
 			{
-				pInstance.ImageURL =  Convert.ToString(pReader["ImageURL"]);
+				pInstance.ItemId =  Convert.ToString(pReader["ItemId"]);
 			}
-			if (pReader["DisplayIndex"] != DBNull.Value)
+			if (pReader["IsDelete"] != DBNull.Value)
 			{
-				pInstance.DisplayIndex =   Convert.ToInt32(pReader["DisplayIndex"]);
+				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["CustomerID"] != DBNull.Value)
+			{
+				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
 			}
 			if (pReader["CreateTime"] != DBNull.Value)
 			{
@@ -615,39 +577,14 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
 			}
-			if (pReader["LastUpdateBy"] != DBNull.Value)
-			{
-				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
-			}
 			if (pReader["LastUpdateTime"] != DBNull.Value)
 			{
 				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
 			}
-			if (pReader["IsDelete"] != DBNull.Value)
+			if (pReader["LastUpdateBy"] != DBNull.Value)
 			{
-				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
 			}
-			if (pReader["CustomerId"] != DBNull.Value)
-			{
-				pInstance.CustomerId =  Convert.ToString(pReader["CustomerId"]);
-			}
-			if (pReader["Title"] != DBNull.Value)
-			{
-				pInstance.Title =  Convert.ToString(pReader["Title"]);
-			}
-			if (pReader["Description"] != DBNull.Value)
-			{
-				pInstance.Description =  Convert.ToString(pReader["Description"]);
-			}
-            if (pReader["BatId"] != DBNull.Value)
-            {
-                pInstance.BatId = Convert.ToString(pReader["BatId"]);
-            }
-            if (pReader["RuleContent"] != DBNull.Value)
-            {
-                pInstance.RuleContent = Convert.ToString(pReader["RuleContent"]);
-            }
-            
 
         }
         #endregion

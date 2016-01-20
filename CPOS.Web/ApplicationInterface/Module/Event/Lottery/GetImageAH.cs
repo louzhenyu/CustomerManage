@@ -49,12 +49,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     if (i.BatId == "LT_regularpic")
                         rd.LT_regularpic = i.ImageURL;
                 };
-
-
-
+                rd.RuleContent = image.FirstOrDefault().RuleContent;
                 rd.ImageList = bllImage.QueryByEntity(new ObjectImagesEntity() { ObjectId = pRequest.Parameters.EventId, BatId = "list", IsDelete = 0 }, null).ToList();
             }
-
             rd.EventTitle = eventInfo.Title;
             rd.EventContent = eventInfo.Content;
             rd.BootUrl = eventInfo.BootURL;
@@ -63,60 +60,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             rd.OverRemark = eventInfo.OverRemark;
             rd.ShareLogoUrl = eventInfo.ShareLogoUrl;
             rd.IsShare = eventInfo.IsShare == null ? 0 : (int)eventInfo.IsShare;
-
-            //LLotteryLogEntity lotteryEntity = null;
-            //LLotteryLogBLL bllLottery = new LLotteryLogBLL(this.CurrentUserInfo);
-
-            //LPrizeWinnerBLL bllPrizeWinner = new LPrizeWinnerBLL(this.CurrentUserInfo);
-            //LPrizeWinnerEntity entityPrizeWinner = null;
-
-            //List<OrderBy> lstOrder = new List<OrderBy> { };
-            //lstOrder.Add(new OrderBy() { FieldName = " createtime", Direction = OrderByDirections.Desc });
-
-            //entityPrizeWinner = bllPrizeWinner.QueryByEntity(new LPrizeWinnerEntity() {VipID = CurrentUserInfo.UserID }, lstOrder.ToArray()).FirstOrDefault();
-
-            //switch (eventInfo.PersonCount)
-            //{
-            //    case 1://仅能参加一次抽奖
-            //        if (entityPrizeWinner == null)
-            //        {
-            //            rd.Qualification = 1;
-            //        }
-            //        else
-            //        {
-            //            rd.Qualification = 0;
-            //            rd.PrizeName = entityPrizeWinner.PrizeName;
-            //        }
-            //        break;
-            //    case 2://每天一次
-            //        if ((entityPrizeWinner != null && Convert.ToDateTime(entityPrizeWinner.CreateTime.ToString()).Date < DateTime.Now.Date) || entityPrizeWinner == null)
-            //        {
-            //            rd.Qualification = 1;
-            //        }
-            //        else
-            //        {
-            //            rd.Qualification = 0;
-            //            rd.PrizeName = entityPrizeWinner.PrizeName;
-            //        }
-            //        break;
-            //    case 3://每周一次  最后一次获奖时间 小于周一即可
-            //        if ((entityPrizeWinner != null && DateTime.Now.AddDays(1 - (int)DateTime.Now.DayOfWeek) < Convert.ToDateTime(entityPrizeWinner.CreateTime.ToString()).Date) || entityPrizeWinner == null)
-            //        {
-            //            rd.Qualification = 1;
-            //        }
-            //        else
-            //        {
-            //            rd.Qualification = 0;
-            //            rd.PrizeName = entityPrizeWinner.PrizeName;
-            //        }
-            //        break;
-            //    case 4://无限
-            //            rd.Qualification = 1;
-            //        break;
-
-            //}
-
-
             return rd;
         }
     }

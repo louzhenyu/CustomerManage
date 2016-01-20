@@ -32,11 +32,45 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理： 分为单向和双向奖励 
     /// </summary>
     public partial class SysRetailRewardRuleBLL
-    {  
-
-        public void UpdateSysRetailRewardRule(int IsTemplate, string CooperateType, string RetailTraderID, string CustomerID )
+    {
+        public SysRetailRewardRuleEntity[] GetSysRetailRewardRule(SysRetailRewardRuleEntity en)
         {
-            this._currentDAO.UpdateSysRetailRewardRule(IsTemplate, CooperateType, RetailTraderID, CustomerID);
+            return DataTableToObject.ConvertToList<SysRetailRewardRuleEntity>(this._currentDAO.GetSysRetailRewardRule(en).Tables[0]).ToArray();
+        }
+
+        public void UpdateSysRetailRewardRule(int IsTemplate, string CooperateType, string RewardTypeCode, string RetailTraderID, string CustomerID)
+        {
+            this._currentDAO.UpdateSysRetailRewardRule(IsTemplate,CooperateType,RewardTypeCode,  RetailTraderID, CustomerID);
+        }
+        /// <summary>
+        /// 商品列表带分润价格
+        /// </summary>
+        /// <param name="strCustomerID"></param>
+        /// <returns></returns>
+        public DataSet GetItemListWithSharePrice(string strCustomerID, string strRetailTraderID, int intPageIndex, int intPageSize, string strSort, string strSortName)
+        {
+            return this._currentDAO.GetItemListWithSharePrice(strCustomerID, strRetailTraderID, intPageIndex, intPageSize, strSort, strSortName);
+
+        }
+        /// <summary>
+        /// 计算分销商N天内集客数量
+        /// </summary>
+        /// <param name="strRetailTraderID">分销商id</param>
+        /// <param name="intDays">天数</param>
+        /// <returns></returns>
+        public DataSet GetRetailTraderVipCountByDays(string strRetailTraderID, int intDays)
+        {
+        
+
+            return this._currentDAO.GetRetailTraderVipCountByDays(strRetailTraderID,intDays);
+
+        }
+        public DataSet GetRetailTraderEarnings(string strRetailTraderID, string strType)
+        {
+
+
+            return this._currentDAO.GetRetailTraderEarnings(strRetailTraderID, strType);
+
         }
     }
 }

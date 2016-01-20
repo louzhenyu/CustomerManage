@@ -260,6 +260,7 @@
     <Compile Include="CodeGeneration\Order\SalesReturn\T_RefundOrderEntity.cs" />
     <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnEntity.cs" />
     <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnHistoryEntity.cs" />
+    <Compile Include="CodeGeneration\RetailTraderItemMappingEntity.cs" />
     <Compile Include="CodeGeneration\SeatOrderEntity.cs" />
     <Compile Include="CodeGeneration\SpecialDateEntity.cs" />
     <Compile Include="CodeGeneration\StoreItemDailyStatusEntity.cs" />
@@ -950,6 +951,7 @@
     <Compile Include="ReservationStoreEntity.cs" />
     <Compile Include="ReservationStoreServiceMappingEntity.cs" />
     <Compile Include="ReservationWorkCalendarEntity.cs" />
+    <Compile Include="RetailTraderItemMappingEntity.cs" />
     <Compile Include="RoleMenuModel.cs" />
     <Compile Include="RoleModel.cs" />
     <Compile Include="SAIFUserInfoEntity.cs" />

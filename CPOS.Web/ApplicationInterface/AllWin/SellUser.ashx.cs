@@ -159,6 +159,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             en.RetailTraderPhone = rp.Parameters.RetailTraderInfo.RetailTraderPhone;
             en.RetailTraderAddress = rp.Parameters.RetailTraderInfo.RetailTraderAddress;
             en.CooperateType = rp.Parameters.RetailTraderInfo.CooperateType;
+            en.SalesType = rp.Parameters.RetailTraderInfo.SalesType;
             en.SellUserID = rp.Parameters.RetailTraderInfo.SellUserID;
             en.UnitID = rp.Parameters.RetailTraderInfo.UnitID;
             en.Status = "1";//启用状态
@@ -792,6 +793,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
         /// </summary>
         public String RetailTraderType { get; set; }
 
+
         /// <summary>
         /// 
         /// </summary>
@@ -812,6 +814,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
         /// </summary>
         public String CooperateType { get; set; }
 
+        public String SalesType { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -1124,8 +1127,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
     {
         public int Year { get; set; }
         public int Month { get; set; }
+        /// <summary>
+        /// 引流
+        /// </summary>
         public decimal MonthAmount { get; set; }
         public decimal MonthVipAmount { get; set; }
         public decimal MonthTradeAmount { get; set; }
+        /// <summary>
+        /// 销售
+        /// </summary>
+        public decimal MonthSalesAmount { get; set; }
     }
 }
