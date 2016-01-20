@@ -50,6 +50,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         rd.LT_regularpic = i.ImageURL;
                 };
                 rd.RuleContent = image.FirstOrDefault().RuleContent;
+                rd.RuleId = (int)image.FirstOrDefault().RuleId;
                 rd.ImageList = bllImage.QueryByEntity(new ObjectImagesEntity() { ObjectId = pRequest.Parameters.EventId, BatId = "list", IsDelete = 0 }, null).ToList();
             }
             rd.EventTitle = eventInfo.Title;

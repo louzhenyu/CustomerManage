@@ -13,6 +13,7 @@ namespace JIT.CPOS.DTO.Module.Event.Lottery.Response
         public string BeforeGround { get; set; }
         public string Logo { get; set; }
         public string Rule { get; set; }
+        public int RuleId { get; set; }
         public string RuleContent { get; set; }
         public string LT_kvPic { get; set; }
         public string LT_Rule { get; set; }

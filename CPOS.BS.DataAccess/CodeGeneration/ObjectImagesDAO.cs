@@ -647,6 +647,10 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pInstance.RuleContent = Convert.ToString(pReader["RuleContent"]);
             }
+            if (pReader["RuleId"] != DBNull.Value)
+            {
+                pInstance.RuleId = Convert.ToInt32(pReader["RuleId"]);
+            }
             
 
         }
