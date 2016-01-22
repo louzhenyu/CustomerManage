@@ -2016,7 +2016,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="OldIntegration">变动前积分</param>
         /// <param name="vipInfo">会员信息</param>
         /// <param name="ChangeIntegral">变动积分</param>
-        /// <param name="OpenID"></param>
+        /// <param name="OpenID">微信UserID</param>
         /// <param name="loggingSessionInfo"></param>
         /// <returns></returns>
         public ResultEntity PointsChangeMessage(string OldIntegration, VipEntity vipInfo, string ChangeIntegral, string OpenID, LoggingSessionInfo loggingSessionInfo)

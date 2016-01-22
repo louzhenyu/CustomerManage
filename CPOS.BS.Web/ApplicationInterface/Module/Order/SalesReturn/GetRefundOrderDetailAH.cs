@@ -24,7 +24,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
 
             var inoutService = new InoutService(loggingSessionInfo);
             var tInoutDetailBll = new TInoutDetailBLL(loggingSessionInfo);
-
+            var t_InoutBLL = new T_InoutBLL(loggingSessionInfo);
+            var PaymentTtpeBLL = new T_Payment_TypeBLL(loggingSessionInfo);
             var refundEntity = refundOrderBLL.GetByID(para.RefundID);
 
             if (refundEntity != null)
@@ -41,7 +42,18 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 rd.PointsAmount = refundEntity.PointsAmount == null ? 0 : refundEntity.PointsAmount;
                 rd.ReturnAmount = refundEntity.ReturnAmount == null ? 0 : refundEntity.RefundAmount;
                 rd.Amount = refundEntity.Amount == null ? 0 : refundEntity.Amount;
-                rd.PayTypeName = refundEntity.PayTypeName;
+
+                //支付方式名称
+                var OrderData=t_InoutBLL.GetByID(refundEntity.OrderID);
+                string m_PayTypeName="";
+                if(OrderData!=null){
+                    var PayTypeData=PaymentTtpeBLL.GetByID(OrderData.pay_id);
+                    if(PayTypeData!=null)
+                        m_PayTypeName=PayTypeData.Payment_Type_Name;
+                }
+                rd.PayTypeName = m_PayTypeName;
+
+
                 rd.PayOrderID = refundEntity.PayOrderID;
                 rd.OrderID = refundEntity.OrderID;
                 rd.ItemID = refundEntity.ItemID;

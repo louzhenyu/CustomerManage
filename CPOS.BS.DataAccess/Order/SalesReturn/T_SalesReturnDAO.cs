@@ -67,6 +67,8 @@ namespace JIT.CPOS.BS.DataAccess
                             left join T_Inout as i on r.OrderID=i.order_id 
                             left join T_Payment_Type as p on i.pay_id=p.Payment_Type_Id and p.IsDelete=0 
                             where r.isdelete=0 ");
+            //商户ID
+            StrSql.AppendFormat("and r.CustomerID='{0}' ",CurrentUserInfo.ClientID);
             //条件
             if (!string.IsNullOrWhiteSpace(SalesReturnNo))
                 StrSql.AppendFormat("and r.SalesReturnNo='{0}' ", SalesReturnNo);

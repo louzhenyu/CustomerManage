@@ -72,5 +72,6 @@ namespace JIT.CPOS.BS.DataAccess
             StrSql.Append("order by a.CreateTime desc");
             return this.SQLHelper.ExecuteDataset(StrSql.ToString());
         }
+
     }
 }

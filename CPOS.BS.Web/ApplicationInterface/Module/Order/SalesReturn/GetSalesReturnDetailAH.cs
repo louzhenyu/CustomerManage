@@ -28,7 +28,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
             var tInoutDetailBll = new TInoutDetailBLL(loggingSessionInfo);
             var inoutBLL = new T_InoutBLL(CurrentUserInfo);
             var salesReturnEntity = salesReturnBLL.GetByID(para.SalesReturnID);
-
+            var PaymentTtpeBLL = new T_Payment_TypeBLL(loggingSessionInfo);
 
             if (salesReturnEntity != null)
             {
@@ -67,7 +67,20 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                 orderDetail.SalesPrice = Convert.ToDecimal(drItem["enter_price"]);
                 orderDetail.Qty = Convert.ToInt32(drItem["enter_qty"]);
                 orderDetail.ImageUrl = ImagePathUtil.GetImagePathStr(itemImage, "240");
+
                 orderDetail.PayTypeName = salesReturnEntity.PayTypeName;
+                //支付方式名称
+                var OrderData = inoutBLL.GetByID(salesReturnEntity.OrderID);
+                string m_PayTypeName = "";
+                if (OrderData != null)
+                {
+                    var PayTypeData = PaymentTtpeBLL.GetByID(OrderData.pay_id);
+                    if (PayTypeData != null)
+                        m_PayTypeName = PayTypeData.Payment_Type_Name;
+                }
+                orderDetail.PayTypeName = m_PayTypeName;
+
+
                 orderDetail.RefundAmount = salesReturnEntity.RefundAmount == null ? 0 : salesReturnEntity.RefundAmount.Value;
                 orderDetail.ConfirmAmount = salesReturnEntity.ConfirmAmount == null ? 0 : salesReturnEntity.ConfirmAmount.Value;
                 rd.OrderDetail = orderDetail;
