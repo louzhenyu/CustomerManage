@@ -39,8 +39,16 @@ namespace JIT.CPOS.Web.WX
                 //把HTTP请求转换为字符串
                 string postStr = new BaseService().ConvertHttpContextToString(httpContext);
                 BaseService.WriteLogWeixin("  解密前postStr：" + postStr);
+                //延迟几秒执行，看看微信会不会重复推送三次信息
+                //System.Threading.Thread.Sleep(10000);
+                // //避免微信服务器发起重试
+                // httpContext.Response.Write("");
+                // httpContext.Response.Write("success");
+                //// 延迟几秒执行，看看微信会不会重复推送三次信息（放在后面查看还会不会重试）
+                //       System.Threading.Thread.Sleep(10000);
+
                 if (httpContext.Request.HttpMethod.ToLower() == "post")
-                {                  
+                {
                     if (!string.IsNullOrEmpty(postStr))
                     {
                         //获取微信公众号信息
@@ -57,6 +65,12 @@ namespace JIT.CPOS.Web.WX
                             new CommonBLL().ValidToken(httpContext, token);//Config.TOKEN配置的token，其实应该是每个客户都有自己的token，配置在数据库里，然后取出来
                         }
                         #region
+                        //验证这个之后看看是否可以去重
+                        //避免微信服务器发起重试
+                        //httpContext.Response.Write("");
+                        //httpContext.Response.Write("success");
+                        // 延迟几秒执行，看看微信会不会重复推送三次信息（放在后面查看还会不会重试）
+                        //  System.Threading.Thread.Sleep(10000);
 
                         //在这里要进行加解密，用接收过来信息的ToUserName（公众号的为weixinid，例如： gh_9cbe4cd7941a）
                         int ret = 0;//解密情况
@@ -100,7 +114,7 @@ namespace JIT.CPOS.Web.WX
 
         #region 设置请求参数
         //设置请求参数
-        private RequestParams SetRequestParams(string postStr, string _TrueEncodingAESKey,  HttpContext httpContext, LoggingSessionInfo loggingSessionInfo,WApplicationInterfaceEntity wAppEntity)
+        private RequestParams SetRequestParams(string postStr, string _TrueEncodingAESKey, HttpContext httpContext, LoggingSessionInfo loggingSessionInfo, WApplicationInterfaceEntity wAppEntity)
         {
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(postStr);
@@ -128,7 +142,7 @@ namespace JIT.CPOS.Web.WX
                 LoggingSessionInfo = loggingSessionInfo,//BaseService.GetWeixinLoggingSession(weixinID),
                 TrueEncodingAESKey = _TrueEncodingAESKey,
                 Token = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.Token : wAppEntity.OpenToken,//如果授权给公众平台了，就用公众平台的token
-                AppID =  string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.AppID : wAppEntity.OpenAppID,
+                AppID = string.IsNullOrEmpty(wAppEntity.OpenOAuthAppid) ? wAppEntity.AppID : wAppEntity.OpenAppID,
                 EncryptType = (int)wAppEntity.EncryptType,
                 Timestamp = timestamp,
                 Nonce = nonce

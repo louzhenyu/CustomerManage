@@ -2337,5 +2337,17 @@ namespace JIT.CPOS.BS.BLL.WX
         #endregion
 
 
+        /// <summary>  
+        /// 将时间戳TimeStamp转换为DateTime  
+        /// </summary>  
+        /// <param name="timeStamp"></param>  
+        /// <returns></returns>  
+        public string GetRealTime(string timeStamp)
+        {
+            DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new DateTime(1970, 1, 1));
+            long lTime = long.Parse(timeStamp + "0000000");
+            TimeSpan toNowTime = new TimeSpan(lTime);
+            return startTime.Add(toNowTime).ToString("yyyy-MM-dd HH:mm:ss");
+        } 
     }
 }

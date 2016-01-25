@@ -44,6 +44,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// </summary>
         public void ResponseMsg()
         {
+          
             //获取会员信息
             VipBLL vipService = new VipBLL(requestParams.LoggingSessionInfo);
             var vipId = string.Empty;
@@ -58,6 +59,60 @@ namespace JIT.CPOS.BS.BLL.WX
                 vipId = vipEntity.FirstOrDefault().VIPID;
                 vip = vipEntity.FirstOrDefault();
             }
+
+            //先排重复的推送信息
+            //关于重试的消息排重，有msgid的消息推荐使用msgid排重。事件类型消息推荐使用FromUserName + CreateTime 排重。 
+            var MsgId = requestParams.XmlNode.SelectSingleNode("//MsgId")==null?"":requestParams.XmlNode.SelectSingleNode("//MsgId").InnerText.Trim();
+            var FromUserName = requestParams.XmlNode.SelectSingleNode("//FromUserName")==null?"":requestParams.XmlNode.SelectSingleNode("//FromUserName").InnerText.Trim();
+            var CreateTime = requestParams.XmlNode.SelectSingleNode("//CreateTime") == null ? "" : requestParams.XmlNode.SelectSingleNode("//CreateTime").InnerText.Trim();
+            
+            if (!string.IsNullOrEmpty(MsgId))
+            {
+                if (JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.ContainsKey(MsgId))//是否包含这个键值
+                {
+                    httpContext.Response.Write("");
+                     httpContext.Response.Write("success");
+                     return;
+                  //  httpContext.Response.End();
+                }
+                else {
+                    JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.Add(MsgId, CreateTime);
+                }
+                
+            }
+            else if (!string.IsNullOrEmpty(FromUserName) && !string.IsNullOrEmpty(CreateTime))
+            {
+                var eventMsgId = FromUserName + CreateTime;
+                if (JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.ContainsKey(eventMsgId))
+                {
+                    httpContext.Response.Write("");
+                    httpContext.Response.Write("success");
+                   // httpContext.Response.End();
+                    return;
+                }
+                else
+                {
+                    JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.Add(eventMsgId, CreateTime);
+                }
+            }
+            //删除超过十分钟的数据
+             List<string> msgTemp = new List<string>();
+            foreach (var item in JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId)
+            {
+                  var a=  DateTime.Parse(new CommonBLL().GetRealTime(item.Value));//timestamp转换成的时间
+                TimeSpan ts = DateTime.Now -  DateTime.Parse(  new CommonBLL().GetRealTime(item.Value));
+                if (ts.TotalMinutes > 10)
+                {
+                    msgTemp.Add(item.Key);                    
+                }                
+            }
+            //遍历删除数据
+            foreach (var item in msgTemp)
+            {
+                JIT.CPOS.BS.BLL.WX.Const.Config.ListMsgId.Remove(item);
+            }
+    
+
 
             //根据不同的消息类型，进行不同的处理操作
             switch (requestParams.MsgType)
