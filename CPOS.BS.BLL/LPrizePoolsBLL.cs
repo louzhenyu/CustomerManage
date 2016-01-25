@@ -170,5 +170,15 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetUserPrizeWinnerLog(eventId, vipId);
         }
+        /// <summary>
+        /// 随机一个奖品
+        /// </summary>
+        /// <param name="strEventId"></param>
+        /// <returns></returns>
+        public DataSet GetRandomPrizeByEventId(string strEventId)
+        {
+            return this._currentDAO.GetRandomPrizeByEventId(strEventId);
+
+        } 
     }
 }

@@ -160,5 +160,15 @@ namespace JIT.CPOS.BS.DataAccess
 
             return this.SQLHelper.ExecuteDataset(sql.ToString());
         }
+        /// <summary>
+        /// 随机一个奖品
+        /// </summary>
+        /// <param name="strEventId"></param>
+        /// <returns></returns>
+        public DataSet GetRandomPrizeByEventId(string strEventId)
+        {
+            string strSql = string.Format("SELECT TOP 1* FROM dbo.LPrizePools with(nolock) WHERE Status=1 AND EventId='{0}'	ORDER BY NEWID()", strEventId);
+            return SQLHelper.ExecuteDataset(strSql);
+        } 
     }
 }

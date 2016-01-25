@@ -31,6 +31,7 @@ namespace JIT.CPOS.BS.Entity
         #region  Ù–‘ºØ
         public string LogoUrl { get; set; }
         public string FollowUrl { get; set; }
+
         #endregion
     }
 }

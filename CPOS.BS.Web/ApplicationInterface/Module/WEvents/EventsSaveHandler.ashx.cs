@@ -39,6 +39,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         const int ERROR_MEMBER_REGISTERED = 314;
 
         const int ERROR_VIPCARD_EXISTS = 340;   //会员已办卡
+        const int ERROR_EVENT_STEP1 = 350;
         #endregion
 
 
@@ -241,105 +242,116 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         #region 保存活动第一步
         public string SaveEventStep1(string pRequest)
         {
-            var reqObj = pRequest.DeserializeJSONTo<APIRequest<EventRP>>();
-            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            LEventsBLL bll = new LEventsBLL(loggingSessionInfo);
-            var eventEntity = new LEventsEntity();
-            string strGuid = string.Empty;
-            if (reqObj.Parameters.EventId != null && reqObj.Parameters.EventId != "")
-                strGuid = reqObj.Parameters.EventId;
-            else
-                strGuid = Guid.NewGuid().ToString();
-            eventEntity.EventID = strGuid;
-            eventEntity.Title = reqObj.Parameters.Title;
-            eventEntity.BeginTime = reqObj.Parameters.BeginTime;
-            eventEntity.EndTime = reqObj.Parameters.EndTime;
-            eventEntity.Content = reqObj.Parameters.Content;
-            eventEntity.VipCardType = reqObj.Parameters.VipCardType;
-            eventEntity.VipCardGrade = reqObj.Parameters.VipCardGrade;
-            eventEntity.EventTypeID = reqObj.Parameters.EventTypeID;
-            eventEntity.DrawMethodId = reqObj.Parameters.DrawMethodId;
-            eventEntity.PersonCount = reqObj.Parameters.PersonCount;
-            eventEntity.PointsLottery = reqObj.Parameters.PointsLottery;
-            if (DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.BeginTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <= 0 && DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.EndTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) >= 0)
+            try
             {
-                eventEntity.EventStatus = 20;//10=未开始,20=运行中,30=暂停,40=结束
-
-            }
-            else if (DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.EndTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <0)
-            {
-                eventEntity.EventStatus = 40;//10=未开始,20=运行中,30=暂停,40=结束
-
-            }
-            else if (DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.BeginTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd")))>0)
-            {
-                eventEntity.EventStatus = 10;//10=未开始,20=运行中,30=暂停,40=结束
-
-            }
-            eventEntity.CustomerId = loggingSessionInfo.ClientID;
-
-            var methodBll = new LEventDrawMethodMappingBLL(loggingSessionInfo);
 
 
-            if (reqObj.Parameters.EventId != null && reqObj.Parameters.EventId != "")
-            {
-                eventEntity.LastUpdateBy = loggingSessionInfo.UserID;
-                eventEntity.LastUpdateTime = DateTime.Now;
-                bll.Update(eventEntity);
-            }
-            else
-            {
-                eventEntity.CreateBy = loggingSessionInfo.UserID;
-                bll.Create(eventEntity);
-
-                #region 生成二维码
-
-                var wqrentity = new WQRCodeTypeBLL(loggingSessionInfo).QueryByEntity(
-
-                    new WQRCodeTypeEntity { TypeCode = "EventQrcode" }
-
-                    , null).FirstOrDefault();
-
-                var wapentity = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity
+                var reqObj = pRequest.DeserializeJSONTo<APIRequest<EventRP>>();
+                var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+                LEventsBLL bll = new LEventsBLL(loggingSessionInfo);
+                var eventEntity = new LEventsEntity();
+                string strGuid = string.Empty;
+                if (reqObj.Parameters.EventId != null && reqObj.Parameters.EventId != "")
+                    strGuid = reqObj.Parameters.EventId;
+                else
+                    strGuid = Guid.NewGuid().ToString();
+                eventEntity.EventID = strGuid;
+                eventEntity.Title = reqObj.Parameters.Title;
+                eventEntity.BeginTime = reqObj.Parameters.BeginTime;
+                eventEntity.EndTime = reqObj.Parameters.EndTime;
+                eventEntity.Content = reqObj.Parameters.Content;
+                eventEntity.VipCardType = reqObj.Parameters.VipCardType;
+                eventEntity.VipCardGrade = reqObj.Parameters.VipCardGrade;
+                eventEntity.EventTypeID = reqObj.Parameters.EventTypeID;
+                eventEntity.DrawMethodId = reqObj.Parameters.DrawMethodId;
+                eventEntity.PersonCount = reqObj.Parameters.PersonCount;
+                eventEntity.PointsLottery = reqObj.Parameters.PointsLottery;
+                if (DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.BeginTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <= 0 && DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.EndTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) >= 0)
                 {
-                            
-                    CustomerId = loggingSessionInfo.ClientID,
-                    IsDelete = 0
+                    eventEntity.EventStatus = 20;//10=未开始,20=运行中,30=暂停,40=结束
 
-                }, null).FirstOrDefault();
-
-                var wxCode = CretaeWxCode();
-
-                var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);
-
-                Guid QRCodeId = Guid.NewGuid();
-
-                if (!string.IsNullOrEmpty(wxCode.ImageUrl))
-                {
-                    WQRCodeManagerbll.Create(new WQRCodeManagerEntity
-                    {
-                        QRCodeId = QRCodeId,
-                        QRCode = wxCode.MaxWQRCod.ToString(),
-                        QRCodeTypeId = wqrentity.QRCodeTypeId,
-                        IsUse = 1,
-                        ObjectId = strGuid,
-                        CreateBy = loggingSessionInfo.UserID,
-                        ApplicationId = wapentity.ApplicationId,
-                        IsDelete = 0,
-                        ImageUrl = wxCode.ImageUrl,
-                        CustomerId = loggingSessionInfo.ClientID
-
-                    });
                 }
-                #endregion
+                else if (DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.EndTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) < 0)
+                {
+                    eventEntity.EventStatus = 40;//10=未开始,20=运行中,30=暂停,40=结束
+
+                }
+                else if (DateTime.Compare(Convert.ToDateTime(reqObj.Parameters.BeginTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) > 0)
+                {
+                    eventEntity.EventStatus = 10;//10=未开始,20=运行中,30=暂停,40=结束
+
+                }
+                eventEntity.CustomerId = loggingSessionInfo.ClientID;
+
+                var methodBll = new LEventDrawMethodMappingBLL(loggingSessionInfo);
+
+
+                if (reqObj.Parameters.EventId != null && reqObj.Parameters.EventId != "")
+                {
+                    eventEntity.LastUpdateBy = loggingSessionInfo.UserID;
+                    eventEntity.LastUpdateTime = DateTime.Now;
+                    bll.Update(eventEntity,false);
+                }
+                else
+                {
+                    eventEntity.CreateBy = loggingSessionInfo.UserID;
+                    bll.Create(eventEntity);
+
+                    #region 生成二维码
+
+                    var wqrentity = new WQRCodeTypeBLL(loggingSessionInfo).QueryByEntity(
+
+                        new WQRCodeTypeEntity { TypeCode = "EventQrcode" }
+
+                        , null).FirstOrDefault();
+
+                    var wapentity = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity
+                    {
+
+                        CustomerId = loggingSessionInfo.ClientID,
+                        IsDelete = 0
+
+                    }, null).FirstOrDefault();
+
+                    var wxCode = CretaeWxCode();
+
+                    var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);
+
+                    Guid QRCodeId = Guid.NewGuid();
+
+                    if (!string.IsNullOrEmpty(wxCode.ImageUrl))
+                    {
+                        WQRCodeManagerbll.Create(new WQRCodeManagerEntity
+                        {
+                            QRCodeId = QRCodeId,
+                            QRCode = wxCode.MaxWQRCod.ToString(),
+                            QRCodeTypeId = wqrentity.QRCodeTypeId,
+                            IsUse = 1,
+                            ObjectId = strGuid,
+                            CreateBy = loggingSessionInfo.UserID,
+                            ApplicationId = wapentity.ApplicationId,
+                            IsDelete = 0,
+                            ImageUrl = wxCode.ImageUrl,
+                            CustomerId = loggingSessionInfo.ClientID
+
+                        });
+                    }
+                    #endregion
+
+                }
+
+
+                var rd = new EventRD();
+                rd.EventId = strGuid;
+                var rsp = new SuccessResponse<IAPIResponseData>(rd);
+                return rsp.ToJSON();
+            }
+            catch (Exception ex)
+            {
+
+                throw new APIException(ex.Message.ToString()) { ErrorCode = 350 };
 
             }
-
-
-            var rd = new EventRD();
-            rd.EventId = strGuid;
-            var rsp = new SuccessResponse<IAPIResponseData>(rd);
-            return rsp.ToJSON();
         }
         #endregion
         #region 根据活动id获取活动第一步信息
@@ -546,7 +558,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                     {
                         rd.ImageList = DataTableToObject.ConvertToList<ObjectImagesEntity>(dsImage.Tables[0]);
 
-                        rd.RuleId = Convert.ToInt32(dsImage.Tables[0].Rows[0]["RuleId"].ToString() == "" ? "0" : dsImage.Tables[0].Rows[0]["RuleId"].ToString());
+                        rd.RuleId = Convert.ToInt32(dsImage.Tables[0].Rows[0]["RuleId"].ToString() == "" ? "1" : dsImage.Tables[0].Rows[0]["RuleId"].ToString());
                         rd.RuleContent = dsImage.Tables[0].Rows[0]["RuleContent"].ToString();
                     }
                 }
@@ -803,11 +815,44 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
 
             //活动的二维码自己查找QRCodeId
             var wqrCodeManagerEntity = new WQRCodeManagerBLL(loggingSessionInfo).QueryByEntity(new WQRCodeManagerEntity() { ObjectId = rp.Parameters.EventId }, null).FirstOrDefault();
+            Guid QRCodeId;
             if (wqrCodeManagerEntity == null)
             {
-                throw new APIException("活动没有生成二维码！") { ErrorCode = 342 };
+                #region 生成二维码
+
+                var wqrentity = new WQRCodeTypeBLL(loggingSessionInfo).QueryByEntity(
+
+                    new WQRCodeTypeEntity { TypeCode = "EventQrcode" }
+
+                    , null).FirstOrDefault();
+                var wxCode = CretaeWxCode();
+
+                var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);
+
+                QRCodeId = Guid.NewGuid();
+
+                if (!string.IsNullOrEmpty(wxCode.ImageUrl))
+                {
+                    wqrCodeManagerEntity = new WQRCodeManagerEntity()
+                    {
+                        QRCodeId = QRCodeId,
+                        QRCode = wxCode.MaxWQRCod.ToString(),
+                        QRCodeTypeId = wqrentity.QRCodeTypeId,
+                        IsUse = 1,
+                        ObjectId = rp.Parameters.EventId,
+                        CreateBy = loggingSessionInfo.UserID,
+                        ApplicationId = wapentity.ApplicationId,
+                        IsDelete = 0,
+                        ImageUrl = wxCode.ImageUrl,
+                        CustomerId = loggingSessionInfo.ClientID
+                    };
+                    WQRCodeManagerbll.Create(wqrCodeManagerEntity);
+                }
+                #endregion
+
+                //throw new APIException("活动没有生成二维码！") { ErrorCode = 342 };
             }
-            var QRCodeId = wqrCodeManagerEntity.QRCodeId;//活动二维码的标识
+            QRCodeId =(Guid)wqrCodeManagerEntity.QRCodeId;//活动二维码的标识
             //根据二维码标识查找是否有他的关键字回复
             var WKeywordReplyentity = new WKeywordReplyBLL(loggingSessionInfo).QueryByEntity(new WKeywordReplyEntity()
             {

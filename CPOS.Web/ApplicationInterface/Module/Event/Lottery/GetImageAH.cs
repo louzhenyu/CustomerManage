@@ -26,7 +26,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             var image = bllImage.QueryByEntity(new ObjectImagesEntity() { ObjectId = pRequest.Parameters.EventId ,IsDelete=0}, null).ToList();
             var eventInfo = bllEvent.GetByID(pRequest.Parameters.EventId);
             
-            if (image != null)
+            if (image.Count != 0)
             {
                 foreach (var i in image)
                 {

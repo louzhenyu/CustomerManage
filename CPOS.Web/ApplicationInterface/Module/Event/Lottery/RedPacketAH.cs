@@ -30,7 +30,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                 try
                 {
 
-                    rd = bllPrize.RedPacket(pRequest.UserID, para.EventId,pRequest.CustomerID);
+                    rd = bllPrize.RedPacket2(pRequest.UserID, para.EventId,pRequest.CustomerID);
 
                 }
                 catch (Exception ex)

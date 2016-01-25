@@ -401,7 +401,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             //判断密码是否正确
             if (retailTraderInfo.Status != "1")
             {
-                rsp.Message = "该分销商找好已经被停用";
+                rsp.Message = "该分销商账号已经被停用";
                 rsp.ResultCode = 136;
                 return rsp.ToJSON();
             }

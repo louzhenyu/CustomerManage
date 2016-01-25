@@ -24,30 +24,58 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
         protected override LotteryRD ProcessRequest(DTO.Base.APIRequest<LotteryRP> pRequest)
         {
             var rd = new LotteryRD();//返回值
+            var bllPrize = new LPrizesBLL(this.CurrentUserInfo);
+            var para = pRequest.Parameters;
 
-            string result = string.Empty;
-            int[] arr = { 67, 112, 202, 292, 337 };
-            //定义奖品和概率
-            var szZP = new List<JiangPin>{ 
-                new JiangPin{id=1,Name="恭喜您抽中的一等奖", gailv=1,zhizhen=157}, 
-                new JiangPin{id=2,Name="恭喜您抽中的二等奖", gailv=2,zhizhen=247},
-                new JiangPin{id=3,Name="恭喜您抽中的三等奖", gailv=3,zhizhen=22},
-                new JiangPin{id=0,Name="很遗憾，这次您未抽中奖", gailv=800,zhizhen=0}
-            };
-            //模拟一千次抽奖
-            Enumerable.Range(1, 2).ToList().ForEach(x =>
+            if (para.EventId != null && para.EventId != "")
             {
-                if (ChouJiang(szZP).id == 0)
+                try
                 {
-                    result = "" + arr[Rnd.Next(0, 4)] + "|" + ChouJiang(szZP).Name + "";
+
+                    rd = bllPrize.RedPacket(pRequest.UserID, para.EventId,pRequest.CustomerID);
+
                 }
-                else
+                catch (Exception ex)
                 {
-                    result = "" + ChouJiang(szZP).zhizhen + "|" + ChouJiang(szZP).Name + "";
+                    rd.ErrCode = -1;
+                    rd.ResultMsg = ex.Message.ToString();
                 }
-            });
+            }
+            else
+            {
+                rd.ErrCode = -2;
+                rd.ResultMsg = "参数EventId有误";
+
+            }
+
             return rd;
         }
+
+            //var rd = new LotteryRD();//返回值
+
+            //string result = string.Empty;
+            //int[] arr = { 67, 112, 202, 292, 337 };
+            ////定义奖品和概率
+            //var szZP = new List<JiangPin>{ 
+            //    new JiangPin{id=1,Name="恭喜您抽中的一等奖", gailv=1,zhizhen=157}, 
+            //    new JiangPin{id=2,Name="恭喜您抽中的二等奖", gailv=2,zhizhen=247},
+            //    new JiangPin{id=3,Name="恭喜您抽中的三等奖", gailv=3,zhizhen=22},
+            //    new JiangPin{id=0,Name="很遗憾，这次您未抽中奖", gailv=800,zhizhen=0}
+            //};
+            ////模拟一千次抽奖
+            //Enumerable.Range(1, 2).ToList().ForEach(x =>
+            //{
+            //    if (ChouJiang(szZP).id == 0)
+            //    {
+            //        result = "" + arr[Rnd.Next(0, 4)] + "|" + ChouJiang(szZP).Name + "";
+            //    }
+            //    else
+            //    {
+            //        result = "" + ChouJiang(szZP).zhizhen + "|" + ChouJiang(szZP).Name + "";
+            //    }
+            //});
+            //return rd;
+        
         private static JiangPin ChouJiang(List<JiangPin> szZP)
         {
             return (from x in Enumerable.Range(0, 1000000)  //最多随机100万次

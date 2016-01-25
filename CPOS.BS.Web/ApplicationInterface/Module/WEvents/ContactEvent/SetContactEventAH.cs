@@ -24,6 +24,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var bllContactEvent = new ContactEventBLL(loggingSessionInfo);
             var bllEvent = new LEventsBLL(loggingSessionInfo);
+            var bllPrizes = new LPrizesBLL(loggingSessionInfo);
             
             try
             {
@@ -69,7 +70,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         {
                             contactEvent.CouponTypeID = para.CouponTypeID;
                             var bllCoupon = new CouponBLL(loggingSessionInfo);
-                            var bllPrizes = new LPrizesBLL(loggingSessionInfo);
                             string strCouponTypeID = para.CouponTypeID;
                             //优惠券未被使用了的数量
                             int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
@@ -114,6 +114,38 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     ContactEventEntity entityContactEvent = new ContactEventEntity();
 
       
+                   
+                                  
+                    if (bllContactEvent.ExistsContact(entityContactEvent) > 0)
+                    {
+                        if (para.ContactTypeCode == "Share" && para.ShareEventId != null && para.ShareEventId.Length > 0)
+                        {
+
+                            rd.ErrMsg = "该分享活动已存在";
+                        }
+                        else
+                        {
+                            rd.ErrMsg = "有效期与已存在的触点活动有冲突";
+                        }
+                        rd.Success = false;
+                        return rd;
+                    }
+
+                    if (para.ContactTypeCode == "Share" && para.ShareEventId != null && para.ShareEventId.Length > 0)
+                    {
+                        //判断触点中的分享设置的开始时间和结束时间是否在被分享的活动时间范围内
+                        var entityEvent = bllEvent.GetByID(para.ShareEventId);
+                        if (DateTime.Compare(Convert.ToDateTime(para.BeginDate), Convert.ToDateTime(entityEvent.BeginTime)) < 0 || DateTime.Compare(Convert.ToDateTime(para.EndDate), Convert.ToDateTime(entityEvent.EndTime)) > 0)
+                        {
+                            rd.Success = false;
+                            rd.ErrMsg = "活动的时间不在被分享的活动时间范围内";
+                            return rd;
+                        }
+                        entityContactEvent.ShareEventId = para.ShareEventId;
+                        entityEvent.IsShare = 1;
+                        bllEvent.Update(entityEvent, false);
+                    }
+                   
                     //RewardType:Point,Coupon,Chance
                     if (para.PrizeType == "Point")
                         entityContactEvent.Integral = para.Integral;
@@ -121,7 +153,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     {
                         entityContactEvent.CouponTypeID = para.CouponTypeID;
                         var bllCoupon = new CouponBLL(loggingSessionInfo);
-                        var bllPrizes = new LPrizesBLL(loggingSessionInfo);
                         string strCouponTypeID = para.CouponTypeID;
                         //优惠券未被使用了的数量
                         int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
@@ -139,37 +170,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         entityContactEvent.EventId = para.EventId;
                         entityContactEvent.ChanceCount = para.ChanceCount;
                     }
-                                  
-                    if (bllContactEvent.ExistsContact(entityContactEvent) > 0)
-                    {
-                        if (para.ContactTypeCode == "Share" && para.ShareEventId != null && para.ShareEventId.Length > 0)
-                        {
 
-                            rd.ErrMsg = "该分享活动已存在";
-                        }
-                        else
-                        {
-                            rd.ErrMsg = "有效期与已存在的触点活动有冲突";
-                        }
-                        rd.Success = false;
-                        return rd;
-                    }
-                    else
-                    {
-                        if (para.ContactTypeCode == "Share" && para.ShareEventId != null && para.ShareEventId.Length > 0)
-                        {
-                            //判断触点中的分享设置的开始时间和结束时间是否在被分享的活动时间范围内
-                            var entityEvent = bllEvent.GetByID(para.ShareEventId);
-                            if (DateTime.Compare(Convert.ToDateTime(para.BeginDate), Convert.ToDateTime(entityEvent.BeginTime)) < 0 || DateTime.Compare(Convert.ToDateTime(para.EndDate), Convert.ToDateTime(entityEvent.EndTime)) > 0)
-                            {
-                                rd.Success = false;
-                                rd.ErrMsg = "活动的时间不在被分享的活动时间范围内";
-                                return rd;
-                            }
-                            entityContactEvent.ShareEventId = para.ShareEventId;
-                            bllEvent.UpdateEventIsShare(para.ShareEventId);
-                        }
-                    }
 
                     entityContactEvent.PrizeCount = para.PrizeCount;
                     entityContactEvent.ContactTypeCode = para.ContactTypeCode;
@@ -186,21 +187,19 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     }
 
                     bllContactEvent.Create(entityContactEvent);
+             
+                        ///保存奖品 生成奖品池
+                        var entityPrize = new LPrizesEntity();
+                        entityPrize.EventId = entityContactEvent.ContactEventId.ToString();
+                        entityPrize.PrizeName = para.ContactEventName;
+                        entityPrize.PrizeTypeId = para.PrizeType;
+                        entityPrize.Point = para.Integral;
+                        entityPrize.CouponTypeID = para.CouponTypeID;
+                        entityPrize.CountTotal = para.PrizeCount;
+                        entityPrize.CreateBy = loggingSessionInfo.UserID;
+                        bllContactEvent.AddContactEventPrize(entityPrize);
 
-                    ///保存奖品 生成奖品池
-                    var entityPrize = new LPrizesEntity();
-                    entityPrize.EventId = entityContactEvent.ContactEventId.ToString();
-                    entityPrize.PrizeName = para.ContactEventName;
-                    entityPrize.PrizeTypeId = para.PrizeType;
-                    entityPrize.Point = para.Integral;
-                    entityPrize.CouponTypeID = para.CouponTypeID;
-                    entityPrize.CountTotal = para.PrizeCount;
-                    entityPrize.CreateBy = loggingSessionInfo.UserID;
-
-                   
-
-                    bllContactEvent.AddContactEventPrize(entityPrize);
-
+                  
                     rd.ContactEventId = entityContactEvent.ContactEventId.ToString();
                     rd.ErrMsg="操作成功";
                     rd.Success = true;
