@@ -19,6 +19,7 @@ using System.Data;
 using System.Threading;
 using System.Configuration;
 using JIT.CPOS.BS.BLL.WX;
+using JIT.CPOS.DTO.Base;
 
 namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
 {
@@ -2545,7 +2546,10 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
         /// <returns></returns>
         private string UpdateStatus(NameValueCollection rParams, HttpContext pContext)
         {
-            string res = "{success:false,msg:'保存失败'}";
+            var responseData = new ResponseData();
+            responseData.success = false;
+            responseData.msg = "操作失败";
+            //string res = "{success:false,msg:'保存失败'}";
             string error = "";
 
             //图片路径
@@ -2577,6 +2581,22 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
 
                     if (!string.IsNullOrEmpty(status))
                     {
+                        if (order.status == status)
+                        {
+                            responseData.success = true;
+                            responseData.msg = "操作已处理";
+                            return responseData.ToJSON();
+                        }
+                        else if (status == "700")//完成操作
+                        {
+                            if (string.IsNullOrEmpty(order.Field1) || order.Field1 == "0")
+                            {
+                                responseData.success = true;
+                                responseData.msg = "请先完成收款操作";
+                                return responseData.ToJSON();
+                            }
+                        }
+
                         #region 添加日志信息
                         if (!string.IsNullOrEmpty(rParams["PayMethod"]))
                         {
@@ -2669,14 +2689,14 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             CommonBLL.SentShipMessage(order, vipInfo.WeiXinUserId, order.vip_no, CurrentUserInfo);
                         }
                         #endregion
-
-                        res = "{success:true,msg:'保存成功'}";
+                        responseData.success = true;
+                        responseData.msg = "操作成功";
                     }
                     #endregion
                 }
 
             }
-            return res.ToJSON();
+            return responseData.ToJSON();
         }
 
         #endregion
@@ -2975,9 +2995,9 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             }
 
             var inoutService = new Inout3Service(CurrentUserInfo);
+            var vipBLL = new VipBLL(CurrentUserInfo);
 
             int result = inoutService.SetOrderUnit(orderList, unitID);
-
 
             if (result > 0)
             {

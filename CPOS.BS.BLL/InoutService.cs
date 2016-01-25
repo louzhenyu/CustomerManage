@@ -1271,6 +1271,7 @@ namespace JIT.CPOS.BS.BLL
                 inoutInfo.vip_no = vipId;
                 //inoutInfo.data_from_id = "wap";
                 inoutInfo.sales_unit_id = SetOrderInfo.StoreId;
+                inoutInfo.purchase_unit_id = SetOrderInfo.StoreId;
                 inoutInfo.if_flag = "0";
                 inoutInfo.customer_id = SetOrderInfo.CustomerId;
                 inoutInfo.status = "10";
@@ -1300,13 +1301,13 @@ namespace JIT.CPOS.BS.BLL
                 {
                     inoutInfo.purchase_unit_id = SetOrderInfo.PurchaseUnitId;
                 }
-                else
-                {
-                    if (SetOrderInfo.CustomerId.Equals("f6a7da3d28f74f2abedfc3ea0cf65c01"))
-                    {
-                        inoutInfo.purchase_unit_id = "8c41446fe80d4f2e9e3d659df01641fa";
-                    }
-                }
+                //else
+                //{
+                //    if (SetOrderInfo.CustomerId.Equals("f6a7da3d28f74f2abedfc3ea0cf65c01"))
+                //    {
+                //        inoutInfo.purchase_unit_id = "8c41446fe80d4f2e9e3d659df01641fa";
+                //    }
+                //}
                 #endregion
 
                 #region 明细

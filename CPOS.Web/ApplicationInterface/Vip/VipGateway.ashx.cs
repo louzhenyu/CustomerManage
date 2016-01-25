@@ -574,6 +574,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     if (!string.IsNullOrEmpty(tInoutEntity.SalesUnitID))
                         unitInfo = unitBLL.GetByID(tInoutEntity.SalesUnitID);
 
+                    #region 处理订单发货门店,无会籍店用户sales_unit_id置为空
+                    if (string.IsNullOrEmpty(vipInfo.CouponInfo))
+                    {
+                        if (tInoutEntity.Field8 == "1")//等于送货到家处理
+                            tInoutEntity.SalesUnitID = "";
+                    }
+                    #endregion
+
                     #region 积分抵扣业务处理
                     if (integralFlag == 1)
                     {
@@ -1385,10 +1393,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         public string SetCancelOrder(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<SetOrderStatusRP>>();
+            var rd = new EmptyResponseData();
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
             var orderId = rp.Parameters.OrderId;
             var inoutBll = new T_InoutBLL(loggingSessionInfo);              //订单业务实例化
 
+            var inoutInfo = inoutBll.GetInoutInfo(orderId, loggingSessionInfo);
+
+            var errorRsp = new SuccessResponse<IAPIResponseData>(rd);
+            if (inoutInfo.status == "800")//已取消
+            {
+                errorRsp.Message = "操作已处理";
+                errorRsp.ResultCode = 302;
+                return errorRsp.ToJSON();
+            }
+            else if (inoutInfo.status == "700")//已完成
+            {
+                errorRsp.Message = "订单已完成，不能进行取消订单操作";
+                errorRsp.ResultCode = 302;
+                return errorRsp.ToJSON();
+            }
             //执行取消订单业务 reconstruction By Henry 2015-10-20
             inoutBll.SetCancelOrder(orderId, 0, loggingSessionInfo);
 
@@ -1403,7 +1427,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             };
             tinoutStatusBLL.Create(statusEntity);
 
-            var rd = new EmptyResponseData();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
 
             return rsp.ToJSON();

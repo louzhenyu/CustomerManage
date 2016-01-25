@@ -230,7 +230,7 @@
 
                         that.loadData.operation(fields, that.elems.optionType, function (data) {
 
-                            alert("操作成功");
+                            alert(data.msg);
                             $('#win').window('close');
                             that.loadPageData(e);
 
@@ -1095,7 +1095,7 @@
                     url: prams.url,
                     data: prams.data,
                     success: function (data) {
-                        if (data) {
+                        if (data.success) {
                             if (callback) {
                                 callback(data);
                             }

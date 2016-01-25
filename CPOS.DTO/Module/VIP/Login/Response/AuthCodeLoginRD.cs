@@ -19,8 +19,9 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         public string VipNo { get; set; }
         public string Mobile { get; set; }
         public string Name { get; set; }
-        public string VipLevelName { get; set; }
-        public string ImageUrl { get; set; }//String	会员卡图片URL
+        public string VipLevelName { get; set; }  //会员卡名称
+        public string CardTypeImageUrl { get; set; }//会员卡图片
+        public string ImageUrl { get; set; }//String	会员图片URL
         public decimal Balance { get; set; }//decimal	余额
         public decimal ReturnAmount { get; set; }//返现
         public decimal Integration { get; set; }//int	积分

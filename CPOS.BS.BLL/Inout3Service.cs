@@ -1039,7 +1039,7 @@ namespace JIT.CPOS.BS.BLL
 
 
         /// <summary>
-        /// 修改订单门店
+        /// 修改订单销售门店和会员会籍店
         /// </summary>
         /// <param name="orderList"></param>
         /// <param name="unitID"></param>

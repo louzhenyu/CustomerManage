@@ -85,7 +85,7 @@ namespace JIT.CPOS.BS.BLL
                     salesReturnEntity.DeliveryType = 1;//¿ìµÝËÍ»Ø;
                     salesReturnEntity.OrderID = inoutInfo.order_id;
                     var inoutDetailInfo = inoutDetailList.FirstOrDefault();
-                    if (inoutDetailInfo!= null)
+                    if (inoutDetailInfo != null)
                     {
                         salesReturnEntity.ItemID = inoutDetailInfo.item_id;
                         salesReturnEntity.SkuID = inoutDetailInfo.sku_id;

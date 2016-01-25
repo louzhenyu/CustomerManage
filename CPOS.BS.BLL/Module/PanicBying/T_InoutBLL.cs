@@ -315,7 +315,8 @@ namespace JIT.CPOS.BS.BLL
                         Field20 = para.tableNumber,
                         Field16 = para.couponsPrompt,
                         Field15 = order_reason_id,
-                        sales_unit_id = para.storeId
+                        sales_unit_id = para.storeId,
+                        purchase_unit_id=para.storeId
                         #endregion
                     };
                     //¶©µ¥×´Ì¬

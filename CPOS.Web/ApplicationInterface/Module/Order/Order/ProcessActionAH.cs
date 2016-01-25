@@ -39,6 +39,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
         {
             #region 错误码
             const int ERROR_ORDER_NOTEXISTS = 301;
+            const int ERROR_ORDER_PROCESSED = 302;
             #endregion
             ProcessActionRD rd = new ProcessActionRD();
             T_InoutBLL _TInoutbll = new T_InoutBLL(this.CurrentUserInfo);                   //订单表
@@ -67,6 +68,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     #region 1.根据订单ID，订单操作码更新订单表中订单状态和状态描述
 
                     var entity = _TInoutbll.GetInoutInfo(OrderID, this.CurrentUserInfo); //根据标识获取新的实例
+
+                    if (entity.status == ActionCode)//判断是否重复操作
+                        throw new APIException("操作已处理") { ErrorCode = ERROR_ORDER_PROCESSED };
 
                     #region 当状态为完成时，返现，返积分
                     if (ActionCode == "700" && entity.status != "700")

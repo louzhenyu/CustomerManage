@@ -174,7 +174,7 @@ namespace JIT.CPOS.BS.DataAccess
         }
 
         /// <summary>
-        /// 修改订单门店
+        /// 修改订单销售门店和会员会籍店
         /// </summary>
         /// <param name="orderList"></param>
         /// <param name="unitID"></param>
@@ -182,6 +182,7 @@ namespace JIT.CPOS.BS.DataAccess
         public int SetOrderUnit(string orderList, string unitID)
         {
             string sql = string.Format("UPDATE T_Inout SET sales_unit_id='{0}' WHERE order_no IN ({1})", unitID, orderList);
+            sql += string.Format("; Update Vip set CouponInfo='{0}' where vipid in (select vip_no from t_inout where order_no IN ({1}) )",unitID,orderList);
             return SQLHelper.ExecuteNonQuery(sql);
         }
 

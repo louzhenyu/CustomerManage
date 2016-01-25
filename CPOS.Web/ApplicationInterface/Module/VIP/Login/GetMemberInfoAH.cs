@@ -97,6 +97,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                 {
                     var vipCardTypeInfo = vipCardTypeBLL.QueryByEntity(new SysVipCardTypeEntity() { VipCardTypeID = vipCardInfo.VipCardTypeID }, null).FirstOrDefault();
                     rd.MemberInfo.VipLevelName = vipCardTypeInfo != null ? vipCardTypeInfo.VipCardTypeName : "";
+                    rd.MemberInfo.CardTypeImageUrl = vipCardTypeInfo != null ? vipCardTypeInfo.PicUrl : "";
                 }
             }
             #endregion
