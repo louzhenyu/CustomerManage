@@ -857,6 +857,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						     }
 
 						     if (that.elems.activiType == 1) {
+						         if (result.RuleId == 0)
+						         {
+						             result.RuleId = 1;
+						         }
 						         $('#ruleOption').combobox('select', result.RuleId);
 						         $('.ruleText textarea').html(result.RuleContent);
 						     }
@@ -1181,7 +1185,12 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					afterUpload: function(data){
 						if(data.error===0){
 							if(callback) {
-								callback(btn,data);
+							    callback(btn, data);
+							    if ($(btn).data("alertinfo")) {
+							        alert($(btn).data("alertinfo"));
+							    } else {
+							        alert("图片上传成功！");
+							    }
 							}
 						}else{
 							alert(data.message);

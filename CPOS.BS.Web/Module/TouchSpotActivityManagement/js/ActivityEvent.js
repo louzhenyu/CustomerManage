@@ -470,10 +470,10 @@
 		            "key": "Coupon",
 		            "value": "优惠券"
 		        }
-                //, {
-		        //    "key": "Chance",
-		        //    "value": "抽奖机会"
-                //}
+                , {
+		            "key": "Chance",
+		            "value": "抽奖机会"
+                }
                 , {
 		            "key": "",
 		            "value": "请选择"

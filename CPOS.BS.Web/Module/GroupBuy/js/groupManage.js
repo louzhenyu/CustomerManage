@@ -219,6 +219,10 @@
                     alert("活动结束时间不能为空!");
                     return;
                 }
+                if ($("#beginTime").val() >= $("#endTime").val()) {
+                    alert("活动开始时间不能大于等于结束时间!");
+                    return;
+                }
                 that.loadData.args.EventName=$("#eventName").val();
                 that.loadData.args.BeginTime=$("#beginTime").val();
                 that.loadData.args.EndTime=$("#endTime").val();

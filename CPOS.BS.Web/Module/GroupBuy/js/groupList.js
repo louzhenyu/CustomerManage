@@ -23,6 +23,8 @@
                 //团购  抢购 市场都是一套逻辑  故用pageType标识
                 var pageType = $.util.getUrlParam("pageType");
                 var pageName = decodeURIComponent($.util.getUrlParam("pageName"));
+
+               
                 var pageStr = "";
                 if (pageName) {
                     pageStr = pageName;
@@ -192,18 +194,22 @@
                         var beginTime = $("#beginTime").val(),
                             endTime = $("#endTime").val();
                         if ($("#name").val().length == 0) {
+                            page.isSending = false;
                             that.alert("活动名称不能为空!");
                             return;
                         }
                         if (beginTime.length == 0) {
+                            page.isSending = false;
                             that.alert("活动开始时间不能为空!");
                             return;
                         }
                         if (endTime.length == 0) {
+                            page.isSending = false;
                             that.alert("活动结束时间不能为空!");
                             return;
                         }
                         if (beginTime >= endTime) {
+                            page.isSending = false;
                             that.alert("活动开始时间不能大于等于结束时间!");
                             return;
                         }

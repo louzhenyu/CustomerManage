@@ -3321,7 +3321,8 @@
                                             if (self.categoryLayer.shopType == 2) {
                                                 pageName = "抢购";
                                             }
-                                            location.href = "/module/GroupBuy/GroupList.aspx?pageType=" + self.categoryLayer.shopType + "&mid=" + $.util.getUrlParam("mid") + "&pageName=" + pageName;
+                                            window.open("/module/GroupBuy/GroupList.aspx?pageType=" + self.categoryLayer.shopType + "&mid=" + $.util.getUrlParam("mid") + "&pageName=" + pageName, 'newwindow');
+                                            
                                         }
                                     })
                                 }

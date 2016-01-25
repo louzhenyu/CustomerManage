@@ -307,9 +307,9 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
               		<div class="examplePic"><img src="images/red-bg.png" /></div>
                     <div class="uploadPicBox">
                     	<div id="beforeBgPic" class="uploadItem" data-flag=1  data-url="" data-batid="beforeGround">
-                        	<p class="tit">领取前背景颜色：</p>
+                        	<p class="tit">背景图片：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="背景图片上传成功！">上传图片</a>
                                 <p class="exp">(建议尺寸640*1008 大小为200K)</p>
                             </div>
                         </div>
@@ -319,8 +319,8 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <div id="logoBgPic" class="uploadItem" data-flag=3  data-url="" data-batid="Logo">
                         	<p class="tit">logo图片：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
-                                <p class="exp">(建议尺寸640*1008 大小为50K)</p>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="logo图片上传成功！" >上传图片</a>
+                                <p class="exp">(建议尺寸100*100 大小为200K)</p>
                             </div>
                         </div>
                         
@@ -333,7 +333,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                             	<textarea placeholder="请输入"></textarea>
                             </div>
                             <div class="infoBox ruleImg"  style="margin-top:10px">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn" data-alertinfo="活动规则图片上传成功！" >上传图片</a>
                                 <p class="exp">(建议尺寸640*1008 大小为200K)</p>
                             </div>
                         </div>
@@ -387,7 +387,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                     	<div id="LT_Data_kvPic" class="uploadItem" style="margin-top: 75px;" data-flag=10  data-url="" data-batid="LT_kvPic">
                         	<p class="tit">KV图片：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn" data-alertinfo="KV图片上传成功！">上传图片</a>
                                 <p class="exp">(尺寸:640*368)</p>
                             </div>
                         </div>
@@ -395,7 +395,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <div id="LT_Data_Rule" class="uploadItem"  data-flag=11  data-url="" data-batid="LT_Rule">
                         	<p class="tit">活动规则内容：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="活动规则图片上传成功！">上传图片</a>
                                 <p class="exp">(尺寸：640*1008)</p>
                             </div>
                         </div>
@@ -403,14 +403,14 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <div id="LT_Data_bgpic1" class="uploadItem"  data-flag=12  data-url="" data-batid="LT_bgpic1">
                         	<p class="tit">背景颜色1：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="背景颜色1图片上传成功！">上传图片</a>
                                 <p class="exp">(尺寸：640*640)</p>
                             </div>
                         </div>
                          <div id="LT_Data_bgpic2" class="uploadItem" data-flag=13  data-url="" data-batid="LT_bgpic2">
                         	<p class="tit">背景颜色2：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="背景颜色2图片上传成功！">上传图片</a>
                                 <p class="exp">(尺寸：640*640)</p>
                             </div>
                         </div>
@@ -479,7 +479,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                     	<div id="Div5" class="uploadItem" style="margin-top: 75px;" data-flag=15  data-url="" data-batid="beforeGround">
                         	<p class="tit">背景颜色：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="背景颜色图片上传成功！">上传图片</a>
                                 <p class="exp">(尺寸:640*1008)</p>
                             </div>
                         </div>
@@ -487,7 +487,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <div id="Div6" class="uploadItem"  data-flag=16  data-url="" data-batid="BackGround">
                         	<p class="tit">活动规则内容：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn" data-alertinfo="活动规则图片上传成功！" >上传图片</a>
                                 <p class="exp">(尺寸：90*90)</p>
                             </div>
                         </div>
@@ -495,7 +495,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <div id="Div7" class="uploadItem"  data-flag=17  data-url="" data-batid="Logo">
                         	<p class="tit">奖品图片：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="奖品图片上传成功！">上传图片</a>
                                 <p class="exp">(尺寸：640*300)</p>
                             </div>
                         </div>
@@ -578,7 +578,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                       		<em class="tit" style="width:75px;">封面：</em>
                       		<p class="picBox"><img id="imageTextPic" src="" /></p>
                             <div class="uploadImgWrap">
-                                <a href="javascript:;" class="commonHandleBtn uploadImgBtn">上传图片</a>
+                                <a href="javascript:;" class="commonHandleBtn uploadImgBtn" data-alertinfo="封面图片上传成功！">上传图片</a>
                                 <span>(建议尺寸536*300 大小为100K)</span>
                             </div>
                       </div>
@@ -751,7 +751,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                     </span>
                 <div><img id="LuckyTurntablePrizeimg" src="images/uploadpic.png" /></div>
                 <p>尺寸：120*120</p>
-                <a href="javascript:;" class="commonHandleBtn uploadImgBtn"></a>
+                <a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="奖品图片上传成功！"></a>
             </div>
             <div style="clear:both;"></div>
         </form>
