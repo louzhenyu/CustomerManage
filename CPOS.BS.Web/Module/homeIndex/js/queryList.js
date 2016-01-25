@@ -1583,7 +1583,7 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
 
                                 self.elems.productLayer.find('.pageContianer').show();
                             } else {
-                                self.elems.editLayer.find('.pageContianer').hide();
+                                self.elems.productLayer.find('.pageContianer').hide();
                             }
                             // 分页处理 end
 
@@ -1646,7 +1646,7 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
 
                                         self.elems.productLayer.find('.pageContianer').show();
                                     } else {
-                                        self.elelems.editLayer.find('.pageContianer').hide();
+                                        self.elems.productLayer.find('.pageContianer').hide();
                                     }
                                     // 分页处理 end
 

@@ -2063,7 +2063,7 @@
                                 self.ele.categorySelect[0].options[i + 1] = new Option(idata.categoryName, idata.categoryId);
                             }
                         } else {
-                            alert("一级分类列表为空！");
+                           // alert("一级分类列表为空！");
                         }
 
                     } else {
@@ -3247,6 +3247,7 @@
                 self.mask.hide();
             },
             pageIndex: 0,
+            pageIndex1:1,
             pageSize: 5,
             loadDate: function (text) {
                 var categoryName = text || self.ele.categoryLayer.find("input").val();
@@ -3257,7 +3258,7 @@
                         data: {
                             method: 'GetPanicbuyingEventList',
                             eventTypeId: self.categoryLayer.shopType,
-                            pageIndex: this.pageIndex,
+                            pageIndex: this.pageIndex1,
                             pageSize: this.pageSize
                         },
                         dataType: "json",
@@ -3270,11 +3271,12 @@
                                     // 分页处理 begin
                                     var pageNumber = Math.ceil(data.data.totalCount / self.categoryLayer.pageSize);
                                     if (pageNumber > 1) {
+                                        //分页的隐藏和显示
                                         self.ele.categoryLayer.find('.pageContianer').show();
                                         kkpager.generPageHtml({
-                                            pno: self.categoryLayer.pageIndex ? self.categoryLayer.pageIndex + 1 : 1,
+                                            pno: self.categoryLayer.pageIndex1,
                                             mode: 'click', //设置为click模式
-                                            pagerid: 'kkpager12',
+                                            pagerid: 'kkpager14', //分页标签的id
                                             total: pageNumber,//总页码
                                             totalRecords: data.data.totalCount,
                                             isShowTotalPage: true,
@@ -3290,8 +3292,8 @@
                                                 //var table = $('table.dataTable');//that.tableMap[that.status];
                                                 //var length = table.find("thead th").length;
                                                 //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
-                                                self.categoryLayer.pageIndex = n - 1;
-                                                self.categoryLayer.loadDate();
+                                                self.categoryLayer.pageIndex1 = n;
+                                                self.categoryLayer.loadDate("killListType");
                                             },
                                             //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
                                             getHref: function (n) {
@@ -3459,7 +3461,7 @@
                                             //var table = $('table.dataTable');//that.tableMap[that.status];
                                             //var length = table.find("thead th").length;
                                             //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
-                                            self.commodityGroupLayer.pageIndex=n-1
+                                            self.commodityGroupLayer.pageIndex=n;
                                             self.commodityGroupLayer.loadDate();
                                         },
                                         //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
