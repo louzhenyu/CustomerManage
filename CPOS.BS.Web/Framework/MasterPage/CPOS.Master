@@ -369,7 +369,7 @@
                 window.RoleName = '<%=RoleName%>';
                 $(".session1").text((window.clientID));
                 window.statementUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["website_WWW"] %>";
-                window.weixinUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["openAuthUrl"] %>/receive?clientid=" + window.clientID;
+                window.weixinUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["openOAuthUrl"] %>/receive?clientid=" + window.clientID;
                 window.fsr_userName = "admin";
                 window.fsr_passWord = "i15617945";
    });

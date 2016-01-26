@@ -322,7 +322,7 @@
                 window.RoleCode = '<%=RoleCode%>';
                 window.RoleName = '<%=RoleName%>';
                 window.staticUrl = '<%=StaticUrl%>';
-                window.weixinUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["openAuthUrl"] %>/receive?clientid=" + window.clientID;
+                window.weixinUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["openOAuthUrl"] %>/receive?clientid=" + window.clientID;
                 $(".session1").text((window.clientID));
                 //     console.log($(".session1").text());
             });
