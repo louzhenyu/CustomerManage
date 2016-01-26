@@ -411,7 +411,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         	<p class="tit">背景颜色2：</p>
                             <div class="infoBox">
                             	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="背景颜色2图片上传成功！">上传图片</a>
-                                <p class="exp">(尺寸：640*640)</p>
+                                <p class="exp">(尺寸：492*492)</p>
                             </div>
                         </div>
                       

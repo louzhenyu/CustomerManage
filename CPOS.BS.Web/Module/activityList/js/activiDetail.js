@@ -786,6 +786,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX_QL.png" data-prizesid=""><em></em>谢谢您（浅蓝）！</div>');
 						$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX_TL.png" data-prizesid=""><em></em>谢谢您（天蓝）！</div>');
 						$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX_ZS.png" data-prizesid=""><em></em>谢谢您（紫色）！</div>');
+						$(".PrizeseOption").append('<div class="radio " data-prizesname="" data-imageurl="images/THX_HB.png" data-prizesid=""><em></em>谢谢您（红包空）！</div>');
 						 if (that.elems.activiType == 1) {
 						     $('#prizeListTable tbody').html(html);
 						 }
