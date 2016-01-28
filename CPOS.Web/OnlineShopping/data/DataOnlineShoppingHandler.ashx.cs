@@ -2434,8 +2434,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 orderInfo.SalesUser = reqObj.special.SalesUser; //店员ID add by donal 2014-9-25 18:09:49
                 orderInfo.ChannelId = reqObj.common.channelId; //渠道 add by donal 2014-9-28 14:32:05
 
-                //如果是【人人销售/我的小店】销售人为空，销售人就是他自己
-                if ((orderInfo.ChannelId == "6" || orderInfo.ChannelId == "10") && string.IsNullOrWhiteSpace(orderInfo.SalesUser))
+                //如果是【人人销售/我的小店】销售人为空，销售人就是他自己6=会员小店;7=一起发码;10=员工小店
+                if ((orderInfo.ChannelId == "6" || orderInfo.ChannelId == "10"|| orderInfo.ChannelId == "7") && string.IsNullOrWhiteSpace(orderInfo.SalesUser))
                 {
                     orderInfo.SalesUser = reqObj.common.userId;
                 }
