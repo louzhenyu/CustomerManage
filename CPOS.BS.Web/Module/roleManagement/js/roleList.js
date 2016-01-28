@@ -127,6 +127,7 @@
 					
 					//拥有的权限
 					that.getLimitsTree(row.Role_Id,row.Def_App_Id);
+					$('#win').window({'title':'编辑角色'});
 					$('#win').window('open');
 				}
 				$.util.stopBubble(e);
@@ -154,6 +155,7 @@
 				$('#app_sys_id2').combobox('setValue',0);
 				//拥有的权限
 				that.getLimitsTree('','');
+				$('#win').window({'title':'新建角色'});
 				$('#win').window('open');
 			});
 			
@@ -410,7 +412,7 @@
 		},
 		addEditRoleDialog:function(data){
             var that=this;
-            $('#win').window({title:"新建角色",width:600,height:600,top:15,left:($(window).width() - 550) * 0.5});
+            $('#win').window({title:"新建角色",width:600,height:600,top:($(window).height() - 600) * 0.5,left:($(window).width() - 600) * 0.5});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_addProm');

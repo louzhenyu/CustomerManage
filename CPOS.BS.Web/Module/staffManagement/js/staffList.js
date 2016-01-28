@@ -12,7 +12,6 @@
             thead:$("#thead"),                    //表格head部分
             showDetail: $('#showDetail'),         //弹出框查看详情部分
             operation:$('#opt,#Tooltip'),              //弹出框操作部分
-			dataMessage:$(".dataMessage"),
             vipSourceId:'',
             click:true,
             dataMessage:  $("#pageContianer").find(".dataMessage"),
@@ -44,6 +43,8 @@
             var that = this;
             //点击查询按钮进行数据查询
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
+           	 	$(".datagrid-body").html('<div class="loading" style="width:99%"><span><img src="../static/images/loading.gif"></span></div>');
+				debugger;
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
 				that.loadData.args.start = 0;
                 that.setCondition();

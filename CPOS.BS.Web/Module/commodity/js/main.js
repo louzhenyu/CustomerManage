@@ -58,7 +58,8 @@ require.config({
         artDialog: '/Module/static/js/plugin/artDialog',
         ajaxform: '/Module/static/js/plugin/jquery.form',
         datetimePicker: '/Module/static/js/plugin/jquery.datetimepicker',
-        kkpager: '/Module/static/js/plugin/kkpager'
+        kkpager: '/Module/static/js/plugin/kkpager',
+		lang: '/Framework/Javascript/Other/kindeditor/lang/zh_CN'
 
     }
 });

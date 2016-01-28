@@ -59,7 +59,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/staffDetail.js?ver=0.4">
+        <div class="allPage" id="section" data-js="js/staffDetail.js?ver=0.5">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
             	<div class="bigTitle">新建用户</div>
@@ -88,14 +88,14 @@
                               <div class="commonSelectWrap">
                                   <em class="tit">密码：</em>
                                   <label class="searchInput" style="width:232px;">
-                                      <input data-text="密码" class="easyui-validatebox" data-flag="User_Password" name="User_Password"   id="User_Password" type="password" value="" data-options="required:true" placeholder="请输入">
+                                      <input data-text="密码" class="easyui-validatebox" data-flag="User_Password" name="User_Password"   id="User_Password" type="password" value="" data-options="required:true,validType:'maxLength[32]',invalidMessage:'输入的密码长度不能超32位'" placeholder="请输入">
                                   </label>
                               </div>
                               
                               <div class="commonSelectWrap">
                                   <em class="tit">手机：</em>
                                   <label class="searchInput" style="width:232px;">
-                                      <input data-text="手机" class="easyui-validatebox" data-flag="User_Telephone" name="User_Telephone" id="User_Telephone" type="text" value="" data-options="required:true" placeholder="请输入">
+                                      <input data-text="手机" class="easyui-validatebox" data-flag="User_Telephone" name="User_Telephone" id="User_Telephone" type="text" value="" data-options="required:true,validType:'mobile'" placeholder="请输入">
                                   </label>
                               </div>
                               

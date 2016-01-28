@@ -88,6 +88,9 @@
 					
 					//权限的前端数据保存
 					if(that.elems.indx==-1){
+						if(!$('.setUnitBtn',$('#tableWrap')).hasClass('on')){
+							obj.DefaultFlag=1;
+						}
 						$('#gridTable').datagrid('insertRow',{
 							index: 0,// 索引从0开始
 							row: obj

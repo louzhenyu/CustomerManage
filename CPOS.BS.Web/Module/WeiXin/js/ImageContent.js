@@ -1,4 +1,4 @@
-﻿define(['jquery', 'tools', 'template', 'kindeditor', 'lang', 'pagination', 'drag'], function () {
+﻿define(['jquery', 'tools', 'template','easyui', 'kindeditor','pagination'], function () {
 
     //debugger;
     //上传图片

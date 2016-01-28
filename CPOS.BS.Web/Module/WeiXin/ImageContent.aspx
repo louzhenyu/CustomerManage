@@ -199,7 +199,8 @@
 <div class="activeListPopupArea hide" id="chooseEvents">
 	
 </div>
-<script type="text/javascript" src="/Module/static/js/lib/require.min.js" defer async="true" data-main="/Module/WeiXin/js/main"></script>
+<script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
+            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 <script id="pageTmpl" type="text/html">
     <div class="pagination">
       <a href="#" class="first" data-action="first">&laquo;</a>
