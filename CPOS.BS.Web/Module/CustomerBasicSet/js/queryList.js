@@ -49,11 +49,13 @@ define(['jquery','tools','template', 'kindeditor',"easyui"], function ($) {
                 $("#customerName").html(data.Data.customer_name);
                 if (data.Data["WebLogo"] ) {
                     $(".logoWrap").css({ 'background-image': 'url("' + data.Data["WebLogo"]  + '")' });
-                }
+                  }
                     $("[data-name].logo").each(function() {
-                        var name = $(this).data("name")
+                        var name = $(this).data("name");
 
-                        $(this).find("img").attr("src",data.Data[name]);
+                         if(data.Data[name]) {
+                             $(this).find("img").attr("src", data.Data[name]);
+                         }
                     })
 
             });
