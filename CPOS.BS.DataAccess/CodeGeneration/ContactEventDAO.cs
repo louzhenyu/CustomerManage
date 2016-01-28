@@ -202,7 +202,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Update(ContactEventEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity, pTran, true);
+            Update(pEntity , pTran,false);
         }
 
         /// <summary>

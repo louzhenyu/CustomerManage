@@ -99,7 +99,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         contactEvent.ShareEventId = para.ShareEventId;
                         if (para.ContactTypeCode=="Share" && para.ShareEventId != null && para.ShareEventId != "")
                             bllEvent.UpdateEventIsShare(para.ShareEventId);
-
+                        //开始日期是当天的 状态直接变为运行中
+                        if (DateTime.Compare(Convert.ToDateTime(para.BeginDate), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <= 0 && DateTime.Compare(Convert.ToDateTime(para.EndDate), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) >= 0)
+                        {
+                            contactEvent.Status = 2;
+                        }
                     }
 
 
@@ -185,7 +189,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     {
                         entityContactEvent.Status = 2;
                     }
-
+                    else
+                    {
+                        entityContactEvent.Status = 1;
+                    }
                     bllContactEvent.Create(entityContactEvent);
              
                         ///保存奖品 生成奖品池

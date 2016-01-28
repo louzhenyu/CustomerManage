@@ -852,7 +852,7 @@ namespace JIT.CPOS.BS.DataAccess
         #region 获取正在运行中的活动列表
         public DataSet GetWorkingEventList()
         {
-            string strSql = "Select EventID,Title FROM vw_EventList WHERE [status]='运行中' and CustomerId='" + CurrentUserInfo.ClientID + "' ORDER BY CreateTime DESC";
+            string strSql = "Select EventID,Title FROM LEvents WHERE [EventStatus] in(20,30) and CustomerId='" + CurrentUserInfo.ClientID + "' ORDER BY CreateTime DESC";
             return this.SQLHelper.ExecuteDataset(CommandType.Text, strSql);
         }
         #endregion

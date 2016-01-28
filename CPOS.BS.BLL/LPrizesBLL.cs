@@ -387,12 +387,12 @@ namespace JIT.CPOS.BS.BLL
 
                         }
                     }
-                    else if (entityPrize.PrizeTypeId == "Chance" && !string.IsNullOrEmpty(strEventId))
+                    else if (entityPrize.PrizeTypeId == "Chance" && !string.IsNullOrEmpty(strEventId) && contactEvent.ChanceCount>0)
                     {
                         LEventsVipObjectEntity entityEventsVipObject = new LEventsVipObjectEntity();
                         LEventsVipObjectBLL bllEventsVipObject = new LEventsVipObjectBLL(this.CurrentUserInfo);
-                        entityEventsVipObject = bllEventsVipObject.QueryByEntity(new LEventsVipObjectEntity() { VipId = strVipId, EventId = strEventId, ObjectId = contactEvent.ContactEventId.ToString() }, null).FirstOrDefault();
-                        if (entityEventsVipObject == null)
+
+                        for (int i = 0; i < contactEvent.ChanceCount;i++ )
                         {
                             entityEventsVipObject = new LEventsVipObjectEntity()
                             {
@@ -451,7 +451,7 @@ namespace JIT.CPOS.BS.BLL
 
 
             LEventsEntity eventEntity = bll.QueryByEntity(new LEventsEntity() { EventID = strEventId, CustomerId = strCustomerID }, null).FirstOrDefault();// bll.GetByID(strEventId);
-            if (eventEntity.EventStatus == 40 || eventEntity == null)
+            if (eventEntity == null || eventEntity.EventStatus == 40)
             {
                 rd.PrizeName = "抱歉 来晚一步 活动已经结束啦";
                 return rd;
@@ -758,9 +758,9 @@ namespace JIT.CPOS.BS.BLL
             CouponEntity entityCoupon = null;
             CouponBLL bllCoupon = new CouponBLL(this.CurrentUserInfo);
 
-
-            LEventsEntity eventEntity = bll.QueryByEntity(new LEventsEntity() { EventID = strEventId, CustomerId = strCustomerID }, null).FirstOrDefault();// bll.GetByID(strEventId);
-            if (eventEntity.EventStatus == 40 || eventEntity == null)
+            LEventsEntity eventEntity = new LEventsEntity();
+            eventEntity = bll.QueryByEntity(new LEventsEntity() { EventID = strEventId, CustomerId = strCustomerID }, null).FirstOrDefault();// bll.GetByID(strEventId);
+            if (eventEntity == null||eventEntity.EventStatus == 40)
             {
                 rd.PrizeName = "抱歉 来晚一步 活动已经结束啦";
                 return rd;
@@ -908,6 +908,14 @@ namespace JIT.CPOS.BS.BLL
 
 
                 var prize = DataTableToObject.ConvertToList<LPrizesEntity>(bllPrize.GetCouponTypeIDByPrizeId(entityPrizePools.PrizeID).Tables[0]).FirstOrDefault();
+                if(prize==null)
+                {
+                    rd.Location = 0;
+                    rd.PrizeId = "0";
+                    rd.PrizeName = "啊呜  手气不是时时有 下次再接再厉哦";
+                    return rd;
+                }
+
                 if (prize.PrizeTypeId == "Point")
                 {
                     #region 调用积分统一接口
