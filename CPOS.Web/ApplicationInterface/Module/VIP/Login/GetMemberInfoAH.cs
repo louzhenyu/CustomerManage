@@ -40,9 +40,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                 }
             }
 
+            string m_MemberID = "";
+            if(!string.IsNullOrWhiteSpace(pRequest.Parameters.OwnerVipID))
+                m_MemberID = string.IsNullOrWhiteSpace(pRequest.Parameters.OwnerVipID) ? pRequest.UserID : pRequest.Parameters.OwnerVipID;
+            else
+                m_MemberID = string.IsNullOrWhiteSpace(pRequest.Parameters.MemberID) ? pRequest.UserID : pRequest.Parameters.MemberID;
 
-
-            string UserID = string.IsNullOrWhiteSpace(pRequest.Parameters.MemberID) ? pRequest.UserID : pRequest.Parameters.MemberID;
+            string UserID = m_MemberID;
             var VipLoginInfo = vipLoginBLL.GetByID(UserID);
             if (VipLoginInfo == null)
                 throw new APIException("用户不存在") { ErrorCode = 330 };

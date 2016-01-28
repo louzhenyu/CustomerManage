@@ -32,6 +32,10 @@ namespace JIT.CPOS.DTO.Base
         public EmptyRequestParameter()
         {
         }
+        /// <summary>
+        /// 店主vipID
+        /// </summary>
+        public string OwnerVipID { get; set; }
         #endregion
 
         #region IAPIRequestParameter 成员

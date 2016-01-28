@@ -14,6 +14,10 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Request
         public string MemberID { get; set; }
         //查询条件，手机号、会员名或者会员昵称
         public string SearchFlag { get; set; }
+        /// <summary>
+        /// 店主vipID
+        /// </summary>
+        public string OwnerVipID { get; set; }
         public void Validate()
         {
 
