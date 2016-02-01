@@ -7,6 +7,7 @@ using JIT.CPOS.BS.Entity.WX;
 using System.Collections.Generic;
 using System.Configuration;
 using JIT.Utility.ExtensionMethod;
+using System.Data;
 
 namespace JIT.CPOS.BS.BLL.WX.BaseClass
 {
@@ -30,41 +31,65 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
         //用户关注微信号
         public override void UserSubscribe()
         {
+            var eventsBll = new LEventsBLL(requestParams.LoggingSessionInfo);
+
             //设置关注信息
             var modelDAO = new WModelDAO(requestParams.LoggingSessionInfo);
-            var ds = modelDAO.GetMaterialByWeixinIdJermyn(requestParams.WeixinId,2);
+            var ds = new DataSet();// /// <param name="KeyworkType">1=关键字回复 2=关注回复 3=自动回复</param>
 
-            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            //优先处理二维码
+            var qrcodeId = string.Empty;
+            var eventKey = requestParams.XmlNode.SelectSingleNode("//EventKey");
+            if (eventKey != null && eventKey.InnerText.Contains("qrscene_"))
             {
-                //string typeId = ds.Tables[0].Rows[0]["MaterialTypeId"].ToString();  //素材类型
-                //string materialId = ds.Tables[0].Rows[0]["MaterialId"].ToString();  //素材ID
+                qrcodeId = eventKey.InnerText.Substring(8);
+                eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, qrcodeId,
+                requestParams.OpenId, this.httpContext, requestParams);
+                //eventsBll.QrCodeHandlerText(qrcodeId, requestParams.LoggingSessionInfo,
+                           // requestParams.WeixinId, 4, requestParams.OpenId, httpContext, requestParams);
+                //ds = modelDAO.GetMaterialByWeixinIdJermyn(requestParams.WeixinId, 4);
 
-                string typeId = ds.Tables[0].Rows[0]["ReplyType"].ToString();  //素材类型 1=文字2=图片3=图文4=语音5=视频6=其他
-                string ReplyId = ds.Tables[0].Rows[0]["ReplyId"].ToString();  //素材ID
-                string Text = ds.Tables[0].Rows[0]["text"].ToString();  //素材ID
-
-                BaseService.WriteLogWeixin("自动回复： typeId：" + typeId);
-                BaseService.WriteLogWeixin("自动回复：ReplyId：" + ReplyId);
-
-                switch (typeId)
+            }
+            else
+            {
+                ds = modelDAO.GetMaterialByWeixinIdJermyn(requestParams.WeixinId, 2);
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
-                    case MaterialType.TEXT:         //回复文字消息 
-                        //ReplyText(materialId);
-                        ReplyTextJermyn(Text);
-                        break;
-                    case MaterialType.IMAGE_TEXT:   //回复图文消息 
-                        //ReplyNews(materialId);
-                        ReplyNewsJermyn(ReplyId,2,1);
-                        break;
-                    case MaterialType.OTHER:    //后台处理
-                        break;
-                    default:
-                        break;
+                    //string typeId = ds.Tables[0].Rows[0]["MaterialTypeId"].ToString();  //素材类型
+                    //string materialId = ds.Tables[0].Rows[0]["MaterialId"].ToString();  //素材ID
+
+                    string typeId = ds.Tables[0].Rows[0]["ReplyType"].ToString();  //素材类型 1=文字2=图片3=图文4=语音5=视频6=其他
+                    string ReplyId = ds.Tables[0].Rows[0]["ReplyId"].ToString();  //素材ID
+                    string Text = ds.Tables[0].Rows[0]["text"].ToString();  //素材ID
+
+                    BaseService.WriteLogWeixin("自动回复： typeId：" + typeId);
+                    BaseService.WriteLogWeixin("自动回复：ReplyId：" + ReplyId);
+
+
+
+                    switch (typeId)
+                    {
+                        case MaterialType.TEXT:         //回复文字消息 
+                                                        //ReplyText(materialId);
+                            ReplyTextJermyn(Text);
+                            break;
+                        case MaterialType.IMAGE_TEXT:   //回复图文消息 
+                                                        //ReplyNews(materialId);
+                            ReplyNewsJermyn(ReplyId, 2, 1);
+                            break;
+                        case MaterialType.OTHER:    //后台处理
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    UserSubscribeOld();
                 }
             }
-            else {
-                UserSubscribeOld();
-            }
+
+            
 
             var application = new WApplicationInterfaceDAO(requestParams.LoggingSessionInfo);
             var appEntitys = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = requestParams.WeixinId }, null);
@@ -84,11 +109,14 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                 if (!string.IsNullOrEmpty(eventKey.InnerText))
                 {
                     qrcodeId = eventKey.InnerText.Substring(8);
+                    
+                    //eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, eventKey.ToString(),
+                    //requestParams.OpenId, this.httpContext, requestParams);
                 }
 
                 BaseService.WriteLogWeixin("二维码 qrcodeId:  " + qrcodeId);
 
-                //保存用户信息
+                //保存用户信息///// <param name="isShow">1： 关注  0： 取消关注</param>
                 commonService.SaveUserInfo(requestParams.OpenId, requestParams.WeixinId, "1", entity.AppID, entity.AppSecret, qrcodeId, requestParams.LoggingSessionInfo);
             }
         }
