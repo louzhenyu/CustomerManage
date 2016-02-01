@@ -40,17 +40,17 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
             //优先处理二维码
             var qrcodeId = string.Empty;
             var eventKey = requestParams.XmlNode.SelectSingleNode("//EventKey");
-            if (eventKey != null && eventKey.InnerText.Contains("qrscene_"))
+            if (eventKey != null && eventKey.InnerText.Contains("qrscene_"))//如果是二维码的就之返回二维码的
             {
                 qrcodeId = eventKey.InnerText.Substring(8);
                 eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, qrcodeId,
                 requestParams.OpenId, this.httpContext, requestParams);
                 //eventsBll.QrCodeHandlerText(qrcodeId, requestParams.LoggingSessionInfo,
-                           // requestParams.WeixinId, 4, requestParams.OpenId, httpContext, requestParams);
+                // requestParams.WeixinId, 4, requestParams.OpenId, httpContext, requestParams);
                 //ds = modelDAO.GetMaterialByWeixinIdJermyn(requestParams.WeixinId, 4);
 
             }
-            else
+            else//否则返回自动回复的
             {
                 ds = modelDAO.GetMaterialByWeixinIdJermyn(requestParams.WeixinId, 2);
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
@@ -70,11 +70,11 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                     switch (typeId)
                     {
                         case MaterialType.TEXT:         //回复文字消息 
-                                                        //ReplyText(materialId);
+                            //ReplyText(materialId);
                             ReplyTextJermyn(Text);
                             break;
                         case MaterialType.IMAGE_TEXT:   //回复图文消息 
-                                                        //ReplyNews(materialId);
+                            //ReplyNews(materialId);
                             ReplyNewsJermyn(ReplyId, 2, 1);
                             break;
                         case MaterialType.OTHER:    //后台处理
@@ -89,7 +89,7 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                 }
             }
 
-            
+
 
             var application = new WApplicationInterfaceDAO(requestParams.LoggingSessionInfo);
             var appEntitys = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = requestParams.WeixinId }, null);
@@ -102,14 +102,14 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                 BaseService.WriteLogWeixin("AppSecret:  " + entity.AppSecret);
 
                 //扫描带参数二维码事件
-                var eventKey = requestParams.XmlNode.SelectSingleNode("//EventKey");
+
                 BaseService.WriteLogWeixin("二维码 eventKey:  " + eventKey.InnerText);
 
-                var qrcodeId = string.Empty;
-                if (!string.IsNullOrEmpty(eventKey.InnerText))
+
+                if (!string.IsNullOrEmpty(eventKey.InnerText))//这里如果是二维码扫锚，就找出了二维码的code，可以在这里推送该二维码对应的图文素材******
                 {
                     qrcodeId = eventKey.InnerText.Substring(8);
-                    
+
                     //eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, eventKey.ToString(),
                     //requestParams.OpenId, this.httpContext, requestParams);
                 }
