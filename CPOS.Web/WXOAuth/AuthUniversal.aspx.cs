@@ -155,7 +155,8 @@ namespace JIT.CPOS.Web.WXOAuth
                         Response.Write("<br>");
                         Response.Write("goUrl:" + goUrl);
                         string eventId = Request["eventId"];
-                        if (eventId != null && !eventId.Equals(""))
+                        string employeeId = Request["employeeId"];
+                        if (eventId != null && !eventId.Equals(""))//如果是跳转到活动的链接，还要加上活动标识***
                         {
                             if (goUrl.IndexOf("?") > 0)
                             {
@@ -166,6 +167,18 @@ namespace JIT.CPOS.Web.WXOAuth
                                 goUrl = goUrl + "?eventId=" + eventId + "";
                             }
                         }
+                        if (employeeId != null && !employeeId.Equals(""))//如果是员工打赏的链接，还要加上员工标识***
+                        {
+                            if (goUrl.IndexOf("?") > 0)
+                            {
+                                goUrl = goUrl + "&employeeId=" + employeeId + "";
+                            }
+                            else
+                            {
+                                goUrl = goUrl + "?employeeId=" + employeeId + "";
+                            }
+                        }
+                        //同样可以把商品的标识也这样处理goodsId
                         //Response.End();
                     }
                     else

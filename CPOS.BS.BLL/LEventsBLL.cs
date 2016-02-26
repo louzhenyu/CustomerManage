@@ -1012,8 +1012,15 @@ namespace JIT.CPOS.BS.BLL
 
                     if (weixinId != "")//处理素材的
                     {
+                        //员工二维码
                         QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
-                            weixinId, 4, openId, httpContext, requestParams);
+                            weixinId, 4, openId, httpContext, requestParams,qrCodeEntity.ObjectId);
+                        Loggers.Debug(new DebugLogInfo()
+                        {
+                            Message = string.Format("员工二维码扫描的员工ID：{0} ", qrCodeEntity.ObjectId)
+                        });
+                        //QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
+                        //    weixinId, 4, openId, httpContext, requestParams);
                     }
                 }
             }
@@ -1026,9 +1033,19 @@ namespace JIT.CPOS.BS.BLL
             }
         }
 
-
+        /// <summary>
+        /// 处理二维码消息
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="loggingSessionInfo"></param>
+        /// <param name="weixinId"></param>
+        /// <param name="keywordType"></param>
+        /// <param name="openId"></param>
+        /// <param name="httpContext"></param>
+        /// <param name="requestParams"></param>
+        /// <param name="objectId">员工ID</param>
         public void QrCodeHandlerText(string content, LoggingSessionInfo loggingSessionInfo,
-            string weixinId, int keywordType, string openId, HttpContext httpContext, RequestParams requestParams)
+            string weixinId, int keywordType, string openId, HttpContext httpContext, RequestParams requestParams,string objectId = null)
         {
             var keywordDAO = new WKeywordReplyDAO(loggingSessionInfo);
 
@@ -1058,7 +1075,7 @@ namespace JIT.CPOS.BS.BLL
                         break;
                     case MaterialType.IMAGE_TEXT:   //回复图文消息 
                         //ReplyNews(materialId);
-                        ReplyNewsJermyn(ReplyId, keywordType, 1, openId, weixinId, loggingSessionInfo, httpContext, requestParams);
+                        ReplyNewsJermyn(ReplyId, keywordType, 1, openId, weixinId, loggingSessionInfo, httpContext, requestParams, objectId);
                         break;
                     default:
                         break;
@@ -1066,10 +1083,10 @@ namespace JIT.CPOS.BS.BLL
             }
         }
 
-        public void ReplyNewsJermyn(string objectId, int KeywordType, int ObjectDataFrom, string openId,
-            string weixinId, LoggingSessionInfo loggingSessionInfo, HttpContext httpContext, RequestParams requestParams)
+        public void ReplyNewsJermyn(string replyId, int KeywordType, int ObjectDataFrom, string openId,
+            string weixinId, LoggingSessionInfo loggingSessionInfo, HttpContext httpContext, RequestParams requestParams,string objectId = null)
         {
-            var dsMaterialText = new WMaterialTextDAO(loggingSessionInfo).GetMaterialTextByIDJermyn(objectId, ObjectDataFrom);
+            var dsMaterialText = new WMaterialTextDAO(loggingSessionInfo).GetMaterialTextByIDJermyn(replyId, ObjectDataFrom);
 
             if (dsMaterialText != null && dsMaterialText.Tables.Count > 0 && dsMaterialText.Tables[0].Rows.Count > 0)
             {
@@ -1096,6 +1113,15 @@ namespace JIT.CPOS.BS.BLL
                     }
 
                     #endregion
+
+                    if (!string.IsNullOrEmpty(objectId) && url.Contains("?"))
+                    {
+                        url += "&employeeId=" + objectId;
+                    } 
+                    else
+                    {
+                        url += "?employeeId=" + objectId;
+                    }
 
                     newsList.Add(new WMaterialTextEntity()
                     {

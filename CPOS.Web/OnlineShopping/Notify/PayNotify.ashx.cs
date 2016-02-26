@@ -58,6 +58,25 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                         //更新积分和状态
                         //var loggingSessionInfo = Default.GetBSLoggingSession(CustomerID, "1");
                         var inoutBll = new T_InoutBLL(loggingSessionInfo);//订单业务对象实例化
+
+                        var trrBll = new T_RewardRecordBLL(loggingSessionInfo);
+                        //辨别打赏订单
+                        var rewardOrderPrefix = "REWARD|";
+                        if (OrderID.Contains(rewardOrderPrefix))
+                        {
+                            OrderID = OrderID.Substring(rewardOrderPrefix.Length, OrderID.Length - rewardOrderPrefix.Length);
+                            var trrEntity = trrBll.GetByID(OrderID);
+                            trrEntity.PayStatus = 2;
+                            trrEntity.LastUpdateTime = DateTime.Now;
+                            trrEntity.LastUpdateBy = loggingSessionInfo.UserID;
+                            trrBll.Update(trrEntity);
+                            if (trrEntity != null)
+                                context.Response.Write("SUCCESS");
+                            else
+                                context.Response.Write("FAIL");
+                            return;
+                        }
+
                         var inoutInfo = inoutBll.GetByID(OrderID);
                         if (inoutInfo != null)
                         {

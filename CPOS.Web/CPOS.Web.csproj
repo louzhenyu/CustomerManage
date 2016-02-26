@@ -54,10 +54,6 @@
       <HintPath>..\ReferenceDll\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ReferenceDll\Microsoft.SqlServer.Types.dll</HintPath>
-    </Reference>
     <Reference Include="NetDimension.Weibo">
       <HintPath>..\ReferenceDll\NetDimension.Weibo.dll</HintPath>
     </Reference>
@@ -2282,6 +2278,9 @@
     <Compile Include="ApplicationInterface\Module\VIP\Register\SetRegisterFormItemsAH.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\VIP\Reward\GetTopRewardListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Reward\SetRewardOrderAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Reward\GetConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetVipAmountDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipListNum\GetVipListNumAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipList\GetVipListAH.cs" />

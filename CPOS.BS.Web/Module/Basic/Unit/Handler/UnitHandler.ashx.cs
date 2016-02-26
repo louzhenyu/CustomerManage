@@ -170,6 +170,15 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 
             data = unitService.GetUnitById(key);
 
+            //门店关联的公众号
+            var tueBll = new TUnitExpandBLL(CurrentUserInfo);
+            var tueEntity = new TUnitExpandEntity();
+            if (!string.IsNullOrEmpty(key))
+            {
+                tueEntity = tueBll.QueryByEntity(new TUnitExpandEntity() { UnitId = key }, null).FirstOrDefault();
+                data.wxAppid = tueEntity != null && !string.IsNullOrEmpty(tueEntity.Field1) ? tueEntity.Field1 : string.Empty ;
+            }
+
             if (data != null)
             {
                 //var unitSortMappingList = tUnitUnitSortMappingBLL.QueryByEntity(new TUnitUnitSortMappingEntity()

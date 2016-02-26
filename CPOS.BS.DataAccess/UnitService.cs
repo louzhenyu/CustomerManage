@@ -594,6 +594,13 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             sql = pService.GetIsNotNullUpdateSql(sql, "StoreType", unitInfo.StoreType);
 
             sql = sql + " where unit_id = '" + unitInfo.Id + "' ;";
+            //同时保存门店关联的微信appid
+            if(!string.IsNullOrEmpty(unitInfo.wxAppid))
+            {
+                sql += " update t_unit set Field1 = '" + unitInfo.wxAppid + "' ";
+                sql = sql + " where unit_id = '" + unitInfo.Id + "' ;";
+            }
+
             #endregion
             if (pTran != null)
             {

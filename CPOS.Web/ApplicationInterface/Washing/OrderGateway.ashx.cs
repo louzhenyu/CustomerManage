@@ -68,6 +68,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Washing
 
             //允许上传的扩展名
             string allowExpandName = customerBasicSettingBll.GetSettingValueByCode("AllowUploadExpandName");
+            allowExpandName = !string.IsNullOrEmpty(allowExpandName) ? allowExpandName : "gif,jpg,jpeg,png,bmp";//设置缺省图片格式
             //不允许
             if (allowExpandName.IndexOf(expandName) == -1)
             {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using JIT.CPOS.DTO.Base;
-using Microsoft.SqlServer.Types;
 using Newtonsoft.Json;
 
 namespace JIT.CPOS.DTO.Module.UnitAndItem.Unit.Response

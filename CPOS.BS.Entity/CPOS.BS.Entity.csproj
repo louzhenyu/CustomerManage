@@ -312,12 +312,14 @@
     <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionNaireQuestionMappingEntity.cs" />
     <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionPicEntity.cs" />
     <Compile Include="CodeGeneration\Questionnaire\T_QN_ScoreRecoveryInformationEntity.cs" />
-  <Compile Include="CodeGeneration\T_Item_CategoryEntity.cs" />
+    <Compile Include="CodeGeneration\T_Item_CategoryEntity.cs" />
     <Compile Include="CodeGeneration\T_Item_PriceEntity.cs" />
     <Compile Include="CodeGeneration\T_Item_Price_TypeEntity.cs" />
     <Compile Include="CodeGeneration\T_Item_PropertyEntity.cs" />
     <Compile Include="CodeGeneration\T_Payment_detailEntity.cs" />
     <Compile Include="CodeGeneration\T_PropEntity.cs" />
+    <Compile Include="CodeGeneration\T_RewardConfigEntity.cs" />
+    <Compile Include="CodeGeneration\T_RewardRecordEntity.cs" />
     <Compile Include="CodeGeneration\T_SkuEntity.cs" />
     <Compile Include="CodeGeneration\T_Sku_PriceEntity.cs" />
     <Compile Include="CodeGeneration\T_Sku_PropertyEntity.cs" />
@@ -386,7 +388,7 @@
     <Compile Include="CodeGeneration\WXSalesPolicyRateObjectMappingEntity.cs" />
     <Compile Include="CodeGeneration\WXSalesPushLogEntity.cs" />
     <Compile Include="CodeGeneration\WXUserInfoEntity.cs" />
- <Compile Include="CodeGeneration\WXTMConfigEntity.cs" />
+    <Compile Include="CodeGeneration\WXTMConfigEntity.cs" />
     <Compile Include="ContactEventEntity.cs" />
     <Compile Include="CouponGrantLogEntity.cs" />
     <Compile Include="CouponSourceEntity.cs" />
@@ -1041,6 +1043,8 @@
     <Compile Include="Questionnaire\T_QN_QuestionNaireQuestionMappingEntity.cs" />
     <Compile Include="Questionnaire\T_QN_QuestionPicEntity.cs" />
     <Compile Include="Questionnaire\T_QN_ScoreRecoveryInformationEntity.cs" />
+    <Compile Include="T_RewardConfigEntity.cs" />
+    <Compile Include="T_RewardRecordEntity.cs" />
     <Compile Include="T_SkuEntity.cs" />
     <Compile Include="T_Sku_PriceEntity.cs" />
     <Compile Include="T_Sku_PropertyEntity.cs" />

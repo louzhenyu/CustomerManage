@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.SqlServer.Types;
 using Newtonsoft.Json;
 
 namespace JIT.CPOS.BS.Entity.Eliya

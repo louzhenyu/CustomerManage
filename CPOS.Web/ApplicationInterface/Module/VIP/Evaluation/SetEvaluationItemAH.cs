@@ -50,21 +50,25 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
                     bll.Create(entity, pTran);
 
                     //批量评论商品
-                    ObjectEvaluationEntity evaluation = null;
-                    foreach (var item in rp.ItemEvaluationInfo)
+                    if (rp.ItemEvaluationInfo != null)
                     {
-                        evaluation = new ObjectEvaluationEntity();
-                        evaluation.ObjectID = item.ObjectID;
-                        evaluation.StarLevel = item.StarLevel;
-                        evaluation.Content = item.Content;
-                        evaluation.Remark = item.Remark;
-                        evaluation.CustomerID = pRequest.CustomerID;
-                        evaluation.IsAnonymity = rp.IsAnonymity;
-                        evaluation.OrderID = rp.OrderID;
-                        evaluation.Type = rp.Type;
-                        evaluation.VipID = pRequest.UserID;
-                        bll.Create(evaluation, pTran);
+                        ObjectEvaluationEntity evaluation = null;
+                        foreach (var item in rp.ItemEvaluationInfo)
+                        {
+                            evaluation = new ObjectEvaluationEntity();
+                            evaluation.ObjectID = item.ObjectID;
+                            evaluation.StarLevel = item.StarLevel;
+                            evaluation.Content = item.Content;
+                            evaluation.Remark = item.Remark;
+                            evaluation.CustomerID = pRequest.CustomerID;
+                            evaluation.IsAnonymity = rp.IsAnonymity;
+                            evaluation.OrderID = rp.OrderID;
+                            evaluation.Type = rp.Type;
+                            evaluation.VipID = pRequest.UserID;
+                            bll.Create(evaluation, pTran);
+                        }
                     }
+                    
                     //修改订单评论状态
                     var order = inoutBll.GetByID(rp.OrderID);
                     if (order != null)
@@ -74,7 +78,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
                     }
                     pTran.Commit();//提交事物
 
-                    #region 评论触点活动奖励
+                    #region 评论触点活动奖励 
                     var bllPrize = new LPrizesBLL(CurrentUserInfo);
                     bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Comment");
                     #endregion

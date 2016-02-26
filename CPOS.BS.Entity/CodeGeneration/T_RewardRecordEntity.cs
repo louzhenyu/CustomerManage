@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013/7/17 10:52:37
+ * Create On	:2016-1-18 17:23:57
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,13 +25,13 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class TUnitExpandEntity : BaseEntity 
+    public partial class T_RewardRecordEntity : BaseEntity 
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public TUnitExpandEntity()
+        public T_RewardRecordEntity()
         {
         }
         #endregion     
@@ -40,62 +40,57 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String UnitId { get; set; }
+		public Guid? RewardId { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? OrderNo { get; set; }
+		public String RewardCode { get; set; }
 
 		/// <summary>
-		/// 门店关联的微信公众号AppID
+		/// 1.会员   2.员工
 		/// </summary>
-		public String Field1 { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Field2 { get; set; }
+		public Int32? RewardOPType { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String Field3 { get; set; }
+		public String RewardOP { get; set; }
+
+		/// <summary>
+		/// 1.会员   2.员工
+		/// </summary>
+		public Int32? RewardedOPType { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String Field4 { get; set; }
+		public String RewardedOP { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String Field5 { get; set; }
+		public Int32? RewardType { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String Field6 { get; set; }
+		public Decimal? RewardAmount { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String Field7 { get; set; }
+		public String Remark { get; set; }
+
+		/// <summary>
+		/// 0.未支付   1.已支付   2.支付失败
+		/// </summary>
+		public Int32? PayStatus { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String Field8 { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Field9 { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Field10 { get; set; }
+		public DateTime? PayDatetime { get; set; }
 
 		/// <summary>
 		/// 
@@ -110,17 +105,22 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String LastUpdateBy { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
 		public DateTime? LastUpdateTime { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
+		public String LastUpdateBy { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CustomerId { get; set; }
 
 
         #endregion

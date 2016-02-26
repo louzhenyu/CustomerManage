@@ -602,10 +602,12 @@ namespace JIT.CPOS.BS.Entity
         public string imageUrl { set; get; }
         public string StoreType { set; get; }
         public string StoreTypeName { set; get; }
-        
-        //public string Parent_Unit_Name { set; get; }
-        
 
-       
+        //public string Parent_Unit_Name { set; get; }
+        /// <summary>
+        /// 微信appid
+        /// </summary>
+        public string wxAppid { set; get; }
+
     }
 }

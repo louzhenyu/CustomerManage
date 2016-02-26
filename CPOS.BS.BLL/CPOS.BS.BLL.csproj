@@ -440,7 +440,6 @@
     <Compile Include="CodeGeneration\t_customerBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
-
     <Compile Include="CodeGeneration\T_ItemBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemSkuPropBLL.cs" />
     <Compile Include="CodeGeneration\Questionnaire\T_QN_ActivityQuestionnaireMappingBLL.cs" />
@@ -452,14 +451,15 @@
     <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionNaireQuestionMappingBLL.cs" />
     <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionPicBLL.cs" />
     <Compile Include="CodeGeneration\Questionnaire\T_QN_ScoreRecoveryInformationBLL.cs" />
-
-  <Compile Include="CodeGeneration\T_Item_CategoryBLL.cs" />
+    <Compile Include="CodeGeneration\T_Item_CategoryBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_PriceBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_Price_TypeBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_PropertyBLL.cs" />
     <Compile Include="CodeGeneration\T_Payment_detailBLL.cs" />
     <Compile Include="CodeGeneration\T_Payment_TypeBLL.cs" />
     <Compile Include="CodeGeneration\T_PropBLL.cs" />
+    <Compile Include="CodeGeneration\T_RewardConfigBLL.cs" />
+    <Compile Include="CodeGeneration\T_RewardRecordBLL.cs" />
     <Compile Include="CodeGeneration\T_SkuBLL.cs" />
     <Compile Include="CodeGeneration\T_Sku_PriceBLL.cs" />
     <Compile Include="CodeGeneration\T_Sku_PropertyBLL.cs" />
@@ -1022,7 +1022,6 @@
     <Compile Include="T_CityBLL.cs" />
     <Compile Include="t_customerBLL.cs" />
     <Compile Include="T_InoutBLL.cs" />
-
     <Compile Include="T_ItemBLL.cs" />
     <Compile Include="T_ItemSkuPropBLL.cs" />
     <Compile Include="Questionnaire\T_QN_ActivityQuestionnaireMappingBLL.cs" />
@@ -1034,13 +1033,15 @@
     <Compile Include="Questionnaire\T_QN_QuestionNaireQuestionMappingBLL.cs" />
     <Compile Include="Questionnaire\T_QN_QuestionPicBLL.cs" />
     <Compile Include="Questionnaire\T_QN_ScoreRecoveryInformationBLL.cs" />
- <Compile Include="T_Item_CategoryBLL.cs" />
+    <Compile Include="T_Item_CategoryBLL.cs" />
     <Compile Include="T_Item_PriceBLL.cs" />
     <Compile Include="T_Item_Price_TypeBLL.cs" />
     <Compile Include="T_Item_PropertyBLL.cs" />
     <Compile Include="T_Payment_detailBLL.cs" />
     <Compile Include="T_Payment_TypeBLL.cs" />
     <Compile Include="T_PropBLL.cs" />
+    <Compile Include="T_RewardConfigBLL.cs" />
+    <Compile Include="T_RewardRecordBLL.cs" />
     <Compile Include="T_SkuBLL.cs" />
     <Compile Include="T_Sku_PriceBLL.cs" />
     <Compile Include="T_Sku_PropertyBLL.cs" />
@@ -1159,7 +1160,7 @@
     <Compile Include="WXSalesPolicyRateObjectMappingBLL.cs" />
     <Compile Include="WXSalesPushLogBLL.cs" />
     <Compile Include="WXUserInfoBLL.cs" />
- <Compile Include="WXTMConfigBLL.cs" />
+    <Compile Include="WXTMConfigBLL.cs" />
     <Compile Include="WX\BaseClass\ServiceBLL.cs" />
     <Compile Include="WX\BaseClass\SubscriptionBLL.cs" />
     <Compile Include="WX\Common\AuthBLL.cs" />

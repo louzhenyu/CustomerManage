@@ -417,12 +417,14 @@
     <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionNaireQuestionMappingDAO.cs" />
     <Compile Include="CodeGeneration\Questionnaire\T_QN_QuestionPicDAO.cs" />
     <Compile Include="CodeGeneration\Questionnaire\T_QN_ScoreRecoveryInformationDAO.cs" />
-   <Compile Include="CodeGeneration\T_Item_CategoryDAO.cs" />
+    <Compile Include="CodeGeneration\T_Item_CategoryDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_PriceDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_Price_TypeDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_PropertyDAO.cs" />
     <Compile Include="CodeGeneration\T_Payment_detailDAO.cs" />
     <Compile Include="CodeGeneration\T_PropDAO.cs" />
+    <Compile Include="CodeGeneration\T_RewardConfigDAO.cs" />
+    <Compile Include="CodeGeneration\T_RewardRecordDAO.cs" />
     <Compile Include="CodeGeneration\T_SkuDAO.cs" />
     <Compile Include="CodeGeneration\T_Sku_PriceDAO.cs" />
     <Compile Include="CodeGeneration\T_Sku_PropertyDAO.cs" />
@@ -560,7 +562,7 @@
     <Compile Include="CodeGeneration\WXSalesPolicyRateObjectMappingDAO.cs" />
     <Compile Include="CodeGeneration\WXSalesPushLogDAO.cs" />
     <Compile Include="CodeGeneration\WXUserInfoDAO.cs" />
- <Compile Include="CodeGeneration\WXTMConfigDAO.cs" />
+    <Compile Include="CodeGeneration\WXTMConfigDAO.cs" />
     <Compile Include="CodeGeneration\ZCourseApplyDAO.cs" />
     <Compile Include="CodeGeneration\ZCourseDAO.cs" />
     <Compile Include="CodeGeneration\ZCourseNewsMappingDAO.cs" />
@@ -939,7 +941,6 @@
     <Compile Include="T_CityDAO.cs" />
     <Compile Include="t_customerDAO.cs" />
     <Compile Include="T_InoutDAO.cs" />
-   
     <Compile Include="T_ItemDAO.cs" />
     <Compile Include="T_ItemSkuPropDAO.cs" />
     <Compile Include="Questionnaire\T_QN_ActivityQuestionnaireMappingDAO.cs" />
@@ -958,6 +959,8 @@
     <Compile Include="T_Payment_detailDAO.cs" />
     <Compile Include="T_Payment_TypeDAO.cs" />
     <Compile Include="T_PropDAO.cs" />
+    <Compile Include="T_RewardConfigDAO.cs" />
+    <Compile Include="T_RewardRecordDAO.cs" />
     <Compile Include="T_SkuDAO.cs" />
     <Compile Include="T_Sku_PriceDAO.cs" />
     <Compile Include="T_Sku_PropertyDAO.cs" />

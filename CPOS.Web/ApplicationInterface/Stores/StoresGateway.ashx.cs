@@ -120,14 +120,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
 
 
                 #region 获取微信帐号
-                WApplicationInterfaceBLL server = new WApplicationInterfaceBLL(loggingSessionInfo);
-                var wxObj = server.QueryByEntity(new WApplicationInterfaceEntity
+                //门店关联的公众号
+                var tueBll = new TUnitExpandBLL(loggingSessionInfo);
+                var tueEntity = new TUnitExpandEntity();
+                if(!string.IsNullOrEmpty(RP.Parameters.unitId))
                 {
-                    CustomerId = customerId
-                    ,
-                    IsDelete = 0
-                }, null);
-                if (wxObj == null || wxObj.Length == 0)
+                    tueEntity = tueBll.QueryByEntity(new TUnitExpandEntity() { UnitId = RP.Parameters.unitId }, null).FirstOrDefault();
+                }
+
+                var server = new WApplicationInterfaceBLL(loggingSessionInfo);
+                var wxObj = new WApplicationInterfaceEntity();
+                if(tueEntity != null && !string.IsNullOrEmpty(tueEntity.Field1))
+                {
+                    wxObj = server.QueryByEntity(new WApplicationInterfaceEntity { AppID = tueEntity.Field1, CustomerId = customerId }, null).FirstOrDefault();
+                }
+                else
+                {
+                    wxObj = server.QueryByEntity(new WApplicationInterfaceEntity { CustomerId = customerId }, null).FirstOrDefault();
+                }
+                
+                if (wxObj == null)
                 {
                     rsp.ResultCode = 302;
                     rsp.Message = "不存在对应的微信帐号";
@@ -135,9 +147,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 }
                 else
                 {
-                    JIT.CPOS.BS.BLL.WX.CommonBLL commonServer = new JIT.CPOS.BS.BLL.WX.CommonBLL();
-                    imageUrl = commonServer.GetQrcodeUrl(wxObj[0].AppID
-                        , wxObj[0].AppSecret
+                    var commonServer = new CommonBLL();
+
+                    imageUrl = commonServer.GetQrcodeUrl(wxObj.AppID
+                        , wxObj.AppSecret
                         , rpVipDCode.ToString("")//二维码类型  0： 临时二维码  1：永久二维码
                         , iResult, loggingSessionInfo);//iResult作为场景值ID，临时二维码时为32位整型，永久二维码时只支持1--100000
                     if (imageUrl != null && !imageUrl.Equals(""))
@@ -174,7 +187,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         userQrCode.IsUse = 1;
                         userQrCode.CustomerId = loggingSessionInfo.ClientID;
                         userQrCode.ImageUrl = imageUrl;
-                        userQrCode.ApplicationId = wxObj[0].ApplicationId;
+                        userQrCode.ApplicationId = wxObj.ApplicationId;
                         //objectId 为店员ID
                         userQrCode.ObjectId = objectid;
                         userQrcodeBll.Create(userQrCode);
