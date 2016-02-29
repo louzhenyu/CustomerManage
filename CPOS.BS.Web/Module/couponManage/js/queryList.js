@@ -241,7 +241,8 @@
                         }
                     },
                     {field : 'ParValue',title : '面值',width:200,resizable:false,align:'center'},
-                    {field : 'ValidityPeriod',title : '有效期',width:200,align:'left',resizable:false
+                    {
+                        field: 'ValidityPeriod', title: '有效期', width: 200, align: 'left', resizable: false
                         ,formatter:function(value ,row,index) {
                         if (!value) {
                             return new Date(value).format("yyyy-MM-dd") + "至" + new Date(row.EndTime).format("yyyy-MM-dd");
@@ -262,12 +263,18 @@
                         formatter:function(value,row,index){
                             if(isNaN(parseInt(value))){
                                 return 0;
-                            }else{
-                                return parseInt(value);
+                            } else {
+                                var result = parseInt(value);
+                                if (result > 0) {
+                                    return result;
+                                } else {
+                                    return -result;
+                                }
                             }
                         }},
 
-                    {field : 'addOptdel',title : '操作',width:200,align:'left',resizable:false,
+                    {
+                        field: 'addOptdel', title: '操作', width: 200, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             var str = "<div class='operation'><div data-index=" + index + " data-flag='add' class='btnAdd  opt' title='追加'> </div>";
                             str += "<div data-index=" + index + "  data-flag='Download' data-TypeName='" + row.CouponTypeName + "' data-TypeID='" + row.CouponTypeID + "' class='btnDownload  opt' title='下载'> </div>";

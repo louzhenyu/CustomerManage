@@ -54,10 +54,11 @@
                     <!--<h2 class="commonTitle">会员查询</h2>-->
 
                 </div>
-                <div class="tableWrap" id="tableWrap">
-                                   <div class="optionBtn">
-                                    <div class="commonBtn export icon w80 icon_export" data-flag="export">导出</div>
+                <div class="optionBtn">
+                                    <div class="commonBtn export icon w80 icon_export r" data-flag="export">导出</div>
                                   </div>
+                <div class="tableWrap" id="tableWrap">
+                                   
                 <div class="tableList" id="opt">
                    <ul><li data-status="0" class="on"><em> 全部 </em></li>
                         <li data-status="1"><em>待审核 </em></li>

@@ -8,7 +8,7 @@
     <link href="css/birthDayDetail.css" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="allPage" id="section" data-js="js/birthDayDetail.js?ver=0.3">
+    <div class="allPage" id="section" data-js="js/birthDayDetail.js?ver=0.5">
         <!-- 内容区域 -->
         <div class="contentArea_vipquery">
             <!--个别信息查询-->
@@ -30,7 +30,7 @@
                                 <div class="commonSelectWrap">
                                     <em class="tit">活动名称：</em>
                                     <label class="searchInput" style="width: 352px;">
-                                        <input class="easyui-validatebox" data-options="required:true,validType:'stringCheck'" name="ActivityName"
+                                        <input class="easyui-validatebox"  data-options="required:true,validType:'stringCheck'" name="ActivityName"
                                             type="text" value="" placeholder="请输入">
                                     </label>
                                 </div>
@@ -53,7 +53,7 @@
                                 <div class="commonSelectWrap">
                                     <div class="tit">
                                         <div class="radio on" data-name="vip">
-                                            <em></em><span>会员卡类型：</span></div>
+                                            <em></em><span>会员类型：</span></div>
                                     </div>
                                     <div class="selectBox">
                                         <input type="text" class="easyui-combobox" id="vipCard" name="VipCardTypeID" data-options="width:160,height:32,validType:'selectIndex'">
@@ -121,7 +121,7 @@
                       <form></form>
                        <form id="nav0_3">
                         <div class="lineTitle">
-                            短信设置</div>
+                            短信设置<span class="prompttips" title="每次发送不能少于100个手机号。&#10;群发时间：早上09:00点到晚上06:00点。&#10;内容格式：短信内容开头“尊敬的会员”，最后要加“回复T退订”。"></span></div>
                         <div class="tagPanel borderNone">
                             <div class="checkBoxPanel">
                                 <div class="inputDiv">
@@ -201,7 +201,7 @@
 
                         </div><!--tagPanel-->
                         <div class="lineTitle">
-                            微信设置</div>
+                            微信设置<span class="prompttips" title="微信群发消息会占用1次服务号消息推送的机会！"></span></div>
                         <div class="tagPanel borderNone">
                             <div class="checkBoxPanel">
                                 <div class="inputDiv">
@@ -268,6 +268,7 @@
                                                                               <!--selectBox-->
                                                                           </div>
                                                                           <!--commonSelectWrap-->
+                                                   
                                                                           <div class="commonBtn" style="display: none">
                                                                               选择模板</div>
                                                                           <div class="text">
@@ -290,9 +291,9 @@
                 <div class="zsy">
                 </div>
                 <div class="btnopt" data-falg="nav01">
-                    <div class=" commonBtn bgWhite" data-flag="#nav01">
+                    <div class=" commonBtn bgWhite prevStepBtn" data-flag="#nav01" style="float:left;">
                         上一步</div>
-                    <div class=" commonBtn" id="submitBtn" data-submitindex="1" data-flag="#nav02">
+                    <div class=" commonBtn nextStepBtn" id="submitBtn" data-submitindex="1" data-flag="#nav02" style="float:left;">
                         下一步</div>
                 </div>
             </div>
@@ -387,6 +388,8 @@
                                                 <!--selectBox-->
                                             </div>
                                             <!--commonSelectWrap-->
+                                            
+                                                    <div class="deletebtn " >删除</div>
                                             <div class="commonBtn" style="display: none">
                                                 选择模板</div>
                                             <div class="text">

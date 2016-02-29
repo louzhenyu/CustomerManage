@@ -72,7 +72,7 @@
             </table>
             <div id="pageContianer">
              <div class="dataMessage" >没有符合条件的查询记录</div>
-                <div id="kkpager" style="text-align:center;"></div>
+                <div id="kkpager" ></div>
             </div>
         </div>
     </div>
@@ -238,7 +238,7 @@
 						<div class="commonSelectWrap" style="position:relative;left:-61px;">
 							<em class="tit">商品分销价比例：</em>
 								<label class="searchInput" >
-									 <input  data-text="商品分销价比例" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="" name="ItemSalsePriceRate" type="text" >
+									 <input  data-text="商品分销价比例" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="" name="ItemSalesPriceRate" type="text" >
 								</label>%
 						</div>
 					</div>

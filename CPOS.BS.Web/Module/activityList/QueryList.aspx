@@ -19,7 +19,6 @@
 
 #tableWrap2 .datagrid-row,#tableWrap2 .datagrid-header-row{height:62px;line-height:61px;}
 #tableWrap2 .datagrid-btable{width:100%;}
-
 /*活动参与，弹出*/
 .jui-dialog .dataTable{border:none;}
 .jui-dialog .dataTable tr{height:49px;line-height:48px;}
@@ -43,20 +42,7 @@
 .exportTable{height:75px;background:#f4f8fa;}
 .exportTable .exportBtn{display:none;width:110px;height:32px;line-height:32px;margin:22px 0 0 30px;text-align:center;font-size:14px;border-radius:3px;background:#0cc;color:#f4f8fa;}
 /*弹层，分页*/
-/*底部分页的重写*/
-#kkpager2{clear:both;height:30px;line-height:30px;margin-top:10px;color:#999999;font-size:14px;}
-#kkpager2 a{padding:4px 8px;margin:10px 3px;font-size:12px;color:#9d9d9d;text-decoration:none;}
-#kkpager2 span{font-size:14px;}
-#kkpager2 span.disabled{padding:4px 8px;margin:10px 3px;font-size:12px;border:1px solid #DFDFDF;background-color:#FFF;color:#DFDFDF;}
-#kkpager2 span.curr{padding:4px 8px;margin:10px 3px;font-size:12px;border:1px solid #FF6600;background-color:#FF6600;color:#FFF;}
-#kkpager2 a:hover{background-color:#FFEEE5;border:1px solid #FF6600;}
-#kkpager2 span.normalsize{font-size:12px;}
 
-#kkpager2{clear:both;height:30px;line-height: 23px;color:#323232;font-size:12px;text-align: right;padding-right: 65px;}
-#kkpager2 span.normalsize{ color:#323232;}
-#kkpager2 span.disabled,#kkpager a {border: none; color: #969696;}
-#kkpager2 a:hover {border: none; background: none; color: #00cccc}
-#kkpager2 span.curr {color: #00cccc; font-size: 14px; font-weight:600; border: none; background: none;}
 
 .joinprize,.winprize{  text-decoration: underline;color:#0099ff;}
     

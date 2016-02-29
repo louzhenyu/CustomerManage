@@ -133,7 +133,7 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         <div class="modulecontent">
         <div class="class">
             <div class="classify">商城</div>
-            <div class="options"><span><a target="_blank" href="#">配送方案</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=776">配送方式</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=774">支付方式</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=772">商城装修</a></span></div>
+            <div class="options"><span><a target="_blank" href="#">配送方</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=776">配送方式</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=774">支付方式</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=772">商城装修</a></span></div>
         </div>
         <div class="class">
             <div class="classify">商品</div>
@@ -141,7 +141,7 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         </div>
         <div class="class">
             <div class="classify">订单</div>
-            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=836">订单管理</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=840">退换货管理</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=843">退款管理</a></span><span><a target="_blank" href="#">发起活动</a></span></div>
+            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=836">订单管理</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=840">退换货管理</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=843">退款管理</a></span></div>
         </div>
         </div>
     </div>
@@ -160,11 +160,11 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         </div>
              <div class="class">
             <div class="classify">优惠券管理</div>
-            <div class="options"><span><a target="_blank" href="#">优惠券设置</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=814">优惠券查询</a></span></div>
+            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=1141">优惠券设置</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=814">优惠券查询</a></span></div>
         </div>
             <div class="class">
             <div class="classify">营销工具</div>
-            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=822">生日关怀</a></span><span><a target="_blank" href="#">节日关怀</a></span><span><a target="_blank" href="#">花样问卷</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=820">触点活动</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=818">互动游戏</a></span></div>
+            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=822">生日关怀</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=1217">节日关怀</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=931">花样问卷</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=820">触点活动</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=818">互动游戏</a></span></div>
         </div>
           </div>
     </div>
@@ -179,11 +179,11 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         </div>
              <div class="class">
             <div class="classify">忠诚度</div>
-            <div class="options"><span><a target="_blank" href="#">积分设置</a></span><span><a target="_blank" href="#">返现设置</a></span></div>
+            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=717">积分/返现设置</a></span></div>
         </div>
              <div class="class">
             <div class="classify">大数据</div>
-            <div class="options"><span><a target="_blank" href="#">会员数据</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=727">标签设置</a></span><span><a target="_blank" href="#">会员分组</a></span><span><a target="_blank" href="#">节日关怀</a></span></div>
+            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=730">会员数据</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=727">标签设置</a></span><span><a target="_blank" href="#">会员分组</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=1217">节日关怀</a></span></div>
         </div>
           </div>
     </div>
@@ -240,7 +240,7 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         <div class="modulecontent">
              <div class="class">
             <div class="classify"></div>
-            <div class="options"><span><a target="_blank" href="#">商户信息</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=753">组织架构</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=755">门店管理</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=757">角色设置</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=759">员工管理</a></span></div>
+            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=1089">商户信息</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=753">组织架构</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=755">门店管理</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=757">角色设置</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=759">员工管理</a></span></div>
         </div>
           </div>
     </div>

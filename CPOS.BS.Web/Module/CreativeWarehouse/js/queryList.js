@@ -123,21 +123,6 @@
 
                 $(".InSeasonList").append(bd.template("tpl_InSeasonList", data));
 
-
-                //赋值导航start
-                var navhtml="<span class='thisseasontouchslider-prev'></span>";
-                for (i = 0; i < data.ThemeList.length; i++)
-                {
-                    if(i==0)
-                        navhtml+=" <span class='thisseasontouchslider-nav-item thisseasontouchslider-nav-item-current'></span>";
-                    else
-                        navhtml+=" <span class='thisseasontouchslider-nav-item '></span>";
-                }
-                navhtml += "<span class='thisseasontouchslider-next'></span>";
-
-                $(".thisseasontouchslider-nav").html(navhtml);
-                //赋值导航end
-
                 $(".touchsliderthisseason").touchSlider({
                     container: this,
                     duration: 350, // 动画速度

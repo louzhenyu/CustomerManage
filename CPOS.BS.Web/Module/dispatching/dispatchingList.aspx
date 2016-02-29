@@ -32,7 +32,7 @@
 
 	.tableWrap .operateWrap .editIcon{cursor:pointer;display:block;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px; height: 18px;  }
 	
-
+	.datagrid-btable,.datagrid-btable tr{width:100%;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -78,7 +78,7 @@
         
         <div class="commonSelectWrap" style="height:100px">
             <em class="tit"><span class="fontRed">*</span> 配送费描述:</em>
-            <p class="searchInput" style="height:100px"><textarea class="formInputBox" id="dispatching_describe" style="width:100%;height:100%;"></textarea></p>
+            <p class="searchInput" style="height:100px"><textarea class="formInputBox" id="dispatching_describe" placeholder="例如：配送范围仅上海，满100元面运费" style="width:100%;height:100%;"></textarea></p>
         </div>
         <div class="commonSelectWrap">
             <em class="tit"><span class="fontRed">*</span> 默认配送费:</em>
@@ -99,7 +99,7 @@
 
 
 <!-- 弹出，到店自提 -->
-<div id="jui-dialog-2" class="jui-dialog jui-dialog-dispatching">
+<div id="jui-dialog-2" class="jui-dialog jui-dialog-dispatching" style="width:500px;min-height:200px;margin-left:-250px;">
 	<div class="jui-dialog-tit">
     	<h2>到店自提</h2>
         <span class="jui-dialog-close"></span>
@@ -112,7 +112,7 @@
                 <p class="radioBox unstartUs">停用</p>
             </div>
         </div>
-        
+        <!--
         <div class="commonSelectWrap">
             <em class="tit"><span class="fontRed">*</span> 备货期:</em>
             <p class="searchInput"><input class="formInputBox" id="dispatching_stockup" type="text" /></p>
@@ -128,7 +128,7 @@
             <em class="tit"><span class="fontRed">*</span> 提货期最长:</em>
             <p class="searchInput"><input class="formInputBox" id="dispatching_pickup" type="text" value="" /></p><span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">天内</span>
         </div>
-        
+        -->
         <div class="btnWrap">
         	<a href="javascript:;" class="commonBtn saveBtn">保存</a>
             <a href="javascript:;" class="commonBtn cancelBtn">取消</a>

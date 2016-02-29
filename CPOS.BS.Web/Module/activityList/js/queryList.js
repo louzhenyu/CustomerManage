@@ -183,7 +183,6 @@
                     {field : 'DrawMethodName',title : '活动方式',width:58,resizable:false,align:'center'},
                     {field : 'BeginTime',title : '开始时间',width:58,resizable:false,align:'center',
                     formatter: function (value, row, index) {
-                        debugger;
                             return new Date(value).format("yyyy-MM-dd");
                         }
                     },
@@ -251,7 +250,7 @@
             //data.Data={};
             //data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
             //var page=parseInt(that.loadData.args.start/15);
-            kkpager.generPageHtml({
+             kkpager.generPageHtml({
 				pagerid:'kkpager',
                 pno: that.loadData.args.PageIndex,
                 mode: 'click', //设置为click模式
@@ -407,8 +406,12 @@
                 }
             });
 			
+            debugger;
 			var pageCount = data.totalCount%that.loadData2.limit==0? data.totalCount/that.loadData2.limit: data.totalCount/that.loadData2.limit +1;
 			
+
+            
+
             kkpager.generPageHtml({
 				pagerid:'kkpager2',
                 pno: that.loadData2.page,
@@ -417,11 +420,7 @@
                 totalRecords: data.totalCount,//总条数
                 isShowTotalPage: true,
                 isShowTotalRecords: true,
-                click: function(n){
-                    this.selectPage(n);
-                    that.loadMoreData2(n);
-                },
-                getHref: function (n) {
+                click: function (n) {
                     this.selectPage(n);
                     that.loadMoreData2(n);
                 }

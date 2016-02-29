@@ -625,7 +625,7 @@
   background-color: #fff;
 }
 .combo {
-  border-color: #ccc;
+  border-color: #ddd;
   background-color: #fff;
 }
 .combo-arrow {
@@ -1821,7 +1821,7 @@
 }
 .searchbox .searchbox-prompt {
   font-size: 13px;
-  color: #ccc;
+  color: #ddd;
 }
 .searchbox-button {
   width: 18px;
@@ -2383,7 +2383,7 @@
   border: 1px dotted red;
 }
 .tree-editor {
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   font-size: 13px;
   height: 14px !important;
   height: 18px;

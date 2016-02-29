@@ -523,10 +523,11 @@
                         that.renderTable();
                     })
                 }else{
-					$('.tipsBottomBox').show();
-			   		setTimeout(function(){
-						$('.tipsBottomBox').hide();
-					},1000);
+					//$('.tipsBottomBox').show();
+			   		//setTimeout(function(){
+					//	$('.tipsBottomBox').hide();
+                    //},1000);
+                    $.messager.alert("提示", "引流与销售至少选中一个哦！");
 			   }
 
             });
