@@ -470,6 +470,8 @@ public class JsonData
     public string status { get; set; }
 
     public string topics { get; set; }
+    public bool success { get; set; }
+    public string msg { get; set; }
 }
 public class ResponseData
 {

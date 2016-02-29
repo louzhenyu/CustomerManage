@@ -127,7 +127,7 @@ namespace JIT.CPOS.Web.CustomerService
                         , reqObj.special.messageTypeId
                         , reqObj.special.contetTypeId
                         , reqObj.special.sign
-                        , reqObj.special.mobileNo);
+                        , reqObj.special.mobileNo, reqObj.special.VipIDInit);
                 }
             }
             catch (Exception ex)
@@ -157,6 +157,8 @@ namespace JIT.CPOS.Web.CustomerService
             public int? contetTypeId;
             public string sign;
             public string mobileNo;
+            public string VipIDInit;//员工主动向会员发起会话的vipID
+            
         }
         public class SendMessageRespData : Default.LowerRespData
         {

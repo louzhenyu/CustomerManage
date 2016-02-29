@@ -23,6 +23,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             var rd = new GetImageRD();
             ObjectImagesBLL bllImage = new ObjectImagesBLL(this.CurrentUserInfo);
             LEventsBLL bllEvent = new LEventsBLL(this.CurrentUserInfo);
+            LCoverBLL bllCover = new LCoverBLL(CurrentUserInfo);
+
+
             var image = bllImage.QueryByEntity(new ObjectImagesEntity() { ObjectId = pRequest.Parameters.EventId ,IsDelete=0}, null).ToList();
             var eventInfo = bllEvent.GetByID(pRequest.Parameters.EventId);
             
@@ -61,6 +64,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             rd.OverRemark = eventInfo.OverRemark;
             rd.ShareLogoUrl = eventInfo.ShareLogoUrl;
             rd.IsShare = eventInfo.IsShare == null ? 0 : (int)eventInfo.IsShare;
+
+            var entityCover = bllCover.QueryByEntity(new LCoverEntity() { EventId = pRequest.Parameters.EventId, IsDelete = 0,IsShow=1 }, null).FirstOrDefault();
+            if (entityCover!=null)
+            {
+                rd.CoverInfo = entityCover;
+            }
+
             return rd;
         }
     }

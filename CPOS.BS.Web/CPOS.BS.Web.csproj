@@ -51,6 +51,10 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\ReferenceDll\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="LitJSON, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Framework\Javascript\Other\kindeditor\asp.net\bin\LitJSON.dll</HintPath>
@@ -1628,6 +1632,11 @@
     <Content Include="Module\Vip\Vip14\images\storeNum_icon.png" />
     <Content Include="Module\Vip\Vip14\images\vipTrend_icon.png" />
     <Content Include="Module\Vip\Vip14\VipCenter.aspx" />
+    <Content Include="Module\WeChatAuthor\css\style.css" />
+    <Content Include="Module\WeChatAuthor\images\bind.png" />
+    <Content Include="Module\WeChatAuthor\images\loading.gif" />
+    <Content Include="Module\WeChatAuthor\js\queryList.js" />
+    <Content Include="Module\WeChatAuthor\QueryList.aspx" />
     <Content Include="Module\WeiXin\css\images\add-icon.png" />
     <Content Include="Module\WeiXin\css\images\closeBtn02.png" />
     <Content Include="Module\WeiXin\css\images\moudleOn.png" />
@@ -6378,7 +6387,9 @@
     <Compile Include="ApplicationInterface\Module\Basic\Customer\SetBusinessBasisConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Customer\SetRewardsSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Customer\SetSalesSettingAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Basic\HomePageStats\GetHomePageStatsAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Menu\GetFunctionListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Basic\Menu\GetMenuListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\MessageTemplate\DelMessageTemplateAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\MessageTemplate\GetMessageTemplateDeatileAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\MessageTemplate\GetMessageTemplateListAH.cs" />
@@ -6393,9 +6404,14 @@
       <DependentUpon>UnitTypeTreeHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\Module\Basic\Unit\GetUnitInfoAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Basic\User\SetPasswordAH.cs" />
     <Compile Include="ApplicationInterface\Module\CardProduct\MakeVipCard\GetMakeVipCardListAH.cs" />
     <Compile Include="ApplicationInterface\Module\CardProduct\MakeVipCard\ImportVipCardISNAH.cs" />
     <Compile Include="ApplicationInterface\Module\CardProduct\MakeVipCard\MakeVipCardAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Theme\ApplyAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Theme\GetAllThemeListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Theme\InSeasonListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Theme\NextSeasonListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Item\ItemHandler.ashx.cs">
       <DependentUpon>ItemHandler.ashx</DependentUpon>
     </Compile>
@@ -6492,6 +6508,10 @@
     <Compile Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx.cs">
       <DependentUpon>EventsSaveHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\ChangeKJStatusAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\DeleteBargainAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\BargainListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\SetBargainAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\Customer\GetDisplaynoneAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\KeyWord\DeleteKeyWordAH.cs" />
     <Content Include="ApplicationInterface\Vip\VipGateway.ashx" />

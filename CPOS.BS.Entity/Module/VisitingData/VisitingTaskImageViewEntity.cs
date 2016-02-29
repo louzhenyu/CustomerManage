@@ -83,4 +83,4 @@ namespace JIT.CPOS.BS.Entity
             return (Array.IndexOf<string>(ENABLE_FILETYPE, FileType) != -1);
         }
     }
-}
+}                                                                                                     

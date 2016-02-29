@@ -304,30 +304,30 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Delivery
             if (rp.Parameters.DeliveryId=="2")
                 //保存到店提货信息
             {
-                if (rp.Parameters.StockUpPeriod<=0)
-                {
-                    throw new APIException("请求参数中StockUpPeriod值为空,或者不正确") { ErrorCode = 127 };
-                }
+                //if (rp.Parameters.StockUpPeriod<=0)
+                //{
+                //    throw new APIException("请求参数中StockUpPeriod值为空,或者不正确") { ErrorCode = 127 };
+                //}
 
-                if (rp.Parameters.BeginWorkTime==null)
-                {
-                     throw new APIException("请求参数中BeginWorkTime值为空,或者不正确") { ErrorCode = 127 };
-                }
+                //if (rp.Parameters.BeginWorkTime==null)
+                //{
+                //     throw new APIException("请求参数中BeginWorkTime值为空,或者不正确") { ErrorCode = 127 };
+                //}
 
-                if (rp.Parameters.EndWorkTime==null)
-                {
-                    throw new APIException("请求参数中EndWorkTime值为空,或者不正确") { ErrorCode = 127 };
-                }
+                //if (rp.Parameters.EndWorkTime==null)
+                //{
+                //    throw new APIException("请求参数中EndWorkTime值为空,或者不正确") { ErrorCode = 127 };
+                //}
 
-                if (rp.Parameters.MaxDelivery <= 0)
-                {
-                    throw new APIException("请求参数中MaxDelivery值为空,或者不正确") { ErrorCode = 127 };
-                }
+                //if (rp.Parameters.MaxDelivery <= 0)
+                //{
+                //    throw new APIException("请求参数中MaxDelivery值为空,或者不正确") { ErrorCode = 127 };
+                //}
 
-                if (rp.Parameters.Status!=1&&rp.Parameters.Status!=0)
-                {
-                    throw new APIException("请求参数中Status值为空,或者不正确") { ErrorCode = 127 };
-                }
+                //if (rp.Parameters.Status!=1&&rp.Parameters.Status!=0)
+                //{
+                //    throw new APIException("请求参数中Status值为空,或者不正确") { ErrorCode = 127 };
+                //}
 
                 CustomerTakeDeliveryEntity takeDeliveryEntity = new CustomerTakeDeliveryEntity()
                 {                    

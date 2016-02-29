@@ -951,7 +951,11 @@ namespace JIT.CPOS.BS.BLL
                     for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
                     {
                         dr = dt.Rows[i];
-                        this.unitService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                        if (dr[0].ToString() != "" && dr[1].ToString() != "")
+                        {
+                            this.unitService.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+
+                        }
                     }
 
                     connSql.Close();

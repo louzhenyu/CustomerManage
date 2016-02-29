@@ -23,51 +23,78 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
             var customerBasicSettingBLL = new CustomerBasicSettingBLL(loggingSessionInfo);
             ResponseData res = new ResponseData();
             List<CustomerBasicSettingEntity> list = new List<CustomerBasicSettingEntity>();
-              list.Add(new CustomerBasicSettingEntity()
+            if (!string.IsNullOrEmpty(para.SocialSalesType.ToString()))
             {
-                SettingCode = "SocialSalesType",
-                SettingValue = para.SocialSalesType.ToString()
-            });
-            list.Add(new CustomerBasicSettingEntity()
+                list.Add(new CustomerBasicSettingEntity()
+              {
+                  SettingCode = "SocialSalesType",
+                  SettingValue = para.SocialSalesType.ToString()
+              });
+            }
+            if (!string.IsNullOrEmpty(para.EnableEmployeeSales.ToString()))
             {
-                SettingCode = "EnableEmployeeSales",
-                SettingValue = para.EnableEmployeeSales.ToString()
-            });
-            list.Add(new CustomerBasicSettingEntity()
+                list.Add(new CustomerBasicSettingEntity()
+                {
+                    SettingCode = "EnableEmployeeSales",
+                    SettingValue = para.EnableEmployeeSales.ToString()
+                });
+            }
+            if (!string.IsNullOrEmpty(para.EDistributionPricePer.ToString()))
             {
-                SettingCode = "EDistributionPricePer",
-                SettingValue = para.EDistributionPricePer.ToString()
-            });
-            list.Add(new CustomerBasicSettingEntity()
+                list.Add(new CustomerBasicSettingEntity()
+                {
+                    SettingCode = "EDistributionPricePer",
+                    SettingValue = para.EDistributionPricePer.ToString()
+                });
+            }
+            if (!string.IsNullOrEmpty(para.EOrderCommissionPer.ToString()))
             {
-                SettingCode = "EOrderCommissionPer",
-                SettingValue = para.EOrderCommissionPer.ToString()
-            });
-            list.Add(new CustomerBasicSettingEntity()
+                list.Add(new CustomerBasicSettingEntity()
+                {
+                    SettingCode = "EOrderCommissionPer",
+                    SettingValue = para.EOrderCommissionPer.ToString()
+                });
+            }
+            if (!string.IsNullOrEmpty(para.EnableVipSales.ToString()))
             {
-                SettingCode = "EnableVipSales",
-                SettingValue = para.EnableVipSales.ToString()
-            });
-            list.Add(new CustomerBasicSettingEntity()
+                list.Add(new CustomerBasicSettingEntity()
+                {
+                    SettingCode = "EnableVipSales",
+                    SettingValue = para.EnableVipSales.ToString()
+                });
+            }
+            if (!string.IsNullOrEmpty(para.VDistributionPricePer.ToString()))
             {
-                SettingCode = "VDistributionPricePer",
-                SettingValue = para.VDistributionPricePer.ToString()
-            });
-            list.Add(new CustomerBasicSettingEntity()
+                list.Add(new CustomerBasicSettingEntity()
+                {
+                    SettingCode = "VDistributionPricePer",
+                    SettingValue = para.VDistributionPricePer.ToString()
+                });
+            }
+            if (!string.IsNullOrEmpty(para.VOrderCommissionPer.ToString()))
             {
-                SettingCode = "VOrderCommissionPer",
-                SettingValue = para.VOrderCommissionPer.ToString()
-            });
-            list.Add(new CustomerBasicSettingEntity()
+                list.Add(new CustomerBasicSettingEntity()
+                {
+                    SettingCode = "VOrderCommissionPer",
+                    SettingValue = para.VOrderCommissionPer.ToString()
+                });
+            }
+            if (!string.IsNullOrEmpty(para.GetVipUserOrderPer.ToString()))
             {
-                SettingCode = "GetVipUserOrderPer",
-                SettingValue = para.GetVipUserOrderPer.ToString()
-            });
-             list.Add(new CustomerBasicSettingEntity()
+                list.Add(new CustomerBasicSettingEntity()
+                {
+                    SettingCode = "GetVipUserOrderPer",
+                    SettingValue = para.GetVipUserOrderPer.ToString()
+                });
+            }
+            if (!string.IsNullOrEmpty(para.InvitePartnersPoints.ToString()))
             {
-                SettingCode = "InvitePartnersPoints",
-                SettingValue = para.InvitePartnersPoints.ToString()
-            });
+                list.Add(new CustomerBasicSettingEntity()
+               {
+                   SettingCode = "InvitePartnersPoints",
+                   SettingValue = para.InvitePartnersPoints.ToString()
+               });
+            }
             int i = customerBasicSettingBLL.SaveustomerBasicrInfo(list);
 
             return rd;

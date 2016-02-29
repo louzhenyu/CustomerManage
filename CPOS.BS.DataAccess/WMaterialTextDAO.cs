@@ -234,7 +234,7 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder strb = new StringBuilder();
             strb.AppendFormat(@"
                 select a.TextId,ParentTextId,Title,Author,CoverImageUrl,Text,OriginalUrl,DisplayIndex,a.TypeId,a.LastUpdateTime,d.user_name as LastUpdateBy
-                ,ROW_NUMBER() Over (Order By a.CreateTime Asc)ROW_NUMBER 
+                ,ROW_NUMBER() Over (Order By a.lastupdatetime desc)ROW_NUMBER 
                 into #wmTemp
                 From WMaterialText a
                 inner join WModelTextMapping b on(a.TextId = b.TextId)
@@ -296,10 +296,10 @@ namespace JIT.CPOS.BS.DataAccess
             set @PageStart=@PageIndex*@PageSize
             set @PageEnd=@PageStart+@PageSize
             set @PageEnd=@PageStart+@PageSize
-            SELECT * FROM #wmTemp WHERE ROW_NUMBER between  @PageStart+1 and @PageEnd
+            SELECT * FROM #wmTemp WHERE ROW_NUMBER between  @PageStart+1 and @PageEnd order by ROW_NUMBER
             SELECT @RowsCount RowsCount,@PageCount PageCount
             DROP TABLE #wmTemp", pPageIndex, pPageSize));
-            return pageSql;
+            return pageSql;//ÐÂ¼ÓÁË order by ROW_NUMBER
         }
         #endregion
         #endregion

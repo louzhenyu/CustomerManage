@@ -32,7 +32,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.VipStore
             {
                 case "VipStoreAddItem":
                     rst = VipStoreAddItem(pRequest);
-                    break;
+                     break;
 
                 case "VipStoreDelItem":
                     rst = VipStoreDelItem(pRequest);
@@ -122,6 +122,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.VipStore
             VipBLL vipBll = new VipBLL(loggingSessionInfo);
 
             VipEntity vipEntity = vipBll.GetByID(rp.UserID);
+            vipEntity.IsSotre = vipEntity.IsSotre ?? 0;
             if (vipEntity !=null && vipEntity.IsSotre == 0)
             {
                 vipEntity.IsSotre = 1;
@@ -146,7 +147,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.VipStore
             VipStoreEntity vipstoreEntity = vipStoreBlll.QueryByEntity(
                     new VipStoreEntity()
                     {
-                        ItemID = rp.Parameters.ItemID
+                        ItemID = rp.Parameters.ItemID,
+                        VIPID=rp.UserID
                     },
                     null
                 ).FirstOrDefault();

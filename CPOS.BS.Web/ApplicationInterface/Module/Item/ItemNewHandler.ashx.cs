@@ -382,7 +382,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             }
 
             //如果是新建的情况
-            //如果不存在属性关系
+            //如果不存在属性关系（sku和属性之间的关系）
             if (!skuPropServer.CheckSkuProp(propInfo.Prop_Id))
             {
                 SkuPropInfo skuPropInfo = new SkuPropInfo();

@@ -64,7 +64,8 @@ namespace JIT.CPOS.BS.DataAccess
                     ( SELECT    COUNT(*)
                       FROM      T_Inout
                       WHERE     sales_user = '{0}'
-                                AND field7!='-99'
+                                AND field7!='-99' 
+                                AND data_from_id='16' 
                     ) AS OrderCount ,
                     ( SELECT    COUNT(*)
                       FROM      VipAmountDetail

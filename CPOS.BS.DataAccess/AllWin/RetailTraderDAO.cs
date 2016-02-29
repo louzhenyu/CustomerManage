@@ -1073,7 +1073,15 @@ where a.CustomerId=@CustomerId  AND    a.isdelete = 0   {4} ";
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());    //计算总行数
             return ds;
         }
-
-
+        /// <summary>
+        /// 返回分销商关联商品二维码
+        /// </summary>
+        /// <param name="strRetailTraderId"></param>
+        /// <returns></returns>
+        public DataSet RetailTraderItemQRCode(string strRetailTraderId)
+        {
+            string strSql = string.Format("SELECT  i.item_id ItemId,i.item_name ItemName,o.ImageURL FROM    dbo.RetailTraderItemMapping r INNER JOIN dbo.ObjectImages o ON CAST(r.MappingId AS NVARCHAR(50))  = o.ObjectId AND o.IsDelete=0 INNER JOIN t_item i ON r.ItemId = i.item_id AND i.status=1 WHERE r.IsDelete=0 and RetailTraderId='{0}'", strRetailTraderId);
+            return this.SQLHelper.ExecuteDataset(strSql);
+        }
     }
 }

@@ -59,6 +59,14 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
 
             //}
         }
+        /// <summary>
+        /// 六大模块的ID
+        /// </summary>
+        protected string MMenuID
+        {
+            get;
+            set;
+        }
         protected string StaticUrl
         {
             get
@@ -131,8 +139,9 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                     }
                 }
                 AppSysService appSysService = new AppSysService(loggingSessionInfo);
-                this.MenuList = appSysService.GetRoleMenus(loggingSessionInfo, 
+                this.MenuList = appSysService.GetRoleMenusList(loggingSessionInfo, 
                     loggingSessionInfo.CurrentUserRole.RoleId);//根据当前用户的角色，来取他拥有的页面
+                MMenuID = Request.QueryString["MMenuID"] == null ? "" : Request.QueryString["MMenuID"].ToString();
                 PMenuID = Request.QueryString["PMenuID"] == null ? "" : Request.QueryString["PMenuID"].ToString();
                 if (PMenuID == "")
                 {
@@ -141,7 +150,18 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                     {
                         PMenuID = currentMenu.Parent_Menu_Id;
                     }
+
+                  
                    
+                }
+                if (MMenuID == "")
+                {
+                    var currentMenu = MenuList.Where(p => p.Menu_Id == PMenuID).SingleOrDefault();
+                    if (currentMenu != null)
+                    {
+                        MMenuID = currentMenu.Parent_Menu_Id;
+                    }
+
                 }
                 if (!IsPostBack)
                 {
@@ -183,8 +203,9 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                     case "LogOut": content = LogOut(); break;
                     case "KeepSession": content = ""; break;
                 }
-                Response.Write(content); ;
-                Response.End();
+                Response.Write(content);
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+                //Response.End();
             }
 
             

@@ -55,9 +55,41 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
         /// </summary>
         public string QueryRoleListData()
         {
+            var responseData = new ResponseData();
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
+
             var form = Request("form").DeserializeJSONTo<RoleQueryEntity>();
 
-            var appSysService = new AppSysService(CurrentUserInfo);
+            var appSysService = new AppSysService(loggingSessionInfo);//使用兼容模式
             RoleModel list = new RoleModel();
 
             string content = string.Empty;
@@ -74,12 +106,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
             }
 
 
-            int page = Utils.GetIntVal(Request("page"));//第几行
+            int page = Utils.GetIntVal(Request("page"));//第几页面
             if (page == 0) { page = 1; }
             int startRowIndex = (page - 1) * PageSize + 1;//因为row_number()从1开始
 
 
-            list = appSysService.GetRolesByAppSysId(key, maxRowCount, startRowIndex, form.type_id ?? "", form.role_name ?? "", CurrentUserInfo.UserID);
+            list = appSysService.GetRolesByAppSysId(key, maxRowCount, startRowIndex
+                , form.type_id ?? "", form.role_name ?? "", loggingSessionInfo.UserID);
             //在为用户配置门店角色关系时
             //多加一个参数，在这里选择门店，必须重新加载角色列表，因为创建用户角色门店关系时，角色必须和门店同一个type_level上
             if (!string.IsNullOrEmpty(form.unit_id))
@@ -169,6 +202,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
                         tmpSrcMenuObj.leaf_flag = "true";
                         tmpSrcMenuObj.cls_flag = "";
                         tmpMenuObj.children.Add(tmpSrcMenuObj);
+                        GetSubMenus(tmpSrcMenuObj, src);
                     }
                 }
             }
@@ -186,6 +220,25 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Role.Handler
 
             content = jsonData.ToJSON();
             return content;
+        }
+        public void GetSubMenus(MenuModel menu, IList<MenuModel> menulist)
+        {
+            menu.leaf_flag =  "true";//默认写为true
+            menu.expanded_flag =  "false";//不展开
+            if (menulist != null && menulist.Count > 0)
+            {
+                menu.children = new List<MenuModel>();
+                
+                foreach (MenuModel subMenu in menulist)//遍历所有的菜单项
+                {
+                    if (subMenu.Parent_Menu_Id == menu.Menu_Id)
+                    {
+                        menu.leaf_flag = "false";//默认写为true
+                        menu.children.Add(subMenu);//children和SubMenu是两组人写的
+                        GetSubMenus(subMenu, menulist);//递归查找子元素的节点
+                    }
+                }
+            }
         }
         #endregion
 

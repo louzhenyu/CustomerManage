@@ -42,6 +42,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 case "DeleteTagsType":  //更改促销分组
                     rst = DeleteTagsType(pRequest);
                     break;
+                case "GetMenusByPMenuCode":  //更改促销分组
+                    rst = GetMenusByPMenuCode(pRequest);
+                    break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
                     {
@@ -297,9 +300,52 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
         }
         #endregion
 
+
+
+        /// <summary>
+        /// 销售（服务）订单
+        /// </summary>
+        public string GetMenusByPMenuCode(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<GetMenusByPMenuCodeRP>>();//不需要参数
+            string userId = rp.UserID;
+            string customerId = rp.CustomerID;
+
+            var menu_code = rp.Parameters.menu_code;
+
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            AppSysService appSysService = new AppSysService(loggingSessionInfo);
+            string errMsg = "";
+            MenuModel Menu = appSysService.GetRoleMenusByPMenuCode(loggingSessionInfo,
+                loggingSessionInfo.CurrentUserRole.RoleId, menu_code, out errMsg);//根据当前用户的角色，来取他拥有的页面
+            if (errMsg != "")
+            {
+                throw new APIException("errMsg:" + errMsg) { ErrorCode = 135 };
+            }
+            var rd = new GetMenusByPMenuCodeRD();
+            rd.currentMenu = Menu;
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
+
+
     }
 
 
+
+
+   public class GetMenusByPMenuCodeRP : IAPIRequestParameter
+    {
+        public string menu_code { get; set; }
+        public void Validate()
+        {
+        }
+    }
+    public class GetMenusByPMenuCodeRD : IAPIResponseData
+    {
+        public MenuModel currentMenu { get; set; }
+
+    }
 
 
 

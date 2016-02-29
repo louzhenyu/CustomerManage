@@ -123,7 +123,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     }
                     else
                     {
-                        CreateName = "[操作人:用户]";
+                        CreateName = "[操作人:客户]";
                     }
 
 

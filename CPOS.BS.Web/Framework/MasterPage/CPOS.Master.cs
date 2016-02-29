@@ -35,7 +35,7 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
         {
             get
             {
-               return  new SessionManager().CurrentUserLoginInfo.ClientID; 
+                return new SessionManager().CurrentUserLoginInfo.ClientID;
             }
         }
         protected string adminUserID
@@ -43,13 +43,13 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
             get
             {
                 return new SessionManager().CurrentUserLoginInfo.UserID;
-                
+
 
             }
         }
         #endregion
 
-       
+
         protected string PMenuID
         {
             get;
@@ -59,14 +59,22 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
 
             //}
         }
+        /// <summary>
+        /// 六大模块的ID
+        /// </summary>
+        protected string MMenuID
+        {
+            get;
+            set;
+        }
         protected string StaticUrl
         {
             get
             {
                 string staticUrl = ConfigurationManager.AppSettings["staticUrl"];
                 if (string.IsNullOrEmpty(staticUrl))
-                { 
-                  staticUrl="";
+                {
+                    staticUrl = "";
                 }
                 return staticUrl;
             }
@@ -97,10 +105,11 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
         {
             get { return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.RoleCode; }
         }
-        protected string RoleName{
-            get{return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.RoleName;}
+        protected string RoleName
+        {
+            get { return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.RoleName; }
         }
-      
+
         #region 页面入口
         /// <summary>
         /// pageload
@@ -109,7 +118,7 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
         /// <param name="e"></param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             string content = string.Empty;
             if (string.IsNullOrEmpty(Request["method"]))
             {
@@ -124,24 +133,35 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                 {
                     this.Response.Redirect("~/GoSso.aspx");
                 }
-                else {
-                    if (lblLoginUserName!=null)
+                else
+                {
+                    if (lblLoginUserName != null)
                     {
                         lblLoginUserName.InnerText = loggingSessionInfo.CurrentUser.User_Name;//因为ChildPage.Master的前台页面Inherits="JIT.CPOS.BS.Web.Framework.MasterPage.CPOS" 但是不含有 lblLoginUserName
                     }
                 }
                 AppSysService appSysService = new AppSysService(loggingSessionInfo);
-                this.MenuList = appSysService.GetRoleMenus(loggingSessionInfo, 
+                this.MenuList = appSysService.GetRoleMenusList(loggingSessionInfo,
                     loggingSessionInfo.CurrentUserRole.RoleId);//根据当前用户的角色，来取他拥有的页面
+                MMenuID = Request.QueryString["MMenuID"] == null ? "" : Request.QueryString["MMenuID"].ToString();
                 PMenuID = Request.QueryString["PMenuID"] == null ? "" : Request.QueryString["PMenuID"].ToString();
                 if (PMenuID == "")
                 {
-                    var currentMenu =MenuList.Where(p=>p.Menu_Id==Mid).SingleOrDefault();
-                    if (currentMenu!=null)
+                    var currentMenu = MenuList.Where(p => p.Menu_Id == Mid).SingleOrDefault();
+                    if (currentMenu != null)
                     {
                         PMenuID = currentMenu.Parent_Menu_Id;
                     }
-                   
+
+                }
+                if (MMenuID == "")
+                {
+                    var currentMenu = MenuList.Where(p => p.Menu_Id == PMenuID).SingleOrDefault();
+                    if (currentMenu != null)
+                    {
+                        MMenuID = currentMenu.Parent_Menu_Id;
+                    }
+
                 }
                 if (!IsPostBack)
                 {
@@ -150,8 +170,10 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                     var customerBSList = customerBSServer.QueryByEntity(new CustomerBasicSettingEntity
                     {
                         CustomerID = loggingSessionInfo.CurrentUser.customer_id.Trim()
-                        ,SettingCode = "WebLogo"
-                        ,IsDelete = 0
+                        ,
+                        SettingCode = "WebLogo"
+                        ,
+                        IsDelete = 0
                     }, null);
                     if (customerBSList == null || customerBSList.Length == 0 || customerBSList[0] == null
                         || customerBSList[0].SettingValue == null
@@ -169,11 +191,12 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                             strWebLogo = strLogo;
                         }
                     }
-                    else {
+                    else
+                    {
                         strWebLogo = customerBSList[0].SettingValue;
                     }
 
-                   
+
                 }
             }
             else
@@ -183,11 +206,12 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                     case "LogOut": content = LogOut(); break;
                     case "KeepSession": content = ""; break;
                 }
-                Response.Write(content); ;
-                Response.End();
+                Response.Write(content);
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+                //Response.End();
             }
 
-            
+
 
         }
         #endregion

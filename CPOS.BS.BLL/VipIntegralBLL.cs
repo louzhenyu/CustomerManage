@@ -417,9 +417,9 @@ namespace JIT.CPOS.BS.BLL
             Hashtable htSetting = basicSettingBll.GetSocialSetting();
 
             //获取积分与金额的兑换比例
-            var integralAmountPre = vipBll.GetIntegralAmountPre(this.CurrentUserInfo.ClientID);
-            if (integralAmountPre == 0)
-                integralAmountPre = (decimal)0.01;
+            //var integralAmountPre = vipBll.GetIntegralAmountPre(this.CurrentUserInfo.ClientID);
+            //if (integralAmountPre == 0)
+            //    integralAmountPre = (decimal)0.01;
 
             decimal actualAmount = orderInfo.actual_amount ?? 0;    //实付金额
             decimal deliveryAmount = orderInfo.DeliveryAmount;      //运费
@@ -587,14 +587,17 @@ namespace JIT.CPOS.BS.BLL
                         };
 
                         var vipSalesVipInfo = vipBll.GetByID(orderInfo.sales_user);
-                        //账户余额和返现
-                        var vipSalesAmountEntity = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = vipSalesVipInfo.VIPID, VipCardCode = vipSalesVipInfo.VipCode }, null).FirstOrDefault();
-                        var vipAmountDetailId = vipAmountBll.AddVipAmount(vipSalesVipInfo, unitInfo, ref vipSalesAmountEntity, detailInfo, tran, this.CurrentUserInfo);
-                        if (!string.IsNullOrWhiteSpace(vipAmountDetailId) && orderInfo.data_from_id == "16")
-                        {//发送微信账户余额变动模板消息
+                        if (vipSalesVipInfo != null)
+                        {
+                            //账户余额和返现
+                            var vipSalesAmountEntity = vipAmountBll.QueryByEntity(new VipAmountEntity() { VipId = vipSalesVipInfo.VIPID, VipCardCode = vipSalesVipInfo.VipCode }, null).FirstOrDefault();
+                            var vipAmountDetailId = vipAmountBll.AddVipAmount(vipSalesVipInfo, unitInfo, ref vipSalesAmountEntity, detailInfo, tran, this.CurrentUserInfo);
+                            if (!string.IsNullOrWhiteSpace(vipAmountDetailId) && orderInfo.data_from_id == "16")
+                            {//发送微信账户余额变动模板消息
 
-                            var CommonBLL = new CommonBLL();
-                            CommonBLL.BalanceChangedMessage(orderInfo.order_no, vipSalesAmountEntity, detailInfo, vipSalesVipInfo.WeiXinUserId, orderInfo.vip_no, this.CurrentUserInfo);
+                                var CommonBLL = new CommonBLL();
+                                CommonBLL.BalanceChangedMessage(orderInfo.order_no, vipSalesAmountEntity, detailInfo, vipSalesVipInfo.WeiXinUserId, orderInfo.vip_no, this.CurrentUserInfo);
+                            }
                         }
                     }
 

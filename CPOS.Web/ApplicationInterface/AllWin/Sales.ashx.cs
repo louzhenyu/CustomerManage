@@ -23,6 +23,7 @@ using JIT.Utility.Web;
 using JIT.Utility.DataAccess.Query;
 using JIT.Utility;
 
+
 namespace JIT.CPOS.Web.ApplicationInterface.AllWin
 {
     /// <summary>
@@ -51,6 +52,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
                     break;
                 case "GetRetailTraderEarnings"://分销商销售情况
                     rst = this.GetRetailTraderEarnings(pRequest);
+                    break;
+                case "GetRetailTraderEarningsDetails"://15天集客会员数量变化
+                    rst = this.GetRetailTraderEarningsDetails(pRequest);
                     break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
@@ -86,15 +90,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             var bll = new RetailTraderItemMappingBLL(loggingSessionInfo);
             var rd = new EmptyRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            
+            var itemService = new ItemService(loggingSessionInfo);
+            var bllTrader = new RetailTraderBLL(loggingSessionInfo);
+            var entityTrader = bllTrader.GetByID(rp.Parameters.RetailTraderId);
+            entityTrader.SalesType="Sales";
+            bllTrader.Update(entityTrader,null,false);
+
 
             bll.DeleteData(rp.Parameters.RetailTraderId);
-
-            foreach (var item in rp.Parameters.ItemList)
+            if (rp.Parameters.ItemList.Count() > 0)
             {
-                RetailTraderItemMappingEntity entityRTIM = new RetailTraderItemMappingEntity();
-                entityRTIM.ItemId = item.ItemId;
-                entityRTIM.RetailTraderId = rp.Parameters.RetailTraderId;
-                bll.Create(entityRTIM);
+                foreach (var item in rp.Parameters.ItemList)
+                {
+                    RetailTraderItemMappingEntity entityRTIM = new RetailTraderItemMappingEntity();
+                    entityRTIM.ItemId = item.ItemId;
+                    entityRTIM.RetailTraderId = rp.Parameters.RetailTraderId;
+                    entityRTIM.CustomerID = rp.CustomerID;
+                    bll.Create(entityRTIM);
+                    itemService.CreateTraderQRCode(rp.CustomerID, item.ItemId, item.ItemName, rp.Parameters.RetailTraderId, entityRTIM.MappingId.ToString());
+                }
             }
             return rsp.ToJSON();
         }
@@ -124,7 +139,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
         public string GetVipCount15Days(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<GeneralRP>>();
-
+            var para=rp.Parameters;
             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
 
             var bll = new SysRetailRewardRuleBLL(loggingSessionInfo);
@@ -133,17 +148,23 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
 
             rd.VipCountList = DataTableToObject.ConvertToList<VipCountInfo>(bll.GetRetailTraderVipCountByDays(rp.Parameters.RetailTraderId, 15).Tables[0]).ToArray();
 
-            var dsMain = bll.GetRetailTraderEarnings(rp.Parameters.RetailTraderId, "All");
+            var dsMain = bll.GetRetailTraderEarnings(para.RetailTraderId, "All", 0,0);
             if (dsMain.Tables[0].Rows.Count > 0)
             {
                 rd.Bonus = Convert.ToDecimal(dsMain.Tables[0].Rows[0]["Bonus"]);
                 rd.SalesMoney = Convert.ToDecimal(dsMain.Tables[0].Rows[0]["SalesMoney"]);
             }
-            var dsMonth = bll.GetRetailTraderEarnings(rp.Parameters.RetailTraderId, "Month");
+            var dsMonth = bll.GetRetailTraderEarnings(para.RetailTraderId, "Month", 0, 0);
             if (dsMonth.Tables[0].Rows.Count > 0)
             {
                 rd.Bonus_Month = Convert.ToDecimal(dsMonth.Tables[0].Rows[0]["Bonus"]);
                 rd.SalesMoney_Month = Convert.ToDecimal(dsMonth.Tables[0].Rows[0]["SalesMoney"]);
+            }
+            var dsDaily = bll.GetRetailTraderEarnings(para.RetailTraderId, "Daily", 0, 0);
+            if (dsDaily.Tables[0].Rows.Count > 0)
+            {
+                rd.Bonus_Day = Convert.ToDecimal(dsDaily.Tables[0].Rows[0]["Bonus"]);
+                rd.SalesMoney_Day = Convert.ToDecimal(dsDaily.Tables[0].Rows[0]["SalesMoney"]);
             }
             return rsp.ToJSON();
         }
@@ -159,7 +180,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             var bll = new SysRetailRewardRuleBLL(loggingSessionInfo);
             var rd = new RetailTraderEarningsRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
-            var dsMain=bll.GetRetailTraderEarnings(rp.Parameters.RetailTraderId, rp.Parameters.Type);
+            var dsMain=bll.GetRetailTraderEarnings(rp.Parameters.RetailTraderId, rp.Parameters.Type,rp.Parameters.PageIndex,rp.Parameters.PageSize);
             if(dsMain.Tables[0].Rows.Count>0)
             {
                 rd.Bonus = Convert.ToDecimal(dsMain.Tables[0].Rows[0]["Bonus"]);
@@ -175,6 +196,27 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
 
         #endregion
 
+        #region 分销商每日奖励详情
+        public string GetRetailTraderEarningsDetails(string pRequest)
+        {
+            var rp = pRequest.DeserializeJSONTo<APIRequest<GeneralRP>>();
+
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
+
+            var bll = new SysRetailRewardRuleBLL(loggingSessionInfo);
+            var rd = new RetailTraderEarningsDetailsRD();
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            var dsMain = bll.GetRetailTraderEarningsDetails(rp.Parameters.RetailTraderId);
+
+            if (dsMain.Tables[0].Rows.Count > 0)
+            {
+                rd.BonusList = DataTableToObject.ConvertToList<BonusInfo>(dsMain.Tables[0]).ToArray();
+            }
+
+            return rsp.ToJSON();
+        }
+        #endregion
+
         public class GeneralRP : IAPIRequestParameter
         {
             public string RetailTraderId { get; set; }
@@ -182,13 +224,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             {
             }
         }
-
+        #region 分销商保存商品
         public class RetailTraderItemMappingRP : IAPIRequestParameter
         {
             public string RetailTraderId { get; set; }
             public List<ItemInfo> ItemList { get; set; }
             public void Validate()
             {
+                if (string.IsNullOrEmpty(RetailTraderId))
+                {
+                    throw new APIException("RetailTraderId不能为空") { ErrorCode = 103 };
+                }
             }
         }
          public class RetailTraderItemMappingRD : IAPIResponseData
@@ -196,7 +242,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             public string RetailTraderId { get; set; }
             public RetailTraderItemMappingEntity[] ItemList { get; set; }
         }
-        public class GetItemListRP : IAPIRequestParameter
+        #endregion
+        #region 获取商品列表
+         public class GetItemListRP : IAPIRequestParameter
         {
             /// <summary>
             /// 页码
@@ -252,15 +300,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             public int IsCheck { get; set; }
             public int SalesQty { get; set; }
         }
-        public class SaveRetailTraderRP : IAPIRequestParameter
-        {
-            public int? IsNewHeadImg { get; set; }
-            public RetailTraderInfo RetailTraderInfo { get; set; }
-            public void Validate()
-            {
-            }
-        }
-
+        #endregion
+        #region 15天集客会员数量变化
         public class VipCountRD : IAPIResponseData
         {
             public string RetailTraderID { get; set; }
@@ -280,6 +321,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             /// 分润
             /// </summary>
             public decimal Bonus_Month { get; set; }
+            /// <summary>
+            /// 销售额
+            /// </summary>
+            public decimal SalesMoney_Day { get; set; }
+            /// <summary>
+            /// 分润
+            /// </summary>
+            public decimal Bonus_Day { get; set; }
             public VipCountInfo[] VipCountList { get; set; }
         }
         public class VipCountInfo
@@ -288,6 +337,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             public int VipCount { get; set; }
         }
 
+        #endregion
         #region 分销商销售情况
         public class RetailTraderEarningsRP : IAPIRequestParameter
         {
@@ -296,6 +346,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             /// 计算类型  All:总额，Month:月度 ,Daily:每日
             /// </summary>
             public string Type { get; set; }
+            public int PageIndex { get; set; }
+            public int PageSize { get; set; }
             public void Validate()
             {
             }
@@ -321,6 +373,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             /// 单价
             /// </summary>
             public decimal SalesPrice { get; set; }
+            /// <summary>
+            /// 分润
+            /// </summary>
+            public decimal Bonus { get; set; }
+        }
+        #endregion
+        #region 分销商每日奖励详情
+        public class RetailTraderEarningsDetailsRD : IAPIResponseData
+        {
+            public string RetailTraderID { get; set; }
+
+            public BonusInfo[] BonusList { get; set; }
+
+        }
+        public class BonusInfo
+        {
+            /// <summary>
+            /// 销售额
+            /// </summary>
+            public string BonusType { get; set; }
             /// <summary>
             /// 分润
             /// </summary>

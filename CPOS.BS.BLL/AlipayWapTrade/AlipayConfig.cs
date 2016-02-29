@@ -40,7 +40,7 @@ namespace JIT.CPOS.BS.BLL.AlipayWapTrade
             Out_trade_no = System.DateTime.Now.ToString();
             Subject = "百搭花朵珍珠胸花";
             Total_fee = "0.01";
-            Out_user = "jitmarketing";
+            Out_user = "chainclouds";
 
             //三个返回URL
             var host = ConfigurationManager.AppSettings["website_url"];

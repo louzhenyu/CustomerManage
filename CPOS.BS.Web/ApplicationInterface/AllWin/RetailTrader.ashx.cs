@@ -15,6 +15,12 @@ using JIT.CPOS.BS.Web.ApplicationInterface.Base;
 using JIT.CPOS.BS.Entity;
 using System.Web.Script.Serialization;
 using JIT.CPOS.BS.Web.ApplicationInterface.Vip;
+using System.Text;
+using System.Collections;
+//using ICSharpCode.SharpZipLib.Zip;
+using System.IO;
+using Ionic.Zip;
+
 namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
 {
     /// <summary>
@@ -52,6 +58,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                     break;
                 case "GetRetailMonthRewardList":// 分销商月度奖励情况
                     rst = this.GetRetailMonthRewardList(pRequest);
+                    break;
+                case "DownloadQRCode":// 下载分销商关联商品二维码
+                    rst = this.DownloadQRCode(pRequest);
                     break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
@@ -127,10 +136,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
         #endregion
 
 
-
-
-
-
         #region 获取分销商某个月的奖励情况
         public string GetSellerMonthRewardList(string pRequest)
         {
@@ -164,7 +169,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
         }
         #endregion
 
-
         #region 获取分销商某个月的奖励情况
         public string GetRetailMonthRewardList(string pRequest)
         {
@@ -197,6 +201,84 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
         }
         #endregion
 
+
+        #region 下载分销商商品二维码DownloadQRCode
+        public string DownloadQRCode(string pRequest)
+        {
+            //try
+            //{
+            var rd = new RetailTraderItemQRCodeRD();
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+
+            string path = "";
+            var rp = pRequest.DeserializeJSONTo<APIRequest<RetailTraderItemQRCode>>();
+            if (string.IsNullOrEmpty(rp.Parameters.RetailTraderId))
+                throw new APIException("请输入RetailTraderId参数") { ErrorCode = 000 };
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            var bll = new RetailTraderBLL(loggingSessionInfo);
+            HttpContext context = System.Web.HttpContext.Current;
+            var entityRetailTrader = bll.GetByID(rp.Parameters.RetailTraderId);
+            DataSet ds = bll.RetailTraderItemQRCode(rp.Parameters.RetailTraderId);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                List<GetRetailTraderItemQRCode> list = DataTableToObject.ConvertToList<GetRetailTraderItemQRCode>(ds.Tables[0]).ToList();
+                path = CreateZipAndResponse(list, context.Response, entityRetailTrader.RetailTraderName);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    rd.FilePath = path;
+                }
+            }
+            else
+            {
+                context.Response.Write("<script languge='javascript'>alert('No Data'); window.location.href='index.aspx'</script>");
+
+            }
+            return rsp.ToJSON();
+
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 输出zip
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="response"></param>
+        private string CreateZipAndResponse(List<GetRetailTraderItemQRCode> list, HttpResponse response, string strZipFileName)
+        {
+            string strZipPath = "";
+
+            if (list != null && list.Count > 0)
+            {
+                ArrayList nStr = new ArrayList();
+                for (int j = 0; j < list.Count; j++)
+                {
+                    if (!nStr.Contains(list[j].ImageUrl))
+                    {
+                        nStr.Add(list[j].ImageUrl);
+                    }
+                }
+                byte[] buffer = null;
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    using (ZipFile zip = new ZipFile(System.Text.Encoding.Default))
+                    {
+                        string strPath = "";
+                        for (int i = 0; i < list.Count; i++)
+                        {
+
+                            strPath = System.Configuration.ConfigurationManager.AppSettings["RetailTraderItemImageUrl"] + list[i].ImageUrl.Substring(list[i].ImageUrl.IndexOf("/"));
+                            zip.AddFile(strPath, "");
+                        }
+                        strZipPath = string.Format("{0}\\{1}.zip", System.Web.HttpContext.Current.Server.MapPath("../../QRCodeImage"), strZipFileName);
+                        zip.Save(strZipPath);
+                        strZipPath = "/QRCodeImage/" + strZipFileName + ".zip";
+                    }
+                }
+
+            }
+            return strZipPath;
+        }
     }
     public class SellUserMainAchieveRP : IAPIRequestParameter
     {
@@ -421,10 +503,29 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
         public string user_name { get; set; }
         public string user_telephone { get; set; }
         public string UnitName { get; set; }
-       // public string UnitID { get; set; }
+        // public string UnitID { get; set; }
         public string YearAndMonth { get; set; }
         public decimal MonthAmount { get; set; }
-      
+
     }
+    #region 分销商商品二维码
+    public class RetailTraderItemQRCode : IAPIRequestParameter
+    {
+        public string RetailTraderId { get; set; }
+        public void Validate()
+        {
+        }
+    }
+    public class RetailTraderItemQRCodeRD : IAPIResponseData
+    {
+        public string FilePath { get; set; }
+    }
+    public class GetRetailTraderItemQRCode
+    {
+        public string ItemId { get; set; }
+        public string ItemName { get; set; }
+        public string ImageUrl { get; set; }
+    }
+    #endregion
 
 }

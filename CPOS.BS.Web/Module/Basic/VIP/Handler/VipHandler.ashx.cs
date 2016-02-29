@@ -215,7 +215,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.VIP.Handler
         public string ImportVip()
         {
             var responseData = new ResponseData();
-            var userService = new cUserService(CurrentUserInfo);
+            var service = new VipBLL(CurrentUserInfo);
+
             ExcelHelper excelHelper = new ExcelHelper();
            
             if (Request("filePath") != null && Request("filePath").ToString() != "")
@@ -225,12 +226,12 @@ namespace JIT.CPOS.BS.Web.Module.Basic.VIP.Handler
                     var rp = new ImportRP();
                     string strPath = Request("filePath").ToString();
                     string strFileName = string.Empty;
-                    DataSet ds = userService.ExcelToDb(HttpContext.Current.Server.MapPath(strPath), CurrentUserInfo);
+                    DataSet ds = service.ExcelToDb(HttpContext.Current.Server.MapPath(strPath), CurrentUserInfo);
                     if (ds != null && ds.Tables.Count > 1 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                     {
 
                         Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(ds.Tables[0], 0);
-                        string savePath = HttpContext.Current.Server.MapPath(@"~/File/ErrFile/User");
+                        string savePath = HttpContext.Current.Server.MapPath(@"~/File/ErrFile/Vip");
                         if (!System.IO.Directory.Exists(savePath))
                         {
                             System.IO.Directory.CreateDirectory(savePath);

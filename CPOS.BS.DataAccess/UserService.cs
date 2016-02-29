@@ -23,7 +23,7 @@ namespace JIT.CPOS.BS.DataAccess
     {
         #region 构造函数
 
-        
+
         /// <summary>
         /// 构造函数 
         /// </summary>
@@ -119,25 +119,25 @@ namespace JIT.CPOS.BS.DataAccess
                       + ",user_status_desc "
                       + ",fail_date "
                       + " ,isnull((select top 1 ImageUrl from WQRCodeManager where IsDelete=0 and  ObjectId =a.user_id),'' ) as WqrURL"
-                          // + @",isnull((	select top 1 c.unit_name from 	  T_User_Role b  inner join t_unit c on	  b.unit_id=c.unit_id where b.user_id=a.user_id),'') as UnitName "//UnitName
+                // + @",isnull((	select top 1 c.unit_name from 	  T_User_Role b  inner join t_unit c on	  b.unit_id=c.unit_id where b.user_id=a.user_id),'') as UnitName "//UnitName
                           + ",     dbo.fnGetRoleNamesByUserId(a.user_id) as role_name"
                            + ",     dbo.fnGetUnitNamesByUserId(a.user_id) as UnitName"
                       + ",b.row_no "
                       + ", @iCount icount "
                       + "From t_user a "
-                      + "inner join @TmpTable b "                     
+                      + "inner join @TmpTable b "
                       + "on(a.user_id = b.user_id) "
                       + "where 1=1 "
-                   
+
                       + "and b.row_no  > '" + _ht["StartRow"].ToString() + "' and  b.row_no <= '" + _ht["EndRow"] + "' "
-                      + " ;";
+                      + " order by  a.modify_time desc;";
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
 
 
 
-        public DataSet GetUserList(int pageIndex, int pageSize, string OrderBy, string sortType, string UserID, string CustomerID,string PhoneList,string UnitID)
+        public DataSet GetUserList(int pageIndex, int pageSize, string OrderBy, string sortType, string UserID, string CustomerID, string PhoneList, string UnitID)
         {
             if (string.IsNullOrEmpty(OrderBy))
                 OrderBy = "a.CREATE_TIME";
@@ -152,7 +152,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 sqlCon += " and a.user_telephone in (" + PhoneList + ")";
             }
-                       List<SqlParameter> ls = new List<SqlParameter>();
+            List<SqlParameter> ls = new List<SqlParameter>();
             if (!string.IsNullOrEmpty(UnitID))
             {
                 //and操作，如果前面已经是false了，后面的判断就不执行了
@@ -165,7 +165,7 @@ namespace JIT.CPOS.BS.DataAccess
             //    sqlCon += " and (case  when a.haspay=0 then '未付款' when haspay=1 then '已付款' end)= '" + PayStatus + "'";
 
             //}
- 
+
             ls.Add(new SqlParameter("@loginUserID", UserID));
             ls.Add(new SqlParameter("@CustomerId", CustomerID));
 
@@ -188,7 +188,7 @@ select user_id  into #TempTable	 from  #TmpTBL L , #UnitSET R where
 	 L.Unit_ID=R.UnitID    ----只取出改账号能看到的员工信息
 
 ";
-           
+
 
             //办卡人是vip本身
             sql += @" 
@@ -254,7 +254,10 @@ where a.customer_id=@CustomerId    {4} ";
 
             sql = sql + " select @iCount = COUNT(*) From @TmpTable; ";
             **/
-            string sql="";//初始化
+            string sql = @"Declare @TmpTable Table  (user_id nvarchar(100)  ,row_no int  );  
+                Declare @iCount int;  ";//初始化
+
+
             sql += @"  DECLARE @News3 table 
 ( 
  user_id varchar(100)
@@ -267,12 +270,12 @@ where a.customer_id=@CustomerId    {4} ";
                                 inner join T_Role  y on x.role_id=y.role_id  
                                 where y.role_code='Administrator'
                             )
-       insert into @News3 select * from temp3";
+       insert into @News3 select * from temp3;";
 
 
-             if (_ht["para_unit_id"].ToString() != "")
-             {
-                 sql += @"   DECLARE @News table 
+            if (_ht["para_unit_id"].ToString() != "")
+            {
+                sql += @"   DECLARE @News table 
 ( 
  dst_unit_id varchar(100), 
  src_unit_id varchar(100)
@@ -289,11 +292,12 @@ where a.customer_id=@CustomerId    {4} ";
                                 from T_Unit_Relation a
                                 inner join temp2 on a.src_unit_id = temp2.dst_unit_id
                             )
-       insert into @News select * from temp2
+       insert into @News select * from temp2;
 ";
-             }
-              sql +=@" Declare @TmpTable Table  (user_id nvarchar(100)  ,row_no int  );  
-                Declare @iCount int;  
+            }
+            if (_ht["UnitID"].ToString() != "")
+            {
+                sql += @"
 
                 with temp ( dst_unit_id, src_unit_id)
                 as
@@ -305,48 +309,60 @@ where a.customer_id=@CustomerId    {4} ";
                 select a.dst_unit_id,a.src_unit_id
                 from T_Unit_Relation a
                 inner join temp on a.src_unit_id = temp.dst_unit_id
-                )
+                )";
+            }
 
-                insert into @TmpTable(user_id,row_no)  
+            sql += @"   
+
+insert into @TmpTable(user_id,row_no)  
                 select 
                       a.user_id
-	                 ,row_no=row_number() over(order by a.user_code)  
+	                 ,row_no=row_number() over(order by a.modify_time desc)  
 	                 from t_user a 
 	                 where 1=1 
-	                 and a.user_id 
-	                 in (
-	                 select user_id 
-	                   from  T_User_Role c inner join temp d     ----在前面就把需要计算的数据先算好了，就不要再每次取数据时再取了
-	                   ON d.dst_unit_id = c.unit_id)                            
+	                               
 	                  ----- and a.User_Status = '1'   ---让停用的显示出来，现在删除就直接物理删除了
 	                   and a.customer_id = '" + _ht["CustomerId"].ToString() + "'";
-             sql = pService.GetLinkSql(sql, "a.User_Name", _ht["UserName"].ToString(), "%");
-             sql = pService.GetLinkSql(sql, "a.User_Code", _ht["UserCode"].ToString(), "%");
-             sql = pService.GetLinkSql(sql, "a.User_Status", _ht["UserStatus"].ToString(), "=");
-             sql = pService.GetLinkSql(sql, "a.User_CellPhone", _ht["CellPhone"].ToString(), "%");
-             sql = pService.GetLinkSql(sql, "a.customer_id", _ht["CustomerId"].ToString(), "=");
-              if (_ht["role_id"].ToString() != "")
+            //为了方便前端操作，把员工本身的默认门店也给去掉了
+            if (_ht["UnitID"].ToString() != "")
             {
-                  sql+=  @" and a.user_id in (select user_id from  T_User_Role f where  f.role_id = '" + _ht["role_id"] + "')";
-              }
-             if (_ht["para_unit_id"].ToString() != "")
-             {
+                sql += @"   and a.user_id 
+	                         in (
+	                         select user_id 
+	                           from  T_User_Role c inner join temp d     ----在前面就把需要计算的数据先算好了，就不要再每次取数据时再取了
+	                           ON d.dst_unit_id = c.unit_id)            ";
+            }
+            sql = pService.GetLinkSql(sql, "a.User_Name", _ht["UserName"].ToString(), "%");
+            sql = pService.GetLinkSql(sql, "a.User_Code", _ht["UserCode"].ToString(), "%");
+            sql = pService.GetLinkSql(sql, "a.User_Status", _ht["UserStatus"].ToString(), "=");
+            sql = pService.GetLinkSql(sql, "a.User_CellPhone", _ht["CellPhone"].ToString(), "%");
+            sql = pService.GetLinkSql(sql, "a.customer_id", _ht["CustomerId"].ToString(), "=");
+            if (_ht["NameOrPhone"].ToString() != "")
+            {
+                sql += @" and ( a.user_name like '%" + _ht["NameOrPhone"] + "%'   or a.user_telephone  like '%" + _ht["NameOrPhone"] + "%'  )";
+            }
+            if (_ht["role_id"].ToString() != "")
+            {
+                sql += @" and a.user_id in (select user_id from  T_User_Role f where  f.role_id = '" + _ht["role_id"] + "')";
+            }
+            if (_ht["para_unit_id"].ToString() != "")
+            {
 
-                 sql += @"    and a.user_id   in (
+                sql += @"    and a.user_id   in (
 	                 select user_id 
 	                   from  T_User_Role c inner join @News d     ----在前面就把需要计算的数据先算好了，就不要再每次取数据时再取了
 	                   ON d.dst_unit_id = c.unit_id)    ";
-             }
+            }
             //不要是超级管理员
-             sql += @" and a.user_id   not in  (select user_id from @News3)";
+            sql += @" and a.user_id   not in  (select user_id from @News3)";
 
-	    
- 	  sql+=" select @iCount = COUNT(*) From @TmpTable ";
 
-         
-                //+ "left join T_User_Role c on b.user_id=c.user_id "
-                //      + "INNER JOIN vw_unit_level d ON d.unit_id = c.unit_id "
-                //      + "and d.path_unit_id like '%"+_ht["UnitID"]+"%' "
+            sql += " select @iCount = COUNT(*) From @TmpTable ";
+
+
+            //+ "left join T_User_Role c on b.user_id=c.user_id "
+            //      + "INNER JOIN vw_unit_level d ON d.unit_id = c.unit_id "
+            //      + "and d.path_unit_id like '%"+_ht["UnitID"]+"%' "
 
             return sql;
         }
@@ -358,9 +374,9 @@ where a.customer_id=@CustomerId    {4} ";
         /// 判断用户号码是否唯一
         /// </summary>
         /// <returns></returns>
-        public int IsExistUserCode(string user_code,string user_id)
+        public int IsExistUserCode(string user_code, string user_id)
         {
-            string sql = " select count(*) From t_user where 1=1 and user_code = '"+user_code+"' and customer_id = '"+this.loggingSessionInfo.CurrentLoggingManager.Customer_Id.ToString()+"'";
+            string sql = " select count(*) From t_user where 1=1 and user_code = '" + user_code + "' and customer_id = '" + this.loggingSessionInfo.CurrentLoggingManager.Customer_Id.ToString() + "'";
             if (user_id != null && !user_id.Equals(""))
             {
                 PublicService pService = new PublicService();
@@ -369,7 +385,7 @@ where a.customer_id=@CustomerId    {4} ";
             var count = Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
 
             return count;
-      
+
         }
 
         /// <summary>
@@ -381,10 +397,11 @@ where a.customer_id=@CustomerId    {4} ";
         /// <param name="strDo"></param>
         /// <param name="strError"></param>
         /// <returns></returns>
-        public bool SetUserInfo(UserInfo userInfo, IList<UserRoleInfo> userRoleInfos,  bool IsTrans, string strDo,out string strError)
+        public bool SetUserInfo(UserInfo userInfo, IList<UserRoleInfo> userRoleInfos, bool IsTrans, string strDo, out string strError)
         {
             IDbTransaction tran = null;
-            if (IsTrans) {
+            if (IsTrans)
+            {
                 tran = this.SQLHelper.CreateTransaction();
             }
             using (tran)
@@ -517,30 +534,30 @@ where a.customer_id=@CustomerId    {4} ";
                       + " )  "
                       + " select a.* From ( "
                       + " select '" + userInfo.User_Id + "' user_id "
-                      + " ,'"+ userInfo.User_Code +"' user_code "
-                      + " ,'"+ userInfo.User_Name +"' user_name "
-                      + " ,'"+ userInfo.User_Gender +"' user_gender "
-                      + " ,'"+ userInfo.User_Birthday +"' user_birthday "
-                      + " ,'"+ userInfo.User_Password +"' user_password "
-                      + " ,'"+ userInfo.User_Email +"' user_email "
-                      + " ,'"+ userInfo.User_Identity +"' user_identity "
-                      + " ,'"+ userInfo.User_Telephone +"' user_telephone "
-                      + " ,'"+ userInfo.User_Cellphone +"' user_cellphone "
-                      + " ,'"+ userInfo.User_Address +"' user_address "
-                      + " ,'"+ userInfo.User_Postcode +"' user_postcode "
-                      + " ,'"+ userInfo.User_Remark +"' user_remark "
-                      + " ,'"+ userInfo.User_Status +"' user_status "
-                      + " ,'"+ userInfo.User_Name_En +"' user_name_en "
-                      + " ,'"+ userInfo.QQ +"' qq "
-                      + " ,'"+ userInfo.MSN +"' msn "
-                      + " ,'"+ userInfo.Blog +"' blog "
-                      + " ,'"+ userInfo.Create_User_Id +"' create_user_id "
-                      + " ,'"+ userInfo.Create_Time +"' create_time "
-                      + " ,'"+ userInfo.Modify_User_Id +"' modify_user_id "
-                      + " ,'"+ userInfo.Modify_Time +"' modify_time "
-                      + " ,'"+ userInfo.User_Status_Desc +"' user_status_desc "
+                      + " ,'" + userInfo.User_Code + "' user_code "
+                      + " ,'" + userInfo.User_Name + "' user_name "
+                      + " ,'" + userInfo.User_Gender + "' user_gender "
+                      + " ,'" + userInfo.User_Birthday + "' user_birthday "
+                      + " ,'" + userInfo.User_Password + "' user_password "
+                      + " ,'" + userInfo.User_Email + "' user_email "
+                      + " ,'" + userInfo.User_Identity + "' user_identity "
+                      + " ,'" + userInfo.User_Telephone + "' user_telephone "
+                      + " ,'" + userInfo.User_Cellphone + "' user_cellphone "
+                      + " ,'" + userInfo.User_Address + "' user_address "
+                      + " ,'" + userInfo.User_Postcode + "' user_postcode "
+                      + " ,'" + userInfo.User_Remark + "' user_remark "
+                      + " ,'" + userInfo.User_Status + "' user_status "
+                      + " ,'" + userInfo.User_Name_En + "' user_name_en "
+                      + " ,'" + userInfo.QQ + "' qq "
+                      + " ,'" + userInfo.MSN + "' msn "
+                      + " ,'" + userInfo.Blog + "' blog "
+                      + " ,'" + userInfo.Create_User_Id + "' create_user_id "
+                      + " ,'" + userInfo.Create_Time + "' create_time "
+                      + " ,'" + userInfo.Modify_User_Id + "' modify_user_id "
+                      + " ,'" + userInfo.Modify_Time + "' modify_time "
+                      + " ,'" + userInfo.User_Status_Desc + "' user_status_desc "
                       + " ,'" + userInfo.Fail_Date + "' fail_date "
-                      + " ,'"+ userInfo.customer_id +"' customer_id "
+                      + " ,'" + userInfo.customer_id + "' customer_id "
                       + " ) a"
                       + " left join T_User b"
                       + " on(a.user_id = b.user_id)"
@@ -585,7 +602,7 @@ where a.customer_id=@CustomerId    {4} ";
         public bool InsertUserRole(UserRoleInfo userRoleInfo, IDbTransaction pTran)
         {
             #region
-            
+
             string sql = "insert into t_user_role "
                         + " ( "
                         + " user_role_id "
@@ -598,7 +615,7 @@ where a.customer_id=@CustomerId    {4} ";
                         + " ,modify_time "
                         + " ,modify_user_id "
                         + " ,default_flag "
-                        
+
                         + " )"
                         + "select  '" + userRoleInfo.Id + "' "
                         + " ,'" + userRoleInfo.UserId + "'  "
@@ -635,10 +652,10 @@ where a.customer_id=@CustomerId    {4} ";
         /// <returns></returns>
         public int ModifyUserPassword(string UserId, string UserPassword)
         {
-            string sql = "update t_user set user_password = '" + UserPassword + "',modify_time = '"+ System.DateTime.Now.ToString()+"' where user_id = '" + UserId + "' ";
+            string sql = "update t_user set user_password = '" + UserPassword + "',modify_time = '" + System.DateTime.Now.ToString() + "' where user_id = '" + UserId + "' ";
             sql += "update cpos_ap..t_customer_user set cu_pwd = '" + UserPassword + "',sys_modify_stamp = '"
                     + System.DateTime.Now.ToString() + "' where customer_user_id = '" + UserId + "' ";
-       
+
             var count = Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql));
             return count;
         }
@@ -653,16 +670,16 @@ where a.customer_id=@CustomerId    {4} ";
         /// <returns></returns>
         public bool SetUpdateUserStatus(UserInfo userInfo)
         {
-            string sql = "update t_user " 
-                       + " set user_status = '"+userInfo.User_Status+"' "
-                       + " ,User_Status_Desc = '"+userInfo.User_Status_Desc+"' "
-                       + " ,Modify_Time =  '"+ userInfo.Modify_Time +"' "
-                       + " ,Modify_User_Id = '"+ userInfo.Modify_User_Id+"' "
-                       + " where user_id = '"+ userInfo.User_Id+"' ;";
+            string sql = "update t_user "
+                       + " set user_status = '" + userInfo.User_Status + "' "
+                       + " ,User_Status_Desc = '" + userInfo.User_Status_Desc + "' "
+                       + " ,Modify_Time =  '" + userInfo.Modify_Time + "' "
+                       + " ,Modify_User_Id = '" + userInfo.Modify_User_Id + "' "
+                       + " where user_id = '" + userInfo.User_Id + "' ;";
 
             sql += "update cpos_ap..t_customer_user set cu_status = '" + userInfo.User_Status + "',sys_modify_stamp = '"
                  + System.DateTime.Now.ToString() + "' where customer_user_id = '" + userInfo.User_Id + "' ";
-       
+
             this.SQLHelper.ExecuteNonQuery(sql);
             return true;
         }
@@ -685,7 +702,7 @@ where a.customer_id=@CustomerId    {4} ";
         /// <returns></returns>
         public int IsExistUser()
         {
-            string strSql = "select isnull(count(*),0) From t_user where user_id='" + 
+            string strSql = "select isnull(count(*),0) From t_user where user_id='" +
                 loggingSessionInfo.CurrentLoggingManager.User_Id.ToString() + "'";
 
             var count = Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
@@ -732,7 +749,7 @@ where a.customer_id=@CustomerId    {4} ";
         /// </summary>
         /// <param name="user_id">用户标识</param>
         /// <returns></returns>
-        public DataTable GetUserByCustomerID(string customerID,string unitID,string roleCode)
+        public DataTable GetUserByCustomerID(string customerID, string unitID, string roleCode)
         {
             string sql = "";
 
@@ -764,10 +781,10 @@ where a.customer_id=@CustomerId    {4} ";
             string sql = " select user_role_id Id, user_id userId, role_id RoleId, unit_id UnitId,default_flag defaultFlag, "
             + " null as userName, null as unitName, null as RoleName, null as applicationDescription "
             + "  from t_user_role "
-            + "  where default_flag=1 and user_id='" + userId + "' and role_id='"+roleId+"' and  status = '1'";
+            + "  where default_flag=1 and user_id='" + userId + "' and role_id='" + roleId + "' and  status = '1'";
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
-         }
+        }
 
         #region 根据用户标识获取角色信息
         /// <summary>
@@ -785,8 +802,8 @@ where a.customer_id=@CustomerId    {4} ";
                       + " , e.role_code RoleCode"
                       + " , a.default_flag DefaultFlag"
                       + " , e.role_name as  RoleName"
-                  //    + " , c.unit_code + ' - ' + c.unit_name as  UnitName"
-                  +",c.unit_name as  UnitName"
+                //    + " , c.unit_code + ' - ' + c.unit_name as  UnitName"
+                  + ",c.unit_name as  UnitName"
                       + " , d.user_name UserName"
                       + " , f.def_app_name as  ApplicationDescription"
                       + " from t_user_role a "
@@ -796,7 +813,7 @@ where a.customer_id=@CustomerId    {4} ";
                       + " left join T_Def_App f "
                       + " on e.def_app_id=f.def_app_id where a.user_id='" + userId
                                         + "' and e.def_app_id =case when '" + applicationId + "'='' then e.def_app_id else '" + applicationId + "' end "//可以根据applicationId来查找信息
-                      + " and  a.status = '1' order by e.def_app_id, e.role_code, a.default_flag desc, c.unit_code ;" ;
+                      + " and  a.status = '1' order by  a.default_flag desc,e.def_app_id, e.role_code, c.unit_code ;";
 
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);
@@ -948,7 +965,7 @@ where a.customer_id=@CustomerId    {4} ";
                 sql += " ,modify_user_id='" + certInfo["ModifyUserId"] + "' ";
                 sql += " ,modify_time='" + certInfo["ModifyTime"] + "' ";
 
-                if (certInfo["ModifyPassword"] != null && certInfo["ModifyPassword"].ToString() == "1" && 
+                if (certInfo["ModifyPassword"] != null && certInfo["ModifyPassword"].ToString() == "1" &&
                     certInfo["CertPwd"] != null && certInfo["CertPwd"].ToString().Length > 0)
                 {
                     sql += " ,cert_pwd='" + certInfo["CertPwd"] + "' ";
@@ -1063,7 +1080,7 @@ where a.customer_id=@CustomerId    {4} ";
         }
 
         #region 导入用户信息
-      
+
         /// 导入用户临时表
         /// </summary>
         /// <param name="dr"></param>

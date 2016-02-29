@@ -218,7 +218,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.IsDelete != null)
+                strSql.Append("[IsDelete]=@IsDelete");
             strSql.Append(" where MappingID=@MappingID ");
             SqlParameter[] parameters = 
             {
@@ -227,7 +229,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@Sequence",SqlDbType.Int),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@MappingID",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@MappingID",SqlDbType.UniqueIdentifier),
+                    new SqlParameter("@IsDelete",SqlDbType.Int)
             };
 			parameters[0].Value = pEntity.VocaVerMappingID;
 			parameters[1].Value = pEntity.PageID;
@@ -235,6 +238,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[3].Value = pEntity.LastUpdateBy;
 			parameters[4].Value = pEntity.LastUpdateTime;
 			parameters[5].Value = pEntity.MappingID;
+            parameters[6].Value = pEntity.IsDelete;
 
             //Ö´ÐÐÓï¾ä
             int result = 0;

@@ -42,7 +42,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Utility">
+    <Reference Include="Utility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Utility.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -61,6 +62,8 @@
     <Compile Include="Module\Basic\Customer\Request\SetBusinessBasisConfigRP.cs" />
     <Compile Include="Module\Basic\Customer\Response\GetBusinessBasisConfigInfoRD.cs" />
     <Compile Include="Module\Basic\Customer\Response\GetCustomerBasicSettingRD.cs" />
+    <Compile Include="Module\Basic\Customer\Response\GetCustomerConfigRD.cs" />
+    <Compile Include="Module\Basic\Customer\Response\GetCustomerVersionRD.cs" />
     <Compile Include="Module\Basic\Holiday\Request\GetHolidayDetailRP.cs" />
     <Compile Include="Module\Basic\Holiday\Response\GetHolidayDetailRD.cs" />
     <Compile Include="Base\IAPIRequestParameter.cs" />
@@ -74,19 +77,36 @@
     <Compile Include="Module\AppConfig\HomePageConfig\Response\SetEventItemRD.cs" />
     <Compile Include="Module\Basic\Customer\Request\SetRewardsSettingRP.cs" />
     <Compile Include="Module\Basic\Customer\Request\SetSalesSettingRP.cs" />
+    <Compile Include="Module\Basic\Holiday\Response\GetHolidayListRD.cs" />
+    <Compile Include="Module\Basic\HomePageStats\Response\GetHomePageStatsRD.cs" />
+    <Compile Include="Module\Basic\Holiday\Request\DeleteHolidayRP.cs" />
+    <Compile Include="Module\Basic\Holiday\Request\GetHolidayListRP.cs" />
+    <Compile Include="Module\Basic\Holiday\Request\SetHolidayRP.cs" />
     <Compile Include="Module\Basic\Menu\Request\GetFuntionListRP.cs" />
     <Compile Include="Module\Basic\Menu\Response\GetFuntionListRD.cs" />
+    <Compile Include="Module\Basic\Menu\Response\GetMenuListRD.cs" />
     <Compile Include="Module\Basic\MessageTemplate\Request\GetMessageTemplateListRP.cs" />
     <Compile Include="Module\Basic\MessageTemplate\Request\SetMessageTemplateRP.cs" />
     <Compile Include="Module\Basic\MessageTemplate\Response\GetMessageTemplateListRD.cs" />
     <Compile Include="Module\Basic\Unit\Request\GetUnitInfoRP.cs" />
     <Compile Include="Module\Basic\Unit\Response\GetUnitInfoRD.cs" />
+    <Compile Include="Module\Basic\User\Request\SetPasswordRP.cs" />
     <Compile Include="Module\CardProduct\MakeVipCard\Request\ExportVipCardCodeRP.cs" />
     <Compile Include="Module\CardProduct\MakeVipCard\Request\GetMakeVipCardListRP.cs" />
     <Compile Include="Module\CardProduct\MakeVipCard\Request\ImportVipCardISNRP.cs" />
     <Compile Include="Module\CardProduct\MakeVipCard\Request\MakeVipCardRP.cs" />
     <Compile Include="Module\CardProduct\MakeVipCard\Response\ExportVipCardCodeRD.cs" />
     <Compile Include="Module\CardProduct\MakeVipCard\Response\GetMakeVipCardListRD.cs" />
+    <Compile Include="Module\CreativityWarehouse\Theme\Request\ApplyRP.cs" />
+    <Compile Include="Module\CreativityWarehouse\Theme\Request\ThemeListRP.cs" />
+    <Compile Include="Module\CreativityWarehouse\Theme\Response\ApplyRD.cs" />
+    <Compile Include="Module\CreativityWarehouse\Theme\Response\ThemeListRD.cs" />
+    <Compile Include="Module\Event\Bargain\Request\BargainListRP.cs" />
+    <Compile Include="Module\Event\Bargain\Request\ChangeStatusRP.cs" />
+    <Compile Include="Module\Event\Bargain\Request\SetBargainRP.cs" />
+    <Compile Include="Module\Event\Bargain\Response\BargainListRD.cs" />
+    <Compile Include="Module\Event\Bargain\Response\ChangeStatusRD.cs" />
+    <Compile Include="Module\Event\Bargain\Response\SetBargainRD.cs" />
     <Compile Include="Module\Event\ContactEvent\Request\ChangeContactEventStatusRP.cs" />
     <Compile Include="Module\Event\ContactEvent\Request\GetContactEventDetailRP.cs" />
     <Compile Include="Module\Event\ContactEvent\Request\GetContactEventListRP.cs" />
@@ -112,10 +132,18 @@
     <Compile Include="Module\Extension\Question\Request\GetQuestionListRP.cs" />
     <Compile Include="Module\Extension\Question\Response\GetQuestionListRD.cs" />
     <Compile Include="Module\Marketing\Activity\Request\DelPrizesDetailRP.cs" />
+    <Compile Include="Module\Marketing\Activity\Request\GetActivityDeatilRP.cs" />
+    <Compile Include="Module\Marketing\Activity\Request\GetActivityListRP.cs" />
+    <Compile Include="Module\Marketing\Activity\Request\GetCardholderCountRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\SetActivityMessageRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\SetActivityRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\SetPrizesRP.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\ActivityMessageInfo.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\GetActivityDeatilRD.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\GetActivityListRD.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\GetCardholderCountRD.cs" />
     <Compile Include="Module\Marketing\Activity\Response\GetMessageTemplateDeatileRD.cs" />
+    <Compile Include="Module\Marketing\Activity\Response\PrizesInfo.cs" />
     <Compile Include="Module\Marketing\Activity\Response\SetActivityRD.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\DelCouponRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Request\GetCouponTypeListRP.cs" />
@@ -123,14 +151,6 @@
     <Compile Include="Module\Marketing\Coupon\Request\SetCouponRP.cs" />
     <Compile Include="Module\Marketing\Coupon\Response\GetCouponTypeListRD.cs" />
     <Compile Include="Module\Marketing\Coupon\Response\GrantCouponRD.cs" />
-    <Compile Include="Module\Marketing\Activity\Request\GetActivityDeatilRP.cs" />
-    <Compile Include="Module\Marketing\Activity\Request\GetActivityListRP.cs" />
-    <Compile Include="Module\Marketing\Activity\Request\GetCardholderCountRP.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\ActivityMessageInfo.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\GetActivityDeatilRD.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\GetActivityListRD.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\GetCardholderCountRD.cs" />
-    <Compile Include="Module\Marketing\Activity\Response\PrizesInfo.cs" />
     <Compile Include="Module\Order\Delivery\Request\GetVipAddressInfoRP.cs" />
     <Compile Include="Module\Order\Delivery\Response\GetVipAddressInfoRD.cs" />
     <Compile Include="Module\Order\Logistics\Request\GetLogisticsCompanyRP.cs" />
@@ -181,10 +201,6 @@
     <Compile Include="Module\VIP\Attribute\Request\SetAttributeRP.cs" />
     <Compile Include="Module\VIP\Attribute\Response\GetAttributeListRD.cs" />
     <Compile Include="Module\VIP\Attribute\Response\SetAttributeRD.cs" />
-    <Compile Include="Module\Basic\Holiday\Request\DeleteHolidayRP.cs" />
-    <Compile Include="Module\Basic\Holiday\Request\GetHolidayListRP.cs" />
-    <Compile Include="Module\Basic\Holiday\Request\SetHolidayRP.cs" />
-    <Compile Include="Module\Basic\Holiday\Response\GetHolidayListRD.cs" />
     <Compile Include="Module\VIP\Evaluation\Request\SetEvaluationItemRP.cs" />
     <Compile Include="Module\VIP\LoginOut\Request\RemoveAndriodMessageBindRP.cs" />
     <Compile Include="Module\VIP\LoginOut\Request\RemoveIOSMessageBindRP.cs" />
@@ -262,9 +278,16 @@
     <Compile Include="Module\VIP\Reward\Response\GetTopRewardListRD.cs" />
     <Compile Include="Module\VIP\Reward\Response\SetRewardOrderRD.cs" />
     <Compile Include="Module\VIP\Reward\Response\GetConfigRD.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Request\AddVipFeedbackInfoRP.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Request\GetCouponUseRP.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Request\GetDeliveryOrderListRP.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Request\GetVipAmountdetailListRP.cs" />
     <Compile Include="Module\VIP\ServicesLog\Request\GetVipServicesLogListRP.cs" />
     <Compile Include="Module\VIP\ServicesLog\Request\SetApiVipServicesLogRP.cs" />
     <Compile Include="Module\VIP\ServicesLog\Request\SetVipServicesLogRP.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Response\GetApiCouponUserListRD.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Response\GetDeliveryOrderListRD.cs" />
+    <Compile Include="Module\VIP\ServicesLog\Response\GetVipAmountdetailListRD.cs" />
     <Compile Include="Module\VIP\ServicesLog\Response\GetVipServicesLogDetailRD.cs" />
     <Compile Include="Module\VIP\ServicesLog\Response\GetVipServicesLogListRD.cs" />
     <Compile Include="Module\VIP\SysVipCardType\Request\DelSpecialDateRP.cs" />
@@ -391,6 +414,10 @@
     <Compile Include="Module\VIP\Login\Response\MemberLoginRD.cs" />
     <Compile Include="Module\VIP\Order\Request\GetOrdersRP.cs" />
     <Compile Include="Module\VIP\Order\Response\GetOrderRD.cs" />
+    <Compile Include="Module\AP\ZMBA\Request\GetZMBACourseDetailListRP.cs" />
+    <Compile Include="Module\AP\ZMBA\Request\SetZMBACourseDetailReadLogRP.cs" />
+    <Compile Include="Module\AP\ZMBA\Response\GetZMBACourseDetailListRD.cs" />
+    <Compile Include="Module\AP\ZMBA\Response\GetZMBACourseRD.cs" />
     <Compile Include="Project\LZLJ\Activity\Activity\Request\GetHomePageActivityListRP.cs" />
     <Compile Include="Project\LZLJ\Activity\Activity\Response\GetHomePageActivityListRD.cs" />
     <Compile Include="Project\YiMa\Order\Order\Request\OrderPayRP.cs" />
@@ -411,13 +438,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Module\Basic\User\Response\" />
     <Folder Include="Module\HtmlApp\Config\Request\" />
     <Folder Include="Module\VIP\VipIntegral\Response\" />
     <Folder Include="Product\Eclub\Module\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="bin\Debug\CPOS.DTO.dll" />
-    <Content Include="bin\Debug\CPOS.DTO.pdb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

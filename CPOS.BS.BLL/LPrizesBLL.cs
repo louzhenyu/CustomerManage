@@ -551,7 +551,29 @@ namespace JIT.CPOS.BS.BLL
 
             }
             #endregion
+            //抽奖记录
+            lotteryEntityNew = new LLotteryLogEntity()
+            {
+                LogId = Guid.NewGuid().ToString(),
+                VipId = strVipId,
+                EventId = strEventId,
+                LotteryCount = 1,
+                IsDelete = 0
 
+            };
+            if (lotteryEntityOld == null)
+                bllLottery.Create(lotteryEntityNew);
+            else
+            {
+                lotteryEntityOld.LotteryCount = (lotteryEntityOld == null ? 0 + 1 : lotteryEntityOld.LotteryCount + 1);
+                bllLottery.Update(lotteryEntityOld);
+            }
+            //更新抽奖机会
+            if (!boolHaveChange && intChange == 1)
+            {
+                entityEventsVipObject.IsLottery = 1;
+                bllEventsVipObject.Update(entityEventsVipObject, false, null);
+            }
             VipIntegralBLL bllVipIntegral = new VipIntegralBLL(this.CurrentUserInfo);
             VipIntegralDetailEntity IntegralDetail = new VipIntegralDetailEntity();
             if (eventEntity.PointsLottery > 0)
@@ -577,31 +599,7 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
 
-            //抽奖记录
-            lotteryEntityNew = new LLotteryLogEntity()
-            {
-                LogId = Guid.NewGuid().ToString(),
-                VipId = strVipId,
-                EventId = strEventId,
-                LotteryCount = 1,
-                IsDelete = 0
-
-            };
-            if (lotteryEntityOld == null)
-                bllLottery.Create(lotteryEntityNew);
-            else
-            {
-                lotteryEntityOld.LotteryCount = (lotteryEntityOld == null ? 0 + 1 : lotteryEntityOld.LotteryCount + 1);
-                bllLottery.Update(lotteryEntityOld);
-            }
-            //更新抽奖机会
-            if (!boolHaveChange && intChange == 1)
-            {
-                entityEventsVipObject.IsLottery = 1;
-                bllEventsVipObject.Update(entityEventsVipObject, false, null);
-            }
-
-
+            //获取奖品
             if (dsAwardEntity.Tables[0].Rows.Count > 0)
             {
                 awardEntity = DataTableToObject.ConvertToObject<t_award_poolEntity>(dsAwardEntity.Tables[0].Rows[0]);
@@ -845,17 +843,28 @@ namespace JIT.CPOS.BS.BLL
 
             }
             #endregion
-            if (bllPrizePools.GetRandomPrizeByEventId(strEventId).Tables[0].Rows.Count > 0)
+            //抽奖记录
+            lotteryEntityNew = new LLotteryLogEntity()
             {
-                entityPrizePools = DataTableToObject.ConvertToObject<LPrizePoolsEntity>(bllPrizePools.GetRandomPrizeByEventId(strEventId).Tables[0].Rows[0]);
-            }
+                LogId = Guid.NewGuid().ToString(),
+                VipId = strVipId,
+                EventId = strEventId,
+                LotteryCount = 1,
+                IsDelete = 0
+
+            };
+            if (lotteryEntityOld == null)
+                bllLottery.Create(lotteryEntityNew);
             else
             {
-                int intLocation = bllPrize.GetLocationByEventID(strEventId);
-                rd.Location = intLocation;
-                rd.PrizeId = "0";
-                rd.PrizeName = "啊呜  手气不是时时有 下次再接再厉哦";
-                return rd;
+                lotteryEntityOld.LotteryCount = (lotteryEntityOld == null ? 0 + 1 : lotteryEntityOld.LotteryCount + 1);
+                bllLottery.Update(lotteryEntityOld);
+            }
+            //更新抽奖机会
+            if (!boolHaveChange && intChange == 1)
+            {
+                entityEventsVipObject.IsLottery = 1;
+                bllEventsVipObject.Update(entityEventsVipObject, false, null);
             }
             VipIntegralBLL bllVipIntegral = new VipIntegralBLL(this.CurrentUserInfo);
             VipIntegralDetailEntity IntegralDetail = new VipIntegralDetailEntity();
@@ -881,33 +890,20 @@ namespace JIT.CPOS.BS.BLL
                     CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, this.CurrentUserInfo);
                 }
             }
-
-            //抽奖记录
-            lotteryEntityNew = new LLotteryLogEntity()
+            //获取奖品
+            if (bllPrizePools.GetRandomPrizeByEventId(strEventId).Tables[0].Rows.Count > 0)
             {
-                LogId = Guid.NewGuid().ToString(),
-                VipId = strVipId,
-                EventId = strEventId,
-                LotteryCount = 1,
-                IsDelete = 0
-
-            };
-            if (lotteryEntityOld == null)
-                bllLottery.Create(lotteryEntityNew);
+                entityPrizePools = DataTableToObject.ConvertToObject<LPrizePoolsEntity>(bllPrizePools.GetRandomPrizeByEventId(strEventId).Tables[0].Rows[0]);
+            }
             else
             {
-                lotteryEntityOld.LotteryCount = (lotteryEntityOld == null ? 0 + 1 : lotteryEntityOld.LotteryCount + 1);
-                bllLottery.Update(lotteryEntityOld);
+                int intLocation = bllPrize.GetLocationByEventID(strEventId);
+                rd.Location = intLocation;
+                rd.PrizeId = "0";
+                rd.PrizeName = "啊呜  手气不是时时有 下次再接再厉哦";
+                return rd;
             }
-            //更新抽奖机会
-            if (!boolHaveChange && intChange == 1)
-            {
-                entityEventsVipObject.IsLottery = 1;
-                bllEventsVipObject.Update(entityEventsVipObject, false, null);
-            }
-
-
-                var prize = DataTableToObject.ConvertToList<LPrizesEntity>(bllPrize.GetCouponTypeIDByPrizeId(entityPrizePools.PrizeID).Tables[0]).FirstOrDefault();
+            var prize = DataTableToObject.ConvertToList<LPrizesEntity>(bllPrize.GetCouponTypeIDByPrizeId(entityPrizePools.PrizeID).Tables[0]).FirstOrDefault();
                 if(prize==null)
                 {
                     rd.Location = 0;

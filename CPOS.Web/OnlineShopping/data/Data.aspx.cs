@@ -619,6 +619,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
                 //查询参数
                 string userId = reqObj.common.userId;
+
+                if(!string.IsNullOrWhiteSpace(reqObj.special.OwnerVipID))//店主vipid
+                    userId = reqObj.special.OwnerVipID;
+
                 string itemName = reqObj.special.itemName; //模糊查询商品名称
                 string itemTypeId = reqObj.special.itemTypeId; //活动标识
                 string isExchange = reqObj.special.isExchange;
@@ -737,6 +741,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public int pageSize { get; set; } //页面数量
             public string isExchange { get; set; } //兑换商品
             public string storeId { get; set; } //门店标识 Jermyn20131008
+            public string OwnerVipID { get; set; }//店主vipid
+
         }
 
         #endregion
@@ -3232,21 +3238,63 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 respData.content.deliveryList = new List<getDeliveryListRespContentItemTypeData>();
 
                 DeliveryBLL dService = new DeliveryBLL(loggingSessionInfo);
-                var deliveryList = dService.QueryByEntity(
-                        new DeliveryEntity()
-                        {
-                            Status = 1
-                        }
-                        , null
-                    );
+                //var deliveryList = dService.QueryByEntity(
+                //        new DeliveryEntity()
+                //        {
+                //            Status = 1
+                //        }
+                //        , null
+                //    );
+                var deliveryList = dService.GetAll();
                 IList<getDeliveryListRespContentItemTypeData> list = new List<getDeliveryListRespContentItemTypeData>();
                 foreach (var paymentInfo in deliveryList)
                 {
                     getDeliveryListRespContentItemTypeData info = new getDeliveryListRespContentItemTypeData();
-                    info.deliveryId = ToStr(paymentInfo.DeliveryId);
-                    info.deliveryName = ToStr(paymentInfo.DeliveryName);
-                    info.isAddress = ToStr(paymentInfo.IsDelete);
-                    list.Add(info);
+
+                    //判断送货到家是否启用
+                    if (paymentInfo.DeliveryId == "1")
+                    {
+                        //送货到家信息
+                        CustomerDeliveryStrategyBLL deliveryStrategyBLL = new CustomerDeliveryStrategyBLL(loggingSessionInfo);
+                        var deliveryStrategy = deliveryStrategyBLL.QueryByEntity(
+                            new CustomerDeliveryStrategyEntity
+                            {
+                                CustomerId = loggingSessionInfo.ClientID,
+                                DeliveryId = paymentInfo.DeliveryId
+                            },
+                            null
+                        ).FirstOrDefault();
+
+                        if (deliveryStrategy != null && deliveryStrategy.Status == 1)
+                        {
+                            info.deliveryId = ToStr(paymentInfo.DeliveryId);
+                            info.deliveryName = ToStr(paymentInfo.DeliveryName);
+                            info.isAddress = ToStr(paymentInfo.IsDelete);
+                            list.Add(info);
+                            //info.IsOpen = deliveryStrategy.Status == 1 ? true : false;
+                        }
+                    }
+                    else if (paymentInfo.DeliveryId == "2")//判断到店自提是否启用
+                    {
+                        //到店提货信息
+                        CustomerTakeDeliveryBLL takeDeliveryBLL = new CustomerTakeDeliveryBLL(loggingSessionInfo);
+                        var takeDelivery = takeDeliveryBLL.QueryByEntity(
+                            new CustomerTakeDeliveryEntity()
+                            {
+                                CustomerId = loggingSessionInfo.ClientID
+                            }, null
+                        ).FirstOrDefault();
+
+                        if (takeDelivery != null && takeDelivery.Status == 1)
+                        {
+                            info.deliveryId = ToStr(paymentInfo.DeliveryId);
+                            info.deliveryName = ToStr(paymentInfo.DeliveryName);
+                            info.isAddress = ToStr(paymentInfo.IsDelete);
+                            list.Add(info);
+                            //info.IsOpen = takeDelivery.Status == 1 ? true : false;
+                        }
+                    }
+
                 }
                 respData.content.deliveryList = list;
 

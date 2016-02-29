@@ -86,7 +86,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface
                 ErrorResponse rsp = new ErrorResponse(ex.ErrorCode, ex.Message);
                 this.DoResponse(context, rsp.ToJSON());
             }
-            catch (ThreadAbortException) { }    //Response.End通过抛出ThreadAbortException异常来实现中止执行后续代码的功能
+            //catch (ThreadAbortException) { }    //Response.End通过抛出ThreadAbortException异常来实现中止执行后续代码的功能
             catch (Exception ex)
             {
                 Loggers.DEFAULT.Exception(new ExceptionLogInfo(ex));
@@ -111,7 +111,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface
             pContext.Response.Clear();
             pContext.Response.StatusCode = 200;
             pContext.Response.Write(pRspContent);
-            pContext.Response.End();
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
+            //pContext.Response.End();
         }
 
         /// <summary>

@@ -52,6 +52,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 string url = string.Empty;
                 if (!string.IsNullOrEmpty(openOAuthAppid))
                 {
+                    //HttpUtility.UrlEncode(,这里对redirect_uri做了编码设置，以保证gourl的所有参数都在redirect_uri的值里，而不被当成open.weixin.qq.com/connect/oauth2/authorize的参数
                     url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + strAppId + "&redirect_uri=" + HttpUtility.UrlEncode(strRedirectUri) + "&response_type=code&scope=" + scope + "&state=" + strState + "&component_appid=" + openOAuthAppid + "#wechat_redirect";
                 }
                 else
@@ -132,7 +133,13 @@ namespace JIT.CPOS.BS.BLL.WX
                     var postData = string.Empty;
                     if (string.IsNullOrEmpty(strAppSecret))//已登录授权了
                     {
-                        openOAuthAppid = !string.IsNullOrEmpty(openOAuthAppid) ? openOAuthAppid : "wx691c2f2bbac04b4b";
+                        if (string.IsNullOrEmpty(openOAuthAppid))
+                        {
+                            var wailist = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity { AppID = strAppId, CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+                            openOAuthAppid = wailist != null ? wailist.OpenOAuthAppid : string.Empty;
+                        }
+
+                        //openOAuthAppid = !string.IsNullOrEmpty(openOAuthAppid) ? openOAuthAppid : "wx691c2f2bbac04b4b";
                         var openOAuthUrl = string.IsNullOrEmpty(ConfigurationManager.AppSettings["openOAuthUrl"]) ? "http://open.chainclouds.com" : ConfigurationManager.AppSettings["openOAuthUrl"];
                         var openuri = openOAuthUrl + "/OpenOAuth/GetComponentAccessToken";
                         var opendata = CommonBLL.GetRemoteData(openuri, "GET", string.Empty).Replace("\"", "");

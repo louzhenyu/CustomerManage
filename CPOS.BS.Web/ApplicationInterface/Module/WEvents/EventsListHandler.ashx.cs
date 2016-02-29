@@ -59,6 +59,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 case "GetWorkingEventList":
                     rst = this.GetWorkingEventList(pRequest);
                     break;
+                case "ExportJoinData":
+                    rst = this.ExportJoinData(pRequest);
+                    break;
+                case "ExportWinnerData":
+                    rst = this.ExportJoinData(pRequest);
+                    break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
                     {
@@ -129,6 +135,27 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             var rd = new EmptyRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
+        }
+        #endregion
+        #region   ExportJoinData
+        public string ExportJoinData(string pRequest)
+        {
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            var couponBLL = new CouponBLL(loggingSessionInfo);
+
+            var rd = new CouponManagePagedSearchRD();
+            var rp = pRequest.DeserializeJSONTo<APIRequest<CouponManagePagedSearchRP>>();
+            rp.Parameters.Validate();
+
+            string fileName = "";
+
+            DataTable dataTable = couponBLL.GetExportData(rp.Parameters);
+            //var rsp = new SuccessResponse<IAPIResponseData>(rd);
+
+
+            fileName = Utils.DataTableToExcel(dataTable, "list", "使用记录", "post");
+
+            return fileName;
         }
         #endregion
     }

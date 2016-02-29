@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-7-8 15:47:38
+ * Create On	:2016/2/22 16:17:07
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,13 +25,13 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class T_RefundOrderEntity : BaseEntity 
+    public partial class T_CTW_LEventThemeEntity : BaseEntity 
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public T_RefundOrderEntity()
+        public T_CTW_LEventThemeEntity()
         {
         }
         #endregion     
@@ -40,102 +40,52 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Guid? RefundID { get; set; }
+		public Guid? ThemeId { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Guid? SalesReturnID { get; set; }
+		public String ThemeName { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String RefundNo { get; set; }
+		public String ThemeDesc { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String VipID { get; set; }
-
-		/// <summary>
-		/// 1=送回门店；   2=快递送回
-		/// </summary>
-		public Int32? DeliveryType { get; set; }
+		public Int32? ThemeStatus { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String OrderID { get; set; }
+		public String ThemeStartMonth { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String ItemID { get; set; }
+		public String ThemeEndMonth { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String SkuID { get; set; }
+		public String RCodeURL { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? Qty { get; set; }
+		public String ImageURL { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? ActualQty { get; set; }
+		public DateTime? StartDate { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String UnitID { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String UnitName { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String UnitTel { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Address { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Contacts { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String Phone { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Decimal? RefundAmount { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Decimal? ActualRefundAmount { get; set; }
-
-		/// <summary>
-		/// 1.待退款   2.已完成
-		/// </summary>
-		public Int32? Status { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String CustomerID { get; set; }
+		public DateTime? EndDate { get; set; }
 
 		/// <summary>
 		/// 
@@ -161,6 +111,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CustomerId { get; set; } 
 
 
         #endregion

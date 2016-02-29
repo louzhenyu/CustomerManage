@@ -65,12 +65,36 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetRetailTraderVipCountByDays(strRetailTraderID,intDays);
 
         }
-        public DataSet GetRetailTraderEarnings(string strRetailTraderID, string strType)
+        /// <summary>
+        /// 分销商总销售额情况  总的，月度，每天
+        /// </summary>
+        /// <param name="strRetailTraderID"></param>
+        /// <param name="strType"></param>
+        /// <param name="intPageIndex"></param>
+        /// <param name="intPageSize"></param>
+        /// <returns></returns>
+        public DataSet GetRetailTraderEarnings(string strRetailTraderID, string strType, int intPageIndex, int intPageSize)
         {
 
 
-            return this._currentDAO.GetRetailTraderEarnings(strRetailTraderID, strType);
+            return this._currentDAO.GetRetailTraderEarnings(strRetailTraderID, strType, intPageIndex, intPageSize);
 
         }
+        /// <summary>
+        /// 分销商当天收入详情
+        /// </summary>
+        /// <param name="strRetailTraderID"></param>
+        /// <param name="strType"></param>
+        /// <param name="intPageIndex"></param>
+        /// <param name="intPageSize"></param>
+        /// <returns></returns>
+        public DataSet GetRetailTraderEarningsDetails(string strRetailTraderID)
+        {
+
+
+            return this._currentDAO.GetRetailTraderEarningsDetails(strRetailTraderID);
+
+        }
+        
     }
 }

@@ -130,6 +130,35 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             }
 
 
+            #region 获取appLogo
+            //基础数据初始化
+            CustomerBasicSettingBLL customerBasicSettingBLL = new CustomerBasicSettingBLL(currentUserInfo);
+            List<CustomerBasicCodeInfo> customerBasicCodeList = new List<CustomerBasicCodeInfo>();
+            //查询条件
+            CustomerBasicSettingEntity customerBasicSettingEntity = new CustomerBasicSettingEntity()
+            {
+                CustomerID = currentUserInfo.ClientID,
+                SettingCode = "WebLogo"
+            };
+            //执行查询
+            List<CustomerBasicSettingEntity> customerBasicSettingEntityList = customerBasicSettingBLL.QueryByEntity(customerBasicSettingEntity, null).ToList();
+            
+            foreach (var a in customerBasicSettingEntityList)
+            {
+                CustomerBasicCodeInfo customerBasicCodeInfo = new CustomerBasicCodeInfo();
+
+                if (a.SettingCode.Equals("WebLogo"))
+                {
+                    customerBasicCodeInfo.WebLogo = a.SettingValue.ToString();
+                }
+                customerBasicCodeList.Add(customerBasicCodeInfo);
+
+            }
+
+            rd.CustomerBasicCodeList = customerBasicCodeList;
+            #endregion
+
+
             return rd;
         }
     }

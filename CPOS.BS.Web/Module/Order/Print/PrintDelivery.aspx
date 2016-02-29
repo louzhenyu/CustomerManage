@@ -83,9 +83,9 @@
         </tr>
     </script>
     <script id="tpl_delivery" type="text/html">
-        <tr><th colspan="10"><#=entity.A1#></th></tr>
-        <tr><td colspan="10"><#=entity.A2#></td></tr>
-        <tr><td colspan="10"><span>&nbsp;</span></td></tr>
+        <tr><th colspan="11"><#=entity.A1#></th></tr>
+        <tr><td colspan="11"><#=entity.A2#></td></tr>
+        <tr><td colspan="11"><span>&nbsp;</span></td></tr>
         <tr>
             <th  colspan="2">客户名称</th>
             <td><#=entity.C4#></td>
@@ -94,16 +94,16 @@
             <th>订单单号</th>
             <td><#=entity.H4#></td>
             <th>配送单号</th>
-            <td><#=entity.J4#></td>
+            <td colspan ="2"><#=entity.J4#></td>
         </tr>
         <tr>
             <th colspan="2">送货地址</th><td colspan="4"><#=entity.C5#></td>
             <th>订单时间</th><td><#=entity.H5#></td>
-            <th>支付方式</th><td><#=entity.J5#></td>
+            <th>支付方式</th><td colspan ="2"><#=entity.J5#></td>
         </tr>
-        <tr><td colspan="10"><span>&nbsp;</span></td></tr>
+        <tr><td colspan="11"><span>&nbsp;</span></td></tr>
         <tr>
-            <th>序号</th><th>商品编码</th><th>商品条码</th><th style="width:150px;" colspan="2">商品名称</th><th>单位</th><th>商品单价(元)</th><th>商品数量</th><th>金额(元)</th><th>备注</th>
+            <th>序号</th><th>商品编码</th><th>商品条码</th><th style="width:150px;" colspan="2">商品名称</th><th>商品规格</th><th>单位</th><th>商品单价(元)</th><th>商品数量</th><th>金额(元)</th><th>备注</th>
         </tr>
         <#var list = entity.Details;#>
         <#for(var i=0;i<list.length;i++){var item=list[i];#>
@@ -112,6 +112,7 @@
                 <td><#=item.ItemCode#></td>
                 <td><#=item.BarCode#></td>
                 <td colspan="2"><#=item.ItemName#></td>
+                <td><#=entity.PropDetailName#></td>
                 <td><#=item.SalesUnitName#></td>
                 <td class="number"><#=item.EnterPrice?item.EnterPrice:0#></td>
                 <td class="number"><#=item.qty#></td>
@@ -131,6 +132,7 @@
                     <td><span>&nbsp;</span></td>
                     <td><span>&nbsp;</span></td>
                     <td><span>&nbsp;</span></td>
+                    <td><span>&nbsp;</span></td>
                 </tr>
             <#}#>
         <#}#>
@@ -141,6 +143,7 @@
             <td class="number"><#=entity.SumQty#></td>
             <td class="number"><#=entity.SumAmount#></td>
             <td></td>
+            <td></td>
         </tr>        
         <tr>
             <th style="text-align:center;" colspan="2">配送费</th>
@@ -148,6 +151,7 @@
                 
             </th>
             <td class="number"><#=entity.E9#></td>
+            <td></td>
             <td></td>
         </tr>
        <tr>
@@ -196,6 +200,7 @@
             <th>总抵扣</th>
             <td class="number"><#=entity.AllDeduction#></td>
             <td></td>
+           <td></td>
         </tr>
         <tr>
             <th style="text-align:center;" colspan="2">整单实付</th>
@@ -203,6 +208,7 @@
                 
             </th>
             <td class="number"><#=entity.actualAmount#></td>
+            <td></td>
             <td></td>
         </tr>
 
@@ -218,6 +224,7 @@
             <td><span>&nbsp;</span></td>
             <th>客户:</th>
             <td><span>&nbsp;</span></td>
+            <td></td>
         </tr>
     </script>
     <script type="text/javascript" src="Controller/PrintDelivery.js"></script>

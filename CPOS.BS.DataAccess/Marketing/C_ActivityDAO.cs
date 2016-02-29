@@ -81,6 +81,8 @@ namespace JIT.CPOS.BS.DataAccess
                 sql.Append("inner join vip as vp on vm.vipid=vp.vipid and vp.IsDelete=0 ");
                 sql.Append("where vm.IsDelete=0 ");
             }
+
+            sql.AppendFormat("and vm.customerid='{0}' ", CurrentUserInfo.ClientID);
             //if (!string.IsNullOrWhiteSpace(ActivityID))
             //{
             //    sql.Append("select count(*) from VipCard where VipCardStatusId=5 or VipCardStatusId=1 and IsDelete=0 ");
@@ -119,7 +121,7 @@ namespace JIT.CPOS.BS.DataAccess
                                      )
                                 )
                     GROUP BY m.VipID
-                ",activityId,prizesId);
+                ", activityId, prizesId);
             return this.SQLHelper.ExecuteDataset(sql);
         }
         /// <summary>
@@ -155,6 +157,113 @@ namespace JIT.CPOS.BS.DataAccess
                 ", activityId, prizesId, vipCardTypeID);
             return this.SQLHelper.ExecuteDataset(sql);
         }
-        
+
+
+        #region 批量营销活动送券、消息业务
+        /// <summary>
+        /// 获取所有商户信息
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public DataSet GetALLCustomerInfo(string sql)
+        {
+            DataSet ds = new DataSet();
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+        /// <summary>
+        /// 批量送券业务
+        /// </summary>
+        /// <param name="MinCouponNum"></param>
+        /// <param name="ActivityID"></param>
+        /// <param name="ActivityType"></param>
+        /// <param name="CouponTypeID"></param>
+        /// <param name="VipCardTypeID"></param>
+        /// <returns></returns>
+        public int BatchAddSendCoupon(int MinCouponNum, string ActivityID, int ActivityType, string CouponTypeID, int VipCardTypeID)
+        {
+            int Count = 0;
+            //是否是生日营销活动
+            bool IsBirthdayMarketing = false;
+            if (ActivityType == 1)
+                IsBirthdayMarketing = true;
+
+
+            var parm = new SqlParameter[7];
+            parm[0] = new SqlParameter("@Num", System.Data.SqlDbType.Int) { Value = MinCouponNum };
+            parm[1] = new SqlParameter("@IsBirthdayMarketing", System.Data.SqlDbType.Bit) { Value = IsBirthdayMarketing };
+            parm[2] = new SqlParameter("@ActivityID", System.Data.SqlDbType.UniqueIdentifier) { Value = new Guid(ActivityID) };
+            parm[3] = new SqlParameter("@CouponTypeID", System.Data.SqlDbType.NVarChar) { Value = CouponTypeID };
+            parm[4] = new SqlParameter("@VipCardTypeID", System.Data.SqlDbType.Int) { Value = VipCardTypeID };
+            parm[5] = new SqlParameter("@UserID", System.Data.SqlDbType.NVarChar) { Value = CurrentUserInfo.UserID };
+            parm[6] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = CurrentUserInfo.ClientID };
+
+            var Result = this.SQLHelper.ExecuteScalar(CommandType.StoredProcedure, "BatchAddSendCoupon", parm);
+            if (Result != null)
+                Count = Convert.ToInt32(Result);
+
+            return Count;
+        }
+        /// <summary>
+        /// 批量生成活动消息业务
+        /// </summary>
+        /// <param name="ResultConunt"></param>
+        /// <param name="ActivityID"></param>
+        /// <param name="VipCardTypeID"></param>
+        /// <param name="MessageID"></param>
+        /// <param name="MessageType"></param>
+        /// <param name="Content"></param>
+        /// <param name="SendTime"></param>
+        /// <param name="StrCouponName"></param>
+        /// <param name="ActivityType"></param>
+        public void BatchAddMessageSend(int ResultConunt, string ActivityID, int VipCardTypeID, string MessageID, string MessageType, string Content, DateTime SendTime, int ActivityType)
+        {
+            //是否是生日营销活动
+            bool IsBirthdayMarketing = false;
+            if (ActivityType == 1)
+                IsBirthdayMarketing = true;
+
+
+            var parm = new SqlParameter[10];
+            parm[0] = new SqlParameter("@Num", System.Data.SqlDbType.Int) { Value = ResultConunt };
+            parm[1] = new SqlParameter("@IsBirthdayMarketing", System.Data.SqlDbType.Bit) { Value = IsBirthdayMarketing };
+            parm[2] = new SqlParameter("@ActivityID", System.Data.SqlDbType.UniqueIdentifier) { Value = new Guid(ActivityID) };
+            parm[3] = new SqlParameter("@VipCardTypeID", System.Data.SqlDbType.Int) { Value = VipCardTypeID };
+            parm[4] = new SqlParameter("@MessageID", System.Data.SqlDbType.UniqueIdentifier) { Value = new Guid(MessageID) };
+            parm[5] = new SqlParameter("@MessageType", System.Data.SqlDbType.NVarChar) { Value = MessageType };
+            parm[6] = new SqlParameter("@Content", System.Data.SqlDbType.NVarChar) { Value = Content };
+            parm[7] = new SqlParameter("@SendTime", System.Data.SqlDbType.DateTime) { Value = SendTime };
+            parm[8] = new SqlParameter("@UserID", System.Data.SqlDbType.NVarChar) { Value = CurrentUserInfo.UserID };
+            parm[9] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = CurrentUserInfo.ClientID };
+
+            var Result = this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "BatchAddMessageSend", parm);
+
+        }
+        /// <summary>
+        /// 批量新增活动获赠信息
+        /// </summary>
+        /// <param name="ResultConunt"></param>
+        /// <param name="ActivityID"></param>
+        /// <param name="VipCardTypeID"></param>
+        /// <param name="ActivityType"></param>
+        public void BatchAddPrizeReceive(int ResultConunt, string ActivityID, int VipCardTypeID, int ActivityType)
+        {
+            //是否是生日营销活动
+            bool IsBirthdayMarketing = false;
+            if (ActivityType == 1)
+                IsBirthdayMarketing = true;
+
+            var parm = new SqlParameter[6];
+            parm[0] = new SqlParameter("@Num", System.Data.SqlDbType.Int) { Value = ResultConunt };
+            parm[1] = new SqlParameter("@IsBirthdayMarketing", System.Data.SqlDbType.Bit) { Value = IsBirthdayMarketing };
+            parm[2] = new SqlParameter("@ActivityID", System.Data.SqlDbType.UniqueIdentifier) { Value = new Guid(ActivityID) };
+            parm[3] = new SqlParameter("@VipCardTypeID", System.Data.SqlDbType.Int) { Value = VipCardTypeID };
+            parm[4] = new SqlParameter("@UserID", System.Data.SqlDbType.NVarChar) { Value = CurrentUserInfo.UserID };
+            parm[5] = new SqlParameter("@CustomerID", System.Data.SqlDbType.NVarChar) { Value = CurrentUserInfo.ClientID };
+
+            var Result = this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "BatchAddPrizeReceive", parm);
+        }
+        #endregion
+
     }
 }

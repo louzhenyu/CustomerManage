@@ -82,7 +82,100 @@ namespace JIT.CPOS.BS.BLL
             }
             return menulist;
         }
+
+        /// <summary>
+        /// 获取某个角色所能操作的菜单列表,不递归包含子集
+        /// </summary>
+        /// <param name="loggingSession">当前登录用户的Session信息</param>
+        /// <param name="roleId">角色Id</param>
+        /// <returns></returns>
+        public IList<MenuModel> GetRoleMenusList(LoggingSessionInfo loggingSessionInfo, string roleId)
+        {
+            //分隔出角色ID和单位ID
+            string[] arr_role = roleId.Split(new char[] { ',' });
+            roleId = arr_role[0];
+
+            DataSet ds = appSysService.GetRoleMenus(roleId);//从Dal层获取数据
+
+            IList<MenuModel> menulist = new List<MenuModel>();
+
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                menulist = DataTableToObject.ConvertToList<MenuModel>(ds.Tables[0]);//菜单列表转换成实体对象
+
+                //if (menulist != null && menulist.Count > 0)
+                //{
+                //    foreach (MenuModel menu in menulist)
+                //    {
+                //        menu.SubMenuList = new List<MenuModel>();
+                //        foreach (MenuModel subMenu in menulist)//遍历所有的菜单项
+                //        {
+                //            if (subMenu.Parent_Menu_Id == menu.Menu_Id)
+                //            {
+                //                menu.SubMenuList.Add(subMenu);
+                //            }
+                //        }
+                //    }
+                //}
+            }
+            return menulist;
+        }
+
         #endregion 菜单
+
+        /// <summary>
+        /// 获取某个角色所能操作的菜单列表
+        /// </summary>
+        /// <param name="loggingSession">当前登录用户的Session信息</param>
+        /// <param name="roleId">角色Id</param>
+        /// <returns></returns>
+        public MenuModel GetRoleMenusByPMenuCode(LoggingSessionInfo loggingSessionInfo, string roleId, string menu_code, out string errMsg)
+        {
+            //分隔出角色ID和单位ID
+            string[] arr_role = roleId.Split(new char[] { ',' });
+            roleId = arr_role[0];
+            DataSet ds = appSysService.GetRoleMenus(roleId);//从Dal层获取数据
+            IList<MenuModel> menulist = new List<MenuModel>();
+            MenuModel currentMenu = new MenuModel();
+            errMsg = "";
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                menulist = DataTableToObject.ConvertToList<MenuModel>(ds.Tables[0]);//菜单列表转换成实体对象
+                var currentMenuList = menulist.Where(p => p.Menu_Code == menu_code).ToArray();
+                if (currentMenuList == null || currentMenuList.Length == 0)
+                {
+                    errMsg = "没有找到对应菜单编码的菜单";
+                }
+                else
+                {
+                    currentMenu = currentMenuList[0];
+                    GetSubMenus(currentMenu, menulist);
+                }
+            }
+            return currentMenu;
+        }
+
+
+
+        public void GetSubMenus(MenuModel menu, IList<MenuModel> menulist)
+        {
+            if (menulist != null && menulist.Count > 0)
+            {
+                menu.SubMenuList = new List<MenuModel>();
+                foreach (MenuModel subMenu in menulist)//遍历所有的菜单项
+                {
+                    if (subMenu.Parent_Menu_Id == menu.Menu_Id)
+                    {
+                        menu.SubMenuList.Add(subMenu);
+                        GetSubMenus(subMenu, menulist);//递归查找子元素的节点
+                    }
+                }
+            }
+        }
+
+
+
+
 
         /// <summary>
         /// 获取单据号

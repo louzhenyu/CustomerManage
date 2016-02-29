@@ -13,6 +13,9 @@ using JIT.CPOS.Common;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.DTO.Module.WeiXin.Menu.Request;
 using JIT.CPOS.DTO.Module.WeiXin.Menu.Response;
+using JIT.CPOS.BS.BLL.WX;
+using JIT.CPOS.BS.Entity.WX;
+using JIT.CPOS.BS.BLL.WX.Enum;
 
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
 {
@@ -27,7 +30,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
             string parentId = pRequest.Parameters.ParentId;
             string displayIndex = pRequest.Parameters.DisplayColumn;
             int status = pRequest.Parameters.Status;
-            string applicationId = pRequest.Parameters.ApplicationId;
+            string applicationId = pRequest.Parameters.ApplicationId;//某个公众号在数据库里的标识
             string text = pRequest.Parameters.Text;
             string menuUrl = pRequest.Parameters.MenuUrl;
             string imageUrl = pRequest.Parameters.ImageUrl;
@@ -58,10 +61,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                 type = "view";
                 if (unionTypeId == 1 && (string.IsNullOrEmpty(menuUrl) || menuUrl == ""))
                 {
-                    throw new APIException("菜单链接不能为空") {ErrorCode = 123};
+                    throw new APIException("菜单链接不能为空") { ErrorCode = 123 };
                 }
 
-                if (unionTypeId == 1 && (menuUrl.Length>500))
+                if (unionTypeId == 1 && (menuUrl.Length > 500))
                 {
                     throw new APIException("菜单链接地址超长，请重新填写") { ErrorCode = 140 };
                 }
@@ -73,11 +76,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                 {
                     if (materialTextIds == null || materialTextIds.Any() == false)
                     {
-                        throw new APIException("图文消息不能为空") {ErrorCode = 124};
+                        throw new APIException("图文消息不能为空") { ErrorCode = 124 };
                     }
                     if (materialTextIds.Any() == true && materialTextIds.Length > 10)
                     {
-                        throw new APIException("图文消息最大不能超过10条数据") {ErrorCode = 125};
+                        throw new APIException("图文消息最大不能超过10条数据") { ErrorCode = 125 };
                     }
                 }
 
@@ -85,18 +88,18 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                 {
                     if (text == "" || string.IsNullOrEmpty(text))
                     {
-                        throw new APIException("文本不能为空") {ErrorCode = 126};
+                        throw new APIException("文本不能为空") { ErrorCode = 126 };
                     }
                     if (Encoding.Default.GetBytes(text).Length > 2048)
                     {
-                        throw new APIException("文本超过了最大限制（2M）") {ErrorCode = 127};
+                        throw new APIException("文本超过了最大限制（2M）") { ErrorCode = 127 };
                     }
                 }
                 if (messageType == "2")
                 {
                     if (imageUrl == "" || string.IsNullOrEmpty(imageUrl))
                     {
-                        throw new APIException("图片不能为空") {ErrorCode = 128};
+                        throw new APIException("图片不能为空") { ErrorCode = 128 };
                     }
                 }
             }
@@ -223,17 +226,27 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                 }
             }
 
-
+            //上传图文素材  
+            //获取access_token/
+            /**
+            var commonService = new CommonBLL();
+            var appService = new WApplicationInterfaceBLL(CurrentUserInfo);
+            var appEntity = appService.GetByID(applicationId);//
+            //var accessToken = commonService.GetAccessTokenByCache(appEntity.AppID, appEntity.AppSecret, CurrentUserInfo);
+            //UploadMediaEntity media = commonService.UploadMediaFileFOREVER(accessToken.access_token, imageUrl, MediaType.Image);
+            string filePath = commonService.DownloadFile(imageUrl);        
+            ***/
             var wMaterialImageBll = new WMaterialImageBLL(CurrentUserInfo);
             var wMaterialImageEntity = new WMaterialImageEntity();
-
             var imageId = Utils.NewGuid();
 
             wMaterialImageEntity.ApplicationId = applicationId;
             wMaterialImageEntity.ImageUrl = imageUrl;
             wMaterialImageEntity.ImageId = imageId;
+           // wMaterialImageEntity.ImageName = filePath;//存物理路径，用于在微信端发送图片
             wMaterialImageBll.Create(wMaterialImageEntity);
 
+     
 
             var entity = new WMenuEntity();
             if (string.IsNullOrEmpty(menuId) || menuId == "")
@@ -243,7 +256,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                 entity.Name = name;
                 entity.ParentId = parentId;
                 entity.DisplayColumn = displayIndex;
-                entity.ImageId = imageId;
+                entity.ImageId = imageId; //和图片做了关联
                 entity.Status = status;
                 entity.Level = level.ToString();
                 entity.MenuURL = menuUrl;

@@ -896,7 +896,7 @@ namespace JIT.CPOS.BS.BLL
                     CustomerId = customerId,
                     QRCode = qrCode
                 }, null).FirstOrDefault();
-                Loggers.Debug(new DebugLogInfo() { Message = string.Format("zk qrCodeEntity != null:{0},customerId:{1},qrCode:{2}", qrCodeEntity != null,customerId,qrCode) });
+                Loggers.Debug(new DebugLogInfo() { Message = string.Format("zk qrCodeEntity != null:{0},customerId:{1},qrCode:{2}", qrCodeEntity != null, customerId, qrCode) });
                 if (qrCodeEntity != null)
                 {
                     #region Jermyn20140819 判断二维码类型
@@ -953,7 +953,7 @@ namespace JIT.CPOS.BS.BLL
                             case "unitqrcode"://门店二维码
                                 #region 绑定会籍店
                                 VipBLL vipServer = new VipBLL(loggingSessionInfo);
-                                
+
                                 var vipInfo = vipServer.QueryByEntity(new VipEntity()
                                 {
                                     WeiXinUserId = openId
@@ -1012,19 +1012,28 @@ namespace JIT.CPOS.BS.BLL
 
                     if (weixinId != "")//处理素材的
                     {
-                        //员工二维码
-                        QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
-                            weixinId, 4, openId, httpContext, requestParams,qrCodeEntity.ObjectId);
+                        if(qrCodeTypeInfo.TypeCode == "UserQrCode")//员工二维码
+                        {
+                            //根据员工类型QRCodeTypeId
+                            QrCodeHandlerText(qrCodeEntity.QRCodeTypeId.ToString(), loggingSessionInfo,
+                                weixinId, 4, openId, httpContext, requestParams, qrCodeEntity.ObjectId);
+                        }
+                        else
+                        {
+                            QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
+                                weixinId, 4, openId, httpContext, requestParams);
+                        }
+                        
                         Loggers.Debug(new DebugLogInfo()
                         {
                             Message = string.Format("员工二维码扫描的员工ID：{0} ", qrCodeEntity.ObjectId)
                         });
-                        //QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
-                        //    weixinId, 4, openId, httpContext, requestParams);
+
                     }
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Loggers.Debug(new DebugLogInfo()
                 {
                     Message = string.Format(
@@ -1045,7 +1054,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="requestParams"></param>
         /// <param name="objectId">员工ID</param>
         public void QrCodeHandlerText(string content, LoggingSessionInfo loggingSessionInfo,
-            string weixinId, int keywordType, string openId, HttpContext httpContext, RequestParams requestParams,string objectId = null)
+            string weixinId, int keywordType, string openId, HttpContext httpContext, RequestParams requestParams, string objectId = null)
         {
             var keywordDAO = new WKeywordReplyDAO(loggingSessionInfo);
 
@@ -1084,7 +1093,7 @@ namespace JIT.CPOS.BS.BLL
         }
 
         public void ReplyNewsJermyn(string replyId, int KeywordType, int ObjectDataFrom, string openId,
-            string weixinId, LoggingSessionInfo loggingSessionInfo, HttpContext httpContext, RequestParams requestParams,string objectId = null)
+            string weixinId, LoggingSessionInfo loggingSessionInfo, HttpContext httpContext, RequestParams requestParams, string objectId = null)
         {
             var dsMaterialText = new WMaterialTextDAO(loggingSessionInfo).GetMaterialTextByIDJermyn(replyId, ObjectDataFrom);
 
@@ -1113,16 +1122,19 @@ namespace JIT.CPOS.BS.BLL
                     }
 
                     #endregion
+                    int x = url.IndexOf("?");
 
-                    if (!string.IsNullOrEmpty(objectId) && url.Contains("?"))
+                    if (!string.IsNullOrEmpty(objectId))
                     {
-                        url += "&employeeId=" + objectId;
-                    } 
-                    else
-                    {
-                        url += "?employeeId=" + objectId;
+                        if (url.IndexOf("?") > 0)//url.Contains("?")
+                        {
+                            url += "&employeeId=" + objectId;
+                        }
+                        else
+                        {
+                            url += "?employeeId=" + objectId;
+                        }
                     }
-
                     newsList.Add(new WMaterialTextEntity()
                     {
                         Title = dr["Title"].ToString(),
@@ -1272,10 +1284,11 @@ namespace JIT.CPOS.BS.BLL
             if (Utils.IsDataSetValid(optionDataSet))
             {
                 rd.OptionList = (from o in optionDataSet.Tables[0].AsEnumerable()
-                          select new OptionsEntity() {
-                              OptionValue = int.Parse(o["OptionID"].ToString()),
-                              OptionText = o["OptionText"].ToString()
-                          }).ToArray();
+                                 select new OptionsEntity()
+                                 {
+                                     OptionValue = int.Parse(o["OptionID"].ToString()),
+                                     OptionText = o["OptionText"].ToString()
+                                 }).ToArray();
             }
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -1289,13 +1302,14 @@ namespace JIT.CPOS.BS.BLL
             var rd = new JIT.CPOS.BS.BLL.LEventsBLL.EventListRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             DataSet dataSet = this._currentDAO.EventList(eventListRP.BeginTime, eventListRP.EndTime, eventListRP.EventTypeID, eventListRP.Sponsor, eventListRP.EventStatus, eventListRP.EventTitle, eventListRP.PageSize, eventListRP.PageIndex);
-            
+
             Loggers.Debug(new DebugLogInfo() { Message = dataSet.ToJSON() });
-            
-            if(Utils.IsDataSetValid(dataSet))
+
+            if (Utils.IsDataSetValid(dataSet))
             {
                 rd.EventList = (from e in dataSet.Tables[0].AsEnumerable()
-                                select new EventEntity() {
+                                select new EventEntity()
+                                {
                                     EventID = e["EventID"].ToString(),
                                     EventTitle = e["Title"].ToString(),
                                     Sponsor = e["Sponsor"].ToString(),
@@ -1341,7 +1355,7 @@ namespace JIT.CPOS.BS.BLL
                 rd.Event.IsSignUpList = lEventsEntity.IsSignUpList.ToString(); //允许显示报名人员，0否，1是
                 rd.Event.EventStatus = lEventsEntity.EventStatus.ToString();
                 rd.Event.CustomerId = lEventsEntity.CustomerId.ToString();//客户id
-                
+
                 LEventSignUpBLL lEventSignUpBLL = new LEventSignUpBLL(CurrentUserInfo);
                 DataSet formDataSet = lEventSignUpBLL.DynamicFormLoadByEventID(eventGetRP.EventID);
 
@@ -1402,11 +1416,11 @@ namespace JIT.CPOS.BS.BLL
         #region 获取运行中的活动
         public DataSet GetWorkingEventList()
         {
-           return this._currentDAO.GetWorkingEventList();
+            return this._currentDAO.GetWorkingEventList();
         }
 
         #endregion
-   
+
         public JIT.CPOS.BS.BLL.MobileModuleBLL.Field[] GetFieldList(DataSet formDataSet)
         {
             return (from f in formDataSet.Tables[0].AsEnumerable()
@@ -1461,7 +1475,7 @@ namespace JIT.CPOS.BS.BLL
         #region RP
         public class EventSaveRP : IAPIRequestParameter
         {
-            public EventEntity EventEntity{get;set;}
+            public EventEntity EventEntity { get; set; }
 
             public void Validate()
             {
@@ -1591,7 +1605,7 @@ namespace JIT.CPOS.BS.BLL
                 }
                 else
                     PageIndex = "15";
-                  
+
             }
         }
 
@@ -1600,8 +1614,8 @@ namespace JIT.CPOS.BS.BLL
             public string EventID { get; set; }
             public string CustomerId { get; set; }
             public void Validate()
-            { 
-                if(string.IsNullOrEmpty(EventID))
+            {
+                if (string.IsNullOrEmpty(EventID))
                     throw new APIException(201, "活动ID不能为空！");
             }
         }
@@ -1619,7 +1633,7 @@ namespace JIT.CPOS.BS.BLL
 
         public class EventRD : IAPIResponseData
         {
-            public EventEntity Event {get;set;}
+            public EventEntity Event { get; set; }
         }
 
         public class EventEntity

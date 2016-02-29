@@ -124,7 +124,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
             if (orderList.Count() > 0)
             {
-                rd.OrderListInfo.discount_rate = orderList[0].discount_rate??100;//订单折扣
+                rd.OrderListInfo.discount_rate = orderList[0].discount_rate ?? 100;//订单折扣
                 rd.OrderListInfo.OrderID = orderList[0].order_id;
                 rd.OrderListInfo.OrderCode = orderList[0].order_no;
                 rd.OrderListInfo.OrderDate = orderList[0].order_date;
@@ -133,7 +133,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.TotalAmount = Convert.ToDecimal(orderList[0].total_amount);
                 rd.OrderListInfo.Remark = orderList[0].remark;
                 rd.OrderListInfo.Status = orderList[0].status;
-                rd.OrderListInfo.OrderStatus =int.Parse(orderList[0].Field7);
+                rd.OrderListInfo.OrderStatus = int.Parse(orderList[0].Field7);
                 rd.OrderListInfo.StatusDesc = orderList[0].status_desc;
                 rd.OrderListInfo.DeliveryAddress = orderList[0].Field4;
                 rd.OrderListInfo.DeliveryTime = orderList[0].Field9;
@@ -151,7 +151,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
                 var deliveryBll = new TOrderCustomerDeliveryStrategyMappingBLL(this.CurrentUserInfo);
                 rd.OrderListInfo.DeliveryAmount = deliveryBll.GetDeliverAmount(orderId);//配送费 add by henry***
-                
+
                 if (!string.IsNullOrEmpty(orderList[0].Field15) && orderList[0].Field15 != "0") //是否是团购商品 add by Henry 2014-12-22
                     rd.OrderListInfo.IsEvent = 1;   //团购商品
                 else
@@ -162,7 +162,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.Mobile = orderList[0].Field6; //配送联系电话 
                 rd.OrderListInfo.DeliveryRemark = orderList[0].remark;
 
-                rd.OrderListInfo.IsEvaluation = orderList[0].IsEvaluation==null?0:orderList[0].IsEvaluation.Value;//评论
+                rd.OrderListInfo.IsEvaluation = orderList[0].IsEvaluation == null ? 0 : orderList[0].IsEvaluation.Value;//评论
                 #endregion
             }
 
@@ -208,16 +208,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 //获取商品的图片
                 DataSet imageDs = tInoutDetailBll.GetOrderDetailImageList(ItemIdList);
 
-                
+
                 var tmp = ds.Tables[0].AsEnumerable().Select(t => new OrderDetailEntity()
                 {
                     ItemID = t["item_id"].ToString(),
                     ItemName = t["item_name"].ToString(),
                     SkuID = t["sku_id"].ToString(),
-                    SalesReturnFlag=salesReturnBll.CheckSalesReturn(orderId, t["sku_id"].ToString()),//是否可申请退换货
+                    SalesReturnFlag = salesReturnBll.CheckSalesReturn(orderId, t["sku_id"].ToString()),//是否可申请退换货
                     //GG = t["prop_1_detail_name"].ToString()+t["prop_2_detail_name"].ToString()+t["prop_3_detail_name"].ToString()
                     //+t["prop_4_detail_name"].ToString()+t["prop_5_detail_name"].ToString(),
-                    
+
                     GG =
                         ggDs.Tables[0].AsEnumerable()
                             .Where(tt => tt["sku_id"].ToString() == t["sku_id"].ToString())
@@ -249,7 +249,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                             .Select(c => new OrderDetailImage
                             {
                                 ImageID = c["imageId"].ToString(),
-                                ImageUrl =ImagePathUtil.GetImagePathStr(c["imageUrl"].ToString(),"240")
+                                ImageUrl = ImagePathUtil.GetImagePathStr(c["imageUrl"].ToString(), "240")
                             }).ToArray()
                 });
                 rd.OrderListInfo.OrderDetailInfo = tmp.ToArray();
@@ -261,8 +261,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             //使用积分
             rd.OrderListInfo.OrderIntegral = Math.Abs(vipIntegralDetailBll.GetVipIntegralByOrder(orderId, pRequest.UserID));
             //积分抵扣金额 add by Henry 2014-10-8
-            decimal integralAmountPre = vipBll.GetIntegralAmountPre(this.CurrentUserInfo.ClientID);//获取积分金额比例
-            rd.OrderListInfo.UseIntegralToAmount =rd.OrderListInfo.OrderIntegral*(integralAmountPre>0?integralAmountPre:0.01M);
+            //decimal integralAmountPre = vipBll.GetIntegralAmountPre(this.CurrentUserInfo.ClientID);//获取积分金额比例
+            //rd.OrderListInfo.UseIntegralToAmount =rd.OrderListInfo.OrderIntegral*(integralAmountPre>0?integralAmountPre:0.01M);
+            rd.OrderListInfo.UseIntegralToAmount = vipBll.GetAmountByIntegralPer(CurrentUserInfo.ClientID, rd.OrderListInfo.OrderIntegral);
 
             var tOrderCouponMappingBll = new TOrderCouponMappingBLL(this.CurrentUserInfo);
 
@@ -272,7 +273,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 
             var vipAmountDetailBll = new VipAmountDetailBLL(this.CurrentUserInfo);
             //使用的账户余额
-            rd.OrderListInfo.VipEndAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, pRequest.UserID,1));
+            rd.OrderListInfo.VipEndAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, pRequest.UserID, 1));
             //使用的返现金额
             rd.OrderListInfo.ReturnAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, pRequest.UserID, 13));
             //使用阿拉币和阿拉币抵扣 add by Henry 2014-10-13
@@ -280,7 +281,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             {
                 decimal aldAmount = Math.Abs(vipAmountDetailBll.GetVipAmountByOrderId(orderId, pRequest.UserID, 11));
                 rd.OrderListInfo.ALDAmount = aldAmount;
-                rd.OrderListInfo.ALDAmountMoney = aldAmount*0.01M;
+                rd.OrderListInfo.ALDAmountMoney = aldAmount * 0.01M;
             }
             #region 获取订单积分，优惠券金额，使用余额
 

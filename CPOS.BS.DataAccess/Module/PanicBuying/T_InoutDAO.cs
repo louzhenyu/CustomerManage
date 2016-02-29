@@ -300,7 +300,7 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
         }
         #endregion
-        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList,string isPayment, string orderNo, string customerId
+        public DataSet GetOrdersList(string orderId, string userId, string orderStatusList, string isPayment, string orderNo, string customerId
             , int pageSize, int pageIndex, string OrderChannelID)
         {
             List<SqlParameter> paras = new List<SqlParameter> { };
@@ -421,7 +421,7 @@ as CollectIncome");
 ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
 as CollectIncome");
             sql.Append(" from t_inout a ");
-          //  sql.Append("inner join #tmp bon a.sales_unit_id = b.unit_id ");
+            //  sql.Append("inner join #tmp bon a.sales_unit_id = b.unit_id ");
             sql.Append(" left join vip c on a.vip_no = c.vipId");
             sql.AppendFormat(" where a.status not in( '-1') and field7 <> 0 and field7<>-99 ");
             //and (isnull('{0}','')='' or order_id like '%{0}%' ),, orderId
@@ -445,9 +445,9 @@ as CollectIncome");
             paras.Add(new SqlParameter() { ParameterName = "@pOrderNo", Value = order_no });
             string sqlWhere = " and 1 = 1 and a.create_time is not null";//时间不能为空
             sqlWhere += "  and customer_id=@pCustomerId ";
-            //是集客的
-            sqlWhere += @"and (SetoffUserId=@pUserId    ---是该会员的集客员工
-                                    or Col20 in (select retailtraderid from retailtrader where SellUserID=@pUserId ) )";
+
+            //所有订单（包括分销商）
+            sqlWhere += @" and SetoffUserId=@pUserId ";
 
             if (!string.IsNullOrEmpty(order_no))
             {
@@ -456,14 +456,15 @@ as CollectIncome");
             //订单来源
             if (!string.IsNullOrEmpty(OrderChannelID) && OrderChannelID != "-1")
             {
-                if (OrderChannelID == "19")
-                {
-                    sqlWhere += " and  col20 in (select retailtraderID from retailtrader  where CustomerID=@pCustomerId ) ";
-                }
-                else
-                {
+                
+                //if (OrderChannelID == "19")
+                //{
+                //    sqlWhere += " and  col20 in (select retailtraderID from retailtrader  where CustomerID=@pCustomerId ) ";
+                //}
+                //else
+                //{
                     sqlWhere += " and a.data_from_id = '" + OrderChannelID + "'";
-                }
+                //}
             }
 
             StringBuilder sql = new StringBuilder();
@@ -485,7 +486,7 @@ as CollectIncome");
 ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
 as CollectIncome");
             sql.Append(" from t_inout a ");
-          //  sql.Append("inner join #tmp bon a.sales_unit_id = b.unit_id ");
+            //  sql.Append("inner join #tmp bon a.sales_unit_id = b.unit_id ");
             sql.Append(" left join vip c on a.vip_no = c.vipId");
             sql.AppendFormat(" where a.status not in( '-1' ) and field7 <> 0 and field7<>-99 ");
             //and (isnull('{0}','')='' or order_id like '%{0}%' ),, orderId
@@ -558,12 +559,12 @@ as CollectIncome");
                 sortType = "DESC";
             var sqlCon = "";
             List<SqlParameter> ls = new List<SqlParameter>();
-            ls.Add(new SqlParameter("@VipID",vipID));
+            ls.Add(new SqlParameter("@VipID", vipID));
             //Loggers.Debug(new DebugLogInfo()
             //{
             //    Message = parm.ToJSON()
             //});
-          
+
 
             var sql = @" 
 select * from t_inout where vip_no=@VipID and [status]='700'

@@ -44,7 +44,7 @@ namespace JIT.CPOS.BS.DataAccess
     {
         public int DeleteData(string strRetailTraderId)
         {
-            string strSql = string.Format("UPDATE RetailTraderItemMapping SET IsDelete=1 WHERE RetailTraderId='{0}'",strRetailTraderId);
+            string strSql = string.Format("DELETE RetailTraderItemMapping  WHERE RetailTraderId='{0}'",strRetailTraderId);
             return SQLHelper.ExecuteNonQuery(strSql);
         }
 

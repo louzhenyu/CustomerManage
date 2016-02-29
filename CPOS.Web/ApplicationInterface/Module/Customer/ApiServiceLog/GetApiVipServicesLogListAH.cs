@@ -20,10 +20,20 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Customer.ApiServiceLog
             var rd = new GetVipServicesLogListRD();
             var para = pRequest.Parameters;
             var vipServicesLogBLL = new VipServicesLogBLL(CurrentUserInfo);
-
+            var VipBLL = new VipBLL(CurrentUserInfo);
             //查询参数
             List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
-            complexCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = para.VipID });
+            #region 门店条件处理
+            string UnitId = "";
+            if (CurrentUserInfo.CurrentUserRole != null)
+                if (!string.IsNullOrWhiteSpace(CurrentUserInfo.CurrentUserRole.UnitId))
+                    UnitId = CurrentUserInfo.CurrentUserRole.UnitId;
+
+            if (!string.IsNullOrWhiteSpace(UnitId))
+                complexCondition.Add(new EqualsCondition() { FieldName = "UnitID", Value = CurrentUserInfo.CurrentUserRole.UnitId });
+            else
+                return rd;
+            #endregion
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "ServicesTime", Direction = OrderByDirections.Desc });
@@ -38,8 +48,21 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Customer.ApiServiceLog
                 ServicesMode = t.ServicesMode,
                 UnitName = t.UnitName,
                 UserName = t.UserName,
-                Content = t.Content
+                Content = t.Content,
+                VipID=t.VipID
             }).ToArray();
+
+            foreach (var item in rd.VipServicesLogList)
+            {
+                //会员名称
+                var VipData = VipBLL.GetByID(item.VipID);
+                if (VipData != null)
+                {
+                    item.VipName = VipData.VipName ?? "";
+                    item.HeadImgUrl = VipData.HeadImgUrl ?? "";
+                }
+                
+            }
 
             return rd;
         }

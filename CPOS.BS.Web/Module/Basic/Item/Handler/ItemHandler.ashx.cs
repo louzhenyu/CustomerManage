@@ -92,10 +92,27 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
 
             if (objectImagesEntityArray.Length == 0)
             {
+                string applicationId = "";
+                //根据CustomerId去取公众号信息
+               
+                var list = new WApplicationInterfaceBLL(CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity { CustomerId = CurrentUserInfo.ClientID   , IsDelete = 0}, null).ToList();
+
+                if (list != null && list.Count > 0)
+                {
+                    applicationId = list.FirstOrDefault().ApplicationId;
+                }
+                else
+                {
+                    //Response.Write("<br>");
+                    //Response.Write("没有获取微信标识");
+                    throw new Exception("该商户没有绑定微信公众号，无法生成商品二维码");
+                }
+
                 //http://api.dev.chainclouds.com
                 //    http://api.dev.chainclouds.com/WXOAuth/AuthUniversal.aspx?customerId=049b0a8f641f4ca7b17b0b7b6291de1f&applicationId=1D7A01FC1E7D41ECBAC2696D0D363315&goUrl=api.dev.chainclouds.com/HtmlApps/html/public/shop/goods_detail.html?rootPage=true&rootPage=true&goodsId=DBF5326F4C5B4B0F8508AB54B0B0EBD4&ver=1448273310707&scope=snsapi_userinfo
 
                 string itemUrl = weixinDomain + "/WXOAuth/AuthUniversal.aspx?customerId=" + CurrentUserInfo.ClientID
+                    + "&applicationId=" + applicationId
                     + "&goUrl=" + weixinDomain + "/HtmlApps/html/public/shop/goods_detail.html?goodsId="
                     + itemId + "&scope=snsapi_userinfo";
 

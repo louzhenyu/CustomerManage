@@ -59,15 +59,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
                 complexCondition.Add(new LikeCondition() { FieldName = "a.WithdrawNo", Value = "%" + rp.Parameters.WithdrawNo + "%" });
 
             //下面要加上对分销商的兼容性*****
-            if (!string.IsNullOrEmpty(rp.Parameters.VipName))
-            {
-                if (rp.Parameters.IsVip == 1)//会员
+            if (rp.Parameters.IsVip == 1)//会员
+                if (!string.IsNullOrEmpty(rp.Parameters.VipName))
                     complexCondition.Add(new LikeCondition() { FieldName = "v.VipName", Value = "%" + rp.Parameters.VipName + "%" });
                 else if (rp.Parameters.IsVip == 2)//店员
-                    complexCondition.Add(new LikeCondition() { FieldName = "u.user_name", Value = "%" + rp.Parameters.VipName + "%" });
-                else if (rp.Parameters.IsVip == 3)//分销商
-                    complexCondition.Add(new LikeCondition() { FieldName = "u.RetailTraderName", Value = "%" + rp.Parameters.VipName + "%" });
-            }
+                    if (!string.IsNullOrEmpty(rp.Parameters.VipName))
+                        complexCondition.Add(new LikeCondition() { FieldName = "u.user_name", Value = "%" + rp.Parameters.VipName + "%" });
+            //else if (rp.Parameters.IsVip == 3)//分销商
+            //    complexCondition.Add(new LikeCondition() { FieldName = "u.RetailTraderName", Value = "%" + rp.Parameters.VipName + "%" });
+
             if (!string.IsNullOrEmpty(rp.Parameters.Status))//判断状态
                 complexCondition.Add(new EqualsCondition() { FieldName = "a.Status", Value = rp.Parameters.Status });
             complexCondition.Add(new EqualsCondition() { FieldName = "a.CustomerID", Value = loggingSessionInfo.ClientID });
@@ -80,7 +80,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Vip
             var rd = new WDManageInfoRD();
             rd.TotalPageCount = wdApplyList.PageCount;
             rd.TotalCount = wdApplyList.RowCount;
-            rd.WithdrawDepositList = wdApplyList.Entities.Select(t => new WDManageInfo() { AccountName=t.AccountName, ApplyID = t.ApplyID, WithdrawNo = t.WithdrawNo, ApplyDate = t.ApplyDate, VipName = t.VipName, VipId = t.VipID, Amount = t.Amount, Status = t.Status, CompleteDate = t.CompleteDate,BankName=t.BankName,CardNo=t.CardNo }).ToArray();
+            rd.WithdrawDepositList = wdApplyList.Entities.Select(t => new WDManageInfo() { AccountName = t.AccountName, ApplyID = t.ApplyID, WithdrawNo = t.WithdrawNo, ApplyDate = t.ApplyDate, VipName = t.VipName, VipId = t.VipID, Amount = t.Amount, Status = t.Status, CompleteDate = t.CompleteDate, BankName = t.BankName, CardNo = t.CardNo }).ToArray();
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();

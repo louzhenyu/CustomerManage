@@ -26,6 +26,10 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         /// app权限code数组
         /// </summary>
         public List<Menu> MenuCodeList { get; set; }
+        /// <summary>
+        /// app配置信息
+        /// </summary>
+        public List<CustomerBasicCodeInfo> CustomerBasicCodeList { get; set; }
 
         //头像信息
         public string HeadImg { get; set; }
@@ -42,5 +46,13 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
     public class Menu
     {
         public string MenuCode { get; set; }
+    }
+
+    /// <summary>
+    /// 获取配置信息
+    /// </summary>
+    public class CustomerBasicCodeInfo
+    {
+        public string WebLogo { get; set; }
     }
 }

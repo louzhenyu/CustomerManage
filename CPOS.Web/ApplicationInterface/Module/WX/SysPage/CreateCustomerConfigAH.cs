@@ -71,10 +71,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
             #region 2.写入文件。全部客户
             else
             {
+                //访问ap数据库
                 var userInfo = new LoggingSessionInfo() { CurrentLoggingManager = new LoggingManager() };
                 userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["Conn_ap"];
                 SysPageBLL BLL1 = new SysPageBLL(userInfo);
                 DataTable dt = BLL1.GetCustomerInfo();
+                var tempCustoemrID = "";
                 if (dt.Rows.Count > 0)
                 {
                     for (int i = 0; i < dt.Rows.Count; i++)
@@ -82,7 +84,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
                         try
                         {
                             string CustomerId = dt.Rows[i]["customer_id"].ToString();
-                            var currentInfo = Default.GetBSLoggingSession(CustomerId, "");//根据商户的数据来看
+                            tempCustoemrID = CustomerId;
+                            var currentInfo = Default.GetBSLoggingSession(CustomerId, "");//根据商户的数据的标识来取数据库连接
                             SysPageBLL bll = new SysPageBLL(currentInfo);
                             string AllConfig = bll.GetCreateCustomerConfig(CustomerId); //获取要生成的Config内容
                             AllConfig = Regex.Replace(AllConfig, @"\s", "");
@@ -97,7 +100,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
                             }
                             strpath = strpath + FileName; //存储文件路径
                             // string outpath = HttpContext.Current.Server.MapPath(@"../" + strpath).Replace("CPOS.BS.Web", "CPOS.Web");
-                            FileStream fs = new FileStream(strpath, FileMode.Create); //新建一个文件
+                            FileStream fs = new FileStream(strpath, FileMode.Create); //新建一个文件（这样每一次发布都新建****）
                             StreamWriter sw = new StreamWriter(fs);
                             sw.Write(AllConfig);  //开始写入
                             sw.Flush();//清除缓冲区
@@ -113,7 +116,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
                             {
                                 Directory.CreateDirectory(strpathVersion);
                             }
-                            strpathVersion = strpathVersion + FileNameVersion;//存储文件路径
+                            strpathVersion = strpathVersion + FileNameVersion;//存储文件路径（存储的信息是从customerbasicSetting里取的）
 
                             FileStream fsVersion = new FileStream(strpathVersion, FileMode.Create); //新建一个文件
                             StreamWriter swVersion = new StreamWriter(fsVersion);
@@ -123,6 +126,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
                         }
                         catch (Exception ex)
                         {
+                            string s = tempCustoemrID;//查看出问题的商户****
                             JIT.Utility.Log.Loggers.Exception(new Utility.Log.ExceptionLogInfo(ex));
                             throw ex;
                         }

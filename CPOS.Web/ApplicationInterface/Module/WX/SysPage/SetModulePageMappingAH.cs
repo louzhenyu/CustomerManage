@@ -41,8 +41,23 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
             userInfo.CurrentLoggingManager.Connection_String = System.Configuration.ConfigurationManager.AppSettings["Conn_ap"];
             SysModulePageMappingBLL bll = new SysModulePageMappingBLL(userInfo);
             SysModulePageMappingEntity entity = new SysModulePageMappingEntity();
+//解除页面和行业版本的绑定关系
+            string propIds = "";
+            foreach (var itemInfo in para.VocaVerMappingID)//数组，更新数据
+            {
+                if (!string.IsNullOrEmpty(itemInfo))
+                {
+                    if (propIds != "")
+                    {
+                        propIds += ",";
+                    }
+                    propIds += "'" + itemInfo + "'";
+                }
+            }
+            //删除不在这个里面的
+            bll.DeleteMappingByIds(propIds, para.PageId);//牵扯到地方比较多，所以直接删除了
 
-            for (int i = 0; i < para.VocaVerMappingID.Length; i++)
+            for (int i = 0; i < para.VocaVerMappingID.Length; i++)//所有新传过来的行业版本参数
             {
                 DataSet ds = bll.GetExistsVocaVerMappingIDandPageId(para.VocaVerMappingID[i], para.PageId);
                 if (ds!=null && ds.Tables[0].Rows.Count > 0)
@@ -52,6 +67,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
                     entity.VocaVerMappingID = Guid.Parse(para.VocaVerMappingID[i]);
                     entity.PageID = Guid.Parse(para.PageId);
                     entity.Sequence =Convert.ToInt32(ds.Tables[0].Rows[0]["Sequence"].ToString());
+                    entity.IsDelete = 0;
                     bll.Update(entity);
                 }
                 else
@@ -67,6 +83,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
                     entity.VocaVerMappingID = Guid.Parse(para.VocaVerMappingID[i]);
                     entity.PageID = Guid.Parse(para.PageId);
                     entity.Sequence =Sequence+1;
+                    entity.IsDelete = 0;
                     bll.Create(entity);
                 }
             }

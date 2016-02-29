@@ -67,5 +67,17 @@ namespace JIT.CPOS.BS.DataAccess
             object Sequence= this.SQLHelper.ExecuteScalar(sbSQL.ToString());
             return Sequence;
         }
+
+        public bool DeleteMappingByIds(string propIds, string PageID)
+        {
+            string sql = "delete from  SysModulePageMapping  ";
+           // sql += " isdelete=1 ";
+        //    sql += " ,Last='" +  + "' ";
+           // sql += " ,LastUpdateTime='" + propInfo.Modify_Time + "' ";
+            sql += " where PageID='" + PageID + "'";
+            sql += " and VocaVerMappingID not in (" + propIds + ") ";
+            this.SQLHelper.ExecuteNonQuery(sql);
+            return true;
+        }
     }
 }

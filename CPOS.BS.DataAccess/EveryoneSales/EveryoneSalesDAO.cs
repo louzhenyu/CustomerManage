@@ -78,6 +78,7 @@ namespace JIT.CPOS.BS.DataAccess.EveryoneSales
             parm[1] = new SqlParameter("@PageSize", PageSize);
             parm[2] = new SqlParameter("@PageIndex", PageIndex);
             parm[3] = new SqlParameter("@ChanelId", ChanelId);
+   
             Loggers.Debug(new DebugLogInfo()
             {
                 Message = parm.ToJSON()
@@ -108,7 +109,7 @@ namespace JIT.CPOS.BS.DataAccess.EveryoneSales
         /// <returns></returns>
         public DataSet GetVipAccount(string CustomerID, int PageSize, int PageIndex, string ChanelId)
         {
-            var parm = new SqlParameter[4];
+            var parm = new SqlParameter[5];
             parm[0] = new SqlParameter("@CustomerID", CustomerID);
             parm[1] = new SqlParameter("@PageSize", PageSize);
             parm[2] = new SqlParameter("@PageIndex", PageIndex);
@@ -118,6 +119,23 @@ namespace JIT.CPOS.BS.DataAccess.EveryoneSales
                 Message = parm.ToJSON()
             });
             return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "ProcGetUserIncomeTopN", parm);
+        }
+
+        /// <summary>
+        /// 收入榜排名 By UserID
+        /// </summary>
+        /// <returns></returns>
+        public DataSet GetVipAccountRankingByUserID(string CustomerID, string UserID, string ChanelId)
+        {
+            var parm = new SqlParameter[3];
+            parm[0] = new SqlParameter("@CustomerID", CustomerID);
+            parm[1] = new SqlParameter("@UserID", UserID);
+            parm[2] = new SqlParameter("@ChanelId", ChanelId);
+            Loggers.Debug(new DebugLogInfo()
+            {
+                Message = parm.ToJSON()
+            });
+            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "ProcGetVipAccountRankingByUserID", parm);
         }
 
         /// <summary>

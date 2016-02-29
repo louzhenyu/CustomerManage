@@ -65,6 +65,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Reward
                         userAmountEntity = new VipAmountEntity
                         {
                             VipId = employeeId,//员工ID
+                            VipCardCode = string.Empty,
                             BeginAmount = 0,
                             InAmount = rewardAmount,
                             OutAmount = 0,

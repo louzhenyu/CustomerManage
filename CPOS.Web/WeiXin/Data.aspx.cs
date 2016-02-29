@@ -99,13 +99,13 @@ namespace JIT.CPOS.Web.WeiXin
                 string IsShow = Request["isShow"];
                 string qrcode = Request["qrcode"]; // 二维码
                 string WeiXin = Request["weixin_id"];
-                string qrcode_id = Request["qrcode_id"];    //门店转换id
+                string qrcode_id = Request["qrcode_id"];    //门店转换id,二维码的code也传过来了 
 
                 string headimgurl = Request["headimgurl"];
                 string unionid = Request["unionid"]; //多个公众账号唯一标识
                 //这里加密，只能取当前的了
-                LoggingSessionInfo customerLogging = BaseService.GetWeixinLoggingSession(WeiXin);
-                var application = new WApplicationInterfaceBLL(customerLogging);
+                LoggingSessionInfo loggingSessionInfo = BaseService.GetWeixinLoggingSession(WeiXin);
+                var application = new WApplicationInterfaceBLL(loggingSessionInfo);
                 var appEntitys = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = WeiXin }, null);
 
                 //下面的取开发平台的放在解密的代码里，因为明文用不到
@@ -166,7 +166,7 @@ namespace JIT.CPOS.Web.WeiXin
                         OpenID, City, Gender, VipName, IsShow, qrcode, WeiXin)
                 });
                 #endregion
-                var loggingSessionInfo = Default.GetAPLoggingSession("");
+                var apLoggingSessionInfo = Default.GetAPLoggingSession("");
 
                 #region 2.管理平台处理日志
                 VipShowLogEntity vipShowLogInfo = new VipShowLogEntity();
@@ -175,7 +175,7 @@ namespace JIT.CPOS.Web.WeiXin
                 vipShowLogInfo.City = qrcode_id;
                 vipShowLogInfo.IsShow = Convert.ToInt32(IsShow);
                 vipShowLogInfo.WeiXin = WeiXin;
-                VipShowLogBLL vipShowLogBll = new VipShowLogBLL(loggingSessionInfo);
+                VipShowLogBLL vipShowLogBll = new VipShowLogBLL(apLoggingSessionInfo);
                 vipShowLogInfo.VipName = VipName;
                 vipShowLogInfo.Language = iRad.ToString();
                 vipShowLogBll.Create(vipShowLogInfo);
@@ -183,9 +183,8 @@ namespace JIT.CPOS.Web.WeiXin
 
 
 
-                VipBLL vipService = new VipBLL(loggingSessionInfo);
-				
-                var vipCode = vipService.GetVipCode();
+                VipBLL vipService = new VipBLL(apLoggingSessionInfo);
+                var vipCode = vipService.GetVipCode();//获取新的vipcode
                 var vipCodeShort = vipCode.Substring(4).Insert(3, " ");
 
 
@@ -206,17 +205,31 @@ namespace JIT.CPOS.Web.WeiXin
                         if (IsShow.Equals("1")) //关注，取消关注不要修改vip表
                         {
                             vipInfo.WeiXinUserId = OpenID;
+                            vipInfo.WeiXin = WeiXin;
+                            vipInfo.UnionID = unionid;
+                            vipInfo.VipSourceId = "3";//是否需要把这个去掉，因为VipSourceId=13也会走到这里
+                            /**  //不做为查询条件
                             vipInfo.City = City;
                             if (Gender != string.Empty) vipInfo.Gender = Convert.ToInt32(Gender);
                             vipInfo.VipName = VipName;
+                            vipInfo.ClientID = loggingSessionInfo.ClientID;
                             //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用
                             vipInfo.WeiXin = WeiXin;
                             vipInfo.UnionID = unionid;
                             vipInfo.VipSourceId = "3";//是否需要把这个去掉，因为VipSourceId=13也会走到这里
                             vipInfo.HeadImgUrl = headimgurl;
+                             **/
                             var vipObj = vipService.QueryByEntity(vipQueryInfo, null);
+
+                            vipInfo.City = City;
+                            if (Gender != string.Empty) vipInfo.Gender = Convert.ToInt32(Gender);
+                            vipInfo.VipName = VipName;
+                            //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用                         
+                            vipInfo.HeadImgUrl = headimgurl;
                             if (vipObj == null || vipObj.Length == 0 || vipObj[0] == null)
                             {
+
+
                                 vipInfo.Status = 1;
                                 vipInfo.VIPID = Guid.NewGuid().ToString().Replace("-", "");
                                 vipInfo.VipCode = vipCode;
@@ -224,10 +237,10 @@ namespace JIT.CPOS.Web.WeiXin
                                 //根据UnionID判断已关注其他绑定公众号
                                 if (!string.IsNullOrEmpty(vipInfo.UnionID))
                                 {
-                                    var vipUnionInfo = vipService.QueryByEntity(new VipEntity() {UnionID = vipInfo.UnionID }, null).FirstOrDefault();
+                                    var vipUnionInfo = vipService.QueryByEntity(new VipEntity() { UnionID = vipInfo.UnionID }, null).FirstOrDefault();
                                     if (vipUnionInfo == null)//首次关注
                                     {
-                                        vipService.Create(vipInfo);
+                                        vipService.Create(vipInfo);                                        
                                     }
                                     //已关注了绑定公众号中的其他公众号
                                     WXUserInfoBLL wxUserInfoBLL = new WXUserInfoBLL(loggingSessionInfo);
@@ -244,6 +257,7 @@ namespace JIT.CPOS.Web.WeiXin
                                 else //未绑定多个公众号
                                 {
                                     vipService.Create(vipInfo);
+                                    
                                 }
 
                             }
@@ -293,7 +307,7 @@ namespace JIT.CPOS.Web.WeiXin
                 });
 
                 //插入业务系统
-                customerIdUnoin = SetCustomerVipInfo(loggingSessionInfo, WeiXin, OpenID, City, IsShow, VipName, Gender, qrcode, null, null, headimgurl, qrcode_id, unionid, out VipIdTmp);
+                customerIdUnoin = SetCustomerVipInfo(apLoggingSessionInfo, WeiXin, OpenID, City, IsShow, VipName, Gender, qrcode, null, null, headimgurl, qrcode_id, unionid, out VipIdTmp);
 
                 Loggers.Debug(new DebugLogInfo()
                 {
@@ -316,7 +330,7 @@ namespace JIT.CPOS.Web.WeiXin
                 respData.Data = vipInfo.QRVipCode;
 
                 //update by wzq 20140805 cancel old push qrcode info
-                loggingSessionInfo = Default.GetBSLoggingSession(customerIdUnoin, "1");
+                //loggingSessionInfo = Default.GetBSLoggingSession(customerIdUnoin, "1");//??不用再次获取session了
                 var eventsBll = new LEventsBLL(loggingSessionInfo);
 
                 Loggers.Debug(new DebugLogInfo()
@@ -1333,7 +1347,7 @@ namespace JIT.CPOS.Web.WeiXin
             string unitName = string.Empty;
 
             WMenuBLL menuServer = new WMenuBLL(AploggingSessionInfo);
-            customerIdUnoin = menuServer.GetCustomerIdByWx(WeiXin);
+            customerIdUnoin = menuServer.GetCustomerIdByWx(WeiXin);//根据微信标识获取商户信息
 
             vipQueryInfo.WeiXinUserId = OpenID;
             vipQueryInfo.WeiXin = WeiXin;
@@ -1438,11 +1452,6 @@ namespace JIT.CPOS.Web.WeiXin
                         #endregion
                     }
                     vipId = vipInfo.VIPID;
-
-                    #region 关注触点活动奖励
-
-                    bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
-                    #endregion
                 }
                 else
                 {

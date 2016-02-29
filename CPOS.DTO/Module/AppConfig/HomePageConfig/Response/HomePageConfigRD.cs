@@ -255,23 +255,31 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         /// 商品名称		【必须】
         /// </summary>
         public string ItemName { get; set; }
-        private string imageurl;
         /// <summary>
         /// 原图片链接地址	【必须】
         /// </summary>
         public string ImageUrl
         {
-            get { return imageurl; }  //请求图片缩略图 
-            set { imageurl = ImagePathUtil.GetImagePathStr(value, "240"); }
+            get;
+            set;
+        }
+        private string imageurl1;
+        /// <summary>
+        /// 原图片链接地址	【必须】
+        /// </summary>
+        public string ImageUrl1
+        {
+            get { return imageurl1; }  //请求图片缩略图 
+            set { imageurl1 = ImagePathUtil.GetImagePathStr(ImageUrl, "240"); }
         }
         private string imageurl2;
-        public string imageUrl2
+        public string ImageUrl2
         {
             get { return imageurl2; }  //请求图片缩略图 
             set { imageurl2 = ImagePathUtil.GetImagePathStr(ImageUrl.Replace("_240", ""), "480"); }
         }
         private string imageurl3;
-        public string imageUrl3
+        public string ImageUrl3
         {
             get { return imageurl3; }  //请求图片缩略图 
             set { imageurl3 = ImagePathUtil.GetImagePathStr(ImageUrl.Replace("_240", ""), "640"); }
@@ -291,4 +299,6 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         public string DiscountRate { get; set; }
 
     }
+
+     
 }

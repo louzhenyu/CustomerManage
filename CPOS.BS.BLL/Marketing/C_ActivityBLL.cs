@@ -47,7 +47,8 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="ActivityID"></param>
         /// <returns></returns>
-        public string GetTargetGroups(string ActivityID) {
+        public string GetTargetGroups(string ActivityID)
+        {
             return _currentDAO.GetTargetGroups(ActivityID);
         }
 
@@ -55,7 +56,8 @@ namespace JIT.CPOS.BS.BLL
         /// 条件获取获取持卡人数
         /// </summary>
         /// <returns></returns>
-        public int GetholderCardCount(string VipCardTypeID, string ActivityID) {
+        public int GetholderCardCount(string VipCardTypeID, string ActivityID)
+        {
             return _currentDAO.GetholderCardCount(VipCardTypeID, ActivityID);
         }
         /// <summary>
@@ -79,9 +81,8 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public DataSet GetSendPrizeVipID(Guid activityId, Guid prizesId, string vipCardTypeID)
         {
-            return _currentDAO.GetSendPrizeVipID(activityId, prizesId,vipCardTypeID);
+            return _currentDAO.GetSendPrizeVipID(activityId, prizesId, vipCardTypeID);
         }
-
-
+        
     }
 }

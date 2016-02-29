@@ -75,8 +75,8 @@ namespace JIT.CPOS.BS.BLL
             //    ThisCardStatusID = CardStatusID.Value;
             //}
             DataSet ds = this._currentDAO.VipBirthdayCount(Month, UnitID, Gender, CardStatusID, StarDate, EndDate, PageSize, PageIndex);
-            
-            
+
+
 
             return ds;
         }
@@ -1176,12 +1176,27 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetTotalSaleAmountBySkuId(skuIdList);
         }
-
+        /// <summary>
+        /// 获取积分兑换金额设置
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         public decimal GetIntegralAmountPre(string customerId)
         {
             return this._currentDAO.GetIntegralAmountPre(customerId);
         }
-
+        /// <summary>
+        /// 根据客户积分兑换金额设置和积分，计算金额
+        /// </summary>
+        /// <param name="customerId">客户ID</param>
+        /// <param name="amount">金额</param>
+        /// <returns></returns>
+        public decimal GetAmountByIntegralPer(string customerId, decimal integral)
+        {
+            decimal integralAmountPre = this._currentDAO.GetIntegralAmountPre(customerId);
+            integralAmountPre = integralAmountPre > 0 ? integralAmountPre : 0.01M;
+            return Math.Round(integral / integralAmountPre, 2);
+        }
         public decimal GetTotalReturnAmountBySkuId(string skuIdList, SqlTransaction tran)
         {
             return this._currentDAO.GetTotalReturnAmountBySkuId(skuIdList, tran);
@@ -1648,11 +1663,25 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetVipCardDetail(phone, idnumber, vipcardcode);
         }
 
-        /// <summary>
-        /// excel导入数据库
+        /// 事务
         /// </summary>
-        /// <param name="strPath"></param>
-        /// <param name="CurrentUserInfo"></param>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
+        }
+        /// <summary>
+        /// 获取会员列表-新版
+        /// </summary>
+        /// <param name="pWhereConditions"></param>
+        /// <param name="pOrderBys"></param>
+        /// <param name="pPageSize"></param>
+        /// <param name="pCurrentPageIndex"></param>
+        /// <returns></returns>
+        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int type, int pPageSize, int pCurrentPageIndex)
+        {
+            return this._currentDAO.GetVipList(pWhereConditions, pOrderBys, type, pPageSize, pCurrentPageIndex);
+        }
         public DataSet ExcelToDb(string strPath, LoggingSessionInfo CurrentUserInfo)
         {
             DataSet ds; //要插入的数据  
@@ -1686,9 +1715,10 @@ namespace JIT.CPOS.BS.BLL
 
             try
             {
-                
+
+
                 dt = ds.Tables[0];
-                string connString = CurrentUserInfo.Conn; //System.Configuration.ConfigurationManager.AppSettings["Conn_alading"]; //@"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
+                string connString = CurrentUserInfo.CurrentLoggingManager.Connection_String; //System.Configuration.ConfigurationManager.AppSettings["Conn_alading"]; //@"user id=dev;password=JtLaxT7668;data source=182.254.219.83,3433;database=cpos_bs_alading;";   //连接数据库的路径方法  
                 SqlConnection connSql = new SqlConnection(connString);
                 connSql.Open();
                 DataRow dr = null;
@@ -1698,7 +1728,10 @@ namespace JIT.CPOS.BS.BLL
                     for (int i = 0; i < dt.Rows.Count; i++)  //记录表中的行数，循环插入  
                     {
                         dr = dt.Rows[i];
-                        this._currentDAO.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                        if (dr[0].ToString() != "" && dr[1].ToString() != "")
+                        {
+                            this._currentDAO.insertToSql(dr, C_Count, connSql, CurrentUserInfo.ClientID, CurrentUserInfo.UserID);
+                        }
                     }
 
                     connSql.Close();
@@ -1745,26 +1778,6 @@ namespace JIT.CPOS.BS.BLL
             }
 
             return dsResult;
-        }
-        /// <summary>
-        /// 事务
-        /// </summary>
-        /// <returns></returns>
-        public SqlTransaction GetTran()
-        {
-            return this._currentDAO.GetTran();
-        }
-        /// <summary>
-        /// 获取会员列表-新版
-        /// </summary>
-        /// <param name="pWhereConditions"></param>
-        /// <param name="pOrderBys"></param>
-        /// <param name="pPageSize"></param>
-        /// <param name="pCurrentPageIndex"></param>
-        /// <returns></returns>
-        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int type, int pPageSize, int pCurrentPageIndex)
-        {
-            return this._currentDAO.GetVipList(pWhereConditions, pOrderBys,type, pPageSize, pCurrentPageIndex);
         }
     }
 }

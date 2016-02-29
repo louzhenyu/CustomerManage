@@ -330,8 +330,7 @@
 
 });
 
-
-$(".leftsead .help a").hover(function () {
+$(".leftsead .help a").hover(function () {
     $(this).children("img.hides").show();
     $(this).children("img.shows").hide();
 

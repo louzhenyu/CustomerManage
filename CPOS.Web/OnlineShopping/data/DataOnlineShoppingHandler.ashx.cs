@@ -65,7 +65,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     reqObj.special.page = 1;
                     reqObj.special.pageSize = 15;
                 }
-                
+
                 //判断客户ID是否传递
                 if (!string.IsNullOrEmpty(reqObj.common.customerId))
                 {
@@ -75,9 +75,12 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 Stopwatch sw = new Stopwatch(); sw.Start();
                 var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
                 sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "登录，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
+                string userId = "";
+                if (!string.IsNullOrWhiteSpace(reqObj.special.OwnerVipID))
+                    userId = reqObj.special.OwnerVipID;
+                else
+                    userId = reqObj.common.userId;
 
-                //查询参数
-                string userId = reqObj.common.userId;
                 string itemName = reqObj.special.itemName;      //模糊查询商品名称
                 string itemTypeId = reqObj.special.itemTypeId;  //活动标识
                 string isExchange = reqObj.special.isExchange;
@@ -243,14 +246,14 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string imageUrl2
             {
                 get { return imageurl2; }  //请求图片缩略图 
-                set { imageurl2 = ImagePathUtil.GetImagePathStr(imageUrl.Replace("_240",""), "480"); }
+                set { imageurl2 = ImagePathUtil.GetImagePathStr(imageUrl.Replace("_240", ""), "480"); }
             }
             private string imageurl3;
             public string imageUrl3
             {
                 get { return imageurl3; }  //请求图片缩略图 
                 set { imageurl3 = ImagePathUtil.GetImagePathStr(imageUrl.Replace("_240", ""), "640"); }
-            } 
+            }
             public string TargetUrl { get; set; }
 
             public decimal price { get; set; }        //商品原价
@@ -306,6 +309,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
             public string sortName { get; set; }//排序字段 salesQty，create_time，salesPrice
             public string sort { get; set; }//排序类型  desc  asc
+
+            public string OwnerVipID { get; set; }//店主vipid
         }
         #endregion
 
@@ -465,7 +470,25 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                 item.salesPrice = item.EveryoneSalesPrice;
                         }
                     }
-
+                    if (reqObj.common.channelId == "7")//一起发码
+                    {
+                        var bll = new SysRetailRewardRuleBLL(loggingSessionInfo);
+                        SysRetailRewardRuleEntity en = new SysRetailRewardRuleEntity();
+                        en.RetailTraderID = reqObj.special.RetailTraderId;
+                        en.CustomerId = loggingSessionInfo.ClientID;
+                        var ds = bll.GetSysRetailRewardRule(en).Where(a => a.CooperateType == "Sales").FirstOrDefault();
+                        if (ds != null)
+                        {
+                            foreach (var item in respData.content.skuList)
+                            {
+                                //--如果渠道是一起发码，当前价格取一起发码价
+                                if (ds.ItemSalesPriceRate > 0)
+                                {
+                                    item.salesPrice =(item.salesPrice *(decimal)ds.ItemSalesPriceRate)/ 100;
+                                }
+                            }
+                        }
+                    }
                 }
 
 
@@ -824,6 +847,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string beginDate { get; set; } //开始日期
             public string endDate { get; set; } //结束日期
             public string storeId { get; set; }
+            public string RetailTraderId { get; set; }//分销商标识
         }
 
         /// <summary>
@@ -1567,16 +1591,17 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 }
 
                 var vipId = "";
-           
+
                 if (!string.IsNullOrEmpty(reqObj.common.openId))
                 {
                     var vipList = (new VipBLL(loggingSessionInfo)).QueryByEntity(new VipEntity()
                     {
-                        WeiXinUserId = reqObj.common.openId
+                        WeiXinUserId = reqObj.common.openId,
+                        ClientID = reqObj.common.customerId
                     }, null);
                     if (vipList != null && vipList.Length > 0) vipId = vipList[0].VIPID;
                 }
-                
+
                 if (vipId == null || vipId.Length == 0)
                 {
                     //respData.code = "2200";
@@ -2383,6 +2408,23 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                     item.ReturnCash = (decimal.Parse(item.salesPrice) * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100)).ToString();
                                 }
                             }
+                            if (reqObj.common.channelId == "7")//一起发码
+                            {
+                                var bll = new SysRetailRewardRuleBLL(loggingSessionInfo);
+                                SysRetailRewardRuleEntity en = new SysRetailRewardRuleEntity();
+                                en.RetailTraderID = reqObj.special.RetailTraderId;
+                                en.CustomerId = loggingSessionInfo.ClientID;
+                                var ds = bll.GetSysRetailRewardRule(en).Where(a => a.CooperateType == "Sales").FirstOrDefault();
+                                if (ds != null)
+                                {
+                                    //--如果渠道是一起发码，当前价格取一起发码价
+                                    if (ds.ItemSalesPriceRate > 0)
+                                    {
+                                        item.salesPrice = ((decimal.Parse(item.salesPrice) * (decimal)ds.ItemSalesPriceRate) / 100).ToString();
+                                    }
+                                }
+                            }
+
 
                         }
                         else
@@ -2431,6 +2473,21 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 orderInfo.IsALD = ToStr(reqObj.common.isALD);
                 orderInfo.IsGroupBuy = ToStr(reqObj.special.isGroupBy);
                 orderInfo.DataFromId = reqObj.special.dataFromId;
+
+                //会员小店订单来源赋值
+                if (reqObj.common.channelId.Equals("6"))
+                {
+                    orderInfo.DataFromId = 16;
+                }
+                else if (reqObj.common.channelId.Equals("10")) //员工小店
+                {
+                    orderInfo.DataFromId = 17;
+                }
+                else if (reqObj.common.channelId.Equals("7")) //分销商订单
+                {
+                    orderInfo.DataFromId = 19;
+                }
+
                 orderInfo.SalesUser = reqObj.special.SalesUser; //店员ID add by donal 2014-9-25 18:09:49
                 orderInfo.ChannelId = reqObj.common.channelId; //渠道 add by donal 2014-9-28 14:32:05
 
@@ -2964,6 +3021,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public IList<setOrderCouponClass> couponList { get; set; }  //优惠券集合 （Jermyn20131213--tordercouponmapping
             public int dataFromId { get; set; }
             public string SalesUser { get; set; } //店员ID add by donal 2014-9-25 18:07:11
+            public string RetailTraderId { get; set; }  //分销商id
         }
 
 
@@ -4592,7 +4650,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"),
                     ToInt(appOrderAmount * 100),
                     //1,//测试用，支付一分钱
-                    string.IsNullOrEmpty(reqObj.special.orderDesc) ? "jitmarketing" : reqObj.special.orderDesc,
+                    string.IsNullOrEmpty(reqObj.special.orderDesc) ? "chainclouds" : reqObj.special.orderDesc,
                     string.IsNullOrEmpty(reqObj.special.currency) ? "1" : reqObj.special.currency,
                     reqObj.special.mobileNO,
                     pReturnUrl
@@ -4702,7 +4760,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"),
                 //ToInt(appOrderAmount * 100),
                 1,//测试用，支付一分钱
-                string.IsNullOrEmpty(reqObj.special.orderDesc) ? "jitmarketing" : reqObj.special.orderDesc,
+                string.IsNullOrEmpty(reqObj.special.orderDesc) ? "chainclouds" : reqObj.special.orderDesc,
                 string.IsNullOrEmpty(reqObj.special.currency) ? "1" : reqObj.special.currency,
                 reqObj.special.mobileNO
                 );

@@ -27,7 +27,7 @@ using Aspose.Cells;
 using System.Net;
 using System.Drawing;
 using System.Globalization;
-
+using JIT.Utility;
 
 namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 {
@@ -72,10 +72,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 case "ImportUser":
                     content = ImportUser();
                     break;
-                case "DownloadQRCodeNew":
-                     DownloadQRCodeNew();
+                case "DownloadQRCodeNew":  //员工二维码，新的
+                    DownloadQRCodeNew();
                     break;
-                    
+
             }
             pContext.Response.Write(content);
             pContext.Response.End();
@@ -88,8 +88,40 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         public string GetUserListData()
         {
             var form = Request("form").DeserializeJSONTo<UserQueryEntity>();
+            var responseData = new ResponseData();
 
-            var userService = new cUserService(CurrentUserInfo);
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                 responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
+
+            var userService = new cUserService(loggingSessionInfo);
             UserInfo data;
             string content = string.Empty;
 
@@ -102,12 +134,14 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             //int maxRowCount = PageSize;
             int maxRowCount = Utils.GetIntVal(Request("limit"));
             int startRowIndex = Utils.GetIntVal(Request("start"));
+            string NameOrPhone = form.NameOrPhone == null ? string.Empty : form.NameOrPhone;
 
             string key = string.Empty;
             if (Request("id") != null && Request("id") != string.Empty)
             {
                 key = Request("id").ToString().Trim();
             }
+          
             data = userService.SearchUserListByUnitID(   //SearchUserListByUnitID
                 user_code,
                 user_name,
@@ -115,15 +149,16 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 user_status,
                 maxRowCount,
                 startRowIndex,
-                CurrentUserInfo.CurrentUserRole.UnitId, para_unit_id, role_id);
+                CurrentUserInfo==null?"": CurrentUserInfo.CurrentUserRole.UnitId, para_unit_id, role_id,NameOrPhone);
 
             var jsonData = new JsonData();
             jsonData.totalCount = data.ICount.ToString();
             jsonData.data = data.UserInfoList;
 
-            content = string.Format("{{\"totalCount\":{1},\"topics\":{0}}}",
+            content = string.Format("{{\"success\":{2},\"msg\":{3},\"totalCount\":{1},\"topics\":{0}}}",
                 data.UserInfoList.ToJSON(),
-                data.ICount);
+                data.ICount
+                ,1,"\"\"");
             return content;
         }
         #endregion
@@ -134,7 +169,39 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         /// </summary>
         public string GetUserInfoByIdData()
         {
-            var userService = new cUserService(CurrentUserInfo);
+            var responseData = new ResponseData();
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
+
+            var userService = new cUserService(loggingSessionInfo);//使用兼容模式
             UserInfo data;
             string content = string.Empty;
 
@@ -153,6 +220,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             var jsonData = new JsonData();
             jsonData.totalCount = "1";
             jsonData.data = data;
+            jsonData.success = true;
+            jsonData.msg = "";
 
             content = jsonData.ToJSON();
             return content;
@@ -165,7 +234,39 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         /// </summary>
         public string GetUserRoleInfoByUserIdData()
         {
-            var userService = new cUserService(CurrentUserInfo);
+            var responseData = new ResponseData();
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
+
+            var userService = new cUserService(loggingSessionInfo);//使用兼容模式
             UserRoleInfo data = new UserRoleInfo();
             string content = string.Empty;
 
@@ -195,12 +296,45 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         /// </summary>
         public string SaveUserData()
         {
+            var responseData = new ResponseData();
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
 
-            var userService = new cUserService(CurrentUserInfo);
+
+
+            var userService = new cUserService(loggingSessionInfo);//兼容模式
             UserInfo user = new UserInfo();
             string content = string.Empty;
             string error = "";
-            var responseData = new ResponseData();
+          //  var responseData = new ResponseData();
 
             string key = string.Empty;
             string user_id = string.Empty;
@@ -215,7 +349,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 
             user = key.DeserializeJSONTo<UserInfo>();
 
-            if (userService.IsExistUserCode(user.User_Code, CurrentUserInfo, user_id))
+            if (userService.IsExistUserCode(user.User_Code, loggingSessionInfo, user_id))//使用兼容模式
             {
                 responseData.success = false;
                 responseData.msg = "用户名已存在！";
@@ -255,7 +389,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 responseData.msg = "姓名不能为空";
                 return responseData.ToJSON();
             }
-           
+
             //if (user.Fail_Date == null || user.Fail_Date.Trim().Length == 0)
             //{
             //    responseData.success = false;
@@ -295,11 +429,11 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 responseData.msg = "只能设置一个单位为默认单位";
                 return responseData.ToJSON();
             }
-           UserRoleInfo roleinfo =user.userRoleInfoList.Where(p => p.DefaultFlag == 1).ToArray()[0];
-            t_unitBLL t_unitBLL=new BLL.t_unitBLL(CurrentUserInfo);
+            UserRoleInfo roleinfo = user.userRoleInfoList.Where(p => p.DefaultFlag == 1).ToArray()[0];
+            t_unitBLL t_unitBLL = new BLL.t_unitBLL(loggingSessionInfo);//使用兼容模式
             t_unitEntity UnitEn = t_unitBLL.GetByID(roleinfo.UnitId);
             string unitName = "";
-            if (UnitEn != null && UnitEn.unit_name!=null)
+            if (UnitEn != null && UnitEn.unit_name != null)
             {
                 unitName = UnitEn.unit_name;
             }
@@ -310,9 +444,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             }
 
             user.Create_Time = Utils.GetNow();
-            user.Create_User_Id = CurrentUserInfo.CurrentUser.User_Id;
+            user.Create_User_Id = loggingSessionInfo.CurrentUser.User_Id;//使用兼容模式
             user.Modify_Time = Utils.GetNow();
-            user.Modify_User_Id = CurrentUserInfo.CurrentUser.User_Id;
+            user.Modify_User_Id = loggingSessionInfo.CurrentUser.User_Id;//使用兼容模式
 
             userService.SetUserInfo(user, user.userRoleInfoList, out error);
 
@@ -386,9 +520,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             #endregion
 
             string errorMsg = "";
-            
-            string wxCodeImageUrl = CreateUserWxCode(user, unitName,out errorMsg);
-            if (errorMsg!="")
+
+            string wxCodeImageUrl = CreateUserWxCode(user, unitName,loggingSessionInfo, out errorMsg);
+            if (errorMsg != "")
             {
                 responseData.success = false;
                 responseData.msg = errorMsg;
@@ -407,21 +541,22 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 
 
         //生成员工二维码
-        public string CreateUserWxCode(UserInfo user, string unitName, out string errorMsg)
+        public string CreateUserWxCode(UserInfo user, string unitName,LoggingSessionInfo loggingSessionInfo ,out string errorMsg)
         {
             errorMsg = "";
             #region  生成员工二维码
             //微信 公共平台
-            var wapentity = new WApplicationInterfaceBLL(CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+        //兼容模式
+            var wapentity = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity
             {
-                CustomerId = CurrentUserInfo.ClientID,
+                CustomerId = loggingSessionInfo.ClientID,
                 IsDelete = 0
             }, null).FirstOrDefault();//取默认的第一个微信
 
             var QRCodeId = Guid.NewGuid();
-            var QRCodeManagerentity = new WQRCodeManagerBLL(this.CurrentUserInfo).QueryByEntity(new WQRCodeManagerEntity
+            var QRCodeManagerentity = new WQRCodeManagerBLL(loggingSessionInfo).QueryByEntity(new WQRCodeManagerEntity
             {
-                ObjectId =  user.User_Id
+                ObjectId = user.User_Id
             }, null).FirstOrDefault();
             if (QRCodeManagerentity != null)
             {
@@ -430,7 +565,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             if (QRCodeManagerentity == null)
             {
                 //二维码类别
-                var wqrentity = new WQRCodeTypeBLL(this.CurrentUserInfo).QueryByEntity(
+                var wqrentity = new WQRCodeTypeBLL(loggingSessionInfo).QueryByEntity(
                     new WQRCodeTypeEntity { TypeCode = "UserQrCode" }
                     , null).FirstOrDefault();
                 if (wqrentity == null)
@@ -441,7 +576,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                     errorMsg = "无法获取员工二维码类别";
                 }
                 //生成了微信二维码
-                var wxCode = CretaeWxCode();//***
+                var wxCode = CretaeWxCode( loggingSessionInfo);//***
                 //如果名称不为空，就把图片放在一定的背景下面
                 if (!string.IsNullOrEmpty(user.User_Name))
                 {
@@ -449,7 +584,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                     wxCode.ImageUrl = CombinImage(apiDomain + @"/HeadImage/qrcodeBack.jpg", wxCode.ImageUrl, unitName + "-" + user.User_Name);
                 }
 
-                var WQRCodeManagerbll = new WQRCodeManagerBLL(CurrentUserInfo);
+                var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);//兼容模式
 
                 //    Guid QRCodeId = Guid.NewGuid();
 
@@ -462,11 +597,11 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                         QRCodeTypeId = wqrentity.QRCodeTypeId,
                         IsUse = 1,
                         ObjectId = user.User_Id,
-                        CreateBy = CurrentUserInfo.UserID,
+                        CreateBy = loggingSessionInfo.UserID,//兼容模式
                         ApplicationId = wapentity.ApplicationId,
                         IsDelete = 0,
                         ImageUrl = wxCode.ImageUrl,
-                        CustomerId = CurrentUserInfo.ClientID
+                        CustomerId = loggingSessionInfo.ClientID
 
                     });
                 }
@@ -474,7 +609,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 return wxCode.ImageUrl;//生成新的二维码地址
 
             }
-            else {
+            else
+            {
                 return QRCodeManagerentity.ImageUrl;
             }
 
@@ -485,13 +621,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         }
 
 
-                   #region new 生成活动二维码
-        public WxCode CretaeWxCode()
+        #region new 生成活动二维码
+        public WxCode CretaeWxCode(LoggingSessionInfo loggingSessionInfo)//用了兼容模式
         {
             var responseData = new WxCode();
             responseData.success = false;
             responseData.msg = "二维码生成失败!";
-            var loggingSessionInfo = CurrentUserInfo;
+         //   var loggingSessionInfo = CurrentUserInfo;
             try
             {
                 //微信 公共平台
@@ -634,11 +770,44 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         /// </summary>
         public string DeleteData()
         {
-            var service = new cUserService(CurrentUserInfo);
+            var responseData = new ResponseData();
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
+
+
+            var service = new cUserService(loggingSessionInfo);//使用兼容模式
 
             string content = string.Empty;
             string error = "";
-            var responseData = new ResponseData();
+        //    var responseData = new ResponseData();
 
             string key = string.Empty;
             if (FormatParamValue(Request("ids")) != null && FormatParamValue(Request("ids")) != string.Empty)
@@ -662,7 +831,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             string[] ids = key.Split(',');
             foreach (var id in ids)
             {
-                service.SetUserStatus(key, status, CurrentUserInfo);
+                service.SetUserStatus(key, status, loggingSessionInfo);//使用兼容模式
             }
 
             responseData.success = true;
@@ -675,11 +844,43 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
 
         public string DeleteData2()
         {
-            var service = new cUserService(CurrentUserInfo);
+            var responseData = new ResponseData();
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
+
+            var service = new cUserService(loggingSessionInfo);//使用兼容模式
 
             string content = string.Empty;
             string error = "";
-            var responseData = new ResponseData();
+         //   var responseData = new ResponseData();
 
             string key = string.Empty;
             if (FormatParamValue(Request("ids")) != null && FormatParamValue(Request("ids")) != string.Empty)
@@ -694,11 +895,11 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 return responseData.ToJSON();
             }
 
-           
+
             string[] ids = key.Split(',');
             foreach (var id in ids)
             {
-             //  service.SetUserStatus(key, status, CurrentUserInfo);
+                //  service.SetUserStatus(key, status, CurrentUserInfo);
                 service.physicalDeleteUser(id);
             }
 
@@ -713,11 +914,40 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         public string RevertPassword()
         {
             var responseData = new ResponseData();
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+             
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
+
+
+            string error = "";
+         //   var responseData = new ResponseData();
             try
             {
                 UserInfo user = new UserInfo();
-                var userService = new cUserService(CurrentUserInfo);
-                bool bl = userService.ModifyUserPassword(CurrentUserInfo, Request("user").ToString(), Request("password").ToString());
+                var userService = new cUserService(loggingSessionInfo);//使用兼容模式
+                userService.SetUserPwd(loggingSessionInfo, MD5Helper.Encryption(Request("password")), out error);//使用兼容模式
                 responseData.success = true;
             }
             catch (Exception)
@@ -826,15 +1056,45 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             //string imagePath = targetPath + imageURL.Substring(imageURL.LastIndexOf("/"));
             //Loggers.Debug(new DebugLogInfo() { Message = "二维码路径，imagePath:" + imageURL });
 
+            var responseData = new ResponseData();
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                 //   return responseData.ToString();
+                    throw new Exception("缺少商户标识");
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                   // return responseData.ToString();
+                    throw new Exception("缺少登陆员工的标识");
+                }            
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
+
+
+
 
             //需要有一个targetPath？？？明天测试一下//参考上面的 方法
             string user_id = user_id = Request("user_id").ToString().Trim();
             //根据id获取到员工信息
-            var service = new cUserService(CurrentUserInfo);
-            UserInfo user = service.GetUserById(CurrentUserInfo,user_id);
+            var service = new cUserService(loggingSessionInfo);
+            UserInfo user = service.GetUserById(loggingSessionInfo, user_id);//兼容模式
             string errorMsg = "";
 
-            string wxCodeImageUrl = CreateUserWxCode(user, user.UnitName, out errorMsg);
+            string wxCodeImageUrl = CreateUserWxCode(user, user.UnitName,loggingSessionInfo, out errorMsg);
             //if (errorMsg != "")
             //{
             //    responseData.success = false;
@@ -843,7 +1103,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             //}
 
             var dirPath = System.AppDomain.CurrentDomain.BaseDirectory;
-            var imageName = wxCodeImageUrl.Substring(wxCodeImageUrl.IndexOf("HeadImage")).Replace("/",@"\");
+            var imageName = wxCodeImageUrl.Substring(wxCodeImageUrl.IndexOf("HeadImage")).Replace("/", @"\");
             var imagePath = dirPath + imageName;//整个
             try
             {
@@ -885,31 +1145,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             var responseData = new ResponseData();
             var userService = new cUserService(CurrentUserInfo);
             ExcelHelper excelHelper = new ExcelHelper();
-            //string strPath = excelHelper.UploadExcel();//上传文件
-            //if (strPath.Length > 0)
-            //{
-            //    try
-            //    {
-            //        DataSet ds = userService.ExcelToDb(strPath, CurrentUserInfo);
-            //        if (ds != null && ds.Tables[0].Rows.Count > 0)
-            //        {
-            //            new ExcelCommon().OutPutExcel(HttpContext.Current, strPath);
-            //            HttpContext.Current.Response.End();
-            //        }
-            //        else
-            //        {
-            //            responseData.success = true;
-            //            responseData.msg = "操作成功";
-            //        }
-
-            //    }
-            //    catch (Exception err)
-            //    {
-            //        responseData.success = false;
-            //        responseData.msg = err.Message.ToString();
-            //    }
-            //}
-            //return "";
             if (Request("filePath") != null && Request("filePath").ToString() != "")
             {
                 try
@@ -918,7 +1153,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                     string strPath = Request("filePath").ToString();
                     string strFileName = string.Empty;
                     DataSet ds = userService.ExcelToDb(HttpContext.Current.Server.MapPath(strPath), CurrentUserInfo);
-                    if (ds != null && ds.Tables.Count>1 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
+                    if (ds != null && ds.Tables.Count > 1 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0)
                     {
 
                         Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(ds.Tables[0], 0);
@@ -930,11 +1165,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                         strFileName = "\\用户错误信息导出" + DateTime.Now.ToFileTime() + ".xls";
                         savePath = savePath + strFileName;
                         wb.Save(savePath);//保存Excel文件   
-                           
-                        //new ExcelCommon().OutPutExcel(HttpContext.Current, savePath);
-                        //HttpContext.Current.ApplicationInstance.CompleteRequest();
-                        //HttpContext.Current.Response.End();
-
                         rp = new ImportRP()
                         {
                             Url = "/File/ErrFile/User" + strFileName,
@@ -963,7 +1193,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                 }
             }
             return responseData.ToJSON();
-           
+
         }
         #endregion
     }
@@ -979,9 +1209,11 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         public string user_status;
         public string unit_id;
         public string role_id;
+        public string NameOrPhone;
+        
     }
 
-     public class WxCode
+    public class WxCode
     {
         public bool success { get; set; }
         public string msg { get; set; }

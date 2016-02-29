@@ -242,6 +242,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 }
 
 
+
                 BaseService.WriteLogWeixin("调用获取凭证接口返回值： " + data);
                 Loggers.Debug(new DebugLogInfo() { Message = "调用获取凭证接口返回值： " + data });
 
@@ -251,7 +252,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 //accessToken.expires_in = "7200";
 
                 appObj.RequestToken = accessToken.access_token;
-                appObj.ExpirationTime = DateTime.Now.AddHours(1);
+                appObj.ExpirationTime = DateTime.Now.AddHours(1);//token的过期时间不是两小时吗？为什么这里只加了一小时
                 wApplicationInterfaceBLL.Update(appObj, false);
             }
             else
@@ -602,7 +603,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 if (userInfo.errcode == null || userInfo.errcode.Equals(string.Empty))
                 {
                     //记录用户信息
-                    BaseService.WriteLogWeixin("userInfo.subscribe:  " + userInfo.subscribe);
+                    BaseService.WriteLogWeixin("userInfo.subscribe:  " + userInfo.subscribe);//用户是否订阅该公众号标识，值为0时，拉取不到其余信息,
                     BaseService.WriteLogWeixin("userInfo.openid:  " + userInfo.openid);
                     BaseService.WriteLogWeixin("userInfo.nickname:  " + userInfo.nickname);
                     BaseService.WriteLogWeixin("userInfo.sex:  " + userInfo.sex);
@@ -622,7 +623,7 @@ namespace JIT.CPOS.BS.BLL.WX
                     uri += "&vipName=" + (string.IsNullOrEmpty(userInfo.nickname) ? "0" : HttpUtility.UrlEncode(userInfo.nickname));
                     uri += "&headimgurl=" + HttpUtility.UrlEncode(userInfo.headimgurl);
                     uri += "&isShow=" + HttpUtility.UrlEncode(isShow);
-                    uri += "&qrcode=" + HttpUtility.UrlEncode(qrcode);
+                    uri += "&qrcode=" + HttpUtility.UrlEncode(qrcode);//
                     uri += "&qrcode_id=" + HttpUtility.UrlEncode(qrcodeId);
                     uri += "&unionid=" + HttpUtility.UrlEncode(userInfo.unionid);
                     //  uri += "&unionid=" + HttpUtility.UrlEncode(request);
@@ -988,7 +989,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 BaseService.WriteLogWeixin("文件下载成功！");
                 BaseService.WriteLogWeixin("文件保存路径： " + filePath);
 
-                return filePath;
+                return filePath;//以@开头
             }
             catch (Exception ex)
             {
@@ -1019,13 +1020,13 @@ namespace JIT.CPOS.BS.BLL.WX
 
             if (accessToken.errcode == null || accessToken.errcode.Equals(string.Empty))
             {
-                string uri = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=" + accessToken.access_token;
+                string uri = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=" + accessToken.access_token;//通过token创建二维码
                 string method = "POST";
                 string content = string.Empty;
 
                 if (type.Equals("0"))
                 {
-                    content = "{\"expire_seconds\": 1800, \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": " + sceneId + "}}}";
+                    content = "{\"expire_seconds\": 1800, \"action_name\": \"QR_SCENE\", \"action_info\": {\"scene\": {\"scene_id\": " + sceneId + "}}}";//这个二维码就用半小时的？！！
                 }
                 else if (type.Equals("1"))
                 {
@@ -1037,7 +1038,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 if (data.IndexOf("40001") > -1 && data.ToLower().IndexOf("invalid credential") > -1)
                     Loggers.Debug(new DebugLogInfo() { Message = "获取二维码失败，40001:invalid credential, accessToken.access_token=" + accessToken.access_token });
 
-                var qrcode = data.DeserializeJSONTo<QrCodeEntity>();
+                var qrcode = data.DeserializeJSONTo<QrCodeEntity>();//主要获取ticket的
 
                 #region 处理第三方使用token，没有更改过期时间问题
                 if (qrcode.errcode == "40001")
@@ -1060,7 +1061,7 @@ namespace JIT.CPOS.BS.BLL.WX
 
                 if (string.IsNullOrEmpty(qrcode.errcode))
                 {
-                    qrcodeUrl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + qrcode.ticket;
+                    qrcodeUrl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + qrcode.ticket;//通过ticket获取二维码地址
                 }
                 else
                 {
@@ -1779,6 +1780,32 @@ namespace JIT.CPOS.BS.BLL.WX
 
         #region inner method
         /// <summary>
+        /// 根据订单ID获取商品名称
+        /// </summary>
+        /// <param name="order_id"></param>
+        /// <param name="loggingSessionInfo"></param>
+        /// <returns></returns>
+        private string GetItemName(string order_id, LoggingSessionInfo loggingSessionInfo)
+        {
+            var InoutDetailBLL = new T_Inout_DetailBLL(loggingSessionInfo);
+            var skuBLL = new T_SkuBLL(loggingSessionInfo);
+            var ItembBLL = new T_ItemBLL(loggingSessionInfo);
+            string Result = "";
+
+            var InoutDetailEntity = InoutDetailBLL.QueryByEntity(new T_Inout_DetailEntity() { order_id = "18be67be140a4e9d91d900601d9da794" }, null).FirstOrDefault();
+            if (InoutDetailEntity == null)
+                return Result;
+            var SkuEntity = skuBLL.GetByID(InoutDetailEntity.sku_id);
+            if (SkuEntity == null)
+                return Result;
+            var ItemEntity = ItembBLL.GetByID(SkuEntity.item_id);
+            if (ItemEntity == null)
+                return Result;
+            return ItemEntity.item_name;
+        }
+
+
+        /// <summary>
         /// 根据模板编号发送匹配模板微信消息底层方法
         /// </summary>
         /// <param name="CommonData"></param>
@@ -1917,7 +1944,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// 设置微信消息模板所属行业
         /// </summary>
         /// <param name="accessToke"></param>
-        private void SetWXTemplateIndustry(AccessTokenEntity accessToke)
+        public void SetWXTemplateIndustry(AccessTokenEntity accessToke)
         {
             if (accessToke.errcode == null || accessToke.errcode.Equals(string.Empty))
             {
@@ -1935,7 +1962,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <returns></returns>
         private AccessTokenEntity GetAccessToken(LoggingSessionInfo loggingSessionInfo)
         {
-            //var WXUserInfoBLL = new WXUserInfoBLL(loggingSessionInfo);
+            var WXUserInfoBLL = new WXUserInfoBLL(loggingSessionInfo);
             var appService = new WApplicationInterfaceBLL(loggingSessionInfo);
 
             //var WXUserInfoList = WXUserInfoBLL.QueryByEntity(new WXUserInfoEntity() { CustomerID=loggingSessionInfo.ClientID}, null).ToList();
@@ -1969,10 +1996,12 @@ namespace JIT.CPOS.BS.BLL.WX
                 return new ResultEntity();
             if (WXTMConfigData == null)
                 return new ResultEntity();
+
+            string ItemName = GetItemName(Inout.order_id, loggingSessionInfo);
             PaySuccess PaySuccessData = new PaySuccess();
             PaySuccessData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             PaySuccessData.orderProductPrice = new DataInfo() { value = Math.Round(Inout.actual_amount ?? 0, 2).ToString(), color = WXTMConfigData.Colour1 };
-            PaySuccessData.orderProductName = new DataInfo() { value = "商品名称", color = WXTMConfigData.Colour2 };
+            PaySuccessData.orderProductName = new DataInfo() { value = ItemName, color = WXTMConfigData.Colour2 };
             PaySuccessData.orderAddress = new DataInfo() { value = Inout.Field4, color = WXTMConfigData.Colour3 };
             PaySuccessData.orderName = new DataInfo() { value = Inout.order_no, color = WXTMConfigData.Colour3 };
             PaySuccessData.remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
@@ -2101,9 +2130,9 @@ namespace JIT.CPOS.BS.BLL.WX
             var accessToke = GetAccessToken(loggingSessionInfo);
             if (accessToke.errcode == null || accessToke.errcode.Equals(string.Empty))
             {
-                #region 设置行业模板
-                SetWXTemplateIndustry(accessToke);
-                #endregion
+                //#region 设置行业模板
+                //SetWXTemplateIndustry(accessToke);
+                //#endregion
                 #region 获取模板ID
                 string uri = "https://api.weixin.qq.com/cgi-bin/template/api_add_template?access_token=" + accessToke.access_token;
                 string method = "POST";
@@ -2157,7 +2186,46 @@ namespace JIT.CPOS.BS.BLL.WX
 
         #endregion
 
+        #region 群发微信消息
+        /// <summary>
+        /// 群发微信消息(最多支持一万条)
+        /// </summary>
+        /// <param name="OpenIdArray"></param>
+        /// <param name="Content"></param>
+        /// <param name="loggingSessionInfo"></param>
+        /// <returns></returns>
+        public string BulkSendWXTemplateMessage(string[] OpenIdArray, string Content, LoggingSessionInfo loggingSessionInfo)
+        {
+            string Result = "";
+            var appService = new WApplicationInterfaceBLL(loggingSessionInfo);
+            var appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = loggingSessionInfo.ClientID }, null)[0];
+            var AccessToke = new CommonBLL().GetAccessTokenByCache(appEntity.AppID, appEntity.AppSecret, loggingSessionInfo);
 
+            if (AccessToke.errcode == null || AccessToke.errcode.Equals(string.Empty))
+            {
+                string uri = "https://api.weixin.qq.com/cgi-bin/message/mass/send?access_token=" + AccessToke.access_token;
+                string method = "POST";
+                Loggers.Debug(new DebugLogInfo() { Message = string.Format("发送模板消息使用的token:{0}", AccessToke.access_token) });
+
+                #region 处理json
+                StringBuilder Json = new StringBuilder();
+                Json.Append("{\"touser\":[");
+                for (int i = 0; i < OpenIdArray.Length; i++)
+                {
+                    Json.AppendFormat("\"{0}\",", OpenIdArray[i]);
+                }
+                string NewJson = Json.ToString().TrimEnd(',');
+                Json = new StringBuilder();
+                Json.Append(NewJson);
+                Json.Append("],\"msgtype\":\"text\",\"text\":{\"content\":\"" + Content + "\"}}");
+                #endregion
+
+                Result = GetRemoteData(uri, method, Json.ToString());
+            }
+
+            return Result;
+        }
+        #endregion
 
 
         #region 消息加解密
@@ -2348,6 +2416,6 @@ namespace JIT.CPOS.BS.BLL.WX
             long lTime = long.Parse(timeStamp + "0000000");
             TimeSpan toNowTime = new TimeSpan(lTime);
             return startTime.Add(toNowTime).ToString("yyyy-MM-dd HH:mm:ss");
-        } 
+        }
     }
 }

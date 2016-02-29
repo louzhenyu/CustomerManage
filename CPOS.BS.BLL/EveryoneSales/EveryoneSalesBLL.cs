@@ -74,6 +74,14 @@ namespace JIT.CPOS.BS.BLL
         }
 
         /// <summary>
+        /// 收入榜排名 By UserID
+        /// </summary>
+        /// <returns></returns>
+        public DataSet GetVipAccountRankingByUserID(string CustomerID, string UserID, string ChanelId)
+        {
+            return this._currentDAO.GetVipAccountRankingByUserID(CustomerID, UserID, ChanelId);
+        }
+        /// <summary>
         /// 月收入统计列表
         /// </summary>
         public DataSet GetAmountDetail(string CustomerId, string UserID, int PageSize, int PageIndex, string ChanelId)

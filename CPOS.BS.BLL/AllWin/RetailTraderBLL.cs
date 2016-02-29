@@ -158,6 +158,14 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetRetailCoupon(RetailTraderID, CustomerID
 , Status, pageIndex, pageSize, OrderBy, sortType);
         }
-
+        /// <summary>
+        /// 返回分销商关联商品二维码
+        /// </summary>
+        /// <param name="strRetailTraderId"></param>
+        /// <returns></returns>
+        public DataSet RetailTraderItemQRCode(string strRetailTraderId)
+        {
+            return this._currentDAO.RetailTraderItemQRCode(strRetailTraderId);
+        }
     }
 }

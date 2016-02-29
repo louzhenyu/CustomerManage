@@ -1614,7 +1614,7 @@ WHERE     1=1) as t";
                       + " on(a.sku_id = b.sku_id) "
                       + " inner join t_inout c WITH(NOLOCK)  "
                       + " on(a.order_id = c.order_id)"
-                      + " LEFT JOIN (SELECT *,ROW_NUMBER() OVER(PARTITION BY ObjectId  ORDER BY DisplayIndex ASC ) rowIndex FROM  ObjectImages  WHERE CustomerId='" + strCustomerId + "'  and Description != '自动生成的产品二维码') oi ON oi.objectID=b.item_id AND oi.rowIndex=1 "
+                      + " LEFT JOIN (SELECT *,ROW_NUMBER() OVER(PARTITION BY ObjectId  ORDER BY DisplayIndex ASC ) rowIndex FROM  ObjectImages  WHERE CustomerId='" + strCustomerId + "'  and Description != '自动生成的产品二维码') oi ON oi.objectID=b.item_id AND oi.rowIndex=1 AND oi.isdelete = 0 "
                       + " where a.order_id= '" + orderId + "' order by b.item_code";
             #endregion
             DataSet ds = new DataSet();

@@ -101,13 +101,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Washing
             }
             //文件目录
             string uploadFilePath = customerBasicSettingBll.GetSettingValueByCode("UploadFilePath");
+           uploadFilePath=string.IsNullOrEmpty(uploadFilePath)? "/Images/":uploadFilePath;//如果为空，就取默认的
 
             uploadFilePath += DateTime.Now.Year + "/" + DateTime.Now.Month + "." + DateTime.Now.Day + "/";
             if (!IOUtil.ExistsFile(IOUtil.MapPath(uploadFilePath)))
                 IOUtil.CreateDirectoryIfNotExists(IOUtil.MapPath(uploadFilePath));
 
             // 把 byte[] 写入文件 
-            FileStream fs = new FileStream(IOUtil.MapPath(uploadFilePath) + fileName, FileMode.Create);
+            FileStream fs = new FileStream(IOUtil.MapPath(uploadFilePath) + fileName, FileMode.Create);//通过IOUtil.MapPath由网络目录转换成物理目录
             BinaryWriter bw = new BinaryWriter(fs);
             bw.Write(bytes);
             bw.Close();

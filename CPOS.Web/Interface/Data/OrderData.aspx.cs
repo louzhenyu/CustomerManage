@@ -868,7 +868,7 @@ namespace JIT.CPOS.Web.Interface.Data
                             AppOrderID = reqObj.special.orderId,
                             AppOrderTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff"),
                             AppOrderAmount = ToInt(appOrderAmount * 100),
-                            AppOrderDesc = string.IsNullOrEmpty(itemNameList) ? "jitmarketing" : itemNameList,
+                            AppOrderDesc = string.IsNullOrEmpty(itemNameList) ? "chainclouds" : itemNameList,
                             Currency = 1,
                             MobileNO = reqObj.special.mobileNo,
                             ReturnUrl = pReturnUrl,

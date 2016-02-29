@@ -186,8 +186,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
 
             var everyoneBll = new EveryoneSalesBLL(loggingSessionInfo);
 
-            //查询结果
+            //查询所有结果
             DataSet dt = everyoneBll.GetVipCount(rp.CustomerID, rp.Parameters.PageSize, rp.Parameters.PageIndex, rp.ChannelId);
+
+            //单独查询用户自己的集客情况
+            DataSet Userdt = everyoneBll.GetRankingByUserID(rp.CustomerID,rp.UserID,rp.ChannelId);
 
             //把查询的数据转化为返回的数据
             UserInfo userinfo = null;
@@ -208,8 +211,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 }
             }
 
+            //自己的集客情况转化为返回数据
+            UserInfo userSelf = new UserInfo();
+            if (Userdt.Tables[0].Rows.Count != 0)
+            {
+                userSelf.OrdinaID = int.Parse(Userdt.Tables[0].Rows[0]["Ordinal"].ToString());
+                userSelf.VipName = Userdt.Tables[0].Rows[0]["VipName"].ToString();
+                userSelf.GetVipCount = int.Parse(Userdt.Tables[0].Rows[0]["GetVipCount"].ToString());
+            }
+
             //返回参数
             var rd = new GetVipCountRD();
+            rd.UserSelf = userSelf;
             rd.UserList = UserInfoList.ToArray();
             rd.TotalPage = TotalPage;
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -232,6 +245,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             //查询结果
             DataSet dt = everyoneBll.GetVipAccount(rp.CustomerID, rp.Parameters.PageSize, rp.Parameters.PageIndex, rp.ChannelId);
 
+            //查询当前用户收入情况
+            DataSet Userdt = everyoneBll.GetVipAccountRankingByUserID(rp.CustomerID,rp.UserID,rp.ChannelId);
+
             //把查询的数据转化为返回的数据
             UserAccountInfo useraccountinfo = null;
             List<UserAccountInfo> UserAccountList = new List<UserAccountInfo>();
@@ -250,9 +266,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                         TotalPage = int.Parse(dt.Tables[0].Rows[i]["TotalPage"].ToString());
                 }
             }
-
+            UserAccountInfo userAccountInfoUser = new UserAccountInfo();
+            if (Userdt.Tables[0].Rows.Count > 0)
+            {
+                userAccountInfoUser.OrdinaID = int.Parse(Userdt.Tables[0].Rows[0]["Ordinal"].ToString());
+                userAccountInfoUser.VipName = Userdt.Tables[0].Rows[0]["VipName"].ToString();
+                userAccountInfoUser.GetVipAmount = decimal.Parse(Userdt.Tables[0].Rows[0]["GetVipCount"].ToString());
+            }
             //返回参数
             var rd = new GetVipAccountRD();
+            rd.UserAccountInfoSelf = userAccountInfoUser;
             rd.UserAccountList = UserAccountList.ToArray();
             rd.TotalPage = TotalPage;
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -935,6 +958,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
     /// </summary>
     public class GetVipCountRD : IAPIResponseData
     {
+        public UserInfo UserSelf { get; set; }
         public UserInfo[] UserList { get; set; }
         public int TotalPage { get; set; }
     }
@@ -967,6 +991,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
     /// </summary>
     public class GetVipAccountRD : IAPIResponseData
     {
+        public UserAccountInfo UserAccountInfoSelf { get; set; }
         public UserAccountInfo[] UserAccountList { get; set; }
         public int TotalPage { get; set; }
     }

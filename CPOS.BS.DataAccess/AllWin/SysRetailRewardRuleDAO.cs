@@ -68,13 +68,13 @@ namespace JIT.CPOS.BS.DataAccess
                 ls.Add(new SqlParameter("@RetailTraderID", RetailTraderID));  //如果是分销商，不论他之前用的什么奖励规则都给删除。
                 sql += " and RetailTraderID=@RetailTraderID";
             }
-            else
-            {
-                sql += " and CooperateType=@CooperateType and RewardTypeCode=@RewardTypeCode ";
+            //else
+            //{
+            //    sql += " and CooperateType=@CooperateType and RewardTypeCode=@RewardTypeCode ";
 
-                ls.Add(new SqlParameter("@CooperateType", CooperateType));
-                ls.Add(new SqlParameter("@RewardTypeCode", RewardTypeCode));
-            }
+            //    ls.Add(new SqlParameter("@CooperateType", CooperateType));
+            //    ls.Add(new SqlParameter("@RewardTypeCode", RewardTypeCode));
+            //}
 
       
             this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql, ls.ToArray());    //计算总行数
@@ -105,14 +105,11 @@ namespace JIT.CPOS.BS.DataAccess
               strSql.Append("  ,CAST(i.SalesPrice * @ItemSalesPriceRate AS DECIMAL(18,2)) SharePrice ");
               strSql.Append("  ,CASE WHEN r.ItemId IS NULL THEN 0 ELSE 1 END  IsCheck");
               strSql.Append("  ,(i.SalesPrice* (@ItemSalesPriceRate*0.01)*(@RetailTraderReward*0.01))  Commission");
-              //strSql.Append("  ,ROW_NUMBER() OVER(ORDER BY i.CreateTime DESC) num");
-              //strSql.Append("  ,ROW_NUMBER() OVER(ORDER BY i.CreateTime DESC) num");
               strSql.Append("   FROM dbo.[vw_item_detail] i ");
               strSql.AppendFormat(" LEFT JOIN RetailTraderItemMapping r ON i.item_id=r.ItemId AND i.CustomerId=r.CustomerID and r.[IsDelete]=0   AND r.RetailTraderId= '{0}'",strRetailTraderID);
-              strSql.AppendFormat(" WHERE  i.CustomerId ='{0}' AND i.IsDelete=0", strCustomerID, strCustomerID);
+              strSql.AppendFormat(" WHERE  i.CustomerId ='{0}' AND i.IsDelete=0 AND i.status=1 AND i.item_category_id<>'-1'", strCustomerID, strCustomerID);
               strSql.Append(" ) A");
               strSql.AppendFormat(" ) Main WHERE Main.num >={0} and Main.num<={1}", ((intPageIndex - 1) * intPageSize) + 1, intPageIndex * intPageSize);
-              //strSql.AppendFormat(" ORDER BY  {0}  {1}", strSortName == "" ? "Commission" : strSortName, strSort == "" ? "Desc" : strSort);
               return SQLHelper.ExecuteDataset(strSql.ToString());
           }
         /// <summary>
@@ -132,7 +129,15 @@ namespace JIT.CPOS.BS.DataAccess
               return dataSet;
 
           }
-          public DataSet GetRetailTraderEarnings(string strRetailTraderID, string strType)
+        /// <summary>
+        /// 分销商总销售额情况  总的，月度，每天
+        /// </summary>
+        /// <param name="strRetailTraderID"></param>
+        /// <param name="strType"></param>
+        /// <param name="intPageIndex"></param>
+        /// <param name="intPageSize"></param>
+        /// <returns></returns>
+          public DataSet GetRetailTraderEarnings(string strRetailTraderID, string strType,int intPageIndex,int intPageSize)
           {
               DataSet dataSet = new DataSet();
               DateTime dt = DateTime.Now.Date;
@@ -140,7 +145,29 @@ namespace JIT.CPOS.BS.DataAccess
               spl.Add(new SqlParameter("@dt", dt));
               spl.Add(new SqlParameter("@RetailTraderID", strRetailTraderID));
               spl.Add(new SqlParameter("@Type", strType));
+              spl.Add(new SqlParameter("@PageIndex", intPageIndex));
+              spl.Add(new SqlParameter("@PageSize", intPageSize));
               dataSet = SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "[Proc_RetailTraderEarnings]", spl.ToArray());
+
+              return dataSet;
+
+          }
+        /// <summary>
+        /// 分销商当天收入详情
+        /// </summary>
+        /// <param name="strRetailTraderID"></param>
+        /// <param name="strType"></param>
+        /// <param name="intPageIndex"></param>
+        /// <param name="intPageSize"></param>
+        /// <returns></returns>
+          public DataSet GetRetailTraderEarningsDetails(string strRetailTraderID)
+          {
+              DataSet dataSet = new DataSet();
+              DateTime dt = DateTime.Now.Date;
+              List<SqlParameter> spl = new List<SqlParameter>();
+              spl.Add(new SqlParameter("@dt", dt));
+              spl.Add(new SqlParameter("@RetailTraderID", strRetailTraderID));
+              dataSet = SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "[Proc_RetailTraderEarningsDetails]", spl.ToArray());
 
               return dataSet;
 

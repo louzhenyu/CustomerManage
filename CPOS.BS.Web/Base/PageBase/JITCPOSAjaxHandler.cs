@@ -31,7 +31,7 @@ namespace JIT.CPOS.BS.Web.PageBase
 {
     public abstract class JITCPOSAjaxHandler : JITAjaxHandler<LoggingSessionInfo>
     {
-        protected int PageSize = 15;
+        protected int PageSize = 10;
 
         ///// <summary>
         ///// use for utility log
@@ -84,7 +84,7 @@ namespace JIT.CPOS.BS.Web.PageBase
         /// </summary>
         protected override void Authenticate()
         {
-            if (!new JITPage().CheckUserLogin())
+            if (!new JITPage().CheckUserLogin() &&  string.IsNullOrEmpty( Request("CustomerID")))
             {
                 HttpContext.Current.Response.Write("{success:false,msg:'未登录，请先登录'}");
                 HttpContext.Current.Response.End();

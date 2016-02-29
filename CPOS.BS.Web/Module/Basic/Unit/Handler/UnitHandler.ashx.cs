@@ -971,38 +971,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
              var responseData = new ResponseData();
              var unitService = new UnitService(CurrentUserInfo);
              ExcelHelper excelHelper = new ExcelHelper();
-            //if (Request("filePath")!=null && Request("filePath").ToString()!="")
-            //{
-            //    DataTable dt = new DataTable();
-            //    //dt = excelHelper.OpenCSV(Request("filePath").ToString());
-            //    dt = excelHelper.OpenCSV("d:\\B4EE87CCD42A4A66A9F6453280F6BC97.csv");
-            //    DataSet ds = unitService.DataTableToDb(dt, CurrentUserInfo);
-            //    if (ds != null && ds.Tables[0].Rows.Count > 0)
-            //    {
-                    
-            //        //数据获取
-            //        Workbook wb = JIT.Utility.DataTableExporter.WriteXLS(dt, 0);
-            //        string savePath = HttpContext.Current.Server.MapPath(@"~/File/Unit");
-            //        if (!System.IO.Directory.Exists(savePath))
-            //        {
-            //            System.IO.Directory.CreateDirectory(savePath);
-            //        }
-            //        savePath = savePath + "\\门店错误信息导出" + DateTime.Now.ToFileTime() + ".xls";
-            //        wb.Save(savePath);//保存Excel文件
-            //        new ExcelCommon().OutPutExcel(HttpContext.Current, savePath);
-            //        HttpContext.Current.Response.End();
-            //    }
-            //    else
-            //    {
-            //        responseData.success = true;
-            //        responseData.msg = "操作成功";
-            //    }
-            //}
-            //else
-            //{
-            //    responseData.success = false;
-            //    responseData.msg ="文件路径不对";
-            //}
              if (Request("filePath")!=null && Request("filePath").ToString()!="")
              {
                  try
@@ -1023,11 +991,6 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                          strFileName = "\\门店错误信息导出" + DateTime.Now.ToFileTime() + ".xls";
                          savePath = savePath + strFileName;
                          wb.Save(savePath);//保存Excel文件
-
-                         //new ExcelCommon().OutPutExcel(HttpContext.Current, savePath);
-                         //HttpContext.Current.ApplicationInstance.CompleteRequest();
-                         //HttpContext.Current.Response.End();
-
                          rp = new ImportRP()
                          {
                              Url = "/File/ErrFile/Unit" + strFileName,

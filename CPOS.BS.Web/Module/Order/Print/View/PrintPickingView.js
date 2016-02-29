@@ -93,7 +93,7 @@
                 text: '商品规格',
                 width: 260,
                 sortable: true,
-                dataIndex: 'ItemType'
+                dataIndex: 'PropDetailName'
             }
                     ,
             {

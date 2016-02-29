@@ -34,6 +34,8 @@ namespace JIT.CPOS.DTO.Module.Event.Lottery.Response
 
         public string PrizeName { get; set; } 
         public List<ObjectImagesEntity> ImageList { get; set; }
+
+        public LCoverEntity CoverInfo { get; set; }
     }
 
 }

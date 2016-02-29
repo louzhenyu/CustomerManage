@@ -23,7 +23,6 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,6 +53,10 @@
       <HintPath>..\ReferenceDll\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="NetDimension.Weibo">
       <HintPath>..\ReferenceDll\NetDimension.Weibo.dll</HintPath>
     </Reference>
@@ -295,11 +298,7 @@
     <Content Include="Images\mingLong\question9\b2.png" />
     <Content Include="Images\mingLong\question9\topic01.jpg" />
     <Content Include="Images\mingLong\question9\topic02.jpg" />
-    <Content Include="Interface\Images\bg.png" />
-    <Content Include="Interface\Images\bg2.png" />
-    <Content Include="Interface\Images\btn1.png" />
-    <Content Include="Interface\Images\btn2.png" />
-    <Content Include="Interface\Images\msg_vip.jpg" />
+    <Content Include="HeadImage\qrcodeBack.png" />
     <Content Include="HtmlApp\Demo\html\WQuestion.html" />
     <Content Include="HtmlApp\Demo\images\icon_gift.png" />
     <Content Include="HtmlApp\Demo\images\sprites.png" />
@@ -1108,12 +1107,11 @@
     <Content Include="ApplicationInterface\Project\HuaAn\HuaAnRetCallbackHandler.ashx" />
     <Content Include="ApplicationInterface\Customer\CloudGateway.ashx" />
     <Content Include="ApplicationInterface\AllWin\SellUser.ashx" />
-    <Content Include="ApplicationInterface\AllWin\RetailTrader.ashx" />
     <Content Include="ApplicationInterface\EveryoneSale\EveryoneGetway.ashx" />
     <Content Include="ApplicationInterface\Washing\OrderGateway.ashx" />
+    <Content Include="ApplicationInterface\AllWin\RetailTrader.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewApp.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewWXGateway.ashx" />
-    <Content Include="ApplicationInterface\AllWin\Sales.ashx" />
     <None Include="HtmlApp\Demo\images\Thumbs.db" />
     <None Include="HtmlApp\LJ\images\Thumbs.db" />
     <Content Include="log4net.config">
@@ -2192,17 +2190,18 @@
     <Compile Include="ApplicationInterface\Module\Coupon\CouponHandler.ashx.cs">
       <DependentUpon>CouponHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationInterface\Module\Coupon\Grant\GrantCouponAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\AddVipFeedbackInfoAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetApiVipServicesLogListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetApiCouponUserListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetDeliveryOrderListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetVipAmountdetailListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\SetApiVipServicesLogAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerBasicSettingAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerConfigAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerVersionAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\ContactPrizeAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetImageAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeLocationListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeWinnerListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\RedPacketAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Event\Lottery\RouletteAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\ShareAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\GetActivityApplyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\SetActivityApplyAH.cs" />
@@ -2219,15 +2218,10 @@
     <Compile Include="ApplicationInterface\Module\NewAppContent\NewWXGateway.ashx.cs">
       <DependentUpon>NewWXGateway.ashx</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationInterface\Module\Order\Delivery\GetVipAddressInfoAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Logistics\GetLogisticsCompanyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\SetSalesReturnAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Order\ShoppingCart\RemoveShoppingCartAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\SetQuestionnaireAnswerRecordAH.cs" />
     <Compile Include="ApplicationInterface\Module\Test\Test\TestAH.cs" />
     <Compile Include="ApplicationInterface\Module\UnitAndItem\Item\Item.ashx.cs">
       <DependentUpon>Item.ashx</DependentUpon>
@@ -2278,9 +2272,6 @@
     <Compile Include="ApplicationInterface\Module\VIP\Register\SetRegisterFormItemsAH.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ApplicationInterface\Module\VIP\Reward\GetTopRewardListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\VIP\Reward\SetRewardOrderAH.cs" />
-    <Compile Include="ApplicationInterface\Module\VIP\Reward\GetConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetVipAmountDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipListNum\GetVipListNumAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipList\GetVipListAH.cs" />
@@ -2298,6 +2289,9 @@
     <Compile Include="ApplicationInterface\Module\WX\SysPage\SetSysPageAH.cs" />
     <Compile Include="ApplicationInterface\Module\ZiXun\ZiXunInfo\AddZiXunCommentAH.cs" />
     <Compile Include="ApplicationInterface\Module\ZiXun\ZiXunInfo\SeacherNewsListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\AP\ZMBA\GetZMBACourseDetailListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\AP\ZMBA\GetZMBACourseListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\AP\ZMBA\SetZMBACourseDetailReadLogAH.cs" />
     <Compile Include="ApplicationInterface\Order\OrderGateway.ashx.cs">
       <DependentUpon>OrderGateway.ashx</DependentUpon>
     </Compile>
@@ -3181,7 +3175,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

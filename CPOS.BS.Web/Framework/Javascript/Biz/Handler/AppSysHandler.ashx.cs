@@ -41,7 +41,39 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
         /// </summary>
         public string GetAppSysListData()
         {
-            var appSysService = new AppSysService(new SessionManager().CurrentUserLoginInfo);
+            var responseData = new ResponseData();
+            LoggingSessionInfo loggingSessionInfo = null;
+            if (CurrentUserInfo != null)
+            {
+                loggingSessionInfo = CurrentUserInfo;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(Request("CustomerID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少商户标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else if (string.IsNullOrEmpty(Request("CustomerUserID")))
+                {
+                    responseData.success = false;
+                    responseData.msg = "缺少登陆员工的标识";
+                    return responseData.ToString();
+                }
+                else
+                {
+                    loggingSessionInfo = Default.GetBSLoggingSession(Request("CustomerID"), Request("CustomerUserID"));
+                }
+            }
+
+            var appSysService = new AppSysService(loggingSessionInfo);//用兼容模式
             IList<AppSysModel> list = new List<AppSysModel>();
 
             string content = string.Empty;
@@ -52,6 +84,8 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
             var jsonData = new JsonData();
             jsonData.totalCount = list.Count.ToString();
             jsonData.data = list;
+            jsonData.success = true;
+            jsonData.msg = "";
 
             content = jsonData.ToJSON();
             return content;

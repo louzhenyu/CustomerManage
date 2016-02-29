@@ -30,8 +30,14 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
             {
                 LoadLoggingSessionInfo();
                 var paras = context.Request.Params;
-                context.Response.ContentType = "text/plain";
                 string fileName = doDownLoadMethod(context, paras);
+                //context.Response.ContentType = "text/plain";
+                context.Response.Buffer = true;
+                context.Response.Charset = "GB2312";
+                context.Response.AppendHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode(fileName));
+                context.Response.ContentEncoding = System.Text.Encoding.GetEncoding("GB2312");//设置输出流为简体中文
+                context.Response.ContentType = "application/ms-excel";//设置输出文件类型为excel文件。 
+
                 var str = System.IO.Path.Combine(context.Request.ApplicationPath, "ExportTemp/" + fileName);
                 context.Response.Write(str);
             }
@@ -54,7 +60,8 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
             ClearTempFilesBeforeToday();
             switch (type)
             {
-                case "stock": return ExportStock();
+                case "Winner": return ExportWinner();
+                case "Join": return ExportJoin();
                 default: return null;
             }
         }
@@ -77,7 +84,7 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
             }
         }
         #endregion
-        private string ExportStock()
+        private string ExportWinner()
         {
             try
             {
@@ -86,7 +93,7 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
                 string EventId = FormatParamValue(para["eventId"]);
 
                 var service = new LPrizeWinnerBLL(this.CurrentUserInfo);
-                var dataExport = service.GetPrizeWinnerListByEventId(EventId, 1, 100000);
+                var dataExport = service.GetPrizeWinnerListByEventId(EventId, 0, 0);
 
 
                 //var service = new LEventSignUpBLL(loggingSessionInfo);
@@ -144,6 +151,10 @@ namespace JIT.CPOS.BS.Web.Module.WEvents.Handler
                 PageLog.Current.Write(ex);
                 return null;
             }
+        }
+        private string ExportJoin()
+        {
+            return "";
         }
         private string propValue(JIT.CPOS.BS.Entity.StockBalanceInfo info, int index)
         {

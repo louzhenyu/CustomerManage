@@ -114,13 +114,13 @@ namespace JIT.CPOS.Web.WXOAuth
                     if (!string.IsNullOrEmpty(Request["applicationId"]))//微信菜单传来了applicationId，微信信息的唯一标识
                     {
                         applicationId = Request["applicationId"];
-                        var wailist = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity { ApplicationId = applicationId, CustomerId = customerId }, null).FirstOrDefault();
+                        var wailist = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity { ApplicationId = applicationId, CustomerId = customerId,IsDelete=0 }, null).FirstOrDefault();
                         openOAuthAppid = wailist != null ? wailist.OpenOAuthAppid : string.Empty;
                     }
                     else
                     {
                         loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
-                        var list = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity { CustomerId = customerId }, null).ToList();
+                        var list = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity { CustomerId = customerId,IsDelete=0 }, null).ToList();
 
                         if (list != null && list.Count > 0)
                         {
@@ -156,6 +156,8 @@ namespace JIT.CPOS.Web.WXOAuth
                         Response.Write("goUrl:" + goUrl);
                         string eventId = Request["eventId"];
                         string employeeId = Request["employeeId"];
+                        string strRetailTraderId = Request["RetailTraderId"];
+                        string strChannelID = Request["ChannelID"];
                         if (eventId != null && !eventId.Equals(""))//如果是跳转到活动的链接，还要加上活动标识***
                         {
                             if (goUrl.IndexOf("?") > 0)
@@ -176,6 +178,28 @@ namespace JIT.CPOS.Web.WXOAuth
                             else
                             {
                                 goUrl = goUrl + "?employeeId=" + employeeId + "";
+                            }
+                        }
+                        if (strRetailTraderId != null && !strRetailTraderId.Equals(""))
+                        {
+                            if (goUrl.IndexOf("?") > 0)
+                            {
+                                goUrl = goUrl + "&RetailTraderId=" + strRetailTraderId + "";
+                            }
+                            else
+                            {
+                                goUrl = goUrl + "?RetailTraderId=" + strRetailTraderId + "";
+                            }
+                        }
+                        if (strChannelID != null && !strChannelID.Equals(""))
+                        {
+                            if (goUrl.IndexOf("?") > 0)
+                            {
+                                goUrl = goUrl + "&channelId=" + strChannelID + "";
+                            }
+                            else
+                            {
+                                goUrl = goUrl + "?channelId=" + strChannelID + "";
                             }
                         }
                         //同样可以把商品的标识也这样处理goodsId

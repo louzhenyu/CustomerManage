@@ -123,14 +123,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 //门店关联的公众号
                 var tueBll = new TUnitExpandBLL(loggingSessionInfo);
                 var tueEntity = new TUnitExpandEntity();
-                if(!string.IsNullOrEmpty(RP.Parameters.unitId))
+                if (!string.IsNullOrEmpty(RP.Parameters.unitId))
                 {
                     tueEntity = tueBll.QueryByEntity(new TUnitExpandEntity() { UnitId = RP.Parameters.unitId }, null).FirstOrDefault();
                 }
 
                 var server = new WApplicationInterfaceBLL(loggingSessionInfo);
                 var wxObj = new WApplicationInterfaceEntity();
-                if(tueEntity != null && !string.IsNullOrEmpty(tueEntity.Field1))
+                if (tueEntity != null && !string.IsNullOrEmpty(tueEntity.Field1))
                 {
                     wxObj = server.QueryByEntity(new WApplicationInterfaceEntity { AppID = tueEntity.Field1, CustomerId = customerId }, null).FirstOrDefault();
                 }
@@ -138,7 +138,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 {
                     wxObj = server.QueryByEntity(new WApplicationInterfaceEntity { CustomerId = customerId }, null).FirstOrDefault();
                 }
-                
+
                 if (wxObj == null)
                 {
                     rsp.ResultCode = 302;
@@ -162,8 +162,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         if (!string.IsNullOrEmpty(RP.Parameters.RetailTraderName))
                         {
                             string apiDomain = ConfigurationManager.AppSettings["website_url"];
-                            
-                            imageUrl = CombinImage(apiDomain+@"/HeadImage/qrcodeBack.jpg", imageUrl, RP.Parameters.RetailTraderName + "合作二维码");
+
+                            imageUrl = CombinImage(apiDomain + @"/HeadImage/qrcodeBack.jpg", imageUrl, RP.Parameters.RetailTraderName + "合作二维码");
                         }
 
 
@@ -350,33 +350,64 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 if ((RP.Parameters.special.Mode == null || (!string.IsNullOrEmpty(RP.Parameters.special.Mode) && RP.Parameters.special.Mode.Equals("Inbound"))) && !string.IsNullOrEmpty(info.VipId))
                 {
                     VipBLL vipBll = new VipBLL(loggingSessionInfo);
-                    var vipInfo = vipBll.GetByID(info.VipId);
-
-#region 总部会员可以被门店集客
                     var unitBll = new t_unitBLL(loggingSessionInfo);
-                    UnitService unitServer = new UnitService(loggingSessionInfo);
+                    var UserBll = new T_UserBLL(loggingSessionInfo);
+
+                    var vipInfo = vipBll.GetByID(info.VipId);
+                    var tt = vipBll.GetUnitByUserId(RP.UserID);//获取员工的会集店****
+                    var UserEntity = UserBll.GetByID(vipInfo.SetoffUserId);//当前会员集客员工
                     var tempUnit = unitBll.GetByID(vipInfo.CouponInfo);//获取会员目前的会籍店
-                    if (tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
-                    {
-                        var tt = vipBll.GetUnitByUserId(RP.UserID);//获取员工的会集店****
+                    //UnitService unitServer = new UnitService(loggingSessionInfo);
+
+                    //
+                    string UserStatus = "";
+                    if (UserEntity != null)
+                        UserStatus = UserEntity.user_status;
+
+                    #region 会员会籍店、集客员工变动处理
+                    if (string.IsNullOrWhiteSpace(vipInfo.CouponInfo) || string.IsNullOrWhiteSpace(vipInfo.SetoffUserId))
+                    {//当会员会籍店、集客员工为空时
                         if (!string.IsNullOrEmpty(tt))
                         {
                             vipInfo.CouponInfo = tt;//设为门店
                             vipInfo.SetoffUserId = RP.UserID;//设为门店员工
                             vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
-                            vipBll.Update(vipInfo);
                         }
-                        
                     }
-#endregion
+                    else if (UserStatus.Trim().Equals("-1"))
+                    {// 当前会员的集客员工离职时
+                        if (!string.IsNullOrEmpty(tt))
+                        {
+                            vipInfo.CouponInfo = tt;//设为门店
+                            vipInfo.SetoffUserId = RP.UserID;//设为门店员工
+                            vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
+                        }
+                    }
+                    else if (tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
+                    {// 总部会员可以被门店集客
+                        if (!string.IsNullOrEmpty(tt))
+                        {
+                            vipInfo.CouponInfo = tt;//设为门店
+                            vipInfo.SetoffUserId = RP.UserID;//设为门店员工
+                            vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
+                        }
+                    }
+                    #endregion
+
+
+
+                    vipBll.Update(vipInfo);
+
+
                     if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
                     {
                         rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
                     }
-                    if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddMinutes(3)<DateTime.Now)  //col21：员工集客/或者分销商集客时间
+                    if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddMinutes(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
                     {
                         rsp.Message = "此客户此前已经被您集客，无需重复集客。！";
-                    }else  if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
+                    }
+                    else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
                     {
                         rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
                     }
@@ -477,7 +508,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 {
                     RP.Parameters.DcodeId = RP.Parameters.DcodeId.Replace(" ", "").Trim();
                 }
-               
+
 
                 var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
 

@@ -118,7 +118,10 @@ namespace JIT.CPOS.BS.DataAccess
             int endSize = (page - 1) * pageSize + pageSize;
 
             string sql = GetPrizeWinnerListByEventIdSql(EventId);
-            sql += " select * From #tmp a where 1=1 and a.DisplayIndex between '" + beginSize + "' and '" + endSize + "' order by a.displayindex";
+            if(page==0 && pageSize==0)
+                sql += " select * From #tmp a order by a.displayindex";
+            else
+                sql += " select * From #tmp a where 1=1 and a.DisplayIndex between '" + beginSize + "' and '" + endSize + "' order by a.displayindex";
 
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;

@@ -23,5 +23,17 @@ namespace JIT.CPOS.DTO.Module.VIP.ServicesLog.Response
 
         public string UserName { get; set; }
         public string Content { get; set; }
+        /// <summary>
+        /// 会员ID
+        /// </summary>
+        public string VipID { get; set; }
+        /// <summary>
+        /// 会员名称
+        /// </summary>
+        public string VipName { get; set; }
+        /// <summary>
+        /// 图片Url（会员头像）
+        /// </summary>
+        public string HeadImgUrl { get; set; }
     }
 }

@@ -102,6 +102,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 case "GetPrizeLocationList": //获取奖品位置列表
                     rst = this.GetPrizeLocationList(pRequest);
                     break;
+                case "GetCover": //封面
+                    rst = this.GetCover(pRequest);
+                    break;
+                case "SaveCover": //封面
+                    rst = this.SaveCover(pRequest);
+                    break;
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
                     {
@@ -362,8 +368,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             LEventsBLL bll = new LEventsBLL(loggingSessionInfo);
             var eventEntity = new LEventsEntity();
             eventEntity = bll.GetByID(reqObj.Parameters.EventId);
+
+            LCoverBLL bllCover=new LCoverBLL(loggingSessionInfo);
             var rd = new EventRD();
             rd.EventInfo = eventEntity;
+            var entityCover = bllCover.QueryByEntity(new LCoverEntity() { EventId = reqObj.Parameters.EventId, IsDelete = 0 }, null).FirstOrDefault();
+            rd.CoverId = entityCover != null ? entityCover.CoverId.ToString() : "";
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
@@ -525,7 +535,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         }
         #endregion
 
-
         #region 根据活动id获取活动第二步信息
         public string GetStep2Info(string pRequest)
         {
@@ -586,16 +595,16 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             {
                 rd.EventInfo = DataTableToObject.ConvertToObject<LEventsInfo>(ds.Tables[0].Rows[0]);//直接根据所需要的字段反序列化
             }
-            var ds2 = bll.GetMaterialTextInfo(rp.Parameters.EventId);
+            var ds2 = bll.GetMaterialTextInfo(rp.Parameters.EventId);//活动图文素材对应的keyword其实是这个活动的标识，也就是生成二维码的关键字
             if (ds2 != null && ds2.Tables.Count > 0 && ds2.Tables[0].Rows.Count > 0)
             {
                 rd.MaterialText = DataTableToObject.ConvertToObject<WMaterialTextEntity>(ds2.Tables[0].Rows[0]);//直接根据所需要的字段反序列化
                 rd.MappingId=ds2.Tables[0].Rows[0]["MappingId"].ToString();
             }
 
-            //获取图文素材的信息
+            //获取该商户所属行业对应的图文素材的信息
             var sysPageBLL = new SysPageBLL(loggingSessionInfo);
-            var list = sysPageBLL.GetPagesByCustomerID(loggingSessionInfo.ClientID);  //增加根据customer_id查询 update by Henry 2014-11-19
+            var list = sysPageBLL.GetPagesByCustomerID(loggingSessionInfo.ClientID);  //增加根据customer_id查询
             var temp = list.GroupBy(t => new { t.ModuleName, t.PageCode, t.PageID, t.URLTemplate,t.PageKey }).Select(t => new ModulePageInfo()
             {
                 ModuleName = t.Key.ModuleName,
@@ -653,7 +662,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             var entity = new WMaterialTextEntity()
             {
                 ApplicationId = wapentity.ApplicationId,//用自己取出来的
-                CoverImageUrl = para.MaterialText.ImageUrl,//图拍你地址
+                CoverImageUrl = para.MaterialText.ImageUrl,//图片地址
                 PageId = para.MaterialText.PageID,  //页面模块的标识
                 PageParamJson = para.MaterialText.PageParamJson,//这个比较重要
                 Text = para.MaterialText.Text,
@@ -668,7 +677,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             string URL = string.Empty;
 
             #region 系统模块
-            var pages = pageBll.GetPageByID(para.MaterialText.PageID);//通过pageid查找syspage信息
+            var pages = pageBll.GetPageByID(para.MaterialText.PageID);//通过pageid查找syspage信息***
             if (pages.Length == 0)
                 throw new APIException("未找到Page:" + para.MaterialText.PageID) { ErrorCode = 341 };
             SysPageEntity CurrentPage;
@@ -676,7 +685,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             string urlTemplate = pages[0].URLTemplate;//模板URL
             string json = pages[0].JsonValue;// JSON体
             var jsonDic = json.DeserializeJSONTo<Dictionary<string, object>>();//转换后的字典
-            var htmls = jsonDic["htmls"].ToJSON().DeserializeJSONTo<Dictionary<string, object>[]>().ToList();//所有的Html模板
+            var htmls = jsonDic["htmls"].ToJSON().DeserializeJSONTo<Dictionary<string, object>[]>().ToList();//htmls是一个数组，里面有他的很多属性
             Dictionary<string, object> html = null;//选择的html信息
             var defaultHtmlId = jsonDic["defaultHtml"].ToString();
             html = htmls.Find(t => t["id"].ToString() == defaultHtmlId);//默认的htmlid*****
@@ -731,7 +740,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
 
             //替换URL模板
             #region 替换URL模板
-            urlTemplate = urlTemplate.Replace("_pageName_", path);
+            urlTemplate = urlTemplate.Replace("_pageName_", path);//用path替换掉_pageName_***（可以查看红包或者客服的path信息即可以知道）
             var paraDic = para.MaterialText.PageParamJson.DeserializeJSONTo<Dictionary<string, object>[]>();
             foreach (var item in paraDic)   //这里key和value对于活动来说，其实就是活动的eventId，和eventId的值
             {
@@ -748,7 +757,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 throw new APIException("微信管理:未配置域名,请在web.config中添加<add key='host' value=''/>") { ErrorCode = 342 };
             if (IsAuth)
             {
-                //需要认证
+                //需要认证（传参数时，需要传递applicationId，对于一个商户有多个微信服务号的，不能取默认的第一个，而是精确地取固定的微信服务号）
+                //通过urlTemplate（用path替换了_pageName_），生成了goUrl
                 URL = string.Format("http://{0}/WXOAuth/AuthUniversal.aspx?customerId={1}&applicationId={2}&goUrl={3}&scope={4}", Domain.Trim('/'), loggingSessionInfo.ClientID, wapentity.ApplicationId, HttpUtility.UrlEncode(string.Format("{0}{1}", Domain.Trim('/'), urlTemplate)), scope);
             }
             else
@@ -761,7 +771,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             #endregion
             #endregion
 
-            entity.OriginalUrl = URL;//图文素材
+            entity.OriginalUrl = URL;//图文素材要跳转到的页面
             #endregion
 
 
@@ -1105,6 +1115,74 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             return rsp.ToJSON();
         }
         #endregion
+
+        #region 封面
+        public string GetCover(string pRequest)
+        {
+            var rd = new CoverRD();
+            var para = pRequest.DeserializeJSONTo<APIRequest<CoverRP>>().Parameters;
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+
+            var bllCover = new LCoverBLL(loggingSessionInfo);
+
+            if(!string.IsNullOrEmpty(para.CoverId))
+            {
+                rd.CoverId = para.CoverId;
+                rd.CoverInfo=bllCover.GetByID(para.CoverId);
+            }
+
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+
+            return rsp.ToJSON();
+        }
+        public string SaveCover(string pRequest)
+        {
+            var rd = new SaveCoverRD();
+            var para = pRequest.DeserializeJSONTo<APIRequest<CoverRP>>().Parameters;
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+
+            var bllCover = new LCoverBLL(loggingSessionInfo);
+
+            LCoverEntity entityCover = new LCoverEntity();
+
+            if(string.IsNullOrEmpty(para.CoverId))
+            {
+                entityCover.EventId = para.EventId;
+                entityCover.CoverImageUrl = para.CoverImageUrl;
+                entityCover.ButtonText = para.ButtonText;
+                entityCover.ButtonColor = para.ButtonColor;
+                entityCover.ButtonFontColor = para.ButtonFontColor;
+                entityCover.RuleType = para.RuleType;
+                entityCover.RuleText = para.RuleText;
+                entityCover.RuleImageUrl = para.RuleImageUrl;
+                entityCover.IsShow = para.IsShow;
+                entityCover.CustomerId = loggingSessionInfo.ClientID;
+                bllCover.Create(entityCover);
+
+            }
+            else
+            {
+                entityCover=bllCover.GetByID(para.CoverId);
+
+                entityCover.CoverImageUrl = para.CoverImageUrl;
+                entityCover.ButtonText = para.ButtonText;
+                entityCover.ButtonColor = para.ButtonColor;
+                entityCover.ButtonFontColor = para.ButtonFontColor;
+                entityCover.RuleType = para.RuleType;
+                entityCover.RuleText = para.RuleText;
+                entityCover.RuleImageUrl = para.RuleImageUrl;
+                entityCover.IsShow = para.IsShow;
+
+                bllCover.Update(entityCover);
+            }
+
+            rd.CoverId = entityCover.CoverId.ToString();
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+
+            return rsp.ToJSON();
+        }
+        #endregion
+
     }
     public class PrizeLocation
     {
@@ -1429,6 +1507,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
     public class EventRD : IAPIResponseData
     {
         public string EventId { get; set; }
+        /// <summary>
+        /// 封面Id
+        /// </summary>
+        public string CoverId { get; set; }
         public LEventsEntity EventInfo { get; set; }//活动列表   
     }
     public class GetStep3InfoRD : IAPIResponseData
@@ -1783,6 +1865,34 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
     {
         public SysVipCardGradeEntity[] VipCardGradeList { get; set; }
     }
+
+    #region 封面
+    public class CoverRP :IAPIRequestParameter
+    {
+        public string EventId { get; set; }
+        public string CoverId { get; set; }
+        public string CoverImageUrl { get; set; }
+        public string ButtonText { get; set; }
+        public string ButtonColor { get; set; }
+        public string ButtonFontColor { get; set; }
+        public string RuleType { get; set; }
+        public string RuleText { get; set; }
+        public string RuleImageUrl { get; set; }
+        public int IsShow { get; set; }
+        public void Validate()
+        {
+        }
+    }
+    public class SaveCoverRD : IAPIResponseData
+    {
+        public string CoverId { get; set; }
+    }
+    public class CoverRD : IAPIResponseData
+    {
+        public string CoverId { get; set; }
+        public LCoverEntity CoverInfo { get; set; }
+    }
+    #endregion
     #region 1.1 查询数据表 Options
     /// <summary>
     /// 接口请求参数

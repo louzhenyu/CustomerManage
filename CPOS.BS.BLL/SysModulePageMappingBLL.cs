@@ -43,6 +43,7 @@ namespace JIT.CPOS.BS.BLL
             return _currentDAO.GetExistsVocaVerMappingIDandPageId(MappingId,PageId);
         }
 
+
         /// <summary>
         /// 查询数据库表SysModulePageMapping 返回次序
         /// </summary>
@@ -51,6 +52,10 @@ namespace JIT.CPOS.BS.BLL
         public object GetModulePageMappingBySequence(string MappingId)
         {
             return _currentDAO.GetModulePageMappingBySequence(MappingId);
+        }
+        public bool DeleteMappingByIds(string propIds, string propInfo)
+        {
+            return _currentDAO.DeleteMappingByIds(propIds, propInfo);
         }
     }
 }

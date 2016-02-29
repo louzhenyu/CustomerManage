@@ -110,16 +110,18 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,imageUrl2 = a.imageUrl2 ";
             sql += " ,imageUrl3 = a.imageUrl3 ";
             sql += " ,TargetUrl='aldlinks://product/list/' ";
-            if (channelId == "6" || channelId == "10")
-            {
-                sql += " ,price = a.Price ";
-                sql += " ,salesPrice = a.SalesPrice ";
-            }
-            else
-            {
-                sql += " ,price = CASE WHEN D.ItemId IS  NULL THEN A.Price ELSE D.Price  END";//" ,price = a.Price ";
-                sql += " ,salesPrice = CASE WHEN D.ItemId IS  NULL THEN A.SalesPrice  ELSE D.SalesPrice   END"; //" ,salesPrice = a.SalesPrice ";
-            }
+            //if (channelId == "6" || channelId == "10")
+            //{
+            //    sql += " ,price = a.Price ";
+            //    sql += " ,salesPrice = a.SalesPrice ";
+            //}
+            //else
+            //{
+            //    sql += " ,price = CASE WHEN D.ItemId IS  NULL THEN A.Price ELSE D.Price  END";//" ,price = a.Price ";
+            //    sql += " ,salesPrice = CASE WHEN D.ItemId IS  NULL THEN A.SalesPrice  ELSE D.SalesPrice   END"; //" ,salesPrice = a.SalesPrice ";
+            //} 2016-02-27 peter确认不再区分渠道 有活动的直接取活动价   modify by  wujx
+            sql += " ,price = CASE WHEN D.ItemId IS  NULL THEN A.Price ELSE D.Price  END";
+            sql += " ,salesPrice = CASE WHEN D.ItemId IS  NULL THEN A.SalesPrice  ELSE D.SalesPrice   END"; 
             sql += " ,ItemDisplayIndex ";
             sql += " ,BeginTime";
             sql += " ,discountRate = a.DiscountRate ";

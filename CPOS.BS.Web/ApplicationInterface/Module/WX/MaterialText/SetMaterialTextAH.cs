@@ -62,7 +62,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                     break;
                 case "3"://系统模块
                     #region 系统模块
-                    var pages = pageBll.GetPageByID(para.MaterialText.PageID);
+                    var pages = pageBll.GetPageByID(para.MaterialText.PageID);//通过pageid查找syspage信息
                     if (pages.Length == 0)
                         throw new APIException("未找到Page:" + para.MaterialText.PageID) { ErrorCode = 341 };
                     SysPageEntity CurrentPage;
@@ -73,9 +73,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                     var htmls = jsonDic["htmls"].ToJSON().DeserializeJSONTo<Dictionary<string, object>[]>().ToList();//所有的Html模板
                     Dictionary<string, object> html = null;//选择的html信息
                     var defaultHtmlId = jsonDic["defaultHtml"].ToString();
-                    html = htmls.Find(t => t["id"].ToString() == defaultHtmlId);//默认的htmlid
+                    html = htmls.Find(t => t["id"].ToString() == defaultHtmlId);//默认的htmlid*****
                     if (html != null)
                         path = html["path"].ToString();
+                    //判断高级oauth认证
+                    var scope = "snsapi_base";
+                    if (jsonDic.ContainsKey("scope"))
+                    {
+                        scope = (jsonDic["scope"] == null || jsonDic["scope"] == "") ? "snsapi_base" : "snsapi_userinfo";
+                    }
+                  
+
                     //判断是否有定制,没有则取JSON体中的默认
                     //找出订制内容
                     var customerPages = pages.ToList().FindAll(t => t.CustomerID == CurrentUserInfo.ClientID);
@@ -120,7 +128,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                     #region 替换URL模板
                     urlTemplate = urlTemplate.Replace("_pageName_", path);
                     var paraDic = para.MaterialText.PageParamJson.DeserializeJSONTo<Dictionary<string, object>[]>();
-                    foreach (var item in paraDic)
+                    foreach (var item in paraDic)   //这里key和value对于活动来说，其实就是活动的eventId，和eventId的值
                     {
                         if (item.ContainsKey("key") && item.ContainsKey("value"))
                             urlTemplate = urlTemplate.Replace("{" + item["key"] + "}", item["value"].ToString());
@@ -135,8 +143,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                         throw new APIException("微信管理:未配置域名,请在web.config中添加<add key='host' value=''/>") { ErrorCode = 342 };
                     if (IsAuth)
                     {
-                        //需要认证
-                        URL = string.Format("http://{0}/WXOAuth/AuthUniversal.aspx?customerId={1}&applicationId={2}&goUrl={3}", Domain.Trim('/'), CurrentUserInfo.ClientID, para.MaterialText.ApplicationId, HttpUtility.UrlEncode(string.Format("{0}{1}", Domain.Trim('/'), urlTemplate)));
+                        //需要认证,并加上scope类型
+                        URL = string.Format("http://{0}/WXOAuth/AuthUniversal.aspx?customerId={1}&applicationId={2}&goUrl={3}&scope={4}", Domain.Trim('/'), CurrentUserInfo.ClientID, para.MaterialText.ApplicationId, HttpUtility.UrlEncode(string.Format("{0}{1}", Domain.Trim('/'), urlTemplate)),scope);
                     }
                     else
                     {
@@ -152,7 +160,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
                     break;
             }
 
-            entity.OriginalUrl = URL;
+            entity.OriginalUrl = URL;//图文素材
             #endregion
 
             #region 保存
@@ -186,7 +194,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.MaterialText
             var modelMapping = new WModelTextMappingEntity()
             {
                 MappingId = Guid.NewGuid().ToString("N"),
-                ModelId = entity.TypeId,
+                ModelId = entity.TypeId,   //模板的标识竟然是和图文类型的标识
                 TextId = entity.TextId
             };
             modelMappingBll.Create(modelMapping);

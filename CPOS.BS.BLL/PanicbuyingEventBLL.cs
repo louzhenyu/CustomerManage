@@ -71,5 +71,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetPanicbuyingEventDetails(pID);
         }
+
+        public DataSet GetKJEventList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
+        {
+            return this._currentDAO.GetKJEventList(pageIndex, pageSize, strEventName, intEventStatus, strBeginTime, strEndTime);
+        }
     }
 }

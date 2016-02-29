@@ -102,6 +102,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                 //enRT.SalesType = "";//修改销售方式
                 //_RetailTraderBLL.Update(enRT, null, false);//不更新空的
             }
+            else
+            {
+                bll.UpdateSysRetailRewardRule(rp.Parameters.IsTemplate, "", "", rp.Parameters.RetailTraderID, loggingSessionInfo.ClientID);
+            }
          
         
 
@@ -125,10 +129,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                         _RetailTraderBLL.Update(enRT, null, false);//不更新空的
                     }
                 }
-                if (rp.Parameters.IsTemplate == 1)//为模板时
-                {
-                    bll.UpdateSysRetailRewardRule(rp.Parameters.IsTemplate, item.CooperateType, item.RewardTypeCode, rp.Parameters.RetailTraderID, loggingSessionInfo.ClientID);
-                }
+
                 SysRetailRewardRuleEntity en = new SysRetailRewardRuleEntity();
                 en.RetailRewardRuleID = Guid.NewGuid().ToString();//每次都创建新的
                 en.CooperateType = item.CooperateType;//合作方式

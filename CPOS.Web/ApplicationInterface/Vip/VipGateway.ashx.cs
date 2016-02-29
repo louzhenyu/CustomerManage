@@ -148,12 +148,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
             ////应付金额
             var totalPayAmount = bll.GetTotalSaleAmountBySkuId(skuIdList);
-            //3.获取积分与金额的兑换比例
-            var integralAmountPre = bll.GetIntegralAmountPre(rp.CustomerID);
-            if (integralAmountPre == 0)
-            {
-                integralAmountPre = (decimal)0.01;
-            }
+
             #region 启用积分
             if (rd.EnableIntegral == 1)
             {
@@ -176,10 +171,21 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     if (int.Parse(htSetting["rewardsType"].ToString()) == 1)//按商品奖励
                         totalIntegral = (int)Math.Round(bll.GetIntegralBySkuId(skuIdList), 1);
                     else//按订单奖励
-                        totalIntegral = (int)Math.Round(totalPayAmount * (decimal.Parse(htSetting["pointsRedeemUpLimit"].ToString()) / 100) / integralAmountPre, 1); ;//可使用的积分
+                    {
+                        //积分使用上限比例
+                        decimal pointsRedeemUpLimit = decimal.Parse(htSetting["pointsRedeemUpLimit"].ToString()) / 100;
+                        //3.获取积分与金额的兑换比例
+                        var integralAmountPre = bll.GetIntegralAmountPre(rp.CustomerID);
+                        if (integralAmountPre == 0)
+                            integralAmountPre = (decimal)0.01;
+
+                        totalIntegral = (int)Math.Round(totalPayAmount * pointsRedeemUpLimit * integralAmountPre, 1); //可使用的积分
+
+                    }
                     rd.Integral = validIntegral > totalIntegral ? totalIntegral : validIntegral;
 
-                    rd.IntegralAmount = rd.Integral * integralAmountPre;
+                    //rd.IntegralAmount = rd.Integral * integralAmountPre;
+                    rd.IntegralAmount = bll.GetAmountByIntegralPer(loggingSessionInfo.ClientID, rd.Integral);
                     rd.IntegralDesc = "使用积分" + rd.Integral.ToString("0") + ",可兑换"
                                       + rd.IntegralAmount.ToString("0.00") + "元";
                     rd.PointsRedeemLowestLimit = int.Parse(htSetting["pointsRedeemLowestLimit"].ToString());
@@ -521,6 +527,19 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             if (tInoutEntity == null)
                 throw new APIException("此订单Id无效") { ErrorCode = 103 };
 
+            #region 根据渠道判断订单来源
+
+            if (rp.ChannelId.Equals("6"))
+            {
+                tInoutEntity.DataFromID = "16";
+                if (!string.IsNullOrWhiteSpace(rp.Parameters.OwnerVipID))//店主vipid
+                {
+                    tInoutEntity.SalesUser = rp.Parameters.OwnerVipID;
+                }
+            }
+            #endregion
+
+
             //获取订单明细
             var inoutDetailList = inoutServiceBLL.GetInoutDetailInfoByOrderId(orderId);
 
@@ -551,7 +570,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     //首次提交订单处理库存和销量
                     if (tInoutEntity.Status == "100" && tInoutEntity.Field7 == "-99")
                         inoutBll.SetStock(orderId, inoutDetailList, 1, loggingSessionInfo);
-
+                    // 根据订单ID修改订单配送状态
+                    //推送ios、android信息
                     var flag = inoutService.UpdateOrderDeliveryStatus(orderId, status, Utils.GetNow(), null, (SqlTransaction)tran);
                     if (!flag)
                         throw new APIException("更新订单状态失败") { ErrorCode = 103 };
@@ -849,7 +869,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                         OrderID = tInoutEntity.OrderID,
                         OrderStatus = int.Parse(tInoutEntity.Status),
                         CustomerID = loggingSessionInfo.ClientID,
-                        StatusRemark = "提交订单[操作人:用户]"
+                        StatusRemark = "提交订单[操作人:客户]"
                     };
                     tinoutStatusBLL.Create(statusEntity, tran);
                     #endregion
@@ -2246,6 +2266,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 活动ID
         /// </summary>
         public string EventId { get; set; }
+        /// <summary>
+        /// 店主VIPID
+        /// </summary>
+        public string OwnerVipID { get; set; }
         public void Validate()
         {
         }
