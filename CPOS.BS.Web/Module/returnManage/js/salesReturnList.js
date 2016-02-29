@@ -6,7 +6,8 @@
             allQueryDiv: $("#allQuery"),             //所有的查询条件层dom
             uiMask: $("#ui-mask"),
             tabel:$("#gridTable"),                   //表格body部分
-            tabelWrap:$('#tableWrap'),
+            tabelWrap: $('#tableWrap'),
+            optionBtn: $('.optionBtn'),
             thead:$("#thead"),                    //表格head部分
             showDetail: $('#showDetail'),         //弹出框查看详情部分
             operation:$('#opt'),              //弹出框操作部分
@@ -48,7 +49,7 @@
 
             });
             //导出退款单
-            that.elems.tabelWrap.delegate(".commonBtn", "click", function (e) {
+            that.elems.optionBtn.delegate(".commonBtn", "click", function (e) {
 
                 var optType = $(this).data("flag");
                 if(optType=="export")

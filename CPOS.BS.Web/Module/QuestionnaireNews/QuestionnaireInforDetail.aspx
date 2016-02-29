@@ -21,10 +21,16 @@
                     <div class="navtit selected">明细数据</div>
                     <div class="navtit">报表统计</div>
                 </div>
-                <div class="questiontitle"><span></span><div class="QuestionnaireName">问卷</div></div>
+                
                 <div class="tableWrap showcontent" id="tableWrap" style="width:100%;">
+                    <div class="operation">
+                            <div class="commonBtn batchdelete" data-flag="export">批量删除</div>
+                            <div class="commonBtn exportBtn" data-flag="export"></div>
 
+                    </div>
+                    <div>
                    <table class="dataTable" id="gridTable"></table>
+                        </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager">
@@ -33,6 +39,9 @@
                 </div>
 
                 <div class="borderArea showcontent" style="display:inline-block;display:none;">
+                <div class="questiontitle">
+                <span></span><div class="QuestionnaireName"></div>
+                </div>
                 <div class="inlineBlockArea">
                 </div>
                

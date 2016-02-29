@@ -6,7 +6,8 @@
 
             uiMask: $("#ui-mask"),
             tabel:$("#gridTable"),                   //表格body部分
-            tabelWrap:$('#tableWrap'),
+            tabelWrap: $('#tableWrap'),
+            optionBtn: $('.optionBtn'),
             dataMessage:  $("#pageContianer").find(".dataMessage"),
             panlH:116                           // 下来框统一高度
         },
@@ -43,7 +44,7 @@
                 $.util.stopBubble(e);
 
             });
-            that.elems.tabelWrap.delegate(".commonBtn","click",function(e){
+            that.elems.optionBtn.delegate(".commonBtn", "click", function (e) {
                 var mid = JITMethod.getUrlParam("mid");
                 location.href = "birthDayDetail.aspx?mid=" + mid;
             });
@@ -129,7 +130,13 @@
                         }
                     })
                 }
-                if(optType=="exit"){
+                if (optType == "exit") {
+                    if (row.Status == 1)
+                    {
+
+                        $.messager.alert("提示", "活动已开始,不可修改");
+                        return;
+                    }
                     var mid = JITMethod.getUrlParam("mid");
                     location.href = "birthDayDetail.aspx?mid=" + mid+"&ActivityID="+row.ActivityID;
                 }
@@ -292,13 +299,14 @@
                     }
                 },
                 onClickRow:function(rowindex,rowData){
-                    if(that.elems.click) {
+                    if (that.elems.click) {
+                        debugger;
                         that.elems.click = true;
-                        if (rowData.Status== 1||rowData.Status==2) {
+                        if (rowData.Status==2) {
                             var mid = $.util.getUrlParam("mid");
                             location.href = "birthDayDetail.aspx?mid=" + mid + "&ActivityID=" + rowData.ActivityID;
-                        }else if(rowData.Status==3){
-                            $.messager.alert( "提示","活动运行中,不可修改");
+                        }else if(rowData.Status==3||rowData.Status== 1){
+                            $.messager.alert( "提示","活动已开始,不可修改");
                         }else if(rowData.Status==4){
                             $.messager.alert( "提示","活动已经结束,不可修改");
 

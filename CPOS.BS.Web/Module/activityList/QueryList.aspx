@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -8,10 +8,7 @@
 
     <link href="<%=StaticUrl+"/module/activityList/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
 <style type="text/css">
-.textbox-addon-right{right:9px !important;top:-2px;}
-.queryTermArea .commonSelectWrap{margin-right:0px;}
 .commonSelectWrap .tit{width:102px;}
-.moreQueryWrap .queryBtn{width:72px;margin:3px 70px 0 0;}
 
 .datagrid-btable .handle{width:25px;height:39px;line-height:38px;cursor:pointer;  display: inline-block;}
 .datagrid-btable .delete{background:url(images/delete.png) no-repeat center center;}
@@ -23,7 +20,6 @@
 #tableWrap2 .datagrid-row,#tableWrap2 .datagrid-header-row{height:62px;line-height:61px;}
 #tableWrap2 .datagrid-btable{width:100%;}
 
-#addNewGamesBtn{width:115px;text-indent:20px;background:#0cc url(images/icon-add2.png) no-repeat 20px center;}
 /*活动参与，弹出*/
 .jui-dialog .dataTable{border:none;}
 .jui-dialog .dataTable tr{height:49px;line-height:48px;}
@@ -79,14 +75,14 @@
                           <form id="seach">
                               <div class="commonSelectWrap">
                                   <em class="tit">活动名称：</em>
-                                  <label class="searchInput" style="width:387px;">
+                                  <label class="searchInput" >
                                       <input data-text="活动名称" data-flag="item_name" name="item_name" type="text" value="">
                                   </label>
                               </div>
-                              <div class="commonSelectWrap">
+                              <div class="commonSelectWrap" style="width: 325px;">
                                   <em class="tit">活动时间：</em>
                                   <div class="selectBox">
-                                        <input type="text" data-flag="item_startTime" name="item_startTime" id="startDate" class="easyui-datebox" data-options="width:162,height:34"/>&nbsp;&nbsp;至&nbsp;&nbsp;<input type="text"  data-flag="item_endTime" name="item_endTime" class="easyui-datebox" validType="compareDate[$('#startDate').datebox('getText'),'前面选择的时间必须晚于该时间']" data-options="width:163,height:34"/>
+                                        <input type="text" data-flag="item_startTime" name="item_startTime" id="startDate" class="easyui-datebox" data-options="width:100,height:30"/>&nbsp;&nbsp;至&nbsp;&nbsp;<input type="text"  data-flag="item_endTime" name="item_endTime" class="easyui-datebox" validType="compareDate[$('#startDate').datebox('getText'),'前面选择的时间必须晚于该时间']" data-options="width:100,height:30"/>
                                   </div>
                               </div>
                               <div class="moreQueryWrap">
@@ -100,7 +96,7 @@
 
                 </div>
                 <div class="optionBtn">
-                	<a class="commonBtn" id="addNewGamesBtn" href="javascript:;">添加游戏</a>
+                	<a class="commonBtn  icon w100  icon_add r" id="addNewGamesBtn" href="javascript:;">添加游戏</a>
                 </div>
                 <div class="tableWrap" id="tableWrap" style="display:inline-block;width:100%;">
 

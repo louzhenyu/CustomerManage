@@ -7,7 +7,7 @@
             uiMask: $("#ui-mask"),
             tabel:$("#gridTable"),                   //表格body部分
             tabelWrap:$('#tableWrap'),
-            operation:$('.optionBtns'),
+            operation: $('.optionBtn'),
             vipSourceId:'',
             click:true,
             dataMessage:  $("#pageContianer").find(".dataMessage"),

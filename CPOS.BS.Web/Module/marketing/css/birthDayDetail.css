@@ -32,7 +32,7 @@
 .tagPanel .checkBoxPanel .inputDiv{ width: 100%; float: left;}
 .tagPanel .checkBoxPanel .inputDiv .checkBox{ float: left; margin-top: 8px; }
 .tagPanel .checkBoxPanel .inputDiv .textbox {margin: 0 12px;}
-.tagPanel .commonBtn{ display: block; background: #00cccc; width: 90px; height: 32px; float: right;line-height: 32px;}
+.tagPanel .commonBtn{ display: block; background: #00a0e8; width: 90px; height: 32px; float: right;line-height: 32px;}
 .templatePanel{border-bottom:1px solid #d8d8d8;display: inline-block; width: 100%;  margin-bottom: 20px;}
 .tagPanel .templatePanel .commonSelectWrap .tit {width: 58px;}
 .tagPanel .templatePanel .commonSelectWrap .selectBox{ width:auto;}
@@ -45,7 +45,7 @@
 .tagPanel .tablePanel .gridTable{width: 100%;display: block;}
 .lineTitle{ text-align: left; width:100%;padding-left: 30px; color: #333;font-size: 16px; border: 1px solid #e0e0e0;background: #eaeff2; height: 39px; line-height: 39px; }
 
-.textAddBtn{color: #00cccc; width: 50px;cursor: pointer; font-size: 14px; height: 18px; text-align: left; position: absolute; left:96px; bottom:20px;}
+.textAddBtn{color: #00a0e8; width: 50px;cursor: pointer; font-size: 14px; height: 18px; text-align: left; position: absolute; left:96px; bottom:20px;}
 
 .ticketList{ width:100%; padding-left: 20px; display: inline-block; }
 .ticketList .ticket{ width:100%; height: 65px; padding-top: 21px; display: inline-block;border-bottom: 1px solid #ececec; }
@@ -55,10 +55,9 @@
 .optPanel{ float: right;}
 .optPanel .hint{ float: right; margin-right: 10px;}
 
-.btnopt{margin: 0 auto; width:380px; display: block;}
-.btnopt .commonBtn{ margin-left: 35px;border-radius: 23px;float:left; width: 153px; margin-top: 45px;}
+.btnopt{margin: 20px auto; width:380px; display: block;}
 .btnopt .commonBtn.cancel{ background-color: #cccccc}
-.btnopt .commonBtn.bgWhite{background:#f4f8fa; color:#fc7a52; border: #fc7a52 1px solid; display:none;}
+.btnopt .commonBtn.bgWhite{display:none;}
 
 .tablePanel .datagrid{ border:none}
 
@@ -67,3 +66,21 @@
 .bgColor{ background-color: #efefef}
 .bgColor input{ background-color: #efefef}
 .bgCcc{background-color: #ccc}
+
+.deletebtn {
+    display: block;
+    background: #00a0e8;
+    width: 50px;
+    height: 32px;
+    float: right;
+    line-height: 32px;
+      border-radius: 4px;
+  font-size: 12px;
+      display: block;
+  height: 30px;
+  cursor: pointer;
+  line-height: 30px;
+  text-align: center;
+  color: #fff;
+  margin-top: 12px;
+}

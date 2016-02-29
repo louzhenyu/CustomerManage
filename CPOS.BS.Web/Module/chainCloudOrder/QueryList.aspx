@@ -49,10 +49,15 @@
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">付款状态：</em>
                                                       <div class="selectBox">
-                                                               <select id="payment" name="Field1"></select>
+                                                               <select id="payment" name="Field1" class="easyui-combobox" data-options="width:200" ></select>
                                                       </div>
                                                   </div>
-
+                                                  <div class="commonSelectWrap">
+                                                  <em class="tit">订单渠道:</em>
+                                                   <div class="selectBox">
+                                                   <select id="txtDataFromIDs" class="easyui-combobox" name="data_from_id" data-options="width:200" ></select>
+</div>
+</div>
                                                    <div class="commonSelectWrap">
                                                        <em class="tit">下单日期：</em>
                          <div class="searchInput bordernone whauto"  style="width: 202px; background: none;">
@@ -67,19 +72,20 @@
                     <!--<h2 class="commonTitle">会员查询</h2>-->
 
                 </div>
+                <div class="optionBtn">
+                                     <div class="commonBtn w100 batch optionCheck" style="position: relative" data-show="0,100,500" data-flag="batch"   >批量操作
+                                     <div class="panelTab" >
+                                     <p class="optionCheck check01" data-optiontype="audit" data-show="0,100" >批量审核</p>
+                                     <p class="optionCheck check02" data-optiontype="shipments" data-show="0,500">批量发货</p>
+                                     <p class="optionCheck check03" data-optiontype="cancel" data-show="0,占位">批量取消</p>
+                </div>
+                                     </div>
+                                    <div class="commonBtn sales icon w80 icon_export r" data-flag="export" >导出</div>
+                               <div class="commonBtn sales" id="optBtnss" data-flag="add" style="display: none">配发货门店</div>
+                                  </div>
                 <div class="tableWrap" id="tableWrap">
-                 <div class="optionBtn">
-                     <div class="commonBtn  batch optionCheck" data-show="0,100,500" data-flag="batch" >批量操作
-                     <div class="panelTab">
-                     <p class="optionCheck check01" data-optiontype="audit" data-show="0,100" >批量审核</p>
-                     <p class="optionCheck check02" data-optiontype="shipments" data-show="0,500">批量发货</p>
-                     <p class="optionCheck check03" data-optiontype="cancel" data-show="0,占位">批量取消</p>
-</div>
-                     </div>
-                    <div class="commonBtn sales export" data-flag="export" >导出</div>
-               <div class="commonBtn sales" id="optBtnss" data-flag="add" style="display: none">配发货门店</div>
-                  </div>
-                <div class="optionBtn" id="opt">
+
+                <div class="tableList" id="opt">
                    <ul><li class="on" data-Field7="0"><em > 全部 </em></li>
                         <li data-Field7="100"><em>未审核 </em></li>
                         <li data-Field7="900"><em>审核不通过</em></li>
@@ -148,13 +154,13 @@
                   <div  class="commonSelectWrap">
                                                               <em class="tit">电子优惠券抵扣:</em>
                                                               <div class="selectBox bodernone">
-                                                                 <input id="coupon" class="easyui-combogrid" data-options="width:160,height:32,validType:'selectIndex'"  name="CouponID" />
+                                                                 <input id="coupon" class="easyui-combogrid" data-options="width:200,height:30,validType:'selectIndex'"  name="CouponID" />
                                                              </div>
                                         </div>
                <div class="commonSelectWrap">
                              <em class="tit">纸质优惠券抵扣:</em>
                              <div class="searchInput" >
-                                    <input id="Deduction" class="easyui-numberbox" name="Deduction" value="" data-options="width:160,height:32,precision:0,groupSeparator:','" /><span style="float: right; margin-right: -24px;margin-top: -30px;font-size: 14px;">元</span>
+                                    <input id="Deduction" class="easyui-numberbox" name="Deduction" value="" data-options="width:200,height:30,precision:0,groupSeparator:','" /><span style="float: right; margin-right: -24px;margin-top: -30px;font-size: 14px;">元</span>
                             </div>
                             </div>
                <div class="commonSelectWrap">
@@ -164,13 +170,13 @@
                 <div class="commonSelectWrap">
                                         <em class="tit">付款方式：</em>
                                         <div class="searchInput bodernone" >
-                                               <input id="pay"  class="easyui-combobox" data-options="width:160,height:32,required:true"  name="PayID" />
+                                               <input id="pay"  class="easyui-combobox" data-options="width:200,height:32,required:true"  name="PayID" />
                                        </div>
                                        </div>
                 <div class="commonSelectWrap" id="ValueCard">
                             <em class="tit">实体储值卡号：</em>
                                   <div class="searchInput bodernone">
-                                      <input  class="easyui-validatebox" data-options="width:160,height:32,validType:['englishCheckSub','length[5,12]']"  name="ValueCard" />
+                                      <input  class="easyui-validatebox" data-options="width:200,height:32,validType:['englishCheckSub','length[5,12]']"  name="ValueCard" />
                                   </div>
                             </div>
                </div>
@@ -183,7 +189,7 @@
           <div class="commonSelectWrap">
                                         <em class="tit">门店：</em>
                                         <div class="searchInput bodernone" >
-                                               <input id="setUnit"  class="easyui-combotree" data-options="width:160,height:32,required:true"  name="unitID" />
+                                               <input id="setUnit"  class="easyui-combotree" data-options="width:200,height:32,required:true"  name="unitID" />
                                        </div>
                                        </div>
            </form>

@@ -22,25 +22,25 @@
                <div class="tableWrap">
                 <div class="panlDiv">
                 <div class="commonSelectWrap">
-                    <em class="tit">优惠券名称：</em>
+                    <em class="tit w120">优惠券名称：</em>
                         <label class="searchInput" style="width: 487px;">
                              <input data-text="优惠券名称" data-flag="CouponTypeName" class="easyui-validatebox textbox" data-options="required:true,validType:'length[3,100]'" name="CouponTypeName" type="text" value="">
                         </label>
                 </div>
                 <div class="commonSelectWrap" style="height: 80px;">
-                    <em class="tit">使用规则：</em>
+                    <em class="tit w120">使用规则：</em>
                     <label class="searchInput " style="width: 487px; height: 80px;">
                         <textarea name="CouponTypeDesc" class="easyui-validatebox" data-options="required:true,validType:'length[6,200]'"></textarea>
                     </label>
                </div>
                 <div class="commonSelectWrap panltext">
-                    <em class="tit">优惠券面值：</em>
+                    <em class="tit w120">优惠券面值：</em>
                         <label class="searchInput bordernone">
                              <input id="ParValue" data-text="优惠券面值" class="easyui-numberbox" data-options="min:0,precision:2,required:true,min:0,width:160,height:32" value="0" data-flag="ParValue" name="ParValue" type="text" >
                         </label>
                 </div>
                 <div class="commonSelectWrap">
-                    <em class="tit">优惠券数量：</em>
+                    <em class="tit w120">优惠券数量：</em>
                         <label class="searchInput bordernone">
                              <input data-text="优惠券数量" class="easyui-numberbox" data-options="min:1,precision:0,required:true,width:160,height:32" data-flag="IssuedQty" name="IssuedQty" type="text" value="0">
                         </label>
@@ -48,7 +48,7 @@
                 </div><!--panlDivEnd-->
                 <div class="panlDiv">
                 <div class="commonSelectWrap">
-                    <em class="tit">适用范围：</em>
+                    <em class="tit w120">适用范围：</em>
                         <label class="searchInput bordernone" style="width:347px;margin-top:5px;">
                               <div class="radio on" data-name="r1" data-UsableRange="1"><em></em><span>仅限在线商城使用</span></div>
                               <div class="radio" data-name="r1"  data-UsableRange="2"><em></em><span>仅限到店使用</span></div>
@@ -59,10 +59,10 @@
                 </div> <!--panlDivEnd-->
                 <div class="panlDiv">
                 <div class="commonSelectWrap" style="height:86px">
-                    <em class="tit">有效期：</em>
+                    <em class="tit w120">有效期：</em>
                         <div class="searchInput bordernone whauto">
                           <div class="line"> <div class="radio" data-name="r2" data-validity="time"><em></em></div>
-                               <div class="linetext">固定时间：<input id="startDate"  name="BeginTime" class="easyui-datebox"  data-options="width:160,height:32" /><span>至</span> <input id="expireDate" name="EndTime" class="easyui-datebox" data-options="width:160,height:32" validType="compareDate[$('#startDate').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/></div>
+                               <div class="linetext">固定时间：<input id="startDate"  name="BeginTime" class="easyui-datebox"  data-options="width:120,height:32" /><span>至</span> <input id="expireDate" name="EndTime" class="easyui-datebox" data-options="width:120,height:32" validType="compareDate[$('#startDate').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/></div>
                              </div>
                            <div class="line">
                             <div class="radio on" data-name="r2" data-validity="day"><em></em></div>
@@ -73,20 +73,20 @@
                 </div> <!--panlDivEnd-->
                 <div class="panlDiv panltext">
                 <div class="commonSelectWrap">
-                    <div class="tit"><div class="checkBox" data-flag="ConditionValue" ><em></em><span>使用限制:</span></div></div>
+                    <em class="tit w120">使用限制:</em>
+
+                     <div class="searchInput bordernone whauto">
+                            <div class="checkBox l" data-flag="ConditionValue" ><em></em></div> <div class="linetext">购买商品满<input id="ConditionValue" name="ConditionValue" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" value="0" /><span>元 可使用</span></div>
+                         </div>
 
                 </div>
-               <div class="commonSelectWrap">
-                         <div class="searchInput bordernone whauto pl_45">
-                             <div class="linetext">购买商品满<input id="ConditionValue" name="ConditionValue" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" value="0" /><span>元 可使用</span></div>
-                         </div>
-                </div>
+               
 
                 </div> <!--panlDivEnd-->
                 <div class="panlDiv bordernone">
 
                    <div class="commonSelectWrap">
-                           <em class="tit">适用类型:</em>
+                           <em class="tit w120">适用类型:</em>
                            <div class="searchInput bordernone whauto">
                               <select id="applicationType" class="easyui-combobox" data-options="width:160,height:32"  style="width:160px;"></select>
 
@@ -125,7 +125,7 @@
                 </div><!--panlDivEnd-->
             </div>
             </form>
-            <div class="commonBtn submitBtn">保存</div>
+            <div class="commonBtn submitBtn saveBtn">保存</div>
         </div>
     </div>
     <div style="display: none">
@@ -149,7 +149,7 @@
 
             <div class="optionclass">
                <div class="commonSelectWrap">
-               <em class="tit" style="width: 30px;"></em>
+               <em class="tit w120" style="width: 30px;"></em>
                                 <div class="bordernone searchInput"  style="width: 222px">
                                  <input  id="unitTree" class="easyui-combotree" data-options=" width:130,height:32,"/>
                                </div>

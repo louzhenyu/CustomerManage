@@ -2,22 +2,22 @@
 
 
 /*导航标题*/
-.blueline{border: 1px solid #00cccb; width: 59px; display: inline-block;}
-.grayline{border: 1px solid #cccccc; width: 59px; display: inline-block;}
-.navhead{padding: 10px 20px 20px 20px; text-align: center; display: inline-block; width: 100%; border-bottom: 1px dashed #dbdbdb;}
+.blueline{border: 1px solid #00a0e8; width: 59px; display: inline-block;  margin: 15px 0px;}
+.grayline{border: 1px solid #cccccc; width: 59px; display: inline-block;  margin: 15px 0px;}
+.navhead{padding: 10px 20px 15px 20px; text-align: center; display: inline-block; width: 100%; border-bottom: 1px dashed #dbdbdb;}
 .navhead img{margin: 10px; width: 34px;}
 .navcontent{display: inline-block;}
-.bluetext{color: #00cccb;}
+.bluetext{color: #00a0e8;}
 /*问卷内容*/
 .Questionnairebody.tableWrap{padding-top: 50px; display: inline-block; width: 100%;}
 /*内容公共*/
 .step{display:none;}
 .step1{display:block;}
-.ordernumber{float: left; width: 180px;}
+.ordernumber{float: left; width: 179px;}
 .commonSelectWrap{width: 100%; margin-top: 25px;}
 .commonHandleBtn.uploadImgBtn{background: url(/module/QuestionnaireNews/images/uploadImgBtn.png) no-repeat 0 0; cursor: pointer;}
 .commonHandleBtn{display: block; width: 132px; height: 32px; line-height: 32px; text-align: center; font-size: 14px; border-radius: 4px; background: #07c8cf; color: #fff;}
-.commonSelectWrap .infoBox{margin-left: 130px;}
+.commonSelectWrap .infoBox{margin-left: 87px;}
 .uploadItem .exp{padding-top: 7px; font-size: 13px; color: #999;}
 form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .ke-button-common .ke-button{width: 0px;}
@@ -37,7 +37,7 @@ form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .startpageContent{float: left; width: 62%;}
 .ruleText textarea{width: 252px; height: 111px; padding: 5px; border: 1px solid #d0d5d8; border-radius: 3px;}
 .regular{position: absolute; right: 26px; top: 371px; color: #fc9a01;}
-.rulebtn{width: 100px; margin-left: 130px;}
+.rulebtn{width: 100px; margin-left: 87px;}
 /*问卷内容--模板选择页*/
 .modeltype{width:100%; text-align: center;}
 .modeltypeimg{width: 225px; margin:0px 50px;  cursor: pointer;}
@@ -50,18 +50,18 @@ form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .lineTitle{height: 50px; line-height: 50px; padding-left: 30px; font-size: 16px; color: #333; background-color: #fafafa; border: 1px solid #e0e0e0; border-left: none; border-right: none;}
 .linePanel{display: inline-block; margin-bottom: 15px;}
 .firstTile{border-top: 0px;}
-.lineTitle em{display: block; width: 4px; height: 18px; margin-top: 16px; background-color: #00cccc; margin-right: 10px; float: left;}
+.lineTitle em{display: block; width: 4px; height: 18px; margin-top: 16px; background-color: #00a0e8; margin-right: 10px; float: left;}
 .commonOptsBtn{text-align: center; border: 1px solid #d0d5d8; width: 490px; margin-left: 29px; margin-top: 24px; display: inline-block; border-radius: 5px; display: block;}
 .commonOptsBtn .icon{margin: -14px auto 0px auto; background: url("../images/upJiantou.png") no-repeat center center; height: 14px;}
 .commonOptsBtn p{font-size: 14px; color: #666; line-height: 36px; background-color: #f3f3f5; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom: 1px solid #d0d5d8; padding-left: 20px; text-align: left;}
 .commonOptsBtn .listAdd{width: 470px; margin: 13px auto; display: inline-block;}
-.commonOptsBtn .addBtn{cursor: pointer; border-radius: 3px; min-width: 84px; color: #fff; margin-bottom: 10px; font-size: 14px; line-height: 32px; height: 32px; background: #00cccc; margin-left: 10px; float: left;}
+.commonOptsBtn .addBtn{cursor: pointer; border-radius: 3px; min-width: 84px; color: #fff; margin-bottom: 10px; font-size: 14px; line-height: 32px; height: 32px; background: #00a0e8; margin-left: 10px; float: left;}
 .questionlist{width: 490px; display: inline-block; position:relative;}
 .question{display: inline-block; float: left; margin: 29px 29px 0px 29px; width: 100%; border: 1px solid #d0d5d8; border-radius: 5px;}
 .questiontitle{background: #f3f3f5; line-height: 45px; font-size: 14px; padding: 0px 16px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom: 1px solid #d0d5d8;cursor:pointer;}
 .questiontitle span{float: right; margin: 4px;}
 .questiontitle span img{padding: 10px;cursor: pointer;}
-.questionlist .select{border: 2px dashed #00cccc; z-index: 10;}
+.questionlist .select{border: 2px dashed #00a0e8; z-index: 10;}
 
 
 
@@ -75,7 +75,7 @@ form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .handleLayer .uploadArea{margin-top:30px; position: relative;}
 .handleLayer .wrapBtn{float:right; margin-top: 20px;}
 .handleLayer .wrapBtn span{float:right;width:80px;height:32px;line-height:32px;margin-left:20px;border-radius:4px;text-align:center;background:#ccc;color:#fff; cursor:pointer;}
-.handleLayer .wrapBtn span:nth-last-of-type(1){ background-color:#00cccc;}
+.handleLayer .wrapBtn span:nth-last-of-type(1){ background-color:#00a0e8;}
 
 .handleLayer .delBtn{display:none;height:30px; width:30px;position: absolute; top:-15px; right: -15px;background: url("../images/handleLayer/close.png") no-repeat center center;  }
 .handleLayer .uploadArea:hover .delBtn{display: block;}
@@ -84,7 +84,7 @@ form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .handleLayer .wrapPic .size{display:block;width:50%;margin:15% auto;}
 .handleLayer .wrapPic p{width:130px;max-height:124px;min-height:88px;border:1px solid #cfcedc;color:#333;overflow:hidden;}
 .handleLayer .wrapPic p img{width:100%;}
-.handleLayer .wrapPic .uploadBtn{display:block;position:relative;width:95px;height:32px;line-height:32px;margin:10px auto;text-align:center;border-radius:4px;background:#00cccc;color:#fff; cursor:pointer;}
+.handleLayer .wrapPic .uploadBtn{display:block;position:relative;width:95px;height:32px;line-height:32px;margin:10px auto;text-align:center;border-radius:4px;background:#00a0e8;color:#fff; cursor:pointer;}
 .handleLayer .wrapPic .uploadBtn .input{display:block;width:95px;height:32px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;left:0;}
 .handleLayer .wrapInput{float:left;  width: 80%;}
 .handleLayer .wrapInput textarea{  width: 90%;  border: 1px solid #d0d5d8;  height: 80px;  border-radius: 5px;  margin: 10px 0px;}
@@ -110,9 +110,9 @@ form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .handleLayer .wrapInput .option{width:100%}
 .handleLayer .wrapInput .addroption{  display: inline-block;  width: 195px;float:left;  height: 47px;}
 .handleLayer .wrapInput .operationbtn .delbtn{float: right; background: #fb7a52;}
-.handleLayer .wrapInput .operationbtn span{float: left; width: 80px; height: 32px; line-height: 32px; margin-left: 20px; border-radius: 4px; text-align: center; background: #00cccc; color: #fff; cursor: pointer;}
+.handleLayer .wrapInput .operationbtn span{float: left; width: 80px; height: 32px; line-height: 32px; margin-left: 20px; border-radius: 4px; text-align: center; background: #00a0e8; color: #fff; cursor: pointer;}
 
-.handleLayer .wrapInput .tagBtn{display:inline-block;width:50px;height:32px;line-height:32px;text-align:center;border-radius:4px;background:#00cccc;color:#fff; cursor:pointer;float: right;}
+.handleLayer .wrapInput .tagBtn{display:inline-block;width:50px;height:32px;line-height:32px;text-align:center;border-radius:4px;background:#00a0e8;color:#fff; cursor:pointer;float: right;}
 .handleLayer .addLayerBtn{height:100px;margin-top:30px;}
 .handleLayer .wrapRadio{ width: 82%; margin: 0 auto;font-size: 18px; color: #666;  float: left;}
 .handleLayer .wrapRadio div{ float: left; margin-left:8px; }
@@ -122,7 +122,7 @@ form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .handleLayer .wrapRadio div{margin:0;}
 .handleLayer .wrapRadio .checkBox { margin-top: 6px; width: 50%;margin-bottom: 18px;}
 .handleLayer .wrapRadio .checkBoxwidth {width: 100%;}
-.handleLayer .wrapRadio .checkBox span{ float: left;margin-left: 8px;padding:0px}
+.handleLayer .wrapRadio .checkBox span{ float: left;margin-left: 5px;padding:0px}
 
 .handleLayer .wrapPics{float: left; width: 80%;}
 .handleLayer .wrapPics .editimgoption{display: inline-block; width: 400px; background-color: #f8f8f8; padding: 16px; margin: 10px 0px; border-radius: 5px; border: 1px solid #e9e9e9;position: relative;}
@@ -202,11 +202,5 @@ form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 
 /*内容操作按钮 */
 .btnWrap{padding: 55px 0 30px 0; text-align: center;}
-.commonStepBtn{display: inline-block; width: 148px; height: 43px; line-height: 43px; text-align: center; font-size: 15px; border-radius: 22px; background: #fc7a52; color: #fff;}
-.commonStepBtn:hover{color:#fff}
+.btnopt {margin: 0 auto;margin-top: 45px; border-radius: 23px;}
 
-.nextStepBtn{background: #fc7a52; border: 1px solid #fc7a52;}
-.startStepbtn {display: inline-block; width: 148px; height: 43px; line-height: 43px; text-align: center; font-size: 15px; border-radius: 22px; background: #fc7a52; color: #fff;}
-.startStepbtn:hover {color:#fc7a52 }
-.startStepbtn,.prevStepBtn{background: #fff; border: 1px solid #fc7a52; color: #fc7a52;}
-.prevStepBtn:hover{ color: #fc7a52;}

@@ -53,7 +53,7 @@
                                 <div class="commonSelectWrap">
                                     <div class="tit">
                                         <div class="radio on" data-name="vip">
-                                            <em></em><span>会员卡类型：</span></div>
+                                            <em></em><span>会员类型：</span></div>
                                     </div>
                                     <div class="selectBox">
                                         <input type="text" class="easyui-combobox" id="vipCard" name="VipCardTypeID" data-options="width:160,height:32 ,validType:'selectIndex'">
@@ -95,7 +95,7 @@
                             <!--tablePanl-->
                         </div>
                         <!--tagPanel-->
-                        <div class="tagPanel">
+                        <div class="tagPanel" style="display: none;">
                             <div class="checkBoxPanel">
                                 <div class="inputDiv">
                                     <div class="checkBox" data-filed="PointsMultiple" data-name="numberBox">
@@ -110,9 +110,9 @@
                                 <div id="gridTable">
                                 </div>
                             </div>
-                        </div>
+                        </div style>
                         <!--tagPanel-->
-                         <div class="tagPanel">
+                         <div class="tagPanel" style="display: none;">
                                                     <div class="checkBoxPanel">
                                                         <div class="inputDiv">
                                                             <div class="checkBox" data-filed="AmountLimit" data-name="numberBoxAndOpt">
@@ -214,7 +214,7 @@
                                                                               <!--selectBox-->
                                                                           </div>
                                                                           <!--commonSelectWrap-->
-                                                                          <div class="commonBtn" >
+                                                                          <div class="commonBtn" style="display: none" >
                                                                               选择模板</div>
                                                                           <div class="text">
                                                                               <textarea></textarea>
@@ -293,7 +293,7 @@
                                                                               <!--selectBox-->
                                                                           </div>
                                                                           <!--commonSelectWrap-->
-                                                                          <div class="commonBtn" >
+                                                                          <div class="commonBtn" style="display: none" >
                                                                               选择模板</div>
                                                                           <div class="text">
                                                                               <textarea></textarea>
@@ -315,9 +315,9 @@
                 <div class="zsy">
                 </div>
                 <div class="btnopt" data-falg="nav01">
-                    <div class=" commonBtn bgWhite" data-flag="#nav01">
+                    <div class=" commonBtn bgWhite prevStepBtn" data-flag="#nav01" style="float: left;">
                         上一步</div>
-                    <div class=" commonBtn" id="submitBtn" data-submitindex="1" data-flag="#nav02">
+                    <div class=" commonBtn nextStepBtn" id="submitBtn" data-submitindex="1" data-flag="#nav02" style="float: left;">
                         下一步</div>
                 </div>
             </div>
@@ -412,10 +412,12 @@
                                                 <!--selectBox-->
                                             </div>
                                             <!--commonSelectWrap-->
-                                            <div class="commonBtn" >
+                                            
+                                                    <div class="deletebtn " >删除</div>
+                                            <div class="commonBtn" style="display: none" >
                                                 选择模板</div>
                                             <div class="text">
-                                                <textarea><#=item.Content#></textarea>
+                                                <textarea  class="easyui-validatebox" data-options="validType:'maxLength[50]'"><#=item.Content#></textarea>
                                             </div>
                                         </div>
                                         <!--panelDiv-->
@@ -485,10 +487,10 @@
                                                 <!--selectBox-->
                                             </div>
                                             <!--commonSelectWrap-->
-                                            <div class="commonBtn" >
+                                            <div class="commonBtn" style="display: none" >
                                                 选择模板</div>
                                             <div class="text">
-                                                <textarea><#=item.Content#></textarea>
+                                                <textarea  class="easyui-validatebox" data-options="validType:'maxLength[50]'"><#=item.Content#></textarea>
                                             </div>
                                         </div>
                                         <!--panelDiv-->

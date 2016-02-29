@@ -45,13 +45,14 @@
      
      <%--模板 公共样式end--%>
       <%--模板 样式strart 切换模板样式只要更改/alading/skin02.css?v=0.5  alading qixin  college 只要三个模板 --%>
-    <link href="<%=StaticUrl+"/module/styles/css/newTemplate/skin02.css?v=0.1"%>" rel="stylesheet" />
+    <link href="<%=StaticUrl+"/module/styles/css/newYear/skin02.css?v=0.1"%>" rel="stylesheet" />
       <%--模板 样式End--%>
        <script type="text/javascript" src="<%=StaticUrl+"/Module/AppConfig/lib/jquery-1.8.3.min.js" %>"></script>
        <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/plugin/artDialog.js" %>"></script>
 
     <link href="<%=StaticUrl+"/Framework/Css/cpos.css"%>" rel="stylesheet" type="text/css" />
     <script src="<%=StaticUrl+"/Framework/javascript/Other/lightCpos.js?v=0.4"%>" type="text/javascript"></script>
+	<script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 
 </head>
@@ -97,39 +98,50 @@
                         <%-- <a href="###">个人信息</a>
                             <a href="###">系统通知(1)</a>--%>
                         <%--    <a href="#" class="fl mr25 nava3" onclick="fnChangePwd()">修改密码</a>--%>
-                        <span class="commonBtn safetyOutBtn"><a href="#" onclick="fnChangePwd();">修改密码</a>
-                        </span><span class="commonBtn safetyOutBtn"><a href="/default.aspx?method=LogOut">安全退出</a>
+                        <span class="commonBtn safetyOutBtn" data-menucode="jysj"><a class="one menusrc" href="#" >经营数据</a>
+                        </span>
+                        <span class="commonBtn safetyOutBtn" data-menucode="fstz"><a  class="four menusrc" href="#" onclick=""> 发送通知</a>
+                        </span>
+                        <span class="commonBtn safetyOutBtn"><a class="two"  onclick="fnChangePwd();">修改密码</a>
+                        </span>
+                        <span class="commonBtn safetyOutBtn"><a class="three" href="/default.aspx?method=LogOut">安全退出</a>
                         </span>
                     </div>
+                    
                 </div>
+                  <div class="imgList"><div data-menucode="sz" title="设置"><a href="" class="l menusrc"></a></div>
+                 <div data-menucode="wx"  title="微信"><a href="" class="r menusrc"></a></div>
+                 
+                 </div>
             </div>
-                           <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="LOGO">
+                           <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="首页">
  
                         <%--<div class="arr"></div>--%>
                 </a>
                 <div class="commonNav" id="commonNav">
                     <ul class="clearfix addul" >
-                        <%var level1Menu = from c in MenuList where c.Parent_Menu_Id == "--" select c;  //在这里取父节点为空的
+                        <%var level1Menu = from c in MenuList where c.Parent_Menu_Id ==MMenuID select c;  //在这里取父节点为六大模块的mid
                           int i = 0;
                           //debugger;
                           foreach (var n in level1Menu)
                           {
                               i++;
                               //默认点击时，跳到第一个子节点的Url_Path
-                              var SubMenuList = n.SubMenuList;
+                              var SubMenuList = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
                               // var SubMenuList = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
                               //  SubMenuList.Count();
                               string urlPath = "";
                               string childMenuID = "";
-
-                              if (SubMenuList != null && SubMenuList.Count() != 0)
+                              string iconType = n.Icon_Path == "" ? "icon" : n.Icon_Path;
+                              var subList = SubMenuList.ToList();
+                              if (SubMenuList != null && SubMenuList.Count() != 0 && MMenuID != "")
                               {
-                                  urlPath = SubMenuList[0].Url_Path;
-                                  childMenuID = SubMenuList[0].Menu_Id;
+                                  urlPath = subList[0].Url_Path;
+                                  childMenuID = subList[0].Menu_Id;
                               }
 
-                              Response.Write(string.Format("<li class=\"{3}\"><a href=\"#\"  id=\"{0}\" class=\"{1}\" title=\"{2}\" onclick='PMenuClick(\"{4}\",\"{5}\",\"{6}\")'>{2}</a>",
-                                  n.Menu_Id, n.Icon_Path, n.Menu_Name, "nav" + (i.ToString().PadLeft(3, '0')), urlPath, childMenuID, n.Menu_Id));
+                              Response.Write(string.Format("<li class=\"{3}\"><a href=\"#\"  id=\"{0}\" class=\"{1}\" title=\"{2}\" onclick='PMenuClick(\"{4}\",\"{5}\",\"{6}\",\"{7}\")'>{2}</a>",
+                                  n.Menu_Id, iconType, n.Menu_Name, "nav" + (i.ToString().PadLeft(3, '0')), urlPath, childMenuID, n.Menu_Id, MMenuID));
 
                               Response.Write("</li>");
                           }
@@ -167,7 +179,7 @@
                 <ul>
                     <%
                         //   var level2Menu = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
-                        var level2Menu = from c in MenuList where c.Parent_Menu_Id == PMenuID select c; ;//要从后台取出当前的PMenuID
+                        var level2Menu = from c in MenuList where c.Parent_Menu_Id == PMenuID select c;//要从后台取出当前的PMenuID //父类id
                         int j = 0;
                         foreach (var m in level2Menu)
                         {
@@ -196,7 +208,7 @@
                             var result = false;
                             result = (urlPath.IndexOf("?") >= 0);
                             Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\"  href=\"{1}\" title=\"{2}\"><em class=\"icon {3}\"></em><span>{2}</span></a></dt>",
-                                m.Menu_Id, (result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID)), m.Menu_Name
+                                m.Menu_Id, (result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID + "&MMenuID=" + MMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID + "&MMenuID=" + MMenuID)), m.Menu_Name
                                 , tempUrlPath2, "menu" + (j.ToString().PadLeft(3, '0'))));//不用m.Icon_Path，改用urlPath的截取信息 m.Icon_Path != "" ? m.Icon_Path : "icon"
                             //icon {3}的意思是： 如果没有样式还是要用icon的样式
 
@@ -252,10 +264,10 @@
 
         <script type="text/javascript">
             //主菜单点击
-            function PMenuClick(urlPath, childMenuID, parentMenu_Id) {
+            function PMenuClick(urlPath, childMenuID, parentMenu_Id,MMenuID) {
 
                 var result = urlPath.indexOf("?");
-                var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID + "&PMenuID=" + parentMenu_Id) : (urlPath + "?mid=" + childMenuID + "&PMenuID=" + parentMenu_Id);
+                var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID + "&PMenuID=" + parentMenu_Id+"&MMenuID=" + MMenuID) : (urlPath + "?mid=" + childMenuID + "&PMenuID=" + parentMenu_Id+"&MMenuID=" + MMenuID);
                 location = newUrl;
             }
             $(function () {
@@ -289,6 +301,48 @@
 
         </script>
     </form>
+<div class="leftsead">
+<div class="index hover" style="padding-bottom:1px;" >
+<a href="/module/Index/IndexPage.aspx" ><img src="/Framework/Image/leftImgList/index.png" alt="" class="shows"/><img src="/Framework/Image/leftImgList/indexOn.png" alt="" class="hides" style="display:none;" /> </a>
+</div>
+<ul id="leftsead">
+<li data-menucode="yd"><a href="JavaScript:void(0)" class="menusrc"  ><img src="/Framework/Image/leftImgList/01L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/01.png" alt="" class="shows"/></a></li>
+<li data-menucode="yxlq"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/06L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/06.png" alt="" class="shows"/></a></li>
+<li data-menucode="hyjk"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/05L.png" alt="" class="hides"/><img src="/Framework/Image/leftImgList/05.png" alt="" class="shows"/></a></li>
+<li data-menucode="dzhh"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/02L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/02.png" alt="" class="shows"/></a></li>
+<li data-menucode="ygjl"><a href="JavaScript:void(0)"  class="menusrc"><img src="/Framework/Image/leftImgList/03L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/03.png" alt="" class="shows"/></a></li>
+<li data-menucode="qdcx"><a href="JavaScript:void(0)" class="menusrc" ><img src="/Framework/Image/leftImgList/04L.png" alt="" class="hides" /> <img src="/Framework/Image/leftImgList/04.png" alt="" class="shows"/></a></li>
+</ul>
+<div class="help">
+<a href="/Module/helpCenter/helpCenter.aspx"   ><img src="/Framework/Image/leftImgList/help.png" alt="" class="shows"/><img src="/Framework/Image/leftImgList/helpon.png" alt="" class="hides" style="display:none;" /> </a>
+</div>
+</div>
+<script type="text/javascript">
+  $("#leftsead a").hover(function(){
+		
+			$(this).children("img.hides").show();
+			$(this).children("img.shows").hide();
+			$(this).children("img.hides").animate({marginRight:'0px'},'slow'); 
+		
+	},function(){
+	        //$(this).children("img.hides").stop()
+			$(this).children("img.hides").animate({marginRight:'-90px'},'slow',function(){$(this).hide();$(this).next("img.shows").show();});
+
+});
+
+
+$(".leftsead .help a").hover(function () {
+    $(this).children("img.hides").show();
+    $(this).children("img.shows").hide();
+
+}, function () {
+
+    $(this).children("img.hides").hide();
+    $(this).children("img.shows").show();
+
+})  
+</script>
+
 
 <!-- Piwik Image Tracker-->
 <%--<img src="http://tj.chainclouds.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" />--%>
@@ -321,12 +375,15 @@
                 window.UnitShortName = '<%=UnitShortName%>';
                 window.RoleCode = '<%=RoleCode%>';
                 window.RoleName = '<%=RoleName%>';
-                window.staticUrl = '<%=StaticUrl%>';
-                window.weixinUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["openOAuthUrl"] %>/receive?clientid=" + window.clientID;
                 $(".session1").text((window.clientID));
+                window.statementUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["website_WWW"] %>";
+                window.weixinUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["openOAuthUrl"] %>/receive?clientid=" + window.clientID;
+                window.fsr_userName = "admin";
+                window.fsr_passWord = "123456";
                 //     console.log($(".session1").text());
             });
-        </script>
-     
+        </script>   
+        
 </body>
+
 </html>

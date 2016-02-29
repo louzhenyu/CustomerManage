@@ -19,6 +19,11 @@ namespace JIT.CPOS.DTO.Module.Questionnaire.ActivityQuestionnaireMapping.Respons
         /// <summary>
         /// 
         /// </summary>
+        public string QuestionnaireID { get; set; }
+        
+        /// <summary>
+        /// 
+        /// </summary>
         public DataTable ResultData { get; set; }
 
         /// <summary>

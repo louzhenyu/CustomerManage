@@ -8,7 +8,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             section:$("#section"),
             editLayer:$(".uploadPicBox"), //图片上传
             simpleQuery:$("#simpleQuery"),//全部
-            skuTable:$("#skuTable"),
+            skuTable: $("#skuTable"),
+            colorplan: $(".colorplan"),             //调色板
             width:160,
             height:32,
             panlH:200,
@@ -17,6 +18,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             priceFilde:"item_price_type_name_",//数据库价格相关的字段，一般有销量库存，价格实体价格
             allData:{}, //页面所有存放对象基础数据
             eventId: $.util.getUrlParam('EventID'),
+            CoverId:"",
             eventName:"",
             DrawMethod:1,
 			jsonParams: {},
@@ -36,7 +38,9 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				h = $centreArea.height();
 			$contentArea.css({'minHeight':h+'px'});
 			$('#nav01').fadeIn("slow");
-			
+
+		    //加载调色板
+			$(".color_plan").append(bd.template("tpl_colorplan", ""));
 			
 			//第一步
 			that.getFirstStep();
@@ -51,222 +55,130 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
         initEvent:function() {
             var that = this;
             $('.commonStepBtn').on('click', function () {
-				var $this = $(this),
+                var $this = $(this),
 					idVal = $this.data('flag'),
 					$panelDiv = $('.panelDiv');
-				//if($this.hasClass('nextStepBtn')){/*prevStepBtn*/}
-				switch(idVal){
-					  case '#nav01':
-					  	that.elems.optPanel.find("li").removeClass("on");
-						that.elems.optPanel.find("li").eq(0).addClass("on");
-						$panelDiv.hide();
-						$(idVal).fadeIn("slow");
-						break;
-					  case '#nav02':
-					      if($('#nav0_1').form('validate')){
-					          var prams = {action:'SaveEventStep1',EventID:that.elems.eventId},
-                                  fields = $('#nav0_1').serializeArray();
-					          //console.log(fields);
+                //if($this.hasClass('nextStepBtn')){/*prevStepBtn*/}
+                debugger
+                switch (idVal) {
+                    case 'nav01':
+                        that.navshow("nav01", $panelDiv);
+                        break;
+                    case 'nav02':
+                        that.BasicInformationStep(idVal, $panelDiv, $this);
+                        break;
+                    case 'nav03':
+                        that.CoverSettingStep(idVal, $panelDiv, $this);
+                        break;
+                    case 'nav04':
+                        that.PrizeAllocationStep(idVal, $panelDiv, $this);
+                        break;
+                    case 'nav05':
+                        that.GraphicPushStep(idVal, $panelDiv, $this);
+                    default:
+                        break;
+                }
+            });
 
-					          for(var i=0;i<fields.length;i++){
-					              var obj = fields[i];
-					              prams[obj['name']] = obj['value'];
-					          }
-					          //console.log(prams);
-					          prams.EventTypeID = '081AEC92-CC16-4041-9496-B4F6BC3B11FC';
-					          if(prams.PointsLottery == ''){
-					              prams.PointsLottery = 0;
-					          }
 
-					          that.setFirstStep(prams, function (DrawMethodId) {
-					              that.elems.optPanel.find("li").removeClass("on");
-					              that.elems.optPanel.find("li").eq(1).addClass("on");
-					              $panelDiv.hide();
-					              $(idVal).fadeIn("slow");
-					              if (DrawMethodId == 2) {
-					                  that.elems.activiType = 2;
-					                  that.LuckyTurntable();
-					              //} else if (DrawMethodId == 1) {
-					              //    that.elems.activiType = 3;
-					            //    that.ScratchCard();
-					                } else if (DrawMethodId == 5) {
-					                that.elems.activiType = 4;
-					                that.Questionnaire();
-					                that.getQuestionnaireList(function (data) {
-					                    $("#Questionnaires").combobox({
-					                        width: 132,
-					                        height: 34,
-					                        panelHeight: that.elems.panlH,
-					                        lines: true,
-					                        valueField: 'QuestionnaireID',
-					                        textField: 'QuestionnaireName',
-					                        data: data.Data.QuestionnaireList
-					                    });
-					                });
 
-					              }else{
-					                  $(".PrizeSet").hide();
-					                  $("#nav0_2").show();
-					              }
-								
-								//保存第一步的同时获取第二步的数据
-								//待开发
-							});
-							//第二步，奖品配置模块数据初始化
-							that.getPrizeList(true);
-							that.addPrizeList();
-						}
-						break;
-					  case '#nav03':
-					      if ($this.data('page') == 'redPackage') {
-					          var array = [],
-					              leng;
-					          debugger;
-					          if (that.elems.activiType == 1) {
-					              var logo = $('#logoBgPic').data('url'),
-                                      beforeGround = $('#beforeBgPic').data('url'),
-                                      rule = $('#ruleBgPic').data('url'),
-                                      ruleContent = $('.ruleText textarea').val(),
-                                      ruleFlag = $('#ruleOption').combobox('getValue');
-					              leng = $('#prizeListTable tbody tr td').length > 1;
-                                      
-					              if (!leng) {
-					                  return $.messager.alert("提示", '请添加奖品信息！');
-					              } else if (!beforeGround) {
-					                  return $.messager.alert("提示", '请上传领取前背景图片！');
-					              } else if (!logo) {
-					                  return $.messager.alert("提示", '请上传logo图片！');
-					              } else if (ruleFlag == 1 && !ruleContent) {
-					                  return $.messager.alert("提示", '请填写活动规则内容文本！');
-					              } else if (ruleFlag == 2 && !rule) {
-					                  return $.messager.alert("提示", '请上传活动规则内容图片！');
-					              }
-					              array = [
-                                              {
-                                                  "ImageURL": logo,
-                                                  "BatId": "Logo"
-                                              },
-                                              {
-                                                  "ImageURL": beforeGround,
-                                                  "BatId": "BeforeGround"
-                                              },
-                                              {
-                                                  "ImageURL": "",
-                                                  "BatId": "BackGround"
-                                              },
-                                              {
-                                                  "ImageURL": rule,
-                                                  "BatId": "Rule"
-                                              }
-					              ];
+            //调色板事件start
+            that.elems.colorplan.on("click", ".writecolor", function (e) {
 
-					              that.setSaveWxPrize(array, ruleFlag, ruleContent);
-					          }
-                              //大转盘
-					          if (that.elems.activiType == 2) {
-					              var LT_Data_kvPic = $('#LT_Data_kvPic').data('url'),
-                                      LT_Data_Rule = $('#LT_Data_Rule').data('url'),
-                                      LT_Data_bgpic1 = $('#LT_Data_bgpic1').data('url'),
-                                      LT_Data_bgpic2 = $('#LT_Data_bgpic2').data('url'),
-                                      LT_Data_regularpic = $('#LT_Data_regularpic').data('url');
-					              leng = $('#LuckyTurnListTable tbody tr td').length > 1;
-					              if (!leng) {
-					                  return $.messager.alert("提示",'请添加奖品信息！');
-					              } else if (!LT_Data_regularpic) {
-					                  return $.messager.alert("提示", '请上传试试手气背景图片！');
-					              } else if (!LT_Data_kvPic) {
-					                  return $.messager.alert("提示", '请上传kv图片！');
-					              } else if (!LT_Data_Rule) {
-					                  return $.messager.alert("提示", '请上传活动规则图片！');
-					              } else if (!LT_Data_bgpic1) {
-					                  return $.messager.alert("提示", '请上传背景图片1！');
-					              } else if (!LT_Data_bgpic2) {
-					                  return $.messager.alert("提示", '请上传背景图片2！');
-					              }
-                                  
-					              if ($("#selectPrize ._selected").length < 12) {
-					             
-					                  return $.messager.alert("提示", "奖品选项未全部添加！");
-					              }
+                var type = $(this).parents(".color_plan").data("type");
 
-					              array = [
-                                              {
-                                                  "ImageURL": LT_Data_kvPic,
-                                                  "BatId": "LT_kvPic"
-                                              },
-                                              {
-                                                  "ImageURL": LT_Data_Rule,
-                                                  "BatId": "LT_Rule"
-                                              },
-                                              {
-                                                  "ImageURL": LT_Data_bgpic1,
-                                                  "BatId": "LT_bgpic1"
-                                              },
-                                              {
-                                                  "ImageURL": LT_Data_bgpic2,
-                                                  "BatId": "LT_bgpic2"
-                                              },
-                                              {
-                                                  "ImageURL": LT_Data_regularpic,
-                                                  "BatId": "LT_regularpic"
-                                              }
-					              ];
+                if (type == 1) {
+                    $(".startbtn").attr("style", "background-color:#FFFFFF;color:#000;");
+                    $(".regular").attr("style", "color:#FFFFFF");
+                    $("#StartPageBtnBGColor").val("#FFFFFF");
+                    $("#StartPageBtnTextColor").val("#000");
+                }
 
-					              that.setSaveWxPrize(array, 1, "");
+                if (type == 2) {
+                    $(".Endbtn").attr("style", "background-color:#FFFFFF;color:#000;");
+                    $("#QResultBGColor").val("#FFFFFF");
+                    $("#QResultBtnTextColor").val("#000");
+                }
+            });
 
-					              var imgjsonstr = "[";
-					              $("#selectPrize p img").each(function () {
-					                  imgjsonstr += " {PrizeLocationID:" + ($(this).data("prizeLocationid") == undefined ? "''" : "'" + $(this).data("prizeLocationid") + "'") + ",Location:'" + $(this).data("index") + "',PrizeID:'" + $(this).data("prizesid") + "',ImageUrl:'" + $(this).attr("src") + "',PrizeName:'" + $(this).data("prizesname") + "'},";
-					              });
-					              imgjsonstr = imgjsonstr.trim(",") + "]";
-					              var imgjson= Ext.decode(imgjsonstr);
-					              that.SavePrizeLocation(imgjson);
-					          }
+            that.elems.colorplan.on("click", ".blackcolor", function (e) {
+                var type = $(this).parents(".color_plan").data("type");
 
-                              //花样问卷
-					          if (that.elems.activiType == 4) {
-					              var QN_text = $('#Questionnaires').combobox('getText');
-                                      QN_value = $('#Questionnaires').combobox('getValue');
-                                      leng = $('#QuestionnaireTable tbody tr td').length > 1;
+                if (type == 1) {
+                    $(".startbtn").attr("style", "background-color:#000000;color:#fff;");
+                    $(".regular").attr("style", "color:#000");
+                    $("#StartPageBtnBGColor").val("#000");
+                    $("#StartPageBtnTextColor").val("#fff");
+                }
 
-					              if (!leng) {
-					                  return $.messager.alert("提示", '请添加奖品信息！');
-					              } else if (!QN_value || QN_value=="") {
-					                  return $.messager.alert("提示", '请选择表单！');
-					              } 
-					              array = [
-                                             
-					              ];
+                if (type == 2) {
+                    $(".Endbtn").attr("style", "background-color:#000000;color:#fff;");
+                    $("#QResultBGColor").val("#000");
+                    $("#QResultBtnTextColor").val("#fff");
+                }
+            });
 
-					              that.setSaveWxPrize(array, 1, "", QN_value, QN_text);
-					          }
-					          
-						}
-					  	that.elems.optPanel.find("li").removeClass("on");
-						that.elems.optPanel.find("li").eq(2).addClass("on");
-						$panelDiv.hide();
-						$(idVal).fadeIn("slow");
-						//保存第二步的同时获取第三步的数据
-						that.getThirdStep();
-						break;
-				    case '#nav04':
-					  	if($('#nav0_3').form('validate')){
-							var url = $('.imageTextArea').data('url');
-							if(!url){
-								return alert('请上传图片！');
-							}
-					  	    //待开发，保存第三步
+            $("body").on("click", function () {
+                $(".colorplan .Colorplate").each(function () {
+                    if ($(this).css("display") != "none") {
+                        $(this).hide();
+                    }
+                });
+            });
 
-							debugger;
-							that.setThirdStep(that.elems.jsonParams);
-						}
-					  	break;
-					  default:
-					  	break;
-				}
-			})
-			
-			
+
+            that.elems.colorplan.on("click", ".allcolor", function (e) {
+                $(".colorplan .Colorplate").toggle();
+                e.stopPropagation();
+            });
+
+            $(".colorplan").on("click", ".Colorplate div", function (e) {
+                debugger;
+                var type = $(this).parents(".color_plan").data("type");
+
+                if (type == 1) {
+                    $(".startbtn").attr("style", $(this).attr("style"));
+                    $(".regular").attr("style", "color:" + $(this).css("background-color"));
+                    $("#StartPageBtnBGColor").val($(this).css("background-color"));
+                    $("#StartPageBtnTextColor").val($(this).css("color"));
+                }
+
+                if (type == 2) {
+                    $(".Endbtn").attr("style", $(this).attr("style"));
+                    $("#QResultBGColor").val($(this).css("background-color"));
+                    $("#QResultBtnTextColor").val($(this).css("color"));
+                }
+                $(".colorplan .Colorplate").hide();
+            });
+
+
+
+            //调色板事件end
+			//进入按钮字体设置事件
+            $("#ButtonName").keyup(function () {
+                $(".startbtn").text($(this).val());
+
+            });
+            //进入按钮字体设置事件end
+
+            //封面设置页点击启用规则
+            $(".startpageContent").delegate(".checkBox", "click", function (e) {
+                var me = $(this)
+                me.toggleClass("on");
+
+                var checkvalue = $(this).find(".checkvalue");
+                if (checkvalue.val() == 1) {
+                    checkvalue.val(0);
+                    $("#QRegular").data("required", false);
+                } else {
+                    checkvalue.val(1);
+                    $("#QRegular").data("required", true);
+
+                }
+
+            });
+
+
 			//奖品配置模块
             $('#addPrizeBtn').bind('click', function () {
                 $('#addPrizeForm').form('clear');
@@ -428,6 +340,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							PrizesID: prizesId,
 							CouponTypeID: CouponTypeID
 						},
+						beforeSend: function () {
+						    $.util.isLoading()
+
+						},
 						success: function(data){
 							if(data.IsSuccess && data.ResultCode == 0) {
 								$('.jui-mask').hide();
@@ -436,6 +352,9 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							}else{
 								alert(data.Message);
 							}
+						},
+						complete: function () {
+						    $.util.isLoading(true);
 						}
 					});
 					
@@ -509,6 +428,272 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             
 			
         },
+        //保存基本信息
+        BasicInformationStep: function (idVal, $panelDiv, $this) {
+            var that = this;
+            if ($('#nav0_1').form('validate')) {
+                var prams = { action: 'SaveEventStep1', EventID: that.elems.eventId },
+                    fields = $('#nav0_1').serializeArray();
+                //console.log(fields);
+
+                for (var i = 0; i < fields.length; i++) {
+                    var obj = fields[i];
+                    prams[obj['name']] = obj['value'];
+                }
+                //console.log(prams);
+                prams.EventTypeID = '081AEC92-CC16-4041-9496-B4F6BC3B11FC';
+                if (prams.PointsLottery == '') {
+                    prams.PointsLottery = 0;
+                }
+
+                that.setFirstStep(prams, function (DrawMethodId) {
+                    if (DrawMethodId == 2) {
+                        that.elems.activiType = 2;
+                        that.LuckyTurntable();
+                        //} else if (DrawMethodId == 1) {
+                        //    that.elems.activiType = 3;
+                        //    that.ScratchCard();
+                    } else if (DrawMethodId == 5) {
+                        that.elems.activiType = 4;
+                        that.Questionnaire();
+                        that.getQuestionnaireList(function (data) {
+                            $("#Questionnaires").combobox({
+                                width: 132,
+                                height: 34,
+                                panelHeight: that.elems.panlH,
+                                lines: true,
+                                valueField: 'QuestionnaireID',
+                                textField: 'QuestionnaireName',
+                                data: data.Data.QuestionnaireList
+                            });
+                        });
+
+                    } else {
+                        $(".PrizeSet").hide();
+                        $("#nav0_2").show();
+                    }
+
+
+                    that.navshow(idVal, $panelDiv);
+
+                    //保存第一步的同时获取第二步的数据
+                    //待开发
+                });
+                //第二步，奖品配置模块数据初始化
+                that.getPrizeList(true);
+                that.addPrizeList();
+            }
+        },
+        //保存奖品配置
+        PrizeAllocationStep: function (idVal, $panelDiv, $this) {
+            var that = this;
+            if ($this.data('page') == 'redPackage') {
+                var array = [],
+                    leng;
+                debugger;
+                if (that.elems.activiType == 1) {
+                    var logo = $('#logoBgPic').data('url'),
+                        beforeGround = $('#beforeBgPic').data('url'),
+                        rule = $('#ruleBgPic').data('url'),
+                        ruleContent = $('.ruleText textarea').val(),
+                        ruleFlag = $('#ruleOption').combobox('getValue');
+                    leng = $('#prizeListTable tbody tr td').length > 1;
+
+                    if (!leng) {
+                        return $.messager.alert("提示", '请添加奖品信息！');
+                    } else if (!beforeGround) {
+                        return $.messager.alert("提示", '请上传领取前背景图片！');
+                    } else if (!logo) {
+                        return $.messager.alert("提示", '请上传logo图片！');
+                    } else if (ruleFlag == 1 && !ruleContent) {
+                        return $.messager.alert("提示", '请填写活动规则内容文本！');
+                    } else if (ruleFlag == 2 && !rule) {
+                        return $.messager.alert("提示", '请上传活动规则内容图片！');
+                    }
+                    array = [
+                                {
+                                    "ImageURL": logo,
+                                    "BatId": "Logo"
+                                },
+                                {
+                                    "ImageURL": beforeGround,
+                                    "BatId": "BeforeGround"
+                                },
+                                {
+                                    "ImageURL": "",
+                                    "BatId": "BackGround"
+                                },
+                                {
+                                    "ImageURL": rule,
+                                    "BatId": "Rule"
+                                }
+                    ];
+
+                    that.setSaveWxPrize(array, ruleFlag, ruleContent);
+                }
+                //大转盘
+                if (that.elems.activiType == 2) {
+                    var LT_Data_kvPic = $('#LT_Data_kvPic').data('url'),
+                        LT_Data_Rule = $('#LT_Data_Rule').data('url'),
+                        LT_Data_bgpic1 = $('#LT_Data_bgpic1').data('url'),
+                        LT_Data_bgpic2 = $('#LT_Data_bgpic2').data('url'),
+                        LT_Data_regularpic = $('#LT_Data_regularpic').data('url');
+                    leng = $('#LuckyTurnListTable tbody tr td').length > 1;
+                    if (!leng) {
+                        return $.messager.alert("提示", '请添加奖品信息！');
+                    } else if (!LT_Data_regularpic) {
+                        return $.messager.alert("提示", '请上传试试手气背景图片！');
+                    } else if (!LT_Data_kvPic) {
+                        return $.messager.alert("提示", '请上传kv图片！');
+                    } else if (!LT_Data_Rule) {
+                        return $.messager.alert("提示", '请上传活动规则图片！');
+                    } else if (!LT_Data_bgpic1) {
+                        return $.messager.alert("提示", '请上传背景图片1！');
+                    } else if (!LT_Data_bgpic2) {
+                        return $.messager.alert("提示", '请上传背景图片2！');
+                    }
+
+                    if ($("#selectPrize ._selected").length < 12) {
+
+                        return $.messager.alert("提示", "奖品选项未全部添加！");
+                    }
+
+                    array = [
+                                {
+                                    "ImageURL": LT_Data_kvPic,
+                                    "BatId": "LT_kvPic"
+                                },
+                                {
+                                    "ImageURL": LT_Data_Rule,
+                                    "BatId": "LT_Rule"
+                                },
+                                {
+                                    "ImageURL": LT_Data_bgpic1,
+                                    "BatId": "LT_bgpic1"
+                                },
+                                {
+                                    "ImageURL": LT_Data_bgpic2,
+                                    "BatId": "LT_bgpic2"
+                                },
+                                {
+                                    "ImageURL": LT_Data_regularpic,
+                                    "BatId": "LT_regularpic"
+                                }
+                    ];
+
+                    that.setSaveWxPrize(array, 1, "");
+
+                    var imgjsonstr = "[";
+                    $("#selectPrize p img").each(function () {
+                        imgjsonstr += " {PrizeLocationID:" + ($(this).data("prizeLocationid") == undefined ? "''" : "'" + $(this).data("prizeLocationid") + "'") + ",Location:'" + $(this).data("index") + "',PrizeID:'" + $(this).data("prizesid") + "',ImageUrl:'" + $(this).attr("src") + "',PrizeName:'" + $(this).data("prizesname") + "'},";
+                    });
+                    imgjsonstr = imgjsonstr.trim(",") + "]";
+                    var imgjson = Ext.decode(imgjsonstr);
+                    that.SavePrizeLocation(imgjson);
+                }
+
+                //花样问卷
+                if (that.elems.activiType == 4) {
+                    var QN_text = $('#Questionnaires').combobox('getText');
+                    QN_value = $('#Questionnaires').combobox('getValue');
+                    leng = $('#QuestionnaireTable tbody tr td').length > 1;
+
+                    if (!leng) {
+                        return $.messager.alert("提示", '请添加奖品信息！');
+                    } else if (!QN_value || QN_value == "") {
+                        return $.messager.alert("提示", '请选择表单！');
+                    }
+                    array = [
+
+                    ];
+
+                    that.setSaveWxPrize(array, 1, "", QN_value, QN_text);
+                }
+
+            }
+            //保存第二步的同时获取第三步的数据
+            that.navshow(idVal, $panelDiv);
+            that.getThirdStep();
+        },
+        //保存图文推送
+        GraphicPushStep: function (idVal, $panelDiv, $this) {
+            var that = this;
+            if ($('#nav0_3').form('validate')) {
+                var url = $('.imageTextArea').data('url');
+                if (!url) {
+                    return alert('请上传图片！');
+                }
+                //待开发，保存第三步
+
+                debugger;
+                that.setThirdStep(that.elems.jsonParams);
+            }
+        },
+        //封面设置
+        CoverSettingStep: function (idVal, $panelDiv, $this) {
+            var that = this;
+            var param = {
+                action: 'SaveCover',
+                EventID: that.elems.eventId
+            };
+            debugger;
+            param.IsShow = $(".checkvalue").val();
+            param.ButtonText = $("#ButtonName").val();
+            param.ButtonColor = $("#StartPageBtnBGColor").val();
+            param.ButtonFontColor = $("#StartPageBtnTextColor").val();
+            param.CoverImageUrl = $("#CoverImageUrl").data('url');
+            param.RuleType = $("#ruleType").combobox("getValue");
+            if (that.elems.CoverId != "") {
+                param.CoverId = that.elems.CoverId;
+            }
+
+            if (param.IsShow == "1") {
+
+                if (!param.CoverImageUrl) {
+                    return alert('请上传封面背景图片！');
+                }
+
+                if (param.RuleType == "") {
+                    return alert('请选择规则类型！');
+                }
+
+                if (param.RuleType == "2") {
+
+                    param.RuleText = $("#QRegular").val();
+                } else {
+
+                    param.RuleImageUrl = $("#RuleImageUrl").data('url');
+                    if (!param.RuleImageUrl) {
+                        return alert('请上传规则图片！');
+                    }
+
+                }
+
+                
+
+            }
+
+
+            if ($('#nav0_5').form('validate')) {
+
+                that.SaveCover(param, function () {
+
+                    that.navshow(idVal, $panelDiv);
+
+                });
+
+            }
+
+          
+        },
+        navshow: function (idVal, $panelDiv)
+        {
+            var that = this;
+            that.elems.optPanel.find("li").removeClass("on");
+            $("." + idVal).addClass("on");
+            $panelDiv.hide();
+            $("#"+idVal).fadeIn("slow");
+        },
 		//初始化基本信息数据
 		getFirstStep:function(){
 			var that = this;
@@ -555,42 +740,38 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							    }
 							}
 						});
+
+						$('#ruleType').combobox({
+						    width: 200,
+						    height: 34,
+						    panelHeight: that.elems.panlH,
+						    lines: true,
+						    valueField: 'RuleId',
+						    textField: 'RuleName',
+						    data: [{
+						        RuleId: "1",
+						        RuleName:"图片"
+						    }, {
+						        RuleId: "2",
+						        RuleName: "文字"
+						    }],
+						    onSelect: function (param) {
+						        debugger;
+						        $('.CoverSettingrule .infoBox').hide();
+						        if (param) {
+						            if (param.RuleId == 2) {
+						                $('.CoverruleText').show();
+						            } else {
+						                $('.ruleTextImg').show();
+						            }
+						        }
+						    }
+						});
+
+						$("#ruleType").combobox("select", 1);
+
 						setTimeout(function(){$('#ruleOption').combobox('select',1);},200);
-						/*
-						$('#cardType').combobox({
-							width: that.elems.width,
-							height: that.elems.height,
-							panelHeight: that.elems.panlH,
-							lines:true,
-							valueField: 'VipCardTypeID',
-							textField: 'VipCardTypeName',
-							data:VipCardTypeList
-						});
 						
-						$('#cardGrade').combobox({
-							width: that.elems.width,
-							height: that.elems.height,
-							panelHeight: that.elems.panlH,
-							lines:true,
-							valueField: 'VipCardGradeID',
-							textField: 'VipCardGradeName',
-							data:VipCardGradeList
-						});
-						*/
-						/*
-						$('#eventsType').combobox({
-							width: that.elems.width,
-							height: that.elems.height,
-							panelHeight: that.elems.panlH,
-							lines:true,
-							valueField: 'EventTypeID',
-							textField: 'Title',
-							data:EventsTypeList,
-							onSelect: function(param){
-								that.activityWay(param.EventTypeID);
-							}
-						});
-						*/
 						$('#personCount').combobox({
 							width: that.elems.width,
 							height: that.elems.height,
@@ -647,7 +828,52 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							$('#lEventDrawMethod').combobox('select',drawMethodId);
 						},500);
 						
-						
+                        //获取封面数据
+						if (data.Data.CoverId && data.Data.CoverId != "") {
+						    var param = {
+						        action: 'GetCover',
+						        CoverId: data.Data.CoverId
+						    };
+						    that.elems.CoverId = data.Data.CoverId;
+						    that.GetCover(param, function (data) {
+						        debugger;
+						        if (data) {
+						            data = data.CoverInfo;
+						            if (!data.IsShow || data.IsShow == "1") {
+						                $(".EnableCover").addClass("on");
+						                $(".checkvalue").val(1);
+						            } else {
+						                $(".EnableCover").removeClass("on");
+
+						            }
+
+						            $("#QRegular").val(data.RuleText);
+
+
+
+						            if (data.ButtonText && data.ButtonText != "") {
+						                $("#ButtonName").val(data.ButtonText);
+
+						                $(".startbtn").html(data.ButtonText);
+						            }
+						            if (data.ButtonColor && data.ButtonColor != "") {
+						                $("#StartPageBtnBGColor").val(data.ButtonColor);
+						            }
+						            if (data.ButtonFontColor && data.ButtonFontColor != "") {
+						                $("#StartPageBtnTextColor").val(data.ButtonFontColor);
+						                $(".startbtn").attr("style", "background-color:" + data.ButtonColor + ";color:" + data.ButtonFontColor + ";");
+						                $(".regular").attr("style", "color:" + data.ButtonColor + ";");
+						            }
+						            $("#CoverImageUrl").data("url", data.CoverImageUrl);
+						            $("._BGImageSrc").attr("src", data.CoverImageUrl);
+						            $("#ruleType").combobox("select", data.RuleType);
+						            
+						            $("#RuleImageUrl").data("url", data.RuleImageUrl);
+						        }
+
+						    });
+						}
+
 					}else{
 						alert(data.Message);
 					}
@@ -676,6 +902,41 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					}
 				}
 			});
+		},
+        //保存封面
+		SaveCover: function (params, callback) {
+		        var that = this;
+		        $.util.ajax({
+		            url: that.elems.domain + "/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
+		            async: false,
+		            data: params,
+		            success: function(data){
+		                if(data.IsSuccess && data.ResultCode == 0) {
+		                    if (callback) {
+		                        callback();
+		                    }
+		                }else{
+		                    alert(data.Message);
+		                }
+		            }
+		        });
+		}, //获取封面
+		GetCover: function (params, callback) {
+		    var that = this;
+		    $.util.ajax({
+		        url: that.elems.domain + "/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
+		        async: false,
+		        data: params,
+		        success: function (data) {
+		            if (data.IsSuccess && data.ResultCode == 0) {
+		                if (callback) {
+		                    callback(data.Data);
+		                }
+		            } else {
+		                alert(data.Message);
+		            }
+		        }
+		    });
 		},
 		//活动方式
 		activityWay:function(id){
@@ -1060,6 +1321,11 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			$.util.ajax({
 				url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
 				data: params,
+				beforeSend:function()
+				{
+				    $.util.isLoading()
+
+				},
 				success: function(data) {
 					if(data.IsSuccess && data.ResultCode == 0) {
 						that.getPrizeList(false);
@@ -1069,6 +1335,9 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					}else{
 						alert(data.Message);
 					}
+				},
+				complete: function () {
+				    $.util.isLoading(true);
 				}
 			});
 		},
@@ -1093,7 +1362,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             
         },
         //上传图片区域的各种事件绑定
-        addUploadImgEvent:function(e) {
+        addUploadImgEvent: function (e) {
             var self = this,
 				$redBgPic = $('#redBgPic'),
 				$logoPic = $('#logoPic'),
@@ -1111,7 +1380,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					result = data,
 					thumUrl = result.thumUrl,//缩略图
 					url = result.url;//原图
-                debugger
+				debugger;
 				if(flag==1){
 					$redBgPic.attr('src',url);
 				}else if(flag==3){
@@ -1140,6 +1409,14 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 
 
                 //大转盘end
+
+                //封面
+				if (flag == "Cover") {
+				    $("._BGImageSrc").attr('src', url);
+				}
+				
+                //封面end
+
 				$uploadItem.data('url',url);
             });
         },
@@ -1170,6 +1447,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			}else if(flag==4){
 				w = 536;
 				h = 300;
+			} else if (flag == "Cover" || flag == "Cover1") {
+			    _width = 80;
 			}
 			if ($(btn).parents('.uploadItem').data("flag") == 14)
 			{

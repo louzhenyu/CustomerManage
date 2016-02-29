@@ -46,12 +46,13 @@
                     <!--<h2 class="commonTitle">会员查询</h2>-->
 
                 </div>
-                <div class="tableWrap" id="tableWrap">
-                     <div class="optionBtn">
-                      <div class="commonBtn " data-flag="add">新增生日活动</div>
+                <div class="optionBtn">
+                      <div class="commonBtn icon w120  icon_add r" data-flag="add">新增生日活动</div>
 
 
                      </div>
+                <div class="tableWrap" id="tableWrap">
+                     
                     <div class="dataTable" id="gridTable">
                           <div  class="loading">
                                    <span>

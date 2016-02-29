@@ -100,20 +100,20 @@
                      
                  </div><!--clearfix END-->
                  </div><!--panlDiv订单信息  END-->
-                <div class="panlDiv">
-                 <div class="title">会员信息</div>
+                <div class="panlDiv DeliveryInformation">
+                 <div class="title">提货人信息</div>
                  <div class="panlText">
                      <div class="panlL">
                       <div class="commonSelectWrap">
                          <em class="tit">姓名:</em>
                          <div class="searchInput">
-                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"   readonly="readonly" name="vip_name"/>
+                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"   readonly="readonly" name="Field14"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
                          <em class="tit">手机号:</em>
                          <div class="searchInput">
-                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="vipPhone"/>
+                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="Field6"/>
                          </div>
                       </div>
                       <%--<div class="commonSelectWrap">
@@ -122,6 +122,33 @@
                           <input type="text"  class="easyui-validatebox" data-options="width:459,disabled:true"  readonly="readonly" name="Field4"/>
                          </div>
                       </div>--%>
+
+                     </div><!--panl   END-->
+
+                 </div><!--clearfix END-->
+                 </div><!--panlDiv 会员信息 END-->
+                  <div class="panlDiv ConsigneeInformation" style="display:none">
+                 <div class="title">收件人信息</div>
+                 <div class="panlText">
+                     <div class="panlL">
+                      <div class="commonSelectWrap">
+                         <em class="tit">姓名:</em>
+                         <div class="searchInput">
+                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"   readonly="readonly" name="Field14"/>
+                         </div>
+                      </div>
+                      <div class="commonSelectWrap">
+                         <em class="tit">手机号:</em>
+                         <div class="searchInput">
+                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="Field6"/>
+                         </div>
+                      </div>
+                      <div class="commonSelectWrap">
+                         <em class="tit">详细地址:</em>
+                         <div class="searchInput" style=" width: 459px">
+                          <input type="text"  class="easyui-validatebox" data-options="width:459,disabled:true"  readonly="readonly" name="Field4"/>
+                         </div>
+                      </div>
 
                      </div><!--panl   END-->
 
@@ -280,7 +307,7 @@
                  
                 <div class="panlDiv">
                  <div class="title">配送信息
-                 <div class="updateBtn">
+                 <div class="updateBtn" style="display:none;">
                     <div class="commonBtn" data-flag="update" data-type="gropupdate">修改</div>
                     <div class="commonBtn" data-flag="save"   data-type="groupsubmit">保存</div>
                     <div class="commonBtn" data-flag="cancel" data-type="groupsubmit">取消</div>
@@ -294,19 +321,6 @@
                          </div>
                       </div>
                       <div class="DeliveryName1" data-datainfo="送货到家" style="display: none">
-                      <div class="commonSelectWrap">
-                         <em class="tit">收件人:</em>
-                         <div class="searchInput">
-                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="Field14"/>
-                         </div>
-                      </div>
-                      <div class="commonSelectWrap">
-                         <em class="tit">手机:</em>
-                         <div class="searchInput">
-                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="Field6"/>
-                         </div>
-                      </div>
-					  
                       <div class="commonSelectWrap" id="deliveryExpressBox">
                          <em class="tit">配送快递:</em>
                          <div class="searchInput">
@@ -325,12 +339,7 @@
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"   readonly="readonly"name="DeliveryAmount"/>
                          </div>
                        </div>
-                       <div class="commonSelectWrap">
-                           <em class="tit">地址:</em>
-                           <div class="searchInput" style="width: 459px;">
-                            <input type="text"  class="easyui-validatebox"  readonly="readonly" data-options=" width:459,disabled:true" name="Field4"/>
-                           </div>
-                       </div>
+                      
                        </div>
                        <div class="DeliveryName2" data-datainfo="到店自提"  style="display: none">
                            <div class="commonSelectWrap">
@@ -465,27 +474,27 @@
             <div class="optionclass">
                <div class="commonSelectWrap amount">
                              <em class="tit">订单金额:</em>
-                                <div class=" searchInput borderNone" >
+                                <div class=" selectBox borderNone" >
                                  <input id="Amount" class=" easyui-numberbox " data-options="width:160,height:32, min:0,precision:2,disabled:true" name="actual_amount" readonly="readonly" style="border:none"/>
                                </div>
                 </div>
 
                 <div class="commonSelectWrap PayMethod">
                                         <em class="tit">付款方式：</em>
-                                        <div class="searchInput bodernone" >
+                                        <div class="selectBox bodernone" >
                                                <input id="PayMethod"  class="easyui-combobox" data-options="width:160,height:32,required:true"  name="PayMethod" />
                                        </div>
                 </div>
                 <div class="commonSelectWrap CheckResult">
                                         <em class="tit">审核不通过理由：</em>
-                                        <div class="searchInput bodernone" >
+                                        <div class="selectBox bodernone" >
                                                <input id="CheckResult"  class="easyui-combobox" data-options="width:160,height:32,required:true"  name="CheckResult" />
                                        </div>
                 </div>
 
                 <div class="commonSelectWrap DeliverCompany">
                                         <em class="tit">配送商：</em>
-                                        <div class="searchInput bodernone" >
+                                        <div class="selectBox bodernone" >
                                                <input id="DeliverCompany"  class="easyui-combobox" data-options="width:160,height:32,required:true"  name="DeliverCompany" />
                                        </div>
                 </div>

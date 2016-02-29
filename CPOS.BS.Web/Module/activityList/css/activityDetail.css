@@ -1,11 +1,15 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
+.ke-button-common {
+display:none;}
 .queryTermArea{ background:none; padding:0px; }
-.title{ height: 57px; background:#f2f2f2; border-bottom:1px solid #d8d8d8;border-radius:8px 8px 0 0; }
-.title li{width:268px; height: 56px; line-height: 56px;  float:left; text-align:center; font-size: 17px; font-weight:600; color:#3d3e40;  border-right:1px solid #d8d8d8; }
+.contentArea-info .title{border:1px solid #d8d8d8;}
+.contentArea-info .title li{height:50px;line-height:50px;}
+.contentArea-info .title li{width:180px;}
+.title{ height: 51px; background:#f2f2f2; border-bottom:1px solid #fafafa; }
+.title li{width:268px; height: 56px; line-height: 56px;  float:left; text-align:center; font-size: 12px; font-weight:600; color:#6f6f6f;  border-right:1px solid #d8d8d8; }
 .title li.on{ background:#fff;}
-.title li.one{ border-radius: 8px 0 0 0;}
 .btnopt{margin: 0 auto;margin-top: 45px;border-radius: 23px;}
 .panelDiv{display: none;margin-top:20px;min-width: 1043px; width: auto; }
 #nav02.panelDiv{margin: 0 auto;}
@@ -91,3 +95,312 @@ p.fontC{ width: 100%; text-align: center;}
 #batch .commonBtn{width: 35px;margin:0 auto;margin-left: 8px; height: 35px;float: left;font-size: 15px; background: none; color: #00acee;}
 #batch .borderNone{ border: 1px solid  transparent; width:auto; background: none}
 #batch .fontC{margin-right: 15px;cursor: pointer;}
+
+a:hover{color:#fff;}
+.panelDiv{margin-top:0;}
+
+.borderArea{border:1px solid #d8d8d8;border-top:none;background:#fff;}
+.clearBorder .combo,.clearBorder .numberbox{
+	border: none;
+	background: none;
+}
+.textbox-invalid {
+	border-color: #d0d5d8;
+	background-color: #fff;
+}
+.textbox-addon-right {
+	right: 9px !important;
+	top: 1px;
+}
+.inlineBlockArea {
+	display: inline-block;
+	width: 100%;
+	padding: 21px 0;
+}
+.titleItem {
+	display: inline-block;
+	width: 100%;
+	height: 41px;
+	line-height: 39px;
+	padding-left: 30px;
+	font-size: 16px;
+	border-top: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+	background: #eaeff1;
+	color: #333;
+}
+.dataTable{border:none;}
+.dataTable tr{height:49px;line-height:48px;}
+.dataTable th{text-align:center;font-size:14px;color:#4d4d4d;}
+.dataTable td{font-size:13px;color:#666;}
+.dataTable .tableHead{border-bottom:2px solid #07c8cf;}
+.dataTable .addBtn{display:inline-block;  margin: 0 10px;width:20px;height:49px;background:url(../images/icon-add.png) no-repeat center center;cursor:pointer;}
+.dataTable .edit{display:inline-block;  margin: 0 10px;width:100%;height:49px;background:url(../images/exit.png) no-repeat center center;cursor:pointer;}
+.dataTable .delBtn{display:inline-block;  margin: 0 10px;width:20px;height:49px;background:url(../images/delete.png) no-repeat center center;cursor:pointer;}
+
+.addPrizeArea{height:73px;padding:20px;border-bottom:1px solid #d0d5d8;}
+.commonHandleBtn{display:block;width:132px;height:32px;line-height:32px;text-align:center;font-size:14px;border-radius:4px;background:#07c8cf;color:#fff;}
+.addPrizeArea .commonHandleBtn{}
+.btnWrap{padding:55px 0 30px 0;text-align:center;}
+
+/*活动配置*/
+.activityConfigArea{height:585px;padding:28px 0px 5px 70px;}
+.activityConfigArea .examplePic,.activityConfigArea .createPic{float:left;width:324px;height:506px;border:3px solid #ccc;border-radius:5px;}
+.activityConfigArea .createPicBox{float:left;width:324px;}
+.activityConfigArea .redPackPrize{position: absolute;bottom: 61px;left: 50%;width: 210px;margin-left: -105px;}
+.activityConfigArea .redPackPrize img{width:100%;}
+.activityConfigArea .uploadPicBox{float:left;width:368px;height:506px;}
+.activityConfigArea .createPic>img,.createPic .logoPic img{width:100%;height:auto;}
+.uploadPicBox{padding:3px 0;}
+.uploadPicBox>div{margin-bottom:27px;padding:3px 0;}
+.uploadItem{font-size:14px;}
+.uploadItem .tit{float:left;width:126px;height:32px;line-height:32px;text-align:right;color:#666;}
+.uploadItem .infoBox{margin-left:126px;}
+.uploadItem .exp{padding-top:7px;font-size:13px;color:#999;}
+.createPic{position:relative;background:#f1f1f1 url(../images/icon-red.jpg) no-repeat center 150px;}
+.createPic .logoPic{position:absolute;top:15px;left:15px;width:50px;height:50px;}
+.createPic .getRedBtn{display: block;position: absolute;bottom: 15%;left: 50%;margin-left: -105px;width: 210px;height:285px;}
+.createPic .getRedBtn img{width:100%;}
+.createPic .Redrule {position: absolute;bottom: 0px;line-height: 37px;text-align: center;color: #fff;font-weight: 600;font-size: 13px;right: 0px;  margin-right: 10px;}
+.createPic .getRedBtn .OpenRedBtn{position: absolute;top: 50%;background-color: #ffea58;width: 70%;line-height: 37px;text-align: center;left: 50%; margin-left: -35%;color: #d13820;font-weight: 900;border-radius: 4px;font-size: 16px;}
+.gameAction{line-height:33px;font-size:14px;width:168px;margin-left:120px;display:block;color:#4d4d4d;}
+.seeRedBtn{display:inline-block;width:100%;padding:17px 0;text-align:center;font-size:15px;color:#0098ff;cursor:pointer;}
+
+/*大转盘*/
+.LuckyTurntable .bgpic {background:#f1f1f1;}
+.LuckyTurntable .bgpic p {position:absolute;z-index:3; border-radius: 50px; }
+.LuckyTurntable .bgpic p img{width:50px;height:50px;  border-radius: 50px;cursor:pointer;}
+.LuckyTurntable .bgpic .Pic1 {position:absolute;z-index:3;width:50px;height:50px;  top: 62px;left: 132px; border:0px;}
+.LuckyTurntable .Pic2 {bottom: 222px;left: 45px;}
+.LuckyTurntable .Pic3 {bottom: 222px;left: 104px;}
+.LuckyTurntable .Pic4 {bottom: 222px;left: 163px;}
+.LuckyTurntable .Pic5 {bottom: 222px;left: 222px;}
+.LuckyTurntable .Pic6 {bottom: 163px;left: 222px;}
+.LuckyTurntable .Pic7 {bottom: 104px;left: 222px;}
+.LuckyTurntable .Pic8 {bottom: 45px;left: 222px;}
+.LuckyTurntable .Pic9 {bottom: 45px;left: 163px;}
+.LuckyTurntable .Pic10 {bottom: 45px;left: 104px;}
+.LuckyTurntable .Pic11 {bottom: 45px;left: 45px;}
+.LuckyTurntable .Pic12 {bottom: 104px;left: 45px;}
+.LuckyTurntable .Pic13 {bottom: 163px;left: 45px;}
+.LuckyTurntable .createPic .regularpic {position:absolute;z-index:3;bottom: 114px; left: 114px;width:90px;height:90px; border-radius: 15px;cursor:pointer; }
+.LuckyTurntable .createPic .realpic {  z-index: 3; position: absolute;}
+.LuckyTurntable .createPic .bgpic1 {  z-index: 1; top: 181px; width:318px;height:318px;}
+.LuckyTurntable .createPic .bgpic2 {  z-index: 2; top: 216px;height:250px; border-radius: 36px;width:250px;left:35px;}
+.LuckyTurntable .border {border: 2px #fe9d1e solid;}
+.LuckyTurntable .border1 {box-shadow:0 0 0 6px rgba(6, 6, 6, 0.09);}
+
+.LuckyTurntable .regularpicupload{position:absolute;z-index:55;bottom: 114px; left: 114px;width:90px;height:90px; border-radius: 15px;cursor:pointer; }
+.LuckyTurntable .createPicBox .ke-upload-file {height:90px}
+
+#LuckyTurntablePrizeimg {width:159px; border-radius: 100px;height: 159px;}
+
+
+.kvpic { max-height: 184px;}
+
+/*刮刮卡*/
+.ScratchCard .ScratchCardimg{top: 145px; position: absolute;left: 10px;width: 300px;}
+.ScratchCard .activityConfigArea .createPic .ScratchCardbg{height:672px;width: 318px;}
+.ScratchCard .text{top: 315px; position: absolute;left: 130px;font-size: 17px;font-weight: 600;color: #5aabfd;}
+.ScratchCard .activityConfigArea {height:720px;}
+.ScratchCard .activityConfigArea  .examplePic {height:678px;}
+.ScratchCard .activityConfigArea  .createPic{height:678px;}
+.ScratchCard .activityConfigArea .uploadPicBox{height:678px;}
+.ScratchCard .activityConfigArea .ScratchCardimg{width: 300px;}
+.ScratchCard .createPic{position:relative;background:#f1f1f1 url(../images/icon-red.jpg) no-repeat center 60px;}
+.ScratchCard .createPic .jiangpin {  position: absolute; width: 300px;height: 275px;border-radius: 5px;}
+.ScratchCard .bgjiangpin {background-color: #ddd;width: 300px;height: 275px;position: absolute;bottom: 10px;left: 10px;border-radius: 5px;background:#ddd url(../images/jiangpin.png) no-repeat center 110px;}
+.ScratchCard .activityConfigArea .createPic .ActivityRule {position: absolute;top: 305px;left: 40px;width:235px;height:50px;border-radius: 5px;}
+
+/*插件的上传按钮*/
+form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
+.commonHandleBtn.uploadImgBtn{background:url(../images/uploadImgBtn.png) no-repeat 0 0;cursor:pointer;}
+.ke-upload-file,.ke-button-common,input[type="button"],input[type="submit"],input[type="reset"], input[type="file"]::-webkit-file-upload-button,button{cursor:pointer !important;}
+
+/*奖品配置，弹出*/
+.jui-dialog-redPackage{width:636px;height:470px;position:fixed;top:90px;margin-left:-318px;}
+.jui-dialog-tit{height:55px;}
+.jui-dialog-tit h2{font:16px/55px "Microsoft YaHei";color:#66666d;}
+.jui-dialog-close{position:absolute;top:0px;right:18px;width:30px;height:54px;background:url(../images/icon-close-btn.png) no-repeat center center;cursor:pointer;}
+.jui-dialog .tit{width:250px;}
+.jui-dialog .redPackageContent{padding:10px 0 30px 0;}
+.jui-dialog .searchInput{width:190px;}
+.jui-dialog .commonSelectWrap{float:none;display:block;margin:20px 0 2px 0;}
+.jui-dialog .hint-exp{padding-top:5px;text-indent:30px;text-align:center;font-size:14px;color:#999;}
+.jui-dialog .btnWrap{padding:30px 0 0 0;}
+.jui-dialog .commonBtn{width:150px;height:45px;line-height:45px;}
+.jui-dialog .cancelBtn{border:none;background:#ccc;color:#fff;}
+
+/*问卷奖品配置，弹出*/
+.jui-dialog-Questionnaire{width:636px;height:470px;position:fixed;top:90px;margin-left:-318px;}
+
+/*大转盘奖品配置，弹出*/
+.jui-dialog-LuckyTurntable{width:636px;height:530px;position:fixed;top:90px;margin-left:-318px;}
+.jui-dialog-LuckyTurntable .LuckyTurntableLeft {float:left}
+.jui-dialog-LuckyTurntable .LuckyTurntableright {float: right; padding: 20px 70px 0 0;}
+.jui-dialog-LuckyTurntable .LuckyTurntableright p{text-align:center;margin-top: 20px;margin-bottom: 10px;}
+.jui-dialog-LuckyTurntable .LuckyTurntableright .uploadImgBtn{text-align:center;margin-top: 20px;  margin-left: 12px;}
+.jui-dialog .LuckyTurntableLeft .tit{width:120px;}
+.jui-dialog .LuckyTurntableLeft .hint-exp {text-align:left; }
+.PrizeseOption {  margin-left: 20px;display: inline-block; }
+.PrizeseOption .radio{ float:left;margin-right:20px; }
+
+
+/*大转盘奖品选择，弹出*/
+.jui-dialog-Prizeselect{width:636px;max-height:430px;position:fixed;top:90px;margin-left:-318px;}
+
+
+/*奖品数量追加*/
+.jui-dialog-prizeCountAdd{width:636px;height:322px;position:fixed;top:20%;margin-left:-318px;}
+.prizeCountAddContent .commonSelectWrap{margin:60px 0 45px 0;}
+
+/*图文消息*/
+.imageTextArea{display:inline-block;height:160px;padding:15px 0;}
+.imageTextArea .picBox{float:left;width:270px;height:130px;margin-left:5px;border:1px solid #d0d5d8;border-radius:3px;background:#f9f9f9 url(../images/icon-img.png) no-repeat center center;}
+.imageTextArea .picBox img{width:100%;height:100%;}
+.imageTextArea .tit{float:left;width:75xp;}
+.imageTextArea .commonHandleBtn{margin-bottom:5px;}
+.ruleText textarea{width:217px;height:94px;padding:5px;border:1px solid #d0d5d8;border-radius:3px;}
+.graphicHandleBox{float:left;width:640px;padding-bottom:17px;border-right:1px solid #d8d8d8;}
+.graphicHandleBox .commonSelectWrap{margin:15px 0 15px 0;}
+.uploadImgWrap{margin:77px 0 0 380px;color:#999;}
+.graphicPreview{width:420px;height:355px;margin-left:670px;padding:12px;border:1px solid #d8d8d8;border-radius:7px;}
+.previewPic{width:390px;height:218px;margin:18px 0 15px;background:#f9f9f9 url(../images/icon-img.png) no-repeat center center;}
+.previewPic img{width:100%;height:100%;}
+.previewTit{height:30px;line-height:30px;overflow:hidden;font-size:24px;color:#000;}
+.previewDsc{height:48px;line-height:24px;overflow:hidden;font-size:18px;color:#a9a9a9;}
+
+
+/*封面设置*/
+.coverbody {
+  padding-top: 45px;
+  display: inline-block;
+  width: 100%;
+}
+
+.StartBG {
+  width: 225px;
+}
+
+._BGImageSrc {
+  position: absolute;
+  width: 195px;
+  right: 15px;
+    top: 54px;
+  height: 347px;
+}
+
+.startimg {
+  float: left;
+  width: 400px;
+  text-align: right;
+  position: relative;
+}
+
+.startbtn {
+  position: absolute;
+  top: 330px;
+  right: 27px;
+  width: 172px;
+  text-align: center;
+  background-color: #fc9a01;
+  border-radius: 5px;
+  line-height: 30px;
+  color: #fff;
+  height: 30px;
+}
+
+.regular {
+  position: absolute;
+  right: 26px;
+  top: 371px;
+  color: #fc9a01;
+}
+
+
+.rulebtn {
+height:42px;
+}
+.startpageContent {
+  float: left;
+  width: 400px;
+  padding-left: 40px;
+}
+
+.startpageContent .commonSelectWrap {
+  width: 100%;
+  margin:  25px 10px 0px 10px;
+}
+
+.startpageContent .uploadItem .tit {
+  float: left;
+  width: 76px;
+  height: 30px;
+  line-height: 30px;
+  text-align: right;
+  font-size: 12px;
+  color: #666;
+}
+
+
+.startpageContent .commonSelectWrap .infoBox {
+  margin-left: 15px;
+}
+
+/*颜色板*/
+.Colorplate{position: absolute; border: 2px solid #d1d1d1; width: 394px; z-index: 10; background-color: #fff; padding: 10px; left: 270px; top: 0px; display: none;} .Colorplate div{width: 35px; height: 35px; float: left; margin: 1px; border-radius: 4px; border: 1px solid #f0f0f0; cursor: pointer; text-align: center; line-height: 35px;}
+
+.colorplan img {
+  margin-right: 20px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.CoverSetting {
+      display: inline-block;
+  width: 350px;
+  height: 250px;  margin-top: 50px;
+    background-color: #f7f7f7;
+}
+.CoverSettingrule {
+      display: inline-block;
+  width: 350px;
+  height: 150px;margin-top: 10px;
+    background-color: #f7f7f7;
+}
+
+
+.CoverruleText textarea{
+      border: 1px solid #ccc;
+  border-radius: 5px;
+width: 262px;
+  height: 71px;
+}
+
+
+.startpageContent .commonHandleBtn.uploadImgBtn {
+  background: url(../images/uploadImgBtn1.png) no-repeat 0 0;
+  cursor: pointer;
+    width: 80px;
+      display: inline-block;
+      float: left;
+}
+
+.startpageContent .commonHandleBtn .ke-button{
+    width:0px;
+}
+ .startpageContent .exp {
+  padding-top: 7px;
+  font-size: 13px;
+  color: #999;
+      display: inline-block;
+      float: left;
+        padding-left: 10px;
+}
+.EnableCover {
+  margin: 30px 0px 0px 25px;
+}
+
+
+ .startpageContent .ruleText textarea{  width: 300px;
+  height: 80px;padding:5px;border:1px solid #d0d5d8;border-radius:3px;}

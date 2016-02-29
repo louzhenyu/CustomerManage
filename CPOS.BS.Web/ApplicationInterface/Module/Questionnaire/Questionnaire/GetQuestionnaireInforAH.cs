@@ -27,8 +27,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Questionnaire.Questionnair
             var rd=new GetActivityIDAndQuestionnaireIDRD();
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-            var QARMBLL = new T_QN_QuestionnaireAnswerRecordBLL(loggingSessionInfo);
-            var QuestionBLL = new T_QN_QuestionBLL(loggingSessionInfo);
 
             var AQMmodel = new T_QN_ActivityQuestionnaireMappingBLL(loggingSessionInfo).GetByAID(para.ActivityID);
 
@@ -36,67 +34,97 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Questionnaire.Questionnair
             if (AQMmodel != null)
             {
                 rd.QuestionnaireName = AQMmodel.QuestionnaireName;
-                var tempList = QARMBLL.GetModelList(AQMmodel.ActivityID, AQMmodel.QuestionnaireID);
+                rd.QuestionnaireID = AQMmodel.QuestionnaireID;
 
-                var questionlist = QuestionBLL.getList(AQMmodel.QuestionnaireID);
-
-                rd.TitleData = new TitleName[questionlist.Length+1];
-                for (int j = 0; j < questionlist.Length; j++)
-                {
-                    DataColumn dc = new DataColumn(questionlist[j].Questionid.ToString());
-                    if (rd.TitleData[j] == null)
-                    {
-                        rd.TitleData[j] = new TitleName();
-                    }
-                    rd.TitleData[j].Name = questionlist[j].Name;
-                    rd.TitleData[j].NameID = questionlist[j].Questionid.ToString();
-                    dt.Columns.Add(dc);
-                }
-
-                if (rd.TitleData[questionlist.Length] == null)
-                {
-                    rd.TitleData[questionlist.Length] = new TitleName();
-                }
-                rd.TitleData[questionlist.Length].Name = "提交时间";
-                rd.TitleData[questionlist.Length].NameID = "submitdate";
-                DataColumn dcsubmitdate = new DataColumn("submitdate");
-                dt.Columns.Add(dcsubmitdate);
-
-                var vipdata = QARMBLL.GetUserModelList(AQMmodel.ActivityID, AQMmodel.QuestionnaireID);
-
-
-
-                for (int k = 0; k < vipdata.Length; k++)
-                {
-                    DataRow dr = dt.NewRow();
-                    var _vipdata = vipdata[k];
-                    var datetime = new DateTime();
-                    for (int j = 0; j < questionlist.Length; j++)
-                    {
-                        var _questindata = questionlist[j];
-                        for (int i = 0; i < tempList.Length; i++)
-                        {
-                            var _data = tempList[i];
-                            if (_vipdata.ToString() == _data.VipID.ToString())
-                            {
-                                if (_questindata.Questionid.ToString() == _data.QuestionID)
-                                {
-                                    dr[_questindata.Questionid.ToString()] = (_data.AnswerText + _data.AnswerOption + _data.AnswerDate + _data.AnswerProvince + _data.AnswerCity + _data.AnswerCounty + _data.AnswerAddress).TrimEnd(',');
-                                    datetime = _data.CreateTime.Value;
-                                }
-                            }
-                        }
-                    }
-                    dr["submitdate"] = datetime;
-                    dt.Rows.Add(dr);
-                }
-
-
-
-                rd.ResultData = dt;
+                TitleName[] TitleData;
+                rd.ResultData = GetQuestionnaireInfor(AQMmodel.ActivityID, AQMmodel.QuestionnaireID, out TitleData);
+                rd.TitleData = TitleData;
             }
 
             return rd;
+        }
+
+        /// <summary>
+        /// 获取答题记录详细信息
+        /// </summary>
+        /// <param name="ActivityID">活动id</param>
+        /// <param name="QuestionnaireID">问卷id</param>
+        /// <returns></returns>
+        public static DataTable GetQuestionnaireInfor(string ActivityID, string QuestionnaireID, out TitleName[] TitleData)
+        {
+
+            DataTable dt = new DataTable();
+
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            var QARMBLL = new T_QN_QuestionnaireAnswerRecordBLL(loggingSessionInfo);
+            var QuestionBLL = new T_QN_QuestionBLL(loggingSessionInfo);
+
+            var tempList = QARMBLL.GetModelList(ActivityID, QuestionnaireID);
+
+            var questionlist = QuestionBLL.getList(QuestionnaireID);
+
+             TitleData = new TitleName[questionlist.Length + 2];
+            for (int j = 0; j < questionlist.Length; j++)
+            {
+                DataColumn dc = new DataColumn(questionlist[j].Questionid.ToString());
+                if (TitleData[j] == null)
+                {
+                    TitleData[j] = new TitleName();
+                }
+                TitleData[j].Name = questionlist[j].Name;
+                TitleData[j].NameID = questionlist[j].Questionid.ToString();
+                dt.Columns.Add(dc);
+            }
+
+            if (TitleData[questionlist.Length] == null)
+            {
+                TitleData[questionlist.Length] = new TitleName();
+            }
+            TitleData[questionlist.Length].Name = "提交时间";
+            TitleData[questionlist.Length].NameID = "submitdate";
+            DataColumn dcsubmitdate = new DataColumn("submitdate");
+            dt.Columns.Add(dcsubmitdate);
+
+            if (TitleData[questionlist.Length + 1] == null)
+            {
+                TitleData[questionlist.Length + 1] = new TitleName();
+            }
+            TitleData[questionlist.Length + 1].Name = "标识";
+            TitleData[questionlist.Length + 1].NameID = "ID";
+            DataColumn dcID = new DataColumn("ID");
+            dt.Columns.Add(dcID);
+
+            var vipdata = QARMBLL.GetUserModelList(ActivityID,QuestionnaireID);
+
+
+
+            for (int k = 0; k < vipdata.Length; k++)
+            {
+                DataRow dr = dt.NewRow();
+                var _vipdata = vipdata[k];
+                var datetime = new DateTime();
+                for (int j = 0; j < questionlist.Length; j++)
+                {
+                    var _questindata = questionlist[j];
+                    for (int i = 0; i < tempList.Length; i++)
+                    {
+                        var _data = tempList[i];
+                        if (_vipdata.ToString() == _data.VipID.ToString())
+                        {
+                            if (_questindata.Questionid.ToString() == _data.QuestionID)
+                            {
+                                dr[_questindata.Questionid.ToString()] = (_data.AnswerText + _data.AnswerOption + _data.AnswerDate + _data.AnswerProvince + _data.AnswerCity + _data.AnswerCounty + _data.AnswerAddress).TrimEnd(',');
+                                datetime = _data.CreateTime.Value;
+                            }
+                        }
+                    }
+                }
+                dr["submitdate"] = datetime;
+                dr["ID"] = _vipdata;
+                dt.Rows.Add(dr);
+            }
+
+            return dt;
         }
     }
 }

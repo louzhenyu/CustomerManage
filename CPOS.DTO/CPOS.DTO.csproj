@@ -153,6 +153,7 @@
     <Compile Include="Module\Order\SalesReturn\Response\GetSalesReturnListRD.cs" />
     <Compile Include="Module\Questionnaire\ActivityQuestionnaireMapping\Request\GetActivityIDAndQuestionnaireIDRP.cs" />
     <Compile Include="Module\Questionnaire\ActivityQuestionnaireMapping\Response\GetActivityIDAndQuestionnaireIDRD.cs" />
+    <Compile Include="Module\Questionnaire\QuestionnaireAnswerRecord\Request\DelQuestionnaireAnswerRecordRP.cs" />
     <Compile Include="Module\Questionnaire\QuestionnaireAnswerRecord\Request\GetQuestionnaireAnswerRecordRP.cs" />
     <Compile Include="Module\Questionnaire\QuestionnaireAnswerRecord\Response\GetScoreRecoveryInformationRD.cs" />
     <Compile Include="Module\Questionnaire\QuestionnaireAnswerRecord\Response\GetScoreRecoveryOptionInforRD.cs" />

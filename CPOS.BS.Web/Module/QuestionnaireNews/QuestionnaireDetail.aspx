@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/QuestionnaireNews/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-    <link href="<%=StaticUrl+"/module/QuestionnaireNews/css/QuestionnaireDetail.css?v=0.5"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/QuestionnaireNews/css/QuestionnaireDetail.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -45,7 +45,7 @@
                             <div class="commonSelectWrap">
                                 <em class="tit">按钮名称：</em>
                                 <label class="searchInput" style="width: 180px;">
-                                    <input id="ButtonName" class="Questionnairedata" data-alerttext="按钮名称不能为空"  data-required="true"  data-idname="ButtonName"   name="ButtonName" type="text"
+                                    <input id="ButtonName" class="Questionnairedata" data-alerttext="按钮名称不能为空"  data-required="true" maxlength="10"  data-idname="ButtonName"   name="ButtonName" type="text"
                                         value="开始">
                                 </label>
                             </div>
@@ -90,8 +90,8 @@
                 </div>
 
                 <div class="btnWrap">
-            	    <a href="javascript:void(0)" class="startStepbtn" data-flag="#nav01">返回</a>
-            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn" data-showstep="step2"  data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            	    <a href="javascript:void(0)" class="startStepbtn   btnopt commonBtn" data-flag="#nav01">返回</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn  btnopt  commonBtn" data-showstep="step2"  data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
                     </div>
             </div>
 
@@ -128,8 +128,8 @@
                 </div>
 
                 <div class="btnWrap">
-            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn "  data-showstep="step1"  data-flag="#nav01">上一步</a>
-            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn" data-showstep="step3" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn btnopt commonBtn"  data-showstep="step1"  data-flag="#nav01">上一步</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn btnopt commonBtn" data-showstep="step3" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
                     </div>
             </div>
 
@@ -222,8 +222,8 @@
 
 
                 <div class="btnWrap">
-            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn "  data-showstep="step2"  data-flag="#nav01">上一步</a>
-            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn" data-showstep="step4" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn btnopt  commonBtn"  data-showstep="step2"  data-flag="#nav01">上一步</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn  btnopt commonBtn" data-showstep="step4" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
                     </div>
             </div>
 
@@ -251,8 +251,8 @@
 
 
                 <div class="btnWrap">
-            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn "  data-showstep="step3"  data-flag="#nav01">上一步</a>
-            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn" data-showstep="step5" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn btnopt  commonBtn "  data-showstep="step3"  data-flag="#nav01">上一步</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn  btnopt commonBtn" data-showstep="step5" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
                     </div>
 
         
@@ -295,8 +295,8 @@
 
 
                 <div class="btnWrap">
-            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn "  data-showstep="step4"  data-flag="#nav01">上一步</a>
-            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn" data-showstep="step6" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn btnopt commonBtn"  data-showstep="step4"  data-flag="#nav01">上一步</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn nextStepBtn  btnopt commonBtn" data-showstep="step6" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
                     </div>
             </div>
 
@@ -356,8 +356,8 @@
                 </div>
 
                 <div class="btnWrap">
-            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn" data-showstep="step5" >上一步</a>
-            	    <a href="javascript:void(0)" class="commonStepBtn endStepBtn"  data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">保存</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn prevStepBtn  btnopt commonBtn" data-showstep="step5" >上一步</a>
+            	    <a href="javascript:void(0)" class="commonStepBtn endStepBtn  btnopt commonBtn"  data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">保存</a>
                     </div>
             </div>
 
@@ -375,14 +375,14 @@
              <div class="ordernumber">
                  <# if( idata.checked){ #>
                      <div class="blueline"></div>
-                      <img  src="/Module/QuestionnaireNews/images/<#=(i+1)+'_bg' #>.png" />
+                      <div class="NavOuterCircle"><div class="NavCircle"><#=(i+1) #></div></div>
                      <div class="blueline"></div>
                  
                      <div class="bluetext"><#=idata.name#></div>
                 <#}else{#>
                  
                      <div class="grayline"></div>
-                    <img  src="/Module/QuestionnaireNews/images/<#=(i+1) #>.png" />
+                      <div class="NavOuterCircle GrayColor"><div class="GrayColor NavCircle "><#=(i+1) #></div></div>
                      <div class="grayline"></div>
                      <div ><#=idata.name#></div>
                  <#}#>

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -41,16 +41,14 @@
                         </div>
                 </div>
                 
-            
-            <div class="tableWrap" id="tableWrap">
-                <div class="optionBtn" id="opt">
-                	<div class="commonBtn" id="addUserBtn">+新增</div>
+            <div class="optionBtn" id="opt">
+                	<div class="commonBtn  icon w80  icon_add r" id="addUserBtn">新增</div>
                 </div>
+            <div class="tableWrap" id="tableWrap">
+                
                    <div class="">
                    		<table class="dataTable" id="gridTable">
-                        	<div  class="loading">
-                               <span><img src="../static/images/loading.gif"></span>
-                            </div>
+                        	
                         </table>
                    </div>
                     <div id="pageContianer">

@@ -6,7 +6,7 @@
     <title>退货管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="<%=StaticUrl+"/module/returnManage/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -54,11 +54,12 @@
                     <!--<h2 class="commonTitle">会员查询</h2>-->
 
                 </div>
-                <div class="tableWrap" id="tableWrap">
-                                   <div class="outoptionBtn ">
-                                    <div class="commonBtn  export" data-flag="export">导出</div>
+                <div class="optionBtn">
+                                    <div class="commonBtn export icon w80 icon_export r" data-flag="export">导出</div>
                                   </div>
-                <div class="optionBtn" id="opt">
+                <div class="tableWrap" id="tableWrap">
+                                   
+                <div class="tableList" id="opt">
                    <ul><li data-status="0" class="on"><em> 全部 </em></li>
                         <li data-status="1"><em>待审核 </em></li>
                         <li data-status="4"><em>待收货 </em></li>
@@ -122,13 +123,13 @@
                   <div class="commonSelectWrap">
                                                               <em class="tit">电子优惠券抵扣:</em>
                                                               <div class="selectBox bodernone">
-                                                                 <input id="coupon" class="easyui-combogrid" data-options="width:160,height:32,validType:'selectIndex'"  name="CouponID" />
+                                                                 <input id="coupon" class="easyui-combogrid" data-options="width:200,height:30,validType:'selectIndex'"  name="CouponID" />
                                                              </div>
                                         </div>
                <div class="commonSelectWrap">
                              <em class="tit">纸质优惠券抵扣:</em>
                              <div class="searchInput" >
-                                    <input id="Deduction" class="easyui-numberbox" name="Deduction" value="" data-options="width:160,height:32,precision:0,groupSeparator:','" /><span style="float: right; margin-right: -24px;margin-top: -30px;font-size: 14px;">元</span>
+                                    <input id="Deduction" class="easyui-numberbox" name="Deduction" value="" data-options="width:200,height:30,precision:0,groupSeparator:','" /><span style="float: right; margin-right: -24px;margin-top: -30px;font-size: 14px;">元</span>
                             </div>
                             </div>
                <div class="commonSelectWrap">
@@ -138,13 +139,13 @@
                 <div class="commonSelectWrap">
                                         <em class="tit">付款方式：</em>
                                         <div class="searchInput bodernone" >
-                                               <input id="pay"  class="easyui-combobox" data-options="width:160,height:32,required:true"  name="PayID" />
+                                               <input id="pay"  class="easyui-combobox" data-options="width:200,height:30,required:true"  name="PayID" />
                                        </div>
                                        </div>
                 <div class="commonSelectWrap" id="ValueCard">
                             <em class="tit">实体储值卡号：</em>
                                   <div class="searchInput bodernone">
-                                      <input  class="easyui-validatebox" data-options="width:160,height:32,validType:['englishCheckSub','length[5,12]']"  name="ValueCard" />
+                                      <input  class="easyui-validatebox" data-options="width:200,height:30,validType:['englishCheckSub','length[5,12]']"  name="ValueCard" />
                                   </div>
                             </div>
                </div>

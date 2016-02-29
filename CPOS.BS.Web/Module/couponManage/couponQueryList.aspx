@@ -57,8 +57,8 @@ font-size: 18px;
                                                   </div>
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">状态：</em>
-                                                      <label class="searchInput">
-                                                          <select id="item_status" name="Status"></select>
+                                                      <label class=" selectBox">
+                                                          <select id="item_status" name="Status" style="display:none;"></select>
                                                       </label>
                                                   </div>
                                                   <div class="moreQueryWrap">

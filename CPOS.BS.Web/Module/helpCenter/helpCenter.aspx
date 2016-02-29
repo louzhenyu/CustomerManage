@@ -8,7 +8,7 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div id="section">
     <div class="allPage">
-       <div class="help">
+       <div class="helpchild">
 	<div class="Novice">
     	<div class="novice_title"><h1>新手入门</h1><span>获得宝典  勤加练习</span></div>
         <div class="novice_nr">
@@ -50,7 +50,7 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         </div>        
     </div>
 </div>
-<div class="help">
+<div class="helpchild">
 	<div class="Novice">
    	  <div class="novice_title"><h1>常用宝典</h1><span>温故知新  渐成老手</span><a href="/Module/helpCenter/helpCenterClass.aspx">更多</a></div>
 		<div class="commonly_nr">
@@ -83,7 +83,7 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         </div>
     </div>
 </div>
-<div class="help">
+<div class="helpchild">
 	<div class="Novice">
    	  <div class="novice_title"><h1>常见FAQ</h1><span>老手过招  华山论剑</span><a href="">更多</a></div>
 		<div class="commonly_nr">
@@ -139,5 +139,9 @@ function Downloadapp(showapp)
         $(".QRcode").hide();
     }
 }
+
+$(function () {
+    $(".help img").attr("src", "/Framework/Image/leftImgList/helpon.png")
+});
 </SCRIPT>
 </asp:Content>

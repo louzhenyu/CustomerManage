@@ -9,8 +9,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             section:$("#section"),
             editLayer:$(".uploadPicBox"), //图片上传
             simpleQuery:$("#simpleQuery"),//全部
-            width:220,
-            height:32,
+            width:200,
+            height:30,
             panlH:200,
 			SaveAllPrams:null,
 			unitId:'',
@@ -402,64 +402,82 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					unit_id: unitId
 				},
 				success: function (data) {
-					if (data) {
-						var result = data.data,
-							id = result.Id,
-							itemImageList = result.ItemImageList || [];
-						if(!!id){//有门店
-							//待开发
-							that.elems.SaveAllPrams = result;
-							$('#nav0_1').form('load',result);
-							var htmlStr = '';
-							for(var i=0;i<itemImageList.length;i++){
-								htmlStr += '<p class="picBox"><img src="'+itemImageList[i].ImageURL+'"><em></em></p>'
-							}
-							$('.storePicBox').prepend(htmlStr);
-							
-							$('#provinceId').combobox('select',65);
-							setTimeout(function(){
-								$('#provinceId').combobox('select',result.provinceId);
-								setTimeout(function(){
-									$('#townId').combobox('select',result.townId);
-									setTimeout(function(){
-										$('#CityId').combobox('select',result.CityId);
-									},500);
-								},500);
-							},500);
-							
-							//定位树节点
-							$('#Parent_Unit_Id').combotree('setValue',result.Parent_Unit_Id);
+				    if (data) {
+				            var result = data.data,
+                                id = result.Id,
+                                itemImageList = result.ItemImageList || [];
+				            if (!!id) {//有门店
+				                //待开发
+				                that.elems.SaveAllPrams = result;
+				                $('#nav0_1').form('load', result);
+				                var htmlStr = '';
+				                for (var i = 0; i < itemImageList.length; i++) {
+				                    htmlStr += '<p class="picBox"><img src="' + itemImageList[i].ImageURL + '"><em></em></p>'
+				                }
+				                $('.storePicBox').prepend(htmlStr);
+
+				                //覆盖经纬度
+				                var longitudeAndLatitude = result.longitude + "," + result.dimension;
+				                $('#longitude').val(longitudeAndLatitude);
+
+				            var result = data.data,
+                                id = result.Id,
+                                itemImageList = result.ItemImageList || [];
+				            if (!!id) {//有门店
+				                //待开发
+				                that.elems.SaveAllPrams = result;
+				                $('#nav0_1').form('load', result);
+				                var htmlStr = '';
+				                for (var i = 0; i < itemImageList.length; i++) {
+				                    htmlStr += '<p class="picBox"><img src="' + itemImageList[i].ImageURL + '"><em></em></p>'
+				                }
+				                $('.storePicBox').prepend(htmlStr);
+
+				                $('#provinceId').combobox('select', 65);
+				                setTimeout(function () {
+				                    $('#provinceId').combobox('select', result.provinceId);
+				                    setTimeout(function () {
+				                        $('#townId').combobox('select', result.townId);
+				                        setTimeout(function () {
+				                            $('#CityId').combobox('select', result.CityId);
+				                        }, 500);
+				                    }, 500);
+				                }, 500);
+
+				                //定位树节点
+				                $('#Parent_Unit_Id').combotree('setValue', result.Parent_Unit_Id);
 
 
-							
-							
-							//二维码模块遍历
-							$('#nav0_2').form('load',result);
-							
-							setTimeout(function(){
-								$('#ReplyType').combobox('select',0);
-								setTimeout(function(){
-									$('#ReplyType').combobox('select',result.ReplyType || 0);
-								},1000);
-							},1000);
-							$('.qrInfoBox img').attr('src',result.WXCodeImageUrl).attr('data-code',result.WXCode);
-							$('.qrStoreName').text(result.Name);
-							
-							//图文素材遍历
-							if(!!result.listMenutext){
-								var obj = {
-									pageSize: result.listMenutext.length,
-									currentPage: 1,
-									allPage: 1,
-									showAdd: true,  //表示的一个标识
-									itemList: result.listMenutext
-								}
-								var html = bd.template("addImageItemTmpl",obj);
-								that.elems.imageContentDiv.find(".list").html(html);
-								
-							}
-							
-						}
+
+
+				                //二维码模块遍历
+				                $('#nav0_2').form('load', result);
+
+				                setTimeout(function () {
+				                    $('#ReplyType').combobox('select', 0);
+				                    setTimeout(function () {
+				                        $('#ReplyType').combobox('select', result.ReplyType || 0);
+				                    }, 1000);
+				                }, 1000);
+				                $('.qrInfoBox img').attr('src', result.WXCodeImageUrl).attr('data-code', result.WXCode);
+				                $('.qrStoreName').text(result.Name);
+
+				                //图文素材遍历
+				                if (!!result.listMenutext) {
+				                    var obj = {
+				                        pageSize: result.listMenutext.length,
+				                        currentPage: 1,
+				                        allPage: 1,
+				                        showAdd: true,  //表示的一个标识
+				                        itemList: result.listMenutext
+				                    }
+				                    var html = bd.template("addImageItemTmpl", obj);
+				                    that.elems.imageContentDiv.find(".list").html(html);
+
+				                }
+
+				            }
+				        }
 					}else{
 						alert(data.msg);
 					}

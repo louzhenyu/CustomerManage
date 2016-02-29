@@ -1,9 +1,7 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.optionBtns .commonBtn{background: no-repeat 8px center #00cccc;  float: left; margin-left: 35px;}
-.optionBtn .commonBtn{background-color: #00cccc; width: 146px; height: 44px; float: left; margin-left: 35px;}
 .queryTermArea{padding-left: 0; padding-right:0}
 .btnOpt{margin: 0 auto;margin-top:145px;border-radius: 23px; line-height: 44px; }
 .optionBtn .commonBtn.bg{ background-color: #fc7a52 }

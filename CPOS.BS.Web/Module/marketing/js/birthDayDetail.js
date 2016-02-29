@@ -228,7 +228,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                             if (list.length > 0) {
                                 that.addCoupon(list);
                             } else {
-                                $.messager.alert("提示", "没有可供选择的优惠券")
+                                $.messager.alert("提示", "您还没有建立优惠券哦，请去优惠券管理中添加！")
                             }
 
                         }
@@ -387,6 +387,29 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                 me.toggleClass("show");
             }) ;
             /**************** -------------------弹出窗口初始化 end****************/
+
+            /*时间控件不能选择当前之前日期*/
+            $('#BeginDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return d1 <= date;
+                }
+            });
+
+            $("#name").datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return d1 <= date;
+                }
+            });
+
+
+            that.elems.tagPanel.delegate(".deletebtn", "click", function () {
+                $(this).parents(".templatePanel").remove();
+            });
+
 
         },
         //添加优惠券;

@@ -5,187 +5,6 @@
   <title>活动详情</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="<%=StaticUrl+"/module/activityList/css/activityDetail.css?v=0.5"%>" rel="stylesheet" type="text/css" />
-  <style type="text/css">
-a:hover{color:#fff;}
-#contentArea{background:#f4f8fa;}
-#section{padding:30px 20px 0 20px;}
-.contentArea-info{border-radius:5px 5px 0 0;}
-.panelDiv{margin-top:0;}
-.contentArea-info .title{border:1px solid #d8d8d8;}
-.contentArea-info .title li{height:55px;line-height:55px;}
-.contentArea-info .title li{width:33.33%;}
-.borderArea{border:1px solid #d8d8d8;border-top:none;background:#fff;}
-.clearBorder .combo,.clearBorder .numberbox{
-	border: none;
-	background: none;
-}
-.textbox-invalid {
-	border-color: #d0d5d8;
-	background-color: #fff;
-}
-.textbox-addon-right {
-	right: 9px !important;
-	top: 1px;
-}
-.inlineBlockArea {
-	display: inline-block;
-	width: 100%;
-	padding: 21px 0;
-}
-.titleItem {
-	display: inline-block;
-	width: 100%;
-	height: 41px;
-	line-height: 39px;
-	padding-left: 30px;
-	font-size: 16px;
-	border-top: 1px solid #e0e0e0;
-	border-bottom: 1px solid #e0e0e0;
-	background: #eaeff1;
-	color: #333;
-}
-.dataTable{border:none;}
-.dataTable tr{height:49px;line-height:48px;}
-.dataTable th{text-align:center;font-size:14px;color:#4d4d4d;}
-.dataTable td{font-size:13px;color:#666;}
-.dataTable .tableHead{border-bottom:2px solid #07c8cf;}
-.dataTable .addBtn{display:inline-block;  margin: 0 10px;width:20px;height:49px;background:url(images/icon-add.png) no-repeat center center;cursor:pointer;}
-.dataTable .edit{display:inline-block;  margin: 0 10px;width:100%;height:49px;background:url(images/exit.png) no-repeat center center;cursor:pointer;}
-.dataTable .delBtn{display:inline-block;  margin: 0 10px;width:20px;height:49px;background:url(images/delete.png) no-repeat center center;cursor:pointer;}
-
-.addPrizeArea{height:73px;padding:20px;border-bottom:1px solid #d0d5d8;}
-.commonHandleBtn{display:block;width:132px;height:32px;line-height:32px;text-align:center;font-size:14px;border-radius:4px;background:#07c8cf;color:#fff;}
-.addPrizeArea .commonHandleBtn{}
-.btnWrap{padding:55px 0 30px 0;text-align:center;}
-.commonStepBtn{display:inline-block;width:148px;height:43px;line-height:43px;text-align:center;font-size:15px;border-radius:22px;background:#fc7a52;color:#fff;}
-
-/*活动配置*/
-.activityConfigArea{height:585px;padding:28px 0px 5px 70px;}
-.activityConfigArea .examplePic,.activityConfigArea .createPic{float:left;width:324px;height:506px;border:3px solid #ccc;border-radius:5px;}
-.activityConfigArea .createPicBox{float:left;width:324px;}
-.activityConfigArea .redPackPrize{position: absolute;bottom: 61px;left: 50%;width: 210px;margin-left: -105px;}
-.activityConfigArea .redPackPrize img{width:100%;}
-.activityConfigArea .uploadPicBox{float:left;width:368px;height:506px;}
-.activityConfigArea .createPic>img,.createPic .logoPic img{width:100%;height:auto;}
-.uploadPicBox{padding:3px 0;}
-.uploadPicBox>div{margin-bottom:27px;padding:3px 0;}
-.uploadItem{font-size:14px;}
-.uploadItem .tit{float:left;width:126px;height:32px;line-height:32px;text-align:right;color:#666;}
-.uploadItem .infoBox{margin-left:126px;}
-.uploadItem .exp{padding-top:7px;font-size:13px;color:#999;}
-.createPic{position:relative;background:#f1f1f1 url(images/icon-red.jpg) no-repeat center 150px;}
-.createPic .logoPic{position:absolute;top:15px;left:15px;width:50px;height:50px;}
-.createPic .getRedBtn{display: block;position: absolute;bottom: 15%;left: 50%;margin-left: -105px;width: 210px;height:285px;}
-.createPic .getRedBtn img{width:100%;}
-.createPic .Redrule {position: absolute;bottom: 0px;line-height: 37px;text-align: center;color: #fff;font-weight: 600;font-size: 13px;right: 0px;  margin-right: 10px;}
-.createPic .getRedBtn .OpenRedBtn{position: absolute;top: 50%;background-color: #ffea58;width: 70%;line-height: 37px;text-align: center;left: 50%; margin-left: -35%;color: #d13820;font-weight: 900;border-radius: 4px;font-size: 16px;}
-.gameAction{line-height:33px;font-size:14px;width:168px;margin-left:120px;display:block;color:#4d4d4d;}
-.seeRedBtn{display:inline-block;width:100%;padding:17px 0;text-align:center;font-size:15px;color:#0098ff;cursor:pointer;}
-
-/*大转盘*/
-.LuckyTurntable .bgpic {background:#f1f1f1;}
-.LuckyTurntable .bgpic p {position:absolute;z-index:3; border-radius: 50px; }
-.LuckyTurntable .bgpic p img{width:50px;height:50px;  border-radius: 50px;cursor:pointer;}
-.LuckyTurntable .bgpic .Pic1 {position:absolute;z-index:3;width:50px;height:50px;  top: 62px;left: 132px; border:0px;}
-.LuckyTurntable .Pic2 {bottom: 222px;left: 45px;}
-.LuckyTurntable .Pic3 {bottom: 222px;left: 104px;}
-.LuckyTurntable .Pic4 {bottom: 222px;left: 163px;}
-.LuckyTurntable .Pic5 {bottom: 222px;left: 222px;}
-.LuckyTurntable .Pic6 {bottom: 163px;left: 222px;}
-.LuckyTurntable .Pic7 {bottom: 104px;left: 222px;}
-.LuckyTurntable .Pic8 {bottom: 45px;left: 222px;}
-.LuckyTurntable .Pic9 {bottom: 45px;left: 163px;}
-.LuckyTurntable .Pic10 {bottom: 45px;left: 104px;}
-.LuckyTurntable .Pic11 {bottom: 45px;left: 45px;}
-.LuckyTurntable .Pic12 {bottom: 104px;left: 45px;}
-.LuckyTurntable .Pic13 {bottom: 163px;left: 45px;}
-.LuckyTurntable .createPic .regularpic {position:absolute;z-index:3;bottom: 114px; left: 114px;width:90px;height:90px; border-radius: 15px;cursor:pointer; }
-.LuckyTurntable .createPic .realpic {  z-index: 3; position: absolute;}
-.LuckyTurntable .createPic .bgpic1 {  z-index: 1; top: 181px; width:318px;height:318px;}
-.LuckyTurntable .createPic .bgpic2 {  z-index: 2; top: 216px;height:250px; border-radius: 36px;width:250px;left:35px;}
-.LuckyTurntable .border {border: 2px #fe9d1e solid;}
-.LuckyTurntable .border1 {box-shadow:0 0 0 6px rgba(6, 6, 6, 0.09);}
-
-.LuckyTurntable .regularpicupload{position:absolute;z-index:55;bottom: 114px; left: 114px;width:90px;height:90px; border-radius: 15px;cursor:pointer; }
-.LuckyTurntable .createPicBox .ke-upload-file {height:90px}
-
-#LuckyTurntablePrizeimg {width:159px; border-radius: 100px;height: 159px;}
-
-
-.kvpic { max-height: 184px;}
-
-/*刮刮卡*/
-.ScratchCard .ScratchCardimg{top: 145px; position: absolute;left: 10px;width: 300px;}
-.ScratchCard .activityConfigArea .createPic .ScratchCardbg{height:672px;width: 318px;}
-.ScratchCard .text{top: 315px; position: absolute;left: 130px;font-size: 17px;font-weight: 600;color: #5aabfd;}
-.ScratchCard .activityConfigArea {height:720px;}
-.ScratchCard .activityConfigArea  .examplePic {height:678px;}
-.ScratchCard .activityConfigArea  .createPic{height:678px;}
-.ScratchCard .activityConfigArea .uploadPicBox{height:678px;}
-.ScratchCard .activityConfigArea .ScratchCardimg{width: 300px;}
-.ScratchCard .createPic{position:relative;background:#f1f1f1 url(images/icon-red.jpg) no-repeat center 60px;}
-.ScratchCard .createPic .jiangpin {  position: absolute; width: 300px;height: 275px;border-radius: 5px;}
-.ScratchCard .bgjiangpin {background-color: #ddd;width: 300px;height: 275px;position: absolute;bottom: 10px;left: 10px;border-radius: 5px;background:#ddd url(images/jiangpin.png) no-repeat center 110px;}
-.ScratchCard .activityConfigArea .createPic .ActivityRule {position: absolute;top: 305px;left: 40px;width:235px;height:50px;border-radius: 5px;}
-
-/*插件的上传按钮*/
-form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
-.commonHandleBtn.uploadImgBtn{background:url(images/uploadImgBtn.png) no-repeat 0 0;cursor:pointer;}
-.ke-upload-file,.ke-button-common,input[type="button"],input[type="submit"],input[type="reset"], input[type="file"]::-webkit-file-upload-button,button{cursor:pointer !important;}
-
-/*奖品配置，弹出*/
-.jui-dialog-redPackage{width:636px;height:470px;position:fixed;top:90px;margin-left:-318px;}
-.jui-dialog-tit{height:55px;}
-.jui-dialog-tit h2{font:16px/55px "Microsoft YaHei";color:#66666d;}
-.jui-dialog-close{position:absolute;top:0px;right:18px;width:30px;height:54px;background:url(images/icon-close-btn.png) no-repeat center center;cursor:pointer;}
-.jui-dialog .tit{width:250px;}
-.jui-dialog .redPackageContent{padding:10px 0 30px 0;}
-.jui-dialog .searchInput{width:190px;}
-.jui-dialog .commonSelectWrap{float:none;display:block;margin:20px 0 2px 0;}
-.jui-dialog .hint-exp{padding-top:5px;text-indent:30px;text-align:center;font-size:14px;color:#999;}
-.jui-dialog .btnWrap{padding:30px 0 0 0;}
-.jui-dialog .commonBtn{width:150px;height:45px;line-height:45px;}
-.jui-dialog .cancelBtn{border:none;background:#ccc;color:#fff;}
-
-/*问卷奖品配置，弹出*/
-.jui-dialog-Questionnaire{width:636px;height:470px;position:fixed;top:90px;margin-left:-318px;}
-
-/*大转盘奖品配置，弹出*/
-.jui-dialog-LuckyTurntable{width:636px;height:530px;position:fixed;top:90px;margin-left:-318px;}
-.jui-dialog-LuckyTurntable .LuckyTurntableLeft {float:left}
-.jui-dialog-LuckyTurntable .LuckyTurntableright {float: right; padding: 20px 70px 0 0;}
-.jui-dialog-LuckyTurntable .LuckyTurntableright p{text-align:center;margin-top: 20px;margin-bottom: 10px;}
-.jui-dialog-LuckyTurntable .LuckyTurntableright .uploadImgBtn{text-align:center;margin-top: 20px;  margin-left: 12px;}
-.jui-dialog .LuckyTurntableLeft .tit{width:120px;}
-.jui-dialog .LuckyTurntableLeft .hint-exp {text-align:left; }
-.PrizeseOption {  margin-left: 20px;display: inline-block; }
-.PrizeseOption .radio{ float:left;margin-right:20px; }
-
-
-/*大转盘奖品选择，弹出*/
-.jui-dialog-Prizeselect{width:636px;max-height:430px;position:fixed;top:90px;margin-left:-318px;}
-
-
-/*奖品数量追加*/
-.jui-dialog-prizeCountAdd{width:636px;height:322px;position:fixed;top:20%;margin-left:-318px;}
-.prizeCountAddContent .commonSelectWrap{margin:60px 0 45px 0;}
-
-/*图文消息*/
-.imageTextArea{display:inline-block;height:160px;padding:15px 0;}
-.imageTextArea .picBox{float:left;width:270px;height:130px;margin-left:5px;border:1px solid #d0d5d8;border-radius:3px;background:#f9f9f9 url(images/icon-img.png) no-repeat center center;}
-.imageTextArea .picBox img{width:100%;height:100%;}
-.imageTextArea .tit{float:left;width:75xp;}
-.imageTextArea .commonHandleBtn{margin-bottom:5px;}
-.ruleText textarea{width:217px;height:94px;padding:5px;border:1px solid #d0d5d8;border-radius:3px;}
-.graphicHandleBox{float:left;width:640px;padding-bottom:17px;border-right:1px solid #d8d8d8;}
-.graphicHandleBox .commonSelectWrap{margin:15px 0 15px 0;}
-.uploadImgWrap{margin:77px 0 0 380px;color:#999;}
-.graphicPreview{width:420px;height:355px;margin-left:670px;padding:12px;border:1px solid #d8d8d8;border-radius:7px;}
-.previewPic{width:390px;height:218px;margin:18px 0 15px;background:#f9f9f9 url(images/icon-img.png) no-repeat center center;}
-.previewPic img{width:100%;height:100%;}
-.previewTit{height:30px;line-height:30px;overflow:hidden;font-size:24px;color:#000;}
-.previewDsc{height:48px;line-height:24px;overflow:hidden;font-size:18px;color:#a9a9a9;}
-</style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
   <div class="allPage" id="section" data-js="js/activiDetail.js?ver=0.3"> 
@@ -195,9 +14,10 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
       <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
         <div class="title">
           <ul id="optPanel">
-            <li data-flag="#nav01" class="on one">基本信息</li>
-            <li data-flag="#nav02">奖品配置</li>
-            <li data-flag="#nav03" style="border-right:none">图文推送</li>
+            <li data-flag="#nav01"  class="nav01  on one">基本信息</li>
+            <li data-flag="#nav02"  class="nav02">封面设置</li>
+            <li data-flag="#nav03"  class="nav03">奖品配置</li>
+            <li data-flag="#nav04"  class="nav04">图文推送</li>
           </ul>
         </div>
         <div class="panelDiv" id="nav01" data-index="0">
@@ -254,19 +74,18 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                     -->
                   </div>
                   <div class="commonSelectWrap">
-                  	<em class="tit" style="width:126px">活动方式：</em>
-                    <label class="searchInput clearBorder">
-                      <input data-text="活动方式" class="easyui-combobox" id="lEventDrawMethod" data-flag="lEventDrawMethod" name="DrawMethodId" type="text" value="" data-options="required:true,width:160,height:32"  validType='selectIndex'>
-                    </label>
+                  	<em class="tit" >活动方式：</em>
+                    
+                      <input data-text="活动方式" class="easyui-combobox textbox combo" id="lEventDrawMethod" data-flag="lEventDrawMethod" name="DrawMethodId" type="text" value="" data-options="required:true,width:160,height:32"  validType='selectIndex'>
+                    
                   </div>
                 </div>
-                <p class="titleItem">活动规则</p>
+                <p class="titleItem">游戏规则</p>
                 <div class="inlineBlockArea">
                   <div class="commonSelectWrap" style="margin-right:55px;">
-                  	<em class="tit">参与游戏次数：</em>
-                    <label class="searchInput clearBorder"> 
-                      <input data-text="参与游戏次数" class="easyui-combobox" id="personCount" data-flag="personCount" name="PersonCount" type="text" value="" data-options="required:true,width:160,height:32"  validType='selectIndex'>
-                    </label>
+                  	<em class="tit" style="width:100px;">参与游戏次数：</em>
+                      <input data-text="参与游戏次数" class="easyui-combobox  textbox combo" id="personCount" data-flag="personCount" name="PersonCount" type="text" value="" data-options="required:true,width:160,height:32"  validType='selectIndex'>
+                   
                   </div>
                   <div class="commonSelectWrap"> <em class="tit" style="width:126px">参与游戏所需积分：</em>
                     <label class="selectBox">
@@ -276,17 +95,97 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                 </div>
             </div>
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav02">下一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn btnopt commonBtn" data-flag="nav02">下一步</a>
             </div>
           </form>
         </div>
         
+           <!--封面设置-->
+        <div class="panelDiv" id="nav02" data-index="4">
+
+           <form id="nav0_5">
+                <div class="tableWrap coverbody" id="tableWrap">
+                    <div class="startimg">
+                        <img  class="StartBG" src="/Module/activityList/images/StartBG.png" />
+                        <img class="_BGImageSrc" src="" />
+                        <span class="startbtn">进入</span>
+                        <span class="regular">活动规则></span>
+                    </div>
+                    <div class="startpageContent">
+                        <div class="CoverSetting">
+                            <div class="EnableCover checkBox on">
+                                  <em></em>
+                                  <span>启用封面</span>
+                                 <div style="display:none;">
+                                    <input class="checkvalue activityListdata"    data-text="活动规则启用" data-idname="IsShowQRegular" value="1"  type="text" />
+                                </div>
+                            </div>
+                            <div class="commonSelectWrap">
+                                <em class="tit">按钮名称：</em>
+                                <label class="searchInput" style="width: 180px;">
+                                    <input id="ButtonName" class="activityListdata" data-alerttext="按钮名称不能为空"  data-required="true"  data-idname="ButtonName"   name="ButtonName" type="text"
+                                        value="进入">
+                                </label>
+                            </div>
+                            <div class="commonSelectWrap colorplan">
+                                <em class="tit">按钮颜色：</em>
+                                <span style="display:none;">
+                                <input id="StartPageBtnBGColor"  class="activityListdata"  data-idname="StartPageBtnBGColor"   type="text" value="#fc9a01"/>
+                                    <input id="StartPageBtnTextColor"  class="activityListdata"  data-idname="StartPageBtnTextColor"     type="text"  value="#fff"/>
+                                 </span>
+                                <div class="color_plan" data-type="1">
+                               
+                                </div>
+                            </div>
+                            <div  id="CoverImageUrl"  class="commonSelectWrap uploadItem"  data-flag="Cover"  data-url="" data-batid="BGImageSrc" >
+                            
+                            <div class="infoBox">
+                            	<a href="javascript:void(0)" data-uploadimgwidth=80  class="commonHandleBtn uploadImgBtn"></a>
+                                <p class="exp">(建议尺寸:640*1008，大小50kb)</p>
+                            </div>
+                        </div>
+
+                        </div>
+                        <div class="CoverSettingrule">
+
+                            <div  class="commonSelectWrap" style="margin-top: 20px;" >
+                        	<p class="tit">活动规则：</p>
+                            <div class="on rulebtn" data-flag="Cover1" data-name="r1" >
+                                <input data-text="活动规则" class="easyui-combobox textbox combo" data-options="required:true,width:200,height:32" id="ruleType"   name="ruleType" type="text" value="">
+                              </div>
+                            <div class="infoBox CoverruleText" style="display: none;">
+                            	<textarea id="QRegular"  class="activityListdata"  placeholder="请输入"  data-alerttext="规则内容不能为空！" data-required="true"  data-idname="QRegular"   ></textarea>
+                            </div>
+                            <div id="RuleImageUrl" class="infoBox ruleTextImg uploadItem"  data-flag="Cover1"  data-url="" data-batid="RuleImageUrl">
+                                <a href="javascript:void(0)" data-uploadimgwidth=80  class="commonHandleBtn uploadImgBtn"></a>
+                                <p class="exp">(建议尺寸:640*1008，大小50kb)</p>
+                            </div>
+                        </div>
+                        </div>
+                            
+
+                        
+                        
+                    </div>
+
+
+                    
+                </div>
+
+               <div class="btnWrap">
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn  " data-flag="nav01">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn " data-flag="nav03">下一步</a>
+            </div>
+               </form>
+        </div>
+        <!--封面设置End--> 
+
         <!--奖品配置-->
-        <div class="panelDiv" id="nav02" data-index="1">
+        <div class="panelDiv" id="nav03" data-index="1">
           <form id="nav0_2" class="PrizeSet" style="display:none;" >
             <div class="borderArea">
               <div class="addPrizeArea">
-              		<a href="javascript:;" class="commonHandleBtn" id="addPrizeBtn">+添加奖品</a>
+              		<a href="javascript:;" class="commonBtn  icon w100  icon_add r" id="addPrizeBtn">添加奖品</a>
               </div>
               <table class="dataTable" id="prizeListTable">
               	<thead>
@@ -325,15 +224,15 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         </div>
                         
                         <div id="ruleBgPic" class="uploadItem" data-url="" data-batid="rule">
-                        	<p class="tit">活动规则内容：</p>
-                            <label class="searchInput">
-                              <input data-text="活动规则内容" class="easyui-combobox" id="ruleOption" name="" type="text" value="" data-options="required:true,width:132,height:34">
-                            </label>
+                        	<p class="tit">游戏规则内容：</p>
+                           
+                              <input data-text="游戏规则内容" class="easyui-combobox textbox combo" id="ruleOption" name="" type="text" value="" data-options="required:true,width:132,height:34">
+                           
                             <div class="infoBox ruleText"  style="margin-top:10px">
                             	<textarea placeholder="请输入"></textarea>
                             </div>
                             <div class="infoBox ruleImg"  style="margin-top:10px">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn" data-alertinfo="活动规则图片上传成功！" >上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn" data-alertinfo="游戏规则图片上传成功！" >上传图片</a>
                                 <p class="exp">(建议尺寸640*1008 大小为200K)</p>
                             </div>
                         </div>
@@ -343,7 +242,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <div class="createPic">
                             <p class="logoPic"><img id="logoPic" src="images/icon-log.png" /></p>
                             <img id="redBgPic" src="" />
-                            <span class="getRedBtn getRedBackBtn"><img src="images/Redbg.png" /><span class="Redrule">活动规则></span><div class="OpenRedBtn">打开红包</div></span>
+                            <span class="getRedBtn getRedBackBtn"><img src="images/Redbg.png" /><span class="Redrule">游戏规则></span><div class="OpenRedBtn">打开红包</div></span>
                             <div class="backAction hide">
                             <p class="redPackPrize"><img src="images/backRedbg.png" /></p>
                             </div>
@@ -355,8 +254,8 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
               
             </div>
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="#nav01">上一步</a>
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="nav02">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="nav04" data-page="redPackage" style="margin-left:40px;">下一步</a>
             </div>
           </form>
 
@@ -364,7 +263,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
             <form id="LuckyTurntable_form" class="LuckyTurntable PrizeSet" >
             <div class="borderArea">
               <div class="addPrizeArea">
-              		<a href="javascript:;" class="commonHandleBtn" id="LuckyTurntableaddBtn">+添加奖品</a>
+              		<a href="javascript:;" class="commonBtn  icon w100  icon_add r" id="LuckyTurntableaddBtn">添加奖品</a>
               </div>
               <table class="dataTable" id="LuckyTurnListTable">
               	<thead>
@@ -393,9 +292,9 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         </div>
                         
                         <div id="LT_Data_Rule" class="uploadItem"  data-flag=11  data-url="" data-batid="LT_Rule">
-                        	<p class="tit">活动规则内容：</p>
+                        	<p class="tit">游戏规则内容：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="活动规则图片上传成功！">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="游戏规则图片上传成功！">上传图片</a>
                                 <p class="exp">(尺寸：640*1008)</p>
                             </div>
                         </div>
@@ -444,8 +343,8 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
               
             </div>
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="#nav01">上一步</a>
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn " data-flag="nav02">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn " data-flag="nav04" data-page="redPackage" style="margin-left:40px;">下一步</a>
             </div>
           </form>
 
@@ -454,7 +353,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
             <form id="ScratchCard_form" class="ScratchCard PrizeSet" >
             <div class="borderArea">
               <div class="addPrizeArea">
-              		<a href="javascript:;" class="commonHandleBtn" id="A1">+添加奖品</a>
+              		<a href="javascript:;" class="commonBtn  icon w100  icon_add r" id="A1">添加奖品</a>
               </div>
               <table class="dataTable" id="Table2">
               	<thead>
@@ -485,9 +384,9 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         </div>
                         
                         <div id="Div6" class="uploadItem"  data-flag=16  data-url="" data-batid="BackGround">
-                        	<p class="tit">活动规则内容：</p>
+                        	<p class="tit">游戏规则内容：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn" data-alertinfo="活动规则图片上传成功！" >上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn" data-alertinfo="游戏规则图片上传成功！" >上传图片</a>
                                 <p class="exp">(尺寸：90*90)</p>
                             </div>
                         </div>
@@ -506,7 +405,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <div id="Div9" class="createPic bgpic">
                             <img id="ScratchCardbg"   class="ScratchCardbg" />
                             <img id="ScratchCardimg" class="ScratchCardimg"  src="images/ScratchCardimg.png" />
-                            <p class="text">活动规则</p>
+                            <p class="text">游戏规则</p>
                             <img id="ActivityRule"   class="ActivityRule" src="images/ActivityRule.png" />
                             <span class="bgjiangpin">
                                 <img id="jiangpin" class="jiangpin " src="images/bg.png" / />
@@ -518,8 +417,8 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
               
             </div>
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="#nav01">上一步</a>
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn  btnopt commonBtn" data-flag="nav02">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn btnopt commonBtn" data-flag="nav04" data-page="redPackage" style="margin-left:40px;">下一步</a>
             </div>
           </form>
 
@@ -528,7 +427,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
             <form id="Questionnaire_form"  class="Questionnaire PrizeSet" >
             <div class="borderArea">
               <div class="addPrizeArea">
-              		<a href="javascript:;" class="commonHandleBtn" id="QuestionnaireaddBtn">+添加奖品</a>
+              		<a href="javascript:;" class="commonBtn  icon w100  icon_add r" id="QuestionnaireaddBtn">添加奖品</a>
               </div>
               <table class="dataTable" id="QuestionnaireTable">
               	<thead>
@@ -547,13 +446,13 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
               
               <div class="activityConfigArea">
               		  
-                    选择表单：<input id="Questionnaires" class="easyui-combobox" data-options="required:true,width:190,height:32"  type="text" />
+                    选择表单：<input id="Questionnaires" class="easyui-combobox textbox combo" data-options="required:true,width:190,height:32"  type="text" />
               </div>
               
             </div>
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="#nav01">上一步</a>
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav03" data-page="redPackage" style="margin-left:40px;">下一步</a>
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn  btnopt commonBtn" data-flag="nav02">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn btnopt commonBtn" data-flag="nav04" data-page="redPackage" style="margin-left:40px;">下一步</a>
             </div>
           </form>
 
@@ -562,7 +461,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
         <!--奖品配置End--> 
         
         <!--图文推送-->
-        <div class="panelDiv" id="nav03" data-index="2">
+        <div class="panelDiv" id="nav04" data-index="2">
           <form id="nav0_3">
           	<div class="borderArea">
             	<div class="inlineBlockArea">
@@ -599,8 +498,8 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                </div>
             </div>
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn prevStepBtn" data-flag="#nav02">上一步</a>
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav04" style="margin-left:40px;">完成</a>
+            	<a href="javascript:;" class="commonStepBtn prevStepBtn btnopt commonBtn" data-flag="nav03">上一步</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn btnopt commonBtn" data-flag="nav05" style="margin-left:40px;">完成</a>
             </div>
           </form>
         </div>
@@ -628,16 +527,14 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
         
         <div class="commonSelectWrap">
             <em class="tit">奖品选择：</em>
-            <label class="searchInput clearBorder">
-              <input data-text="奖品选择" class="easyui-combobox" id="prizeOption" data-options="required:true,width:190,height:32" data-flag="" name="PrizeTypeId" type="text" value="">
-            </label>
+              <input data-text="奖品选择" class="easyui-combobox textbox combo" id="prizeOption" data-options="required:true,width:190,height:32" data-flag="" name="PrizeTypeId" type="text" value="">
+            
         </div>
         
         <div class="commonSelectWrap" id="couponItem">
             <em class="tit">优惠券：</em>
-            <label class="searchInput clearBorder">
-              <input data-text="优惠券" class="easyui-combobox" id="couponOption" data-options="width:190,height:32" data-flag="" name="CouponTypeID" type="text" value="">
-            </label>
+             <input data-text="优惠券" class="easyui-combobox textbox combo" id="couponOption" data-options="width:190,height:32" data-flag="" name="CouponTypeID" type="text" value="">
+            
         </div>
         
         
@@ -693,23 +590,20 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
             <div class="LuckyTurntableLeft">
         <div class="commonSelectWrap">
             <em class="tit">奖品等级：</em>
-            <label class="searchInput clearBorder">
-              <input data-text="奖品等级" class="easyui-combobox" id="LTprizeLevel" data-options="required:true,width:190,height:32" data-flag="" name="PrizeLevel" type="text" value="">
-            </label>
+              <input data-text="奖品等级" class="easyui-combobox textbox combo" id="LTprizeLevel" data-options="required:true,width:190,height:32" data-flag="" name="PrizeLevel" type="text" value="">
+            
         </div>
         
         <div class="commonSelectWrap">
             <em class="tit">奖品选择：</em>
-            <label class="searchInput clearBorder">
-              <input data-text="奖品选择" class="easyui-combobox" id="LTprizeOption" data-options="required:true,width:190,height:32" data-flag="" name="PrizeTypeId" type="text" value="">
-            </label>
+             <input data-text="奖品选择" class="easyui-combobox textbox combo" id="LTprizeOption" data-options="required:true,width:190,height:32" data-flag="" name="PrizeTypeId" type="text" value="">
+           
         </div>
         
         <div class="commonSelectWrap" id="LTcouponItem" style="display:none">
             <em class="tit">优惠券选择：</em>
-            <label class="searchInput clearBorder">
-              <input data-text="优惠券选择" class="easyui-combobox" id="LTcouponOption" data-options="width:190,height:32" data-flag="" name="CouponTypeID" type="text" value="">
-            </label>
+             <input data-text="优惠券选择" class="easyui-combobox textbox combo" id="LTcouponOption" data-options="width:190,height:32" data-flag="" name="CouponTypeID" type="text" value="">
+            
         </div>
 
                   
@@ -776,16 +670,14 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
         
         <div class="commonSelectWrap">
             <em class="tit">奖品选择：</em>
-            <label class="searchInput clearBorder">
-              <input data-text="奖品选择" class="easyui-combobox" id="questprizeOption" data-options="required:true,width:190,height:32" data-flag="" name="PrizeTypeId" type="text" value="">
-            </label>
+              <input data-text="奖品选择" class="easyui-combobox textbox combo" id="questprizeOption" data-options="required:true,width:190,height:32" data-flag="" name="PrizeTypeId" type="text" value="">
+            
         </div>
         
         <div class="commonSelectWrap" id="_questcouponOption">
             <em class="tit">优惠券：</em>
-            <label class="searchInput clearBorder">
-              <input data-text="优惠券" class="easyui-combobox" id="questcouponOption" data-options="width:190,height:32" data-flag="" name="CouponTypeID" type="text" value="">
-            </label>
+             <input data-text="优惠券" class="easyui-combobox textbox combo" id="questcouponOption" data-options="width:190,height:32" data-flag="" name="CouponTypeID" type="text" value="">
+            
         </div>
         
         
@@ -890,6 +782,96 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 </tr>
 <#}#>
 </script>
+
+     <%-- 颜色板 --%>
+    <script id="tpl_colorplan" type="text/html">
+         <img class="writecolor" src="/Module/activityList/images/writecolor.png"  />
+                                   <img class="blackcolor" src="/Module/activityList/images/blackcolor.png"  />
+                                   <img class="allcolor" src="/Module/activityList/images/allcolor.png"  />
+                                <div class="Colorplate" >
+                                    <%-- 第1行 --%>
+                                    <div style="background-color:#960001;color:#fff;">文字</div>
+                                    <div style="background-color:#ff0101;color:#fff;">文字</div>
+                                    <div style="background-color:#fc9a01;color:#fff;">文字</div>
+                                    <div style="background-color:#fffe03;color:#EA8E39;">文字</div>
+                                    <div style="background-color:#04fd01;color:#274F13;">文字</div>
+                                    <div style="background-color:#01ffcd;color:#007765;">文字</div>
+                                    <div style="background-color:#00ffff;color:#44828F;">文字</div>
+                                    <div style="background-color:#0102fa;color:#fff;">文字</div>
+                                    <div style="background-color:#9c00fc;color:#fff;">文字</div>
+                                    <div style="background-color:#ff00fe;color:#fff;">文字</div>
+                                    <%-- 第2行 --%>
+                                    <div style="background-color:#e7b8b0;color:#C94320;">文字</div>
+                                    <div style="background-color:#f4cccc;color:#E26563;">文字</div>
+                                    <div style="background-color:#fde4d0;color:#EA8E39;">文字</div>
+                                    <div style="background-color:#fff2cd;color:#EA8E39;">文字</div>
+                                    <div style="background-color:#d8ead2;color:#69A84F;">文字</div>
+                                    <div style="background-color:#c3f8f2;color:#007765;">文字</div>
+                                    <div style="background-color:#d2e0e3;color:#44828F;">文字</div>
+                                    <div style="background-color:#cfe2f3;color:#3E85C7;">文字</div>
+                                    <div style="background-color:#dad2e9;color:#674FA7;">文字</div>
+                                    <div style="background-color:#e7d3dc;color:#A54E79;">文字</div>
+                                    <%-- 第3行 --%>
+                                    <div style="background-color:#DD7E6A;color:#fff;">文字</div>
+                                    <div style="background-color:#E99897;color:#660000;">文字</div>
+                                    <div style="background-color:#FAC99E;color:#7B3C07;">文字</div>
+                                    <div style="background-color:#FFE598;color:#7E6000;">文字</div>
+                                    <div style="background-color:#B6D7A8;color:#274F13;">文字</div>
+                                    <div style="background-color:#7DDED5;color:#007765;">文字</div>
+                                    <div style="background-color:#A3C4CB;color:#0C353B;">文字</div>
+                                    <div style="background-color:#9FC5E9;color:#073863;">文字</div>
+                                    <div style="background-color:#B3A6D4;color:#20124D;">文字</div>
+                                    <div style="background-color:#D7A5BE;color:#fff;">文字</div>
+                                    <%-- 第4行 --%>
+                                    <div style="background-color:#C94320;color:#fff;">文字</div>
+                                    <div style="background-color:#E26563;color:#fff;">文字</div>
+                                    <div style="background-color:#F5B172;color:#fff;">文字</div>
+                                    <div style="background-color:#FDDA64;color:#fff;">文字</div>
+                                    <div style="background-color:#92C47F;color:#fff;">文字</div>
+                                    <div style="background-color:#39C6B5;color:#fff;">文字</div>
+                                    <div style="background-color:#79A3AF;color:#fff;">文字</div>
+                                    <div style="background-color:#6FA8DD;color:#fff;">文字</div>
+                                    <div style="background-color:#8D7CC3;color:#fff;">文字</div>
+                                    <div style="background-color:#BD7D9F;color:#fff;">文字</div>
+
+                                    <%-- 第5行 --%>
+                                    <div style="background-color:#A61C00;color:#fff;">文字</div>
+                                    <div style="background-color:#CC0001;color:#fff;">文字</div>
+                                    <div style="background-color:#EA8E39;color:#fff;">文字</div>
+                                    <div style="background-color:#F1C332;color:#fff;">文字</div>
+                                    <div style="background-color:#69A84F;color:#fff;">文字</div>
+                                    <div style="background-color:#05A792;color:#fff;">文字</div>
+                                    <div style="background-color:#44828F;color:#fff;">文字</div>
+                                    <div style="background-color:#3E85C7;color:#fff;">文字</div>
+                                    <div style="background-color:#674FA7;color:#fff;">文字</div>
+                                    <div style="background-color:#A54E79;color:#fff;">文字</div>
+
+                                    <%-- 第6行 --%>
+                                    <div style="background-color:#5B0F01;color:#fff;">文字</div>
+                                    <div style="background-color:#660000;color:#fff;">文字</div>
+                                    <div style="background-color:#7B3C07;color:#fff;">文字</div>
+                                    <div style="background-color:#7E6000;color:#fff;">文字</div>
+                                    <div style="background-color:#274F13;color:#fff;">文字</div>
+                                    <div style="background-color:#007764;color:#fff;">文字</div>
+                                    <div style="background-color:#0C353B;color:#fff;">文字</div>
+                                    <div style="background-color:#053863;color:#fff;">文字</div>
+                                    <div style="background-color:#20124D;color:#fff;">文字</div>
+                                    <div style="background-color:#000000;color:#fff;">文字</div>
+
+                                    <%-- 第7行 --%>
+                                    <div ><img style="margin: 0px;width: 31px;" src="/Module/activityList/images/slash.png" /></div>
+                                    <div style="background-color:#FFFFFF;color:#000">文字</div>
+                                    <div style="background-color:#E1E1E1;color:#000">文字</div>
+                                    <div style="background-color:#C3C3C3;color:#000">文字</div>
+                                    <div style="background-color:#A5A5A5;color:#000;">文字</div>
+                                    <div style="background-color:#868789;color:#fff;">文字</div>
+                                    <div style="background-color:#696969;color:#fff;">文字</div>
+                                    <div style="background-color:#4C4A4B;color:#fff;">文字</div>
+                                    <div style="background-color:#232323;color:#fff;">文字</div>
+                                    <div style="background-color:#000000;color:#fff;">文字</div>
+                                </div>
+         </script>
+
   
 <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>" defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>" ></script> 
 

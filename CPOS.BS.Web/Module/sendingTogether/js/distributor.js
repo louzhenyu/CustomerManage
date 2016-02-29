@@ -34,8 +34,6 @@
                 debugger;
                 if(!data.Data.RetailTraderList){
                     data.Data.RetailTraderList=[];
-                    that.elems.tabel.datagrid({data:data.Data.RetailTraderList});
-                    return;
                 }
                 //jQuery easy datagrid  表格处理
                 that.elems.tabel.datagrid({

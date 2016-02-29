@@ -69,7 +69,7 @@
 
                 if (type == 1) {
                     $(".startbtn").attr("style", "background-color:#FFFFFF;color:#000;");
-                    $(".regular").attr("style", "color:#FFFFFF");
+                    $(".regular").css("color", "#FFFFFF");
                     $("#StartPageBtnBGColor").val("#FFFFFF");
                     $("#StartPageBtnTextColor").val("#000");
                 }
@@ -87,7 +87,7 @@
 
                 if (type == 1) {
                     $(".startbtn").attr("style", "background-color:#000000;color:#fff;");
-                    $(".regular").attr("style", "color:#000");
+                    $(".regular").css("color", "#000");
                     $("#StartPageBtnBGColor").val("#000");
                     $("#StartPageBtnTextColor").val("#fff");
                 }
@@ -119,7 +119,7 @@
 
                 if (type == 1) {
                     $(".startbtn").attr("style", $(this).attr("style"));
-                    $(".regular").attr("style", "color:" + $(this).css("background-color"));
+                    $(".regular").css("color",  $(this).css("background-color"));
                     $("#StartPageBtnBGColor").val($(this).css("background-color"));
                     $("#StartPageBtnTextColor").val($(this).css("color"));
                 }

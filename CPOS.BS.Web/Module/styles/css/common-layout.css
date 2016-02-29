@@ -5,7 +5,7 @@ article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{di
 mark{background-color:#ff9;color:#000;font-style:normal;font-weight:400}
 del{text-decoration:line-through}
 caption,cite,em,i,th,b,strong{font-style:normal;font-weight:400}
-select,input,button,textarea{font-size:100%;font-style:normal;font-weight:400;vertical-align:middle}
+select,input,button,textarea{font-size:12px;font-style:normal;font-weight:400;vertical-align:middle}
 table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}legend{color:#000}sup{vertical-align:text-top}sub{vertical-align:text-bottom}iframe{display:block}li{list-style:none}img{vertical-align:middle}a img{vertical-align:top}textarea{resize:none}
 div,th,td{word-wrap:break-word;word-break:break-all}
 body,button,input,select,textarea{font:14px/1.5 Microsoft YaHei,Arial,Helvetica,sans-serif;}

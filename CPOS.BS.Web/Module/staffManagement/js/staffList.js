@@ -660,7 +660,7 @@
 		                }
 		            } else {
 
-		                $.messager.alert("提示", "上传的文件格式只能是.xls、.xlsx和.csv！");
+		                $.messager.alert("提示", "上传的文件格式只能是.xls、.xlsx！");
 		            }
 		        },
 		        afterError: function (str) {

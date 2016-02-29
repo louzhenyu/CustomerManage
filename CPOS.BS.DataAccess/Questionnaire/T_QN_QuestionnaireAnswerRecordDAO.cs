@@ -78,7 +78,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat(string.Format("SELECT VipID,max(CreateTime) as CreateTime  from T_QN_QuestionnaireAnswerRecord   where QuestionnaireID='{0}' and  ActivityID='{1}'  GROUP BY VipID ORDER BY CreateTime desc   ", QNID, AID));
+            sql.AppendFormat(string.Format("SELECT VipID,max(CreateTime) as CreateTime  from T_QN_QuestionnaireAnswerRecord   where QuestionnaireID='{0}' and  ActivityID='{1}' and  Status=1  GROUP BY VipID ORDER BY CreateTime desc   ", QNID, AID));
             //读取数据
 
             List<string> list = new List<string>();
@@ -91,6 +91,32 @@ namespace JIT.CPOS.BS.DataAccess
             }
             //返回
             return list.ToArray();
+        }
+
+
+        /// <summary>
+        /// 按照每个用户答题标识批量删除
+        /// </summary>
+        /// <param name="vipIDs">用户答题标识数组</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void DeletevipIDs(object[] vipIDs, IDbTransaction pTran) 
+        {
+            if (vipIDs == null || vipIDs.Length==0)
+                return ;
+            //组织参数化SQL
+            StringBuilder primaryKeys = new StringBuilder();
+            foreach (object item in vipIDs)
+            {
+                primaryKeys.AppendFormat("'{0}',",item.ToString());
+            }
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine("update [T_QN_QuestionnaireAnswerRecord] set status='-1' where VipID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            //执行语句
+            int result = 0;   
+            if (pTran == null)
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
+            else
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
         }
     }
 }

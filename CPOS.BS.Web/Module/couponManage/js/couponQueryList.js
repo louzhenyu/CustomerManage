@@ -64,8 +64,7 @@
         
             });
             /**************** -------------------弹出easyui 控件 start****************/
-            var  wd=160,H=32;
-            var wd = 160, H = 32;
+            var  wd=200,H=30;
             $('#item_status').combobox({
                 width: wd,
                 height: H,
@@ -170,14 +169,14 @@
 
                 columns : [[
                     {
-                        field: 'VipName', title: '会员姓名', width: 120, align: 'center', resizable: false,
+                        field: 'VipName', title: '会员姓名', width: 120, align: 'left', resizable: false,
                         formatter:function(value ,row,index){
                             return value;
                         }
                     },
-                    { field: 'Phone', title: '手机号', width: 100, resizable: false, align: 'left' },
+                    { field: 'Phone', title: '手机号', width: 100, resizable: false, align: 'center' },
                     {
-                        field: 'CouponName', title: '优惠券名称', width: 100, align: 'left', resizable: false,
+                        field: 'CouponName', title: '优惠券名称', width: 100, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
                             var long = 8;
                             var html = ""
@@ -190,17 +189,17 @@
                          return html
                         }
                     },
-                    { field: 'CouponCode', title: '优惠券号', width: 120, align: 'left', resizable: false },
-                    { field: 'UnitName', title: '核销门店', width: 180, align: 'left', resizable: false },
+                    { field: 'CouponCode', title: '优惠券号', width: 120, align: 'center', resizable: false },
+                    { field: 'UnitName', title: '核销门店', width: 180, align: 'center', resizable: false },
 
                     {
-                        field: 'VerifyDate', title: '核销日期', width: 100, align: 'left', resizable: false,
+                        field: 'VerifyDate', title: '核销日期', width: 100, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
                             return value.replace("年", "-").replace("月", "-").replace("日", "");
                         }
                     },
-                    { field: 'VerifyPerson', title: '核销人员', width: 100, align: 'left', resizable: false },
-                    { field: 'ConponStatus', title: '状态', width: 80, align: 'left', resizable: false },
+                    { field: 'VerifyPerson', title: '核销人员', width: 100, align: 'center', resizable: false },
+                    { field: 'ConponStatus', title: '状态', width: 80, align: 'center', resizable: false },
 
 
                     {

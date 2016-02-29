@@ -1016,6 +1016,24 @@
     <Content Include="Module\holidayManage\css\style.css" />
     <Content Include="Module\holidayManage\js\queryList.js" />
     <Content Include="Module\holidayManage\queryList.aspx" />
+    <Content Include="Module\Index\css\IndexPage.css" />
+    <Content Include="Module\Index\images\arms.png" />
+    <Content Include="Module\Index\images\drop.png" />
+    <Content Include="Module\Index\images\drop1.png" />
+    <Content Include="Module\Index\images\droplist.png" />
+    <Content Include="Module\Index\images\gomore.png" />
+    <Content Include="Module\Index\images\list.png" />
+    <Content Include="Module\Index\images\member.png" />
+    <Content Include="Module\Index\images\money.png" />
+    <Content Include="Module\Index\images\order.png" />
+    <Content Include="Module\Index\images\partner.png" />
+    <Content Include="Module\Index\images\reward.png" />
+    <Content Include="Module\Index\images\rise.png" />
+    <Content Include="Module\Index\images\rise1.png" />
+    <Content Include="Module\Index\images\riselist.png" />
+    <Content Include="Module\Index\images\shop.png" />
+    <Content Include="Module\Index\IndexPage.aspx" />
+    <Content Include="Module\Index\js\IndexPage.js" />
     <Content Include="Module\integralCashback\css\style.css" />
     <Content Include="Module\integralCashback\images\duihao.png" />
     <Content Include="Module\integralCashback\js\socializeConfig.js" />
@@ -6401,7 +6419,11 @@
     <Compile Include="ApplicationInterface\Module\Basic\Holiday\DeleteHolidayAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Holiday\GetHolidayListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Basic\Holiday\SetHoliday.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\QuestionnaireAnswerRecord\DelQuestionnaireAnswerRecordAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\DelQuestionnaireAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\DownLoadQuestionnaireInfor.ashx.cs">
+      <DependentUpon>DownLoadQuestionnaireInfor.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireInforAH.cs" />
@@ -6488,7 +6510,7 @@
     <Content Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
     <Content Include="ApplicationInterface\Module\Order\SalesReturn\DownLoadSales.ashx" />
-    <Content Include="ApplicationInterface\Module\Item\ItemTreeHandler.ashx" />
+    <Content Include="ApplicationInterface\Module\Questionnaire\Questionnaire\DownLoadQuestionnaireInfor.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -8115,6 +8137,12 @@
     <Compile Include="Module\FormConfig\Handler\FormHandler.ashx.cs">
       <DependentUpon>FormHandler.ashx</DependentUpon>
     </Compile>
+    <Compile Include="Module\Index\IndexPage.aspx.cs">
+      <DependentUpon>IndexPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Module\Index\IndexPage.aspx.designer.cs">
+      <DependentUpon>IndexPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Module\LNewsType\Handler\LNewsTypeHander.ashx.cs">
       <DependentUpon>LNewsTypeHander.ashx</DependentUpon>
     </Compile>
@@ -8502,6 +8530,7 @@
     <Folder Include="Module\Coupon\Model\" />
     <Folder Include="Module\Coupon\Store\" />
     <Folder Include="Module\Coupon\View\" />
+    <Folder Include="Module\CreativeWarehouse\" />
     <Folder Include="Module\MapAnalysis\Common\LayoutResource\js\date\test\" />
     <Folder Include="Module\MapAnalysis\Common\LayoutResource\js\date\translations\" />
     <Folder Include="Module\VipCardCenter\Controller\" />

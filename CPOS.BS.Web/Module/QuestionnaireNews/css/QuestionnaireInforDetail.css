@@ -34,10 +34,9 @@
 .queryTermArea{display: inline-block; width: 100%;padding: 0px;background-color:#f2f2f2;border-top-left-radius: 20px;border-top-right-radius: 20px;}
 .contentArea_quetion {  width: 95%;margin: 31px auto;border: 1px solid #d8d8d8;  border-top-left-radius: 20px;border-top-right-radius: 20px;}
 .questiontitle {  display: block;line-height: 50px;background-color: #fafafa;border: 1px solid #d8d8d8;  font-size: 20px;padding-left: 40px;}
-.questiontitle span{display: block;
-  width: 8px;
-  height: 18px;
-  margin-top: 16px;
-  background-color: #00cccc;
-  margin-right: 10px;
-  float: left;}
+.questiontitle span{display: block; width: 8px;height: 18px;margin-top: 16px; background-color: #00cccc; margin-right: 10px; float: left;}
+
+.exportBtn {  background: url(../images/icon-export.png) no-repeat  center center;}
+.commonBtn {float: right; width: 82px; height: 32px; margin-left: 20px;cursor: pointer;}
+.batchdelete { background: url(../images/delwhite.png) no-repeat 10px  ;  background-color: #fb7a52;width: 107px;line-height: 30px;text-align: right;padding: 0px 17px;}
+.operation {display: inline-block; height: 60px;  padding: 12px;width: 100%;}

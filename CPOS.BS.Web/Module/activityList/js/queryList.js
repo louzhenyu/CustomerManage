@@ -170,7 +170,7 @@
                 /*  pageNumber:1,*/
                 //frozenColumns:[[]],
                 columns : [[
-                    {field : 'Title',title : '活动名称',width:110,align:'center',resizable:false,
+                    {field : 'Title',title : '活动名称',width:110,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value&&value.length>long){
@@ -206,8 +206,8 @@
                           return '<p class="handle winprize"  data-index="'+index+'"  data-oprtype="winprize">'+value+'</p>';
                         }
 					},
-                    {field : 'Status',title : '状态',width:40,align:'center',resizable:false,align:'center'},
-                    {field : 'EventID',title : '操作',width:50,align:'center',resizable:false,
+                    {field : 'Status',title : '状态',width:40,align:'center',resizable:false},
+                    {field : 'EventID',title : '操作',width:50,align:'left',resizable:false,
                     formatter: function (value, row, index) {
                         var ophtml = "";
 							var status = row.Status;
@@ -422,7 +422,8 @@
                     that.loadMoreData2(n);
                 },
                 getHref: function (n) {
-                    return '#';
+                    this.selectPage(n);
+                    that.loadMoreData2(n);
                 }
             }, true);
         },

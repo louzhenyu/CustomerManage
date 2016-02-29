@@ -59,6 +59,7 @@ require.config({
         ajaxform: '/Module/static/js/plugin/jquery.form',
         datetimePicker: '/Module/static/js/plugin/jquery.datetimepicker',
         kkpager: '/Module/static/js/plugin/kkpager',
+        touchslider: '/Module/static/js/plugin/touchslider',
 		lang: '/Framework/Javascript/Other/kindeditor/lang/zh_CN'
 
     }

@@ -358,10 +358,14 @@
                        if(orderinfo.DeliveryName=="到店自提"){
                            $(".DeliveryName1").hide();
                            $(".DeliveryName2").show();
+                           $(".DeliveryInformation").show();
+                           $(".ConsigneeInformation").hide();
 
                        }else{
                            $(".DeliveryName1").show();
                            $(".DeliveryName2").hide();
+                           $(".DeliveryInformation").hide();
+                           $(".ConsigneeInformation").show();
 
                        }
 
@@ -424,7 +428,6 @@
                        if (orderinfo.DeliveryName == "到店自提") {
                            that.loadData.opertionField.Addr = orderinfo.unit_address;//配送地址
                            that.loadData.opertionField.Phone = orderinfo.unit_tel;//手机号
-                           $("#orderInfo").form('load', { Field14: '', Field6: '', Field4: '' });
                        }
 
                        that.elems.operation.show();
@@ -850,26 +853,7 @@
             },
             saveDeliveryInfo: function (callback) {
                 var that = this;
-                if (that.opertionField.DeliveryType==1) {
-                    if (this.opertionField.ReceiveMan == "") {
-                        alert("联系人不能为空！");
-                        return;
-                    }
-
-                    if (this.opertionField.Phone == "") {
-                        alert("手机不能为空！");
-                        return;
-                    }
-
-
-
-
-                    if (this.opertionField.Addr == "") {
-                        alert("地址不能为空！");
-                        return;
-                    }
-                }
-
+               
                 $.util.oldAjax({
                     url: "/Module/Order/InoutOrders/Handler/Inout3Handler.ashx",
                     data: {

@@ -8,6 +8,7 @@
             tabel: $("#gridTable"),                   //表格body部分
             tabelWrap: $('#tableWrap'),
             QuestionnaireID: "",
+            QuestionnaireName:"",
             ActivityID:"",
             thead: $("#thead"),                    //表格head部分
             panlH: 116                           // 下来框统一高度
@@ -28,8 +29,71 @@
                     $(".showcontent").toggle();
                 }
             });
-        },
 
+            $(".batchdelete").on("click", function () {
+                if (that.elems.tabel.datagrid("getChecked").length < 1) {
+                    $.messager.alert("提示", "至少选择一项数据。");
+                    return;
+                }
+                $.messager.confirm("提示", "你是否确定要删除所选的数据吗？", function (r) {
+                    if (r) {
+                        var data = that.elems.tabel.datagrid("getChecked");
+                        var VipIDs=new Array();
+                        debugger;
+                        for (var i = 0; i < data.length; i++) {
+                             VipIDs[i] = data[i].ID;
+                        }
+                        that.DelQuestionnaireAnswerRecord(VipIDs);
+                    }
+                });
+
+            });
+
+            $(".exportBtn").on("click", function () {
+                if (that.elems.QuestionnaireID == "")
+                {
+                    $.messager.alert("提示", "数据尚未加载完，请稍后再试。");
+                    return;
+                }
+
+                $.messager.confirm("导出问卷详细列表", "你确定导出当前列表的数据吗？", function (r) {
+                    if (r) {
+                        that.exportList();
+                    }
+                });
+            });
+
+        },
+        //根据form数据 和 请求地址 导出数据到表格
+        exportExcel: function (data, url) {
+            var dataLink = JSON.stringify(data);
+            var form = $('<form>');
+            form.attr('style', 'display:none;');
+            form.attr('target', '');
+            form.attr('method', 'post');
+            form.attr('action', url);
+            var input1 = $('<input>');
+            input1.attr('type', 'hidden');
+            input1.attr('name', 'req');
+            input1.attr('value', dataLink);
+            $('body').append(form);
+            form.append(input1);
+            form.submit();
+            form.remove();
+        },
+        //导出订单列表
+        exportList: function (QuestionnaireID, QuestionnaireName) {
+            var that = this;
+            page.setCondition();
+            var getUrl = '/ApplicationInterface/Module/Questionnaire/Questionnaire/DownLoadQuestionnaireInfor.ashx?method=DownLoadQuestionnaireInfor';//&req=';
+            getUrl += "&ActivityID=" + that.elems.ActivityID;
+            getUrl += "&QuestionnaireID=" + that.elems.QuestionnaireID;
+            getUrl += "&filename=" + that.elems.QuestionnaireName + "--问卷明细";
+            var data = {
+                
+            };
+            this.exportExcel(data, getUrl);
+        },
 
 
 
@@ -79,7 +143,7 @@
 
                 method: 'post',
                 //iconCls : 'icon-list', //图标
-                singleSelect: true, //单选
+                singleSelect: false, //单选
                 // height : 332, //高度
                 fitColumns: false, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped: true, //奇偶行颜色不同
@@ -89,9 +153,18 @@
                 //sortName : 'brandCode', //排序的列
                 /*sortOrder : 'desc', //倒序
                  remoteSort : true, // 服务器排序*/
-                //idField : '', //主键字段
+                idField : 'ID', //主键字段
                 /*  pageNumber:1,*/
                 //frozenColumns:[[]],
+
+                frozenColumns: [[{
+                    field: 'ck',
+                    width: 70,
+                    title: '全选',
+                    align: 'center',
+                    checkbox: true
+                } //显示复选框
+                ]],
                 columns: [columns],
                 onLoadSuccess: function (data) {
                     that.elems.tabel.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
@@ -104,45 +177,55 @@
                     }
                     //that.elems.tabel.datagrid('getSelected');
 
+                    $(".datagrid-body").css("overflow", "auto");
+                    $(".datagrid-body").css("height", "100px");
+                   
 
+                }
+                , onClickCell: function (rowIndex, field, value) {
+                    if (field == "ck") {    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
+                        that.elems.click = false;
+                    } else {
+                        that.elems.click = true;
+                    }
                 }
             });
 
 
 
-            //分页
-            //data.Data={};
-            //data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
-            //var page=parseInt(that.loadData.args.start/15);
-            kkpager.generPageHtml({
-                pagerid: 'kkpager',
-                pno: that.loadData.args.PageIndex,
-                mode: 'click', //设置为click模式
-                //总页码
-                total: data.PageCount,
-                totalRecords: data.TotalCount,
-                isShowTotalPage: true,
-                isShowTotalRecords: true,
-                //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
-                //适用于不刷新页面，比如ajax
-                click: function (n) {
-                    //这里可以做自已的处理
-                    //...
-                    //处理完后可以手动条用selectPage进行页码选中切换
-                    this.selectPage(n);
-                    //让  tbody的内容变成加载中的图标
-                    //var table = $('table.dataTable');//that.tableMap[that.status];
-                    //var length = table.find("thead th").length;
-                    //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
+            ////分页
+            ////data.Data={};
+            ////data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
+            ////var page=parseInt(that.loadData.args.start/15);
+            //kkpager.generPageHtml({
+            //    pagerid: 'kkpager',
+            //    pno: that.loadData.args.PageIndex,
+            //    mode: 'click', //设置为click模式
+            //    //总页码
+            //    total: data.PageCount,
+            //    totalRecords: data.TotalCount,
+            //    isShowTotalPage: true,
+            //    isShowTotalRecords: true,
+            //    //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
+            //    //适用于不刷新页面，比如ajax
+            //    click: function (n) {
+            //        //这里可以做自已的处理
+            //        //...
+            //        //处理完后可以手动条用selectPage进行页码选中切换
+            //        this.selectPage(n);
+            //        //让  tbody的内容变成加载中的图标
+            //        //var table = $('table.dataTable');//that.tableMap[that.status];
+            //        //var length = table.find("thead th").length;
+            //        //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
 
-                    that.loadMoreData(n);
-                },
-                //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
-                getHref: function (n) {
-                    return '#';
-                }
+            //        that.loadMoreData(n);
+            //    },
+            //    //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
+            //    getHref: function (n) {
+            //        return '#';
+            //    }
 
-            }, true);
+            //}, true);
         },
         //加载更多的资讯或者活动
         loadMoreData: function (currentPage) {
@@ -170,10 +253,17 @@
                                 var columns = "";
 
                                 $(".QuestionnaireName").html(result.QuestionnaireName);
-                                if (result.TitleData.length > 0) {
-                                    for (var i = 0; i < result.TitleData.length; i++) {
+                                that.elems.QuestionnaireID = result.QuestionnaireID;
+                                that.elems.QuestionnaireName = result.QuestionnaireName;
 
-                                        columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + result.TitleData[i].Name + "',  resizable: true, align: 'center' },";
+                                if (result.TitleData) {
+                                    if (result.TitleData.length > 0) {
+                                        for (var i = 0; i < result.TitleData.length; i++) {
+                                            if (result.TitleData[i].NameID == "ID") {
+                                                break;
+                                            }
+                                            columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + result.TitleData[i].Name + "',  resizable: true, align: 'center' },";
+                                        }
                                     }
                                 }
                                 columns = "[" + columns + "]";
@@ -183,6 +273,29 @@
 
 
 
+                        } else {
+                            debugger;
+                            alert(data.Message);
+                        }
+                    }
+                });
+            }
+
+        },
+        DelQuestionnaireAnswerRecord: function ( VipIDs) {
+            var that = this;
+            debugger;
+            if (that.elems.ActivityID != null && that.elems.ActivityID != "") {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Gateway.ashx",
+                    data: {
+                        action: 'Questionnaire.QuestionnaireAnswerRecord.DelQuestionnaireAnswerRecord',
+                        VipIDs: VipIDs
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            var result = data.Data;
+                            that.loadPageData();
                         } else {
                             debugger;
                             alert(data.Message);

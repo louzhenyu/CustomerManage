@@ -98,8 +98,6 @@
 .succeed p{ color:#999;}
 .succeed .red{ color:#fc7a52;}
 
-.btnWrap .close{  float:right; margin-top:20px;font-size:14px;background:#ccc;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff; line-height:32px; float:right; }
-
 
 /* 上传文件按钮 */
  .uploadCSVFileBtn{float:left; position: relative; width: 96px; height: 40px; background:url(../images/SelectBtn.png) no-repeat; cursor:pointer;margin-right: 20px;}

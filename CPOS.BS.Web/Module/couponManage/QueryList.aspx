@@ -20,8 +20,8 @@
                           <form></form>
                           <form id="seach">
                                                   <div class="commonSelectWrap">
-                                                      <em class="tit">优惠券名称：</em>
-                                                      <label class="searchInput" style="width: 487px;">
+                                                      <em class="tit  w100">优惠券名称：</em>
+                                                      <label class="searchInput">
                                                           <input data-text="优惠券名称" data-flag="CouponTypeName" name="CouponTypeName" type="text"
                                                               value="">
                                                       </label>
@@ -43,12 +43,13 @@
                     <!--<h2 class="commonTitle">会员查询</h2>-->
 
                 </div>
-                <div class="tableWrap" id="tableWrap">
-                <div class="optionBtn" id="opt">
-                 <div class="commonBtn sales" data-flag="add" id="sales"> <img src="images/add.png"  >新增优惠券</div>
+                 <div class="optionBtn" id="opt">
+                 <div class="commonBtn icon w110  icon_add  sales r" data-flag="add" id="sales"> 新增优惠券</div>
 
 
                 </div>
+                <div class="tableWrap" id="tableWrap">
+               
                 <div class="cursorDef">
                    <div  id="gridTable" class="gridLoading">
                          <div  class="loading">
@@ -88,12 +89,12 @@
 
 
             <div class="optionclass">
-               <div class="commonSelectWrap">
-                             <em class="tit">数量:</em>
+               
+                             <div class="title">数量:</div>
                                 <div class="borderNone" >
                                  <input id="Amount" class="easyui-numberbox" data-options="width:180,height:34,min:0,precision:0,max:10000" name="IssuedQty" />
                                </div>
-                </div>
+               
             </div>
                 </form>
                 </script>

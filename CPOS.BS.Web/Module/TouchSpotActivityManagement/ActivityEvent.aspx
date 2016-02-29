@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -140,11 +140,7 @@
             padding: 15px 0 0 0;
         }
 
-        .jui-dialog .commonBtn {
-            width: 150px;
-            height: 45px;
-            line-height: 45px;
-        }
+       
 
         .jui-dialog .cancelBtn {
             border: none;
@@ -253,35 +249,11 @@
             }
 
 
-        /*添加活动*/
-        .addShareArea {
-            height: 75px;
-            padding: 21px 37px;
-        }
+      
 
-        .commonHandleBtn {
-            display: block;
-            width: 100px;
-            height: 32px;
-            line-height: 32px;
-            text-align: center;
-            font-size: 14px;
-            border-radius: 4px;
-            background: #07c8cf;
-            color: #fff;
-        }
+        
 
-            .commonHandleBtn:hover {
-                color: #fff;
-            }
-
-        #tableWrap .datagrid-header, #tableWrap .datagrid-htable {
-            height: 50px;
-        }
-
-        #tableWrap .datagrid-btable tr {
-            height: 40px;
-        }
+      
 
         #tableWrap .addBtn {
             display: block;
@@ -305,7 +277,7 @@
             height: auto;
             max-height:665px;
             position: fixed;
-            top: 5px;
+            top: 10px;
             margin-left: -318px;
         }
 
@@ -321,11 +293,6 @@
 
         .jui-dialog-addShare .btnWrap {
             padding: 15px 0 15px 0;
-        }
-
-        .jui-dialog .textbox {
-            border: none;
-            background: none;
         }
 
         .iconPlay, .iconPause, .editBtn, .running {
@@ -387,33 +354,8 @@
         <div class="contentArea_vipquery">
 
             <!--个别信息查询-->
-            <!--
-                <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
-                        <div class="item">
-                          <form></form>
-                          <form id="seach">
-                              <div class="commonSelectWrap">
-                                  <em class="tit">活动名称：</em>
-                                  <label class="searchInput" style="width:387px;">
-                                      <input data-text="活动名称" data-flag="item_name" name="item_name" type="text" value="">
-                                  </label>
-                              </div>
-                              <div class="commonSelectWrap">
-                                  <em class="tit">活动时间：</em>
-                                  <div class="selectBox">
-                                        <input type="text" data-flag="item_startTime" name="item_startTime" id="startDate" class="easyui-datebox" data-options="width:162,height:34"/>&nbsp;&nbsp;至&nbsp;&nbsp;<input type="text"  data-flag="item_endTime" name="item_endTime" class="easyui-datebox" validType="compareDate[$('#startDate').datebox('getText'),'前面选择的时间必须晚于该时间']" data-options="width:163,height:34"/>
-                                  </div>
-                              </div>
-                              <div class="moreQueryWrap">
-                                 <a href="javascript:;" class="commonBtn queryBtn">查询</a>
-                              </div>
-                          </form>
-
-                        </div>
-                </div>
-                -->
-            <div class="addShareArea">
-                <a href="javascript:;" class="commonHandleBtn" id="addShareBtn">+添加活动</a>
+            <div class="optionBtn">
+                <a href="javascript:;" class="commonBtn  icon w100  icon_add r" id="addShareBtn">添加活动</a>
             </div>
             <div class="tableWrap" id="tableWrap" style="display: inline-block; width: 100%;">
                 <table class="dataTable" id="gridTable"></table>
@@ -446,18 +388,16 @@
                 
                 <div class="commonSelectWrap">
                     <em class="tit">触点类型：</em>
-                    <label class="searchInput clearBorder">
                         <input id="ContactEventId" name="ContactEventId" value="" type="hidden" style="display: none" />
-                        <input data-text="触点类型" class="easyui-combobox" id="Activity_ContactTypeCode" data-options="required:true,width:190,height:32,invalidMessage:'必填',missingMessage:'必填'" missingMessage="必填" name="ContactTypeCode" type="text" value="" validtype='selectIndex'>
-                        
-                    </label>
+                        <input data-text="触点类型" class="easyui-combobox textbox combo" id="Activity_ContactTypeCode" data-options="required:true,width:190,height:32,invalidMessage:'必填',missingMessage:'必填'" missingMessage="必填" name="ContactTypeCode" type="text" value="" validtype='selectIndex'>
+                    
                 </div>
 
                 <div class="commonSelectWrap">
                     <em class="tit">活动名称：</em>
                     <label class="searchInput clearBorder">
-                        <input data-text="活动名称" class="easyui-validatebox" placeholder="请输入" id="Activity_ContactEventName" data-options="required:true,width:190,height:32,invalidMessage:'必填'" maxlength="40" name="ContactEventName" type="text" value="" validtype='length[1,60]'>
-                    </label>
+                       <input data-text="活动名称" class="easyui-validatebox" placeholder="请输入" id="Activity_ContactEventName" data-options="required:true,width:190,height:32,invalidMessage:'必填'" maxlength="40" name="ContactEventName" type="text" value="" validtype='length[1,60]'>
+                   </label>
                 </div>
 
                 <div class="commonSelectWrap">
@@ -469,51 +409,45 @@
                 </div>
                  <div class="commonSelectWrap"  id="ActivitySelect"  style="display: none">
                     <em class="tit">活动选择：</em>
-                    <label class="searchInput clearBorder">
-                        <input data-text="活动选择" class="easyui-combobox" id="Activity_Select" data-options="width:190,height:32,invalidMessage:'必填',editable:false" name="ShareEventId" type="text" value="" validtype='selectIndex'>
-                    </label>
+                        <input data-text="活动选择" class="easyui-combobox textbox combo" id="Activity_Select" data-options="width:190,height:32,invalidMessage:'必填',editable:false" name="ShareEventId" type="text" value="" validtype='selectIndex'>
+                   
                 </div>
 
                 <div class="commonSelectWrap">
                     <em class="tit">奖品选择：</em>
-                    <label class="searchInput clearBorder">
-                        <input data-text="奖品选择" class="easyui-combobox" id="Activity_PrizeType" data-options="required:true,width:190,height:32,invalidMessage:'必填'" name="PrizeType" type="text" value="" validtype='selectIndex'>
-                    </label>
+                       <input data-text="奖品选择" class="easyui-combobox textbox combo" id="Activity_PrizeType" data-options="required:true,width:190,height:32,invalidMessage:'必填'" name="PrizeType" type="text" value="" validtype='selectIndex'>
+                   
                 </div>
 
                 <div class="commonSelectWrap" >
                     <em class="tit">奖品数量：</em>
-                    <label class="searchInput clearBorder">
-                        <input data-text="奖品数量" class="easyui-numberbox" min="0" max="1000000" placeholder="请输入" id="Activity_PrizeCount" data-options="required:true,width:190,height:32,invalidMessage:'奖品数量不能超过券的生成数量',missingMessage:'奖品数量不能超过券的生成数量'" name="PrizeCount" type="text" data-flag="" value="">
-                    </label>
+                      <input data-text="奖品数量" class="easyui-numberbox" min="0" max="1000000" placeholder="请输入" id="Activity_PrizeCount" data-options="required:true,width:190,height:32,invalidMessage:'奖品数量不能超过券的生成数量',missingMessage:'奖品数量不能超过券的生成数量'" name="PrizeCount" type="text" data-flag="" value="">
+                    
                 </div>
 
                 <div class="commonSelectWrap" id="ActivityIntegral" style="display: none">
                     <em class="tit">积分：</em>
-                    <label class="searchInput clearBorder">
                         <input data-text="积分" class="easyui-numberbox" min="0" max="1000000" placeholder="请输入" id="Activity_Integral" data-options="width:190,height:32,invalidMessage:'必填',missingMessage:'积分必须为整数'" name="Integral" type="text" value="">
-                    </label>
+                   
                 </div>
 
                 <div class="commonSelectWrap" id="ActivityCouponType" style="display: none">
                     <em class="tit">优惠券：</em>
-                    <label class="searchInput clearBorder">
-                        <input data-text="优惠券" class="easyui-combobox" placeholder="请输入" id="Activity_CouponTypeID" data-options="invalidMessage:'优惠券数量为0时，触点活动状态自动更换为未启用。需要追加券后才可重新启用。',missingMessage:'优惠券数量为0时，触点活动状态自动更换为未启用。需要追加券后才可重新启用。'" name="CouponTypeID" type="text" value="" validtype='selectIndex'>
-                    </label>
+                       <input data-text="优惠券" class="easyui-combobox textbox combo" placeholder="请输入" id="Activity_CouponTypeID" data-options="height:32,invalidMessage:'优惠券数量为0时，触点活动状态自动更换为未启用。需要追加券后才可重新启用。',missingMessage:'优惠券数量为0时，触点活动状态自动更换为未启用。需要追加券后才可重新启用。'" name="CouponTypeID" type="text" value="" validtype='selectIndex'>
+                    
                 </div>
 
                 <div class="commonSelectWrap" id="ActivityEvent" style="display: none">
                     <em class="tit">活动名称：</em>
-                    <label class="searchInput clearBorder">
-                        <input data-text="活动名称" class="easyui-combobox" id="Activity_EventId" data-options="width:190,height:32,invalidMessage:'必填'" name="EventId" type="text" value="" validtype='selectIndex'>
-                    </label>
+                       <input data-text="活动名称" class="easyui-combobox textbox combo" id="Activity_EventId" data-options="width:190,height:32,invalidMessage:'必填'" name="EventId" type="text" value="" validtype='selectIndex'>
+                    
                 </div>
 
                 <div class="commonSelectWrap" id="ActivityChanceCount" style="display: none">
                     <em class="tit">抽奖次数：</em>
-                    <label class="searchInput clearBorder">
+                    
                         <input data-text="抽奖次数"  class="easyui-numberbox" min="0" max="100000" placeholder="请输入" id="Activity_ChanceCount" data-options="width:190,height:32,missingMessage:'抽奖次数必须为整数'" name="ChanceCount" type="text" value="">
-                    </label>
+                   
                 </div>
 
 
@@ -521,16 +455,17 @@
                 <div style="float: left;margin-left: 20px;">规则设置</div>
                 <div class="commonSelectWrap" >
                     <em class="tit">奖励次数：</em>
-                    <label class="searchInput clearBorder">
-                        <input data-text="奖励次数" class="easyui-combobox" min="0" max="100000" placeholder="请输入" id="Activity_RewardNumber" data-options="required:true,width:190,height:32,invalidMessage:'必填'" name="RewardNumber" type="text" value="" validtype='selectIndex'>
+                       <input data-text="奖励次数" class="easyui-combobox textbox combo" min="0" max="100000" placeholder="请输入" id="Activity_RewardNumber" data-options="required:true,width:190,height:32,invalidMessage:'必填'" name="RewardNumber" type="text" value="" validtype='selectIndex'>
 
                        
-                    </label>
+                    
                 </div>
             </form>
             <div class="btnWrap">
-                <a id="addActivity" href="javascript:;" class="commonBtn saveBtn">保存</a>
+                <a id="addActivity" href="javascript:;" class="commonBtn saveBtn ">保存</a>
+                <span style="display:none;">
                 <a id="cancelActivity"  href="javascript:;" class="commonBtn cancelBtn" style="margin-left: 16px;">取消</a>
+                    </span>
             </div>
         </div>
     </div>

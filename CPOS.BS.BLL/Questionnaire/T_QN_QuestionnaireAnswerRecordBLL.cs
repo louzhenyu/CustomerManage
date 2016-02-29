@@ -56,5 +56,17 @@ namespace JIT.CPOS.BS.BLL
         {
             return _currentDAO.GetUserModelList(AID, QNID);
         }
+
+        /// <summary>
+        /// 按照每个用户答题标识批量删除
+        /// </summary>
+        /// <param name="vipIDs">用户答题标识数组</param>
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void DeletevipIDs(object[] vipIDs)
+        {
+            _currentDAO.DeletevipIDs(vipIDs, null);
+            
+        }
+
     }
 }

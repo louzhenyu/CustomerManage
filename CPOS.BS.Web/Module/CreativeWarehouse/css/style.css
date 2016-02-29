@@ -1,0 +1,122 @@
+﻿@charset "utf-8";
+
+
+.contentleft {  float: left; font-size: 16px;padding:0px 10px 0px 20px;color:#666;}
+.spacing { margin: 10px 0px;}
+.thisseason {   width: 800px; }
+.thisseason .title{ padding: 10px 0px;border-bottom: 1px solid #e1e7ea;}
+.titleline {display: inline-block; width: 2px;height: 14px;background-color: #00a0e8;margin-right: 4px;}
+.thisseason .content{padding-top: 20px;  position: relative;}
+.nextseason {  width: 800px; }
+.nextseason .title{padding: 10px 0px;border-bottom: 1px solid #e1e7ea;}
+.nextseason .content{padding-top: 20px;overflow: auto;overflow-y:hidden;height: 277px;display: -webkit-box;}
+.nextseason .content .activityimg {  display: inline-block;  position:relative;height: 115px;  margin-bottom: 1px;}
+.nextseason .content .activityimg div{ position:absolute;width:100%;height:25px;background-color:rgba(0,0,0,0.5);color: #fff;  font-size: 12px;line-height: 23px;  bottom: 0px;padding-left: 10px;}
+.nextseason .content .activityimg img{  width: 266px;height: 115px;}
+.activitys {width: 266px;margin-right: 1px;}
+.contentright { float: left;  font-size: 16px;padding:0px 10px;color:#666;}
+.seasonlist { width:275px;}
+.seasonlist .title{padding: 10px 0px;}
+.seasonlist .content{padding: 10px;border: 1px solid #e1e7ea;  height: 320px;font-size: 10px;  width: 275px;  overflow: auto;}
+.seasonlist .content li{padding: 10px;}
+.seasonlist .content li span{padding-right: 20px;}
+.seasonbannerlist { width:275px;height:150px;margin: 20px 0px;}
+.QRcode {border: 1px solid #e1e7ea; width:275px;height:150px;font-size: 14px;}
+.QRcode img{width:118px;height:118px;margin: 15px 25px 15px 30px;}
+
+.apply {width:100px;height:30px;display:block;position: absolute;
+  bottom: 59px;
+  right: 20px;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  text-align: center;color: #fff;line-height: 25px;
+  font-size: 14px;cursor: pointer;}
+.Scan {width:100px;height:30px;display:block;position: absolute;
+  bottom: 19px;
+  right: 20px;
+  border: 2px solid #fff;
+  border-radius: 20px;
+  text-align: center;color: #fff;line-height: 25px;
+  font-size: 14px;cursor: pointer;}
+.qcode {  width: 165px;
+  height: 165px;
+  background-color: #fff;
+  position: absolute;
+  top: 339px;
+  right: -18px;
+    background: url(../images/qcodeimg.png) no-repeat;
+      z-index: 1;
+}
+.qcode img {
+width: 135px;
+height: 135px;
+margin: 20px 12px;
+}
+
+.thisseasontouchslider-item .qcode img{  width: 130px;
+  height: 130px;
+  margin: 14px 20px 14px 14px;}
+
+.touchsliderthisseason {
+position:relative;
+}
+.thisseasontouchslider-nav-item {
+  width: 8px;
+  height: 8px;
+    background: rgba(253, 253, 253, 0.5);
+  margin: 0 3px;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+}
+.thisseasontouchslider-item {width: 800px;
+  height: 340px;
+  display: inline-block;position: relative;}
+.thisseasontouchslider-item img{width: 800px;
+  height: 340px;}
+
+.thisseasontouchslider-nav-item-current {
+  background: #fff;
+}
+
+.thisseasontouchslider-nav {
+  text-align: center;
+  margin-top: 16px;
+    position: absolute;
+  bottom: 0px;
+  width: 100%;
+    height: 25px;
+}
+
+.touchslider {
+position:relative;
+}
+.touchslider-nav-item {
+  width: 8px;
+  height: 8px;
+  background: #ccc2c2;
+  margin: 0 3px;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+}
+
+.touchslider-nav-item-current {
+  background: #999;
+}
+
+
+.touchslider-nav {
+  text-align: center;
+  margin-top: 16px;
+    position: absolute;
+  bottom: 0px;
+  width: 100%;
+    height: 22px;
+}
+
+.applycontent {}
+.Applyimg {  margin-top: 45px;
+  text-align: center;}
+.Applystatus {  text-align: center;  margin-top: 30px;  font-size: 18px; font-weight: 600;}
+.Applysdesc {  text-align: center;  margin-top: 20px;font-size: 14px;}

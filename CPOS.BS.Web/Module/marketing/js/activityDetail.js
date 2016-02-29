@@ -402,6 +402,29 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
             }) ;
             /**************** -------------------弹出窗口初始化 end****************/
 
+
+            /*时间控件不能选择当前之前日期*/
+            $('#BeginDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return d1 <= date;
+                }
+            });
+
+            $("#name").datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    return d1 <= date;
+                }
+            });
+
+            that.elems.tagPanel.delegate(".deletebtn", "click", function () {
+                $(this).parents(".templatePanel").remove();
+            });
+
+
         },
         //添加优惠券;
         addCoupon:function(data){

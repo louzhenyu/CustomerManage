@@ -2,10 +2,6 @@
 
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.optionBtn{height:65px; padding-top: 20px; background: #f4f8fa; border: solid  1px #eee; border-bottom:none;}
-.optionBtn .commonBtn{ width:72px; background: #00cccc;line-height: 32px; height:32px; float: left; margin-left: 20px;}
-.optionBtn .sales{ width: 132px;}
-.optionBtn .sales img{margin-top: -3px; margin-right: 5px;}
 .moreQueryWrap{ float: left;margin-top: 12px;}
 
 #Tooltip .opts { width:52px; background: #00acee;line-height: 32px; height:32px;  }
@@ -23,9 +19,7 @@
 
 
 
-.moreQueryWrap{float: right;margin-top: 10px;}
 .moreQueryWrap .commonBtn{ display: block;}
-.moreQueryWrap .queryBtn{width:100px;height:32px;line-height:32px;}
 .moreQueryWrap #addOrder{width:100px;height:32px;line-height:32px;}
 .moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "å®‹ä½“";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
 .btnWrap{padding:35px 0;text-align:center;}

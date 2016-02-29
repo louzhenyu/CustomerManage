@@ -99,6 +99,10 @@
 			                        "Method": "Append"
 
 			                    },
+			                    beforeSend: function () {
+			                        $.util.isLoading()
+
+			                    },
 			                    success: function (data) {
 			                        if (data.IsSuccess && data.ResultCode == 0) {
 
@@ -808,7 +812,11 @@
 			var that = this;
 			$.util.ajax({
 			    url: that.elems.domain + "/ApplicationInterface/Gateway.ashx",
-				data: params,
+			    data: params,
+			    beforeSend: function () {
+			        $.util.isLoading()
+
+			    },
 				success: function(data) {
 				    if (data.IsSuccess && data.ResultCode == 0) {
 

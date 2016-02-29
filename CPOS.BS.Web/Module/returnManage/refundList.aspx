@@ -6,7 +6,7 @@
     <title>退款列表管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="<%=StaticUrl+"/module/returnManage/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -48,12 +48,13 @@
                     <!--<h2 class="commonTitle">会员查询</h2>-->
 
                 </div>
-                <div class="tableWrap" id="tableWrap">
-                    <div class="outoptionBtn ">
-                    <div class="commonBtn  export" data-flag="export">导出</div>
+                  <div class="optionBtn ">
+                    <div class="commonBtn icon icon_export w80 export r" data-flag="export">导出</div>
                   </div>
+                <div class="tableWrap" id="tableWrap">
+                  
 
-                <div class="optionBtn" id="opt">
+                <div class="tableList" id="opt">
                    <ul><li data-status="0" class="on"><em> 全部 </em></li>
                         <li data-status="1"><em>待退款 </em></li>
                         <li data-status="2"><em>已完成 </em></li>

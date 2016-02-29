@@ -40,11 +40,11 @@
         </div>
 
         <!--表格操作按钮-->
-        <div id="menuItems" class="tableHandleBox">
+        <div id="menuItems" class="optionBtn">
             <!--<span class="commonBtn _addVip">添加新会员</span>-->
-            <span class="commonBtn exportBtn">打印</span>
-            <span class="commonBtn affirmBtn" data-statusid=1>确认</span>
-            <span class="commonBtn finishBtn" data-statusid=2>完成</span>
+            <span class="commonBtn exportBtn w80 r">打印</span>
+            <span class="commonBtn affirmBtn w80 l" data-statusid=1>确认</span>
+            <span class="commonBtn finishBtn w80 l" data-statusid=2>完成</span>
 
         </div>    
         <div class="tableWrap">

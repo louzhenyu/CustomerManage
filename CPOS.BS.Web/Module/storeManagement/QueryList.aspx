@@ -136,7 +136,7 @@ background: url(images/icon-export.png) no-repeat center center;
 
 			            <div class="qb_member">
                             <div id="step1" class="member step">
-                                <div class="menber_title"><img src="images/lc_1.jpg" /></div>
+                                <div class="menber_title"><img src="images/lc_1.png" /></div>
                                 <div class="menber_center">
                                     <div class="menber_centernr">
                                         <div class="menber_centernrt">
@@ -150,7 +150,7 @@ background: url(images/icon-export.png) no-repeat center center;
                                             </div>
                                         </div>
                                         <div class="menber_centernrb" id="editLayer">
-                                            选择需要导入的CSV文件
+                                            选择需要导入的xlsx文件
                                             <p id="nofiletext" >未选择文件</p>
                                              <div class="CSVFilelist"></div>
                                             <input id="CSVFileurl" value="" type="hidden"  />
@@ -161,7 +161,7 @@ background: url(images/icon-export.png) no-repeat center center;
                             </div>
 
                              <div id="step2"  class="member step" style="display:none">
-                                <div class="menber_title"><img src="images/lc_2.jpg" /></div>
+                                <div class="menber_title"><img src="images/lc_2.png" /></div>
                                     <div class="menber_center">
                                         <div class="menber_centernr">
                                             <div class="loading">导入中...</div>
@@ -175,13 +175,13 @@ background: url(images/icon-export.png) no-repeat center center;
 
 
                             <div id="step3"  class="member step" style="display:none">
-                                <div class="menber_title"><img src="images/lc_3.jpg" /></div>
+                                <div class="menber_title"><img src="images/lc_3.png" /></div>
                                 <div class="menber_center">
                                     <div class="menber_centernr">
                                         <div class="succeed">导入完成<p>共<span id="inputTotalCount" class="inputCount"> 0</span> 条，成功导入<span  id="inputErrCount" class="red inputCount"> 0</span> 条</p></div>
                                         <div class="menber_centernrb1">
                 	                        下载错误报告，查看失败原因
-                                            <p><a id="error_report" href="javascipt:void(0)">error_report.csv</a><span>选择文件</span></p>
+                                            <p><a id="error_report" href="javascipt:void(0)">error_report.xlsx</a><span>选择文件</span></p>
                     
                                         </div>
         	                        </div>
@@ -195,7 +195,7 @@ background: url(images/icon-export.png) no-repeat center center;
 
 
       			</div>
-      			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:right;padding:5px 20px 0;">
+      			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;padding:5px 20px 0;">
       				<a id="startinport"  class="easyui-linkbutton commonBtn saveBtn" >开始导入</a>  
                       <a id="closebutton" style="display:none;" class="easyui-linkbutton commonBtn closeBtn close" >关闭</a>
       			</div>

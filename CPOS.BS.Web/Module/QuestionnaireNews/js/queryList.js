@@ -211,6 +211,8 @@
             debugger;
             var that = this;
             $(that.elems.sectionPage.find(".queryBtn").get(0)).trigger("click");
+
+            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             $.util.stopBubble(e)
         },
 
@@ -245,7 +247,7 @@
                  ] ],*/
                 columns : [[
 
-                    { field: 'QuestionnaireName', title: '问卷名称', width: 100, align: 'center', resizable: false },
+                    { field: 'QuestionnaireName', title: '问卷名称', width: 100, align: 'left', resizable: false },
                     {
                         field: 'QuestionnaireType', title: '类别', width: 50, resizable: false, align: 'center'
                        , formatter: function (value, row, index) {
@@ -260,7 +262,7 @@
                            return status;
                         }},
                    
-                    {field : 'Status',title : '操作',width:50,align:'center',resizable:false,
+                    {field : 'Status',title : '操作',width:50,align:'left',resizable:false,
                     formatter: function (value, row, index) {
                             var status = row.Status;
                             var optstr = "";
@@ -283,7 +285,6 @@
                     } else {
                         that.elems.dataMessage.show();
                     }
-
                     if (that.elems.isshow) {
                         $('#win').window({
                             title: "选择类型", width: 580, height: 430, top: ($(window).height() - 430) * 0.5,
