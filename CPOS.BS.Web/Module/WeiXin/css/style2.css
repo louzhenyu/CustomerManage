@@ -33,7 +33,6 @@ body{_height:100%;}
 .commonTitleWrap{height:52px;padding:0 15px;border-bottom:1px solid #cecedc;border-radius:4px 4px 0 0;background:#f2f2f9;}
 .commonTitleWrap h2{float:left;margin-top:15px;font-size:15px;font-weight:bold;color:#404853;}
 .commonTitleWrap span{float:right;width:100px;height:30px;line-height:30px;margin:12px 20px 0 0;border-radius:3px;text-align:center;color:#fff;cursor:pointer;}
-.commonTitleWrap .saveBtn{background:#b2c7ab;}
 .commonTitleWrap .cancelBtn{background:#949ca7;}
 
 

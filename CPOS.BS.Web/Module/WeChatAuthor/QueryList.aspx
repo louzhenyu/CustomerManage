@@ -20,7 +20,7 @@
                           <form></form>
                           <form id="seach">
                                                   <div class="commonSelectWrap">
-                                                      <em class="tit">微信账号名称：</em>
+                                                      <em class="tit">微信账号：</em>
                                                       <label class="searchInput">
                                                           <input data-text="微信账号名称" data-flag="CouponTypeName" name="WeiXinName" type="text"
                                                               value="">
@@ -45,13 +45,13 @@
                 </div>
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
-                 <div class="commonBtn sales" data-flag="add" id="sales"> 绑定微信账号
+                 <div class="commonBtn sales w120" data-flag="add" id="sales"> 绑定微信账号
                  <div class="authBtn">
                   <iframe id="wxAuth"  width="180px" height="50px" scrolling="0" frameborder="0" src=""></iframe>
                  </div>
 
                  </div>
-                <div class="commonBtn sales ImportWXUser" data-flag="ImportWXUser" id="Div1"> 拉取微信粉丝
+                <div class="commonBtn sales ImportWXUser w120" data-flag="ImportWXUser" id="Div1"> 拉取微信粉丝
                 </div>
                 </div>
                    <div  id="gridTable" class="gridLoading">

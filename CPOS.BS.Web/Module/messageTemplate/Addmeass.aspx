@@ -40,7 +40,7 @@
                                              <textarea data-text="内容" placeholder="请输入" class="easyui-validatebox" name="Content" data-options="required:true,width:621,height:126" ></textarea>
                                          </div>
                                      </div>
-           <div class="optionBtn" style="width: 363px;margin: 0 auto;">
+           <div class="btnWrapBox">
            <div class="btnOpt commonBtn" data-flag="save">保存</div>
            <div class="btnOpt commonBtn bg"  data-flag="preview">预览</div>
             </div>

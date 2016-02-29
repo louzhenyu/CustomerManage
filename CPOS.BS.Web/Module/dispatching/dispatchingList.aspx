@@ -21,21 +21,18 @@
 	.jui-dialog-dispatching .searchInput input{height:32px;}
 	.jui-dialog-dispatching .searchInput input[disabled='disabled'],
 	.jui-dialog-dispatching .searchInput textarea[disabled='disabled']{background:#ccc;}
-	.jui-dialog-dispatching .btnWrap .commonBtn{height:44px;line-height:44px;margin-top:20px;}
-	.jui-dialog-dispatching .cancelBtn{margin-left:60px;}
 	
-	.jui-dialog-dispatching .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(images/radio.png) no-repeat left center;cursor:pointer;}
-	.jui-dialog-dispatching .radioBox.on{background:url(images/radioOn.png) no-repeat left center;}
+	.jui-dialog-dispatching .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(../styles/images/newYear/radio.png) no-repeat left center;cursor:pointer;}
+	.jui-dialog-dispatching .radioBox.on{background:url(../styles/images/newYear/radioOn.png) no-repeat left center;}
 	
 	.jui-dialog-dispatching .uploadFileBox,.jui-dialog-dispatching .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
 	
 
 	.tableWrap{border:none;}
 
-	.tableWrap .operateWrap .editIcon{display:block;background:url(images/exit.png) no-repeat center center; width: 18px; height: 18px;}
+	.tableWrap .operateWrap .editIcon{cursor:pointer;display:block;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px; height: 18px;  }
 	
-	.radio em{  height: 28px;   width: 28px; background: url("../../images/newTemplate/radio.png") center center no-repeat; float: left; }
-.radio.on em{ background-image: url("../../images/newTemplate/radioOn.png")}
+	.datagrid-btable,.datagrid-btable tr{width:100%;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -43,7 +40,7 @@
 
 
 <div class="dispatchingListArea" id="section" data-js="js/dispatchingList">
-    <div class="tableWrap">
+    <div class="tableWrap cursorDef" >
        <!-- &lt;!&ndash; 已确认名单表格 &ndash;&gt;
         <table class="dataTable" style="display:inline-table;">
             <thead>
@@ -81,7 +78,7 @@
         
         <div class="commonSelectWrap" style="height:100px">
             <em class="tit"><span class="fontRed">*</span> 配送费描述:</em>
-            <p class="searchInput" style="height:100px"><textarea class="formInputBox" id="dispatching_describe" style="width:100%;height:100%;"></textarea></p>
+            <p class="searchInput" style="height:100px"><textarea class="formInputBox" id="dispatching_describe" placeholder="例如：配送范围仅上海，满100元面运费" style="width:100%;height:100%;"></textarea></p>
         </div>
         <div class="commonSelectWrap">
             <em class="tit"><span class="fontRed">*</span> 默认配送费:</em>
@@ -102,7 +99,7 @@
 
 
 <!-- 弹出，到店自提 -->
-<div id="jui-dialog-2" class="jui-dialog jui-dialog-dispatching">
+<div id="jui-dialog-2" class="jui-dialog jui-dialog-dispatching" style="width:500px;min-height:200px;margin-left:-250px;">
 	<div class="jui-dialog-tit">
     	<h2>到店自提</h2>
         <span class="jui-dialog-close"></span>
@@ -115,7 +112,7 @@
                 <p class="radioBox unstartUs">停用</p>
             </div>
         </div>
-        
+        <!--
         <div class="commonSelectWrap">
             <em class="tit"><span class="fontRed">*</span> 备货期:</em>
             <p class="searchInput"><input class="formInputBox" id="dispatching_stockup" type="text" /></p>
@@ -131,7 +128,7 @@
             <em class="tit"><span class="fontRed">*</span> 提货期最长:</em>
             <p class="searchInput"><input class="formInputBox" id="dispatching_pickup" type="text" value="" /></p><span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">天内</span>
         </div>
-        
+        -->
         <div class="btnWrap">
         	<a href="javascript:;" class="commonBtn saveBtn">保存</a>
             <a href="javascript:;" class="commonBtn cancelBtn">取消</a>

@@ -53,7 +53,7 @@
                 that.setCondition();
             });
             /**************** -------------------弹出easyui 控件 start****************/
-            var  wd=160,H=32;
+            var  wd=200,H=30;
 			//状态
             $('#unit_status').combobox({
                 width:wd,
@@ -111,28 +111,6 @@
                 });
             });
 			
-			/*
-            that.loadData.args.bat_id='2';
-            that.loadData.getClassify(function(data) {
-                $("#Tooltip").find(".treeNode").tree({
-                   //animate:true,
-                    checkbox:true,
-                    valueField: 'id',
-                    textField: 'text',
-                    data:data
-                });
-                data.push({id:0,text:"请选择"});
-                $('#SalesPromotion_id').combobox({
-                    width: wd,
-                    height: H,
-                    panelHeight: that.elems.panlH,
-                    valueField: 'id',
-                    textField: 'text',
-                    data: data
-                });
-            });
-			*/
-
             /**************** -------------------弹出窗口初始化 start****************/
             $('#win').window({
                 modal:true,
@@ -291,26 +269,26 @@
                 ]],
 				*/
                 columns : [[
-                    {field : 'Name',title : '店名',width:70,align:'center',resizable:false,
+                    {field : 'Name',title : '店名',width:70,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return value;
                         }
                     },
-                    {field : 'Contact',title : '联系人',width:125,align:'center',resizable:false,
+                    {field : 'Contact',title : '联系人',width:70,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return value;
                         }
                     },
-                    {field : 'Telephone',title : '电话',width:58,resizable:false,align:'center',resizable:false,formatter:function(value ,row,index){
+                    {field : 'Telephone',title : '电话',width:60,resizable:false,align:'left',resizable:false,formatter:function(value ,row,index){
                             return value;
                         }
 					},
-                    {field : 'Parent_Unit_Name',title : '上级组织',width:58,align:'center',resizable:false,
+                    {field : 'Parent_Unit_Name',title : '上级组织',width:80,align:'left',resizable:false,
                         formatter:function(value,row,index){
                            return value
                         }
                     },
-                    {field : 'StoreType',title : '类型',width:60,align:'center',resizable:false,formatter:function(value ,row,index){
+                    {field : 'StoreType',title : '类型',width:60,align:'left',resizable:false,formatter:function(value ,row,index){
                             var staus;
                             switch (value){
                                 case "DirectStore": staus="直营店";break;
@@ -320,7 +298,7 @@
                             return staus;
                         }
 					},
-                    {field : 'Status',title : '状态',width:80,align:'center',resizable:false,
+                    {field : 'Status',title : '状态',width:60,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var staus;
                             switch (value){
@@ -331,7 +309,7 @@
                             return staus;
                         }
                     },
-					{field : 'Id',title : '操作',width:80,align:'center',resizable:false,
+					{field : 'Id',title : '操作',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                            var htmlStr = '',
 						   	   status = row.Status;

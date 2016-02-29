@@ -120,3 +120,12 @@ position:relative;
   text-align: center;}
 .Applystatus {  text-align: center;  margin-top: 30px;  font-size: 18px; font-weight: 600;}
 .Applysdesc {  text-align: center;  margin-top: 20px;font-size: 14px;}
+
+
+
+.quicklyBox{width:382px;margin:40px auto 0;}
+.quicklyBtnBox{height:20px;line-height:20px;margin-top:8px;margin-bottom:20px;}
+.quicklyBtnBox a{float:left;width:50%;text-align:center;font-size:14px;color:#00a1e6;}
+.quicklyBtnBox a span{padding-right:18px;background:url(../images/icon-href.png) no-repeat right center;}
+.nextNotShow span{display:inline-block;margin-left:10px;line-height:20px;padding-left:22px;font-size:12px;background:url(../images/icon-check.png) no-repeat left center;color:#666;cursor:pointer;}
+.nextNotShow span.on{background:url(../images/icon-checked.png) no-repeat left center;}

@@ -481,7 +481,7 @@
 
                             columns: [[
 
-                                {field: 'PaymentTypeName', title: '配送方式', width: 196, align: 'left', resizable: false,
+                                {field: 'PaymentTypeName', title: '支付方式', width: 196, align: 'left', resizable: false,
                                     formatter:function(value ,row,index){
 
                                         if(row.IsNativePay==0){

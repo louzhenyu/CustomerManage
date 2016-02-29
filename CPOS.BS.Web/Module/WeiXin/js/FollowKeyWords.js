@@ -482,8 +482,7 @@
                 if (!!!flag) {
                     this.elems.uiMask.hide();
                     this.elems.addImageMessageDiv.hide();
-                }
-                else {
+                }else {
                     this.elems.uiMask.show();
                     //动态的填充弹出层里面的内容展示
                     this.loadPopMatrialText();

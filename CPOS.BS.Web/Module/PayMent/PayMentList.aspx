@@ -24,10 +24,14 @@
 	.jui-dialog-payMent .uploadFileBox,.jui-dialog-payMent .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
 	
 	#CupWap_certificatecilepath_upload{display:none;position:absolute;top:0;left:0;width:90px;height:32px;}
-	
+	#payMentList{height:120px;}
 	.tableWrap{border:none;}
 
 	.tableWrap .operateWrap .editIcon{background:url(images/exit.png) no-repeat center center; width: 18px;height: 18px; display: block;}
+	.datagrid-btable,.datagrid-btable tr{width:100%;}
+	.handleGuide{float:right;width:20px;height:30px;margin:3px 112px 0 0;background:url(images/icon-guide.png) no-repeat center center;}
+	.tip-payment{float:right;height:30px;line-height:30px;font-size:12px;text-align:right;padding:0 60px 0 45px;background:url(images/icon-tip.png) no-repeat left center;color:#f00;}
+	.tipWx{background:url(images/icon-tip.png) no-repeat left center;clear:left;height:30px;line-height:30px;margin-left:160px;padding-left:45px;font-size:14px;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -52,8 +56,11 @@
             </tbody>
         </table>-->
         <div id="payMentList"></div>
+        <p class="tip-payment">提示：您必须启用一种支付方式哦，不然微商城就要罢工啦！</p>
     </div>
+    
 </div>
+
 <div id="kkpager" style="padding-right:35px;text-align:right;"></div>
 
 <!-- 遮罩层 -->
@@ -66,6 +73,7 @@
     </div>
     <div class="payMentContent">
     	<div class="commonSelectWrap">
+        	<a href="http://help.chainclouds.cn/?p=700" target="_blank" class="handleGuide" title="操作指引"></a>
             <em class="tit">是否启用:</em>
             <div class="radioWrap">
                 <p class="radioBox" data-value='busine'>启用</p>
@@ -142,6 +150,7 @@
     </div>
     <div class="payMentContent">
     	<div class="commonSelectWrap">
+        	<a href="http://help.chainclouds.cn/?p=697" target="_blank" class="handleGuide" title="操作指引"></a>
             <em class="tit">是否启用:</em>
             <div class="radioWrap">
                 <p class="radioBox" data-value='busine'>启用</p>
@@ -163,7 +172,7 @@
             <em class="tit"><span class="fontRed">*</span> API秘钥:</em>
             <p class="searchInput"><input id="WXJS_parnterkey" type="text" value="" disabled="disabled"/></p>
         </div>
-        <p class="fontRed" style="padding-left:160px;font-size:14px;">提示：将字符串复制黏贴到微信支付商户平台，API安全的设置密钥中</p>
+        <p class="fontRed tipWx">提示：将字符串复制黏贴到微信支付商户平台，API安全的设置密钥中</p>
         
         <!--
         <div class="commonSelectWrap">

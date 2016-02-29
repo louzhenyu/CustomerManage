@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
   <meta charset="UTF-8" />
@@ -23,27 +23,12 @@ a:hover{color:#fff;}
 .contentArea-info .title .two.on em{background:url(images/icon-on2.png) no-repeat center center;}
 
 .borderArea{border:1px solid #d8d8d8;border-top:none;background:#fff;}
-.clearBorder .combo,.clearBorder .numberbox{
-	border: none;
-	background: none;
-}
-.textbox-invalid {
-	border-color: #d0d5d8;
-	background-color: #fff;
-}
-.textbox-addon-right {
-	right: 5px !important;
-	top: 1px;
-}
-.inlineBlockArea {
-	display: inline-block;
-	width: 100%;
-	min-height:351px;
-	padding: 40px 0;
-}
+.clearBorder .combo,.clearBorder .numberbox{border:none;background:none;}
+.textbox-invalid {border-color:#d0d5d8;background-color:#fff;}
+.textbox-addon-right {right:5px !important;top:1px;}
+.inlineBlockArea {display: inline-block;width:100%;min-height:351px;padding:40px 0;}
 
-.commonStepBtn{display:inline-block;width:148px;height:43px;line-height:43px;text-align:center;font-size:15px;border-radius:22px;background:#ccc;color:#fff;}
-.commonStepBtn.nextStepBtn{background:#fc7a52;}
+.commonStepBtn{display:inline-block;width:148px;height:43px;line-height:43px;text-align:center;font-size:15px;border-radius:22px;}
 
 
 .panel-body-noheader .combobox-item{font-size:12px;}
@@ -62,15 +47,13 @@ a:hover{color:#fff;}
 .jui-dialog .cancelBtn{border:none;background:#ccc;color:#fff;}
 
 
-.commonSelectWrap .searchInput{width:220px;font-family:"黑体";font-size:16px;color:#666;}
-.queryTermArea .commonSelectWrap{margin-right:10px;}
-.inlineBlockArea .commonSelectWrap .tit{width:110px;}
+
+
 #storeIntroduce{clear:left;height:auto;}
-#storeIntroduce .searchInput{width:616px;height:92px;}
-#storeIntroduce .searchInput textarea{display:block;width:100%;height:100%;padding:5px;}
-.cityLinkageBox .searchInput input{font-size:14px;}
+#storeIntroduce .searchInput{width:505px;height:92px;}
+#storeIntroduce .searchInput textarea{display:block;width:100%;height:100%;padding:5px;font-size:12px;}
 #longitude{background:#f2f2f2;}
-.coordQueryBtn{display:inline-block;width:65px;height:34px;line-height:34px;margin-left:10px;text-align:center;font-size:14px;border-radius:4px;background:#0cc;color:#fff;cursor:pointer;}
+.coordQueryBtn{display:inline-block;margin-left:10px;}
 
 
 .addStorePicArea{padding:40px 50px 50px 50px;}
@@ -83,7 +66,7 @@ a:hover{color:#fff;}
 .storePicBox .picBox img{display:block;width:100%;height:100%;border-radius:5px;}
 .storePicBox .picBox em{display:none;position:absolute;top:0;left:0;width:100%;height:100%;border-radius:5px;background:rgba(51,51,51,0.5) url(images/icon-trash.png) no-repeat center center;}
 .storePicBox .picBox:hover em{display:block;}
-
+.commonSelectWrap .searchInput input{font-size:12px;}
 
 /*插件的上传按钮*/
 form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
@@ -183,9 +166,9 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
           	<div class="borderArea">
                 <div class="inlineBlockArea">
 					  <div class="commonSelectWrap">
-                        <em class="tit">上级组织层级：</em>
+                        <em class="tit">组织层级：</em>
                         <label class="searchInput clearBorder">
-                          <input data-text="上级组织层级" class="easyui-combobox" id="Parent_Unit_Id" data-flag="Parent_Unit_Id" name="Parent_Unit_Id" type="text" value="" data-options="required:true"  validType='selectIndex'>
+                          <input data-text="上级组织层级" class="easyui-validatebox" id="Parent_Unit_Id" data-flag="Parent_Unit_Id" name="Parent_Unit_Id" type="text" value="" data-options="required:true"  validType='selectIndex'>
                         </label>
                       </div>
                       
@@ -222,7 +205,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                       
 
                       <div class="commonSelectWrap">
-                        <em class="tit">详细地址：</em>
+                        <em class="tit" style="width:62px;">详细地址：</em>
                         <label class="searchInput clearBorder">
                           <input data-text="详细地址" class="easyui-validatebox"  data-flag="Address" id="Address" name="Address" type="text" data-options="required:true"  value="" placeholder="请输入">
                         </label>
@@ -234,7 +217,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <label class="searchInput clearBorder">
                           <input data-text="经纬度" class="easyui-validatebox"  data-flag="longitude" id="longitude" name="longitude" type="text" data-options="required:true"  value="" placeholder="请查询">
                         </label>
-                        <span class="coordQueryBtn">查询</span>
+                        <span class="commonBtn w80 coordQueryBtn">查询</span>
                       </div>
                       
                       
@@ -278,7 +261,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
             </div>
             
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav02">保存</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn commonBtn" data-flag="#nav02">保存</a>
             </div>
           </form>
         </div>
@@ -329,7 +312,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                 </div>
             </div>
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn" data-flag="#nav03" id="twoSaveBtn">保存</a>
+            	<a href="javascript:;" class="commonStepBtn nextStepBtn commonBtn" data-flag="#nav03" id="twoSaveBtn">保存</a>
             </div>
           </form>
         </div>

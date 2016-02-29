@@ -2,7 +2,7 @@
     var temp = {
         pageList: '<%for(var i=0;i<list.length;i++){var idata = list[i];%>\
                         <tr>\
-                            <td><a href="pageEdit.aspx?key=<%=idata.PageKey%>&id=<%=idata.MappingID%>" class="editText" data-key="<%=idata.PageKey%>" data-id="<%=idata.MappingID%>">编辑</a></td>\
+                            <td><a href="pageEdit.aspx?key=<%=idata.PageKey%>&id=<%=idata.MappingID%>&PMenuID='+JITMethod.getUrlParam('PMenuID')+'&mid='+JITMethod.getUrlParam('mid')+'" class="editText" data-key="<%=idata.PageKey%>" data-id="<%=idata.MappingID%>">编辑</a></td>\
                             <td><%=idata.PageKey%></td>\
                             <td><%=idata.Title%></td>\
                             <td><%=idata.Version%></td>\
@@ -11,7 +11,7 @@
                     <%}%>',
 
         baseInfo: '<div class="areaWrap">\
-        	            <div class="clearfix">\
+        	            <div class="itemBox">\
             	            <div class="item">\
                 	            <em>页面名：</em>\
                                 <span><%=ModuleName%></span>\
@@ -21,7 +21,7 @@
                                 <span><%=Version%></span>\
                             </div>\
                         </div>\
-                        <div class="clearfix">\
+                        <div class="itemBox">\
             	            <div class="item">\
                 	            <em>更新人：</em>\
                                 <span><%=Auther%></span>\
@@ -31,27 +31,27 @@
                                 <span><%=LastUpdateTime%></span>\
                             </div>\
                         </div>\
-                        <div class="clearfix">\
+                        <div class="itemBox">\
             	            <div class="item width100">\
                 	            <em>页面地址：</em>\
-                                <span><a style="color:blue;" target="_blank" href="<%=PageUrl%>"><%=PageUrl%></a></span>\
+                                <span style="text-align:left;"><a style="color:blue;" target="_blank" href="<%=PageUrl%>"><%=PageUrl%></a></span>\
                             </div>\
                         </div>\
-                        <div class="clearfix">\
+                        <div class="itemBox">\
             	            <div class="item width100">\
-                	            <em>Auth认证页面地址：</em>\
-                                <span><%=PageAuthUrl%></span>\
+                	            <em>Auth认证：</em>\
+                                <span style="text-align:left;"><%=PageAuthUrl%></span>\
                             </div>\
                         </div>\
                     </div>',
         pageInfo:'<div class="commonItem clearfix">\
-                        <span class="tit">页面标题</span>\
+                        <span class="tit">页面标题：</span>\
                         <div class="handleWrap">\
                             <input type="text" class="inputBox jsNodeValue" value=\'<%=title%>\' data-node="1" />\
                         </div>\
                     </div>\
                     <div class="commonItem clearfix">\
-                        <span class="tit">页面模板</span>\
+                        <span class="tit">页面模板：</span>\
                         <div class="handleWrap w-495 jsNodeValue" data-value=\'<%=model%>\'  data-node="2" >\
                             <%for(var i=0;i<list.length;i++){var idata=list[i];%>\
                                 <div class="jsPageMoudle moudle <%if(idata.id==model){%>on<%}%>" data-id="<%=idata.id%>">\

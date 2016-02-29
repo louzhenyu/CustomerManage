@@ -1,12 +1,11 @@
 @charset "utf-8";
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.optionBtn{height:65px; padding-top: 20px; background: #f4f8fa; border: solid  1px #eee; border-bottom:none;}
-.optionBtn .commonBtn{ width:72px; background: #00cccc;line-height: 32px; height:32px; float: left; margin-left: 20px;}
-.optionBtn .sales{ width: 132px; position: relative;}
+.optionBtn{height:65px; padding-top:18px; background: #f4f8fa; border: solid  1px #eee; border-bottom:none;}
+.optionBtn .commonBtn{float:left;}
+.optionBtn .sales{position: relative;}
 .optionBtn .sales img{margin-top: -3px; margin-right: 6px;}
-.moreQueryWrap{ float: left;margin-top: 12px; }
-.moreQueryWrap .queryBtn{ height: 32px;line-height: 32px;}
+.moreQueryWrap{float:left;margin-top:9px; }
 .unbundling{background-image:url(../images/bind.png); width: 16px; height: 16px; margin: 0 auto;}
 
 .optionBtn .sales .authBtn{ position: absolute; top:-10px;left:-10px;opacity:0}

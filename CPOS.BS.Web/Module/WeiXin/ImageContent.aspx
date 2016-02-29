@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -15,8 +15,8 @@
     <div class="imageTextEditArea" id="section" data-js="js/ImageContent">
 	<div class="commonTitleWrap">
     	<h2>图文素材编辑详页</h2>
-        <span id="cancelBtn" class="cancelBtn">取消</span>
-        <span id="btnSaveData" class="saveBtn">保存</span>
+        <span id="cancelBtn" class="cancelBtn commonBtn w80">取消</span>
+        <span id="btnSaveData" class="saveBtn commonBtn w80">保存</span>
     </div>
     
     <div class="titleUploadArea">
@@ -249,8 +249,8 @@
 <script id="popDivTmpl" type="text/html">
     <div class="commonTitleWrap">
     	<h2><#=topTitle#></h2>
-        <span id="cancelBtn" class="cancelBtn">取消</span>
-        <span id="saveBtn" class="saveBtn">确定</span>
+        <span id="cancelBtn" class="cancelBtn commonBtn w80">取消</span>
+        <span id="saveBtn" class="saveBtn commonBtn w80">确定</span>
     </div>
 
     <div class="activeQueryWrap clearfix">
@@ -260,7 +260,7 @@
         <select id="pop_eventsType" class="selectBox">
         	<option selected>请选择</option>
         </select>
-        <span id="searchEvents" class="queryBtn">搜索</span>
+        <span id="searchEvents" class="queryBtn commonBtn w80">搜索</span>
     </div>
     
     <div class="activeListWrap">

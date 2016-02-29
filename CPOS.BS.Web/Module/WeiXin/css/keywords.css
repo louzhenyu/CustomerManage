@@ -1,31 +1,28 @@
 @charset "utf-8";
-
-
-
 .x-body.x-reset{font:14px/1.5 "微软雅黑";}
 .weChatTitle{width:100%;height:60px;line-height:60px;padding:0px 25px;border-bottom:1px solid #d0cedc;background:#f6f6f7;}
-.weChatTitle .digTit{font-size:18px;font-weight:bold;color:#666;}
+.weChatTitle .digTit{font-size:18px;color:#666;}
 .weChatMenuManage{float:left;margin:15px;border:1px solid #cecedc;border-radius:4px;}
+.ui-mask{display:none;position:fixed;_position:absolute;_width:100%;_height:100%;top:0px;left:0px;right:0px;bottom:0px;background:rgba(0,0,0,0.7);background:#000\9;filter:Alpha(opacity=70);z-index:999;}
 /*公共标题*/
-.commonTitleWrap{height:52px;padding:0 15px;border-radius:4px 4px 0 0;background:#f6f6f7;}
-.commonTitleWrap h2{float:left;margin-top:15px;font-size:15px;font-weight:bold;color:#666;}
+.commonTitleWrap{height:55px;padding:0 15px;border-radius:4px 4px 0 0;background:#f6f6f7;}
+.commonTitleWrap h2{float:left;margin-top:15px;font-size:15px;color:#666;}
 
-.commonTitleWrap .selectBox{width:210px;margin:9px 0 0 8px;padding:8px 0 8px 5px;border:none;border-radius:4px;background:#d0d4d7;color:#535b64;}
-.commonTitleWrap span{float:right;width:95px;height:30px;line-height:30px;margin:15px 0 0 12px;border-radius:3px;text-align:center;color:#fff;cursor:pointer;}
+.commonTitleWrap .selectBox{width:200px;height:30px;margin:12px 0 0 8px;border:none;border-radius:4px;background:#d0d4d7;color:#535b64;}
+.commonTitleWrap span{float:right;margin:12px 0 0 12px;border-radius:3px;text-align:center;color:#fff;cursor:pointer;}
 .commonTitleWrap .releaseBtn{height:35px;line-height:35px;margin-top:9px;background:#7ac682;}
-.commonTitleWrap .saveBtn,.commonTitleWrap .queryBtn{background:#b2c7ab;}
-.commonTitleWrap .addBtn{background:#a2c3c8;}
+.commonTitleWrap .addBtn{background:#ef5f4a;}
 .commonTitleWrap .delBtn{background:#ef5f4a;}
 .commonTitleWrap .cancelBtn{background:#949ca7;}
 
 /*关键字 左边区域*/
-.leftArea{float:left;width: 48%;height:200px;border-top:1px solid #ccc;}
+.leftArea{float:left;width:50%;height:200px;border-top:1px solid #ccc;}
 .leftArea .commonTitleWrap{height:61px;padding:0 10px;border-bottom:1px solid #cfcedc;background:#fff;}
 .leftArea .commonTitleWrap h2{margin-top:20px;}
 .leftArea .commonTitleWrap input{width:167px;height:30px;margin:13px 0 0 15px;text-indent:5px;border:1px solid #cfcedc;}
-.keywordTable table{width:476px;border-collapse:collapse;}
+.keywordTable table{width:100%;border-collapse:collapse;}
 .keywordTable th,.keywordTable .num{text-align:center;}
-.keywordTable th{height:42px;border:1px solid #c2c3c8;border-top:none;background:#f6f6f7;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #fefefe), color-stop(1,#edecf1));}
+.keywordTable th{height:42px;line-height:42px;border:1px solid #c2c3c8;border-top:none;background:#f6f6f7;background-image:-webkit-gradient(linear, left top, left bottom, color-stop(0, #fefefe), color-stop(1,#edecf1));}
 .keywordTable td{height:70px;border:1px solid #c2c3c8;cursor:pointer;}
 
 .keywordTable .num{border-left:none;width:60px;}
@@ -38,7 +35,7 @@
 .tempEditArea{padding:20px 30px;border-top:1px solid #cecedc;}
 
 .commonItem{margin-bottom:30px;}
-.commonItem .tit{float:left;min-width:115px;width:auto;_width:115px;height:36px;line-height:36px;font-size:15px;font-weight:bold;color:#404853;}
+.commonItem .tit{float:left;min-width:115px;width:auto;_width:115px;height:36px;line-height:36px;font-size:15px;color:#404853;}
 .commonItem .handleWrap{float:left;}
 .commonItem .inputBox{width:365px;height:32px;text-indent:5px;border:1px solid #cecedc;}
 
@@ -57,11 +54,11 @@
 .commonItem .sortTit{min-width:77px;text-align:center;}
 
 /*文本编辑*/
-.commonItem .handleWrap textarea{width:355px;height:125px;padding:5px;border:1px solid #cfcedc; resize:none;}
+.commonItem .handleWrap textarea{width:365px;height:125px;padding:5px;border:1px solid #cfcedc; resize:none;}
 .commonItem .mt-40{margin-top:40px;}
 
 /*图文消息*/
-.imgTextMessage h2{margin-bottom:10px;font-size:14px;font-weight:bold;color:#a2a2a2;}
+.imgTextMessage h2{margin-bottom:10px;font-size:14px;color:#a2a2a2;}
 .imgTextMessage .list{border-top:1px dashed #dbdbe5;background:#fbfbfb;}
 .imgTextMessage .item{position:relative;height:80px;padding:7px 0 0 20px;border-bottom:1px dashed #dbdbe5;}
 .imgTextMessage .picWrap{float:left;width:90px;height:65px;margin-right:20px;background:#e7e7e7;}
@@ -74,22 +71,23 @@
 .imgTextMessage .item.hover{background:#ecf6ff;}
 .imgTextMessage .item.hover .delBtn{display:block;}
 
-.imgTextMessage .addBtn{float:left;width:100px;height:30px;line-height:30px;margin:25px 20px;text-align:center;border-radius:3px;background:#b2c7ab;color:#fff;cursor:pointer;}
+.imgTextMessage .addBtn{float:left;margin:25px 20px;cursor:pointer;}
 
 
 /*默认回复 页面*/
 .defaultReplyArea{width:1036px;}
-.defaultReplyArea .commonTitleWrap{height:60px;border-top:1px solid #cfcedc;border-bottom:1px solid #cfcedc;border-radius:0px;background:#fff;}
+.defaultReplyArea .commonTitleWrap{height:55px;border-top:1px solid #cfcedc;border-bottom:1px solid #cfcedc;border-radius:0px;background:#fff;}
 .defaultReplyArea .tempEditArea{border-top:none;width:600px;margin:0 auto;}
 /*添加图文消息-弹层*/
 .addImgMessagePopup{display:none;width:582px;padding-bottom:20px;position:fixed;_position:absolute;top:10px;left:50%;margin-left:-290px;border-radius:4px;background:#fff;z-index:9999;}
+.addImgMessagePopup .pagination,.weChatMenuManage .pagination{display:block;width:202px;margin:10px auto;}
 .addImgMessagePopup .commonTitleWrap{padding:0 20px;background:#f2f2fa;}
 .addImgMessagePopup .commonTitleWrap span{width:80px;}
 .addImgMessageWrap{height:95px;padding:32px 0 0 25px;border-radius:3px 3px 0 0;border-bottom:1px solid #cfcedc;background:#fff;}
-.addImgMessageWrap .tit{float:left;height:32px;line-height:32px;font-size:15px;font-weight:bold;color:#66666d;}
-.addImgMessageWrap input,.addImgMessageWrap select{float:left;width:152px;height:30px;_line-height:30px;margin:0 20px 0 12px;padding:0;text-indent:5px;border:1px solid #cecedc;border-radius:4px;background:#f8f8fa;}
-.addImgMessageWrap select{width:175px;height:auto;padding:6px 0 6px 5px;cursor:pointer;}
-.addImgMessageWrap .queryBtn{float:left;width:80px;height:34px;line-height:34px;text-align:center;border-radius:4px;background:#a2c3c8;color:#fff;cursor:pointer;}
+.addImgMessageWrap .tit{float:left;height:32px;line-height:32px;font-size:15px;color:#66666d;}
+.addImgMessageWrap input,.addImgMessageWrap select{float:left;width:150px;height:30px;margin:0 20px 0 12px;padding:0;text-indent:5px;border:1px solid #cecedc;border-radius:4px;background:#f8f8fa;}
+.addImgMessageWrap select{cursor:pointer;}
+.addImgMessageWrap .queryBtn{float:left;cursor:pointer;}
 
 
 .addImgMessagePopup .radioBox{float:left;width:25px;height:25px;margin:16px 20px 0 0;background:url(images/on-icon3.png) no-repeat center center;cursor:pointer;}

@@ -6,12 +6,12 @@
     <title>卡类型管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="<%=StaticUrl+"/module/activateCard/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/activateCard/css/style.css?v=0.5"%>" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.3">
+        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.4">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
@@ -54,6 +54,26 @@
 
       	</div>
       </div>
+      
+      
+      <!-- 快速上手 -->
+      <div style="display:none;">
+            <div id="winQuickly" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
+                <div class="easyui-layout" data-options="fit:true" id="panlconent">
+                    <div data-options="region:'center'" style="padding:10px;">
+                        <div class="quicklyBox">
+                            <div><img src="images/card-quickly.png" alt="" /></div>
+                        </div>
+                        <div class="quicklyBtnBox">
+                            <a href="http://help.chainclouds.cn/?p=874" style="text-indent:5px;" target="_blank"><span>操作指引</span></a>
+                            <a href="http://help.chainclouds.cn/?p=1396" style="text-indent:13px;" target="_blank"><span>操作指引</span></a>
+                            <a href="http://help.chainclouds.cn/?p=730" style="text-indent:25px;" target="_blank"><span>操作指引</span></a>
+                        </div>
+                        <p class="nextNotShow"><span>下次不再显示</span></p>
+                    </div>
+                </div>
+            </div>  
+        </div>
 
 
         <!--收款-->

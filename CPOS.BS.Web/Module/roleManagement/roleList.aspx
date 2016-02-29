@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
@@ -9,25 +9,16 @@
 	.queryTermArea{border-bottom:1px dashed #dcdcdc;background:#fafafa;}
 	.queryTermArea .item{display:inline-block;}
     .queryTermArea .commonSelectWrap{margin-right:0px;}
-	.commonSelectWrap .selectBox{width:232px;}
 	#opt{padding-top:17px;border-top:none;background:#fff;}
-	.optionBtn .commonBtn{width:100px;}
-	.commonSelectWrap .tit{width:105px;}
-	.moreQueryWrap{float:left;margin-left:25px;}
+	.moreQueryWrap{float:left;margin:10px 0 0 25px;}
 	.optionBtn .exportBtn,.optionBtn .entranceBtn{float:right;}
-	.optionBtn .exportBtn{margin-right:40px;}
-	.moreQueryWrap .queryBtn{width:73px;}
+
 	.textbox-addon-right{right:9px !important;}
-	#addRoleBtn{width:115px; text-indent:20px;background:#0cc url(images/icon-add.png) no-repeat 20px center;}
 	.datagrid-header td, .datagrid-body td, .datagrid-footer td{cursor:inherit;}
 	.datagrid-body .datagrid-row{}
-	.datagrid-body .handle{display:inline-block;width:30px;height:39px;}
-	.deleteBtn{margin-left:15px;background:url(images/delete.png) no-repeat center center;}
-	.editBtn{background:url(images/edit.png) no-repeat center center;}
-	
 	#win .commonSelectWrap{margin:12px 10px 32px 0;}
 	#win .searchInput{width:232px;}
-	#win .searchInput .combo{width:230px !important;border-width:0px;}
+	#win .searchInput .combo{width:230px !important;border-width:0px;background:none;}
 	.textbox-invalid{border:none;background:none;}
 	.limitsTreeBox{float:left;height:200px;width:380px;margin-left:5px;border:1px solid #d0d5d8;border-radius:3px;overflow-x:auto;}
 	#btnWrap{height:60px !important;}
@@ -47,7 +38,7 @@
                           <form id="seach">
                               <div class="commonSelectWrap">
                                   <em class="tit">角色：</em>
-                                  <label class="searchInput" style="width:232px;">
+                                  <label class="searchInput" style="">
                                       <input data-text="角色" data-flag="role_name" name="role_name"   id="role_name" type="text" value="" placeholder="请输入">
                                   </label>
                               </div>
@@ -72,7 +63,7 @@
                 </div>
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
-                	<div class="commonBtn" id="addRoleBtn">新增角色</div>
+                	<div class="commonBtn icon icon_add w100 r" id="addRoleBtn">新增角色</div>
                 </div>
                    <div class="">
                         <table class="dataTable" id="gridTable">
@@ -111,7 +102,7 @@
 			<div class="commonSelectWrap">
 			  <em class="tit">角色：</em>
 				<label class="searchInput clearBorder">
-				  <input data-text="角色" class="easyui-validatebox" id="role_name2" data-options="required:true"  name="Role_Name" type="text" value="" placeholder="请输入2-6位字符"  validType='length[2,6]'>
+				  <input data-text="角色" class="easyui-validatebox" id="role_name2" data-options="required:true"  name="Role_Name" type="text" value="" placeholder="请输入2-6个中文字符"  validType='length[2,6]'>
 			   </label>
 			</div>
 			

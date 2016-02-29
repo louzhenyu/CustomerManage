@@ -100,7 +100,7 @@
     <em class="tit">引导关注二维码:</em>
     <div class="inputBox">
       <div class="logo" style="width: 90px; height: 90px;" data-name="GuideQRCode"><img src="images/imgDefault.png"></div>
-      <div class="uploadTip" style="left: 110px; width: 500px;">
+      <div class="uploadTip" style="left: 110px; width: 508px;">
         <div class="uploadBtn btn">
             <em class="upTip">上传</em>
              <div class="jsUploadBtn" ></div>

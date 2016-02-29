@@ -15,8 +15,8 @@
             click:true,
             dataMessage:  $("#pageContianer").find(".dataMessage"),
             panlH:116,                          // 下来框统一高度
-			width:232,
-			height:32,
+			width:200,
+			height:30,
 			roleId:'',
 			isSys:0
         },
@@ -237,23 +237,23 @@
                 ]],
 				*/
                 columns : [[
-                    {field : 'Role_Name',title : '角色',width:70,align:'center',resizable:false,
+                    {field : 'Role_Name',title : '角色',width:100,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return value;
                         }
                     },
-                    {field : 'type_name',title : '所属层级',width:60,align:'center',resizable:false,formatter:function(value ,row,index){
+                    {field : 'type_name',title : '所属层级',width:100,align:'left',resizable:false,formatter:function(value ,row,index){
                             return value;
                         }
 					},
-                    {field : 'Def_App_Name',title : '应用系统',width:80,align:'center',resizable:false,
+                    {field : 'Def_App_Name',title : '应用系统',width:100,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                              return value;
                         }
                     },
-					{field : 'Role_Id',title : '操作',width:80,align:'center',resizable:false,
+					{field : 'Role_Id',title : '操作',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                           var htmlStr='<a href="javascript:;" title="编辑" data-index='+index+' class="handle editBtn"></a><a href="javascript:;" title="删除" class="handle deleteBtn"  data-index='+index+' ></a>';
+                           var htmlStr='<a href="javascript:;" title="编辑" data-index='+index+' class="handle editBtn opt exit"></a><a href="javascript:;" title="删除" class="handle deleteBtn opt delete"  data-index='+index+' ></a>';
                             return htmlStr;
                         }
                     }

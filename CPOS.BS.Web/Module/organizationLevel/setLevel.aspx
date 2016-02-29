@@ -51,14 +51,13 @@ a:hover{color:#fff;}
 .commonHandleBtn{display:block;width:132px;height:32px;line-height:32px;text-align:center;font-size:14px;border-radius:4px;background:#07c8cf;color:#fff;}
 .addPrizeArea .commonHandleBtn{}
 
-.commonStepBtn{display:inline-block;width:148px;height:43px;line-height:43px;text-align:center;font-size:15px;border-radius:22px;background:#ccc;color:#fff;}
-.commonStepBtn.nextStepBtn{background:#fc7a52;}
+.commonStepBtn{display:inline-block;width:148px;height:43px;line-height:43px;text-align:center;font-size:15px;border-radius:22px;color:#fff;}
 
 /*设置组织层级*/
 .frameworkArea{height:490px;}
 .frameworkArea .subsetArea{position:relative;float:left;width:265px;height:100%;border-right:1px solid #d8d8d8;}
 .frameworkArea .addBtnBox{position:absolute;bottom:0;left:0;width:100%;height:72px;text-align:center;border-top:1px solid #d8d8d8;}
-.frameworkArea .addSubBtn{display:inline-block;width:103px;height:33px;line-height:33px;margin-top:20px;border-radius:4px;background:#0cc;color:#fff;}
+.frameworkArea .addSubBtn{display:inline-block;margin-top:20px;}
 .frameworkArea .handleArea{margin-left:265px;}
 .frameworkArea .levelContentBox{}
 .frameworkArea a.disableBtn{background:#ccc;cursor:default;}
@@ -68,10 +67,9 @@ a:hover{color:#fff;}
 .levelContentBox .text-tip{width:500px;line-height:26px;margin:0 auto;text-indent:2em;font-size:14px;color:#999;}
 
 .levelContentBox .handleBtn{width:230px;padding:55px 0 25px 0;margin:0 auto;text-align:center;}
-.levelContentBox .handleBtn a{display:inline-block;width:103px;height:33px;line-height:33px;border-radius:4px;background:#0cc;color:#fff;}
+.levelContentBox .handleBtn a{display:inline-block;}
 .levelContentBox .handleBtn a.disableBtn{background:#ccc;cursor:default;}
 .levelContentBox .handleBtn .delBtn{margin-left:15px;}
-.levelContentBox .handleBtn .editBtn,.levelContentBox .handleBtn .delBtn{}
 
 .levelInfoBox{width:200px;margin:0 auto;}
 .levelItem{margin-bottom:10px;line-height:32px;font-size:16px;font-family:"黑体";color:#999;}
@@ -175,7 +173,7 @@ a:hover{color:#fff;}
                 <div class="frameworkArea">
                 	<div class="subsetArea">
                     	<div class="treeBox"></div>
-                    	<div class="addBtnBox"><a class="addSubBtn" href="javascript:;">增加子组织</a></div>
+                    	<div class="addBtnBox"><a class="addSubBtn commonBtn w100" href="javascript:;">增加子组织</a></div>
                     </div>
                     <div class="handleArea">
                     	<p class="titleItem">组织详情</p>
@@ -200,9 +198,9 @@ a:hover{color:#fff;}
                             </div>
                             
                             <div class="handleBtn">
-                            	<a class="editBtn disableBtn" href="javascript:;">修改</a>
-                                <a class="saveBtn" href="javascript:;" style="display:none">保存</a>
-                                <a class="delBtn disableBtn" href="javascript:;">删除</a>
+                            	<a class="editBtn disableBtn commonBtn w80" href="javascript:;">修改</a>
+                                <a class="saveBtn commonBtn w80" href="javascript:;" style="display:none;border-radius:4px;">保存</a>
+                                <a class="delBtn disableBtn commonBtn w80" href="javascript:;">删除</a>
                             </div>
                             
                             <p class="text-tip">提示：拥有下级组织（包括门店）的组织单位需在完成下级组织的删除或迁出后，方可进行删除操作。</p>
@@ -256,6 +254,6 @@ a:hover{color:#fff;}
 <#}#>
 </script>
   
-<script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>" defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>" ></script> 
+<script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>" defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>" ></script>
 
 </asp:Content>

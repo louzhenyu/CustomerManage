@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 
@@ -32,7 +32,7 @@
     <div class="defaultReplyArea">
     	<div class="commonTitleWrap">
         	<h2>关注回复</h2>
-            <span id="btnSaveData" class="saveBtn">保存</span>
+            <span id="btnSaveData" class="saveBtn commonBtn w80">保存</span>
         </div>
         
         <div class="tempEditArea">
@@ -63,7 +63,7 @@
        
                     
                 </div>
-                <span class="addBtn">添加</span>	
+                <span class="addBtn commonBtn w80">添加</span>	
             </div>
          </div> 
     </div>
@@ -76,8 +76,8 @@
 <div class="addImgMessagePopup" id="addImageMessage">
 	<div class="commonTitleWrap">
         <h2>添加图文消息</h2>
-        <span class="cancelBtn">取消</span>
-        <span class="saveBtn">确定</span>
+        <span class="cancelBtn commonBtn w80">取消</span>
+        <span class="saveBtn commonBtn w80">确定</span>
     </div>
     
     <div class="addImgMessageWrap clearfix">
@@ -87,7 +87,7 @@
         <select class="selectBox" id="imageCategory">
         	<option selected>请选择</option>
         </select>
-        <span class="queryBtn">查询</span>
+        <span class="queryBtn commonBtn w80">查询</span>
     </div>
     
     
@@ -194,8 +194,8 @@
 <script id="popDivTmpl" type="text/html">
     <div class="commonTitleWrap">
     	<h2><#=topTitle#></h2>
-        <span id="cancelBtn" class="cancelBtn">取消</span>
-        <span id="saveBtn" class="saveBtn">确定</span>
+        <span id="cancelBtn" class="cancelBtn commonBtn w80">取消</span>
+        <span id="saveBtn" class="saveBtn commonBtn w80">确定</span>
     </div>
 
     <div class="activeQueryWrap clearfix">

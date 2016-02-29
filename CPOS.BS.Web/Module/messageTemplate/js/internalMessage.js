@@ -161,15 +161,15 @@
                 ]],*/
                 columns : [[
 
-                    {field : 'Title',title : ' 标题',width:105,align:'left',resizable:false},
-                    {field : 'Content',title : '内容',width:180,align:'left',resizable:false},
+                    {field : 'Title',title : ' 标题',width:100,align:'left',resizable:false},
+                    {field : 'Content',title : '内容',width:150,align:'left',resizable:false},
                     {field : 'LastUpdateTime',title : '更新日期',width:100,align:'left',resizable:false},
-                    {field : 'brand',title : '编辑',width:36,align:'center',resizable:false,
+                    {field : 'brand',title : '编辑',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return '<p class="fontC exit" data-index="'+index+'" data-oprtype="exit"></p>';
                         }
                     },
-                    {field : 'TemplateID',title : '删除',width:36,align:'center',resizable:false,
+                    {field : 'TemplateID',title : '删除',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
                         }

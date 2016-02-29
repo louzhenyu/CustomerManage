@@ -16,8 +16,8 @@
             click:true,
             dataMessage:  $("#pageContianer").find(".dataMessage"),
             panlH:116,                          // 下来框统一高度
-			width:232,
-			height:32
+			width:200,
+			height:30
         },
         select:{
             isSelectAllPage:false,                 //是否是选择所有页面
@@ -110,7 +110,7 @@
 							   });
 						   }
 						});
-					break; 
+					break;
 				}
 				$.util.stopBubble(e);
             });
@@ -273,43 +273,43 @@
                 ]],
 				*/
                 columns : [[
-                    {field : 'User_Code',title : '用户名',width:50,align:'center',resizable:false,
+                    {field : 'User_Code',title : '用户名',width:80,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return value;
                         }
                     },
-                    {field : 'User_Name',title : '姓名',width:30,align:'center',resizable:false,formatter:function(value ,row,index){
+                    {field : 'User_Name',title : '姓名',width:80,align:'left',resizable:false,formatter:function(value ,row,index){
                             return value;
                         }
 					},
-                    {field : 'UnitName',title : '单位',width:80,align:'center',resizable:false,
+                    {field : 'UnitName',title : '单位',width:80,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                              return value;
                         }
                     },
-					{field : 'role_name',title : '角色',width:80,align:'center',resizable:false,
+					{field : 'role_name',title : '角色',width:80,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                              return value;
                         }
                     },
-					{field : 'User_Status_Desc',title : '状态',width:30,align:'center',resizable:false,
+					{field : 'User_Status_Desc',title : '状态',width:50,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                            	return value;
                         }
                     },
-					{field : 'WqrURL',title : '下载二维码',width:30,align:'center',resizable:false,
+					{field : 'WqrURL',title : '下载二维码',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return row.User_Id ? '<a href="/Module/Basic/User/Handler/UserHandler.ashx?method=DownloadQRCodeNew&user_id=' + row.User_Id + '" target="_brank" class="downImg">下载</a>' : '';
                         }
                     },
-					{field : 'User_Id',title : '操作',width:90,align:'center',resizable:false,
+					{field : 'User_Id',title : '操作',width:100,align:'left',resizable:false,
                         formatter:function(value ,row,index){
 						   var text = row.User_Status==1?'running':'pause',
 						   	   tit = row.User_Status==1?'停用':'启用';
-                           var htmlStr='<a href="javascript:;" data-flag="reset" data-index='+index+' class="handle resetBtn" title="重置密码"></a>\
-								<a href="javascript:;" data-flag="edit" data-index='+index+' class="handle editBtn" title="编辑"></a>\
-								<a href="javascript:;" data-flag="'+text+'" data-index='+index+'  class="handle '+text+'Btn" title="'+tit+'"></a>\
-								<a href="javascript:;" data-flag="delete" data-index='+index+'  class="handle deleteBtn" title="删除"></a>';
+                           var htmlStr='<a href="javascript:;" data-flag="reset" data-index='+index+' class="handle resetBtn opt reset" title="重置密码"></a>\
+								<a href="javascript:;" data-flag="edit" data-index='+index+' class="handle editBtn opt exit" title="编辑"></a>\
+								<a href="javascript:;" data-flag="'+text+'" data-index='+index+'  class="opt handle '+text+'Btn" title="'+tit+'"></a>\
+								<a href="javascript:;" data-flag="delete" data-index='+index+'  class="handle deleteBtn opt delete" title="删除"></a>';
                             return htmlStr;
                         }
                     }
@@ -387,7 +387,7 @@
         loadMoreData: function (currentPage) {
             var that = this;
             that.loadData.args.PageIndex = currentPage;
-			that.loadData.args.start=parseInt(9*(that.loadData.args.PageIndex-1));
+			that.loadData.args.start=parseInt(10*(that.loadData.args.PageIndex-1));
             that.loadData.getCommodityList(function(data){
                 that.renderTable(data);
             });

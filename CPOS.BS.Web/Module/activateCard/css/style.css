@@ -1,37 +1,4 @@
 @charset "utf-8";
-
-.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
-.commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.optionBtn{height:65px; padding-top: 20px; background: #f4f8fa; border: solid  1px #eee; border-bottom:none;}
-.optionBtn .commonBtn{ width:72px; background: #00cccc;line-height: 32px; height:32px; float: left; margin-left: 20px;}
-.optionBtn .sales{ width: 132px;}
-.optionBtn .sales img{margin-top: -3px; margin-right: 5px;}
-
-#Tooltip .opts { width:52px; background: #00acee;line-height: 32px; height:32px;  }
-#Tooltip  .btnList { margin: 15px; width: 120px;}
-
-.r{float: right}.l{float: left}
-
-.fontC{ width: 18px; height: 18px; margin: 0 auto; background:no-repeat center center;}
-.red{color:red}
-
-
-
-
-
-.moreQueryWrap .commonBtn{ display: block; background: #00cccc; margin-left: 32px;}
-.moreQueryWrap .queryBtn{width:100px;height:32px;line-height:32px;}
-.moreQueryWrap #addOrder{width:100px;height:32px;line-height:32px;}
-.moreQueryWrap .more{display:block;width:102px;margin-top:5px;padding-right:4px;text-align:center;font:14px/1.2em "å®‹ä½“";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 5px;color:#2d83cf;}
-.btnWrap{padding:35px 0;text-align:center;}
-.btnWrap a{display:inline-block;}
-.cancelBtn{height:38px;line-height:38px;border:1px solid #fe7c24;background:#fff;color:#fe7c24;}
-.cancelBtn,.saveBtn{border-radius:38px;}
-.cancelBtn:hover{background:transparent;color: #fe7c24}
-.panel-header, .panel-body {
-    border: none;
-}
-.rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left;}
 /*上传图片样式*/
 .commonSelectWrap .handleLayer{ display: block;float: left;margin-left: 5px}
 .handleLayer .jsAreaItem{width:385px; position: relative;}
@@ -62,7 +29,11 @@
 #Children{border: none; max-height: 258px; height: auto;overflow-x: auto;width: 248px;}
 #Children input{ border: 1px solid #ccc; width: 160px;}
 #Children .add{ background:none; color: #00acee; font-size: 15px;}
-.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 
-.datagrid-row td:first-of-type div,.datagrid-header-row td:first-of-type div{padding-left:0;}
-.rowText{text-align:center;}
+
+.quicklyBox{width:614px;margin:40px auto 0;}
+.quicklyBtnBox{height:20px;line-height:20px;margin-top:8px;margin-bottom:20px;}
+.quicklyBtnBox a{float:left;width:33.33%;text-align:center;font-size:14px;color:#00a1e6;}
+.quicklyBtnBox a span{padding-right:18px;background:url(../images/icon-href.png) no-repeat right center;}
+.nextNotShow span{display:inline-block;margin-left:10px;line-height:20px;padding-left:22px;font-size:12px;background:url(../images/icon-check.png) no-repeat left center;color:#666;cursor:pointer;}
+.nextNotShow span.on{background:url(../images/icon-checked.png) no-repeat left center;}

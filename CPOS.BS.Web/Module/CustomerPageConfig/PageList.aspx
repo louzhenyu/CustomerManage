@@ -9,17 +9,17 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div id="section"  class="commonOutArea" data-js="CustomerPageConfig/pageList">
+    <div id="section"  class="commonOutArea" data-js="js/pageList.js">
         <div class="pageUserConfigArea">
             <div class="queryWrap clearfix">
-                <span id="publicBtn" class="queryBtn">发布</span>
+                <span id="publicBtn" class="queryBtn commonBtn w80">发布</span>
             </div>
 		    <div class="queryWrap clearfix">
         	    <span class="tit">页面KEY</span>
                 <input id="keyInput" type="text" class="inputKey">
                 <span class="tit">页面名</span>
                 <input id="nameInput" type="text" class="inputName">
-                <span id="searchBtn" class="queryBtn">查询</span>
+                <span id="searchBtn" class="queryBtn commonBtn w80">查询</span>
             </div>
         
             <div class="queryListWrap">

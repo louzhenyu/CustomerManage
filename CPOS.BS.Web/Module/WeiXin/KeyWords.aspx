@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 
@@ -28,8 +28,8 @@
     	<div class="commonTitleWrap">
             <h2>关键字</h2>
             <input id="keys" type="text" />
-            <span class="addBtn">添加</span>
-            <span id="keyQuery" class="queryBtn">查询</span>
+            <span class="addBtn commonBtn w80">添加</span>
+            <span id="keyQuery" class="queryBtn commonBtn w80">查询</span>
         </div>
         
         <div class="keywordTable">
@@ -44,8 +44,8 @@
     
     <div class="rightArea">
     	<div class="commonTitleWrap">
-            <span id="delBtn" class="delBtn">删除</span>
-            <span id="btnSaveData" class="saveBtn">保存</span>
+            <span id="delBtn" class="delBtn commonBtn w80">删除</span>
+            <span id="btnSaveData" class="saveBtn commonBtn w80">保存</span>
         </div>
         
         <div class="tempEditArea">
@@ -98,7 +98,7 @@
        
                     
                 </div>
-                <span class="addBtn">添加</span>	
+                <span class="addBtn commonBtn w80">添加</span>	
             </div>
 
 
@@ -114,8 +114,8 @@
 <div class="addImgMessagePopup" id="addImageMessage">
 	<div class="commonTitleWrap">
         <h2>添加图文消息</h2>
-        <span class="cancelBtn">取消</span>
-        <span class="saveBtn">确定</span>
+        <span class="cancelBtn commonBtn w80">取消</span>
+        <span class="saveBtn commonBtn w80">确定</span>
     </div>
     
     <div class="addImgMessageWrap clearfix">
@@ -125,7 +125,7 @@
         <select class="selectBox" id="imageCategory">
         	<option selected>请选择</option>
         </select>
-        <span class="queryBtn">查询</span>
+        <span class="queryBtn commonBtn w80">查询</span>
     </div>
     
     
@@ -188,7 +188,7 @@
                     <b><#=item.Name#></b>
                     <div data-menu="<#=JSON.stringify(item)#>"  class="subMenuWrap">
                         <em class="pointer"></em>
-                        <a href="javascript:;" data-parentId="<#=item.MenuId#>" class="addBtn">添加</a>
+                        <a href="javascript:;" data-parentId="<#=item.MenuId#>" class="addBtn commonBtn w80">添加</a>
                         <#for(var j=0;j<item.SubMenus.length;j++){ var subItem=item.SubMenus[j];if(subItem!=null){#>
                             <a href="javascript:;"   data-menu="<#=JSON.stringify(subItem)#>" class="tempSubMenu <#=subItem.Status==1?'select':''#>"><#=subItem.Name#></a>
                             <#}#>
@@ -241,8 +241,8 @@
 <script id="popDivTmpl" type="text/html">
     <div class="commonTitleWrap">
     	<h2><#=topTitle#></h2>
-        <span id="cancelBtn" class="cancelBtn">取消</span>
-        <span id="saveBtn" class="saveBtn">确定</span>
+        <span id="cancelBtn" class="cancelBtn commonBtn w80">取消</span>
+        <span id="saveBtn" class="saveBtn commonBtn w80">确定</span>
     </div>
 
     <div class="activeQueryWrap clearfix">

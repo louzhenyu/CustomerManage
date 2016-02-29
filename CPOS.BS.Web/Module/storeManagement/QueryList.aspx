@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
@@ -6,30 +6,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="<%=StaticUrl+"/module/storeManagement/css/style.css?v=0.64"%>" rel="stylesheet" type="text/css" />
     <style type="text/css">
-	.queryTermArea{background:#ecf1f5;}
-    .queryTermArea .commonSelectWrap{margin-right:0px;}
-	#opt{padding-top:17px;background:#f4f8fb;}
-	.optionBtn .commonBtn{width:100px;}
-	.commonSelectWrap .tit{width:105px;}
+	.queryTermArea{border-bottom:1px dashed #dcdcdc;background:#fafafa;}
 	.moreQueryWrap{float:left;margin-left:20px;}
 	.optionBtn .exportBtn{display:none;margin-right:40px;}
-	.moreQueryWrap .queryBtn{width:73px;}
-	.iconPlay,.iconPause{display:inline-block;width:30px;height:39px;}
+	.iconPlay,.iconPause{display:inline-block;width:18px;height:39px;}
 	.iconPlay{background:url(images/running.png) no-repeat center center;}
 	.iconPause{background:url(images/pause.png) no-repeat center center;}
-    .importBtn, .exportBtn {
-float: left;
-width: 82px;
-height: 32px;
-margin-left: 20px;
-cursor: pointer;
-}
-    .importBtn {
-background: url(images/icon-import.png) no-repeat center center;
-}
-    .exportBtn {
-background: url(images/icon-export.png) no-repeat center center;
-}
 	.loading{width:81%;}
     </style>
 </asp:Content>
@@ -45,7 +27,7 @@ background: url(images/icon-export.png) no-repeat center center;
                           <form id="seach">
                               <div class="commonSelectWrap">
                                   <em class="tit">店名：</em>
-                                  <label class="searchInput" style="width:250px;">
+                                  <label class="searchInput" >
                                       <input data-text="店名" data-flag="unit_name" name="unit_name" type="text" value="" placeholder="请输入店名">
                                   </label>
                               </div>
@@ -66,8 +48,8 @@ background: url(images/icon-export.png) no-repeat center center;
                                   </div>
                               </div>
                               <div class="moreQueryWrap">
-                                                         <a href="javascript:;" class="commonBtn queryBtn">查询</a>
-                                                       </div>
+                                   <a href="javascript:;" class="commonBtn queryBtn w80">查询</a>
+                              </div>
 
                               
                               <div class="commonSelectWrap">
@@ -76,9 +58,6 @@ background: url(images/icon-export.png) no-repeat center center;
                                   <input id="Parent_Unit_ID" name="Parent_Unit_ID" />
                                   </div>
                               </div>
-
-
-
                         </form>
 
                         </div>
@@ -88,29 +67,9 @@ background: url(images/icon-export.png) no-repeat center center;
                 </div>
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
-                	<div class="commonBtn" id="addStoreBtn">添加门店</div>
-
-                    
-                    <div class="importBtn"  id="inportStoreBtn"></div>
-                    <div class="exportBtn"></div>
-                    
-                    <!--
-                    <div class="commonBtn " data-flag="putaway"><img src="images/jiatous.png"  >  上架</div>
-                    <div class="commonBtn" data-flag="soldOut"><img src="images/jiatoux.png"  >   下架</div>
-                    <div class="commonBtn sales" data-flag="salesTooltip" id="sales"> <img src="images/cxfzbtn.png"  >更改商品分组</div>
-                    -->
-                 <div style="display: none">
-                        <div id="Tooltip">
-                               <div class="treeNode"></div>
-
-                              <div class="btnList">
-                                <div class="commonBtn opts l"  data-flag="sales"> 确定 </div>
-                                 <div class="commonBtn opts r"  data-flag="cannel">取消</div>
-                               </div>
-                        </div>
-
-                 </div>
-
+                	<div class="commonBtn icon w100 icon_add r" id="addStoreBtn">新增门店</div>
+                    <div class="icon icon_import commonBtn w80 r"  id="inportStoreBtn">导入</div>
+                    <div class="exportBtn commonBtn w80">导出</div>
                 </div>
                    <div>
                    		<table class="dataTable" id="gridTable">

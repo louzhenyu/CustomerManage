@@ -304,12 +304,12 @@
                         }
 						//待开发
                     },
-                    {field : 'UnitName',title : '单位',width:120,align:'center',resizable:false,
+                    {field : 'UnitName',title : '单位',width:100,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                              return value;
                         }
                     },
-					{field : 'ApplicationDescription',title : '系统',width:30,align:'center',resizable:false,
+					{field : 'ApplicationDescription',title : '系统',width:50,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                            	return value;
                         }
@@ -320,11 +320,11 @@
                         }
                     },
 					
-					{field : 'User_Id',title : '操作',width:50,align:'center',resizable:false,
+					{field : 'User_Id',title : '操作',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
 						   var text = row.User_Status==1?'running':'pause';
-                           var htmlStr='<a href="javascript:;" data-flag="edit" data-index='+index+' class="handle editBtn" title="编辑"></a>\
-								<a href="javascript:;" data-flag="delete" data-index='+index+'  class="handle deleteBtn" title="删除"></a>';
+                           var htmlStr='<a href="javascript:;" data-flag="edit" data-index='+index+' class="handle editBtn opt exit" title="编辑"></a>\
+								<a href="javascript:;" data-flag="delete" data-index='+index+'  class="handle deleteBtn opt delete" title="删除"></a>';
                             return htmlStr;
                         }
                     }
@@ -476,7 +476,7 @@
 			//console.log(rowObj);
 			
             var that=this,
-				tit='添加角色';
+				tit='新增角色';
 			if(rowObj!=''){
 				tit = '编辑角色';
 			}	

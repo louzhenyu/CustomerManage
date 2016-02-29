@@ -14,7 +14,7 @@
 </asp:Content>
 <asp:Content ID="Content2"  ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <body cache>
-<div class="allPage" id="section" data-js="js/distributor.js?ver=0.1">
+<div class="allPage" id="section" data-js="js/distributor.js?ver=0.2">
     <!-- 内容区域 -->
     <div class="contentArea_vipquery">
         <!--个别信息查询-->

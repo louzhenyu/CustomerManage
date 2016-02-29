@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <title>创意仓库</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="<%=StaticUrl+"/module/CreativeWarehouse/css/style.css?v=0.5"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/CreativeWarehouse/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.3">
+        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.4">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <div class="contentleft">
@@ -103,6 +103,26 @@
       		</div>
 
       	</div>
+        
+      <!-- 快速上手 -->
+      <div style="display:none;">
+    <div id="winQuickly" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
+        <div class="easyui-layout" data-options="fit:true" id="panlconent">
+            <div data-options="region:'center'" style="padding:10px;">
+                <div class="quicklyBox">
+                	<div><img src="images/creative-quickly.png" alt="" /></div>
+                </div>
+                <div class="quicklyBtnBox">
+                    <a href="http://help.chainclouds.cn/?p=1444" style="text-indent:78px;" target="_blank"><span>操作指引</span></a>
+                    <a href="http://help.chainclouds.cn/?p=814" style="text-indent:-35px;" target="_blank"><span>操作指引</span></a>
+                </div>
+                <p class="nextNotShow"><span>下次不再显示</span></p>
+            </div>
+        </div>
+    </div>  
+</div>  
+        
+        
         <%-- 当季 --%>
     <script id="tpl_InSeasonList" type="text/html">
         <# for(i=0;i<ThemeList.length;i++){ _data=ThemeList[i]; #>

@@ -1,13 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
-    <title>新建用户</title>
+    <title>新增用户</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="<%=StaticUrl+"/module/staffManagement/css/style.css?v=0.62"%>" rel="stylesheet" type="text/css" />
     <style type="text/css">
-	
-	.contentArea{font-family:"黑体";}
+
 	.queryTermArea{border-bottom:1px solid #dcdcdc;background:#fff;}
 	.queryTermArea .item{display:inline-block;}
     .queryTermArea .commonSelectWrap{margin-right:0px;}
@@ -21,13 +20,13 @@
 	#addRoleBtn{width:115px; text-indent:20px;background:#0cc url(images/icon-add.png) no-repeat 20px center;}
 	
 	.datagrid-body .datagrid-row{height:45px;}
-	.datagrid-body .handle{display:inline-block;width:30px;height:45px;margin-left:8px;}
-	.deleteBtn{background:url(images/delete.png) no-repeat center center;}
-	.editBtn{background:url(images/edit.png) no-repeat center center;}
+	#tableWrap .handle{margin:6px 16px 0 0;}
+	/*.deleteBtn{background:url(images/delete.png) no-repeat center center;}
+	.editBtn{background:url(images/edit.png) no-repeat center center;}*/
 	.resetBtn{background:url(images/icon-reset.png) no-repeat center center;}
 	.pauseBtn{background:url(images/pause.png) no-repeat center center;}
 	.runningBtn{background:url(images/running.png) no-repeat center center;}
-	.setUnitBtn{background:url(images/icon-tree01.png) no-repeat center center;}
+	.setUnitBtn{display:inline-block;width:30px;height:45px;background:url(images/icon-tree01.png) no-repeat center center;}
 	.setUnitBtn.on{background:url(images/icon-tree02.png) no-repeat center center;}
 	
 	#addProm{margin-top:35px;}
@@ -44,10 +43,10 @@
 	.bigTitle{height:65px;line-height:65px;padding:0 25px;font-size:18px;font-family:"黑体";border-bottom:1px dashed #dcdcdc;background:#fff;color:#333;}
 	.smallTitle{height:55px;font-size:15px;border-bottom:1px solid #dcdcdc;background:#fafafa;color:#333;}
 	.smallTitle span{display:inline-block;line-height:16px;margin:20px 0 0 50px;padding-left:10px;border-left:3px solid #07c8cf;}
-	.addStaffBtn{float:right;width:82px;height:33px;line-height:33px;margin:11px 50px 0 0;text-align:center;border-radius:4px;background:#fc7a52;color:#fff;}
+	.addStaffBtn{float:right;margin:12px 50px 0 0;}
 	.addStaffBtn:hover{color:#fff;}
 	.tableWrap{margin:20px 50px 0;border-radius:5px;}
-	.panel.datagrid{min-height:300px;width:100%;border-radius:5px;}
+	.panel.datagrid{min-height:300px;width:100%;border-radius:5px;border-left:1px solid #e1e7ea;}
 	.datagrid-btable{width:100%;}
 	.datagrid-btable tr:nth-last-of-type(1) td{border:none;}
 	.staffBtn a{width:145px;height:43px;line-height:43px;margin:0 15px;font-size:18px;font-family:"Micorsoft YaHei";border-radius:22px;}
@@ -62,7 +61,7 @@
         <div class="allPage" id="section" data-js="js/staffDetail.js?ver=0.5">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
-            	<div class="bigTitle">新建用户</div>
+            	<div class="bigTitle">新增用户</div>
                 <div class="smallTitle"><span>基本信息</span></div>
                 <!--信息查询-->
                 <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
@@ -103,10 +102,10 @@
                         </div>
                 </div>
                 <div class="smallTitle">
-                	<a href="javascript:;" class="addStaffBtn">添加</a>
+                	<a href="javascript:;" class="addStaffBtn commonBtn w80 icon icon_add">新增</a>
                 	<span>角色/权限</span>
                 </div>
-                <div class="tableWrap" id="tableWrap">
+                <div class="tableWrap cursorDef" id="tableWrap">
                    <div class=""> <table class="dataTable" id="gridTable"></table>  </div>
                     <div id="pageContianer">
                     <div class="dataMessage" style="display:none">没有符合条件的查询记录</div>

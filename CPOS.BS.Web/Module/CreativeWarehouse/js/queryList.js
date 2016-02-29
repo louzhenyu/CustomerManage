@@ -7,7 +7,15 @@
             this.loadPageData();
         },
         initEvent: function () {
-            var that = this;
+            var that = this,
+				$notShow = $('.nextNotShow span');
+			$notShow.on('click',function(){
+				if($notShow.hasClass('on')){
+					$notShow.removeClass('on');
+				}else{
+					$notShow.addClass('on');
+				}
+			})
             
 
 
@@ -141,6 +149,7 @@
 
                 $(".seasonlist_ul").append(bd.template("tpl_seasonlist", data));
             });
+			that.quicklyDialog();
         },
 		
 		
@@ -322,7 +331,42 @@
                 }
             }
 			 
-        }
+        },
+		
+		quicklyDialog: function(){
+			var that=this,
+				$notShow = $('.nextNotShow span'),
+				cooksName = '';
+			$('#winQuickly').window({title:"快速上手",width:600,height:422,top:($(window).height() - 422) * 0.5,left:($(window).width() - 600) * 0.5,
+			onClose:function(){
+				if($notShow.hasClass('on')){
+					$.util.setCookie('chainclouds_management_system_creative', 'zmind');
+				}
+				//var mid = JITMethod.getUrlParam("mid"),PMenuID = JITMethod.getUrlParam("PMenuID");
+				//location.href = "/module/newVipManage/querylist.aspx?mid=" +mid+"&PMenuID="+PMenuID;
+			}
+			});
+			cooksName = $.util.getCookie('chainclouds_management_system_creative');
+			if(!cooksName){
+				$(document).ready(function() {
+					setTimeout(function(){
+						$('#winQuickly').window('open');
+					},1000);
+				});
+			}else{
+				$(document).ready(function() {
+					$('#winQuickly').window('close');
+				});
+			}
+			//改变弹框内容，调用百度模板显示不同内容
+			/*$('#panlconent').layout('remove','center');
+			var html=bd.template('tpl_addProm');
+			var options = {
+				region: 'center',
+				content:html
+			};
+			$('#panlconent').layout('add',options);*/
+		}
 
     };
     page.init();

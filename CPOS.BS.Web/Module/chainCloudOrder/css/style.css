@@ -67,3 +67,12 @@
 .actuallyDetail .arrIcon{display:none;width:20px;height:11px;position:absolute;top:41px;left:32px;background:url(../images/arr.png) no-repeat 0 0;z-index:99;}
 .otherInfoBox .infoBox{display:inline-block;padding:10px 0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
 .otherInfoBox .infoBox .commonSelectWrap{margin-bottom:5px;}
+
+
+
+.quicklyBox{width:613px;margin:40px auto 0;}
+.quicklyBtnBox{height:20px;line-height:20px;margin-top:8px;margin-bottom:20px;}
+.quicklyBtnBox a{float:left;width:33.33%;text-align:center;font-size:14px;color:#00a1e6;}
+.quicklyBtnBox a span{padding-right:18px;background:url(../images/icon-href.png) no-repeat right center;}
+.nextNotShow span{display:inline-block;margin-left:10px;line-height:20px;padding-left:22px;font-size:12px;background:url(../images/icon-check.png) no-repeat left center;color:#666;cursor:pointer;}
+.nextNotShow span.on{background:url(../images/icon-checked.png) no-repeat left center;}

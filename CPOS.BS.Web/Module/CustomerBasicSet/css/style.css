@@ -21,6 +21,6 @@
 .panelText .lineText .logo{width: 214px; height: 67px; border: 1px solid #d0d5d8; text-align: center; vertical-align: middle; line-height: 67px; display: table-cell;}
 .panelText .lineText .logo img {max-width:100%;max-height:100%}
 .panelText .lineText .uploadBtn{ width: 70px;height: 32px; border-radius: 3px; float:left; line-height: 32px; font-size:14px; color: #fff; background: #00cccc; text-align: center;}
-.panelText .lineText .uploadTip{position: absolute; left: 235px;bottom: 0;width: 330px;height: 32px;}
+.panelText .lineText .uploadTip{position: absolute; left: 235px;bottom: 0;width:348px;height: 32px;}
 .panelText .lineText .uploadTip .tip{font-size: 14px; color: #fe0000; line-height: 33px; padding-left: 50px; background: url("../images/tips.png") no-repeat left center; display: inline-block; float: right;}
      .subMitButton{ width: 152px; height: 43px; margin: 0 auto;line-height: 43px; font-size: 18px; border-radius: 32px;}

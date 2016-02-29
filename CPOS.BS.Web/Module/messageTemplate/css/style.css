@@ -3,8 +3,9 @@
 .zsy{clear: both;font-size:0px; line-height:0px; display:block;}
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
 .queryTermArea{padding-left: 0; padding-right:0}
-.btnOpt{margin: 0 auto;margin-top:145px;border-radius: 23px; line-height: 44px; }
-.optionBtn .commonBtn.bg{ background-color: #fc7a52 }
+
+.btnWrapBox{text-align:center;width:455px;float:left;}
+.btnWrapBox .commonBtn{display:inline-block;height:40px;line-height:40px;margin:80px 0 0 35px;border-radius:20px;}
 .moreQueryWrap{ float: left;margin-top: 12px;}
 .moreQueryWrap .queryBtn{ width: 58px;}
 .title{ font-size: 16px; line-height: 36px;}

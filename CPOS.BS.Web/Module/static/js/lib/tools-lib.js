@@ -441,8 +441,27 @@
             },1600);
             util.stopBubble(e);
         });
-
-
     };
+	util.setCookie=function(name,value){
+		var Days = 365;
+		var exp = new Date();
+		exp.setTime(exp.getTime() + Days*24*60*60*1000);
+		document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+	};
+	util.getCookie=function(name){
+		var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+		if(arr=document.cookie.match(reg))
+		return unescape(arr[2]);
+		else
+		return null;
+	};
+	util.delCookie=function(name){
+		var that = this,
+			exp = new Date();
+		exp.setTime(exp.getTime() - 1);
+		var cval=util.getCookie(name);
+		if(cval!=null)
+		document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+	};
     $.util=util;
 })(jQuery);

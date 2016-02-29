@@ -200,7 +200,29 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			//删除上传的图片
 			$('.storePicBox').delegate('em','click',function(){
 				var $this = $(this);
-				$this.parents('.picBox').remove();	
+				$this.parents('.picBox').remove();
+				
+				
+				var that = this,
+					$storePicBox = $('.storePicBox');
+				if($('.picBox',$storePicBox).length!=3){
+					$('.ke-inline-block.addPicBtn').show();
+				}	
+				/*
+				that.uploadImg(e,function(ele,data) {
+					var $ele = $(ele),
+						result = data,
+						thumUrl = result.thumUrl,//缩略图
+						url = result.url,
+						htmlStr = '<p class="picBox"><img src="'+url+'"><em></em></p>';//原图
+					$('.ke-inline-block').before(htmlStr);
+					if($('.picBox',$storePicBox).length==3){
+						$('.addPicBtn').hide();
+					}
+					//$(htmlStr).insertBefore($ele);
+					//alert($ele.attr('class'));
+				});
+				*/
 			});
 			
 			//监听导航是否可以点击
@@ -414,6 +436,9 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				                for (var i = 0; i < itemImageList.length; i++) {
 				                    htmlStr += '<p class="picBox"><img src="' + itemImageList[i].ImageURL + '"><em></em></p>'
 				                }
+								if(itemImageList.length>=3){
+									$('.addPicBtn').hide();
+								}
 				                $('.storePicBox').prepend(htmlStr);
 
 				                //覆盖经纬度

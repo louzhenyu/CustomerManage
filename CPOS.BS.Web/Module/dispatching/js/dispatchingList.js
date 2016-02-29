@@ -251,6 +251,7 @@
 							obj.Parameters.DeliveryAmount = $('#dispatching_cost').val();//默认配送费
 							obj.Parameters.AmountEnd = $('#dispatching_mincost').val()||0 ;//免配送费最低订单金额
 						}else if(deliveryId=='2'){
+							/*
 							if($("#dispatching_stockup").val() == ''){
 								that.alert('备货期不能为空！');
 								return ;
@@ -284,6 +285,7 @@
 							obj.Parameters.BeginWorkTime = dateStr+$('#dispatching_startTime').val()+':00';//门店工作时间开始
 							obj.Parameters.EndWorkTime = dateStr+$('#dispatching_endTime').val()+':00';//门店工作时间结束
 							obj.Parameters.MaxDelivery = $('#dispatching_pickup').val();//提货期最长
+							*/
 						}
 					}
 					var obj2=obj;
@@ -295,7 +297,7 @@
 							alert('启用成功！');
 							$tr.text('已启用').removeClass('blue');
 						}else{
-							alert('停启成功！');
+							alert('停用成功！');
 							$tr.text('未启用').addClass('blue');
 						}
 						that.elems.uiMask.slideUp();

@@ -1,24 +1,22 @@
 
 /*公共标题*/
 .commonTitleWrap{height:52px;padding:0 15px;border-bottom:1px solid #cecedc;border-radius:4px 4px 0 0;background:#f2f2f9;}
-.commonTitleWrap h2{float:left;margin-top:15px;font-size:16px;font-weight:bold;color:#666;}
+.commonTitleWrap h2{float:left;margin-top:15px;font-size:16px;color:#666;}
 .commonTitleWrap span{float:right;width:100px;height:30px;line-height:30px;margin:12px 0 0 16px;border-radius:3px;text-align:center;color:#fff;cursor:pointer;}
-.commonTitleWrap .saveBtn{background:#b2c7ab;}
 .commonTitleWrap .cancelBtn{background:#949ca7;}
 
-
-/*刮刮卡页面*/
 /*top部的显示信息*/
-.scratchCardSetArea{width:1038px;margin:15px;padding-bottom:40px;border:1px solid #cecedc;border-radius:4px;}
-.scratchCardSetArea .areaWrap{width:640px;margin:0 auto;padding:20px 0;}
+.pageEditArea{padding:30px;}
+.scratchCardSetArea{width:95%;text-align:center;border:1px solid #cecedc;border-radius:4px;}
+.scratchCardSetArea .areaWrap{display:inline-block;width:640px;padding:20px 0;}
 .infoShowArea .item{float:left;width:50%;height:50px;line-height:50px;}
 .infoShowArea .width100{width:100%;height:auto;}
-.infoShowArea .item em{float:left;width:85px;font-style:normal;font-size:16px;font-weight:bold;color:#404853;}
+.infoShowArea .item em{float:left;width:90px;font-style:normal;text-align:right;font-size:16px;color:#404853;}
 .infoShowArea .item span{float:left;font-size:15px;color:#999;word-break:break-all;}
 
 
 .commonItem{margin-bottom:30px;}
-.commonItem .tit{float:left;min-width:140px;width:auto;_width:140px;height:36px;line-height:36px;font-size:16px;font-weight:bold;color:#404853;}
+.commonItem .tit{float:left;min-width:90px;width:auto;_width:140px;height:36px;line-height:36px;text-align:right;font-size:16px;color:#404853;}
 .commonItem .handleWrap{float:left;}
 .commonItem .inputBox{width:455px;height:32px;text-indent:5px;border:1px solid #cecedc;}
 
@@ -38,7 +36,6 @@
 .tempEditArea .moudle{float:left;margin:0 40px 20px 0;cursor:pointer;}
 .tempEditArea .moudle p{position:relative;width:125px;height:80px;background:#d0d0d0;}
 .tempEditArea .moudle img{weidth:100%;height:100%;display:block;}
-/*.tempEditArea .moudle .name{display:block;margin-top:10px;text-align:center;font-size:14px;font-weight:bold;color:#404853;}*/
 .tempEditArea .moudle .mask{display:none;position:absolute;width:100%;height:100%;background:url(../images/moudleOn2.png) no-repeat center center;}
 .tempEditArea .moudle.on .mask{display:block;}
 

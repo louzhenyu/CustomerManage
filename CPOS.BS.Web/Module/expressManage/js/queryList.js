@@ -253,10 +253,11 @@
         renderTable: function (data) {
             debugger;
             var that=this;
-            if(!data.Data.LogisticsCompanyList){
-
-                return;
-            }
+			/*
+			if(!data.Data.LogisticsCompanyList || !data.Data.LogisticsCompanyList.length){
+				$('.dataMessage').show();
+			}
+			*/
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({
 

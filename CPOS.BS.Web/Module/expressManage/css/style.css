@@ -10,7 +10,9 @@
 .title{ font-size: 16px; line-height: 36px;}
 .tableWrap{ min-height: 200px;}
 #kkpager{ clear:none}
+#simpleQuery .icon_add{margin:15px 0 15px 20px;}
 .commonSelectWrap .wh80{ width: 80px;}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 #addExpress{padding:0 50px;}
 #addExpress .commonSelectWrap{display:block;float:none;}
+.datagrid-btable,.datagrid-btable tr{width:100%;}

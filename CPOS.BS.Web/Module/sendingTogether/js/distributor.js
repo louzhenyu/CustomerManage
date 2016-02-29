@@ -359,6 +359,25 @@
                     aLink.dispatchEvent(evt);
 
         },
+		downloadPack:function(id){
+			var that = this;
+			$.util.ajax({
+				url: "/ApplicationInterface/AllWin/RetailTrader.ashx",
+				type: 'get',
+				data: {
+					action: 'DownloadQRCode',
+					RetailTraderID:id
+				},
+				success: function (data){
+					if(data.IsSuccess && data.ResultCode == 0){
+						var href = data.Data.FilePath;
+						that.downloadFile('',href);
+					}else{
+						alert(data.Message);
+					}
+				}
+			});
+		},
         initEvent: function () {
             var that=this;
 			//奖励设置-监听复选框事件
@@ -544,12 +563,7 @@
                         break;
 						
 					case "packdown"://全部分销商品下载
-                       // window.location.href=row.QRImageUrl;
-                        new Image().src=row.QRImageUrl;
-                       //that.saveit('images/duihao.png');
-
-                        //that.saveit(downloadFile);
-                        that.downloadFile('222222.jpg',row.QRImageUrl);
+						that.downloadPack(row.RetailTraderID);
                         break;
                 }
 

@@ -141,10 +141,10 @@
                     </div>  
                       
                     <!--销售-->
-                    <div class="titleBar" style="display:none">
+                    <div class="titleBar">
                         <p id="marketTag" class="checkBoxTag"><em></em><span>销售</span></p>
                     </div>
-                    <div class="salesWrapArea"  style="display:none">
+                    <div class="salesWrapArea">
                         <div class="panlDiv" style="display:inline-block;width:100%;">
                         	<form id="addSalseWay" class="">
                                 <div class="panlDiv ">

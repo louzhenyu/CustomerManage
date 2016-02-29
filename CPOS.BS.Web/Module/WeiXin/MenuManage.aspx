@@ -1,66 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
-    AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
+    AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>  
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>微信菜单管理</title>
-        <link rel="stylesheet" href="<%=StaticUrl+"/Framework/Javascript/Other/kindeditor/themes/default/default.css?v=Math.random()"%>" />
+    <link rel="stylesheet" href="<%=StaticUrl+"/Framework/Javascript/Other/kindeditor/themes/default/default.css?v=Math.random()"%>" />
     <link href="<%=StaticUrl+"/module/WeiXin/css/style.css?v=Math.random()"%>" rel="stylesheet" type="text/css" />
-    
     <link href="<%=StaticUrl+"/Module/static/css/pagination.css"%>" rel="stylesheet" type="text/css" />
-
-     <style>
-            .groupWrapper
-            {
-	            width: 32%;
-	            float: left;
-	            margin-right: 1%;
-	            min-height: 400px;
-            }
-            .serializer
-            {
-	            clear: both;
-            }
-            .groupItem
-            {
-	            margin-bottom: 20px;
-            }
-            .groupItem .itemHeader
-            {
-	            line-height: 28px;
-	            background-color: #DAFF9F;
-	            border-top: 2px solid #B5EF59;
-	            color: #000;
-	            padding: 0 10px;
-	            cursor: move;
-	            font-weight: bold;
-	            font-size: 16px;
-	            height: 28px;
-	            position: relative;
-            }
-
-            .groupItem .itemHeader a
-            {
-	            position: absolute;
-	            right: 10px;
-	            top: 0px;
-	            font-weight: normal;
-	            font-size: 11px;
-	            text-decoration: none;
-            }
-            .sortHelper
-            {
-	            border: 3px dashed #666;
-	            width: auto !important;
-            }
-            .groupWrapper p
-            {
-	            height: 1px;
-	            overflow: hidden;
-	            margin: 0;
-	            padding: 0;
-            }
-     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     
@@ -79,7 +24,7 @@
         <select class="selectBox" id="weixinList">
             
         </select>
-        <span id="publishMenu" class="releaseBtn">发布</span>
+        <span id="publishMenu" class="releaseBtn commonBtn w80">发布</span>
     </div>
     
     <!--菜单区域-->
@@ -93,8 +38,8 @@
     <div class="rightArea" id="contentArea">
     	<div class="commonTitleWrap">
             <h2 id="menuContent">微官网</h2>
-            <span style="display:none;" id="delBtn" class="delBtn">删除</span>
-            <span id="btnSaveData" class="saveBtn">保存</span>
+            <span style="display:none;" id="delBtn" class="commonBtn delBtn w80">删除</span>
+            <span id="btnSaveData" class="saveBtn commonBtn w80">保存</span>
         </div>
         
         <div class="tempEditArea">
@@ -278,8 +223,8 @@
 <div class="addImgMessagePopup" id="addImageMessage">
 	<div class="commonTitleWrap">
         <h2>添加图文消息</h2>
-        <span class="cancelBtn">取消</span>
-        <span class="saveBtn">确定</span>
+        <span class="cancelBtn commonBtn w80">取消</span>
+        <span class="saveBtn commonBtn w80">确定</span>
     </div>
     
     <div class="addImgMessageWrap clearfix">
@@ -387,8 +332,8 @@
 <script id="popDivTmpl" type="text/html">
     <div class="commonTitleWrap">
     	<h2><#=topTitle#></h2>
-        <span id="cancelBtn" class="cancelBtn">取消</span>
-        <span id="saveBtn" class="saveBtn">确定</span>
+        <span id="cancelBtn" class="cancelBtn commonBtn w80">取消</span>
+        <span id="saveBtn" class="saveBtn commonBtn w80">确定</span>
     </div>
 
     <div class="activeQueryWrap clearfix">
@@ -398,7 +343,7 @@
         <select id="pop_eventsType" class="selectBox">
         	<option selected>请选择</option>
         </select>
-        <span id="searchEvents" class="queryBtn">搜索</span>
+        <span id="searchEvents" class="queryBtn commonBtn w80">搜索</span>
     </div>
     
     <div class="activeListWrap">

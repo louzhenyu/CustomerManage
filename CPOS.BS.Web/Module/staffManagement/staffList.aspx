@@ -1,46 +1,38 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
     <title>员工管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="<%=StaticUrl+"/module/staffManagement/css/style.css?v=0.62"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/staffManagement/css/style.css?v=0.63"%>" rel="stylesheet" type="text/css" />
     <style type="text/css">
 	.queryTermArea{border-bottom:1px dashed #dcdcdc;background:#fafafa;}
 	.queryTermArea .item{display:inline-block;}
-    .queryTermArea .commonSelectWrap{margin-right:0px;}
-	.commonSelectWrap .selectBox{width:232px;}
 	#opt{padding-top:17px;border-top:none;background:#fff;}
-	.optionBtn .commonBtn{width:100px;}
-	.commonSelectWrap .tit{width:105px;}
 	.moreQueryWrap{float:left;margin-left:25px;}
-	.moreQueryWrap .queryBtn{width:73px;}
 	.textbox-addon-right{right:9px !important;}
 	#addRoleBtn{width:115px; text-indent:20px;background:#0cc url(images/icon-add.png) no-repeat 20px center;}
 	
 	.datagrid-body .datagrid-row{}
-	.datagrid-body .handle{display:inline-block;width:30px;height:39px;margin-left:8px;}
+	/*.datagrid-body .handle{display:inline-block;}
 	.deleteBtn{background:url(images/delete.png) no-repeat center center;}
 	.editBtn{background:url(images/edit.png) no-repeat center center;}
 	.resetBtn{background:url(images/icon-reset.png) no-repeat center center;}
 	.pauseBtn{background:url(images/pause.png) no-repeat center center;}
-	.runningBtn{background:url(images/running.png) no-repeat center center;}
+	.runningBtn{background:url(images/running.png) no-repeat center center;}*/
 	
 	#win .commonSelectWrap{margin:12px 10px 32px 0;}
 	#win .searchInput{width:232px;}
 	.textbox-invalid{border:none;background:none;}
 	.limitsTreeBox{height:200px;width:460px;margin-left:110px;border:1px solid #d0d5d8;border-radius:3px;overflow-x:auto;}
 	#btnWrap{height:60px !important;}
-	.importBtn,.exportBtn{float:left;width:82px;height:32px;margin-left:20px;cursor:pointer;}
-	.importBtn{background:url(images/icon-import.png) no-repeat center center;}
-	.exportBtn{background:url(images/icon-export.png) no-repeat center center;}
 	.loading{width:81%;}
 	
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/staffList.js?ver=0.3">
+        <div class="allPage" id="section" data-js="js/staffList.js?ver=0.4">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--信息查询-->
@@ -50,14 +42,14 @@
                           <form id="seach">
                               <div class="commonSelectWrap">
                                   <em class="tit">用户名：</em>
-                                  <label class="searchInput" style="width:232px;">
+                                  <label class="searchInput">
                                       <input data-text="用户名" data-flag="user_code" name="user_code"   id="user_code" type="text" value="" placeholder="请输入">
                                   </label>
                               </div>
                               
                               <div class="commonSelectWrap">
                                   <em class="tit">姓名：</em>
-                                  <label class="searchInput" style="width:232px;">
+                                  <label class="searchInput">
                                       <input data-text="姓名" data-flag="user_name" name="user_name" id="user_name" type="text" value="" placeholder="请输入">
                                   </label>
                               </div>
@@ -65,7 +57,7 @@
                               <div class="commonSelectWrap">
                                   <em class="tit">所属单位：</em>
                                   <div class="selectBox">
-                                       <input id="type_id" name="unit_id"  class="easyui-combobox"   data-options="width:232,height:32" />
+                                       <input id="type_id" name="unit_id"  class="easyui-combobox"   data-options="width:200,height:30" />
                                   </div>
                               </div>
                               
@@ -76,7 +68,7 @@
                               <div class="commonSelectWrap">
                                   <em class="tit">所属角色：</em>
                                   <div class="selectBox">
-                                       <select id="role_id" name="role_id" class="easyui-combobox"   data-options="width:232,height:32"></select>
+                                       <select id="role_id" name="role_id" class="easyui-combobox"   data-options="width:200,height:30"></select>
                                   </div>
                               </div>
                               
@@ -84,10 +76,10 @@
                         </div>
                     <!--<h2 class="commonTitle">会员查询</h2>-->
                 </div>
-                <div class="tableWrap" id="tableWrap">
+                <div class="tableWrap cursorDef" id="tableWrap">
                    <div class="optionBtn" id="opt">
-                       <div class="commonBtn" id="addUserBtn">新增员工</div>
-                       <div class="importBtn"  id="inportvipmanageBtn"></div>
+                       <div class="commonBtn icon icon_add w100 r" id="addUserBtn">新增员工</div>
+                       <div class="importBtn commonBtn icon icon_import w80"  id="inportvipmanageBtn">导入</div>
                        <div class="exportBtn" style="display:none"></div>
                    </div>
                    <div class="">
