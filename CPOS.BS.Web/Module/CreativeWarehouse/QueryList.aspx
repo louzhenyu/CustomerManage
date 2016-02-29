@@ -25,10 +25,7 @@
                                 </div>
                                 
                                 <div class="thisseasontouchslider-nav">
-                                    <span class="thisseasontouchslider-prev"></span>
-                                    <span class="thisseasontouchslider-nav-item thisseasontouchslider-nav-item-current"></span>
-                                    <span class="thisseasontouchslider-nav-item"></span>
-                                    <span class="thisseasontouchslider-next"></span>
+                                    
                                 </div>
                             </div>
                             <div class="qcode" style="display:none;"><img  src=""  /></div>
@@ -75,10 +72,9 @@
                                 </div>
 
                                 <div class="touchslider-nav">
-                                    <span class="touchslider-prev"></span>
+                                   
                                     <span class="touchslider-nav-item touchslider-nav-item-current"></span>
-                                    <span class="touchslider-nav-item"></span>
-                                    <span class="touchslider-next"></span>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -129,6 +125,8 @@
         <div class="thisseasontouchslider-item Seasondata"> <img  src="<#=_data.ImageURL #>"  /><div class="apply" data-themeid="<#=_data.ThemeId #>">申请活动</div><div class="Scan" data-src="<#=_data.RCodeURL #>">扫码预览</div></div>
             <#} #>
     </script>
+
+
 
        <%-- 下季 --%>
     <script id="tpl_NextSeasonList" type="text/html">
