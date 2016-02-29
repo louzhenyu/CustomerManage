@@ -27,12 +27,10 @@
 	
 	.jui-dialog-dispatching .uploadFileBox,.jui-dialog-dispatching .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
 	
-
+	#dispatchingList{min-height:120px;}
 	.tableWrap{border:none;}
-
-	.tableWrap .operateWrap .editIcon{cursor:pointer;display:block;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px; height: 18px;  }
-	
-	.datagrid-btable,.datagrid-btable tr{width:100%;}
+	.tip-payment{float:right;height:30px;line-height:30px;font-size:12px;text-align:right;padding:0 60px 0 45px;background:url(images/icon-tip.png) no-repeat left center;color:#f00;}
+	/*.tableWrap .operateWrap .editIcon{cursor:pointer;display:block;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px; height: 18px;  }*/
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -55,6 +53,7 @@
             </tbody>
         </table>-->
         <div id="dispatchingList"></div>
+        <p class="tip-payment">至少配置一种配送方式，否则无法完成配送环节。</p>
     </div>
 </div>
 <div id="kkpager" style="padding-right:35px;text-align:right;"></div>
@@ -78,7 +77,7 @@
         
         <div class="commonSelectWrap" style="height:100px">
             <em class="tit"><span class="fontRed">*</span> 配送费描述:</em>
-            <p class="searchInput" style="height:100px"><textarea class="formInputBox" id="dispatching_describe" placeholder="例如：配送范围仅上海，满100元面运费" style="width:100%;height:100%;"></textarea></p>
+            <p class="searchInput" style="height:100px"><textarea class="formInputBox" id="dispatching_describe" placeholder="例如：每笔订单消费满**元，本店包邮，除港澳台地区、内蒙古、新疆、西藏地区除外。每笔订单**元以下，快递费**元；**元以上，免快递费。" style="width:100%;height:100%;"></textarea></p>
         </div>
         <div class="commonSelectWrap">
             <em class="tit"><span class="fontRed">*</span> 默认配送费:</em>

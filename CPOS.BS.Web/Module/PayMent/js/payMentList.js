@@ -506,7 +506,7 @@
                                     formatter: function (value, row, index) {
                                         debugger;
                                       var obj= "{'IsOpen':"+row.IsOpen+",'IsDefault':"+row.IsDefault+",'IsCustom':"+row.IsCustom+",'IsNativePay':"+row.IsNativePay+"}";
-                                        return '<div class="operateWrap" title="编辑" data-usertype="'+obj+'" data-typecode="'+row.PaymentTypeCode+'" data-typeid="'+row.PaymentTypeID+'" data-channelid="'+row.ChannelId+'" > <span class="editIcon"></span> </td>';
+                                        return '<div class="operateWrap" title="编辑" data-usertype="'+obj+'" data-typecode="'+row.PaymentTypeCode+'" data-typeid="'+row.PaymentTypeID+'" data-channelid="'+row.ChannelId+'" > <span class="editIcon opt exit"></span> </td>';
                                     }
                                 }
                             ]]

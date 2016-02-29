@@ -280,9 +280,9 @@
 
 
 
-                    {field : 'isParent',title : '操作',align:'left',resizable:false,
+                    {field : 'isParent',title : '操作',width:30,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
+                            return '<div class="fontC delete opt" data-index="'+index+'" data-oprtype="del"></div>';
                         }
                     }
                 ]],

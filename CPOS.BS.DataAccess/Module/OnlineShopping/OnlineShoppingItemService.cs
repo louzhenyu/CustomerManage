@@ -201,14 +201,19 @@ namespace JIT.CPOS.BS.DataAccess
 
             //用UnixLocalTime条件代替，放在查询外面过滤
             //sql += " AND (a.BeginTime <= GETDATE() AND a.EndTime >= GETDATE()) ";
-            if (!string.IsNullOrEmpty(itemTypeId))
-            {
-                sql += string.Format(" inner join (select CategoryID from fnGetChildCategoryByID('{0}',1)) e on a.item_category_id=e.CategoryID ", itemTypeId);
-            }
+            //if (!string.IsNullOrEmpty(itemTypeId))
+            //{
+            //    sql += string.Format(" inner join (select CategoryID from fnGetChildCategoryByID('{0}',1)) e on a.item_category_id=e.CategoryID ", itemTypeId);
+            //}
             sql += " WHERE 1 = 1 and item_category_id<>'-1' and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
             if (!string.IsNullOrEmpty(itemName))
             {
                 sql += " AND (a.item_name LIKE '%" + itemName + "%' OR a.prop_2_detail_name LIKE '%" + itemName + "%' OR a.sku_prop_id3 LIKE '%" + itemName + "%') "; //通过商品名、颜色、材质查询
+            }
+            if (!string.IsNullOrEmpty(itemTypeId))
+            {
+                sql += " AND ( item_id IN (SELECT item_id FROM dbo.ItemCategoryMapping WHERE IsDelete=0 and ItemCategoryId='" + itemTypeId + "') ";
+                sql += "     OR  a.item_category_id ='" + itemTypeId + "') ";
             }
             //if (!string.IsNullOrEmpty(itemTypeId))
             //{

@@ -175,9 +175,9 @@
 #tableWrap{}
 #tableWrap .optionBtn .r{margin-right: 0;}
 /*表格顶部状态操作栏*/
-.tableList{ padding-top:5px; background: #fff; border: solid  1px #eee; border-bottom:none; float: left; width: 100%}
+.tableList{ padding-top:5px; background: #fff; border: solid  1px #eee; border-bottom:none; float: left; width: 100%;padding-left: 15px;}
 .tableList ul{ width: 100%; height: 45px; float: left;}
-.tableList li{cursor: pointer; font-size: 13px; color: #999; float: left; padding-left: 35px; line-height:42px; }
+.tableList li{cursor: pointer; font-size: 13px; color: #999; float: left; padding-right: 35px; line-height:42px; }
 .tableList li.on{color: #00a0e8}
 .tableList li.on em{border-bottom: 2px #00a0e8 solid;}
 /*登录页*/
@@ -287,11 +287,11 @@
 .l-btn{color: #fff;}
 .messager-button .l-btn {color: #000;}
 /*底部分页的重写*/
-#kkpager span{ font-size: 12px}
-#kkpager_gopage_wrap{ border:solid 1px #00a0e8; width: 28px; border-radius: 3px 0 0 3px;  height: 23px; line-height: 23px;}
-#kkpager_btn_go_input{ text-indent:0; font-size: 12px; color: #00a0e8; padding:0; width: 26px;height:20px; background: none; line-height:20px;border-radius: 3px 0 0 3px}
-#kkpager_btn_go{cursor: pointer;display: block; width:25px;height:23px;margin-left:-1px; left:28px;text-indent:-999em;border:1px solid #00a0e8;border-left:none;border-radius:0 3px 3px 0;background: url(../../images/newYear/pagebtn.png) no-repeat center center;color:#fff;}
-#kkpager{
+.kkPager span{ font-size: 12px}
+.kkpager_gopage_wrap{ border:solid 1px #00a0e8; width: 28px; border-radius: 3px 0 0 3px;  height: 23px; line-height: 23px;}
+.kkpager_btn_go_input{ text-indent:0; font-size: 12px; color: #00a0e8; padding:0; width: 26px;height:20px; background: none; line-height:20px;border-radius: 3px 0 0 3px}
+.kkpager_btn_go{cursor: pointer;display: block; width:25px;height:23px;margin-left:-1px; left:28px;text-indent:-999em;border:1px solid #00a0e8;border-left:none;border-radius:0 3px 3px 0;background: url(../../images/newYear/pagebtn.png) no-repeat center center;color:#fff;}
+.kkPager{
     clear:none;
     height:30px;
     line-height: 23px;
@@ -301,11 +301,11 @@
     text-align: right;
     padding-right: 65px;
 }
-#kkpager span.normalsize{ color:#323232;}
-#kkpager span.disabled{color: #999999;border: none; }
-#kkpager a {border: none; color: #999999;}
-#kkpager a:hover {border: none; background: none; color: #00cccc}
-#kkpager span.curr {color: #00a0e8; font-size: 14px; font-weight:600; border: none; background: none;}
+.kkPager span.normalsize{ color:#323232;}
+.kkPager span.disabled{color: #999999;border: none; }
+.kkPager a {border: none; color: #999999;}
+.kkPager a:hover {border: none; background: none; color: #00a0e8}
+.kkPager span.curr {color: #00a0e8; font-size: 14px; font-weight:600; border: none; background: none;}
 
 
 .commonSelectWrap .searchInput.bordernone{ border-color: transparent; background: none;}
@@ -345,7 +345,7 @@
 .imgTable .datagrid-row  img.l{margin-right: 10px;}
 /*列表相关样式*/
 .operation{display: inline-block;}
-.opt {float: left;cursor: pointer; width: 18px;height: 18px;margin: 6px 8px;}
+.opt {float: left;cursor: pointer; width: 18px;height: 18px; margin-left: 4px; margin-right: 16px;}
 .noOpt{ float: left;margin: 6px 10px;}
 .noDelete{background:no-repeat center center;background-image:url(../../images/newYear/nodel.png);   width: 16px; height: 16px; }
 .delete{background:no-repeat center center; background-image:url(../../images/newYear/del.png); width: 16px; height: 16px;  cursor: pointer}
@@ -354,10 +354,10 @@
 .btnAdd{background:url(../../images/newYear/addstr.png) center center  no-repeat; width: 18px; height: 18px;  cursor: pointer}
 .btnDownload{background:url(../../images/newYear/Download.png) center center  no-repeat;width: 16px; height: 16px;cursor:pointer;}
 .reset{ background:no-repeat center center; background-image:url(../../images/newYear/reset.png);width:16px;height:16px;cursor:pointer;}
-.runningBtn{float:left;margin:6px 8px;background:no-repeat center center; background-image:url(../../images/newYear/runningBtn.png);width:16px;height:16px;cursor:pointer;}
-.pauseBtn{float:left;margin:6px 8px;background:no-repeat center center; background-image:url(../../images/newYear/pauseBtn.png);width:16px;height:16px;cursor:pointer;}
+.runningBtn{float:left;background:no-repeat center center; background-image:url(../../images/newYear/runningBtn.png);width:16px;height:16px;cursor:pointer;}
+.pauseBtn{float:left;background:no-repeat center center; background-image:url(../../images/newYear/pauseBtn.png);width:16px;height:16px;cursor:pointer;}
 
-.rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left; color: #999;}
+.rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left;}
 
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 .datebox .combo-arrow{padding-right:26px;}
@@ -392,6 +392,7 @@
     height: 18px;
     line-height: 18px;
     font-size: 12px;
+    color: #666;
 }
 .isSubmitLoading{background:rgba(0,0,0,0.2) no-repeat center center; background-image:url(../../images/newYear/loading.gif);position:fixed;top:0; left: 0; width: 100%; height: 100%; z-index: 999999999999; }
 /*上一步下一步样式*/

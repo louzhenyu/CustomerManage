@@ -18,14 +18,16 @@
 .rowText p{ color: #666;}
 .imgTable .datagrid-row-checked {background-color:#b2f0f0;}
 .imgTable .datagrid-row  img{ float: left;margin-right: 10px;}
-.rowStatusStyle{color: #fc7a52;}
+.rowStatusStyle{color: #00a0e8;}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
 .commonSelectWrap .searchInput .line{ height: 46px;}
+.commonSelectWrap .searchInput input {color:#999;}
+.commonSelectWrap .tit {color:#999;}
 .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
 .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
 .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
-.commonSelectWrap .searchInput textarea{line-height:34px;font-size:14px;background:none;color:#999;height: 35px; }
+.commonSelectWrap .searchInput textarea{line-height:34px;font-size:12px;background:none;color:#999;height: 35px; }
 .panlDiv .commonSelectWrap .searchInput{ border-width:0;background:none;  width: 370px;}
 
 .forminput .commonSelectWrap .searchInput{ border-width:1px;background:#fff;}
@@ -33,7 +35,7 @@
 .forminput .commonSelectWrap .bordrnone.searchInput{ border-width:0;}
 .panlDiv{ display: block;  border-bottom: 1px solid #d0d5d8; padding-top:5px; padding-bottom: 5px; position: relative;margin-left: 35px; }
 .panlDiv .title{ color: #666666; font-size: 16px; line-height: 43px;}
-.panlDiv .panlText{ display: inline-block; width: 100%}
+.panlDiv .panlText{ display: inline-block; width: 100%;margin-left: 44px;}
 .panlDiv .panlL{ float: left; width: auto;}
 .panlDiv .panlR{float: left; margin-left: 65px;}
 .panlDiv .panlL .commonSelectWrap{ float: none;}
@@ -44,7 +46,7 @@
 
 .actuallyDetailBox{display:inline-block;width:100%;}
 .actuallyDetail{position:relative;display:inline-block;padding-top:10px;}
-.actuallyDetail a{line-height:33px;text-decoration:underline;color:#fc7a52;}
+.actuallyDetail a{line-height:33px;text-decoration:underline;color:#00a0e8;}
 .otherInfoBox{display:none;position:absolute;top:50px;left:-55px;width:200px;height:350px;padding:0 20px;border:1px solid #d0d5d8;border-radius:4px;font-size:14px;background:#fff;color:#999;z-index:99;}
 .actuallyDetail:hover .otherInfoBox,.actuallyDetail:hover .arrIcon{display:block;}
 .otherInfoBox .commonSelectWrap{width:100%;margin:0;}

@@ -112,9 +112,9 @@
         },
         //跳转框页面跳转
         gopage: function () {
-            var str_page = $('#' + this.gopageTextboxId).val();
+            var str_page =$('#'+this.pagerid).find('.' + this.gopageTextboxId).val();
             if (isNaN(str_page)) {
-                $('#' + this.gopageTextboxId).val(this.next-1);
+                $('#'+this.pagerid).find('.' + this.gopageTextboxId).val(this.next-1);
                 return;
             }
             var n = parseInt(str_page);
@@ -191,10 +191,10 @@
             var gopage_info = '';
             if (this.isGoPage) {
 
-                gopage_info = '&nbsp;' + this.lang.gopageBeforeText + '<span id="' + this.gopageWrapId + '">' +
-					'<input type="button" id="' + this.gopageButtonId + '" onclick="kkpager.gopage()" value="'
+                gopage_info = '&nbsp;' + this.lang.gopageBeforeText + '<span  id="' + this.gopageWrapId + '" class="' + this.gopageWrapId + '">' +
+					'<input type="button" id="' + this.gopageButtonId + '" class="' + this.gopageButtonId + '" onclick="kkpager.gopage()" value="'
 						+ this.lang.gopageButtonOkText + '" />' +
-					'<input type="text" id="' + this.gopageTextboxId + '" onfocus="kkpager.focus_gopage()"  onkeypress="return kkpager.keypress_gopage(event);"   onblur="kkpager.blur_gopage()" value="' + this.pno + '" /></span>' + this.lang.gopageAfterText;
+					'<input type="text" id="' + this.gopageTextboxId + '" class="' + this.gopageTextboxId + '" onfocus="kkpager.focus_gopage()"  onkeypress="return kkpager.keypress_gopage(event);"   onblur="kkpager.blur_gopage()" value="' + this.pno + '" /></span>' + this.lang.gopageAfterText;
             }
 
             //分页处理
@@ -251,7 +251,7 @@
             }
 
             str = "&nbsp;" + str_first + str_prv + str + str_next + str_last + total_info + gopage_info;
-            $("#" + this.pagerid).html(str);
+            $("#" + this.pagerid).html(str).addClass("kkPager");
         },
         //分页按钮控件初始化
         init: function (config) {

@@ -1,10 +1,10 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 
 
 
 .listBtn{height:59px;line-height:58px;padding-left:30px;float:left;cursor:pointer;color:#999;font-size:16px;margin-right:25px;background:url(../../styles/images/newYear/radio.png) no-repeat left center;}
 .listBtn.show{background:url(../../styles/images/newYear/radioOn.png) no-repeat left center;}
-
+.submitBtn {margin: 0 auto;border-radius: 32px; width: 100px; height: 36px; line-height: 36px;}
 .panlDiv{border-bottom: 1px solid #d0d5d8;width: 100%; float: left;padding:10px 10px 15px 0px}
 #simpleQuery{border-bottom: 1px solid #d0d5d8;}
 .panlDiv:nth-last-of-type(1){border-bottom:none;}

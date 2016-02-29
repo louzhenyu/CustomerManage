@@ -100,15 +100,7 @@
                 color: #66666d;
             }
 
-        .jui-dialog-close {
-            position: absolute;
-            top: 0px;
-            right: 18px;
-            width: 30px;
-            height: 54px;
-            background: url(images/icon-close-btn.png) no-repeat center center;
-            cursor: pointer;
-        }
+     
 
         .jui-dialog .tit {
             width: 250px;

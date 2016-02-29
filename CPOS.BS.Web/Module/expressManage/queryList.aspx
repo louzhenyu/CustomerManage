@@ -6,12 +6,12 @@
     <title>配送商管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="css/style.css?v=0.6" rel="stylesheet" type="text/css" />
+    <link href="css/style.css?v=0.7" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.4">
+        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.5">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
@@ -20,7 +20,8 @@
                     </div>
                 <div class="tableWrap cursorDef" id="tableWrap">
 
-                    <table class="dataTable" id="gridTable"></table>
+                    <table class="dataTable" id="gridTable">
+                    </table>
                     <div id="pageContianer">
                     <div class="dataMessage" >数据没有对应记录</div>
                         <div id="kkpager" >

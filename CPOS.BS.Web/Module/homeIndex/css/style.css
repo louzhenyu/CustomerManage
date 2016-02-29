@@ -36,7 +36,6 @@
 .commonInputWrap .btn{cursor: pointer; float: left; margin-right: 16px; border-radius: 3px; color:#fff; line-height: 32px;  font-size: 14px;}
 .commonInputWrap .uploadBtn{ width: 91px; height: 32px; background-color: #00a0e8; position: relative;}
 .commonInputWrap .del{ width:61px; height: 32px; background-color: #999}
-.commonInputWrap .bColor{background-color: #fc7a52;}
 .radioList{width: 100%; display: inline-block;}
 .radioList .radio{float:left;margin-bottom: 10px; width: 25%;}
 .radioList .radio span{font-size: 15px; color: #595a5a; }

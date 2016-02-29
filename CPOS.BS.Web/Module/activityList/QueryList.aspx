@@ -20,24 +20,7 @@
 #tableWrap2 .datagrid-row,#tableWrap2 .datagrid-header-row{height:62px;line-height:61px;}
 #tableWrap2 .datagrid-btable{width:100%;}
 /*活动参与，弹出*/
-.jui-dialog .dataTable{border:none;}
-.jui-dialog .dataTable tr{height:49px;line-height:48px;}
-.jui-dialog .dataTable th{text-align:center;font-size:14px;color:#4d4d4d;}
-.jui-dialog .dataTable td{font-size:13px;color:#666;}
-.jui-dialog .dataTable .tableHead{border-bottom:2px solid #07c8cf;}
-
 .jui-dialog-table{width:1026px;height:576px;position:fixed;top:30px;margin-left:-513px;}
-.jui-dialog-tit{height:55px;}
-.jui-dialog-tit h2{font:16px/55px "Microsoft YaHei";color:#66666d;}
-.jui-dialog-close{position:absolute;top:0px;right:18px;width:30px;height:54px;background:url(images/icon-close-btn.png) no-repeat center center;cursor:pointer;}
-.jui-dialog .tit{width:250px;}
-.jui-dialog .activityContent{padding:10px 0 30px 0;}
-.jui-dialog .searchInput{width:190px;}
-.jui-dialog .commonSelectWrap{float:none;display:block;margin:20px 0 2px 0;}
-.jui-dialog .hint-exp{padding-top:5px;text-indent:30px;text-align:center;font-size:14px;color:#999;}
-.jui-dialog .btnWrap{padding:15px 0 0 0;}
-.jui-dialog .commonBtn{width:150px;height:45px;line-height:45px;}
-.jui-dialog .cancelBtn{border:none;background:#ccc;color:#fff;}
 
 .exportTable{height:75px;background:#f4f8fa;}
 .exportTable .exportBtn{display:none;width:110px;height:32px;line-height:32px;margin:22px 0 0 30px;text-align:center;font-size:14px;border-radius:3px;background:#0cc;color:#f4f8fa;}

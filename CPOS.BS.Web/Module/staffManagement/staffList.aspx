@@ -78,8 +78,8 @@
                 </div>
                 <div class="tableWrap cursorDef" id="tableWrap">
                    <div class="optionBtn" id="opt">
+                   	   <div class="importBtn commonBtn icon icon_import w80 r"  id="inportvipmanageBtn">导入</div>
                        <div class="commonBtn icon icon_add w100 r" id="addUserBtn">新增员工</div>
-                       <div class="importBtn commonBtn icon icon_import w80"  id="inportvipmanageBtn">导入</div>
                        <div class="exportBtn" style="display:none"></div>
                    </div>
                    <div class="">

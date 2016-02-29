@@ -24,8 +24,7 @@
 	#payMentList{height:120px;}
 	.tableWrap{border:none;}
 
-	.tableWrap .operateWrap .editIcon{cursor:pointer;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px;height: 18px; display: block;}
-	.datagrid-btable,.datagrid-btable tr{width:100%;}
+	/*.tableWrap .operateWrap .editIcon{cursor:pointer;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px;height: 18px; display: block;}*/
 	.handleGuide{float:right;width:20px;height:30px;margin:3px 112px 0 0;background:url(images/icon-guide.png) no-repeat center center;}
 	.tip-payment{float:right;height:30px;line-height:30px;font-size:12px;text-align:right;padding:0 60px 0 45px;background:url(images/icon-tip.png) no-repeat left center;color:#f00;}
 	.tipWx{background:url(images/icon-tip.png) no-repeat left center;clear:left;height:30px;line-height:30px;margin-left:160px;padding-left:45px;font-size:14px;}
@@ -53,7 +52,7 @@
             </tbody>
         </table>-->
         <div id="payMentList"></div>
-        <p class="tip-payment">提示：您必须启用一种支付方式哦，不然微商城就要罢工啦！</p>
+        <p class="tip-payment">至少配置一种支付方式，否则无法完成支付环节。</p>
     </div>
     
 </div>

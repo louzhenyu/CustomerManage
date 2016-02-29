@@ -348,7 +348,7 @@
 										field: 'deliveryId', title: '编辑', width: 46, align: 'left', resizable: false,
 										formatter: function (value, row, index) {
 
-											return '<div class="operateWrap" title="编辑" data-typeid="'+value+'" ><span class="editIcon"></span></div>';
+											return '<div class="operateWrap" title="编辑" data-typeid="'+value+'" ><span class="editIcon opt exit"></span></div>';
 										}
 									}
 								]]

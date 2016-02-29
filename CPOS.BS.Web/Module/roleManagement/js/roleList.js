@@ -110,7 +110,7 @@
 				that.elems.tabel.datagrid('selectRow', rowIndex);	
 				var row = that.elems.tabel.datagrid('getSelected');
 				
-                if(flag == 'handle deleteBtn'){
+                if(flag == 'handle deleteBtn opt delete'){
 					$.messager.confirm('提示', '您确定要删除该角色吗？',function(r){
 					   if(r){
 						   that.setRemoveRole(row.Role_Id,function(data){
@@ -118,7 +118,7 @@
 						   });
 					   }
 				    });
-                }else if(flag == 'handle editBtn'){
+                }else if(flag == 'handle editBtn opt exit'){
 					that.elems.roleId = row.Role_Id;
 					that.elems.isSys = row.Is_Sys;
 					$('#role_name2').val(row.Role_Name);

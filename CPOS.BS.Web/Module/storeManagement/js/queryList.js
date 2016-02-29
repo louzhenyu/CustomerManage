@@ -144,10 +144,10 @@
 					optType=$(this).attr('class');
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
-                if(optType=="handle iconPlay"){
+                if(optType=="handle runningBtn opt"){
 					that.statusEvent(row.Id,-1,$this);
                 }
-				if(optType=="handle iconPause"){
+				if(optType=="handle pauseBtn opt"){
                     that.statusEvent(row.Id,1,$this);
                 }
 				$.util.stopBubble(e);
@@ -314,11 +314,12 @@
                            var htmlStr = '',
 						   	   status = row.Status;
                             switch(status){
-                                case "1": htmlStr='<a href="javascript:;" class="handle iconPlay" data-index='+index+'></a>';break;
+                                case "1": htmlStr='<a href="javascript:;" class="handle runningBtn opt" data-index='+index+'></a>';break;
 
-                                case "-1": htmlStr='<a href="javascript:;" class="handle iconPause" data-index='+index+'></a>'; break;
+                                case "-1": htmlStr='<a href="javascript:;" class="handle pauseBtn opt" data-index='+index+'></a>'; break;
                             }
                             return htmlStr;
+							
                         }
                     }
 
@@ -430,10 +431,10 @@
 					if(data.success){
 						var $status = $dom.parents('tr').find('td[field="Status"] div');
 						if(tag==1){
-							$dom.attr('class','handle iconPlay');
+							$dom.attr('class','handle runningBtn opt');
 							$status.text('正常');
 						}else{
-							$dom.attr('class','handle iconPause');
+							$dom.attr('class','handle pauseBtn opt');
 							$status.text('停用');
 						}
 					}else{

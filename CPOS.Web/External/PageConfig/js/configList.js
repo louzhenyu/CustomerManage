@@ -27,14 +27,18 @@
             });
         },
         public: function () {
+            fnShowLoading("正在发布，可能需要几分钟...");
             $.util.ajax({
                 url: "/ApplicationInterface/Gateway.ashx",
                 action: "WX.SysPage.CreateCustomerConfig",
                 success: function (data) {
                     if (data.IsSuccess) {
-                        alert("发布成功");
+                        //alert("发布成功");
+                        fnHideLoading("发布成功");
+
                     } else {
-                        alert(data.Message);
+                         alert(data.Message);
+                        fnHideLoading("发布失败");
                     }
                 }
             });

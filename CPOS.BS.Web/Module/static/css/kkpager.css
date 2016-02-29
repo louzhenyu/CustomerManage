@@ -1,4 +1,4 @@
-﻿#kkpager{
+﻿.kkPager{
 	clear:both;
 	height:30px;
 	line-height:30px;
@@ -6,7 +6,7 @@
 	color:#999999;
 	font-size:14px;
 }
-#kkpager a{
+.kkPager a{
 	padding:4px 8px;
 	margin:10px 3px;
 	font-size:12px;
@@ -15,10 +15,10 @@
 	color:#9d9d9d;
 	text-decoration:none;
 }
-#kkpager span{
+.kkPager span{
 	font-size:14px;
 }
-#kkpager span.disabled{
+.kkPager span.disabled{
 	padding:4px 8px;
 	margin:10px 3px;
 	font-size:12px;
@@ -26,7 +26,7 @@
 	background-color:#FFF;
 	color:#DFDFDF;
 }
-#kkpager span.curr{
+.kkPager span.curr{
 	padding:4px 8px;
 	margin:10px 3px;
 	font-size:12px;
@@ -34,14 +34,14 @@
 	background-color:#FF6600;
 	color:#FFF;
 }
-#kkpager a:hover{
+.kkPager a:hover{
 	background-color:#FFEEE5;
 	border:1px solid #FF6600;
 }
-#kkpager span.normalsize{
+.kkPager span.normalsize{
 	font-size:12px;
 }
-#kkpager_gopage_wrap{
+.kkpager_gopage_wrap{
 	display:inline-block;
 	width:44px;
 	height:20px;
@@ -52,7 +52,7 @@
 	left:0px;
 	top:5px;
 }
-#kkpager_btn_go {
+.kkpager_btn_go {
 	width:44px;
 	height:20px;
 	line-height:20px;
@@ -67,7 +67,7 @@
 	top:-1px;
 	display:none;
 }
-#kkpager_btn_go_input{
+.kkpager_btn_go_input{
 	width:42px;
 	height:16px;
     line-height: 20px;

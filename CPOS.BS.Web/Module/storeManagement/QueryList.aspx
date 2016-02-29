@@ -17,7 +17,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.3">
+        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.4">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
@@ -67,8 +67,8 @@
                 </div>
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
+                	<div class="icon icon_import commonBtn w80 r"  id="inportStoreBtn">导入</div>
                 	<div class="commonBtn icon w100 icon_add r" id="addStoreBtn">新增门店</div>
-                    <div class="icon icon_import commonBtn w80 r"  id="inportStoreBtn">导入</div>
                     <div class="exportBtn commonBtn w80">导出</div>
                 </div>
                    <div>

@@ -202,9 +202,9 @@
                      -->
                       <div class="actuallyDetailBox">	
                           <div class="commonSelectWrap">
-                             <em class="tit"><div class="Paystatus" style="display: inline-block;">实付金额:</div><span>￥</span></em>
+                             <em class="tit"><div class="Paystatus" style="display: inline-block;">实付金额:</div><span style="color: #00a0e8;">￥</span></em>
                              <div class="searchInput" style="margin-left:-3px;">
-                              <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="actual_amount" style="color:#fc7a52;"/>
+                              <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="actual_amount" style="color:#00a0e8;"/>
                              </div>
                           </div>
                           <div class="actuallyDetail">

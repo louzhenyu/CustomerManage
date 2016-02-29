@@ -36,7 +36,7 @@ function SetLogoInfo() {
             if (data.data.loadInfo.BusinessLogo) {
                 $(".logoWrap").css({ 'background-image': 'url("' + data.data.loadInfo.BusinessLogo + '")' });
             } else {
-                $(".logoWrap").css({ 'background-image': 'url("../../images/newYear/logo.png")' })
+                $(".logoWrap").css({ 'background-image': 'url("/module/styles/images/newYear/logo.png")' })
             }
             //$('#unitName').html(data.data.loadInfo.customerName); //title是全称html是简写名;        
             //window.customerNameAttr=data.data.loadInfo.customerName;
