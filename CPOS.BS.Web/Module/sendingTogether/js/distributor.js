@@ -75,10 +75,10 @@
                             }
                         },
 
-                        {field : 'RetailTraderMan',title:"联系人",width:80,align:'center',resizable:false},
-                        {field : 'VipCount',title : '集客数',width:80,align:'center',resizable:false},
-                        {field : 'EndAmount',title : '可提现金额',width:100,align:'center',resizable:false},
-                        {field : 'CooperateTypeDesc',title : '活动类型',width:220,align:'center',resizable:false,
+                        {field : 'RetailTraderMan',title:"联系人",width:80,align:'left',resizable:false},
+                        {field : 'VipCount',title : '集客数',width:80,align:'left',resizable:false},
+                        {field : 'EndAmount',title : '可提现金额',width:100,align:'left',resizable:false},
+                        {field : 'CooperateTypeDesc',title : '活动类型',width:220,align:'left',resizable:false,
                             formatter:function(value ,row,index){
 								/*
 								var status="";
@@ -90,7 +90,7 @@
                                 return value;
                             }
                         },
-                        {field : 'UnitName',title : '所属门店',width:150,align:'center',resizable:false,
+                        {field : 'UnitName',title : '所属门店',width:150,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=16;
                             if(value&&value.length>long){
@@ -100,7 +100,7 @@
                             }
                          }
                         },
-                        {field : 'Status',title : '状态',width:100,align:'center',resizable:false,
+                        {field : 'Status',title : '状态',width:100,align:'left',resizable:false,
                             formatter:function(value ,row,index){
                                 var status="";
                                 switch (value){
@@ -110,7 +110,7 @@
                                 return "<p style='color: #fc7a52'> "+status+" </p>";
                             }
                         },
-						{field : 'RetailTraderID',title : '操作',width:200,align:'center',resizable:false,
+						{field : 'RetailTraderID',title : '操作',width:200,align:'left',resizable:false,
                             formatter:function(value ,row,index){
                                var status=row.Status==1?"停用":'启用', //操作按钮文字 如果为1 分销商是正常 需要停用。反之亦然
 							   	   iconSrc=row.Status==1?"images/icon-pause.png":'images/icon-start.png';
@@ -118,7 +118,7 @@
                             }
                         }
 						/*
-                        {field : 'QRImageUrl',title : '二维码',width:100,align:'center',resizable:false
+                        {field : 'QRImageUrl',title : '二维码',width:100,align:'left',resizable:false
                             ,formatter:function(value ,row,index){
                             return '<div class="rowText" data-index="'+index+'" ><div class="fontC" data-opttype="down">下载</div></div>';
                         }
@@ -398,8 +398,8 @@
             $("#cc").combobox({//
                 valueField:'id',
                 textField:'text',
-                width:160,
-                height:32,
+                width:200,
+                height:30,
                 data:[{
                     "id":-1,
                     "text":"全部",
@@ -416,8 +416,8 @@
             $("#Way").combobox({//
                 valueField:'id',
                 textField:'text',
-                width:160,
-                height:32,
+                width:200,
+                height:30,
                 data:[ {
                     "id":"",
                     "text":"全部" ,

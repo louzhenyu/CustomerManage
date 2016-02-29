@@ -171,7 +171,7 @@
                      <!--销售信息End-->
                   <div class="zsy"></div>
                 </div>
-               <div class="btnopt commonBtn" id="submitBtn" data-flag="#nav02">下一步</div>
+               <div class="btnopt commonBtn nextStepBtn" id="submitBtn" data-flag="#nav02">下一步</div>
             </div>
         </div>
        <div style="display: none">
@@ -283,7 +283,7 @@
            <div class="commonSelectWrap load" style="display: none">
                                                                                    <em class="tit"><#=item.item_price_type_name#>:</em>
                                                                                    <label class="searchInput " style="border: none">
-                                                                                     <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:70,height:32,disabled:true" data-flag="price" name="price" type="text" value="0">
+                                                                                     <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="min:0,precision:0,width:70,height:30,disabled:true" data-flag="price" name="price" type="text" value="0">
                                                                                    </label>
                                                               </div>
 
@@ -293,9 +293,9 @@
                                                               <em class="tit"><#=item.item_price_type_name#>:</em>
                                                               <label class="searchInput " style="border: none">
                                                               <#if(item.item_price_type_code=="库存"){#>
-                                                                <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="required:true,min:0,precision:0,width:160,height:32" data-flag="price" name="price" type="text" value="">
+                                                                <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="required:true,min:0,precision:0,width:200,height:30" data-flag="price" name="price" type="text" value="">
                                                             <#}else{#>
-                                                             <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="required:true,min:0,precision:2,width:160,height:32" data-flag="price" name="price" type="text" value="">
+                                                             <input data-text="<#=item.item_price_type_name#>" data-type="price" data-flagInfo="<#=JSON.stringify(item)#>" class="easyui-numberbox"  data-options="required:true,min:0,precision:2,width:200,height:30" data-flag="price" name="price" type="text" value="">
 
                                                             <#}#>
                                                               </label>

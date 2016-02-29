@@ -110,7 +110,7 @@
         },
 
         update:function(){
-            $('#win').window({title:"促销分组",width:360,height:230});
+            $('#win').window({title:"促销分组",width:400,height:230});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_addProm');
@@ -192,14 +192,14 @@
                             return new Date(value).format("yyyy-MM-dd");
                         }
                     },
-                    {field : 'id',title : '编辑',width:30,align:'center',resizable:false,
+                    {field : 'id',title : '编辑',width:30,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC exit" data-index="'+index+'" data-oprtype="exit"></p>';
+                            return '<p class="fontC opt exit" data-index="'+index+'" data-oprtype="exit"></p>';
                         }
                     },
-                    {field : 'isParent',title : '删除',width:30,align:'center',resizable:false,
+                    {field : 'isParent',title : '删除',width:30,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
+                            return '<p class="fontC opt delete" data-index="'+index+'" data-oprtype="del"></p>';
                         }
                     }
                 ]],

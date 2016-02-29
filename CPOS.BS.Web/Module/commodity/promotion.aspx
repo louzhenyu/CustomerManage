@@ -15,11 +15,13 @@
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                     <div class="tableWrapText" id="tableWrap">
-                                   <div class="tableWrapTextBtn">
-                                   <div class="commonBtn " data-flag="add">新建分组</div>
+                                   <div class="tableWrapTextBtn optionBtn">
+                                   <div class="commonBtn icon icon_add w100 r" data-flag="add">新增分组</div>
 
                                     </div>
+                                    <div class="cursorDef">
                                      <table class="dataTable" id="gridTable"></table>
+                                     </div>
                                      <div id="pageContianer">
                                          <div id="kkpager" style="text-align: center;">
                                          </div>
@@ -45,7 +47,7 @@
 <script id="tpl_addProm" type="text/html">
            <form id="addProm">
       <div class="commonSelectWrap">
-      <em class="tit">商品分组名称：</em>
+      <em class="tit w100">商品分组名称：</em>
         <label class="searchInput" >
           <input data-text="商品分组名称" class="easyui-validatebox" data-options="required:true" data-flag="Item_Category_Name" name="Item_Category_Name" type="text" value="">
           <input name="Item_Category_Id" type="text" style="display: none"/>

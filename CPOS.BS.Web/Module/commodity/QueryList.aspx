@@ -21,7 +21,7 @@
                           <form id="seach">
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">商品名称：</em>
-                                                      <label class="searchInput" style="width: 487px;">
+                                                      <label class="searchInput" style="width: 506px;">
                                                           <input data-text="商品名称" data-flag="item_name" name="item_name" type="text"
                                                               value="">
                                                       </label>
@@ -29,7 +29,7 @@
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">状态：</em>
                                                       <div class="selectBox">
-                                                                <select id="item_status" name="item_status"></select>
+                                                                <input id="item_status" name="item_status" class="easyui-combobox" data-options="width:200,height:30"  />
                                                       </div>
                                                   </div>
                                                   <div class="moreQueryWrap">
@@ -39,14 +39,14 @@
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">商品分类：</em>
                                                       <div class="selectBox">
-                                                                <input id="item_category_id" name="item_category_id"/>
+                                                                <input id="item_category_id" class="easyui-combobox" data-options="width:200,height:30" name="item_category_id"/>
                                                       </div>
                                                   </div>
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">商品分组：</em>
                                                       <div class="selectBox">
 
-                                                      <input id="SalesPromotion_id" name="SalesPromotion_id" />
+                                                      <input id="SalesPromotion_id" class="easyui-combobox" data-options="width:200,height:30"  name="SalesPromotion_id" />
 
                                                       </div>
                                                   </div>
@@ -59,25 +59,26 @@
 
                     <!--<h2 class="commonTitle">会员查询</h2>-->
 
-                </div>
+                </div> <div class="optionBtn" id="opt">
+                                       <div class="commonBtn icon w80 icon_up" data-flag="putaway">上架</div>
+                                       <div class="commonBtn icon w80 icon_downLoad" data-flag="soldOut">   下架</div>
+                                       <div class="commonBtn icon w120 sales icon_playlist" data-flag="salesTooltip" id="sales"  >更改商品分组</div>
+                                       <div class="commonBtn icon w100 icon_add r" data-flag="add"  >新增商品</div>
+                                       <div style="display: none">
+                                              <div id="Tooltip">
+                                                     <div class="treeNode"></div>
+
+                                                    <div class="btnList">
+                                                      <div class="commonBtn opts l"  data-flag="sales"> 确定 </div>
+                                                       <div class="commonBtn opts r"  data-flag="cannel">取消</div>
+                                                     </div>
+                                              </div>
+
+                                       </div>
+
+                                      </div>
                 <div class="tableWrap" id="tableWrap">
-                <div class="optionBtn" id="opt">
-                 <div class="commonBtn " data-flag="putaway"><img src="images/jiatous.png"  >  上架</div>
-                 <div class="commonBtn" data-flag="soldOut"><img src="images/jiatoux.png"  >   下架</div>
-                 <div class="commonBtn sales" data-flag="salesTooltip" id="sales"> <img src="images/cxfzbtn.png"  >更改商品分组</div>
-                 <div style="display: none">
-                        <div id="Tooltip">
-                               <div class="treeNode"></div>
 
-                              <div class="btnList">
-                                <div class="commonBtn opts l"  data-flag="sales"> 确定 </div>
-                                 <div class="commonBtn opts r"  data-flag="cannel">取消</div>
-                               </div>
-                        </div>
-
-                 </div>
-
-                </div>
                    <div class="imgTable"> <table class="dataTable" id="gridTable"></table>  </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>

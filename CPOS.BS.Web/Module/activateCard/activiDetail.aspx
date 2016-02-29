@@ -89,8 +89,9 @@
                                     <em class="tit" style="width: 49px;"></em>
                          <div class="handleLayer" id="editLayer">
                              <div class="jsAreaItem">
+
                               <div class="wrapPic">
-                                 <span class="uploadBtn"><input class="uploadImgBtn" type="file" /></span>
+                                 <span class="uploadBtn"> <div> 上传图片</div><input class="uploadImgBtn" type="file" /></span>
                                  <div class="imgPanl"><img src="images/deflaut.png" width="270" height="135"> </div>
                                </div>
                                <div  class="txt">图片尺寸580*290</div>
@@ -130,7 +131,7 @@
                        
                        
                        
-                       <div class="line" id="autoUpdateBox" style="padding-bottom:20px">
+                       <div class="line" id="autoUpdateBox" style="padding-bottom:20px;display: none;">
                              <div class="linetext" style="width:100%">
                                 <div class="checkBox" data-flag="UpgradeAmount"><em></em> <span>累计消费金额满 </span></div>
                                 <div class="inputDiv" style="margin-left:8px;"><input type="text" class="easyui-numberbox"  name="UpgradeAmount" data-options="min:0,precision:1,max:10000,width:120,height:32"> 自动升级
@@ -153,7 +154,7 @@
                              <div class="expText">
                                  <p>1.如允许会员卡自动升级，可以选择一个或多个升级条件；满足条件后，系统将按会员卡等级值升级；</p>
                                  <p>2.如不允许会员卡自动升级，则不要勾选任何升级条件；</p>
-                                 <p>3.会员卡伊通过在门店或云店购买会员卡实现升级。</p>
+                                 <p>3.会员可以通过在门店或云店购买会员卡实现升级</p>
                              </div>
                          
                          
@@ -163,7 +164,7 @@
                    <!--商品详情-->
                    <div class="panelDiv cursorDef" id="nav02" data-index="1">
                     <div class="optBtnPanel">
-                         <div class="commonBtn" id="addDatetime">+添加</div>
+                         <div class="commonBtn icon w80 icon_add" id="addDatetime">添加</div>
                     </div>
                    <div  id="gridTable" class="gridLoading">
                          <div  class="loading">
@@ -187,7 +188,7 @@
 
                 <div class="btnopt" data-falg="nav01">
                  <div class=" commonBtn bgWhite"   data-flag="#nav01">上一步</div>
-                <div class=" commonBtn"  id="submitBtn" data-flag="#nav02">下一步</div>
+                <div class=" commonBtn nextStepBtn"  id="submitBtn" data-flag="#nav02">下一步</div>
                  <!--<div class="commonBtn bgCcc"  data-flag="#nav02">取消</div>-->
             </div>
 

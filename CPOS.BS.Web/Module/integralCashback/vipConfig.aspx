@@ -20,7 +20,7 @@
 
         <div class="allPage" id="section" data-js="js/vipConfig.js?ver=0.3">
               <div class="queryTermArea" id="simpleQuery" style="display:inline-block;width:100%;  background:#ebf1f4;">
-                             <div class="listBtn" data-show="nav01" data-hide="nav02"  data-rewardstype="0"> 订单   <div class="on"></div></div>
+                             <div class="listBtn" data-show="nav01" data-hide="nav02"  data-rewardstype="0"> 订单   </div>
                           <!--   <div class="listBtn" data-show="nav02" data-hide="nav01"  data-rewardstype="1"> 商品 <div class="on"></div></div>-->
                        </div>
                        <!-- 内容区域 -->
@@ -29,7 +29,7 @@
                    <form></form>
            <form id="optionForm">
                           <div class="lineT">
-                             <div class="nav01">
+                             <div class="nav01"  data-flag="EnableIntegral">
                               <div class="checkBox" data-flag="EnableIntegral" data-name="r1" style="width: 100px;margin-bottom: 40px;">
                                   <em></em>
                                   <span>启用积分</span>
@@ -66,7 +66,7 @@
                           </div>
 
                           <div class="lineT">
-                              <div class="nav01">
+                              <div class="nav01" data-flag="EnableRewardCash">
                               <div class="checkBox" data-flag="EnableRewardCash" data-name="r1"  style="height:50px;"><em></em> <span>启用返现 </span></div>
 								<!--
                                 <div class="rowRline">

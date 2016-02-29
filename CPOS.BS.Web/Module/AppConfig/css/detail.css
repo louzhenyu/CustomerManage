@@ -1,13 +1,12 @@
 @charset "utf-8";
 #section{background-color: #f4f8fa;}
 .savePanel{ height:94px; padding-top: 20px; background-color: #ebf1f4;}
-.saveHomPageBtn{ width: 120px;height:32px; line-height: 32px;margin-top: 12px; background-color:#00cccc;float: right; margin-right: 60px;}
 .commonOptsBtn{ text-align:center; border: 1px solid #d0d5d8; width: 300px;margin-left: 29px; margin-top: 24px;}
-.icon{ width:26px; height:26px; }
-.commonOptsBtn .icon{ margin: -13px auto; background:url("../images/upJiantou.png") no-repeat center center;}
+.iconJ{ width:26px; height:26px; }
+.commonOptsBtn .iconJ{ margin: -13px auto; background:url("../images/upJiantou.png") no-repeat center center;}
 .commonOptsBtn p{ font-size: 14px; color: #666; line-height: 36px;}
 .commonOptsBtn .listAdd{ width: 292px; margin: px auto;  display: inline-block;}
-.commonOptsBtn .addBtn{cursor: pointer; border-radius: 3px; min-width:84px;color: #fff; margin-bottom:10px; font-size: 14px; line-height: 32px; height: 32px; background: #00cccc; margin-left: 10px; float: left;}
+.commonOptsBtn .addBtn{cursor: pointer; border-radius: 3px; min-width:84px;color: #fff; margin-bottom:10px; font-size: 12px; line-height: 32px; height: 32px; background: #00a0e8; margin-left: 10px; float: left;}
 .paddingBtn{ width: 93%; text-align: center;}
 
 /*关注*/
@@ -57,8 +56,8 @@
 .commonSearchBox{height: 100%;border-radius:12px;background:#fff;width: 100%;}
 .commonSearchBox .searchBtn{float:right;width:40px;height:100%;background:url(../images/searchIcon.png) no-repeat center center;background-size: 23px;}
 .commonSearchBox .searchBtn input{width:100%;height:100%;opacity: 0;}
-.commonSearchBox .searchInput{height: 100%;margin-right:40px;}
-.commonSearchBox .searchInput input{display:inline-block;width:100%;height: 100%;text-indent:10px;font-size: 12px;background:none;border:none;border-right:1px solid #ccc;color:#8c8e92;}
+.commonSearchBox .searchInput{height: 100%;margin-right:40px;border: none;background: none;width: 50%}
+.commonSearchBox .searchInput input{display:inline-block;width:100%;height: 100%;text-indent:10px;font-size: 12px;background:none;border:none;color:#8c8e92;}
 .commonSearchBox .searchInput input::-webkit-input-placeholder { color:#eee;}
 /*图文导航列表*/
 .navPicArea{ background:#fff;overflow:hidden}
@@ -141,7 +140,7 @@
 .handleLayer .uploadArea{margin-top:30px; position: relative;}
 .handleLayer .wrapBtn{float:right; margin-top: 20px;}
 .handleLayer .wrapBtn span{float:right;width:80px;height:32px;line-height:32px;margin-left:20px;border-radius:4px;text-align:center;background:#ccc;color:#fff; cursor:pointer;}
-.handleLayer .wrapBtn span:nth-last-of-type(1){ background-color:#00cccc;}
+.handleLayer .wrapBtn span:nth-last-of-type(1){ background-color: #00a0e8;}
 
 .handleLayer .delBtn{display:none;height:30px; width:30px;position: absolute; top:-15px; right: -15px;background: url("../images/handleLayer/close.png") no-repeat center center;  }
 .handleLayer .uploadArea:hover .delBtn{display: block;}
@@ -152,10 +151,10 @@
 .handleLayer .wrapPic .uploadBtn{display:block;position:relative;width:95px;height:32px;line-height:32px;margin:10px auto;text-align:center;border-radius:4px;background:#00cccc;color:#fff; cursor:pointer;}
 .handleLayer .wrapPic .uploadBtn .input{display:block;width:95px;height:32px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;left:0;}
 .handleLayer .wrapInput{float:right;}
-.handleLayer .wrapInput .typeContainer{position: relative;}
+.handleLayer .wrapInput .typeContainer{position: relative;height: 32px}
 .handleLayer .wrapInput select{width: 340px;height:32px;padding-left:10px;border:1px solid #cfcedc;border-radius:4px;background:#fff;color:#333;}
 .handleLayer .wrapInput .delIcon{display:none;height:30px; width:30px;position: absolute; top:-15px; right: -15px;background: url("../images/handleLayer/close.png") no-repeat center center;  }
-.handleLayer .wrapTit{ float: left; font-size: 14px; width: 72px; text-align: left;}
+.handleLayer .wrapTit{ float: left; font-size: 12px; width: 72px; text-align: right;}
 .handleLayer .wrapInput select{ background: url("../images/handleLayer/select.png") no-repeat 98% center;}
 
 /*.handleLayer .wrapInput:hover .delIcon{display: block;}*/
@@ -164,10 +163,10 @@
 .handleLayer .hint{ width: 80%; margin: 0 auto; height: 65px;font-size: 14px; line-height: 65px; display: flex; text-align: left;}
 .handleLayer .hint b{ color: #333; float: left; width: 50px;}
 .handleLayer .hint span{ color: #999; float: left; line-height: 23px; width: 100%; padding-top: 21px;}
-.handleLayer .wrapInput input{float:left;width: 100%;}
-.handleLayer .wrapInput .infoContainer input.jsNameInput{width: 80%;margin-right: 15px; }
+.handleLayer .wrapInput input{float: left;width: 100%;}
+.handleLayer .wrapInput .infoContainer input.jsNameInput{ width: 83%;}
 
-.handleLayer .wrapInput .tagBtn{display:inline-block;width:50px;height:32px;line-height:32px;text-align:center;border-radius:4px;background:#00cccc;color:#fff; cursor:pointer;float: right;}
+.handleLayer .wrapInput .tagBtn{display:inline-block;width:50px;height: 30px;line-height: 30px;text-align:center;border-radius:4px;background: #00a0e8;color:#fff; cursor:pointer;float: right;margin-top: 1px;}
 .handleLayer .addLayerBtn{height:100px;margin-top:30px;}
 .addLayerBtn{width:100%;height:100px; position:relative;background:#fff url(../images/handleLayer/addBtn.png) no-repeat center top ; cursor:pointer;}
 .addLayerBtn p{ font-size: 14px;color: #999; position: absolute; bottom:15px; width: 100%; text-align: center;}
@@ -175,16 +174,16 @@
 .showLayer .listAdd{height:100px; margin-top:-100px; }
 .showLayer .listAdd .addBtn{line-height: 22px; border:1px solid #0f82b3; display:inline; float:left;padding:5px; margin:5px;}
 
-.handleLayer .wrapRadio{ width: 70%; margin: 0 auto; padding-top: 25px;font-size: 18px;height: 52px; color: #666}
-.handleLayer .wrapRadio div{ float: left; margin-left:8px; line-height: 28px;}
-.line{ width: 90%; margin: 0 auto;display: inline-block; padding-top: 40px;}
-.line .tit{ float: left; font-size: 14px; width: 72px; text-align: left;}
-.line .wrapRadio{float: left; width: 420px; padding-top:0; font-size: 14px; margin-top: -6px;}
-.handleLayer .wrapRadio div{margin:0;}
-.handleLayer .wrapRadio .checkBox { margin-top: 6px; width: 50%;}
+.handleLayer .wrapRadio{ width: 70%; margin: 0 auto; padding-top: 25px;font-size: 18px;height: 22px; color: #666}
+.handleLayer .wrapRadio div{ float: left;  line-height: 28px;}
+.line{ width: 94%; margin: 0 auto;display: inline-block; padding-top: 30px;}
+.line .tit{ float: left; font-size: 14px; width: 72px; text-align: right;}
+.line .wrapRadio{float: left; width: 442px; padding-top:0; font-size: 12px; margin-top: -6px;padding-left: 3px;}
+.handleLayer .wrapRadio .checkBox { margin-top: 6px; width: 25%;line-height: 22px;}
+.handleLayer .wrapRadio .checkBox span{ margin-left: 16px;}
 .lineBlock .radio span{ padding-right: 15px;}
 /**幻灯片编辑**/
-.jsAreaItem{ width: 94%; margin: 0 auto; padding: 15px;border-radius:6px; -webkit-border-radius:6px; border: solid 1px #e9e9e9; background-color: #f8f8f8;}
+.jsAreaItem{ width: 94%; margin: 0 auto; padding: 15px;border-radius:6px; -webkit-border-radius:6px; border: solid 1px #e9e9e9; background-color: #fff;}
 
 /**模板设置规则**/
 .moduleType{width: 90%;margin: 0  auto; padding-bottom:25px; text-align: left; display: inline-block;}
@@ -203,10 +202,10 @@
 /*添加标题功能样式*/
 #titlePanel{ width: 90%; height: 120px;margin: 0 auto;}
 #titlePanel .tittleName{ width: 100%; float: left; margin-top:20px; line-height: 33px; display: inline-flex;}
-#titlePanel .tittleName .tit{ width: 88px; float:left;font-size: 14px; }
-#titlePanel .tittleName .titleInput{ float: left; width: 100%;  height: 33px;}
+#titlePanel .tittleName .tit{ width: 72px; float:left;font-size: 12px; text-align: right;margin-right: 8px;}
+#titlePanel .tittleName .titleInput{ float: right; width: 100%;  height: 33px;}
 #titlePanel .tittleName .titleInput input{ width: 100%; height: 100%}
-#titlePanel .wrapRadio{ padding:10px 0 0 70px; font-size: 12px; float: left; width: 100%}
+#titlePanel .wrapRadio{ padding: 10px 0 0 65px; font-size: 12px; float: left; width: 100%}
 
 
 .titlePanel{ height: 38px;  width: 100%;background: #fff;}
@@ -361,5 +360,4 @@ table.gridtable td:first-child{width:30%;}
 
 /*编辑框样式*/
 .action{position: relative}
-.select{ border: 2px dashed #00cccc; position: absolute; top:0;left:0; width: 100%;height: 100%;z-index: 10}
-
+.select{  border: 2px dashed #00cccc; position: absolute; top:0;left:0; width: 100%;height: 100%;z-index: 10}

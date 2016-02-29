@@ -1,0 +1,401 @@
+﻿@charset "utf-8";
+body{overflow-x: hidden;}
+/*右侧浮动*/
+.leftsead{width:34px;height:143px;position:fixed;top:258px;right:0; z-index:99999}
+*html .leftsead{margin-top:258px;position:absolute;top:expression(eval(document.documentElement.scrollTop));}
+.leftsead li{height:35px;}
+.leftsead .index{ height: 35px;}
+.leftsead li img{float:right;}
+.leftsead li a{height:35px;float:right;display:inline-block;min-width:35px;max-width:90px;}
+.leftsead li a .shows{display:block;}
+.leftsead li a .hides{margin-right:-91px;display:none;cursor:hand;}
+.help{padding-top: 20px; text-align: right;  position: absolute;right: 0;top: 245px;}
+/*common*/
+.commonBtn{background:#00a0e8; cursor:pointer;border-radius: 4px; font-size: 12px;}
+.commonTitle{border-left:4px solid #fe7c24;}
+.commonTitleBox .getBack{background:url(../../images/skin/bg02/getBack.png) no-repeat right center;}
+
+.commonBtn.icon{ padding-left: 36px;  text-align: left;background-position:10px center;background-repeat: no-repeat; }
+.w80{ width: 80px;}
+.w100{width: 100px;}
+.w110{width: 110px;}
+.w120{width: 120px;}
+/*下架*/
+.icon_downLoad{ background-image: url("../../images/newYear/icon_download.png")}
+/*上架*/
+.icon_up{background-image:url("../../images/newYear/icon_up.png") }
+/*商品分组选择*/
+.icon_playlist{background-image:url("../../images/newYear/icon_playlist.png") }
+/*新增*/
+.icon_add{background-image:url("../../images/newYear/icon_add.png") }
+/*导入*/
+.icon_import{background-image:url("../../images/newYear/icon_import.png") }
+/*导出*/
+.icon_export{background-image:url("../../images/newYear/icon_export.png") }
+/* 保存（）*/
+.icon_save{background-image:url("../../images/newYear/icon_save.png") }
+/*按钮宽度*/
+.moreQueryWrap .queryBtn {width: 70px;}
+
+/*复选框*/
+.checkBoxWrap label.on{background:url(../../images/skin/bg02/radio3.png) no-repeat left center;}
+
+/*表格的菜单*/
+.tableMenu a.on{border-bottom:3px solid #fe7c24;color:#fe7c24;}
+/*添加资讯*/
+.addInfoArea .classInput .selectBox{background: #fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 85px center;}
+.addInfoArea .radioBox.on em{background:url(../../images/skin/bg02/radio3.png) no-repeat center center;}
+.topIssuesInfo .getBack{background:url(../../images/skin/bg02/getBack.png) no-repeat right center;}
+/*弹框*/
+.commdialog .row .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 107px center;}
+/*头部的微信，设置信息，退出*/
+.commonSelectWrap .selectBox{background:#fff url(../../images/skin/bg02/selectIcon02.png) no-repeat 120px center;}
+.selectDateBox p{background:#fbfbfb url(../../images/skin/bg02/dateIcon.png) no-repeat 80px center;}
+.moreQueryWrap .more{background:url(../../images/skin/bg02/moreQuery.png) no-repeat right 4px;color:#2d83cf;}
+
+
+/***公共的头部，导航，logo，信息***/
+.commonHeader{height:50px;background: #1074bd; border-bottom-width:0;}
+.commonHeader .handleWrap{ color: #fff; font-size: 14px; padding: 0;}
+.fontC{ color: #00a0e8;}
+
+/*adminIcon 的margin-top是 右侧文件的line-height减去自身高度/2 所以两个必须是偶数防止不一致*/
+.commonHeader .logo{background:url(../../images/blueFruit/logo.png) no-repeat 0 0;}
+.commonHeader .setBox p{background: url(../../images/newYear/jiantou.png) no-repeat 95%  center;  padding-right: 28px; line-height: 50px;  text-indent:0.5em;}
+.commonHeader .setBox p:hover{background-color: #0c5e99;}
+.commonHeader .setBox p b{font-size: 16px; float: left;  font-weight: 500;}
+.commonHeader .setBox-tip{top: 50px;  padding: 0;background: url(../../images/newYear/set-tip-bg.png) repeat-y 0 0;  left: 0; width: 158px; height: 132px; border-bottom: none;}
+.commonHeader .setBox-tip .safetyOutBtn{ border-radius:0; width: 100%; height: 32px;  padding:0;  line-height: 32px; background: none;  text-align: center;margin: 0;}
+.commonHeader .setBox-tip .safetyOutBtn:nth-child(4){border-bottom:none;height:38px;background: url("../../images/newYear/setBoxBot.png") no-repeat bottom center;}
+.commonHeader .setBox-tip a{padding-left: 48px;text-align:left; background-repeat: no-repeat; background-position: 20px center;color: #999; line-height: 32px; font-size: 12px; width: 148px; margin:0 auto;}
+.commonHeader .setBox-tip a:hover { background-color:#0c5e99; color: #fff;border-radius: 0;background-repeat: no-repeat; background-position: 20px center;}
+.commonHeader .setBox-tip a.one{background-image: url("../../images/newYear/set_top/abacus.png");}
+.commonHeader .setBox-tip a.two{background-image: url("../../images/newYear/set_top/unlock.png");}
+.commonHeader .setBox-tip a.three{background-image: url("../../images/newYear/set_top/upload.png");}
+.commonHeader .setBox-tip a.four{background-image: url("../../images/newYear/set_top/fsxx.png");}
+.commonHeader .setBox-tip a.one:hover{background-image: url("../../images/newYear/set_top/abacuson.png");}
+.commonHeader .setBox-tip a.two:hover{background-image: url("../../images/newYear/set_top/unlockon.png");}
+.commonHeader .setBox-tip a.three:hover{background-image: url("../../images/newYear/set_top/uploadon.png");}
+.commonHeader .setBox-tip a.four:hover{background-image: url("../../images/newYear/set_top/fsxxon.png");}
+.commonHeader .imgList{ width:112px; padding: 0 20px; float: left;}
+.commonHeader .imgList a{height: 50px;width: 16px;}
+.commonHeader .imgList .l{ background: url("../../images/newYear/set_top/settings.png") no-repeat center center;}
+.commonHeader .imgList .r{ background: url("../../images/newYear/set_top/weixin.png") no-repeat center center;}
+.commonHeader .handleWrap .unitName{ line-height:50px; height: 50px;}
+.commonHeader .logoWrap{float:left; width: 180px;height: 50px;background:/* url(../../images/newYear/logo.png)*/  no-repeat center center;}
+
+/****头部，导航****/
+.commonNav { padding-left: 18px; display: none;}
+.commonNav li {padding: 0 20px; text-indent:0; display: block; height: 50px; line-height: 50px; text-align:left; margin:0 auto; }
+.commonNav li a{color:#fff;height: 50px; line-height: 50px; font-size: 14px;margin-top: 2px;padding-left:27px;background: url("../../images/newYear/icon/icon_yd_sc.png") no-repeat left center; }
+/***图标Start***/
+/****云店****/
+.commonNav li a.icon_yd_sc{ background-image: url("../../images/newYear/icon/icon_yd_sc.png")}
+.commonNav li a.icon_yd_sp{ background-image: url("../../images/newYear/icon/icon_yd_sp.png")}
+.commonNav li a.icon_yd_dd{ background-image: url("../../images/newYear/icon/icon_yd_dd.png")}
+
+
+/****营销利器****/
+.commonNav li a.icon_yxlq_cyck{ background-image: url("../../images/newYear/icon/icon_yxlq_cyck.png")}
+.commonNav li a.icon_yxlq_schd{ background-image: url("../../images/newYear/icon/icon_yxlq_schd.png")}
+.commonNav li a.icon_yxlq_yhqgl{ background-image: url("../../images/newYear/icon/icon_yxlq_yhqgl.png")}
+.commonNav li a.icon_yxlq_yxgj{ background-image: url("../../images/newYear/icon/icon_yxlq_yxgj.png")}
+
+/****会员金矿****/
+.commonNav li a.icon_hyjk_zcd{ background-image: url("../../images/newYear/icon/icon_hyjk_zcd.png")}
+.commonNav li a.icon_hyjk_dsj{ background-image: url("../../images/newYear/icon/icon_hyjk_dsj.png")}
+.commonNav li a.icon_hyjk_hyk{ background-image: url("../../images/newYear/icon/icon_hyjk_hyk.png")}
+/****员工激励****/
+.commonNav li a.icon_ygjl_ygjl{ background-image: url("../../images/newYear/icon/icon_ygjl_ygjl.png")}
+/****创新渠道****/
+.commonNav li a.icon_qdcx_yg{ background-image: url("../../images/newYear/icon/icon_qdcx_yg.png")}
+.commonNav li a.icon_qdcx_yg{ background-image: url("../../images/newYear/icon/icon_hyjk_hyk.png")}
+.commonNav li a.icon_qdcx_wbqd{ background-image: url("../../images/newYear/icon/icon_qdcx_wbqd.png")}
+/****设置****/
+.commonNav li a.icon_sz_sz{ background-image: url("../../images/newYear/icon/icon_sz_sz.png")}
+/****微信****/
+.commonNav li a.icon_wx_wx{ background-image: url("../../images/newYear/icon/icon_wx_wx.png")}
+/****发送通知****/
+.commonNav li a.icon_zbxx_zbxx{ background-image: url("../../images/newYear/icon/icon_zbxx_zbxx.png")}
+.commonNav li a.icon_jysj_jysj{ background-image: url("../../images/newYear/icon/icon_jysj_jysj.png")}
+/***图标End***/
+
+
+.commonNav li:hover{ background: #0c5e99;}
+.commonNav li.on{background: #0c5e99;}
+.commonNav li.dropDown{background:url(../../images/newYear/jiantou.png) no-repeat center center}
+.commonNav li.dropDown{ position: relative; width: 36px;z-index: 999}
+.commonNav li.dropDown ul{ background:#00cccc;  position: absolute; top: 67px; left: 0;z-index: 998}
+.commonNav li.dropDown ul li{ float: none; height: 32px; line-height: 32px; }
+.commonNav li.dropDown ul li a{ height: 32px; line-height: 32px; font-size: 14px;}
+/*全局菜单*/
+.commonMenu{ width:180px; padding-top: 10px;}
+.commonMenu li{ height: 40px; padding-left: 40px; margin:0 auto; text-align: center;}
+.commonMenu li a{ height: 40px; text-align: left; font:12px/40px "Microsoft YaHei"; color:#666; text-indent:0;display: block;}
+/*.commonMenu li:hover{ background-color:#00a0e8 ;}*/
+/*.commonMenu li:hover a{ text-decoration: none; color:#fff;}*/
+.commonMenu li.on{ background-color:#00a0e8}
+.commonMenu li.on a{color:#fff;}
+.commonMenu li.on:hover a{color:#fff;}
+
+/**右侧布局***/
+
+.contentArea{ padding-bottom: 30px; margin-left: 180px; border-color:#e1e7ea;padding-right:40px; }
+
+
+
+/******查询*****/
+/*头部简单查询*/
+.tableWrapTextBtn   {height: 120px;padding-top: 35px;padding-left: 25px;}
+.queryTermArea{min-height:73px;padding:20px 20px 20px 0;background:#fafafa; margin-bottom:0; border: none;}
+.queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; min-width: 1000px;}
+.moreQueryWrap{ float: left;margin-top: 12px;}
+/*查询*/
+.queryTermArea .commonSelectWrap{margin-right: 28px; font-size: 12px; }
+.commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
+.commonSelectWrap .tit{float:left;width:76px;height:30px;line-height:30px;text-align:right;font-size:12px;color:#666;}
+.commonSelectWrap .w100{width: 100px;}
+.commonSelectWrap .w120{width: 120px;}
+.commonSelectWrap .endTime .tit{width:15px;}
+.commonSelectWrap .endTime .selectBox{margin-left:22px;}
+.commonSelectWrap .selectBox{float:left;margin-left: 2px;width:200px;height:32px;line-height:32px;border:none;border-radius:3px;background:none;}
+.commonSelectWrap .selectBox .text{display:block;width:150px;line-height:34px;text-indent:5px;}
+.commonSelectWrap .searchInput {display:block;float:left;width:200px;height:32px;line-height:32px;margin-left: 2px;border:1px solid #ddd;border-radius:3px;}
+.commonSelectWrap .searchInput  input{float:left;width:100%;height:30px;border:none;color:#666;}
+.commonSelectWrap .searchInput  textarea{white-space: normal; line-height:22px;float:left;width:100%;height:100%;border:none;color:#666; padding-left: 10px;}
+
+/**列表页面---表头的操作按钮栏**/
+.zsy{clear: both;font-size:0; line-height:0px; display:block;}
+
+.optionBtn{display:inline-block; width:100%;height:60px; padding-left: 10px; padding-top: 15px; background: #fff; border-top: dashed 1px #e1e7ea;}
+#tableWrap .optionBtn{border:none;}
+.optionBtn .commonBtn{float: left; margin-left: 10px;}
+.optionBtn .commonBtn.r{ float: right; }
+/*如果操作栏右侧只有一个按钮commonBtn，在commonBtn加一个r 类；如果有多个 在多个嵌套一个div  设置类为 r*/
+.optionBtn .r{ }
+#tableWrap{}
+#tableWrap .optionBtn .r{margin-right: 0;}
+/*表格顶部状态操作栏*/
+.tableList{ padding-top:5px; background: #fff; border: solid  1px #eee; border-bottom:none; float: left; width: 100%}
+.tableList ul{ width: 100%; height: 45px; float: left;}
+.tableList li{cursor: pointer; font-size: 13px; color: #999; float: left; padding-left: 35px; line-height:42px; }
+.tableList li.on{color: #00a0e8}
+.tableList li.on em{border-bottom: 2px #00a0e8 solid;}
+/*登录页*/
+/*
+.loginPage .name{background:url(../../images/blueFruit/bg02/loginLogo.png) no-repeat left center;}
+.loginFooterMenu .item01{background:url(../../images/blueFruit/bg02/item01.png) no-repeat center 50px;}
+.loginFooterMenu .item02{background:url(../../images/blueFruit/bg02/item02.png) no-repeat center 50px;}
+.loginFooterMenu .item03{background:url(../../images/blueFruit/bg02/item03.png) no-repeat center 50px;}
+.loginFooterMenu .item04{background:url(../../images/blueFruit/bg02/item04.png) no-repeat center 50px;}
+.loginFooterMenu .item05{background:url(../../images/blueFruit/bg02/item05.png) no-repeat center 50px;}
+*/
+
+
+/**********______easyui 样式重构部分 所有修改公共样式的都要在这里重写________*********/
+
+.panel-title{ height: 40px; line-height: 40px;}
+.datagrid-row{height: 40px;}
+.panel-header {background-color: #f3f3f6;}
+/*表格边框*/
+.datagrid-header td,
+.datagrid-body td,
+.datagrid-footer td {
+    border-color: #e1e7ea;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    border-bottom: 1px solid #e1e7ea;
+}
+.datagrid-body tr:last-of-type td{ border:1px solid transparent}/*最后一个边框透明防止多边框*/
+.treegrid-tr-tree tr:last-of-type td{ border:1px solid transparent; border-bottom-color: #e1e7ea;}
+.easyui-layout.panel-header,.easyui-layout .panel-body{ border: none;}
+/*列表的checkbox 重构*/
+.datagrid-header-check.on,
+.datagrid-row-selected .datagrid-cell-check {
+    background-image:url("../../images/newYear/checkon.png")
+}
+.datagrid-header-check,
+.datagrid-cell-check {
+    padding: 0;
+    width: 38px;
+    height: 20px;
+    font-size: 1px;
+    text-align: left;
+    overflow: hidden;
+    background:url("../../images/newYear/check.png") right center no-repeat;
+}
+/* 只是点击框就要启用 且 下面input的大小和其一致 .datagrid-header-check{display:block;width: 20px;height: 20px;margin: 0 16px;}*//*大小和背景图片大小一致 防止点图片以外的位置也变成选中状态*/
+.datagrid-header-check input, .datagrid-cell-check input{
+    width: 38px; height: 20px;
+    opacity: 0;
+    filter:alpha(opacity=0); //IE系列识别
+-moz-opacity:0; //火狐私有
+}
+
+.datagrid-header .datagrid-cell span{ font:12px "Microsoft YaHei"; color: #333; }
+.datagrid-header .datagrid-cell{}
+.datagrid-header{border-bottom:1px solid #e1e7ea;background-color: #f5f6fa}
+.datagrid{ border:1px solid #e1e7ea;border-left: none;}
+.datagrid-row{ background-color:#fff;}  /*奇偶不同 奇*/
+.datagrid-row-alt{ background-color:#fff;}/*奇偶不同 偶*/
+.datagrid-row-over{background-color:#f0f3f5;} /*鼠标停靠*/
+.datagrid-row-selected{background-color: #e5f5fd; }
+.imgTable .datagrid-row-checked {background:e5f5fd;}
+.imgTable .datagrid-header-row{ height: 48px;line-height: 48px;}
+.imgTable .datagrid-row {
+    height:60px;
+}
+.tree-node{ text-align: left;}
+.tree-folder {
+    /* background: url('images/tree_icons.png') no-repeat -208px 0; */
+    background: none;
+}
+.tree-folder-open {
+    /* background: url('images/tree_icons.png') no-repeat -224px 0; */
+    background: none;
+}
+.tree-file {
+    /* background: url('images/tree_icons.png') no-repeat -240px 0; */
+    background: none;
+}
+.tree-folder, .tree-file{
+    width:0px;
+}
+.tree-indent{ width: 16px;}
+.tree-title{ font-size: 14px; color: #666}
+.tree-node-selected{color: #00a0e8; background:none;}
+.tree-node-selected .tree-title{ color: #00a0e8;}
+.tree-node-hover {background: #00a0e8;}
+.tree-node-hover  .tree-title{  color: #fff;}
+
+/*下拉框的改造*/
+
+.textbox .textbox-text {color: #666666}
+.combo-arrow {
+
+
+    background: url('../../images/newYear/moreIcon.png') no-repeat center center;
+}
+.combobox-item{ color:#666;}
+.combobox-item-selected{ color: #00a0e8; background:none;}
+.combobox-item-hover {
+    color: #fff; background-color: #00a0e8;
+}
+
+
+/*linkBtn*/
+.l-btn{color: #fff;}
+.messager-button .l-btn {color: #000;}
+/*底部分页的重写*/
+#kkpager span{ font-size: 12px}
+#kkpager_gopage_wrap{ border:solid 1px #00a0e8; width: 28px; border-radius: 3px 0 0 3px;  height: 23px; line-height: 23px;}
+#kkpager_btn_go_input{ text-indent:0; font-size: 12px; color: #00a0e8; padding:0; width: 26px;height:20px; background: none; line-height:20px;border-radius: 3px 0 0 3px}
+#kkpager_btn_go{cursor: pointer;display: block; width:25px;height:23px;margin-left:-1px; left:28px;text-indent:-999em;border:1px solid #00a0e8;border-left:none;border-radius:0 3px 3px 0;background: url(../../images/newYear/pagebtn.png) no-repeat center center;color:#fff;}
+#kkpager{
+    clear:none;
+    height:30px;
+    line-height: 23px;
+    margin-top:20px;
+    color:#323232;
+    font-size:12px;
+    text-align: right;
+    padding-right: 65px;
+}
+#kkpager span.normalsize{ color:#323232;}
+#kkpager span.disabled{color: #999999;border: none; }
+#kkpager a {border: none; color: #999999;}
+#kkpager a:hover {border: none; background: none; color: #00a0e8}
+#kkpager span.curr {color: #00a0e8; font-size: 14px; font-weight:600; border: none; background: none;}
+
+
+.commonSelectWrap .searchInput.bordernone{ border-color: transparent; background: none;}
+
+.checkBox{
+    height: 22px; line-height: 22px;
+    cursor: pointer;
+}
+.checkBox em{  height: 22px; width: 22px;  background:url("../../images/newYear/check.png") center center no-repeat; float: left;}
+.checkBox.on em{background-image: url("../../images/newYear/checkon.png");}
+.checkBox  span{ color: #666; padding-left: 10px; margin-left: 25px; display: block; text-align: left;}
+
+
+
+
+.radio{height: 28px; line-height: 28px;  }
+.radio  span{ float: left; color: #666; padding-left: 10px; white-space:normal;padding-right: 40px;}
+.radio em{  height: 28px;   width: 28px; background: url("../../images/newYear/radio.png") center center no-repeat; float: left; }
+.radio.on em{ background-image: url("../../images/newYear/radioOn.png")}
+.zsy{clear: both;font-size:0; line-height:0; display:block;}
+
+.submitBtn{ border-radius: 40px; margin: 0 auto; font-size: 16px; margin-top: 35px;}
+
+.btnWrap{padding:35px 0;text-align:center;}
+.btnWrap a{display:inline-block;}
+.cancelBtn,.saveBtn,.closeBtn{border-radius:38px;color: #fff; border: none; width:110px; height: 36px;line-height: 36px;}
+.cancelBtn{ height:30px;line-height:30px;background:#cccccc;color:#fff; margin-left: 15px;}
+.btnWrap .cancelBtn{ display:none;}
+/*.cancelBtn:hover{background:transparent;color: #fe7c24}*/
+.panel-header, .panel-body {
+    border: none;
+}
+.datagrid-row td:first-of-type div.datagrid-cell{ line-height: 22px; white-space:initial;  padding-left: 20px;}
+.datagrid-header-row td:first-of-type div.datagrid-cell{ line-height: 22px; white-space:initial;  padding-left: 20px;}
+.datagrid-row td:first-of-type div.datagrid-cell-check{ padding-left: 0;}
+.datagrid-header-row td:first-of-type div.datagrid-header-check{  padding-left: 0;}
+.imgTable .datagrid-row  img.l{margin-right: 10px;}
+/*列表相关样式*/
+.operation{display: inline-block;}
+.opt {float: left;cursor: pointer; width: 18px;height: 18px;margin: 6px 8px;}
+.noOpt{ float: left;margin: 6px 10px;}
+.noDelete{background:no-repeat center center;background-image:url(../../images/newYear/nodel.png);   width: 16px; height: 16px; }
+.delete{background:no-repeat center center; background-image:url(../../images/newYear/del.png); width: 16px; height: 16px;  cursor: pointer}
+.down{ background:no-repeat center center; background-image:url(../../images/newYear/down.png); width: 18px; height: 17px; cursor: pointer}
+.exit{background:no-repeat center center; background-image:url(../../images/newYear/exit.png); width: 16px; height: 16px;cursor: pointer}
+.btnAdd{background:url(../../images/newYear/addstr.png) center center  no-repeat; width: 18px; height: 18px;  cursor: pointer}
+.btnDownload{background:url(../../images/newYear/Download.png) center center  no-repeat;width: 16px; height: 16px;cursor:pointer;}
+.reset{ background:no-repeat center center; background-image:url(../../images/newYear/reset.png);width:16px;height:16px;cursor:pointer;}
+.runningBtn{float:left;margin:6px 8px;background:no-repeat center center; background-image:url(../../images/newYear/runningBtn.png);width:16px;height:16px;cursor:pointer;}
+.pauseBtn{float:left;margin:6px 8px;background:no-repeat center center; background-image:url(../../images/newYear/pauseBtn.png);width:16px;height:16px;cursor:pointer;}
+
+.rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left; color: #999;}
+
+.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+.datebox .combo-arrow{padding-right:26px;}
+.gridLoading{display: block} /*所有需要loading的dataGrid*/
+.loading{text-align: center;position:absolute; vertical-align: middle;width: 100%;margin-top: 10px;}
+.datagrid-body{position: relative;z-index: 8}
+.datagrid-body .loading{ z-index:8;}
+
+.datagrid-header td.datagrid-header-over{ background:transparent;}
+
+.datagrid-header td, .datagrid-footer td{cursor: default;}
+.cursorDef  .datagrid-body td{ cursor: default}
+.datagrid-view{ height: 200px;}
+
+.r{ float: right;} .l{ float: left;}
+/*关闭按钮重构*/
+.panel-tool-close,.jui-dialog-close {
+    background: url('../../images/newYear/hitClose.png') no-repeat center center;
+}
+
+/*日期控件*/
+.combo-panel {border: 1px solid #ddd;padding-bottom: 5px;}
+.datagrid-cell,
+.datagrid-cell-group,
+.datagrid-header-rownumber,
+.datagrid-cell-rownumber {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
+    height: 18px;
+    line-height: 18px;
+    font-size: 12px;
+}
+.isSubmitLoading{background:rgba(0,0,0,0.2) no-repeat center center; background-image:url(../../images/newYear/loading.gif);position:fixed;top:0; left: 0; width: 100%; height: 100%; z-index: 999999999999; }
+/*上一步下一步样式*/
+.prevStepBtn ,.startStepbtn{width: 110px;height: 35px;line-height: 35px;background: #fff;cursor: pointer;font-size: 12px;text-align: center;display: inline-block;border-radius: 25px;color: #00a0e8; border: 2px solid #00a0e8;margin: 0px 10px;}
+.prevStepBtn:hover ,.startStepbtn:hover{color: #00a0e8;}
+.nextStepBtn {width: 110px;height: 35px;line-height: 35px;background: #00a0e8;cursor: pointer;font-size: 12px;text-align: center;display:block;border-radius: 25px;color: #fff; border: 2px solid #00a0e8;margin: 0px 10px;}

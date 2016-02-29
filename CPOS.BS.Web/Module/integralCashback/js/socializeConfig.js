@@ -17,7 +17,7 @@
         },
         initEvent: function () {
             $('.easyui-numberbox').numberbox({
-                width:100,
+               /* width:200,*/
                 height:32
             });
             var that = this;
@@ -43,19 +43,19 @@
             });*/
 
             that.elems.sectionPage.delegate(".checkBox","click",function(e){
-                var me= $(this);
+                var me= $(this),flag=me.data("flag");
                 me.toggleClass("on");
                 $.util.stopBubble(e);
 
                 if(!me.hasClass("on")) {
-                    me.siblings().find(".textbox.numberbox").css({"background": "#efefef"});
-                    me.siblings().find(".easyui-numberbox").numberbox({
+                    $("[data-flag='"+flag+"']").find(".textbox.numberbox").css({"background": "#efefef"});
+                    $("[data-flag='"+flag+"']").find(".easyui-numberbox").numberbox({
                         disabled:true
                         //required: true
                     });
                 }else{
-                    me.siblings().find(".textbox.numberbox").css({"background":"#fff"});
-                    me.siblings().find(".easyui-numberbox").numberbox({
+                    $("[data-flag='"+flag+"']").find(".textbox.numberbox").css({"background":"#fff"});
+                    $("[data-flag='"+flag+"']").find(".easyui-numberbox").numberbox({
                         disabled:false
                         //required: true
                     });
@@ -187,10 +187,12 @@
                     $.each( pram,function(index,filed){
                         if(filed.value!=="") {
                             prams.data[filed.name] = filed.value;
+                        }else{
+                            prams.data[filed.name] =0;
                         }
                     });
                 }
-                if($("[data-flag].checkBox.on").length>0){
+
                     $("[data-flag].checkBox").each(function(){
                         var name=$(this).data("flag");
                         if($(this).hasClass('on')){
@@ -198,8 +200,8 @@
                         }else{
                             prams.data[name] = 0;
                         }
-                    })
-                }
+                    });
+
 
          /*       switch(operationType){
                     case "putaway":prams.data.action="ItemToggleStatus";  //上架

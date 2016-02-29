@@ -1,26 +1,17 @@
 ﻿@charset "utf-8";
-#contentArea{background:#f4f8fa;}
-.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
-.commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.optionBtn{height:65px; border: solid  1px #eee; border-bottom:none; }
-.optionBtn li{cursor: pointer; font-size: 15px; color: #999; float: left; padding-left: 35px; float: left; line-height:33px; }
-.optionBtn li.on{color: #07c8cf}
-.optionBtn li.on em{border-bottom: 2px #07c8cf solid;}
 
-.optionBtn{height:65px; padding-top: 15px;  border: solid  1px #eee; border-bottom:none;}
-.optionBtn .commonBtn{ width:99px; background-color: #00cccc;line-height: 32px; height:32px; float: left; margin-left:20px; padding:0 12px;}
-.optionBtn .batch{ position:relative;background:url("../images/jiantouD.png") 90% center no-repeat #00cccc;}
+.optionBtn .batch{ position:relative;background:url("../images/jiantouD.png") 90% center no-repeat #00a0e8;}
 .optionBtn .export{float: right; margin-right: 35px; width: 83px; text-align:right;background: url("../images/Share.png") #82ba38 no-repeat 14px center ; padding-right: 18px; }
 .panelTab{display: none; position: absolute; top:0; left: 0; background-color:#fff;width: 108px; border: 1px solid #d0d5d8; border-radius: 3px;}
 .panelTab p{border-bottom: 1px solid #d0d5d8; display: inline-block; color:#999; height: 33px; line-height:33px;padding-right: 10px; text-align: right; background: 10px center no-repeat  ; width: 100%;   }
-.panelTab p.on{ color: #00a0e8;}
+.panelTab p.on{ color: #00cccc;}
 .panelTab p.check01{ background-image: url("../images/check01.png")  }
 .panelTab p.check02{ background-image: url("../images/check02.png") }
 .panelTab p.check03{ background-image: url("../images/check03.png") }
 .panelTab p.check01.on{ background-image: url("../images/check_01.png") }
 .panelTab p.check02.on{ background-image: url("../images/check_02.png") }
 .panelTab p.check03.on{ background-image: url("../images/check_03.png") }
-.queryTermArea{padding-left: 0; padding-right:0}
+.queryTermArea{border-bottom:1px solid #07c8cf;padding-left: 0; padding-right:0}
 .moreQueryWrap{ float: left;margin-top: 12px;}
 .moreQueryWrap .queryBtn{ width: 58px;}
 .rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left; color: #999;}
@@ -34,8 +25,8 @@
 .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
 .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
 .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
-.commonSelectWrap .searchInput textarea{line-height:34px;font-size:14px;background:none;color:#999;height: 35px; }
-.panlDiv .commonSelectWrap .searchInput{ border-width:0;background:none;  width: 370px;}
+.commonSelectWrap .searchInput textarea{line-height:34px;font-size:14px;background:none;color:#999;}
+.panlDiv .commonSelectWrap .searchInput{ border-width:0;background:none;}
 
 .forminput .commonSelectWrap .searchInput{ border-width:1px;background:#fff;}
 
@@ -51,11 +42,6 @@
 .updateBtn{ float: right; width: 160px; margin-right: 65px;}
 .updateBtn .commonBtn { width: 58px; margin-right:12px; float: left; height: 28px; line-height: 28px; display: none}
 
-.commonSelectWrap .wh80{ width: 80px;}
-.commonSelectWrap .rowStatusStyle input{color: #fc7a52;}
-.commonSelectWrap .tit,.commonSelectWrap .searchInput input{color:#999;font-size:14px;}
-.commonSelectWrap .searchInput.rowStatusStyle input{color:#fc7a52;}
-.commonSelectWrap .tit span{color:#fc7a52;}
 .actuallyDetailBox{display:inline-block;width:100%;}
 .actuallyDetail{position:relative;display:inline-block;padding-top:10px;}
 .actuallyDetail a{line-height:33px;text-decoration:underline;color:#fc7a52;}
@@ -63,16 +49,7 @@
 .actuallyDetail:hover .otherInfoBox,.actuallyDetail:hover .arrIcon{display:block;}
 .otherInfoBox .commonSelectWrap{width:100%;margin:0;}
 .otherInfoBox .commonSelectWrap .tit{width:80px;}
-.otherInfoBox .commonSelectWrap .searchInput{width:75px;height:33px;margin-left:0;}
+.otherInfoBox .commonSelectWrap .searchInput{width:60px;height:33px;margin-left:0;}
 .actuallyDetail .arrIcon{display:none;width:20px;height:11px;position:absolute;top:41px;left:32px;background:url(../images/arr.png) no-repeat 0 0;z-index:99;}
 .otherInfoBox .infoBox{display:inline-block;padding:10px 0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;}
 .otherInfoBox .infoBox .commonSelectWrap{margin-bottom:5px;}
-
-
-
-.quicklyBox{width:613px;margin:40px auto 0;}
-.quicklyBtnBox{height:20px;line-height:20px;margin-top:8px;margin-bottom:20px;}
-.quicklyBtnBox a{float:left;width:33.33%;text-align:center;font-size:14px;color:#00a1e6;}
-.quicklyBtnBox a span{padding-right:18px;background:url(../images/icon-href.png) no-repeat right center;}
-.nextNotShow span{display:inline-block;margin-left:10px;line-height:20px;padding-left:22px;font-size:12px;background:url(../images/icon-check.png) no-repeat left center;color:#666;cursor:pointer;}
-.nextNotShow span.on{background:url(../images/icon-checked.png) no-repeat left center;}

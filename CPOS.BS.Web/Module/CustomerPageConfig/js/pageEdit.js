@@ -106,7 +106,6 @@
                     NodeValue: nodeValue
                 },
                 success: function (data) {
-                    debugger;
                     if (data.IsSuccess) {
                         alert("保存成功，即将跳往列表页");
                         window.location.href = "pageList.aspx";

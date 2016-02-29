@@ -21,6 +21,7 @@
         <div class="queryTermArea" id="simpleQuery" style="display:inline-block;width: 100%; " >
              <form></form>
             <form id="queryFrom">
+            <div class="item">
             <div class="commonSelectWrap">
                 <em class="tit">商家名称：</em>
                 <label class="searchInput"><input  name="RetailTraderName" type="text" value=""></label>
@@ -33,16 +34,21 @@
                             <em class="tit">联系人：</em>
                             <label class="searchInput"><input   name="RetailTraderMan" type="text" value=""></label>
                         </div>
+                        <div class="moreQueryWrap">
+                         <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+                         </div>
+           </div>
+           <div class="item">
              <div class="commonSelectWrap">
                              <em class="tit">门店：</em>
                              <div class="selectBox bordernone">
-                               <input id="unitTree" name="UnitID"  class="easyui-combotree" style="width:160px;height: 32px;"   />
+                               <input id="unitTree" name="UnitID"  class="easyui-combotree" style="width:200px;height: 30px;"   />
                              </div>
                          </div>
             <div class="commonSelectWrap">
                             <em class="tit">活动类型：</em>
                             <div class="selectBox bordernone">
-                              <input id="Way" class="easyui-combobox"  style="width:160px;height: 32px;"  name="CooperateType"  />
+                              <input id="Way" class="easyui-combobox"  style="width:200px;height: 30px;"  name="CooperateType"  />
 
 
                             </div>
@@ -50,12 +56,13 @@
             <div class="commonSelectWrap">
                 <em class="tit">状态：</em>
                 <div class="selectBox bordernone">
-                  <input id="cc" class="easyui-combobox"  style="width:160px;height: 32px;" name="Status"  />
+                  <input id="cc" class="easyui-combobox"  style="width:200px;height: 30px;" name="Status"  />
                 </div>
+            </div>
             </div>
              </form>
             
-              <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+
         </div>
 
         <!--表格操作按钮-->

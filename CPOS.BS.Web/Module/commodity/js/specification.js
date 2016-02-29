@@ -239,14 +239,14 @@
                         }
                     } ,
 
-                    {field : 'id',title : '编辑',width:30,align:'center',resizable:false,
+                    {field : 'id',title : '编辑',width:30,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC exit" data-index="'+index+'" data-oprtype="exit"></p>';
+                            return '<p class="fontC opt exit" data-index="'+index+'" data-oprtype="exit"></p>';
                         }
                     },
-                    {field : 'isParent',title : '删除',width:30,align:'center',resizable:false,
+                    {field : 'isParent',title : '删除',width:30,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
+                            return '<p class="fontC opt delete" data-index="'+index+'" data-oprtype="del"></p>';
                         }
                     }
                 ]],

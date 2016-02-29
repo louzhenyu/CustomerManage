@@ -66,7 +66,7 @@
             });
 
             /**************** -------------------弹出easyui 控件 start****************/
-            var wd = 160, H = 32;
+            var wd = 200, H = 30;
 
 
             /**************** -------------------弹出easyui 控件  End****************/
@@ -299,13 +299,13 @@
                    $("#ActualQtyPanl").html(html);
                    debugger
                    $("#ActualQtyPanl .easyui-numberbox").numberbox({
-                       width:160,height:32,min:0,precision:0
+                       width:200,height:30,min:0,precision:0
                    });
                    $("#ActualQty").form('load',salesReturnInfo);
                     html = bd.template('tpl_ServicesTypeForm');
                    $("#ServicesTypePanl").html(html);
                    $("#ServicesType").form('load',salesReturnInfo);
-                   var wd = 160, H = 32;
+                   var wd = 200, H = 30;
                    $('#ServicesTypeText').combobox({
                        width: wd,
                        height: H,
@@ -328,7 +328,7 @@
                    html = bd.template('tpl_ConfirmAmountForm');
                    $("#ConfirmAmountPanl").html(html);
                    $("#ConfirmAmountPanl .easyui-numberbox").numberbox({
-                       width:160,height:32,min:0,precision:0
+                       width:200,height:30,min:0,precision:0
                    });
                    $("#ConfirmAmount").form('load',salesReturnInfo.OrderDetail)
 

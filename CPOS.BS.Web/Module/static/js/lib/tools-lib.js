@@ -72,6 +72,17 @@
         return  parseInt((new Date(startTime)-new Date(endTime))/ parseInt(divNum));
     };
 
+    //提交loading 防止多点
+    // notProceed  为true 没有在进行提交
+    util.isLoading=function(notProceed){
+        if(notProceed){
+            $(".isSubmitLoading").remove();
+        }else{
+            if($(".isSubmitLoading").length==0) {
+                $("body").append('<div class="isSubmitLoading"></div>');
+            }
+        }
+    };
 
     util.obj2list = function(obj){
         var list = [];
@@ -100,43 +111,43 @@
 		var urlstr = window.location.href.split("?"),
             params = {};
         if (urlstr[1]) {
-			
+
 				var items = urlstr[1].split("&");
-				
+
 				for (var i = 0; i < items.length; i++) {
-				
+
 					var itemarr = items[i].split("=");
-					
+
 					params[itemarr[0]] = itemarr[1];
 				}
 			}
         return key?params[key]:params;
-        
+
     }
     util.toUrlWithParam=function(toUrl,param){
-		
+
 		var value = "",itemarr = [],params;
 
 
 		params = this.getUrlParam();
-		
+
 		if(param){
-			
+
 			var temps = param.split("&"),tempparam;
-		
+
 			for(var i=0;i<temps.length;i++){
-				
+
 				tempparam = temps[i].split('=');
-				
+
 				params[tempparam[0]] = tempparam[1];
 			}
 		}
-		
-		
+
+
 		var paramslist = [];
-		
+
 		for(var key in params){
-			
+
 			paramslist.push(key + '=' + params[key]);
 		}
 		location.href= toUrl + "?" + paramslist.join("&");
@@ -149,29 +160,18 @@
 				url: "",
 				data: null,
 				beforeSend: function () {
-					
+
 				},
 				success: null,
 				error: function (XMLHttpRequest, textStatus, errorThrown){
-					
+
 				}
 			};
-			
+
 			$.extend(_param,param);
-        _param.success= function (data) {
-            if (!data.IsSuccess && data.ResultCode == 500) {
-                $.messager.alert("提示", data.Message,"error",function() {
-                    location.href = "/default.aspx?method=LogOut";
-                });
 
-            } else {
-                param.success(data);
-            }
-
-
-        };
 			//var baseInfo = this.getBaseAjaxParam();
-			
+
 			var action = param.data.action,
 				interfaceType = param.interfaceType||'Product',
 				_req = {
@@ -191,7 +191,7 @@
 			var _data = {
 				'req':JSON.stringify(_req)
 			};
-			
+
 			_param.data = _data;
             if(param.data.oldInface){
                 _param.url = _param.url;
@@ -212,7 +212,19 @@
 				_param = util.buildAjaxParams(param);
 			}
 			//_param.url =  _param.url;
-			
+        _param.success= function (data) {
+            if (!data.IsSuccess && data.ResultCode == 500) {
+                $.messager.alert("提示", data.Message,"error",function() {
+                    location.href = "/default.aspx?method=LogOut";
+                });
+
+            } else {
+                param.success(data);
+                $.util.isLoading(true);
+            }
+
+
+        };
 			$.ajax(_param);
 	};
     /*
@@ -221,9 +233,9 @@
         {
             domFlag:""   //页面元素要保存的标记
             attrs:"",    //要保存的属性
-            pageSize       
+            pageSize
         ]
-    
+
     */
    util.oldBuildAjaxParams=function(param){
        debugger;
@@ -282,12 +294,35 @@
             _param = util.oldBuildAjaxParams(param);
         }
         //_param.url =  _param.url;
+        _param.success= function (data) {
+            if (!data.IsSuccess && data.ResultCode == 500) {
+                $.messager.alert("提示", data.Message,"error",function() {
+                    location.href = "/default.aspx?method=LogOut";
+                });
+
+            } else {
+                param.success(data);
+                $.util.isLoading(true);
+            }
+
+
+        };
 
         $.ajax(_param);
 
     };
-	
 
+    util.toNewUrlPath=function(urlPath){
+
+            var childMenuID =this.getUrlParam("mid");
+            var parentMenu_Id = this.getUrlParam("PMenuID");
+            var MMenuID = this.getUrlParam("MMenuID");
+            var result = urlPath.indexOf("?");
+            var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID + "&PMenuID=" + parentMenu_Id + "&MMenuID=" + MMenuID) : (urlPath + "?mid=" + childMenuID + "&PMenuID=" + parentMenu_Id + "&MMenuID=" + MMenuID);
+            location.href = newUrl;
+
+
+    };
     util.setPageParam=function(option){
         var array=[];
         $("["+option.domFlag+"]").each(function(i,j){

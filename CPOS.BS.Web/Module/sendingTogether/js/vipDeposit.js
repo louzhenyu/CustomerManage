@@ -50,7 +50,7 @@
                     method : 'post',
                     iconCls : 'icon-list', //图标
                     singleSelect : false, // 多选
-                    // height : 332, //高度
+                    // height : 330, //高度
                     fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                     striped : true, //奇偶行颜色不同
                     collapsible : true,//可折叠
@@ -65,7 +65,7 @@
                         field : 'ck',
                         width:70,
                         title:'全选',
-                        align:'center',
+                        align:'left',
                         checkbox : true
                     } //显示复选框
                     ] ],
@@ -83,7 +83,7 @@
                             }
                         },
 
-                        {field : 'ApplyDate',title : '申请日期',width:200,align:'center',resizable:false
+                        {field : 'ApplyDate',title : '申请日期',width:200,align:'left',resizable:false
                             ,formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd");
                         }
@@ -101,7 +101,7 @@
                         {field : 'CardNo',title : '银行卡号',width:400,align:'left',resizable:false},
                         {field : 'BankName',title : '银行名称',width:200,align:'left',resizable:false},
                         {field : 'AccountName',title : '开户人姓名',width:200,align:'left',resizable:false},
-                        {field : 'Amount',title : '提现金额',width:150,align:'center',resizable:false,
+                        {field : 'Amount',title : '提现金额',width:150,align:'left',resizable:false,
                             formatter:function(value,row,index){
                                 if(isNaN(parseInt(value))){
                                     return 0;
@@ -120,7 +120,7 @@
                                 return  status ;
                             }
                         },
-                        {field : 'CompleteDate',title : '完成日期',width:200,align:'center',resizable:false
+                        {field : 'CompleteDate',title : '完成日期',width:200,align:'left',resizable:false
                             ,formatter:function(value ,row,index){
                             if(value) {
                                 return new Date(value).format("yyyy-MM-dd");
@@ -193,8 +193,8 @@
             $("#cc").combobox({//0待确认；1=已确认；2=已完成
                 valueField:'id',
                 textField:'text',
-                width:160,
-                height:32,
+                width:200,
+                height:30,
                 data:[{
                     "id":"-1",
                     "text":"全部",

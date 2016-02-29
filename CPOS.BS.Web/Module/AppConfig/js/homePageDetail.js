@@ -1031,7 +1031,7 @@
                 //选择select类型  产品、资讯、类型....
                 var $this = $(this);
                 $this.parent().siblings(".infoContainer").children(".jsChooseBtn").show();
-                $this.parent().siblings(".infoContainer").children(".jsNameInput").css({"width":"80%"});
+                //$this.parent().siblings(".infoContainer").children(".jsNameInput").css({"width":"86%"});
                 //$this.siblings(".delIcon").show();
                 if(!isSimulation) {
                     $this.parent().siblings(".infoContainer").children(".jsNameInput").val("");
@@ -2215,6 +2215,9 @@
                                                 var s = Math.floor(maxTime % 60);
                                                 if(h<10){
                                                     h="0"+h
+                                                }
+                                                if(h>99){
+                                                    h="99"
                                                 }
                                                 if(m<10){
                                                     m="0"+m

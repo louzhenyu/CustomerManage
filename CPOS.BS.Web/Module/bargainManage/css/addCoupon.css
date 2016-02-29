@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+
+
+.listBtn{ width: 170px; height: 50px; border-radius: 2px; float: left;cursor: pointer; text-align: center; line-height: 50px; color: #666; font-size: 16px; background: #fff; position: relative; margin-left: 50px; border:1px solid #e1e1e1 }
+.listBtn .on{ background:url("../images/duihao.png") no-repeat; width: 18px; height: 18px; position:absolute; right: 0; bottom: 0;display: none}
+
+.listBtn.show{ border-color: #07c8cf}
+.listBtn.show .on{ display: block;}
+
+
+.panlDiv{ display: block;  border-bottom: 1px solid #d0d5d8;padding-top:5px; padding-bottom: 5px; position: relative; }
+.panlDiv .commonSelectWrap{ display: block; float: none; margin-top: 20px;}
+/*.panlDiv .commonSelectWrap .searchInput{ width: 238px;}*/
+.panlDiv .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.panlDiv .commonSelectWrap .searchInput .line{ height: 46px;}
+.panlDiv .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.panlDiv .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.panlDiv .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.panlDiv .commonSelectWrap .tit .checkBox{float: right}
+.pl_45{padding-left:45px;}
+/*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
+.panlDiv .commonSelectWrap .searchInput  .explain{ color: #999}
+
+.listItem{padding-top:12px; padding-left: 126px;}
+.listItem .icon{ background:url(../images/iconDel.png) no-repeat 0 0; width: 30px; height: 30px; position: absolute;display: none;cursor: pointer;}
+.listItem .unitBtn{cursor: pointer; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #07c8cf; position: relative; float: left; margin-right:30px; line-height: 32px; color: #07c8cf; font-size: 15px;}
+.listItem .unitBtn .icon{ top: -16px; right: -16px;}
+.listItem .unitBtn:last-of-type { margin-right: 12px;}
+.panlDiv .listTable{padding-left: 80px;  float: left; width: 640px;}
+.panlDiv .listTable .datagrid { border-color:#d0d5d8 }
+.panlDiv .listTable .datagrid .panel-header{ border-bottom: none}
+.panlDiv .listTable .datagrid-header{border-bottom: none;}
+
+#Tooltip .treeNode { width: 222px;min-height: 65px; max-height: 150px; overflow: auto;}
+.btnlist{ padding-top:5px; padding-bottom: 15px;width: 100%;  height: auto; float: left;}
+.addunitBtn {height: 32px; float: left; cursor: pointer; border: #ccc 1px solid;font-size: 15px; color:#07c8cf; width: 160px; line-height: 32px; text-align: center;}
+.btnWrap{padding:35px 0;text-align:center;}
+.btnWrap a{display:inline-block;}
+#Tooltip{padding-bottom: 45px;}
+#Tooltip .tooltip-content{height: 180px;}
+.btnList{ position:absolute; border-top: 1px solid #ccc; padding-top: 10px;  left: 0; bottom: 0; width: 100%; height:45px; background-color: #fff; border-radius: 0;}
+.btnList .commonBtn{ color: #00cccc; width: 50px;height: 25px; border-color: #07c8cf; border-width:1px; border-style: solid; line-height: 25px; background-color:inherit;}
+.btnList .commonBtn{ float: left; margin-left: 40px;}
+.btnList .commonBtn.r{ border-color:#ccc; color: #ccc; }
+
+
+.bordernone{ border: none;}
+.searchBtn{float: left;width: 88px; margin-left: 346px;height: 33px;line-height: 33px;}
+.searchGrid{ width: 338px; height: 280px; border:#00cccc solid 1px; margin: 0 auto; margin-top: 10px;}
+.radio { float: left;}
+.r{ float: right;}
+.checkBox.r{ margin-left: 25px; margin-top: 10px;}
+.texlist{ line-height: 30px; text-align: left;width: 88%}
+.texlist img{ float: right; margin-right: 35px; margin-top: 5px;}
+.panlDiv .datagrid-header-row{ display: none}

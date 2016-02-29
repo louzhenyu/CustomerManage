@@ -69,18 +69,19 @@
         },
         //跳转框得到输入焦点时
         focus_gopage: function () {
-            var btnGo = $('#' + this.gopageButtonId);
+           /* var btnGo = $('#' + this.gopageButtonId);
             $('#' + this.gopageTextboxId).attr('hideFocus', true);
             btnGo.show();
             btnGo.css('left', '0px');
             //$('#' + this.gopageWrapId).css('border-color', '#6694E3');
-            btnGo.animate({ left: '+=44' }, 50, function () {
+          var w=$("#kkpager_gopage_wrap").width();
+            btnGo.animate({ left: w }, 50, function () {
                 //$('#'+this.gopageWrapId).css('width','88px');
-            });
+            });*/
         },
         //跳转框失去输入焦点时
         blur_gopage: function () {
-            var _this = this;
+          /*  var _this = this;
             setTimeout(function () {
                 var btnGo = $('#' + _this.gopageButtonId);
                 btnGo.animate({
@@ -90,7 +91,7 @@
                     btnGo.hide();
                     //$('#' + _this.gopageWrapId).css('border-color', '#DFDFDF');
                 });
-            }, 400);
+            }, 400);*/
         },
         //跳转输入框按键操作
         keypress_gopage: function () {
@@ -173,15 +174,15 @@
             var dot = '<span>...</span>';
             var total_info = '';
             if (this.isShowTotalPage || this.isShowTotalRecords) {
-                total_info = '&nbsp;<span class="normalsize">' + this.lang.totalPageBeforeText;
+                total_info = '&nbsp;<span class="normalsize "> ' +this.lang.totalPageBeforeText+"<em>";
                 if (this.isShowTotalPage) {
-                    total_info += this.total + this.lang.totalPageAfterText;
+                    total_info += this.total+"</em>" + this.lang.totalPageAfterText;
                     if (this.isShowTotalRecords) {
                         total_info += '/';
                     }
                 }
                 if (this.isShowTotalRecords) {
-                    total_info += this.totalRecords + this.lang.totalRecordsAfterText;
+                    total_info += "<i>"+this.totalRecords +"</i>"+ this.lang.totalRecordsAfterText;
                 }
 
                 total_info += '</span>';

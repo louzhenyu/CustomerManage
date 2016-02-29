@@ -1,4 +1,4 @@
-﻿define(['newJquery', 'tools', 'template','kkpager','datetimePicker','artDialog','cookie','swfobject','fullAvatarEditor'], function () {
+﻿define(['newJquery', 'tools', 'template','kkpager','datetimePicker','artDialog','cookie','swfobject','fullAvatarEditor','easyui'], function () {
     window.alert=function(content){
         var d = dialog({
             fixed:true,
@@ -506,7 +506,7 @@
             //保存规格
             $("#saveRules").click(function(e){
                 //获得所有的选中的规格
-				var isBool = true;
+				var isBool = true,priceEorr={isSubMit:true,indexList:""};
                 var singlePurchaseQtyInput = $("#goodsInfo .inputBox input");
                 var items=$("#rules").find(".on");
                 var skuList=[];
@@ -555,24 +555,44 @@
                         }
                     });
 					if(obj.Qty<obj.KeepQty){
-						isBool = false;
-						alert("已售数量不能大于商品数量");
-						return false;
-					}
+                        isBool = false;
+                        alert("已售数量不能大于商品数量");
+                        return false;
+                    }
+
+                    if(obj.price<obj.SalesPrice){
+
+                        priceEorr.isSubMit=false;
+                        priceEorr.indexList+=","+(i+1);
+                    }
                     skuList.push(obj);
                 });
 				if(!isBool){
 					return false;
 				}
                 that.loadData.sku.SkuList=skuList;
-                //添加规格
-                //debugger;
-                that.loadData.addEventItemSku(function(data){
-                    //初始化详细页面头部信息
-                    that.initDetail();
-                    that.initEventGoodsList();
-                    that.hideElements("#addNewRules");
-                });
+                if(priceEorr.isSubMit) {
+                    that.loadData.addEventItemSku(function (data) {
+                        //初始化详细页面头部信息
+                        that.initDetail();
+                        that.initEventGoodsList();
+                        that.hideElements("#addNewRules");
+                    });
+
+                }else {
+                    $.messager.confirm("提示", "第" + priceEorr.indexList.substr(1,  priceEorr.indexList.length) + "项活动价大于优惠价，确定这样设置吗？", function (r) {
+                        if (r) {
+                            //添加规格
+                            //debugger;
+                            that.loadData.addEventItemSku(function (data) {
+                                //初始化详细页面头部信息
+                                that.initDetail();
+                                that.initEventGoodsList();
+                                that.hideElements("#addNewRules");
+                            });
+                        }
+                    })
+                }
             });
             //点击删除规格的操作
             $("#goodsList").delegate(".delSizeBtn","click",function(e){

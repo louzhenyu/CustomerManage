@@ -191,7 +191,7 @@
                  ] ],*/
 
                 columns : [[
-                    {field : 'VipCardTypeName',title : '类型',width:120,resizable:false,
+                    {field : 'VipCardTypeName',title : '类型',width:120,resizable:false, align:'left',
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value&&value.length>long){
@@ -213,7 +213,7 @@
                             }
                         }},
 					*/	
-                    {field : 'addOpt',title : '编辑',width:100,align:'center',resizable:false,
+                    {field : 'addOpt',title : '编辑',width:100,align:'left',resizable:false,
                         formatter:function(value,row,index){
                             return "<div data-index="+index+" data-flag='exit' class='exit  opt'> </div>"
 
@@ -221,7 +221,7 @@
 
                     } ,
 
-                    {field : 'addOptdel',title : '删除',width:100,align:'center',resizable:false,
+                    {field : 'addOptdel',title : '删除',width:100,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return "<div data-index="+index+" data-flag='delete' class='delete opt'></div>"
                         }

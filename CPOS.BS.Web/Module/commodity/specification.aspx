@@ -15,11 +15,13 @@
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                     <div class="tableWrapText" id="tableWrap">
-                                   <div class="tableWrapTextBtn">
-                                   <div class="commonBtn " data-flag="add">新建规格</div>
+                                   <div class="tableWrapTextBtn optionBtn">
+                                   <div class="commonBtn icon w100 icon_add r " data-flag="add">新增规格</div>
 
                                     </div>
+                                    <div class="cursorDef">
                                      <table class="dataTable" id="gridTable"></table>
+                                     </div>
                                      <div id="pageContianer">
                                          <div id="kkpager" style="text-align: center;">
                                          </div>

@@ -42,12 +42,12 @@
                    <div class="commonSelectWrap widthMax">
                     <em class="tit">生日:</em>
                     <div class="selectBox" style="margin-right: 11px;"><input id="Birthday" name="Birthday" class="easyui-datebox"
-                    data-options="required:true,width:198,height:32,validType:'dateTime'"   /></div>
+                    data-options="required:true,width:200,height:30,validType:'dateTime'"   /></div>
                    <span class="hint" id="BirthdayHint" style="width: 600px;display: block">提示:只能修改一次</span>
                    </div> <!--commonSelectWrap-->
                    <div class="commonSelectWrap ">
                     <em class="tit">性别:</em>
-                    <div class="selectBox"><input name="Gender" class="easyui-combobox" data-options="required:true,width:198,height:32,
+                    <div class="selectBox"><input name="Gender" class="easyui-combobox" data-options="required:true,width:200,height:30,
                                                                   		valueField: 'label',
                                                                   		textField: 'value',
                                                                   		data: [{
@@ -752,8 +752,7 @@
                     </div>
                     <div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height: 80px;
                         text-align: center; padding: 5px 0 0;">
-                        <a class="easyui-linkbutton commonBtn saveBtn">确定</a> <a class="easyui-linkbutton commonBtn cancelBtn"
-                            href="javascript:void(0)" onclick="javascript:$('#win').window('close')">取消</a>
+                        <a class="easyui-linkbutton commonBtn saveBtn">确定</a>
                     </div>
                 </div>
             </div>

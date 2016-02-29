@@ -20,7 +20,7 @@
 .line{border-bottom: 1px solid #d0d5d8; margin:0 auto; width:95%; display:inline-block; margin-top: 20px; padding-bottom: 20px;}
 .linePanel{ width: 506px;}
 .linePanel .radio{ margin-top: 4px;}
-.line .radio span{ padding:0; width: 96px;}
+.line .radio span{ padding:0;}
 
 #nav01 .commonSelectWrap{ margin:10px 10px 10px 0}
 #nav01 .commonSelectWrap .tit{ width:auto;}

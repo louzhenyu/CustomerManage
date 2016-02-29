@@ -35,7 +35,7 @@
     <div class="lineText">
     <em class="tit">LOGO:</em>
     <div class="inputBox">
-      <div class="logo" style="background-color: #00cccc;" data-name="WebLogo"><img src="images/imgDefault.png"></div>
+      <div class="logo" style="background-color: #1074bd;" data-name="WebLogo"><img src="images/imgDefault.png"></div>
       <div class="uploadTip">
         <div class="uploadBtn btn">
             <em class="upTip">上传</em>
@@ -45,7 +45,7 @@
          </div> <!--uploadTip-->
     </div> <!--inputBox-->
 </div><!--lineText-->
-    <div class="lineText">
+    <div class="lineText" style="display: none">
     <em class="tit">客服电话:</em>
     <div class="inputBox">
     <input type="text" class="easyui-validatebox" name="CustomerPhone" data-options="validType:'mobileTelephone'" placeholder="请输入"/>

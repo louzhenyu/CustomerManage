@@ -130,7 +130,7 @@
                          </div>
                       </div>
                        <div class="commonSelectWrap">
-                                               <em class="tit ">商品单价（元）:</em>
+                                               <em class="tit w100 ">商品单价（元）:</em>
                                                <div class="searchInput wh80">
                                                 <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="SalesPrice"/>
                                                </div>
@@ -155,7 +155,7 @@
                                                                                       <div class="commonSelectWrap">
                                                                                          <em class="tit">申请数量:</em>
                                                                                          <div class="searchInput" >
-                                                                                          <input type="text"  class="easyui-numberbox" data-options=" width:160,height:32,min:0,precision:0" name="ActualQty"/>
+                                                                                          <input type="text"  class="easyui-numberbox" data-options=" width:200,height:30,min:0,precision:0" name="ActualQty"/>
                                                                                          </div>
                                                                                       </div>
 
@@ -191,7 +191,7 @@
                                          </div>
                                       </div>
                                        <div class="commonSelectWrap" data-type="gropupdate">
-                                          <em class="tit">确认退款金额(元):</em>
+                                          <em class="tit w100">确认退款金额(元):</em>
                                           <div class="searchInput wh80" >
                                            <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="ConfirmAmount"/>
                                           </div>
@@ -206,7 +206,7 @@
 
             <div class="panlDiv">
                  <div class="title">操作记录</div>
-                 <div class="panlText" id="tableWrap">
+                 <div class="panlText cursorDef" id="tableWrap">
                   <div class="table" id="commodity"></div>
 
                  </div>
@@ -262,7 +262,7 @@
                                                                      <div class="commonSelectWrap">
                                                                         <em class="tit">确认退货数量:</em>
                                                                         <div class="searchInput" >
-                                                                         <input type="text"  class="easyui-numberbox" data-options=" width:160,height:32,min:0,precision:0" name="ActualQty"/>
+                                                                         <input type="text"  class="easyui-numberbox" data-options=" width:200,height:30,min:0,precision:0" name="ActualQty"/>
                                                                         </div>
                                                                      </div>
 
@@ -275,7 +275,7 @@
                                                              <div class="commonSelectWrap">
                                                                 <em class="tit">服务类型:</em>
                                                                 <div class="searchInput" >
-                                                                 <input type="text" id="ServicesTypeText"  class="easyui-combobox" data-options=" width:160,height:32,min:0,precision:0" name="ServicesType"/>
+                                                                 <input type="text" id="ServicesTypeText"  class="easyui-combobox" data-options=" width:200,height:30,min:0,precision:0" name="ServicesType"/>
                                                                 </div>
                                                              </div>
                          </form>
@@ -287,9 +287,9 @@
                                                  <form> </form>
                                                <form id="ConfirmAmount" class="optionForm" data-type="groupsubmit">
                                                <div class="commonSelectWrap">
-                                                  <em class="tit">确认退款金额(元):</em>
+                                                  <em class="tit w100">确认退款金额(元):</em>
                                                   <div class="searchInput" >
-                                                   <input type="text"  class="easyui-numberbox" data-options=" width:160,height:32,min:0,precision:2" name="ConfirmAmount"/>
+                                                   <input type="text"  class="easyui-numberbox" data-options=" width:200,height:30,min:0,precision:2" name="ConfirmAmount"/>
                                                   </div>
                                                </div>
 

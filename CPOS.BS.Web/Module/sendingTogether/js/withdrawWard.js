@@ -75,7 +75,7 @@
                                 }
                             }
                         },
-                        {field : 'UnitName',title : '所属门店',width:281,align:'center',resizable:false,
+                        {field : 'UnitName',title : '所属门店',width:281,align:'left',resizable:false,
                             formatter:function(value ,row,index){
                                 var long=16;
                                 if(value&&value.length>long){
@@ -86,9 +86,9 @@
                             }
                         } ,
                         {field : 'YearAndMonth',title : '年/月 ',width:111,align:'left',resizable:false},
-                        {field : 'MonthAmount',title : '奖励(元)',width:100,align:'center',resizable:false},
-                        {field : 'MonthVipCount',title : '集客会员数 ',width:111,align:'center',resizable:false},
-                        {field : 'MonthOrderCount',title : '交易笔数 ',width:111,align:'center',resizable:false}
+                        {field : 'MonthAmount',title : '奖励(元)',width:100,align:'left',resizable:false},
+                        {field : 'MonthVipCount',title : '集客会员数 ',width:111,align:'left',resizable:false},
+                        {field : 'MonthOrderCount',title : '交易笔数 ',width:111,align:'left',resizable:false}
 
 
 
@@ -219,7 +219,7 @@
             $("#Year").combobox({//
                 valueField:'id',
                 textField:'text',
-                width:160,
+                width:200,
                 height:32,
                 data:[/*{
                  "id":"0",
@@ -253,7 +253,7 @@
             $("#Month").combobox({
                 valueField:'id',
                 textField:'text',
-                width:160,
+                width:200,
                 height:32,
                 data:[ /*{
                  "id":"0",

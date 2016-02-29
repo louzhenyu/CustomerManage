@@ -170,7 +170,7 @@
                      <!--销售信息End-->
                   <div class="zsy"></div>
                 </div>
-               <div class="btnopt commonBtn" id="submitBtn" data-flag="#nav02">下一步</div>
+               <div class="btnopt commonBtn nextStepBtn" id="submitBtn" data-flag="#nav02">下一步</div>
             </div>
         </div>
        <div style="display: none">

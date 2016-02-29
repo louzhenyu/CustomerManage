@@ -18,6 +18,7 @@
         <div class="queryTermArea" id="simpleQuery" style="display:inline-block;width: 100%; " >
              <form></form>
             <form id="queryFrom">
+            <div class="item">
             <div class="commonSelectWrap">
                 <em class="tit">年份：</em>
                 <label class="selectBox"><input id="Year"  name="Year" class="easyui-combobox" type="text" ></label>
@@ -30,31 +31,28 @@
                 <em class="tit">姓名：</em>
                 <label class="searchInput"><input   name="SellerOrRetailName" type="text" value=""></label>
             </div>
+            <div class="moreQueryWrap">
+                                                                    <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+                                                                    </div>
+            </div>
 
+            <div class="item">
              <div class="commonSelectWrap">
                              <em class="tit">门店：</em>
                              <div class="selectBox bordernone">
                                <input id="unitTree" name="UnitID"  class="easyui-combotree" style="width:160px;height: 32px;"   />
                              </div>
                          </div>
+                         </div>
              </form>
-              <div class="commonSelectWrap">
-                             <em class="tit"></em>
-                             <div class="selectBox bordernone">
-                             </div>
-               </div>
-              <div class="commonSelectWrap">
-                             <em class="tit"></em>
-                             <div class="selectBox bordernone">
-                             </div>
-               </div>
-              <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+
+
         </div>
 
         <!--表格操作按钮-->
         <div class="tableWrap">
             <table class="dataTable"  id="dataTable">
-
+                     <p class="loading" style="width:32px;height:32px;left:50%;margin-left:-16px;"><img src="../static/images/loading.gif"></p>
             </table>
             <div id="pageContianer">
              <div class="dataMessage" >没有符合条件的查询记录</div>

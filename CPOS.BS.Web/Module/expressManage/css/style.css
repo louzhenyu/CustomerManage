@@ -1,18 +1,7 @@
 @charset "utf-8";
-
-.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
-.commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.optionBtn .commonBtn{background: no-repeat 8px center #00cccc;  float: left; margin-left: 35px;}
-.queryTermArea{padding-left: 0; padding-right:0}
-.btnopt{margin: 0 auto;margin-top: 45px;border-radius: 23px;}
-.moreQueryWrap{ float: left;margin-top: 12px;}
-.moreQueryWrap .queryBtn{ width: 58px;}
-.title{ font-size: 16px; line-height: 36px;}
-.tableWrap{ min-height: 200px;}
 #kkpager{ clear:none}
 #simpleQuery .icon_add{margin:15px 0 15px 20px;}
 .commonSelectWrap .wh80{ width: 80px;}
-.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 #addExpress{padding:0 50px;}
 #addExpress .commonSelectWrap{display:block;float:none;}
 .datagrid-btable,.datagrid-btable tr{width:100%;}

@@ -381,6 +381,7 @@ namespace JIT.CPOS.BS.DataAccess
         }
         #endregion
 
+        
         #region IQueryable 成员
         /// <summary>
         /// 执行查询

@@ -17,8 +17,8 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
             tabelWrap:$('#tableWrap'),                //表格head部分
             SpecialDateList: [],         //弹出框
             dataMessage:  $("#pageContianer").find(".dataMessage"),
-            width:160,
-            height:32,
+            width:200,
+            height:30,
             panlH:200,
             sku  :$("#sku"),
             loadAlert:null,
@@ -84,7 +84,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
             that.elems.simpleQuery.find(".panelDiv").fadeOut(0).eq(0).fadeIn("slow");
 
             /**************** -------------------初始化easyui 控件 start****************/
-            var wd=160,H=32;
+            var wd=200,H=30;
 
            $("#nav02").delegate(".fontC","click",function(e){
                var rowIndex=$(this).data("index");
@@ -237,7 +237,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 				$vipTypeCard.removeClass('on');
 				me.addClass('on');
 				
-				$autoUpdateBox.show();
+				//$autoUpdateBox.show();
 				$returnAmountPerBox.show();
 				$chargeGiveBox.show();
 				$paidGivePointsBox.show();
@@ -447,7 +447,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                  ] ],*/
 
                 columns : [[
-                    {field : 'HolidayName',title : '名称',width:120,align:'center',resizable:false,
+                    {field : 'HolidayName',title : '名称',width:120,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=52;
                             if(value&&value.length>long){
@@ -489,9 +489,9 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                         }
                     } ,
 
-                    {field : 'SpecialID',title : '删除',width:18,align:'center',resizable:false,
+                    {field : 'SpecialID',title : '删除',width:22,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC delete" data-index="'+index+'" data-oprtype="delete"></p>';
+                            return '<p class="fontC opt delete" style="margin:0;" data-index="'+index+'" data-oprtype="delete"></p>';
                         }
                     }
                 ]],

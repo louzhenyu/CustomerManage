@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title></title>
+    <script type="text/javascript" src="js/bdTemplate.js"></script>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+      <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="js/tools-lib.js"></script>
+    <script type="text/javascript" src="js/queryList.js"></script>
+    <link href="/module/static/css/easyui.css" rel="stylesheet" type="text/css" />
+
+    <link href="/module/styles/css/common-layout.css" rel="stylesheet" />
+
+
+    <link href="/module/styles/css/newYear/skin02.css" rel="stylesheet" />
+      <style type="text/css">
+            .opcTouM{background:rgba(00,00,00,0);}
+          .window-mask{filter: alpha(opacity=40);
+              opacity: 0.40;}
+      </style>
+</head>
+<body class="opcTouM">
+<div class="allPage opcTouM" id="section" >
+    <div style="display: none">
+        <div id="winPwd" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
+            <div class="easyui-layout" data-options="fit:true" id="panlconent1">
+
+                <div data-options="region:'center'" style="padding:10px;">
+                    指定的模板添加内容
+                </div>
+                <div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
+                    <a class="easyui-linkbutton commonBtn saveBtn" >确定</a>
+                    <a class="easyui-linkbutton commonBtn cancelBtn"  href="javascript:void(0)" onclick="javascript:$('#win').window('close')" >取消</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script id="tpl_OrderCancel" type="text/html">
+    <form id="payOrder">
+        <div class="commonSelectWrap">
+            <em class="tit w120">用户名：</em>
+            <div  class="searchInput">
+                <input type="text" value="" readonly="readonly" id="userName" />
+            </div>
+        </div>
+        <div class="commonSelectWrap">
+            <em class="tit w120">旧密码：</em>
+            <div  class="searchInput">
+                <input  name="OldPassword"  type="password" class="easyui-validatebox" data-options="required:true"/>
+            </div>
+        </div>
+        <div class="commonSelectWrap">
+            <em class="tit w120">新密码：</em>
+            <div  class="searchInput">
+                <input id="pwd" name="NewPassword" type="password" class="easyui-validatebox" data-options="required:true" />
+
+            </div>
+        </div>
+        <div class="commonSelectWrap">
+            <em class="tit w120">新密码确认：</em>
+            <div  class="searchInput">
+                <input id="rpwd" name="NewPassword" type="password" class="easyui-validatebox"
+                       required="required" validType="equals['#pwd']" />
+            </div>
+        </div>
+    </form>
+</script>
+
+</body>
+
+</html>

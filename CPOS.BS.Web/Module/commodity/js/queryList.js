@@ -31,7 +31,20 @@
         initEvent: function () {
             var that = this;
             //点击查询按钮进行数据查询
+           //
 
+            $("#leftMenu li").each(function(){
+                debugger;
+                $(this).removeClass("on");
+                   var urlPath= location.pathname.replace(/\//g, "_");
+                var classNameList=$(this).find("em").attr("class").split(" ");
+                if(classNameList.length>1){
+                    if(urlPath.indexOf(classNameList[1])!=-1){
+                        $(this).addClass("on");
+                    }
+                }
+
+            });
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
                 that.setCondition();
@@ -50,11 +63,18 @@
             });
             that.elems.operation.delegate(".commonBtn","click",function(e){
                 var  selectList= that.elems.tabel.datagrid("getSelections");
+                var  type= $(this).data("flag");
+                if(type=="add"){
+                   // var mid = JITMethod.getUrlParam("mid");
+                  //  location.href = "?&mid=" + mid;
+                    $.util.toNewUrlPath("release.aspx");
+                    return false;
+                }
                 if(selectList.length==0){
                     alert("必须选择一个商品");
                     return false;
                 }
-                var  type= $(this).data("flag");
+
                 var parms={};
                 parms.ItemInfoList=selectList;
                 if(type=="sales"){
@@ -65,7 +85,7 @@
                     }*/
                     parms.SalesPromotionList=nodes
                 }
-                if(type!="salesTooltip"&&type!="cannel"){
+                if(type!="salesTooltip"&&type!="cannel"&&type!="add"){
                     that.loadData.operation(parms,type,function(data){
                         alert("操作成功");
                         that.loadPageData(e);
@@ -96,7 +116,7 @@
                 }
             });
             /**************** -------------------弹出easyui 控件 start****************/
-            var  wd=160,H=32;
+            var  wd=200,H=30;
             $('#item_status').combobox({
                 width:wd,
                 height:H,
@@ -268,39 +288,23 @@
                 frozenColumns:[[
                     {
                         field : 'ck',
-                        width:70,
                         title:'全选',
-                        align:'center',
                         checkbox : true
                     }//显示复选框
-                    /*  {field : 'OrderNo',title : '订单号',width:96,align:'center',resizable:false},
-                     {field : 'OrderID',title : '操作',width:96,align:'center',resizable:false,
-                     formatter:function(value ,row,index){
-                     *//* var html="";
-                     if(row.IsPaid==0&&row.Status!=10&&row.Status!=11) {
-                     html=   '<p class="fontC" data-oprType="payment" data-index="'+index+'"> 收款</p>';
-                     }
-                     if($.util.GetDateDiff(new Date().format("yyyy-mm-dd"),row.ReserveTime,"day")>=1&&row.Status!=6&&row.Status!=10&&row.Status!=11){
-                     html+='<p class="fontC" data-oprType="cancel" data-index="'+index+'"> 取消</p>';
-                     }
-                     return html;*//*
-                     }
-
-                     }*/
                 ]],
                 columns : [[
-                    {field : 'Image_Url',title : '图片',width:70,align:'center',resizable:false,
+                    {field : 'Image_Url',title : '图片',width:80,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            var html=' <img src="images/商品.png" width="70" height="70"  />';
+                            var html=' <img src="images/商品.png" width="40" height="40"  />';
                             if(value){
-                                html=' <img src="'+value+'" width="70" height="70"  />'
+                                html=' <img src="'+value+'" width="40" height="40"  />'
                             }
 
                             return html;
                         }
 
                     },
-                    {field : 'Item_Name',title : '商品名称',width:125,align:'center',resizable:false,
+                    {field : 'Item_Name',title : '商品名称',width:125,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value&&value.length>long){
@@ -310,7 +314,7 @@
                             }
                         }
                     },
-                    {field : 'minPrice',title : '价格(元)',width:58,resizable:false,align:'center'},
+                    {field : 'minPrice',title : '价格(元)',width:80,resizable:false,align:'center'},
                     {field : 'stock',title : '库存',width:58,align:'center',resizable:false,
                         formatter:function(value,row,index){
                            if(isNaN(parseInt(value))){
@@ -328,7 +332,7 @@
                                 return parseInt(value);
                             }
                         }},
-                    {field : 'SalesPromotion',title : '商品分组',width:120,align:'center',resizable:false,
+                    {field : 'SalesPromotion',title : '商品分组',width:120,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=18;
                             var html=""
@@ -340,8 +344,8 @@
 
                             return  html
                     }},
-                    {field : 'Item_Category_Name',title : '分类',width:60,align:'center',resizable:false} ,
-                    {field : 'Modify_Time',title : '更新时间',width:80,align:'center',resizable:false,
+                    {field : 'Item_Category_Name',title : '分类',width:60,align:'left',resizable:false} ,
+                    {field : 'Modify_Time',title : '更新时间',width:100,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd hh:mm");
                         }
@@ -359,10 +363,10 @@
                         }
                     },
                     {
-                        field: 'Item_Id', title: '下载二维码', width: 80, align: 'center', resizable: false,
+                        field: 'Item_Id', title: '下载二维码', width:90, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
 
-                            return value ? '<a target="_blank" href="/Module/Basic/Item/Handler/ItemHandler.ashx?method=download_qrcode&item_id=' + value + '&item_name=' + row.Item_Name + '"><img width="16" height="16" src="images/QRcode.png"></span>' : '';
+                            return value ? '<a target="_blank" style="padding-left:20px;" href="/Module/Basic/Item/Handler/ItemHandler.ashx?method=download_qrcode&item_id=' + value + '&item_name=' + row.Item_Name + '"><img width="16" height="16" src="images/QRcode.png"></span>' : '';
                         }
                     }
 
@@ -384,8 +388,9 @@
                      that.elems.click = true;
                      debugger;
 
-                     var mid = JITMethod.getUrlParam("mid");
-                     location.href = "commodityExit.aspx?Item_Id=" + rowData.Item_Id +"&mid=" + mid;
+                     //var mid = JITMethod.getUrlParam("mid");
+                    var url = "commodityExit.aspx?Item_Id=" + rowData.Item_Id;
+                         $.util.toNewUrlPath(url);
                      }
 
                 },onClickCell:function(rowIndex, field, value){

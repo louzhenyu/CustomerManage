@@ -35,7 +35,7 @@
                   </div>\
                   <div class="lineBox">\
                   <div class="tit">链接类型:</div>\
-                                   <div class="wrapInput" style="width: 420px;">\
+                                   <div class="wrapInput" style="width: 432px;">\
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect"  style="width: 100%">\
 												    <option value ="cg-null" <%if(!TypeId){%>selected="selected"<%}%>>选择链接到的模块</option>\
@@ -45,7 +45,7 @@
 											    </p>\
 											    <p class="infoContainer clearfix mb-15">\
 												    <%if(Url){%>\
-												    <input class="jsNameInput" style="width: 360px" type="text" value="<%=Url%>">\
+												    <input class="jsNameInput"  type="text" value="<%=Url%>">\
 												    <%}else{%>\
 													   <input class="jsNameInput" style="width: 360px" type="text" value="<%=TextTitle%>">\
 													<%}%>\
@@ -175,7 +175,7 @@
         titleBtnModel: '<div id="titlePanel">\
                     <div id="addTitle" class="addBtn" style="display:none">添加标题</div>\
                     <div class="setTitle">\
-                    <div class="tittleName"><em class="tit"> 标题文字：</em> <div class="titleInput"><input type="text" name="titleName"></div></div>\
+                    <div class="tittleName"><em class="tit">标题文字:</em> <div class="titleInput"><input type="text" name="titleName"></div></div>\
                      <div class="wrapRadio">\
                      <div class="radio" data-name="titleStyle" data-value="left"><em></em><span>靠左显示</span></div>\
                      <div class="radio" data-name="titleStyle" data-value="center"><em></em><span>居中显示</span></div>\
@@ -657,8 +657,8 @@
                                      	<div class="tit">选择分组:</div>\
                                      	<div class="wrapInput">\
 											   <p class="infoContainer clearfix">\
-												    <input class="jsNameInput" type="text" style="width:258px;" value="<%=list[0].eventName%>">\
-												     <span class="jsChooseEventListBtn tagBtn" style="width:76px;">选择</span>\
+												    <input class="jsNameInput" type="text" style="width:250px;" value="<%=list[0].eventName%>">\
+												     <span class="jsChooseEventListBtn tagBtn" style="width:76px;margin-left: 10px;">选择</span>\
 											    </p>\
 										    </div>\
                               </div>\
@@ -748,8 +748,8 @@
 										    </div>\
 										    <div class="wrapInput">\
 											   <p class="infoContainer clearfix">\
-												   <input class="jsNameInput" type="text" style="width:258px;" value="<%=idata.eventName%>">\
-												    <span class="jsChooseEventBtn tagBtn" style="width:76px;">选择分组</span>\
+												   <input class="jsNameInput" type="text" style="width:250px;" value="<%=idata.eventName%>">\
+												    <span class="jsChooseEventBtn tagBtn" style="width:76px;margin-left:10px; ">选择分组</span>\
 											    </p>\
 										    </div>\
 									    </div>\
@@ -770,8 +770,8 @@
 											 </div>\
 										    <div class="wrapInput">\
 											    <p class="infoContainer clearfix">\
-												  <input class="jsNameInput" type="text" style="width:258px;" value="">\
-												    <span class="jsChooseEventBtn tagBtn" style="width:76px;">选择分组</span>\
+												  <input class="jsNameInput" type="text" style="width:250px;" value="">\
+												    <span class="jsChooseEventBtn tagBtn" style="width:76px;margin-left: 10px;">选择分组</span>\
 											    </p>\
 										    </div>\
 									    </div>\
@@ -1148,34 +1148,34 @@
 						    </div>\
                   <%if(itemList&&itemList.length>0){var idata=itemList[0];%>\
                   <div class="jsAreaItem concise uploadArea clearfix" style="padding:0"  data-objectid="<%=idata.objectId %>" data-displayindex="<%=idata.displayIndex %>" data-typeid="<%=idata.typeId%>" data-name="<%=idata.objectName%>" data-categoryareaid="<%=idata.categoryAreaId%>" data-imageurl="<%=idata.imageUrl%>">\
-						<div class="wrapTit">商品来源:</div>\
-						<div class="wrapInput">\
+						<div class="wrapTit" >商品来源:</div>\
+						<div class="wrapInput" style="width: 442px;float: left;">\
 							<p class="typeContainer mb-15">\
-					          <select class="jsTypeSelect" style="width: 420px;">\
+					          <select class="jsTypeSelect" style="width: 425px;margin-left:8px;float: left;">\
 											       <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >选择链接到的模块</option>\
 												    <option value ="cg-1"    <%if(idata.typeId==1){%>selected="selected"<%}%>>商品品类</option>\
 												    <option value ="cg-4"    <%if(idata.typeId==4){%>selected="selected"<%}%> >商品分组</option>\
 											    </select>\
 											    </p>\
-											    <p class="infoContainer clearfix">\
-												    <input class="jsNameInput" style="width: 360px;" type="text" value="<%=idata.objectName%>">\
+											    <p class="infoContainer clearfix" style="width: 469px;float:right;padding-left: 35px;padding-right: 10px;">\
+												    <input class="jsNameInput" style="width:86%"  type="text" value="<%=idata.objectName%>">\
 												    <span class="jsChooseBtn tagBtn">选择</span>\
 											    </p>\
 										    </div>\
 									    </div>\
 			<%}else{%>\
                   <div class="jsAreaItem concise uploadArea clearfix"  style="padding:0"  >\
-						<div class="wrapTit">商品来源:</div>\
-						<div class="wrapInput">\
+						<div class="wrapTit" style="text-align: right">商品来源:</div>\
+						<div class="wrapInput" style="width: 442px;float: left;">\
 							<p class="typeContainer mb-15">\
-					          <select class="jsTypeSelect" style="width: 420px;">\
+					          <select class="jsTypeSelect" style="width: 425px;margin-left: 8px;float: left;">\
 											       <option value ="cg-null">选择链接到的模块</option>\
 												    <option value ="cg-1"  >商品品类</option>\
 												    <option value ="cg-4" >商品分组</option>\
 											    </select>\
 											    </p>\
-											    <p class="infoContainer clearfix"  >\
-												    <input class="jsNameInput" style="width: 360px;" type="text" value="">\
+											    <p class="infoContainer clearfix" style="width: 469px;float:right;padding-left: 35px;padding-right: 10px;" >\
+												    <input class="jsNameInput" style="width:86%"  type="text" value="">\
 												    <span class="jsChooseBtn tagBtn">选择</span>\
 											    </p>\
 										    </div>\
@@ -1197,12 +1197,12 @@
 			</div>\
 			</div>\
            <div class="line"><div class="tit">列表内容:</div>\
-			 <div class="wrapRadio" style="height:136px;">\
+			 <div class="wrapRadio" style="height:136px;padding-left: 3px;">\
                      <div class="checkBox" data-name="allList" data-value="showName"><em></em><span>显示商品名称</span></div>\
-                     <div class="checkBox" data-name="allList" data-value="showDiscount"><em></em><span>显示商品折扣</span></div>\
                      <div class="checkBox" data-name="allList" data-value="showSalesPrice"><em></em><span>显示商品售价</span></div>\
-                     <div class="checkBox" data-name="allList" data-value="showSalesQty"><em></em><span>显示销量</span></div>\
                      <div class="checkBox" data-name="allList" data-value="showPrice"><em></em><span>显示商品原价</span></div>\
+                     <div class="checkBox" data-name="allList" data-value="showDiscount"><em></em><span>显示商品折扣</span></div>\
+                     <div class="checkBox" data-name="allList" data-value="showSalesQty"><em></em><span>显示销量</span></div>\
 			</div>\
 			</div>\
 			',

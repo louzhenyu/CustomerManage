@@ -1,19 +1,19 @@
-.mainPanl{padding-top: 30px; padding-left: 40px; width: 100% ;font-size: 12px;}
-
+.mainPanl{padding-top: 10px; padding-left: 20px; width: 100% ;font-size: 12px;}
+.mainTop { padding-left: 19px; padding-top: 8px;  height: 40px; width: 100% ;font-size: 12px; border-bottom: 1px solid #e1e7ea}
 .borderBotom{border-bottom:1px solid #d8d8d8;}
 .listBtn{ border-radius: 2px; cursor: pointer;width: 170px; height: 50px; float: left;  text-align: center; line-height: 50px; color: #666; font-size: 16px; background: #fff; position: relative; margin-left: 50px; border:2px solid #e1e1e1 }
 .listBtn .on{ background:url("../images/duihao.png") no-repeat; width: 18px; height: 18px; position:absolute; right: 0; bottom: 0;display: none}
 
-.listBtn.show{ border-color: #07c8cf}
+.listBtn.show{ border-color: #12a7ea; border-radius: 3px;}
 .listBtn.show .on{ display: block;}
 
-.lineT{ display: none;border-bottom: 1px solid #d8d8d8; padding-bottom: 30px; margin-bottom: 30px;}
+.lineT{border-bottom: 1px solid #d8d8d8; padding-bottom: 30px; margin-bottom: 30px;}
 
-.lineT .rowRline{ padding-left: 18px; padding-top:15px; width: 100%; }
+.lineT .rowRline{  padding-top:15px; display:inline-block; width: 100%;color:#666;font-size: 12px;padding-left: 10px;}
 .lineT .rowRline input{ background: transparent;}
 .lineT .rowRline .radio{ float:left;}
-.lineT .rowRline .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666;}
-.lineT .rowRline .linetext em.txt{ width: 14.3%;min-width: 183px; text-align: right; display: inline-block}
+.lineT .rowRline .linetext{ height: 28px; line-height: 28px;    color: #666;}
+.lineT .rowRline .linetext em.txt{min-width: 120px; text-align: right; display: inline-block}
 .lineT .rowRline .linetext input{ width: 100px; height: 28px;}
 .lineT .rowRline .linetext span{ float: right; margin-left:35px;}
 .lineT .rowRline .linetext span.textbox.numberbox { float: none; margin:0;}
@@ -28,6 +28,13 @@
 .submit{
     margin: 0 auto;
     border-radius: 32px;
-    font-weight: 600;
+    width: 100px;
+    height: 36px;
+    line-height: 36px;
 }
- .nav01,.nav02{ display: none}
+/*.nav01,.nav02{ display: none}*/
+.lineT .rowRline .linetext{height:32px;line-height:32px;font-size:12px;}
+.tipTextBox{line-height:20px;padding:8px 0 0 169px;font-size:15px;color:#f33;}
+.tipSecretText{font-size:12px;padding: 8px  0 0 29px; color: #00a0e8;height: 22px; line-height: 22px;margin-bottom: 22px;}
+.tipSecretText em{ display:inline-block;height: 20px; background-color: #00a0e8;font-weight: 200;border-radius: 4px; color: #fff; margin-right: 4px; padding: 0 5px;}
+.mainTitle{border-left: 3px #00a0e8 solid; margin: 20px 0 0 0; padding-left: 4px; font-size: 14px;line-height: 14px; color: #666;  height: 14px;}

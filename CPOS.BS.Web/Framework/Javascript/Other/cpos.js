@@ -35,6 +35,8 @@ function SetLogoInfo() {
             logo.closest('a').attr('title', data.data.loadInfo.customerName);
             if (data.data.loadInfo.BusinessLogo) {
                 $(".logoWrap").css({ 'background-image': 'url("' + data.data.loadInfo.BusinessLogo + '")' });
+            } else {
+                $(".logoWrap").css({ 'background-image': 'url("../../images/newYear/logo.png")' })
             }
             //$('#unitName').html(data.data.loadInfo.customerName); //title是全称html是简写名;        
             //window.customerNameAttr=data.data.loadInfo.customerName;
@@ -200,7 +202,7 @@ $(function () {
                                             params[itemarr[0]] = itemarr[1];
                                         }
                                     }
-                                    //debugger;
+                                    debugger;
                                    if (params["MMenuID"] == menu.Menu_Id) {
                                         me.find(".menusrc .shows").attr("src", "/Framework/Image/leftImgList/" +menucode+ "on.png")
                                     }

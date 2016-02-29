@@ -10,8 +10,8 @@
             tabel1:$("#gridTable1"),
 
             click:true,
-            width:160,
-            height:32,
+            width:200,
+            height:30,
             panlH:116                           // 下来框统一高度
         },
 
@@ -43,7 +43,7 @@
 
 
             /**************** -------------------弹出easyui 控件 start****************/
-            var  wd=160,H=32;
+            var  wd=200,H=30;
 
             $('.datebox').datebox({
                 width:wd,
@@ -296,9 +296,10 @@
         renderTable: function (data) {
             debugger;
             var that=this;
-            if(!data[0].children){
+            var list=[]
+            if(data[0].children){
+                list=data[0].children
 
-                return;
             }
             //jQuery easy treegrid  表格处理
             that.elems.tabel.treegrid({
@@ -307,7 +308,7 @@
                 fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。                striped : true, //奇偶行颜色不同
                 collapsible : true,//可折叠
                 //数据来源
-                data:data[0].children,
+                data:list,
                 rownumbers:true,
                 idField:'id',
                 treeField:'text',
@@ -329,27 +330,27 @@
                     },
                     {field : 'ImageUrl',title : '图片',width:70,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-                            var html=' <img src="images/商品.png" width="70" height="70"  />';
+                            var html=' <img src="images/商品.png" width="40" height="40"  />';
                             if(value) {
-                                html = ' <img src="' + value + '" width="70" height="70"  />'
+                                html = ' <img src="' + value + '" width="40" height="40"  />'
                             }
                             return html;
                         }
 
                     },
-                    {field : 'create_time',title : '子类添加',width:81,align:'center',resizable:false,
+                    {field : 'create_time',title : '子类添加',width:81,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC btnAdd" data-index="'+row.id+'" data-oprtype="addChildren"></p>';
+                            return '<p class="fontC opt btnAdd" data-index="'+row.id+'" data-oprtype="addChildren"></p>';
                         }
                     },
-                    {field : 'id',title : '编辑',width:81,align:'center',resizable:false,
+                    {field : 'id',title : '编辑',width:81,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC exit" data-index="'+row.id+'" data-oprtype="exit"></p>';
+                            return '<p class="fontC opt exit" data-index="'+row.id+'" data-oprtype="exit"></p>';
                         }
                     },
-                    {field : 'isParent',title : '删除',width:81,align:'center',resizable:false,
+                    {field : 'isParent',title : '删除',width:81,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC delete" data-index="'+row.id+'" data-oprtype="del"></p>';
+                            return '<p class="fontC opt delete" data-index="'+row.id+'" data-oprtype="del"></p>';
                         }
                     }
                 ]],

@@ -8,9 +8,8 @@
 .title li.on{ background:#fff;}
 .title li.one{ border-radius: 8px 0 0 0;}
 .title li.borderNone{ border:none}
-#nav02 .commonBtn{ display: block; background: #00cccc}
 .btnopt{margin: 0 auto;margin-top: 45px; width:380px;}
-.btnopt .commonBtn{ margin-left: 35px;border-radius: 23px;float:left; width: 153px; }
+
 .btnopt .commonBtn.cancel{ background-color: #cccccc}
 .btnopt .commonBtn.bgWhite{background:#f4f8fa; color:#fc7a52; border: #fc7a52 1px solid; display:none;}
 .checkBoxList{padding-left:8px; width: 278px; height: 100px; float: left; }
@@ -37,8 +36,8 @@
 .handleLayer .wrapPic .size{display:block;width:50%;margin:15% auto;}
 .handleLayer .wrapPic .imgPanl{width: 300px;background:#dde0e9;overflow:hidden;position: absolute; top: 0;left: 0;}
 .handleLayer .wrapPic .imgPanl img{width:100%;}
-.handleLayer .wrapPic .uploadBtn{float: right; position: relative; width: 90px; height: 32px; cursor:pointer;margin-top: 103px;}
-.handleLayer .wrapPic .uploadBtn .ke-button-common { width: 100%; height: 32px;	 background:url(../images/upload.png);cursor: pointer;overflow: visible;  display: inline-block;vertical-align: top;
+.handleLayer .wrapPic .uploadBtn{float: right; position: relative; width: 90px; height: 30px;border-radius: 4px; line-height: 30px; cursor:pointer;margin-top: 103px; background: #00a0e8; font-size: 12px; color: #fff;}
+.handleLayer .wrapPic .uploadBtn .ke-button-common { width: 100%; height: 30px;	 cursor: pointer;overflow: visible;  display: inline-block;vertical-align: top;
     }
 .handleLayer .wrapPic .uploadBtn input{display:block;width:300px;height:32px;opacity:0;filter:Alpha(opacity=0);position:absolute;top:0;right:0;}
 .ke-upload-area {height: 100%;}
@@ -53,7 +52,7 @@
 .textList .commonSelectWrap{margin: 10px 10px 10px 0; }
 .textList .commonSelectWrap .searchInput { width: auto;}
 
-#nav02 .commonBtn{ width: 80px; line-height: 32px; height: 32px;}
+#nav02 .commonBtn{ width: 80px; line-height: 30px; height: 30px;}
 #nav02 .optBtnPanel{ height: 76px;padding-left: 30px; padding-top: 22px;  border-bottom: 1px solid #d8d8d8;}
 .borderNone{ border: 1px solid  transparent;  background: none}
 
@@ -68,7 +67,7 @@
 .expText{display:inline-block;width:100%;text-align:left;line-height:22px;padding-top:10px;font-size:14px;color:#f33;}
 .radio em{margin-right:7px;}
 .commonSelectWrap.numberBox-100 .textbox,
-.commonSelectWrap.numberBox-100 .validatebox-text{width:96px !important;height:32px !important;border:none}
+.commonSelectWrap.numberBox-100 .validatebox-text{width:96px !important;height:28px !important;border:none}
 .commonSelectWrap .searchInput input,.textbox .textbox-text{color:#999;}
 
 .ruleTipText{display:none;clear:left;padding-left:130px;color:#f00;}

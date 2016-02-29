@@ -194,7 +194,7 @@
                  ] ],*/
 
                 columns : [[
-                    {field : 'HolidayName',title : '标题',width:100,align:'center',resizable:false,
+                    {field : 'HolidayName',title : '标题',width:100,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=52;
                             if(value&&value.length>long){
@@ -204,9 +204,9 @@
                             }
                         }
                     } ,
-                    {field : 'BeginDate',title : '开始日期',width:60,align:'center',resizable:false},
-                    {field : 'EndDate',title : '结束日期',width:60,align:'center',resizable:false},
-                    {field : 'Desciption',title : '描述',width:130,align:'center',resizable:false,
+                    {field : 'BeginDate',title : '开始日期',width:60,align:'left',resizable:false},
+                    {field : 'EndDate',title : '结束日期',width:60,align:'left',resizable:false},
+                    {field : 'Desciption',title : '描述',width:130,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=52;
                             if(value&&value.length>long){
@@ -216,16 +216,16 @@
                             }
                         }
                     } ,
-                    { field : 'CreateTime',title : '创建日期',width:100,align:'center',resizable:false},
-                    {field : 'isParent',title : '编辑',width:30,align:'center',resizable:false,
+                    { field : 'CreateTime',title : '创建日期',width:60,align:'left',resizable:false},
+                    {field : 'isParent',title : '编辑',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC exit" data-index="'+index+'" data-oprtype="exit"></p>';
+                            return '<p class="fontC opt exit" data-index="'+index+'" data-oprtype="exit"></p>';
                         }
                     },
 
-                    {field : 'Parent',title : '删除',width:30,align:'center',resizable:false,
+                    {field : 'Parent',title : '删除',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
+                            return '<p class="fontC opt delete" data-index="'+index+'" data-oprtype="del"></p>';
                         }
                     }
                 ]],

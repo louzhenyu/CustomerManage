@@ -38,7 +38,7 @@
 #salesReturnInfo .panlTexthead{margin-left: 35px;}
 
 .fontC{width: 56px; text-align: left; float: left;}
-.updateBtn{ float: right; width: 160px; margin-right: 65px;}
+.updateBtn{ float: right; width: 160px; margin-right: 65px;display: none;}
 .updateBtn .commonBtn { width: 58px; margin-right:12px; float: left; height: 28px; line-height: 28px; display: none}
 
 .commonSelectWrap .wh80{ width: 80px;}

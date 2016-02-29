@@ -17,7 +17,7 @@
         <!--个别信息查询-->
         <div class="queryTermArea" id="simpleQuery" style="display:inline-block;width: 100%; " >
              <form></form>
-            <form id="queryFrom">
+            <form id="queryFrom"> <div class="item">
             <div class="commonSelectWrap">
                 <em class="tit">提现单号：</em>
                 <label class="searchInput"><input  name="WithdrawNo" type="text" value=""></label>
@@ -33,11 +33,15 @@
                   <input id="cc" class="easyui-combobox" name="Status"  />
 
 
+
                 </div>
+            </div>
             </div>
              </form>
             
-              <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+               <div class="moreQueryWrap">
+                                       <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+                                       </div>
         </div>
 
         <!--表格操作按钮-->
@@ -50,7 +54,7 @@
         </div>    
         <div class="tableWrap">
             <table class="dataTable"  id="dataTable">
-
+                    <p class="loading" style="width:32px;height:32px;left:50%;margin-left:-16px;"><img src="../static/images/loading.gif"></p>
             </table>
             <div id="pageContianer">
              <div class="dataMessage" >没有符合条件的查询记录</div>

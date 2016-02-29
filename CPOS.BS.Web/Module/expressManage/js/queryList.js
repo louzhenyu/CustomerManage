@@ -108,7 +108,7 @@
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
                 if(optType=="del") {
-                    $.messager.confirm('删除配送商', '确认删除此项以后将不再显示', function(r){
+                    $.messager.confirm('删除', '确认删除此项以后将不再显示', function(r){
                         if (r){
                             that.loadData.operation(row,optType,function(data){
                                 alert("操作成功");
@@ -264,7 +264,7 @@
                 method : 'post',
                 iconCls : 'icon-list', //图标
                 singleSelect : true, //单选
-                // height : 332, //高度
+                // width : 100%, //高度
                 fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped : true, //奇偶行颜色不同
                 collapsible : true,//可折叠
@@ -273,38 +273,14 @@
                 /*sortOrder : 'desc', //倒序
                  remoteSort : true, // 服务器排序*/
                 idField : 'id', //主键字段
-                /*  pageNumber:1,*/
-                /* frozenColumns : [ [ {
-                 field : 'brandLevelId',
-                 checkbox : true
-                 } //显示复选框
-                 ] ],*/
 
                 columns : [[
-                    {field : 'LogisticsName',title : '名称',width:220,align:'left',resizable:false,
-                        formatter:function(value ,row,index){
-                            var long=52;
-                            if(value&&value.length>long){
-                                return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
-                            }else{
-                                return '<div class="rowText">'+value+'</div>'
-                            }
-                        }
-                    } ,
-                    {field : 'LogisticsShortName',title : '简称',width:100,align:'left',resizable:false,
-                        formatter:function(value ,row,index){
-                            var long=12;
-                            if(value&&value.length>long){
-                                return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
-                            }else{
-                                return '<div class="rowText">'+value+'</div>'
-                            }
-                        }
-                    },
+                    {field : 'LogisticsName',title : '名称',width:121,align:'left',resizable:false} ,
+                    {field : 'LogisticsShortName',title : '简称',width:62,align:'left',resizable:false},
 
 
 
-                    {field : 'isParent',title : '操作',width:30,align:'center',resizable:false,
+                    {field : 'isParent',title : '操作',align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
                         }

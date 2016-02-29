@@ -22,7 +22,7 @@ var SearchPanelMoreBtnHideText = "隐藏高级查询";
 
 var timeoutMsg = "页面超时，请重新登录";
 function SetLogoInfo() {
-  $.ajax({
+    $.ajax({
         method: 'GET',
         async: true,
         url: '/Module/CustomerBasicSetting/Handler/CustomerBasicSettingHander.ashx?mid=' + getUrlParam('mid') + '&method=GetCustomerList',
@@ -34,16 +34,16 @@ function SetLogoInfo() {
             logo.closest('a').attr('title', data.data.loadInfo.customerName);
             if (data.data.loadInfo.BusinessLogo) {
                 $(".logoWrap").css({ 'background-image': 'url("' + data.data.loadInfo.BusinessLogo + '")' });
+            } else {
+                $(".logoWrap").css({ 'background-image': 'url("../../images/newYear/logo.png")' })
             }
-            $('#unitName').html(data.data.loadInfo.customerName); //title是全称html是简写名;        
-            if (data.data.loadInfo.BusinessLogo) {
-                $(".logoWrap").css({ 'background-image': 'url("' + data.data.loadInfo.BusinessLogo + '")' });
-            }
+            //$('#unitName').html(data.data.loadInfo.customerName); //title是全称html是简写名;        
             var str = $("#lblLoginUserName").html();
             var UnitName = window.UnitShortName ? window.UnitShortName : window.UnitName;
             window.UserName = str;
             UnitName = UnitName.length > 8 ? UnitName.substring(0, 8) + "..." : UnitName
-            $("#lblLoginUserName").html("<b>|</b>" + UnitName + "&nbsp;&nbsp;&nbsp;" + str).attr("title", window.UnitName + "(" + window.RoleName + ")");
+            $("#lblLoginUserName").html(UnitName + "&nbsp;&nbsp;&nbsp;" + str).attr("title", window.UnitName + "(" + window.RoleName + ")");
+            $("#lblLoginUserName").attr("userName", window.UserName);
             if (data.data.requset != null) {
                 for (var i = 0; i < data.data.requset.length; i++) {
                     var code = data.data.requset[i].SettingCode;
@@ -103,43 +103,43 @@ function SetLogoInfo() {
 }
 
 $(function () {
+    $("#leftsead").hide();
+    var height = $(window).outerHeight() - $(".commonHeader").outerHeight();
 
-    var height=$(window).outerHeight()-$(".commonHeader").outerHeight();
-    if($("#contentArea").outerHeight()<height ){
-        $("#contentArea").css({"min-height":height+"px"})
-    }
-    if($("#contentArea").outerHeight()<$("#leftMenu").outerHeight()) {
-        $("#contentArea").css({"min-height":$("#leftMenu").outerHeight()+"px"})
+    $("#contentArea").css({ "min-height": height + "px" })
+
+    if ($("#contentArea").outerHeight() < $("#leftMenu").outerHeight()) {
+        $("#contentArea").css({ "min-height": $("#leftMenu").outerHeight() + "px" })
     }
     $(window).resize(function () {
-        var height=$(window).outerHeight()-$(".commonHeader").outerHeight();
-        if($("#contentArea").outerHeight()<height ){
-            $("#contentArea").css({"min-height":height+"px"})
+        var height = $(window).outerHeight() - $(".commonHeader").outerHeight();
+        if ($("#contentArea").outerHeight() < height) {
+            $("#contentArea").css({ "min-height": height + "px" })
         }
-        if($("#contentArea").outerHeight()<$("#leftMenu").outerHeight()) {
-            $("#contentArea").css({"min-height":$("#leftMenu").outerHeight()+"px"})
+        if ($("#contentArea").outerHeight() < $("#leftMenu").outerHeight()) {
+            $("#contentArea").css({ "min-height": $("#leftMenu").outerHeight() + "px" })
         }
     });
 
-    $('#section').resize(function() {
+    $('#section').resize(function () {
         if ($("#contentArea").outerHeight() < $("#section").outerHeight()) {
-            $("#contentArea").css({"height": $("#section").outerHeight() + "px"})
+            $("#contentArea").css({ "height": $("#section").outerHeight() + "px" })
         }
     });
 
-    $("#commonNav").delegate(".dropDown",'click',function(){
+    $("#commonNav").delegate(".dropDown", 'click', function () {
         $(this).find("ul").stop().show();
-    }).delegate(".dropDown",'mouseenter',function(){
+    }).delegate(".dropDown", 'mouseenter', function () {
         $(this).find("ul").stop().show();
-    }).delegate(".dropDown",'mouseleave',function(){
-        var me=  $(this);
-        setTimeout(function(){
+    }).delegate(".dropDown", 'mouseleave', function () {
+        var me = $(this);
+        setTimeout(function () {
             me.find("ul").stop().hide();
-        },300) //设置一个超时对象
+        }, 300) //设置一个超时对象
 
-    }).delegate(".dropDown ul",'mouseenter',function(){
+    }).delegate(".dropDown ul", 'mouseenter', function () {
         $(this).stop().show();
-    }).delegate(".dropDown ul",'mouseleave',function(){
+    }).delegate(".dropDown ul", 'mouseleave', function () {
         $(this).stop().hide();
     });
     SetLogoInfo(); //头部导航菜单右侧部分赋值
@@ -156,31 +156,87 @@ $(function () {
         var dom = $(this);
         var nondes = dom.parents(".datagrid-body-inner").find(".datagrid-cell-check input");
         //验证是否是全选
-        var isSeletAll=true;
+        var isSeletAll = true;
         for (var i = 0; i < nondes.length; i++) {
-            if (!nondes.get(i).checked&&nondes.get(i)!==dom.find("input").get(0)) { //排除当前的
-                isSeletAll=false;
+            if (!nondes.get(i).checked && nondes.get(i) !== dom.find("input").get(0)) { //排除当前的
+                isSeletAll = false;
 
                 break;
             }
         }
-        if(isSeletAll) {    //其他都是选中状态
+        if (isSeletAll) {    //其他都是选中状态
             if (dom.find("input").get(0).checked) { //如果当前的是选中装态。
                 isSeletAll = false;
             }
         }
 
-        if(isSeletAll){
-          var allCheckBox=dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").addClass("on")
-            allCheckBox.find("input").get(0).checked=true;
-        } else{
-            var allCheckBox=dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").removeClass("on")
-            allCheckBox.find("input").get(0).checked=true;
+        if (isSeletAll) {
+            var allCheckBox = dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").addClass("on")
+            allCheckBox.find("input").get(0).checked = true;
+        } else {
+            var allCheckBox = dom.parents(".datagrid-body").siblings(".datagrid-header").find(".datagrid-header-check").removeClass("on")
+            allCheckBox.find("input").get(0).checked = true;
         }
 
 
 
         return false;
+    });
+    $.ajax({
+        url: '/ApplicationInterface/Gateway.ashx?type=Product&action=Basic.Menu.GetMenuList&req={"Locale":null,"CustomerID":null,"UserID":null,"OpenID":null,"Token":null,"ChannelID":null,"Parameters":{},"random":0.7135860174894333}',
+        method: 'post',
+        async: true,
+        success: function (response) {
+            var menuData = JSON.parse(response);
+            if (menuData.IsSuccess && menuData.ResultCode == 0) {
+                var data = menuData.Data;
+
+                if (data&&data.MenuList) {
+                    if (window.location.pathname.indexOf("Index/IndexPage.aspx") == -1) {
+                        $("#leftsead").show();
+                    }
+                    for (var k = 0; k < data.MenuList.length; k++) {
+                        var menu = data.MenuList[k];
+
+                        $("[data-menucode]").each(function () {
+                            var menucode = $(this).data("menucode");
+                            var me = $(this);
+                            if (menu && menu.Menu_Code) {
+                                if (menu.Menu_Code == menucode) {
+                                    var urlstr = window.location.href.split("?"),
+                                  params = {};
+                                    if (urlstr[1]) {
+                                        var items = urlstr[1].split("&");
+                                        for (var j= 0; j< items.length; j++) {
+                                            var itemarr = items[j].split("=");
+                                            params[itemarr[0]] = itemarr[1];
+                                        }
+                                    }
+                                    debugger;
+                                   if (params["MMenuID"] == menu.Menu_Id) {
+                                       me.find(".menusrc .shows").attr("src", "/Framework/Image/leftImgList/" + menucode + "on.png")
+                                   }
+
+                                    if (menu.SubMenuList.length > 0 && menu.SubMenuList[0].SubMenuList && menu.SubMenuList[0].SubMenuList.length > 0) {
+                                        me.find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path + "?CustomerId=" + getUrlParam("CustomerId") + "&mid=" + menu.SubMenuList[0].SubMenuList[0].Menu_Id + "&PMenuID=" + menu.SubMenuList[0].Menu_Id + "&MMenuID=" + menu.Menu_Id);
+                                    } else {
+                                        me.find(".menusrc").attr("href","JavaScript:void(0)");
+                                    }
+                                }
+                            }
+
+                        });
+
+                    }
+                } else {
+                    console.log("模块数据加载失败")
+                }
+
+            } else {
+                debugger;
+                alert(menuData.Message);
+            }
+        }
     });
 });
 
@@ -241,8 +297,14 @@ function getUrlParam(key){
 }
 
 fnChangePwd = function () {
-    location.href = "/Module/Basic/ChangePWD/ChangePWD.aspx?mid=1";
-};
+if($("#padIframe").length==0){
+    $("body").append('<iframe src="../../Module/changePWD/changePWD.html" width="100%" id="padIframe" height="100%" style="position: absolute; top: 0; left: 0;z-index:9999999" ></iframe>');
+    }
+   
+}
+fnStatement = function () {
+    location.href = "/module/statementList/querylist.aspx?mid=1";
+}
 var  JITMethod = {
     getUrlParam: function (strname) {
         var hrefstr, pos, parastr, para, tempstr;

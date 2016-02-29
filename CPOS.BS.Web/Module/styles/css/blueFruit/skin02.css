@@ -1,9 +1,9 @@
 @charset "utf-8";
-.centreArea .commonMenu li {margin-bottom:0px;}
+.centreArea .commonMenu li {margin-bottom:0;}
 .centreArea .commonMenu {border-right: 1px solid #ededed;}
 .centreArea .contentArea {border-left: none;}
 /*common*/
-.commonBtn{background:#fe7c24; cursor:pointer;}
+.commonBtn{background:#fe7c24; }
 .commonTitle{border-left:4px solid #fe7c24;}
 .commonTitleBox .getBack{background:url(../../images/skin/bg02/getBack.png) no-repeat right center;}
 

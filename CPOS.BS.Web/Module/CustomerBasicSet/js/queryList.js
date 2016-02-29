@@ -41,7 +41,7 @@ define(['jquery','tools','template', 'kindeditor',"easyui"], function ($) {
             self.loadData.GetBusinessBasisConfigInfo(function(data){
 
                 if(data.Data.CustomerShortName){
-                    $("#unitName").html(data.Data.CustomerShortName);
+                    //$("#unitName").html(data.Data.CustomerShortName);
                 }else{
                     data.Data.CustomerShortName=data.Data.customer_name
                 }

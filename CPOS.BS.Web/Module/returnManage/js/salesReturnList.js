@@ -82,7 +82,7 @@
                 }
             });
             /**************** -------------------弹出easyui 控件 start****************/
-            var  wd=160,H=32;
+            var  wd=200,H=30;
             $('#DeliveryType').combobox({
                 width:wd,
                 height:H,
@@ -269,13 +269,13 @@
 
                 columns : [[
 
-                    {field : 'ItemName',title : '商品名称',width:165,align:'center',resizable:false,
+                    {field : 'ItemName',title : '商品名称',width:165,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=26;
                             if(value&&value.length>long){
-                                return '<img src="'+row.ImageUrl+'" width="70" height="70"  /> <div class="rowText" title="'+value+'"><p>退货单号:'+row.SalesReturnNo+'</p>'+value.substring(0,long)+'...</div>'
+                                return '<img src="'+row.ImageUrl+'" width="40" height="40" class="l" /> <div class="rowText" title="'+value+'"><p>退货单号:'+row.SalesReturnNo+'</p>'+value.substring(0,long)+'...</div>'
                             }else{
-                                return '<img src="'+row.ImageUrl+'" width="70" height="70"  /> <div class="rowText"><p>退货单号:'+row.SalesReturnNo+'</p>'+value+'</div>'
+                                return '<img src="'+row.ImageUrl+'" width="40" height="40" class="l"  /> <div class="rowText"><p>退货单号:'+row.SalesReturnNo+'</p>'+value+'</div>'
                             }
                         }
                     },

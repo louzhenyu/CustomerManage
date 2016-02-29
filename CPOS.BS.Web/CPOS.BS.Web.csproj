@@ -1375,6 +1375,25 @@
     <Content Include="Module\styles\images\minArr.png" />
     <Content Include="Module\styles\images\moreQuery.png" />
     <Content Include="Module\styles\images\mustIcon.png" />
+    <Content Include="Module\styles\images\newTemplate\addstr.png" />
+    <Content Include="Module\styles\images\newTemplate\check.png" />
+    <Content Include="Module\styles\images\newTemplate\checkon.png" />
+    <Content Include="Module\styles\images\newTemplate\del.png" />
+    <Content Include="Module\styles\images\newTemplate\del11.png" />
+    <Content Include="Module\styles\images\newTemplate\down.png" />
+    <Content Include="Module\styles\images\newTemplate\exit.png" />
+    <Content Include="Module\styles\images\newTemplate\iconList.png" />
+    <Content Include="Module\styles\images\newTemplate\iconList1.png" />
+    <Content Include="Module\styles\images\newTemplate\jiantou.png" />
+    <Content Include="Module\styles\images\newTemplate\logo.png" />
+    <Content Include="Module\styles\images\newTemplate\moreIcon.png" />
+    <Content Include="Module\styles\images\newTemplate\nodel.png" />
+    <Content Include="Module\styles\images\newTemplate\pagebtn.png" />
+    <Content Include="Module\styles\images\newTemplate\pagebtn1.png" />
+    <Content Include="Module\styles\images\newTemplate\radio.png" />
+    <Content Include="Module\styles\images\newTemplate\radioOn.png" />
+    <Content Include="Module\styles\images\newTemplate\set-tip-bg.png" />
+    <Content Include="Module\styles\images\newTemplate\stop.png" />
     <Content Include="Module\styles\images\qixin\bg01\h-menu001.png" />
     <Content Include="Module\styles\images\qixin\bg01\h-menu002.png" />
     <Content Include="Module\styles\images\qixin\bg01\h-menu003.png" />
@@ -6505,7 +6524,7 @@
     <Content Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeGateway.ashx" />
     <Content Include="ApplicationInterface\Module\Basic\UnitAndType\UnitTypeTreeHandler.ashx" />
     <Content Include="ApplicationInterface\Module\Basic\UnitAndType\TypeTreeHandler.ashx" />
-	<Content Include="ApplicationInterface\Module\Marketing\Coupon\DownLoadCouponTicketNumber.ashx" />
+    <Content Include="ApplicationInterface\Module\Marketing\Coupon\DownLoadCouponTicketNumber.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventShareHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsListHandler.ashx" />
     <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
@@ -8139,6 +8158,7 @@
     </Compile>
     <Compile Include="Module\Index\IndexPage.aspx.cs">
       <DependentUpon>IndexPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Module\Index\IndexPage.aspx.designer.cs">
       <DependentUpon>IndexPage.aspx</DependentUpon>
@@ -8591,7 +8611,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>2330</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

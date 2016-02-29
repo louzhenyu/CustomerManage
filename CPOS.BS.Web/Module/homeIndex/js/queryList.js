@@ -895,31 +895,39 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
                             $(this).find(".commonInputWrap").each(function () {
 
                                 if ($(this).data("key") == "toUrl") {
-                                    var toUrlObj = {};
-                                    toUrlObj = $(this).find(".jsAreaItem").data();
-                                    toUrlObj["id"] = toUrlObj["id"].toString();
-                                    toUrlObj["url"] = $(this).find(".jsAreaItem .jsNameInput").val();
-                                    toUrlObj["name"] = $(this).find(".jsAreaItem .jsNameInput").val();
-                                    debugger;
-                                    obj[$(this).data("key")] = JSON.stringify(toUrlObj).replace(/,/g, "&&");
-                                    if (toUrlObj.typeid == "null") {
-                                        alert(menuName + "的第" + index + "项菜单,请选择一个链接类型")
-                                        isSubmit = false;
+                                    var execute=!self.param["menuLength"];
+                                      if(self.param["menuLength"]>=index){
+                                          execute=true;
+                                      }
 
-                                    } else {
-                                        if (toUrlObj.typeid=="3") {
-                                            if (!toUrlObj.url) {
-                                                alert(menuName + "的第" + index + "项菜单，请填写一个正确的网址")
-                                                isSubmit = false;
-                                            }
+                                    if(execute) {
+                                        var toUrlObj = {};
+                                        toUrlObj = $(this).find(".jsAreaItem").data();
+                                        toUrlObj["id"] = toUrlObj["id"].toString();
+                                        toUrlObj["url"] = $(this).find(".jsAreaItem .jsNameInput").val();
+                                        toUrlObj["name"] = $(this).find(".jsAreaItem .jsNameInput").val();
+                                        debugger;
+                                        obj[$(this).data("key")] = JSON.stringify(toUrlObj).replace(/,/g, "&&");
+                                        if (toUrlObj.typeid == "null") {
+                                            alert(menuName + "的第" + index + "项菜单,请选择一个链接类型");
+                                            isSubmit = false;
+
                                         } else {
-                                            if (!toUrlObj.name) {
-                                                alert(menuName + "的第" + index + "项菜单，请选择一个商品或者商品品类")
-                                                isSubmit = false;
+                                            if (toUrlObj.typeid == "3") {
+                                                if (!toUrlObj.url) {
+                                                    alert(menuName + "的第" + index + "项菜单，请填写一个正确的网址");
+                                                    isSubmit = false;
 
+                                                }
+                                            } else {
+                                                if (!toUrlObj.name) {
+                                                    alert(menuName + "的第" + index + "项菜单，请选择一个商品或者商品品类");
+                                                    isSubmit = false;
+
+                                                }
                                             }
-                                        }
 
+                                        }
                                     }
 
                                 } else {
@@ -935,6 +943,7 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
                         });
                         self.param[key] = links;
                     }
+                    return isSubmit;
                 });
                 if (isSubmit) {
                     if (self.param) {
@@ -1298,7 +1307,7 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
                                 self.elems.categorySelect[0].options[i + 1] = new Option(idata.categoryName, idata.categoryId);
                             }
                         } else {
-                            alert("一级分类列表为空！");
+
                         }
 
                     } else {

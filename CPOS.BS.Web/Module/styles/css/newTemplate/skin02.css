@@ -384,10 +384,10 @@
 .datagrid-row td:first-of-type div.datagrid-cell-check{ padding-left: 0;}
 .datagrid-header-row td:first-of-type div.datagrid-header-check{  padding-left: 0;}
 /*列表操作图标*/
-.noDelete{background-image:url(../../images/newTemplate/nodel.png); width: 16px; height: 16px; margin: 0 auto;}
-.delete{background-image:url(../../images/newTemplate/del.png); width: 16px; height: 16px; margin: 0 auto; cursor: pointer}
-.down{background-image:url(../../images/newTemplate/down.png); width: 18px; height: 17px; margin: 0 auto;cursor: pointer}
-.exit{background-image:url(../../images/newTemplate/exit.png); width: 16px; height: 16px; margin: 0 auto;cursor: pointer}
+.noDelete{background:no-repeat center center;background-image:url(../../images/newTemplate/nodel.png) ;   width: 16px; height: 16px; margin: 0 auto;}
+.delete{background:no-repeat center center; background-image:url(../../images/newTemplate/del.png); width: 16px; height: 16px; margin: 0 auto; cursor: pointer}
+.down{ background:no-repeat center center; background-image:url(../../images/newTemplate/down.png); width: 18px; height: 17px; margin: 0 auto;cursor: pointer}
+.exit{background:no-repeat center center; background-image:url(../../images/newTemplate/exit.png); width: 16px; height: 16px; margin: 0 auto;cursor: pointer}
 .btnAdd    {background:url(../../images/newTemplate/addstr.png) center center  no-repeat; width: 18px; height: 18px; margin: 0 auto; cursor: pointer}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 .datebox .combo-arrow{padding-right:26px;}

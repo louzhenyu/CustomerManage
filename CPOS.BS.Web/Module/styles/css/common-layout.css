@@ -8,11 +8,11 @@ caption,cite,em,i,th,b,strong{font-style:normal;font-weight:400}
 select,input,button,textarea{font-size:12px;font-style:normal;font-weight:400;vertical-align:middle}
 table{border-collapse:collapse;border-spacing:0}fieldset,img{border:0}legend{color:#000}sup{vertical-align:text-top}sub{vertical-align:text-bottom}iframe{display:block}li{list-style:none}img{vertical-align:middle}a img{vertical-align:top}textarea{resize:none}
 div,th,td{word-wrap:break-word;word-break:break-all}
-body,button,input,select,textarea{font:14px/1.5 Microsoft YaHei,Arial,Helvetica,sans-serif;}
-body{text-align:left;color:#333;background:#fff}
+body{text-align:left;color:#333;background:#fff; font-family:"Microsoft Yahei"}
 input,button,.button,textarea,select{border:none;outline:none;padding:0 5px;margin:0;background:#fff;}
 button,.button,textarea,select{
     -webkit-appearance:none;
+    color: #666;
 }
 .x-border-box, .x-border-box,* {
     box-sizing: border-box;
@@ -36,6 +36,7 @@ h1,h2,h3{font-weight:normal;}
 h1{font-size:18px;}h2{font-size:16px;}h3{font-size:14px;}
 .f14{font-size:14px}.f16{font-size:16px}
 /*清除浮动*/
+.r{ float: right;}.l{ float: left;}
 .clear{display:block;clear:both;overflow:hidden;height:0;line-height:0;font-size:0}
 .clearfix:after{content:" ";visibility:hidden;display:block;clear:both;height:0;font-size:0}
 .clearfix{*zoom:1}
@@ -97,10 +98,10 @@ box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
 */
 
 /*common*/
-body{font:12px/1.5em "黑体","Microsoft YaHei";background:#fff;color:#4d4d4d; text-align: center;}
-input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"黑体";color:#a5a5a5;}
+body{font:12px/1.5em "Microsoft YaHei";background:#fff;color:#4d4d4d; text-align: center;}
+input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"Microsoft YaHei";color:#666;}
 .fontRed{font-family:"宋体";color:#f00;}
-.commonBtn{display:block;width:140px;height:40px;line-height:40px;text-align:center;font-size:14px;border-radius:5px;background:#007aff;color:#fff;}
+.commonBtn{display:block;width:140px;height:30px;cursor:pointer; line-height:30px;text-align:center;font-size:14px;border-radius:5px;color:#fff;}
 .commonBtn:hover{color:#fff;}
 .commonTitleBox{height:66px;padding:0 40px;border-bottom:1px solid #eee;}
 .commonTitle{display:inline-block;height:14px;line-height:14px;margin:26px 0 0 40px;padding-left:8px;font-size:14px;border-left:4px solid #007aff;color:#333;}
@@ -120,7 +121,7 @@ input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-hei
 .jui-dialog-tit h2,.ui-dialog-tit h3{font:15px/47px "Microsoft YaHei";color:#66666d;}
 .jui-dialog-close{position:absolute;top:8px;right:12px;width:30px;height:30px;background:url(../images/hintClose.png) no-repeat center center;cursor:pointer;}
 .jui-dialog .btnWrap{text-align:center;}
-.jui-dialog .btnWrap a{display:inline-block;}
+/*.jui-dialog .btnWrap a{display:inline-block;}*/
 .jui-dialog .titName{position:absolute;top:0;left:50%;margin-left:-225px;width:450px;line-height:55px;text-align:center;color:#333;}
 
 /*表格*/
@@ -228,7 +229,7 @@ input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-hei
 .commonSelectWrap .selectList p:hover{background:#007aff;color:#fff;}
 .commonSelectWrap .selectBox:hover{position:relative;}/* add by yehua*/
 .commonSelectWrap .selectBox:hover .selectList{display:block;}
-.commonSelectWrap .searchInput{display:block;float:left;margin-left:10px;width:137px;height:26px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff;}
+ .searchInput{display:block;float:left;margin-left:2px;width:200px;height:30px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fff;}
 .commonSelectWrap input{float:left;width:95%;height:32px;line-height:32px;border:none;background:none;color:#666;}
 .commonSelectWrap .searchBtn{float:right;width:64px;height:32px;background:url(../images/searchBtn.png) no-repeat 0 0;}
 
@@ -236,8 +237,6 @@ input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-hei
 .selectDateBox > *{float:left;}
 .selectDateBox .tit{margin-left:10px;}
 .selectDateBox p{margin-left:10px;width:98px;height:26px;font-family:Arial;border:1px solid #ccc;border-radius:2px;background:#fbfbfb url(../images/dateIcon.png) no-repeat 80px center;}
-.moreQueryWrap .queryBtn{width:72px;height:28px;line-height:28px;}
-.moreQueryWrap .more{display:block;width:80px;margin-top:3px;padding-right:10px;text-align:center;font:12px/1.2em "宋体";text-decoration:underline;background:url(../images/moreQuery.png) no-repeat right 4px;color:#2d83cf;}
 
 /*头部 全查询*/
 .allQueryTermArea{position:relative;min-height:100px;margin-bottom:22px;padding:25px 0 20px;border:1px solid #d8d8d8;background:#fbfbfb;}

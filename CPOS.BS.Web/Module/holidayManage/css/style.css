@@ -11,7 +11,7 @@
 .commonSelectWrap .wh80{ width: 80px;}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 
-.optionDIv{ display: inline-block; padding-top: 30px;}
+.optionDIv{ padding-top: 30px;}
 .commonSelectWrap{ float: none;}
 .commonSelectWrap .bonone {border: 1px solid transparent;}
 .commonSelectWrap .searchInput.remark{ width: 460px; height:124px;}

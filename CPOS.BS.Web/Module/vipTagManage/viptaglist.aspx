@@ -15,8 +15,8 @@
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                     <div class="tableWrapText" id="tableWrap">
-                                   <div class="tableWrapTextBtn">
-                                   <div class="commonBtn " data-flag="add">新增标签</div>
+                                   <div class="optionBtn">
+                                   <div class="commonBtn icon icon_add w100 r" data-flag="add">新增标签</div>
 
                                     </div>
                                      <table class="dataTable" id="gridTable"></table>
@@ -45,14 +45,14 @@
 <script id="tpl_addProm" type="text/html">
            <form id="addProm">
       <div class="commonSelectWrap">
-      <em class="tit">标签分类名称：</em>
+      <em class="tit w100">标签分类名称：</em>
         <label class="searchInput" >
           <input data-text="标签" class="easyui-validatebox" data-options="required:true" data-flag="SkuProp" name="TypeName" type="text" value="">
           <input name="TypeId" type="text" style="display: none"/>
        </label>
  </div>
        <div class="commonSelectWrap">
-       <em class="tit">标签分类值：</em>
+       <em class="tit w100">标签分类值：</em>
          <label class="searchInput" id="TagsList">
           <div class="mainpanl">
            <div class="list">

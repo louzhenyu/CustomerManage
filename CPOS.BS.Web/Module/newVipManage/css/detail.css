@@ -1,11 +1,11 @@
 @charset "utf-8";
 
- /**头部操作按钮**/
+/**头部操作按钮**/
 .queryTermArea{  padding: 20px 0 20px 24px;}
 .queryTermArea .commonBtn{display: none;}
-.queryTermArea .commonBtn{ margin-left: 66px; width: 100px; height: 32px;  line-height: 32px; float:left;}
+.queryTermArea .commonBtn{  width: 80px; height: 30px;  line-height: 30px; float:left;}
 
-.queryTermArea  .optBtn{background-color: #00cccc;margin-right: 24px; margin-left:0;}
+.queryTermArea  .optBtn{margin-right: 24px; margin-left:0;}
 /*****会员详情*****/
 /*会员信息*/
 .contentArea_vipquery{min-width:1000px;min-height:587px;padding:20px;}
@@ -28,7 +28,7 @@
 .subMenu{height:50px;padding-left:40px;background:#fff; border-top: 1px solid #d0d5d8;border-bottom:1px solid #d0d5d8 }
 .subMenu li{float:left;height:25px;width:85px; margin-top:12px; font-size: 14px; margin-right: 35px; text-align:center;line-height:25px;color:#4d4d4d;cursor:pointer;}
 .subMenu li.on {color: #07c8cf; border-bottom:1px solid #00cccc; background-color:#fafafa;}
- /*tab选项卡公共样式*/
+/*tab选项卡公共样式*/
 .commonSelectWrap .bonone{ border: 1px solid transparent;}
 .R{ float:right} .L{ float: left}  .txtCenter{ text-align: center}
 .panltaglist .fontC{ height: 27px; background: center center no-repeat; margin:0 auto}
@@ -41,11 +41,11 @@
 .panlnav09{ width: 100%; padding-top: 35px; padding-left: 35px;}
 .panlnav09 p{ font-size: 16px; line-height: 36px; color: #666; height: 36px;  float: left; width: 100%;}
 .tagbtnList{float: left; padding-bottom: 15px;border-bottom: 1px solid #d0d5d8; padding-top:15px; display: block; width:100%;}
-.tagbtn{cursor: pointer; margin-bottom: 15px; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #07c8cf; position: relative; float: left; margin-right:30px; line-height: 32px; color: #07c8cf; font-size: 14px; }
+.tagbtn{cursor: pointer; margin-bottom: 15px; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #00a0e8; position: relative; float: left; margin-right:30px; line-height: 32px; color: #07c8cf; font-size: 14px; }
 .tagbtn{ float: left;}
 .tagbtn .icon{display: none}
-.tagbtn .icon{background: url("../images/delicon.png")no-repeat; width: 30px; height: 30px; top: -19px; right:-19px; position: absolute;}
-.bgtext.tagbtn  { background-color: #07c8cf; color: #fff;}
+.tagbtn .icon{background: url("../../styles/images/newYear/hitClose.png")no-repeat; width: 30px; height: 30px; top: -12px; right: -34px; position: absolute;}
+.bgtext.tagbtn  { background-color: #00a0e8; color: #fff;}
 .panltaglist{ float: left;}
 .groupTag{ float: left;border-left: 1px solid #d0d5d8;}
 .groupTag li{cursor: pointer; width: 120px; text-align: center; border: 1px solid #d0d5d8; border-bottom-width:0;border-left-width:0;height: 28px; line-height: 28px; float: left;}
@@ -58,7 +58,7 @@
 .btnList .commonBtn{ width:80px; height: 32px; line-height: 32px; margin:0 auto; }
 
 .textbtn{ display: inline-block; float: left;}
-.textbtn .saveTagBtn{ background-color: #07c8cf; color: #fff;}
+.textbtn .saveTagBtn{ background-color: #00a0e8; color: #fff;}
 .textbtn  input{ float: left;}
 
 
@@ -89,7 +89,6 @@
 
 /***新增客服记录***/
 .tableHandleBox{padding:12px 0;text-align:right;width: 100%; height: 58px;}
-.tableHandleBox span{display:inline-block; background-color:#00cccc;width:100px;height:32px;line-height:32px;margin-left:10px;border-radius:3px;cursor:pointer;}
 .tableWrap{min-height:300px;}
 
 /******XXXX信息相关样式*********/
@@ -100,12 +99,12 @@
 .linePanel .selectBox{ border: 1px solid transparent; background: none}
 .linePanel .commonSelectWrap .tit{ width: 108px}
 .linePanel .exitDiv{ width:813px;float:left;}
-.linePanel .exitDiv .selectBox{ width: 198px;}
-.linePanel .exitDiv .searchInput{ width: 198px;}
+.linePanel .exitDiv .selectBox{ width: 200px;}
+.linePanel .exitDiv .searchInput{ width: 200px;}
 .widthMax{ width:460px}
 .commonSelectWrap .hint{ color: #cc0000; line-height: 35px; font-size: 15px; padding-left: 8px;}
 .adjustList {height:45px; line-height: 45px; font-size: 14px;margin-top: 10px; margin-bottom: 20px}
-.linePanel .commonBtn{  width: 100px; height: 32px;  line-height: 32px; background-color: #00cccc; float: left;  margin: 0 auto; border-radius: 3px;}
+.linePanel .commonBtn{  width: 80px; height: 30px;  line-height: 30px;  float: left;  margin: 0 auto; border-radius: 6px;}
 .adjustList .commonSelectWrap{margin: 0 auto;}
 .adjustList .commonSelectWrap .tit{width: 100px;}
 .linePanel .mTop10{ margin-top: 10px;}

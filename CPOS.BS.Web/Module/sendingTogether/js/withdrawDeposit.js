@@ -65,14 +65,14 @@
                         field : 'ck',
                         width:70,
                         title:'全选',
-                        align:'center',
+                        align:'left',
                         checkbox : true
                     } //显示复选框
                     ] ],
 
                     columns : [[
 
-                        {field : 'WithdrawNo',title : '提现单号',width:200,align:'center',resizable:false,
+                        {field : 'WithdrawNo',title : '提现单号',width:200,align:'left',resizable:false,
                             formatter:function(value ,row,index){
                                 var long=56;
                                 if(value&&value.length>long){
@@ -83,7 +83,7 @@
                             }
                         },
 
-                        {field : 'ApplyDate',title : '申请日期',width:80,align:'center',resizable:false
+                        {field : 'ApplyDate',title : '申请日期',width:80,align:'left',resizable:false
                             ,formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd");
                         }
@@ -101,7 +101,7 @@
                         {field : 'CardNo',title : '银行卡号',width:200,align:'left',resizable:false},
                         {field : 'BankName',title : '银行名称',width:100,align:'left',resizable:false},
                         {field : 'AccountName',title : '开户人姓名',width:60,align:'left',resizable:false},
-                        {field : 'Amount',title : '提现金额',width:80,align:'center',resizable:false,
+                        {field : 'Amount',title : '提现金额',width:80,align:'left',resizable:false,
                             formatter:function(value,row,index){
                                 if(isNaN(parseInt(value))){
                                     return 0;
@@ -120,7 +120,7 @@
                                 return  status ;
                             }
                         },
-                        {field : 'CompleteDate',title : '完成日期',width:80,align:'center',resizable:false
+                        {field : 'CompleteDate',title : '完成日期',width:80,align:'left',resizable:false
                             ,formatter:function(value ,row,index){
                             if(value) {
                                 return new Date(value).format("yyyy-MM-dd");

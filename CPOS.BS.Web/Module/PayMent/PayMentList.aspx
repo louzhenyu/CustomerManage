@@ -15,11 +15,8 @@
 	.jui-dialog-payMent .searchInput{width:420px;height:35px;border:1px solid #dedede;}
 	.jui-dialog-payMent .searchInput input{height:33px;}
 	.jui-dialog-payMent .searchInput input[disabled='disabled']{background:#ccc;}
-	.jui-dialog-payMent .btnWrap .commonBtn{width:148px;height:44px;line-height:44px;margin-top:20px;}
-	.jui-dialog-payMent .cancelBtn{margin-left:20px;}
-	
-	.jui-dialog-payMent .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(images/radio.png) no-repeat left center;cursor:pointer;}
-	.jui-dialog-payMent .radioBox.on{background:url(images/radioOn.png) no-repeat left center;}
+	.jui-dialog-payMent .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(../styles/images/newYear/radio.png) no-repeat left center;cursor:pointer;}
+	.jui-dialog-payMent .radioBox.on{background:url(../styles/images/newYear/radioOn.png) no-repeat left center;}
 	
 	.jui-dialog-payMent .uploadFileBox,.jui-dialog-payMent .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
 	
@@ -27,7 +24,7 @@
 	#payMentList{height:120px;}
 	.tableWrap{border:none;}
 
-	.tableWrap .operateWrap .editIcon{background:url(images/exit.png) no-repeat center center; width: 18px;height: 18px; display: block;}
+	.tableWrap .operateWrap .editIcon{cursor:pointer;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px;height: 18px; display: block;}
 	.datagrid-btable,.datagrid-btable tr{width:100%;}
 	.handleGuide{float:right;width:20px;height:30px;margin:3px 112px 0 0;background:url(images/icon-guide.png) no-repeat center center;}
 	.tip-payment{float:right;height:30px;line-height:30px;font-size:12px;text-align:right;padding:0 60px 0 45px;background:url(images/icon-tip.png) no-repeat left center;color:#f00;}
@@ -39,7 +36,7 @@
 
 
 <div class="payMentListArea" id="section" data-js="js/payMentList">
-    <div class="tableWrap">
+    <div class="tableWrap cursorDef">
         <!-- 已确认名单表格 -->
      <!--   <table class="dataTable" style="display:inline-table;">
             <thead>

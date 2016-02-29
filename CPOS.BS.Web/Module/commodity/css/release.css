@@ -6,7 +6,7 @@
 .title li{cursor: pointer;  width:268px; height: 56px; line-height: 56px;  float:left; text-align:center; font-size: 17px; font-weight:600; color:#3d3e40;  border-right:1px solid #d8d8d8; }
 .title li.on{ background:#fff;}
 .title li.one{ border-radius: 8px 0 0 0;}
-.btnopt{margin: 0 auto;margin-top: 45px;border-radius: 23px;}
+.btnopt{margin: 0 auto;margin-top: 45px;}
 .panelDiv{display: none;margin-top:20px;min-width: 1043px; width: auto; }
 #nav02.panelDiv{margin: 0 auto;}
 .left{ float: left;} .right{float: right}

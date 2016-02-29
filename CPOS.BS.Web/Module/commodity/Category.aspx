@@ -7,10 +7,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/commodity/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
-    <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-    .datagrid-row td:first-of-type div{padding-left:0px;}
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -18,14 +14,14 @@
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                     <div class="tableWrapText" id="tableWrap">
-                                   <div class="tableWrapTextBtn">
-                                   <div class="commonBtn addCategory" data-flag="add">新建分类</div>
+                                   <div class="tableWrapTextBtn optionBtn">
+                                   <div class="commonBtn addCategory w100 icon icon_add r" data-flag="add">新增分类</div>
 
                                     </div>
-                                    <div class="imgTable">
+                                    <div class="imgTable cursorDef">
                                      <table class="dataTable" id="gridTable"></table>
                                      </div>
-                                     <div style="display: none"> <table class="dataTable" id="gridTable1"></table>
+                                     <div style="display: none "> <table class="dataTable" id="gridTable1"></table>
                                        </div>
                                      <div id="pageContianer">
                                          <div id="kkpager" style="text-align: center;">

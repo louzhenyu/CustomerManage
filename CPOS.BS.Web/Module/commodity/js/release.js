@@ -41,8 +41,8 @@
             editLayer:$("#editLayer"), //图片上传
             simpleQuery:$("#simpleQuery"),  //全部
             skuTable:$("#skuTable"),
-            width:160,
-            height:32,
+            width:200,
+            height:30,
             panlH:200,
             sku  :$("#sku"),
             loadAlert:null,
@@ -78,7 +78,7 @@
            var that=this;
            switch (objType) {
                case "htmltextarea":
-                   $(".info").css({ width: $("#optPanel").width() + "px",height:"300px"});
+                   $(".info").css({ width: $("#optPanel").width() + "px",height:"480px"});
                      that.elems.editor = KE.create('.info', {
                            allowFileManager: true,
                            fileManagerJson: "/Framework/Javascript/Other/kindeditor/asp.net/file_manager_json.ashx", //打开图片空间路径
@@ -94,7 +94,7 @@
             that.elems.simpleQuery.find(".panelDiv").fadeOut(0).eq(0).fadeIn("slow");
 
             /**************** -------------------初始化easyui 控件 start****************/
-            var wd=160,H=32;
+            var wd=200,H=30;
 
             that.loadData.getClassify(function(data) {
                 $('#Category').combotree({

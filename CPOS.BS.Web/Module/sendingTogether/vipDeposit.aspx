@@ -17,6 +17,7 @@
         <div class="queryTermArea" id="simpleQuery" style="display:inline-block;width: 100%; " >
              <form></form>
             <form id="queryFrom">
+            <div class="item">
             <div class="commonSelectWrap">
                 <em class="tit">提现单号：</em>
                 <label class="searchInput"><input  name="WithdrawNo" type="text" value=""></label>
@@ -29,7 +30,7 @@
             <div class="commonSelectWrap">
                 <em class="tit">状态：</em>
                 <div class="selectBox bordernone">
-                  <select id="cc" class="easyui-combobox" name="Status" style="width:159px; height: 29px;">
+                  <select id="cc" class="easyui-combobox" name="Status" style="width:199px; height:30px;">
                       <option value="-1">全部</option>
                       <option value="0">待确认</option>
                       <option value="1">已确认</option>
@@ -38,10 +39,12 @@
                   </select>
 
                 </div>
+            </div >
             </div>
              </form>
-            
+               <div class="moreQueryWrap">
               <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+              </div>
         </div>
 
         <!--表格操作按钮-->
@@ -54,7 +57,7 @@
         </div>    
         <div class="tableWrap">
             <table class="dataTable"  id="dataTable">
-
+                 <p class="loading" style="width:32px;height:32px;left:50%;margin-left:-16px;"><img src="../static/images/loading.gif"></p>
             </table>
             <div id="pageContianer">
              <div class="dataMessage" >没有符合条件的查询记录</div>

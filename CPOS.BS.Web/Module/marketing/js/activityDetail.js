@@ -56,15 +56,14 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                    var submit = {is: true, msg: ""};
                    $(select).find(".templatePanel").each(function (index) {
                        var me = $(this), messageInfo = me.data("message");
-                       if (messageInfo.MessageID) {
-
-                       } else {
+                       if ($(this).find(".text textarea").val()){
+                       }else {
 
                            submit.is = false;
                            if (type == "SMS") {
-                               submit.msg = "短信设置,第" + (me.index()) + "项未选择模板";
+                               submit.msg = "短信设置,第" + (me.index()) + "项未设置发送信息";
                            } else if (type == "WeChat") {
-                               submit.msg = "微信设置,第" + (me.index()) + "项未选择模板";
+                               submit.msg = "微信设置,第" + (me.index()) + "项未设置发送信息";
                            }
 
                            return false;
@@ -86,9 +85,9 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                       $(select).find(".templatePanel:last").removeClass("borderNone");
                       var html = bd.template('tpl_addMessage', {item: messageInfo});
                       $(select).append(html);
-
-                      $.parser.parse();
                       $(select).find(".templatePanel:last").addClass("borderNone");
+                      $(select).find(".templatePanel:last").find(".easyui-combobox").combobox();
+                      $(select).find(".templatePanel:last").find("textarea").validatebox();
                   }else{
                       $.messager.alert("提示", submit.msg);
                   }
@@ -902,7 +901,9 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 
                               }
                               prams.data["ActivityMessageList"]=[
-                                  {"MessageID":messageInfo.MessageID,"MessageType":$.trim(messageInfo.MessageType),"TemplateID":dom.data("id"),"Content":dom.data("forminfo").Content,
+                                  {"MessageID":messageInfo.MessageID,"MessageType":$.trim(messageInfo.MessageType),
+                                    /*"TemplateID":dom.data("id"),*/
+                                      "Content":dom.data("forminfo").Content,
                                       "SendTime":this.args.messageDiv.data("starttime"),IsEnable:true
                                   }
                               ];
@@ -920,12 +921,12 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                               prams.data["ActivityMessageList"] = [];
                               $(".templatePanel").each(function(index){
                               var me=$(this),messageInfo=me.data("message");
-                                  if(messageInfo.MessageID) {
+                                  if(me.find("textarea").val()) {
                                       prams.data["ActivityMessageList"].push({
                                           "MessageID": messageInfo.MessageID,//消息ID
                                           "MessageType": $.trim(messageInfo.MessageType),//发送消息的方式
-                                          "TemplateID": messageInfo.TemplateID,//消息模板的id
-                                          "Content": me.find("textarea").html(),//发送信息内容
+                                         // "TemplateID": messageInfo.TemplateID,//消息模板的id
+                                          "Content": me.find("textarea").val(),//发送信息内容
                                           "SendTime": me.data("starttime"),//发送时间
                                           "IsEnable": $('.on[data-filed="' + $.trim(messageInfo.MessageType) + '"]').length > 0  //是否启用选择框 是否勾
                                       })
@@ -933,9 +934,9 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 
                                       submit.is=false;
                                      if(messageInfo.MessageType=="SMS"){
-                                         submit.msg="短信设置,第"+(me.index())+"项未选择模板";
+                                         submit.msg="短信设置,第"+(me.index())+"项设置发送信息";
                                      }else if(messageInfo.MessageType=="WeChat"){
-                                         submit.msg="微信设置,第"+(me.index())+"项未选择模板";
+                                         submit.msg="微信设置,第"+(me.index())+"项设置发送信息";
                                      }
 
                                       return false;

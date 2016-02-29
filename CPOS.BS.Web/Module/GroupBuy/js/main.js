@@ -38,6 +38,7 @@ require.config({
         datatables: '/Module/static/js/plugin/jquery.dataTables.min',
         datepicker: '/Module/static/js/plugin/datepicker',
         md5: '/Module/static/js/lib/MD5',
+        easyui: '/Module/static/js/lib/jquery.easyui.min',
         cookie:'/Module/static/js/plugin/jquery.cookie',
         kkpager: '/Module/static/js/plugin/kkpager',
         datetimePicker: '/Module/static/js/plugin/jquery.datetimepicker',

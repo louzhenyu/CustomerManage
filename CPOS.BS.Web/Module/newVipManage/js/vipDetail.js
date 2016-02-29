@@ -812,7 +812,7 @@
                                      singleSelect:true,
                                      fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                                      columns:[[
-                                         {field:'ServicesTime',title:'服务时间',width:160},
+                                         {field:'ServicesTime',title:'服务时间',width:160,align:'left'},
                                          {field:'ServicesMode',title:'服务方式',width:175,align:'left'},
                                          {field: 'UnitName', title: '服务门店', width: 175, align: 'left',
                                              formatter: function (value, row, index) {
@@ -898,7 +898,7 @@
 
                                     columns : [[
 
-                                        {field : 'CreateTime',title : '日期',width:196,align:'center',resizable:false},
+                                        {field : 'CreateTime',title : '日期',width:196,align:'left',resizable:false},
 
                                         {field : 'UnitName',title : '办卡门店',width:100,align:'center',resizable:false} ,
                                         {field : 'Action',title : '卡操作',width:80,align:'center',resizable:false} ,
@@ -1051,7 +1051,7 @@
 
                                     columns : [[
 
-                                        {field : 'CouponCode',title : '优惠券编码',width:100,align:'center',resizable:false,
+                                        {field : 'CouponCode',title : '优惠券编码',width:100,align:'left',resizable:false,
                                             formatter:function(value ,row,index){
                                                 var long=26;
                                                 if(value&&value.length>long){
@@ -1129,7 +1129,7 @@
 
 
                                     columns : [[
-                                        {field : 'CreateTime',title : '时间',width:180,align:'center',resizable:false,
+                                        {field : 'CreateTime',title : '时间',width:180,align:'left',resizable:false,
                                             formatter:function(value ,row,index){
                                                 return new Date(value).format("yyyy-MM-dd hh:mm:ss");
                                             }
@@ -1223,7 +1223,7 @@
 
 
                                     columns : [[
-                                        {field : 'CreateTime',title : '时间',width:180,align:'center',resizable:false,
+                                        {field : 'CreateTime',title : '时间',width:180,align:'left',resizable:false,
                                             formatter:function(value ,row,index){
                                                 return new Date(value).format("yyyy-MM-dd hh:mm:ss");
                                             }
@@ -1325,7 +1325,7 @@
                                     //数据来源
                                     data:list,
                                     columns : [[
-                                        {field : 'Date',title : '时间',width:180,align:'center',resizable:false,
+                                        {field : 'Date',title : '时间',width:180,align:'left',resizable:false,
                                             formatter:function(value ,row,index){
                                                 return new Date(value).format("yyyy-MM-dd hh:mm:ss");
                                             }

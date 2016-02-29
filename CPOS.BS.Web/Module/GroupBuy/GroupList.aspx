@@ -13,7 +13,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div class="allPage" id="section" data-js="js/groupList.js?ver=0.3">
-	<div class="commonTopTitle"><a href="javascript:;" id="addNew" class="addBtn">添加新</a></div>
+	<div class="commonTopTitle optionBtn " style="border-top: none;"><a href="javascript:;" id="addNew" class="commonBtn icon w110  icon_add r">添加新</a></div>
     <!--团购列表-->
     <div  class="groupList">
     	<ul id="goodsList">

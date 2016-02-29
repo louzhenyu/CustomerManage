@@ -56,7 +56,7 @@
                     </label>
                     <em>上架商品显示在推出的活动中</em>				
                 </div>
-                <a href="javascript:;" id="btnSureUpdate" class="commonBtn">确定</a>
+                <a href="javascript:;" id="btnSureUpdate" class="commonBtn saveBtn">确定</a>
             </div>
         </div>
         
@@ -64,7 +64,7 @@
         <div class="groupShopManage" data-table="block" id="shopManage">
         	<div class="titleBox clearfix" style="height:50px;">
             	<h2 id="textName">团购商品管理</h2>
-                <a class="addShopBtn" href="javascript:;"></a>
+                <a class="addShopBtn commonBtn icon icon_add r w110" href="javascript:;"> 添加新商品</a>
             </div>
             <div id="goodsList" class="groupShopManage-list">
             	
@@ -99,7 +99,7 @@
 
     </div>
     <div class="btnWrap">
-        <a href="javascript:;" id="saveRules" class="commonBtn">提交</a>
+        <a href="javascript:;" id="saveRules" class="commonBtn saveBtn">提交</a>
         <a href="javascript:;" class="commonBtn cancelBtn hintClose">取消</a>
     </div>
 </div>
@@ -162,7 +162,7 @@
                         <#}#>
                     </div>
                     <div class="handleShop">
-                        <a class="addSizeBtn" href="javascript:;"></a>
+                        <a class="addSizeBtn commonBtn w100" href="javascript:;">编辑商品</a>
                         <span class="uploadPicBtn" style="display:none"></span>
                         <span class="moveUp <#=(i==0)?"first":""#>">上移</span>
                         <span class="moveDown <#=(i==list.length-1)?"last":""#>">下移</span>

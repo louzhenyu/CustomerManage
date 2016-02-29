@@ -6,7 +6,7 @@
     <title>配送商管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="css/style.css?v=0.5" rel="stylesheet" type="text/css" />
+    <link href="css/style.css?v=0.6" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -15,19 +15,10 @@
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
-                <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
-                    <div class="optionBtn" data-opttype="staus">
-                                         <div class="commonBtn"  data-flag="add" data-showstaus="1" >添加</div>
-                                         <!-- <div class="commonBtn" data-status="2" data-showstaus="1,3,4,5"  >取消申请</div>-->
-
-
-
-
+                    <div class="tableWrapTextBtn optionBtn" data-opttype="staus">
+                                         <div class="commonBtn icon icon_add w80 r"  data-flag="add" data-showstaus="1" >新增</div>
                     </div>
-                    <!--<h2 class="commonTitle">会员查询</h2>-->
-
-                </div>
-                <div class="tableWrap" id="tableWrap">
+                <div class="tableWrap cursorDef" id="tableWrap">
 
                     <table class="dataTable" id="gridTable"></table>
                     <div id="pageContianer">
@@ -72,13 +63,13 @@
            <div class="commonSelectWrap inputName">
                             <em class="tit">名称：</em>
                            <div class="searchInput">
-                              <input type="text" id="name" name="LogisticsName" class="easyui-validatebox" data-options="required:true" />
+                              <input type="text" id="name" name="LogisticsName" class="easyui-validatebox" data-options="required:true,validType:'maxLength[50]'" />
                           </div>
                       </div>
              <div class="commonSelectWrap inputName">
                              <em class="tit">简称：</em>
                             <div class="searchInput">
-                               <input type="text" name="LogisticsShortName" />
+                               <input type="text" name="LogisticsShortName"  data-options="validType:'maxLength[20]'" />
                            </div>
                        </div>
 

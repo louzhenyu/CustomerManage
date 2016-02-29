@@ -18,7 +18,7 @@
 
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
-                 <div class="commonBtn sales" data-flag="add" id="sales"> 新建主页</div>
+                 <div class="commonBtn sales icon icon_add w100 r" data-flag="add" id="sales"> 新建主页</div>
 
 
                 </div>
@@ -85,7 +85,7 @@
              <div class="show bg"></div>
               <img src="images/duihao.png" width="111" height="111" class="show imgT"/>
                <div class="radioPanel">
-                          <div class="radio" data-name="r1" data-index="1"><em></em><span> 模板一 <img data-index="1" src="images/yuelan.png"/></span> </div>
+                          <div class="radio" data-name="r1" data-index="1"><em></em><span> 零售推荐版 <img data-index="1" src="images/yuelan.png"/></span> </div>
 
                </div>
 </div>
@@ -94,7 +94,7 @@
                           <div class="show bg"></div>
                            <img src="images/duihao.png" width="111" height="111" class="show imgT"/>
                <div class="radioPanel">
-                          <div class="radio" data-name="r1" data-index="2"><em></em><span> 模板二 <img data-index="2"  src="images/yuelan.png"/></span> </div>
+                          <div class="radio" data-name="r1" data-index="2"><em></em><span> 服务推荐版 <img data-index="2"  src="images/yuelan.png"/></span> </div>
                </div>
 </div>
              <div class="imgPanel">
@@ -102,7 +102,7 @@
                           <div class="show bg"></div>
                            <img src="images/duihao.png" width="111" height="111" class="show imgT"/>
              <div class="radioPanel">
-             <div class="radio" data-name="r1" data-index="3"><em></em><span> 模板三 <img data-index="3"  src="images/yuelan.png"/></span> </div>
+             <div class="radio" data-name="r1" data-index="3"><em></em><span> 促销推荐版 <img data-index="3"  src="images/yuelan.png"/></span> </div>
              </div>
 </div>
 

@@ -136,7 +136,7 @@
                 }
             });
             /**************** -------------------弹出easyui 控件 start****************/
-            var  wd=160,H=32;
+            var  wd=200,H=30;
 
 
             $('#txtDataFromID').combobox({
@@ -227,6 +227,31 @@
                 }
             });
             /**************** -------------------弹出窗口初始化 end****************/
+            $('#txtDataFromIDs').combobox({
+                width:wd,
+                height:H,
+                panelHeight:that.elems.panlH,
+                valueField: 'id',
+                textField: 'text',
+                data:[{
+                    "id":0,
+                    "text":"请选择"
+
+                }]
+            });
+
+            that.loadData.getFromList(function(data){
+                debugger;
+                data.data.push({"Id":-1,Description:"请选择","selected":true});
+                $('#txtDataFromIDs').combobox({
+                    width:wd,
+                    height:H,
+                    panelHeight:that.elems.panlH,
+                    valueField: 'Id',
+                    textField: 'Description',
+                    data:data.data
+                });
+            });
 
             /**************** -------------------列表操作事件用例 start****************/
             that.elems.tabelWrap.delegate(".fontC","click",function(e){
@@ -346,7 +371,7 @@
                 columns : [[
 
 
-                    {field : 'order_no',title : '订单编号',width:140,resizable:false,align:'center'},
+                    {field : 'order_no',title : '订单编号',width:140,resizable:false,align:'left'},
                     {field : 'paymentcenter_id',title : '商户单号',width:100,resizable:false,align:'left'},
                     {field : 'total_amount',title : '订单金额(元)',width:100,resizable:false,align:'center'},
                     {field : 'payment_name',title : '支付方式',width:100,align:'center',resizable:false},
@@ -368,8 +393,8 @@
                         }
                     },
 
-                    /*{field : 'data_from_name',title : '订单渠道',width:100,align:'left',resizable:false},*/
-                    {field : 'Field1',title : '付款状态',width:100,align:'left',resizable:false,
+                    {field : 'data_from_name',title : '订单渠道',width:100,align:'left',resizable:false},
+                    {field : 'Field1',title : '付款状态',width:70,align:'center',resizable:false,
                         styler: function(index,row){
                             /* status: "700"
                              status_desc: "已完成"*/

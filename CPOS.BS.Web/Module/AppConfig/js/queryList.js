@@ -99,7 +99,8 @@
                                 var dataDom = $("#win").find(".imgPanel .radio.on").data();
                                 if (row.DisplayIndex == dataDom.index) {
                                     isAdd = false;
-                                    location.href = "/module/AppConfig/homePageDetail.aspx?mid=" + $.util.getUrlParam("mid") + "&homeId=" + row.HomeId + "&optionType=Add"
+                                    var url="/module/AppConfig/homePageDetail.aspx?homeId=" + row.HomeId + "&optionType=Add"
+                                    $.util.toNewUrlPath(url);
                                 }
                             }
                             if (isAdd) {
@@ -199,7 +200,8 @@
 
                 }
                 if(optType=="exit"){
-                    location.href="/module/AppConfig/homePageDetail.aspx?mid="+ $.util.getUrlParam("mid")+"&homeId="+row.HomeId+"&optionType=Edit"
+                    var url="/module/AppConfig/homePageDetail.aspx?homeId="+row.HomeId+"&optionType=Edit";
+                    $.util.toNewUrlPath(url);
                 }
 
                 if(optType=="delete"){
@@ -344,7 +346,7 @@
                 columns: [[
 
                     {
-                        field: 'Title', title: '名称', width: 200, align: 'center', resizable: false,
+                        field: 'Title', title: '名称', width: 200, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             var long = 56;
                             if (value && value.length > long) {
@@ -356,7 +358,7 @@
                     },
 
                     {
-                        field: 'CreateTime', title: '创建时间', width: 100, align: 'center', resizable: false
+                        field: 'CreateTime', title: '创建时间', width: 200, align: 'left', resizable: false
                         , formatter: function (value, row, index) {
                         /*   if (!value) {
                          return new Date(value).format("yyyy-MM-dd") + "至" + new Date(row.EndTime).format("yyyy-MM-dd");
@@ -368,13 +370,13 @@
                     },
 
                     {
-                        field: 'HomeId', title: '编辑', width: 60, align: 'center', resizable: false,
+                        field: 'HomeId', title: '编辑', width: 100, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             return "<div data-index=" + index + " data-flag='exit' class='exit opt'></div>"
                         }
                     },
                     {
-                        field: 'IsTemplate', title: '删除', width: 60, align: 'center', resizable: false,
+                        field: 'IsTemplate', title: '删除', width: 100, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             if(row.IsActivate==1) {
                                 return "<div data-index=" + index + " data-flag='noDelete' class='noDelete opt'></div>"
@@ -385,13 +387,13 @@
                         }
                     },
                     {
-                        field: 'IsActivate', title: '操作', width: 100, align: 'center', resizable: false,
+                        field: 'IsActivate', title: '操作', width: 50, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             if(value==1){
-                                return "<div data-index=" + index + " data-flag='ChangeStatus' class='noOpt'>当前主页</div>"
+                                return "<div data-index=" + index + " data-flag='ChangeStatus' style='margin:0;' class='noOpt'>当前主页</div>"
 
                             }else{
-                                return "<div data-index=" + index + " data-flag='ChangeStatus' class='opt'>设为主页</div>"
+                                return "<div data-index=" + index + " data-flag='ChangeStatus'style='margin:0;'   class='opt'>设为主页</div>"
                             }
 
                         }

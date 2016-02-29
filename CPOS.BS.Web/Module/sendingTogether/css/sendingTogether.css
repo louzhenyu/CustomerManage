@@ -1,15 +1,4 @@
 .commonTitle{height:16px;line-height:16px;margin:15px 0 5px 53px;padding-left:8px;border-left:4px solid #fe7c23;color:#666;margin-bottom: 20px;}
-.commonSelectWrap .selectBox {
- border: none
-}
-.commonSelectWrap input {
-    border:1px solid #ccc;
-}
-
-
-.queryTermArea{min-height:65px;padding:16px 20px 0 0px;}
-.queryTermArea .queryBtn{float:left; width:70px; height: 28px;line-height: 28px;margin-top: 10px;}
-.queryTermArea .commonSelectWrap{margin-right:10px;}
 .commonSelectWrap .selectList{top:3px;border-top:2px solid #fe7c24;}
 .commonSelectWrap .selectList p:hover{color:#fe7c24;}
 
@@ -39,13 +28,13 @@
 .panlDiv .commonSelectWrap .tit .checkBox{float: right}
 .pl_45{padding-left:45px;}
 /*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
-.panlDiv .explain{padding-left:50px;color:#fe2222;font-size:14px;font-family:"黑体";background:url(../images/icon-tips.png) no-repeat left center;}
+.panlDiv .explain{padding-left:50px;color:#fe2222;font-size:14px;;background:url(../images/icon-tips.png) no-repeat left center;}
 .panlDiv .lineH30{ line-height: 30px; white-space: nowrap;}
 
 
 .titleBar{display:inline-block;width:100%;height:53px;line-height:52px;padding-left:30px;font-size:16px;border-top:1px solid #e1e7ea;border-bottom:1px solid #e1e7ea;background:#fafafa;color:#666;}
 .checkBoxTag{display:inline-block;cursor:pointer;}
-.checkBoxTag em{float:left;width:35px;height:52px;background:url(../images/icon-uncheck.png) no-repeat left center;}
-.checkBoxTag.on em{background:url(../images/icon-checked.png) no-repeat left center;}
+.checkBoxTag em{float:left;width:35px;height:52px;background:url(../../styles/images/newYear/check.png) no-repeat left center;}
+.checkBoxTag.on em{background:url(../../styles/images/newYear/checkon.png) no-repeat left center;}
 .salesWrapArea{display:inline-block;width:100%;border-bottom:1px solid #e1e7ea;}
 .tipsBottomBox{display:none;text-align:center;color:#fe2222;}

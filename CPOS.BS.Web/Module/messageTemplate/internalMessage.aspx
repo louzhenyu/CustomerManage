@@ -15,16 +15,12 @@
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
-                <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
-                    <div class="optionBtns" data-opttype="staus">
-                                         <div class="commonBtn"  data-showstaus="1" >新增模板</div>
+                
+                <div class="tableWrap" id="tableWrap">
+                     <div class="optionBtn" data-opttype="staus">
+                                         <div class="commonBtn icon w100  icon_add r"  data-showstaus="1" >新增模板</div>
                                          <!-- <div class="commonBtn" data-status="2" data-showstaus="1,3,4,5"  >取消申请</div>-->
                     </div>
-                    <!--<h2 class="commonTitle">会员查询</h2>-->
-
-                </div>
-                <div class="tableWrap" id="tableWrap">
-
                     <div class="dataTable gridLoading" id="gridTable" >
 
                                              <div  class="loading">

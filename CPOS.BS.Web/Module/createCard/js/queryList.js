@@ -178,9 +178,10 @@
                 closable:true*/
                 onClose:function(){
                     if(that.elems.isClose){
-                        var mid = JITMethod.getUrlParam("mid"),PMenuID = JITMethod.getUrlParam("PMenuID");
+                        /*var mid = JITMethod.getUrlParam("mid"),PMenuID = JITMethod.getUrlParam("PMenuID");
 
-                        location.href = "/module/newVipManage/querylist.aspx?mid=" +mid+"&PMenuID="+PMenuID;
+                        location.href = "/module/newVipManage/querylist.aspx?mid=" +mid+"&PMenuID="+PMenuID;*/
+                        $.util.toNewUrlPath("/module/newVipManage/querylist.aspx");
 
                     }
 

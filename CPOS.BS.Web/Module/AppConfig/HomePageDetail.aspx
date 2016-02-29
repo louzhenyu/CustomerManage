@@ -22,7 +22,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
         <form>
         </form>
         <form id="saveForm">
-        <div class="savePanel">
+        <div class="savePanel optionBtn">
             <div class="commonSelectWrap">
                 <em class="tit">名称:</em>
                 <div class="searchInput" style="width: 340px;">
@@ -30,7 +30,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                 </div>
             </div>
             <!--commonSelectWrap-->
-            <div class="commonBtn saveHomPageBtn">
+            <div class="commonBtn saveHomPageBtn w80 icon icon_save r">
                 保存</div>
         </div>
         </form>
@@ -520,7 +520,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
             </div>
             <!--collectionList-->
             <div id="addItem" class="commonOptsBtn">
-                <div class="icon">
+                <div class="iconJ">
                 </div>
                 <p>
                     添加模块</p>

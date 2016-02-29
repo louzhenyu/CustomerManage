@@ -1,44 +1,6 @@
 ﻿@charset "utf-8";
 
-.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
-.commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.queryTermArea{ position:relative;border-bottom:1px solid #07c8cf;padding-left: 0; padding-right:0;display:inline-flex; width: 100%;}
-.moreQueryWrap{ float:left;margin-top: 12px; margin-bottom: 12px;}
-.moreQueryWrap .commonBtn{ margin-left: 55px; height: 30px; line-height: 30px;}
-.queryTermArea .item{width: 100%; height: 100%}
-.queryTermArea .itemBtn{width:200px;height: 100% }
 
-
-.count{ width:320px;display: none;margin-left: 35px}
-.count .commonSelectWrap{ margin:0 auto;}
-.tableWrap{ min-height: 60px;}
-.fontColor{ color: #fb7a52;}
-
-#opt {
-  padding-top: 17px;
-  border-top: none;
-  background: #fff;
-}
-
-.optionBtn {
-  height: 65px;
-  padding-top: 20px;
-  background: #f4f8fa;
-  border: solid 1px #eee;
-  border-bottom: none;
-}
-
-.importBtn {
-  background: url(../images/icon-import.png) no-repeat center center;
-}   
-
-.importBtn, .exportBtn {
-  float: left;
-  width: 82px;
-  height: 32px;
-  margin-left: 20px;
-  cursor: pointer;
-}
 
 
 /*导出窗口样式*/
@@ -58,8 +20,6 @@
 .menber_centernrb span{font-size:14px;background:#0cc;padding:10px 20px;cursor:pointer; border-radius:6px; text-align:center; color:#fff; line-height:32px; }
 .menber_centernrb1{width:594px;float:left; color:#999;   padding-bottom:20px; padding-left:20px; border-bottom:1px solid #ededed;}
 .menber_centernrb1 p{ color:#666; line-height:50px;}
-.menber_centernrb1 span{font-size:14px;background:#0cc;padding:5px 10px;cursor:pointer; border-radius:6px; text-align:center; color:#fff; line-height:32px;  margin-left:10px; }
-
 
 .import{ width:100%; float:left; margin-top:20px; }
 .import a{ font-size:14px;background:#fc7a52;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff;line-height:32px;float:right;}
@@ -73,7 +33,6 @@
 .succeed p{ color:#999;}
 .succeed .red{ color:#fc7a52;}
 
-.btnWrap .close{  float:right; margin-top:20px;font-size:14px;background:#ccc;padding:6px 30px;cursor:pointer; border-radius:16px; text-align:center; color:#fff; line-height:32px; float:right; }
 
 
 /* 上传文件按钮 */

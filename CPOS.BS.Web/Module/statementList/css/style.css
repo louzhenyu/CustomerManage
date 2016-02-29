@@ -1,0 +1,57 @@
+@charset "utf-8";
+body,.panel-body{overflow: hidden;}
+.contentArea{ margin: 0;}
+.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
+#leftMenu{display: none;}
+.panelMenu{width:217px;border-right: 1px; border-right: solid 1px #eee;float: left; display: block; overflow: auto;}
+.menuBody{ width:100%; margin-top: 2px;}
+.menuTitle{ background: url("../images/up.png") #1074bd no-repeat 182px center;height: 40px; padding-left: 20px; line-height: 40px; font-size: 16px; color: #fff;}
+.menuTitle.on{background-image: url("../images/down.png")}
+.menuTitle img{ margin-right: 6px;}
+.menuUl{ width:100%; display: none;}
+.menuUl li.menuLi{width:100%;white-space: nowrap; display: inline-block;  line-height: 45px; padding-left: 45px; text-align: left; font-size: 15px; cursor: pointer;}
+.menuUl li.menuLi ul{ width: 100%; display:none; float: left;}
+.menuUl li.menuLi ul.show{ display:inline-block;}
+.menuUl li.menuLi li{padding-left: 15px;font-size: 15px; cursor: pointer; width: 100%;white-space: nowrap; float: left; display: block;}
+.icon{ color: #a2b7be; background: url("../images/001.png") no-repeat left center; padding-left: 24px; line-height:45px;float: left;}
+.icon.on{ color: #1074bd; background-image: url("../images/001Hover.png");}
+
+.menuUl a:hover{ color: #a2b7be;}
+.icon_Add {background-image: url("../images/pause1.png");}
+.icon_Add.on {background-image: url("../images/pause1.png");}
+.show .icon_Add {background-image: url("../images/pause.png");}
+.show .icon_Add.on {background-image: url("../images/pause.png");}
+
+.icon_a {background-image: url("../images/001.png");}
+.icon_a.on {background-image: url("../images/001Hover.png");}
+.icon_b {background-image: url("../images/002.png");}
+.icon_b.on {background-image: url("../images/002Hover.png");}
+.icon_c {background-image: url("../images/003.png");}
+.icon_c.on{background-image: url("../images/003Hover.png");}
+.icon_d {background-image: url("../images/004.png");}
+.icon_d.on {background-image: url("../images/004Hover.png");}
+.icon_e {background-image: url("../images/005.png");}
+.icon_e.on{background-image: url("../images/005Hover.png");}
+.icon_f {background-image: url("../images/006.png");}
+.icon_f.on {background-image: url("../images/006Hover.png");}
+#tabPanel{float: left;}
+
+/**重构默认tab样式**/
+.tabs{ background-color: #ebebeb; border-color: #00CCCC;}
+.tabs li{line-height: 34px;/* height: 32px; */}
+.tabs li a.tabs-close{ background:url("../images/close.png") right center no-repeat; }
+
+.tabs li.tabs-selected a.tabs-close{ background:url("../images/closeon.png") right center no-repeat; }
+.tabs li a.tabs-inner{ border-radius: 6px 6px 0 0; -moz-border-radius-topleft:6px; height: 32px; line-height: 32px; border:none; background-color: #f8f8f8; color:#b0b0b0 }
+.tabs li a.tabs-inner{ display: inline-block; padding-right: 20px;}
+.tabs li.tabs-selected a.tabs-inner{
+    color: #1074bd;
+    border: solid #1074bd 1px;
+    border-bottom-color: #ededed;
+    height: 33px;
+}
+.tabs-p-tool a:hover, .tabs li a:hover.tabs-close, .tabs-scroller-over{
+    background-color: #f8f8f8;
+}
+.tabs li a.tabs-inner:hover{  background-color: #f8f8f8; color: #1074bd}
+.loading{ position: absolute; top:200px;left: 200px; display:none;}

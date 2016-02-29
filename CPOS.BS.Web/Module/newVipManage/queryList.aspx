@@ -19,15 +19,15 @@
                     </form>
                     <form id="seach">
                     <div class="commonSelectWrap">
-                     <em class="tit">会员编号</em>
+                     <em class="tit">会员编号：</em>
                     <div class="searchInput"><input type="text" name="VipCardCode"  placeholder="请输入卡号" value=""/> </div>
 </div><!--commonSelectWrap-->
                      <div class="commonSelectWrap">
-                      <em class="tit">会员姓名</em>
+                      <em class="tit">会员姓名：</em>
                      <div class="searchInput"><input type="text"  name="VipName" placeholder="请输入姓名/昵称" value=""/> </div>
  </div><!--commonSelectWrap-->
                       <div class="commonSelectWrap">
-                       <em class="tit">手机号</em>
+                       <em class="tit">手机号：</em>
                       <div class="searchInput"><input type="text"  name="Phone" placeholder="请输入手机号" value=""/> </div>
   </div><!--commonSelectWrap-->
                     </form>
@@ -69,7 +69,7 @@
 
 			            <div class="qb_member">
                             <div id="step1" class="member step">
-                                <div class="menber_title"><img src="images/lc_1.png" /></div>
+                                <div class="menber_title"><img src="images/lc_1.jpg" /></div>
                                 <div class="menber_center">
                                     <div class="menber_centernr">
                                         <div class="menber_centernrt">
@@ -94,7 +94,7 @@
                             </div>
 
                              <div id="step2"  class="member step" style="display:none">
-                                <div class="menber_title"><img src="images/lc_2.png" /></div>
+                                <div class="menber_title"><img src="images/lc_2.jpg" /></div>
                                     <div class="menber_center">
                                         <div class="menber_centernr">
                                             <div class="memberloading">导入中...</div>
@@ -108,13 +108,13 @@
 
 
                             <div id="step3"  class="member step" style="display:none">
-                                <div class="menber_title"><img src="images/lc_3.png" /></div>
+                                <div class="menber_title"><img src="images/lc_3.jpg" /></div>
                                 <div class="menber_center">
                                     <div class="menber_centernr">
                                         <div class="succeed">导入完成<p>共<span id="inputTotalCount" class="inputCount"> 0</span> 条，成功导入<span  id="inputErrCount" class="red inputCount"> 0</span> 条</p></div>
                                         <div class="menber_centernrb1">
                 	                        下载错误报告，查看失败原因
-                                            <p><a id="error_report" href="javascipt:void(0)">error_report.xlsx<span class="commonBtn w100">选择文件</span></a></p>
+                                            <p><a id="error_report" href="javascipt:void(0)">error_report.xlsx</a><span class="commonBtn w100">选择文件</span></p>
                     
                                         </div>
         	                        </div>

@@ -15,9 +15,9 @@
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
-                <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
-                   <div class="moreQueryWrap">
-                       <div class="commonBtn " data-flag="add">新增卡类型</div>
+                <div class="" id="simpleQuery" style="display: inline-block; width: 100%;">
+                   <div class="optionBtn">
+                       <div class="commonBtn icon icon_add w110 r" data-flag="add">新增卡类型</div>
                    </div>
 
 
