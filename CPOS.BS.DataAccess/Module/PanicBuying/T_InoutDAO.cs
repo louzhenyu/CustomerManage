@@ -347,8 +347,8 @@ namespace JIT.CPOS.BS.DataAccess
             sql.Append(" select distinct a.unit_id  from vw_unit_level a inner join T_User_Role b");
             sql.Append(" on a.path_unit_id like '%' +b.unit_id + '%' and (isnull(@pUserId,'') = '' or b.user_id = @pUserId) and a.customer_id = @pCustomerId");
 
-            sql.Append(" select * from (");
-            sql.Append(" select row_number() over(order by a.create_time desc) _row,");
+            sql.Append(" select DISTINCT * from (");
+            sql.Append(" select dense_rank() over(order by a.create_time desc) _row,");
             sql.Append(" a.order_id,a.order_no,isnull(a.Field8,'0') as DeliveryTypeId,a.create_time OrderDate,");
             sql.Append(" a.status_desc OrderStatusDesc,c.vipName as VipName,create_time,");
             sql.Append(" a.status OrderStatus,isnull(a.total_qty,0) TotalQty,isnull(a.total_retail,0) TotalAmount,total_amount");//total_retail是商品零售价，total_amount才是总额
@@ -359,7 +359,7 @@ namespace JIT.CPOS.BS.DataAccess
 ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
 as CollectIncome");
             sql.Append(" from t_inout a inner join #tmp b");
-            sql.Append(" on a.sales_unit_id = b.unit_id ");
+            sql.Append(" on (a.sales_unit_id = b.unit_id or a.purchase_unit_id=b.unit_id ) ");
             sql.Append(" left join vip c on a.vip_no = c.vipId");
             sql.AppendFormat(" where a.status not in( '-1' ) and field7 <> 0 and field7<>-99 and (isnull('{0}','')='' or order_id like '%{0}%' )", orderId);
             //, '700','800'

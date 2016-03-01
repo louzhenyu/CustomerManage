@@ -46,7 +46,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                             //AddData.MessageID = System.Guid.NewGuid();
                             AddData.ActivityID = new Guid(para.ActivityID);
                             AddData.TemplateID =new Guid();
-                            AddData.MessageType = item.MessageType;
+                            AddData.MessageType = item.MessageType.Trim();
                             AddData.Content = item.Content == null ? "" : item.Content;
                             AddData.SendTime = Convert.ToDateTime(item.SendTime);
                             AddData.CustomerID = loggingSessionInfo.ClientID;

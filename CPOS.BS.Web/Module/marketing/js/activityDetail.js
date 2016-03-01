@@ -83,6 +83,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                       };
 
                       $(select).find(".templatePanel:last").removeClass("borderNone");
+                      debugger;
                       var html = bd.template('tpl_addMessage', {item: messageInfo});
                       $(select).append(html);
                       $(select).find(".templatePanel:last").addClass("borderNone");
@@ -594,7 +595,8 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                                var  select= "#"+type;
                                $(select).find(".templatePanel:last").removeClass("borderNone");
                                 filed["day"]= $.util.GetDateDiff (window.StartTime,new Date(filed.SendTime).format("yyyy-MM-dd"),"day");
-                               filed["hour"]=new Date(filed.SendTime).format("hh");
+                                filed["hour"] = new Date(filed.SendTime).format("hh");
+                                debugger;
                                var html=bd.template('tpl_addMessageExit',{item:filed});
                                $(select).append(html);
                                if(filed.MessageID) { //如果有单条消息的删除 IsEnable	Bool	是否启用（True：启用，false不启用）

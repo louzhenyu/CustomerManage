@@ -101,7 +101,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                                                   select new ActivityMessageInfo()
                                                   {
                                                       MessageID = u.MessageID.Value.ToString(),
-                                                      MessageType = u.MessageType,
+                                                      MessageType = u.MessageType.Trim(),
                                                       TemplateID = u.TemplateID.Value.ToString(),
                                                       Content = u.Content,
                                                       SendTime = u.SendTime == null ? "" : u.SendTime.Value.ToString()

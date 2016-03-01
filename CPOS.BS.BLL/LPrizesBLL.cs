@@ -280,8 +280,10 @@ namespace JIT.CPOS.BS.BLL
 
                 if (contactEvent != null)
                 {
-                    
+                   
 
+                    
+                    
                     var entityPrize = bllPrize.GetPrizesByEventId(contactEvent.ContactEventId.ToString()).FirstOrDefault();
 
                     var bllPrizePool = new LPrizePoolsBLL(CurrentUserInfo);
@@ -407,6 +409,27 @@ namespace JIT.CPOS.BS.BLL
                             bllEventsVipObject.Create(entityEventsVipObject, null);
                         }
                     }
+                    LLotteryLogBLL bllLottery = new LLotteryLogBLL(this.CurrentUserInfo);
+                    LLotteryLogEntity lotteryEntity = bllLottery.GetByID(contactEvent.ContactEventId);
+                    if (lotteryEntity != null)
+                    {
+                        lotteryEntity.LotteryCount = lotteryEntity.LotteryCount + 1;
+                        bllLottery.Update(lotteryEntity, false);
+                    }
+                    else
+                    {
+                        lotteryEntity = new LLotteryLogEntity()
+                        {
+                            LogId = Guid.NewGuid().ToString(),
+                            VipId = strVipId,
+                            EventId = contactEvent.ContactEventId.ToString(),
+                            LotteryCount = 1,
+                            IsDelete = 0
+
+                        };
+                        bllLottery.Create(lotteryEntity);
+                    }
+
                     entityPrizeWinner = new LPrizeWinnerEntity()
                     {
                         PrizeWinnerID = Guid.NewGuid().ToString(),

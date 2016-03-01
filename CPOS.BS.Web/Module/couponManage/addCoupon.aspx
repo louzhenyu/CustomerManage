@@ -73,7 +73,7 @@
                 </div> <!--panlDivEnd-->
                 <div class="panlDiv panltext">
                 <div class="commonSelectWrap">
-                    <em class="tit w120">使用限制:</em>
+                    <em class="tit w120">使用限制：</em>
 
                      <div class="searchInput bordernone whauto">
                             <div class="checkBox l" data-flag="ConditionValue" ><em></em></div> <div class="linetext">购买商品满<input id="ConditionValue" name="ConditionValue" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" value="0" /><span>元 可使用</span></div>
@@ -86,7 +86,7 @@
                 <div class="panlDiv bordernone">
 
                    <div class="commonSelectWrap">
-                           <em class="tit w120">适用类型:</em>
+                           <em class="tit w120">适用类型：</em>
                            <div class="searchInput bordernone whauto">
                               <select id="applicationType" class="easyui-combobox" data-options="width:160,height:32"  style="width:160px;"></select>
 
@@ -116,7 +116,7 @@
                    </div>
 					
                    <div class="listTable toggClass">
-                     <div class="easyui-datagrid" style="width:640px;height:250px" data-options="title:'已选门店',fitColumns:true,singleSelect:true"></div>
+                     <div class="easyui-datagrid" style="width:640px;height:250px;" data-options="title:'已选门店',fitColumns:true,singleSelect:true"></div>
                    </div>
 
 

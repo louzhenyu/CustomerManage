@@ -179,7 +179,7 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         </div>
              <div class="class">
             <div class="classify">忠诚度</div>
-            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=717">积分/返现设置</a></span></div>
+            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=717">积分设置</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=1396">返现设置</a></span></div>
         </div>
              <div class="class">
             <div class="classify">大数据</div>

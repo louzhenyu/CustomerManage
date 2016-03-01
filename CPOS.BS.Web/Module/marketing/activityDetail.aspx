@@ -417,7 +417,7 @@
                                             <div class="commonBtn" style="display: none" >
                                                 选择模板</div>
                                             <div class="text">
-                                                <textarea  class="easyui-validatebox" data-options="validType:'maxLength[50]'"><#=item.Content#></textarea>
+                                                <textarea  class="easyui-validatebox" data-options="validType:'maxLength[50]'" placeholder="<#=item.type=='SMS'?'短信长度为66个字，标点符号、汉字、英文字母等都各算一个字。':'微信群发消息长度为600个字，标点符号、汉字、英文字母等都各算一个字。'#>"><#=item.Content#></textarea>
                                             </div>
                                         </div>
                                         <!--panelDiv-->
@@ -487,10 +487,11 @@
                                                 <!--selectBox-->
                                             </div>
                                             <!--commonSelectWrap-->
+                                             <div class="deletebtn " >删除</div>
                                             <div class="commonBtn" style="display: none" >
                                                 选择模板</div>
                                             <div class="text">
-                                                <textarea  class="easyui-validatebox" data-options="validType:'maxLength[50]'"><#=item.Content#></textarea>
+                                                <textarea  class="easyui-validatebox" data-options="validType:'maxLength[50]'"  placeholder="<#=item.MessageType=='SMS'?'短信长度为66个字，标点符号、汉字、英文字母等都各算一个字。':'微信群发消息长度为600个字，标点符号、汉字、英文字母等都各算一个字。'#>"><#=item.Content#></textarea>
                                             </div>
                                         </div>
                                         <!--panelDiv-->
