@@ -222,6 +222,8 @@
                     }
                    page.params[filed.name] = filed.value
                 });
+
+                $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
                 that.renderTable();
 			});
 

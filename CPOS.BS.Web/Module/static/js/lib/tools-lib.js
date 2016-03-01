@@ -164,7 +164,7 @@
 				},
 				success: null,
 				error: function (XMLHttpRequest, textStatus, errorThrown){
-
+                    $.util.isLoading(true);
 				}
 			};
 
@@ -221,6 +221,7 @@
             } else {
                 param.success(data);
                 $.util.isLoading(true);
+                $(".loading").hide();
             }
 
 
@@ -249,7 +250,7 @@
            },
            success: null,
            error: function (XMLHttpRequest, textStatus, errorThrown){
-
+               $.util.isLoading(true);
            }
        };
        $.extend(_param,param);
@@ -303,6 +304,7 @@
             } else {
                 param.success(data);
                 $.util.isLoading(true);
+                $(".loading").hide();
             }
 
 

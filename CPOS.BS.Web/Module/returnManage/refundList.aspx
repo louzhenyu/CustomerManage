@@ -66,7 +66,7 @@
                         <div class="dataTable" id="dataTable">
                           <div  class="loading">
                                    <span>
-                                 <img src="../static/images/loading.gif"></span>
+                                 <img src="../static/images/loading.gif" style="  padding-top: 50px;"></span>
                             </div>
                         </div>
 

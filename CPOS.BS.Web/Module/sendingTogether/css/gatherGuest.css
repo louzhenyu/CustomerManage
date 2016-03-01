@@ -2,7 +2,7 @@
 
 
 
-.listBtn{height:59px;line-height:58px;padding-left:30px;float:left;cursor:pointer;color:#999;font-size:14px;margin-right:25px;background:url(../../styles/images/newYear/radio.png) no-repeat left center;}
+.listBtn{height:59px;line-height:58px;padding-left:30px;float:left;cursor:pointer;color:#666666;font-size:14px;margin-right:25px;background:url(../../styles/images/newYear/radio.png) no-repeat left center;}
 .listBtn.show{background:url(../../styles/images/newYear/radioOn.png) no-repeat left center;}
 .submitBtn {margin: 0 auto;border-radius: 32px; width: 100px; height: 36px; line-height: 36px;}
 .panlDiv{border-bottom: 1px solid #d0d5d8;width: 100%; float: left;padding:10px 10px 15px 0px}
@@ -20,7 +20,7 @@
 .panlDiv .commonSelectWrap .tit .checkBox{float: right}
 .pl_45{padding-left:45px;}
 /*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
-.panlDiv   .explain{padding-left:50px;color:#fe2222;font-size:12px;font-family:"黑体";background:url(../images/icon-tips.png) no-repeat left center;}
+.panlDiv   .explain{padding-left:50px;color:#fe2222;font-size:12px;background:url(../images/icon-tips.png) no-repeat left center;}
 .panlDiv .lineH30{ line-height: 30px;}
 .Wrap{ display: none;}
 .bordernone{ border: none;}

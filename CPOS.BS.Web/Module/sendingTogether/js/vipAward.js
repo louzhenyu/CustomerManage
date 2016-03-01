@@ -147,6 +147,7 @@
             var that = this;
             this.loadData.args.PageIndex = currentPage;
 
+            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             that.renderTable();
 
         },
@@ -187,6 +188,8 @@
                 $.each(fileds,function(index,filed){
                   that.loadData.seach[filed.name] = filed.value;
                 });
+
+                $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
                 that.renderTable();
 			});
 
