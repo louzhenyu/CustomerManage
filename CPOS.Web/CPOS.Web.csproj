@@ -1113,6 +1113,7 @@
     <Content Include="ApplicationInterface\AllWin\RetailTrader.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewApp.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewWXGateway.ashx" />
+    <Content Include="ApplicationInterface\AllWin\Sales.ashx" />
     <None Include="HtmlApp\Demo\images\Thumbs.db" />
     <None Include="HtmlApp\LJ\images\Thumbs.db" />
     <Content Include="log4net.config">
@@ -2145,6 +2146,9 @@
     <Compile Include="ApplicationInterface\ActionHandlerFactory.cs" />
     <Compile Include="ApplicationInterface\AllWin\RetailTrader.ashx.cs">
       <DependentUpon>RetailTrader.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\AllWin\Sales.ashx.cs">
+      <DependentUpon>Sales.ashx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\AllWin\SellUser.ashx.cs">
       <DependentUpon>SellUser.ashx</DependentUpon>
