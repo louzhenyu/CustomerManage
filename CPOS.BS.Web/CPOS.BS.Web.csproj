@@ -701,6 +701,23 @@
     <Content Include="Module\AppConfig\plugin\template.js" />
     <Content Include="Module\AppConfig\plugin\touchslider.js" />
     <Content Include="Module\AppConfig\QueryList.aspx" />
+    <Content Include="Module\bargainManage\addCommodity.aspx" />
+    <Content Include="Module\bargainManage\css\addCoupon.css" />
+    <Content Include="Module\bargainManage\css\style.css" />
+    <Content Include="Module\bargainManage\images\add.png" />
+    <Content Include="Module\bargainManage\images\addstr.png" />
+    <Content Include="Module\bargainManage\images\addstr1.png" />
+    <Content Include="Module\bargainManage\images\del.png" />
+    <Content Include="Module\bargainManage\images\delicon.png" />
+    <Content Include="Module\bargainManage\images\Download.png" />
+    <Content Include="Module\bargainManage\images\duihao.png" />
+    <Content Include="Module\bargainManage\images\end.png" />
+    <Content Include="Module\bargainManage\images\iconDel.png" />
+    <Content Include="Module\bargainManage\images\radio.png" />
+    <Content Include="Module\bargainManage\images\radioOn.png" />
+    <Content Include="Module\bargainManage\js\addBargin.js" />
+    <Content Include="Module\bargainManage\js\queryList.js" />
+    <Content Include="Module\bargainManage\QueryList.aspx" />
     <Content Include="Module\Basic\ItemCategoryNew\Controller\ItemCategoryManagementCtl.js" />
     <Content Include="Module\Basic\ItemCategoryNew\ItemCategoryManagement.aspx" />
     <Content Include="Module\Basic\ItemCategoryNew\Model\ItemCategoryVM.js" />
@@ -738,70 +755,15 @@
     <Content Include="Module\chainCloudOrder\js\queryList.js" />
     <Content Include="Module\chainCloudOrder\orderDetail.aspx" />
     <Content Include="Module\chainCloudOrder\QueryList.aspx" />
-    <Content Include="Module\College\CommRes\css\reset-pc.css" />
-    <Content Include="Module\College\CommRes\css\style.css" />
-    <Content Include="Module\College\CommRes\images\commonMenuBg.png" />
-    <Content Include="Module\College\CommRes\images\dateIcon.png" />
-    <Content Include="Module\College\CommRes\images\delIcon.png" />
-    <Content Include="Module\College\CommRes\images\downIcon.png" />
-    <Content Include="Module\College\CommRes\images\editIcon.png" />
-    <Content Include="Module\College\CommRes\images\getBack.png" />
-    <Content Include="Module\College\CommRes\images\h-menu001.png" />
-    <Content Include="Module\College\CommRes\images\h-menu002.png" />
-    <Content Include="Module\College\CommRes\images\h-menu003.png" />
-    <Content Include="Module\College\CommRes\images\h-menu004.png" />
-    <Content Include="Module\College\CommRes\images\h-menu005.png" />
-    <Content Include="Module\College\CommRes\images\h-menu006.png" />
-    <Content Include="Module\College\CommRes\images\h-menu007.png" />
-    <Content Include="Module\College\CommRes\images\hintClose.png" />
-    <Content Include="Module\College\CommRes\images\loading.gif" />
-    <Content Include="Module\College\CommRes\images\logo.png" />
-    <Content Include="Module\College\CommRes\images\menu001.png" />
-    <Content Include="Module\College\CommRes\images\menu002.png" />
-    <Content Include="Module\College\CommRes\images\menu003.png" />
-    <Content Include="Module\College\CommRes\images\menu004.png" />
-    <Content Include="Module\College\CommRes\images\menu005.png" />
-    <Content Include="Module\College\CommRes\images\menu006.png" />
-    <Content Include="Module\College\CommRes\images\menu007.png" />
-    <Content Include="Module\College\CommRes\images\minArr.png" />
-    <Content Include="Module\College\CommRes\images\moreQuery.png" />
-    <Content Include="Module\College\CommRes\images\mustIcon.png" />
-    <Content Include="Module\College\CommRes\images\nav01.png" />
-    <Content Include="Module\College\CommRes\images\nav02.png" />
-    <Content Include="Module\College\CommRes\images\nav03.png" />
-    <Content Include="Module\College\CommRes\images\on-checkIcon.png" />
-    <Content Include="Module\College\CommRes\images\on-menu001.png" />
-    <Content Include="Module\College\CommRes\images\on-menu002.png" />
-    <Content Include="Module\College\CommRes\images\on-menu003.png" />
-    <Content Include="Module\College\CommRes\images\on-menu004.png" />
-    <Content Include="Module\College\CommRes\images\on-menu005.png" />
-    <Content Include="Module\College\CommRes\images\on-menu006.png" />
-    <Content Include="Module\College\CommRes\images\on-menu007.png" />
-    <Content Include="Module\College\CommRes\images\on-nav001.png" />
-    <Content Include="Module\College\CommRes\images\qr-tip-bg.png" />
-    <Content Include="Module\College\CommRes\images\qrIcon.png" />
-    <Content Include="Module\College\CommRes\images\radio1.png" />
-    <Content Include="Module\College\CommRes\images\radio2.png" />
-    <Content Include="Module\College\CommRes\images\radio3.png" />
-    <Content Include="Module\College\CommRes\images\seeIcon02.png" />
-    <Content Include="Module\College\CommRes\images\selectIcon02.png" />
-    <Content Include="Module\College\CommRes\images\set-tip-bg.png" />
-    <Content Include="Module\College\CommRes\images\tableImg.png" />
-    <Content Include="Module\College\CommRes\images\userIcon.png" />
-    <Content Include="Module\College\CommRes\js\mainNew.js" />
-    <Content Include="Module\College\CommRes\UploadImg.aspx" />
-    <Content Include="Module\College\Micro\js\NumberList.js" />
-    <Content Include="Module\College\Micro\js\NumberNewMap.js" />
-    <Content Include="Module\College\Micro\js\NumberTypeMap.js" />
-    <Content Include="Module\College\Micro\NumberList.aspx" />
-    <Content Include="Module\College\Micro\NumberNewMap.aspx" />
-    <Content Include="Module\College\Micro\NumberTypeMap.aspx" />
-    <Content Include="Module\College\News\js\NewsEdit.js" />
-    <Content Include="Module\College\News\js\NewsList.js" />
-    <Content Include="Module\College\News\js\NewsType.js" />
-    <Content Include="Module\College\News\NewsEdit.aspx" />
-    <Content Include="Module\College\News\NewsList.aspx" />
-    <Content Include="Module\College\News\NewsType.aspx" />
+    <Content Include="Module\changePWD\changePwd.html" />
+    <Content Include="Module\changePWD\js\bdTemplate.js" />
+    <Content Include="Module\changePWD\js\jquery-1.8.3.min.js" />
+    <Content Include="Module\changePWD\js\jquery.easyui.min.js" />
+    <Content Include="Module\changePWD\js\queryList.js" />
+    <Content Include="Module\changePWD\js\tools-lib.js" />
+    <Content Include="Module\changePWD\QueryList.aspx" />
+    <Content Include="Module\CollegeNews\images\selectIcon02.png" />
+    <Content Include="Module\CollegeNews\NewsList.aspx" />
     <Content Include="Module\commodity\Category.aspx" />
     <Content Include="Module\commodity\commodityExit.aspx" />
     <Content Include="Module\commodity\css\release.css" />
@@ -885,6 +847,11 @@
     <Content Include="Module\CustomerBasicSetting\Model\CustomerBasicSettingVM.js" />
     <Content Include="Module\CustomerBasicSetting\Store\CustomerBasicSettingVMStore.js" />
     <Content Include="Module\CustomerBasicSetting\View\CustomerBasicSetting.js" />
+    <Content Include="Module\CustomerBasicSet\css\style.css" />
+    <Content Include="Module\CustomerBasicSet\images\imgDefault.png" />
+    <Content Include="Module\CustomerBasicSet\images\tips.png" />
+    <Content Include="Module\CustomerBasicSet\js\queryList.js" />
+    <Content Include="Module\CustomerBasicSet\queryList.aspx" />
     <Content Include="Module\CustomerPageConfig\css\style.css" />
     <Content Include="Module\CustomerPageConfig\css\style3.css" />
     <Content Include="Module\CustomerPageConfig\images\check01.png" />
@@ -952,6 +919,11 @@
     <Content Include="Module\EMMLManage\js\userList.js" />
     <Content Include="Module\EMMLManage\Sample.aspx" />
     <Content Include="Module\EMMLManage\StaffEdit.aspx" />
+    <Content Include="Module\expressManage\css\style.css" />
+    <Content Include="Module\expressManage\images\delete.png" />
+    <Content Include="Module\expressManage\images\exit.png" />
+    <Content Include="Module\expressManage\js\queryList.js" />
+    <Content Include="Module\expressManage\queryList.aspx" />
     <Content Include="Module\FormConfig\css\style.css" />
     <Content Include="Module\FormConfig\FormEdit.aspx" />
     <Content Include="Module\FormConfig\FormList.aspx" />
@@ -1020,6 +992,51 @@
     <Content Include="Module\holidayManage\css\style.css" />
     <Content Include="Module\holidayManage\js\queryList.js" />
     <Content Include="Module\holidayManage\queryList.aspx" />
+    <Content Include="Module\homeIndex\css\style.css" />
+    <Content Include="Module\homeIndex\images\allcolor.png" />
+    <Content Include="Module\homeIndex\images\blackcolor.png" />
+    <Content Include="Module\homeIndex\images\canel.png" />
+    <Content Include="Module\homeIndex\images\close.png" />
+    <Content Include="Module\homeIndex\images\images4\01.png" />
+    <Content Include="Module\homeIndex\images\images4\02.png" />
+    <Content Include="Module\homeIndex\images\images4\03.png" />
+    <Content Include="Module\homeIndex\images\images4\04.png" />
+    <Content Include="Module\homeIndex\images\images4\hdzqIcon.png" />
+    <Content Include="Module\homeIndex\images\images4\indexBg.jpg" />
+    <Content Include="Module\homeIndex\images\images4\indexBg1.jpg" />
+    <Content Include="Module\homeIndex\images\images4\indexBg2.jpg" />
+    <Content Include="Module\homeIndex\images\images4\indexBg3.jpg" />
+    <Content Include="Module\homeIndex\images\images4\logoIcon.png" />
+    <Content Include="Module\homeIndex\images\images4\xkzsIcon.png" />
+    <Content Include="Module\homeIndex\images\images4\zxdtIcon.png" />
+    <Content Include="Module\homeIndex\images\mark.png" />
+    <Content Include="Module\homeIndex\images\phoneBg.png" />
+    <Content Include="Module\homeIndex\images\select.png" />
+    <Content Include="Module\homeIndex\images\slash.png" />
+    <Content Include="Module\homeIndex\images\special\europe\h_location.png" />
+    <Content Include="Module\homeIndex\images\special\europe\h_sinaweibo.png" />
+    <Content Include="Module\homeIndex\images\special\europe\h_tel.png" />
+    <Content Include="Module\homeIndex\images\special\europe\h_user.png" />
+    <Content Include="Module\homeIndex\images\special\europe\menuBtn.png" />
+    <Content Include="Module\homeIndex\images\special\europe\nav001.png" />
+    <Content Include="Module\homeIndex\images\special\europe\nav002.png" />
+    <Content Include="Module\homeIndex\images\special\europe\nav003.png" />
+    <Content Include="Module\homeIndex\images\special\europe\nav004.png" />
+    <Content Include="Module\homeIndex\images\special\europe\nav01.png" />
+    <Content Include="Module\homeIndex\images\special\europe\nav02.png" />
+    <Content Include="Module\homeIndex\images\special\europe\nav03.png" />
+    <Content Include="Module\homeIndex\images\special\europe\nav04.png" />
+    <Content Include="Module\homeIndex\images\special\indexBG.jpg" />
+    <Content Include="Module\homeIndex\images\special\indexBg1.jpg" />
+    <Content Include="Module\homeIndex\images\special\indexBg2.jpg" />
+    <Content Include="Module\homeIndex\images\special\indexBg3.jpg" />
+    <Content Include="Module\homeIndex\images\writecolor.png" />
+    <Content Include="Module\homeIndex\js\alice.min.js" />
+    <Content Include="Module\homeIndex\js\iscroll.js" />
+    <Content Include="Module\homeIndex\js\queryList.js" />
+    <Content Include="Module\homeIndex\js\tempModel.js" />
+    <Content Include="Module\homeIndex\QueryList.aspx" />
+    <Content Include="Module\homeIndex\queryList.html" />
     <Content Include="Module\Index\browserDown.html" />
     <Content Include="Module\Index\css\IndexPage.css" />
     <Content Include="Module\Index\images\arms.png" />
@@ -1153,6 +1170,62 @@
     <Content Include="Module\PayMent\View\PayMentListView.js" />
     <Content Include="Module\PayMent\View\PayMentView.js" />
     <Content Include="Module\PayMent\View\PayMentWapView.js" />
+    <Content Include="Module\QuestionnaireNews\css\QuestionnaireDetail.css" />
+    <Content Include="Module\QuestionnaireNews\css\QuestionnaireInforDetail.css" />
+    <Content Include="Module\QuestionnaireNews\css\style.css" />
+    <Content Include="Module\QuestionnaireNews\images\1.png" />
+    <Content Include="Module\QuestionnaireNews\images\1_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\2.png" />
+    <Content Include="Module\QuestionnaireNews\images\2_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\3.png" />
+    <Content Include="Module\QuestionnaireNews\images\3_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\4.png" />
+    <Content Include="Module\QuestionnaireNews\images\4_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\5.png" />
+    <Content Include="Module\QuestionnaireNews\images\5_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\6.png" />
+    <Content Include="Module\QuestionnaireNews\images\6_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\add.png" />
+    <Content Include="Module\QuestionnaireNews\images\allcolor.png" />
+    <Content Include="Module\QuestionnaireNews\images\blackcolor.png" />
+    <Content Include="Module\QuestionnaireNews\images\bm.png" />
+    <Content Include="Module\QuestionnaireNews\images\bm_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\cs.png" />
+    <Content Include="Module\QuestionnaireNews\images\cs_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\del.png" />
+    <Content Include="Module\QuestionnaireNews\images\delwhite.png" />
+    <Content Include="Module\QuestionnaireNews\images\editIcon.png" />
+    <Content Include="Module\QuestionnaireNews\images\EndPage.png" />
+    <Content Include="Module\QuestionnaireNews\images\enlarge.png" />
+    <Content Include="Module\QuestionnaireNews\images\hintClose.png" />
+    <Content Include="Module\QuestionnaireNews\images\icon-export.png" />
+    <Content Include="Module\QuestionnaireNews\images\leftJiantou.png" />
+    <Content Include="Module\QuestionnaireNews\images\ModelType1.png" />
+    <Content Include="Module\QuestionnaireNews\images\ModelType1_on.png" />
+    <Content Include="Module\QuestionnaireNews\images\ModelType2.png" />
+    <Content Include="Module\QuestionnaireNews\images\ModelType2_on.png" />
+    <Content Include="Module\QuestionnaireNews\images\move.png" />
+    <Content Include="Module\QuestionnaireNews\images\optionbgcolor.png" />
+    <Content Include="Module\QuestionnaireNews\images\slash.png" />
+    <Content Include="Module\QuestionnaireNews\images\StartBG.png" />
+    <Content Include="Module\QuestionnaireNews\images\test.png" />
+    <Content Include="Module\QuestionnaireNews\images\tp.png" />
+    <Content Include="Module\QuestionnaireNews\images\tp_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\upJiantou.png" />
+    <Content Include="Module\QuestionnaireNews\images\uploadImgBtn.png" />
+    <Content Include="Module\QuestionnaireNews\images\uploadpic.png" />
+    <Content Include="Module\QuestionnaireNews\images\wj.png" />
+    <Content Include="Module\QuestionnaireNews\images\wj_bg.png" />
+    <Content Include="Module\QuestionnaireNews\images\writecolor.png" />
+    <Content Include="Module\QuestionnaireNews\images\zswj.png" />
+    <Content Include="Module\QuestionnaireNews\js\main.js" />
+    <Content Include="Module\QuestionnaireNews\js\queryList.js" />
+    <Content Include="Module\QuestionnaireNews\js\QuestionnaireDetail.js" />
+    <Content Include="Module\QuestionnaireNews\js\QuestionnaireInforDetail.js" />
+    <Content Include="Module\QuestionnaireNews\js\标注开发版.js" />
+    <Content Include="Module\QuestionnaireNews\queryList.aspx" />
+    <Content Include="Module\QuestionnaireNews\QuestionnaireDetail.aspx" />
+    <Content Include="Module\QuestionnaireNews\QuestionnaireInforDetail.aspx" />
     <Content Include="Module\returnManage\css\detail.css" />
     <Content Include="Module\returnManage\css\style.css" />
     <Content Include="Module\returnManage\images\close.png" />
@@ -1165,6 +1238,32 @@
     <Content Include="Module\returnManage\refundList.aspx" />
     <Content Include="Module\returnManage\salesReturnDetail.aspx" />
     <Content Include="Module\returnManage\salesReturnList.aspx" />
+    <Content Include="Module\roleManagement\css\roleList.css" />
+    <Content Include="Module\roleManagement\css\style.css" />
+    <Content Include="Module\roleManagement\images\closeBtn02.png" />
+    <Content Include="Module\roleManagement\images\del.png" />
+    <Content Include="Module\roleManagement\images\delete.png" />
+    <Content Include="Module\roleManagement\images\edit.png" />
+    <Content Include="Module\roleManagement\images\icon-add.png" />
+    <Content Include="Module\roleManagement\images\icon-close-btn.png" />
+    <Content Include="Module\roleManagement\images\icon-tipBox.png" />
+    <Content Include="Module\roleManagement\images\icon-trash.png" />
+    <Content Include="Module\roleManagement\images\icon-tree01.png" />
+    <Content Include="Module\roleManagement\images\icon-tree02.png" />
+    <Content Include="Module\roleManagement\images\icon-tree03.png" />
+    <Content Include="Module\roleManagement\images\on-icon.png" />
+    <Content Include="Module\roleManagement\images\on-icon3.png" />
+    <Content Include="Module\roleManagement\images\pause.png" />
+    <Content Include="Module\roleManagement\images\radio1.png" />
+    <Content Include="Module\roleManagement\images\running.png" />
+    <Content Include="Module\roleManagement\images\商品.png" />
+    <Content Include="Module\roleManagement\js\main.js" />
+    <Content Include="Module\roleManagement\js\roleList.js" />
+    <Content Include="Module\roleManagement\js\storeInfo.js" />
+    <Content Include="Module\roleManagement\js\标注开发版.js" />
+    <Content Include="Module\roleManagement\roleList.aspx" />
+    <Content Include="Module\roleManagement\storeInfo.aspx" />
+    <Content Include="Module\roleManagement\标准开发版列表.aspx" />
     <Content Include="Module\sendingTogether\css\gatherGuest.css" />
     <Content Include="Module\sendingTogether\css\sendingTogether.css" />
     <Content Include="Module\sendingTogether\distributor.aspx" />
@@ -1181,6 +1280,47 @@
     <Content Include="Module\sendingTogether\vipDeposit.aspx" />
     <Content Include="Module\sendingTogether\withdrawAward.aspx" />
     <Content Include="Module\sendingTogether\withdrawDeposit.aspx" />
+    <Content Include="Module\staffManagement\css\staffList.css" />
+    <Content Include="Module\staffManagement\css\style.css" />
+    <Content Include="Module\staffManagement\images\chenggong.png" />
+    <Content Include="Module\staffManagement\images\closeBtn02.png" />
+    <Content Include="Module\staffManagement\images\del.png" />
+    <Content Include="Module\staffManagement\images\delete.png" />
+    <Content Include="Module\staffManagement\images\edit.png" />
+    <Content Include="Module\staffManagement\images\icon-add.png" />
+    <Content Include="Module\staffManagement\images\icon-close-btn.png" />
+    <Content Include="Module\staffManagement\images\icon-export.png" />
+    <Content Include="Module\staffManagement\images\icon-import.png" />
+    <Content Include="Module\staffManagement\images\icon-pause.png" />
+    <Content Include="Module\staffManagement\images\icon-reset.png" />
+    <Content Include="Module\staffManagement\images\icon-tips.png" />
+    <Content Include="Module\staffManagement\images\icon-trash.png" />
+    <Content Include="Module\staffManagement\images\icon-tree01.png" />
+    <Content Include="Module\staffManagement\images\icon-tree02.png" />
+    <Content Include="Module\staffManagement\images\icon-tree03.png" />
+    <Content Include="Module\staffManagement\images\lc_1.jpg" />
+    <Content Include="Module\staffManagement\images\lc_1.png" />
+    <Content Include="Module\staffManagement\images\lc_2.jpg" />
+    <Content Include="Module\staffManagement\images\lc_2.png" />
+    <Content Include="Module\staffManagement\images\lc_3.jpg" />
+    <Content Include="Module\staffManagement\images\lc_3.png" />
+    <Content Include="Module\staffManagement\images\loading.gif" />
+    <Content Include="Module\staffManagement\images\on-icon.png" />
+    <Content Include="Module\staffManagement\images\on-icon3.png" />
+    <Content Include="Module\staffManagement\images\pause.png" />
+    <Content Include="Module\staffManagement\images\radio1.png" />
+    <Content Include="Module\staffManagement\images\running.png" />
+    <Content Include="Module\staffManagement\images\SelectBtn.png" />
+    <Content Include="Module\staffManagement\images\商品.png" />
+    <Content Include="Module\staffManagement\js\main.js" />
+    <Content Include="Module\staffManagement\js\staffDetail.js" />
+    <Content Include="Module\staffManagement\js\staffList.js" />
+    <Content Include="Module\staffManagement\js\storeInfo.js" />
+    <Content Include="Module\staffManagement\js\标注开发版.js" />
+    <Content Include="Module\staffManagement\staffDetail.aspx" />
+    <Content Include="Module\staffManagement\staffList.aspx" />
+    <Content Include="Module\staffManagement\storeInfo.aspx" />
+    <Content Include="Module\staffManagement\标准开发版列表.aspx" />
     <Content Include="Module\static\css\artDialog.css" />
     <Content Include="Module\static\css\artskin\aero.css" />
     <Content Include="Module\static\css\artskin\black.css" />
@@ -1462,6 +1602,33 @@
     <Content Include="Module\styles\images\qixin\bg02\on-menu002.png" />
     <Content Include="Module\styles\images\qixin\bg02\on-menu003.png" />
     <Content Include="Module\styles\images\qixin\logo.png" />
+    <Content Include="Module\TouchSpotActivityManagement\ActivityEvent.aspx" />
+    <Content Include="Module\TouchSpotActivityManagement\css\activityDetail.css" />
+    <Content Include="Module\TouchSpotActivityManagement\css\style.css" />
+    <Content Include="Module\TouchSpotActivityManagement\images\delete.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\down.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\edit.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\exit.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\get-red-btn.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\icon-add.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\icon-close-btn.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\icon-img.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\icon-log.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\icon-red.jpg" />
+    <Content Include="Module\TouchSpotActivityManagement\images\moreIcon.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\pause.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\red-bg.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\redpackBackText.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\running.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\shareBtn.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\upload.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\uploadimg.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\uploadImgBtn.png" />
+    <Content Include="Module\TouchSpotActivityManagement\images\商品.png" />
+    <Content Include="Module\TouchSpotActivityManagement\js\activiDetail.js" />
+    <Content Include="Module\TouchSpotActivityManagement\js\ActivityEvent.js" />
+    <Content Include="Module\TouchSpotActivityManagement\js\queryList.js" />
+    <Content Include="Module\TouchSpotActivityManagement\js\标注开发版.js" />
     <Content Include="Module\VipCardCenter\AllBrowser.aspx" />
     <Content Include="Module\VipCardCenter\CardManage.aspx" />
     <Content Include="Module\VipCardCenter\Consumption.aspx" />
@@ -6558,6 +6725,7 @@
     <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
     <Content Include="ApplicationInterface\Module\Order\SalesReturn\DownLoadSales.ashx" />
     <Content Include="ApplicationInterface\Module\Questionnaire\Questionnaire\DownLoadQuestionnaireInfor.ashx" />
+    <Content Include="ApplicationInterface\WXSalesRebate\Gateway.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -7596,6 +7764,9 @@
     <Compile Include="ApplicationInterface\WithdrawalAndBooking\WithdrawalGateway.ashx.cs">
       <DependentUpon>WithdrawalGateway.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\WXSalesRebate\Gateway.ashx.cs">
+      <DependentUpon>Gateway.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Base\Cookie\CookieKeyConst.cs" />
     <Compile Include="Base\Cookie\CookieManager.cs" />
     <Compile Include="Base\Excel\ExcelCommon.cs" />
@@ -8095,47 +8266,12 @@
     <Compile Include="Module\BI\WebMap.aspx.designer.cs">
       <DependentUpon>WebMap.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Module\College\CommRes\UploadImg.aspx.cs">
-      <SubType>ASPXCodeBehind</SubType>
-      <DependentUpon>UploadImg.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Module\College\CommRes\UploadImg.aspx.designer.cs">
-      <DependentUpon>UploadImg.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Module\College\Micro\NumberList.aspx.cs">
-      <DependentUpon>NumberList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Module\College\Micro\NumberList.aspx.designer.cs">
-      <DependentUpon>NumberList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Module\College\Micro\NumberNewMap.aspx.cs">
-      <DependentUpon>NumberNewMap.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Module\College\Micro\NumberNewMap.aspx.designer.cs">
-      <DependentUpon>NumberNewMap.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Module\College\Micro\NumberTypeMap.aspx.cs">
-      <DependentUpon>NumberTypeMap.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Module\College\Micro\NumberTypeMap.aspx.designer.cs">
-      <DependentUpon>NumberTypeMap.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Module\College\News\NewsList.aspx.cs">
+    <Compile Include="Module\CollegeNews\NewsList.aspx.cs">
       <DependentUpon>NewsList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Module\College\News\NewsList.aspx.designer.cs">
+    <Compile Include="Module\CollegeNews\NewsList.aspx.designer.cs">
       <DependentUpon>NewsList.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Module\College\News\NewsType.aspx.cs">
-      <DependentUpon>NewsType.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Module\College\News\NewsType.aspx.designer.cs">
-      <DependentUpon>NewsType.aspx</DependentUpon>
     </Compile>
     <Compile Include="Module\CRM\Handler\CRMHandler.ashx.cs">
       <DependentUpon>CRMHandler.ashx</DependentUpon>
@@ -8572,7 +8708,6 @@
     <Folder Include="Framework\Upload\File\" />
     <Folder Include="Module\Basic\Brand\Handler\" />
     <Folder Include="Module\Basic\Item\css\" />
-    <Folder Include="Module\College\News\images\" />
     <Folder Include="Module\Coupon\Controller\" />
     <Folder Include="Module\Coupon\Handler\" />
     <Folder Include="Module\Coupon\Model\" />

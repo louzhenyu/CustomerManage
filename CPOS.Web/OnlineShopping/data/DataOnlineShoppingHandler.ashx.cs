@@ -4186,18 +4186,22 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 }
 
                 var vipId = "";
-                var vipList = (new VipBLL(loggingSessionInfo)).QueryByEntity(new VipEntity()
-                {
-                    WeiXinUserId = reqObj.common.openId
-                }, null);
-                if (vipList != null && vipList.Length > 0) vipId = vipList[0].VIPID;
-                if (vipId == null || vipId.Length == 0)
-                {
-                    //respData.code = "2200";
-                    //respData.description = "未查询到匹配的VIP信息";
-                    //return respData.ToJSON().ToString();
-                    vipId = ToStr(reqObj.common.userId);
+                var VipData = new VipBLL(loggingSessionInfo).GetByID(reqObj.common.userId);
+                if (VipData!=null) {
+                    vipId = VipData.VIPID;
                 }
+                //var vipList = (new VipBLL(loggingSessionInfo)).QueryByEntity(new VipEntity()
+                //{
+                //    WeiXinUserId = reqObj.common.openId
+                //}, null);
+                //if (vipList != null && vipList.Length > 0) vipId = vipList[0].VIPID;
+                //if (vipId == null || vipId.Length == 0)
+                //{
+                //    //respData.code = "2200";
+                //    //respData.description = "未查询到匹配的VIP信息";
+                //    //return respData.ToJSON().ToString();
+                //    vipId = ToStr(reqObj.common.userId);
+                //}
 
                 respData.content = new getVipAddressRespContentData();
 

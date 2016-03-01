@@ -68,7 +68,7 @@
 
 				if (optType == "detail") {
 				    var mid = JITMethod.getUrlParam("mid");
-				    location.href = "/Module/QuestionnaireNews/QuestionnaireInforDetail.aspx?EventID=" + row.EventID + "&mid=" + mid;
+				    $.util.toNewUrlPath("/Module/QuestionnaireNews/QuestionnaireInforDetail.aspx?EventID=" + row.EventID + "&mid=" + mid);
 				}
 
 				if((optType=="joinprize" || optType=="winprize")  && $this.text() != '0'){
@@ -111,12 +111,12 @@
                 var $this = $(this),
 					mid = JITMethod.getUrlParam("mid");
                 var row = that.elems.tabel.datagrid('getSelected');
-				location.href = "activiDetail.aspx?EventID=" + row.EventID + "&mid=" + mid;
+                $.util.toNewUrlPath("activiDetail.aspx?EventID=" + row.EventID + "&mid=" + mid);
 			});
 			
 			//跳转创建游戏页面
 			$('#addNewGamesBtn').on('click',function(){
-				location.href = 'activiDetail.aspx?mid='+JITMethod.getUrlParam("mid");
+			    $.util.toNewUrlPath('activiDetail.aspx?mid=' + JITMethod.getUrlParam("mid"));
 			})
             
         },

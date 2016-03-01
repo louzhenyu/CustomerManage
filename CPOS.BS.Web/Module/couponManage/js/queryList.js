@@ -50,7 +50,7 @@
             });
             that.elems.operation.delegate(".commonBtn","click",function(e){
                 var mid = JITMethod.getUrlParam("mid");
-                location.href = "addCoupon.aspx?mid=" + mid;
+                $.util.toNewUrlPath("addCoupon.aspx?mid=" + mid);
             });
             /**************** -------------------弹出easyui 控件 start****************/
             var  wd=160,H=32;

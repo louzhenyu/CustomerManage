@@ -88,7 +88,7 @@
                 var mid = getUrlParam('mid') ? "&mid=" + getUrlParam('mid') : "";
                 var PMenuID = getUrlParam('PMenuID') ? "&PMenuID=" + getUrlParam('PMenuID') : "";
                 if (typeid) {
-                    window.location.href = "/Module/QuestionnaireNews/QuestionnaireDetail.aspx?type=" + typeid + mid + PMenuID;
+                    $.util.toNewUrlPath("/Module/QuestionnaireNews/QuestionnaireDetail.aspx?type=" + typeid + mid );
                 }
 
             });
@@ -145,7 +145,7 @@
                     var mid = getUrlParam('mid')?"&mid="+getUrlParam('mid'):"";
                     var PMenuID = getUrlParam('PMenuID') ? "&PMenuID=" + getUrlParam('PMenuID') : ""; 
                     if (typeid) {
-                        window.location.href = "/Module/QuestionnaireNews/QuestionnaireDetail.aspx?type=" + typeid + mid + PMenuID;
+                        $.util.toNewUrlPath("/Module/QuestionnaireNews/QuestionnaireDetail.aspx?type=" + typeid + mid );
                     } else {
                         that.submitsaveBtn = false;
                         $.messager.alert('提示', '请选择问卷类型！');
@@ -179,7 +179,8 @@
 
                 }
                 if (optType == "edit") {
-                    window.location.href = "/Module/QuestionnaireNews/QuestionnaireDetail.aspx?type=" + row.QuestionnaireType + "&mid=" + JITMethod.getUrlParam("mid") + "&QuestionnaireID=" + row.QuestionnaireID;
+                    $.util.toNewUrlPath("/Module/QuestionnaireNews/QuestionnaireDetail.aspx?type=" + row.QuestionnaireType + "&mid=" + JITMethod.getUrlParam("mid") + "&QuestionnaireID=" + row.QuestionnaireID);
+                    
                 }
 
             });

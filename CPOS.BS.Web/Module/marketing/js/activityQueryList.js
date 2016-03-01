@@ -47,7 +47,7 @@
             });
             that.elems.optionBtn.delegate(".commonBtn", "click", function (e) {
                 var mid = JITMethod.getUrlParam("mid");
-                location.href = "activityDetail.aspx?mid=" + mid;
+                $.util.toNewUrlPath("activityDetail.aspx?mid=" + mid);
             });
             /**************** -------------------初始化easyui 控件 start****************/
             var  wd=160,H=32;
@@ -133,7 +133,7 @@
                 }
                 if (optType == "exit") {
                     var mid = JITMethod.getUrlParam("mid");
-                    location.href = "activityDetail.aspx?mid=" + mid+"&ActivityID="+row.ActivityID;
+                    $.util.toNewUrlPath("activityDetail.aspx?mid=" + mid + "&ActivityID=" + row.ActivityID);
                 }
                 if(optType=="start"||optType=="end"){
                     that.loadData.operation(row,optType,function(){
@@ -302,7 +302,7 @@
                         that.elems.click=true;
                         if(rowData.Status==1||rowData.Status==2) {
                             var mid = $.util.getUrlParam("mid");
-                            location.href = "activityDetail.aspx?mid=" + mid + "&ActivityID=" + rowData.ActivityID;
+                            $.util.toNewUrlPath("activityDetail.aspx?mid=" + mid + "&ActivityID=" + rowData.ActivityID);
                         }else if(rowData.Status==3){
                             $.messager.alert("提示", "活动运行中,不可修改");
                         }else if(rowData.Status==4){
