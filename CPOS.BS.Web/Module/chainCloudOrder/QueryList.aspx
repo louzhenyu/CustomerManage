@@ -103,7 +103,7 @@
 
 
                    <div class="dataTable" id="gridTable">
-                                            <div  class="loading" style="padding-top: 50px; width: 70%">
+                                            <div  class="loading" style="padding-top: 50px;">
                                                      <span>
                                                    <img src="../static/images/loading.gif"></span>
                                               </div>

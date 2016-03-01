@@ -69,7 +69,15 @@
                 </div>
                 <div class="tableWrap" id="tableWrap" style="display:inline-block;width:100%;">
 
-                   <table class="dataTable" id="gridTable"></table>
+                   <table class="dataTable" id="gridTable">
+                         <div class="dataTable" id="dataTable">
+                          <div  class="loading">
+                                   <span>
+                                 <img src="../static/images/loading.gif"></span>
+                            </div>
+                        </div>
+
+                   </table>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager">

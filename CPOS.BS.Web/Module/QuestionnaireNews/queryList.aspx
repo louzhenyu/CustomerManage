@@ -48,7 +48,12 @@
                 
                    <div class="">
                    		<table class="dataTable" id="gridTable">
-                        	
+                        	 <div class="dataTable" id="dataTable">
+                          <div  class="loading">
+                                   <span>
+                                 <img src="../static/images/loading.gif"></span>
+                            </div>
+                        </div>
                         </table>
                    </div>
                     <div id="pageContianer">

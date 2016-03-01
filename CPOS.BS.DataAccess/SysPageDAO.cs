@@ -57,7 +57,7 @@ namespace JIT.CPOS.BS.DataAccess
                 sub.AppendFormat("and CustomerID=@CustomerID");
                 paras.Add(new SqlParameter() { ParameterName = "@CustomerID", Value = pCustomerID });
             }
-            string sql = string.Format("select * from vwPageInfo where isentrance = 1 and isdelete=0 {0}", sub);
+            string sql = string.Format("select * from vwPageInfo where isentrance = 1 and CustomerVisible = 1 and isdelete=0 {0}", sub);
             using (var rd = this.SQLHelper.ExecuteReader(CommandType.Text, sql, paras.ToArray()))
             {
                 while (rd.Read())

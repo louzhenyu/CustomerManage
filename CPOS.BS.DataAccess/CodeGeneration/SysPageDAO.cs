@@ -49,8 +49,8 @@ namespace JIT.CPOS.BS.DataAccess
         public SysPageDAO(LoggingSessionInfo pUserInfo, string connectionString)
             : base(pUserInfo)
         {
-            this.StaticConnectionString = connectionString;
-            this.SQLHelper = StaticSqlHelper;
+            //this.StaticConnectionString = connectionString;
+            //this.SQLHelper = StaticSqlHelper;
         }
         #endregion
 

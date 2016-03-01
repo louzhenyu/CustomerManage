@@ -36,7 +36,9 @@
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
                 that.setCondition();
                 //查询数据
-				that.loadData.args.PageIndex = 1;
+                that.loadData.args.PageIndex = 1;
+
+                $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
                 that.loadData.getCommodityList(function(data){
                     that.renderTable(data);
                 });
@@ -284,6 +286,8 @@
         loadMoreData: function (currentPage) {
             var that = this;
             that.loadData.args.PageIndex = currentPage;
+
+            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             that.loadData.getCommodityList(function(data){
                 that.renderTable(data);
             });

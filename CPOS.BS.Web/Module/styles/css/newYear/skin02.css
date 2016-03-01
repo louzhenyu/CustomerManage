@@ -366,7 +366,7 @@ body{overflow-x: hidden;}
 .dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
 .datebox .combo-arrow{padding-right:26px;}
 .gridLoading{display: block} /*所有需要loading的dataGrid*/
-.loading{text-align: center;position:absolute; vertical-align: middle;width: 100%;margin-top: 10px;}
+.loading{text-align: center;position:absolute; vertical-align: middle;width: 85%;margin-top: 10px;}
 .datagrid-body{position: relative;z-index: 8}
 .datagrid-body .loading{ z-index:8;}
 
