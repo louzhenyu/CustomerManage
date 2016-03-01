@@ -571,15 +571,35 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                             }
                                             if (ds != null && ds.Tables[0].Rows.Count > 0)
                                             {
-                                                //返现金额
-                                                ReturnAmount = entity.ReturnAmount = Convert.ToDecimal(ds.Tables[0].Rows[0]["ReturnAmount"].ToString());
+                                                string m_ReturnAmount = ds.Tables[0].Rows[0]["ReturnAmount"].ToString();
+                                                if (!string.IsNullOrWhiteSpace(m_ReturnAmount))
+                                                {
+                                                    //返现金额
+                                                    ReturnAmount = entity.ReturnAmount = Convert.ToDecimal(ds.Tables[0].Rows[0]["ReturnAmount"].ToString());
+                                                }
+                                                else
+                                                {
+                                                    //返现金额
+                                                    ReturnAmount = entity.ReturnAmount = 0;
+
+                                                }
                                                 //返现消息内容
                                                 PushInfo = ds.Tables[0].Rows[0]["PushInfo"].ToString();
                                             }
                                             else
                                             {
-                                                //返现金额
-                                                ReturnAmount = entity.ReturnAmount = Convert.ToDecimal(ds.Tables[1].Rows[0]["ReturnAmount"].ToString());
+                                                string m_ReturnAmountTwo = ds.Tables[1].Rows[0]["ReturnAmount"].ToString();
+                                                if (!string.IsNullOrWhiteSpace(m_ReturnAmountTwo))
+                                                {
+                                                    //返现金额
+                                                    ReturnAmount = entity.ReturnAmount = Convert.ToDecimal(ds.Tables[0].Rows[0]["ReturnAmount"].ToString());
+                                                }
+                                                else
+                                                {
+                                                    //返现金额
+                                                    ReturnAmount = entity.ReturnAmount = 0;
+
+                                                }
                                                 //返现消息内容
                                                 PushInfo = ds.Tables[1].Rows[0]["PushInfo"].ToString();
                                             }

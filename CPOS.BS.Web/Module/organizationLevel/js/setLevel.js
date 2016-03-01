@@ -1,6 +1,6 @@
-define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','kindeditor'],function($){
+define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager'],function($){
     //上传图片
-    KE = KindEditor;
+    //KE = KindEditor;,'kindeditor'
     var page = {
         elems: {
             optPanel:$("#optPanel"), //页面的顶部li

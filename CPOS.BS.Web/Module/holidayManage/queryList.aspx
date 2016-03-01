@@ -18,7 +18,7 @@
                 
                 <div class="tableWrap" id="tableWrap">
                      <div class="optionBtn" data-opttype="staus">
-                                         <div class="commonBtn icon w100  icon_add"  data-flag="add" data-showstaus="1" >添加假日</div>
+                                         <div class="commonBtn icon w100  icon_add r"  data-flag="add" data-showstaus="1" >添加假日</div>
                                          <!-- <div class="commonBtn" data-status="2" data-showstaus="1,3,4,5"  >取消申请</div>-->
 
 

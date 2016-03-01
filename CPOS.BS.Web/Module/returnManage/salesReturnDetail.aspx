@@ -14,7 +14,7 @@
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
-                <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
+                <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;padding: 0px;min-height: 60px;border-bottom: 1px solid #e1e7ea;">
                      <div class="optionBtn " style="display: none"  data-opttype="staus">
                      <div class="commonBtn icon" data-status="1"  data-showstaus="1,3" >审核通过</div>
                      <div class="commonBtn icon close" data-status="2"  data-showstaus="1,3" >审核不通过</div>
@@ -32,13 +32,13 @@
                 <div class="panlDiv">
                           <div class="panlText">
                                    <div class="commonSelectWrap">
-                                      <em class="tit">退货单号:</em>
+                                      <em class="tit">退货单号：</em>
                                       <div class="searchInput">
                                        <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="SalesReturnNo"/>
                                       </div>
                                    </div>
                                    <div class="commonSelectWrap">
-                                      <em class="tit">退货状态:</em>
+                                      <em class="tit">退货状态：</em>
                                       <div class="searchInput rowStatusStyle" >
                                        <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="StatusName"/>
                                       </div>
@@ -60,38 +60,38 @@
                  <div class="panlText">
                      <div class="panlL">
                       <div class="commonSelectWrap">
-                         <em class="tit">原订单编号:</em>
+                         <em class="tit">原订单编号：</em>
                          <div class="searchInput">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="OrderNo"/>
                          </div>
                       </div>
                      
                       <div class="commonSelectWrap">
-                         <em class="tit">联系人:</em>
+                         <em class="tit">联系人：</em>
                          <div class="searchInput">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Contacts"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">手机号:</em>
+                         <em class="tit">手机号：</em>
                          <div class="searchInput">
                           <input type="text"    readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Phone"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">地址:</em>
+                         <em class="tit">地址：</em>
                          <div class="searchInput">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Address"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">配送方式:</em>
+                         <em class="tit">配送方式：</em>
                          <div class="searchInput rowStatusStyle">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="DeliveryTypeName"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap" data-type="gropupdate">
-                         <em class="tit">服务类型:</em>
+                         <em class="tit">服务类型：</em>
                          <div class="searchInput rowStatusStyle ">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="ServicesTypeName"/>
                          </div>
@@ -102,7 +102,7 @@
                      </div>
 
                       <div class="commonSelectWrap">
-                                               <em class="tit">退货原因:</em>
+                                               <em class="tit">退货原因：</em>
                                                <div class="searchInput">
                                                 <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Reason"/>
                                                </div>
@@ -124,19 +124,19 @@
                  <div class="panlText">
 
                       <div class="commonSelectWrap">
-                         <em class="tit">商品名称:</em>
+                         <em class="tit">商品名称：</em>
                          <div class="searchInput">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="ItemName"/>
                          </div>
                       </div>
                        <div class="commonSelectWrap">
-                                               <em class="tit w100 ">商品单价（元）:</em>
+                                               <em class="tit w100 ">商品单价（元）：</em>
                                                <div class="searchInput wh80">
                                                 <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="SalesPrice"/>
                                                </div>
                         </div>
                       <div class="commonSelectWrap" >
-                         <em class="tit wh80">申请数量:</em>
+                         <em class="tit wh80">申请数量：</em>
                          <div class="searchInput wh80">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="applyQty"/>
                          </div>
@@ -144,7 +144,7 @@
 
 
                                             <div class="commonSelectWrap" data-type="gropupdate">
-                                               <em class="tit">确认退货数量:</em>
+                                               <em class="tit w100">确认退货数量：</em>
                                                <div class="searchInput">
                                                 <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="ActualQty"/>
                                                </div>
@@ -179,19 +179,19 @@
                                  <div class="panlText">
 
                                       <div class="commonSelectWrap">
-                                         <em class="tit">支付方式:</em>
+                                         <em class="tit">支付方式：</em>
                                          <div class="searchInput rowStatusStyle" >
                                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="PayTypeName"/>
                                          </div>
                                       </div>
                                       <div class="commonSelectWrap">
-                                         <em class="tit">应退金额:</em>
+                                         <em class="tit">应退金额：</em>
                                          <div class="searchInput wh80" >
                                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="RefundAmount"/>
                                          </div>
                                       </div>
                                        <div class="commonSelectWrap" data-type="gropupdate">
-                                          <em class="tit w100">确认退款金额(元):</em>
+                                          <em class="tit w120">确认退款金额(元)：</em>
                                           <div class="searchInput wh80" >
                                            <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="ConfirmAmount"/>
                                           </div>
@@ -234,7 +234,7 @@
        <script type="text/html" id="suklistValue">
         <#for(var i=0;i<list.length;i++){var item=list[i];#>
           <div class="commonSelectWrap">
-                                  <em class="tit"><#=item.skuName#>:</em>
+                                  <em class="tit"><#=item.skuName#>：</em>
                                   <div class="searchInput">
                                    <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" value="<#=item.skuValue#>"/>
                                   </div>
@@ -248,7 +248,7 @@
        <script type="text/html" id="tpl_salesReturnOption">
                      <form id="orderOption">
                 <div class="commonSelectWrap">
-                      <em class="tit">备注: </em>
+                      <em class="tit">备注： </em>
                 <div class="searchInput" style="width:457px; height: 100px;">
 
                           <textarea type="text"   class="easyui-validatebox" data-options="required:true"  name="Desc"> </textarea>
@@ -260,7 +260,7 @@
           <form> </form>
          <form id="ActualQty" class="optionForm" data-type="groupsubmit">
                                                                      <div class="commonSelectWrap">
-                                                                        <em class="tit">确认退货数量:</em>
+                                                                        <em class="tit">确认退货数量：</em>
                                                                         <div class="searchInput" >
                                                                          <input type="text"  class="easyui-numberbox" data-options=" width:200,height:30,min:0,precision:0" name="ActualQty"/>
                                                                         </div>
@@ -273,7 +273,7 @@
         <form> </form>
                         <form id="ServicesType" class="optionForm" data-type="groupsubmit" style="display: none">
                                                              <div class="commonSelectWrap">
-                                                                <em class="tit">服务类型:</em>
+                                                                <em class="tit">服务类型：</em>
                                                                 <div class="searchInput" >
                                                                  <input type="text" id="ServicesTypeText"  class="easyui-combobox" data-options=" width:200,height:30,min:0,precision:0" name="ServicesType"/>
                                                                 </div>
@@ -287,7 +287,7 @@
                                                  <form> </form>
                                                <form id="ConfirmAmount" class="optionForm" data-type="groupsubmit">
                                                <div class="commonSelectWrap">
-                                                  <em class="tit w100">确认退款金额(元):</em>
+                                                  <em class="tit w100">确认退款金额(元)：</em>
                                                   <div class="searchInput" >
                                                    <input type="text"  class="easyui-numberbox" data-options=" width:200,height:30,min:0,precision:2" name="ConfirmAmount"/>
                                                   </div>

@@ -296,7 +296,7 @@
                          debugger;
 
                          var mid = JITMethod.getUrlParam("mid");
-                         location.href = "refundDetail.aspx?RefundID=" + rowData.RefundID + "&mid=" + mid;
+                         $.util.toNewUrlPath("refundDetail.aspx?RefundID=" + rowData.RefundID + "&mid=" + mid);
                      }
 
                 },onClickCell:function(rowIndex, field, value){

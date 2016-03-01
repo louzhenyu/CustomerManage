@@ -2205,6 +2205,7 @@
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetDeliveryOrderListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetVipAmountdetailListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\SetApiVipServicesLogAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerBasicSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerVersionAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />

@@ -100,6 +100,11 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public String DefaultHtml { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public String Remark { get; set; }
 
 		/// <summary>
@@ -135,7 +140,7 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String DefaultHtml { get; set; }
+		public Int32? CustomerVisible { get; set; }
 
 
         #endregion

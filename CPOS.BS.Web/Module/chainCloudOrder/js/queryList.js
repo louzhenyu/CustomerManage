@@ -465,7 +465,7 @@
                         debugger;
 
                         var mid = JITMethod.getUrlParam("mid");
-                         location.href = "orderDetail.aspx?orderId=" + rowData.order_id +"&mid=" + mid;
+                        $.util.toNewUrlPath("orderDetail.aspx?orderId=" + rowData.order_id + "&mid=" + mid);
                     }
 
                 },onClickCell:function(rowIndex, field, value){

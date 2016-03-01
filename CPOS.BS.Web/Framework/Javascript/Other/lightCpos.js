@@ -103,7 +103,7 @@ function SetLogoInfo() {
 }
 
 $(function () {
-    $("#leftsead").hide();
+   
     var height = $(window).outerHeight() - $(".commonHeader").outerHeight();
 
     $("#contentArea").css({ "min-height": height + "px" })
@@ -192,9 +192,9 @@ $(function () {
                 var data = menuData.Data;
 
                 if (data&&data.MenuList) {
-                    if (window.location.pathname.indexOf("Index/IndexPage.aspx") == -1) {
-                        $("#leftsead").show();
-                    }
+//                    if (window.location.pathname.indexOf("Index/IndexPage.aspx") != -1) {
+//                        $("#leftsead").show();
+//                    }
                     for (var k = 0; k < data.MenuList.length; k++) {
                         var menu = data.MenuList[k];
 

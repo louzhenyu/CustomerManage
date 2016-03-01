@@ -27,6 +27,7 @@ using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
+using System.Configuration;
 
 namespace JIT.CPOS.BS.BLL
 {   
@@ -37,13 +38,15 @@ namespace JIT.CPOS.BS.BLL
     {
         private BasicUserInfo CurrentUserInfo;
         private SysPageDAO _currentDAO;
+        private string connectionString = ConfigurationManager.AppSettings["Conn_ap"];
+
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
         public SysPageBLL(LoggingSessionInfo pUserInfo)
         {
-            this._currentDAO = new SysPageDAO(pUserInfo);
+            this._currentDAO = new SysPageDAO(pUserInfo, connectionString);
             this.CurrentUserInfo = pUserInfo;
         }
         #endregion

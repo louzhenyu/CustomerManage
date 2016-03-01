@@ -345,7 +345,7 @@
                      debugger;
 
                      var mid = JITMethod.getUrlParam("mid");
-                      location.href = "salesReturnDetail.aspx?SalesReturnID=" + rowData.SalesReturnID +"&mid=" + mid;
+                         $.util.toNewUrlPath("salesReturnDetail.aspx?SalesReturnID=" + rowData.SalesReturnID +"&mid=" + mid);
                      }
 
                 },onClickCell:function(rowIndex, field, value){

@@ -46,8 +46,8 @@ body{_height:100%;}
 .commonItem .viewPic{float:left;width:179px;height:100px;line-height:100px;margin-right:30px;text-align:center;font-size:16px;background:#d0d0d0;color:#fff;}
 .commonItem .viewPic img{display:block;width:179px;height:100px;}
 .commonItem .info{float:left;width:200px;}
-.commonItem .exp{line-height:28px;font-size:15px;color:#828282;}
-.commonItem .uploadBtn{display:block;width:96px;height:30px;line-height:30px;margin-top:15px;text-align:center;border-radius:7px;background:#b2c7ab url(images/uploadBtn.jpg) no-repeat center center;;color:#fff;cursor:pointer;}
+.commonItem .exp{line-height:28px;font-size:15px;color:#f00;}
+.commonItem .uploadBtn{display:block;width:80px;height:30px;line-height:30px;margin-top:15px;text-align:center;background:url(images/uploadBtn.png) no-repeat center center;;cursor:pointer;}
 .tempEditArea{border:1px dashed #dadada;background:#f9f9f9;}
 .tempEditArea .areaWrap{width:640px;margin:0 auto;padding:20px 0 10px;}
 .commonItem .selectBox{width:490px;padding:7px 0 7px 5px;border:1px solid #cecedc;}

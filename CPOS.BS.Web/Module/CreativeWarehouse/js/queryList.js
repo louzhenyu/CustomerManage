@@ -141,7 +141,7 @@
                 $(".touchsliderthisseason").touchSlider({
                     container: this,
                     duration: 350, // 动画速度
-                    delay: 10000, // 动画时间间隔
+                    delay: 2000, // 动画时间间隔
                     margin: 5,
                     mouseTouch: true,
                     namespace: "touchslider",

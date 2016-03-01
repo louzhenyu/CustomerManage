@@ -44,7 +44,7 @@ a:hover{color:#fff;}
 .inlineBlockArea .commonSelectWrap{float:none;display:block;width:432px;margin:0 auto;}
 .inlineBlockArea .levelBox{display:none;}
 .inlineBlockArea .levelBox .commonSelectWrap{display:none;margin-top:18px;}
-.inlineBlockArea .text-tip{width:432px;margin:0 auto;padding:5px 0 0 132px;font-size:15px;color:#0cc;}
+.inlineBlockArea .text-tip{width:432px;margin:0 auto;padding:5px 0 0 132px;font-size:15px;color:#f00;}
 
 .titleItem {display:inline-block;width:100%;height:41px;line-height:40px;margin-bottom:80px;padding-left:30px;font-size:16px;border-bottom:1px solid #e0e0e0;background:#eaeff1;color:#333;}
 
@@ -64,10 +64,10 @@ a:hover{color:#fff;}
 
 .levelContentBox .commonSelectWrap{float:none;display:block;width:300px;height:33px;margin:0px auto 10px;position:relative;}
 .contentArea-info .commonSelectWrap .tit{font-size:16px;color:#999;}
-.levelContentBox .text-tip{width:500px;line-height:26px;margin:0 auto;text-indent:2em;font-size:14px;color:#999;}
+.levelContentBox .text-tip{width:500px;line-height:26px;margin:0 auto;text-indent:2em;font-size:14px;color:#f00;}
 
 .levelContentBox .handleBtn{width:230px;padding:55px 0 25px 0;margin:0 auto;text-align:center;}
-.levelContentBox .handleBtn a{display:inline-block;}
+.levelContentBox .handleBtn a{display:inline-block;width:80px;height:30px;line-height:30px;}
 .levelContentBox .handleBtn a.disableBtn{background:#ccc;cursor:default;}
 .levelContentBox .handleBtn .delBtn{margin-left:15px;}
 

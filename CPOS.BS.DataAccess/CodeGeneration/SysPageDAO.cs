@@ -41,14 +41,28 @@ namespace JIT.CPOS.BS.DataAccess
     public partial class SysPageDAO : BaseCPOSDAO, ICRUDable<SysPageEntity>, IQueryable<SysPageEntity>
     {
         #region 构造函数
+        public string StaticConnectionString { get; set; }
+        private ISQLHelper staticSqlHelper;
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public SysPageDAO(LoggingSessionInfo pUserInfo)
+        public SysPageDAO(LoggingSessionInfo pUserInfo, string connectionString)
             : base(pUserInfo)
         {
+            this.StaticConnectionString = connectionString;
+            this.SQLHelper = StaticSqlHelper;
         }
         #endregion
+
+        protected ISQLHelper StaticSqlHelper
+        {
+            get
+            {
+                if (null == staticSqlHelper)
+                    staticSqlHelper = new DefaultSQLHelper(StaticConnectionString);
+                return staticSqlHelper;
+            }
+        }
 
         #region ICRUDable 成员
         /// <summary>
@@ -81,9 +95,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [SysPage](");
-            strSql.Append("[PageKey],[Title],[ModuleName],[IsEntrance],[URLTemplate],[JsonValue],[PageCode],[IsAuth],[IsRebuild],[Version],[Author],[Remark],[CustomerID],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[DefaultHtml],[PageID])");
+            strSql.Append("[PageKey],[Title],[ModuleName],[IsEntrance],[URLTemplate],[JsonValue],[PageCode],[IsAuth],[IsRebuild],[Version],[Author],[DefaultHtml],[Remark],[CustomerID],[CreateBy],[CreateTime],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerVisible],[PageID])");
             strSql.Append(" values (");
-            strSql.Append("@PageKey,@Title,@ModuleName,@IsEntrance,@URLTemplate,@JsonValue,@PageCode,@IsAuth,@IsRebuild,@Version,@Author,@Remark,@CustomerID,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@DefaultHtml,@PageID)");
+            strSql.Append("@PageKey,@Title,@ModuleName,@IsEntrance,@URLTemplate,@JsonValue,@PageCode,@IsAuth,@IsRebuild,@Version,@Author,@DefaultHtml,@Remark,@CustomerID,@CreateBy,@CreateTime,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerVisible,@PageID)");            
 
             Guid? pkGuid;
             if (pEntity.PageID == null)
@@ -104,6 +118,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsRebuild",SqlDbType.Int),
 					new SqlParameter("@Version",SqlDbType.NVarChar),
 					new SqlParameter("@Author",SqlDbType.NVarChar),
+					new SqlParameter("@DefaultHtml",SqlDbType.NVarChar),
 					new SqlParameter("@Remark",SqlDbType.NVarChar),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
@@ -111,7 +126,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@DefaultHtml",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerVisible",SqlDbType.Int),
 					new SqlParameter("@PageID",SqlDbType.UniqueIdentifier)
             };
             parameters[0].Value = pEntity.PageKey;
@@ -125,15 +140,16 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[8].Value = pEntity.IsRebuild;
             parameters[9].Value = pEntity.Version;
             parameters[10].Value = pEntity.Author;
-            parameters[11].Value = pEntity.Remark;
-            parameters[12].Value = pEntity.CustomerID;
-            parameters[13].Value = pEntity.CreateBy;
-            parameters[14].Value = pEntity.CreateTime;
-            parameters[15].Value = pEntity.LastUpdateBy;
-            parameters[16].Value = pEntity.LastUpdateTime;
-            parameters[17].Value = pEntity.IsDelete;
-            parameters[18].Value = pEntity.DefaultHtml;
-            parameters[19].Value = pkGuid;
+			parameters[11].Value = pEntity.DefaultHtml;
+			parameters[12].Value = pEntity.Remark;
+			parameters[13].Value = pEntity.CustomerID;
+			parameters[14].Value = pEntity.CreateBy;
+			parameters[15].Value = pEntity.CreateTime;
+			parameters[16].Value = pEntity.LastUpdateBy;
+			parameters[17].Value = pEntity.LastUpdateTime;
+			parameters[18].Value = pEntity.IsDelete;
+			parameters[19].Value = pEntity.CustomerVisible;
+			parameters[20].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -249,6 +265,8 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append("[Version]=@Version,");
             if (pIsUpdateNullField || pEntity.Author != null)
                 strSql.Append("[Author]=@Author,");
+            if (pIsUpdateNullField || pEntity.DefaultHtml!=null)
+                strSql.Append( "[DefaultHtml]=@DefaultHtml,");
             if (pIsUpdateNullField || pEntity.Remark != null)
                 strSql.Append("[Remark]=@Remark,");
             if (pIsUpdateNullField || pEntity.CustomerID != null)
@@ -257,8 +275,8 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append("[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
                 strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.DefaultHtml != null)
-                strSql.Append("[DefaultHtml]=@DefaultHtml");
+            if (pIsUpdateNullField || pEntity.CustomerVisible!=null)
+                strSql.Append( "[CustomerVisible]=@CustomerVisible");
             strSql.Append(" where PageID=@PageID ");
             SqlParameter[] parameters = 
             {
@@ -273,11 +291,12 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@IsRebuild",SqlDbType.Int),
 					new SqlParameter("@Version",SqlDbType.NVarChar),
 					new SqlParameter("@Author",SqlDbType.NVarChar),
+					new SqlParameter("@DefaultHtml",SqlDbType.NVarChar),
 					new SqlParameter("@Remark",SqlDbType.NVarChar),
 					new SqlParameter("@CustomerID",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@DefaultHtml",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerVisible",SqlDbType.Int),
 					new SqlParameter("@PageID",SqlDbType.UniqueIdentifier)
             };
             parameters[0].Value = pEntity.PageKey;
@@ -291,12 +310,13 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[8].Value = pEntity.IsRebuild;
             parameters[9].Value = pEntity.Version;
             parameters[10].Value = pEntity.Author;
-            parameters[11].Value = pEntity.Remark;
-            parameters[12].Value = pEntity.CustomerID;
-            parameters[13].Value = pEntity.LastUpdateBy;
-            parameters[14].Value = pEntity.LastUpdateTime;
-            parameters[15].Value = pEntity.DefaultHtml;
-            parameters[16].Value = pEntity.PageID;
+			parameters[11].Value = pEntity.DefaultHtml;
+			parameters[12].Value = pEntity.Remark;
+			parameters[13].Value = pEntity.CustomerID;
+			parameters[14].Value = pEntity.LastUpdateBy;
+			parameters[15].Value = pEntity.LastUpdateTime;
+			parameters[16].Value = pEntity.CustomerVisible;
+			parameters[17].Value = pEntity.PageID;
 
             //执行语句
             int result = 0;
@@ -606,6 +626,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Version", Value = pQueryEntity.Version });
             if (pQueryEntity.Author != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Author", Value = pQueryEntity.Author });
+            if (pQueryEntity.DefaultHtml!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DefaultHtml", Value = pQueryEntity.DefaultHtml });
             if (pQueryEntity.Remark != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Remark", Value = pQueryEntity.Remark });
             if (pQueryEntity.CustomerID != null)
@@ -620,8 +642,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
             if (pQueryEntity.IsDelete != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
-            if (pQueryEntity.DefaultHtml != null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DefaultHtml", Value = pQueryEntity.DefaultHtml });
+            if (pQueryEntity.CustomerVisible!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerVisible", Value = pQueryEntity.CustomerVisible });
 
             return lstWhereCondition.ToArray();
         }
@@ -685,6 +707,10 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pInstance.Author = Convert.ToString(pReader["Author"]);
             }
+			if (pReader["DefaultHtml"] != DBNull.Value)
+			{
+				pInstance.DefaultHtml =  Convert.ToString(pReader["DefaultHtml"]);
+			}
             if (pReader["Remark"] != DBNull.Value)
             {
                 pInstance.Remark = Convert.ToString(pReader["Remark"]);
@@ -713,10 +739,10 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
             }
-            if (pReader["DefaultHtml"] != DBNull.Value)
-            {
-                pInstance.DefaultHtml = Convert.ToString(pReader["DefaultHtml"]);
-            }
+			if (pReader["CustomerVisible"] != DBNull.Value)
+			{
+				pInstance.CustomerVisible =   Convert.ToInt32(pReader["CustomerVisible"]);
+			}
 
         }
         #endregion

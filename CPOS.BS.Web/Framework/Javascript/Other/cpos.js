@@ -185,7 +185,9 @@ $(function () {
                 var data = menuData.Data ;
 
                 if (data&&data.MenuList) {
-                    $("#leftsead").show();
+//                    if (window.location.pathname.indexOf("Index/IndexPage.aspx") != -1) {
+//                        $("#leftsead").hide();
+//                    }
                     for (var k = 0; k< data.MenuList.length; k++) {
                         var menu = data.MenuList[k];
 

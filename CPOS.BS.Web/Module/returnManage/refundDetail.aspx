@@ -15,7 +15,7 @@
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
-                <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
+                <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;padding: 0px;min-height: 60px;border-bottom: 1px solid #e1e7ea;">
                      <div class="optionBtn " style="display: none"  data-opttype="staus">
                      <div class="commonBtn icon"  data-showstaus="1" >确认退款</div>
                      <!-- <div class="commonBtn" data-status="2" data-showstaus="1,3,4,5"  >取消申请</div>-->
@@ -33,13 +33,13 @@
                 <div class="panlDiv  panlDivhead">
                           <div class="panlText panlTexthead">
                                    <div class="commonSelectWrap">
-                                      <em class="tit">退款单号:</em>
+                                      <em class="tit">退款单号：</em>
                                       <div class="searchInput">
                                        <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="RefundNo"/>
                                       </div>
                                    </div>
                                    <div class="commonSelectWrap">
-                                      <em class="tit">退款状态:</em>
+                                      <em class="tit">退款状态：</em>
                                       <div class="searchInput" >
                                        <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="StatusName"/>
                                       </div>
@@ -54,61 +54,61 @@
                  <div class="panlText">
                      <div class="panlL">
                       <div class="commonSelectWrap">
-                         <em class="tit">原订单编号:</em>
+                         <em class="tit w100">原订单编号：</em>
                          <div class="searchInput">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="OrderNo"/>
                          </div>
                       </div>
                         <div class="commonSelectWrap">
-                                               <em class="tit">会员:</em>
+                                               <em class="tit w100">会员：</em>
                                                <div class="searchInput">
                                                 <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Contacts"/>
                                                </div>
                                             </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">手机号:</em>
+                         <em class="tit w100">手机号：</em>
                          <div class="searchInput">
                           <input type="text"    readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Phone"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">应退金额(元):</em>
+                         <em class="tit w100">应退金额(元)：</em>
                          <div class="searchInput">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="ConfirmAmount"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">实退金额(元):</em>
+                         <em class="tit w100">实退金额(元)：</em>
                          <div class="searchInput">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="ActualRefundAmount"/>
                          </div>
                       </div>
                       <div class="commonSelectWrap">
-                         <em class="tit">退款方式:</em>
+                         <em class="tit w100">退款方式：</em>
                          <div class="searchInput">
                           <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="PayTypeName"/>
                          </div>
                       </div>
 
                       <div class="commonSelectWrap">
-                                               <em class="tit">商户订单号:</em>
+                                               <em class="tit w100">商户订单号：</em>
                                                <div class="searchInput">
                                                 <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="PayOrderID"/>
                                                </div>
                                                <p class="fontColor">(*请在支付宝或者微信支付中输入此单号查询完成退款)</p>
                                             </div>
                       <div class="commonSelectWrap textlist">
-                                               <em class="tit">余额(元):</em>
+                                               <em class="tit w100">余额(元)：</em>
                                                <div class="searchInput">
                                                 <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Amount"/>
 
                                                </div>
                                                  <div class="searchInput" style="width: auto">
-                                                  <em style="width: 36px;">积分:</em>
+                                                  <em style="width: 36px;">积分：</em>
                                                    <input type="text" style="width:auto"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="Points"/>
                                                 </div>
                                                  <div class="searchInput">
-                                                  <em >返现(元):</em>
+                                                  <em >返现(元)：</em>
                                                    <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="ReturnAmount"/>
 
                                                 </div>
@@ -126,7 +126,7 @@
                  <div class="panlText ">
 
                       <div class="commonSelectWrap showItem" style="width: 100%; min-width: 300px;">
-                         <em class="tit" style="min-width:60px;">商品名称:</em>
+                         <em class="tit" style="min-width:60px;">商品名称：</em>
                          <div class="searchInput" style="width: 80%;">
                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="ItemName"/>
                          </div>
@@ -172,9 +172,9 @@
         <#for(var i=0;i<list.length;i++){var item=list[i];#>
           <div class="commonSelectWrap" >
          <# if(i==0){ #>
-          <em class="tit " ><#=item.skuName#>: </em>
+          <em class="tit " ><#=item.skuName#>： </em>
          <# } else{  #>
-              <em class="tit wh30" ><#=item.skuName#>: </em>
+              <em class="tit wh30" ><#=item.skuName#>： </em>
          <#  } #>
 
                                   <div class="searchInput wh30">
@@ -190,7 +190,7 @@
        <script type="text/html" id="tpl_salesReturnOption">
                      <form id="orderOption">
                 <div class="commonSelectWrap">
-                      <em class="tit">备注: </em>
+                      <em class="tit">备注： </em>
                 <div class="searchInput" style="width:457px; height: 100px;">
 
                           <textarea type="text"   class="easyui-validatebox"   name="Desc"> </textarea>
