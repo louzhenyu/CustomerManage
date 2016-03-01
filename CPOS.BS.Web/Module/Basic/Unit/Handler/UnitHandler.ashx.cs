@@ -830,13 +830,39 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
             try
             {
                 //微信 公共平台
-                var wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+                var wapentity = new WApplicationInterfaceEntity();
+                if (!string.IsNullOrEmpty(Request("unit_id")))
                 {
-
-                    CustomerId = this.CurrentUserInfo.ClientID,
-                    IsDelete = 0
-
-                }, null).FirstOrDefault();
+                    //门店关联的公众号
+                    var tuBll = new t_unitBLL(CurrentUserInfo);
+                    var tuEntity = new t_unitEntity();
+                    tuEntity = tuBll.QueryByEntity(new t_unitEntity() { unit_id = Request("unit_id") }, null).FirstOrDefault();
+                    if (tuEntity != null)
+                    {
+                        wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+                        {
+                            WeiXinID = tuEntity.weiXinId,
+                            CustomerId = this.CurrentUserInfo.ClientID,
+                            IsDelete = 0
+                        }, null).FirstOrDefault();
+                    }
+                    else
+                    {
+                        wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+                        {
+                            CustomerId = this.CurrentUserInfo.ClientID,
+                            IsDelete = 0
+                        }, null).FirstOrDefault();
+                    }
+                }
+                else
+                {
+                    wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+                    {
+                        CustomerId = this.CurrentUserInfo.ClientID,
+                        IsDelete = 0
+                    }, null).FirstOrDefault();
+                }
 
                 //获取当前二维码 最大值
                 var MaxWQRCod = new WQRCodeManagerBLL(this.CurrentUserInfo).GetMaxWQRCod() + 1;
