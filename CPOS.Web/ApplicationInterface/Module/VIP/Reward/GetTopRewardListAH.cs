@@ -37,16 +37,27 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Reward
             //获取员工列表(门店内)
             var userList = userBll.QueryByEntity(new T_UserEntity() { customer_id = customerId }, null);
             var userService = new cUserService(CurrentUserInfo);
-            var para_unit_id = CurrentUserInfo == null ? "" : CurrentUserInfo.CurrentUserRole.UnitId;
+            CurrentUserInfo.CurrentUserRole.UnitId = string.IsNullOrEmpty(CurrentUserInfo.CurrentUserRole.UnitId) ? "" : CurrentUserInfo.CurrentUserRole.UnitId;
+            var para_unit_id = CurrentUserInfo.CurrentUserRole.UnitId;
+
             var maxRowCount = Utils.GetIntVal(Request("limit"));
             var startRowIndex = Utils.GetIntVal(Request("start"));
             var rowCount = maxRowCount > 0 ? maxRowCount : 999;//每页行数
             var startIndex = startRowIndex > 0 ? startRowIndex : 0;//当前页的起始行数
-            var userdata = userService.SearchUserListByUnitID(string.Empty,string.Empty,string.Empty,string.Empty,
-                rowCount,startIndex,
-                CurrentUserInfo == null ? "" : CurrentUserInfo.CurrentUserRole.UnitId, para_unit_id, string.Empty, string.Empty);
 
-            
+            var userdata = new JIT.CPOS.BS.Entity.User.UserInfo();
+            if (string.IsNullOrEmpty(CurrentUserInfo.CurrentUserRole.UnitId))
+            {
+                userdata = userService.SearchUserListByUnitID(string.Empty, string.Empty, string.Empty, string.Empty,
+                rowCount, startIndex, "", para_unit_id, string.Empty, string.Empty);
+            }
+            else
+            {
+                userdata = userService.SearchUserListByUnitID(string.Empty, string.Empty, string.Empty, string.Empty,
+                rowCount, startIndex,
+                CurrentUserInfo == null ? "" : CurrentUserInfo.CurrentUserRole.UnitId, para_unit_id, string.Empty, string.Empty);
+            }
+
             var orderBys = new OrderBy[1];
             orderBys[0] = new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Asc };
             var trrList = trrBll.QueryByEntity(new T_RewardRecordEntity() { PayStatus = 2,CustomerId = customerId }, orderBys);
