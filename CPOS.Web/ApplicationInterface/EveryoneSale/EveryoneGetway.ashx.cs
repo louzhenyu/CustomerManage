@@ -653,25 +653,27 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             var tempVipList = vipBll.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), rp.Parameters.PageSize, rp.Parameters.PageIndex + 1);
 
             List<IWhereCondition> allComplexCondition = new List<IWhereCondition> { };
-            List<IWhereCondition> registeredComplexCondition = new List<IWhereCondition> { };
-            List<IWhereCondition> latentComplexCondition = new List<IWhereCondition> { };
-            List<IWhereCondition> disabledComplexCondition = new List<IWhereCondition> { };
-
+            //List<IWhereCondition> registeredComplexCondition = new List<IWhereCondition> { };
+            //List<IWhereCondition> latentComplexCondition = new List<IWhereCondition> { };
+            //List<IWhereCondition> disabledComplexCondition = new List<IWhereCondition> { };
             allComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
+            allComplexCondition.Add(new DirectCondition("(Status=0 or Status=1 or Status=2)"));//0:停用 1:潜在会员 2:注册会员
 
-            registeredComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
-            registeredComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 2 });//注册会员状态
+            //registeredComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
+            //registeredComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 2 });//注册会员状态
 
-            latentComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
-            latentComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 1 });//潜在会员状态
+            //latentComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
+            //latentComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 1 });//潜在会员状态
 
-            disabledComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
-            disabledComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 0 });//停用会员状态
+            //disabledComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
+            //disabledComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 0 });//停用会员状态
+            var CountVipList = vipBll.Query(allComplexCondition.ToArray(), null).ToList();
 
-            rd.MyVipCount = vipBll.Query(allComplexCondition.ToArray(), lstOrder.ToArray()).Length;  //注册会员行数
-            rd.Registered = vipBll.Query(registeredComplexCondition.ToArray(), lstOrder.ToArray()).Length;  //注册会员行数
-            rd.Latent = vipBll.Query(latentComplexCondition.ToArray(), lstOrder.ToArray()).Length;    //潜在会员行数
-            rd.Disabled = vipBll.Query(disabledComplexCondition.ToArray(), lstOrder.ToArray()).Length;    //停用会员行数
+
+            rd.MyVipCount = CountVipList.Count();  //注册会员行数
+            rd.Registered = CountVipList.Where(m => m.Status == 2).Count();  //注册会员行数
+            rd.Latent = CountVipList.Where(m => m.Status == 1).Count();    //潜在会员行数
+            rd.Disabled = CountVipList.Where(m => m.Status == 0).Count();    //停用会员行数
 
             #region 排名
             var everyoneBll = new EveryoneSalesBLL(loggingSessionInfo);
