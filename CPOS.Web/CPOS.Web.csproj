@@ -23,6 +23,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -2272,6 +2273,9 @@
     <Compile Include="ApplicationInterface\Module\VIP\Register\SetRegisterFormItemsAH.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\VIP\Reward\GetConfigAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Reward\GetTopRewardListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Reward\SetRewardOrderAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetVipAmountDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipListNum\GetVipListNumAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipList\GetVipListAH.cs" />
@@ -2289,9 +2293,6 @@
     <Compile Include="ApplicationInterface\Module\WX\SysPage\SetSysPageAH.cs" />
     <Compile Include="ApplicationInterface\Module\ZiXun\ZiXunInfo\AddZiXunCommentAH.cs" />
     <Compile Include="ApplicationInterface\Module\ZiXun\ZiXunInfo\SeacherNewsListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\AP\ZMBA\GetZMBACourseDetailListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\AP\ZMBA\GetZMBACourseListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\AP\ZMBA\SetZMBACourseDetailReadLogAH.cs" />
     <Compile Include="ApplicationInterface\Order\OrderGateway.ashx.cs">
       <DependentUpon>OrderGateway.ashx</DependentUpon>
     </Compile>
