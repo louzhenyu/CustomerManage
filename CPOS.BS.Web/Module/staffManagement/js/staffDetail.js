@@ -40,6 +40,7 @@
 						alert('至少一个设为所属单位！');
 						return false;
 					}
+					$.util.isLoading();
 					$('#staffSaveBtn').unbind('click');
                     var fields = $('#seach').serializeArray(),
 						obj = {}; //自动序列化表单元素为JSON对象
@@ -420,6 +421,7 @@
 					if(data.success){
 						window.history.go(-1);
 					}else{
+						$.util.isLoading(true);
 						alert(data.msg);
 						that.bindSaveBtn();
 					}

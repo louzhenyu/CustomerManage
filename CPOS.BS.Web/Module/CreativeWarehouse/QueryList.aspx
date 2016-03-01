@@ -87,7 +87,7 @@
             </div>
         </div>
     <div id="win" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
-      		<div class="easyui-layout" data-options="fit:true" id="panlconent">
+      		<div class="easyui-layout" data-options="fit:true" id="panlconent1">
 
       			<div data-options="region:'center'" style="padding:10px;">
       				指定的模板添加内容

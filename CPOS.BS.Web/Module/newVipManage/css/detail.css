@@ -27,7 +27,7 @@
 /*菜单*/
 .subMenu{height:50px;padding-left:40px;background:#fff; border-top: 1px solid #d0d5d8;border-bottom:1px solid #d0d5d8 }
 .subMenu li{float:left;height:25px;width:85px; margin-top:12px; font-size: 14px; margin-right: 35px; text-align:center;line-height:25px;color:#4d4d4d;cursor:pointer;}
-.subMenu li.on {color: #07c8cf; border-bottom:1px solid #00cccc; background-color:#fafafa;}
+.subMenu li.on {color: #07c8cf; border-bottom:1px solid #00a0e8; background-color:#fafafa;}
 /*tab选项卡公共样式*/
 .commonSelectWrap .bonone{ border: 1px solid transparent;}
 .R{ float:right} .L{ float: left}  .txtCenter{ text-align: center}
@@ -64,7 +64,7 @@
 
 .optPanel{height:75px; background-color: #f4f8fa;  line-height: 45px; font-size: 14px; padding-top: 20px;}
 .inputBox { float: left; width: 120px; padding-left: 3px; line-height: 34px;}
-.optPanel .commonBtn{ width: 100px; float: left; height: 32px; line-height: 32px; background-color: #00cccc;}
+.optPanel .commonBtn{ width: 100px; float: left; height: 32px; line-height: 32px; background-color: #00a0e8;}
 .lineTitle{height: 37px; background-color: #d9d9d9; color: #666; padding-left: 35px; font-size: 14px; line-height: 37px;}
 .optPanel .commonSelectWrap{margin: 0 auto;}
 .optPanel .commonSelectWrap .tit{width: 100px;}
@@ -76,7 +76,7 @@
 .imageList .line{width: 100%; border-bottom: 1px #d9d9d9 solid; padding: 20px; display: inline-block}
 .imageList .tit{ width: 80px;}
 .line .textA{float: left; height: 157px;}
-.line .textA p{line-height: 42px; color: #00cccc; font-size: 14px;}
+.line .textA p{line-height: 42px; color: #00a0e8; font-size: 14px;}
 .lineText{ float: left; width: 658px; text-align: left;}
 
 .uploadBtn{ background: url("../images/upload.png") no-repeat; width: 37px; height: 37px;}
@@ -94,7 +94,7 @@
 /******XXXX信息相关样式*********/
 .lineTitle{ height: 50px;line-height: 50px;padding-left: 30px; font-size: 16px; color: #333;background-color: #fafafa;border:1px solid #e0e0e0;border-left:none; border-right:none;}
 .topDashed{ border-top-style: dashed;}
-.lineTitle em{ display:block; width: 4px; height: 18px;margin-top: 16px;background-color:#00cccc; margin-right: 10px; float: left;}
+.lineTitle em{ display:block; width: 4px; height: 18px;margin-top: 16px;background-color:#00a0e8; margin-right: 10px; float: left;}
 .linePanel{  padding-top: 18px; padding-bottom: 18px;display:inline-block;width:100%}
 .linePanel .selectBox{ border: 1px solid transparent; background: none}
 .linePanel .commonSelectWrap .tit{ width: 108px}

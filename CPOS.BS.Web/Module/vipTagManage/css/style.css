@@ -47,7 +47,7 @@
 .datagrid-row-over .shift{display: block}
 
 
-.list{position:relative;height: 36px;display: block;clear: both;width: 200px;}
+.list{position:relative;height: 50px;display: block;clear: both;width: 200px;}
 .list .optBtn{ width: 23px; height: 23px; left:179px; top:-6px;;position: absolute;  display: none }
 .list:hover .optBtn { display: block;}
 .list .optBtn .btn{ width: 31px; height: 31px; float:left; margin-left: 15px;}

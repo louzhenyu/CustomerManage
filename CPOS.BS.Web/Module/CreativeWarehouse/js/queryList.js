@@ -49,13 +49,13 @@
                             left: ($(window).width() - 550) * 0.5
                         });
                         //改变弹框内容，调用百度模板显示不同内容
-                        $('#panlconent').layout('remove', 'center');
+                        $('#panlconent1').layout('remove', 'center');
                         var html = bd.template('tpl_Applyfail', data);
                         var options = {
                             region: 'center',
                             content: html
                         };
-                        $('#panlconent').layout('add', options);
+                        $('#panlconent1').layout('add', options);
                         $('#win').window('open');
 
                     } else {
@@ -65,13 +65,13 @@
                             left: ($(window).width() - 550) * 0.5
                         });
                         //改变弹框内容，调用百度模板显示不同内容
-                        $('#panlconent').layout('remove', 'center');
+                        $('#panlconent1').layout('remove', 'center');
                         var html = bd.template('tpl_Apply');
                         var options = {
                             region: 'center',
                             content: html
                         };
-                        $('#panlconent').layout('add', options);
+                        $('#panlconent1').layout('add', options);
                         $('#win').window('open');
                     }
                 });

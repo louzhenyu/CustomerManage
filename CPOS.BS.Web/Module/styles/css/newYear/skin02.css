@@ -152,7 +152,7 @@ body{overflow-x: hidden;}
 .queryTermArea{min-height:90px;padding:20px 20px 20px 0;background:#fafafa; margin-bottom:0; border: none;}
 .queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; min-width: 1000px;}
 .moreQueryWrap{ float: left;margin-top: 10px;}
-#Children .add{ cursor:pointer}
+ .add{ cursor:pointer}
 /*查询*/
 .queryTermArea .commonSelectWrap{margin-right: 28px; font-size: 12px; }
 .commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
@@ -170,7 +170,7 @@ body{overflow-x: hidden;}
 /**列表页面---表头的操作按钮栏**/
 .zsy{clear: both;font-size:0; line-height:0px; display:block;}
 
-.optionBtn{display:inline-block; width:100%;height:60px; padding-left: 10px; padding-top: 15px; background: #fff; border-top: dashed 1px #e1e7ea;}
+.optionBtn{display:inline-block; width:100%;height:60px; padding-left: 10px; padding-top: 15px; background: #fff;/* border-top: dashed 1px #e1e7ea;*/}
 #tableWrap .optionBtn{border:none;}
 .optionBtn .commonBtn{float: left; margin-left: 10px;}
 .optionBtn .commonBtn.r{ float: right; }
