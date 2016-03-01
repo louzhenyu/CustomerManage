@@ -257,11 +257,8 @@
                 	<div><img src="images/index-quickly.png" alt="" /></div>
                 </div>
                 <div class="quicklyBtnBox">
-                    <a href="###" style="text-indent:5px;" target="_blank">
-                        <span class="wxAuthBox">
-                            操作指引
-                            <div class="authBtn"><iframe id="wxAuth"  width="180px" height="50px" scrolling="0" frameborder="0" src=""></iframe></div>
-                        </span>
+                    <a href="javascript:;" style="text-indent:5px;" target="_blank">
+                        <span class="wxAuthBox">操作指引</span>
                     </a>
                     <a href="http://help.chainclouds.cn/?p=763" style="text-indent:13px;" target="_blank"><span>操作指引</span></a>
                     <a href="http://help.chainclouds.cn/?p=772" style="text-indent:25px;" target="_blank"><span>操作指引</span></a>
@@ -271,6 +268,37 @@
             </div>
         </div>
     </div>  
-</div>          
+</div>
+
+<!-- 微信服务号授权 -->
+<div style="display:none;">
+    <div id="win2" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
+        <div class="easyui-layout" data-options="fit:true" id="panlconent">
+            <div data-options="region:'center'" style="padding:10px;">
+                <div class="qb_WeixinService">
+                    <div class="quick">
+                        <div class="quick_center">
+                            <div class="quick_centernr ">
+                                <div class="found" >
+                                    <br />
+                                   <p>如果您已有<font>微信公众服务号并已通过实名认证</font>，请与连锁掌柜打通吧。</p><br /><br /><br />
+                                    <iframe id="receive" scrolling="no" src="http://open.chainclouds.com/receive" ></iframe>
+                                    <img src="images/weixinset.png" /><br />
+                                    如果你还没有微信公众服务号，可以<a target="_blank"  href="https://mp.weixin.qq.com/cgi-bin/readtemplate?t=register/step1_tmpl&lang=zh_CN">点击注册</a><br /><br /><br /><br />
+                                    绑定微信服务号，将可使用连锁掌柜所有功能，<a target="_blank"  href="\Module\helpCenter\helpCenterClass.aspx">了解所有功能</a><br />
+                                    请注意是微信公众服务号，不是订阅号哦，<a target="_blank"  href="http://kf.qq.com/faq/140806zARbmm140826M36RJF.html">有何区别？</a>
+                                </div>
+                            </div>
+                        </div
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>  
+</div>
+
+
+        
     <script type="text/JavaScript" src="/Module/static/js/lib/require.js" defer async="true" data-main="/Module/static/js/main"></script>
 </asp:Content>

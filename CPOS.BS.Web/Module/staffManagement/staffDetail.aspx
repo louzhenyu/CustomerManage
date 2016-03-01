@@ -49,11 +49,10 @@
 	.panel.datagrid{min-height:300px;width:100%;border-radius:5px;border-left:1px solid #e1e7ea;}
 	.datagrid-btable{width:100%;}
 	.datagrid-btable tr:nth-last-of-type(1) td{border:none;}
-	.staffBtn a{width:145px;height:43px;line-height:43px;margin:0 15px;font-size:18px;font-family:"Micorsoft YaHei";border-radius:22px;}
 	.staffBtn .cancelBtn{background:#07c8cf;}
-	.tipBox{display:inline-block;width:400px;padding-left:45px;margin:20px 0 10px 125px;line-height:20px;font-size:14px;background:url(images/icon-tips.png) no-repeat left center;color:#fc7a52;}
+	.tipBox{display:inline-block;width:400px;padding-left:45px;margin:20px 0 10px 125px;line-height:20px;font-size:14px;background:url(images/icon-tips.png) no-repeat left center;color:#f00;}
 	.panel.layout-panel.layout-panel-south{top:280px !important;}
-	.btnWrap.staffBtn{padding:0 0 35px 0;}
+	.btnWrap.staffBtn{padding:10px 0 20px 0;}
 	
     </style>
 </asp:Content>
@@ -116,7 +115,7 @@
                 </div>
                 
                 <div class="btnWrap staffBtn">
-                    <a href="javascript:;" class="commonBtn" id="staffSaveBtn">保存</a>
+                    <a href="javascript:;" class="commonBtn saveBtn" id="staffSaveBtn">保存</a>
                     <a href="javascript:history.go(-1);" class="commonBtn cancelBtn">取消</a>
                 </div>
             </div>

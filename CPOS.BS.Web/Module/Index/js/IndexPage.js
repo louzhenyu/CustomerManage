@@ -35,7 +35,15 @@
         },
         initEvent: function () {
             var that = this,
+				$uiMask = $('.ui-mask'),
+				$closeBtn = $('.closeBtn'),
+                $WeixinServicecloseBtn = $(".WeixinServicecloseBtn"),
+				$qbQuick = $('.qb_quick'),
+				$WeixinServiceqbQuick = $('.qb_WeixinService'),
+				
 				$notShow = $('.nextNotShow span');
+				
+				
 			$notShow.on('click',function(){
 				if($notShow.hasClass('on')){
 					$notShow.removeClass('on');
@@ -44,7 +52,13 @@
 				}
 			});
 			
-			$('#wxAuth').attr("src",window.weixinUrl);
+			//绑定微信服务号授权start
+			$('#win2').window({title:"绑定微信帐号",width:922,height:422,top:($(window).height() - 422) * 0.5,left:($(window).width() - 922) * 0.5});
+			$(".wxAuthBox").bind("click", function () {
+			    $('#win2').window('open');
+			});
+
+			//$('#wxAuth').attr("src",window.weixinUrl);
         },
 
 		quicklyDialog: function(){

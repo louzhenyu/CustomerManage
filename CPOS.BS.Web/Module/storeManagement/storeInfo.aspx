@@ -22,13 +22,11 @@ a:hover{color:#fff;}
 .contentArea-info .title .two em{background:url(images/icon-end2.png) no-repeat center center;}
 .contentArea-info .title .two.on em{background:url(images/icon-on2.png) no-repeat center center;}
 
-.borderArea{border:1px solid #d8d8d8;border-top:none;background:#fff;}
+.borderArea{border:1px solid #d8d8d8;border-top:none;background:#fff; overflow:hidden;}
 .clearBorder .combo,.clearBorder .numberbox{border:none;background:none;}
 .textbox-invalid {border-color:#d0d5d8;background-color:#fff;}
 .textbox-addon-right {right:5px !important;top:1px;}
 .inlineBlockArea {display: inline-block;width:100%;min-height:351px;padding:40px 0;}
-
-.commonStepBtn{display:inline-block;width:148px;height:43px;line-height:43px;text-align:center;font-size:15px;border-radius:22px;}
 
 
 .panel-body-noheader .combobox-item{font-size:12px;}
@@ -58,7 +56,7 @@ a:hover{color:#fff;}
 
 .addStorePicArea{padding:40px 50px 50px 50px;}
 .addStorePicArea .tit{font-size:15px;color:#999;}
-.addStorePicArea .tipText{font-size:15px;color:#0cc}
+.addStorePicArea .tipText{font-size:15px;color:#f00}
 .addStorePicArea .tit span{color:#ccc;}
 .storePicBox{display:inline-block;min-height:83px;padding:14px 0 7px 0;}
 .storePicBox > p{float:left;margin-right:20px;cursor:pointer;}
@@ -86,15 +84,15 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 .setQRcodeArea .qrCreateBtn{background:url(images/qr-createBtn.png) no-repeat 0 0;}
 .setQRcodeArea .qrDownBtn{margin-left:20px;background:url(images/qr-downBtn.png) no-repeat 0 0;}
 .setQRcodeArea .qrStoreName{padding:15px 0 24px 0;text-align:center;font-size:15px;color:#999;}
-.qrSetBox .commonSelectWrap{margin:0 0 38px 0;}
-.qrSetBox .commonSelectWrap .tit{width:88px;font-size:15px;color:#999;}
+.qrSetBox .commonSelectWrap{margin:0 0 38px 0;float:none;display:block;}
+.qrSetBox .commonSelectWrap .tit{width:88px;font-size:12px;color:#999;}
 
 
 /*图文消息*/
 .imgTextMessage{display:none;margin-left:92px;}		 
 .imgTextMessage h2{margin-bottom:10px;font-size:14px;font-weight:bold;color:#a2a2a2;}
 .imgTextMessage .list{border-top:1px dashed #dbdbe5;background:#fbfbfb;}
-.imgTextMessage .item{position:relative;height:80px;padding:7px 0 0 20px;border-bottom:1px dashed #dbdbe5;}
+.imgTextMessage .item{position:relative;height:80px;max-width:auto;min-width:auto;padding:7px 0 0 20px;border-bottom:1px dashed #dbdbe5;}
 .imgTextMessage .picWrap{float:left;width:90px;height:65px;margin-right:20px;background:#e7e7e7;}
 .imgTextMessage .picWrap img{display:block;width:90px;height:65px;}
 .imgTextMessage .textInfo{width:340px;white-space:nowrap;font-size:16px;color:#66666d;}
@@ -105,28 +103,26 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
 .imgTextMessage .item.hover{background:#ecf6ff;}
 .imgTextMessage .item.hover .delBtn{display:block;}
 
-.imgTextMessage .addBtn{float:left;width:100px;height:30px;line-height:30px;margin:15px 0px;text-align:center;border-radius:3px;background:#b2c7ab;color:#fff;cursor:pointer;}
+.imgTextMessage .addBtn{float:left;margin:15px 0px;text-align:center;}
 
 .commonTitleWrap{height:52px;padding:0 15px;border-radius:4px 4px 0 0;background:#f6f6f7;}
 .commonTitleWrap h2{float:left;margin-top:15px;font-size:15px;font-weight:bold;color:#666;}
 
 .commonTitleWrap .selectBox{width:210px;margin:9px 0 0 8px;padding:8px 0 8px 5px;border:none;border-radius:4px;background:#d0d4d7;color:#535b64;}
-.commonTitleWrap span{float:right;width:95px;height:30px;line-height:30px;margin:15px 0 0 12px;border-radius:3px;text-align:center;color:#fff;cursor:pointer;}
+.commonTitleWrap span{float:right;width:95px;height:30px;line-height:30px;margin:11px 0 0 12px;border-radius:3px;text-align:center;color:#fff;cursor:pointer;}
 .commonTitleWrap .releaseBtn{height:35px;line-height:35px;margin-top:9px;background:#7ac682;}
-.commonTitleWrap .saveBtn,.commonTitleWrap .queryBtn{background:#b2c7ab;}
 .commonTitleWrap .addBtn{background:#a2c3c8;}
 .commonTitleWrap .delBtn{background:#ef5f4a;}
-.commonTitleWrap .cancelBtn{background:#949ca7;}
 
 /*添加图文消息-弹层*/
 .addImgMessagePopup{display:none;width:582px;padding-bottom:20px;position:fixed;_position:absolute;top:10px;left:50%;margin-left:-290px;border-radius:4px;background:#fff;z-index:9999;}
 .addImgMessagePopup .commonTitleWrap{padding:0 20px;background:#f2f2fa;}
 .addImgMessagePopup .commonTitleWrap span{width:80px;}
 .addImgMessageWrap{height:95px;padding:32px 0 0 25px;border-radius:3px 3px 0 0;border-bottom:1px solid #cfcedc;background:#fff;}
-.addImgMessageWrap .tit{float:left;height:32px;line-height:32px;font-size:15px;font-weight:bold;color:#66666d;}
-.addImgMessageWrap input,.addImgMessageWrap select{float:left;width:152px;height:30px;_line-height:30px;margin:0 20px 0 12px;padding:0;text-indent:5px;border:1px solid #cecedc;border-radius:4px;background:#f8f8fa;}
+.addImgMessageWrap .tit{float:left;height:30px;line-height:30px;font-size:15px;color:#66666d;}
+.addImgMessageWrap input,.addImgMessageWrap select{float:left;width:280px;height:30px;_line-height:30px;margin:0 20px 0 12px;padding:0;text-indent:5px;border:1px solid #cecedc;border-radius:4px;background:#fff;}
 .addImgMessageWrap select{width:175px;height:auto;padding:6px 0 6px 5px;cursor:pointer;}
-.addImgMessageWrap .queryBtn{float:left;width:80px;height:34px;line-height:34px;text-align:center;border-radius:4px;background:#a2c3c8;color:#fff;cursor:pointer;}
+.addImgMessageWrap .queryBtn{float:left;}
 .addImgMessagePopup .radioBox{float:left;width:25px;height:25px;margin:16px 20px 0 0;background:url(images/on-icon3.png) no-repeat center center;cursor:pointer;}
 .addImgMessagePopup .radioList{height:360px;overflow:auto;}
 .addImgMessagePopup .item{position:relative;height:90px;padding:17px 0 0 20px;border-bottom:1px solid #cfcedc;}
@@ -261,7 +257,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
             </div>
             
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn commonBtn" data-flag="#nav02">保存</a>
+            	<a href="javascript:;" class="commonStepBtn commonBtn saveBtn" data-flag="#nav02">保存</a>
             </div>
           </form>
         </div>
@@ -303,7 +299,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                         <div class="imgTextMessage selectItem" id="imageContentMessage" name="elems">
                             <h2>提示:按住鼠标左键可拖拽排序图文消息显示的顺序 <b>已选图文</b>&nbsp;&nbsp;<b id="hasChoosed" style="color: Red">0</b>&nbsp;&nbsp;个</h2>
                              <div class="list ui-sortable"></div>
-                             <span class="addBtn">添加</span>
+                             <span class="addBtn commonBtn w80">添加</span>
                         </div>
                       	</div>
                       
@@ -312,7 +308,7 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                 </div>
             </div>
             <div class="btnWrap">
-            	<a href="javascript:;" class="commonStepBtn nextStepBtn commonBtn" data-flag="#nav03" id="twoSaveBtn">保存</a>
+            	<a href="javascript:;" class="commonStepBtn commonBtn saveBtn" data-flag="#nav03" id="twoSaveBtn">保存</a>
             </div>
           </form>
         </div>
@@ -330,12 +326,12 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
     <div class="commonTitleWrap">
         <h2>
             添加图文消息</h2>
-        <span class="cancelBtn">取消</span> <span class="saveBtn">确定</span>
+        <span class="cancelBtn commonBtn w80">取消</span> <span class="saveBtn commonBtn w80">确定</span>
     </div>
     <div class="addImgMessageWrap clearfix">
         <span class="tit">标题</span>
         <input type="text" id="theTitle" class="inputName" />
-        <span class="queryBtn">查询</span>
+        <span class="queryBtn commonBtn w80">查询</span>
     </div>
     <div class="radioList" id="imageContentItems">
     </div>
