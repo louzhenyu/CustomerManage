@@ -839,12 +839,23 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                     tuEntity = tuBll.QueryByEntity(new t_unitEntity() { unit_id = Request("unit_id") }, null).FirstOrDefault();
                     if (tuEntity != null)
                     {
-                        wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+                        if(!string.IsNullOrEmpty(tuEntity.weiXinId))
                         {
-                            WeiXinID = tuEntity.weiXinId,
-                            CustomerId = this.CurrentUserInfo.ClientID,
-                            IsDelete = 0
-                        }, null).FirstOrDefault();
+                            wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+                            {
+                                WeiXinID = tuEntity.weiXinId,
+                                CustomerId = this.CurrentUserInfo.ClientID,
+                                IsDelete = 0
+                            }, null).FirstOrDefault();
+                        }
+                        else
+                        {
+                            wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+                            {
+                                CustomerId = this.CurrentUserInfo.ClientID,
+                                IsDelete = 0
+                            }, null).FirstOrDefault();
+                        }
                     }
                     else
                     {
