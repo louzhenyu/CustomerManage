@@ -40,10 +40,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
                         throw new APIException("活动对象为NULL！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
                     }
 
-                    if (ChangeData.StartTime > DateTime.Now)
-                    {
-                        throw new APIException("进行中或已结束的活动不可修改！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
-                    }
+                    //if (ChangeData.StartTime > DateTime.Now)
+                    //{
+                    //    throw new APIException("进行中或已结束的活动不可修改！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
+                    //}
 
                     //
                     string m_OldStarTime = ChangeData.StartTime.Value.ToString("yyyy-MM-dd");

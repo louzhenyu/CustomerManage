@@ -1203,6 +1203,16 @@ namespace JIT.CPOS.BS.BLL
                         var tempAmount = inoutInfo.actual_amount - inoutInfo.DeliveryAmount; //应付-运费后的应付金额
                         vipDiscount = tempAmount / (inoutInfo.discount_rate / 100) - tempAmount;// (应付-运费)/折扣率=去除折扣后实付Y；Y-包含折扣的实付=会员折扣
                     }
+
+                    //积分抵扣
+                    if (inoutInfo.IntegralAmountPer != 0)
+                    {
+                        inoutInfo.pay_pointsAmount = Math.Round(inoutInfo.Integral / inoutInfo.IntegralAmountPer,2);
+                    }
+                    else
+                    {
+                        inoutInfo.pay_pointsAmount = 0;
+                    }
                     inoutInfo.VipDiscount = -Math.Round(vipDiscount, 2);
 
                 }

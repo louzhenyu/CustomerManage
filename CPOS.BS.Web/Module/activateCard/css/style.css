@@ -29,3 +29,11 @@
 #Children{border: none; max-height: 258px; height: auto;overflow-x: auto;width: 248px;}
 #Children input{ border: 1px solid #ccc; width: 160px;}
 #Children .add{ background:none; color: #00acee; font-size: 15px;}
+
+
+.quicklyBox{width:614px;margin:40px auto 0;}
+.quicklyBtnBox{height:20px;line-height:20px;margin-top:8px;margin-bottom:20px;}
+.quicklyBtnBox a{float:left;width:33.33%;text-align:center;font-size:14px;color:#00a1e6;}
+.quicklyBtnBox a span{padding-right:18px;background:url(../images/icon-href.png) no-repeat right center;}
+.nextNotShow span{display:inline-block;margin-left:10px;line-height:20px;padding-left:22px;font-size:12px;background:url(../images/icon-check.png) no-repeat left center;color:#666;cursor:pointer;}
+.nextNotShow span.on{background:url(../images/icon-checked.png) no-repeat left center;}

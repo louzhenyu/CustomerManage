@@ -237,6 +237,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
         public string GetDeliveryData()
         {
             string customerId = this.CurrentUserInfo.ClientID;
+            string userId = this.CurrentUserInfo.UserID;
             string orderId = Request("orderId");
             if (string.IsNullOrEmpty(orderId))
             {
@@ -289,7 +290,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             VipIntegralDetailEntity IntegralDetailEntity = VipIntegralDetailBll.QueryByEntity(
                     new VipIntegralDetailEntity()
                     {
-                        ObjectId = orderId
+                        ObjectId = orderId,
+                        IntegralSourceID = "20"
                     }
                     , null
                 ).OrderByDescending(m => m.CreateTime).FirstOrDefault();

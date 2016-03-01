@@ -569,6 +569,15 @@ namespace JIT.CPOS.BS.Entity
         public string paymentcenter_id { get; set; }
 
         public string OldStatusDesc { get; set; }
+        /// <summary>
+        /// n积分抵扣1元
+        /// </summary>
+        public decimal IntegralAmountPer { get; set; }
+
+        /// <summary>
+        /// 积分数
+        /// </summary>
+        public int Integral { get; set; }
 
     }
 

@@ -37,7 +37,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
 
             var bll = new WKeywordReplyBLL(CurrentUserInfo);
 
-            var entity = new WKeywordReplyEntity
+            var entity = new WKeywordReplyEntity//实体对象数据，含有文本信息
             {
                 ApplicationId = keywordList.ApplicationId,
                 Keyword = keywordList.KeyWord,

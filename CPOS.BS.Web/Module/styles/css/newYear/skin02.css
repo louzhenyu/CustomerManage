@@ -1,4 +1,5 @@
 ﻿@charset "utf-8";
+body{overflow-x: hidden;}
 /*右侧浮动*/
 .leftsead{width:34px;height:143px;position:fixed;top:258px;right:0; z-index:99999}
 *html .leftsead{margin-top:258px;position:absolute;top:expression(eval(document.documentElement.scrollTop));}

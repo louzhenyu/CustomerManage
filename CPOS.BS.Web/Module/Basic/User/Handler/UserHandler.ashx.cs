@@ -576,12 +576,22 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
                     errorMsg = "无法获取员工二维码类别";
                 }
                 //生成了微信二维码
-                var wxCode = CretaeWxCode( loggingSessionInfo);//***
+                var wxCode = CretaeWxCode(loggingSessionInfo);//***
                 //如果名称不为空，就把图片放在一定的背景下面
-                if (!string.IsNullOrEmpty(user.User_Name))
+                if (!string.IsNullOrEmpty(user.User_Name) && wxCode.success == true)
                 {
-                    string apiDomain = ConfigurationManager.AppSettings["original_url"];
-                    wxCode.ImageUrl = CombinImage(apiDomain + @"/HeadImage/qrcodeBack.jpg", wxCode.ImageUrl, unitName + "-" + user.User_Name);
+                    try
+                    {
+                        string apiDomain = ConfigurationManager.AppSettings["original_url"];
+                        wxCode.ImageUrl = CombinImage(apiDomain + @"/HeadImage/qrcodeBack.jpg", wxCode.ImageUrl, unitName + "-" + user.User_Name);
+                    }
+                    catch
+                    {
+                        errorMsg = "生成二维码失败";
+                    }
+                }
+                else {
+                    errorMsg = "生成二维码失败";
                 }
 
                 var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);//兼容模式

@@ -256,7 +256,11 @@
                                 return "否";
                             }
                         }},
-                    {field : 'CreateTime',title : '授权时间',width:80,resizable:false,align:'center'},
+                    {field : 'CreateTime',title : '授权时间',width:80,resizable:false,align:'center',
+                      formatter:function(value,row,index){
+                          return  new Date(value).format("yyyy-MM-dd hh:mm:ss")
+                      }
+                    },
                     {field : 'CreateByName',title : '授权人',width:60,resizable:false,align:'left'},
 
                     {field : 'CreateBy',title : '操作',width:30,align:'left',resizable:false,

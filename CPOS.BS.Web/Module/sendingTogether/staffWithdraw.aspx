@@ -5,7 +5,6 @@
 <meta charset="UTF-8" />
     <title>员工提现管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="../static/css/kkpager.css" rel="stylesheet" type="text/css" />
     <link type="text/css" rel="stylesheet" href="css/sendingTogether.css"/>
 
 </asp:Content>
@@ -46,7 +45,7 @@
         <!--表格操作按钮-->
         <div id="menuItems" class="optionBtn">
             <!--<span class="commonBtn _addVip">添加新会员</span>-->
-            <span class="commonBtn exportBtn">打印</span>
+           <!-- <span class="commonBtn exportBtn">打印</span>-->
             <span class="commonBtn affirmBtn w80 l" data-statusid=1>确认</span>
             <span class="commonBtn finishBtn w80 l" data-statusid=2>完成</span>
 
@@ -57,7 +56,7 @@
             </table>
             <div id="pageContianer">
              <div class="dataMessage" >没有符合条件的查询记录</div>
-                <div id="kkpager" style="text-align:center;"></div>
+                <div id="kkpager" ></div>
             </div>
         </div>
     </div>
