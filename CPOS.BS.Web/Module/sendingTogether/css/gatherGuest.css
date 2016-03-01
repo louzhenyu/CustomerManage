@@ -2,14 +2,14 @@
 
 
 
-.listBtn{height:59px;line-height:58px;padding-left:30px;float:left;cursor:pointer;color:#999;font-size:16px;margin-right:25px;background:url(../../styles/images/newYear/radio.png) no-repeat left center;}
+.listBtn{height:59px;line-height:58px;padding-left:30px;float:left;cursor:pointer;color:#999;font-size:14px;margin-right:25px;background:url(../../styles/images/newYear/radio.png) no-repeat left center;}
 .listBtn.show{background:url(../../styles/images/newYear/radioOn.png) no-repeat left center;}
 .submitBtn {margin: 0 auto;border-radius: 32px; width: 100px; height: 36px; line-height: 36px;}
 .panlDiv{border-bottom: 1px solid #d0d5d8;width: 100%; float: left;padding:10px 10px 15px 0px}
 #simpleQuery{border-bottom: 1px solid #d0d5d8;}
 .panlDiv:nth-last-of-type(1){border-bottom:none;}
-.panlDiv .title{ line-height: 50px;font-size: 16px;}
-.panlDiv .commonSelectWrap{ display: block;  margin-left:53px; line-height: 33px}
+.panlDiv .title{   margin: 10px 0px;font-size: 14px;  color: #666666;border-left: 4px solid #00a0e8;padding-left: 4px;}
+.panlDiv .commonSelectWrap{ display: block;  margin-left:60px; line-height: 33px}
 .panlDiv .commonSelectWrap .searchInput{ margin-right: 8px; border:none;}
 .panlDiv .commonSelectWrap .tit{ width: auto;}
 .panlDiv .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
@@ -20,14 +20,16 @@
 .panlDiv .commonSelectWrap .tit .checkBox{float: right}
 .pl_45{padding-left:45px;}
 /*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
-.panlDiv   .explain{padding-left:50px;color:#fe2222;font-size:14px;font-family:"黑体";background:url(../images/icon-tips.png) no-repeat left center;}
+.panlDiv   .explain{padding-left:50px;color:#fe2222;font-size:12px;font-family:"黑体";background:url(../images/icon-tips.png) no-repeat left center;}
 .panlDiv .lineH30{ line-height: 30px;}
 .Wrap{ display: none;}
 .bordernone{ border: none;}
 .panlDiv .datagrid-header-row{ display: none}
 
 .titleBar{display:inline-block;width:100%;height:53px;line-height:52px;padding-left:30px;font-size:16px;border-top:1px solid #e1e7ea;border-bottom:1px solid #e1e7ea;background:#fafafa;color:#666;}
-.checkBoxTag{display:inline-block;cursor:pointer;}
+.checkBoxTag{display:inline-block;cursor:pointer;font-size: 14px;}
 .checkBoxTag em{float:left;width:35px;height:52px;background:url(../../styles/images/newYear/check.png) no-repeat left center;}
 .checkBoxTag.on em{background:url(../../styles/images/newYear/checkon.png) no-repeat left center;}
 .salesWrapArea{padding:5px 0 5px 30px;display:inline-block;width:100%;border-bottom:1px solid #e1e7ea;}
+
+.commonSelectWrap .searchInput {width:100px;}

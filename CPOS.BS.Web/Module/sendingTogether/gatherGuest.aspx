@@ -31,13 +31,13 @@
                                    <em class="tit">销售员：</em>
                                     <label class="searchInput" >
                                          <input name="FirstAttention_RetailRewardRuleID" type="text" style="display:none">
-                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:2,required:true,min:0,width:160,height:32" value="0" data-flag="FirstAttention_SellUserReward" name="FirstAttention_SellUserReward" type="text" >
+                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:2,required:true,min:0,width:100,height:32" value="0" data-flag="FirstAttention_SellUserReward" name="FirstAttention_SellUserReward" type="text" >
                                     </label>元
                             </div>
                             <div class="commonSelectWrap" >
                                 <em class="tit">分销商：</em>
                                     <label class="searchInput" >
-                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:2,required:true,min:0,width:160,height:32" value="0" data-flag="FirstAttention_RetailTraderReward" name="FirstAttention_RetailTraderReward" type="text" >
+                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:2,required:true,min:0,width:100,height:32" value="0" data-flag="FirstAttention_RetailTraderReward" name="FirstAttention_RetailTraderReward" type="text" >
                                     </label>元
                            </div>
     
@@ -48,31 +48,31 @@
                                 <em class="tit">销售员：</em>
                                     <label class="searchInput" >
                                         <input name="FirstTrade_RetailRewardRuleID" type="text" style="display:none">
-                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="FirstTrade_SellUserReward" name="FirstTrade_SellUserReward" type="text" >
+                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="FirstTrade_SellUserReward" name="FirstTrade_SellUserReward" type="text" >
                                     </label>%
                             </div>
                             <div class="commonSelectWrap" >
                                 <em class="tit">分销商：</em>
                                     <label class="searchInput" >
-                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="FirstTrade_RetailTraderReward" name="FirstTrade_RetailTraderReward" type="text" >
+                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="FirstTrade_RetailTraderReward" name="FirstTrade_RetailTraderReward" type="text" >
                                     </label>%
                            </div>
     
                             </div><!--panlDivEnd-->
                             <div class="panlDiv ">
-                            <p  class="title lineH30">会员3个月内消费奖励比例，按每笔成交总额</p>
-                            <p  class="title explain lineH30">(说明：设置“会员首笔消费奖励后”，此项设置不包括首笔的奖励规则；如不设置则此项设置包括首笔奖励规则)</p>
+                            <p  class="title ">会员3个月内消费奖励比例，按每笔成交总额</p>
+                            <p  class="explain lineH30">(说明：设置“会员首笔消费奖励后”，此项设置不包括首笔的奖励规则；如不设置则此项设置包括首笔奖励规则)</p>
                             <div class="commonSelectWrap">
                                 <em class="tit">销售员：</em>
                                     <label class="searchInput" >
                                                <input name="AttentThreeMonth_RetailRewardRuleID" type="text" style="display:none">
-                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="AttentThreeMonth_SellUserReward" name="AttentThreeMonth_SellUserReward" type="text" >
+                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="AttentThreeMonth_SellUserReward" name="AttentThreeMonth_SellUserReward" type="text" >
                                     </label>%
                             </div>
                             <div class="commonSelectWrap" >
                                 <em class="tit">分销商：</em>
                                     <label class="searchInput" >
-                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="AttentThreeMonth_RetailTraderReward" name="AttentThreeMonth_RetailTraderReward" type="text" >
+                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="AttentThreeMonth_RetailTraderReward" name="AttentThreeMonth_RetailTraderReward" type="text" >
                                     </label>%
                            </div>
     
@@ -88,13 +88,13 @@
                                 <em class="tit">销售员：</em>
                                     <label class="searchInput" >
                                       <input name="FirstAttention_RetailRewardRuleID" type="text" style="display:none">
-                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:2,required:true,min:0,width:160,height:32" value="0" data-flag="FirstAttention_SellUserReward" name="FirstAttention_SellUserReward" type="text" >
+                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:2,required:true,min:0,width:100,height:32" value="0" data-flag="FirstAttention_SellUserReward" name="FirstAttention_SellUserReward" type="text" >
                                     </label>元
                             </div>
                             <div class="commonSelectWrap" >
                                 <em class="tit">分销商：</em>
                                     <label class="searchInput" >
-                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:2,required:true,min:0,width:160,height:32" value="0" data-flag="FirstAttention_RetailTraderReward" name="FirstAttention_RetailTraderReward" type="text" >
+                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:2,required:true,min:0,width:100,height:32" value="0" data-flag="FirstAttention_RetailTraderReward" name="FirstAttention_RetailTraderReward" type="text" >
                                     </label>元
                            </div>
     
@@ -105,31 +105,31 @@
                                 <em class="tit">销售员：</em>
                                     <label class="searchInput" >
                                     <input name="FirstTrade_RetailRewardRuleID" type="text" style="display:none">
-                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="FirstTrade_SellUserReward" name="FirstTrade_SellUserReward" type="text" >
+                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="FirstTrade_SellUserReward" name="FirstTrade_SellUserReward" type="text" >
                                     </label>%
                             </div>
                             <div class="commonSelectWrap" >
                                 <em class="tit">分销商：</em>
                                     <label class="searchInput" >
-                                       <input  data-text="优惠券面值" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="FirstTrade_RetailTraderReward" name="FirstTrade_RetailTraderReward" type="text" >
+                                       <input  data-text="优惠券面值" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="FirstTrade_RetailTraderReward" name="FirstTrade_RetailTraderReward" type="text" >
                                     </label>%
                            </div>
     
                             </div><!--panlDivEnd-->
                             <div class="panlDiv ">
-                            <p  class="title lineH30">会员3个月内消费奖励比例，按每笔成交总额</p>
-                            <p  class="title explain lineH30">(说明：设置“会员首笔消费奖励后”，此项设置不包括首笔的奖励规则；如不设置则此项设置包括首笔奖励规则)</p>
+                            <p  class="title ">会员3个月内消费奖励比例，按每笔成交总额</p>
+                            <p  class=" explain lineH30">(说明：设置“会员首笔消费奖励后”，此项设置不包括首笔的奖励规则；如不设置则此项设置包括首笔奖励规则)</p>
                             <div class="commonSelectWrap">
                                 <em class="tit">销售员：</em>
                                     <label class="searchInput" >
                                     <input name="AttentThreeMonth_RetailRewardRuleID" type="text" style="display:none">
-                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="AttentThreeMonth_SellUserReward" name="AttentThreeMonth_SellUserReward" type="text" >
+                                         <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="AttentThreeMonth_SellUserReward" name="AttentThreeMonth_SellUserReward" type="text" >
                                     </label>%
                             </div>
                             <div class="commonSelectWrap" >
                                 <em class="tit">分销商：</em>
                                     <label class="searchInput" >
-                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="AttentThreeMonth_RetailTraderReward" name="AttentThreeMonth_RetailTraderReward" type="text" >
+                                       <input  data-text="分销商" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="AttentThreeMonth_RetailTraderReward" name="AttentThreeMonth_RetailTraderReward" type="text" >
                                     </label>%
                            </div>
                            
@@ -149,24 +149,24 @@
                         	<form id="addSalseWay" class="">
                                 <div class="panlDiv ">
                                 	<div style="display:inline-block;width:100%;">
-                                        <div class="commonSelectWrap" style="position:relative;left:-61px;">
+                                        <div class="commonSelectWrap" style="position:relative;left:-48px;">
                                             <em class="tit">商品分销价比例：</em>
                                                 <label class="searchInput" >
-                                                     <input  data-text="商品分销价比例" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="" name="ItemSalesPriceRate" type="text" >
+                                                     <input  data-text="商品分销价比例" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="" name="ItemSalesPriceRate" type="text" >
                                                 </label>%
                                         </div>
                                     </div>
-                                    <p class="explain" style="clear:left;">分销价=商品价格*百分比</p>
+                                    <p class="explain" style="clear:left;  margin-left: 110px;">分销价=商品价格*百分比</p>
                                     <div class="commonSelectWrap">
                                         <em class="tit">销售员：</em>
                                             <label class="searchInput">
-                                                 <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="" name="SellUserReward" type="text" >
+                                                 <input  data-text="销售员" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="" name="SellUserReward" type="text" >
                                             </label>%
                                     </div>
                                     <div class="commonSelectWrap" >
                                         <em class="tit">分销商：</em>
                                             <label class="searchInput" >
-                                               <input  data-text="分销商" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:160,height:32" value="0" data-flag="" name="RetailTraderReward" type="text" >
+                                               <input  data-text="分销商" class="easyui-numberbox" data-options="precision:0,required:true,min:0,width:100,height:32" value="0" data-flag="" name="RetailTraderReward" type="text" >
                                             </label>%
                                     </div>
                                     

@@ -47,7 +47,7 @@
         <!--表格操作按钮-->
         <div id="menuItems" class="optionBtn">
             <!--<span class="commonBtn _addVip">添加新会员</span>-->
-            <span class="commonBtn exportBtn w80 r">打印</span>
+            <span class="commonBtn exportBtn w80 r" style="display:none;">打印</span>
             <span class="commonBtn affirmBtn w80 l" data-statusid=1>确认</span>
             <span class="commonBtn finishBtn w80 l" data-statusid=2>完成</span>
 
