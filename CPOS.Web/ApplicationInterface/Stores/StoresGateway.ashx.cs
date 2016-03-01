@@ -121,18 +121,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
 
                 #region 获取微信帐号
                 //门店关联的公众号
-                var tueBll = new TUnitExpandBLL(loggingSessionInfo);
-                var tueEntity = new TUnitExpandEntity();
+                var tuBll = new t_unitBLL(loggingSessionInfo);
+                var tuEntity = new t_unitEntity();
                 if (!string.IsNullOrEmpty(RP.Parameters.unitId))
                 {
-                    tueEntity = tueBll.QueryByEntity(new TUnitExpandEntity() { UnitId = RP.Parameters.unitId }, null).FirstOrDefault();
+                    tuEntity = tuBll.QueryByEntity(new t_unitEntity() { unit_id = RP.Parameters.unitId }, null).FirstOrDefault();
                 }
 
                 var server = new WApplicationInterfaceBLL(loggingSessionInfo);
                 var wxObj = new WApplicationInterfaceEntity();
-                if (tueEntity != null && !string.IsNullOrEmpty(tueEntity.Field1))
+                if (tuEntity != null && !string.IsNullOrEmpty(tuEntity.weiXinId))
                 {
-                    wxObj = server.QueryByEntity(new WApplicationInterfaceEntity { AppID = tueEntity.Field1, CustomerId = customerId }, null).FirstOrDefault();
+                    wxObj = server.QueryByEntity(new WApplicationInterfaceEntity { WeiXinID = tuEntity.weiXinId, CustomerId = customerId }, null).FirstOrDefault();
                 }
                 else
                 {
