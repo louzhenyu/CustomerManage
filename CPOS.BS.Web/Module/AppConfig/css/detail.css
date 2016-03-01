@@ -1,7 +1,7 @@
 @charset "utf-8";
 #section{background-color: #f4f8fa;}
 .savePanel{ height:94px; padding-top: 20px; background-color: #ebf1f4;}
-.commonOptsBtn{ text-align:center; border: 1px solid #d0d5d8; width: 300px;margin-left: 29px; margin-top: 24px;}
+.commonOptsBtn{ background-color:#fff;text-align:center; border: 1px solid #d0d5d8; width: 300px;margin-left: 29px; margin-top: 24px;}
 .iconJ{ width:26px; height:26px; }
 .commonOptsBtn .iconJ{ margin: -13px auto; background:url("../images/upJiantou.png") no-repeat center center;}
 .commonOptsBtn p{ font-size: 14px; color: #666; line-height: 36px;}

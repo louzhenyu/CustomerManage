@@ -44,8 +44,9 @@
 
             });
             that.elems.simpleQueryDiv.delegate(".commonBtn","click",function(e){
-                var mid = JITMethod.getUrlParam("mid");
-                location.href = "activiDetail.aspx?mid=" + mid;
+               /* var mid = JITMethod.getUrlParam("mid");
+                location.href = "activiDetail.aspx?mid=" + mid;*/
+                $.util.toNewUrlPath("activiDetail.aspx")
             });
             /**************** -------------------弹出easyui 控件 start****************/
             var  wd=160,H=32;
@@ -107,7 +108,8 @@
                 }
                 if(optType=="exit"){
                     var mid = $.util.getUrlParam("mid");
-                    location.href = "activiDetail.aspx?mid=" + mid+"&VipCardTypeID="+row.VipCardTypeID;
+
+                    $.util.toNewUrlPath("activiDetail.aspx?VipCardTypeID="+row.VipCardTypeID);
                 }
             });
             /**************** -------------------列表操作事件用例 End****************/

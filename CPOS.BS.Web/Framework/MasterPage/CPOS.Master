@@ -376,7 +376,7 @@
     }, function () {
         $(this).children("img.hides").animate({ marginRight: '-90px' }, 'slow', function () { $(this).hide(); $(this).next("img.shows").show(); });
     });
-    $(".leftsead .help a").hover(function () {
+    $(".leftsead .hover a").hover(function () {
         $(this).children("img.hides").show();
         $(this).children("img.shows").hide();
 

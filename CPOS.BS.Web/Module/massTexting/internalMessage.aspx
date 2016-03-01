@@ -17,7 +17,7 @@
                 <!--个别信息查询-->
                 <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
                     <div class="optionBtn" data-opttype="staus">
-                                         <div class="commonBtn"  data-showstaus="1" >新建内部消息</div>
+                                         <div class="commonBtn icon w120 icon_add r"  data-showstaus="1" >新建内部消息</div>
                                          <!-- <div class="commonBtn" data-status="2" data-showstaus="1,3,4,5"  >取消申请</div>-->
                     </div>
                     <!--<h2 class="commonTitle">会员查询</h2>-->

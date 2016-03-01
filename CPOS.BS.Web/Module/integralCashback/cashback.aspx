@@ -46,8 +46,8 @@
                                         <div class="linetext"> <em class="txt"> 每单可使用返现上限：</em>  <input type="text" value="" name="CashRedeemUpLimit" class="easyui-numberbox"  data-options="min:0,precision:0"> %  <em class="explain">（按订单实付金额比例设置）</em></div>
                                 </div>
                                 <div class="rowRline">
-                                        <div class="linetext" style="float: left;"><em class="txt">返现有效期:</em> <input type="text" name="CashValidPeriod" value="2" class="easyui-numberbox"  data-options="min:1,precision:0"> 年 </div>  <em style="color: #ff0000;float: left; margin: 6px;">例如：返现有效期为2年，则客户2013年度（2013/1/1 - 2013/12/31）<br />
-                                                                                                                                                                                                                       累计的所有返现，次年年底（2014/12/31）返现到期。</em>
+                                        <div class="linetext" style="float: left;"><em class="txt">返现有效期：</em> <input type="text" name="CashValidPeriod" value="2" class="easyui-numberbox"  data-options="min:1,precision:0"> 年 </div>  <em style="color: #ff0000;float: left; margin: 6px;">例如：返现有效期为2年，则客户2013年度（2018/1/1 - 2018/12/31）<br />
+                                                                                                                                                                                                                       累计的所有返现，次年年底（2019/12/31）返现到期。</em>
                                 </div>
 
                                 </div>

@@ -110,7 +110,9 @@
         },
 
         update:function(){
-            $('#win').window({title:"促销分组",width:400,height:230});
+            var top=$(document).scrollTop()+60;
+
+            $('#win').window({title:"商品营销分组",width:400,height:230,top:top,left:($(window).width()-400)*0.5});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_addProm');

@@ -146,9 +146,9 @@
                 ]],*/
                 columns : [[
 
-                    {field : 'Title',title : '标题',width:165,align:'center',resizable:false},
-                    {field : 'CreateByName',title : '操作人',width:100,align:'center',resizable:false},
-                    {field: 'NewsUserCount', title: '发送状态', width: 120, align: 'left', resizable: false,
+                    {field : 'Title',title : '标题',width:165,align:'left',resizable:false},
+                    {field : 'CreateByName',title : '操作人',width:100,align:'left',resizable:false},
+                    {field: 'NewsUserCount', title: '发送状态', width: 121, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                            /* NewsUserCount	int	送达人数
                             ReadUserCount	int	阅读人数*/
@@ -164,10 +164,10 @@
                     },
 
 
-                    {field : 'CreateTimeStr',title : '发送日期',width:120,align:'left',resizable:false},
-                    {field : '',title : '删除',width:80,align:'left',resizable:false,
+                    {field : 'CreateTimeStr',title : '发送日期',width:120,align:'center',resizable:false},
+                    {field : 'GroupNewsId',title : '删除',width:41,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
+                            return '<p class="fontC delete opt" data-index="'+index+'" data-oprtype="del"></p>';
                         }
                     }
                 ]],

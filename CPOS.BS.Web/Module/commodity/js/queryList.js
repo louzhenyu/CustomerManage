@@ -104,7 +104,7 @@
                 onShow: function(){
                     var nodes=$("#Tooltip").find(".treeNode").tree('getChecked');
                     $.each(nodes,function(){
-                        var me=this
+                        var me=this;
                         $("#Tooltip").find(".treeNode").tree('uncheck',me.target);
                     });
                     var t = $(this);

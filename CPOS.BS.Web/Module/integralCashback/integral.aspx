@@ -36,7 +36,7 @@
                                 <div class="mainTitle">获取积分规则</div>
                                 <div class="rowRline">会员消费回馈积分请在“会员卡-卡类型管理”中设置</div>
                              <div class="rowRline">
-                                    <div class="linetext"><em class="txt">每单赠送积分上限:</em> <input type="text" name="PointsOrderUpLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分  <em class="explain">（0或空代表不限制）</em></div>
+                                    <div class="linetext"><em class="txt">每单赠送积分上限：</em> <input type="text" name="PointsOrderUpLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分  <em class="explain">（0或空代表不限制）</em></div>
                              </div>
                               <div class="mainTitle">使用积分规则</div>
                              <div class="rowRline">
@@ -46,10 +46,10 @@
                                     <div class="linetext"><em class="txt">账户积分累计满：</em> <input type="text" name="PointsRedeemLowestLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 才可使用积分 <em class="explain">（积分数未达到此限制不允许抵扣，0或空代表不限制）</em></div>
                              </div>
                              <div class="rowRline">
-                                    <div class="linetext"><em class="txt"> 每单可使用积分上限:</em> <input type="text" value="" name="PointsRedeemUpLimit" class="easyui-numberbox"  data-options="min:0,precision:0"> %  <em class="explain">（按订单实付金额比例设置）</em></div>
+                                    <div class="linetext"><em class="txt"> 每单可使用积分上限：</em> <input type="text" value="" name="PointsRedeemUpLimit" class="easyui-numberbox"  data-options="min:0,precision:0"> %  <em class="explain">（按订单实付金额比例设置）</em></div>
                              </div>
                              <div class="rowRline">
-                                    <div class="linetext" style="float: left;"><em class="txt">积分有效期:</em> <input type="text" name="PointsValidPeriod" value="2" class="easyui-numberbox"  data-options="min:1,precision:0"> 年</div>  <em class="explain" style="color: #ff0000;float: left; margin: 6px;">例如：积分有效期为2年，则客户2018年度（2018/1/1 - 2018/12/31）<br/>
+                                    <div class="linetext" style="float: left;"><em class="txt">积分有效期：</em> <input type="text" name="PointsValidPeriod" value="2" class="easyui-numberbox"  data-options="min:1,precision:0"> 年</div>  <em class="explain" style="color: #ff0000;float: left; margin: 6px;">例如：积分有效期为2年，则客户2018年度（2018/1/1 - 2018/12/31）<br/>
                                                                                                                                                                                                                                           累计的所有积分，次年年底（2019/12/31）积分到期</em>
                              </div>
 

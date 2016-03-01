@@ -19,7 +19,7 @@
 .listBtn{ width: 110px; height:34px; float: left;cursor: pointer; text-align: center; line-height: 34px; color: #999; font-size: 14px; background: #fff; position: relative; margin-right: 25px; border:1px solid #e1e1e1 ; margin-bottom: 20px; border-radius: 5px;}
 .listBtn .on{ background:url("../images/duihao.png") no-repeat; width: 27px; height:22px; position:absolute; right: 0; bottom: 0;display: none}
 
-.listBtn.show{ border-color: #07c8cf;color: #00cccc}
+.listBtn.show{ border-color: #00a0e8;color: #00a0e8;}
 .listBtn.show .on{ display: block;}
 
 #nav01 .commonSelectWrap{ margin:16px 20px 16px 0;font-size:14px;}

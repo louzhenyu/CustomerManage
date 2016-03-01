@@ -38,7 +38,7 @@
                                    <div class="wrapInput" style="width: 432px;">\
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect"  style="width: 100%">\
-												    <option value ="cg-null" <%if(!TypeId){%>selected="selected"<%}%>>选择链接到的模块</option>\
+												    <option value ="cg-null" <%if(!TypeId){%>selected="selected"<%}%>>请选择</option>\
 												    <option value ="cg-3" <%if(TypeId==3){%>selected="selected"<%}%>>自定义链接</option>\
 												    <option value ="cg-35" <%if(TypeId==35){%>selected="selected"<%}%>>图文素材</option>\
 											    </select>\
@@ -63,7 +63,7 @@
                                  <div class="wrapInput" style="width: 420px;">\
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect" style="width: 100%">\
-												    <option value ="cg-null" >选择链接到的模块</option>\
+												    <option value ="cg-null" >请选择</option>\
 												    <option value ="cg-3" >自定义链接</option>\
 												    <option value ="cg-35" >图文素材</option>\
 											    </select>\
@@ -121,7 +121,7 @@
 										    <div class="wrapInput">\
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
-											        <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%>>选择链接到的模块</option>\
+											        <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%>>请选择</option>\
 												    <option value ="cg-1" <%if(idata.typeId==1){%>selected="selected"<%}%>>商品品类</option>\
 												    <option value ="cg-2"<%if(idata.typeId==2){%>selected="selected"<%}%>>产品</option>\
 												    <option value ="cg-3"<%if(idata.typeId==3){%>selected="selected"<%}%>>自定义链接</option>\
@@ -153,7 +153,7 @@
 										    <div class="wrapInput">\
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
-											    <option value ="cg-null">选择链接到的模块</option>\
+											    <option value ="cg-null">请选择</option>\
 												    <option value ="cg-1">商品品类</option>\
 												    <option value ="cg-2">产品</option>\
 												    <option value ="cg-3">自定义链接</option>\
@@ -587,7 +587,7 @@
 								<div class="wrapInput">\
 									<p class="typeContainer mb-15">\
 									<select class="jsTypeSelect">\
-									<option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >选择链接到的模块</option>\
+									<option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >请选择</option>\
 									   <option value ="cg-1"  <%if(idata.typeId==1){%>selected="selected"<%}%> >商品品类</option>\
 										<option value ="cg-2" <%if(idata.typeId==2){%>selected="selected"<%}%> >商品</option>\
 										<option value ="cg-4" <%if(idata.typeId==4){%>selected="selected"<%}%> >商品分组</option>\
@@ -616,7 +616,7 @@
 								<div class="wrapInput">\
 									<p class="typeContainer mb-15">\
 									<select class="jsTypeSelect">\
-									<option value ="cg-null"  >选择链接到的模块</option>\
+									<option value ="cg-null"  >请选择</option>\
 									   <option value ="cg-1"  >商品品类</option>\
 										<option value ="cg-2" >商品</option>\
 										<option value ="cg-4"  >商品分组</option>\
@@ -813,7 +813,7 @@
 										    <div class="wrapInput">\
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
-											       <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >选择链接到的模块</option>\
+											       <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >请选择</option>\
 												    <option value ="cg-1"<%if(idata.typeId==1){%>selected="selected"<%}%>>商品品类</option>\
 												    <option value ="cg-2"<%if(idata.typeId==2){%>selected="selected"<%}%>>产品</option>\
 												    <option value ="cg-3" <%if(idata.typeId==3){%>selected="selected"<%}%> >自定义链接</option>\
@@ -847,7 +847,7 @@
 										    <div class="wrapInput">\
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
-											    <option value ="cg-null"  selected="selected">选择链接到的模块</option>\
+											    <option value ="cg-null"  selected="selected">请选择</option>\
 												    <option value ="cg-1">商品品类</option>\
 												    <option value ="cg-2">产品</option>\
 													<option value ="cg-3">自定义链接</option>\
@@ -896,7 +896,7 @@
 										    <div class="wrapInput">\
 											    <p class="typeContainer mb-15">\
 											    <select class="jsTypeSelect">\
-													<option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >选择链接到的模块</option>\
+													<option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >请选择</option>\
 									   				<option value ="cg-1"  <%if(idata.typeId==1){%>selected="selected"<%}%> >商品品类</option>\
 													<option value ="cg-2" <%if(idata.typeId==2){%>selected="selected"<%}%> >商品</option>\
 													<option value ="cg-3" <%if(idata.typeId==3){%>selected="selected"<%}%> >自定义链接</option>\
@@ -925,7 +925,7 @@
                                             <div class="wrapInput">\
                                                 <p class="typeContainer mb-15">\
                                                 <select class="jsTypeSelect">\
-													<option value ="cg-null"  >选择链接到的模块</option>\
+													<option value ="cg-null"  >请选择</option>\
 									   				<option value ="cg-1"  >商品品类</option>\
 													<option value ="cg-2" >商品</option>\
 													<option value ="cg-3" >自定义链接</option>\
@@ -1152,7 +1152,7 @@
 						<div class="wrapInput" style="width: 442px;float: left;">\
 							<p class="typeContainer mb-15">\
 					          <select class="jsTypeSelect" style="width: 425px;margin-left:8px;float: left;">\
-											       <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >选择链接到的模块</option>\
+											       <option value ="cg-null"  <%if(!idata.typeId){%>selected="selected"<%}%> >请选择</option>\
 												    <option value ="cg-1"    <%if(idata.typeId==1){%>selected="selected"<%}%>>商品品类</option>\
 												    <option value ="cg-4"    <%if(idata.typeId==4){%>selected="selected"<%}%> >商品分组</option>\
 											    </select>\
@@ -1169,7 +1169,7 @@
 						<div class="wrapInput" style="width: 442px;float: left;">\
 							<p class="typeContainer mb-15">\
 					          <select class="jsTypeSelect" style="width: 425px;margin-left: 8px;float: left;">\
-											       <option value ="cg-null">选择链接到的模块</option>\
+											       <option value ="cg-null">请选择</option>\
 												    <option value ="cg-1"  >商品品类</option>\
 												    <option value ="cg-4" >商品分组</option>\
 											    </select>\

@@ -36,7 +36,7 @@
                               </div>
                              
                              <div class="rowRline">
-                                    <div class="linetext"><em class="txt">每单赠送积分上限:</em> <input type="text" name="PointsOrderUpLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分  <em class="explain">（0或空代表不限制）</em></div>
+                                    <div class="linetext"><em class="txt">每单赠送积分上限：</em> <input type="text" name="PointsOrderUpLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分  <em class="explain">（0或空代表不限制）</em></div>
                              </div>
                              <div class="rowRline">
                                     <div class="linetext"><em class="txt">积分抵扣比例：</em> <input type="text" value="" name="RewardPointsPer" class="easyui-numberbox"  data-options="min:0,precision:0"> 积分抵扣1元 </div>
@@ -45,10 +45,10 @@
                                     <div class="linetext"><em class="txt">账户积分累计满：</em> <input type="text" name="PointsRedeemLowestLimit" value="" class="easyui-numberbox"  data-options="min:0,precision:0"> 才可使用积分 <em class="explain">（积分数未达到此限制不允许抵扣，0或空代表不限制）</em></div>
                              </div>
                              <div class="rowRline">
-                                    <div class="linetext"><em class="txt"> 每单可使用积分上限:</em> <input type="text" value="" name="PointsRedeemUpLimit" class="easyui-numberbox"  data-options="min:0,precision:0"> %  <em class="explain">（按订单实付金额比例设置）</em></div>
+                                    <div class="linetext"><em class="txt"> 每单可使用积分上限：</em> <input type="text" value="" name="PointsRedeemUpLimit" class="easyui-numberbox"  data-options="min:0,precision:0"> %  <em class="explain">（按订单实付金额比例设置）</em></div>
                              </div>
                              <div class="rowRline">
-                                    <div class="linetext"><em class="txt">积分有效期:</em> <input type="text" name="PointsValidPeriod" value="2" class="easyui-numberbox"  data-options="min:1,precision:0"> 年 </div>
+                                    <div class="linetext"><em class="txt">积分有效期：</em> <input type="text" name="PointsValidPeriod" value="2" class="easyui-numberbox"  data-options="min:1,precision:0"> 年 </div>
                              </div>
                              <div class="tipTextBox">
                              		例如：积分有效期为2年，则客户2013年度（2013/1/1 - 2013/12/31）<br />

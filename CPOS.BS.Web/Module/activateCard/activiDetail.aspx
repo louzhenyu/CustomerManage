@@ -87,6 +87,7 @@
                       <div class="line">
                       <div class="commonSelectWrap" style="height: 158px;">
                                     <em class="tit" style="width: 49px;"></em>
+                                    <em class="tit" style="width: 49px;"></em>
                          <div class="handleLayer" id="editLayer">
                              <div class="jsAreaItem">
 
@@ -164,7 +165,7 @@
                    <!--商品详情-->
                    <div class="panelDiv cursorDef" id="nav02" data-index="1">
                     <div class="optBtnPanel">
-                         <div class="commonBtn icon w80 icon_add" id="addDatetime">添加</div>
+                         <div class="commonBtn icon w80 icon_add r" id="addDatetime">新增</div>
                     </div>
                    <div  id="gridTable" class="gridLoading">
                          <div  class="loading">
@@ -187,7 +188,7 @@
                   <div class="zsy"></div>
 
                 <div class="btnopt" data-falg="nav01">
-                 <div class=" commonBtn bgWhite prevStepBtn"   data-flag="#nav01">上一步</div>
+                 <div class=" commonBtn bgWhite prevStepBtn l"   data-flag="#nav01">上一步</div>
                 <div class=" commonBtn nextStepBtn r"  id="submitBtn" data-flag="#nav02">下一步</div>
                  <!--<div class="commonBtn bgCcc"  data-flag="#nav02">取消</div>-->
             </div>

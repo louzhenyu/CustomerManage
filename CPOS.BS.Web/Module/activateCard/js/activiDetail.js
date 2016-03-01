@@ -326,8 +326,8 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
          //特殊日期操作
         addDatetime:function(){
             var that=this;
-
-            $('#win').window({title:"特殊日期",width:444,height:335,top:($(window).height()-310)/2,left:($(window).width()-444)/2 });
+            var top=$(document).scrollTop()+60;
+            $('#win').window({title:"特殊日期",width:444,height:335,top:top,left:($(window).width()-444)/2 });
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_addDatetime');
