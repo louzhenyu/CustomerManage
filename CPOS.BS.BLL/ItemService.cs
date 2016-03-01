@@ -1026,7 +1026,7 @@ namespace JIT.CPOS.BS.BLL
                     {
                         imageURL = "http://" + imageURL;
                     }
-                    imageURL = CombinImage(weixinDomain + @"/HeadImage/qrcodeBack.jpg", imageURL, itemName);
+                    imageURL = CombinImage(weixinDomain + @"/QRCodeImage/qrcodeBack.jpg", imageURL, itemName);
                 }
 
                 //把下载下来的图片的地址存到ObjectImages
@@ -1047,10 +1047,10 @@ namespace JIT.CPOS.BS.BLL
                 imageURL = objectImagesEntityArray[0].ImageURL;
             }
             string imagePath = "";
-            if (imageURL.IndexOf("HeadImage") > -1)
+            if (imageURL.IndexOf("QRCodeImage") > -1)
             {
                 string dirPath = System.AppDomain.CurrentDomain.BaseDirectory;
-                var imageName = imageURL.Substring(imageURL.IndexOf("HeadImage")).Replace("/", @"\");
+                var imageName = imageURL.Substring(imageURL.IndexOf("QRCodeImage")).Replace("/", @"\");
                 imagePath = dirPath + imageName;//整个
             }
             else
@@ -1112,10 +1112,10 @@ namespace JIT.CPOS.BS.BLL
             System.Drawing.Image newImg = Image.FromStream(ms);//生成的新的图片
             //把新图片保存下来
             string DownloadUrl = ConfigurationManager.AppSettings["website_WWW"];
-            string host = DownloadUrl + "/HeadImage/";
+            string host = DownloadUrl + "/QRCodeImage/";
             //创建下载根文件夹
             //var dirPath = @"C:\DownloadFile\";
-            var dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "HeadImage\\";
+            var dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "QRCodeImage\\";
             if (!Directory.Exists(dirPath))
             {
                 Directory.CreateDirectory(dirPath);
