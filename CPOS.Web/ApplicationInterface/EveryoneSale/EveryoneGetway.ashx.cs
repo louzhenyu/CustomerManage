@@ -85,7 +85,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 case "GetCollectOrderList":      //获取我的银行卡
                     rst = GetCollectOrderList(pRequest);
                     break;
-                default:
+<<<<<<< .mine=======
+>>>>>>> .theirs                default:
                     throw new APIException(string.Format("找不到名为：{0}的Action方法。", pAction));
             }
             return rst;
@@ -190,7 +191,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             DataSet dt = everyoneBll.GetVipCount(rp.CustomerID, rp.Parameters.PageSize, rp.Parameters.PageIndex, rp.ChannelId);
 
             //单独查询用户自己的集客情况
-            DataSet Userdt = everyoneBll.GetRankingByUserID(rp.CustomerID,rp.UserID,rp.ChannelId);
+            DataSet Userdt = everyoneBll.GetRankingByUserID(rp.CustomerID, rp.UserID, rp.ChannelId);
 
             //把查询的数据转化为返回的数据
             UserInfo userinfo = null;
@@ -246,7 +247,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             DataSet dt = everyoneBll.GetVipAccount(rp.CustomerID, rp.Parameters.PageSize, rp.Parameters.PageIndex, rp.ChannelId);
 
             //查询当前用户收入情况
-            DataSet Userdt = everyoneBll.GetVipAccountRankingByUserID(rp.CustomerID,rp.UserID,rp.ChannelId);
+            DataSet Userdt = everyoneBll.GetVipAccountRankingByUserID(rp.CustomerID, rp.UserID, rp.ChannelId);
 
             //把查询的数据转化为返回的数据
             UserAccountInfo useraccountinfo = null;
@@ -653,25 +654,27 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             var tempVipList = vipBll.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), rp.Parameters.PageSize, rp.Parameters.PageIndex + 1);
 
             List<IWhereCondition> allComplexCondition = new List<IWhereCondition> { };
-            List<IWhereCondition> registeredComplexCondition = new List<IWhereCondition> { };
-            List<IWhereCondition> latentComplexCondition = new List<IWhereCondition> { };
-            List<IWhereCondition> disabledComplexCondition = new List<IWhereCondition> { };
-
+            //List<IWhereCondition> registeredComplexCondition = new List<IWhereCondition> { };
+            //List<IWhereCondition> latentComplexCondition = new List<IWhereCondition> { };
+            //List<IWhereCondition> disabledComplexCondition = new List<IWhereCondition> { };
             allComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
+            allComplexCondition.Add(new DirectCondition("(Status=0 or Status=1 or Status=2)"));//0:停用 1:潜在会员 2:注册会员
 
-            registeredComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
-            registeredComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 2 });//注册会员状态
+            //registeredComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
+            //registeredComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 2 });//注册会员状态
 
-            latentComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
-            latentComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 1 });//潜在会员状态
+            //latentComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
+            //latentComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 1 });//潜在会员状态
 
-            disabledComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
-            disabledComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 0 });//停用会员状态
+            //disabledComplexCondition.Add(new EqualsCondition() { FieldName = "SetoffUserId", Value = rp.UserID });//会员上线ID
+            //disabledComplexCondition.Add(new EqualsCondition() { FieldName = "Status", Value = 0 });//停用会员状态
+            var CountVipList = vipBll.Query(allComplexCondition.ToArray(), null).ToList();
 
-            rd.MyVipCount = vipBll.Query(allComplexCondition.ToArray(), lstOrder.ToArray()).Length;  //注册会员行数
-            rd.Registered = vipBll.Query(registeredComplexCondition.ToArray(), lstOrder.ToArray()).Length;  //注册会员行数
-            rd.Latent = vipBll.Query(latentComplexCondition.ToArray(), lstOrder.ToArray()).Length;    //潜在会员行数
-            rd.Disabled = vipBll.Query(disabledComplexCondition.ToArray(), lstOrder.ToArray()).Length;    //停用会员行数
+
+            rd.MyVipCount = CountVipList.Count();  //注册会员行数
+            rd.Registered = CountVipList.Where(m => m.Status == 2).Count();  //注册会员行数
+            rd.Latent = CountVipList.Where(m => m.Status == 1).Count();    //潜在会员行数
+            rd.Disabled = CountVipList.Where(m => m.Status == 0).Count();    //停用会员行数
 
             #region 排名
             var everyoneBll = new EveryoneSalesBLL(loggingSessionInfo);
@@ -744,8 +747,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             var rd = new OrderChannelRD();
             rd.OrderChannelList = new List<OrderChannel>();
             rd.OrderChannelList.Add(new OrderChannel("3", "云店订单"));
-          //  rd.OrderChannelList.Add(new OrderChannel("16", "会员小店订单"));
-        rd.OrderChannelList.Add(new OrderChannel("17", "员工小店订单"));
+            //  rd.OrderChannelList.Add(new OrderChannel("16", "会员小店订单"));
+            rd.OrderChannelList.Add(new OrderChannel("17", "员工小店订单"));
             rd.OrderChannelList.Add(new OrderChannel("18", "门店订单"));
             rd.OrderChannelList.Add(new OrderChannel("19", "分销商订单"));
 
@@ -775,7 +778,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             var ServiceOrderList = new List<ServiceOrderDetail>();
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
-               ServiceOrderList = DataTableToObject.ConvertToList<ServiceOrderDetail>(ds.Tables[0]);
+                ServiceOrderList = DataTableToObject.ConvertToList<ServiceOrderDetail>(ds.Tables[0]);
                 //foreach (ServiceOrderDetail _orderDetail in ServiceOrderList)
                 //{
                 //    int i=0;
@@ -798,15 +801,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             }
 
             var rd = new ServiceOrderRD();
-         //   rd.OrderGroupList = orderGroupList;
+            //   rd.OrderGroupList = orderGroupList;
             rd.ServiceOrderList = ServiceOrderList;
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
 
 
-        
-            
+
+
         /// <summary>
         /// 销售（服务）订单
         /// </summary>
@@ -823,7 +826,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             LoggingSessionInfo loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
             T_InoutBLL bll = new T_InoutBLL(loggingSessionInfo);
             var ds = bll.GetCollectOrderList(order_no, OrderChannelID, userId, customerId, pageSize, pageIndex);
-              var ServiceOrderList = new List<ServiceOrderDetail>();
+            var ServiceOrderList = new List<ServiceOrderDetail>();
             List<ServiceOrderGroup> orderGroupList = new List<ServiceOrderGroup>();
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
@@ -850,7 +853,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
             }
 
             var rd = new ServiceOrderRD();
-           // rd.OrderGroupList = orderGroupList;
+            // rd.OrderGroupList = orderGroupList;
             rd.ServiceOrderList = ServiceOrderList;
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
