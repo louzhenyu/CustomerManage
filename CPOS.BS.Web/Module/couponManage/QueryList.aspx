@@ -29,7 +29,7 @@
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">面值：</em>
                                                       <div class="searchInput bordernone">
-                                                         <input data-text="面值" data-flag="ParValue" class="easyui-numberbox" data-options="min:0,precision:2, width:160,height:32" name="ParValue" type="text" value="">
+                                                         <input data-text="面值" data-flag="ParValue" class="easyui-numberbox" data-options="min:0,precision:2, width:200,height:32" name="ParValue" type="text" value="">
                                                       </div>
                                                   </div>
                                                   <div class="moreQueryWrap">

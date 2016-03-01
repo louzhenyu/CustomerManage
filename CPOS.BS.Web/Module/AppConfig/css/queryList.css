@@ -16,7 +16,7 @@
 .imgOpt{ padding-left:6px;  width: 120px;height: 32px; background: #e6e6e6; color: #5e5e5e; margin:0 auto;margin-bottom: 10px;}
 .imgOpt div{float: left;margin-right: 6px; width: 26px; height: 26px; margin-top: 3px; background-position: center center; background-repeat: no-repeat;}
 .imgOpt span{float: left;font-size: 15px;font-weight:bold; border-bottom: 2px solid #5e5e5e; height: 25px; line-height: 32px; }
-.imgOpt div.on{ background-color: #00cccc;}
+.imgOpt div.on{ background-color: #00a0e8;}
 .imgOpt .magnify { background-image: url("../images/magnifyB.png")}
 .imgOpt .shrink { background-image: url("../images/shrinkB.png")}
 .imgOpt .on.magnify { background-image: url("../images/magnifyW.png")}

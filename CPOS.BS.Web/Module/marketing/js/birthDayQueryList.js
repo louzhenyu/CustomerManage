@@ -49,7 +49,7 @@
                 $.util.toNewUrlPath("birthDayDetail.aspx?mid=" + mid);
             });
             /**************** -------------------初始化easyui 控件 start****************/
-            var  wd=160,H=32;
+            var  wd=200,H=32;
                 $("#StatusList").combobox({
                     width:wd,
                     height:H,

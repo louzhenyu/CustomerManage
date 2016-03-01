@@ -28,7 +28,7 @@
                                                                        <div class="commonSelectWrap">
                                                                            <em class="tit">活动状态：</em>
                                                                            <label class="searchInput selectBox">
-                                                                               <input id="StatusList" class="easyui-combobox" data-options="width:160,height:32" data-text="活动状态" data-flag="Status" name="Status" type="text">
+                                                                               <input id="StatusList" class="easyui-combobox" data-options="width:200,height:32" data-text="活动状态" data-flag="Status" name="Status" type="text">
                                                                            </label>
                                                                        </div>
 

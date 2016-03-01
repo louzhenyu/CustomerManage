@@ -45,7 +45,7 @@ font-size: 18px;
                                             <div class="commonSelectWrap">
                                                       <em class="tit">手机号：</em>
                                                       <div class="searchInput bordernone">
-                                                         <input data-text="手机号" validType="mobile"  class="easyui-numberbox" data-options=" width:160,height:32" name="Mobile" type="text" value="">
+                                                         <input data-text="手机号" validType="mobile"  class="easyui-numberbox" data-options=" width:200,height:32" name="Mobile" type="text" value="">
                                                       </div>
                                                   </div>
                                                   <div class="commonSelectWrap">
