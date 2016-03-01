@@ -434,7 +434,7 @@
 
                 <div class="panlDiv cursorDef">
                  <div class="title">商品信息</div>
-                 <div class="panlText" id="tableWrap">
+                 <div class="panlText" id="tableWrap" style="margin-left: 0px;">
                   <div class="table" id="commodity"></div>
 
                  </div>
@@ -442,7 +442,7 @@
                  <div class="panlDiv cursorDef" >
                                  <div class="title">订单操作记录
                                  </div>
-                                 <div class="panlText">
+                                 <div class="panlText" style="margin-left: 0px;">
                                   <div class="table" id="StatusList"></div>
 
                                  </div>

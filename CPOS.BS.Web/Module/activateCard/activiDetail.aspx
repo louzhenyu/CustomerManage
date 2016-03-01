@@ -64,8 +64,8 @@
                       
                       <div class="commonSelectWrap numberBox-100" style="clear:left">
                           <em class="tit" style="width:92px">售卡金额：</em>
-                          <label class="searchInput" style="width:100px;" >
-                            <input data-text="售卡金额" data-flag="" class="easyui-numberbox" data-options="min:0,precision:2,max:10000,tipPosition:'top'" name="Prices" type="text" value="">
+                          <label class="selectBox" style="width:100px;" >
+                            <input data-text="售卡金额" data-flag="" class="easyui-numberbox" data-options="height:30,min:0,precision:2,max:10000,tipPosition:'top'" name="Prices" type="text" value="">
                           </label>
                           <span class="monadBox">元</span>
                       </div>
@@ -73,8 +73,8 @@
                       
                       <div class="commonSelectWrap numberBox-100" style="margin-left:35px;">
                           <em class="tit" style="width:92px">积分换卡：</em>
-                          <label class="searchInput" style="width:100px;" >
-                            <input data-text="积分兑换" data-flag="ExchangeIntegral" class="easyui-numberbox" data-options="min:0,precision:0,max:10000,tipPosition:'top'" name="ExchangeIntegral" type="text" value="">
+                          <label class="selectBox" style="width:100px;" >
+                            <input data-text="积分兑换" data-flag="ExchangeIntegral" class="easyui-numberbox" data-options="height:30,min:0,precision:0,max:10000,tipPosition:'top'" name="ExchangeIntegral" type="text" value="">
                           </label>
                           <span class="monadBox">积分</span>
                       </div>

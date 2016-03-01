@@ -66,8 +66,6 @@
 .textF33{color:#f33;}
 .expText{display:inline-block;width:100%;text-align:left;line-height:22px;padding-top:10px;font-size:14px;color:#f33;}
 .radio em{margin-right:7px;}
-.commonSelectWrap.numberBox-100 .textbox,
-.commonSelectWrap.numberBox-100 .validatebox-text{width:96px !important;height:28px !important;border:none}
 .commonSelectWrap .searchInput input,.textbox .textbox-text{color:#999;}
 
 .ruleTipText{display:none;clear:left;padding-left:130px;color:#f00;}

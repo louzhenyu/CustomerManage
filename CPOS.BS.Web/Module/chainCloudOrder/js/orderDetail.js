@@ -397,11 +397,11 @@
                        if (getStr(orderinfo.Field1) == "1") {
                            orderinfo["paystatus"]= "已付款";
                            $(".commonBtn[data-optType='payment']").hide()
-                           $(".Paystatus").html("实付金额:");
+                           $(".Paystatus").html("实付金额：");
                            $(".PaystatusDetail").html("实付金额明细");
                        } else {
                            orderinfo["paystatus"] = "未付款";
-                           $(".Paystatus").html("应付金额:");
+                           $(".Paystatus").html("应付金额：");
                            $(".PaystatusDetail").html("应付金额明细");
                            if(orderinfo.status!="800"&&orderinfo.status!="900")
                            {
