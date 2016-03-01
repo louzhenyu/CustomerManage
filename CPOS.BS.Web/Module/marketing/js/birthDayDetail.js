@@ -135,7 +135,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 
                                    that.loadData.GetCardholderCount(function(data){
                                        debugger;
-                                      $(".tagPanel .optPanel  .hint").html(that.loadData.args.VipCardTypeName+"持卡人数:"+data.Data.Count+"人");
+                                      $(".tagPanel .optPanel  .hint").html(that.loadData.args.VipCardTypeName+"持卡人数："+data.Data.Count+"人");
                                    });
                                    //提交成功下一步的操作记录
                                     that.elems.submitBtn.html("下一步");

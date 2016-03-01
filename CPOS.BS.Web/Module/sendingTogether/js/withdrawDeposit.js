@@ -193,7 +193,7 @@
             $("#cc").combobox({//0待确认；1=已确认；2=已完成
                 valueField:'id',
                 textField:'text',
-                width:160,
+                width:200,
                 height:32,
                 data:[{
                     "id":"-1",

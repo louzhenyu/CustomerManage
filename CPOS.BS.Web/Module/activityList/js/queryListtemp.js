@@ -421,10 +421,6 @@
                 click: function(n){
                     this.selectPage(n);
                     that.loadMoreData2(n);
-                },
-                getHref: function (n) {
-                    this.selectPage(n);
-                    that.loadMoreData2(n);
                 }
             }, true);
         },

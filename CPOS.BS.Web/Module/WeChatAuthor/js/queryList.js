@@ -257,9 +257,9 @@
                             }
                         }},
                     {field : 'CreateTime',title : '授权时间',width:80,resizable:false,align:'center'},
-                    {field : 'CreateByName',title : '授权人',width:60,resizable:false,align:'center'},
+                    {field : 'CreateByName',title : '授权人',width:60,resizable:false,align:'left'},
 
-                    {field : 'CreateBy',title : '操作',width:30,align:'center',resizable:false,
+                    {field : 'CreateBy',title : '操作',width:30,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return "<div title='解绑' data-index="+index+" data-flag='unbundling' class='unbundling opt'></div>"
                         }

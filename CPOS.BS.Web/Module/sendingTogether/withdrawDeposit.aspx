@@ -30,7 +30,7 @@
             <div class="commonSelectWrap">
                 <em class="tit">状态：</em>
                 <div class="selectBox bordernone">
-                  <input id="cc" class="easyui-combobox" name="Status"  />
+                  <input id="cc" class="easyui-combobox"  style="width:200px;height: 32px;"  name="Status"  />
 
 
                 </div>

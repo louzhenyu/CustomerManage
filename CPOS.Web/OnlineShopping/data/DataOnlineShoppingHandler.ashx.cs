@@ -109,7 +109,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
 
                 var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
-                Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置
+                Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置 
 
                 var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId, reqObj.special.isStore, int.Parse(htSetting["socialSalesType"].ToString()), reqObj.special.sortName == null ? "modify_time" : reqObj.special.sortName, reqObj.special.sort == null ? "desc" : reqObj.special.sort);
                 sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取所有藏商品列表，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });

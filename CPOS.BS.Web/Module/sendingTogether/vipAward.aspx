@@ -40,7 +40,7 @@
              <div class="commonSelectWrap">
                              <em class="tit">门店：</em>
                              <div class="selectBox bordernone">
-                               <input id="unitTree" name="UnitID"  class="easyui-combotree" style="width:160px;height: 32px;"   />
+                               <input id="unitTree" name="UnitID"  class="easyui-combotree" style="width:200px;height: 32px;"   />
                              </div>
                          </div>
                          </div>

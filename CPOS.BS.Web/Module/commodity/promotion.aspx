@@ -47,7 +47,7 @@
 <script id="tpl_addProm" type="text/html">
            <form id="addProm">
       <div class="commonSelectWrap">
-      <em class="tit w100">商品分组名称：</em>
+      <em class="tit w120">商品分组名称：</em>
         <label class="searchInput" >
           <input data-text="商品分组名称" class="easyui-validatebox" data-options="required:true" data-flag="Item_Category_Name" name="Item_Category_Name" type="text" value="">
           <input name="Item_Category_Id" type="text" style="display: none"/>

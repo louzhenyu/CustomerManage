@@ -42,7 +42,7 @@
 	
 	.bigTitle{height:65px;line-height:65px;padding:0 25px;font-size:18px;font-family:"黑体";border-bottom:1px dashed #dcdcdc;background:#fff;color:#333;}
 	.smallTitle{height:55px;font-size:15px;border-bottom:1px solid #dcdcdc;background:#fafafa;color:#333;}
-	.smallTitle span{display:inline-block;line-height:16px;margin:20px 0 0 50px;padding-left:10px;border-left:3px solid #07c8cf;}
+	.smallTitle span{display:inline-block;line-height:16px;margin:20px 0 0 50px;padding-left:10px;border-left:3px solid #00a0e8;}
 	.addStaffBtn{float:right;margin:12px 50px 0 0;}
 	.addStaffBtn:hover{color:#fff;}
 	.tableWrap{margin:20px 50px 0;border-radius:5px;}
@@ -54,6 +54,7 @@
 	.tipBox{display:inline-block;width:400px;padding-left:45px;margin:20px 0 10px 125px;line-height:20px;font-size:14px;background:url(images/icon-tips.png) no-repeat left center;color:#fc7a52;}
 	.panel.layout-panel.layout-panel-south{top:280px !important;}
 	.btnWrap.staffBtn{padding:0 0 35px 0;}
+	
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

@@ -143,7 +143,7 @@
               <div id="pageInfo"> </div>
 
               <div id="paramsList"></div>
-               <div class="commonBtn subMitBtn" id="submitBtn">保存</div>
+               <div class="commonBtn subMitBtn saveBtn" id="submitBtn">保存</div>
                <div class="zsy"> </div>
 
 

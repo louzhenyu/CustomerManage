@@ -267,12 +267,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
                         for (int i = 0; i < list.Count; i++)
                         {
 
-                            strPath = System.Configuration.ConfigurationManager.AppSettings["RetailTraderItemImageUrl"] + list[i].ImageUrl.Substring(list[i].ImageUrl.IndexOf("/"));
+                            //strPath = System.Configuration.ConfigurationManager.AppSettings["RetailTraderItemImageUrl"] + list[i].ImageUrl.Substring(list[i].ImageUrl.IndexOf("/"));
+                            strPath = System.Web.HttpContext.Current.Server.MapPath("../../") + list[i].ImageUrl.Substring(list[i].ImageUrl.IndexOf("/"));
                             zip.AddFile(strPath, "");
                         }
                         strZipPath = string.Format("{0}\\{1}.zip", System.Web.HttpContext.Current.Server.MapPath("../../QRCodeImage"), strZipFileName);
                         zip.Save(strZipPath);
-                        strZipPath = "/QRCodeImage/" + strZipFileName + ".zip";
+                        strZipPath = System.Configuration.ConfigurationManager.AppSettings["RetailTraderItemImageUrl"] + strZipFileName + ".zip";
                     }
                 }
 

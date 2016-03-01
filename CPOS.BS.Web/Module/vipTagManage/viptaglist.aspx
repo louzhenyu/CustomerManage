@@ -21,7 +21,7 @@
                                     </div>
                                      <table class="dataTable" id="gridTable"></table>
                                      <div id="pageContianer">
-                                         <div id="kkpager" style="text-align: center;">
+                                         <div id="kkpager" >
                                          </div>
                                      </div>
                                  </div>

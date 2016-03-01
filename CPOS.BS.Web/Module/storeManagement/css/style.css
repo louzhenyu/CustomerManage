@@ -70,7 +70,7 @@
 .menber_top{ width:679px; height:50px; font-size:16px; color:#666;  font-weight:700; line-height:50px; padding-left:15px; background:#f3f3f3;border-radius:5px 5px 0px 0px;}
 .menber_top img{ width:30px; height:30px; margin-right:10px; margin-top:8px; _margin-top:-40px; float:right;}
 .menber_title{ width:100%; float:left;}
-.menber_title img{ width:100%; height:90px; }
+.menber_title img{width: 470px;height: 53px;margin: 20px 95px;}
 .menber_center{ width:614px;font-size:14px; color:#666; background:#ccc; margin:0 auto;}
 .menber_centernr{ width:100%; float:left;}
 .menber_centernrt{width:594px; float:left; padding-bottom:20px; padding-left:20px; margin-top:10px; border-bottom:1px solid #ededed;}

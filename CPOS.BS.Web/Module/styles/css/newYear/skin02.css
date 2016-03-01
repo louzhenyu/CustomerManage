@@ -146,9 +146,10 @@
 /******查询*****/
 /*头部简单查询*/
 .tableWrapTextBtn   {height: 120px;padding-top: 35px;padding-left: 25px;}
-.queryTermArea{min-height:73px;padding:20px 20px 20px 0;background:#fafafa; margin-bottom:0; border: none;}
+.queryTermArea{min-height:90px;padding:20px 20px 20px 0;background:#fafafa; margin-bottom:0; border: none;}
 .queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; min-width: 1000px;}
-.moreQueryWrap{ float: left;margin-top: 12px;}
+.moreQueryWrap{ float: left;margin-top: 10px;}
+#Children .add{ cursor:pointer}
 /*查询*/
 .queryTermArea .commonSelectWrap{margin-right: 28px; font-size: 12px; }
 .commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
@@ -157,9 +158,9 @@
 .commonSelectWrap .w120{width: 120px;}
 .commonSelectWrap .endTime .tit{width:15px;}
 .commonSelectWrap .endTime .selectBox{margin-left:22px;}
-.commonSelectWrap .selectBox{float:left;margin-left: 2px;width:200px;height:32px;line-height:32px;border:none;border-radius:3px;background:none;}
+.commonSelectWrap .selectBox{float:left;margin-left: 2px;width:200px;height:30px;line-height:30px;border:none;border-radius:3px;background:none;}
 .commonSelectWrap .selectBox .text{display:block;width:150px;line-height:34px;text-indent:5px;}
-.commonSelectWrap .searchInput {display:block;float:left;width:200px;height:32px;line-height:32px;margin-left: 2px;border:1px solid #ddd;border-radius:3px;}
+.commonSelectWrap .searchInput {display:block;float:left;width:200px;height:30px;line-height:30px;margin-left: 2px;border:1px solid #ddd;border-radius:3px;}
 .commonSelectWrap .searchInput  input{float:left;width:100%;height:30px;border:none;color:#666;}
 .commonSelectWrap .searchInput  textarea{white-space: normal; line-height:22px;float:left;width:100%;height:100%;border:none;color:#666; padding-left: 10px;}
 
@@ -394,6 +395,8 @@
     font-size: 12px;
     color: #666;
 }
+
+.window .window-header{ padding:0;}
 .isSubmitLoading{background:rgba(0,0,0,0.2) no-repeat center center; background-image:url(../../images/newYear/loading.gif);position:fixed;top:0; left: 0; width: 100%; height: 100%; z-index: 999999999999; }
 /*上一步下一步样式*/
 .prevStepBtn ,.startStepbtn{width: 110px;height: 35px;line-height: 35px;background: #fff;cursor: pointer;font-size: 12px;text-align: center;display: inline-block;border-radius: 25px;color: #00a0e8; border: 2px solid #00a0e8;margin: 0px 10px;}
@@ -408,4 +411,4 @@
 
 
 /*问号提示*/
-.prompttips {width: 16px;height: 16px;display: inline-block;margin-left: 10px; background-image:url(../../images/newYear/icon-tips.png);}
+.prompttips {width: 16px;height: 16px;display: inline-block;margin-left: 10px; background:url(../../images/newYear/icon-tips.png)  no-repeat;}

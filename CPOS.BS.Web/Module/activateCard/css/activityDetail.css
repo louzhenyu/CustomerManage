@@ -8,10 +8,10 @@
 .title li.on{ background:#fff;}
 .title li.one{ border-radius: 8px 0 0 0;}
 .title li.borderNone{ border:none}
-.btnopt{margin: 0 auto;margin-top: 45px; width:380px;}
+.btnopt{margin: 0 auto;margin-top: 45px; width:266px;}
 
 .btnopt .commonBtn.cancel{ background-color: #cccccc}
-.btnopt .commonBtn.bgWhite{background:#f4f8fa; color:#fc7a52; border: #fc7a52 1px solid; display:none;}
+.btnopt .commonBtn.bgWhite{ display:none;}
 .checkBoxList{padding-left:8px; width: 278px; height: 100px; float: left; }
 .panelDiv{display:none;text-align: center; }
 #nav02.panelDiv{margin: 0 auto; width: 100%}

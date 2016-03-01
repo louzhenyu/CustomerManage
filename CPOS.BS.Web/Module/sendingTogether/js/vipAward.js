@@ -336,7 +336,7 @@
             args: {
                 bat_id:"1",
                 PageIndex: 1,
-                PageSize:15,
+                PageSize:10,
                 RetailTraderID:'',
                 bat_id:"1",
                 CooperateType:"OneWay",

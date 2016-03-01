@@ -12,8 +12,6 @@
 .panelTab p.check02.on{ background-image: url("../images/check_02.png") }
 .panelTab p.check03.on{ background-image: url("../images/check_03.png") }
 .queryTermArea{padding-left: 0; padding-right:0}
-.moreQueryWrap{ float: left;margin-top: 12px;}
-.moreQueryWrap .queryBtn{ width: 58px;}
 .rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left; color: #999;}
 .rowText p{ color: #666;}
 .imgTable .datagrid-row-checked {background-color:#b2f0f0;}

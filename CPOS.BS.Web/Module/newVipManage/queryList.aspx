@@ -42,7 +42,7 @@
             </div>
             <div class="tableWrap"  id="tableWrap">
               <div class="optionBtn" id="opt">
-                                         <div class="commonBtn icon icon_import w80"  id="inportvipmanageBtn">导入</div>
+                                         <div class="commonBtn icon icon_import w80 r"  id="inportvipmanageBtn">导入</div>
                                      </div>
                 <div class="dataTable gridLoading" id="gridTable">
                    <!-- <div class="loading">

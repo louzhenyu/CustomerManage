@@ -39,7 +39,7 @@ body{_height:100%;}
 .commonTitleWrap .delBtn{background:#ef5f4a;}
 .commonTitleWrap .cancelBtn{background:#949ca7;}
 
-#btnSaveData{border-radius:4px;}
+#btnSaveData{width:80px;height:30px;line-height:30px;border-radius:4px;}
 
 .leftArea{float:left;width:340px;padding:40px;}
 .leftArea .modelBox{position:relative;width:260px;height:457px;border:1px solid #eaeaef;background:#f9f9f9;_overflow:hidden;}

@@ -30,7 +30,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                 </div>
             </div>
             <!--commonSelectWrap-->
-            <div class="commonBtn saveHomPageBtn w80 icon icon_save r">
+            <div class="commonBtn saveHomPageBtn w80 icon icon_save r" style="margin-top: 12px;">
                 保存</div>
         </div>
         </form>

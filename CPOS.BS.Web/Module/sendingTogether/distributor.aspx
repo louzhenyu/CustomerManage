@@ -42,13 +42,13 @@
              <div class="commonSelectWrap">
                              <em class="tit">门店：</em>
                              <div class="selectBox bordernone">
-                               <input id="unitTree" name="UnitID"  class="easyui-combotree" style="width:200px;height: 30px;"   />
+                               <input id="unitTree" name="UnitID"  class="easyui-combotree" style="width:200px;height: 32px;"   />
                              </div>
                          </div>
             <div class="commonSelectWrap">
                             <em class="tit">活动类型：</em>
                             <div class="selectBox bordernone">
-                              <input id="Way" class="easyui-combobox"  style="width:200px;height: 30px;"  name="CooperateType"  />
+                              <input id="Way" class="easyui-combobox"  style="width:200px;height: 32px;"  name="CooperateType"  />
 
 
                             </div>
@@ -56,7 +56,7 @@
             <div class="commonSelectWrap">
                 <em class="tit">状态：</em>
                 <div class="selectBox bordernone">
-                  <input id="cc" class="easyui-combobox"  style="width:200px;height: 30px;" name="Status"  />
+                  <input id="cc" class="easyui-combobox"  style="width:200px;height: 32px;" name="Status"  />
                 </div>
             </div>
             </div>

@@ -19,13 +19,13 @@
 </div> <!--lineTitle-->
 <div class="panelText">
     <div class="lineText">
-    <em class="tit">商户名称:</em>
+    <em class="tit">商户名称：</em>
     <div class="inputBox" id="customerName">
 
     </div> <!--inputBox-->
 </div><!--lineText-->
     <div class="lineText">
-    <em class="tit">商户简称:</em>
+    <em class="tit">商户简称：</em>
     <div class="inputBox">
     <input type="text" class="easyui-validatebox" name="CustomerShortName" data-options="required:true,validType:'maxLength[10]'" placeholder="请输入"/>
     </div> <!--inputBox-->
@@ -33,7 +33,7 @@
 
 
     <div class="lineText">
-    <em class="tit">LOGO:</em>
+    <em class="tit">LOGO：</em>
     <div class="inputBox">
       <div class="logo" style="background-color: #1074bd;" data-name="WebLogo"><img src="images/imgDefault.png"></div>
       <div class="uploadTip">
@@ -46,7 +46,7 @@
     </div> <!--inputBox-->
 </div><!--lineText-->
     <div class="lineText" style="display: none">
-    <em class="tit">客服电话:</em>
+    <em class="tit">客服电话：</em>
     <div class="inputBox">
     <input type="text" class="easyui-validatebox" name="CustomerPhone" data-options="validType:'mobileTelephone'" placeholder="请输入"/>
     </div> <!--inputBox-->
@@ -59,13 +59,13 @@
 </div> <!--lineTitle-->
 <div class="panelText">
     <div class="lineText">
-    <em class="tit">分享标题:</em>
+    <em class="tit">分享标题：</em>
     <div class="inputBox">
     <input type="text" placeholder="请输入" class="easyui-validatebox" data-options="validType:'maxLength[30]'"  name="ForwardingMessageTitle"/>
     </div> <!--inputBox-->
 </div><!--lineText-->
     <div class="lineText">
-    <em class="tit" >分享图标:</em>
+    <em class="tit" >分享图标：</em>
     <div class="inputBox">
       <div class="logo" data-name="ForwardingMessageLogo" style="width: 90px; height: 90px;"><img src="images/imgDefault.png"></div>
       <div class="uploadTip" style="left: 110px;">
@@ -78,7 +78,7 @@
     </div> <!--inputBox-->
 </div><!--lineText-->
     <div class="lineText">
-    <em class="tit">分享摘要:</em>
+    <em class="tit">分享摘要：</em>
     <div class="inputBox">
     <textarea placeholder="请输入" name="ForwardingMessageSummary"  class="easyui-validatebox" data-options="validType:'maxLength[300]'"></textarea>
     </div> <!--inputBox-->
@@ -91,13 +91,13 @@
 </div> <!--lineTitle-->
 <div class="panelText">
     <div class="lineText">
-    <em class="tit">引导关注链接:</em>
+    <em class="tit">引导关注链接：</em>
     <div class="inputBox">
     <input type="text"  placeholder="请输入" name="GuideLinkUrl"  class="easyui-validatebox long"  data-options="validType:'url'"/>
     </div> <!--inputBox-->
 </div><!--lineText-->
     <div class="lineText">
-    <em class="tit">引导关注二维码:</em>
+    <em class="tit">引导关注二维码：</em>
     <div class="inputBox">
       <div class="logo" style="width: 90px; height: 90px;" data-name="GuideQRCode"><img src="images/imgDefault.png"></div>
       <div class="uploadTip" style="left: 110px; width: 508px;">
@@ -117,7 +117,7 @@
   </div> <!--lineTitle-->
   <div class="panelText">
       <div class="lineText">
-      <em class="tit">欢迎语:</em>
+      <em class="tit">欢迎语：</em>
       <div class="inputBox">
       <textarea type="text" placeholder="请输入" name="CustomerGreeting"  class="easyui-validatebox" data-options="validType:'maxLength[30]'"></textarea>
       </div> <!--inputBox-->

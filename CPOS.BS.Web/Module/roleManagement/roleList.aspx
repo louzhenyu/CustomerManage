@@ -102,7 +102,7 @@
 			<div class="commonSelectWrap">
 			  <em class="tit">角色：</em>
 				<label class="searchInput clearBorder">
-				  <input data-text="角色" class="easyui-validatebox" id="role_name2" data-options="required:true"  name="Role_Name" type="text" value="" placeholder="请输入2-6个中文字符"  validType='length[2,6]'>
+				  <input data-text="角色" class="easyui-validatebox" id="role_name2" data-options="required:true"  name="Role_Name" type="text" value="" placeholder="请输入2-10个字符"  validType='length[2,10]'>
 			   </label>
 			</div>
 			

@@ -187,8 +187,8 @@
                   <div class="zsy"></div>
 
                 <div class="btnopt" data-falg="nav01">
-                 <div class=" commonBtn bgWhite"   data-flag="#nav01">上一步</div>
-                <div class=" commonBtn nextStepBtn"  id="submitBtn" data-flag="#nav02">下一步</div>
+                 <div class=" commonBtn bgWhite prevStepBtn"   data-flag="#nav01">上一步</div>
+                <div class=" commonBtn nextStepBtn r"  id="submitBtn" data-flag="#nav02">下一步</div>
                  <!--<div class="commonBtn bgCcc"  data-flag="#nav02">取消</div>-->
             </div>
 

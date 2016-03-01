@@ -18,7 +18,7 @@
 
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
-                 <div class="commonBtn sales icon icon_add w100 r" data-flag="add" id="sales"> 新建主页</div>
+                 <div class="commonBtn sales icon icon_add w100 r" data-flag="add" id="sales"> 新增主页</div>
 
 
                 </div>
