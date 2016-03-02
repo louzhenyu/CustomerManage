@@ -2211,7 +2211,10 @@
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\ContactPrizeAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetImageAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeLocationListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeWinnerListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\RedPacketAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Event\Lottery\RouletteAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\ShareAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\GetActivityApplyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\ActivityApply\SetActivityApplyAH.cs" />
