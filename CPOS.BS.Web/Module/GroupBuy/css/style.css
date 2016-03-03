@@ -166,16 +166,16 @@ input{border:1px solid #ccc;border-radius:2px;width:120px;height:33px;height:31p
 .jui-dialog-addShop .dropList{display:none;position:absolute;top:34px;*top:36px;left:-1px;width:152px;border-left:1px solid #ccc;border-right:1px solid #ccc;background:#f1f1f1;overflow-y: auto;}
 .jui-dialog-addShop .dropList span{display:block;height:35px;line-height:35px;text-align:center;font-size:14px;border-bottom:1px solid #ccc;}
 .jui-dialog-addShop .dropList span:hover{background:#f8f8f8;}
-.jui-dialog-addShop .inputBox{float:left;width:345px;height:35px;margin-right:25px;border:1px solid #ccc;border-radius:5px;}
-.jui-dialog-addShop .inputBox input{display:block;width:338px;height:32px;border:none;border-radius:5px;padding-left:5px;}
+.jui-dialog-addShop .inputBox{float:left;height:35px;margin-right:25px;border:1px solid #ccc;border-radius:5px;}
+.jui-dialog-addShop .inputBox input{display:block;width:308px;height:32px;border:none;border-radius:5px;padding-left:5px;}
 .jui-dialog-addShop .searchBtn{float:left;width:72px;height:30px;line-height:32px;margin-top:3px;font-size:12px;}
 .jui-dialog-addShop .searchResult{min-height:300px;border:1px solid #ccc;}
-.jui-dialog-addShop .searchResult h2{height:56px;background:#f6f6f7;border-bottom:1px solid #e9e9ea;font:18px/56px "黑体";}
+.jui-dialog-addShop .searchResult h2{height:56px;background:#f6f6f7;border-bottom:1px solid #e9e9ea;font-size:16px;line-height:56px;}
 .jui-dialog-addShop .searchResult .classify{float:left;width:251px;text-indent:62px;border-right:1px solid #e9e9ea;overflow:hidden;}
 .jui-dialog-addShop .searchResult .shopName{margin-left:251px;text-indent:60px;}
 .jui-dialog-addShop .searchList{height:245px;overflow-y:auto;}
 .jui-dialog-addShop .searchList li{height:35px;}
-.jui-dialog-addShop .searchList li p{height:35px;line-height:35px;font:16px/35px "黑体";}
+.jui-dialog-addShop .searchList li p{height:35px;line-height:35px;font-size:14px;}
 
 .jui-dialog-addShop .searchList li:nth-of-type(even){background:#fafafa;}
 /*弹层，图片上传*/

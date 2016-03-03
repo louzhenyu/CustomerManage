@@ -20,7 +20,12 @@
 
                                     </div>
                                     <div class="cursorDef">
-                                     <table class="dataTable" id="gridTable"></table>
+                                     <table class="dataTable" id="gridTable">
+                                                 <div  class="loading">
+                                                          <span>
+                                                        <img src="../static/images/loading.gif"></span>
+                                                   </div>
+</table>
                                      </div>
                                      <div id="pageContianer">
                                          <div id="kkpager" style="text-align: center;">

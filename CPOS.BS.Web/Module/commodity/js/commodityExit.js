@@ -181,10 +181,10 @@
                 if ($(this).data("issubMit")) {
 
                     if (that.getAddData()&&$("#SKUForm").form("validate"))  { //获取添加商品的参数，
-                       alert("商品修改提交中...",true);    // 不自动消失 true；
+                       //alert("商品修改提交中...",true);    // 不自动消失 true；
                        that.loadData.addCommodity(function (data) {
                            debugger;
-                           window.d.close();
+                           //window.d.close();
                            var mid = JITMethod.getUrlParam("mid");
                            location.href = "queryList.aspx?&mid=" + mid;
 
@@ -1514,6 +1514,7 @@
                 });
             },
             addCommodity: function (callback) {
+                $.util.isLoading();
                 $.util.ajax({
                     url: "/ApplicationInterface/Module/Item/ItemNewHandler.ashx",
                     data: {
@@ -1535,7 +1536,7 @@
                                 callback(data);
                         }
                         else {
-                            window.d.close(); //关闭提示框;
+                            //window.d.close(); //关闭提示框;
                             alert(data.Message);
                         }
                     }

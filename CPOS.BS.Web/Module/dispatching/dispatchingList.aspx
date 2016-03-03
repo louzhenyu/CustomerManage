@@ -52,7 +52,11 @@
 
             </tbody>
         </table>-->
-        <div id="dispatchingList"></div>
+        <div id="dispatchingList">
+        	<div class="loading" style="padding-top:40px;">
+              <span><img src="../static/images/loading.gif"></span>
+            </div>
+        </div>
         <p class="tip-payment">至少配置一种配送方式，否则无法完成配送环节。</p>
     </div>
 </div>

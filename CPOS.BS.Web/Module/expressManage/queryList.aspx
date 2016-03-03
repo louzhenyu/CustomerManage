@@ -21,6 +21,9 @@
                 <div class="tableWrap cursorDef" id="tableWrap">
 
                     <table class="dataTable" id="gridTable">
+                    	<div class="loading" style="padding-top:40px;">
+                          <span><img src="../static/images/loading.gif"></span>
+                        </div>
                     </table>
                     <div id="pageContianer">
                     <div class="dataMessage" >数据没有对应记录</div>

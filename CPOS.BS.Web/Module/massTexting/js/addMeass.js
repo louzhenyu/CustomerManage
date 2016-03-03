@@ -93,7 +93,7 @@
 
 
 
-            var wd = 160, H = 32;
+            var wd =200, H = 32;
             that.loadData.getUnitByUser(function(data){
                 debugger;
                 var treeData=that.listToTree('-99','ParentUnitID','UnitID',data.Data.UnitList);
@@ -557,7 +557,7 @@
 
                 });
 
-
+                $.util.isLoading();
 
 
                 $.util.ajax({

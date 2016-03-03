@@ -412,7 +412,7 @@
                         prams.data.action="SaveSku";
                         break;
                 }
-
+                $.util.isLoading();
                  if(isOld) {
                      $.util.oldAjax({
                          url: prams.url,

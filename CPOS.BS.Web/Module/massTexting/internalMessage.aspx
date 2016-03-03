@@ -25,7 +25,15 @@
                 </div>
                 <div class="tableWrap" id="tableWrap">
 
-                    <table class="dataTable" id="gridTable"></table>
+                    <div class="dataTable" id="gridTable">
+                                               <div  class="loading">
+                                                        <span>
+                                                      <img src="../static/images/loading.gif"></span>
+                                                 </div>
+
+</div>
+
+
                     <div id="pageContianer">
                     <div class="dataMessage" >数据没有对应记录</div>
                         <div id="kkpager" >

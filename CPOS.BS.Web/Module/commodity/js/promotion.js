@@ -354,7 +354,7 @@
 
                 prams.data.Parent_Id="-99";
                 prams.data.bat_id="2";
-
+                $.util.isLoading();
                 $.util.oldAjax({
                     url: prams.url,
                     data:prams.data,

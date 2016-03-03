@@ -19,7 +19,12 @@
 
                                     </div>
                                     <div class="imgTable cursorDef">
-                                     <table class="dataTable" id="gridTable"></table>
+                                     <table class="dataTable" id="gridTable">
+                                               <div  class="loading">
+                                                        <span>
+                                                      <img src="../static/images/loading.gif"></span>
+                                                 </div>
+</table>
                                      </div>
                                      <div style="display: none "> <table class="dataTable" id="gridTable1"></table>
                                        </div>

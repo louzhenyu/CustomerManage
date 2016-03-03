@@ -41,7 +41,7 @@
             <em class="upTip">上传</em>
              <div class="jsUploadBtn" ></div>
          </div><!--uploadBtn-->
-         <div class="tip">建议尺寸187px*67px，50KB以内</div>
+         <div class="tip">建议尺寸180px*50px，50KB以内</div>
          </div> <!--uploadTip-->
     </div> <!--inputBox-->
 </div><!--lineText-->

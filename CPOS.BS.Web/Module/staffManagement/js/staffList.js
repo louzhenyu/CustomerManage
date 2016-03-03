@@ -92,13 +92,13 @@
 					
 					case 'pause':
 						that.setStatusEvent(userId,1,function(){
-							$this.attr('class','handle runningBtn').attr('title','停用').data('flag','running');
+							$this.attr('class','handle runningBtn opt').attr('title','停用').data('flag','running');
 							$('td[field="User_Status_Desc"]',$tr).find('div').text('正常');
 						});
 					break;
 					case 'running':
 						that.setStatusEvent(userId,-1,function(){
-							$this.attr('class','handle pauseBtn').attr('title','启用').data('flag','pause');
+							$this.attr('class','handle pauseBtn opt').attr('title','启用').data('flag','pause');
 							$('td[field="User_Status_Desc"]',$tr).find('div').text('停用');
 						});
 					break;

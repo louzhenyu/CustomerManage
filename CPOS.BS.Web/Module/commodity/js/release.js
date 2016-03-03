@@ -178,9 +178,8 @@
                  if($(this).data("issubMit")){
 
                    if (that.getAddData()&&$("#SKUForm").form("validate")) { //获取添加商品的参数，
-                       alert("商品添加提交中...");
+
                        that.loadData.addCommodity(function (data) {
-                           window.d.close();
                            $.messager.confirm("商品操作提示", "商品已添加成功,确定要继续添加商品吗？", function (r) {
                                var mid = JITMethod.getUrlParam("mid");
                                if (r) {//location.href = "queryList.aspx?Item_Id=" + rowData.Item_Id + "&mid=" + mid;
@@ -1313,6 +1312,7 @@
 
 
             addCommodity: function (callback) {
+                $.util.isLoading();
                 $.util.ajax({
                     url: "/ApplicationInterface/Module/Item/ItemNewHandler.ashx",
                     data: {
@@ -1334,7 +1334,7 @@
                                 callback(data);
                         }
                         else {
-                            window.d.close();//关闭提示框;
+                           // window.d.close();//关闭提示框;
                             alert(data.Message);
                         }
                     }

@@ -55,7 +55,7 @@
             <div class="commonSelectWrap">
                 <em class="tit wh80">分组：</em>
                 <label class="selectBox">
-                    <input data-text="分组"  id="DeptID" class="easyui-combobox" name="DeptID" data-options="width:160,height:32"
+                    <input data-text="分组"  id="DeptID" class="easyui-combobox" name="DeptID" data-options="width:200,height:32"
                         value="">
                 </label>
             </div>
@@ -68,7 +68,7 @@
                 </label>
             </div>
             <textarea name="Text"  class="info" style="width: 100%;"></textarea>
-           <div class="btnopt commonBtn" id="submitBtn" data-flag="#nav02">发送</div>
+           <div class="btnopt commonBtn saveBtn" id="submitBtn" data-flag="#nav02">发送</div>
             </form>
         </div>
     </div>

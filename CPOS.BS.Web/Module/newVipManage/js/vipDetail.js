@@ -736,9 +736,9 @@
 
                                 columns:[[
 
-                                    {field : 'OrderNo',title : '订单编号',width:120,resizable:false,align:'center'},
+                                    {field : 'OrderNo',title : '订单编号',width:120,resizable:false,align:'left'},
 										{field : 'TotalAmount',title : '订单金额(元)',width:120,resizable:false,align:'center'},								
-										{field : 'PayType',title : '支付方式',width:120,align:'center',resizable:false},
+										{field : 'PayType',title : '支付方式',width:120,align:'left',resizable:false},
 										
 					
 										{field : 'PayStatus',title : '支付状态',width:100,align:'left',resizable:false},
@@ -752,7 +752,7 @@
 											}
 					
 										},
-										{field : 'CreateTime',title : '下单日期',width:120,align:'left',resizable:false,
+										{field : 'CreateTime',title : '下单日期',width:120,align:'center',resizable:false,
 											formatter:function(value ,row,index){
 												if(value) {
 													return new Date(value).format("yyyy-MM-dd hh:mm");
@@ -841,12 +841,12 @@
                                              }
 
                                         },
-                                         {field : 'id',title : '编辑',width:81,align:'center',resizable:false,
+                                         {field : 'id',title : '编辑',width:81,align:'left',resizable:false,
                                              formatter:function(value ,row,index){
                                                  return '<p class="fontC exit" data-index="'+index+'" data-oprtype="exit"></p>';
                                              }
                                          },
-                                         {field : '',title : '删除',width:81,align:'center',resizable:false,
+                                         {field : '',title : '删除',width:81,align:'left',resizable:false,
                                              formatter:function(value ,row,index){
                                                  return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
                                              }
@@ -900,10 +900,10 @@
 
                                         {field : 'CreateTime',title : '日期',width:196,align:'left',resizable:false},
 
-                                        {field : 'UnitName',title : '办卡门店',width:100,align:'center',resizable:false} ,
+                                        {field : 'UnitName',title : '办卡门店',width:100,align:'left',resizable:false} ,
                                         {field : 'Action',title : '卡操作',width:80,align:'center',resizable:false} ,
                                         {field : 'ChangeReason',title : '原因',width:80,align:'center',resizable:false} ,
-                                        {field : 'Remark',title : '备注',width:200,align:'center',resizable:false,
+                                        {field : 'Remark',title : '备注',width:200,align:'left',resizable:false,
                                             formatter:function(value ,row,index){
                                                 var long=20;
                                                 debugger;
@@ -1062,9 +1062,9 @@
                                             }
                                         },
 
-                                        {field : 'CouponName',title : '优惠券名称',width:100,align:'center',resizable:false },
+                                        {field : 'CouponName',title : '优惠券名称',width:100,align:'left',resizable:false },
 
-                                        {field : 'Remark',title : '优惠券描述',width:200,align:'center',resizable:false,
+                                        {field : 'Remark',title : '优惠券描述',width:200,align:'left',resizable:false,
                                             formatter:function(value ,row,index){
                                             var long=56;
                                             if(value&&value.length>long){
@@ -1148,8 +1148,8 @@
                                         {field : 'Amount',title : '返现增减',width:58,align:'center',resizable:false},
                                         {field : 'AmountSourceName',title : '变更类型',width:100,align:'center',resizable:false},
 
-                                        {field : 'Reason',title : '原因',width:100,align:'center',resizable:false} ,
-                                        {field : 'Remark',title : '备注',width:160,align:'center',resizable:false,
+                                        {field : 'Reason',title : '原因',width:100,align:'left',resizable:false} ,
+                                        {field : 'Remark',title : '备注',width:160,align:'left',resizable:false,
                                             formatter:function(value ,row,index){
                                                 var long=56;
                                                 if(value&&value.length>long){
@@ -1250,8 +1250,8 @@
                                         },
                                         {field : 'AmountSourceName',title : '变更类型',width:100,align:'center',resizable:false},
 
-                                        {field : 'Reason',title : '原因',width:100,align:'center',resizable:false} ,
-                                        {field : 'Remark',title : '备注',width:160,align:'center',resizable:false,
+                                        {field : 'Reason',title : '原因',width:100,align:'left',resizable:false} ,
+                                        {field : 'Remark',title : '备注',width:160,align:'left',resizable:false,
                                             formatter:function(value ,row,index){
                                                 var long=56;
                                                 if(value&&value.length>long){
@@ -1352,8 +1352,8 @@
                                         },
                                         {field : 'VipIntegralSource',title : '变更类型',width:100,align:'center',resizable:false},
 
-                                        {field : 'Reason',title : '原因',width:100,align:'center',resizable:false} ,
-                                        {field : 'Remark',title : '备注',width:160,align:'center',resizable:false,
+                                        {field : 'Reason',title : '原因',width:100,align:'left',resizable:false} ,
+                                        {field : 'Remark',title : '备注',width:160,align:'left',resizable:false,
                                             formatter:function(value ,row,index){
                                                 var long=56;
                                                 if(value&&value.length>long){

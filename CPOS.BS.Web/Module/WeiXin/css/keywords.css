@@ -63,7 +63,7 @@
 .imgTextMessage .item{position:relative;height:80px;padding:7px 0 0 20px;border-bottom:1px dashed #dbdbe5;}
 .imgTextMessage .picWrap{float:left;width:90px;height:65px;margin-right:20px;background:#e7e7e7;}
 .imgTextMessage .picWrap img{display:block;width:90px;height:65px;}
-.imgTextMessage .textInfo{float:left;width:340px;white-space:nowrap;font-size:16px;color:#66666d;}
+.imgTextMessage .textInfo{float:left;width:265px;white-space:nowrap;font-size:16px;color:#66666d;}
 .imgTextMessage .textInfo span{display:block;height:20px;overflow:hidden;text-overflow:ellipsis;}
 .imgTextMessage .textInfo .name{margin:2px 0 10px 0;}
 .imgTextMessage .delBtn{display:none;position:absolute;top:5px;right:5px;width:25px;height:25px;background:url(images/closeBtn02.png) no-repeat center center;cursor:pointer;}

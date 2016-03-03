@@ -54,7 +54,6 @@
     <script src="<%=StaticUrl+"/Framework/javascript/Other/lightCpos.js?v=0.4"%>" type="text/javascript"></script>
 	<script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
-
 </head>
 <body>
     <form id="form1" runat="server">
@@ -331,7 +330,8 @@
 });
 
 
-$(".leftsead .hover a").hover(function () {
+
+$(".leftsead .hover a").hover(function () {
     $(this).children("img.hides").show();
     $(this).children("img.shows").hide();
 

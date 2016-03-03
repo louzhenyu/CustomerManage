@@ -19,7 +19,12 @@
                                    <div class="commonBtn icon icon_add w100 r" data-flag="add">新增标签</div>
 
                                     </div>
-                                     <table class="dataTable" id="gridTable"></table>
+                                     <table class="dataTable" id="gridTable">
+                                                 <div  class="loading">
+                                                          <span>
+                                                        <img src="../static/images/loading.gif"></span>
+                                                   </div>
+</table>
                                      <div id="pageContianer">
                                          <div id="kkpager" >
                                          </div>

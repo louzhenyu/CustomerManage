@@ -625,8 +625,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 case "DZP":
                     rd.ModulePage = SysModuleList.Where(p => p.PageKey == "BigDial").SingleOrDefault();//大转盘
                     break;
-                case "GGK":
-                    rd.ModulePage = SysModuleList.Where(p => p.PageKey == "BigDial").SingleOrDefault();//大转盘
+                case "QN":
+                    rd.ModulePage = SysModuleList.Where(p => p.PageKey == "Questionnaire").SingleOrDefault();//问卷
                     break;
                 default:
                     rd.ModulePage = SysModuleList.Where(p => p.PageKey == "RedPacket").SingleOrDefault();

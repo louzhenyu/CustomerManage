@@ -25,6 +25,9 @@
         },
         init: function () {
             this.initEvent();
+
+            this.quicklyDialog();
+
             this.loadPageData();
         },
         initEvent: function () {
@@ -521,7 +524,6 @@
             }
 			
 			
-			that.quicklyDialog();
         },
         //加载更多的资讯或者活动
         loadMoreData: function (currentPage) {

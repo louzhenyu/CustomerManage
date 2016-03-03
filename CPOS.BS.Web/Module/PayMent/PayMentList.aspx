@@ -21,7 +21,7 @@
 	.jui-dialog-payMent .uploadFileBox,.jui-dialog-payMent .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
 	
 	#CupWap_certificatecilepath_upload{display:none;position:absolute;top:0;left:0;width:90px;height:32px;}
-	#payMentList{height:120px;}
+	#payMentList{min-height:120px;}
 	.tableWrap{border:none;}
 
 	/*.tableWrap .operateWrap .editIcon{cursor:pointer;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px;height: 18px; display: block;}*/
@@ -51,7 +51,11 @@
                 </tr>
             </tbody>
         </table>-->
-        <div id="payMentList"></div>
+        <div id="payMentList">
+        	<div class="loading" style="padding-top:40px;">
+              <span><img src="../static/images/loading.gif"></span>
+           </div>
+        </div>
         <p class="tip-payment">至少配置一种支付方式，否则无法完成支付环节。</p>
     </div>
     

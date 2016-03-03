@@ -520,6 +520,7 @@
                     $(".messager-window").css({"top":"211px"});
                     return false;
                 }
+                $.util.isLoading();
                 $.util.oldAjax({
                     url: prams.url,
                     data:prams.data,

@@ -2124,7 +2124,7 @@ namespace JIT.CPOS.BS.BLL.WX
         /// <param name="templateIdShort">模板编号</param>
         /// <param name="loggingSessionInfo"></param>
         /// <returns></returns>
-        public void AddWXTemplateID(string applicationId, string templateIdShort, LoggingSessionInfo loggingSessionInfo)
+        public void AddWXTemplateID(string applicationId, string templateIdShort, string FirstText, string RemarkText, LoggingSessionInfo loggingSessionInfo)
         {
             string TemplateID = "";
             var accessToke = GetAccessToken(loggingSessionInfo);

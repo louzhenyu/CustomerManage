@@ -17,6 +17,10 @@
     <!--团购列表-->
     <div  class="groupList">
     	<ul id="goodsList">
+                                               <div  class="loading">
+                                                        <span>
+                                                      <img src="../static/images/loading.gif"></span>
+                                                 </div>
         </ul>
         <div id="kkpager" style="text-align:right;"></div>
     </div>
