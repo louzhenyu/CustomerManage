@@ -70,6 +70,92 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                             trrEntity.LastUpdateTime = DateTime.Now;
                             trrEntity.LastUpdateBy = loggingSessionInfo.UserID;
                             trrBll.Update(trrEntity);
+
+                            #region 员工余额变更--需要独立出来处理                            
+                            var userAmountBll = new VipAmountBLL(loggingSessionInfo);//作为员工余额使用
+                            var employeeId = trrEntity.RewardedOP;
+                            var rewardAmount = trrEntity.RewardAmount == null ? 0 : (decimal)trrEntity.RewardAmount;//转为非null的decimal类型
+                            //门店
+                            var unitService = new UnitService(loggingSessionInfo);
+                            var unitInfo = unitService.GetUnitByUser(CustomerID, employeeId).FirstOrDefault();//获取员工所属门店
+
+                            var tran = userAmountBll.GetTran();
+                            using (tran.Connection)//事务
+                            {
+                                try
+                                {
+                                    var userAmountEntity = userAmountBll.GetByID(trrEntity.RewardedOP);
+                                    if (userAmountEntity == null)
+                                    {
+                                        //创建
+                                        userAmountEntity = new VipAmountEntity
+                                        {
+                                            VipId = employeeId,//员工ID
+                                            VipCardCode = string.Empty,
+                                            BeginAmount = 0,
+                                            InAmount = rewardAmount,
+                                            OutAmount = 0,
+                                            EndAmount = rewardAmount,
+                                            TotalAmount = rewardAmount,
+                                            BeginReturnAmount = 0,
+                                            InReturnAmount = 0,
+                                            OutReturnAmount = 0,
+                                            ReturnAmount = 0,
+                                            ImminentInvalidRAmount = 0,
+                                            InvalidReturnAmount = 0,
+                                            ValidReturnAmount = 0,
+                                            TotalReturnAmount = 0,
+                                            IsLocking = 0,
+                                            CustomerID = CustomerID
+                                        };
+                                        userAmountBll.Create(userAmountEntity, tran);//创建员工余额表
+                                    }
+                                    else
+                                    {
+                                        //修改
+                                        if (rewardAmount > 0)
+                                        {
+                                            userAmountEntity.InAmount = (userAmountEntity.InAmount == null ? 0 : userAmountEntity.InAmount.Value) + rewardAmount;
+                                            userAmountEntity.TotalAmount = (userAmountEntity.TotalAmount == null ? 0 : userAmountEntity.TotalAmount.Value) + rewardAmount;
+                                        }
+                                        else
+                                            userAmountEntity.OutAmount = (userAmountEntity.OutAmount == null ? 0 : userAmountEntity.OutAmount.Value) + Math.Abs(rewardAmount);
+                                        userAmountEntity.EndAmount = (userAmountEntity.EndAmount == null ? 0 : userAmountEntity.EndAmount.Value) + rewardAmount;
+
+                                        userAmountBll.Update(userAmountEntity, tran);//更新余额
+                                    }
+
+                                    var vipamountDetailBll = new VipAmountDetailBLL(loggingSessionInfo);
+                                    var vipAmountDetailEntity = new VipAmountDetailEntity
+                                    {
+                                        VipAmountDetailId = Guid.NewGuid(),
+                                        VipCardCode = string.Empty,
+                                        VipId = employeeId,//员工ID
+                                        UnitID = unitInfo != null ? unitInfo.unit_id : string.Empty,
+                                        UnitName = unitInfo != null ? unitInfo.Name : string.Empty,
+                                        Amount = rewardAmount,
+                                        UsedReturnAmount = 0,
+                                        EffectiveDate = DateTime.Now,
+                                        DeadlineDate = Convert.ToDateTime("9999-12-31 23:59:59"),
+                                        AmountSourceId = "26",
+                                        Reason = "Reward",
+                                        CustomerID = CustomerID
+                                    };
+                                    vipamountDetailBll.Create(vipAmountDetailEntity, tran);//创建余额详情
+
+                                    tran.Commit();//提交事务
+                                }
+                                catch (Exception ex)
+                                {
+                                    tran.Rollback();
+                                    Loggers.Debug(new DebugLogInfo()
+                                    {
+                                        Message = "异常-->支付成功回调时更新会员打赏金额出错(PayNotify.ashx)：" + ex
+                                    });
+                                }
+                            }                            
+                            #endregion
+
                             if (trrEntity != null)
                                 context.Response.Write("SUCCESS");
                             else
