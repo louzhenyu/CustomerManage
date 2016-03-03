@@ -2115,7 +2115,8 @@ namespace JIT.CPOS.BS.BLL
         {
             try
             {
-                IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+                //IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+                IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders");
 
                 Loggers.Debug(new DebugLogInfo() { Message = "客服列表，userInfos:" + userInfos.ToJSON() });
                 pStringBuilder.AppendLine("向客服列表推送邮件:");
@@ -2151,7 +2152,8 @@ namespace JIT.CPOS.BS.BLL
             try
             {
                 bool mailOK = false;
-                IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+              //  IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+                IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders");
 
                 Loggers.Debug(new DebugLogInfo() { Message = "客服列表，userInfos:" + userInfos.ToJSON() });
                 pStringBuilder.AppendLine("向客服列表推送邮件:");
@@ -2197,8 +2199,8 @@ namespace JIT.CPOS.BS.BLL
         {
             try
             {
-                IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
-
+              //  IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+                IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders");
                 Loggers.Debug(new DebugLogInfo() { Message = "客服列表，userInfos:" + userInfos.ToJSON() });
 
                 foreach (var userInfo in userInfos)
@@ -2235,8 +2237,8 @@ namespace JIT.CPOS.BS.BLL
                 //推送给客服
                 try
                 {
-                    IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
-
+                    //IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+                    IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders");
                     Loggers.Debug(new DebugLogInfo() { Message = "客服列表，userInfos:" + userInfos.ToJSON() });
 
                     string msg = "你有一笔新订单待处理";

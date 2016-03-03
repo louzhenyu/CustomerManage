@@ -278,8 +278,10 @@ namespace JIT.CPOS.BS.BLL
                 {
                     string currentUserName = messageEntity.MemberName;
                     //第一次回复，推送给其他客服消息
+                    //IList<UserInfo> userInfos =
+                    //    new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
                     IList<UserInfo> userInfos =
-                        new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+                        new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerService");
                     string currentCSName = "";
                     cUserService userService = new cUserService(loggingSessionInfo);
                     currentCSName =
@@ -420,7 +422,8 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="messageEntity"></param>
         private void AddToMessageQueue(CSMessageEntity messageEntity)
         {
-            IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+         //   IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+            IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerService");
             foreach (var userInfo in userInfos)
             {
                 var csPipelineIDs = GetCurrentCSPipeline(userInfo.User_Id);

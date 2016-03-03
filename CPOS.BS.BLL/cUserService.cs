@@ -1374,7 +1374,11 @@ namespace JIT.CPOS.BS.BLL
 
             return true;
         }
-
+        /// <summary>
+        /// 根据角色编码获取用户列表
+        /// </summary>
+        /// <param name="roleCode"></param>
+        /// <returns></returns>
         public IList<UserInfo> GetUserListByRoleCode(string roleCode)
         {
             DataSet ds = userService.GetUserListByRoleCode(roleCode);
@@ -1386,6 +1390,25 @@ namespace JIT.CPOS.BS.BLL
             }
             return userList;
         }
+
+
+        /// <summary>
+        /// 根据菜单编码获取用户列表
+        /// </summary>
+        /// <param name="roleCode"></param>
+        /// <returns></returns>
+        public IList<UserInfo> GetUserListByMenuCode(string menuCode)
+        {
+            DataSet ds = userService.GetUserListByMenuCode(menuCode);
+
+            IList<UserInfo> userList = new List<UserInfo>();
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                userList = DataTableToObject.ConvertToList<UserInfo>(ds.Tables[0]);
+            }
+            return userList;
+        }
+
 
         #region CreateQrcode
         /// <summary>

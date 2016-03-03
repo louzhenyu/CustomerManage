@@ -146,6 +146,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 								$panelDiv.hide();
 								$(idVal).fadeIn("slow");
 								$('.qrStoreName').text(JSON.parse(prams.unit).Name);
+								$.util.isLoading(true);
 							});
 							
 						}
@@ -187,6 +188,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							alert('请生成二维码');
 						}else{
 							that.setFirstStep(prams,function(){
+								$.util.isLoading(true);
 								location.href = "queryList.aspx?mid=" + JITMethod.getUrlParam("mid");	
 							});
 						}
@@ -612,6 +614,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 		},
 		setFirstStep:function(params,callback){
 			var that = this;
+			$.util.isLoading();
 			$.util.oldAjax({
 				url: "/Module/Basic/Unit/Handler/UnitHandler.ashx",
 				data: params,
@@ -623,6 +626,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							callback();
 						}
 					}else{
+						$.util.isLoading(true);
 						alert(data.msg);
 					}
 				}

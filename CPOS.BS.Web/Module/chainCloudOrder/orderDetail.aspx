@@ -473,33 +473,33 @@
 
             <div class="optionclass">
                <div class="commonSelectWrap amount">
-                             <em class="tit">订单金额：</em>
+                             <em class="tit w120">订单金额：</em>
                                 <div class=" selectBox borderNone" >
                                  <input id="Amount" class=" easyui-numberbox " data-options="width:160,height:32, min:0,precision:2,disabled:true" name="actual_amount" readonly="readonly" style="border:none"/>
                                </div>
                 </div>
 
                 <div class="commonSelectWrap PayMethod">
-                                        <em class="tit">付款方式：</em>
+                                        <em class="tit w120">付款方式：</em>
                                         <div class="selectBox bodernone" >
                                                <input id="PayMethod"  class="easyui-combobox" data-options="width:160,height:32,required:true"  name="PayMethod" />
                                        </div>
                 </div>
                 <div class="commonSelectWrap CheckResult">
-                                        <em class="tit">审核不通过理由：</em>
+                                        <em class="tit w120">审核不通过理由：</em>
                                         <div class="selectBox bodernone" >
                                                <input id="CheckResult"  class="easyui-combobox" data-options="width:160,height:32,required:true"  name="CheckResult" />
                                        </div>
                 </div>
 
                 <div class="commonSelectWrap DeliverCompany">
-                                        <em class="tit">配送商：</em>
+                                        <em class="tit w120">配送商：</em>
                                         <div class="selectBox bodernone" >
                                                <input id="DeliverCompany"  class="easyui-combobox" data-options="width:160,height:32,required:true"  name="DeliverCompany" />
                                        </div>
                 </div>
                   <div class="commonSelectWrap DeliverOrder">
-                                             <em class="tit">配送单号：</em>
+                                             <em class="tit w120">配送单号：</em>
                                                 <div class="searchInput" >
                                                  <input class="easyui-validatebox" data-options="width:160,height:32" name="DeliverOrder" style="border:none"/>
                                                </div>
@@ -507,10 +507,10 @@
 
                </div>
                       <div class="commonSelectWrap">
-                       <div class="tit">备注 </div>
+                       <div class="tit w120">备注：</div>
                        <div class="searchInput" style="width:457px; height: 100px;">
 
-                          <textarea type="text" id="Remark"  class="easyui-validatebox" data-options="required:true"  name="Remark"></textarea>
+                          <textarea type="text" id="Remark" style="width:457px; height: 100px;line-height:14px;"  class="easyui-validatebox" data-options="required:true"  name="Remark"></textarea>
                          </div>
 
                       </div>

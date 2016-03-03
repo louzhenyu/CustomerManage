@@ -25,10 +25,9 @@
         },
         init: function () {
             this.initEvent();
-
             this.quicklyDialog();
-
             this.loadPageData();
+
         },
         initEvent: function () {
             var that = this,
@@ -46,7 +45,7 @@
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
                 that.setCondition();
                 //查询数据
-                $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+               // $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
                 that.loadData.getOrderList(function(data){
                     //写死的数据
                     //data={"ResultCode":0,"Message":null,"IsSuccess":true,"Data":{"DicColNames":{"UserName":"姓名","Phone":"手机","Email":"邮箱","Col9":"人数","Col8":"职位","Col7":"公司","Col3":"性别"},"SignUpList":[{"SignUpID":"60828091-F8F4-4C97-8F6C-6AC9E627DF97","EventID":"16856b2950892b62473798f3a88ee3e3","UserName":"王孟孟","Phone":"18621865591","Email":"mengmeng.wang@jitmarketing.cn","Col9":"1","Col8":"研发总监","Col7":"上海杰亦特有限公司","Col3":"男"}],"TotalCountUn":1,"TotalCountYet":9,"TotalPage":1}};

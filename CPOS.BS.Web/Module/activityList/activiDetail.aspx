@@ -287,7 +287,7 @@
                         	<p class="tit">KV图片：</p>
                             <div class="infoBox">
                             	<a href="javascript:;" class="commonHandleBtn uploadImgBtn" data-alertinfo="KV图片上传成功！">上传图片</a>
-                                <p class="exp">(尺寸:640*368)</p>
+                                <p class="exp">(尺寸:640*348)</p>
                             </div>
                         </div>
                         
