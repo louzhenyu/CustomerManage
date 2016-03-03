@@ -28,7 +28,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
         {
             //创建连接用户对象
             var logginUserInfo = base.CurrentUserInfo;
-
+            var param = pRequest.Parameters;
             HomePageConfigRD resData = new HomePageConfigRD();
             resData.eventList = new List<EventListEntity>();
             resData.secondKill = new List<EventListEntity>();
@@ -36,7 +36,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
             resData.hotBuy = new List<EventListEntity>();
 
             var bllHome = new MobileHomeBLL(logginUserInfo);
-            var entityHome=bllHome.QueryByEntity(new MobileHomeEntity() { CustomerId = logginUserInfo.ClientID ,IsActivate=1}, null).FirstOrDefault();
+            MobileHomeEntity entityHome = new MobileHomeEntity(); ;
+            if (!string.IsNullOrEmpty(param.HomeId))
+            {
+                entityHome = bllHome.QueryByEntity(new MobileHomeEntity() { CustomerId = logginUserInfo.ClientID, HomeId = new Guid(param.HomeId) }, null).FirstOrDefault();
+            }
+            else
+            {
+                entityHome = bllHome.QueryByEntity(new MobileHomeEntity() { CustomerId = logginUserInfo.ClientID, IsActivate = 1 }, null).FirstOrDefault();
+
+            }
             if(entityHome==null)
             {
                 resData.Success = false;

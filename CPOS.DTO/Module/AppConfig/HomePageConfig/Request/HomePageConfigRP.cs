@@ -8,6 +8,8 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Request
 {
     public class HomePageConfigRP : IAPIRequestParameter
     {
+        public string HomeId { get; set; }
+
         public void Validate()
         {
             

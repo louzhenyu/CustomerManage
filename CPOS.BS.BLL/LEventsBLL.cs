@@ -995,7 +995,7 @@ namespace JIT.CPOS.BS.BLL
                                     vipEntity2.CouponInfo = RetailTraderInfo.UnitID;//会籍店ID
                                     // vipEntity2.SetoffUserId = qrCodeEntity.ObjectId;//店员ID（上线）
                                     vipEntity2.Col20 = qrCodeEntity.ObjectId;//会籍店ID
-                                    vipEntity2.Col21 = DateTime.Now.ToString();
+                                    vipEntity2.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                                     vipBll2.Update(vipEntity2);
 
                                 }

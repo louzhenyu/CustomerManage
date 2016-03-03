@@ -859,7 +859,11 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
    FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  (@CustomerId,UR.unit_id,205)  R                  
    WHERE user_id=@loginUserID          ---根据账户的角色去查角色对应的  unit_id
 
-   SELECT @AllUnit=unit_id FROM t_unit WHERE customer_id=@CustomerId  AND type_id='2F35F85CF7FF4DF087188A7FB05DED1D'
+   SELECT @AllUnit=unit_id FROM t_unit WHERE customer_id=@CustomerId   AND type_id IN (
+        SELECT  type_id
+        FROM    dbo.T_Type
+        WHERE   type_code = '总部'
+                AND customer_id = @CustomerId )
    ----上面查找了该客户@CustomerId 下总店的unit_id  
 
     SELECT distinct x.user_id,y.unit_id INTO #TmpTBL FROM  t_user x inner join T_User_Role y  on x.user_id=y.user_id where  default_flag=1 and x.customer_id=@CustomerId  AND ISNULL(x.customer_id,'')!=''  -----	 不要没有CustomerId的
