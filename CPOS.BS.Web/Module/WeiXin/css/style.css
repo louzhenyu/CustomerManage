@@ -38,6 +38,7 @@ body{_height:100%;}
 .commonTitleWrap span{float:right;margin:12px 0 0 15px;}
 .commonTitleWrap .delBtn{background:#ef5f4a;}
 .commonTitleWrap .cancelBtn{background:#949ca7;}
+#chooseEvents .commonBtn{width:80px;height:30px;line-height:30px;}
 
 #btnSaveData{width:80px;height:30px;line-height:30px;border-radius:4px;}
 

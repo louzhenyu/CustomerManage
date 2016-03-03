@@ -238,6 +238,16 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager'],
 				$('.jui-dialog').hide();
 			});
 			
+			
+			$(window).bind("keydown",function(e){
+				// 兼容FF和IE和Opera
+				var theEvent = e || window.event;    
+				var code = theEvent.keyCode || theEvent.which || theEvent.charCode;    
+				if (code == 13) {
+					return false;
+				}    
+			});
+
         },
 		//初始化基本信息数据
 		getFirstStep:function(){
