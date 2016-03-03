@@ -49,13 +49,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Reward
             if (string.IsNullOrEmpty(CurrentUserInfo.CurrentUserRole.UnitId))
             {
                 userdata = userService.SearchUserListByUnitID(string.Empty, string.Empty, string.Empty, string.Empty,
-                rowCount, startIndex, "", para_unit_id, string.Empty, string.Empty);
+                rowCount, startIndex, CurrentUserInfo.CurrentUserRole.UnitId, para_unit_id, string.Empty, string.Empty);
             }
             else
             {
                 userdata = userService.SearchUserListByUnitID(string.Empty, string.Empty, string.Empty, string.Empty,
                 rowCount, startIndex,
-                CurrentUserInfo == null ? "" : CurrentUserInfo.CurrentUserRole.UnitId, para_unit_id, string.Empty, string.Empty);
+                CurrentUserInfo.CurrentUserRole.UnitId, para_unit_id, string.Empty, string.Empty);
             }
 
             var orderBys = new OrderBy[1];

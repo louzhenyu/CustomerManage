@@ -66,16 +66,6 @@ namespace JIT.CPOS.BS.BLL
             return _currentDAO.GetPaymentListByCustomerId(customerId, pAppChanelId);
         }
 
-        /// <summary>
-        /// 根据客户获取对应的支付方式集合
-        /// </summary>
-        /// <param name="customerId">客户ID</param>
-        /// <returns></returns>
-        public DataSet GetPaymentListByAppId(string customerId, string pAppChanelId, string wxAppId)
-        {
-            return _currentDAO.GetPaymentListByAppId(customerId, pAppChanelId, wxAppId);
-        }
-
         #endregion
 
         #region 根据客户ID和支付类型ID获取对应的支付方式
@@ -89,17 +79,6 @@ namespace JIT.CPOS.BS.BLL
         public DataSet GetPaymentByCustomerIdAndPaymentID(string customerId, string paymentTypeId)
         {
             return this._currentDAO.GetPaymentByCustomerIdAndPaymentID(customerId, paymentTypeId);
-        }
-
-        /// <summary>
-        /// 根据客户ID和支付类型ID获取对应的支付方式
-        /// </summary>
-        /// <param name="customerId">客户ID</param>
-        /// <param name="paymentTypeId">支付类型ID</param>
-        /// <returns></returns>
-        public DataSet GetPaymentByAppIdAndPaymentID(string customerId, string paymentTypeId, string wxAppId)
-        {
-            return this._currentDAO.GetPaymentByAppIdAndPaymentID(customerId, paymentTypeId, wxAppId);
         }
 
         #endregion

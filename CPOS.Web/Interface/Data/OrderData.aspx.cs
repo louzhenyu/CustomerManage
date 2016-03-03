@@ -597,47 +597,7 @@ namespace JIT.CPOS.Web.Interface.Data
                 respData.content = new GetPaymentListRespContentData();
                 respData.content.paymentList = new List<PaymentEntity>();
 
-                var vipBll = new VipBLL(loggingSessionInfo);
-                var wxUserBll = new WXUserInfoBLL(loggingSessionInfo);
-                var vipEntitys = new VipEntity[] { new VipEntity() };
-                var vipEntity = new VipEntity();
-                var wxappid = string.Empty;
-                var weixinid = string.Empty;
-                if (!string.IsNullOrEmpty(reqObj.common.openId))
-                {
-                    vipEntity = vipBll.QueryByEntity(new VipEntity { WeiXinUserId = reqObj.common.openId,IsDelete = 0, ClientID = customerId }, null).FirstOrDefault();
-                    if (vipEntity == null)
-                    {
-                        var wxUserInfo = wxUserBll.QueryByEntity(new WXUserInfoEntity() { VipID = reqObj.common.userId, WeiXinUserID = reqObj.common.openId }, null).FirstOrDefault();
-                        if (wxUserInfo != null)
-                        {
-                            weixinid = wxUserInfo.WeiXin;
-                        }
-                    }
-                    else
-                    {
-                        weixinid = vipEntity.WeiXin;
-                    }
-                    
-                    var appService = new WApplicationInterfaceBLL(loggingSessionInfo);
-                    var appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = weixinid, CustomerId = customerId, IsPayments = 1 }, null).FirstOrDefault();
-                    if (appEntity != null && !string.IsNullOrEmpty(appEntity.AppID))
-                    {
-                        wxappid = appEntity.AppID;
-                    }
-                    else
-                    {
-                        appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = customerId, IsPayments = 1 }, null).FirstOrDefault();
-                        if (appEntity != null && !string.IsNullOrEmpty(appEntity.AppID))
-                        {
-                            wxappid = appEntity.AppID;
-                        }
-                    }
-                }
-
-
-                //DataSet ds = new TPaymentTypeBLL(loggingSessionInfo).GetPaymentListByCustomerId(customerId, channelId);
-                DataSet ds = new TPaymentTypeBLL(loggingSessionInfo).GetPaymentListByAppId(customerId, channelId,wxappid);
+                DataSet ds = new TPaymentTypeBLL(loggingSessionInfo).GetPaymentListByCustomerId(customerId, channelId);
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     if (string.IsNullOrWhiteSpace(reqObj.common.plat))
@@ -793,45 +753,8 @@ namespace JIT.CPOS.Web.Interface.Data
                     }
                 }
 
-                var vipBll = new VipBLL(loggingSessionInfo);
-                var wxUserBll = new WXUserInfoBLL(loggingSessionInfo);
-                var vipEntitys = new VipEntity[] { new VipEntity() };
-                var vipEntity = new VipEntity();
-                var wxappid = string.Empty;
-                var weixinid = string.Empty;
-                if (!string.IsNullOrEmpty(reqObj.common.openId))
-                {
-                    vipEntity = vipBll.QueryByEntity(new VipEntity { WeiXinUserId = reqObj.common.openId, IsDelete = 0, ClientID = customerId }, null).FirstOrDefault();
-                    if (vipEntity == null)
-                    {
-                        var wxUserInfo = wxUserBll.QueryByEntity(new WXUserInfoEntity() { VipID = reqObj.common.userId, WeiXinUserID = reqObj.common.openId }, null).FirstOrDefault();
-                        if (wxUserInfo != null)
-                        {
-                            weixinid = wxUserInfo.WeiXin;
-                        }
-                    }
-                    else
-                    {
-                        weixinid = vipEntity.WeiXin;
-                    }
-                    var appService = new WApplicationInterfaceBLL(loggingSessionInfo);
-                    var appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = weixinid, CustomerId = customerId, IsPayments = 1 }, null).FirstOrDefault();
-                    if (appEntity != null && !string.IsNullOrEmpty(appEntity.AppID))
-                    {
-                        wxappid = appEntity.AppID;
-                    }
-                    else
-                    {
-                        appEntity = appService.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = customerId, IsPayments = 1 }, null).FirstOrDefault();
-                        if (appEntity != null && !string.IsNullOrEmpty(appEntity.AppID))
-                        {
-                            wxappid = appEntity.AppID;
-                        }
-                    }
-                }
-
                 var ds = new TPaymentTypeBLL(loggingSessionInfo).
-                     GetPaymentByAppIdAndPaymentID(reqObj.common.customerId, reqObj.special.paymentId,wxappid);
+                     GetPaymentByCustomerIdAndPaymentID(reqObj.common.customerId, reqObj.special.paymentId);
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     DataRow dr = ds.Tables[0].Rows[0];
@@ -853,10 +776,9 @@ namespace JIT.CPOS.Web.Interface.Data
 
                 //调用交易中心方法
                 decimal appOrderAmount = new OnlineShoppingItemBLL(loggingSessionInfo).GetOrderAmmount(reqObj.special.orderId);
-
-                if (appOrderAmount == 0)
+                if (appOrderAmount == 0)//金额为零不能进行支付
                 {
-                    appOrderAmount = Convert.ToDecimal(reqObj.special.amount) * 100;
+                    appOrderAmount = Convert.ToDecimal(reqObj.special.amount);
                 }
                 if (reqObj.special.dataFromId.Equals("3"))
                 {
@@ -909,16 +831,16 @@ namespace JIT.CPOS.Web.Interface.Data
                         dic["SpbillCreateIp"] = pBillCreateIP;
 
                         var itemNameDs = server.GetItemNameByOrderId(reqObj.special.orderId);
-                        
+
                         var itemNameList = itemNameDs.Tables[0].AsEnumerable().Aggregate("", (x, j) =>
                         {
                             x += string.Format("{0}|", j["item_name"].ToString());
                             return x;
                         }).Trim('|');
 
-                        if (Encoding.Default.GetBytes(itemNameList).Length > 45)
+                        if (Encoding.Default.GetBytes(itemNameList).Length > 128)
                         {
-                            itemNameList = itemNameList.Substring(0, 42) + "...";
+                            itemNameList = itemNameList.Substring(0, 60) + "......";
                         }
                         itemNameList = itemNameList.Replace("+", "");
                         itemNameList = itemNameList.Replace(" ", "-");
@@ -927,7 +849,7 @@ namespace JIT.CPOS.Web.Interface.Data
 
                         var appInterfaceBLL = new WApplicationInterfaceBLL(loggingSessionInfo);
                         var wxUserBLL = new WXUserInfoBLL(loggingSessionInfo);
-                        var appInterfaceInfo = appInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity() { AppID = wxappid, CustomerId = loggingSessionInfo.ClientID, IsPayments = 1 }, null).FirstOrDefault();
+                        var appInterfaceInfo = appInterfaceBLL.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = loggingSessionInfo.ClientID, IsPayments = 1 }, null).FirstOrDefault();
                         string payNotice = string.Empty;
                         if (appInterfaceInfo != null)
                         {
