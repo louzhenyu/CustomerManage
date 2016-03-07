@@ -411,10 +411,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     #endregion
 
                     #region 橙果财商
-                    if (info.DCodeType==3)
+                    if (info.DCodeType == 3)
                     {
-                        vipInfo.HigherVipID = RP.UserID;
-                        vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
+                        if (string.IsNullOrWhiteSpace(vipInfo.HigherVipID))
+                        {
+                            if (!vipInfo.HigherVipID.Equals(RP.UserID))
+                            {
+                                vipInfo.HigherVipID = RP.UserID;
+                                vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
+                            }
+                        }
                     }
                     #endregion
 
