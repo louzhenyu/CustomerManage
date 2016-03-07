@@ -209,7 +209,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     loggingSessionInfo.UserID = ToStr(RP.UserID);
                     info.CreateBy = RP.UserID;
                     info.ImageUrl = imageUrl;
-                    info.VipId = RP.UserID;
+                    //info.VipId = RP.UserID;
                     info.ObjectId = RP.Parameters.ShareUserId;//分享经销商的vipid
                     vipDCodeServer.Create(info);
                     #endregion
