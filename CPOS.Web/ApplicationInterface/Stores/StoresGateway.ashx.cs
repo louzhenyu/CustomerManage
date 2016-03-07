@@ -415,11 +415,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     {
                         if (string.IsNullOrWhiteSpace(vipInfo.HigherVipID))
                         {
-                            if (!vipInfo.HigherVipID.Equals(RP.UserID))
-                            {
+                            //if (!vipInfo.HigherVipID.Equals(RP.UserID))
+                            //{
                                 vipInfo.HigherVipID = RP.UserID;
                                 vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
-                            }
+                            //}
                         }
                     }
                     #endregion
