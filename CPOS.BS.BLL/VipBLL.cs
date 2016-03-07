@@ -182,7 +182,7 @@ namespace JIT.CPOS.BS.BLL
 
                     if (ds.Tables[0].Rows[i]["col48"] != DBNull.Value)
                     {
-                        string str = ds.Tables[0].Rows[i]["Phone"].ToString();
+                        string str = ds.Tables[0].Rows[i]["col48"].ToString();
                         if (str.Equals("1"))
                             Data.CodeDes = "ÒÑ³É½»";
                         else

@@ -209,6 +209,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     loggingSessionInfo.UserID = ToStr(RP.UserID);
                     info.CreateBy = RP.UserID;
                     info.ImageUrl = imageUrl;
+                    info.VipId = RP.UserID;
+                    info.ObjectId = RP.Parameters.ShareUserId;//分享经销商的vipid
                     vipDCodeServer.Create(info);
                     #endregion
                 }
@@ -279,7 +281,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             public string ObjectID { get; set; }
             public string RetailTraderName { get; set; }//分销商名称
 
-
+            public string ShareUserId { get; set; }//分享经销商的vipid
             public void Validate()
             {
 

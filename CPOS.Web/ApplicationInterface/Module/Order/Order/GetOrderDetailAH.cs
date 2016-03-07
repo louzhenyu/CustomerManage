@@ -250,8 +250,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                             {
                                 ImageID = c["imageId"].ToString(),
                                 ImageUrl = ImagePathUtil.GetImagePathStr(c["imageUrl"].ToString(), "240")
-                            }).ToArray()
+                            }).ToArray(),
+                    IfService = Convert.ToInt32(t["IfService"])
                 });
+
                 rd.OrderListInfo.OrderDetailInfo = tmp.ToArray();
             }
 

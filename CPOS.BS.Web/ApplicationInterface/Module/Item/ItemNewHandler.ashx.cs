@@ -565,7 +565,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             string content = string.Empty;
             var rd = new VirtualItemType();
 
-            rd.VirtualItemTypeInfo = bllSysVirtualItemType.QueryByEntity(new SysVirtualItemTypeEntity() { CustomerId = loggingSessionInfo.ClientID }, null).ToList();
+            rd.VirtualItemTypeInfo = bllSysVirtualItemType.QueryByEntity(new SysVirtualItemTypeEntity() {IsDelete=0}, null).ToList();
             
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
 

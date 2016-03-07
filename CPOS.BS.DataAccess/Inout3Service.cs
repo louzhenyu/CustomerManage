@@ -1610,6 +1610,7 @@ WHERE     1=1) as t";
                         + " ,a.Field10 "
                         + ",(SELECT y.item_category_name  FROM dbo.T_Item x INNER JOIN dbo.T_Item_Category y ON(x.item_category_id = y.item_category_id) WHERE x.item_id = b.item_id ) itemCategoryName "
                         + " ,isnull(datediff(day,a.Field1,a.Field2),0) DayCount "
+                        
                       + " From t_inout_detail a WITH(NOLOCK)  "
                       + " inner join vw_sku b "
                       + " on(a.sku_id = b.sku_id) "

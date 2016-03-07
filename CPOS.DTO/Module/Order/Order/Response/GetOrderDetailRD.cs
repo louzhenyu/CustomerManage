@@ -209,6 +209,8 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// 退换货状态 0=可申请退换货；0<不可申请退换货
         /// </summary>
         public int SalesReturnFlag { get; set; }
+
+        public int IfService { get; set; }
     }
     public class OrderDetailImage
     {
