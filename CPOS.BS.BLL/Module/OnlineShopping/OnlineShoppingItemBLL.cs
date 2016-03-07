@@ -38,9 +38,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="isStore"></param>
         /// <param name="socialSalesType">类型(0=按订单；1=按商品)</param>
         /// <returns></returns>
-        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType, string strSortName, string strSort)
+        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType, string strSortName, string strSort, int intVirtual,double Price)
         {
-            return itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, isKeep, isExchange, storeId, isGroupBy, ChannelId, isStore, socialSalesType, strSortName, strSort);
+            return itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, isKeep, isExchange, storeId, isGroupBy, ChannelId, isStore, socialSalesType, strSortName, strSort, intVirtual,Price);
         }
 
         //public int GetWelfareItemListCount(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId)

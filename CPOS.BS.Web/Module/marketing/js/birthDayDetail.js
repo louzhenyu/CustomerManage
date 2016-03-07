@@ -974,6 +974,10 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                   $.util.ajax({
                       url: prams.url,
                       data: prams.data,
+                      beforeSend: function () {
+                          $.util.isLoading()
+
+                      },
                       success: function (data) {
                           if (data.IsSuccess && data.ResultCode == 0) {
                               if (callback) {

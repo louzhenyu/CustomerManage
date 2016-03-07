@@ -1714,6 +1714,10 @@
                     url: "/ApplicationInterface/Gateway.ashx",
                     async: false,
                     data: params,
+                    beforeSend: function () {
+                        $.util.isLoading()
+
+                    },
                     success: function (data) {
                         debugger;
                         if (data.IsSuccess && data.ResultCode == 0) {
@@ -1738,6 +1742,10 @@
             $.util.ajax({
                 url: "/ApplicationInterface/Gateway.ashx",
                 data: params,
+                beforeSend: function () {
+                    $.util.isLoading()
+
+                },
                 success: function (data) {
                     if (data.IsSuccess && data.ResultCode == 0) {
                         var result = data.Data;
@@ -1805,6 +1813,10 @@
                 data: {
                     action: 'Questionnaire.ScoreRecoveryInformation.DelScoreRecovery',
                     ScoreRecoveryInformationID: ScoreRecoveryInformationID
+                },
+                beforeSend: function () {
+                    $.util.isLoading()
+
                 },
                 success: function (data) {
                     if (data.IsSuccess && data.ResultCode == 0) {

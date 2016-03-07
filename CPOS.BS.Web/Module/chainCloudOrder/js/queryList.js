@@ -767,6 +767,10 @@
                     $.util.ajax({
                         url: prams.url,
                         data: prams.data,
+                        beforeSend: function () {
+                            $.util.isLoading()
+
+                        },
                         success: function (data) {
                             if (data.IsSuccess) {
                                 if (callback) {
@@ -785,6 +789,10 @@
                     $.util.oldAjax({
                         url: prams.url,
                         data: prams.data,
+                        beforeSend: function () {
+                            $.util.isLoading()
+
+                        },
                         success: function (data) {
                             if (data.success) {
                                 if (callback) {

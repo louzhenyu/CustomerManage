@@ -58,6 +58,10 @@ namespace JIT.CPOS.DTO.Module.VIP.SysVipCardType.Response
         /// </summary>
         public decimal? Prices { get; set; }
         /// <summary>
+        /// 买卡是否可补差价（0=不可补；1=可补）
+        /// </summary>
+        public int? IsExtraMoney { get; set; }
+        /// <summary>
         /// 兑换积分
         /// </summary>
         public int? ExchangeIntegral { get; set; }

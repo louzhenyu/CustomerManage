@@ -35,6 +35,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.SysVipCardType
                 rd.IsPassword = vipCardTypeInfo.IsPassword;
                 rd.VipCardLevel = vipCardTypeInfo.VipCardLevel;
                 rd.Prices = vipCardTypeInfo.Prices;
+                rd.IsExtraMoney = vipCardTypeInfo.IsExtraMoney;
                 rd.ExchangeIntegral = vipCardTypeInfo.ExchangeIntegral;
                 rd.UpgradeAmount = vipCardTypeInfo.UpgradeAmount;
                 rd.UpgradeOnceAmount = vipCardTypeInfo.UpgradeOnceAmount;

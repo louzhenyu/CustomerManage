@@ -510,7 +510,6 @@ public enum InfoType : int
     Warning = 2,
     Error = 3,
 }
-
 public class PageLog
 {
     private static PageLog _log;
@@ -542,4 +541,5 @@ public class PageLog
         }
         catch { }
     }
+
 }

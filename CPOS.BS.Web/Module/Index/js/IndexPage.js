@@ -266,7 +266,7 @@
                     $(".MonthArchivePect").html((MonthArchivePect ? MonthArchivePect : "0") + "%");
 
 
-                    $(".CurrentMonthSingleUnitAvgTranCount").html(data.CurrentMonthSingleUnitAvgTranCount ? data.CurrentMonthSingleUnitAvgTranCount : 0);//单店月均客流
+                    $(".CurrentMonthSingleUnitAvgTranCount").html(data.CurrentMonthSingleUnitAvgTranCount ? data.CurrentMonthSingleUnitAvgTranCount : 0);//单店月均消费人次
                     $(".CurrentMonthUnitAvgCustPrice").html(data.CurrentMonthUnitAvgCustPrice ? data.CurrentMonthUnitAvgCustPrice : 0);//门店月均单价
                     
 

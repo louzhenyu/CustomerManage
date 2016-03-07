@@ -128,13 +128,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                         {//如果前端未指定VIP ID则后台指定
                             pRequest.UserID = Guid.NewGuid().ToString("N");
                         }
-                        if (vipByID == null && vipByPhone==null)//根据vipid查不出记录，并且根据手机号也查不出记录 新增一条vip
+                        if (vipByID == null && vipByPhone == null)//根据vipid查不出记录，并且根据手机号也查不出记录 新增一条vip
                         {//如果不存在则首先创建一条VIP记录，补充记录
                             vipByID = new VipEntity()
                             {
                                 Phone = pRequest.Parameters.Mobile,
                                 VipName = pRequest.Parameters.Mobile,
                                 UserName = pRequest.Parameters.Mobile,
+                                VipRealName = pRequest.Parameters.VipRealName,
                                 VIPID = pRequest.UserID,
                                 Status = 2,
                                 ClientID = pRequest.CustomerID,
@@ -147,9 +148,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                             bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
                             #endregion
                         }
-                        else if(vipByID != null)
+                        else if (vipByID != null)
                         {
                             vipByID.Phone = pRequest.Parameters.Mobile;
+                            if (!string.IsNullOrEmpty(pRequest.Parameters.VipRealName))
+                                vipByID.VipRealName = pRequest.Parameters.VipRealName;
                             vipByID.Status = 2;
                             bll.Update(vipByID);
                             #region 注册会员触点活动奖励
@@ -179,7 +182,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                                 IsActivate = vipByID.IsActivate.HasValue && vipByID.IsActivate.Value == 1 ? true : false
                             };
                             //处理绑卡业务 add by Henry 2015/10/28
-                            vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode,vipByID.CouponInfo);
+                            vipCardVipMappingBLL.BindVipCard(vipByID.VIPID, vipByID.VipCode, vipByID.CouponInfo);
                         }
                         else
                         {//否则调用存储过程,做自动会员合并
@@ -194,7 +197,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                             {
                                 throw new APIException("自动绑定会员信息失败") { ErrorCode = ERROR_AUTO_MERGE_MEMBER_FAILED };
                             }
-                            
+
                             //合并成功后重新读取信息
                             List<IWhereCondition> wheres = new List<IWhereCondition>();
                             wheres.Add(new MoreThanCondition() { FieldName = "status", Value = 0, IncludeEquals = false });
@@ -250,6 +253,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                                 Phone = pRequest.Parameters.Mobile,
                                 VipName = pRequest.Parameters.Mobile,
                                 UserName = pRequest.Parameters.Mobile,
+                                VipRealName = pRequest.Parameters.VipRealName,
                                 VIPID = string.IsNullOrWhiteSpace(pRequest.UserID) ? Guid.NewGuid().ToString("N") : pRequest.UserID,
                                 Status = 2, //状态为注册
                                 VipCode = "Vip" + bll.GetNewVipCode(pRequest.CustomerID),
@@ -297,7 +301,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                             ,
                             IsActivate = false
                             ,
-                            Integration = vipByPhone.Integration??0                            
+                            Integration = vipByPhone.Integration ?? 0
                             ,
                             Balance = EndAmount
                         };

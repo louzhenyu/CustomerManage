@@ -21,6 +21,18 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         public string Name { get; set; }
         public string VipLevelName { get; set; }  //会员卡名称
         public string CardTypeImageUrl { get; set; }//会员卡图片
+        /// <summary>
+        /// 是否有付费的卡0=没有；1=有
+        /// </summary>
+        public int IsCostCardType { get; set; }
+        /// <summary>
+        /// 当前会员卡价格
+        /// </summary>
+        public decimal CardTypePrice { get; set; }
+        /// <summary>
+        ///  买卡是否可补差价（0=不可补；1=可补）
+        /// </summary>
+        public int? IsExtraMoney { get; set; }
         public string ImageUrl { get; set; }//String	会员图片URL
         public decimal Balance { get; set; }//decimal	余额
         public decimal ReturnAmount { get; set; }//返现
@@ -40,5 +52,10 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Response
         /// 是否已绑定
         /// </summary>
         public bool IsActivate { get; set; }
+
+        /// <summary>
+        /// 是否是经销商 0=不是；1=是
+        /// </summary>
+        public int IsDealer { get; set; }
     }
 }

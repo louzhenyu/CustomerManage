@@ -51,6 +51,7 @@ namespace JIT.CPOS.BS.Web.Login
          //   AuthWebService.Endpoint.Address = new System.ServiceModel.EndpointAddress("http://localhost:42305/AuthService.asmx");
 
             string str = AuthWebService.GetLoginUserInfo(token);
+            //str = "<?xml version=\"1.0\"?>\r\n<data xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">\r\n  <customer_id>e9f21f7e022d4c72baf64c668b709f0e</customer_id>\r\n  <customer_code>zmdtest</customer_code>\r\n  <customer_name>\u603B\u90E8123</customer_name>\r\n  <connection_string>user id=sa;password=JtLaxT7668;data source=182.254.219.83,8433;database=cpos_bs_alading;</connection_string>\r\n  <user_id>820833030e5b493ca820c1a34109923d</user_id>\r\n  <user_name>\u7BA1\u7406\u5458</user_name>\r\n</data>";
 
             var myLoggingManager = (JIT.CPOS.BS.Entity.LoggingManager)cXMLService.Deserialize(
                 str, typeof(JIT.CPOS.BS.Entity.LoggingManager));

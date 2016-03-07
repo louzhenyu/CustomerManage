@@ -1269,6 +1269,7 @@ namespace JIT.CPOS.BS.BLL
                 inoutInfo.carrier_id = SetOrderInfo.CarrierID;//提交上来的StoreID是到店提货的门店ID
                 inoutInfo.total_qty = Convert.ToDecimal(SetOrderInfo.TotalQty);
                 inoutInfo.vip_no = vipId;
+                inoutInfo.vip_code = SetOrderInfo.VipCardCode;
                 //inoutInfo.data_from_id = "wap";
                 inoutInfo.sales_unit_id = SetOrderInfo.StoreId;
                 inoutInfo.purchase_unit_id = SetOrderInfo.StoreId;

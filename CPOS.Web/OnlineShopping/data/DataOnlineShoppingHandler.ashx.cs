@@ -92,7 +92,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 string storeId = ToStr(reqObj.special.storeId);
                 if (page < 0) page = 0;
                 if (pageSize <= 0) pageSize = 15;
-
+                int intVirtual = reqObj.special.Virtual == null ? 0 : 1;//是否虚拟商品
+                double Price = reqObj.special.Price == null ? 0 : Convert.ToDouble(reqObj.special.Price);
                 //初始化返回对象
                 respData.content = new getItemListRespContentData();
                 respData.content.itemList = new List<getItemListRespContentDataItem>();
@@ -111,7 +112,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 var basicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
                 Hashtable htSetting = basicSettingBll.GetSocialSetting();   //获取社会化销售配置 
 
-                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId, reqObj.special.isStore, int.Parse(htSetting["socialSalesType"].ToString()), reqObj.special.sortName == null ? "modify_time" : reqObj.special.sortName, reqObj.special.sort == null ? "desc" : reqObj.special.sort);
+                var dsItems = itemService.GetWelfareItemList(userId, itemName, itemTypeId, page, pageSize, false, isExchange, storeId, isGroupBy, reqObj.common.channelId, reqObj.special.isStore, int.Parse(htSetting["socialSalesType"].ToString()), reqObj.special.sortName == null ? "create_time" : reqObj.special.sortName, reqObj.special.sort == null ? "desc" : reqObj.special.sort, intVirtual,Price);
                 sw.Stop(); Loggers.Debug(new DebugLogInfo() { Message = "获取所有藏商品列表，执行时长：[" + sw.ElapsedMilliseconds.ToString() + "]毫秒" });
 
                 if (dsItems != null && dsItems.Tables.Count > 0 && dsItems.Tables[0].Rows.Count > 0)
@@ -286,6 +287,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string eventId { get; set; }  ///商品活动id(抢购，团购，秒杀)
             public int EventTypeId { get; set; }//活动类型id(抢购，团购，秒杀)
             public string GoodsType { get; set; } //商品的类型GoodsDetail：正常，热销，GroupGoodsDetail：团购，RushGoodsDetail：抢购
+            public int ifservice { get; set; }//是否虚拟商品
         }
         public class getItemListReqData : ReqData
         {
@@ -311,6 +313,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string sort { get; set; }//排序类型  desc  asc
 
             public string OwnerVipID { get; set; }//店主vipid
+
+            public int? Virtual { get; set; }//虚拟商品
+
+            public double? Price { get; set; } //商品价格
         }
         #endregion
 
@@ -2473,7 +2479,6 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 orderInfo.IsALD = ToStr(reqObj.common.isALD);
                 orderInfo.IsGroupBuy = ToStr(reqObj.special.isGroupBy);
                 orderInfo.DataFromId = reqObj.special.dataFromId;
-
                 //会员小店订单来源赋值
                 if (reqObj.common.channelId.Equals("6"))
                 {
@@ -2507,6 +2512,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     orderInfo.OrderId = BaseService.NewGuidPub();
                     orderInfo.OrderDate = System.DateTime.Now.ToString("yyyy-MM-dd");
                     orderInfo.Status = (string.IsNullOrEmpty(reqObj.special.reqBy) || reqObj.special.reqBy == "0") ? "-99" : "100";   //Jermyn20140219 //haibo.zhou20140224,这里这么写，status=-99,是针对微信平台里的，在提交表单之前就生成了订单，所以状态设为-99，而状态设为100是针对app里提交订单时才生成真实订单***
+                    if (reqObj.special.CommodityType == "1") //为虚拟商品，订单为真实订单
+                    {
+                        orderInfo.Status = "100";
+                    }
                     orderInfo.StatusDesc = "未审核";
                     //orderInfo.DiscountRate = Convert.ToDecimal((orderInfo.SalesPrice / orderInfo.StdPrice) * 100);
                     //获取订单号
@@ -2576,8 +2585,15 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     orderDetailInfo.Field3 = ToStr(detail.appointmentTime);
                     //前台存放会员折扣（根据会员卡等级判断折扣率）
                     var vipID = reqObj.common.userId;
+
                     //根据vipID获取当前折扣信息
-                    var rate = new VipBLL(loggingSessionInfo).GetVipSale(vipID);
+                    var vipInfo = new VipBLL(loggingSessionInfo);
+                    var rate = vipInfo.GetVipSale(vipID);
+ 
+                    if (reqObj.special.CommodityType == "1")
+                    {
+                        orderInfo.VipCardCode = vipInfo.GetVipCode();
+                    }
                     orderDetailInfo.discount_rate = rate;
                     //orderDetailInfo.discount_rate = 100
 
@@ -2593,6 +2609,18 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 string strError = string.Empty;
                 string strMsg = string.Empty;
                 bool bReturn = service.SetOrderOnlineShoppingNew(orderInfo, out strError, out strMsg);
+
+
+                #region 虚拟商品更新入库销量信息
+                if (reqObj.special.CommodityType == "1")
+                {
+                    var inoutBll = new T_InoutBLL(loggingSessionInfo);//订单业务对象实例化
+                    var inoutServiceBLL = new InoutService(loggingSessionInfo);
+                    var inoutDetailList = inoutServiceBLL.GetInoutDetailInfoByOrderId(orderInfo.OrderId);
+                    inoutBll.SetStock(orderInfo.OrderId, inoutDetailList, 1, loggingSessionInfo);
+                }
+
+                #endregion
 
                 #region 更新发货门店
                 //人人销售分配发货门店 add by Henry 2014-11-27
@@ -3014,6 +3042,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string couponsPrompt { get; set; } //优惠券提示语（Jermyn20131213--Field16）
             public string actualAmount { get; set; }    //实际需要支付的金额(去掉优惠券的金额Jermyn20131215)
             public string reqBy { get; set; }   //请求0-wap,1-手机.
+
+            public string CommodityType { get; set; } //商品类型 0-实际商品 1-虚拟商品
             public string joinNo { get; set; }  //餐饮--人数
             public string status { get; set; }
             public string isGroupBy { get; set; }  //是否团购订单（Jermyn20140318—Field15）

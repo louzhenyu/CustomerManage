@@ -1090,17 +1090,24 @@ insert into @TmpTable(user_id,row_no)
         public DataSet GetUserListByMenuCode(string menuCode)
         {
             DataSet ds = new DataSet();
-            string sql = "select a.* "
-                + " from T_User a"
-                + " inner join T_User_Role b on a.user_id=b.user_id"
-                + " inner join T_Role c on b.role_id=c.role_id"
-                + @"  inner join t_role_menu d on d.role_id=c.role_id
-				          inner join t_menu e on e.menu_id=d.menu_id"
-                + " where a.user_status='1' and b.status='1' and c.status='1'  and d.status=1 and e.status=1 "
-                + " and e.menu_code='" + menuCode + "'"
-                + " and a.customer_id='" + CurrentUserInfo.CurrentUser.customer_id + "'"
-                +" and e.customer_id='" + CurrentUserInfo.CurrentUser.customer_id + "'";
-            ds = this.SQLHelper.ExecuteDataset(sql);
+            List<SqlParameter> ls = new List<System.Data.SqlClient.SqlParameter>();
+            ls.Add(new SqlParameter("@menuCode", menuCode));
+            ls.Add(new SqlParameter("@customer_id", CurrentUserInfo.CurrentUser.customer_id));
+            string sql = @"select a.* 
+                              from T_User a 
+			                  where a.user_id in (
+				                   select  b.user_id from  T_User_Role b
+					                 inner join T_Role c on b.role_id=c.role_id 
+					                 inner join t_role_menu d on d.role_id=c.role_id
+					                 inner join t_menu e on e.menu_id=d.menu_id
+					                 where a.user_status='1' and b.status='1' and c.status='1' and d.status=1 and e.status=1					
+					                 and e.menu_code=@menuCode					  
+					                  and c.customer_id=@customer_id
+					                  and e.customer_id=@customer_id
+	    	                 )
+			                 and a.customer_id=@customer_id";
+         
+            ds = this.SQLHelper.ExecuteDataset(CommandType.Text,sql,ls.ToArray());
             return ds;
         }
 

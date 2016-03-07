@@ -283,6 +283,7 @@
     <Compile Include="CodeGeneration\SysCSServiceTypeEntity.cs" />
     <Compile Include="CodeGeneration\SysModulePageMappingEntity.cs" />
     <Compile Include="CodeGeneration\SysPageEntity.cs" />
+    <Compile Include="CodeGeneration\SysVirtualItemTypeEntity.cs" />
     <Compile Include="CodeGeneration\SysVocationEntity.cs" />
     <Compile Include="CodeGeneration\SysVocationVersionMappingEntity.cs" />
     <Compile Include="CodeGeneration\TagsStatusEntity.cs" />
@@ -329,6 +330,7 @@
     <Compile Include="CodeGeneration\T_Sku_PropertyEntity.cs" />
     <Compile Include="CodeGeneration\t_unitEntity.cs" />
     <Compile Include="CodeGeneration\T_UserEntity.cs" />
+    <Compile Include="CodeGeneration\T_VirtualItemTypeSettingEntity.cs" />
     <Compile Include="CodeGeneration\WXTMConfigEntity.cs" />
     <Compile Include="CodeGeneration\UnitCommentEntity.cs" />
     <Compile Include="CodeGeneration\UrlEntity.cs" />
@@ -1010,6 +1012,7 @@
     <Compile Include="SysVipCardStatusEntity.cs" />
     <Compile Include="SysVipCardTypeEntity.cs" />
     <Compile Include="SysVipSourceEntity.cs" />
+    <Compile Include="SysVirtualItemTypeEntity.cs" />
     <Compile Include="SysVisitLogsEntity.cs" />
     <Compile Include="SysVocationVersionMappingEntity.cs" />
     <Compile Include="TagsEntity.cs" />
@@ -1057,6 +1060,7 @@
     <Compile Include="T_Sku_PriceEntity.cs" />
     <Compile Include="T_Sku_PropertyEntity.cs" />
     <Compile Include="t_unitEntity.cs" />
+    <Compile Include="T_VirtualItemTypeSettingEntity.cs" />
     <Compile Include="VipFeedbackInfoEntity.cs" />
     <Compile Include="VipLogEntity.cs" />
     <Compile Include="VipSnapshotEntity.cs" />

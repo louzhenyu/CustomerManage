@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/10/27 22:13:12
+ * Create On	:2016-3-6 11:18:16
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -70,27 +70,27 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-
+            
             //初始化固定字段
-            pEntity.IsDelete = 0;
-            pEntity.CreateTime = DateTime.Now;
-            pEntity.LastUpdateTime = pEntity.CreateTime;
-            pEntity.CreateBy = CurrentUserInfo.UserID;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+			pEntity.IsDelete=0;
+			pEntity.CreateTime=DateTime.Now;
+			pEntity.LastUpdateTime=pEntity.CreateTime;
+			pEntity.CreateBy=CurrentUserInfo.UserID;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
 
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [SysVipCardType](");
-            strSql.Append("[Category],[VipCardTypeCode],[VipCardTypeName],[VipCardLevel],[IsPassword],[AddUpAmount],[IsExpandVip],[PreferentialAmount],[SalesPreferentiaAmount],[IntegralMultiples],[Isprepaid],[IsPoints],[IsDiscount],[IsOnlineRecharge],[IsRegName],[IsUseCoupon],[IsBindECard],[PicUrl],[UpgradeAmount],[UpgradeOnceAmount],[UpgradePoint],[ExchangeIntegral],[Prices],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete])");
+            strSql.Append("[Category],[VipCardTypeCode],[VipCardTypeName],[VipCardLevel],[IsPassword],[AddUpAmount],[IsExpandVip],[PreferentialAmount],[SalesPreferentiaAmount],[IntegralMultiples],[Isprepaid],[IsPoints],[IsDiscount],[IsOnlineRecharge],[IsRegName],[IsUseCoupon],[IsBindECard],[PicUrl],[UpgradeAmount],[UpgradeOnceAmount],[UpgradePoint],[ExchangeIntegral],[Prices],[IsExtraMoney],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete])");
             strSql.Append(" values (");
-            strSql.Append("@Category,@VipCardTypeCode,@VipCardTypeName,@VipCardLevel,@IsPassword,@AddUpAmount,@IsExpandVip,@PreferentialAmount,@SalesPreferentiaAmount,@IntegralMultiples,@Isprepaid,@IsPoints,@IsDiscount,@IsOnlineRecharge,@IsRegName,@IsUseCoupon,@IsBindECard,@PicUrl,@UpgradeAmount,@UpgradeOnceAmount,@UpgradePoint,@ExchangeIntegral,@Prices,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete)");
-            strSql.AppendFormat("{0}select SCOPE_IDENTITY();", Environment.NewLine);
+            strSql.Append("@Category,@VipCardTypeCode,@VipCardTypeName,@VipCardLevel,@IsPassword,@AddUpAmount,@IsExpandVip,@PreferentialAmount,@SalesPreferentiaAmount,@IntegralMultiples,@Isprepaid,@IsPoints,@IsDiscount,@IsOnlineRecharge,@IsRegName,@IsUseCoupon,@IsBindECard,@PicUrl,@UpgradeAmount,@UpgradeOnceAmount,@UpgradePoint,@ExchangeIntegral,@Prices,@IsExtraMoney,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete)");            
+			strSql.AppendFormat("{0}select SCOPE_IDENTITY();", Environment.NewLine);
 
 
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@Category",SqlDbType.Int),
-					new SqlParameter("@VipCardTypeCode",SqlDbType.NVarChar),
+					new SqlParameter("@VipCardTypeCode",SqlDbType.VarChar),
 					new SqlParameter("@VipCardTypeName",SqlDbType.NVarChar),
 					new SqlParameter("@VipCardLevel",SqlDbType.Int),
 					new SqlParameter("@IsPassword",SqlDbType.Int),
@@ -112,6 +112,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@UpgradePoint",SqlDbType.Int),
 					new SqlParameter("@ExchangeIntegral",SqlDbType.Int),
 					new SqlParameter("@Prices",SqlDbType.Decimal),
+					new SqlParameter("@IsExtraMoney",SqlDbType.Int),
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.VarChar),
@@ -119,42 +120,43 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int)
             };
-            parameters[0].Value = pEntity.Category;
-            parameters[1].Value = pEntity.VipCardTypeCode;
-            parameters[2].Value = pEntity.VipCardTypeName;
-            parameters[3].Value = pEntity.VipCardLevel;
-            parameters[4].Value = pEntity.IsPassword;
-            parameters[5].Value = pEntity.AddUpAmount;
-            parameters[6].Value = pEntity.IsExpandVip;
-            parameters[7].Value = pEntity.PreferentialAmount;
-            parameters[8].Value = pEntity.SalesPreferentiaAmount;
-            parameters[9].Value = pEntity.IntegralMultiples;
-            parameters[10].Value = pEntity.Isprepaid;
-            parameters[11].Value = pEntity.IsPoints;
-            parameters[12].Value = pEntity.IsDiscount;
-            parameters[13].Value = pEntity.IsOnlineRecharge;
-            parameters[14].Value = pEntity.IsRegName;
-            parameters[15].Value = pEntity.IsUseCoupon;
-            parameters[16].Value = pEntity.IsBindECard;
-            parameters[17].Value = pEntity.PicUrl;
-            parameters[18].Value = pEntity.UpgradeAmount;
-            parameters[19].Value = pEntity.UpgradeOnceAmount;
-            parameters[20].Value = pEntity.UpgradePoint;
-            parameters[21].Value = pEntity.ExchangeIntegral;
-            parameters[22].Value = pEntity.Prices;
-            parameters[23].Value = pEntity.CustomerID;
-            parameters[24].Value = pEntity.CreateTime;
-            parameters[25].Value = pEntity.CreateBy;
-            parameters[26].Value = pEntity.LastUpdateTime;
-            parameters[27].Value = pEntity.LastUpdateBy;
-            parameters[28].Value = pEntity.IsDelete;
+			parameters[0].Value = pEntity.Category;
+			parameters[1].Value = pEntity.VipCardTypeCode;
+			parameters[2].Value = pEntity.VipCardTypeName;
+			parameters[3].Value = pEntity.VipCardLevel;
+			parameters[4].Value = pEntity.IsPassword;
+			parameters[5].Value = pEntity.AddUpAmount;
+			parameters[6].Value = pEntity.IsExpandVip;
+			parameters[7].Value = pEntity.PreferentialAmount;
+			parameters[8].Value = pEntity.SalesPreferentiaAmount;
+			parameters[9].Value = pEntity.IntegralMultiples;
+			parameters[10].Value = pEntity.Isprepaid;
+			parameters[11].Value = pEntity.IsPoints;
+			parameters[12].Value = pEntity.IsDiscount;
+			parameters[13].Value = pEntity.IsOnlineRecharge;
+			parameters[14].Value = pEntity.IsRegName;
+			parameters[15].Value = pEntity.IsUseCoupon;
+			parameters[16].Value = pEntity.IsBindECard;
+			parameters[17].Value = pEntity.PicUrl;
+			parameters[18].Value = pEntity.UpgradeAmount;
+			parameters[19].Value = pEntity.UpgradeOnceAmount;
+			parameters[20].Value = pEntity.UpgradePoint;
+			parameters[21].Value = pEntity.ExchangeIntegral;
+			parameters[22].Value = pEntity.Prices;
+			parameters[23].Value = pEntity.IsExtraMoney;
+			parameters[24].Value = pEntity.CustomerID;
+			parameters[25].Value = pEntity.CreateTime;
+			parameters[26].Value = pEntity.CreateBy;
+			parameters[27].Value = pEntity.LastUpdateTime;
+			parameters[28].Value = pEntity.LastUpdateBy;
+			parameters[29].Value = pEntity.IsDelete;
 
             //执行并将结果回写
             object result;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteScalar((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+               result= this.SQLHelper.ExecuteScalar((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteScalar(CommandType.Text, strSql.ToString(), parameters);
+               result= this.SQLHelper.ExecuteScalar(CommandType.Text, strSql.ToString(), parameters); 
             pEntity.VipCardTypeID = Convert.ToInt32(result);
         }
 
@@ -214,9 +216,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(SysVipCardTypeEntity pEntity, IDbTransaction pTran)
+        public void Update(SysVipCardTypeEntity pEntity , IDbTransaction pTran)
         {
-            Update(pEntity, pTran, true);
+            Update(pEntity , pTran,true);
         }
 
         /// <summary>
@@ -224,7 +226,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(SysVipCardTypeEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
+        public void Update(SysVipCardTypeEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
@@ -233,71 +235,73 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
-            //初始化固定字段
-            pEntity.LastUpdateTime = DateTime.Now;
-            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
+             //初始化固定字段
+			pEntity.LastUpdateTime=DateTime.Now;
+			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
 
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [SysVipCardType] set ");
-            if (pIsUpdateNullField || pEntity.Category != null)
-                strSql.Append("[Category]=@Category,");
-            if (pIsUpdateNullField || pEntity.VipCardTypeCode != null)
-                strSql.Append("[VipCardTypeCode]=@VipCardTypeCode,");
-            if (pIsUpdateNullField || pEntity.VipCardTypeName != null)
-                strSql.Append("[VipCardTypeName]=@VipCardTypeName,");
-            if (pIsUpdateNullField || pEntity.VipCardLevel != null)
-                strSql.Append("[VipCardLevel]=@VipCardLevel,");
-            if (pIsUpdateNullField || pEntity.IsPassword != null)
-                strSql.Append("[IsPassword]=@IsPassword,");
-            if (pIsUpdateNullField || pEntity.AddUpAmount != null)
-                strSql.Append("[AddUpAmount]=@AddUpAmount,");
-            if (pIsUpdateNullField || pEntity.IsExpandVip != null)
-                strSql.Append("[IsExpandVip]=@IsExpandVip,");
-            if (pIsUpdateNullField || pEntity.PreferentialAmount != null)
-                strSql.Append("[PreferentialAmount]=@PreferentialAmount,");
-            if (pIsUpdateNullField || pEntity.SalesPreferentiaAmount != null)
-                strSql.Append("[SalesPreferentiaAmount]=@SalesPreferentiaAmount,");
-            if (pIsUpdateNullField || pEntity.IntegralMultiples != null)
-                strSql.Append("[IntegralMultiples]=@IntegralMultiples,");
-            if (pIsUpdateNullField || pEntity.Isprepaid != null)
-                strSql.Append("[Isprepaid]=@Isprepaid,");
-            if (pIsUpdateNullField || pEntity.IsPoints != null)
-                strSql.Append("[IsPoints]=@IsPoints,");
-            if (pIsUpdateNullField || pEntity.IsDiscount != null)
-                strSql.Append("[IsDiscount]=@IsDiscount,");
-            if (pIsUpdateNullField || pEntity.IsOnlineRecharge != null)
-                strSql.Append("[IsOnlineRecharge]=@IsOnlineRecharge,");
-            if (pIsUpdateNullField || pEntity.IsRegName != null)
-                strSql.Append("[IsRegName]=@IsRegName,");
-            if (pIsUpdateNullField || pEntity.IsUseCoupon != null)
-                strSql.Append("[IsUseCoupon]=@IsUseCoupon,");
-            if (pIsUpdateNullField || pEntity.IsBindECard != null)
-                strSql.Append("[IsBindECard]=@IsBindECard,");
-            if (pIsUpdateNullField || pEntity.PicUrl != null)
-                strSql.Append("[PicUrl]=@PicUrl,");
-            if (pIsUpdateNullField || pEntity.UpgradeAmount != null)
-                strSql.Append("[UpgradeAmount]=@UpgradeAmount,");
-            if (pIsUpdateNullField || pEntity.UpgradeOnceAmount != null)
-                strSql.Append("[UpgradeOnceAmount]=@UpgradeOnceAmount,");
-            if (pIsUpdateNullField || pEntity.UpgradePoint != null)
-                strSql.Append("[UpgradePoint]=@UpgradePoint,");
-            if (pIsUpdateNullField || pEntity.ExchangeIntegral != null)
-                strSql.Append("[ExchangeIntegral]=@ExchangeIntegral,");
-            if (pIsUpdateNullField || pEntity.Prices != null)
-                strSql.Append("[Prices]=@Prices,");
-            if (pIsUpdateNullField || pEntity.CustomerID != null)
-                strSql.Append("[CustomerID]=@CustomerID,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime != null)
-                strSql.Append("[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.LastUpdateBy != null)
-                strSql.Append("[LastUpdateBy]=@LastUpdateBy");
+                        if (pIsUpdateNullField || pEntity.Category!=null)
+                strSql.Append( "[Category]=@Category,");
+            if (pIsUpdateNullField || pEntity.VipCardTypeCode!=null)
+                strSql.Append( "[VipCardTypeCode]=@VipCardTypeCode,");
+            if (pIsUpdateNullField || pEntity.VipCardTypeName!=null)
+                strSql.Append( "[VipCardTypeName]=@VipCardTypeName,");
+            if (pIsUpdateNullField || pEntity.VipCardLevel!=null)
+                strSql.Append( "[VipCardLevel]=@VipCardLevel,");
+            if (pIsUpdateNullField || pEntity.IsPassword!=null)
+                strSql.Append( "[IsPassword]=@IsPassword,");
+            if (pIsUpdateNullField || pEntity.AddUpAmount!=null)
+                strSql.Append( "[AddUpAmount]=@AddUpAmount,");
+            if (pIsUpdateNullField || pEntity.IsExpandVip!=null)
+                strSql.Append( "[IsExpandVip]=@IsExpandVip,");
+            if (pIsUpdateNullField || pEntity.PreferentialAmount!=null)
+                strSql.Append( "[PreferentialAmount]=@PreferentialAmount,");
+            if (pIsUpdateNullField || pEntity.SalesPreferentiaAmount!=null)
+                strSql.Append( "[SalesPreferentiaAmount]=@SalesPreferentiaAmount,");
+            if (pIsUpdateNullField || pEntity.IntegralMultiples!=null)
+                strSql.Append( "[IntegralMultiples]=@IntegralMultiples,");
+            if (pIsUpdateNullField || pEntity.Isprepaid!=null)
+                strSql.Append( "[Isprepaid]=@Isprepaid,");
+            if (pIsUpdateNullField || pEntity.IsPoints!=null)
+                strSql.Append( "[IsPoints]=@IsPoints,");
+            if (pIsUpdateNullField || pEntity.IsDiscount!=null)
+                strSql.Append( "[IsDiscount]=@IsDiscount,");
+            if (pIsUpdateNullField || pEntity.IsOnlineRecharge!=null)
+                strSql.Append( "[IsOnlineRecharge]=@IsOnlineRecharge,");
+            if (pIsUpdateNullField || pEntity.IsRegName!=null)
+                strSql.Append( "[IsRegName]=@IsRegName,");
+            if (pIsUpdateNullField || pEntity.IsUseCoupon!=null)
+                strSql.Append( "[IsUseCoupon]=@IsUseCoupon,");
+            if (pIsUpdateNullField || pEntity.IsBindECard!=null)
+                strSql.Append( "[IsBindECard]=@IsBindECard,");
+            if (pIsUpdateNullField || pEntity.PicUrl!=null)
+                strSql.Append( "[PicUrl]=@PicUrl,");
+            if (pIsUpdateNullField || pEntity.UpgradeAmount!=null)
+                strSql.Append( "[UpgradeAmount]=@UpgradeAmount,");
+            if (pIsUpdateNullField || pEntity.UpgradeOnceAmount!=null)
+                strSql.Append( "[UpgradeOnceAmount]=@UpgradeOnceAmount,");
+            if (pIsUpdateNullField || pEntity.UpgradePoint!=null)
+                strSql.Append( "[UpgradePoint]=@UpgradePoint,");
+            if (pIsUpdateNullField || pEntity.ExchangeIntegral!=null)
+                strSql.Append( "[ExchangeIntegral]=@ExchangeIntegral,");
+            if (pIsUpdateNullField || pEntity.Prices!=null)
+                strSql.Append( "[Prices]=@Prices,");
+            if (pIsUpdateNullField || pEntity.IsExtraMoney!=null)
+                strSql.Append( "[IsExtraMoney]=@IsExtraMoney,");
+            if (pIsUpdateNullField || pEntity.CustomerID!=null)
+                strSql.Append( "[CustomerID]=@CustomerID,");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
+                strSql.Append( "[LastUpdateBy]=@LastUpdateBy");
             strSql.Append(" where VipCardTypeID=@VipCardTypeID ");
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@Category",SqlDbType.Int),
-					new SqlParameter("@VipCardTypeCode",SqlDbType.NVarChar),
+					new SqlParameter("@VipCardTypeCode",SqlDbType.VarChar),
 					new SqlParameter("@VipCardTypeName",SqlDbType.NVarChar),
 					new SqlParameter("@VipCardLevel",SqlDbType.Int),
 					new SqlParameter("@IsPassword",SqlDbType.Int),
@@ -319,38 +323,40 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@UpgradePoint",SqlDbType.Int),
 					new SqlParameter("@ExchangeIntegral",SqlDbType.Int),
 					new SqlParameter("@Prices",SqlDbType.Decimal),
+					new SqlParameter("@IsExtraMoney",SqlDbType.Int),
 					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@VipCardTypeID",SqlDbType.Int)
             };
-            parameters[0].Value = pEntity.Category;
-            parameters[1].Value = pEntity.VipCardTypeCode;
-            parameters[2].Value = pEntity.VipCardTypeName;
-            parameters[3].Value = pEntity.VipCardLevel;
-            parameters[4].Value = pEntity.IsPassword;
-            parameters[5].Value = pEntity.AddUpAmount;
-            parameters[6].Value = pEntity.IsExpandVip;
-            parameters[7].Value = pEntity.PreferentialAmount;
-            parameters[8].Value = pEntity.SalesPreferentiaAmount;
-            parameters[9].Value = pEntity.IntegralMultiples;
-            parameters[10].Value = pEntity.Isprepaid;
-            parameters[11].Value = pEntity.IsPoints;
-            parameters[12].Value = pEntity.IsDiscount;
-            parameters[13].Value = pEntity.IsOnlineRecharge;
-            parameters[14].Value = pEntity.IsRegName;
-            parameters[15].Value = pEntity.IsUseCoupon;
-            parameters[16].Value = pEntity.IsBindECard;
-            parameters[17].Value = pEntity.PicUrl;
-            parameters[18].Value = pEntity.UpgradeAmount;
-            parameters[19].Value = pEntity.UpgradeOnceAmount;
-            parameters[20].Value = pEntity.UpgradePoint;
-            parameters[21].Value = pEntity.ExchangeIntegral;
-            parameters[22].Value = pEntity.Prices;
-            parameters[23].Value = pEntity.CustomerID;
-            parameters[24].Value = pEntity.LastUpdateTime;
-            parameters[25].Value = pEntity.LastUpdateBy;
-            parameters[26].Value = pEntity.VipCardTypeID;
+			parameters[0].Value = pEntity.Category;
+			parameters[1].Value = pEntity.VipCardTypeCode;
+			parameters[2].Value = pEntity.VipCardTypeName;
+			parameters[3].Value = pEntity.VipCardLevel;
+			parameters[4].Value = pEntity.IsPassword;
+			parameters[5].Value = pEntity.AddUpAmount;
+			parameters[6].Value = pEntity.IsExpandVip;
+			parameters[7].Value = pEntity.PreferentialAmount;
+			parameters[8].Value = pEntity.SalesPreferentiaAmount;
+			parameters[9].Value = pEntity.IntegralMultiples;
+			parameters[10].Value = pEntity.Isprepaid;
+			parameters[11].Value = pEntity.IsPoints;
+			parameters[12].Value = pEntity.IsDiscount;
+			parameters[13].Value = pEntity.IsOnlineRecharge;
+			parameters[14].Value = pEntity.IsRegName;
+			parameters[15].Value = pEntity.IsUseCoupon;
+			parameters[16].Value = pEntity.IsBindECard;
+			parameters[17].Value = pEntity.PicUrl;
+			parameters[18].Value = pEntity.UpgradeAmount;
+			parameters[19].Value = pEntity.UpgradeOnceAmount;
+			parameters[20].Value = pEntity.UpgradePoint;
+			parameters[21].Value = pEntity.ExchangeIntegral;
+			parameters[22].Value = pEntity.Prices;
+			parameters[23].Value = pEntity.IsExtraMoney;
+			parameters[24].Value = pEntity.CustomerID;
+			parameters[25].Value = pEntity.LastUpdateTime;
+			parameters[26].Value = pEntity.LastUpdateBy;
+			parameters[27].Value = pEntity.VipCardTypeID;
 
             //执行语句
             int result = 0;
@@ -364,7 +370,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(SysVipCardTypeEntity pEntity)
+        public void Update(SysVipCardTypeEntity pEntity )
         {
             this.Update(pEntity, null);
         }
@@ -393,7 +399,7 @@ namespace JIT.CPOS.BS.DataAccess
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.VipCardTypeID.Value, pTran);
+            this.Delete(pEntity.VipCardTypeID.Value, pTran);           
         }
 
         /// <summary>
@@ -404,7 +410,7 @@ namespace JIT.CPOS.BS.DataAccess
         public void Delete(object pID, IDbTransaction pTran)
         {
             if (pID == null)
-                return;
+                return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [SysVipCardType] set  isdelete=1 where VipCardTypeID=@VipCardTypeID;");
@@ -415,10 +421,10 @@ namespace JIT.CPOS.BS.DataAccess
             //执行语句
             int result = 0;
             if (pTran != null)
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
-            return;
+                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+            return ;
         }
 
         /// <summary>
@@ -450,7 +456,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(SysVipCardTypeEntity[] pEntities)
-        {
+        { 
             Delete(pEntities, null);
         }
 
@@ -460,7 +466,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pIDs">标识符值数组</param>
         public void Delete(object[] pIDs)
         {
-            Delete(pIDs, null);
+            Delete(pIDs,null);
         }
 
         /// <summary>
@@ -468,24 +474,24 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran)
+        public void Delete(object[] pIDs, IDbTransaction pTran) 
         {
-            if (pIDs == null || pIDs.Length == 0)
-                return;
+            if (pIDs == null || pIDs.Length==0)
+                return ;
             //组织参数化SQL
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("{0},", item.ToString());
+                primaryKeys.AppendFormat("{0},",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
             sql.AppendLine("update [SysVipCardType] set  isdelete=1 where VipCardTypeID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
-            int result = 0;
+            int result = 0;   
             if (pTran == null)
                 result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
         }
         #endregion
 
@@ -550,7 +556,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pOrderBys)
                 {
-                    if (item != null)
+                    if(item!=null)
                     {
                         pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
                     }
@@ -569,7 +575,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pWhereConditions)
                 {
-                    if (item != null)
+                    if(item!=null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
                         totalCountSql.AppendFormat(" and {0}", item.GetExpression());
@@ -578,7 +584,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
-            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
             PagedQueryResult<SysVipCardTypeEntity> result = new PagedQueryResult<SysVipCardTypeEntity>();
             List<SysVipCardTypeEntity> list = new List<SysVipCardTypeEntity>();
@@ -610,7 +616,7 @@ namespace JIT.CPOS.BS.DataAccess
         public SysVipCardTypeEntity[] QueryByEntity(SysVipCardTypeEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
-            return Query(queryWhereCondition, pOrderBys);
+            return Query(queryWhereCondition,  pOrderBys);            
         }
 
         /// <summary>
@@ -621,7 +627,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<SysVipCardTypeEntity> PagedQueryByEntity(SysVipCardTypeEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
+            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
@@ -633,68 +639,70 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <returns></returns>
         protected IWhereCondition[] GetWhereConditionByEntity(SysVipCardTypeEntity pQueryEntity)
-        {
+        { 
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.VipCardTypeID != null)
+            if (pQueryEntity.VipCardTypeID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipCardTypeID", Value = pQueryEntity.VipCardTypeID });
-            if (pQueryEntity.Category != null)
+            if (pQueryEntity.Category!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Category", Value = pQueryEntity.Category });
-            if (pQueryEntity.VipCardTypeCode != null)
+            if (pQueryEntity.VipCardTypeCode!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipCardTypeCode", Value = pQueryEntity.VipCardTypeCode });
-            if (pQueryEntity.VipCardTypeName != null)
+            if (pQueryEntity.VipCardTypeName!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipCardTypeName", Value = pQueryEntity.VipCardTypeName });
-            if (pQueryEntity.VipCardLevel != null)
+            if (pQueryEntity.VipCardLevel!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipCardLevel", Value = pQueryEntity.VipCardLevel });
-            if (pQueryEntity.IsPassword != null)
+            if (pQueryEntity.IsPassword!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsPassword", Value = pQueryEntity.IsPassword });
-            if (pQueryEntity.AddUpAmount != null)
+            if (pQueryEntity.AddUpAmount!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "AddUpAmount", Value = pQueryEntity.AddUpAmount });
-            if (pQueryEntity.IsExpandVip != null)
+            if (pQueryEntity.IsExpandVip!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsExpandVip", Value = pQueryEntity.IsExpandVip });
-            if (pQueryEntity.PreferentialAmount != null)
+            if (pQueryEntity.PreferentialAmount!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "PreferentialAmount", Value = pQueryEntity.PreferentialAmount });
-            if (pQueryEntity.SalesPreferentiaAmount != null)
+            if (pQueryEntity.SalesPreferentiaAmount!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SalesPreferentiaAmount", Value = pQueryEntity.SalesPreferentiaAmount });
-            if (pQueryEntity.IntegralMultiples != null)
+            if (pQueryEntity.IntegralMultiples!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IntegralMultiples", Value = pQueryEntity.IntegralMultiples });
-            if (pQueryEntity.Isprepaid != null)
+            if (pQueryEntity.Isprepaid!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Isprepaid", Value = pQueryEntity.Isprepaid });
-            if (pQueryEntity.IsPoints != null)
+            if (pQueryEntity.IsPoints!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsPoints", Value = pQueryEntity.IsPoints });
-            if (pQueryEntity.IsDiscount != null)
+            if (pQueryEntity.IsDiscount!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDiscount", Value = pQueryEntity.IsDiscount });
-            if (pQueryEntity.IsOnlineRecharge != null)
+            if (pQueryEntity.IsOnlineRecharge!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsOnlineRecharge", Value = pQueryEntity.IsOnlineRecharge });
-            if (pQueryEntity.IsRegName != null)
+            if (pQueryEntity.IsRegName!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsRegName", Value = pQueryEntity.IsRegName });
-            if (pQueryEntity.IsUseCoupon != null)
+            if (pQueryEntity.IsUseCoupon!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsUseCoupon", Value = pQueryEntity.IsUseCoupon });
-            if (pQueryEntity.IsBindECard != null)
+            if (pQueryEntity.IsBindECard!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsBindECard", Value = pQueryEntity.IsBindECard });
-            if (pQueryEntity.PicUrl != null)
+            if (pQueryEntity.PicUrl!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "PicUrl", Value = pQueryEntity.PicUrl });
-            if (pQueryEntity.UpgradeAmount != null)
+            if (pQueryEntity.UpgradeAmount!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "UpgradeAmount", Value = pQueryEntity.UpgradeAmount });
-            if (pQueryEntity.UpgradeOnceAmount != null)
+            if (pQueryEntity.UpgradeOnceAmount!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "UpgradeOnceAmount", Value = pQueryEntity.UpgradeOnceAmount });
-            if (pQueryEntity.UpgradePoint != null)
+            if (pQueryEntity.UpgradePoint!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "UpgradePoint", Value = pQueryEntity.UpgradePoint });
-            if (pQueryEntity.ExchangeIntegral != null)
+            if (pQueryEntity.ExchangeIntegral!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ExchangeIntegral", Value = pQueryEntity.ExchangeIntegral });
-            if (pQueryEntity.Prices != null)
+            if (pQueryEntity.Prices!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Prices", Value = pQueryEntity.Prices });
-            if (pQueryEntity.CustomerID != null)
+            if (pQueryEntity.IsExtraMoney!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsExtraMoney", Value = pQueryEntity.IsExtraMoney });
+            if (pQueryEntity.CustomerID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
-            if (pQueryEntity.CreateTime != null)
+            if (pQueryEntity.CreateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.CreateBy != null)
+            if (pQueryEntity.CreateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateTime != null)
+            if (pQueryEntity.LastUpdateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.LastUpdateBy != null)
+            if (pQueryEntity.LastUpdateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
-            if (pQueryEntity.IsDelete != null)
+            if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
 
             return lstWhereCondition.ToArray();
@@ -824,31 +832,34 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pInstance.Prices = Convert.ToDecimal(pReader["Prices"]);
             }
-            else { pInstance.Prices = 0; }
-            if (pReader["CustomerID"] != DBNull.Value)
-            {
-                pInstance.CustomerID = Convert.ToString(pReader["CustomerID"]);
-            }
-            if (pReader["CreateTime"] != DBNull.Value)
-            {
-                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
-            }
-            if (pReader["CreateBy"] != DBNull.Value)
-            {
-                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
-            }
-            if (pReader["LastUpdateTime"] != DBNull.Value)
-            {
-                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
-            }
-            if (pReader["LastUpdateBy"] != DBNull.Value)
-            {
-                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
-            }
-            if (pReader["IsDelete"] != DBNull.Value)
-            {
-                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
-            }
+			if (pReader["IsExtraMoney"] != DBNull.Value)
+			{
+				pInstance.IsExtraMoney =   Convert.ToInt32(pReader["IsExtraMoney"]);
+			}
+			if (pReader["CustomerID"] != DBNull.Value)
+			{
+				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
+			}
+			if (pReader["CreateTime"] != DBNull.Value)
+			{
+				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
+			}
+			if (pReader["CreateBy"] != DBNull.Value)
+			{
+				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
+			}
+			if (pReader["LastUpdateTime"] != DBNull.Value)
+			{
+				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
+			}
+			if (pReader["LastUpdateBy"] != DBNull.Value)
+			{
+				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
+			}
+			if (pReader["IsDelete"] != DBNull.Value)
+			{
+				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
 
         }
         #endregion

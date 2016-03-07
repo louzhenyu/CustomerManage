@@ -47,6 +47,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,a.item_name "
                       + " ,a.item_name_en "
                       + " ,a.item_name_short "
+                      + " ,Case  when ifservice=0 Then '实物商品' when ifservice=1 Then '虚拟商品' end ItemType  "
                       + " ,a.pyzjm "
                       + " ,a.item_remark "
                       + " ,a.status "
@@ -84,7 +85,7 @@ namespace JIT.CPOS.BS.DataAccess
 							and item_price_type_id=(select item_price_type_id from T_Item_Price_Type where item_Price_type_code='零售价')
                            ) as minPrice
                            ,dbo.GetSalesPromotion(a.item_id) as SalesPromotion"
-                      + " From T_Item a "
+                      + " From T_Item a  with(nolock)"
                       + "inner join @TmpTable b "
                       + "on(a.Item_Id = b.Item_Id) "
                       + "where 1=1 and a.item_category_id<>'-1' "

@@ -91,3 +91,7 @@ p.fontC{ width: 100%; text-align: center;}
 #batch .commonBtn{width: 35px;margin:0 auto;margin-left: 8px; height: 35px;float: left;font-size: 15px; background: none; color: #00acee;}
 #batch .borderNone{ border: 1px solid  transparent; width:auto; background: none}
 #batch .fontC{margin-right: 15px;cursor: pointer;}
+
+.item{ width: 100%; display:block;height: 55px;}
+.item .radio{  float: left; text-align: center }
+.item .radio span{line-height: 16px;  padding-top: 8px;margin-left: -10px;}

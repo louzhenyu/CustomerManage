@@ -92,10 +92,103 @@
         initEvent: function () {
             var that = this;
             that.elems.simpleQuery.find(".panelDiv").fadeOut(0).eq(0).fadeIn("slow");
-
+            $("#nav0_1").delegate(".radio","click",function(){
+                var me=$(this),name= $(this).data("name");
+                $("[data-name="+name+"]").removeClass("on");
+                me.addClass('on');
+                if(me.data("value")==1){
+                    $("[data-flag="+name+"]").show();
+                    $("#ObjecetType").combobox({
+                        novalidate:false
+                    });
+                    $("#itemType").combobox({
+                        novalidate:false
+                    })
+                    $(".commonBtn.addSKU").hide()
+                }else{
+                    $("[data-flag="+name+"]").hide();
+                    $("#ObjecetType").combobox({
+                        novalidate:true
+                    });
+                    $("#itemType").combobox({
+                        novalidate:true
+                    })
+                    $(".commonBtn.addSKU").show()
+                }
+            });
             /**************** -------------------初始化easyui 控件 start****************/
             var wd=200,H=30;
+            $('[data-name="ifservice"]').eq(0).trigger("click");
 
+           that.loadData.getItemType(function(data) {
+               debugger;
+
+               if (data.Data.VirtualItemTypeInfo && data.Data.VirtualItemTypeInfo.length > 0) {
+                   data.Data.VirtualItemTypeInfo.push({"VirtualItemTypeId":-1,VirtualItemTypeName:"请选择",selected:true})
+
+                   $("#itemType").combobox({
+                       width: wd,
+                       height: H,
+                       panelHeight: that.elems.panlH,
+                       valueField: 'VirtualItemTypeId',
+                       textField: 'VirtualItemTypeName',
+                       data: data.Data.VirtualItemTypeInfo,
+                       onSelect: function (record) {
+                           $("#ObjecetType").combobox({data: []});
+                           if (record.VirtualItemTypeId == -1) {
+                               $("#ObjecetType").combobox("setValue", "请选择");
+                           } else {
+                               $("#ObjecetType").combobox("setValue", "请选择");
+                               var selectData = record.VirtualItemTypeCode;
+                               if (selectData == "VipCard") {
+                                   that.loadData.getSysVipCardTypeList(function (cardData) {
+                                       if (cardData.Data.SysVipCardTypeList && cardData.Data.SysVipCardTypeList.length > 0) {
+                                           cardData.Data.SysVipCardTypeList[0]["selected"] = true;
+                                           $("#ObjecetType").combobox({
+                                               width: wd,
+                                               height: H,
+                                               panelHeight: that.elems.panlH,
+                                               valueField: 'VipCardTypeID',
+                                               textField: 'VipCardTypeName',
+                                               data: cardData.Data.SysVipCardTypeList
+                                           });
+                                       } else {
+                                           console.log("未创建任何类型的卡")
+                                       }
+
+                                   });
+
+                               } else if (selectData == "Coupon") {
+
+                                   that.loadData.getCouponTypeList(function (couponData) {
+                                       debugger;
+                                       if (couponData.Data.CouponTypeList && couponData.Data.CouponTypeList.length > 0) {
+                                           couponData.Data.CouponTypeList[0]["selected"] = true;
+                                           $("#ObjecetType").combobox({
+                                               width: wd,
+                                               height: H,
+                                               panelHeight: that.elems.panlH,
+                                               valueField: 'CouponTypeID',
+                                               textField: 'CouponTypeName',
+                                               data: couponData.Data.CouponTypeList
+                                           });
+                                       } else {
+                                           console.log("我创建任何优惠券类型")
+                                       }
+
+                                   });
+                               }
+                           }
+                       }
+
+                   });
+                   $("#itemType").combobox({"setText":"请选择"});
+
+               } else{
+                  $('[data-name="ifservice"]').eq(1).remove();
+               }
+
+           });
             that.loadData.getClassify(function(data) {
                 $('#Category').combotree({
                     width: wd,
@@ -109,7 +202,7 @@
                 $('#Category').combotree('setText',"请选择");
             });
             // 获取促销分组
-             that.loadData.getClassifySeach.bat_id="2"; //促销分组  1代表分类
+             that.loadData.getClassifySeach.bat_id="2"; //促销分组  1代表品类
             that.loadData.getClassifySeach.isAddPleaseSelectItem=false;
             that.loadData.getClassify(function(data) {
                 $('#ItemCategoryId').combotree({
@@ -130,21 +223,36 @@
                     var me=$(this), flag=$(this).data("flag"),issubmit=true;
                     if(flag!="#nav01"){
                         issubmit=$("#nav0_1").form('validate');
-                        if(issubmit) {
+                        if(issubmit&&  $('[data-name="ifservice"]').eq(1).hasClass("on")){
+                            var itemTypeValue=$("#itemType").combobox("getValue");
+                            var objectIdValue=$("#ObjecetType").combobox("getValue");
+                            if(itemTypeValue=="-1"||itemTypeValue=="请选择"){
+                                issubmit=false;
+                                alert("选择种类填写无效，请重新选择");
+                                return false;
+                            }
+                            if(objectIdValue=="-1"||objectIdValue=="请选择"){
+                                issubmit=false;
+                                alert("关联填写无效，请重新选择");
+                                return false;
+                            }
+
+
+                        }
+                        if(issubmit){
                             var nodes = $('#Category').combotree('tree').tree('getSelected');	// 获取树对象   	// 获取选择的节点
-                           if(!nodes){
-                               issubmit=false;
-                               alert("商品分类填写无效，请重新选择");
-                           }
-                          if(issubmit){
-                              nodes = $('#ItemCategoryId').combotree('tree').tree('getSelected');
-                              if(nodes&&nodes.length>0){
-                                  issubmit=false;
-                                  alert("促销分组填写无效，请重新选择");
+                            if(!nodes){
+                                issubmit=false;
+                                alert("商品品类填写无效，请重新选择");
+                                return false;
+                            }
 
-                              }
-                          }
-
+                            nodes = $('#ItemCategoryId').combotree('tree').tree('getSelected');
+                            if(nodes&&nodes.length>0){
+                                issubmit=false;
+                                alert("促销分组填写无效，请重新选择");
+                                return false;
+                            }
                         }
                         if(issubmit&&that.elems.editLayer.find(".imglist img").length==0){
                             issubmit=false;
@@ -419,7 +527,7 @@
                 $(this).find(".icon").show(0)
             }).delegate(".pro,.btn","mouseleave",function(){
                 $(this).find(".icon").hide(0)
-            }).delegate(".addSKU","click",function(){  //添加sku分类事件
+            }).delegate(".addSKU","click",function(){  //添加sku品类事件
                 $("#dataState").fadeOut(10);
                 var long=that.elems.sku.find(".skuList").length;
                 if(long>=3){
@@ -982,7 +1090,6 @@
              IsEditor*/
             that.loadData.addPram.ItemPropList = [];
             $("[data-flag='details']").each(function (index, dom) {
-                var me = $(this);
                 var me = $(this), flagInfo = me.data("flaginfo");
                 var obj = { PropertyCodeId: flagInfo.Prop_Id, PropertyDetailId: "", PropertyCodeValue: "", IsEditor: false };
 
@@ -1216,17 +1323,19 @@
                  isAddPleaseSelectItem:'true',
                  pleaseSelectText:"请选择",
                  pleaseSelectID:"0",
-                 bat_id:"1" //1 是商品分类 0是促销分组
+                 bat_id:"1" //1 是商品品类 0是促销分组
 
              },
             addPram:{
                 Item_Id:"",     //商品ID
-                Item_Category_Id:"",   //商品分类ID
+                Item_Category_Id:"",   //商品品类ID
                 Item_Name:"",      //商品名称
                 Item_Code:"",     //商品编码
                 SalesPromotionList:'', //促销分组[{"ItemCategoryId":"BD10C60F-8AC9-4BB6-BE64-6F196B3D36CB"},{"ItemCategoryId":"BD10C60F-8AC9-4BB6-BE64-6F196B3D36C3"}]
                 ItemPropList: '',//商品与属性关系集合
                 T_ItemSkuProp:'',//  商品sku名列 (基础数据)
+                ObjecetTypeId:'',// 虚拟商品关联的id
+                VirtualItemTypeId:'',//虚拟商品的种类标识
                 SkuList:'',// 商品sku值列表
                 ItemImageList:'', //图片信息
                 OperationType:'ADD' //add
@@ -1272,6 +1381,7 @@
                     }
                 });
             },*/
+
             getItemBaseData:function(callback){
                 $.util.ajax({
                     url: " /ApplicationInterface/Module/Item/ItemNewHandler.ashx",
@@ -1290,6 +1400,63 @@
                 });
 
             },
+            //获取商品种类
+            getItemType:function(callback){
+                $.util.ajax({
+                    url: " /ApplicationInterface/Module/Item/ItemNewHandler.ashx",
+                    data: {
+                        action: 'GetItemType'
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback)
+                                callback(data);
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获取优惠券
+            getCouponTypeList:function(callback){
+                $.util.ajax({
+                    url: " /ApplicationInterface/Gateway.ashx",
+                    data: {
+                        action: 'Marketing.Coupon.GetCouponTypeList',
+                        "PageIndex": 1,
+                        "PageSize": 100000,
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback)
+                                callback(data);
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获取卡类型
+            getSysVipCardTypeList:function(callback){
+                $.util.ajax({
+                    url: " /ApplicationInterface/Gateway.ashx",
+                    data: {
+                        action: 'VIP.SysVipCardType.GetSysVipCardTypeList'
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback)
+                                callback(data);
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+             //获取商品品类
             getClassify: function (callback) {
                 pram='?Status={0}&_dc=1428913044379&node={1}&multiSelect={2}&isSelectLeafOnly={3}&isAddPleaseSelectItem={4}&bat_id={5}&pleaseSelectText={6}&pleaseSelectID={7}';
                 pram= pram.format(this.getClassifySeach.Status,this.getClassifySeach.node,this.getClassifySeach.multiSelect,true,this.getClassifySeach.isAddPleaseSelectItem,this.getClassifySeach.bat_id,this.getClassifySeach.pleaseSelectText,this.getClassifySeach.pleaseSelectID);
@@ -1304,7 +1471,7 @@
                                 callback(data);
                         }
                         else {
-                            alert("分类加载异常请联系管理员");
+                            alert("品类加载异常请联系管理员");
                         }
                     }
                 });
@@ -1318,9 +1485,12 @@
                     data: {
                         action: 'save_itemNew',
                         Item_Id:"",     //商品ID
-                        Item_Category_Id:this.addPram.Item_Category_Id,   //商品分类ID
+                        Item_Category_Id:this.addPram.Item_Category_Id,   //商品品类ID
                         Item_Name:this.addPram.Item_Name,      //商品名称
                         Item_Code:this.addPram.Item_Code,     //商品编码
+                        VirtualItemTypeId: this.addPram.VirtualItemTypeId,  //虚拟商品种类
+                        ObjecetTypeId:this.addPram.ObjecetTypeId,//关联的id
+                        ifservice: $('[data-name="ifservice"].on').data("value"),
                         SalesPromotionList:this.addPram.SalesPromotionList, //促销分组[{"ItemCategoryId":"BD10C60F-8AC9-4BB6-BE64-6F196B3D36CB"},{"ItemCategoryId":"BD10C60F-8AC9-4BB6-BE64-6F196B3D36C3"}]
                         ItemPropList: this.addPram.ItemPropList,//商品与属性关系集合
                         T_ItemSkuProp:this.addPram.T_ItemSkuProp,//  商品sku名列 (基础数据)

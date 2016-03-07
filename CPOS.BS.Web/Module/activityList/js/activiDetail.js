@@ -381,6 +381,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 								EventId: that.elems.eventId,
 								PrizesID: prizesId
 							},
+							beforeSend: function () {
+							    $.util.isLoading()
+
+							},
 							success: function(data){
 								if(data.IsSuccess && data.ResultCode == 0){
 									$tr.remove();
@@ -839,11 +843,11 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						        debugger;
 						        if (data) {
 						            data = data.CoverInfo;
-						            if (!data.IsShow || data.IsShow == "1") {
+						            if (data.IsShow||data.IsShow == "0") {
+						                $(".EnableCover").removeClass("on");
+						            } else {
 						                $(".EnableCover").addClass("on");
 						                $(".checkvalue").val(1);
-						            } else {
-						                $(".EnableCover").removeClass("on");
 
 						            }
 
@@ -910,6 +914,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 		            url: that.elems.domain + "/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
 		            async: false,
 		            data: params,
+		            beforeSend: function () {
+		                $.util.isLoading()
+
+		            },
 		            success: function(data){
 		                if(data.IsSuccess && data.ResultCode == 0) {
 		                    if (callback) {
@@ -1147,6 +1155,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					action:'DoGetOptionListByName',
 					OptionName:"PrizeGrade",
 					IsSort:"true"
+				},
+				beforeSend: function () {
+				    $.util.isLoading()
+
 				},
 				success: function(data) {
 					if (data.IsSuccess && data.ResultCode == 0) {
@@ -1499,6 +1511,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					QuestionnaireID: QuestionnaireID,
 					QuestionnaireName: QuestionnaireName
 				},
+				beforeSend: function () {
+				    $.util.isLoading()
+
+				},
 				success: function(data){
 					if(data.IsSuccess && data.ResultCode == 0){
 						//alert('图片保存成功！');
@@ -1516,6 +1532,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 		                action: 'SavePrizeLocation',
 		                EventID: that.elems.eventId,
 		                PrizeLocationList: param
+		            },
+		            beforeSend: function () {
+		                $.util.isLoading()
+
 		            },
 		            success: function(data){
 		                if(data.IsSuccess && data.ResultCode == 0){
@@ -1674,6 +1694,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					EventID : that.elems.eventId,//活动id
 					MaterialText: params,//图文素材
 					MappingId: params.MappingId//活动关键字和图文素材的映射
+				},
+				beforeSend: function () {
+				    $.util.isLoading()
+
 				},
 				success: function(data){
 					if(data.IsSuccess && data.ResultCode == 0){

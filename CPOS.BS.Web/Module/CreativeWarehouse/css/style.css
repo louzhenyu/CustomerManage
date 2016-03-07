@@ -27,17 +27,17 @@
 .apply {width:100px;height:30px;display:block;position: absolute;
   bottom: 59px;
   right: 20px;
-  border: 2px solid #fff;
+  border: 2px solid #00a0e8;
   border-radius: 20px;
   text-align: center;color: #fff;line-height: 25px;
-  font-size: 14px;cursor: pointer;}
+  font-size: 14px;cursor: pointer;background-color: #00a0e8;}
 .Scan {width:100px;height:30px;display:block;position: absolute;
   bottom: 19px;
   right: 20px;
-  border: 2px solid #fff;
+  border: 2px solid #00a0e8;
   border-radius: 20px;
   text-align: center;color: #fff;line-height: 25px;
-  font-size: 14px;cursor: pointer;}
+  font-size: 14px;cursor: pointer;background-color: #00a0e8;}
 .qcode {  width: 165px;
   height: 165px;
   background-color: #fff;

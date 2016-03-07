@@ -201,6 +201,13 @@
     <Compile Include="Module\VIP\Attribute\Request\SetAttributeRP.cs" />
     <Compile Include="Module\VIP\Attribute\Response\GetAttributeListRD.cs" />
     <Compile Include="Module\VIP\Attribute\Response\SetAttributeRD.cs" />
+    <Compile Include="Module\VIP\Dealer\Request\GetVipDealerAccountDetailRP.cs" />
+    <Compile Include="Module\VIP\Dealer\Request\GetVipDealerUpsetRP.cs" />
+    <Compile Include="Module\VIP\Dealer\Request\GetVipFansListRP.cs" />
+    <Compile Include="Module\VIP\Dealer\Request\SetVipDealerRP.cs" />
+    <Compile Include="Module\VIP\Dealer\Response\GetVipDealerAccountDetailRD.cs" />
+    <Compile Include="Module\VIP\Dealer\Response\GetVipDealerUpsetRD.cs" />
+    <Compile Include="Module\VIP\Dealer\Response\GetVipFansListRD.cs" />
     <Compile Include="Module\VIP\Evaluation\Request\SetEvaluationItemRP.cs" />
     <Compile Include="Module\VIP\LoginOut\Request\RemoveAndriodMessageBindRP.cs" />
     <Compile Include="Module\VIP\LoginOut\Request\RemoveIOSMessageBindRP.cs" />

@@ -293,7 +293,7 @@
                     }//显示复选框
                 ]],
                 columns : [[
-                    {field : 'Image_Url',title : '图片',width:80,align:'left',resizable:false,
+                    {field : 'Image_Url',title : '图片',width:40,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var html=' <img src="images/商品.png" width="40" height="40"  />';
                             if(value){
@@ -314,6 +314,16 @@
                             }
                         }
                     },
+                    {field : 'ifservice',title : '商品类型',width:60,align:'center',resizable:false,
+                        formatter:function(value ,row,index){
+                            var long=56;
+                            if(value==1){
+                                return '虚拟商品'
+                            }else{
+                                return '实物商品'
+                            }
+                        }
+                    } ,
                     {field : 'minPrice',title : '价格(元)',width:80,resizable:false,align:'center'},
                     {field : 'stock',title : '库存',width:58,align:'center',resizable:false,
                         formatter:function(value,row,index){
@@ -344,7 +354,7 @@
 
                             return  html
                     }},
-                    {field : 'Item_Category_Name',title : '分类',width:60,align:'left',resizable:false} ,
+                    {field : 'Item_Category_Name',title : '商品品类',width:60,align:'left',resizable:false} ,
                     {field : 'Modify_Time',title : '更新时间',width:100,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd hh:mm");

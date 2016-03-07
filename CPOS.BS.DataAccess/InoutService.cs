@@ -885,6 +885,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
             sql = pService.GetIsNotNullUpdateSql(sql, "keep_the_change", inoutInfo.keep_the_change.ToString());
             sql = pService.GetIsNotNullUpdateSql(sql, "wiping_zero", inoutInfo.wiping_zero.ToString());
             sql = pService.GetIsNotNullUpdateSql(sql, "vip_no", inoutInfo.vip_no);
+            sql = pService.GetIsNotNullUpdateSql(sql, "VipCardCode", inoutInfo.vip_code);
             sql = pService.GetIsNotNullUpdateSql(sql, "approve_time", inoutInfo.approve_time);
             sql = pService.GetIsNotNullUpdateSql(sql, "approve_user_id", inoutInfo.approve_user_id);
             sql = pService.GetIsNotNullUpdateSql(sql, "send_user_id", inoutInfo.send_user_id);
@@ -976,6 +977,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                       + " ,keep_the_change "
                       + " ,wiping_zero "
                       + " ,vip_no "
+                      + " ,VipCardCode "
                       + " ,create_time "
                       + " ,create_user_id "
                       + " ,approve_time "
@@ -1048,6 +1050,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                       + " ,'" + inoutInfo.keep_the_change + "' keep_the_change "
                       + " ,'" + inoutInfo.wiping_zero + "' wiping_zero "
                       + " ,'" + inoutInfo.vip_no + "' vip_no "
+                      + " ,'" + inoutInfo.vip_code + "' VipCardCode "
                       + " ,'" + inoutInfo.create_time + "' create_time "
                       + " ,'" + inoutInfo.create_user_id + "' create_user_id "
                       + " ,'" + inoutInfo.approve_time + "' approve_time "

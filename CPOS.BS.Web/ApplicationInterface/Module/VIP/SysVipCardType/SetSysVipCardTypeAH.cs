@@ -114,6 +114,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.SysVipCardType
                     sysVipCardTypeEntity.Category = para.Category;
                     sysVipCardTypeEntity.VipCardLevel = para.VipCardLevel;
                     sysVipCardTypeEntity.Prices = para.Prices;
+                    sysVipCardTypeEntity.IsExtraMoney = para.IsExtraMoney;
                     sysVipCardTypeEntity.ExchangeIntegral = para.ExchangeIntegral;
                     sysVipCardTypeEntity.UpgradeAmount = para.UpgradeAmount;
                     sysVipCardTypeEntity.UpgradeOnceAmount = para.UpgradeOnceAmount;

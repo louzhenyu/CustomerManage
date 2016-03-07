@@ -322,6 +322,10 @@
 					ApplyID: applyId,
 					Status: statusId
 				},
+				beforeSend: function () {
+				    $.util.isLoading()
+
+				},
 				success: function (data) {
 					if (data.ResultCode == 0) {
 						if(callback){

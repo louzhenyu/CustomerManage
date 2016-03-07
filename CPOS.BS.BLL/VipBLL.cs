@@ -38,6 +38,7 @@ using System.Transactions;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.BLL.WX;
 using JIT.CPOS.DTO.Module.Report.VipReport.Response;
+using JIT.CPOS.DTO.Module.VIP.Dealer.Response;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -55,6 +56,152 @@ namespace JIT.CPOS.BS.BLL
         {
             return _currentDAO.NewGetByID(pID);
         }
+
+        #region 橙果财商
+        /// <summary>
+        /// 判断会员是否可以成为经销商
+        /// </summary>
+        /// <param name="VipID"></param>
+        /// <returns></returns>
+        public bool IsSetVipDealer(string VipID)
+        {
+            bool Flag = false;
+
+            //获取成为经销商条件底价
+            string Dsql = string.Format("select MustBuyAmount from T_VipMultiLevelSalerConfig where IsDelete=0 and CustomerId='{0}'", CurrentUserInfo.ClientID);
+            decimal MustBuyAmount = this._currentDAO.GetAmount(Dsql);
+
+            if (!string.IsNullOrWhiteSpace(VipID))
+            {
+                string sql = string.Format(@"
+                                            SELECT c.Prices FROM VipCardVipMapping as a 
+                                            inner join VipCard as b on a.vipcardid=b.VipCardID and b.IsDelete =0 and b.VipCardStatusId=1 
+                                            left join SysVipCardType as c on b.VipCardTypeID=c.VipCardTypeID and c.IsDelete=0 
+                                            where a.IsDelete=0 and a.CustomerId='{0}' and a.VIPID='{1}'", CurrentUserInfo.ClientID, VipID);
+                decimal Prices = this._currentDAO.GetAmount(sql);
+
+                if (MustBuyAmount > 0)
+                    if (Prices >= MustBuyAmount)
+                        Flag = true;
+            }
+
+            return Flag;
+        }
+        /// <summary>
+        /// 获取会员成为经销商底价
+        /// </summary>
+        /// <returns></returns>
+        public Decimal GetSetVipDealerUpset()
+        {
+            //获取成为经销商条件底价
+            string Dsql = string.Format("select MustBuyAmount from T_VipMultiLevelSalerConfig where IsDelete=0 and CustomerId='{0}'", CurrentUserInfo.ClientID);
+            return this._currentDAO.GetAmount(Dsql);
+        }
+        /// <summary>
+        /// 获取会员经销商账户明细
+        /// </summary>
+        /// <param name="VipId"></param>
+        /// <returns></returns>
+        public GetVipDealerAccountDetailRD GetVipDealerAccountDetail(string VipId)
+        {
+            var ReturenData = new GetVipDealerAccountDetailRD();
+
+            DataSet ds = this._currentDAO.GetVipDealerAccountDetail(VipId);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                ReturenData.VipID = VipId;
+                if (ds.Tables[0].Rows[0]["DayIncome"] != DBNull.Value)
+                    ReturenData.DayIncome = ds.Tables[0].Rows[0]["DayIncome"].ToString();
+                else
+                    ReturenData.DayIncome = "0.00";
+
+                if (ds.Tables[0].Rows[0]["DayFans"] != DBNull.Value)
+                    ReturenData.DayFans = ds.Tables[0].Rows[0]["DayFans"].ToString();
+                else
+                    ReturenData.DayFans = "0";
+
+                if (ds.Tables[0].Rows[0]["MounthIncome"] != DBNull.Value)
+                    ReturenData.MounthIncome = ds.Tables[0].Rows[0]["MounthIncome"].ToString();
+                else
+                    ReturenData.MounthIncome = "0.00";
+
+                if (ds.Tables[0].Rows[0]["SumIncome"] != DBNull.Value)
+                    ReturenData.SumIncome = ds.Tables[0].Rows[0]["SumIncome"].ToString();
+                else
+                    ReturenData.SumIncome = "0.00";
+
+                if (ds.Tables[0].Rows[0]["MounthFans"] != DBNull.Value)
+                    ReturenData.MounthFans = ds.Tables[0].Rows[0]["MounthFans"].ToString();
+                else
+                    ReturenData.MounthFans = "0";
+
+                if (ds.Tables[0].Rows[0]["SumFans"] != DBNull.Value)
+                    ReturenData.SumFans = ds.Tables[0].Rows[0]["SumFans"].ToString();
+                else
+                    ReturenData.SumFans = "0";
+
+                if (ds.Tables[0].Rows[0]["WithdrawSumMoney"] != DBNull.Value)
+                    ReturenData.WithdrawSumMoney = ds.Tables[0].Rows[0]["WithdrawSumMoney"].ToString();
+                else
+                    ReturenData.WithdrawSumMoney = "0.00";
+            }
+
+            return ReturenData;
+        }
+        /// <summary>
+        /// 获取当前会员经销商收录粉丝列表
+        /// </summary>
+        /// <param name="HigherVipID"></param>
+        /// <returns></returns>
+
+        public List<VipFansInfo> GetVipFansList(string HigherVipID, string Code,string VipName)
+        {
+            var ReturnList = new List<VipFansInfo>();
+            DataSet ds = this._currentDAO.GetVipFansList(HigherVipID, Code, VipName);
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                {
+                    var Data = new VipFansInfo();
+                    if (ds.Tables[0].Rows[i]["vipid"] != DBNull.Value)
+                        Data.VipId = ds.Tables[0].Rows[i]["vipid"].ToString();
+
+                    if (ds.Tables[0].Rows[i]["HeadImgUrl"] != DBNull.Value)
+                        Data.HeadImgUrl = ds.Tables[0].Rows[i]["HeadImgUrl"].ToString();
+
+                    if (ds.Tables[0].Rows[i]["vipname"] != DBNull.Value)
+                        Data.VipName = ds.Tables[0].Rows[i]["vipname"].ToString();
+
+                    if (ds.Tables[0].Rows[i]["prices"] != DBNull.Value)
+                        Data.CardAmount = ds.Tables[0].Rows[i]["prices"].ToString();
+                    else
+                        Data.CardAmount = "0.00";
+
+                    if (ds.Tables[0].Rows[i]["Phone"] != DBNull.Value)
+                        Data.Phone = ds.Tables[0].Rows[i]["Phone"].ToString();
+
+                    if (ds.Tables[0].Rows[i]["col48"] != DBNull.Value)
+                    {
+                        string str = ds.Tables[0].Rows[i]["Phone"].ToString();
+                        if (str.Equals("1"))
+                            Data.CodeDes = "已成交";
+                        else
+                            Data.CodeDes = "已关注未成交";
+                    }
+                    else
+                    {
+                        Data.CodeDes = "已关注未成交";
+                    }
+
+                    ReturnList.Add(Data);
+                }
+
+            }
+            return ReturnList;
+        }
+        #endregion
+
+
 
         #region 会员统计报表
         /// <summary>

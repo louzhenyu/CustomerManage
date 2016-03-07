@@ -404,6 +404,10 @@
 				      ContactEventId: id,
 				      Status: status
 				  },
+				  beforeSend: function () {
+				      $.util.isLoading()
+
+				  },
 				  success: function (data) {
 					  if(data.IsSuccess && data.ResultCode == 0) {
 						  	if(status==2){
@@ -813,6 +817,10 @@
 			$.util.ajax({
 			    url: that.elems.domain + "/ApplicationInterface/Gateway.ashx",
 			    data: params,
+			    beforeSend: function () {
+			        $.util.isLoading()
+
+			    },
 			    beforeSend: function () {
 			        $.util.isLoading()
 

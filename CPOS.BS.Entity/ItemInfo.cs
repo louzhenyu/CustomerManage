@@ -26,11 +26,10 @@ namespace JIT.CPOS.BS.Entity
         private string remark;
         private string isPause;
         private string isItemCategory;
-
-
-
-
-
+        
+        
+        
+  
         //private IList<ItemPriceInfo> priceList = new List<ItemPriceInfo>();
         /// <summary>
         /// Id【保存必须】
@@ -343,6 +342,16 @@ namespace JIT.CPOS.BS.Entity
         public string SalesCount { get; set; }
         public decimal minPrice { get; set; }
         public string SalesPromotion { get; set; }
+        /// <summary>
+        /// 虚拟商品种类
+        /// </summary>
+        public string VirtualItemTypeId { get; set; }
+
+        /// <summary>
+        /// 优惠券类型ID或者卡类型ID
+        /// </summary>
+        public string ObjecetTypeId { get; set; }
+
     }
 
     public class VwItemDetailEntity

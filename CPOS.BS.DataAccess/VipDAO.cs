@@ -81,6 +81,84 @@ namespace JIT.CPOS.BS.DataAccess
         }
 
 
+        #region 橙果财商
+        /// <summary>
+        /// 根据sql语句返回相应值
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public Decimal GetAmount(string sql)
+        {
+            decimal ReturnAmount = 0;
+            var Result = this.SQLHelper.ExecuteScalar(sql);
+            if (Result != null)
+            {
+                ReturnAmount = Convert.ToDecimal(Result);
+            }
+            return ReturnAmount;
+        }
+        /// <summary>
+        /// 获取会员经销商账户明细
+        /// </summary>
+        /// <param name="VipID"></param>
+        /// <returns></returns>
+        public DataSet GetVipDealerAccountDetail(string VipID)
+        {
+            var parm = new SqlParameter[2];
+            parm[0] = new SqlParameter("@VipID", VipID);
+            parm[1] = new SqlParameter("@CustomerID", CurrentUserInfo.ClientID);
+            Loggers.Debug(new DebugLogInfo()
+            {
+                Message = parm.ToJSON()
+            });
+            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Vip_VipDealerAccountDetail", parm);
+
+        }
+        /// <summary>
+        /// 获取会员经销商粉丝数据集
+        /// </summary>
+        /// <param name="HigherVipID"></param>
+        /// <returns></returns>
+        public DataSet GetVipFansList(string HigherVipID, string Code,string VipName)
+        {
+            var ds = new DataSet();
+            if (!string.IsNullOrWhiteSpace(HigherVipID))
+            {
+                StringBuilder sqlstr = new StringBuilder();
+                sqlstr.AppendFormat(@"select a.vipid,a.HeadImgUrl,a.vipname,c.prices,a.Phone,a.col48 from Vip as a 
+                                        left join VipCardVipMapping as m on a.VIPID=m.VIPID and m.IsDelete=0 
+                                        left join VipCard as b on m.vipcardid=b.VipCardID and b.IsDelete =0  
+                                        left join SysVipCardType as c on b.VipCardTypeID=c.VipCardTypeID and c.IsDelete=0 
+                                where a.ClientID='{0}' and a.HigherVipID='{1}' ", CurrentUserInfo.ClientID, HigherVipID);
+
+                if (!string.IsNullOrWhiteSpace(Code))
+                {
+                    if (Code.Equals("Y"))
+                    {
+                        sqlstr.Append("and a.col48='1' ");
+                    }
+                    if (Code.Equals("N")) {
+                        sqlstr.Append("and a.col48='0' ");
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(VipName))
+                    sqlstr.AppendFormat("and a.VipName like '%{0}%' ",VipName);
+
+                ds = this.SQLHelper.ExecuteDataset(sqlstr.ToString());
+            }
+            else
+            {
+                ds = null;
+            }
+
+
+
+            return ds;
+        }
+
+        #endregion
+
         #region 会员报表
         /// <summary>
         /// 会员生日统计
@@ -2714,7 +2792,7 @@ select @ReturnValue", pCustomerID);
         /// <param name="pPageSize"></param>
         /// <param name="pCurrentPageIndex"></param>
         /// <returns></returns>
-        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int type,int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<VipEntity> GetVipList(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int type, int pPageSize, int pCurrentPageIndex)
         {
             //组织SQL
             StringBuilder hqUnitSql = new StringBuilder();
@@ -2748,8 +2826,8 @@ select @ReturnValue", pCustomerID);
 							inner join unittemp on a.src_unit_id = unittemp.dst_unit_id
 							)
 
-            ", type == 0 ? "'"+CurrentUserInfo.CurrentUserRole.UnitId +"'": "@HQUnitID");
-            
+            ", type == 0 ? "'" + CurrentUserInfo.CurrentUserRole.UnitId + "'" : "@HQUnitID");
+
             //分页SQL
             pagedSql.Append(hqUnitSql + "\n");
             pagedSql.Append(unitListSql + "\n");
@@ -2842,7 +2920,7 @@ select @ReturnValue", pCustomerID);
                     }
                     if (rdr["CreateTime"] != DBNull.Value)
                     {
-                        m.CreateTime =Convert.ToDateTime(rdr["CreateTime"].ToString());
+                        m.CreateTime = Convert.ToDateTime(rdr["CreateTime"].ToString());
                     }
                     if (rdr["unit_name"] != DBNull.Value)
                     {

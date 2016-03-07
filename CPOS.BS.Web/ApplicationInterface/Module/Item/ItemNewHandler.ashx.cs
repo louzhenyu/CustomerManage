@@ -68,6 +68,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
                 case "CategorySort":  //更改促销分组
                     rst = CategorySort(pRequest);
                     break;
+                case "GetItemType":
+                    rst = GetItemType();
+                    break;
 
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
@@ -175,6 +178,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             item.SkuList = rp.Parameters.SkuList;//
             item.SalesPromotionList = rp.Parameters.SalesPromotionList;//促销分组
             item.OperationType = rp.Parameters.OperationType;//促销分组
+            item.ifservice = rp.Parameters.ifservice;
 
 
             //sku值
@@ -219,7 +223,31 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
                 item.SkuList.Add(skuInfo);
             }
 
-
+            if (rp.Parameters.ifservice == 1)
+            {
+                T_VirtualItemTypeSettingBLL bllVirtualItem = new T_VirtualItemTypeSettingBLL(loggingSessionInfo);
+                T_VirtualItemTypeSettingEntity entityVirtualItem = new T_VirtualItemTypeSettingEntity();
+                entityVirtualItem = bllVirtualItem.QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = rp.Parameters.Item_Id, SkuId = rp.Parameters.SkuList[0].sku_id }, null).FirstOrDefault();
+                if (entityVirtualItem != null)
+                {
+                    entityVirtualItem.VirtualItemTypeId = new Guid(rp.Parameters.VirtualItemTypeId);
+                    entityVirtualItem.ObjecetTypeId = rp.Parameters.ObjecetTypeId;
+                    bllVirtualItem.Update(entityVirtualItem);
+                }
+                else
+                {
+                    entityVirtualItem = new T_VirtualItemTypeSettingEntity
+                    {
+                        Id = Guid.NewGuid(),
+                        ItemId =item.Item_Id,
+                        SkuId = rp.Parameters.SkuList[0].sku_id,
+                        VirtualItemTypeId = new Guid(rp.Parameters.VirtualItemTypeId),
+                        ObjecetTypeId = rp.Parameters.ObjecetTypeId,
+                        CustomerId = loggingSessionInfo.ClientID
+                    };
+                    bllVirtualItem.Create(entityVirtualItem);
+                }
+            }
             //保存sku属性名****
 
             string error = "";
@@ -523,6 +551,26 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             return rsp.ToJSON();
         }
         #endregion
+
+        /// <summary>
+        /// 商品种类
+        /// </summary>
+        /// <returns></returns>
+        public string GetItemType()
+        {
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+        
+            SysVirtualItemTypeBLL bllSysVirtualItemType = new SysVirtualItemTypeBLL(loggingSessionInfo);
+            var itemService = new ItemService(loggingSessionInfo);
+            string content = string.Empty;
+            var rd = new VirtualItemType();
+
+            rd.VirtualItemTypeInfo = bllSysVirtualItemType.QueryByEntity(new SysVirtualItemTypeEntity() { CustomerId = loggingSessionInfo.ClientID }, null).ToList();
+            
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+
+            return rsp.ToJSON();
+        }
     }
     public class GetItemBaseDataRP : IAPIRequestParameter
     {
@@ -530,7 +578,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
         {
         }
     }
-
+    public class VirtualItemType : IAPIResponseData
+    {
+        public List<SysVirtualItemTypeEntity> VirtualItemTypeInfo { get; set; }
+    }
     public class GetItemBaseDataRD : IAPIResponseData
     {
         public IList<PropInfo> ItemPropGroupList { get; set; }//属性组
@@ -561,6 +612,19 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
         public T_ItemSkuPropInfo T_ItemSkuProp { get; set; }
         //商品sku值列表
         public IList<SkuInfo> SkuList { get; set; }
+        /// <summary>
+        /// 是否虚拟商品
+        /// </summary>
+        public int ifservice { get; set; }
+        /// <summary>
+        /// 虚拟商品种类
+        /// </summary>
+        public string VirtualItemTypeId { get; set; }
+
+        /// <summary>
+        /// 优惠券类型ID或者卡类型ID
+        /// </summary>
+        public string ObjecetTypeId { get; set; }
         public void Validate()
         {
         }

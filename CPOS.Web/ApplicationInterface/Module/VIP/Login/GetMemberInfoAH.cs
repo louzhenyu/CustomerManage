@@ -41,7 +41,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             }
 
             string m_MemberID = "";
-            if(!string.IsNullOrWhiteSpace(pRequest.Parameters.OwnerVipID))
+            if (!string.IsNullOrWhiteSpace(pRequest.Parameters.OwnerVipID))
                 m_MemberID = string.IsNullOrWhiteSpace(pRequest.Parameters.OwnerVipID) ? pRequest.UserID : pRequest.Parameters.OwnerVipID;
             else
                 m_MemberID = string.IsNullOrWhiteSpace(pRequest.Parameters.MemberID) ? pRequest.UserID : pRequest.Parameters.MemberID;
@@ -77,6 +77,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             rd.MemberInfo.ImageUrl = VipLoginInfo.HeadImgUrl;//会员头像  add by Henry 2014-12-5
             rd.MemberInfo.VipRealName = VipLoginInfo.VipRealName;
             rd.MemberInfo.VipNo = VipLoginInfo.VipCode;
+            rd.MemberInfo.IsDealer = VipLoginInfo.Col48 != null ? int.Parse(VipLoginInfo.Col48) : 0;
             //rd.MemberInfo.Integration = VipLoginInfo.Integration ?? 0;//会员积分
 
             #region 会员有效积分
@@ -92,18 +93,34 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             var vipCardVipMappingBLL = new VipCardVipMappingBLL(CurrentUserInfo);
             var vipCardBLL = new VipCardBLL(CurrentUserInfo);
             var vipCardTypeBLL = new SysVipCardTypeBLL(CurrentUserInfo);
-            
-            var vipCardMappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VIPID = CurrentUserInfo.UserID }, null).FirstOrDefault();
+
+            var vipCardMappingInfo = vipCardVipMappingBLL.QueryByEntity(new VipCardVipMappingEntity() { VIPID = CurrentUserInfo.UserID },
+                new OrderBy[] { new OrderBy() { FieldName = "CreateTime", Direction = OrderByDirections.Desc } }).FirstOrDefault();
             if (vipCardMappingInfo != null)
             {
-                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardID = vipCardMappingInfo.VipCardID }, null).FirstOrDefault();
+                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardID = vipCardMappingInfo.VipCardID, VipCardStatusId = 1 }, null).FirstOrDefault();
                 if (vipCardInfo != null)
                 {
                     var vipCardTypeInfo = vipCardTypeBLL.QueryByEntity(new SysVipCardTypeEntity() { VipCardTypeID = vipCardInfo.VipCardTypeID }, null).FirstOrDefault();
-                    rd.MemberInfo.VipLevelName = vipCardTypeInfo != null ? vipCardTypeInfo.VipCardTypeName : "";
-                    rd.MemberInfo.CardTypeImageUrl = vipCardTypeInfo != null ? vipCardTypeInfo.PicUrl : "";
+                    if (vipCardTypeInfo != null)
+                    {
+                        rd.MemberInfo.VipLevelName = vipCardTypeInfo.VipCardTypeName != null ? vipCardTypeInfo.VipCardTypeName : "";
+                        rd.MemberInfo.CardTypeImageUrl = vipCardTypeInfo.PicUrl != null ? vipCardTypeInfo.PicUrl : "";
+                        rd.MemberInfo.CardTypePrice = vipCardTypeInfo.Prices != null ? vipCardTypeInfo.Prices.Value : 0;
+                        rd.MemberInfo.IsExtraMoney = vipCardTypeInfo.IsExtraMoney != null ? vipCardTypeInfo.IsExtraMoney : 0;
+                    }
                 }
             }
+            //是否有付费的会员卡
+            List<IWhereCondition> freeCardCon = new List<IWhereCondition> { };
+            freeCardCon.Add(new EqualsCondition() { FieldName = "CustomerID", Value = CurrentUserInfo.ClientID });
+            freeCardCon.Add(new DirectCondition("Prices>0"));
+            var freeCardTypeInfo = vipCardTypeBLL.Query(freeCardCon.ToArray(), null).FirstOrDefault();
+            if (freeCardTypeInfo != null)
+                rd.MemberInfo.IsCostCardType = 1;
+            else
+                rd.MemberInfo.IsCostCardType = 0;
+
             #endregion
 
             rd.MemberInfo.Status = VipLoginInfo.Status.HasValue ? VipLoginInfo.Status.Value : 1;

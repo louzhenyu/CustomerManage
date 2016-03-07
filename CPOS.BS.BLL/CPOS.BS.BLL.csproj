@@ -421,6 +421,7 @@
     <Compile Include="CodeGeneration\SysVipCardStatusBLL.cs" />
     <Compile Include="CodeGeneration\SysVipCardTypeBLL.cs" />
     <Compile Include="CodeGeneration\SysVipSourceBLL.cs" />
+    <Compile Include="CodeGeneration\SysVirtualItemTypeBLL.cs" />
     <Compile Include="CodeGeneration\SysVisitLogsBLL.cs" />
     <Compile Include="CodeGeneration\SysVocationBLL.cs" />
     <Compile Include="CodeGeneration\SysVocationVersionMappingBLL.cs" />
@@ -471,6 +472,7 @@
     <Compile Include="CodeGeneration\T_Sku_PropertyBLL.cs" />
     <Compile Include="CodeGeneration\t_unitBLL.cs" />
     <Compile Include="CodeGeneration\T_UserBLL.cs" />
+    <Compile Include="CodeGeneration\T_VirtualItemTypeSettingBLL.cs" />
     <Compile Include="CodeGeneration\WXTMConfigBLL.cs" />
     <Compile Include="CodeGeneration\UnitCommentBLL.cs" />
     <Compile Include="CodeGeneration\UserDeptJobMappingBLL.cs" />
@@ -1019,6 +1021,7 @@
     <Compile Include="SysVipCardGradeBLL.cs" />
     <Compile Include="SysVipCardStatusBLL.cs" />
     <Compile Include="SysVipCardTypeBLL.cs" />
+    <Compile Include="SysVirtualItemTypeBLL.cs" />
     <Compile Include="SysVisitLogsBLL.cs" />
     <Compile Include="SysVocationVersionMappingBLL.cs" />
     <Compile Include="TagsBLL.cs" />
@@ -1064,6 +1067,7 @@
     <Compile Include="T_Sku_PriceBLL.cs" />
     <Compile Include="T_Sku_PropertyBLL.cs" />
     <Compile Include="t_unitBLL.cs" />
+    <Compile Include="T_VirtualItemTypeSettingBLL.cs" />
     <Compile Include="VipFeedbackInfoBLL.cs" />
     <Compile Include="WXTMConfigBLL.cs" />
     <Compile Include="UnitCommentBLL.cs" />

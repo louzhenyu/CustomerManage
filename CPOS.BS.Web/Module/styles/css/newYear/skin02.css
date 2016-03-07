@@ -415,3 +415,12 @@ body{overflow-x: hidden;}
 
 /*问号提示*/
 .prompttips {width: 16px;height: 16px;display: inline-block;margin-left: 10px; background:url(../../images/newYear/icon-tips.png)  no-repeat;}
+/*new问号提示*/
+.tooltip{border-color: #e1e7ea; color: #999}
+.tooltip-content{ font-size: 12px;}
+/*
+.tooltip-bottom .tooltip-arrow-outer{ top:-1px}
+.tooltip-top .tooltip-arrow-outer{ top:-1px}
+.tooltip-left .tooltip-arrow-outer{ top:-1px}
+.tooltip-right .tooltip-arrow-outer{ top:-1px}
+*/

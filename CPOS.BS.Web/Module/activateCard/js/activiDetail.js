@@ -28,6 +28,8 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 
         init: function () {
 
+
+
             this.initEvent();
             var that=this;
             that.elems.section.find(".checkBox").trigger("click").trigger("click");
@@ -130,9 +132,12 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 									//TODO:wlong
                                      var fields = $('#nav0_1').serializeArray(), //自动序列化表单元素为JSON对象
 									 	 category = $('.vipTypeCard .radio.on').data('category'),
+                                         isExtraMoney=$('[data-flag="isextramoney"]').hasClass("on") ? 1 : 0;
 										 isPassword = $('#IsPassword').hasClass('on')?1:0;
 									 fields.push({name:'Category',value:category});
-									 fields.push({name:'IsPassword',value:isPassword});
+                                    fields.push({name:'IsPassword',value:isPassword});
+
+									 fields.push({name:'IsExtraMoney',value:isExtraMoney});
 									 //console.log(fields);
 									 //return false;
                                      that.loadData.operation(fields, "CardType", function (data) {
@@ -185,8 +190,9 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                 if($(this).data("issubMit")){
                       //跳转会列表
 
-                      var mid = JITMethod.getUrlParam("mid");
-                         location.href = "queryList.aspx?&mid=" + mid;
+                     /* var mid = JITMethod.getUrlParam("mid");
+                         location.href = "queryList.aspx?&mid=" + mid;*/
+                    $.util.toNewUrlPath("queryList.aspx")
                 }else {
                     that.elems.simpleQuery.find(".panelDiv").each(function (e) {
                         debugger;
@@ -397,7 +403,9 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 					   if (data.Data && data.Data.UpgradeOnceAmount) {//单次消费金额满
 						   $('.checkBox[data-flag="UpgradeOnceAmount"]').trigger("click");
                        }
-					   
+                       if (data.Data && data.Data.IsExtraMoney) {//是否可补差价
+                           $('.checkBox[data-flag="isextramoney"]').trigger("click");
+                       }
 					   
 					   
 					   
@@ -612,7 +620,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
 
 
                   $.each(pram, function (i, field) {
-                          if(field.value!="") {
+                          if(field.value!=="") {
                               prams.data[field.name] = field.value; //提交的参数
                           }
                   });

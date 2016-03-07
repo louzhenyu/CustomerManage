@@ -209,7 +209,7 @@
                        </div>
                    </div>
                    <div  class="Chartdesc">
-                       <div class="optiondesc"><em>单店月均客流：</em><span class="CurrentMonthSingleUnitAvgTranCount">0</span>人次</div>
+                       <div class="optiondesc"><em>单店月均消费人次：</em><span class="CurrentMonthSingleUnitAvgTranCount">0</span>人次</div>
                        <div class="optiondesc"><em>门店月均单价：</em><span class="CurrentMonthUnitAvgCustPrice">0</span>元/人次</div>
                        <div class="optiondesc"><em>单店月均业绩：</em><span class="CurrentMonthSingleUnitAvgTranAmount">0</span><span class="CurrentMonthunit">万元</span></div>
                        <div class="optiondesc"><em>门店月均总业绩：</em><span class="CurrentMonthTranAmount">0</span><span class="CurrentMonthunit">万元</span></div>

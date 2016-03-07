@@ -41,7 +41,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="isStore"></param>
         /// <param name="socialSalesType">类型(0=按订单；1=按商品)</param>
         /// <returns></returns>
-        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType, string strSortName, string strSort)
+        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType, string strSortName, string strSort, int intVirtual,double Price)
         {
             //page = page < 0 ? 0 : page;
             page = page <= 0 ? 0 : page;
@@ -62,8 +62,24 @@ namespace JIT.CPOS.BS.DataAccess
              */
 
             StringBuilder dbdSql = new StringBuilder();
-            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy, ChannelId, socialSalesType,  strSortName, strSort,isStore));
-            dbdSql.Append(" select *,CASE WHEN a.EventTypeId IS NULL THEN 'GoodsDetail'  ELSE 'GroupGoodsDetail'		END	 GoodsType From #tmp a where 1=1 ");
+            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy, ChannelId, socialSalesType,  strSortName, strSort,intVirtual,isStore));
+
+            if (intVirtual == 1)
+            {
+                dbdSql.Append(" select *,'VirtualDetail' GoodsType From #tmp a where 1=1 ");
+
+            }
+            else
+            {
+                dbdSql.Append(" select *,CASE WHEN a.EventTypeId IS NULL THEN 'GoodsDetail'    ELSE 'GroupGoodsDetail'		END	 GoodsType From #tmp a where 1=1 ");
+            }
+
+            if (Price != null || Price.ToString() != "")
+            {
+                dbdSql.AppendFormat("and a.salesPrice >= {0} ",Price);
+            }
+
+
 
             dbdSql.Append(string.Format(@" and a.displayIndex between '{0}' and '{1}' order by a.displayindex;", beginSize, endSize));
             dbdSql.Append("select count(*) count From #tmp a where ");        
@@ -96,7 +112,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="isStore"></param>
         /// <param name="socialSalesType">类型(0=按订单；1=按商品)</param>
         /// <returns></returns>
-        public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId, string isGroupBy, string channelId, int socialSalesType, string strSortName,string strSort, int isStore = 0)
+        public string GetWelfareItemListSql(string userId, string itemName, string itemTypeId, bool isKeep, string isExchange, string storeId, string isGroupBy, string channelId, int socialSalesType, string strSortName, string strSort, int intVirtual, int isStore = 0)
         {
 
             //string sql = @"SELECT   displayIndex = Row_number() over(order by isnull(t.ItemDisplayIndex,0),t.BeginTime DESC) ,* 
@@ -164,6 +180,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += ",d.EventId";
             sql += ",d.EventTypeId";
             sql += ",a.create_time";
+            sql += ",a.ifservice";
             sql += ",a.modify_time";
             sql += " FROM dbo.vw_item_detail a ";
 
@@ -206,9 +223,13 @@ namespace JIT.CPOS.BS.DataAccess
             //    sql += string.Format(" inner join (select CategoryID from fnGetChildCategoryByID('{0}',1)) e on a.item_category_id=e.CategoryID ", itemTypeId);
             //}
             sql += " WHERE 1 = 1 and item_category_id<>'-1' and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
+            if (intVirtual==1)//是否虚拟商品
+            {
+                sql += " AND ifservice=1";
+            }
             if (!string.IsNullOrEmpty(itemName))
             {
-                sql += " AND (a.item_name LIKE '%" + itemName + "%' OR a.prop_2_detail_name LIKE '%" + itemName + "%' OR a.sku_prop_id3 LIKE '%" + itemName + "%') "; //通过商品名、颜色、材质查询
+                sql += " AND (a.item_name LIKE '%" + itemName + "%' OR a.prop_2_detail_name LIKE '%" + itemName + "%' OR a.sku_prop_id3 LIKE '%" + itemName + "%' or a.SalesPrice like '%" + itemName + "% ') "; //通过商品名、颜色、材质查询,价格
             }
             if (!string.IsNullOrEmpty(itemTypeId))
             {

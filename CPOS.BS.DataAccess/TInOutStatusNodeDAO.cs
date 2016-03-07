@@ -164,6 +164,23 @@ namespace JIT.CPOS.BS.DataAccess
         {
             try
             {
+                //var inoutDAO = new T_InoutDAO(CurrentUserInfo);
+                //var inoutInfo = inoutDAO.GetByID(orderId);
+                //if (inoutInfo != null)
+                //{
+                //    //如果是经销商订单，付款完成后，订单状态修改成完成状态
+                //    if (inoutInfo.data_from_id == "21")
+                //    {
+                //        inoutInfo.Field7 = "700";
+                //        inoutInfo.status = "700";
+                //        inoutDAO.Update(inoutInfo);
+                //        InoutService inoutService = new InoutService(CurrentUserInfo);
+                //        DataRow drItem = inoutService.GetInoutDetailInfoByOrderId(orderId).Tables[0].Rows[0];
+                //        string itemId = drItem["item_id"].ToString();
+                //        inoutService.GetInoutDetailInfoByOrderId(orderId);
+
+                //    }
+                //}
                 //string sql = "update T_Inout "
                 //        //+ " set status = b.NextValue "
                 //        //+ " ,Field7 = b.NextValue "
@@ -191,7 +208,7 @@ namespace JIT.CPOS.BS.DataAccess
                 //        + " where a.order_id = '" + orderId + "'";
 
                 string sql = "update T_Inout set Field1 = '1' ";
-                if (!string.IsNullOrEmpty( ChannelId))
+                if (!string.IsNullOrEmpty(ChannelId))
                 {
                     sql += ",pay_id = (select top 1 PaymentTypeID from TPaymentTypeCustomerMapping where IsDelete = '0' and ChannelId = '" + ChannelId + "' and CustomerId='" + this.CurrentUserInfo.CurrentUser.customer_id.ToString() + "') ";
                 }
@@ -207,13 +224,13 @@ namespace JIT.CPOS.BS.DataAccess
             }
         }
 
-        public void OrderPayCallBack(string orderId,string SerialPay, string customerId, int channelId)
+        public void OrderPayCallBack(string orderId, string SerialPay, string customerId, int channelId)
         {
             SqlParameter[] Parm = new SqlParameter[4];
             Parm[0] = new SqlParameter("@pOrderId", System.Data.SqlDbType.NVarChar, 100);
             Parm[0].Value = orderId;
             Parm[1] = new SqlParameter("@pChannelId", System.Data.SqlDbType.Int);
-            Parm[1].Value = channelId;        
+            Parm[1].Value = channelId;
             Parm[2] = new SqlParameter("@pCustomerId", System.Data.SqlDbType.NVarChar, 100);
             Parm[2].Value = customerId;
             Parm[3] = new SqlParameter("@pSerialPay", System.Data.SqlDbType.NVarChar, 100);
@@ -276,7 +293,7 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder sbWhere = new StringBuilder();
             sbWhere.AppendFormat(" and DeliveryMethod='{0}'", string.IsNullOrWhiteSpace(pDeliveryMethod) ? "1" : pDeliveryMethod);
             //测试数据库中可能会有多种状态 。以后加入 CustomerID后面and DeliveryMethod=1 保留
-            sbSQL.AppendFormat("select * From TInOutStatusNode a where a.IsDelete = '0' "+sbWhere+"  and a.CustomerID='{0}' and a.NodeValue = (select  top 1 status from T_Inout where order_id='{1}') order by  Sequence,DeliveryMethod  desc", this.CurrentUserInfo.ClientID, pOrderId);
+            sbSQL.AppendFormat("select * From TInOutStatusNode a where a.IsDelete = '0' " + sbWhere + "  and a.CustomerID='{0}' and a.NodeValue = (select  top 1 status from T_Inout where order_id='{1}') order by  Sequence,DeliveryMethod  desc", this.CurrentUserInfo.ClientID, pOrderId);
             DataSet ds = this.SQLHelper.ExecuteDataset(sbSQL.ToString());
             return ds;
         }

@@ -71,6 +71,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
                 case "CretaeWxCode":
                     content = CretaeWxCode();
                     break;
+
             }
             pContext.Response.Write(content);
             pContext.Response.End();
@@ -310,7 +311,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
             var jsonData = new JsonData();
             jsonData.totalCount = data.ICount.ToString();
             jsonData.data = data.ItemInfoList;
-            
+
+
+
+
             content = string.Format("{{\"totalCount\":{1},\"topics\":{0}}}",
                 data.ItemInfoList.ToJSON(),
                 data.ICount);
@@ -459,6 +463,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
                     responseData.msg = "商品编码自动生成失败，请联系管理员。";
                     return responseData.ToJSON();
                 }
+
+
             }
             else
             {
@@ -535,6 +541,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
             }
 
             itemService.SetItemInfo(obj, out error);
+
 
             #region 生成二维码
      /**
@@ -1129,6 +1136,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
 
         }
         #endregion
+
+  
     }
 
     #region QueryEntity
@@ -1148,5 +1157,4 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
         public int MaxWQRCod { set; get; }
 
     }
-
 }

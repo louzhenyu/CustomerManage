@@ -60,7 +60,7 @@ namespace JIT.CPOS.BS.DataAccess
                             ,EventItemMappingId
                             from
                             (select item_id,item_name,DisplayIndex,EventItemMappingId,SinglePurchaseQty,
-                            (select top 1 imageUrl from ObjectImages as img where T.item_id=img.ObjectId and IsDelete=0 order by displayindex) Imageurl,
+                            (select top 1 imageUrl from ObjectImages as img where T.item_id=img.ObjectId and IsDelete=0 AND DisplayIndex IS NOT NULL  order by displayindex) Imageurl,
                             (select top 1 ImageURL from ObjectImages where ObjectImages.ObjectId=cast(Pe.EventItemMappingId as nvarchar(200)) order by createtime desc) ObjectURL
                             from PanicbuyingEventItemMapping as Pe
                             inner join T_Item as T on T.item_id=Pe.ItemId

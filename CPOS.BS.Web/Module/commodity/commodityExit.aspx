@@ -25,6 +25,29 @@
                     <form></form>
                     <form id="nav0_1">
                    <div class="panelDiv" id="nav01" data-index="0">
+                                       <div class="item"  >
+                                         <div class="commonSelectWrap">
+                                             <em class="tit">商品类型：</em>
+                                             <div class="selectBox" style="width: 302px;">
+                                             <div class="radio line14 on" data-name="ifservice" data-value="0"><em></em><span>实物商品<br/>（物流发货）</span></div>
+                                             <div class="radio line14 " data-name="ifservice" data-value="1" ><em></em><span>虚拟商品<br/> （无需物流）</span> </div>
+                                             </div>
+                                         </div>
+                                         </div>
+                                         <div class="item" data-flag="ifservice">
+                                               <div class="commonSelectWrap">
+                                                                    <em class="tit">选择种类：</em>
+                                                                    <label class="selectBox">
+                                                                      <input data-text="选择种类" id="itemType" data-flag="Item_Name" class="easyui-combobox" data-options="required:true,width:200,height:30" name="VirtualItemTypeId" type="text" value="">
+                                                                    </label>
+                                                                </div>
+                                               <div class="commonSelectWrap">
+                                                                    <em class="tit">关联：</em>
+                                                                    <label class="selectBox">
+                                                                      <input data-text="商品名称" id="ObjecetType" data-flag="Item_Name"  class="easyui-combobox" data-options="required:true,width:200,height:30" name="ObjecetTypeId" type="text" value="请选择">
+                                                                    </label>
+                                                                </div>
+                                        </div>
                     <div class="left">
                       <div class="commonSelectWrap">
                           <em class="tit"><span style="color: red;position: relative;">*</span>商品名称：</em>

@@ -209,6 +209,8 @@ namespace JIT.CPOS.BS.Entity.Interface
         public string ChannelId { get; set; } //渠道ID add by donal 2014-9-28 14:29:00
 
         public decimal ReturnCash { get; set; } //佣金  add by donal 2014-12-9 10:37:10
+
+        public string VipCardCode { get; set; } //卡号，券号
         
         #endregion
     }

@@ -219,6 +219,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     RD.paraTmp = iResult.ToString("");
                 else
                     RD.paraTmp = iResult.ToString().Insert(4, " "); //加空格，加空格有什么作用？
+
+                if (RP.Parameters.VipDCode == 3)
+                {
+                    VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                    var VipData = vipBll.GetByID(RP.UserID);
+                    if (VipData != null)
+                    {
+                        RD.VipName = VipData.VipName;
+                        RD.HeadImgUrl = VipData.HeadImgUrl;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -249,6 +260,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
         {
             public string imageUrl { get; set; }
             public string paraTmp { get; set; }
+
+            public string VipName { get; set; }
+            public string HeadImgUrl { get; set; }
         }
 
 
@@ -394,7 +408,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     }
                     #endregion
 
-
+                    #region 橙果财商
+                    if (info.DCodeType==3)
+                    {
+                        vipInfo.HigherVipID = RP.UserID;
+                        vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
+                    }
+                    #endregion
 
                     vipBll.Update(vipInfo);
 
@@ -413,10 +433,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     if (vipInfo != null && !string.IsNullOrEmpty(vipInfo.CouponInfo) && vipInfo.SetoffUserId != RP.UserID)
                     {
                         //rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
-                    }else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddMinutes(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
+                    }
+                    else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddMinutes(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
                     {
                         //rsp.Message = "此客户此前已经被您集客，无需重复集客。！";
-                    }else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
+                    }
+                    else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID)
                     {
                         rsp.Message = "恭喜你集客成功。会员需要用心经营才会有订单哦！";
                     }
@@ -464,6 +486,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
             public string unitId { get; set; }
             public string paraTmp { get; set; }
             public string Mode { get; set; }
+
         }
         #endregion
 

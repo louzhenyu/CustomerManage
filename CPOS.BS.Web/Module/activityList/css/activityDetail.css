@@ -146,6 +146,7 @@ a:hover{color:#fff;}
 /*活动配置*/
 .activityConfigArea{height:585px;padding:28px 0px 5px 70px;}
 .activityConfigArea .examplePic,.activityConfigArea .createPic{float:left;width:324px;height:506px;border:3px solid #ccc;border-radius:5px;}
+.activityConfigArea .examplePic img{width:100%;}
 .activityConfigArea .createPicBox{float:left;width:324px;}
 .activityConfigArea .redPackPrize{position: absolute;bottom: 61px;left: 50%;width: 210px;margin-left: -105px;}
 .activityConfigArea .redPackPrize img{width:100%;}

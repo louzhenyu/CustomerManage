@@ -28,7 +28,7 @@ li {list-style-type:none;}
 .modulehead .title img{   float: left;}
 .modulehead .gomore{  display: inline-block;float: right;margin: 10px 20px;}
 .modulecontent {color:#a8a8a8;  padding:17px 0px;  display: inline-block;width: 100%;}
-.modulecontent .count {width: 132px;display: inline-block;padding: 0px 10px;  float: left;}
+.modulecontent .count {width: 130px;display: inline-block;padding: 0px 10px;  float: left;}
 .modulecontent .count .numtitle {  font-size: 15px;  } 
 .modulecontent .count .num {  font-size: 21px;text-align: center;line-height: 60px;color: #57bcc8; }
 .module:nth-of-type(1)  .modulecontent .count .num { color: #57bcc6; }
@@ -37,7 +37,7 @@ li {list-style-type:none;}
 .module:nth-of-type(4)  .modulecontent .count .num { color: #71ba35; }
 .module:nth-of-type(5)  .modulecontent .count .num { color: #00a0e8; }
 .module:nth-of-type(6)  .modulecontent .count .num { color: #f8b62c; }
-.modulecontent .achievement {display: inline-block;height: 70px; border-left: 1px solid #f0f0f0; padding: 0 5px 0px 7px;float: left;width: 162px;}
+.modulecontent .achievement {display: inline-block;height: 70px; border-left: 1px solid #f0f0f0; padding: 0 5px 0px 7px;float: left;width: 166px;}
 .modulecontent .achievement .achievementtitle{ font-size: 15px;  }
 .modulecontent .achievement .achievementnum{ font-size: 14px;  margin: 5px 0 0 0; text-align: center;}
 .modulecontent .achievement .achievementnum .CurrentMonthunit {font-size: 15px;  color: inherit;}

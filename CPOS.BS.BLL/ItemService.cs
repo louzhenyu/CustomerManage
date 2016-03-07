@@ -156,8 +156,13 @@ namespace JIT.CPOS.BS.BLL
            // 商品sku名 (基础数据)
             itemInfo.T_ItemSkuProp = new T_ItemSkuPropBLL(loggingSessionInfo).GetItemSkuPropByItemId(item_id);
 
-
-
+            //虚拟商品
+            T_VirtualItemTypeSettingEntity entityVirtualItemType=new T_VirtualItemTypeSettingBLL(loggingSessionInfo).QueryByEntity(new T_VirtualItemTypeSettingEntity() {ItemId =item_id}, null).FirstOrDefault();
+            if (entityVirtualItemType != null)
+            {
+                itemInfo.VirtualItemTypeId = entityVirtualItemType.VirtualItemTypeId.ToString();
+                itemInfo.ObjecetTypeId = entityVirtualItemType.ObjecetTypeId;
+            }
             return itemInfo;
         }
         #endregion

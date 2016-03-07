@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/10/27 22:13:12
+ * Create On	:2016-3-6 11:18:15
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -156,6 +156,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Decimal? Prices { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? IsExtraMoney { get; set; }
 
 		/// <summary>
 		/// 

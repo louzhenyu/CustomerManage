@@ -66,6 +66,6 @@
 .textF33{color:#f33;}
 .expText{display:inline-block;width:100%;text-align:left;line-height:22px;padding-top:10px;font-size:14px;color:#f33;}
 .radio em{margin-right:7px;}
-.commonSelectWrap .searchInput input,.textbox .textbox-text{color:#999;}
-
+.commonSelectWrap .checkBox{ margin-top: 8px;}
+.commonSelectWrap .tip{ float: right;background: url("../images/icon-tip.png") no-repeat right center;width: 16px;height: 22px;display: block;margin-left: 20px;margin-top: 8px;}
 .ruleTipText{display:none;clear:left;padding-left:130px;color:#f00;}

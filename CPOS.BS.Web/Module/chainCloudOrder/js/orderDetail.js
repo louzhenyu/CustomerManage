@@ -869,6 +869,10 @@
                         DeliveryCode:  this.opertionField.DeliveryCode,//配送单号2343242
                         SendTime:  this.opertionField.SendTime//配送时间
                     },
+                    beforeSend: function () {
+                        $.util.isLoading()
+
+                    },
                     success: function (data) {
                         debugger;
                         if (data.success) {
@@ -1078,6 +1082,10 @@
                 $.util.oldAjax({
                     url: prams.url,
                     data: prams.data,
+                    beforeSend: function () {
+                        $.util.isLoading()
+
+                    },
                     success: function (data) {
                         if (data.success) {
                             if (callback) {

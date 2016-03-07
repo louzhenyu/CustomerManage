@@ -303,7 +303,7 @@
                         	<p class="tit">背景颜色1：</p>
                             <div class="infoBox">
                             	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="背景颜色1图片上传成功！">上传图片</a>
-                                <p class="exp">(尺寸：640*640)</p>
+                                <p class="exp">(尺寸：640*660)</p>
                             </div>
                         </div>
                          <div id="LT_Data_bgpic2" class="uploadItem" data-flag=13  data-url="" data-batid="LT_bgpic2">

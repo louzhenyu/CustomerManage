@@ -392,14 +392,14 @@ as CollectIncome");
             //¶©µ¥À´Ô´
             if (!string.IsNullOrEmpty(OrderChannelID) && OrderChannelID != "-1")
             {
-                if (OrderChannelID == "19")
-                {
-                    sqlWhere += " and  col20 in (select retailtraderID from retailtrader  where CustomerID=@pCustomerId ) ";
-                }
-                else
-                {
+                //if (OrderChannelID == "19")
+                //{
+                //    sqlWhere += " and  col20 in (select retailtraderID from retailtrader  where CustomerID=@pCustomerId ) ";
+                //}
+                //else
+                //{
                     sqlWhere += " and a.data_from_id = '" + OrderChannelID + "'";
-                }
+                //}
             }
 
             StringBuilder sql = new StringBuilder();

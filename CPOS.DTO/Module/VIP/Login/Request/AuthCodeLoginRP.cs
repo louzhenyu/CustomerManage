@@ -33,6 +33,10 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Request
         /// </remarks>
         /// </summary>
         public int? VipSource { get; set; }
+        /// <summary>
+        /// 注册时直接输入真实姓名
+        /// </summary>
+        public string VipRealName { get; set; }
 
         public void Validate()
         {

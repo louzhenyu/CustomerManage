@@ -2244,6 +2244,10 @@
     </Compile>
     <Compile Include="ApplicationInterface\Module\VIP\Attribute\GetAttributeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Attribute\SetAttributeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Dealer\GetVipDealerAccountDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Dealer\GetVipDealerUpsetAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Dealer\GetVipFansListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Dealer\SetVipDealerAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Evaluation\SetEvaluationItemAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\LoginOut\RemoveAndriodMessageBindAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\LoginOut\RemoveIOSMessageBindAH.cs" />
