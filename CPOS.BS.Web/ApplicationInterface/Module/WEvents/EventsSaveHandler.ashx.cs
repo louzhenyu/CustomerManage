@@ -858,6 +858,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                     };
                     WQRCodeManagerbll.Create(wqrCodeManagerEntity);
                 }
+                else {
+                    throw new APIException(wxCode.msg) { ErrorCode = 342 };
+                        
+                }
                 #endregion
 
                 //throw new APIException("活动没有生成二维码！") { ErrorCode = 342 };
@@ -1014,10 +1018,18 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
 
                 #region 生成二维码
                 JIT.CPOS.BS.BLL.WX.CommonBLL commonServer = new JIT.CPOS.BS.BLL.WX.CommonBLL();
-                imageUrl = commonServer.GetQrcodeUrl(wapentity.AppID.ToString().Trim()
-                                                          , wapentity.AppSecret.Trim()
-                                                          , "1", MaxWQRCod
-                                                          , loggingSessionInfo);
+                try
+                {
+                    imageUrl = commonServer.GetQrcodeUrl(wapentity.AppID.ToString().Trim()
+                                                              , wapentity.AppSecret.Trim()
+                                                              , "1", MaxWQRCod
+                                                              , loggingSessionInfo);
+                }
+                catch (Exception e){
+                    responseData.success = false;
+                    responseData.msg = e.Message;// "二维码生成失败!";
+                    return responseData;
+                }
 
                 if (!string.IsNullOrEmpty(imageUrl))
                 {

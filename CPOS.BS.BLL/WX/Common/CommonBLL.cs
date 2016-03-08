@@ -1055,6 +1055,10 @@ namespace JIT.CPOS.BS.BLL.WX
                         qrcode = data.DeserializeJSONTo<QrCodeEntity>();
                     }
                 }
+                if (qrcode.errcode == "48001")
+                {
+                    qrcode.errmsg = "api功能未授权，请确认公众号已获得该接口，可以在公众平台官网-开发者中心页中查看接口权限";
+                }
                 #endregion
 
                 BaseService.WriteLogWeixin("获取二维码图片返回值：" + data);
@@ -1065,7 +1069,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 }
                 else
                 {
-                    throw new Exception(qrcode.errcode + ":" + qrcode.errmsg);
+                    throw new Exception("生成二维码失败，"+qrcode.errcode + ":" + qrcode.errmsg);
                 }
             }
 
