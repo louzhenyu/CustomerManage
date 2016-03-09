@@ -88,8 +88,9 @@
                     "StoreType":'NapaStores',
                     "text":"加盟店"
                 },{
-                    "StoreType":'',
-                    "text":"请选择"
+                    "StoreType":-1,
+                    "text":"请选择",
+                    "selected":true
                 }]
             });
 			

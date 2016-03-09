@@ -74,9 +74,8 @@
                     <table class="dataTable" id="gridTable">
 
                          <div class="dataTable" id="dataTable">
-                          <div  class="loading">
-                                   <span>
-                                 <img src="../static/images/loading.gif" style="  padding-top: 50px;"></span>
+                          <div class="loading" style="margin-top:55px;">
+                                   <span><img src="../static/images/loading.gif"></span>
                             </div>
                         </div>
                     </table>  </div>

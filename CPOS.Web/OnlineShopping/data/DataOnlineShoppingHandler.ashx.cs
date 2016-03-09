@@ -2589,10 +2589,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     //根据vipID获取当前折扣信息
                     var vipInfo = new VipBLL(loggingSessionInfo);
                     var rate = vipInfo.GetVipSale(vipID);
- 
+                    var vip = vipInfo.GetByID(vipID);
                     if (reqObj.special.CommodityType == "1")
                     {
-                        orderInfo.VipCardCode = vipInfo.GetVipCode();
+                        orderInfo.VipCardCode = vip.VipCode;
                     }
                     orderDetailInfo.discount_rate = rate;
                     //orderDetailInfo.discount_rate = 100

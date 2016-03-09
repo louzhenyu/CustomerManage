@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <title>生日营销活动设置</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="css/birthDayDetail.css" rel="stylesheet" type="text/css" />
+    <link href="css/birthDayDetail.css?v1.0" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/birthDayDetail.js?ver=0.5">

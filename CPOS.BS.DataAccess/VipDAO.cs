@@ -111,7 +111,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 Message = parm.ToJSON()
             });
-            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Vip_VipDealerAccountDetail", parm);
+            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Proc_VipDealerAccountDetail", parm);
 
         }
         /// <summary>

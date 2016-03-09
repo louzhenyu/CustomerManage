@@ -1004,13 +1004,68 @@ namespace JIT.CPOS.BS.BLL
 
                                 #endregion
                                 break;
+                            case "vipdealercode"://经销商
+                                weixinId = null;
+                                #region 发展经销商下线
+                                VipBLL vipDealerBLL = new VipBLL(loggingSessionInfo);
+                                string DealerVipId = qrCodeEntity.ObjectId;
+                                var vipData = vipDealerBLL.QueryByEntity(new VipEntity()
+                                {
+                                    WeiXinUserId = openId
+                                }, null).FirstOrDefault();
+                                if (vipData != null)
+                                {
+                                    CommonBLL commonBll = new CommonBLL();
+                                    SendMessageEntity messageEntity = new SendMessageEntity();
+                                    var wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
+                                    {
+
+                                        CustomerId = this.CurrentUserInfo.ClientID,
+                                        IsDelete = 0
+
+                                    }, null).FirstOrDefault();
+                                    if (string.IsNullOrEmpty(vipData.HigherVipID))
+                                    {
+                                        if (!vipData.VIPID.Equals(qrCodeEntity.ObjectId))
+                                        {
+                                            vipData.HigherVipID = qrCodeEntity.ObjectId;//上线会员ID
+                                            vipDealerBLL.Update(vipData);
+
+                                            //
+                                            messageEntity.content = "您成功发展了一个会员！";
+                                        }
+                                        else
+                                        {
+                                            messageEntity.content = "不能发展自己！";
+                                        }
+                                    }
+                                    else
+                                    {
+                                        messageEntity.content = "该会员已有上线！";
+
+                                    }
+
+                                    //获取经销商OpenID
+                                    var DealerVipData = vipDealerBLL.GetByID(DealerVipId);
+                                    if (DealerVipData != null)
+                                    {
+
+                                        messageEntity.touser = DealerVipData.WeiXinUserId;
+                                        messageEntity.msgtype = "text";
+                                        commonBll.SendMessage(messageEntity, wapentity.AppID,
+                                          wapentity.AppSecret, loggingSessionInfo);
+                                    }
+                                }
+                                #endregion
+                                break;
+
                             default:
                                 break;
                         }
                     }
                     #endregion
 
-                    if (weixinId != "")//处理素材的
+                    if (!string.IsNullOrWhiteSpace(weixinId))//处理素材的
                     {
                         if(qrCodeTypeInfo.TypeCode == "UserQrCode")//员工二维码
                         {

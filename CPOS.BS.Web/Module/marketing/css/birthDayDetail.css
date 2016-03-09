@@ -47,7 +47,7 @@
 
 .textAddBtn{color: #00a0e8; width: 50px;cursor: pointer; font-size: 14px; height: 18px; text-align: left; position: absolute; left:96px; bottom:20px;}
 
-.ticketList{ width:100%; padding-left: 20px; display: inline-block; }
+.ticketList{ width:608px; padding-left: 20px; display: inline-block; }
 .ticketList .ticket{ width:100%; height: 65px; padding-top: 21px; display: inline-block;border-bottom: 1px solid #ececec; }
 #win .layout-body{border-bottom: 1px solid #d8d8d8;}
 

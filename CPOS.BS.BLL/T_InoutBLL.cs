@@ -239,5 +239,44 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
         }
+        /// <summary>
+        /// 支付回调/收款处理虚拟商品订单
+        /// </summary>
+        public void SetVirtualItem(LoggingSessionInfo loggingSessionInfo, string orderId)
+        {
+            var inoutBLL = new T_InoutBLL(loggingSessionInfo);
+            var inoutInfo = this._currentDAO.GetByID(orderId);
+            if (inoutInfo != null)
+            {
+                //如果是经销商订单，付款完成后，订单状态修改成完成状态
+                if (inoutInfo.data_from_id == "21")
+                {
+                    inoutInfo.Field7 = "700";
+                    inoutInfo.status = "700";
+                    inoutBLL.Update(inoutInfo);
+                    InoutService inoutService = new InoutService(loggingSessionInfo);
+                    T_VirtualItemTypeSettingBLL virtualItemTypeSettingBLL = new T_VirtualItemTypeSettingBLL(loggingSessionInfo);
+                    VipCardVipMappingBLL vipCardVipMappingBLL = new VipCardVipMappingBLL(loggingSessionInfo);
+                    T_Inout_DetailBLL inoutDetailBLL = new T_Inout_DetailBLL(loggingSessionInfo);
+
+                    var inoutDetail = inoutService.GetInoutDetailInfoByOrderId(orderId).FirstOrDefault();
+                    string itemId = inoutDetail.item_id;
+
+                    var virtualItemTypeSettingInfo = virtualItemTypeSettingBLL.QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = itemId }, null).FirstOrDefault();
+                    if (virtualItemTypeSettingInfo != null)
+                    {
+                        int objectTypeId = int.Parse(virtualItemTypeSettingInfo.ObjecetTypeId);
+                        string objectNo = vipCardVipMappingBLL.BindVirtualItem(inoutInfo.vip_no, inoutInfo.VipCardCode, "", objectTypeId);
+                        //将卡/券的编号保存到订单明细
+                        T_Inout_DetailEntity inoutDetailEntity = inoutDetailBLL.GetByID(inoutDetail.order_detail_id);
+                        if (inoutDetailEntity != null)
+                        {
+                            inoutDetailEntity.Field10 = objectNo;
+                            inoutDetailBLL.Update(inoutDetailEntity);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

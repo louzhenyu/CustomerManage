@@ -411,7 +411,7 @@ select RetailTraderID  into #TempTable	 from  #TmpTBL L , #UnitSET R where L.IsD
 
 ";
             //总数据表
-            sql += @"select a.*  from RetailTrader a
+            sql += @"select  COUNT(1) TotalCount  from RetailTrader a
  inner join #TempTable f on a.RetailTraderID=f.RetailTraderID
                                  WHERE 1 = 1 AND    a.isdelete = 0 
    {4}
@@ -874,11 +874,11 @@ select user_id  into #TempTable	 from  #TmpTBL L , #UnitSET R where
 
 ";
             //总数据表
-            sql += @"select a.*  from t_user a
+            sql += @"select count(1)TotalCount  from t_user a
  inner join #TempTable f on a.user_id=f.user_id
                                  WHERE 1 = 1
    {4}
-                and  a.customer_id=@CustomerId  ";
+                and  a.customer_id=@CustomerId  and ( a.user_code<>'admin' and a.user_code<>'administrator') ";
             //取到某一页的
             sql += @"select * from ( select  ROW_NUMBER()over(order by {0} {3}) _row,a.*
          ,isnull((select top 1 y.unit_name from T_User_Role x inner join t_unit y on x.unit_id=y.unit_id
@@ -892,7 +892,7 @@ select user_id  into #TempTable	 from  #TmpTBL L , #UnitSET R where
                                     from T_User a 
  inner join #TempTable f on a.user_id=f.user_id
 
-where a.customer_id=@CustomerId    {4} ";
+where a.customer_id=@CustomerId and ( a.user_code<>'admin' and a.user_code<>'administrator')   {4} ";
 
 
             sql += @") t

@@ -296,7 +296,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
 
 
 
-            int maxRowCount = PageSize;
+            int maxRowCount = Utils.GetIntVal(Request("limit"));
             int startRowIndex = Utils.GetIntVal(Request("start"));
 
             string key = string.Empty;

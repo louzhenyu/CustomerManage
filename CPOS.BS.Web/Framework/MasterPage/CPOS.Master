@@ -411,6 +411,7 @@
 
                 window.clientID = '<%=CustomerID%>';
                 window.adminUserID = '<%=adminUserID%>';
+                window.homeIndexMallUrl="<%=System.Web.Configuration.WebConfigurationManager.AppSettings["interfacehost"]%>"+"/HtmlApps/html/public/index/index_shop_app.html?customerId="+'<%=CustomerID%>'
                 window.UnitName = '<%=UnitName%>';
                 window.UnitID = '<%=UnitID%>';
                 window.UnitShortName = '<%=UnitShortName%>';

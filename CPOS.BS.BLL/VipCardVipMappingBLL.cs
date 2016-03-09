@@ -118,12 +118,14 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="vipCode"></param>
         /// <param name="unitId">会籍店</param>
         /// <paparam name="ObjecetTypeId">卡/券类型Id</paparam>
-        public void BindVirtualItem(string vipId, string vipCode, string unitId, int ObjecetTypeId)
+        public string BindVirtualItem(string vipId, string vipCode, string unitId, int ObjecetTypeId)
         {
             var vipCardVipMappingBLL = new VipCardVipMappingBLL(CurrentUserInfo);
             var sysVipCardTypeBLL = new SysVipCardTypeBLL(CurrentUserInfo);
             var vipCardBLL = new VipCardBLL(CurrentUserInfo);
             var vipCardStatusChangeLogBLL = new VipCardStatusChangeLogBLL(CurrentUserInfo);
+
+            string ObjectNo = string.Empty;//卡号或券号
 
             UnitService unitServer = new UnitService(CurrentUserInfo);
             if (string.IsNullOrEmpty(unitId))
@@ -159,7 +161,7 @@ namespace JIT.CPOS.BS.BLL
                 vipCardInfo.CustomerID = CurrentUserInfo.ClientID;
                 vipCardBLL.Create(vipCardInfo);
             }
-
+            ObjectNo = vipCardInfo.VipCardCode;
             //绑定会员卡和会员
             var vipCardVipMappingEntity = new VipCardVipMappingEntity()
             {
@@ -226,6 +228,7 @@ namespace JIT.CPOS.BS.BLL
 
                 #endregion
             }
+            return ObjectNo;
         }
     }
 }

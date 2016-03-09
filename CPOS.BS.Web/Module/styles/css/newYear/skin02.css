@@ -349,7 +349,8 @@ body{overflow-x: hidden;}
 .imgTable .datagrid-row  img.l{margin-right: 10px;}
 /*列表相关样式*/
 .operation{display: inline-block;}
-.opt {float: left;cursor: pointer; width: 18px;height: 18px; margin-left: 4px; margin-right: 16px;}
+.opt {float: left;cursor: pointer; width: 18px;height: 18px; margin-left: 4px; margin-right: 16px;color: #00a0e8;}
+.opt a{ color: #00a0e8;}
 .noOpt{ float: left;margin: 6px 10px;}
 .noDelete{background:no-repeat center center;background-image:url(../../images/newYear/nodel.png);   width: 16px; height: 16px; }
 .delete{background:no-repeat center center; background-image:url(../../images/newYear/del.png); width: 16px; height: 16px;  cursor: pointer}

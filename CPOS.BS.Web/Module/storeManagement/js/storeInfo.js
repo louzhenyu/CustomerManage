@@ -3,7 +3,6 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
     KE = KindEditor;
     var page = {
         elems: {
-			unitId:'',
             optPanel:$("#optPanel"), //页面的顶部li
             submitBtn:$("#submitBtn"),//提交和下一步按钮
             section:$("#section"),

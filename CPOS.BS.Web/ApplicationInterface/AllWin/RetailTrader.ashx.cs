@@ -95,8 +95,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
             {
                 var tempDt = ds.Tables[1];
                 rd.RetailTraderList = DataTableToObject.ConvertToList<RetailTraderInfo>(tempDt);//直接根据所需要的字段反序列化
-                rd.TotalCount = ds.Tables[0].Rows.Count;
-                rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(ds.Tables[0].Rows.Count * 1.00 / (pageSize ?? 15) * 1.00)));
+                rd.TotalCount = Convert.ToInt32(ds.Tables[0].Rows[0]["TotalCount"]);
+                rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Convert.ToInt32(ds.Tables[0].Rows[0]["TotalCount"]) * 1.00 / (pageSize ?? 15) * 1.00)));
 
 
             }
@@ -160,8 +160,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
             {
                 var tempDt = ds.Tables[1];
                 rd.SellerMonthRewardList = DataTableToObject.ConvertToList<SellerMonthRewards>(tempDt);//直接根据所需要的字段反序列化
-                rd.TotalCount = ds.Tables[0].Rows.Count;
-                rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(ds.Tables[0].Rows.Count * 1.00 / (pageSize ?? 15) * 1.00)));
+                rd.TotalCount = Convert.ToInt32(ds.Tables[0].Rows[0]["TotalCount"].ToString());
+                rd.TotalPages = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Convert.ToInt32(ds.Tables[0].Rows[0]["TotalCount"].ToString()) * 1.00 / (pageSize ?? 15) * 1.00)));
 
             }
 

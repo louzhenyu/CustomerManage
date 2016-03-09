@@ -275,7 +275,12 @@
                     {
                         field: 'PrizesID', title: '追加', width: 50, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
-                            return '<p class="handle addBtn" data-prizesid="' + value + '" data-ContactEventId="' + row.ContactEventId + '" data-index="' + index + '"></p>';
+							var status = row.Status;
+							if(status==4){
+								return '<p class="handle unAddBtn" data-prizesid="' + value + '" data-ContactEventId="' + row.ContactEventId + '" data-index="' + index + '"></p>';
+							}else{
+								return '<p class="handle addBtn" data-prizesid="' + value + '" data-ContactEventId="' + row.ContactEventId + '" data-index="' + index + '"></p>';
+							}
                         }
                     },
                     {

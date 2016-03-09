@@ -2737,6 +2737,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                             //处理库存和销量
                             //var inoutDetailList = service.GetInoutDetailInfoByOrderId(orderId);
                             //inoutBLL.SetStock(orderId, inoutDetailList, 1, CurrentUserInfo);
+                            inoutBLL.SetVirtualItem(CurrentUserInfo, orderId);  //支付回调/收款处理虚拟商品订单
                         }
                         else
                         {

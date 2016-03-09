@@ -230,9 +230,9 @@
                          formatter:function(value,row,index){
                              var   str="未知";
                              switch (value){
-                                 case "1": str="公众号"; break;
-                                 case "2": str="公众号"; break;
-                                 case "3": str="公众号"; break;
+                                 case "1": str="订阅号"; break;
+                                 case "2": str="订阅号"; break;
+                                 case "3": str="服务号"; break;
                              }
                              return str;
                          }

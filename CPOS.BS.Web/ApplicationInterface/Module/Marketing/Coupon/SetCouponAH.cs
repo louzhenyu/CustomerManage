@@ -18,6 +18,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
         {
             var rd = new EmptyResponseData();
             var para = pRequest.Parameters;
+            para.EndTime = para.EndTime.AddHours(23).AddMinutes(59).AddSeconds(59);
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var couponTypeBLL = new CouponTypeBLL(loggingSessionInfo);
             var couponBLL = new CouponBLL(loggingSessionInfo);

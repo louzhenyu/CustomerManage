@@ -2245,6 +2245,7 @@
     <Compile Include="ApplicationInterface\Module\VIP\Attribute\GetAttributeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Attribute\SetAttributeAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Dealer\GetVipDealerAccountDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Dealer\GetVipDealerSpreadCodeAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Dealer\GetVipDealerUpsetAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Dealer\GetVipFansListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Dealer\SetVipDealerAH.cs" />

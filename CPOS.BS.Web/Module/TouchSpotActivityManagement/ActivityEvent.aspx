@@ -254,6 +254,14 @@
             background: url(images/icon-add.png) no-repeat center center;
             cursor: pointer;
         }
+		
+		#tableWrap .unAddBtn {
+            display: block;
+            width: 100%;
+            height: 39px;
+            background: url(images/icon-unAdd.png) no-repeat center center;
+            cursor: pointer;
+        }
 
         #tableWrap .delBtn {
             display: block;

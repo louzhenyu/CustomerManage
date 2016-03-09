@@ -42,7 +42,9 @@ require.config({
         }
     },
     paths: {
+
         drag: '/Module/static/js/plugin/jquery.drag',
+        copy:'/Module/static/js/plugin/jquery.zclip.min',
         tools: '/Module/static/js/lib/tools-lib',
         template: '/Module/static/js/lib/bdTemplate',
         artTemplate: '/Module/static/js/plugin/template',

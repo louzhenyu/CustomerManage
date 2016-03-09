@@ -115,37 +115,8 @@ namespace JIT.CPOS.BS.BLL
                     //info.StatusRemark = "订单支付成功[操作人:" + CurrentUserInfo.CurrentUser.User_Name + "]";
                     //inoutStatus.Create(info);
 
-                    #region 处理虚拟商品的绑定
-
-                    var inoutBLL = new T_InoutBLL(CurrentUserInfo);
-                    var inoutInfo = inoutBLL.GetByID(orderId);
-                    if (inoutInfo != null)
-                    {
-                        //如果是经销商订单，付款完成后，订单状态修改成完成状态
-                        if (inoutInfo.data_from_id == "21")
-                        {
-                            inoutInfo.Field7 = "700";
-                            inoutInfo.status = "700";
-                            inoutBLL.Update(inoutInfo);
-                            InoutService inoutService = new InoutService(CurrentUserInfo);
-                            T_VirtualItemTypeSettingBLL virtualItemTypeSettingBLL = new T_VirtualItemTypeSettingBLL(CurrentUserInfo);
-                            VipCardVipMappingBLL vipCardVipMappingBLL = new VipCardVipMappingBLL(CurrentUserInfo);
-
-                            var inoutDetail = inoutService.GetInoutDetailInfoByOrderId(orderId).FirstOrDefault();
-                            string itemId = inoutDetail.item_id;
-
-                            var virtualItemTypeSettingInfo = virtualItemTypeSettingBLL.QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = itemId }, null).FirstOrDefault();
-                            if (virtualItemTypeSettingInfo != null)
-                            {
-                                int objectTypeId = int.Parse(virtualItemTypeSettingInfo.ObjecetTypeId);
-                                vipCardVipMappingBLL.BindVirtualItem(inoutInfo.vip_no, inoutInfo.VipCardCode, "", objectTypeId);
-                            }
-                        }
-                    }
-
-
-                    #endregion
-
+                    T_InoutBLL inoutBLL=new T_InoutBLL(this.CurrentUserInfo);
+                    inoutBLL.SetVirtualItem(CurrentUserInfo, orderId);//支付回调/收款处理虚拟商品订单
 
                     return true;
                 }

@@ -120,7 +120,7 @@ namespace JIT.CPOS.BS.DataAccess
                 sql += " where tp.prop_code='canredeem' and (tpv.prop_code = '" + _ht["item_can_redeem"].ToString() + "' or (" + _ht["item_can_redeem"].ToString() + "= 0 and (tpv.prop_code is null or tpv.prop_code = '')))";
             }
             else
-                sql += " where 1=1 ";
+                sql += " where 1=1 and a.item_category_id<>'-1'";
             if (_ht["SalesPromotion_id"]!=null && _ht["SalesPromotion_id"].ToString() != "")
             {
                 sql += " and exists (select * from ItemCategoryMapping cate where cate.ItemId=a.item_id and cate.isdelete=0 and cate.ItemCategoryId='" + _ht["SalesPromotion_id"].ToString() + "')";

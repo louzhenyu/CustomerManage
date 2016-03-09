@@ -196,7 +196,7 @@
             that.loadData.args.PageIndex = 1;
             var fileds=$("#seach").serializeArray();
             $.each(fileds,function(i,filed){
-                filed.value=filed.value=="0"?"":filed.value;
+                //filed.value=filed.value=="0"?"":filed.value;
                 that.loadData.seach[filed.name]=filed.value;
             });
 			//查询数据

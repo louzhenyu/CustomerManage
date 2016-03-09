@@ -32,7 +32,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/staffList.js?ver=0.4">
+        <div class="allPage" id="section" data-js="js/staffList.js?ver=0.5">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--信息查询-->

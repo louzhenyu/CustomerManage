@@ -82,7 +82,7 @@
 .addImgMessagePopup{display:none;width:582px;padding-bottom:20px;position:fixed;_position:absolute;top:10px;left:50%;margin-left:-290px;border-radius:4px;background:#fff;z-index:9999;}
 .addImgMessagePopup .pagination,.weChatMenuManage .pagination{display:block;width:202px;margin:10px auto;}
 .addImgMessagePopup .commonTitleWrap{padding:0 20px;background:#f2f2fa;}
-.addImgMessagePopup .commonTitleWrap span{width:80px;}
+.addImgMessagePopup .commonTitleWrap span{width:80px;height:30px;line-height:30px;}
 .addImgMessageWrap{height:95px;padding:32px 0 0 25px;border-radius:3px 3px 0 0;border-bottom:1px solid #cfcedc;background:#fff;}
 .addImgMessageWrap .tit{float:left;height:32px;line-height:32px;font-size:15px;color:#66666d;}
 .addImgMessageWrap input,.addImgMessageWrap select{float:left;width:150px;height:30px;margin:0 20px 0 12px;padding:0;text-indent:5px;border:1px solid #cecedc;border-radius:4px;background:#f8f8fa;}

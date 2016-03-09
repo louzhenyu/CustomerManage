@@ -41,7 +41,11 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
 //-------------------------------------------------
 
     /*16进制颜色转为RGB格式*/
-    String.prototype.colorRgb = function(){
+    /*
+    * isLong 为
+    *
+    */
+    String.prototype.colorRgb = function(isShort){
         var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
         var sColor = this.toLowerCase();
         if(sColor && reg.test(sColor)){
@@ -55,7 +59,11 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
             //处理六位的颜色值
             var sColorChange = [];
             for(var i=1; i<7; i+=2){
+
                 sColorChange.push(parseInt("0x"+sColor.slice(i,i+2)));
+            }
+            if(isShort){
+                return "rgb(" + sColorChange.join(",")+")";
             }
             return "rgba(" + sColorChange.join(",") + ",0.6)";
         }else{
@@ -762,7 +770,7 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
                 $.util.stopBubble(e)
             }).delegate(".colorPanel div","click",function(e){
                     $(this).parents(".colorPanel").slideUp(600);
-
+                $(this).parents(".colorPanel").find(".on").remove();
                 var obj={};
 
                     obj["bg"]=$(this).css("background-color").colorHex();
@@ -772,6 +780,10 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
                     $(this).parents(".commonInputWrap").data("value", obj);
                     self.timelyLoadPage();
                 }
+                if($(this).find("img").length==0){
+                    $(this).append("<div class='on'></div>")
+                }
+
                 }).delegate(".scheme span","click",function(){
                 var obj={};
 
@@ -831,7 +843,7 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
                     $("#pageTitle").html(value);
                 }
                 self.timelyLoadPage();
-            }).delegate(".jsChooseBtn","click",function(e){
+            }).delegate(".jsChooseBtn","click",function(e) {
                 var $this = $(this),
                     type = $this.parent().siblings(".jsTypeSelect").val();
 
@@ -850,8 +862,8 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
                 else if (type == "cg-2") {
                     //产品
                     self.productLayer.pageIndex = 0;
-                    self.productLayer.eventId="";
-                    self.productLayer.typeId="";
+                    self.productLayer.eventId = "";
+                    self.productLayer.typeId = "";
                     self.productLayer.show(function (key, name) {
                         //注册回调
                         $this.parents(".jsAreaItem").eq(0).data("id", key).data("name", name).data("typeid", type.substring(type.indexOf("-") + 1));
@@ -1249,6 +1261,22 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
                 self.elems.paramsList.find(".jsUploadBtn").each(function (i, e) {
                     self.addUploadImgEvent(e);
                 });
+
+
+                    self.elems.paramsList.find(".colorPanel").each(function(i,e){
+                        debugger;
+                      var color=$(this).parents(".jsParamValue").data("value").bg.colorRgb(true);
+                        $(this).find(".on").remove();
+                        $(this).find("div").each(function (){
+                            debugger;
+                             if($(this).css("background-color").colorHex()==color.colorHex()){
+                                 $(this).append("<div class='on'></div>");
+                             }
+                        });
+
+                    });
+
+
 
                 self.elems.paramsList.find(".jsTypeSelect").trigger("change",true);
                 $('[data-key="menuLength"].radioList').find(".radio.on").eq(0).trigger("click")
