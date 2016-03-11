@@ -400,10 +400,10 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
    FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  (@CustomerId,UR.unit_id,205)  R                  
    WHERE user_id=@loginUserID          ---根据账户的角色去查角色对应的  unit_id
 
-   SELECT @AllUnit=unit_id FROM t_unit WHERE customer_id=@CustomerId  AND type_id='2F35F85CF7FF4DF087188A7FB05DED1D'
+   SELECT @AllUnit=unit_id FROM t_unit   WITH(NOLOCK) WHERE customer_id=@CustomerId  AND type_id='2F35F85CF7FF4DF087188A7FB05DED1D'
    ----上面查找了该客户@CustomerId 下总店的unit_id  
 
-    SELECT * INTO #TmpTBL FROM  RetailTrader where CustomerId=@CustomerId  AND ISNULL(CustomerId,'')!=''  -----	 不要没有CustomerId的
+    SELECT * INTO #TmpTBL FROM  RetailTrader   WITH(NOLOCK) where CustomerId=@CustomerId  AND ISNULL(CustomerId,'')!=''  -----	 不要没有CustomerId的
    UPDATE #TmpTBL SET UnitID=@AllUnit WHERE ISNULL(UnitID,'')=''----把CouponInfo为空的，门店变为总部  
 ----取出这个数据做为会员表的代替
 select RetailTraderID  into #TempTable	 from  #TmpTBL L , #UnitSET R where L.IsDelete=0
@@ -411,42 +411,40 @@ select RetailTraderID  into #TempTable	 from  #TmpTBL L , #UnitSET R where L.IsD
 
 ";
             //总数据表
-            sql += @"select  COUNT(1) TotalCount  from RetailTrader a
+            sql += @"select  COUNT(1) TotalCount  from RetailTrader a  WITH(NOLOCK)
  inner join #TempTable f on a.RetailTraderID=f.RetailTraderID
                                  WHERE 1 = 1 AND    a.isdelete = 0 
    {4}
                 and  a.CustomerId=@CustomerId  ";
+
             //取到某一页的
-            sql += @"select * from ( select  ROW_NUMBER()over(order by {0} {3}) _row,a.*
-        ,(select  unit_name from t_unit x where x.unit_id=a.UnitID) UnitName
-		,(select  user_name from T_User y where y.user_id=a.SellUserID) UserName
-		,(select top 1  ImageURL from ObjectImages z where z.ObjectId=convert(nvarchar(50), a.RetailTraderID) and z.IsDelete=0) ImageURL
-     ,isnull((select COUNT(1) from vip where Col20=a.RetailTraderID),0) as VipCount 
+            sql += @"
+DECLARE @RetailVipCount TABLE(RetailId NVARCHAR(50),VipCount INT)
+INSERT INTO @RetailVipCount
+SELECT Col20, COUNT(1) VipCount
+FROM    vip WITH ( NOLOCK )
+WHERE   ClientID = @CustomerId
+GROUP BY Col20
+
+select * from ( select  ROW_NUMBER()over(order by {0} {3}) _row,a.*
+        ,(select  unit_name from t_unit x   WITH(NOLOCK) where x.unit_id=a.UnitID) UnitName
+		,(select  user_name from T_User y  WITH(NOLOCK)  where y.user_id=a.SellUserID) UserName
+		,(select top 1  ImageURL from ObjectImages z  WITH(NOLOCK)  where z.ObjectId=convert(nvarchar(50), a.RetailTraderID) and z.IsDelete=0) ImageURL
+     ,isnull(tmp.VipCount,0) as VipCount 
     ,(case status when '1' then '正常' else '停用' end)   StatusDesc
-,( STUFF(( SELECT    ','
-                                        + CASE WHEN t.CooperateType = 'OneWay'
-                                               THEN '单向集客'
-                                               WHEN t.CooperateType = 'TwoWay'
-                                               THEN '互相集客'
-                                               WHEN t.CooperateType = 'Sales'
-                                               THEN '销售'
-                                               ELSE t.CooperateType
-                                          END
-                              FROM      ( SELECT DISTINCT
-                                                    CooperateType ,
-                                                    RetailTraderID
-                                          FROM      dbo.SysRetailRewardRule
-                                            WHERE IsDelete=0 AND Status=1
-                                        ) t
-                              WHERE     a.RetailTraderID = t.RetailTraderID
-                            FOR
-                              XML PATH('')
-                            ), 1, 1, '') ) CooperateTypeDesc
-,( select  top 1 isnull(EndAmount,0) from VipWithdrawDeposit where VipId=a.RetailTraderID ) as EndAmount
-,isnull((select ImageUrl from WQRCodeManager x where x.ObjectId=a.RetailTraderID),'') as QRImageUrl
+, CASE WHEN a.SalesType = 'Sales' THEN '销售'
+             WHEN a.SalesType IS NULL
+                  OR a.SalesType = '' THEN ''
+        END + CASE WHEN a.CooperateType = 'OneWay' THEN '单向集客'
+                   WHEN a.CooperateType = 'TwoWay' THEN '互相集客'
+                   WHEN a.CooperateType IS NULL
+                        OR a.CooperateType = '' THEN ''
+              END CooperateTypeDesc
+,( select  top 1 isnull(EndAmount,0) from VipWithdrawDeposit  WITH(NOLOCK)  where VipId=a.RetailTraderID ) as EndAmount
+,isnull((select ImageUrl from WQRCodeManager x  WITH(NOLOCK)  where x.ObjectId=a.RetailTraderID),'') as QRImageUrl
                                     from RetailTrader a 
  inner join #TempTable f on a.RetailTraderID=f.RetailTraderID
-
+LEFT JOIN @RetailVipCount tmp ON tmp.RetailId = a.RetailTraderID
 where a.CustomerId=@CustomerId  AND    a.isdelete = 0   {4} ";
 
 
@@ -1028,50 +1026,54 @@ where a.CustomerId=@CustomerId  AND    a.isdelete = 0   {4} ";
             ls.Add(new SqlParameter("@CustomerId", CustomerID));
             ls.Add(new SqlParameter("@RetailTraderID", RetailTraderID));
 
-            string sqlCon = "";          
+            string sqlCon = "";
+            string strSql = "";
             if (Status!=-1)
             {
                 ls.Add(new SqlParameter("@Status",Status));
                 sqlCon += " and a.Status=@Status";
+            } 
+            if(Status==1)//已核销
+            {
+                strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID";
             }
-
-
-
-
-
-          
+            else
+            {
+                strSql += " INNER JOIN CouponTypeUnitMapping e ON ( a.CouponTypeID = e.CouponTypeID AND e.ObjectID = @RetailTraderID ) ";
+            }
             //总数据表
-            string sql = @"  select c.HeadImgUrl, c.VipName,c.VipRealName,a.CoupnName,a.CouponCode,CONVERT(varchar(50),f.CreateTime,23) as UseTime,a.Status
-  ,(case a.Status when 1 then '已核销' else '未核销' end) as StatusDesc
-  from Coupon a inner join VipCouponMapping b on a.CouponID=b.CouponID
-  inner join vip c on b.VIPID=c.VIPID
-  left join CouponUse f on a.CouponID=f.CouponID
-  inner join CouponType d on a.CouponTypeID=d.CouponTypeID
-  left join CouponTypeUnitMapping e on  ( a.CouponTypeID=e.CouponTypeID and e.ObjectID=@RetailTraderID)  -----这个是left join ，因为如果是SuitableForStore=3，就没有这张关联表 
-  where 1=1
-  and c.Col20=@RetailTraderID
-  and (d.SuitableForStore=3 or (d.SuitableForStore=2 and e.ObjectID=@RetailTraderID))  ----SuitableForStore适用门店(1=所有门店、2=部分门店/分销商、3=所有分销商)
-    {4}
-                and  a.CustomerID=@CustomerId  ";
+            string sql = @"  SELECT Count(1) TotalCount
+                        FROM    Coupon a WITH ( NOLOCK )
+                                INNER JOIN VipCouponMapping b WITH ( NOLOCK ) ON a.CouponID = b.CouponID
+                                INNER JOIN vip c WITH ( NOLOCK ) ON b.VIPID = c.VIPID AND c.ClientID = @CustomerId
+                               {5}
+                        WHERE   1 = 1 and  a.CustomerID=@CustomerId
+                               {4}
+                  ";
             //取到某一页的
-            sql += @"select * from (  select  ROW_NUMBER()over(order by {0} {3}) _row, c.HeadImgUrl, c.VipName,c.VipRealName,a.CoupnName,a.CouponCode,CONVERT(varchar(50),f.CreateTime,23) as UseTime,a.Status
-  ,(case a.Status when 1 then '已核销' else '未核销' end) as StatusDesc
-  from Coupon a inner join VipCouponMapping b on a.CouponID=b.CouponID
-  inner join vip c on b.VIPID=c.VIPID
-  left join CouponUse f on a.CouponID=f.CouponID
-  inner join CouponType d on a.CouponTypeID=d.CouponTypeID
-  left join CouponTypeUnitMapping e on  ( a.CouponTypeID=e.CouponTypeID and e.ObjectID=@RetailTraderID)    -----这个是left join ，因为如果是SuitableForStore=3，就没有这张关联表 
-  where 1=1
-  and c.Col20=@RetailTraderID
-  and (d.SuitableForStore=3 or (d.SuitableForStore=2 and e.ObjectID=@RetailTraderID))  ----SuitableForStore适用门店(1=所有门店、2=部分门店/分销商、3=所有分销商)
-    {4}
-                and  a.CustomerID=@CustomerId";
-
-
+            sql += @"SELECT * FROM (  
+                    SELECT  ROW_NUMBER()over(order by {0} {3}) _row,c.HeadImgUrl ,
+                    c.VipName ,
+                    c.VipRealName ,
+                    a.CoupnName ,
+                    a.CouponCode ,
+                    CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,
+                    a.Status ,
+                    ( CASE a.Status
+                        WHEN 1 THEN '已核销'
+                        ELSE '未核销'
+                      END ) AS StatusDesc
+                  FROM      Coupon a WITH ( NOLOCK )
+                            INNER JOIN VipCouponMapping b WITH ( NOLOCK ) ON a.CouponID = b.CouponID
+                            INNER JOIN vip c WITH ( NOLOCK ) ON b.VIPID = c.VIPID   AND c.ClientID = @CustomerId
+                            {5}
+                  WHERE     1 = 1 and  a.CustomerID=@CustomerId
+                            {4}
+                ";
             sql += @") t
-                                    where t._row>{1}*{2} and t._row<=({1}+1)*{2}";
-        
-            sql = string.Format(sql, OrderBy, pageIndex - 1, pageSize, sortType, sqlCon);
+                  where t._row>{1}*{2} and t._row<=({1}+1)*{2}";
+
+            sql = string.Format(sql, OrderBy, pageIndex - 1, pageSize, sortType, sqlCon, strSql);
 
             //   sql += "  order by VipCount ";
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());    //计算总行数

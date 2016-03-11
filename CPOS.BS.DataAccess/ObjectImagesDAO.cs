@@ -45,7 +45,7 @@ namespace JIT.CPOS.BS.DataAccess
         #region 根据对象获取图片
         public DataSet GetObjectImagesByObjectId(string ObjectId)
         {
-            string sql = "SELECT * FROM ObjectImages a WHERE a.ObjectId = '" + ObjectId + "' AND IsDelete ='0' ORDER BY DisplayIndex ; ";//增加排序update by Henry 2014-11-11
+            string sql = "SELECT * FROM ObjectImages a WHERE a.ObjectId = '" + ObjectId + "' AND IsDelete ='0' and DisplayIndex is not null  ORDER BY DisplayIndex ; ";//增加排序update by Henry 2014-11-11
             return this.SQLHelper.ExecuteDataset(sql);
         }
         #endregion

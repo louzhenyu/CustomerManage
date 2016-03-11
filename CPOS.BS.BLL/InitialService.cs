@@ -72,7 +72,7 @@ namespace JIT.CPOS.BS.BLL
             bool bReturn = false;
             string strError = string.Empty;
             string strReturn = string.Empty;
-            UnitInfo storeInfo = new UnitInfo();
+           // UnitInfo storeInfo = new UnitInfo();
 
             cUserService userServer = new cUserService(loggingSessionInfo);
 
@@ -89,12 +89,13 @@ namespace JIT.CPOS.BS.BLL
             #endregion
 
             #endregion
-
+            UnitInfo unitInfo = new UnitInfo();
             using (TransactionScope scope = new TransactionScope())
             {
                 #region 门店
+                /**
                 JIT.CPOS.BS.Entity.UnitInfo unitShopInfo = new JIT.CPOS.BS.Entity.UnitInfo();//门店
-                if (!strUnitInfo.Equals(""))//把在运营商管理平台创建的门店在这里反序列化
+                if (!strUnitInfo.Equals(""))//把在运营商管理平台创建的门店(code就是商户的code)在这里反序列化
                 {
                     unitShopInfo = (JIT.CPOS.BS.Entity.UnitInfo)cXMLService.Deserialize(strUnitInfo, typeof(JIT.CPOS.BS.Entity.UnitInfo));        
                 }
@@ -106,8 +107,10 @@ namespace JIT.CPOS.BS.BLL
                     });
                     throw new Exception("门店信息不存在.");
                 }
+                 * **/
 
-                #region 门店是否存在（在这之前门店并没有插入到运营商管理平台的数据库）*****
+                #region 门店是否存在（在这之前门店并没有插入到运营商管理平台的数据库,只是序列化在字符串里）*****
+               /**
                 JIT.CPOS.BS.Entity.UnitInfo unitStoreInfo2 = new JIT.CPOS.BS.Entity.UnitInfo();
                 try
                 {
@@ -129,10 +132,11 @@ namespace JIT.CPOS.BS.BLL
                     });
                     throw new Exception("门店信息已经存在.");
                 }
+                * **/
                 #endregion
                 #endregion
 
-
+                #region
                 //创建商户自己的门店类型
                 T_TypeBLL t_TypeBLL = new T_TypeBLL(loggingSessionInfo);
                 //创建总部类型
@@ -174,10 +178,10 @@ namespace JIT.CPOS.BS.BLL
                 t_TypeBLL.Create(typeOnlineShopping);
 
 
-
+                #endregion
 
                 #region 新建角色
-
+                
                 RoleModel roleInfo = new RoleModel();
                 if (typeId.Equals("1"))
                 {
@@ -185,7 +189,7 @@ namespace JIT.CPOS.BS.BLL
                     roleInfo.Def_App_Id = "D8C5FF6041AA4EA19D83F924DBF56F93";  //创建了一个o2o业务系统的角色
                     roleInfo.Role_Code = "Admin";
                     roleInfo.Role_Name = "管理员";
-                    roleInfo.Role_Eng_Name = "administrator";
+                    roleInfo.Role_Eng_Name = "Admin";
                     roleInfo.Is_Sys = 1;
                     roleInfo.Status = 1;
                     roleInfo.customer_id = customerInfo.ID;
@@ -235,48 +239,35 @@ namespace JIT.CPOS.BS.BLL
                 }
                 #endregion
 
-                #region 处理用户信息
 
-                if (typeId.Equals("1"))
-                {
-                    IList<UserRoleInfo> userRoleInfos = new List<UserRoleInfo>();
-                    UserRoleInfo userRoleInfo = new UserRoleInfo();
-                    userRoleInfo.Id = BaseService.NewGuidPub();
-                    userRoleInfo.RoleId = roleInfo.Role_Id;// 加上管理员权限
-                    userRoleInfo.UserId = userInfo.User_Id;
-                    userRoleInfo.UnitId = unitShopInfo.Id;//新建的门店标识（运营商管理平台创建的门店(Shop代表门店***)，code=customer_code,name=customer_name）
-                    userRoleInfos.Add(userRoleInfo);
-                    loggingSessionInfo.CurrentUserRole = userRoleInfo;
-                    bReturn = userServer.SetUserInfo(userInfo, null, out strError,false);//保存用户信息
-                    //先给admin键了一个门店的权限*****，可以给去掉，去掉上面一句话就可以了****
-
-                    if (!bReturn) {
-                        Loggers.Debug(new DebugLogInfo()
-                        {
-                            Message = string.Format("SetBSInitialInfo:{0}", "保存用户失败")
-                        });
-                        throw new Exception("保存用户失败"); }
-                    else {
-                        Loggers.Debug(new DebugLogInfo()
-                        {
-                            Message = string.Format("SetBSInitialInfo:{0}", "保存用户成功")
-                        });
-                    }
-                }
-
-                #endregion
-
-                #region 处理新建客户总部
-                UnitInfo unitInfo = new UnitInfo();
+               
+                //UnitInfo unitInfo = new UnitInfo();
                 UnitService unitServer = new UnitService(loggingSessionInfo);
+                unitInfo.Id = BaseService.NewGuidPub();//先把总部的标识生成好
+
+                #region 插入用户与角色与客户总部关系
+                IList<UserRoleInfo> userRoleInfoList = new List<UserRoleInfo>();
+                UserRoleInfo userRoleInfo = new UserRoleInfo();//后面要用到总部的信息
                 if (typeId.Equals("1") || typeId.Equals("2"))
                 {
-                    unitInfo.Id = BaseService.NewGuidPub();
-                 //   unitInfo.TypeId = "2F35F85CF7FF4DF087188A7FB05DED1D";//这里要替换成该商户自己的门店类型标识****
+                    userRoleInfo.Id = BaseService.NewGuidPub();
+                    userRoleInfo.UserId = userInfo.User_Id;
+                    userRoleInfo.RoleId = roleInfo.Role_Id; //admin角色*****
+                    userRoleInfo.UnitId = unitInfo.Id;//总部下的*** 
+                    userRoleInfo.Status = "1";
+                    userRoleInfo.DefaultFlag = 1;
+                    userRoleInfoList.Add(userRoleInfo);
+                }
+                loggingSessionInfo.CurrentUserRole = userRoleInfo;//主要是保存总部和员工信息时，会用到
+                #region 处理新建客户总部
+                if (typeId.Equals("1") || typeId.Equals("2"))
+                {
+                    
+                    //   unitInfo.TypeId = "2F35F85CF7FF4DF087188A7FB05DED1D";//这里要替换成该商户自己的门店类型标识****
                     unitInfo.TypeId = typeGeneral.type_id;//***
-                
-                    unitInfo.Code = customerInfo.Code + "总部";
-                    unitInfo.Name = customerInfo.Name + "总部";
+
+                    unitInfo.Code = "总部";//customerInfo.Code +
+                    unitInfo.Name = "总部";// customerInfo.Name +
                     unitInfo.CityId = customerInfo.city_id;
                     unitInfo.Status = "1";
                     unitInfo.Status_Desc = "正常";
@@ -284,17 +275,17 @@ namespace JIT.CPOS.BS.BLL
                     unitInfo.customer_id = customerInfo.ID;
                     unitInfo.Parent_Unit_Id = "-99";
                     unitInfo.strDo = "Create";
-                    strReturn = unitServer.SetUnitInfo(loggingSessionInfo, unitInfo,false);
+                    strReturn = unitServer.SetUnitInfo(loggingSessionInfo, unitInfo, false);
                     Loggers.Debug(new DebugLogInfo()
                     {
-                        Message = string.Format("SetBSInitialInfo:{0}","提交总部：" + strReturn.ToString())
+                        Message = string.Format("SetBSInitialInfo:{0}", "提交总部：" + strReturn.ToString())
                     });
                 }
 
                 #endregion
 
                 #region 处理门店，用的是商户的code和名称，id没有用*****
-
+                /**
                 storeInfo.Id = unitShopInfo.Id;//（运营商管理平台创建的门店(Shop代表门店***)
                 if (string.IsNullOrEmpty(unitShopInfo.Id))
                 {
@@ -319,24 +310,15 @@ namespace JIT.CPOS.BS.BLL
                 {
                     Message = string.Format("SetBSInitialInfo:{0}", "提交门店：" + strReturn.ToString())
                 });
+                 * **/
                 #endregion
+
 
                 //在线商城门店是在存储过程[spBasicSetting]里添加的
 
-                #region 插入用户与角色与客户总部关系
-                IList<UserRoleInfo> userRoleInfoList = new List<UserRoleInfo>();
-                if (typeId.Equals("1") || typeId.Equals("2"))
-                {
-                    UserRoleInfo userRoleInfo = new UserRoleInfo();
-                    userRoleInfo.Id = BaseService.NewGuidPub();
-                    userRoleInfo.UserId = userInfo.User_Id;
-                    userRoleInfo.RoleId = roleInfo.Role_Id; //admin角色*****
-                    userRoleInfo.UnitId = unitInfo.Id;//总部下的*** 
-userRoleInfo.Status = "1";
-                    userRoleInfo.DefaultFlag = 1;
-                    userRoleInfoList.Add(userRoleInfo);
-                }
+           
                 //不建立下面的关系，就可以之保留admin的总部角色权限了
+                /**
                 UserRoleInfo userRoleInfo1 = new UserRoleInfo();
                 userRoleInfo1.Id = BaseService.NewGuidPub();
                 userRoleInfo1.UserId = userInfo.User_Id;
@@ -345,7 +327,9 @@ userRoleInfo.Status = "1";
                 userRoleInfo1.Status = "1";
                 userRoleInfo1.DefaultFlag = 0;
                 userRoleInfoList.Add(userRoleInfo1);
-                bReturn = userServer.SetUserRoleTableInfo(loggingSessionInfo, userRoleInfoList, userInfo);
+                 *  * **/
+                bReturn = userServer.SetUserInfo(userInfo, null, out strError, false);//保存用户信息(这里会把之前建的会员的角色信息给删除掉)，所以要在后面再建立角色和会员的关系
+                bReturn = userServer.SetUserRoleTableInfo(loggingSessionInfo, userRoleInfoList, userInfo);//只建立了用户和总部之间的关系
                 if (!bReturn)
                 {
                     Loggers.Debug(new DebugLogInfo()
@@ -354,15 +338,55 @@ userRoleInfo.Status = "1";
                     });
                     throw new Exception("新建角色用户门店关系失败");
                 }
-                else {
+                else
+                {
                     Loggers.Debug(new DebugLogInfo()
                     {
                         Message = string.Format("SetBSInitialInfo:{0}", "新建角色用户门店关系成功")
                     });
                 }
+
                 #endregion
 
+                #region 处理用户信息
+
+                if (typeId.Equals("1"))
+                {
+                    /**
+                    IList<UserRoleInfo> userRoleInfos = new List<UserRoleInfo>();
+                    UserRoleInfo userRoleInfo = new UserRoleInfo();
+                    userRoleInfo.Id = BaseService.NewGuidPub();
+                    userRoleInfo.RoleId = roleInfo.Role_Id;// 加上管理员权限
+                    userRoleInfo.UserId = userInfo.User_Id;
+                    userRoleInfo.UnitId = unitShopInfo.Id;//新建的门店标识（运营商管理平台创建的门店(Shop代表门店***)，code=customer_code,name=customer_name）
+                    userRoleInfos.Add(userRoleInfo);
+                    loggingSessionInfo.CurrentUserRole = userRoleInfo;
+                     * **/
+                  
+                  
+                    //先给admin键了一个门店的权限*****，可以给去掉，去掉上面一句话就可以了****
+
+                    if (!bReturn) {
+                        Loggers.Debug(new DebugLogInfo()
+                        {
+                            Message = string.Format("SetBSInitialInfo:{0}", "保存用户失败")
+                        });
+                        throw new Exception("保存用户失败"); }
+                    else {
+                        Loggers.Debug(new DebugLogInfo()
+                        {
+                            Message = string.Format("SetBSInitialInfo:{0}", "保存用户成功")
+                        });
+                    }
+                }
+
+                #endregion
+
+             
+
+
                 #region 添加仓库以及仓库与门店关系
+                /**
                 JIT.CPOS.BS.Entity.Pos.WarehouseInfo warehouseInfo = new JIT.CPOS.BS.Entity.Pos.WarehouseInfo();
                 warehouseInfo.warehouse_id = BaseService.NewGuidPub();
                 warehouseInfo.wh_code = storeInfo.Code + "_wh";//建立了刚才见的子门点的仓库
@@ -390,6 +414,7 @@ userRoleInfo.Status = "1";
                         Message = string.Format("SetBSInitialInfo:{0}", "新建仓库成功")
                     });
                 }
+                 * **/
                 #endregion
 
                 #region 设置菜单信息
@@ -447,9 +472,10 @@ userRoleInfo.Status = "1";
             }
             #endregion
 
-            #region 管理平台--插入客户下的门店信息
-
-            bReturn = new UnitService(loggingSessionInfo).SetManagerExchangeUnitInfo(loggingSessionInfo, storeInfo, 1);
+            #region 管理平台--插入客户下的门店信息(只是提交门店级别的)
+    
+          //  bReturn = new UnitService(loggingSessionInfo).SetManagerExchangeUnitInfo(loggingSessionInfo, storeInfo, 1);
+            bReturn = new UnitService(loggingSessionInfo).SetManagerExchangeUnitInfo(loggingSessionInfo, unitInfo, 1);
             if (!bReturn)
             {
                 Loggers.Debug(new DebugLogInfo()
@@ -465,6 +491,7 @@ userRoleInfo.Status = "1";
                     Message = string.Format("SetBSInitialInfo:{0}", "门店插入管理平台成功")
                 });
             }
+          
 
             #endregion
 

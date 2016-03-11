@@ -49,7 +49,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
        public DataSet GetPrizeByEventId(string strEventId)
         {
-            string strSql = string.Format("SELECT TOP 1* FROM dbo.t_award_pool with(nolock) WHERE EventId='{0}'	AND GETDATE()>ReleaseTime AND Balance=0", strEventId);
+            string strSql = string.Format("SELECT TOP 1* FROM dbo.t_award_pool with(nolock) WHERE EventId='{0}'	AND GETDATE()>ReleaseTime AND Balance=0 ORDER BY NEWID()", strEventId);
             return SQLHelper.ExecuteDataset(strSql);
         }
     }

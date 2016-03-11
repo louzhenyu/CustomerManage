@@ -20,6 +20,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
             var rd = new SetKeyWordRD();
             var keywordList = pRequest.Parameters.KeyWordList;
 
+             
+
             if (keywordList.DisplayIndex == 0)
             {
                 throw new APIException("序号不能为空或为零") { ErrorCode = 122 };
@@ -42,6 +44,20 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
             }
 
             var bll = new WKeywordReplyBLL(CurrentUserInfo);
+            WKeywordReplyEntity wKeywordReplyEntity = new WKeywordReplyEntity()
+            {
+                ApplicationId = keywordList.ApplicationId,
+                KeywordType = 1
+
+            };
+            var ds = bll.QueryByEntity(wKeywordReplyEntity,null);
+            foreach (var a in ds)
+            {
+                if (a.Keyword.ToString() == keywordList.KeyWord.ToString())
+                {
+                    throw new APIException("关键字名称不可重复") { ErrorCode = 127 };
+                }
+            }
 
             var entity = new WKeywordReplyEntity
             {

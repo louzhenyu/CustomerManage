@@ -2297,6 +2297,7 @@
     <Compile Include="ApplicationInterface\Module\VIP\Reward\GetTopRewardListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Reward\SetRewardOrderAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetVipAmountDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VipCard\GetVipCardAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipListNum\GetVipListNumAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipList\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\WifiSign\WifiSignAH.cs" />

@@ -101,9 +101,10 @@
                     $.messager.confirm('删除', '确定删除此项以后将不再显示', function(r){
                         if (r){
                             that.loadData.operation(row, that.elems.optionType,function(data){
+                                that.loadPageData(e);
                                 alert("操作成功");
                             });
-                            that.loadPageData(e);
+
                         }
                     });
 

@@ -137,7 +137,7 @@ namespace JIT.CPOS.BS.DataAccess
             //    sql += " ,salesPrice = CASE WHEN D.ItemId IS  NULL THEN A.SalesPrice  ELSE D.SalesPrice   END"; //" ,salesPrice = a.SalesPrice ";
             //} 2016-02-27 peter确认不再区分渠道 有活动的直接取活动价   modify by  wujx
             sql += " ,price = CASE WHEN D.ItemId IS  NULL THEN A.Price ELSE D.Price  END";
-            sql += " ,salesPrice = CASE WHEN D.ItemId IS  NULL THEN A.SalesPrice  ELSE D.SalesPrice   END"; 
+            sql += " ,salesPrice = CASE WHEN D.ItemId IS  NULL THEN A.SalesPrice  ELSE D.SalesPrice   END";
             sql += " ,ItemDisplayIndex ";
             sql += " ,BeginTime";
             sql += " ,discountRate = a.DiscountRate ";
@@ -253,8 +253,15 @@ namespace JIT.CPOS.BS.DataAccess
             //员工销售/会员创客时，并且按商品设置时执行
             if ((channelId == "6" || channelId == "10") && socialSalesType==1)
             {
-                sql += " AND a.EveryoneSalesPrice != 0 ";
+                sql += " AND a.EveryoneSalesPrice != 0 "; 
+            
             }
+            //会员小店和员工小店过滤活动商品
+            if ((channelId == "6" || channelId == "10"))
+            {
+                sql += " AND d.EventId IS NULL";
+            }
+            sql += " AND a.status = 1";
             sql += @"  ) t
             where  UnixLocalTime BETWEEN UnixBeginTime AND UnixEndTime ";
             return sql;

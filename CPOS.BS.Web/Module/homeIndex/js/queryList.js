@@ -768,23 +768,25 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
             }).delegate(".colorPanel img","click",function(e){
                 $(this).parents(".colorPanel").slideUp(600);
                 $.util.stopBubble(e)
-            }).delegate(".colorPanel div","click",function(e){
+            }).delegate(".colorPanel div","click",function(e) {
+                if (!$(this).hasClass("on")) {
                     $(this).parents(".colorPanel").slideUp(600);
-                $(this).parents(".colorPanel").find(".on").remove();
-                var obj={};
+                    $(this).parents(".colorPanel").find(".on").remove();
+                    var obj = {};
 
-                    obj["bg"]=$(this).css("background-color").colorHex();
-                    obj["color"]=$(this).css("color").colorHex();
+                    obj["bg"] = $(this).css("background-color").colorHex();
+                    obj["color"] = $(this).css("color").colorHex();
 
-                if(obj["bg"]) {
-                    $(this).parents(".commonInputWrap").data("value", obj);
-                    self.timelyLoadPage();
+                    if (obj["bg"]) {
+                        $(this).parents(".commonInputWrap").data("value", obj);
+                        self.timelyLoadPage();
+                    }
+                    if ($(this).find("img").length == 0) {
+                        $(this).append("<div class='on'></div>")
+                    }
+
                 }
-                if($(this).find("img").length==0){
-                    $(this).append("<div class='on'></div>")
-                }
-
-                }).delegate(".scheme span","click",function(){
+            }).delegate(".scheme span","click",function(){
                 var obj={};
 
                 if($(this).attr("class")=="one"){

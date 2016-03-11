@@ -1796,7 +1796,7 @@ namespace JIT.CPOS.BS.BLL.WX
             var ItembBLL = new T_ItemBLL(loggingSessionInfo);
             string Result = "";
 
-            var InoutDetailEntity = InoutDetailBLL.QueryByEntity(new T_Inout_DetailEntity() { order_id = "18be67be140a4e9d91d900601d9da794" }, null).FirstOrDefault();
+            var InoutDetailEntity = InoutDetailBLL.QueryByEntity(new T_Inout_DetailEntity() { order_id = order_id }, null).FirstOrDefault();
             if (InoutDetailEntity == null)
                 return Result;
             var SkuEntity = skuBLL.GetByID(InoutDetailEntity.sku_id);

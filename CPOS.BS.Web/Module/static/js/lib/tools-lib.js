@@ -216,7 +216,7 @@
         _param.success= function (data) {
             if (!data.IsSuccess && data.ResultCode == 500) {
                 $.messager.alert("提示", data.Message,"error",function() {
-                    location.href = "/default.aspx?method=LogOut";
+                   // location.href = "/default.aspx?method=LogOut";
                 });
 
             } else {

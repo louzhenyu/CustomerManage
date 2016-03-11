@@ -189,7 +189,7 @@
 
 
                     {field : 'PromotionItemCount',title : '商品数',width:100,align:'center',resizable:false} ,
-                    {field : 'create_time',title : '更新时间',width:100,align:'center',resizable:false,
+                    {field : 'create_time',title : '创建时间',width:100,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd");
                         }

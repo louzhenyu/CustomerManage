@@ -1016,32 +1016,26 @@ namespace JIT.CPOS.BS.BLL
                                 if (vipData != null)
                                 {
                                     CommonBLL commonBll = new CommonBLL();
-                                    SendMessageEntity messageEntity = new SendMessageEntity();
-                                    var wapentity = new WApplicationInterfaceBLL(this.CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity
-                                    {
-
-                                        CustomerId = this.CurrentUserInfo.ClientID,
-                                        IsDelete = 0
-
-                                    }, null).FirstOrDefault();
+                                    string content = "";
                                     if (string.IsNullOrEmpty(vipData.HigherVipID))
                                     {
                                         if (!vipData.VIPID.Equals(qrCodeEntity.ObjectId))
                                         {
                                             vipData.HigherVipID = qrCodeEntity.ObjectId;//上线会员ID
+                                            vipData.Col21 = DateTime.Now.ToString();//集客时间
                                             vipDealerBLL.Update(vipData);
 
                                             //
-                                            messageEntity.content = "您成功发展了一个会员！";
+                                            content = vipData.VipName+"成为了您的下线会员！";
                                         }
                                         else
                                         {
-                                            messageEntity.content = "不能发展自己！";
+                                            content = "不能发展自己！";
                                         }
                                     }
                                     else
                                     {
-                                        messageEntity.content = "该会员已有上线！";
+                                        content = vipData.VipName+"已有上线！";
 
                                     }
 
@@ -1049,11 +1043,8 @@ namespace JIT.CPOS.BS.BLL
                                     var DealerVipData = vipDealerBLL.GetByID(DealerVipId);
                                     if (DealerVipData != null)
                                     {
-
-                                        messageEntity.touser = DealerVipData.WeiXinUserId;
-                                        messageEntity.msgtype = "text";
-                                        commonBll.SendMessage(messageEntity, wapentity.AppID,
-                                          wapentity.AppSecret, loggingSessionInfo);
+                                        requestParams.OpenId = DealerVipData.WeiXinUserId;
+                                        commonBll.ResponseTextMessage(DealerVipData.WeiXin, DealerVipData.WeiXinUserId, content, httpContext, requestParams);
                                     }
                                 }
                                 #endregion

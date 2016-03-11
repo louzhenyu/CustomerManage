@@ -125,10 +125,12 @@
                 textField: 'text',
                 data:[{
                     "id":1,
-                    "text":"上架"
+                    "text":"上架",
+                    "selected":true
                 },{
                     "id":-1,
                     "text":"下架"
+
                 },{
                     "id":0,
                     "text":"全部"

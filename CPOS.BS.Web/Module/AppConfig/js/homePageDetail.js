@@ -587,7 +587,7 @@
                                self.currentEditData=null;
                                if (self.allData[key].length > 0) {
                                    for (var i = 0; i < self.allData[key].length; i++) {
-                                       if ($this.data("displayindex") == self.allData[key][i].displayIndex) {
+                                       if ($this.data("displayindex") === self.allData[key][i].displayIndex) {
                                            self.currentEditData = self.allData[key][i];
                                            break;//介绍for循环
                                        }
@@ -2661,6 +2661,7 @@
                                     $(this).html('<p class="space"></p>');
 
                                     $(this).append(self.render(self.template.secondKillModel, obj));
+                                    obj=null
                                 }
                             });
                         } else if (obj.shopType == 2) {
@@ -2674,6 +2675,7 @@
                                     $(this).html('<p class="space"></p>');
 
                                     $(this).append(self.render(self.template.secondKillModel, obj));
+                                    obj=null
                                 }
                             });
                         } else if (obj.shopType == 3) {
@@ -2687,12 +2689,10 @@
                                     $(this).html('<p class="space"></p>');
 
                                     $(this).append(self.render(self.template.secondKillModel, obj));
+                                    obj=null
                                 }
                             });
                         }
-
-
-
 
 
                     }

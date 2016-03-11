@@ -174,7 +174,7 @@ input{border:1px solid #ccc;border-radius:2px;width:120px;height:33px;height:31p
 .jui-dialog-addShop .searchResult .classify{float:left;width:251px;text-indent:62px;border-right:1px solid #e9e9ea;overflow:hidden;}
 .jui-dialog-addShop .searchResult .shopName{margin-left:251px;text-indent:60px;}
 .jui-dialog-addShop .searchList{height:245px;overflow-y:auto;}
-.jui-dialog-addShop .searchList li{height:35px;}
+.jui-dialog-addShop .searchList li{height:35px; cursor: pointer}
 .jui-dialog-addShop .searchList li p{height:35px;line-height:35px;font-size:14px;}
 
 .jui-dialog-addShop .searchList li:nth-of-type(even){background:#fafafa;}

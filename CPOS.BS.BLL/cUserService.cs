@@ -305,6 +305,7 @@ namespace JIT.CPOS.BS.BLL
                     userInfo.User_Status_Desc = "正常";
                 }
 
+              
                 //提交后台
                 userService.SetUserInfo(userInfo, userRoleInfos, IsTran, strDo, out strError);
                 if (IsTran)

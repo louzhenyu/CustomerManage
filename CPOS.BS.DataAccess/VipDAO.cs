@@ -138,7 +138,7 @@ namespace JIT.CPOS.BS.DataAccess
                         sqlstr.Append("and a.col48='1' ");
                     }
                     if (Code.Equals("N")) {
-                        sqlstr.Append("and a.col48='0' ");
+                        sqlstr.Append("and ISNULL(a.col48,0)=0 ");
                     }
                 }
 

@@ -322,6 +322,8 @@
     <Compile Include="Module\VIP\VIPCardManage\Response\SetVipCardRD.cs" />
     <Compile Include="Module\VIP\VipCardTransLog\Request\GetVipCardTransLogListRP.cs" />
     <Compile Include="Module\VIP\VipCardTransLog\Response\GetVipCardTransLogListRD.cs" />
+    <Compile Include="Module\VIP\VipCard\Response\GetVipCardRD.cs" />
+    <Compile Include="Module\VIP\VipCard\Resquest\GetVipCardRP.cs" />
     <Compile Include="Module\VIP\VipIntegral\Request\SetVipIntegralRP.cs" />
     <Compile Include="Module\VIP\VipListNum\Request\GetVipListNumRP.cs" />
     <Compile Include="Module\VIP\VipListNum\Response\GetVipListNumRD.cs" />
