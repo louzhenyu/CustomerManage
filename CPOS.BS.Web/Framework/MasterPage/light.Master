@@ -32,7 +32,7 @@
         var apiurl = '<%=System.Web.Configuration.WebConfigurationManager.AppSettings["interfacehost"] %>';
         window.apiurl = apiurl;
 </script>
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
      <%--模板 公共样式strart--%>   
      <link href="<%=StaticUrl+"/module/static/css/easyui.css"%>" rel="stylesheet" type="text/css" />   
        <%--分页--%>
@@ -376,6 +376,7 @@ $(".leftsead .hover a").hover(function () {
                 window.UnitShortName = '<%=UnitShortName%>';
                 window.RoleCode = '<%=RoleCode%>';
                 window.RoleName = '<%=RoleName%>';
+                window.staticUrl = '<%=StaticUrl%>';
                 $(".session1").text((window.clientID));
                 window.statementUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["website_WWW"] %>";
                 window.weixinUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["openOAuthUrl"] %>/receive?clientid=" + window.clientID;
