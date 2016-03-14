@@ -44,7 +44,7 @@
                 var hour = Math.floor(maxtime / 60 / 60);
                 var minutes = Math.floor(maxtime / 60);
                 var seconds = Math.floor(maxtime % 60);
-               var html= "<em>"+hour+"</em>:<em>12</em>:<em>23</em>" + minutes + " 分 " + seconds + " 秒";
+                var html= "<em>"+hour+"</em>:<em>12</em>:<em>23</em>" + minutes + " 分 " + seconds + " 秒";
                 Dom.html(html);
 
             }
@@ -55,29 +55,29 @@
         },
         init: function () {
             var that=$(this);
-          if(this.ele.type.indexOf("#")!=-1) {
-              var sear=location.hash;
-              sear=decodeURIComponent(sear);
-              var result=sear.replace("#_saveData_=","");
-              try {
-                  result = JSON.parse(result);
-                  if (result.homeId) {
-                      self.ele.homeId = result.homeId;
-                      self.ele.type = "Edit";
-                      this.loadData();
-                      this.initEvent();
-                      this.initSort();
-                  }else{
-                      console.log("地址栏数据异常。"+ex);
-                  }
-              }catch(ex){
-                     console.log("地址栏数据异常。"+ex);
-              }
-          } else{
-              this.loadData();
-              this.initEvent();
-              this.initSort();
-          }
+            if(this.ele.type.indexOf("#")!=-1) {
+                var sear=location.hash;
+                sear=decodeURIComponent(sear);
+                var result=sear.replace("#_saveData_=","");
+                try {
+                    result = JSON.parse(result);
+                    if (result.homeId) {
+                        self.ele.homeId = result.homeId;
+                        self.ele.type = "Edit";
+                        this.loadData();
+                        this.initEvent();
+                        this.initSort();
+                    }else{
+                        console.log("地址栏数据异常。"+ex);
+                    }
+                }catch(ex){
+                    console.log("地址栏数据异常。"+ex);
+                }
+            } else{
+                this.loadData();
+                this.initEvent();
+                this.initSort();
+            }
 
 
         },
@@ -99,7 +99,7 @@
                 },
                 stop: function () {
                     debugger;
-                   self.sortAction();
+                    self.sortAction();
 
                 }
             });
@@ -126,64 +126,64 @@
 
             });
 
-               $("#sortable .action").each(function () {
-                   var name = "未知模块", me = $(this), index = me.index(), groupId = me.find(".jsListItem ").data("id");
+            $("#sortable .action").each(function () {
+                var name = "未知模块", me = $(this), index = me.index(), groupId = me.find(".jsListItem ").data("id");
 
-                   switch (me.data("type")) {
-                       case "search":
-                           name = "搜索";
-                           break;  //搜索
-                       case "followInfo":
-                           name="立即关注";
-                           break;
-                       case "adList":
-                           name = "幻灯片播放";
-                           break; //头部幻灯片
-                       case "categoryEntrance":
-                           name = "分类导航";
-                           break; //分类导航
-                       case "secondKill":   //限时抢购
-                           name = "限时抢购";
-                           break;
-                       case "hotBuy":
-                           name = "热销榜单";
-                           break;  //商品分类列表
-                       case "groupBuy":
-                           name = "疯狂团购";
-                           break;
-                       case "originalityList":
-                           name = "创意组合";
-                           break;
-                       case "eventList":
-                           name = "热销榜单/疯狂团购/限时抢购组合框";
-                           break;
-                       case "productList":
-                           name = "商品列表";
-                           break;
-                       case "navList":
+                switch (me.data("type")) {
+                    case "search":
+                        name = "搜索";
+                        break;  //搜索
+                    case "followInfo":
+                        name="立即关注";
+                        break;
+                    case "adList":
+                        name = "幻灯片播放";
+                        break; //头部幻灯片
+                    case "categoryEntrance":
+                        name = "分类导航";
+                        break; //分类导航
+                    case "secondKill":   //限时抢购
+                        name = "限时抢购";
+                        break;
+                    case "hotBuy":
+                        name = "热销榜单";
+                        break;  //商品分类列表
+                    case "groupBuy":
+                        name = "疯狂团购";
+                        break;
+                    case "originalityList":
+                        name = "创意组合";
+                        break;
+                    case "eventList":
+                        name = "热销榜单/疯狂团购/限时抢购组合框";
+                        break;
+                    case "productList":
+                        name = "商品列表";
+                        break;
+                    case "navList":
 
-                           name = "菜单导航";
-                           break;
+                        name = "菜单导航";
+                        break;
 
-                   }
-                   if (groupId) {
-                       displayIndexList.push({groupId: groupId, index: index});
-                   }
-                   self.sotrActionJson.push({type: me.data("type"), name: name})
+                }
+                if (groupId) {
+                    displayIndexList.push({groupId: groupId, index: index});
+                }
+                self.sotrActionJson.push({type: me.data("type"), name: name})
 
-               });
-               //groupId,index,homeId
-               // self.sotrActionJson=[{"type":"search","name":"查询"},{"type":"adList","name":"幻灯片播放"},{"type":"categoryEntrance","name":"分类导航"},{"type":"secondKill","name":"抢购"},{"type":"eventList","name":"抢购团购热销组合框"},{"type":"originalityList","name":"创意组合"},{"type":"productList","name":"商品列表"},{"type":"productList","name":"商品列表"},{"type":"navList","name":"菜单导航"}]
-               //self.sotrActionJson=[{"type":"search","name":"搜索"},{"type":"adList","name":"幻灯片播放"},{"type":"categoryEntrance","name":"分类导航"},{"type":"secondKill","name":"限时抢购"},{"type":"eventList","name":"热销榜单/疯狂团购/限时抢购组合框"},{"type":"originalityList","name":"创意组合"},{"type":"productList","name":"商品列表"},{"type":"productList","name":"商品列表"},{"type":"originalityList","name":"创意组合"},{"type":"secondKill","name":"限时抢购"},{"type":"navList","name":"菜单导航"}]
+            });
+            //groupId,index,homeId
+            // self.sotrActionJson=[{"type":"search","name":"查询"},{"type":"adList","name":"幻灯片播放"},{"type":"categoryEntrance","name":"分类导航"},{"type":"secondKill","name":"抢购"},{"type":"eventList","name":"抢购团购热销组合框"},{"type":"originalityList","name":"创意组合"},{"type":"productList","name":"商品列表"},{"type":"productList","name":"商品列表"},{"type":"navList","name":"菜单导航"}]
+            //self.sotrActionJson=[{"type":"search","name":"搜索"},{"type":"adList","name":"幻灯片播放"},{"type":"categoryEntrance","name":"分类导航"},{"type":"secondKill","name":"限时抢购"},{"type":"eventList","name":"热销榜单/疯狂团购/限时抢购组合框"},{"type":"originalityList","name":"创意组合"},{"type":"productList","name":"商品列表"},{"type":"productList","name":"商品列表"},{"type":"originalityList","name":"创意组合"},{"type":"secondKill","name":"限时抢购"},{"type":"navList","name":"菜单导航"}]
 
-               self.SaveActionStore(self.sotrActionJson, isLoadInfo,displayIndexList);
+            self.SaveActionStore(self.sotrActionJson, isLoadInfo,displayIndexList);
             if(self.ele.sortableDiv.find('[data-type="navList"]').length>0) {
                 self.ele.sortableDiv.find('[data-type="navList"]').before(actiondom)
 
             } else{
                 self.ele.sortableDiv.append(actiondom);
             }
-              var ele = {
+            var ele = {
                 adList: $("[data-type='adList']"),  //幻灯片播放
                 entranceList: $("[data-type='categoryEntrance']"),//分类导航
                 eventList: $("[data-type='eventList']"),//团购抢购营销,
@@ -197,7 +197,7 @@
                 productList: $("[data-type='productList']") //上班列表
 
             };
-              $.extend(self.ele, ele);
+            $.extend(self.ele, ele);
 
         },
         returnIndex:function(obj){
@@ -248,28 +248,28 @@
             }
         },
         isAdd:function(obj){//利用该方法来判断模型是否已经存在，存在不添加 return false，
-           if(obj.find(".jsListItem").length>0){
-                      return false;
-           }else{
-               return true;
-           }
+            if(obj.find(".jsListItem").length>0){
+                return false;
+            }else{
+                return true;
+            }
         },
         initEvent: function () {
 
 
 
-      /*      self.ele.editLayer.delegate(".search .checkBox","click",function(){
-                $(this).toggleClass("on");
-                if ($(this).hasClass("on")) {
-                    $(this).parents().find(".wrapInput").show();
-                    self.ele.SearchDiv.find(".allClassify").show();
-                } else {
-                    $(this).parents().find(".wrapInput").hide();
-                    self.ele.SearchDiv.find(".allClassify").hide();
-                }
+            /*      self.ele.editLayer.delegate(".search .checkBox","click",function(){
+             $(this).toggleClass("on");
+             if ($(this).hasClass("on")) {
+             $(this).parents().find(".wrapInput").show();
+             self.ele.SearchDiv.find(".allClassify").show();
+             } else {
+             $(this).parents().find(".wrapInput").hide();
+             self.ele.SearchDiv.find(".allClassify").hide();
+             }
 
 
-            });*/
+             });*/
             //初始化事件集
             this.sectionEvent();
             this.editLayerEvent();          //编辑区域事件
@@ -304,8 +304,8 @@
                     $this.removeClass("on");
                 }, 300);
             }).delegate(".closePopupLayer", "click", function (e) {
-                    $(this).parents(".popupLayer").hide();
-                    self.mask.hide();
+                $(this).parents(".popupLayer").hide();
+                self.mask.hide();
             });
             this.ele.materialTextList.delegate(".categoryItem", "click", function (e) {
                 var $this = $(this);
@@ -377,14 +377,14 @@
             // 给section委托事件
             this.ele.section.delegate(".saveHomPageBtn","click",function(){
                 var obj={}
-                 obj["Title"]=$("#searchType").val();
-                 if(obj["Title"].trim().length>0&&obj["Title"].trim().length<=30) {
+                obj["Title"]=$("#searchType").val();
+                if(obj["Title"].trim().length>0&&obj["Title"].trim().length<=30) {
 
-                     self.SaveHomePage(obj);
-                 } else if(obj["Title"].trim().length>30){
-                     alert("名称输入长度不可超过30");
-                 }else{
-                      alert("名称不可能为空");
+                    self.SaveHomePage(obj);
+                } else if(obj["Title"].trim().length>30){
+                    alert("名称输入长度不可超过30");
+                }else{
+                    alert("名称不可能为空");
                 }
 
 
@@ -404,7 +404,7 @@
 
                 $(this).toggleClass("on");
                 var me=$(this);
-               var type=me.data("name");
+                var type=me.data("name");
                 switch (type){
                     case "allList" :
                         if(me.hasClass("on")){
@@ -488,31 +488,31 @@
             }).delegate(".jsRemoveGroup", "click", function (e) {   // 删除
                 debugger;
 
-                    self.ele.editLayer.empty().hide();
-                    self.ele.section.find(".jsListItem").removeClass("on");
+                self.ele.editLayer.empty().hide();
+                self.ele.section.find(".jsListItem").removeClass("on");
 
 
-                    var $this = $(this),
-                        data=$this.parents(".jsListItem").data(),
-                        gid =data.id||data.groupid;
+                var $this = $(this),
+                    data=$this.parents(".jsListItem").data(),
+                    gid =data.id||data.groupid;
 
-                    $.messager.confirm("提示","确认删除该模块？",function(r){
-                         if(r) {
-                             if (gid) {
-                                 self.DeleteItemCategoryArea(gid, function () {
-                                     $this.parents(".action").remove();
-                                     self.stopBubble(e);
-                                     self.sortAction(true);
-                                 });
-                             } else {
-                                 $this.parents(".action").remove();
-                                 self.stopBubble(e);
-                                 self.sortAction();
-                             }
+                $.messager.confirm("提示","确认删除该模块？",function(r){
+                    if(r) {
+                        if (gid) {
+                            self.DeleteItemCategoryArea(gid, function () {
+                                $this.parents(".action").remove();
+                                self.stopBubble(e);
+                                self.sortAction(true);
+                            });
+                        } else {
+                            $this.parents(".action").remove();
+                            self.stopBubble(e);
+                            self.sortAction();
+                        }
 
 
-                         }
-                    });
+                    }
+                });
 
             }).delegate(".jsTowardsUp", "click", function (e) {     //  上移
                 self.ele.editLayer.empty().hide();
@@ -578,28 +578,28 @@
                     self.currentEditData = index == undefined ? self.allData[key] : self.allData[key][index];
                     var isAddTitle = true,titleIndex=0;
 
-                       switch (key) {     //获取可以添加多个的模板的编辑数据
-                           case "originalityList" :
-                           case "productList":
-                           case "secondKill":
-                           case "groupBuy":
-                           case "hotBuy":
-                               self.currentEditData=null;
-                               if (self.allData[key].length > 0) {
-                                   for (var i = 0; i < self.allData[key].length; i++) {
-                                       if ($this.data("displayindex") === self.allData[key][i].displayIndex) {
-                                           self.currentEditData = self.allData[key][i];
-                                           break;//介绍for循环
-                                       }
-                                   }
+                    switch (key) {     //获取可以添加多个的模板的编辑数据
+                        case "originalityList" :
+                        case "productList":
+                        case "secondKill":
+                        case "groupBuy":
+                        case "hotBuy":
+                            self.currentEditData=null;
+                            if (self.allData[key].length > 0) {
+                                for (var i = 0; i < self.allData[key].length; i++) {
+                                    if ($this.data("displayindex") === self.allData[key][i].displayIndex) {
+                                        self.currentEditData = self.allData[key][i];
+                                        break;//介绍for循环
+                                    }
+                                }
 
-                               }
+                            }
 
-                               break;
-                           case "":
-                               break;
+                            break;
+                        case "":
+                            break;
 
-                       }
+                    }
 
                     debugger;
                     if (self.currentEditData) {
@@ -652,16 +652,16 @@
                             }
                         } else if (model == "category") {
 
-                                self.ele.editLayer.html(self.render(self.template.rightCategoryTemp));
-                                //c区模板选择
-                                 //self.ele.editLayer.append(self.render(self.template.categoryModelTemp));
-                          /*      //附加后面的数据
-                            var cuttentTab = self.ele.editLayer.find(".jsSectionCTabContainer .jsTab").removeClass("on");
+                            self.ele.editLayer.html(self.render(self.template.rightCategoryTemp));
+                            //c区模板选择
+                            //self.ele.editLayer.append(self.render(self.template.categoryModelTemp));
+                            /*      //附加后面的数据
+                             var cuttentTab = self.ele.editLayer.find(".jsSectionCTabContainer .jsTab").removeClass("on");
 
                              var seleect ='data-model='+self.currentEditData.modelId;
-                            cuttentTab.find("["+select+"]").addClass("on");*/
-                                //debugger;
-                                self.renderCategoryItemList(self.currentEditData);
+                             cuttentTab.find("["+select+"]").addClass("on");*/
+                            //debugger;
+                            self.renderCategoryItemList(self.currentEditData);
 
 
                         }else if (model == "followInfo") {
@@ -684,15 +684,15 @@
                             debugger
                             isAddTitle = false;
                             self.ele.editLayer.html(self.render(self.template.rightSearchTemp));
-                             if(self.currentEditData.styleType=="s1"){
-                                        if(!self.ele.editLayer.find(".checkBox").hasClass("on")){
-                                            self.ele.editLayer.find(".checkBox").trigger("click");
-                                        }
-                             } else{
-                                 if(self.ele.editLayer.find(".checkBox").hasClass("on")){
-                                     self.ele.editLayer.find(".checkBox").trigger("click");
-                                 }
-                             }
+                            if(self.currentEditData.styleType=="s1"){
+                                if(!self.ele.editLayer.find(".checkBox").hasClass("on")){
+                                    self.ele.editLayer.find(".checkBox").trigger("click");
+                                }
+                            } else{
+                                if(self.ele.editLayer.find(".checkBox").hasClass("on")){
+                                    self.ele.editLayer.find(".checkBox").trigger("click");
+                                }
+                            }
 
                             self.registerUploadImgBtn();
                         } else if(model=="secondKill"){
@@ -706,7 +706,7 @@
                             self.ele.editLayer.find(".radiobtn").eq(index).trigger("click");
                         }else if(model=="product"){
                             self.renderProductTemple(self.currentEditData);
-                             self.ele.productListObject=self.currentEditData;
+                            self.ele.productListObject=self.currentEditData;
 
                         }
 
@@ -726,11 +726,11 @@
                             self.ele.editLayer.html(self.render(self.template.rightEventTemp, { eventTypeList: self.eventTypeList }));
 
                             //数据筛选
-                          /*  self.goodsSelect.typeId = self.ele.editLayer.find(".on").data("typeid");
-                            self.goodsSelect.pageIndex = 0;
-                            self.goodsSelect.loadData();*/
+                            /*  self.goodsSelect.typeId = self.ele.editLayer.find(".on").data("typeid");
+                             self.goodsSelect.pageIndex = 0;
+                             self.goodsSelect.loadData();*/
                         } else if (model == "category") {
-                             debugger;
+                            debugger;
 
                             self.ele.editLayer.html(self.render(self.template.rightCategoryTemp));
                             //c区模板选择
@@ -754,18 +754,18 @@
                             debugger;
                             isAddTitle = false;
                             /*{ key: 2, value: "限时抢购" },
-                            { key: 1, value: "疯狂团购" },
-                            { key: 3, value: "热销榜单"}*/
+                             { key: 1, value: "疯狂团购" },
+                             { key: 3, value: "热销榜单"}*/
                             var name="限时抢购"
                             if($this.data().typeid==1){
-                                 name="疯狂团购";
+                                name="疯狂团购";
                             }else if($this.data().typeid==2){
                                 name="限时抢购";
                             }else if($this.data().typeid==3){
                                 name="热销榜单";
                             }
 
-                             var object={shopType:$this.data().typeid,titleName:name};
+                            var object={shopType:$this.data().typeid,titleName:name};
                             self.ele.editLayer.html(self.render(self.template.rightSecondKillTemp,object));
 
                             //c区模板选择
@@ -779,7 +779,7 @@
                             self.ele.editLayer.find(".radiobtn").eq(0).trigger("click");
                         }else if(model=="product"){
                             debugger
-                             self.ele.productListObject={
+                            self.ele.productListObject={
                                 showDiscount:1, //显示折扣
                                 showPrice:1, //原价
                                 showName:1,   //商品名称
@@ -796,11 +796,11 @@
                     }
                     //加载的样式处理
                     self.ele.editLayer.find(".jsTypeSelect").trigger("change",true);
-                   if(isfunction){
-                       self.ele.editLayer.hide();
-                   } else{
-                       self.ele.editLayer.show();
-                   }
+                    if(isfunction){
+                        self.ele.editLayer.hide();
+                    } else{
+                        self.ele.editLayer.show();
+                    }
 
                     //添加一个按钮
                     if (isAddTitle) {
@@ -810,7 +810,7 @@
                             //右侧标题文字赋值
                             $("#titlePanel").find(".titleInput input").val(self.currentEditData.titleName);
                             //右侧标题文字样式选定
-                           // self.ele.editLayer.find('input[name="titleStyle"]').eq(titleIndex).trigger("click");
+                            // self.ele.editLayer.find('input[name="titleStyle"]').eq(titleIndex).trigger("click");
                         } else{
                             defaultName=defaultName ? defaultName :"";
                             $("#titlePanel").find(".titleInput input").val(defaultName);
@@ -834,7 +834,7 @@
                 /////////////////////////////// 点击左侧listitem，显示右侧模板end  ////////////////////////
             }).delegate("#addTitle", "click", function (e,obj) {
                 debugger;
-                  if(obj){ $(this).parent().find(".titleText").val(obj);}
+                if(obj){ $(this).parent().find(".titleText").val(obj);}
                 self.ele.titleDom.find(".titlePanel").remove();
                 if ($("#addTitle").text() == "添加标题") {
                     $("#addTitle").text("删除标题");
@@ -871,12 +871,12 @@
 
                 switch (type) {
                     case "Search":
-                   if(self.isAdd(self.ele.SearchDiv)){
-                        self.renderSearchList();
-                }else{
-                    alert("搜索框已存在");
-                }
-                break;  //搜索
+                        if(self.isAdd(self.ele.SearchDiv)){
+                            self.renderSearchList();
+                        }else{
+                            alert("搜索框已存在");
+                        }
+                        break;  //搜索
                     case "followInfo":
                         if(self.isAdd(self.ele.followInfo)){
                             self.renderFollowInfo();
@@ -888,8 +888,8 @@
                         if(self.isAdd(self.ele.navigation)){
                             self.renderNavigationModel();
                         }else{
-                        alert("导航栏已存在");
-                    }
+                            alert("导航栏已存在");
+                        }
                         break; //底部导航
                     case "adList":
                         if(self.isAdd(self.ele.adList)){
@@ -936,17 +936,17 @@
                     case "productList":
                         if (self.ele.originalityList.find(".jsListItemEmpty").length == 0) {
 
-                                 self.ele.productListObject={
-                                    showDiscount:1, //显示折扣
-                                    showPrice:1, //原价
-                                    showName:1,   //商品名称
-                                    showSalesPrice:1,  //价格
-                                    showSalesQty:1 , //销量
-                                    styleType:"s1",
-                                    TitleName:"商品列表",
-                                    titleStyle:"left",
-                                    ShowCount:6
-                                };
+                            self.ele.productListObject={
+                                showDiscount:1, //显示折扣
+                                showPrice:1, //原价
+                                showName:1,   //商品名称
+                                showSalesPrice:1,  //价格
+                                showSalesQty:1 , //销量
+                                styleType:"s1",
+                                TitleName:"商品列表",
+                                titleStyle:"left",
+                                ShowCount:6
+                            };
                             html=self.render(self.template.titleModel,{title:"商品列表"})+self.render(self.template.productListModel,{ object:self.ele.productListObject,key: "null" });
                             debugger;
                             if(self.ele.sortableDiv.find('[data-type="navList"]').length>0) {
@@ -987,7 +987,7 @@
                             if(self.ele.sortableDiv.find('[data-type="navList"]').length>0) {
                                 self.ele.sortableDiv.find('[data-type="navList"]').before("<div class='action' data-type='" + obj.key + "'>" + html + "</div>");
                             }else{
-                                  self.ele.sortableDiv.append("<div class='action' data-type='" + obj.key + "'>" + html + "</div>");
+                                self.ele.sortableDiv.append("<div class='action' data-type='" + obj.key + "'>" + html + "</div>");
                             }
 
                             self.ele.secondKill = $("[data-type='secondKill']");// 团购 抢购 营销单个
@@ -999,7 +999,7 @@
 
 
                 }
-               // self.sortAction(true);
+                // self.sortAction(true);
             });
         },
         editLayerEvent: function () {
@@ -1055,7 +1055,7 @@
                     $this.parent().children(".seeahType").hide();
                 }else if (this.value == "sk-1"||this.value == "sk-2") {
                     var text=$(".jsTypeSelect option:selected").text();
-                     self.ele.secondKill.find(".tit").children("b").text(text);
+                    self.ele.secondKill.find(".tit").children("b").text(text);
                 }//自定义链接
                 else if(this.value == "cg-31"||this.value == "cg-99"||this.value == "cg-37"||this.value == "cg-32"||this.value == "cg-33"||this.value == "cg-34"){
                     $this.parent().siblings(".infoContainer").hide();
@@ -1129,10 +1129,10 @@
                 /////////////////////////////////////~~~~~~~~~~~category~~~~~~~~~~~~~~~~~/////////////////////////////
                 var $this = $(this),
                     type = $this.parent().siblings(".typeContainer").children("select").val();
-                    if(!type){
-                        type=self.ele.editLayer.find(".jsAreaTitle").eq(0).find(".typeContainer").find("select").val();
+                if(!type){
+                    type=self.ele.editLayer.find(".jsAreaTitle").eq(0).find(".typeContainer").find("select").val();
 
-                    }
+                }
                 if(!type){
                     type=self.ele.editLayer.find(".jsAreaTitle").data("type");
 
@@ -1169,19 +1169,19 @@
                     self.productLayer.typeId=self.ele.editLayer.find(".jsAreaTitle").data("typeid");
                     self.productLayer.eventId=self.ele.editLayer.find(".jsAreaTitle").data("eventid");
                     if(self.productLayer.eventId){
-                    //产品
-                    self.productLayer.pageIndex = 0;
-                    self.productLayer.skillShow(function (itemId,eventId, name,imageUrl) {
-                        //注册回调
+                        //产品
+                        self.productLayer.pageIndex = 0;
+                        self.productLayer.skillShow(function (itemId,eventId, name,imageUrl) {
+                            //注册回调
+                            debugger;
+                            $this.parents(".jsAreaItem").eq(0).data("itemid", itemId).data("eventid", eventId).data("name", name).data("typeid", type.substring(type.indexOf("-") + 1));
+                            $this.siblings("input").val(name);
+                            /* $this.parents(".jsAreaItem").find(".wrapPic img").attr("src",imageUrl)*/
+                        });
+                        //执行一次搜索
                         debugger;
-                        $this.parents(".jsAreaItem").eq(0).data("itemid", itemId).data("eventid", eventId).data("name", name).data("typeid", type.substring(type.indexOf("-") + 1));
-                        $this.siblings("input").val(name);
-                       /* $this.parents(".jsAreaItem").find(".wrapPic img").attr("src",imageUrl)*/
-                    });
-                    //执行一次搜索
-                    debugger;
 
-                    self.productLayer.loadDate(null,null,"skill");
+                        self.productLayer.loadDate(null,null,"skill");
                     }else{
                         alert("请选择一个活动分组");
                     }
@@ -1215,9 +1215,9 @@
             }).delegate(".jsSaveNavBtn","click",function(){
                 self.SaveNav();
             }).delegate(".jsSaveSearchBtn","click",function(){
-              self.saveSearch();
+                self.saveSearch();
             }).delegate(".jsSaveFollowBtn","click",function(e){
-              self.saveFollowInfo();
+                self.saveFollowInfo();
             }).delegate(".jsSaveCategoryBtn", "click", function (e) {
                 //保存C区信息
                 self.saveCategory();
@@ -1266,7 +1266,7 @@
 
                 if ( self.goodsSelect.eventId) {
                     self.ele.editLayer.find(".jsGoodsList").html('<li style="text-align:center;">数据加载中...</li>');
-                   //数据筛选
+                    //数据筛选
                     self.goodsSelect.typeId = typeId;
                     self.goodsSelect.pageIndex = 0;
                     self.goodsSelect.currentItemId = $(this).data("currentitemid");
@@ -1294,14 +1294,14 @@
             }).delegate(".jsAddadItemTemp", "click", function () {
                 ////////////////////////////////////////begin~~~~~~A区广告  ad
                 /*if (!$("#ADTempCheck").attr("checked")) {
-                    alert("启用幻灯片才可以添加");
-                    return;
-                }*/
+                 alert("启用幻灯片才可以添加");
+                 return;
+                 }*/
                 var $this = $(this);
-              if($this.parent().find(".jsAreaItem").length<5){
-                  $this.before(self.render(self.template.adItemListTemp, { length: 1 }));
-                  self.addUploadImgEvent($this.prev().find(".uploadImgBtn")[0]);
-               }
+                if($this.parent().find(".jsAreaItem").length<5){
+                    $this.before(self.render(self.template.adItemListTemp, { length: 1 }));
+                    self.addUploadImgEvent($this.prev().find(".uploadImgBtn")[0]);
+                }
 
 
 
@@ -1312,9 +1312,9 @@
                 // 保存广告
                 self.saveAD();
             }).delegate(".jsAreaItem", "click", function () {
-                    // 保存广告
+                // 保存广告
 
-                });
+            });
         },
         saveAD: function () {
             var list = [];
@@ -1329,13 +1329,13 @@
                 //obj["objectId"] = $this.data("objectid")||$(this).attr("data-objectid");
                 obj["objectName"] = $this.data("name");
 
-                    switch (obj.typeId.toString()){
-                        case "3": obj["url"] = $this.find(".jsNameInput").val();  break;//自定义链接
-                        case "99": obj["url"] = "nothing";  break;  //无
-                        default: obj["objectId"] = $this.data("objectid")||$(this).attr("data-objectid");
-                            //obj["objectName"]= $this.find(".jsNameInput").val();
-                            break;   //1商品类型  2商品 4商品分组
-                    }
+                switch (obj.typeId.toString()){
+                    case "3": obj["url"] = $this.find(".jsNameInput").val();  break;//自定义链接
+                    case "99": obj["url"] = "nothing";  break;  //无
+                    default: obj["objectId"] = $this.data("objectid")||$(this).attr("data-objectid");
+                        //obj["objectName"]= $this.find(".jsNameInput").val();
+                        break;   //1商品类型  2商品 4商品分组
+                }
 
 
 
@@ -1361,8 +1361,8 @@
                         }
                     }else if(obj.typeId=="null"){
                         flag = false;
-                    alert("第" + (i + 1) + "项展示广告不能为空，请选择展示的商品或填写资讯链接地址");
-                    return false;
+                        alert("第" + (i + 1) + "项展示广告不能为空，请选择展示的商品或填写资讯链接地址");
+                        return false;
                     }
 
                 } else  {
@@ -1443,22 +1443,22 @@
             } else {
                 var modelId = self.ele.editLayer.find(".jsSectionCTabContainer .on").data("model");
                 /*f (!modelId) {
-                    alert("获取不到模板信息");
-                    return;
-                } else {*/
-                    model.id = 3;
-                    model.name = "创意组合" + modelId;
-             /*   }*/
+                 alert("获取不到模板信息");
+                 return;
+                 } else {*/
+                model.id = 3;
+                model.name = "创意组合" + modelId;
+                /*   }*/
             }
             debugger;
             model.styleType=model.id;
             model.titleStyle=self.ele.editLayer.find('[data-name="titleStyle"].on').data("value");//标题样式；
             if(model.titleStyle!="hide"){
                 model.titleName=self.ele.editLayer.find(".titleInput input").val();
-               if(!model.titleName) {
-                   alert("标题文字不可为空");
-                   return;
-               }
+                if(!model.titleName) {
+                    alert("标题文字不可为空");
+                    return;
+                }
             }
             if (self.currentEditData) {
                 //obj["groupId"] = self.currentEditData.CategoryAreaGroupId;
@@ -1484,28 +1484,28 @@
                     obj["groupId"] =$this.data("groupid");
                 }
 
-                    obj["displayIndex"] = i + 1;
-                    if (obj.typeId == 3) {
-                        obj["url"] = $this.find(".jsNameInput").val();
-                        if(!obj.url){
-                            flag = false;
-                            alert("第" + (i + 1) + "项展示不能为空，请自定义的url链接");
-                            return false;
-                        }
-                    } else {
-                        obj["objectId"] = $this.data("objectid")==""?$this.attr("data-objectid"):$this.data("objectid");
-                        if (!obj.objectId) {
-                            flag = false;
-                            alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
-                            return false;
-                        }
-                    }
-
-                    if (!obj.imageUrl) {
+                obj["displayIndex"] = i + 1;
+                if (obj.typeId == 3) {
+                    obj["url"] = $this.find(".jsNameInput").val();
+                    if(!obj.url){
                         flag = false;
-                        alert("第" + (i + 1) + "项展示图片不能为空，请选择展示图片");
+                        alert("第" + (i + 1) + "项展示不能为空，请自定义的url链接");
                         return false;
                     }
+                } else {
+                    obj["objectId"] = $this.data("objectid")==""?$this.attr("data-objectid"):$this.data("objectid");
+                    if (!obj.objectId) {
+                        flag = false;
+                        alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
+                        return false;
+                    }
+                }
+
+                if (!obj.imageUrl) {
+                    flag = false;
+                    alert("第" + (i + 1) + "项展示图片不能为空，请选择展示图片");
+                    return false;
+                }
 
                 list.push(obj);
             });
@@ -1565,12 +1565,12 @@
 
                 obj["displayIndex"] = i + 1;
 
-                    obj["objectId"] = $this.data("objectid")==""?$this.attr("data-objectid"):$this.data("objectid");
-                    if (!obj.objectId) {
-                        flag = false;
-                        alert("第" + (i + 1) + "项展示类型不能为空，请选择展示的类型");
-                        return false;
-                    }
+                obj["objectId"] = $this.data("objectid")==""?$this.attr("data-objectid"):$this.data("objectid");
+                if (!obj.objectId) {
+                    flag = false;
+                    alert("第" + (i + 1) + "项展示类型不能为空，请选择展示的类型");
+                    return false;
+                }
 
                 list.push(obj);
             });
@@ -1592,9 +1592,9 @@
                 model.categoryAreaGroupId = self.currentEditData.CategoryAreaGroupId;
             } else {
 
-                    model.modelTypeId = 4;
-                    model.modelTypeName = "底部导航";
-               if(!self.currentEditData) {self.currentEditData={ss:"11"}}
+                model.modelTypeId = 4;
+                model.modelTypeName = "底部导航";
+                if(!self.currentEditData) {self.currentEditData={ss:"11"}}
             }
             debugger;
             model.displayIndex=self.ele.titleDom.parents(".action").index();
@@ -1619,32 +1619,32 @@
                     obj["categoryAreaId"] = $this.data("categoryareaid");
                     obj["groupId"] = self.currentEditData.groupId;
                 }
-                   obj["displayIndex"]=i+1;
-                 debugger;
-                    if (obj.typeId==99) {
+                obj["displayIndex"]=i+1;
+                debugger;
+                if (obj.typeId==99) {
+                    flag = false;
+                    alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
+                    return false;
+                }else if (obj.typeId==1||obj.typeId==2) {
+                    if(!obj["objectId"]) {
                         flag = false;
-                        alert("第" + (i + 1) + "项展示商品不能为空，请选择展示的商品或类型");
-                        return false;
-                    }else if (obj.typeId==1||obj.typeId==2) {
-                        if(!obj["objectId"]) {
-                            flag = false;
-                            alert("第" + (i + 1) + "选择展示的商品不可为空");
-                            return false;
-                        }
-
-                    }else{
-                        if(!obj["url"]) {
-                            flag = false;
-                            alert("第" + (i + 1) + "自定义链接不可为空");
-                            return false;
-                        }
-
-                    }
-                   if (!obj.navName) {
-                        flag = false;
-                        alert("第" + (i + 1) + "导航名称必填");
+                        alert("第" + (i + 1) + "选择展示的商品不可为空");
                         return false;
                     }
+
+                }else{
+                    if(!obj["url"]) {
+                        flag = false;
+                        alert("第" + (i + 1) + "自定义链接不可为空");
+                        return false;
+                    }
+
+                }
+                if (!obj.navName) {
+                    flag = false;
+                    alert("第" + (i + 1) + "导航名称必填");
+                    return false;
+                }
                 if (!obj.imageUrl) {
                     flag = false;
                     alert("第" + (i + 1) + "项展示图片不能为空，请选择展示图片");
@@ -1674,11 +1674,11 @@
                 model.name = "分类导航";
             }
             model.styleType= self.ele.editLayer.find('.on[data-name="entranceStyle"]').data("value");
-          /*  var addTitle=self.ele.editLayer.find("#addTitle").text()=="添加标题"?false:true;
-            if(addTitle){
-                model.titleName=self.ele.editLayer.find(".titleText").val();
-                model.titleStyle=self.ele.editLayer.find('input[name="titleStyle"]:checked').val();
-            }*/
+            /*  var addTitle=self.ele.editLayer.find("#addTitle").text()=="添加标题"?false:true;
+             if(addTitle){
+             model.titleName=self.ele.editLayer.find(".titleText").val();
+             model.titleStyle=self.ele.editLayer.find('input[name="titleStyle"]:checked').val();
+             }*/
 
 
             self.ele.editLayer.find(".jsAreaItem").each(function (i, e) {    //
@@ -1733,11 +1733,11 @@
 
                 obj["displayIndex"] = i + 1;
 
-              /*  if (obj.imageUrl && (obj.typeId == 1 && obj.objectId||obj.typeId == 3 || obj.typeId == 8)) {
-                    obj["displayIndex"] = list.length;
+                /*  if (obj.imageUrl && (obj.typeId == 1 && obj.objectId||obj.typeId == 3 || obj.typeId == 8)) {
+                 obj["displayIndex"] = list.length;
 
-                }*/
-              /*  obj["displayIndex"] = list.length;*/
+                 }*/
+                /*  obj["displayIndex"] = list.length;*/
                 list.push(obj);
             });
 
@@ -1765,18 +1765,18 @@
                 obj["imageUrl"] = $this.data("imageurl");
                 obj["isUrl"] = 1;
                 obj["itemAreaId"]= $this.data("eventareaitemid");
-                    obj["displayIndex"] = i + 1;
+                obj["displayIndex"] = i + 1;
 
-                    if (!obj.itemId) {
-                        flag = false;
-                        alert("第" + (i + 1) + "项展示分组不能为空，请选择展示的类型");
-                        return false;
-                    }
-                    if (!obj.imageUrl) {
-                        flag = false;
-                        alert("第" + (i + 1) + "项展示图片不能为空，请选择展示图片");
-                        return false;
-                    }
+                if (!obj.itemId) {
+                    flag = false;
+                    alert("第" + (i + 1) + "项展示分组不能为空，请选择展示的类型");
+                    return false;
+                }
+                if (!obj.imageUrl) {
+                    flag = false;
+                    alert("第" + (i + 1) + "项展示图片不能为空，请选择展示图片");
+                    return false;
+                }
 
                 list.push(obj);
             });
@@ -1784,7 +1784,7 @@
             model.ShowStyle= 1 ;
             if (self.currentEditData&&self.currentEditData.length>0) {
                 model.ShowStyle= self.currentEditData.showStyle;
-               // model.name = self.currentEditData.modelTypeName;
+                // model.name = self.currentEditData.modelTypeName;
                 model.groupId = self.currentEditData.groupId;
             }
             //5：团购6:热销，7：秒杀 8:组合活动
@@ -1809,9 +1809,9 @@
         },
         saveFollowInfo:function(){
             var obj={},flag=true;
-           debugger;
-           var data= self.ele.editLayer.find(".jsAreaItem").eq(0).data();
-           var $this= self.ele.editLayer.find(".jsAreaItem").eq(0);
+            debugger;
+            var data= self.ele.editLayer.find(".jsAreaItem").eq(0).data();
+            var $this= self.ele.editLayer.find(".jsAreaItem").eq(0);
             if (self.currentEditData) {
                 obj["FollowId"] = self.currentEditData.FollowId;
             }
@@ -1823,10 +1823,10 @@
                 default: obj["textId"] = $this.data("id");  obj["textTitle"]=$this.find(".jsNameInput").val(); break;  //1商品类型  2商品链接  4商品分组
             }
             if(data.typeid==35){
-                 if( !obj["textId"]){
-                      flag=false;
-                     alert("选择的图文素材不能为空");
-                 }
+                if( !obj["textId"]){
+                    flag=false;
+                    alert("选择的图文素材不能为空");
+                }
             }else{
                 if( !obj["url"]){
                     flag=false;
@@ -1847,7 +1847,7 @@
         },
         saveSearch:function(){
             debugger;
-             var obj={},flag=true;
+            var obj={},flag=true;
             obj["styleType"] =self.ele.editLayer.find('.checkBox').hasClass("on") ? "s1" : "s2";
 
 
@@ -1887,16 +1887,16 @@
             }else{
                 self.ele.editLayer.append(self.render(self.template.categoryItemListTemp,{length: obj.length}))
             }
-          /*  for(var i=0;i<obj.length;i++){
+            /*  for(var i=0;i<obj.length;i++){
 
-                self.ele.titleDom = $("#originalityList .jsListItem");
-                self.ele.titleDom.prepend(self.render(self.template.titleModel, {title: obj[i].titleName}));
-                if (obj[i].titleStyle == "tl1") {
-                    self.ele.titleDom.find(".titleTxt").removeClass("bg");
-                } else {
-                    self.ele.titleDom.find(".titleTxt").addClass("bg");
-                }
-            }*/
+             self.ele.titleDom = $("#originalityList .jsListItem");
+             self.ele.titleDom.prepend(self.render(self.template.titleModel, {title: obj[i].titleName}));
+             if (obj[i].titleStyle == "tl1") {
+             self.ele.titleDom.find(".titleTxt").removeClass("bg");
+             } else {
+             self.ele.titleDom.find(".titleTxt").addClass("bg");
+             }
+             }*/
             // 注册上传按钮
             self.registerUploadImgBtn();
         },
@@ -1995,7 +1995,7 @@
                 data: data,
                 success: function (data) {
                     if (data.success) {
-                       alert("保存成功");
+                        alert("保存成功");
                     } else {
                         alert(data.msg);
                     }
@@ -2063,7 +2063,7 @@
                                 self.ele.categorySelect[0].options[i + 1] = new Option(idata.categoryName, idata.categoryId);
                             }
                         } else {
-                           // alert("一级分类列表为空！");
+                            // alert("一级分类列表为空！");
                         }
 
                     } else {
@@ -2085,7 +2085,7 @@
                     if (data.success) {
                         debugger;
                         if(self.ele.type=="Add"){
-                           self.ele.type="Edit";
+                            self.ele.type="Edit";
                             location.hash="#Edit"
                         }
                         self.ele.homeId=data.data.homeId;   //new
@@ -2139,7 +2139,7 @@
                                     self.ele.entranceList.remove();
                                 }
                                 if (data.data.eventList&&data.data.eventList.length>0&&self.ele.eventList.length>0) {  //团购抢购组合框。
-                                   debugger;
+                                    debugger;
                                     isEmpty=false
                                     self.renderEventList(data.data.eventList[0]);
                                 } else{
@@ -2586,7 +2586,7 @@
         },
         renderFollowInfo: function (obj) {
             if(this.ele.followInfo.length==0){
-                    self.ele.sortableDiv.prepend("<div class='action' data-type='followInfo'></div>")
+                self.ele.sortableDiv.prepend("<div class='action' data-type='followInfo'></div>")
             }
             self.ele.followInfo=$("[data-type='followInfo']");
             if (obj) {
@@ -2604,10 +2604,10 @@
 
 
         renderNavigationModel:function(obj){
-           debugger;
+            debugger;
             if(this.ele.navigation.length==0){
 
-                    self.ele.sortableDiv.append("<div class='action' data-type='navList'></div>")
+                self.ele.sortableDiv.append("<div class='action' data-type='navList'></div>")
 
             }
             self.ele.navigation=$("[data-type='navList']");
@@ -2624,19 +2624,19 @@
                 );
 
                 this.ele.navigation.html(self.render(this.template.navigationModel, obj));
-             /*   if (obj.styleType == "s2") {
-                    self.ele.navigation.css({"top":"0","bottom":"auto"}) ;
-                    self.ele.sortableDiv.css({"padding-top":"83px","padding-bottom":"0px"})
-                } else {
-                    self.ele.navigation.css({"top":"auto","bottom":"0"}) ;
-                    self.ele.sortableDiv.css({"padding-bottom":"63px","padding-top":"0px"});
-                }*/
+                /*   if (obj.styleType == "s2") {
+                 self.ele.navigation.css({"top":"0","bottom":"auto"}) ;
+                 self.ele.sortableDiv.css({"padding-top":"83px","padding-bottom":"0px"})
+                 } else {
+                 self.ele.navigation.css({"top":"auto","bottom":"0"}) ;
+                 self.ele.sortableDiv.css({"padding-bottom":"63px","padding-top":"0px"});
+                 }*/
             } else {
                 this.ele.navigation.html(self.render(this.template.navigationModel, { key: "navList" }));
             }
         } ,
         renderSecondKillList: function (list) {
-              debugger;
+            debugger;
             var list = list || [];
             if (list.length) {
                 for (var i = 0; i < list.length; i++) {
@@ -2661,7 +2661,7 @@
                                     $(this).html('<p class="space"></p>');
 
                                     $(this).append(self.render(self.template.secondKillModel, obj));
-                                    obj=null
+
                                 }
                             });
                         } else if (obj.shopType == 2) {
@@ -2675,7 +2675,7 @@
                                     $(this).html('<p class="space"></p>');
 
                                     $(this).append(self.render(self.template.secondKillModel, obj));
-                                    obj=null
+
                                 }
                             });
                         } else if (obj.shopType == 3) {
@@ -2689,7 +2689,6 @@
                                     $(this).html('<p class="space"></p>');
 
                                     $(this).append(self.render(self.template.secondKillModel, obj));
-                                    obj=null
                                 }
                             });
                         }
@@ -2761,14 +2760,14 @@
                     this.ele.entranceList.append("<div class='select'></div>");
                 }
                 /*if (obj.titleName && obj.titleName.length > 0) {
-                    self.ele.titleDom = $("#entranceList .jsListItem");
-                    self.ele.titleDom.prepend(self.render(self.template.titleModel, {title: obj.titleName}));
-                    if (obj.titleStyle == "tl1") {
-                        self.ele.titleDom.find(".titleTxt").removeClass("bg");
-                    } else {
-                        self.ele.titleDom.find(".titleTxt").addClass("bg");
-                    }
-                }*/
+                 self.ele.titleDom = $("#entranceList .jsListItem");
+                 self.ele.titleDom.prepend(self.render(self.template.titleModel, {title: obj.titleName}));
+                 if (obj.titleStyle == "tl1") {
+                 self.ele.titleDom.find(".titleTxt").removeClass("bg");
+                 } else {
+                 self.ele.titleDom.find(".titleTxt").addClass("bg");
+                 }
+                 }*/
             } else {
                 var object={"key":"categoryEntrance"}
                 $.extend(object,obj);
@@ -2789,11 +2788,11 @@
             this.ele.eventList=$("[data-type='eventList']");//团购抢购营销,
 
 
-               if (obj) {
-                   this.ele.eventList.html(self.render(this.template.eventModel, obj));
-               } else {
-                   this.ele.eventList.html(self.render(this.template.eventEmptyModel));
-               }
+            if (obj) {
+                this.ele.eventList.html(self.render(this.template.eventModel, obj));
+            } else {
+                this.ele.eventList.html(self.render(this.template.eventEmptyModel));
+            }
 
         },
         renderOriginalityList: function (list) {
@@ -2805,26 +2804,26 @@
                     var index=$(this).index();
                     var idata=null;
                     for(var i=0;i<list.length;i++){
-                       if( list[i].displayIndex==index){
-                           idata= list[i];
-                           break
-                       }
+                        if( list[i].displayIndex==index){
+                            idata= list[i];
+                            break
+                        }
                     }
 
-                   if(idata){
-                       $(this).html('<p class="space"></p>');
-                       if(idata.titleName){
-                          idata.title=idata.titleName
-                          $(this).append(self.render(self.template.titleModel,idata));
-                       }
-                       $(this).append(self.render(self.template.originalityModel, { idata: idata, key: "originalityList" }));
-                   }
+                    if(idata){
+                        $(this).html('<p class="space"></p>');
+                        if(idata.titleName){
+                            idata.title=idata.titleName
+                            $(this).append(self.render(self.template.titleModel,idata));
+                        }
+                        $(this).append(self.render(self.template.originalityModel, { idata: idata, key: "originalityList" }));
+                    }
                 });
 
 
             } else {
 
-               // this.ele.originalityList.html(self.render(this.template.categoryEmptyModel));
+                // this.ele.originalityList.html(self.render(this.template.categoryEmptyModel));
             }
 
         },
@@ -2861,7 +2860,7 @@
             self.ele.editLayer.find(".jsAreaItem,.jsAreaTitle").remove();
 
             self.ele.editLayer.html(self.render(self.template.rightProductTemp,obj));
-           //编辑数据针对 基础数据初始化
+            //编辑数据针对 基础数据初始化
             self.ele.editLayer.find(".radio").each(function() {
                 debugger;
                 var name = $(this).data("name"),me= $(this);
@@ -2869,11 +2868,11 @@
                     console.log(obj);
                     me.trigger("click");
                 }
-                  /*  $.each(obj,function(fieldName,fieldValue) {
-                        if (name.toLowerCase() == fieldName.toLowerCase() && fieldValue ==  me.data("value")) {
-                            me.trigger("click");
-                        }
-                    });*/
+                /*  $.each(obj,function(fieldName,fieldValue) {
+                 if (name.toLowerCase() == fieldName.toLowerCase() && fieldValue ==  me.data("value")) {
+                 me.trigger("click");
+                 }
+                 });*/
 
             });
             /***高效。精确，耦合高****/
@@ -2885,24 +2884,24 @@
                     me.trigger("click");
                 }
 
-             /* 性能低。精确，耦合度低
+                /* 性能低。精确，耦合度低
 
-              $.each(obj,function(fieldName,fieldValue){
-                    if (name.toLowerCase()==fieldName.toLowerCase()&&fieldValue==0) {
-                        if(me.hasClass("on")){
-                            me.trigger("click");
-                        }else{
-                            me.addClass("on")
-                        }
-                    } else if(name.toLowerCase()==fieldName.toLowerCase()&&fieldValue==1){
-                        if(!me.hasClass("on")){
-                            me.trigger("click");
-                        } else{
-                            me.addClass("on")
-                        }
-                    }
+                 $.each(obj,function(fieldName,fieldValue){
+                 if (name.toLowerCase()==fieldName.toLowerCase()&&fieldValue==0) {
+                 if(me.hasClass("on")){
+                 me.trigger("click");
+                 }else{
+                 me.addClass("on")
+                 }
+                 } else if(name.toLowerCase()==fieldName.toLowerCase()&&fieldValue==1){
+                 if(!me.hasClass("on")){
+                 me.trigger("click");
+                 } else{
+                 me.addClass("on")
+                 }
+                 }
 
-                })*/
+                 })*/
 
             });
 
@@ -2927,16 +2926,16 @@
              eventId:this.eventId,*/
             loadDate: function () {
                 /*debugger;
-                var categoryId = id || self.ele.productLayer.find("select").val();
-                var itemName = itemName || self.ele.productLayer.find("input").val();*/
+                 var categoryId = id || self.ele.productLayer.find("select").val();
+                 var itemName = itemName || self.ele.productLayer.find("input").val();*/
                 $.util.ajax({
-                        url: "/ApplicationInterface/Gateway.ashx",
+                    url: "/ApplicationInterface/Gateway.ashx",
 
-                        data: {
-                            action:"WX.MaterialText.GetMaterialTextListNew",
-                            PageIndex: this.pageIndex,
-                            PageSize: this.pageSize
-                        },
+                    data: {
+                        action:"WX.MaterialText.GetMaterialTextListNew",
+                        PageIndex: this.pageIndex,
+                        PageSize: this.pageSize
+                    },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {
                             debugger;
@@ -2992,7 +2991,7 @@
                         }
                     },
 
-                    });
+                });
 
 
             }
@@ -3005,7 +3004,7 @@
             currentItemId: undefined,
             loadData: function (callback) {
                 self.GetItemAreaByEventID(this.typeId, this.eventId, this.pageIndex, this.pageSize, function (data) {
-                   debugger;
+                    debugger;
                     var html = "";
                     self.ele.editLayer.find('.pageWrap').hide();
                     if (data.data.totalCount) {
@@ -3020,36 +3019,36 @@
 
                         if (pageNumber > 1) {
 
-                                kkpager.generPageHtml({
-                                    pno: self.goodsSelect.pageIndex?self.goodsSelect.pageIndex+1:1,
-                                    mode: 'click', //设置为click模式
-                                    pagerid:'kPageList',
-                                    total: pageNumber,//总页码
-                                    totalRecords: data.data.totalCount,
-                                    isShowTotalPage: true,
-                                    isShowTotalRecords: true,
-                                    //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
-                                    //适用于不刷新页面，比如ajax
-                                    click: function (n) {
-                                        var currentTab = self.ele.editLayer.find(".jsTabContainer .on");
-                                        self.goodsSelect.currentItemId=currentTab.data("currentitemid");
-                                        //这里可以做自已的处理
-                                        //...
-                                        //处理完后可以手动条用selectPage进行页码选中切换
-                                        this.selectPage(n);
-                                        //让  tbody的内容变成加载中的图标
-                                        //var table = $('table.dataTable');//that.tableMap[that.status];
-                                        //var length = table.find("thead th").length;
-                                        //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
-                                        self.goodsSelect.pageIndex=n-1
-                                        self.goodsSelect.loadData();
-                                    },
-                                    //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
-                                    getHref: function (n) {
-                                        return '#';
-                                    }
+                            kkpager.generPageHtml({
+                                pno: self.goodsSelect.pageIndex?self.goodsSelect.pageIndex+1:1,
+                                mode: 'click', //设置为click模式
+                                pagerid:'kPageList',
+                                total: pageNumber,//总页码
+                                totalRecords: data.data.totalCount,
+                                isShowTotalPage: true,
+                                isShowTotalRecords: true,
+                                //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
+                                //适用于不刷新页面，比如ajax
+                                click: function (n) {
+                                    var currentTab = self.ele.editLayer.find(".jsTabContainer .on");
+                                    self.goodsSelect.currentItemId=currentTab.data("currentitemid");
+                                    //这里可以做自已的处理
+                                    //...
+                                    //处理完后可以手动条用selectPage进行页码选中切换
+                                    this.selectPage(n);
+                                    //让  tbody的内容变成加载中的图标
+                                    //var table = $('table.dataTable');//that.tableMap[that.status];
+                                    //var length = table.find("thead th").length;
+                                    //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
+                                    self.goodsSelect.pageIndex=n-1
+                                    self.goodsSelect.loadData();
+                                },
+                                //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
+                                getHref: function (n) {
+                                    return '#';
+                                }
 
-                                }, true);
+                            }, true);
                             self.ele.editLayer.find('.pageWrap').show();
                         } else {
                             self.ele.editLayer.find('.pageWrap').hide();
@@ -3088,8 +3087,8 @@
             },
             pageIndex: 0,
             pageSize: 5,
-           /* typeId:this.typeId,//只有掌声秒杀模块的时候才用到 typeId 1 表示团购（疯狂团购） 2表示限时抢购（掌上秒杀）的e
-            eventId:this.eventId,*/
+            /* typeId:this.typeId,//只有掌声秒杀模块的时候才用到 typeId 1 表示团购（疯狂团购） 2表示限时抢购（掌上秒杀）的e
+             eventId:this.eventId,*/
             loadDate: function (id, text,type) {
                 debugger;
                 var categoryId = id || self.ele.productLayer.find("select").val();
@@ -3325,7 +3324,7 @@
                                                 pageName = "抢购";
                                             }
                                             window.open("/module/GroupBuy/GroupList.aspx?pageType=" + self.categoryLayer.shopType + "&mid=" + $.util.getUrlParam("mid") + "&pageName=" + pageName, 'newwindow');
-                                            
+
                                         }
                                     })
                                 }

@@ -509,7 +509,7 @@
             })
         },
 
-        //设置查询条件   取得动态的表单查询参数
+        //设置查询条件   取得动态的表单查询参数    如果值为0 传递空值
         setCondition:function(){
             debugger;
             var that=this;
@@ -714,8 +714,8 @@
                     url: prams.url,
                     data: prams.data,
                     beforeSend: function () {
-                        $.util.isLoading()
 
+                        $.util.isLoading();
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {

@@ -172,7 +172,7 @@
                     if (data.rows.length > 0) {
                         $('#kkpager').show();
                     } else {
-                        that.elems.dataMessage.show();
+                        //that.elems.dataMessage.show();
                         $('#kkpager').hide();
                     }
                     //that.elems.tabel.datagrid('getSelected');
@@ -262,12 +262,13 @@
                                             if (result.TitleData[i].NameID == "ID") {
                                                 break;
                                             }
-                                            columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + result.TitleData[i].Name + "',  resizable: true, align: 'center' },";
+                                            var length=result.TitleData[i].Name.length*50;
+                                            columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + result.TitleData[i].Name + "',  resizable: true,width:'"+length+"', align: 'left' },";
                                         }
                                     }
                                 }
                                 columns = "[" + columns + "]";
-
+                                debugger;
                                 callback(result, Ext.decode( columns));
                             }
 

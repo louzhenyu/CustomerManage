@@ -48,13 +48,7 @@
 
             });
             that.elems.operation.delegate(".commonBtn","click",function(e){
-
                    that.loadTemplate();
-
-
-
-
-
             });
             /**************** -------------------弹出easyui 控件 start****************/
             var  wd=160,H=32;
@@ -344,7 +338,6 @@
                  ] ],*/
 
                 columns: [[
-
                     {
                         field: 'Title', title: '名称', width: 200, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
@@ -359,16 +352,7 @@
 
                     {
                         field: 'CreateTime', title: '创建时间', width: 200, align: 'left', resizable: false
-                        , formatter: function (value, row, index) {
-                        /*   if (!value) {
-                         return new Date(value).format("yyyy-MM-dd") + "至" + new Date(row.EndTime).format("yyyy-MM-dd");
-                         }else{
-                         return row.ValidityPeriod
-                         }*/
-                        return value;
-                    }
                     },
-
                     {
                         field: 'HomeId', title: '编辑', width: 100, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
@@ -413,7 +397,7 @@
                 onClickRow: function (rowindex, rowData) {
 
                 }, onClickCell: function (rowIndex, field, value) {
-                    if (field == "addOpt" || field == "addOptdel") {    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
+                    if(field == "addOpt" || field == "addOptdel") {    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
                         that.elems.click = false;
                     } else {
                         that.elems.click = true;

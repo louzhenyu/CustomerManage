@@ -845,6 +845,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						            data = data.CoverInfo;
 						            if (data.IsShow||data.IsShow == "0") {
 						                $(".EnableCover").removeClass("on");
+                                        $(".checkvalue").val(0);
 						            } else {
 						                $(".EnableCover").addClass("on");
 						                $(".checkvalue").val(1);
