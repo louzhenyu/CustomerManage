@@ -585,13 +585,13 @@
                             if(isNaN(parseInt(value))){
                                 return 0;
                             }else{
-                                return parseInt(value);
+                                return value;
                             }
                         },editor: {
                         type: 'numberbox',
                         options: {
                             min: 0,
-                            precision: 0,
+                            precision:2,
                             height: 31,
                             width: 136
 

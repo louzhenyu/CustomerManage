@@ -125,6 +125,10 @@ namespace JIT.CPOS.Web.WXOAuth
                         if (list != null && list.Count > 0)
                         {
                             applicationId = list.FirstOrDefault().ApplicationId;
+                            if (!string.IsNullOrEmpty(list.FirstOrDefault().OpenOAuthAppid))
+                            {
+                                openOAuthAppid = list.FirstOrDefault().OpenOAuthAppid;
+                            }
                         }
                         else
                         {

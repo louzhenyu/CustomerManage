@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 <meta charset="UTF-8" />
-    <title>分销商提现管理</title>
+    <title>分销商提现</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link type="text/css" rel="stylesheet" href="css/sendingTogether.css"/>
 
@@ -53,7 +53,7 @@
         </div>    
         <div class="tableWrap">
             <table class="dataTable"  id="dataTable">
-                 <p class="loading" style="width:32px;height:32px;left:50%;margin-left:-16px;"><img src="../static/images/loading.gif"></p>
+                 <p class="loading" style="width:32px;height:32px;left:50%;margin-left:-16px;margin-top:8px;"><img src="../static/images/loading.gif"></p>
             </table>
             <div id="pageContianer">
              <div class="dataMessage" >没有符合条件的查询记录</div>

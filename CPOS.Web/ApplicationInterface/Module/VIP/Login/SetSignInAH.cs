@@ -156,9 +156,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             }
 
             rd.CustomerBasicCodeList = customerBasicCodeList;
+
+
             #endregion
-
-
             return rd;
         }
     }

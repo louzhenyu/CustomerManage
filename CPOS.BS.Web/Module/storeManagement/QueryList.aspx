@@ -73,7 +73,7 @@
                 </div>
                    <div>
                    		<table class="dataTable" id="gridTable">
-                        	<div  class="loading">
+                        	<div class="loading" style="margin-top:8px;">
                                <span><img src="../static/images/loading.gif"></span>
                             </div>
                         </table>

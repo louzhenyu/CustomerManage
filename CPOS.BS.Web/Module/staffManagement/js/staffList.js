@@ -196,7 +196,7 @@
             that.loadData.args.PageIndex = 1;
             var fileds=$("#seach").serializeArray();
             $.each(fileds,function(i,filed){
-                //filed.value=filed.value=="0"?"":filed.value;
+                //filed.value=filed.value==0?"":filed.value;
                 that.loadData.seach[filed.name]=filed.value;
             });
 			//查询数据
@@ -212,7 +212,7 @@
 			
 			//获取所属层级数据
             that.loadData.getClassify(function(data) {
-                data.push({id:0,text:"请选择"});
+                data.push({id:'',text:"请选择"});
                 $('#type_id').combotree({
                     width:that.elems.width,
 					height:that.elems.height,
@@ -464,7 +464,7 @@
 				success: function(data){
 					if(data.totalCount){
 						var result = data.topics;
-						result.push({Role_Id:0,Role_Name:"请选择"});
+						result.push({Role_Id:"",Role_Name:"请选择"});
 						$('#role_id').combobox({
 							width:that.elems.width,
 							height:that.elems.height,

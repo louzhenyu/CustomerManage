@@ -10,6 +10,7 @@
       .datagrid-btable tr{height:45px;}
 	  .datagrid-row td:first-of-type div{padding-left:0;}
 	  td[field="RetailTraderID"] em{margin-right:15px;}
+	  .layout-panel-center,.panel-body-noheader{overflow:hidden;}
     </style>
 </asp:Content>
 <asp:Content ID="Content2"  ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
