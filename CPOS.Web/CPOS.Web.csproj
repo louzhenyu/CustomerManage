@@ -2231,10 +2231,12 @@
     <Compile Include="ApplicationInterface\Module\NewAppContent\NewWXGateway.ashx.cs">
       <DependentUpon>NewWXGateway.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ApplicationInterface\Module\Order\Delivery\GetVipAddressInfoAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Logistics\GetLogisticsCompanyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\GetSalesReturnListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\SalesReturn\SetSalesReturnAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Order\ShoppingCart\RemoveShoppingCartAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\SetQuestionnaireAnswerRecordAH.cs" />
