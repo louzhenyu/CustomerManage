@@ -946,7 +946,7 @@ namespace JIT.CPOS.BS.BLL.WX
                 //BaseService.WriteLogWeixin("开始推送消息Wzq");
 
                 //eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, eventKey,
-                //    requestParams.OpenId, this.httpContext,requestParams);
+                //    requestParams.OpenId, this.httpContext, requestParams);
 
                 //BaseService.WriteLogWeixin("推送消息成功Wzq");
                 #endregion

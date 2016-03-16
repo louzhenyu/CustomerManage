@@ -338,7 +338,7 @@ namespace JIT.CPOS.Web.WeiXin
                     Message = "三维码扫描---：" + qrcode_id + "------" + customerIdUnoin
                 });
                 //处理扫描静态二维码事件****
-                eventsBll.SendQrCodeWxMessage(loggingSessionInfo, customerIdUnoin, WeiXin, qrcode_id, OpenID, HttpContext.Current,requestParams);
+                eventsBll.SendQrCodeWxMessage(loggingSessionInfo, customerIdUnoin, WeiXin, qrcode_id, OpenID, HttpContext.Current, requestParams);
 
                 #region 云店处理 Add Henry
                 var wAppBll = new WApplicationInterfaceBLL(loggingSessionInfo);       //实例化微信公众号信息BLL
