@@ -458,7 +458,7 @@
                         itemList: data.Data.MaterialTextTypeList
                     }
                     var html = bd.template("optionTmpl", obj);
-                    $("#imageCategory").html(html);
+                //    $("#imageCategory").html(html);//不用图文类别了
                 });
                 //获取图文列表
                 this.loadData.getMaterialTextList("", function (data) {
@@ -1746,7 +1746,7 @@
                     'action': 'WX.MaterialText.GetMaterialTextList',
                     'MaterialTextId': id,
                     'Name': page.MaterialTextName,  //图文名称
-                    'TypeId': page.MaterialTypeId,   //图文id
+                    'TypeId': "",//page.MaterialTypeId,   //图文id
                     'PageSize': page.pageSize,
                     'PageIndex': page.pageIndex || 0
                 },

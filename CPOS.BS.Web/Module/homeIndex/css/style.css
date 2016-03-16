@@ -14,7 +14,7 @@
 .phonePanel{ width: 100%; padding-top: 58px;min-width:958px}
 .phone{ float: left; position: relative; width: 347px;height: 703px; background: url("../images/phoneBg.png") no-repeat center center; }
 .phone .screen{ width: 304px; height: 480px; position: absolute; left: 22px; top: 144px;  }
-#pageTitle{ display: none; color: #fff; line-height:40px; height: 40px; font-size: 17px;width: 87%;position: absolute;top: 104px;z-index: 99999;right: 21px;}
+#pageTitle{ display: none; color: #fff; line-height:40px; height: 40px; font-size: 17px;width: 87%;position: absolute;top: 104px;z-index: 99;right: 21px;}
 #pageTitle{background:url("../images/canel.png") 10px center no-repeat #21292c;}
 .ke-button-common{display: none;}
 .ke-upload-area{ width:180px;}

@@ -71,7 +71,7 @@
 
 
                 if ($('#addExpress').form('validate')) {
-
+					$.util.isLoading();
                     var fields = $('#addExpress').serializeArray(); //自动序列化表单元素为JSON对象
 
                      var html=""
@@ -85,12 +85,13 @@
                     that.loadData.args.IsSystem="0";
                     that.loadData.GetLogisticsCompany(function(data){
                         if(data.Data.LogisticsCompanyList.length==1){
+							$.util.isLoading(true);
                             $.messager.alert("提示",html);
                             return;
                         }
 
                     that.loadData.operation(fields,that.elems.optionType,function(data){
-
+						$.util.isLoading(true);
                         alert("操作成功");
                         $('#win').window('close');
                         that.loadPageData(e);
@@ -253,11 +254,14 @@
         renderTable: function (data) {
             debugger;
             var that=this;
-			/*
+			
 			if(!data.Data.LogisticsCompanyList || !data.Data.LogisticsCompanyList.length){
 				$('.dataMessage').show();
+				$('#tableWrap .loading').hide();
+			}else{
+				$('.dataMessage').hide();
 			}
-			*/
+			
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({
 

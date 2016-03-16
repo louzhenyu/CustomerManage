@@ -485,7 +485,7 @@
     <%-- 单行文字 --%>
     <script id="tpl_Singletext" type="text/html">
 
-        <div class="question  <# if(isedit){#> select <#} #> questionnew" draggable="true" >
+        <div class="question  <# if(isedit){#> select <#} #> questionnew" >
             <div style="display:none;">
                             <input class="Questiondata" data-text="题目标识" data-idname="Questionid" data-realvalue="<#=Questionid  #>" value="<#=Questionid  #>"  type="text" />
                         </div>
@@ -571,7 +571,7 @@
 
 
 
-            <div class="questiontitle">单行文字<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle"  draggable="true" >单行文字<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                 <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #>>*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                 <input class="titletext" readonly="readonly"  type="text" value="<#=DefaultValue  #>" />
@@ -585,7 +585,7 @@
     <%-- 多行文字 --%>
     <script id="tpl_MultiLinetext" type="text/html">
 
-        <div class="question <# if(isedit){#> select <#} #> questionnew" draggable="true" >
+        <div class="question <# if(isedit){#> select <#} #> questionnew" >
              <div style="display:none;">
                             <input class="Questiondata" data-text="题目标识" data-idname="Questionid" data-realvalue="<#=Questionid  #>" value="<#=Questionid  #>"  type="text" />
                         </div>
@@ -664,7 +664,7 @@
 
 
 
-            <div class="questiontitle">多行文字<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle"  draggable="true">多行文字<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                  <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #>>*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                <textarea class="titletext" rows="2" cols="2" readonly="readonly"><#=DefaultValue  #></textarea>
@@ -678,7 +678,7 @@
     <%-- 单项选择 --%>
     <script id="tpl_singleselection" type="text/html">
 
-        <div class="question <# if(isedit){#> select <#} #> questionnew" draggable="true" >
+        <div class="question <# if(isedit){#> select <#} #> questionnew"  >
              <div class="optiondel" style="display:none;">
                            
              </div>
@@ -764,7 +764,7 @@
 
 
 
-            <div class="questiontitle">单项选择<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle" draggable="true">单项选择<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                  <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #>>*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                 <div class="radiolist">
@@ -785,7 +785,7 @@
 
     <%-- 多项选择 --%>
     <script id="tpl_Multiselect" type="text/html">
-        <div class="question <# if(isedit){#> select <#} #> questionnew" draggable="true" >
+        <div class="question <# if(isedit){#> select <#} #> questionnew" >
             <div class="optiondel" style="display:none;">
                            
              </div>
@@ -870,7 +870,7 @@
 
 
 
-            <div class="questiontitle">多项选择<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle" draggable="true" >多项选择<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                  <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #>>*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                 <div class="checkBoxlist">
@@ -891,7 +891,7 @@
     <%-- 下拉框 --%>
     <script id="tpl_dropdownlist" type="text/html">
 
-        <div class="question <# if(isedit){#> select <#} #> questionnew" draggable="true">
+        <div class="question <# if(isedit){#> select <#} #> questionnew" >
             <div class="optiondel" style="display:none;">
                            
              </div>
@@ -978,7 +978,7 @@
 
 
 
-            <div class="questiontitle">下拉框<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle" draggable="true">下拉框<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                  <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #>>*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                
@@ -993,7 +993,7 @@
     <%-- 手机号 --%>
     <script id="tpl_phone" type="text/html">
 
-        <div class="question <# if(isedit){#> select <#} #> questionnew" draggable="true">
+        <div class="question <# if(isedit){#> select <#} #> questionnew" >
              <div style="display:none;">
                             <input class="Questiondata" data-text="题目标识" data-idname="Questionid" data-realvalue="<#=Questionid  #>" value="<#=Questionid  #>"  type="text" />
                         </div>
@@ -1060,7 +1060,7 @@
 
 
 
-            <div class="questiontitle">手机号<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle" draggable="true">手机号<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                  <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #>>*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                
@@ -1077,7 +1077,7 @@
     <script id="tpl_addr" type="text/html">
 
 
-        <div class="question <# if(isedit){#> select <#} #> questionnew" draggable="true">
+        <div class="question <# if(isedit){#> select <#} #> questionnew" >
              <div style="display:none;">
                             <input class="Questiondata" data-text="题目标识" data-idname="Questionid" data-realvalue="<#=Questionid  #>" value="<#=Questionid  #>"  type="text" />
                         </div>
@@ -1172,7 +1172,7 @@
 
 
 
-            <div class="questiontitle">地址<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle" draggable="true">地址<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                 <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #> >*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                 
@@ -1196,7 +1196,7 @@
     <%-- 日期 --%>
     <script id="tpl_date" type="text/html">
 
-        <div class="question <# if(isedit){#> select <#} #> questionnew" draggable="true">
+        <div class="question <# if(isedit){#> select <#} #> questionnew" >
              <div style="display:none;">
                             <input class="Questiondata" data-text="题目标识" data-idname="Questionid" data-realvalue="<#=Questionid  #>" value="<#=Questionid  #>"  type="text" />
                         </div>
@@ -1275,7 +1275,7 @@
 
 
 
-            <div class="questiontitle">日期<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle" draggable="true">日期<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                  <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #>>*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                <input type="text" class="Qdatebox titletext" value="<#=DefaultValue  #>" />
@@ -1291,7 +1291,7 @@
     <script id="tpl_imgsingleselection" type="text/html">
 
 
-        <div class="question <# if(isedit){#> select <#} #> questionnew" draggable="true">
+        <div class="question <# if(isedit){#> select <#} #> questionnew" >
             <div class="optiondel" style="display:none;">
                            
              </div>
@@ -1383,7 +1383,7 @@
 
 
 
-            <div class="questiontitle">图片单选<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle" draggable="true">图片单选<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                  <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #>>*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                 
@@ -1406,7 +1406,7 @@
     <%-- 图片多选 --%>
     <script id="tpl_imgMultiselect" type="text/html">
 
-        <div class="question <# if(isedit){#> select <#} #> questionnew" draggable="true">
+        <div class="question <# if(isedit){#> select <#} #> questionnew" >
             <div class="optiondel" style="display:none;">
                            
              </div>
@@ -1501,7 +1501,7 @@
 
 
 
-            <div class="questiontitle">图片多选<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
+            <div class="questiontitle" draggable="true">图片多选<span><img class="btn_move" src="/Module/QuestionnaireNews/images/move.png" title="添加" /><img class="btn_enlarge" src="/Module/QuestionnaireNews/images/enlarge.png"  title="鼠标左键按住不放进行拖动" /><img class="btn_del" src="/Module/QuestionnaireNews/images/del.png" title="删除" /></span></div>
             <div class="questionbody">
                 <div class="qtext"><span class="red" <# if(IsRequired==0){#> style="display:none;" <#} #>>*</span><span class="title"><#=Name  #></span><img src="<#=Src  #>"></div>
                 

@@ -47,10 +47,10 @@ namespace JIT.CPOS.Web.WX
                 //// 延迟几秒执行，看看微信会不会重复推送三次信息（放在后面查看还会不会重试）
                 //       System.Threading.Thread.Sleep(10000);
 
-                if (httpContext.Request.HttpMethod.ToLower() == "post")
-                {
-                    if (!string.IsNullOrEmpty(postStr))
-                    {
+                //if (httpContext.Request.HttpMethod.ToLower() == "post")
+                //{
+                //    if (!string.IsNullOrEmpty(postStr))
+                //    {
                         //获取微信公众号信息
                         LoggingSessionInfo loggingSessionInfo = null;//这里取过之后，后面不用重复取
                         WApplicationInterfaceEntity wAppEntity = new CommonBLL().GetWAppEntity(postStr, out loggingSessionInfo);
@@ -93,16 +93,16 @@ namespace JIT.CPOS.Web.WX
                         //响应微信平台推送消息
                         ResponseMsg(httpContext, requestParams);
                         #endregion
-                    }
-                }
-                else//专门用于微信公众号里“填写服务器配置”，这时候向这个url传递的方式是get，没有weixinid，无法从数据库里取数据
-                {
-                    if (!string.IsNullOrEmpty(httpContext.Request["echoStr"]))
-                    {
-                        //用于进行微信平台token验证
-                        new CommonBLL().ValidToken(httpContext, Config.TOKEN);//Config.TOKEN配置的token，其实应该是。每个客户都有自己的token，配置在数据库里，然后取出来
-                    }
-                }
+                //    }
+                //}
+                //else//专门用于微信公众号里“填写服务器配置”，这时候向这个url传递的方式是get，没有weixinid，无法从数据库里取数据
+                //{
+                //    if (!string.IsNullOrEmpty(httpContext.Request["echoStr"]))
+                //    {
+                //        //用于进行微信平台token验证
+                //        new CommonBLL().ValidToken(httpContext, Config.TOKEN);//Config.TOKEN配置的token，其实应该是。每个客户都有自己的token，配置在数据库里，然后取出来
+                //    }
+                //}
             }
             catch (Exception ex)
             {

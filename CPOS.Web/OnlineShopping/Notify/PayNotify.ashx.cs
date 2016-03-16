@@ -343,6 +343,17 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                             //if (int.Parse(IsSuccess.ToString()) == 0) //失败
                             //    Loggers.Debug(new DebugLogInfo() { Message = string.Format("订单与分润关系处理失败:{0}", Desc) });
                             #endregion
+
+                            CustomerBasicSettingBLL customerBasicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+                            string AfterPaySetStock = customerBasicSettingBll.GetSettingValueByCode("AfterPaySetStock");
+                            if (AfterPaySetStock == "1")
+                            {
+
+                                    var inoutServiceBLL = new InoutService(loggingSessionInfo);
+                                    var inoutDetailList = inoutServiceBLL.GetInoutDetailInfoByOrderId(OrderID);
+                                    inoutBll.SetStock(OrderID, inoutDetailList, 1, loggingSessionInfo);
+                                
+                            }
                              
                         }
                         else//充值订单
@@ -393,6 +404,7 @@ namespace JIT.CPOS.Web.OnlineShopping.Notify
                                     CommonBLL.CashBackMessage(inoutInfo.order_no, returnAmountdetailInfo.Amount, vipInfo.WeiXinUserId, vipInfo.VIPID,loggingSessionInfo);
                                 }
                             }
+
                         }
 
                         

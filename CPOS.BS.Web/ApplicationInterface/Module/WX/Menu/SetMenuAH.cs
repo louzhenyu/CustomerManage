@@ -111,7 +111,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
 
             if (level == 2)
             {
-                int count = bll.GetLevel2CountByMenuId(parentId);
+                int count = bll.GetLevel2CountByMenuId(parentId, applicationId, this.CurrentUserInfo.ClientID);
 
                 if (count >= 5 && status == 1 && (menuId == "" || string.IsNullOrEmpty(menuId)))
                 {
@@ -122,14 +122,20 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                     var ds = bll.GetMenuDetail(menuId);
                     if (ds.Tables[0].Rows.Count > 0)
                     {
-                        var oldStatus = Convert.ToInt32(ds.Tables[0].Rows[0]["Status"]);
-                        if (oldStatus == 0 && status == 1)
+                        var oldStatus = Convert.ToInt32(ds.Tables[0].Rows[0]["Status"]); 
+                        if (oldStatus == 0 && status == 1)   //如果已经目前已经有五个已经启用了，这个之前是没启用的，现在启用了
                         {
                             throw new APIException("二级节点的数量最大为5条启用的菜单") { ErrorCode = 130 };
                         }
                     }
-
                 }
+                //取没被删除的，id
+                int countDisplayCoulumn = bll.GetLevel2CountByDisplayColumn(parentId, menuId, int.Parse(displayIndex), applicationId, this.CurrentUserInfo.ClientID);
+                if (countDisplayCoulumn > 0)
+                {
+                    throw new APIException("同一个一级菜单下的二级菜单，序号不能相同") { ErrorCode = 130 };
+                }
+
 
                 if (Encoding.Default.GetBytes(name).Length > 16)
                 {

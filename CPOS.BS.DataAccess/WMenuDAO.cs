@@ -205,7 +205,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             string sql = " SELECT * FROM dbo.WMenu "
                          + " WHERE WeiXinID = '" + weixinID + "' AND Level = 1 AND IsDelete = 0 and status = '1'"
-                         + " ORDER BY DisplayColumn ";
+                         + " ORDER BY   CONVERT(int, DisplayColumn ) ";
 
             return this.SQLHelper.ExecuteDataset(sql);
         }
@@ -221,7 +221,7 @@ namespace JIT.CPOS.BS.DataAccess
             string sql = " SELECT Name, [Type], [Key], [MenuURL], sub_button = '[]' FROM dbo.WMenu "
                          + " WHERE WeiXinID = '" + weixinID + "' AND Level = 2 AND IsDelete = 0 and status = '1' "
                          + " AND ParentId = '" + parentID + "' "
-                         + " ORDER BY DisplayColumn ";
+                         + " ORDER BY CONVERT(int, DisplayColumn ) ";
 
             return this.SQLHelper.ExecuteDataset(sql);
         }
@@ -362,7 +362,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql.Append(" and a.IsDelete = 0 and b.IsDelete = 0 and isnull(a.status,-1) <> -1 ");
             sql.Append(" and b.applicationId = @pApplicationId");
             sql.Append(" and b.CustomerId = @pCustomerId");
-            sql.Append(" order by a.DisplayColumn");
+            sql.Append(" order by  CONVERT(int, a.DisplayColumn )");
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
         }
@@ -435,14 +435,47 @@ namespace JIT.CPOS.BS.DataAccess
 
         #region 根据一级节点获取该节点下状态为启用的二级节点数量
 
-        public int GetLevel2CountByMenuId(string menuId)
+        public int GetLevel2CountByMenuId(string menuId, string applicationId, string customerid)
         {
             var paras = new List<SqlParameter>
             {
                 new SqlParameter() {ParameterName = "@pMenuId", Value = menuId},
+                     new SqlParameter() {ParameterName = "@pApplicationId", Value = applicationId},
+                          new SqlParameter() {ParameterName = "@pCustomerId", Value = customerid},
             };
             var sql = new StringBuilder();
-            sql.Append("select isnull(count(1),0) from wmenu where isdelete = 0 and parentid = @pMenuId and status = 1");
+            sql.Append(@"select isnull(count(1),0) from wmenu  a inner join wapplicationinterface b on a.weixinid=b.weixinid
+                                     where a.isdelete = 0 and a.parentid = @pMenuId and a.status = 1
+                                                and b.applicationId = @pApplicationId
+				                        and b.CustomerId = @pCustomerId");
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text, sql.ToString(), paras.ToArray()));
+        }
+
+        public int GetLevel2CountByDisplayColumn(string parentid, string menuId, int DisplayColumn, string applicationId, string customerid)
+        {
+            var paras = new List<SqlParameter>
+            {
+               
+                     new SqlParameter() {ParameterName = "@pApplicationId", Value = applicationId},
+                          new SqlParameter() {ParameterName = "@pCustomerId", Value = customerid},
+                              new SqlParameter() {ParameterName = "@parentid", Value = parentid},
+                                     new SqlParameter() {ParameterName = "@DisplayColumn", Value = DisplayColumn}
+            };
+       
+            var sql = new StringBuilder();
+            sql.Append(@"select isnull(count(1),0) from wmenu  a inner join wapplicationinterface b on a.weixinid=b.weixinid
+                                     where a.isdelete = 0 
+                                        and a.parentid = @parentid 
+                                                and a.status = 1    ---还是加上status=1，不算没启用的
+                                                 and a.DisplayColumn=@DisplayColumn
+                                                and b.applicationId = @pApplicationId
+                                            
+				                        and b.CustomerId = @pCustomerId");
+            if (!string.IsNullOrEmpty(menuId))
+            {
+                paras.Add(new SqlParameter() { ParameterName = "@menuId", Value = menuId });
+                sql.Append(" and  a.Id!=@menuId");
+            }
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(CommandType.Text, sql.ToString(), paras.ToArray()));
         }
 

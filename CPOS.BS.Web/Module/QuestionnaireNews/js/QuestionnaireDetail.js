@@ -704,7 +704,7 @@
 
 
             //拖动排序start
-            $(".questionlist").sortable();
+            $(".questionlist").sortable({ delay: 150});
             $(".questionlist").disableSelection();
             //拖动排序end
 
@@ -755,9 +755,9 @@
             //返回事件
             $(".startStepbtn").bind("click", function () {
                 if (!JITMethod.getUrlParam("QuestionnaireID") || JITMethod.getUrlParam("QuestionnaireID") == "") {
-                    window.location.href = "/Module/QuestionnaireNews/queryList.aspx?isshow=ture&mid=" + JITMethod.getUrlParam("mid");
+                    $.util.toNewUrlPath("/Module/QuestionnaireNews/queryList.aspx?isshow=ture&mid=" + JITMethod.getUrlParam("mid"));
                 } else {
-                    window.location.href = "/Module/QuestionnaireNews/queryList.aspx?mid=" + JITMethod.getUrlParam("mid");
+                    $.util.toNewUrlPath("/Module/QuestionnaireNews/queryList.aspx?mid=" + JITMethod.getUrlParam("mid"));
                 }
             });
 
@@ -765,16 +765,15 @@
                 window.onbeforeunload = function () {
 
                 }
-                window.location.href = "/Module/QuestionnaireNews/queryList.aspx?mid=" + JITMethod.getUrlParam("mid");
+                $.util.toNewUrlPath( "/Module/QuestionnaireNews/queryList.aspx?mid=" + JITMethod.getUrlParam("mid"));
             });
 
             //上一步、下一步点击事件
             $(".commonStepBtn").bind("click", function () {
                 var self = $(this);
+                
                 if ($(this).hasClass("nextStepBtn") || $(this).hasClass("endStepBtn"))
-                {
-
-                    
+                {                 
 
                     var Questiondatasjson = "";
 
@@ -855,7 +854,6 @@
                                     $(this).find(".optionlist .option,.optionlist .editimgoption").each(function () {
                                         var optiondata_json = "";
                                         $(this).find(".optiondata").each(function () {
-                                            debugger;
                                             optiondata_json += $(this).data("idname") + ":'" + $(this).data("realvalue") + "',";
 
                                         });
@@ -1715,6 +1713,7 @@
                     async: false,
                     data: params,
                     beforeSend: function () {
+                        debugger;
                         $.util.isLoading()
 
                     },

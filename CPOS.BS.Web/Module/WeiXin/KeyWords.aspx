@@ -121,8 +121,8 @@
     <div class="addImgMessageWrap clearfix">
         <span class="tit">标题</span>
         <input type="text" id="theTitle" class="inputName" />
-        <span class="tit">分类</span>
-        <select class="selectBox" id="imageCategory">
+        <span class="tit" style="display:none">分类</span>
+        <select class="selectBox" id="imageCategory" style="display:none">
         	<option selected>请选择</option>
         </select>
         <span class="queryBtn commonBtn w80">查询</span>

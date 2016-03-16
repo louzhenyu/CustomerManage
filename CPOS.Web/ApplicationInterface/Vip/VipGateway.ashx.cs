@@ -568,8 +568,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 {
 
                     //首次提交订单处理库存和销量
-                    if (tInoutEntity.Status == "100" && tInoutEntity.Field7 == "-99")
-                        inoutBll.SetStock(orderId, inoutDetailList, 1, loggingSessionInfo);
+                    CustomerBasicSettingBLL customerBasicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+                    string AfterPaySetStock = customerBasicSettingBll.GetSettingValueByCode("AfterPaySetStock");
+                    if (AfterPaySetStock != "1")
+                    {
+                        if (tInoutEntity.Status == "100" && tInoutEntity.Field7 == "-99")
+                            inoutBll.SetStock(orderId, inoutDetailList, 1, loggingSessionInfo);
+                    }
                     // 根据订单ID修改订单配送状态
                     //推送ios、android信息
                     var flag = inoutService.UpdateOrderDeliveryStatus(orderId, status, Utils.GetNow(), null, (SqlTransaction)tran);
@@ -875,11 +880,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     #endregion
 
                     #region 抢购团购处理库存
-                    if (tInoutEntity.OrderReasonID == "CB43DD7DD1C94853BE98C4396738E00C" || tInoutEntity.OrderReasonID == "671E724C85B847BDA1E96E0E5A62055A")
+                    if (AfterPaySetStock != "1")
                     {
-                        //下订单，修改抢购商品的数量信息存储过程ProcPEventItemQty
-                        var eventbll = new vwItemPEventDetailBLL(loggingSessionInfo);
-                        eventbll.ExecProcPEventItemQty(loggingSessionInfo.ClientID, rp.Parameters.EventId, orderId, tInoutEntity.VipNo, (SqlTransaction)tran);
+                        if (tInoutEntity.OrderReasonID == "CB43DD7DD1C94853BE98C4396738E00C" || tInoutEntity.OrderReasonID == "671E724C85B847BDA1E96E0E5A62055A")
+                        {
+                            //下订单，修改抢购商品的数量信息存储过程ProcPEventItemQty
+                            var eventbll = new vwItemPEventDetailBLL(loggingSessionInfo);
+                            eventbll.ExecProcPEventItemQty(loggingSessionInfo.ClientID, rp.Parameters.EventId, orderId, tInoutEntity.VipNo, (SqlTransaction)tran);
+                        }
                     }
                     #endregion
 

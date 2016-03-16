@@ -11,7 +11,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.5">
+        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.6">
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
                 <!--个别信息查询-->
@@ -21,12 +21,12 @@
                 <div class="tableWrap cursorDef" id="tableWrap">
 
                     <table class="dataTable" id="gridTable">
-                    	<div class="loading" style="padding-top:40px;">
+                    	<div class="loading" style="padding-top:35px;">
                           <span><img src="../static/images/loading.gif"></span>
                         </div>
                     </table>
                     <div id="pageContianer">
-                    <div class="dataMessage" >数据没有对应记录</div>
+                    <div class="dataMessage" >暂时没有数据！</div>
                         <div id="kkpager" >
                         </div>
                     </div>

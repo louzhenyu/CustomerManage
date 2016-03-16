@@ -1026,19 +1026,22 @@ where a.CustomerId=@CustomerId  AND    a.isdelete = 0   {4} ";
             ls.Add(new SqlParameter("@CustomerId", CustomerID));
             ls.Add(new SqlParameter("@RetailTraderID", RetailTraderID));
 
-            string sqlCon = "";
+            string sqlWhere = "";
             string strSql = "";
+            string strColumn = "";
             if (Status!=-1)
             {
                 ls.Add(new SqlParameter("@Status",Status));
-                sqlCon += " and a.Status=@Status";
+                sqlWhere += " and a.Status=@Status";
             } 
             if(Status==1)//已核销
             {
+                strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
                 strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID";
             }
             else
             {
+                strColumn = "";
                 strSql += " INNER JOIN CouponTypeUnitMapping e ON ( a.CouponTypeID = e.CouponTypeID AND e.ObjectID = @RetailTraderID ) ";
             }
             //总数据表
@@ -1057,7 +1060,7 @@ where a.CustomerId=@CustomerId  AND    a.isdelete = 0   {4} ";
                     c.VipRealName ,
                     a.CoupnName ,
                     a.CouponCode ,
-                    CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,
+                    {6}
                     a.Status ,
                     ( CASE a.Status
                         WHEN 1 THEN '已核销'
@@ -1073,7 +1076,7 @@ where a.CustomerId=@CustomerId  AND    a.isdelete = 0   {4} ";
             sql += @") t
                   where t._row>{1}*{2} and t._row<=({1}+1)*{2}";
 
-            sql = string.Format(sql, OrderBy, pageIndex - 1, pageSize, sortType, sqlCon, strSql);
+            sql = string.Format(sql, OrderBy, pageIndex - 1, pageSize, sortType, sqlWhere, strSql, strColumn);
 
             //   sql += "  order by VipCount ";
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, ls.ToArray());    //计算总行数

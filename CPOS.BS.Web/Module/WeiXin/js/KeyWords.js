@@ -1633,7 +1633,7 @@
                     'action': 'WX.MaterialText.GetMaterialTextList',
                     'MaterialTextId': id,
                     'Name': page.MaterialTextName,  //图文名称
-                    'TypeId': page.MaterialTypeId,   //图文id
+                    'TypeId': "",  // page.MaterialTypeId,   //图文id
                     'PageSize': page.pageSize,
                     'PageIndex': page.pageIndex || 0
                 },

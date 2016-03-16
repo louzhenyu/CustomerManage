@@ -1021,12 +1021,32 @@ namespace JIT.CPOS.BS.BLL
                                     {
                                         if (!vipData.VIPID.Equals(qrCodeEntity.ObjectId))
                                         {
-                                            vipData.HigherVipID = qrCodeEntity.ObjectId;//上线会员ID
-                                            vipData.Col21 = DateTime.Now.ToString();//集客时间
-                                            vipDealerBLL.Update(vipData);
+                                            //上线会员
+                                            var VipDealerData = vipDealerBLL.GetByID(qrCodeEntity.ObjectId);
+                                            string VipDealerID = VipDealerData.HigherVipID ?? "";
 
-                                            //
-                                            content = vipData.VipName+"成为了您的下线会员！";
+
+                                            //if (!string.IsNullOrWhiteSpace(VipDealerID))
+                                            //{
+                                            if (!VipDealerID.Equals(vipData.VIPID))
+                                            {
+                                                //下线会员
+                                                vipData.HigherVipID = qrCodeEntity.ObjectId;//上线会员ID
+                                                vipData.Col21 = DateTime.Now.ToString();//集客时间
+                                                vipDealerBLL.Update(vipData);
+                                                //
+                                                content = vipData.VipName + "成为了您的下线会员！";
+
+                                            }
+                                            else
+                                            {
+                                                content = "不能发展自己上线会员！";
+                                            }
+                                            //}
+                                            //else
+                                            //{
+                                            //    content = VipDealerID + "=" + vipData.VIPID;
+                                            //}
                                         }
                                         else
                                         {
@@ -1035,7 +1055,7 @@ namespace JIT.CPOS.BS.BLL
                                     }
                                     else
                                     {
-                                        content = vipData.VipName+"已有上线！";
+                                        content = vipData.VipName + "已有上线！";
 
                                     }
 
@@ -1043,8 +1063,11 @@ namespace JIT.CPOS.BS.BLL
                                     var DealerVipData = vipDealerBLL.GetByID(DealerVipId);
                                     if (DealerVipData != null)
                                     {
-                                        requestParams.OpenId = DealerVipData.WeiXinUserId;
-                                        commonBll.ResponseTextMessage(DealerVipData.WeiXin, DealerVipData.WeiXinUserId, content, httpContext, requestParams);
+                                        //requestParams.OpenId = DealerVipData.WeiXinUserId;
+
+                                        CommonBLL.SendWeixinMessage(content, vipData.VIPID, loggingSessionInfo, DealerVipData);
+
+                                        //commonBll.ResponseTextMessage(DealerVipData.WeiXin, DealerVipData.WeiXinUserId, content, httpContext, requestParams);
                                     }
                                 }
                                 #endregion

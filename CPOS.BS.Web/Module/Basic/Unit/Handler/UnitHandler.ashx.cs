@@ -904,6 +904,14 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                     string host = ConfigurationManager.AppSettings["DownloadImageUrl"];
                     CPOS.Common.DownloadImage downloadServer = new DownloadImage();
                     imageUrl = downloadServer.DownloadFile(imageUrl, host);
+                   // 加背景图****
+                    //if (!string.IsNullOrEmpty(user.User_Name))
+                    //{
+                    //    string apiDomain = ConfigurationManager.AppSettings["original_url"];
+                    //    wxCode.ImageUrl = CombinImage(apiDomain + @"/HeadImage/qrcodeBack.jpg", wxCode.ImageUrl, unitName + "-" + user.User_Name);
+                    //}
+
+
                     var unitTypeBll = new WQRCodeTypeBLL(this.CurrentUserInfo);
                     var unitType = unitTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = "UnitQrCode" }, null);
                     var unit_id = Request("unit_id");

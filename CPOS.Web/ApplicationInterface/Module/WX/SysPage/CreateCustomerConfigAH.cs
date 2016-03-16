@@ -23,16 +23,28 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
         protected override CreateCustomerConfigRD ProcessRequest(APIRequest<CreateCustomerConfigRP> pRequest)
         {
             CreateCustomerConfigRD rdRes = new CreateCustomerConfigRD();
-            #region 1.写入文件。单个客户
-            if (CurrentUserInfo==null &&  !string.IsNullOrWhiteSpace(CurrentUserInfo.ClientID.ToString()))//如果CustomerID不为空
+
+            string pCustomerID = "";
+            if (string.IsNullOrEmpty(pRequest.CustomerID))
             {
+                pCustomerID = pRequest.CustomerID;
+            }
+            else if (CurrentUserInfo != null)
+            {
+                pCustomerID = CurrentUserInfo.ClientID.ToString();
+            }
+
+            #region 1.写入文件。单个客户
+            if (!string.IsNullOrEmpty(pCustomerID))//如果CustomerID不为空
+            {
+                var currentInfo = Default.GetBSLoggingSession(pCustomerID, "");
                 try
                 {
-                    SysPageBLL bll = new SysPageBLL(this.CurrentUserInfo);
-                    string strConfig = bll.GetCreateCustomerConfig(CurrentUserInfo.ClientID); //获取要生成的Config内容
+                    SysPageBLL bll = new SysPageBLL(currentInfo);
+                    string strConfig = bll.GetCreateCustomerConfig(currentInfo.ClientID); //获取要生成的Config内容
                     strConfig = Regex.Replace(strConfig, @"\s", "");
                     //写入Config文件
-                    string FileName = CurrentUserInfo.ClientID.ToString() + ".js";
+                    string FileName = currentInfo.ClientID.ToString() + ".js";
                     string strpath = ConfigurationManager.AppSettings["CposWebConfigPath"];
                     if (!Directory.Exists(strpath))
                     {
@@ -45,9 +57,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
                     sw.Flush();//清除缓冲区
                     sw.Close();//关闭流
                     // 写入varsion文件
-                    string strVersion = bll.GetCreateCustomerVersion(CurrentUserInfo.ClientID,CurrentUserInfo.CurrentLoggingManager.Customer_Name); //获取要生成的Version内容
+                    string strVersion = bll.GetCreateCustomerVersion(currentInfo.ClientID,currentInfo.CurrentLoggingManager.Customer_Name); //获取要生成的Version内容
                     strVersion = Regex.Replace(strVersion, @"\s", "");
-                    string FileNameVersion = CurrentUserInfo.ClientID.ToString() + ".js";
+                    string FileNameVersion = currentInfo.ClientID.ToString() + ".js";
                     // string strpathVersion  = HttpContext.Current.Server.MapPath(@"../" +  "/HtmlApps/version/Test/").Replace("CPOS.BS.Web", "CPOS.Web");
                     string strpathVersion = ConfigurationManager.AppSettings["CposWebVersionPath"];
                     if (!Directory.Exists(strpathVersion))
@@ -106,7 +118,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WX.SysPage
                             sw.Flush();//清除缓冲区
                             sw.Close();//关闭流
                             // 写入varsion文件
-                            string strVersion = bll.GetCreateCustomerVersion(CustomerId,CurrentUserInfo.CurrentLoggingManager.Customer_Name); //获取要生成的Version内容
+                            string strVersion = bll.GetCreateCustomerVersion(CustomerId,currentInfo.CurrentLoggingManager.Customer_Name); //获取要生成的Version内容
                             strVersion = Regex.Replace(strVersion, @"\s", "");
                             string FileNameVersion = CustomerId + ".js";
 

@@ -3323,7 +3323,7 @@
                                             if (self.categoryLayer.shopType == 2) {
                                                 pageName = "抢购";
                                             }
-                                            window.open("/module/GroupBuy/GroupList.aspx?pageType=" + self.categoryLayer.shopType + "&mid=" + $.util.getUrlParam("mid") + "&pageName=" + pageName, 'newwindow');
+                                            $.util.toNewUrlPath("/module/GroupBuy/GroupList.aspx?pageType=" + self.categoryLayer.shopType + "&pageName=" + pageName, 'newwindow');
 
                                         }
                                     })

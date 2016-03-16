@@ -129,11 +129,15 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetMenuTextIdList(customerId, weiXinId, menuList);
         }
 
-        public int GetLevel2CountByMenuId(string menuId)
+        public int GetLevel2CountByMenuId(string menuId, string applicationId,string customerid)
         {
-            return this._currentDAO.GetLevel2CountByMenuId(menuId);
+            return this._currentDAO.GetLevel2CountByMenuId(menuId, applicationId, customerid);
         }
 
+        public int GetLevel2CountByDisplayColumn(string parentid, string menuId, int DisplayColumn, string applicationId, string customerid)
+        {
+            return this._currentDAO.GetLevel2CountByDisplayColumn(parentid,menuId,DisplayColumn, applicationId, customerid);
+        }
         public void UpdateMenuData(string menuId, int status, Guid? pageid, string pageParamJson, string pageUrlJson,int unionTypeId)
         {
             this._currentDAO.UpdateMenuData(menuId, status, pageid, pageParamJson, pageUrlJson, unionTypeId);

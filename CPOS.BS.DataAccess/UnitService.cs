@@ -429,7 +429,10 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             sql = pService.GetLinkSql(sql, "a.unit_tel", _ht["unit_tel"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.unit_city_id", _ht["unit_city_id"].ToString(), "=");
             sql = pService.GetLinkSql(sql, "a.status", _ht["unit_status"].ToString(), "=");
-            sql = pService.GetLinkSql(sql, "a.StoreType", _ht["StoreType"].ToString(), "=");//直营店、加盟店
+            if (_ht["StoreType"].ToString() != "-1" && _ht["StoreType"].ToString() != "")
+            {
+                sql = pService.GetLinkSql(sql, "a.StoreType", _ht["StoreType"].ToString(), "=");//直营店、加盟店
+            }
             //根据父组织
             if (!string.IsNullOrEmpty(_ht["Parent_Unit_ID"].ToString()))
             {

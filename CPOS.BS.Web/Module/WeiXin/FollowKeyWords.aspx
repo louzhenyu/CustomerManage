@@ -83,11 +83,11 @@
     <div class="addImgMessageWrap clearfix">
         <span class="tit">标题</span>
         <input type="text" id="theTitle" class="inputName" />
-        <span class="tit">分类</span>
-        <select class="selectBox" id="imageCategory">
+        <span class="tit" style="display:none">分类</span>
+        <select class="selectBox" id="imageCategory" style="display:none">
         	<option selected>请选择</option>
         </select>
-        <span class="queryBtn commonBtn w80">查询</span>
+        <span class="queryBtn commonBtn w80 r">查询</span>
     </div>
     
     
@@ -201,8 +201,8 @@
     <div class="activeQueryWrap clearfix">
         <span class="tit" ><#=popupName?popupName:"活动名称"#></span>
         <input id="eventName" type="text" class="inputName" />
-        <span class="tit"><#=popupSelectName?popupSelectName:"活动分类"#></span>
-        <select id="pop_eventsType" class="selectBox">
+        <span class="tit"   ><#=popupSelectName?popupSelectName:"活动分类"#></span>
+        <select id="pop_eventsType" class="selectBox" >
         	<option selected>请选择</option>
         </select>
         <span id="searchEvents" class="queryBtn">搜索</span>

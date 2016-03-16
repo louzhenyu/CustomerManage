@@ -2612,14 +2612,18 @@ namespace JIT.CPOS.Web.OnlineShopping.data
 
 
                 #region 虚拟商品更新入库销量信息
-                if (reqObj.special.CommodityType == "1")
+                CustomerBasicSettingBLL customerBasicSettingBll = new CustomerBasicSettingBLL(loggingSessionInfo);
+                string AfterPaySetStock = customerBasicSettingBll.GetSettingValueByCode("AfterPaySetStock");
+                if (AfterPaySetStock != "1")
                 {
-                    var inoutBll = new T_InoutBLL(loggingSessionInfo);//订单业务对象实例化
-                    var inoutServiceBLL = new InoutService(loggingSessionInfo);
-                    var inoutDetailList = inoutServiceBLL.GetInoutDetailInfoByOrderId(orderInfo.OrderId);
-                    inoutBll.SetStock(orderInfo.OrderId, inoutDetailList, 1, loggingSessionInfo);
+                    if (reqObj.special.CommodityType == "1")
+                    {
+                        var inoutBll = new T_InoutBLL(loggingSessionInfo);//订单业务对象实例化
+                        var inoutServiceBLL = new InoutService(loggingSessionInfo);
+                        var inoutDetailList = inoutServiceBLL.GetInoutDetailInfoByOrderId(orderInfo.OrderId);
+                        inoutBll.SetStock(orderInfo.OrderId, inoutDetailList, 1, loggingSessionInfo);
+                    }
                 }
-
                 #endregion
 
                 #region 更新发货门店

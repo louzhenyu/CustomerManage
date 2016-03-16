@@ -54,7 +54,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
 
                 #region 根据菜单ID从图文映射表里面关联到图文表里面数据
 
-              //  var textDs = bll.GetMenuTextIdList(customerId, weixinId, menuList);
+           //  var textDs = bll.GetMenuTextIdList(customerId, weixinId, menuList);
 
                 #endregion
 
@@ -62,7 +62,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                     ds.Tables[0].AsEnumerable()
                         .OrderBy(t => t["Status"].ToString())
                         .OrderBy(t => t["DisplayColumn"].ToString())
-                        .Where(t => t["level"].ToString() == "1")
+                        .Where(t => t["level"].ToString() == "1")  //先取第一层
                         .Select(t => new MenuInfo
                         {
                             MenuId = t["ID"].ToString(),
@@ -78,7 +78,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                                     .Where(
                                         tt =>
                                             tt["ParentId"].ToString() == t["ID"].ToString() &&
-                                            tt["level"].ToString() == "2")
+                                            tt["level"].ToString() == "2")//子菜单里取第二层
                                     .OrderBy(tt => tt["Status"].ToString())
                                    // .OrderBy(tt => tt["DisplayColumn"].ToString())
                                    
