@@ -18,15 +18,17 @@
 
                 <div class="tableWrap" id="tableWrap">
                 <div class="optionBtn" id="opt">
-                 <div class="commonBtn sales icon icon_add w100 r" data-flag="add" id="sales"> 新增主页</div>
+                 <div class="commonBtn sales icon icon_add w100 r" data-flag="add" id="sales"> 新增页面</div>
 
 
                 </div>
+                <div class="cursorDef">
                    <div  id="gridTable" class="gridLoading">
                          <div  class="loading">
                                   <span>
                                 <img src="../static/images/loading.gif"></span>
                            </div>
+                   </div>
                    </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
@@ -118,5 +120,5 @@
 
                  </script>
        <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/couponManage/js/main.js"%>"></script>
+            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

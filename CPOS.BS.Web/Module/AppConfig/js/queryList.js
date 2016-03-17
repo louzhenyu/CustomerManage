@@ -1,4 +1,4 @@
-﻿define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialog'], function ($) {
+﻿define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager','copy','artDialog'], function ($) {
     var page = {
         elems: {
             sectionPage:$("#section"),
@@ -278,7 +278,7 @@
             debugger;
             var that=this;
             //查询每次都是从第一页开始
-            that.loadData.args.start=0;
+            that.loadData.args.PageIndex=1;
             var fileds=$("#seach").serializeArray();
             $.each(fileds,function(i,filed){
                that.loadData.seach[filed.name] = filed.value;
@@ -354,13 +354,13 @@
                         field: 'CreateTime', title: '创建时间', width: 200, align: 'left', resizable: false
                     },
                     {
-                        field: 'HomeId', title: '编辑', width: 100, align: 'left', resizable: false,
+                        field: 'HomeId', title: '编辑', width: 60, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             return "<div data-index=" + index + " data-flag='exit' class='exit opt'></div>"
                         }
                     },
                     {
-                        field: 'IsTemplate', title: '删除', width: 100, align: 'left', resizable: false,
+                        field: 'IsTemplate', title: '删除', width: 60, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             if(row.IsActivate==1) {
                                 return "<div data-index=" + index + " data-flag='noDelete' class='noDelete opt'></div>"
@@ -371,13 +371,13 @@
                         }
                     },
                     {
-                        field: 'IsActivate', title: '操作', width: 50, align: 'left', resizable: false,
+                        field: 'IsActivate', title: '操作', width: 100, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             if(value==1){
-                                return "<div data-index=" + index + " data-flag='ChangeStatus' style='margin:0;' class='noOpt'>当前主页</div>"
+                                return "<div data-index=" + index + " data-flag='ChangeStatus' style='margin:0 35px 0 0;width:45px;' class='noOpt'>当前主页</div><div class='opt'> <a href='#none' class='copy-input' data-url='"+ window.homeIndexMallUrl+"&homeId="+row.HomeId+"'> 复制链接</a></div>"
 
                             }else{
-                                return "<div data-index=" + index + " data-flag='ChangeStatus'style='margin:0;'   class='opt'>设为主页</div>"
+                                return "<div data-index=" + index + " data-flag='ChangeStatus' style='margin:0 35px 0 0;width:45px;'   class='opt'>设为主页</div> <div class='opt'> <a href='#none' class='copy-input' data-url='"+ window.homeIndexMallUrl+"&homeId="+row.HomeId+"'> 复制链接</a></div>"
                             }
 
                         }
@@ -393,10 +393,12 @@
                     } else {
                         that.elems.dataMessage.show();
                     }
+
                 },
                 onClickRow: function (rowindex, rowData) {
 
                 }, onClickCell: function (rowIndex, field, value) {
+
                     if(field == "addOpt" || field == "addOptdel") {    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
                         that.elems.click = false;
                     } else {
@@ -405,11 +407,31 @@
                 }
 
             });
+         setTimeout(function(){
+
+             $(".copy-input").zclip({
+                 path: "/Module/static/js/plugin/ZeroClipboard.swf",
+                 copy: function(){
+                     return $(this).data("url");
+                     //$(this).find(".copy-input").data("url");
+                 },
+                 afterCopy:function(){/* 复制成功后的操作 */
+                     var $copysuc = $("<div class='copy-tips'><div class='copy-tips-wrap'>☺ 复制成功</div></div>");
+                     $("body").find(".copy-tips").remove().end().append($copysuc);
+                     $(".copy-tips").fadeOut(3000);
+                 }
+             });
+
+
+         },200);
 
 
 
             //分页
              if(data.moblieHomeList.length>0) {
+                 if(data.pageCount<that.loadData.args.PageIndex){
+                     that.loadData.args.PageIndex=1;
+                 }
                  $("#pageContianer").show();
                  kkpager.generPageHtml({
                      pno: that.loadData.args.PageIndex,
