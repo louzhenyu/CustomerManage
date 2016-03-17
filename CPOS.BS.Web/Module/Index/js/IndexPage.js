@@ -58,7 +58,7 @@
 			    $('#win2').window('open');
 			});
 
-			//$('#wxAuth').attr("src",window.weixinUrl);
+			$('#receive').attr("src",window.weixinUrl);
         },
 
 		quicklyDialog: function(){
