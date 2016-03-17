@@ -185,7 +185,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
         }
         public class HomePage
         {
-
+ 
             public string HomeId { get; set; }
             public string Title { get; set; }
             public string sortActionJson { get; set; }
@@ -242,6 +242,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 int pPageSize = Convert.ToInt32(Request("PageSize"));//分页数量
                 int pCurrentPageIndex = Convert.ToInt32(Request("PageIndex"));//页码
 
+
                 OrderBy[] pOrderBys = new OrderBy[]{
                              new OrderBy(){ FieldName="CreateTime", Direction= OrderByDirections.Desc}
                             };
@@ -265,10 +266,10 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                             HomeId = a.HomeId.ToString(),
                             Title = a.Title,
                             sortActionJson = a.sortActionJson,
-                            IsActivate = a.IsActivate.HasValue?(int)a.IsActivate:0,
-                            CreateTime = Convert.ToDateTime(a.CreateTime.ToString()).ToString("yyyy-MM-dd HH:mm:ss")
+                            IsActivate = a.IsActivate.HasValue ? (int)a.IsActivate : 0,
+                            CreateTime =Convert.ToDateTime(a.CreateTime.ToString()).ToString("yyyy-MM-dd HH:mm:ss")
 
-                        }).ToArray();
+                        }).OrderByDescending(a=>a.CreateTime).ToArray();
                     responseData.success = true;
                     responseData.data = content;
                 }
@@ -319,7 +320,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     homeEntity.HomeId = new Guid(strHomeId);
                     homeBll.Update(homeEntity);//把当前主页设为激活状态
                 }
-
+              
                 responseData.success = true;
                 responseData.data = homeEntity.HomeId;
 
@@ -804,11 +805,11 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     responseData.msg = "参数homeId有误";
                     return responseData.ToJSON();
                 }
-
+        
                 string strHomeId = this.CurrentContext.Request["homeId"].ToString();
 
                 var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
-                var homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID, HomeId = new Guid(strHomeId), IsTemplate = 1 }, null);
+                var homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID, HomeId = new Guid(strHomeId),IsTemplate=1}, null);
                 if (homeList != null && homeList.Length > 0)
                 {
                     var homeEntity = homeList.FirstOrDefault();
@@ -830,9 +831,9 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                         follow = new followInfo(),
                         sortActionJson = ""
                     };  //客户端首页所有配置信息
-
-
-
+        
+          
+                   
                     content.sortActionJson = homeEntity.sortActionJson == null ? "" : homeEntity.sortActionJson;//返回排序数据
                     #region 广告集合 A 图片广告 B活动集合 C 商品分类和商品
                     var dsAd = adAreaBll.GetAdList(homeEntity.HomeId.ToString());//获取广告集合
@@ -1422,7 +1423,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     List<CategoryEntity> allList = new List<CategoryEntity>();
                     eventGroup = allGroup.Where(a => a.ModelTypeId != 5 && a.ModelTypeId != 6 && a.ModelTypeId != 7 && a.ModelTypeId != 8);
 
-                    if (eventGroup != null)
+                    if (eventGroup != null )
                     {
                         foreach (var groupItem in eventGroup)
                         {
@@ -1444,13 +1445,13 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                             category.showSalesQty = (int)groupItem.ShowSalesQty;
                             category.displayIndex = (int)groupItem.DisplayIndex;
                             category.CategoryAreaGroupId = (int)groupItem.GroupId;
-
+                                
                             //根据groupId和HomeId来取MHCategoryArea
                             var dsItem = adAreaBll.GetItemList(category.groupId, homeEntity.HomeId.ToString());
                             if (dsItem != null && dsItem.Tables.Count > 0 && dsItem.Tables[0].Rows.Count > 0)
                             {
-
-
+                        
+                           
                                 category.itemList = DataTableToObject.ConvertToList<ItemEntity>(dsItem.Tables[0]);
                             }
                             allList.Add(category);
@@ -1468,7 +1469,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     {
                         content.productList = pList.OrderByDescending(p => p.groupId).ToList(); ;
                     }
-
+                    
                     //创意组合
                     if (allList.Where(p => p.modelTypeId == 3).ToList() != null && allList.Where(p => p.modelTypeId == 3).ToList().Count != 0)
                     {
@@ -1481,7 +1482,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     {
                         content.navList = lc4.OrderByDescending(p => p.groupId).ToList()[0]; ;//(获取唯一的)
                     }
-
+                
                     #endregion
 
                     #region 关注信息
@@ -1497,7 +1498,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                         FollowId = f.FollowId.ToString(),
                         Title = f.Title,
                         TextId = f.TextId,
-                        TextTitle = f.TextTitle,
+                        TextTitle=f.TextTitle,
                         Url = f.Url,
                         TypeId = f.TypeId
                     }).FirstOrDefault();
@@ -1630,7 +1631,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
             public int typeId { get; set; }             //类型ID： 1=商品分类 2=商品
             public string navName { get; set; }        //导航里各个小图片下面的文字
             public string url { get; set; }
-            public int GroupId { get; set; }
+            public int GroupId  { get; set; }
         }
 
         public class GetMHCategoryAreaInfoRespContentData
@@ -1735,21 +1736,21 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
 
                 //分组ID
 
-
+                
                 groupId = categoryAreaGroupEntity.GroupId;
                 var entityMHCategoryArea = new MHCategoryAreaEntity();
-                var bllMHCategoryArea = new MHCategoryAreaBLL(CurrentUserInfo);
+                var bllMHCategoryArea=new MHCategoryAreaBLL(CurrentUserInfo);
                 bllMHCategoryArea.DeleteCategoryAreaByGroupId((int)groupId);
                 entityMHCategoryArea = bllMHCategoryArea.QueryByEntity(new MHCategoryAreaEntity() { GroupID = groupId }, null).FirstOrDefault();
                 #region
-                if (entityMHCategoryArea == null)
+                if (entityMHCategoryArea==null)
                 {
 
                     InsertItemCategory(itemCategory, groupId, homeId.ToString());
                 }
                 else
                 {
-                    UpdateItemCategory(itemCategory, homeId.ToString(), groupId);
+                    UpdateItemCategory(itemCategory, homeId.ToString(),groupId);
                 }
 
 
@@ -1762,7 +1763,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 //获取分组ID
                 content.modelTypeId = modelTypeId;
                 content.modelTypeName = modelTypeName;
-                content.groupId = groupId.ToString();
+                content.groupId = groupId.ToString();   
                 content.styleType = _styleType;
                 content.titleName = _titleName;
                 content.titleStyle = _titleStyle;
@@ -1928,29 +1929,50 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 {
                     var homeId = homeList.FirstOrDefault().HomeId;
 
-                    adAreaBll.DeleteAdByHomeId(homeId.ToString());
+                    string adsIdList = itemAds.Where(item => !string.IsNullOrEmpty(item.adId.ToString())).Aggregate("", (current, item) => current + "'" + item.adId.ToString() + "',");
+                    //根据AdAreaId删除MHAdArea中旧数据（not in adsList）
+                    var itemCategoryService = new ItemCategoryService(this.CurrentUserInfo);
+                    if (adsIdList != "")
+                    {
+                        itemCategoryService.UpdateMHAdAreaData(adsIdList, customerId);//其实是把id不在这个列表里面的给更新删除掉
+                    }
+                    else
+                    {
+                        itemCategoryService.DeleteMHAdAreaData(customerId);
+                    }
 
                     //根据AdAreaId判断是新增还是更新MHAdArea数据
                     foreach (var item in itemAds)
                     {
-                        var entityAd = new MHAdAreaEntity()
+                        if (string.IsNullOrEmpty(item.adId.ToString()))
                         {
-                            AdAreaId = Guid.NewGuid(),
-                            HomeId = homeId,
-                            ImageUrl = item.imageUrl,
-                            ObjectId = item.objectId,
-                            ObjectTypeId = item.typeId,
-                            DisplayIndex = item.displayIndex,
-                            Url = item.url
-                        };
-                        adAreaBll.Create(entityAd);
+                            var entity = new MHAdAreaEntity()
+                            {
+                                AdAreaId = Guid.NewGuid(),
+                                HomeId = homeId,
+                                ImageUrl = item.imageUrl,
+                                ObjectId = item.objectId,
+                                ObjectTypeId = item.typeId,
+                                DisplayIndex = item.displayIndex,
+                                Url = item.url
+                            };
+                            adAreaBll.Create(entity);
+                        }
+                        else
+                        {
+                            var entity = new MHAdAreaEntity()
+                            {
+                                AdAreaId = item.adId,
+                                HomeId = homeId,
+                                ImageUrl = item.imageUrl,
+                                ObjectId = item.objectId,
+                                ObjectTypeId = item.typeId,
+                                DisplayIndex = item.displayIndex,
+                                Url = item.url
+                            };
+                            adAreaBll.Update(entity);
+                        }
                     }
-                }
-                else
-                {
-                    responseData.success = false;
-                    responseData.msg = "该homeid没有对应的主页数据";
-                    return responseData.ToJSON();
                 }
             }
             #endregion
@@ -2154,6 +2176,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                         };
                         if (string.IsNullOrEmpty(item.itemAreaId.ToString()))
                         {
+                            entity.GroupId = categoryAreaGroupEntity.GroupId;
                             entity.ItemAreaId = Guid.NewGuid();
                             itemAreaBll.Create(entity);
                             responseData.msg = "操作成功";
