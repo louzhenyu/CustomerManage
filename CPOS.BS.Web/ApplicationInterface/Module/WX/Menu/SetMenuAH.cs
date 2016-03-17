@@ -14,8 +14,8 @@ using JIT.CPOS.DTO.Base;
 using JIT.CPOS.DTO.Module.WeiXin.Menu.Request;
 using JIT.CPOS.DTO.Module.WeiXin.Menu.Response;
 using JIT.CPOS.BS.BLL.WX;
-using JIT.CPOS.BS.Entity.WX;
-using JIT.CPOS.BS.BLL.WX.Enum;
+using JIT.CPOS.BS.Entity;
+using JIT.CPOS.BS.BLL;
 
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
 {
@@ -252,9 +252,50 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
            // wMaterialImageEntity.ImageName = filePath;//存物理路径，用于在微信端发送图片
             wMaterialImageBll.Create(wMaterialImageEntity);
 
-     
+
 
             var entity = new WMenuEntity();
+            WMenuEntity[] wMenuEntityArrayByName;
+            if (level == 1)
+            {
+                var wMenuEntityArraybyIndex = bll.QueryByEntity(new WMenuEntity() { DisplayColumn = displayIndex, WeiXinID = weixinId, Level = "1" }, null);
+                if (wMenuEntityArraybyIndex.Length != 0 && wMenuEntityArraybyIndex[0].ID != menuId)
+                {
+                    throw new APIException("一级菜单序号不可重复") { ErrorCode = 143 };
+                }
+                wMenuEntityArrayByName = bll.QueryByEntity(new WMenuEntity() { Name = name, WeiXinID = weixinId, Level = "1" }, null);
+                if (string.IsNullOrEmpty(menuId) || menuId == "")
+                {
+                    if (wMenuEntityArrayByName.Length != 0)
+                    {
+                        throw new APIException("菜单名称不可重复") { ErrorCode = 142 };
+                    }
+                }
+                else if (wMenuEntityArrayByName.Length != 0 && wMenuEntityArrayByName[0].ID != menuId)
+                {
+                    throw new APIException("菜单名称不可重复") { ErrorCode = 142 };
+                }
+            }
+            if (level == 2)
+            {
+                var wMenuEntityArraybyIndex = bll.QueryByEntity(new WMenuEntity() { DisplayColumn = displayIndex, WeiXinID = weixinId, Level = "2" }, null);
+                if (wMenuEntityArraybyIndex.Length != 0 && wMenuEntityArraybyIndex[0].ID != menuId)
+                {
+                    throw new APIException("一级菜单序号不可重复") { ErrorCode = 143 };
+                }
+                wMenuEntityArrayByName = bll.QueryByEntity(new WMenuEntity() { Name = name, WeiXinID = weixinId, Level = "2" }, null);
+                if (string.IsNullOrEmpty(menuId) || menuId == "")
+                {
+                    if (wMenuEntityArrayByName.Length != 0)
+                    {
+                        throw new APIException("菜单名称不可重复") { ErrorCode = 142 };
+                    }
+                }
+                else if (wMenuEntityArrayByName.Length != 0 && wMenuEntityArrayByName[0].ID != menuId)
+                {
+                    throw new APIException("菜单名称不可重复") { ErrorCode = 142 };
+                }
+            }
             if (string.IsNullOrEmpty(menuId) || menuId == "")
             {
                 var newMenuId = Utils.NewGuid().ToString();
@@ -275,7 +316,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                 entity.Text = text;
 
                 bll.Create(entity);
-
                 rd.MenuId = newMenuId;
             }
             else

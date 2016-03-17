@@ -842,6 +842,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     tInoutEntity.Field19 = rp.Parameters.Invoice;  //发票信息
                     tInoutEntity.VipCardCode = vipInfo.VipCode;    //会员卡号
                     tInoutEntity.Field7 = status;
+                    tInoutEntity.OrderDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");  ///提交订单时间
                     tInoutBll.Update(tInoutEntity, tran);          //修改订单信息
 
                     #region [弃用]订单扩展表用于(人人销售、分润数据） add by donal 2014-10-14 09:40:12

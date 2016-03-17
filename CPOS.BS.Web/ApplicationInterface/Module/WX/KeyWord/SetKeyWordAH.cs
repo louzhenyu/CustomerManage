@@ -42,22 +42,31 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.KeyWord
             {
                 throw new APIException("回复类型不能为空") { ErrorCode = 126 };
             }
-
             var bll = new WKeywordReplyBLL(CurrentUserInfo);
+
+            #region 关键字不能重复
             WKeywordReplyEntity wKeywordReplyEntity = new WKeywordReplyEntity()
             {
-                ApplicationId = keywordList.ApplicationId,
-                KeywordType = 1
+                Keyword = keywordList.KeyWord,
+                ApplicationId = keywordList.ApplicationId
 
             };
-            var ds = bll.QueryByEntity(wKeywordReplyEntity,null);
-            foreach (var a in ds)
-            {
-                if (a.Keyword.ToString() == keywordList.KeyWord.ToString())
+            var queryByEntityArray = bll.QueryByEntity(wKeywordReplyEntity, null);
+            if (string.IsNullOrEmpty(keywordList.ReplyId))
+            {                
+                if (queryByEntityArray.Length != 0)
                 {
-                    throw new APIException("关键字名称不可重复") { ErrorCode = 127 };
+                    throw new APIException("关键字不能重复") { ErrorCode = 127 };
                 }
             }
+            else
+            {
+                if (queryByEntityArray.Length != 0 && queryByEntityArray[0].ReplyId != keywordList.ReplyId)
+                {
+                    throw new APIException("关键字不能重复") { ErrorCode = 127 };
+                }
+            }
+            #endregion
 
             var entity = new WKeywordReplyEntity
             {

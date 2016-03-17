@@ -2253,6 +2253,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         public string SetOrderInfo()
         {
             string content = string.Empty;
+            
             var respData = new setOrderInfoNewRespData();
             try
             {
@@ -2510,7 +2511,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 if (orderInfo.OrderId == null || orderInfo.OrderId.Equals(""))
                 {
                     orderInfo.OrderId = BaseService.NewGuidPub();
-                    orderInfo.OrderDate = System.DateTime.Now.ToString("yyyy-MM-dd");
+                    orderInfo.OrderDate = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                     orderInfo.Status = (string.IsNullOrEmpty(reqObj.special.reqBy) || reqObj.special.reqBy == "0") ? "-99" : "100";   //Jermyn20140219 //haibo.zhou20140224,这里这么写，status=-99,是针对微信平台里的，在提交表单之前就生成了订单，所以状态设为-99，而状态设为100是针对app里提交订单时才生成真实订单***
                     if (reqObj.special.CommodityType == "1") //为虚拟商品，订单为真实订单
                     {
