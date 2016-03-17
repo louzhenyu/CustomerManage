@@ -57,7 +57,6 @@
 			$(".wxAuthBox").bind("click", function () {
 			    $('#win2').window('open');
 			});
-
 			$('#receive').attr("src",window.weixinUrl);
         },
 
