@@ -1353,7 +1353,7 @@ namespace JIT.CPOS.Web.WeiXin
             vipQueryInfo.WeiXin = WeiXin;
             vipQueryInfo.ClientID = customerIdUnoin;
 
-            var tmpUser = Default.GetBSLoggingSession(customerIdUnoin, "1");
+            var tmpUser = Default.GetBSLoggingSession(customerIdUnoin, "system");
 
             #region 处理日志
             try

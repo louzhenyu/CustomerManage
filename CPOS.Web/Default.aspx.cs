@@ -163,7 +163,7 @@ namespace JIT.CPOS.Web
         /// <returns></returns>
         public static LoggingSessionInfo GetBSLoggingSession(string customerId, string userId)
         {
-            if (userId == null || userId == string.Empty) userId = "1";
+            if (userId == null || userId == string.Empty) userId = "system";
             string conn = GetCustomerConn(customerId);
             string name = GetCustomerName(customerId);
 
