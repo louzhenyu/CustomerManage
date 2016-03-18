@@ -182,33 +182,35 @@
                 debugger;
                 var rowIndex=$(this).data("index");
                 var optType=$(this).data("flag");
-                that.elems.tabel.datagrid('selectRow', rowIndex);
-                var row = that.elems.tabel.datagrid('getSelected');
-                that.loadData.args.CouponTypeID=row.CouponTypeID;
-                if(optType=="ChangeStatus") {
-                    that.loadData.operation(row,optType,function(){
-                        alert("操作成功");
-                        that.loadPageData()
-                    })
+                if(optType) {
+                    that.elems.tabel.datagrid('selectRow', rowIndex);
+                    var row = that.elems.tabel.datagrid('getSelected');
+                    that.loadData.args.CouponTypeID = row.CouponTypeID;
+                    if (optType == "ChangeStatus") {
+                        that.loadData.operation(row, optType, function () {
+                            alert("操作成功");
+                            that.loadPageData()
+                        })
 
 
-                }
-                if(optType=="exit"){
-                    var url="/module/AppConfig/homePageDetail.aspx?homeId="+row.HomeId+"&optionType=Edit";
-                    $.util.toNewUrlPath(url);
-                }
+                    }
+                    if (optType == "exit") {
+                        var url = "/module/AppConfig/homePageDetail.aspx?homeId=" + row.HomeId + "&optionType=Edit";
+                        $.util.toNewUrlPath(url);
+                    }
 
-                if(optType=="delete"){
+                    if (optType == "delete") {
 
-                    $.messager.confirm("提示","确认删除主页吗",function(r){
-                             if(r){
-                                 that.loadData.operation(row,optType,function(){
-                                     alert("操作成功");
-                                     that.loadPageData()
-                                 })
+                        $.messager.confirm("提示", "确认删除主页吗", function (r) {
+                            if (r) {
+                                that.loadData.operation(row, optType, function () {
+                                    alert("操作成功");
+                                    that.loadPageData()
+                                })
 
-                             }
-                    })
+                            }
+                        })
+                    }
                 }
             });
             /**************** -------------------列表操作事件用例 End****************/
