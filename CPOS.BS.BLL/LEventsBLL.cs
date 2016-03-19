@@ -1035,8 +1035,8 @@ namespace JIT.CPOS.BS.BLL
                                                 vipData.Col21 = DateTime.Now.ToString();//集客时间
                                                 vipDealerBLL.Update(vipData);
                                                 //
-                                                content = vipData.VipName + "成为了您的下线会员！";
-
+                                                //content = vipData.VipName + "成为了您的下线会员！";
+                                                content = vipData.VipName + "成为橙果会员";
                                             }
                                             else
                                             {
@@ -1055,8 +1055,8 @@ namespace JIT.CPOS.BS.BLL
                                     }
                                     else
                                     {
-                                        content = vipData.VipName + "已有上线！";
-
+                                        //content = vipData.VipName + "已有上线！";
+                                        content = vipData.VipName + "已是橙果会员！";
                                     }
 
                                     //获取经销商OpenID
