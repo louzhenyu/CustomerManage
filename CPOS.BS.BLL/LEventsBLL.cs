@@ -1040,7 +1040,7 @@ namespace JIT.CPOS.BS.BLL
                                             }
                                             else
                                             {
-                                                content = "不能发展自己上线会员！";
+                                                content = "不能发展自己上线会员";
                                             }
                                             //}
                                             //else
@@ -1050,13 +1050,13 @@ namespace JIT.CPOS.BS.BLL
                                         }
                                         else
                                         {
-                                            content = "不能发展自己！";
+                                            content = "不能发展自己";
                                         }
                                     }
                                     else
                                     {
                                         //content = vipData.VipName + "已有上线！";
-                                        content = vipData.VipName + "已是橙果会员！";
+                                        content = vipData.VipName + "已是橙果会员";
                                     }
 
                                     //获取经销商OpenID
