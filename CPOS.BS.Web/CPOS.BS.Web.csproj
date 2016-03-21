@@ -108,6 +108,9 @@
     <Content Include="css\lf_style.css" />
     <Content Include="css\fs_base.css" />
     <Content Include="css\fs_style.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="Error.aspx" />
+    <Content Include="File\images\83d66eae0a3943c4a0355b3afa8c3779.jpg" />
     <Content Include="File\Script\Data\Card\Priming_Data.sql" />
     <Content Include="File\Script\Data\NewEventManagement\Priming_Data.sql" />
     <Content Include="File\Script\SP\Card\CardBulkInsert.sql" />
@@ -384,6 +387,7 @@
     <Content Include="images\banner_lf.png" />
     <Content Include="images\banner_wk.jpg" />
     <Content Include="images\comingsoon.jpg" />
+    <Content Include="images\error.jpg" />
     <Content Include="images\fosun_logo.png" />
     <Content Include="images\fs_banner.jpg" />
     <Content Include="images\fs_sprites.png" />
@@ -1992,6 +1996,7 @@
     <Content Include="Module\LEventsAlbum\Store\LEventsAlbumVMStore.js" />
     <Content Include="Module\LEventsAlbum\View\LEventsAlbumEditView.js" />
     <Content Include="Module\LEventsAlbum\View\LEventsAlbumView.js" />
+    <Content Include="NotFound.aspx" />
     <Content Include="QRCodeImage\qrcode.jpg" />
     <Content Include="images\sale_table_bg.png" />
     <Content Include="images\sprites_wk.png" />
@@ -2863,8 +2868,6 @@
     <Content Include="js\jquery.js" />
     <Content Include="lj\Auth.aspx" />
     <Content Include="GoSso.aspx" />
-    <Content Include="Default.aspx" />
-    <Content Include="Error.aspx" />
     <Content Include="Framework\Css\basic.css" />
     <Content Include="Framework\Css\common.css" />
     <Content Include="Framework\Css\cpos.css" />
@@ -7877,6 +7880,20 @@
     <Compile Include="ComingSoon.aspx.designer.cs">
       <DependentUpon>ComingSoon.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Framework\Javascript\Biz\Handler\AlbumModuleTypeHandler.ashx.cs">
       <DependentUpon>AlbumModuleTypeHandler.ashx</DependentUpon>
     </Compile>
@@ -8131,20 +8148,6 @@
     </Compile>
     <Compile Include="GoSso.aspx.designer.cs">
       <DependentUpon>GoSso.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Error.aspx.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Error.aspx.designer.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Framework\Javascript\Biz\Handler\AppSysHandler.ashx.cs">
       <DependentUpon>AppSysHandler.ashx</DependentUpon>
@@ -8755,6 +8758,13 @@
     </Compile>
     <Compile Include="NewsDetail.aspx.designer.cs">
       <DependentUpon>NewsDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="NotFound.aspx.cs">
+      <DependentUpon>NotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NotFound.aspx.designer.cs">
+      <DependentUpon>NotFound.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\MapKpiService\Reference.cs">

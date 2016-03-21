@@ -34,7 +34,7 @@ using JIT.CPOS.BS.Entity.User;
 
 namespace JIT.CPOS.BS.Web.PageBase
 {
-    public class JITPage : Page
+    public partial class JITPage : Page
     {
 
         protected string StaticUrl
