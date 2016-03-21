@@ -182,7 +182,9 @@ namespace JIT.CPOS.BS.DataAccess
             sql += ",a.create_time";
             sql += ",a.ifservice";
             sql += ",a.modify_time";
+            sql += ",vits.ObjecetTypeId";
             sql += " FROM dbo.vw_item_detail a ";
+            sql += "LEFT JOIN T_VirtualItemTypeSetting vits on vits.ItemId = a.item_id and vits.isdelete = 0";
 
             //if (!string.IsNullOrEmpty(itemTypeId))
             //{

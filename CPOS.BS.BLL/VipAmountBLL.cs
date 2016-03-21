@@ -118,6 +118,11 @@ namespace JIT.CPOS.BS.BLL
 
         }
 
+        public decimal GetVipValidReturnAmountByID(string vipId ,System.Data.SqlClient.SqlTransaction tran)
+        {
+            return _currentDAO.GetVipValidReturnAmountByID(vipId, tran);
+        }
+
         /// <summary>
         /// ÊÂÎñ
         /// </summary>

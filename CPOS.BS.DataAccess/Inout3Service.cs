@@ -880,11 +880,11 @@ namespace JIT.CPOS.BS.DataAccess
             sql = pService.GetLinkSql(sql, "a.unit_id", orderSearchInfo.unit_id, "=");
             if (!string.IsNullOrEmpty(orderSearchInfo.order_date_begin))//判断是否为空
             {
-                sql = pService.GetLinkSql(sql, "a.create_time", orderSearchInfo.order_date_begin, ">=");  //订单开始日期
+                sql = pService.GetLinkSql(sql, "a.order_date", orderSearchInfo.order_date_begin, ">=");  //订单开始日期
             }
             if (!string.IsNullOrEmpty(orderSearchInfo.order_date_end))
             {
-                sql = pService.GetLinkSql(sql, "a.create_time", orderSearchInfo.order_date_end, "<=");  //订单开始日期
+                sql = pService.GetLinkSql(sql, "a.order_date", orderSearchInfo.order_date_end, "<=");  //订单开始日期
             }
             if (!string.IsNullOrEmpty(orderSearchInfo.complete_date_begin))
             {

@@ -288,6 +288,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public int EventTypeId { get; set; }//活动类型id(抢购，团购，秒杀)
             public string GoodsType { get; set; } //商品的类型GoodsDetail：正常，热销，GroupGoodsDetail：团购，RushGoodsDetail：抢购
             public int ifservice { get; set; }//是否虚拟商品
+            public string ObjecetTypeId { get; set; } //卡/券类型
         }
         public class getItemListReqData : ReqData
         {

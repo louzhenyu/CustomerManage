@@ -442,7 +442,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                     {
                         //rsp.Message = "此客户已是会员，无需再集客。老会员更要服务好哦！";
                     }
-                    else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddMinutes(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
+                    else if (vipInfo != null && vipInfo.SetoffUserId == RP.UserID && !string.IsNullOrEmpty(vipInfo.Col21) && Convert.ToDateTime(vipInfo.Col21).AddSeconds(3) < DateTime.Now)  //col21：员工集客/或者分销商集客时间
                     {
                         //rsp.Message = "此客户此前已经被您集客，无需重复集客。！";
                     }
@@ -549,7 +549,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 {
                     RP.Parameters.DcodeId = RP.Parameters.DcodeId.Replace(" ", "").Trim();
                 }
-
+                if (string.IsNullOrEmpty(RP.Parameters.VipId))
+                {
+                    rsp.ResultCode = 305;
+                    rsp.Message = "会员信息不能为空";
+                    return rsp.ToJSON().ToString();
+                }
 
                 var loggingSessionInfo = Default.GetBSLoggingSession(customerId, "1");
 
@@ -606,44 +611,64 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                         {
                                             string strErrormessage = "";
                                             DataSet ds = SalesPolicybll.getReturnAmount(Convert.ToDecimal(RP.Parameters.amount.ToString()), customerId);
-                                            if (ds != null && ds.Tables[0].Rows.Count == 0 && ds.Tables[1].Rows.Count == 0)
+
+                                            VipCardVipMappingBLL vipCardVipMappingBll = new VipCardVipMappingBLL(loggingSessionInfo);
+                                            VipCardBLL vipCardBll = new VipCardBLL(loggingSessionInfo);
+                                            VipCardRuleBLL vipCardRuleBll = new VipCardRuleBLL(loggingSessionInfo);
+                                            var vipCardVipMapping = vipCardVipMappingBll.QueryByEntity(new VipCardVipMappingEntity() { VIPID = RP.Parameters.VipId }, new OrderBy[] { new OrderBy(){ Direction = OrderByDirections.Desc,FieldName = "CreateTime"}});
+                                            if (vipCardVipMapping.Length != 0)
                                             {
-                                                throw new APIException("该客户没有配置策略信息") { ErrorCode = 250 };
-                                            }
-                                            if (ds != null && ds.Tables[0].Rows.Count > 0)
-                                            {
-                                                string m_ReturnAmount = ds.Tables[0].Rows[0]["ReturnAmount"].ToString();
-                                                if (!string.IsNullOrWhiteSpace(m_ReturnAmount))
+                                                var vipCard = vipCardBll.GetByID(vipCardVipMapping[0].VipCardID);
+                                                var vipCardRule = vipCardRuleBll.QueryByEntity(new VipCardRuleEntity() { VipCardTypeID = vipCard.VipCardTypeID }, null);
+                                                if (vipCardRule.Length != 0)
                                                 {
-                                                    //返现金额
-                                                    ReturnAmount = entity.ReturnAmount = Convert.ToDecimal(ds.Tables[0].Rows[0]["ReturnAmount"].ToString());
+                                                    double returnAmountPer = Convert.ToDouble(vipCardRule[0].ReturnAmountPer) * 0.01;
+                                                    ReturnAmount = entity.ReturnAmount = entity.SalesAmount * Convert.ToDecimal(returnAmountPer);
                                                 }
                                                 else
                                                 {
-                                                    //返现金额
-                                                    ReturnAmount = entity.ReturnAmount = 0;
-
-                                                }
-                                                //返现消息内容
-                                                PushInfo = ds.Tables[0].Rows[0]["PushInfo"].ToString();
+                                                    ReturnAmount = 0;
+                                                } 
                                             }
-                                            else
-                                            {
-                                                string m_ReturnAmountTwo = ds.Tables[1].Rows[0]["ReturnAmount"].ToString();
-                                                if (!string.IsNullOrWhiteSpace(m_ReturnAmountTwo))
-                                                {
-                                                    //返现金额
-                                                    ReturnAmount = entity.ReturnAmount = Convert.ToDecimal(ds.Tables[0].Rows[0]["ReturnAmount"].ToString());
-                                                }
-                                                else
-                                                {
-                                                    //返现金额
-                                                    ReturnAmount = entity.ReturnAmount = 0;
+            
+                                            PushInfo = ds.Tables[1].Rows[0]["PushInfo"].ToString();
+                                            //if (ds != null && ds.Tables[0].Rows.Count == 0 && ds.Tables[1].Rows.Count == 0)
+                                            //{
+                                            //    throw new APIException("该客户没有配置策略信息") { ErrorCode = 250 };
+                                            //}
+                                            //if (ds != null && ds.Tables[0].Rows.Count > 0)
+                                            //{
+                                            //    string m_ReturnAmount = ds.Tables[0].Rows[0]["ReturnAmount"].ToString();
+                                            //    if (!string.IsNullOrWhiteSpace(m_ReturnAmount))
+                                            //    {
+                                            //        //返现金额
+                                            //        ReturnAmount = entity.ReturnAmount = Convert.ToDecimal(ds.Tables[0].Rows[0]["ReturnAmount"].ToString());
+                                            //    }
+                                            //    else
+                                            //    {
+                                            //        //返现金额
+                                            //        ReturnAmount = entity.ReturnAmount = 0;
+                                            //    }
+                                            //    //返现消息内容
+                                            //    PushInfo = ds.Tables[0].Rows[0]["PushInfo"].ToString();
+                                            //}
+                                            //else
+                                            //{
+                                            //    string m_ReturnAmountTwo = ds.Tables[1].Rows[0]["ReturnAmount"].ToString();
+                                            //    if (!string.IsNullOrWhiteSpace(m_ReturnAmountTwo))
+                                            //    {
+                                            //        //返现金额
+                                            //        ReturnAmount = entity.ReturnAmount = Convert.ToDecimal(ds.Tables[0].Rows[0]["ReturnAmount"].ToString());
+                                            //    }
+                                            //    else
+                                            //    {
+                                            //        //返现金额
+                                            //        ReturnAmount = entity.ReturnAmount = 0;
 
-                                                }
-                                                //返现消息内容
-                                                PushInfo = ds.Tables[1].Rows[0]["PushInfo"].ToString();
-                                            }
+                                            //    }
+                                            //    //返现消息内容
+                                            //    PushInfo = ds.Tables[1].Rows[0]["PushInfo"].ToString();
+                                            //}
                                             VipAmountBLL Amountbll = new VipAmountBLL(loggingSessionInfo);
                                             if (temp.IsReturn != 1)  //当未返现的时候金额变更
                                             {
@@ -656,6 +681,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                             {
                                                 ReturnAmount = temp.ReturnAmount;
                                             }
+                                         
                                             var vipBll = new VipBLL(loggingSessionInfo);
 
                                             var vipEntity = vipBll.GetByID(RP.Parameters.VipId);
@@ -665,60 +691,60 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                                               ReturnAmount ?? 0, RP.Parameters.VipId, vipEntity.WeiXinUserId, tran, loggingSessionInfo);//tran
 
                                             #region 增加抽奖信息
-                                            var rateList = SalesPolicybll.QueryByEntity(new WXSalesPolicyRateEntity { CustomerId = RP.CustomerID }, null);
-                                            if (rateList == null || rateList.Length == 0)
-                                            {
-                                                //rateList = SalesPolicybll.QueryByEntity(new WXSalesPolicyRateEntity{CustomerId =null},null);
-                                                rateList = SalesPolicybll.GetWxSalesPolicyRateList().ToArray();
-                                            }
+                                            //var rateList = SalesPolicybll.QueryByEntity(new WXSalesPolicyRateEntity { CustomerId = RP.CustomerID }, null);
+                                            //if (rateList == null || rateList.Length == 0)
+                                            //{
+                                            //    //rateList = SalesPolicybll.QueryByEntity(new WXSalesPolicyRateEntity{CustomerId =null},null);
+                                            //    rateList = SalesPolicybll.GetWxSalesPolicyRateList().ToArray();
+                                            //}
 
-                                            if (rateList != null && rateList.Length > 0)
-                                            {
+                                            //if (rateList != null && rateList.Length > 0)
+                                            //{
 
-                                                var wxSalespolicyRateMapBll = new WXSalesPolicyRateObjectMappingBLL(loggingSessionInfo);
+                                            //    var wxSalespolicyRateMapBll = new WXSalesPolicyRateObjectMappingBLL(loggingSessionInfo);
 
-                                                var rateMappingEntity =
-                                                    wxSalespolicyRateMapBll.QueryByEntity(new WXSalesPolicyRateObjectMappingEntity { RateId = rateList[0].RateId }, null);
-                                                if (rateMappingEntity != null && rateMappingEntity.Length > 0)
-                                                {
-                                                    if (Convert.ToDecimal(RP.Parameters.amount) >= rateMappingEntity[0].CoefficientAmount)
-                                                    {
-                                                        if (rateMappingEntity[0].PushInfo != null)
-                                                        {
-                                                            var message = rateMappingEntity[0].PushInfo.Replace("#CustomerId#", RP.CustomerID).Replace("#EventId#", rateMappingEntity[0].ObjectId).Replace("#VipId#", RP.Parameters.VipId).Replace("#OpenId#", vipEntity.WeiXinUserId);
+                                            //    var rateMappingEntity =
+                                            //        wxSalespolicyRateMapBll.QueryByEntity(new WXSalesPolicyRateObjectMappingEntity { RateId = rateList[0].RateId }, null);
+                                            //    if (rateMappingEntity != null && rateMappingEntity.Length > 0)
+                                            //    {
+                                            //        if (Convert.ToDecimal(RP.Parameters.amount) >= rateMappingEntity[0].CoefficientAmount)
+                                            //        {
+                                            //            if (rateMappingEntity[0].PushInfo != null)
+                                            //            {
+                                            //                var message = rateMappingEntity[0].PushInfo.Replace("#CustomerId#", RP.CustomerID).Replace("#EventId#", rateMappingEntity[0].ObjectId).Replace("#VipId#", RP.Parameters.VipId).Replace("#OpenId#", vipEntity.WeiXinUserId);
 
-                                                            WXSalesPushLogBLL PushLogbll = new WXSalesPushLogBLL(loggingSessionInfo);
-                                                            WXSalesPushLogEntity qrLog = new WXSalesPushLogEntity();
-                                                            qrLog.LogId = Guid.NewGuid();
+                                            //                WXSalesPushLogBLL PushLogbll = new WXSalesPushLogBLL(loggingSessionInfo);
+                                            //                WXSalesPushLogEntity qrLog = new WXSalesPushLogEntity();
+                                            //                qrLog.LogId = Guid.NewGuid();
 
-                                                            qrLog.OpenId = RP.OpenID;
-                                                            qrLog.VipId = RP.Parameters.VipId;
-                                                            qrLog.PushInfo = message;
-                                                            qrLog.DCodeId = content;
-                                                            qrLog.RateId = Guid.NewGuid();
-                                                            PushLogbll.Create(qrLog);
+                                            //                qrLog.OpenId = RP.OpenID;
+                                            //                qrLog.VipId = RP.Parameters.VipId;
+                                            //                qrLog.PushInfo = message;
+                                            //                qrLog.DCodeId = content;
+                                            //                qrLog.RateId = Guid.NewGuid();
+                                            //                PushLogbll.Create(qrLog);
 
-                                                            #region 增加抽奖机会
-                                                            LEventsVipObjectBLL eventbll = new LEventsVipObjectBLL(loggingSessionInfo);
-                                                            LEventsVipObjectEntity evententity = new LEventsVipObjectEntity();
-                                                            evententity.MappingId = Guid.NewGuid().ToString("N");
-                                                            evententity.ObjectId = rateMappingEntity[0].ObjectId;
-                                                            evententity.VipId = RP.Parameters.VipId;
-                                                            evententity.EventId = rateMappingEntity[0].ObjectId;
-                                                            evententity.ObjectId = RP.Parameters.orderId;
-                                                            evententity.IsCheck = 0;
-                                                            evententity.LotteryCode = "0";
-                                                            evententity.IsLottery = 0;
-                                                            eventbll.Create(evententity);
-                                                            #endregion
+                                            //                #region 增加抽奖机会
+                                            //                LEventsVipObjectBLL eventbll = new LEventsVipObjectBLL(loggingSessionInfo);
+                                            //                LEventsVipObjectEntity evententity = new LEventsVipObjectEntity();
+                                            //                evententity.MappingId = Guid.NewGuid().ToString("N");
+                                            //                evententity.ObjectId = rateMappingEntity[0].ObjectId;
+                                            //                evententity.VipId = RP.Parameters.VipId;
+                                            //                evententity.EventId = rateMappingEntity[0].ObjectId;
+                                            //                evententity.ObjectId = RP.Parameters.orderId;
+                                            //                evententity.IsCheck = 0;
+                                            //                evententity.LotteryCode = "0";
+                                            //                evententity.IsLottery = 0;
+                                            //                eventbll.Create(evententity);
+                                            //                #endregion
 
-                                                            JIT.CPOS.BS.BLL.WX.CommonBLL.SendWeixinMessage(message, "1", loggingSessionInfo, vipEntity);//发送信息
-                                                        }
-                                                    }
-                                                }
+                                            //                JIT.CPOS.BS.BLL.WX.CommonBLL.SendWeixinMessage(message, "1", loggingSessionInfo, vipEntity);//发送信息
+                                            //            }
+                                            //        }
+                                            //    }
 
 
-                                            }
+                                            //}
                                             #endregion
 
                                             //发送抽奖信息

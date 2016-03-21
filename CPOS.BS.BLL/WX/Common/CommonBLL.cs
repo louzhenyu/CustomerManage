@@ -1749,8 +1749,8 @@ namespace JIT.CPOS.BS.BLL.WX
 
 
                     var vipamountBll = new VipAmountBLL(LoggingSessionInfo);
-                    var endAmount = vipamountBll.GetVipByEndAmount(vipID, tran);
-                    var message = PushInfo.Replace("#SalesAmount#", SalesAmount.ToString()).Replace("#ReturnAmount#", ReturnAmount.ToString("0.00")).Replace("#EndAmount#", endAmount.ToString("0.00")).Replace("#VipName#", vipEntity.VipName);
+                    var validReturnAmount = vipamountBll.GetVipValidReturnAmountByID(vipID, tran);
+                    var message = PushInfo.Replace("#SalesAmount#", SalesAmount.ToString()).Replace("#ReturnAmount#", ReturnAmount.ToString("0.00")).Replace("#ValidReturnAmount#", validReturnAmount.ToString("0.00")).Replace("#VipName#", vipEntity.VipName);
                     #region 插入门店返现推送消息日志表
                     WXSalesPushLogBLL PushLogbll = new WXSalesPushLogBLL(LoggingSessionInfo);
                     WXSalesPushLogEntity pushLog = new WXSalesPushLogEntity();

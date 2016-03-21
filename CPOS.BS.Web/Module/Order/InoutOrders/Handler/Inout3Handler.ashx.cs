@@ -1272,6 +1272,19 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                     order_reason_type_id = FormatParamValue(form.order_reason_id);
                 }
 
+                #region 导出一个月订单,对于时间处理
+                if(string.IsNullOrEmpty(form.order_date_begin))
+                {
+                    form.order_date_begin = DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM-dd HH:mm:ss");
+                    form.order_date_end = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                }
+                else if (Convert.ToDateTime(form.order_date_begin).Date < Convert.ToDateTime(form.order_date_end).Date.AddMonths(-1))
+                {
+                    form.order_date_begin = Convert.ToDateTime(form.order_date_end).Date.AddMonths(-1).ToString("yyyy-MM-dd HH:mm:ss");
+                }
+                #endregion
+
+
                 string PayStatus = FormatParamValue(form.Field1);
 
                 string order_no = FormatParamValue(form.order_no);
@@ -1279,8 +1292,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 string warehouse_id = FormatParamValue(form.warehouse_id);//Request("warehouse_id");//
                 //string purchase_unit_id = form.purchase_unit_id;
                 string status = FormatParamValue(form.status);
-                string order_date_begin = FormatParamValue(form.order_date_begin);
-                string order_date_end = FormatParamValue(form.order_date_end);
+                string order_date_begin = FormatParamValue(Convert.ToDateTime(form.order_date_begin).ToString("yyyy-MM-dd HH:mm:ss"));
+                string order_date_end = FormatParamValue(Convert.ToDateTime(form.order_date_end).AddHours(+23).AddMinutes(+59).AddSeconds(+59).ToString("yyyy-MM-dd HH:mm:ss"));
                 string complete_date_begin = FormatParamValue(form.complete_date_begin);
                 string complete_date_end = FormatParamValue(form.complete_date_end);
                 string data_from_id = FormatParamValue(form.data_from_id);
@@ -1584,17 +1597,17 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
         {
             string propDetailName = string.Empty;
 
-            if (string.IsNullOrEmpty(pInoutDetilInfo.prop_1_detail_name)&&string.IsNullOrEmpty(pSkuInfo.prop_1_name))
+            if (!string.IsNullOrEmpty(pInoutDetilInfo.prop_1_detail_name)&&!string.IsNullOrEmpty(pSkuInfo.prop_1_name))
                 propDetailName = pSkuInfo.prop_1_name.ToString() + ":" + propDetailName + pInoutDetilInfo.prop_1_detail_name.ToString();
 
-            if (propDetailName != string.Empty && string.IsNullOrEmpty(pInoutDetilInfo.prop_2_detail_name) && string.IsNullOrEmpty(pSkuInfo.prop_2_name))
+            if (propDetailName != string.Empty && !string.IsNullOrEmpty(pInoutDetilInfo.prop_2_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_2_name))
                 propDetailName = propDetailName + "," + pSkuInfo.prop_2_name.ToString() + ":" + pInoutDetilInfo.prop_2_detail_name.ToString();
-            else if (propDetailName == string.Empty && string.IsNullOrEmpty(pInoutDetilInfo.prop_2_detail_name) && string.IsNullOrEmpty(pSkuInfo.prop_2_name))
+            else if (propDetailName == string.Empty && !string.IsNullOrEmpty(pInoutDetilInfo.prop_2_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_2_name))
                 propDetailName = propDetailName + pSkuInfo.prop_2_name.ToString() + ":" + pInoutDetilInfo.prop_2_detail_name.ToString();
 
-            if (propDetailName != string.Empty && string.IsNullOrEmpty(pInoutDetilInfo.prop_3_detail_name) && string.IsNullOrEmpty(pSkuInfo.prop_3_name))
+            if (propDetailName != string.Empty && !string.IsNullOrEmpty(pInoutDetilInfo.prop_3_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_3_name))
                 propDetailName = propDetailName + "," + pSkuInfo.prop_3_name.ToString() + ":" + pInoutDetilInfo.prop_3_detail_name.ToString();
-            else if (propDetailName == string.Empty && string.IsNullOrEmpty(pInoutDetilInfo.prop_3_detail_name) && string.IsNullOrEmpty(pSkuInfo.prop_3_name))
+            else if (propDetailName == string.Empty && string.IsNullOrEmpty(pInoutDetilInfo.prop_3_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_3_name))
                 propDetailName = propDetailName + pSkuInfo.prop_3_name.ToString() + ":" + pInoutDetilInfo.prop_3_detail_name.ToString();
 
             return propDetailName;

@@ -104,7 +104,7 @@ li {list-style-type:none;}
 .Chartdesc{float: left;display:inline-block;  margin: 30px 0px;  width: 40%;}
 .Chartdesc .optiondesc{  font-size: 15px;  color: #a1a1a1;margin: 7px;float:left;min-width: 200px;white-space: nowrap;}
 .Chartdesc .optiondesc span{font-size: 21px; color: #5fbce7;float: left;}
-.Chartdesc .optiondesc em{ width: 130px; text-align: right;float: left;}
+.Chartdesc .optiondesc em{ width: 135px; text-align: right;float: left;}
 .Chartdesc .optiondesc .CurrentMonthunit {font-size:inherit;color:inherit;}
 
 

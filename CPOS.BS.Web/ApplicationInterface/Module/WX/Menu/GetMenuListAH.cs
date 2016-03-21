@@ -60,9 +60,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
 
                 var temp =
                     ds.Tables[0].AsEnumerable()
+                       .Where(t => t["level"].ToString() == "1")  //先取第一层
                         .OrderBy(t => t["Status"].ToString())
-                        .OrderBy(t => t["DisplayColumn"].ToString())
-                        .Where(t => t["level"].ToString() == "1")  //先取第一层
+                        .OrderBy(t => Convert.ToInt32(t["DisplayColumn"]))
                         .Select(t => new MenuInfo
                         {
                             MenuId = t["ID"].ToString(),
@@ -80,8 +80,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WX.Menu
                                             tt["ParentId"].ToString() == t["ID"].ToString() &&
                                             tt["level"].ToString() == "2")//子菜单里取第二层
                                     .OrderBy(tt => tt["Status"].ToString())
-                                   // .OrderBy(tt => tt["DisplayColumn"].ToString())
-                                   
+                                    .OrderBy(tt => Convert.ToInt32(tt["DisplayColumn"]))
                                     .Select(tt => new MenuChildInfo
                                     {
                                         MenuId = tt["ID"].ToString(),

@@ -76,7 +76,7 @@
             that.elems.optionBtn.delegate(".commonBtn","click",function(e){
               var type=$(this).data("flag");
                 if(type=="export"){
-                    $.messager.confirm("导出订单列表","你确定导出当前列表的数据吗？",function(r){
+                    $.messager.confirm("导出订单列表","你确定导出当前列表的数据吗？(最近一个月的订单)",function(r){
                         if(r){
                             that.loadData.exportOderList();
                         }

@@ -1178,7 +1178,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql.Append(" INTO #tmp ");
             sql.Append(" FROM ( SELECT  a.ItemId,a.EventId,");
             sql.Append(" b.item_name ItemName , ");
-            sql.Append(" CASE WHEN b.imageUrl IS NULL OR b.imageUrl = '' THEN ( SELECT TOP 1 ImageURL	FROM    ObjectImages x WHERE   x.ObjectId = a.ItemId AND x.IsDelete = '0'ORDER BY DisplayIndex)   ELSE b.imageUrl END ImageUrl,");
+            sql.Append(" CASE WHEN b.imageUrl IS NULL OR b.imageUrl = '' THEN ( SELECT TOP 1 ImageURL	FROM    ObjectImages x WHERE   x.ObjectId = a.ItemId AND x.IsDelete = '0' and DisplayIndex is not null ORDER BY DisplayIndex)   ELSE b.imageUrl END ImageUrl,");
             sql.Append(" a.SalesPrice,a.Price");
             sql.Append(" FROM    PanicbuyingEventItemMapping a ");
             sql.Append(" INNER JOIN T_Item b ON a.ItemId = b.item_id and b.status=1 AND a.IsDelete=0 ");

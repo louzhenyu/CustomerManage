@@ -94,5 +94,16 @@ namespace JIT.CPOS.BS.DataAccess
             }
             return Convert.ToDecimal(res);
         }
+        public decimal GetVipValidReturnAmountByID(string vipId, System.Data.SqlClient.SqlTransaction tran)
+        {
+            decimal validReturnAmount = 0;
+            var sql = string.Format("select ValidReturnAmount from VipAmount where VipId='{0}' and isdelete = 0", vipId);
+            var result = SQLHelper.ExecuteScalar(tran, CommandType.Text, sql);
+            if (result == null || string.IsNullOrWhiteSpace(result.ToString()))
+            {
+                return validReturnAmount;
+            }
+            return Convert.ToDecimal(result);
+        }
     }
 }

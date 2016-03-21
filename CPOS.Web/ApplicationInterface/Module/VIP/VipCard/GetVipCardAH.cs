@@ -21,7 +21,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.VipCard
             var para = pRequest.Parameters;
             GetVipCardRD vipCardRD = new GetVipCardRD();
 
-            vipCardRD.VipCardCode = vipCardVipMappingBLL.BindVirtualItem(para.VipID, para.VipCardCode, "", para.ObjectTypeId);
+            vipCardRD.VipCardCode = vipCardVipMappingBLL.BindVirtualItem(pRequest.UserID, para.VipCardCode, "", para.ObjectTypeId);
 
             return vipCardRD;
         
