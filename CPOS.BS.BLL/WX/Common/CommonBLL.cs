@@ -1063,7 +1063,7 @@ namespace JIT.CPOS.BS.BLL.WX
 
                 BaseService.WriteLogWeixin("获取二维码图片返回值：" + data);
 
-                if (string.IsNullOrEmpty(qrcode.errcode))
+                if (string.IsNullOrEmpty(qrcode.errcode) || qrcode.errcode == "0")//	0代表请求成功
                 {
                     qrcodeUrl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + qrcode.ticket;//通过ticket获取二维码地址
                 }
@@ -1077,6 +1077,77 @@ namespace JIT.CPOS.BS.BLL.WX
 
             return qrcodeUrl;
         }
+
+
+        /// <summary>
+        /// 长链接转短链接接口
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="appSecret"></param>
+        /// <param name="long_url">	需要转换的长链接</param>     
+        /// <returns></returns>
+        public string GetShorturl(string appId, string appSecret, string long_url, LoggingSessionInfo loggingSessionInfo)
+        {
+            BaseService.WriteLogWeixin("长链接转短链接接口");
+            var shorturl = string.Empty;
+
+            //获取access_token
+            var accessToken = this.GetAccessTokenByCache(appId, appSecret, loggingSessionInfo);
+
+            if (accessToken.errcode == null || accessToken.errcode.Equals(string.Empty))
+            {
+                string uri = "https://api.weixin.qq.com/cgi-bin/shorturl?access_token=" + accessToken.access_token;//通过token创建二维码
+                string method = "POST";
+                string content = string.Empty;
+
+                content = "{\"action\": \"long2short\", \"long_url\":\"" + long_url + "\"}";        //此处填long2short，代表长链接转短链接     
+
+                 
+
+                string data = GetRemoteData(uri, method, content);
+
+                if (data.IndexOf("40001") > -1 && data.ToLower().IndexOf("invalid credential") > -1)
+                    Loggers.Debug(new DebugLogInfo() { Message = "长链接转短链接失败，40001:invalid credential, accessToken.access_token=" + accessToken.access_token });
+
+                var shorturlEn = data.DeserializeJSONTo<ShorturlEntity>();//主要获取ticket的
+
+                #region 处理第三方使用token，没有更改过期时间问题
+                if (shorturlEn.errcode == "40001")
+                {
+                    var wAppInteBLL = new WApplicationInterfaceBLL(loggingSessionInfo);
+                    var wAppInteInfo = wAppInteBLL.QueryByEntity(new WApplicationInterfaceEntity() { CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
+                    if (wAppInteInfo != null)
+                    {
+                        //修改过期时间
+                        wAppInteInfo.ExpirationTime = DateTime.Now.AddSeconds(-10);//设置当前的token为过期
+                        wAppInteBLL.Update(wAppInteInfo);
+                        //重新调用接口
+                        data = GetRemoteData(uri, method, content);
+                        shorturlEn = data.DeserializeJSONTo<ShorturlEntity>();
+                    }
+                }
+               
+                #endregion
+
+                BaseService.WriteLogWeixin("长链接转短链接返回值：" + data);
+
+                if (!string.IsNullOrEmpty(shorturlEn.errcode) && shorturlEn.errcode != "0")
+                {
+                    throw new Exception("长链接转短链接失败，" + shorturlEn.errcode + ":" + shorturlEn.errmsg);
+                }
+
+                shorturl = shorturlEn.short_url;
+              
+            }
+
+            BaseService.WriteLogWeixin("shorturl：" + shorturl);
+
+            return shorturl;
+        }
+
+
+
+
 
         #endregion
 

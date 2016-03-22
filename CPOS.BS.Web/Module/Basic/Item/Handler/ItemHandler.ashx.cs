@@ -108,6 +108,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
                     //Response.Write("没有获取微信标识");
                     throw new Exception("该商户没有绑定微信公众号，无法生成商品二维码");
                 }
+                var wapentity = list.FirstOrDefault();//获取公众号信息
 
                 //http://api.dev.chainclouds.com
                 //    http://api.dev.chainclouds.com/WXOAuth/AuthUniversal.aspx?customerId=049b0a8f641f4ca7b17b0b7b6291de1f&applicationId=1D7A01FC1E7D41ECBAC2696D0D363315&goUrl=api.dev.chainclouds.com/HtmlApps/html/public/shop/goods_detail.html?rootPage=true&rootPage=true&goodsId=DBF5326F4C5B4B0F8508AB54B0B0EBD4&ver=1448273310707&scope=snsapi_userinfo
@@ -121,6 +122,17 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
                 //      + "&goUrl=" + weixinDomain + "/HtmlApps/html/public/shop/goods_detail.html?rootPage=true&rootPage=true&goodsId="
                 //      + itemId + "&scope=snsapi_userinfo";
                 ////原来的老页面  weixinDomain + "/HtmlApps/Auth.html?pageName=GoodsDetail&rootPage=true&customerId=" + CurrentUserInfo.ClientID + "&goodsId=" + itemId
+             
+                //常链接转短链接
+                  JIT.CPOS.BS.BLL.WX.CommonBLL commonServer = new JIT.CPOS.BS.BLL.WX.CommonBLL();
+                  var shorturl = commonServer.GetShorturl(wapentity.AppID.ToString().Trim()
+                                                          , wapentity.AppSecret.Trim()
+                                                          , itemUrl
+                                                          , CurrentUserInfo);
+                  if (!string.IsNullOrEmpty(shorturl))
+                  {
+                      itemUrl = shorturl;
+                  }
                 imageURL = Utils.GenerateQRCode(itemUrl, currentDomain, sourcePath, targetPath);
 
                 //如果名称不为空，就把图片放在一定的背景下面

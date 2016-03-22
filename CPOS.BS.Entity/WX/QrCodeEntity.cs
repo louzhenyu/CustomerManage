@@ -27,4 +27,21 @@ namespace JIT.CPOS.BS.Entity.WX
         /// </summary>
         public string expire_seconds { get; set; }
     }
+
+    public class ShorturlEntity
+    {
+        /// <summary>
+        /// 错误编码
+        /// </summary>
+        public string errcode { get; set; }
+        /// <summary>
+        /// 错误内容
+        /// </summary>
+        public string errmsg { get; set; }
+        /// <summary>
+        ///短链接。
+        /// </summary>
+        public string short_url { get; set; }
+
+    }
 }
