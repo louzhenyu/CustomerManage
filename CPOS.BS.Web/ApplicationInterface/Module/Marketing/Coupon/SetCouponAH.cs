@@ -18,7 +18,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
         {
             var rd = new EmptyResponseData();
             var para = pRequest.Parameters;
-            para.EndTime = para.EndTime.AddHours(23).AddMinutes(59).AddSeconds(59);
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var couponTypeBLL = new CouponTypeBLL(loggingSessionInfo);
             var couponBLL = new CouponBLL(loggingSessionInfo);
@@ -45,7 +44,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                         if (para.BeginTime != DateTime.MinValue)
                             couponTypeEntity.BeginTime = para.BeginTime;
                         if (para.EndTime != DateTime.MinValue)
+                        {
+                            para.EndTime = para.EndTime.AddHours(23).AddMinutes(59).AddSeconds(59);
                             couponTypeEntity.EndTime = para.EndTime;
+                        }
                         couponTypeEntity.ServiceLife = para.ServiceLife;
                         couponTypeEntity.ConditionValue = para.ConditionValue;
                         couponTypeEntity.SuitableForStore = para.SuitableForStore;

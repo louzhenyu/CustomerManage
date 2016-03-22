@@ -384,13 +384,17 @@
     <Content Include="Framework\swfupload\插件介绍.txt" />
     <Content Include="Framework\swfupload\目录说明.txt" />
     <Content Include="Framework\swfupload\许可协议.txt" />
+    <Content Include="images\404.png" />
     <Content Include="images\banner_lf.png" />
     <Content Include="images\banner_wk.jpg" />
     <Content Include="images\comingsoon.jpg" />
     <Content Include="images\error.jpg" />
+    <Content Include="images\error.png" />
     <Content Include="images\fosun_logo.png" />
     <Content Include="images\fs_banner.jpg" />
     <Content Include="images\fs_sprites.png" />
+    <Content Include="images\notfound.jpg" />
+    <Content Include="images\notfound.png" />
     <Content Include="images\pay\alipayPay.png" />
     <Content Include="images\pay\weixinPay.png" />
     <Content Include="images\qrcode.jpg" />

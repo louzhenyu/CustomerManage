@@ -194,14 +194,31 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                 //var vcmEntity = new VipCouponMappingEntity();
                 CouponBLL bll = new CouponBLL(loggingSessionInfo);
 
-                List<IWhereCondition> wheresOrderNo = new List<IWhereCondition>();
-                    wheresOrderNo.Add(new EqualsCondition() { FieldName = "CouponID", Value = reqObj.Parameters.cuponID });
-                    var resultCouponVipID = vcmBll.Query(wheresOrderNo.ToArray(), null);
+
 
                 //判断是否有权限核销优惠券
-                var couponEntity = bll.GetByID(reqObj.Parameters.cuponID);
+                CouponEntity couponEntity = null;
+                if (!string.IsNullOrEmpty(reqObj.Parameters.couponCode))
+                {
+                    CouponEntity[] couponEntityArray = bll.QueryByEntity(new CouponEntity() { CouponCode = reqObj.Parameters.couponCode, CustomerID = reqObj.customerId }, null);
+                    if (couponEntityArray.Length != 0)
+                    {
+                        couponEntity = couponEntityArray[0];
+                    }
+                }
+                else
+                {
+                   couponEntity = bll.GetByID(reqObj.Parameters.cuponID);
+                }
+              
+
                 if (couponEntity != null)
                 {
+
+                    List<IWhereCondition> wheresOrderNo = new List<IWhereCondition>();
+                    wheresOrderNo.Add(new EqualsCondition() { FieldName = "CouponID", Value = couponEntity.CouponID });
+                    var resultCouponVipID = vcmBll.Query(wheresOrderNo.ToArray(), null);
+
                     var couponTypeInfo = couponTypeBll.GetByID(couponEntity.CouponTypeID);
                     if (couponTypeInfo != null)
                     {
@@ -240,35 +257,54 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
                                 respData.Message = "请到指定门店使用";
                                 return respData.ToJSON();
                             }
+                        } 
+
+                        int res = bll.BestowCoupon(couponEntity.CouponID, reqObj.Parameters.doorID);
+                        if (res > 0) //如果没有影响一行，所以Coupon表里这条记录的status=1了，不能被使用了。
+                        {
+                            InoutService server = new InoutService(loggingSessionInfo);
+                            var tran = server.GetTran();
+                            using (tran.Connection)//事务
+                            {
+                                #region 优惠券使用记录
+                                var couponUseEntity = new CouponUseEntity()
+                                {
+                                    CouponID = couponEntity.CouponID,
+                                    VipID = resultCouponVipID.Length == 0 ? "" : resultCouponVipID[0].VIPID,
+                                    UnitID = reqObj.Parameters.doorID,
+                                    //OrderID = orderEntity.OrderID.ToString(),
+                                    //CreateBy = reqObj.userId,
+                                    Comment = "核销电子券",
+                                    CustomerID = reqObj.customerId
+                                };
+                                couponUseBll.Create(couponUseEntity);//生成优惠券使用记录
+                                #endregion
+                               
+                                #region 修改优惠券数量
+                                couponTypeInfo.IsVoucher = couponTypeInfo.IsVoucher == null ? 1 : couponTypeInfo.IsVoucher + 1;
+                                couponTypeBll.Update(couponTypeInfo, tran);
+                                #endregion
+
+                                respData.ResultCode = "200";
+                                respData.Message = "优惠劵使用成功";
+
+                                tran.Commit();
+                            }
                         }
-
+                        else
+                        {
+                            respData.ResultCode = "103";
+                            respData.Message = "优惠劵已使用";
+                        }
                     }
-                }
-                int res = bll.BestowCoupon(reqObj.Parameters.cuponID, reqObj.Parameters.doorID);
-                if (res > 0) //如果没有影响一行，所以Coupon表里这条记录的status=1了，不能被使用了。
-                {
-                #region 优惠券使用记录
-                    var couponUseEntity = new CouponUseEntity()
-                    {
-                        CouponID = reqObj.Parameters.cuponID,
-                        VipID = resultCouponVipID == null ? "" : resultCouponVipID[0].VIPID,
-                        UnitID = reqObj.Parameters.doorID,
-                        //OrderID = orderEntity.OrderID.ToString(),
-                        //CreateBy = reqObj.userId,
-                        Comment = "核销电子券",
-                        CustomerID = reqObj.customerId
-                    };
-                    couponUseBll.Create(couponUseEntity);//生成优惠券使用记录
-                #endregion
-
-                    respData.ResultCode = "200";
-                    respData.Message = "优惠劵使用成功";
                 }
                 else
                 {
-                    respData.ResultCode = "103";
-                    respData.Message = "优惠劵已使用";
+                    respData.ResultCode = "104";
+                    respData.Message = "没有找到对应券。";
+                    return respData.ToJSON();
                 }
+
             }
             catch (Exception)
             {
@@ -366,6 +402,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon
         public string couponTypeID;
         public string cuponID;
         public string doorID;//门店ID
+        public string couponCode;//优惠券号
     }
     public class getCouponListRespData : RespData
     {

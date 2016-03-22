@@ -122,7 +122,12 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 
         /// </summary>
-        public String CouponName { set; get; }
+        public string CouponName { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+		public string CoupnName { get; set; }
 
         /// <summary>
         /// 
@@ -163,6 +168,24 @@ namespace JIT.CPOS.BS.Entity
         public int diffDay { set; get; }
 
         #region 新增50个动态字段 2014-10-20
+
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CouponPwd { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CollarCardMode { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CustomerID { get; set; }
+
 
         /// <summary>
         /// 组单号字段

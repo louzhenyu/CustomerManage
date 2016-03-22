@@ -754,7 +754,7 @@ namespace JIT.CPOS.BS.BLL
                 {
                     CouponID = writeOffCouponRP.CouponID
                 }, null);
-                this._currentDAO.UpdateCouponUse(writeOffCouponRP.CouponID, writeOffCouponRP.Comment, vipcouponmappingList[0].VIPID, CurrentUserInfo.UserID, CurrentUserInfo.CurrentUserRole.UnitId, CurrentUserInfo.ClientID);
+                this._currentDAO.UpdateCouponUse(writeOffCouponRP.CouponID, writeOffCouponRP.Comment, vipcouponmappingList.Length == 0 ? null : vipcouponmappingList[0].VIPID, CurrentUserInfo.UserID, CurrentUserInfo.CurrentUserRole.UnitId, CurrentUserInfo.ClientID);
                 sr.Message = "ºËÏú³É¹¦£¡";
             }
 

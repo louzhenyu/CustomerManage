@@ -80,9 +80,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [Coupon](");
-            strSql.Append("[CouponCode],[CouponDesc],[BeginDate],[EndDate],[CouponUrl],[ImageUrl],[Status],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[CouponTypeID],[CouponID],[Col1],[Col2],[Col3],[Col4],[Col5],[Col6],[Col7],[Col8],[Col9],[Col10],[Col11],[Col12],[Col13],[Col14],[Col15],[Col16],[Col17],[Col18],[Col19],[Col20],[Col21],[Col22],[Col23],[Col24],[Col25],[Col26],[Col27],[Col28],[Col29],[Col30],[Col31],[Col32],[Col33],[Col34],[Col35],[Col36],[Col37],[Col38],[Col39],[Col40],[Col41],[Col42],[Col43],[Col44],[Col45],[Col46],[Col47],[Col48],[Col49],[Col50])");
+            strSql.Append("[CouponCode],[CouponDesc],[BeginDate],[EndDate],[CouponUrl],[ImageUrl],[Status],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[CouponTypeID],[CoupnName],[DoorID],[CouponPwd],[CollarCardMode],[CustomerID],[CouponDesc],[CouponCode],[CouponID],[Col1],[Col2],[Col3],[Col4],[Col5],[Col6],[Col7],[Col8],[Col9],[Col10],[Col11],[Col12],[Col13],[Col14],[Col15],[Col16],[Col17],[Col18],[Col19],[Col20],[Col21],[Col22],[Col23],[Col24],[Col25],[Col26],[Col27],[Col28],[Col29],[Col30],[Col31],[Col32],[Col33],[Col34],[Col35],[Col36],[Col37],[Col38],[Col39],[Col40],[Col41],[Col42],[Col43],[Col44],[Col45],[Col46],[Col47],[Col48],[Col49],[Col50])");
             strSql.Append(" values (");
-            strSql.Append("@CouponCode,@CouponDesc,@BeginDate,@EndDate,@CouponUrl,@ImageUrl,@Status,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@CouponTypeID,@CouponID,@Col1,@Col2,@Col3,@Col4,@Col5,@Col6,@Col7,@Col8,@Col9,@Col10,@Col11,@Col12,@Col13,@Col14,@Col15,@Col16,@Col17,@Col18,@Col19,@Col20,@Col21,@Col22,@Col23,@Col24,@Col25,@Col26,@Col27,@Col28,@Col29,@Col30,@Col31,@Col32,@Col33,@Col34,@Col35,@Col36,@Col37,@Col38,@Col39,@Col40,@Col41,@Col42,@Col43,@Col44,@Col45,@Col46,@Col47,@Col48,@Col49,@Col50)");            
+            strSql.Append("@CouponCode,@CouponDesc,@BeginDate,@EndDate,@CouponUrl,@ImageUrl,@Status,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@CouponTypeID,@CoupnName,@DoorID,@CouponPwd,@CollarCardMode,@CustomerID,@CouponDesc,@CouponCode,@CouponID,@Col1,@Col2,@Col3,@Col4,@Col5,@Col6,@Col7,@Col8,@Col9,@Col10,@Col11,@Col12,@Col13,@Col14,@Col15,@Col16,@Col17,@Col18,@Col19,@Col20,@Col21,@Col22,@Col23,@Col24,@Col25,@Col26,@Col27,@Col28,@Col29,@Col30,@Col31,@Col32,@Col33,@Col34,@Col35,@Col36,@Col37,@Col38,@Col39,@Col40,@Col41,@Col42,@Col43,@Col44,@Col45,@Col46,@Col47,@Col48,@Col49,@Col50)");            
 
 			string pkString = pEntity.CouponID;
 
@@ -101,6 +101,12 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@CouponTypeID",SqlDbType.NVarChar),
+					new SqlParameter("@CouponID",SqlDbType.NVarChar),
+					new SqlParameter("@CoupnName",SqlDbType.NVarChar),
+					new SqlParameter("@DoorID",SqlDbType.NVarChar),
+					new SqlParameter("@CouponPwd",SqlDbType.NVarChar),
+					new SqlParameter("@CollarCardMode",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
 					new SqlParameter("@CouponID",SqlDbType.NVarChar),
 					new SqlParameter("@Col1",SqlDbType.NVarChar),
 					new SqlParameter("@Col2",SqlDbType.NVarChar),
@@ -217,6 +223,11 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[61].Value = pEntity.Col48;
             parameters[62].Value = pEntity.Col49;
             parameters[63].Value = pEntity.Col50;
+			parameters[64].Value = pEntity.CoupnName;
+			parameters[65].Value = pEntity.DoorID;
+			parameters[66].Value = pEntity.CouponPwd;
+			parameters[67].Value = pEntity.CollarCardMode;
+			parameters[68].Value = pEntity.CustomerID;
 
             //执行并将结果回写
             int result;
@@ -262,7 +273,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [Coupon] where isdelete=0");
+            sql.AppendFormat("select * from [Coupon] where 1=1  and isdelete=0");
             //读取数据
             List<CouponEntity> list = new List<CouponEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -323,6 +334,16 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.CouponTypeID!=null)
                 strSql.Append( "[CouponTypeID]=@CouponTypeID,");
+			if (pIsUpdateNullField || pEntity.CoupnName!=null)
+                strSql.Append( "[CoupnName]=@CoupnName,");
+            if (pIsUpdateNullField || pEntity.DoorID!=null)
+                strSql.Append( "[DoorID]=@DoorID,");
+            if (pIsUpdateNullField || pEntity.CouponPwd!=null)
+                strSql.Append( "[CouponPwd]=@CouponPwd,");
+            if (pIsUpdateNullField || pEntity.CollarCardMode!=null)
+                strSql.Append( "[CollarCardMode]=@CollarCardMode,");
+            if (pIsUpdateNullField || pEntity.CustomerID!=null)
+                strSql.Append( "[CustomerID]=@CustomerID");
             /**
             if (pIsUpdateNullField || pEntity.Col1 != null)
                 strSql.Append("[Col1]=@Col1,");
@@ -442,6 +463,11 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@CouponTypeID",SqlDbType.NVarChar),
 					new SqlParameter("@CouponID",SqlDbType.NVarChar),
+					new SqlParameter("@CoupnName",SqlDbType.NVarChar),
+					new SqlParameter("@DoorID",SqlDbType.NVarChar),
+					new SqlParameter("@CouponPwd",SqlDbType.NVarChar),
+					new SqlParameter("@CollarCardMode",SqlDbType.NVarChar),
+					new SqlParameter("@CustomerID",SqlDbType.VarChar),
                     /**
                     new SqlParameter("@Col1",SqlDbType.NVarChar),
 					new SqlParameter("@Col2",SqlDbType.NVarChar),
@@ -506,7 +532,13 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[7].Value = pEntity.LastUpdateTime;
 			parameters[8].Value = pEntity.LastUpdateBy;
 			parameters[9].Value = pEntity.CouponTypeID;
-			parameters[10].Value = pEntity.CouponID;
+            parameters[10].Value = pEntity.CouponID;
+            parameters[11].Value = pEntity.CoupnName;
+			parameters[12].Value = pEntity.DoorID;
+			parameters[13].Value = pEntity.CouponPwd;
+			parameters[14].Value = pEntity.CollarCardMode;
+			parameters[15].Value = pEntity.CustomerID;
+
             /**
             parameters[11].Value = pEntity.Col1;
             parameters[12].Value = pEntity.Col2;
@@ -908,6 +940,23 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
             if (pQueryEntity.CouponTypeID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponTypeID", Value = pQueryEntity.CouponTypeID });
+			if (pQueryEntity.CoupnName!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CoupnName", Value = pQueryEntity.CoupnName });
+            if (pQueryEntity.DoorID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DoorID", Value = pQueryEntity.DoorID });
+            if (pQueryEntity.CouponPwd!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponPwd", Value = pQueryEntity.CouponPwd });
+            if (pQueryEntity.CollarCardMode!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CollarCardMode", Value = pQueryEntity.CollarCardMode });
+            if (pQueryEntity.CustomerID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = pQueryEntity.CustomerID });
+            if (pQueryEntity.CouponDesc!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponDesc", Value = pQueryEntity.CouponDesc });
+            if (pQueryEntity.CouponCode!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponCode", Value = pQueryEntity.CouponCode });
+            if (pQueryEntity.CouponID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CouponID", Value = pQueryEntity.CouponID });
+
             if (pQueryEntity.Col1 != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "Col1", Value = pQueryEntity.Col1 });
             if (pQueryEntity.Col2 != null)
@@ -1078,6 +1127,38 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["CouponTypeID"] != DBNull.Value)
 			{
 				pInstance.CouponTypeID =  Convert.ToString(pReader["CouponTypeID"]);
+			}
+			if (pReader["CoupnName"] != DBNull.Value)
+			{
+				pInstance.CoupnName =  Convert.ToString(pReader["CoupnName"]);
+			}
+			if (pReader["DoorID"] != DBNull.Value)
+			{
+				pInstance.DoorID =  Convert.ToString(pReader["DoorID"]);
+			}
+			if (pReader["CouponPwd"] != DBNull.Value)
+			{
+				pInstance.CouponPwd =  Convert.ToString(pReader["CouponPwd"]);
+			}
+			if (pReader["CollarCardMode"] != DBNull.Value)
+			{
+				pInstance.CollarCardMode =  Convert.ToString(pReader["CollarCardMode"]);
+			}
+			if (pReader["CustomerID"] != DBNull.Value)
+			{
+				pInstance.CustomerID =  Convert.ToString(pReader["CustomerID"]);
+			}
+			if (pReader["CouponDesc"] != DBNull.Value)
+			{
+				pInstance.CouponDesc =  Convert.ToString(pReader["CouponDesc"]);
+			}
+			if (pReader["CouponCode"] != DBNull.Value)
+			{
+				pInstance.CouponCode =  Convert.ToString(pReader["CouponCode"]);
+			}
+			if (pReader["CouponID"] != DBNull.Value)
+			{
+				pInstance.CouponID =  Convert.ToString(pReader["CouponID"]);
 			}
             /**
             if (pReader["Col1"] != DBNull.Value)
