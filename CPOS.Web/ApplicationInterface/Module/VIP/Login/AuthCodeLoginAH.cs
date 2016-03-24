@@ -141,7 +141,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                                 ClientID = pRequest.CustomerID,
                                 VipCode = "Vip" + bll.GetNewVipCode(pRequest.CustomerID),
                                 VipSourceId = pRequest.Parameters.VipSource.ToString(),
-                                WeiXinUserId = string.IsNullOrWhiteSpace(pRequest.UserID) ? Guid.NewGuid().ToString("N") : pRequest.UserID
+                                WeiXinUserId = string.IsNullOrWhiteSpace(pRequest.UserID) ? Guid.NewGuid().ToString("N") : pRequest.UserID,
+                                RegistrationTime=DateTime.Now
                             };
                             bll.Create(vipByID);
                             #region 注册会员触点活动奖励
@@ -154,6 +155,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                             if (!string.IsNullOrEmpty(pRequest.Parameters.VipRealName))
                                 vipByID.VipRealName = pRequest.Parameters.VipRealName;
                             vipByID.Status = 2;
+                            vipByID.RegistrationTime = DateTime.Now;
                             bll.Update(vipByID);
                             #region 注册会员触点活动奖励
                             bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
@@ -259,7 +261,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                                 VipCode = "Vip" + bll.GetNewVipCode(pRequest.CustomerID),
                                 ClientID = pRequest.CustomerID,
                                 VipSourceId = pRequest.Parameters.VipSource.ToString(),
-                                WeiXinUserId = string.IsNullOrWhiteSpace(pRequest.UserID) ? Guid.NewGuid().ToString("N") : pRequest.UserID
+                                WeiXinUserId = string.IsNullOrWhiteSpace(pRequest.UserID) ? Guid.NewGuid().ToString("N") : pRequest.UserID,
+                                RegistrationTime=DateTime.Now
                             };
                             bll.Create(vipByPhone);
                             #region 注册会员触点活动奖励

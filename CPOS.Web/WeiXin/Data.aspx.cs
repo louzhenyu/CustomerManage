@@ -1417,6 +1417,7 @@ namespace JIT.CPOS.Web.WeiXin
                     vipInfo.UnionID = unionid;
                     //if(qrcode_id != null && !qrcode_id.Equals(""))
                     vipInfo.Col50 = iRad.ToString();
+                    vipInfo.RegistrationTime = DateTime.Now;
 
                     //根据UnionID判断已关注其他绑定公众号
                     if (!string.IsNullOrEmpty(vipInfo.UnionID))
