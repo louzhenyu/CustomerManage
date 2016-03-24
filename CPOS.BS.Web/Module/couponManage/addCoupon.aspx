@@ -62,7 +62,7 @@
                     <em class="tit w120">有效期：</em>
                         <div class="searchInput bordernone whauto">
                           <div class="line"> <div class="radio" data-name="r2" data-validity="time"><em></em></div>
-                               <div class="linetext">固定时间：<input id="startDate"  name="BeginTime" class="easyui-datebox"  data-options="width:120,height:32" /><span>至</span> <input id="expireDate" name="EndTime" class="easyui-datebox" data-options="width:120,height:32" validType="compareDate[$('#startDate').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/></div>
+                               <div class="linetext">固定时间：<input id="startDate"  name="BeginTime" class="easyui-datebox"  data-options="width:120,height:32" /><span>至</span> <input id="expireDate" name="EndTime" class="easyui-datebox" data-options="width:120,height:32" validType="compareEqualityDate[$('#startDate').datebox('getText'),'当前选择的时间不能大于前面选择的时间']"/></div>
                              </div>
                            <div class="line">
                             <div class="radio on" data-name="r2" data-validity="day"><em></em></div>

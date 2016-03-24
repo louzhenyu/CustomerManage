@@ -7,7 +7,7 @@
         temp: temp,
         page: {
             pageIndex: 0,
-            pageSize: 1000  //5  设置不分页
+            pageSize:5 // 设置不分页
         },
         init: function () {
             this.customerId = $.util.getUrlParam("customerId");

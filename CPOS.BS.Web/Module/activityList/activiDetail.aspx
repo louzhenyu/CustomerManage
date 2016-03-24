@@ -764,7 +764,7 @@
 	<td class="numBox"><#=idata.CountTotal#></td>
 	<td><#=idata.IssuedQty#></td>
 	<td ><#=idata.RemainCount#></td>
-	<td><em class="addBtn"></em><em class="delBtn"></em></td>
+	<td><em class="addBtn" title="追加数量"></em><em class="delBtn" title="删除"></em></td>
 </tr>
 <#}#>
 </script>
@@ -778,7 +778,7 @@
 	<td><#=idata.PrizeName#></td>
 	<td class="numBox"><#=idata.CountTotal#></td>
 	<td ><#=idata.RemainCount#></td>
-	<td><em class="addBtn"></em><em class="delBtn"></em></td>
+	<td><em class="addBtn" title="追加数量"></em><em class="delBtn" title="删除"></em></td>
 </tr>
 <#}#>
 </script>

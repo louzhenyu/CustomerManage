@@ -14,7 +14,7 @@
         temp: temp,
         page: {
             pageIndex: 0,
-            pageSize: 5
+            pageSize:1000// 设置不分页5
         },
         init: function () {
             this.pageId = $.util.getUrlParam("id");
