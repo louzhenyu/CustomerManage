@@ -43,8 +43,8 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
             if (eventKey != null && eventKey.InnerText.Contains("qrscene_"))//如果是二维码的就之返回二维码的
             {
                 qrcodeId = eventKey.InnerText.Substring(8);
-                //eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, qrcodeId,
-                //requestParams.OpenId, this.httpContext, requestParams); //保存用户信息时，有推送消息
+                eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, qrcodeId,
+                requestParams.OpenId, this.httpContext, requestParams); //保存用户信息时，有推送消息
                 //eventsBll.QrCodeHandlerText(qrcodeId, requestParams.LoggingSessionInfo,
                 // requestParams.WeixinId, 4, requestParams.OpenId, httpContext, requestParams);
                 //ds = modelDAO.GetMaterialByWeixinIdJermyn(requestParams.WeixinId, 4);
