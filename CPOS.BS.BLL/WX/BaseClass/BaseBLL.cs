@@ -945,8 +945,8 @@ namespace JIT.CPOS.BS.BLL.WX
                 #region 注释备注：扫码时始终会调用保存用户信息接口，这里已经推送了消息
                 //BaseService.WriteLogWeixin("开始推送消息Wzq");
 
-                //eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, eventKey,
-                //    requestParams.OpenId, this.httpContext, requestParams);
+                eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, eventKey,
+                    requestParams.OpenId, this.httpContext, requestParams);
 
                 //BaseService.WriteLogWeixin("推送消息成功Wzq");
                 #endregion

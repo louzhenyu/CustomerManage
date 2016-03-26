@@ -630,6 +630,7 @@ namespace JIT.CPOS.BS.BLL.WX
 
 
                     string method = "GET";
+                    //这里返还的data不会返回给微信服务器的，只是用在了我们自己的服务器上
                     string data = CommonBLL.GetRemoteData(uri, method, string.Empty);
 
                     BaseService.WriteLogWeixin("uri:  " + uri);
