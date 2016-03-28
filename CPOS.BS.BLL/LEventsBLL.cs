@@ -917,16 +917,20 @@ namespace JIT.CPOS.BS.BLL
                         && qrCodeEntity.ObjectId != null
                         && !qrCodeEntity.ObjectId.ToString().Equals(""))
                     {
+                        VipBLL vipBll = new VipBLL(loggingSessionInfo);
+                        var vipEntity = vipBll.QueryByEntity(new VipEntity()
+                        {
+                            WeiXinUserId = openId
+                        }, null).FirstOrDefault();
+
+                        string pushContent = string.Empty;//推送内容
+
                         switch (qrCodeTypeInfo.TypeCode.ToString().ToLower())
                         {
+                               
                             case "userqrcode"://店员二维码
                                 #region 绑定会籍店
-                                VipBLL vipBll = new VipBLL(loggingSessionInfo);
-
-                                var vipEntity = vipBll.QueryByEntity(new VipEntity()
-                                {
-                                    WeiXinUserId = openId
-                                }, null).FirstOrDefault();
+                         
                                 if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
                                 {
                                     //UnitService unitServer = new UnitService(loggingSessionInfo);
@@ -952,20 +956,15 @@ namespace JIT.CPOS.BS.BLL
                                 break;
                             case "unitqrcode"://门店二维码
                                 #region 绑定会籍店
-                                VipBLL vipServer = new VipBLL(loggingSessionInfo);
 
-                                var vipInfo = vipServer.QueryByEntity(new VipEntity()
-                                {
-                                    WeiXinUserId = openId
-                                }, null).FirstOrDefault();
-                                Loggers.Debug(new DebugLogInfo() { Message = string.Format("vipInfo!=null:{0},openid:{1},vipInfo.CouponInfo:{2}", vipInfo != null, openId, vipInfo.CouponInfo) });
-                                if (vipInfo != null && (string.IsNullOrEmpty(vipInfo.CouponInfo) || vipInfo.CouponInfo.Length != 32))
+                                Loggers.Debug(new DebugLogInfo() { Message = string.Format("vipInfo!=null:{0},openid:{1},vipInfo.CouponInfo:{2}", vipEntity != null, openId, vipEntity.CouponInfo) });
+                                if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
                                 {
                                     //vipInfo.CouponInfo = qrCodeEntity.ObjectId.ToString();
                                     //vipInfo.Col50 = "已经绑定会籍店:" + Convert.ToString(System.DateTime.Now);
                                     //vipServer.Update(vipInfo, false);
                                     var bll = new VipOrderSubRunObjectMappingBLL(loggingSessionInfo);
-                                    dynamic o = bll.SetVipOrderSubRun(loggingSessionInfo.ClientID, vipInfo.VIPID, 3, qrCodeEntity.ObjectId.ToString());
+                                    dynamic o = bll.SetVipOrderSubRun(loggingSessionInfo.ClientID, vipEntity.VIPID, 3, qrCodeEntity.ObjectId.ToString());
                                     Type t = o.GetType();
                                     var Desc = t.GetProperty("Desc").GetValue(o, null).ToString();
                                     var IsSuccess = t.GetProperty("IsSuccess").GetValue(o, null).ToString();
@@ -981,23 +980,17 @@ namespace JIT.CPOS.BS.BLL
                                 break;
                             case "retailqrcode"://分销商信息
                                 #region 绑定分销商数据
-                                VipBLL vipBll2 = new VipBLL(loggingSessionInfo);
-
-                                var vipEntity2 = vipBll2.QueryByEntity(new VipEntity()
-                                {
-                                    WeiXinUserId = openId
-                                }, null).FirstOrDefault();
-                                if (vipEntity2 != null && (string.IsNullOrEmpty(vipEntity2.CouponInfo) || vipEntity2.CouponInfo.Length != 32))
+                               
+                                if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
                                 {
                                     RetailTraderBLL retailTraderBLL = new RetailTraderBLL(loggingSessionInfo);
 
                                     var RetailTraderInfo = retailTraderBLL.GetByID(qrCodeEntity.ObjectId);  //根据分销商ID获取所属的门店信息和销售员信息
-                                    vipEntity2.CouponInfo = RetailTraderInfo.UnitID;//会籍店ID
+                                    vipEntity.CouponInfo = RetailTraderInfo.UnitID;//会籍店ID
                                     // vipEntity2.SetoffUserId = qrCodeEntity.ObjectId;//店员ID（上线）
-                                    vipEntity2.Col20 = qrCodeEntity.ObjectId;//会籍店ID
-                                    vipEntity2.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                                    vipBll2.Update(vipEntity2);
-
+                                    vipEntity.Col20 = qrCodeEntity.ObjectId;//会籍店ID
+                                    vipEntity.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                                    vipBll.Update(vipEntity);
                                 }
 
                                 //给分销商和销售员奖励
@@ -1007,40 +1000,34 @@ namespace JIT.CPOS.BS.BLL
                             case "vipdealercode"://经销商
                                 weixinId = null;
                                 #region 发展经销商下线
-                                VipBLL vipDealerBLL = new VipBLL(loggingSessionInfo);
                                 string DealerVipId = qrCodeEntity.ObjectId;
-                                var vipData = vipDealerBLL.QueryByEntity(new VipEntity()
-                                {
-                                    WeiXinUserId = openId
-                                }, null).FirstOrDefault();
-                                if (vipData != null)
+                                if (vipEntity != null)
                                 {
                                     CommonBLL commonBll = new CommonBLL();
-                                    string content = "";
-                                    if (string.IsNullOrEmpty(vipData.HigherVipID))
+                                    if (string.IsNullOrEmpty(vipEntity.HigherVipID))
                                     {
-                                        if (!vipData.VIPID.Equals(qrCodeEntity.ObjectId))
+                                        if (!vipEntity.VIPID.Equals(qrCodeEntity.ObjectId))
                                         {
                                             //上线会员
-                                            var VipDealerData = vipDealerBLL.GetByID(qrCodeEntity.ObjectId);
+                                            var VipDealerData = vipBll.GetByID(qrCodeEntity.ObjectId);
                                             string VipDealerID = VipDealerData.HigherVipID ?? "";
 
 
                                             //if (!string.IsNullOrWhiteSpace(VipDealerID))
                                             //{
-                                            if (!VipDealerID.Equals(vipData.VIPID))
+                                            if (!VipDealerID.Equals(vipEntity.VIPID))
                                             {
                                                 //下线会员
-                                                vipData.HigherVipID = qrCodeEntity.ObjectId;//上线会员ID
-                                                vipData.Col21 = DateTime.Now.ToString();//集客时间
-                                                vipDealerBLL.Update(vipData);
+                                                vipEntity.HigherVipID = qrCodeEntity.ObjectId;//上线会员ID
+                                                vipEntity.Col21 = DateTime.Now.ToString();//集客时间
+                                                vipBll.Update(vipEntity);
                                                 //
                                                 //content = vipData.VipName + "成为了您的下线会员！";
-                                                content = vipData.VipName + "成为橙果会员";
+                                                pushContent = vipEntity.VipName + "成为橙果会员";
                                             }
                                             else
                                             {
-                                                content = "不能发展自己上线会员";
+                                                pushContent = "不能发展自己上线会员";
                                             }
                                             //}
                                             //else
@@ -1050,26 +1037,60 @@ namespace JIT.CPOS.BS.BLL
                                         }
                                         else
                                         {
-                                            content = "不能发展自己";
+                                            pushContent = "不能发展自己";
                                         }
                                     }
                                     else
                                     {
                                         //content = vipData.VipName + "已有上线！";
-                                        content = vipData.VipName + "已是橙果会员";
+                                        pushContent = vipEntity.VipName + "已是橙果会员";
                                     }
 
                                     //获取经销商OpenID
-                                    var DealerVipData = vipDealerBLL.GetByID(DealerVipId);
+                                    var DealerVipData = vipBll.GetByID(DealerVipId);
                                     if (DealerVipData != null)
                                     {
                                         //requestParams.OpenId = DealerVipData.WeiXinUserId;
 
-                                        CommonBLL.SendWeixinMessage(content, vipData.VIPID, loggingSessionInfo, DealerVipData);
+                                        CommonBLL.SendWeixinMessage(pushContent, vipEntity.VIPID, loggingSessionInfo, DealerVipData);
 
                                         //commonBll.ResponseTextMessage(DealerVipData.WeiXin, DealerVipData.WeiXinUserId, content, httpContext, requestParams);
                                     }
                                 }
+                                #endregion
+                                break;
+                            case "eventqrcode":
+                                #region 会议签到
+                                
+                                MarketSignInBLL marketSignInBll = new MarketSignInBLL(loggingSessionInfo);
+                                MarketNamedApplyBLL marketNamedApplyBll = new MarketNamedApplyBLL(loggingSessionInfo);
+                                var marketNamedApplyEntityArray = marketNamedApplyBll.QueryByEntity(new MarketNamedApplyEntity() { MarketEventID = qrCodeEntity.ObjectId.ToString(), VipId = vipEntity.VIPID }, null);
+                                if (marketNamedApplyEntityArray.Length != 0)
+                                {
+                                    var marketSignInEntityArray = marketSignInBll.QueryByEntity(new MarketSignInEntity() { EventID = qrCodeEntity.ObjectId.ToString(), VipID = vipEntity.VIPID }, null);
+                                     if (marketSignInEntityArray.Length == 0)
+                                     {
+                                         MarketSignInEntity marketSignInEntity = new MarketSignInEntity()
+                                         {
+                                             SignInID = Guid.NewGuid().ToString(),
+                                             OpenID = openId,
+                                             EventID = qrCodeEntity.ObjectId.ToString(),
+                                             UserId = "",
+                                             VipID = vipEntity.VIPID
+                                         };
+                                         marketSignInBll.Create(marketSignInEntity);
+                                         pushContent = "签到成功";
+                                     }
+                                     else
+                                     {
+                                         pushContent = "该会员已签到";
+                                     }
+                                }
+                                else
+                                {
+                                    pushContent = "该会员没有申请该活动";
+                                }
+                                CommonBLL.SendWeixinMessage(pushContent,vipEntity.VIPID, loggingSessionInfo,vipEntity);
                                 #endregion
                                 break;
 

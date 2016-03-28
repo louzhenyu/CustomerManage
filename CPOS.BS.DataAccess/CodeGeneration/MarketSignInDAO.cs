@@ -80,15 +80,17 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [MarketSignIn](");
-            strSql.Append("[OpenID],[EventID],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[SignInID])");
+            strSql.Append("[OpenID],[VipID],[UserId],[EventID],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[SignInID])");
             strSql.Append(" values (");
-            strSql.Append("@OpenID,@EventID,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@SignInID)");            
+            strSql.Append("@OpenID,@VipID,@UserId,@EventID,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@SignInID)");            
 
 			string pkString = pEntity.SignInID;
 
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@OpenID",SqlDbType.NVarChar),
+					new SqlParameter("@VipID",SqlDbType.NVarChar),
+					new SqlParameter("@UserId",SqlDbType.NVarChar),
 					new SqlParameter("@EventID",SqlDbType.NVarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.NVarChar),
@@ -98,13 +100,15 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@SignInID",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.OpenID;
-			parameters[1].Value = pEntity.EventID;
-			parameters[2].Value = pEntity.CreateTime;
-			parameters[3].Value = pEntity.CreateBy;
-			parameters[4].Value = pEntity.LastUpdateBy;
-			parameters[5].Value = pEntity.LastUpdateTime;
-			parameters[6].Value = pEntity.IsDelete;
-			parameters[7].Value = pkString;
+			parameters[1].Value = pEntity.VipID;
+			parameters[2].Value = pEntity.UserId;
+			parameters[3].Value = pEntity.EventID;
+			parameters[4].Value = pEntity.CreateTime;
+			parameters[5].Value = pEntity.CreateBy;
+			parameters[6].Value = pEntity.LastUpdateBy;
+			parameters[7].Value = pEntity.LastUpdateTime;
+			parameters[8].Value = pEntity.IsDelete;
+			parameters[9].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -150,7 +154,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [MarketSignIn] where isdelete=0");
+            sql.AppendFormat("select * from [MarketSignIn] where 1=1  and isdelete=0");
             //读取数据
             List<MarketSignInEntity> list = new List<MarketSignInEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -193,6 +197,10 @@ namespace JIT.CPOS.BS.DataAccess
             strSql.Append("update [MarketSignIn] set ");
             if (pIsUpdateNullField || pEntity.OpenID!=null)
                 strSql.Append( "[OpenID]=@OpenID,");
+            if (pIsUpdateNullField || pEntity.VipID!=null)
+                strSql.Append( "[VipID]=@VipID,");
+            if (pIsUpdateNullField || pEntity.UserId!=null)
+                strSql.Append( "[UserId]=@UserId,");
             if (pIsUpdateNullField || pEntity.EventID!=null)
                 strSql.Append( "[EventID]=@EventID,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
@@ -205,16 +213,20 @@ namespace JIT.CPOS.BS.DataAccess
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@OpenID",SqlDbType.NVarChar),
+					new SqlParameter("@VipID",SqlDbType.NVarChar),
+					new SqlParameter("@UserId",SqlDbType.NVarChar),
 					new SqlParameter("@EventID",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@SignInID",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.OpenID;
-			parameters[1].Value = pEntity.EventID;
-			parameters[2].Value = pEntity.LastUpdateBy;
-			parameters[3].Value = pEntity.LastUpdateTime;
-			parameters[4].Value = pEntity.SignInID;
+			parameters[1].Value = pEntity.VipID;
+			parameters[2].Value = pEntity.UserId;
+			parameters[3].Value = pEntity.EventID;
+			parameters[4].Value = pEntity.LastUpdateBy;
+			parameters[5].Value = pEntity.LastUpdateTime;
+			parameters[6].Value = pEntity.SignInID;
 
             //执行语句
             int result = 0;
@@ -370,7 +382,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [MarketSignIn] where isdelete=0 ");
+            sql.AppendFormat("select * from [MarketSignIn] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -431,9 +443,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [SignInID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [MarketSignIn] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [MarketSignIn] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [MarketSignIn] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [MarketSignIn] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -510,6 +522,10 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SignInID", Value = pQueryEntity.SignInID });
             if (pQueryEntity.OpenID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "OpenID", Value = pQueryEntity.OpenID });
+            if (pQueryEntity.VipID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = pQueryEntity.VipID });
+            if (pQueryEntity.UserId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "UserId", Value = pQueryEntity.UserId });
             if (pQueryEntity.EventID!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventID", Value = pQueryEntity.EventID });
             if (pQueryEntity.CreateTime!=null)
@@ -544,6 +560,14 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["OpenID"] != DBNull.Value)
 			{
 				pInstance.OpenID =  Convert.ToString(pReader["OpenID"]);
+			}
+			if (pReader["VipID"] != DBNull.Value)
+			{
+				pInstance.VipID =  Convert.ToString(pReader["VipID"]);
+			}
+			if (pReader["UserId"] != DBNull.Value)
+			{
+				pInstance.UserId =  Convert.ToString(pReader["UserId"]);
 			}
 			if (pReader["EventID"] != DBNull.Value)
 			{

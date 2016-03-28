@@ -267,6 +267,7 @@
     <Compile Include="CodeGeneration\Marketing\C_PrizesBLL.cs" />
     <Compile Include="CodeGeneration\Marketing\C_PrizesDetailBLL.cs" />
     <Compile Include="CodeGeneration\Marketing\C_TargetGroupBLL.cs" />
+    <Compile Include="CodeGeneration\MarketNamedApplyBLL.cs" />
     <Compile Include="CodeGeneration\Menu\T_Menu_FunctionBLL.cs" />
     <Compile Include="CodeGeneration\Menu\T_Role_Menu_FunctionBLL.cs" />
     <Compile Include="CodeGeneration\MHAdAreaBLL.cs" />
@@ -773,6 +774,7 @@
     <Compile Include="Marketing\C_PrizesBLL.cs" />
     <Compile Include="Marketing\C_PrizesDetailBLL.cs" />
     <Compile Include="Marketing\C_TargetGroupBLL.cs" />
+    <Compile Include="MarketNamedApplyBLL.cs" />
     <Compile Include="Menu\T_Menu_FunctionBLL.cs" />
     <Compile Include="Menu\T_Role_Menu_FunctionBLL.cs" />
     <Compile Include="MHCategoryAreaBLL.cs" />

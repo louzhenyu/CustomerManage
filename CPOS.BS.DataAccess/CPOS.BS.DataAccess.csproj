@@ -226,6 +226,7 @@
     <Compile Include="CodeGeneration\LNumberTypeMappingDAO.cs" />
     <Compile Include="CodeGeneration\LongContentDAO.cs" />
     <Compile Include="CodeGeneration\LPrizeLocationDAO.cs" />
+    <Compile Include="CodeGeneration\MarketNamedApplyDAO.cs" />
     <Compile Include="CodeGeneration\Menu\T_Menu_FunctionDAO.cs" />
     <Compile Include="CodeGeneration\Menu\T_Role_Menu_FunctionDAO.cs" />
     <Compile Include="CodeGeneration\MHAdAreaDAO.cs" />
@@ -714,6 +715,7 @@
     <Compile Include="Marketing\C_PrizesDAO.cs" />
     <Compile Include="Marketing\C_PrizesDetailDAO.cs" />
     <Compile Include="Marketing\C_TargetGroupDAO.cs" />
+    <Compile Include="MarketNamedApplyDAO.cs" />
     <Compile Include="Menu\T_Menu_FunctionDAO.cs" />
     <Compile Include="Menu\T_Role_Menu_FunctionDAO.cs" />
     <Compile Include="MHCategoryAreaDAO.cs" />

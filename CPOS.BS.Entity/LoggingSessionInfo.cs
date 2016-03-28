@@ -10,7 +10,7 @@ namespace JIT.CPOS.BS.Entity
     /// 登录用户信息
     /// </summary>
     [Serializable]
-    public class LoggingSessionInfo : BasicUserInfo
+    public class  LoggingSessionInfo : BasicUserInfo
     {
         /// <summary>
         /// 连接字符串

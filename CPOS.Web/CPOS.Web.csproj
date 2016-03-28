@@ -2225,6 +2225,7 @@
     <Compile Include="ApplicationInterface\Module\Extension\PointMark\GetVipPointMarkAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\PointMark\SetVipPointMarkAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\Question\GetQuestionListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Market\MarketSignIn\SetMarketSignInAH.cs" />
     <Compile Include="ApplicationInterface\Module\NewAppContent\NewApp.ashx.cs">
       <DependentUpon>NewApp.ashx</DependentUpon>
     </Compile>

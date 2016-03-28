@@ -398,6 +398,7 @@
     <Content Include="images\pay\alipayPay.png" />
     <Content Include="images\pay\weixinPay.png" />
     <Content Include="images\qrcode.jpg" />
+   <Content Include="images\qrcode2.jpg" />
     <Content Include="Module\activateCard\activiDetail.aspx" />
     <Content Include="Module\activateCard\css\activityDetail.css" />
     <Content Include="Module\activateCard\css\style.css" />
@@ -6705,6 +6706,10 @@
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\DelActivityAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\GetActivityDeatilAH.cs" />
     <Compile Include="ApplicationInterface\Module\Marketing\Activity\GetActivityListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Market\CreateQRCode\DownloadQRCodeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Market\MarketNameApply\GenerateMarketEventQR.ashx.cs">
+      <DependentUpon>GenerateMarketEventQR.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ApplicationInterface\Module\Order\Logistics\GetLogisticsCompanyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\Logistics\SetLogisticsCompanyAH.cs" />
     <Compile Include="ApplicationInterface\Module\Order\OperatingOrder\BatchCheckOrderAH.cs" />
@@ -6819,6 +6824,7 @@
     <Content Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx" />
     <Content Include="ApplicationInterface\Module\Order\SalesReturn\DownLoadSales.ashx" />
     <Content Include="ApplicationInterface\Module\Questionnaire\Questionnaire\DownLoadQuestionnaireInfor.ashx" />
+    <Content Include="ApplicationInterface\Module\Market\MarketNameApply\GenerateMarketEventQR.ashx" />
     <Content Include="ApplicationInterface\WXSalesRebate\Gateway.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />

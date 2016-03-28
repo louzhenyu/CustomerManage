@@ -50,6 +50,16 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public String VipID { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String UserId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public String EventID { get; set; }
 
 		/// <summary>
