@@ -24,16 +24,70 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Questionnaire.Questionnair
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
 
+            List<string> AnswerOptionIDs = new List<string>();
+
 
             var QuestionnaireAnswerRecordBLL = new T_QN_QuestionnaireAnswerRecordBLL(loggingSessionInfo);
 
-            if (para.VipIDs != null)
+            var QuestionnaireOptionCountBLL = new T_QN_QuestionnaireOptionCountBLL(this.CurrentUserInfo);
+
+            for (int i = 0; i < para.VipIDs.Length; i++)
             {
-                QuestionnaireAnswerRecordBLL.DeletevipIDs(para.VipIDs);
+                string[] tempAnswerOptionID = QuestionnaireAnswerRecordBLL.GetVipIDModelList(para.VipIDs[0]);
+
+                ArrangeValue(tempAnswerOptionID, ref AnswerOptionIDs);
             }
 
+            #region 修改记录数
+            var pTran = QuestionnaireAnswerRecordBLL.GetTran();
+
+            using (pTran.Connection)
+            {
+                try
+                {
+                    QuestionnaireOptionCountBLL.UpdateSelectedCount(AnswerOptionIDs,para.ActivityID, pTran);
+                    if (para.VipIDs != null)
+                    {
+                        QuestionnaireAnswerRecordBLL.DeletevipIDs(para.VipIDs);
+                    }
+                    pTran.Commit();//提交事物
+                }
+                catch (Exception ex)
+                {
+                    pTran.Rollback();
+
+                    throw new APIException(ex.Message);
+                }
+            }
+
+            #endregion
 
             return rd;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="OldValue"></param>
+        /// <returns></returns>
+        private void ArrangeValue(string[] OldValue, ref List<string> NewsValue)
+        {
+            for (int j = 0; j < OldValue.Length; j++)
+            {
+                if (OldValue[j] != "")
+                {
+                    string[] tempvalue = OldValue[j].Split(',');
+
+                    for (int k = 0; k < tempvalue.Length; k++)
+                    {
+                        if (tempvalue[k] != "" && tempvalue[k] != null)
+                        {
+                            NewsValue.Add(tempvalue[k]);
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

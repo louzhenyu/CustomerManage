@@ -1840,6 +1840,7 @@
                 var minScore = null;
                 var maxScore = 0;
                 var ScoreStyle = $(this).find(".Questioncombobox").val();
+                var IsRequired = $(this).find(".Questiondata").data("isrequired");
 
                 if (ScoreStyle == null)
                 {
@@ -1876,7 +1877,10 @@
                     });
                 }
 
-               
+                if (IsRequired == 0)
+                {
+                    minScore = 0;
+                }
 
                 $(this).find(".Scorevaluetext").data("minvalue", minScore);
                 $(this).find(".Scorevaluetext").data("maxvalue", maxScore);

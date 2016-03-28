@@ -1546,10 +1546,10 @@
         <div class="OptionScoreitem">
            <div class="OptionScoreContent">
                 <div style="display:none;">
-                                        <input class="Questiondata" data-text="选项标识" data-idname="Questionid" data-realvalue="<#=Questionid  #>" value="<#=Questionid  #>"  type="text" />
+                                        <input class="Questiondata" data-text="选项标识" data-idname="Questionid" data-realvalue="<#=Questionid  #>" data-isrequired="<#=IsRequired  #>" value="<#=Questionid  #>"  type="text" />
                                     </div>
                              
-                    <div class="titleoptionitem"><div class="title"><span>*</span><#= index #>、<#=Name#></div> <div class="titleEdit">单选题&nbsp;&nbsp;本题得分：<span class="Scorevaluetext"> 0-0</span></div></div>
+                    <div class="titleoptionitem"><div class="title"><span><# if(IsRequired==1) {#>*<#}#></span><#= index #>、<#=Name#></div> <div class="titleEdit">单选题&nbsp;&nbsp;本题得分：<span class="Scorevaluetext"> 0-0</span></div></div>
                     
 
                      <# for(var i=0;i<Optionlist.length;i++){#>
@@ -1570,10 +1570,10 @@
          <div class="OptionScoreitem">
                 <div class="OptionScoreContent">
                       <div style="display:none;">
-                                        <input class="Questiondata" data-text="选项标识" data-idname="Questionid" data-realvalue="<#=Questionid  #>" value="<#=Questionid  #>"  type="text" />
+                                        <input class="Questiondata" data-text="选项标识" data-idname="Questionid" data-realvalue="<#=Questionid  #>" data-isrequired="<#=IsRequired  #>" value="<#=Questionid  #>"  type="text" />
                                     </div>
                              
-                    <div class="titleoptionitem"><div class="title"><span>*</span><#=index#>、<#=Name#></div> <div class="titleEdit">多选题&nbsp;&nbsp;本题得分：<span class="Scorevaluetext"> 0-0</span></div></div>
+                    <div class="titleoptionitem"><div class="title"><span><# if(IsRequired==1) {#>*<#}#></span><#=index#>、<#=Name#></div> <div class="titleEdit">多选题&nbsp;&nbsp;本题得分：<span class="Scorevaluetext"> 0-0</span></div></div>
                     <div class="optionitem"><div class="setoption">计分方式: <input class="Questiondata Questioncombobox" data-idname="ScoreStyle" data-realvalue="" value="<#=ScoreStyle  #>" type="text" /></div></div>
                      <# for(var i=0;i<Optionlist.length;i++){#>
                          <div class="optionitem optionitemdata" >

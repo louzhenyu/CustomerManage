@@ -14,6 +14,11 @@ namespace JIT.CPOS.DTO.Module.Questionnaire.QuestionnaireAnswerRecord.Request
         /// </summary>
         public string[] VipIDs { get; set; }
 
+        /// <summary>
+        /// 活动标识
+        /// </summary>
+        public string ActivityID { get; set; }
+
         #endregion
 
         public void Validate()

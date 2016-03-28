@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/12/15 11:34:36
+ * Create On	:2016/3/15 19:16:26
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -77,9 +77,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [T_QN_QuestionnaireAnswerRecord](");
-            strSql.Append("[VipID],[QuestionnaireID],[QuestionnaireName],[QuestionID],[QuestionName],[ActivityID],[ActivityName],[QuestionidType],[AnswerText],[AnswerOption],[AnswerDate],[AnswerProvince],[AnswerCity],[AnswerCounty],[AnswerAddress],[QuestionScore],[CustomerID],[Status],[CreateTime],[QuestionnaireAnswerRecordID])");
+            strSql.Append("[VipID],[QuestionnaireID],[QuestionnaireName],[QuestionID],[QuestionName],[ActivityID],[ActivityName],[QuestionidType],[AnswerText],[AnswerOptionId],[AnswerOption],[AnswerDate],[AnswerProvince],[AnswerCity],[AnswerCounty],[AnswerAddress],[QuestionScore],[CustomerID],[Status],[CreateTime],[QuestionnaireAnswerRecordID])");
             strSql.Append(" values (");
-            strSql.Append("@VipID,@QuestionnaireID,@QuestionnaireName,@QuestionID,@QuestionName,@ActivityID,@ActivityName,@QuestionidType,@AnswerText,@AnswerOption,@AnswerDate,@AnswerProvince,@AnswerCity,@AnswerCounty,@AnswerAddress,@QuestionScore,@CustomerID,@Status,@CreateTime,@QuestionnaireAnswerRecordID)");            
+            strSql.Append("@VipID,@QuestionnaireID,@QuestionnaireName,@QuestionID,@QuestionName,@ActivityID,@ActivityName,@QuestionidType,@AnswerText,@AnswerOptionId,@AnswerOption,@AnswerDate,@AnswerProvince,@AnswerCity,@AnswerCounty,@AnswerAddress,@QuestionScore,@CustomerID,@Status,@CreateTime,@QuestionnaireAnswerRecordID)");            
 
 			Guid? pkGuid;
 			if (pEntity.QuestionnaireAnswerRecordID == null)
@@ -98,6 +98,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@ActivityName",SqlDbType.NVarChar),
 					new SqlParameter("@QuestionidType",SqlDbType.Int),
 					new SqlParameter("@AnswerText",SqlDbType.NVarChar),
+					new SqlParameter("@AnswerOptionId",SqlDbType.VarChar),
 					new SqlParameter("@AnswerOption",SqlDbType.NVarChar),
 					new SqlParameter("@AnswerDate",SqlDbType.NVarChar),
 					new SqlParameter("@AnswerProvince",SqlDbType.NVarChar),
@@ -119,17 +120,18 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[6].Value = pEntity.ActivityName;
 			parameters[7].Value = pEntity.QuestionidType;
 			parameters[8].Value = pEntity.AnswerText;
-			parameters[9].Value = pEntity.AnswerOption;
-			parameters[10].Value = pEntity.AnswerDate;
-			parameters[11].Value = pEntity.AnswerProvince;
-			parameters[12].Value = pEntity.AnswerCity;
-			parameters[13].Value = pEntity.AnswerCounty;
-			parameters[14].Value = pEntity.AnswerAddress;
-			parameters[15].Value = pEntity.QuestionScore;
-			parameters[16].Value = pEntity.CustomerID;
-			parameters[17].Value = pEntity.Status;
-			parameters[18].Value = pEntity.CreateTime;
-			parameters[19].Value = pkGuid;
+			parameters[9].Value = pEntity.AnswerOptionId;
+			parameters[10].Value = pEntity.AnswerOption;
+			parameters[11].Value = pEntity.AnswerDate;
+			parameters[12].Value = pEntity.AnswerProvince;
+			parameters[13].Value = pEntity.AnswerCity;
+			parameters[14].Value = pEntity.AnswerCounty;
+			parameters[15].Value = pEntity.AnswerAddress;
+			parameters[16].Value = pEntity.QuestionScore;
+			parameters[17].Value = pEntity.CustomerID;
+			parameters[18].Value = pEntity.Status;
+			parameters[19].Value = pEntity.CreateTime;
+			parameters[20].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -239,6 +241,8 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[QuestionidType]=@QuestionidType,");
             if (pIsUpdateNullField || pEntity.AnswerText!=null)
                 strSql.Append( "[AnswerText]=@AnswerText,");
+            if (pIsUpdateNullField || pEntity.AnswerOptionId!=null)
+                strSql.Append( "[AnswerOptionId]=@AnswerOptionId,");
             if (pIsUpdateNullField || pEntity.AnswerOption!=null)
                 strSql.Append( "[AnswerOption]=@AnswerOption,");
             if (pIsUpdateNullField || pEntity.AnswerDate!=null)
@@ -269,6 +273,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@ActivityName",SqlDbType.NVarChar),
 					new SqlParameter("@QuestionidType",SqlDbType.Int),
 					new SqlParameter("@AnswerText",SqlDbType.NVarChar),
+					new SqlParameter("@AnswerOptionId",SqlDbType.VarChar),
 					new SqlParameter("@AnswerOption",SqlDbType.NVarChar),
 					new SqlParameter("@AnswerDate",SqlDbType.NVarChar),
 					new SqlParameter("@AnswerProvince",SqlDbType.NVarChar),
@@ -289,16 +294,17 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[6].Value = pEntity.ActivityName;
 			parameters[7].Value = pEntity.QuestionidType;
 			parameters[8].Value = pEntity.AnswerText;
-			parameters[9].Value = pEntity.AnswerOption;
-			parameters[10].Value = pEntity.AnswerDate;
-			parameters[11].Value = pEntity.AnswerProvince;
-			parameters[12].Value = pEntity.AnswerCity;
-			parameters[13].Value = pEntity.AnswerCounty;
-			parameters[14].Value = pEntity.AnswerAddress;
-			parameters[15].Value = pEntity.QuestionScore;
-			parameters[16].Value = pEntity.CustomerID;
-			parameters[17].Value = pEntity.Status;
-			parameters[18].Value = pEntity.QuestionnaireAnswerRecordID;
+			parameters[9].Value = pEntity.AnswerOptionId;
+			parameters[10].Value = pEntity.AnswerOption;
+			parameters[11].Value = pEntity.AnswerDate;
+			parameters[12].Value = pEntity.AnswerProvince;
+			parameters[13].Value = pEntity.AnswerCity;
+			parameters[14].Value = pEntity.AnswerCounty;
+			parameters[15].Value = pEntity.AnswerAddress;
+			parameters[16].Value = pEntity.QuestionScore;
+			parameters[17].Value = pEntity.CustomerID;
+			parameters[18].Value = pEntity.Status;
+			parameters[19].Value = pEntity.QuestionnaireAnswerRecordID;
 
             //执行语句
             int result = 0;
@@ -604,6 +610,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "QuestionidType", Value = pQueryEntity.QuestionidType });
             if (pQueryEntity.AnswerText!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "AnswerText", Value = pQueryEntity.AnswerText });
+            if (pQueryEntity.AnswerOptionId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "AnswerOptionId", Value = pQueryEntity.AnswerOptionId });
             if (pQueryEntity.AnswerOption!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "AnswerOption", Value = pQueryEntity.AnswerOption });
             if (pQueryEntity.AnswerDate!=null)
@@ -678,6 +686,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["AnswerText"] != DBNull.Value)
 			{
 				pInstance.AnswerText =  Convert.ToString(pReader["AnswerText"]);
+			}
+			if (pReader["AnswerOptionId"] != DBNull.Value)
+			{
+				pInstance.AnswerOptionId =  Convert.ToString(pReader["AnswerOptionId"]);
 			}
 			if (pReader["AnswerOption"] != DBNull.Value)
 			{

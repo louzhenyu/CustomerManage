@@ -39,37 +39,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Questionnaire.Questionnaire
                    
                 }
                 var SumScore = 0;
+
+                var createqoc = new List<T_QN_QuestionnaireOptionCountEntity>();
+                var updateqoc = new List<T_QN_QuestionnaireOptionCountEntity>();
+                var createqar = new List<T_QN_QuestionnaireAnswerRecordEntity>();
+
                 for (int i = 0; i < para.QuestionnaireAnswerRecordlist.Count; i++)
                 {
-                    #region 新增答题记录
+
+
                     var qarl = para.QuestionnaireAnswerRecordlist[i];
-                    model_QuestionnaireAnswerRecordEntity = new T_QN_QuestionnaireAnswerRecordEntity
-                    {
-                        CustomerID = this.CurrentUserInfo.ClientID,
-                        ActivityID = para.ActivityID,
-                        ActivityName = para.ActivityName,
-                        AnswerAddress = qarl.AnswerAddress,
-                        AnswerCity = qarl.AnswerCity,
-                        AnswerCounty = qarl.AnswerCounty,
-                        AnswerDate = qarl.AnswerDate,
-                        AnswerOption = qarl.AnswerOption,
-                        AnswerProvince = qarl.AnswerProvince,
-                        AnswerText = qarl.AnswerText,
-                        QuestionID = qarl.QuestionID,
-                        QuestionidType = qarl.QuestionidType,
-                        QuestionnaireID = para.QuestionnaireID,
-                        QuestionnaireName = para.QuestionnaireName,
-                        QuestionName = qarl.QuestionName,
-                        QuestionScore = qarl.QuestionScore,
-                        VipID = para.VipID,
-                        Status = 1
 
-                    };
-                    SumScore += qarl.SumScore;
-
-                    QuestionnaireAnswerRecordBLL.Create(model_QuestionnaireAnswerRecordEntity);
-
-                    #endregion
+                    string AnswerOptionIDs = "";
 
                     #region 答题选项统计
                     if (qarl.optionlist != null)
@@ -80,8 +61,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Questionnaire.Questionnaire
                             var option = qarl.optionlist[j];
                             if (!(option.OptionID == null || option.OptionID == "" || option.OptionName == null || option.OptionName == ""))
                             {
-
-                                var model_qoce = QuestionnaireOptionCountBLL.isExist(option.OptionID,para.ActivityID);
+                                AnswerOptionIDs += option.OptionID + ",";
+                                var model_qoce = QuestionnaireOptionCountBLL.isExist(option.OptionID, para.ActivityID);
 
                                 if (model_qoce != null)
                                 {
@@ -107,11 +88,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Questionnaire.Questionnaire
 
                                 if (model_qoce.QuestionnaireOptionCountID == null)
                                 {
-                                    QuestionnaireOptionCountBLL.Create(model_qoce);
+                                    createqoc.Add(model_qoce);
                                 }
                                 else
                                 {
-                                    QuestionnaireOptionCountBLL.Update(model_qoce);
+                                    updateqoc.Add(model_qoce);
                                 }
                             }
                         }
@@ -119,6 +100,72 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Questionnaire.Questionnaire
 
                     #endregion
 
+                    #region 新增答题记录
+                    model_QuestionnaireAnswerRecordEntity = new T_QN_QuestionnaireAnswerRecordEntity
+                    {
+                        CustomerID = this.CurrentUserInfo.ClientID,
+                        ActivityID = para.ActivityID,
+                        ActivityName = para.ActivityName,
+                        AnswerAddress = qarl.AnswerAddress,
+                        AnswerCity = qarl.AnswerCity,
+                        AnswerCounty = qarl.AnswerCounty,
+                        AnswerDate = qarl.AnswerDate,
+                        AnswerOption = qarl.AnswerOption,
+                        AnswerOptionId = AnswerOptionIDs,
+                        AnswerProvince = qarl.AnswerProvince,
+                        AnswerText = qarl.AnswerText,
+                        QuestionID = qarl.QuestionID,
+                        QuestionidType = qarl.QuestionidType,
+                        QuestionnaireID = para.QuestionnaireID,
+                        QuestionnaireName = para.QuestionnaireName,
+                        QuestionName = qarl.QuestionName,
+                        QuestionScore = qarl.QuestionScore,
+                        VipID = para.VipID,
+                        Status = 1
+
+                    };
+                    SumScore += qarl.SumScore;
+
+                    createqar.Add(model_QuestionnaireAnswerRecordEntity);
+
+                    #endregion
+
+                }
+
+
+                #region 新增答题记录和修改记录数
+                var pTran = QuestionnaireAnswerRecordBLL.GetTran();
+
+                using (pTran.Connection)
+                {
+                    try
+                    {
+
+                        for (int j = 0; j < createqoc.Count; j++)
+                        {
+                            QuestionnaireOptionCountBLL.Create(createqoc[j], pTran);
+                        }
+
+                        for (int j = 0; j < updateqoc.Count; j++)
+                        {
+                            QuestionnaireOptionCountBLL.Update(updateqoc[j], pTran);
+                        }
+
+                        for (int j = 0; j < createqar.Count; j++)
+                        {
+                            QuestionnaireAnswerRecordBLL.Create(createqar[j], pTran);
+                        }
+
+                        pTran.Commit();//提交事物
+                    }
+                    catch (Exception ex)
+                    {
+                        pTran.Rollback();
+                        
+                        throw new APIException(ex.Message);
+                    }
+
+                    #endregion
                 }
 
 

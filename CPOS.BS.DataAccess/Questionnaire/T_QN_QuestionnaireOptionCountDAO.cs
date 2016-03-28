@@ -96,5 +96,33 @@ namespace JIT.CPOS.BS.DataAccess
             //返回
             return list.ToArray();
         }
+
+
+        /// <summary>
+        /// 修改选项统计总数
+        /// </summary>
+        /// <param name="AnswerOptionIDs">选项id</param>
+        /// <param name="ActivityID">活动id</param>
+        public int UpdateSelectedCount(List<string> AnswerOptionIDs,string ActivityID, IDbTransaction pTran)
+        {
+            if (AnswerOptionIDs == null || AnswerOptionIDs.Count == 0)
+                return 0;
+            //组织参数化SQL
+            StringBuilder primaryKeys = new StringBuilder();
+            foreach (object item in AnswerOptionIDs)
+            {
+                primaryKeys.AppendFormat("'{0}',", item.ToString());
+            }
+            StringBuilder sql = new StringBuilder();
+            sql.AppendLine(string.Format("update [T_QN_QuestionnaireOptionCount] set SelectedCount=SelectedCount-1 where  OptionID in ({0}) and ActivityID='{1}' ;", primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1),ActivityID));
+            //执行语句
+            int result = 0;
+            if (pTran == null)
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
+            else
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
+
+            return result;
+        }
     }
 }

@@ -68,5 +68,22 @@ namespace JIT.CPOS.BS.BLL
             
         }
 
+        /// <summary>
+        /// 获取单个用户提交的选项数据
+        /// </summary>
+        /// <param name="用户标识">vipid</param>
+        /// <returns></returns>
+        public string[] GetVipIDModelList(object VipID)
+        {
+
+           return  _currentDAO.GetVipIDModelList(VipID);
+           
+        }
+
+        public System.Data.SqlClient.SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
+        }
+
     }
 }

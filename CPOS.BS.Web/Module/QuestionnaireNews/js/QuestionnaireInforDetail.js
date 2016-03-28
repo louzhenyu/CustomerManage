@@ -177,7 +177,7 @@
                     }
                     //that.elems.tabel.datagrid('getSelected');
 
-                    $(".datagrid-body").css("overflow", "auto");
+                    //$(".datagrid-view").css("overflow", "auto");
                     $(".datagrid-body").css("height", "100px");
                    
 
@@ -192,40 +192,6 @@
             });
 
 
-
-            ////分页
-            ////data.Data={};
-            ////data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
-            ////var page=parseInt(that.loadData.args.start/15);
-            //kkpager.generPageHtml({
-            //    pagerid: 'kkpager',
-            //    pno: that.loadData.args.PageIndex,
-            //    mode: 'click', //设置为click模式
-            //    //总页码
-            //    total: data.PageCount,
-            //    totalRecords: data.TotalCount,
-            //    isShowTotalPage: true,
-            //    isShowTotalRecords: true,
-            //    //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
-            //    //适用于不刷新页面，比如ajax
-            //    click: function (n) {
-            //        //这里可以做自已的处理
-            //        //...
-            //        //处理完后可以手动条用selectPage进行页码选中切换
-            //        this.selectPage(n);
-            //        //让  tbody的内容变成加载中的图标
-            //        //var table = $('table.dataTable');//that.tableMap[that.status];
-            //        //var length = table.find("thead th").length;
-            //        //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
-
-            //        that.loadMoreData(n);
-            //    },
-            //    //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
-            //    getHref: function (n) {
-            //        return '#';
-            //    }
-
-            //}, true);
         },
         //加载更多的资讯或者活动
         loadMoreData: function (currentPage) {
@@ -262,8 +228,7 @@
                                             if (result.TitleData[i].NameID == "ID") {
                                                 break;
                                             }
-                                            var length=result.TitleData[i].Name.length*50;
-                                            columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + result.TitleData[i].Name + "',  resizable: true,width:'"+length+"', align: 'left' },";
+                                            columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + result.TitleData[i].Name + "',  resizable: true, align: 'left' },";
                                         }
                                     }
                                 }
@@ -291,7 +256,8 @@
                     url: "/ApplicationInterface/Gateway.ashx",
                     data: {
                         action: 'Questionnaire.QuestionnaireAnswerRecord.DelQuestionnaireAnswerRecord',
-                        VipIDs: VipIDs
+                        VipIDs: VipIDs,
+                        ActivityID: that.elems.ActivityID
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {

@@ -95,6 +95,30 @@ namespace JIT.CPOS.BS.DataAccess
 
 
         /// <summary>
+        /// 获取单个用户提交的选项数据
+        /// </summary>
+        /// <param name="用户标识">vipid</param>
+        /// <returns></returns>
+        public string[] GetVipIDModelList(object VipID)
+        {
+            //组织SQL
+            StringBuilder sql = new StringBuilder();
+            sql.AppendFormat(string.Format("SELECT AnswerOptionId   from T_QN_QuestionnaireAnswerRecord   where vipid='{0}'  and  Status=1  ", VipID));
+            //读取数据
+
+            List<string> list = new List<string>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    list.Add(rdr[0].ToString());
+                }
+            }
+            //返回
+            return list.ToArray();
+        }
+
+        /// <summary>
         /// 按照每个用户答题标识批量删除
         /// </summary>
         /// <param name="vipIDs">用户答题标识数组</param>

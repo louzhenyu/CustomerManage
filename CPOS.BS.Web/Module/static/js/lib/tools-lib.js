@@ -188,9 +188,9 @@
 
 
 			delete param.data.action;
-
+            //"+"转换成"%2B"：用于解决保存不了+号字符的问题
 			var _data = {
-				'req':JSON.stringify(_req)
+			    'req':JSON.stringify(_req).replace("+","%2B")
 			};
 
 			_param.data = _data;

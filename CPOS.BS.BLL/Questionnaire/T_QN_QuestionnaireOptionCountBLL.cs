@@ -53,5 +53,16 @@ namespace JIT.CPOS.BS.BLL
         {
             return _currentDAO.GetList(QuestionnaireID, ActivityID);
         }
+
+        /// <summary>
+        /// 修改选项统计总数
+        /// </summary>
+        /// <param name="AnswerOptionIDs">选项id</param>
+        /// <param name="ActivityID">活动id</param>
+        public int UpdateSelectedCount(List<string> AnswerOptionIDs, string ActivityID, IDbTransaction pTran)
+        {
+
+            return _currentDAO.UpdateSelectedCount(AnswerOptionIDs, ActivityID, pTran);
+        }
     }
 }
