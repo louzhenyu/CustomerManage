@@ -231,7 +231,10 @@ namespace JIT.CPOS.BS.DataAccess
                          left join TPaymentTypeCustomerMapping as m on t.Payment_Type_Id=m.PaymentTypeID 
                          and m.CustomerId='" + this.CurrentUserInfo.ClientID + @"'
                          and m.IsDelete='0'
-                         where t.IsDelete='0' ";
+                         INNER JOIN dbo.SysASCAndPaymentTypeMapping sm ON sm.PaymentTypeId=t.Payment_Type_Id
+                         where t.IsDelete='0' 
+                         AND sm.APPChannelID=2
+                         ";
             model.TableName = "(" + sql + strbWhere.ToString() + ") as A";
             model.PageIndex = pageIndex;
             model.PageSize = pageSize;
