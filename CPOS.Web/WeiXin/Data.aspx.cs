@@ -212,11 +212,7 @@ namespace JIT.CPOS.Web.WeiXin
                             vipInfo.City = City;
                             if (Gender != string.Empty) vipInfo.Gender = Convert.ToInt32(Gender);
                             vipInfo.VipName = VipName;
-                            vipInfo.ClientID = loggingSessionInfo.ClientID;
-                            //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用
-                            vipInfo.WeiXin = WeiXin;
-                            vipInfo.UnionID = unionid;
-                            vipInfo.VipSourceId = "3";//是否需要把这个去掉，因为VipSourceId=13也会走到这里
+                            //vipInfo.CouponInfo = qrcode;//CouponInfo已作为会籍店使用                         
                             vipInfo.HeadImgUrl = headimgurl;
                              **/
                             var vipObj = vipService.QueryByEntity(vipQueryInfo, null);
