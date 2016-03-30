@@ -1511,10 +1511,10 @@ namespace JIT.CPOS.BS.BLL
 
         #endregion
         #region 获取未开始和正在运行中的活动列表
-        public DataSet GetNoStartAndWorkingEventList()
-        {
-            return this._currentDAO.GetNoStartAndWorkingEventList();
-        }
+        //public DataSet GetNoStartAndWorkingEventList()
+        //{
+        //    return this._currentDAO.GetNoStartAndWorkingEventList();
+        //}
 
         #endregion
         public JIT.CPOS.BS.BLL.MobileModuleBLL.Field[] GetFieldList(DataSet formDataSet)
