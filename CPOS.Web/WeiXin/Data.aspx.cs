@@ -97,15 +97,15 @@ namespace JIT.CPOS.Web.WeiXin
                 string Gender = Request["gender"];
                 string VipName = Request["vipName"] == null ? "" : HttpUtility.UrlDecode(Request["vipName"]);
                 string IsShow = Request["isShow"];
-                string qrcode = Request["qrcode"]; // 二维码
+                string qrcode = Request["qrcode"]; // 二维码,这个是组成了一个带openid和weixinid的链接****
                 string WeiXin = Request["weixin_id"];
-                string qrcode_id = Request["qrcode_id"];    //门店转换id,二维码的code也传过来了 
+                string qrcode_id = Request["qrcode_id"];    //门店转换id,二维码的key也传过来了 
 
                 string headimgurl = Request["headimgurl"];
                 string unionid = Request["unionid"]; //多个公众账号唯一标识
                 //这里加密，只能取当前的了
-                LoggingSessionInfo loggingSessionInfo = BaseService.GetWeixinLoggingSession(WeiXin);
-                var application = new WApplicationInterfaceBLL(loggingSessionInfo);
+                LoggingSessionInfo customerLogging = BaseService.GetWeixinLoggingSession(WeiXin);
+                var application = new WApplicationInterfaceBLL(customerLogging);
                 var appEntitys = application.QueryByEntity(new WApplicationInterfaceEntity() { WeiXinID = WeiXin }, null);
 
                 //下面的取开发平台的放在解密的代码里，因为明文用不到
@@ -166,7 +166,7 @@ namespace JIT.CPOS.Web.WeiXin
                         OpenID, City, Gender, VipName, IsShow, qrcode, WeiXin)
                 });
                 #endregion
-                var apLoggingSessionInfo = Default.GetAPLoggingSession("");
+                var loggingSessionInfo = Default.GetAPLoggingSession("");//默认使用ap管理数据库
 
                 #region 2.管理平台处理日志
                 VipShowLogEntity vipShowLogInfo = new VipShowLogEntity();
@@ -175,7 +175,7 @@ namespace JIT.CPOS.Web.WeiXin
                 vipShowLogInfo.City = qrcode_id;
                 vipShowLogInfo.IsShow = Convert.ToInt32(IsShow);
                 vipShowLogInfo.WeiXin = WeiXin;
-                VipShowLogBLL vipShowLogBll = new VipShowLogBLL(apLoggingSessionInfo);
+                VipShowLogBLL vipShowLogBll = new VipShowLogBLL(loggingSessionInfo);
                 vipShowLogInfo.VipName = VipName;
                 vipShowLogInfo.Language = iRad.ToString();
                 vipShowLogBll.Create(vipShowLogInfo);
@@ -183,7 +183,7 @@ namespace JIT.CPOS.Web.WeiXin
 
 
 
-                VipBLL vipService = new VipBLL(apLoggingSessionInfo);
+                VipBLL vipService = new VipBLL(loggingSessionInfo);
                 var vipCode = vipService.GetVipCode();//获取新的vipcode
                 var vipCodeShort = vipCode.Substring(4).Insert(3, " ");
 
@@ -307,7 +307,7 @@ namespace JIT.CPOS.Web.WeiXin
                 });
 
                 //插入业务系统
-                customerIdUnoin = SetCustomerVipInfo(apLoggingSessionInfo, WeiXin, OpenID, City, IsShow, VipName, Gender, qrcode, null, null, headimgurl, qrcode_id, unionid, out VipIdTmp);
+                customerIdUnoin = SetCustomerVipInfo(loggingSessionInfo, WeiXin, OpenID, City, IsShow, VipName, Gender, qrcode, null, null, headimgurl, qrcode_id, unionid, out VipIdTmp);
 
                 Loggers.Debug(new DebugLogInfo()
                 {
@@ -330,7 +330,7 @@ namespace JIT.CPOS.Web.WeiXin
                 respData.Data = vipInfo.QRVipCode;
 
                 //update by wzq 20140805 cancel old push qrcode info
-                //loggingSessionInfo = Default.GetBSLoggingSession(customerIdUnoin, "1");//??不用再次获取session了
+                loggingSessionInfo = Default.GetBSLoggingSession(customerIdUnoin, "1");
                 var eventsBll = new LEventsBLL(loggingSessionInfo);
 
                 Loggers.Debug(new DebugLogInfo()
@@ -1353,7 +1353,7 @@ namespace JIT.CPOS.Web.WeiXin
             vipQueryInfo.WeiXin = WeiXin;
             vipQueryInfo.ClientID = customerIdUnoin;
 
-            var tmpUser = Default.GetBSLoggingSession(customerIdUnoin, "system");
+            var tmpUser = Default.GetBSLoggingSession(customerIdUnoin, "system");//商户系统的数据库链接
 
             #region 处理日志
             try

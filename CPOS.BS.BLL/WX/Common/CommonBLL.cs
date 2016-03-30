@@ -598,7 +598,7 @@ namespace JIT.CPOS.BS.BLL.WX
             if (accessToken.errcode == null || accessToken.errcode.Equals(string.Empty))
             {
                 //通过openID获取用户信息
-                var userInfo = GetUserInfo(accessToken.access_token, openID);
+                var userInfo = GetUserInfo(accessToken.access_token, openID);//从微信服务器获取会员的信息***
 
                 if (userInfo.errcode == null || userInfo.errcode.Equals(string.Empty))
                 {

@@ -933,10 +933,9 @@ namespace JIT.CPOS.BS.BLL
                          
                                 if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
                                 {
-                                    //UnitService unitServer = new UnitService(loggingSessionInfo);
-                                    //var userOnUnit = unitServer.GetUnitListByUserId(qrCodeEntity.ObjectId);
-                                    var unitid = vipBll.GetUnitByUserId(qrCodeEntity.ObjectId);
-                                    vipEntity.CouponInfo = !string.IsNullOrEmpty(unitid) ? unitid : vipEntity.CouponInfo;//获取会集店//userOnUnit[0].unit_id;//会籍店ID
+                                    UnitService unitServer = new UnitService(loggingSessionInfo);
+                                    var userOnUnit = unitServer.GetUnitListByUserId(qrCodeEntity.ObjectId);
+                                    vipEntity.CouponInfo = userOnUnit[0].unit_id;//会籍店ID
                                     vipEntity.SetoffUserId = qrCodeEntity.ObjectId;//店员ID（上线）
                                     vipBll.Update(vipEntity);
                                     //var bll = new VipOrderSubRunObjectMappingBLL(loggingSessionInfo);
@@ -957,9 +956,10 @@ namespace JIT.CPOS.BS.BLL
                             case "unitqrcode"://门店二维码
                                 #region 绑定会籍店
 
-                                Loggers.Debug(new DebugLogInfo() { Message = string.Format("vipInfo!=null:{0},openid:{1},vipInfo.CouponInfo:{2}", vipEntity != null, openId, vipEntity.CouponInfo) });
-                                if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
+                                  if (vipEntity != null && (string.IsNullOrEmpty(vipEntity.CouponInfo) || vipEntity.CouponInfo.Length != 32))
                                 {
+                                    Loggers.Debug(new DebugLogInfo() { Message = string.Format("vipInfo!=null:{0},openid:{1},vipInfo.CouponInfo:{2}", vipEntity != null, openId, vipEntity.CouponInfo) });
+                            
                                     //vipInfo.CouponInfo = qrCodeEntity.ObjectId.ToString();
                                     //vipInfo.Col50 = "已经绑定会籍店:" + Convert.ToString(System.DateTime.Now);
                                     //vipServer.Update(vipInfo, false);
@@ -1059,7 +1059,7 @@ namespace JIT.CPOS.BS.BLL
                                 }
                                 #endregion
                                 break;
-                            case "eventqrcode":
+                            case "signinqrcode":
                                 #region 会议签到
                                 
                                 MarketSignInBLL marketSignInBll = new MarketSignInBLL(loggingSessionInfo);
@@ -1083,12 +1083,12 @@ namespace JIT.CPOS.BS.BLL
                                      }
                                      else
                                      {
-                                         pushContent = "该会员已签到";
+                                         pushContent = "您已签到";
                                      }
                                 }
                                 else
                                 {
-                                    pushContent = "该会员没有申请该活动";
+                                    pushContent = "您还没有申请该活动";
                                 }
                                 CommonBLL.SendWeixinMessage(pushContent,vipEntity.VIPID, loggingSessionInfo,vipEntity);
                                 #endregion
@@ -1102,7 +1102,7 @@ namespace JIT.CPOS.BS.BLL
 
                     if (!string.IsNullOrWhiteSpace(weixinId))//处理素材的
                     {
-                        if(qrCodeTypeInfo.TypeCode == "UserQrCode")//员工二维码
+                        if (qrCodeTypeInfo.TypeCode == "UserQrCode")//员工二维码（员工二维码的图文素材加上是哪个员工的二维码，以方便分享时查看）
                         {
                             //根据员工类型QRCodeTypeId
                             QrCodeHandlerText(qrCodeEntity.QRCodeTypeId.ToString(), loggingSessionInfo,
@@ -1113,7 +1113,7 @@ namespace JIT.CPOS.BS.BLL
                             QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
                                 weixinId, 4, openId, httpContext, requestParams);
                         }
-                        
+
                         Loggers.Debug(new DebugLogInfo()
                         {
                             Message = string.Format("员工二维码扫描的员工ID：{0} ", qrCodeEntity.ObjectId)
@@ -1510,7 +1510,13 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+        #region 获取未开始和正在运行中的活动列表
+        public DataSet GetNoStartAndWorkingEventList()
+        {
+            return this._currentDAO.GetNoStartAndWorkingEventList();
+        }
 
+        #endregion
         public JIT.CPOS.BS.BLL.MobileModuleBLL.Field[] GetFieldList(DataSet formDataSet)
         {
             return (from f in formDataSet.Tables[0].AsEnumerable()
