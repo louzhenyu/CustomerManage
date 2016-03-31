@@ -78,8 +78,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                         //确认收货时处理积分、返现、佣金[完成订单]
                         vipIntegralBLL.OrderReward(entity, tran);
                     }
-                    #endregion
 
+                    #endregion
                     if (entity == null)
                         throw new APIException(string.Format("未找到OrderID：{0}订单", pRequest.Parameters.OrderID)) { ErrorCode = ERROR_ORDER_NOTEXISTS };
 
@@ -108,10 +108,32 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                         {
                             entity.sales_user = pRequest.UserID;//把当前用户作为服务人员。****！！
                         }
-                        //更新订单配送商及配送单号
+                        //更新订单支付状态
+                        entity.Field1 = "1";
+
+                        #region 提货，订单明细修改
+
+                        T_Inout_DetailBLL inoutDetailBll = new T_Inout_DetailBLL(CurrentUserInfo);
+                        if (pRequest.Parameters.OrderItemInfoList != null)
+                        {
+                            foreach (var item in pRequest.Parameters.OrderItemInfoList)
+                            {
+                                T_Inout_DetailEntity inoutDetailEntity = inoutDetailBll.QueryByEntity(new T_Inout_DetailEntity() { order_id = OrderID, sku_id = item.SkuId }, null).FirstOrDefault();
+                                inoutDetailEntity.enter_qty = item.EnterQty;
+                                inoutDetailEntity.Field9 = "kg";
+                                inoutDetailEntity.enter_amount = item.SumPrice;
+                                inoutDetailEntity.enter_price = Convert.ToDecimal(Math.Round(item.SumPrice / item.EnterQty, 2));
+                                entity.total_amount = entity.total_amount + item.SumPrice - inoutDetailEntity.retail_amount;
+                                entity.actual_amount = entity.actual_amount + item.SumPrice - inoutDetailEntity.retail_amount;
+                                inoutDetailBll.Update(inoutDetailEntity, tran);
+                            }
+                        }
+                        #endregion
                     }
                     _TInoutbll.Update(entity, tran); //用事物更新订单表(T_Inout)
                     #endregion
+
+                 
 
                     #region 2.根据订单ID更新订单日志表中数据
 

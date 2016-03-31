@@ -95,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationInterface\NwEvents\Demo.htm" />
+    <Content Include="bin\Utility.dll" />
     <Content Include="ComingSoon.aspx" />
     <Content Include="Config\config.xml" />
     <Content Include="Config\logger.xml" />
@@ -398,7 +399,7 @@
     <Content Include="images\pay\alipayPay.png" />
     <Content Include="images\pay\weixinPay.png" />
     <Content Include="images\qrcode.jpg" />
-   <Content Include="images\qrcode2.jpg" />
+    <Content Include="images\qrcode2.jpg" />
     <Content Include="Module\activateCard\activiDetail.aspx" />
     <Content Include="Module\activateCard\css\activityDetail.css" />
     <Content Include="Module\activateCard\css\style.css" />

@@ -57,6 +57,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             string sql = string.Format(@"select a.*,b.item_id,b.barcode,c.item_name,c.item_code,c.item_remark
                 ,(select top 1 imageurl from ObjectImages where ObjectId=b.item_id and isdelete=0  and Description != '自动生成的产品二维码' order by displayindex) imageurl 
+              , isnull(c.isGB,1) as isGB
                  from T_Inout_Detail a join t_sku b on a.sku_id=b.sku_id Join T_Item c on b.item_id=c.item_id where 1=1 {0}", sub);
             using (var rd = this.SQLHelper.ExecuteReader(sql))
             {
@@ -73,7 +74,8 @@ namespace JIT.CPOS.BS.DataAccess
                     m.SalesPrice = Convert.ToDecimal(rd["enter_price"]);//实际单价
                     m.ImageUrl = rd["imageurl"].ToString();//SKU图片
                     m.SpecificationDesc = rd["item_remark"].ToString();
-                    m.ReturnCash = rd["ReturnCash"] == DBNull.Value ? 0.00m : Convert.ToDecimal(rd["ReturnCash"]); 
+                    m.ReturnCash = rd["ReturnCash"] == DBNull.Value ? 0.00m : Convert.ToDecimal(rd["ReturnCash"]);
+                    m.isGB = Convert.ToInt32(rd["isGB"]);
                     list.Add(m);
                 }
             }

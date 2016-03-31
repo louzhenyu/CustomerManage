@@ -146,8 +146,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.PaymentTime = orderList[0].Field1 == "1" ? orderList[0].complete_date : null;
                 rd.OrderListInfo.ActualDecimal = orderList[0].actual_amount ?? 0;
 
+
                 rd.OrderListInfo.PaymentTypeCode = orderList[0].Payment_Type_Code;
                 rd.OrderListInfo.PaymentTypeName = orderList[0].Payment_Type_Name;
+
+                rd.OrderListInfo.ReserveTime = orderList[0].reserveDay + " " +orderList[0].reserveQuantum;
 
                 var deliveryBll = new TOrderCustomerDeliveryStrategyMappingBLL(this.CurrentUserInfo);
                 rd.OrderListInfo.DeliveryAmount = deliveryBll.GetDeliverAmount(orderId);//配送费 add by henry***
@@ -217,7 +220,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     SalesReturnFlag = salesReturnBll.CheckSalesReturn(orderId, t["sku_id"].ToString()),//是否可申请退换货
                     //GG = t["prop_1_detail_name"].ToString()+t["prop_2_detail_name"].ToString()+t["prop_3_detail_name"].ToString()
                     //+t["prop_4_detail_name"].ToString()+t["prop_5_detail_name"].ToString(),
-
+                    Field9 = t["Field9"].ToString(),
+                    isGB = Convert.ToInt32(t["isGB"]),
                     GG =
                         ggDs.Tables[0].AsEnumerable()
                             .Where(tt => tt["sku_id"].ToString() == t["sku_id"].ToString())

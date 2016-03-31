@@ -418,6 +418,7 @@
     <Compile Include="CodeGeneration\SysReservationPositionStatusBLL.cs" />
     <Compile Include="CodeGeneration\SysReservationReserveTypeBLL.cs" />
     <Compile Include="CodeGeneration\SysReservationStatusBLL.cs" />
+    <Compile Include="CodeGeneration\SysTimeQuantumBLL.cs" />
     <Compile Include="CodeGeneration\SysVipCardGradeBLL.cs" />
     <Compile Include="CodeGeneration\SysVipCardStatusBLL.cs" />
     <Compile Include="CodeGeneration\SysVipCardTypeBLL.cs" />
@@ -1020,6 +1021,7 @@
     <Compile Include="SysReservationPositionStatusBLL.cs" />
     <Compile Include="SysReservationReserveTypeBLL.cs" />
     <Compile Include="SysReservationStatusBLL.cs" />
+    <Compile Include="SysTimeQuantumBLL.cs" />
     <Compile Include="SysVipCardGradeBLL.cs" />
     <Compile Include="SysVipCardStatusBLL.cs" />
     <Compile Include="SysVipCardTypeBLL.cs" />

@@ -46,6 +46,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -382,6 +383,7 @@
     <Compile Include="CodeGeneration\SysReservationPositionStatusDAO.cs" />
     <Compile Include="CodeGeneration\SysReservationReserveTypeDAO.cs" />
     <Compile Include="CodeGeneration\SysReservationStatusDAO.cs" />
+    <Compile Include="CodeGeneration\SysTimeQuantumDAO.cs" />
     <Compile Include="CodeGeneration\SysVipCardGradeDAO.cs" />
     <Compile Include="CodeGeneration\SysVipCardStatusDAO.cs" />
     <Compile Include="CodeGeneration\SysVipCardTypeDAO.cs" />
@@ -871,6 +873,7 @@
     <Compile Include="SysContactPointTypeDAO.cs" />
     <Compile Include="SysModulePageMappingDAO.cs" />
     <Compile Include="SysPageDAO.cs" />
+    <Compile Include="SysTimeQuantumDAO.cs" />
     <Compile Include="SysVirtualItemTypeDAO.cs" />
     <Compile Include="SysVocationVersionMappingDAO.cs" />
     <Compile Include="TicketDAO.cs" />

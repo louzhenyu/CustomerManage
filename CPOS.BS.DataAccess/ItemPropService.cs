@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using JIT.Utility.DataAccess;
 using System.Collections;
+using System.Web;
 
 namespace JIT.CPOS.BS.DataAccess
 {
@@ -72,8 +73,8 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
             {
-             //   this.SQLHelper.ExecuteNonQuery(sql);
-               ds = this.SQLHelper.ExecuteDataset(sql);
+                //   this.SQLHelper.ExecuteNonQuery(sql);
+                ds = this.SQLHelper.ExecuteDataset(sql);
 
             }
             return ds;
@@ -263,9 +264,18 @@ namespace JIT.CPOS.BS.DataAccess
                           + ",'" + itemInfo.Create_Time + "' create_time "
                           + ",'1' status "
                           + ",'" + itemPropInfo.PropertyCodeId + "' prop_id "
-                          + ",'" + itemPropInfo.Item_Property_Id + "' item_property_id "
-                          + ",'" + itemPropInfo.PropertyCodeValue + "' prop_value "
-                          ;
+                          + ",'" + itemPropInfo.Item_Property_Id + "' item_property_id ";
+                if (itemPropInfo.PropertyCodeName == "ItemJS")  //如果是商品详情，进行加码
+                {
+                    if (!string.IsNullOrEmpty(itemPropInfo.PropertyCodeValue))
+                        sql = sql + ",'" + HttpUtility.HtmlDecode(itemPropInfo.PropertyCodeValue) + "' prop_value ";
+                    else
+                        sql = sql + ",'" + itemPropInfo.PropertyCodeValue + "' prop_value ";
+                }
+                else
+                {
+                    sql = sql + ",'" + itemPropInfo.PropertyCodeValue + "' prop_value ";
+                }
                 i++;
 
             }
@@ -300,9 +310,9 @@ namespace JIT.CPOS.BS.DataAccess
             PublicService pService = new PublicService();
 
             #region
-            string sql = "update t_item_property set prop_value = '"+prop_value+"' where item_property_id='"+item_property_id+"'" ;        
+            string sql = "update t_item_property set prop_value = '" + prop_value + "' where item_property_id='" + item_property_id + "'";
 
-            #endregion           
+            #endregion
 
             if (pTran != null)
             {

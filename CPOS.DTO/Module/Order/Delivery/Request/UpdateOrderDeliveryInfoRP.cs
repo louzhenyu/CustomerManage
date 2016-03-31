@@ -49,6 +49,16 @@ namespace JIT.CPOS.DTO.Module.Order.Delivery.Request
        /// </summary>
        public string ReceiverName { get; set; }
 
+       /// <summary>
+       /// 提货日期
+       /// </summary>
+       public string PickingDate { get; set; }
+
+
+       /// <summary>
+       /// 提货时间
+       /// </summary>
+       public string PickingTime { get; set; }
 
        /// <summary>
        /// 更新方式为到店自提时，自提ID，自提开始时间，自提结束时间都不能为空

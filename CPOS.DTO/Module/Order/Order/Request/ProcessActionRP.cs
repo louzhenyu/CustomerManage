@@ -27,9 +27,28 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Request
         public string DeliverCompany { get; set; }//配送商
         public string VipID { get; set; }//app上传来vipID
 
+        public List<OrderItemInfo> OrderItemInfoList { get; set; } //订单商品信息
+
         public void Validate()
         {
            
         }
     }
+   public class OrderItemInfo
+   {
+       /// <summary>
+       /// skuId
+       /// </summary>
+       public string SkuId { get; set; }
+
+       /// <summary>
+       /// 重量 
+       /// </summary>
+       public decimal EnterQty { get; set; }
+
+       /// <summary>
+       /// 总金额
+       /// </summary>
+       public decimal SumPrice { get; set; }
+   }
 }

@@ -60,6 +60,11 @@ namespace JIT.CPOS.BS.Entity
         /// SKU图片
         /// </summary>
         public string ImageUrl { get; set; }
+
+        /// <summary>
+        /// 是否为标准商品 0-非标准商品 1-标准商品
+        /// </summary>
+        public int isGB { get; set; }  
         #endregion
     }
 }

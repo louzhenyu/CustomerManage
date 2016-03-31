@@ -154,7 +154,10 @@
     <Compile Include="Module\Market\CreateQRCode\Request\DownloadQRCodeRP.cs" />
     <Compile Include="Module\Market\CreateQRCode\Response\DownloadQRCodeRD.cs" />
     <Compile Include="Module\Market\MarketSignIn\Requset\SetMarketSignInRP.cs" />
+    <Compile Include="Module\Order\Delivery\Request\GetPickingQuantumRP.cs" />
     <Compile Include="Module\Order\Delivery\Request\GetVipAddressInfoRP.cs" />
+    <Compile Include="Module\Order\Delivery\Response\GetPickingDateRD.cs" />
+    <Compile Include="Module\Order\Delivery\Response\GetPickingQuantumRD.cs" />
     <Compile Include="Module\Order\Delivery\Response\GetVipAddressInfoRD.cs" />
     <Compile Include="Module\Order\Logistics\Request\GetLogisticsCompanyRP.cs" />
     <Compile Include="Module\Order\Logistics\Request\SetLogisticsCompanyRP.cs" />

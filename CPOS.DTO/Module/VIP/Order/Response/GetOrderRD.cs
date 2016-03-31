@@ -28,6 +28,7 @@ namespace JIT.CPOS.DTO.Module.VIP.Order.Response
         /// </summary>
         public OrderInfo[] Orders { get; set; }
 
+
     }
 
     public class GroupingOrderCount
@@ -102,6 +103,16 @@ namespace JIT.CPOS.DTO.Module.VIP.Order.Response
         /// </summary>
         public int IsEvaluation { get; set; }
 
+        /// <summary>
+        /// 是否包含非标准商品 0-非标准商品 1-标准商品
+        /// </summary>
+        public int IsIncludeGB { get; set; }
+
+        /// <summary>
+        /// 是否付款  0-未付款 1-付款
+        /// </summary>
+        public string IsPayed { get; set; }
+
         
     }
 
@@ -158,6 +169,13 @@ namespace JIT.CPOS.DTO.Module.VIP.Order.Response
         public decimal ReturnCash { get; set; }
 
         public GuiGeInfo GG { get; set; }
+
+        /// <summary>
+        /// 是否为标准商品 0-非标准商品 1-标准商品
+        /// </summary>
+        public int isGB { get; set; }
+
+
 
     }
     public class GuiGeInfo

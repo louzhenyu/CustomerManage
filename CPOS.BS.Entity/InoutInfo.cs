@@ -579,6 +579,11 @@ namespace JIT.CPOS.BS.Entity
         /// </summary>
         public int Integral { get; set; }
 
+        /// <summary>
+        /// 提货时间
+        /// </summary>
+        public string ReserveTime { get; set; }
+
     }
 
     /// <summary>

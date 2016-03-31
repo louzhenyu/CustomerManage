@@ -351,6 +351,79 @@ namespace JIT.CPOS.BS.BLL
             return inoutInfo;
         }
 
+        public InoutInfo SearchInoutInfo_lj4(
+                                    string paymentcenter_id
+                                   , string PayId
+                                   , string PayStatus
+                                   , string order_no
+                                   , string order_reason_type_id
+                                   , string sales_unit_id
+                                   , string warehouse_id
+                                   , string purchase_unit_id
+                                   , string status
+                                   , string order_date_begin  //成交日期
+                                   , string order_date_end    //成交日期
+                                   , string complete_date_begin   //结束日期
+                                   , string complete_date_end
+                                   , string data_from_id
+                                   , string ref_order_no
+                                   , string order_type_id
+                                   , string red_falg
+                                   , int maxRowCount
+                                   , int startRowIndex
+                                   , string purchase_warehouse_id
+                                   , string sales_warehouse_id
+                                   , string DeliveryStatus
+                                   , string DeliveryId
+                                   , string DefrayTypeId
+                                   , string DeliveryDateBegin   //配送日期
+                                   , string DeliveryDateEnd    //
+                                   , string CancelDateBegin
+                                   , string CancelDateEnd, string order_id, string vipId,
+        string path_unit_id, string timestamp, string InoutSort, bool getDetail = false)//getDetail默认是false，不是取详细信息。
+        {
+            InoutInfo inoutInfo = new InoutInfo();
+            OrderSearchInfo orderSearchInfo = new OrderSearchInfo();
+            orderSearchInfo.InoutSort = InoutSort; //排序
+            orderSearchInfo.order_no = order_no;
+            orderSearchInfo.order_reason_id = order_reason_type_id;
+            orderSearchInfo.sales_unit_id = sales_unit_id;
+            orderSearchInfo.warehouse_id = warehouse_id;
+            orderSearchInfo.purchase_unit_id = purchase_unit_id;
+            orderSearchInfo.status = status;
+            orderSearchInfo.order_date_begin = order_date_begin;//成交日期
+            orderSearchInfo.order_date_end = order_date_end;//成交日期
+            orderSearchInfo.complete_date_begin = complete_date_begin;//结束日期
+            orderSearchInfo.complete_date_end = complete_date_end;
+            orderSearchInfo.data_from_id = data_from_id;
+            orderSearchInfo.ref_order_no = ref_order_no;
+            orderSearchInfo.order_type_id = order_type_id;
+            orderSearchInfo.StartRow = startRowIndex;
+            orderSearchInfo.EndRow = startRowIndex + maxRowCount;
+            orderSearchInfo.customer_id = loggingSessionInfo.CurrentLoggingManager.Customer_Id;
+            orderSearchInfo.red_flag = red_falg;
+            orderSearchInfo.purchase_warehouse_id = purchase_warehouse_id;
+            orderSearchInfo.sales_warehouse_id = sales_warehouse_id;
+            orderSearchInfo.DeliveryStatus = DeliveryStatus;
+            orderSearchInfo.DeliveryId = DeliveryId;
+            orderSearchInfo.DefrayTypeId = DefrayTypeId;
+            orderSearchInfo.DeliveryDateBegin = DeliveryDateBegin;   //配送日期？结束日期
+            orderSearchInfo.DeliveryDateEnd = DeliveryDateEnd;
+            orderSearchInfo.CancelDateBegin = CancelDateBegin;
+            orderSearchInfo.CancelDateEnd = CancelDateEnd;
+            orderSearchInfo.order_id = order_id;
+            orderSearchInfo.vip_no = vipId;
+            orderSearchInfo.path_unit_id = path_unit_id;
+            orderSearchInfo.timestamp = timestamp;
+            orderSearchInfo.PayStatus = PayStatus;
+            //商户订单号，支付方式
+            orderSearchInfo.paymentcenter_id = paymentcenter_id;
+            orderSearchInfo.PayId = PayId;
+
+            inoutInfo = SearchInoutInfo_lj4(orderSearchInfo, getDetail);
+            return inoutInfo;
+        }
+
 
         /// <summary>
         /// 查询未审核订单数
@@ -938,7 +1011,6 @@ namespace JIT.CPOS.BS.BLL
             }
         }
 
-
         public InoutInfo SearchInoutInfo_lj3(OrderSearchInfo orderSearchInfo, bool getDetail = false)
         {
 
@@ -1035,7 +1107,108 @@ namespace JIT.CPOS.BS.BLL
             }
         }
 
+        public InoutInfo SearchInoutInfo_lj4(OrderSearchInfo orderSearchInfo, bool getDetail = false)
+        {
 
+            try
+            {
+                orderSearchInfo.customer_id = loggingSessionInfo.CurrentLoggingManager.Customer_Id;
+                InoutInfo inoutInfo = new InoutInfo();
+                inoutInfo.StatusManagerList = new List<StatusManager>();
+                //大问题*****PosOrder_lj，GetPosOrderTotalCount_lj两个方法都调用了这个方法，而且是在一个接口里使用。
+                //获取不同状态订单数量
+
+                #region 获取POS小票的不同单据数量 Jermyn20130906
+                /**
+                //
+                if (orderSearchInfo != null
+                    && orderSearchInfo.order_reason_id.Equals("2F6891A2194A4BBAB6F17B4C99A6C6F5")
+                    && orderSearchInfo.order_type_id.Equals("1F0A100C42484454BAEA211D4C14B80F"))
+                {
+                    DataSet ds1 = null;
+                    // ds1 = inoutService.SearchStatusTypeCount_lj(orderSearchInfo);
+                    ds1 = inoutService.SearchStatusTypeCount_lj2(orderSearchInfo);//按照优化后的
+                    if (ds1 != null && ds1.Tables[0] != null && ds1.Tables[0].Rows.Count > 0)
+                    {
+                        //foreach (DataRow dr in ds1.Tables[0].Rows)
+                        //{
+                        //    switch (dr["StatusType"].ToString())
+                        //    {
+                        //        case "100":
+                        //            inoutInfo.StatusCount1 = Convert.ToInt32(dr["StatusCount"].ToString());
+                        //            break;
+                        //        case "200":
+                        //            inoutInfo.StatusCount2 = Convert.ToInt32(dr["StatusCount"].ToString());
+                        //            break;
+                        //        case "300":
+                        //            inoutInfo.StatusCount3 = Convert.ToInt32(dr["StatusCount"].ToString());
+                        //            break;
+                        //        case "400":
+                        //            inoutInfo.StatusCount4 = Convert.ToInt32(dr["StatusCount"].ToString());
+                        //            break;
+                        //        case "500":
+                        //            inoutInfo.StatusCount5 = Convert.ToInt32(dr["StatusCount"].ToString());
+                        //            break;
+                        //        case "600":
+                        //            inoutInfo.StatusCount6 = Convert.ToInt32(dr["StatusCount"].ToString());
+                        //            break;
+                        //        case "700":
+                        //            inoutInfo.StatusCount7 = Convert.ToInt32(dr["StatusCount"].ToString());
+                        //            break;
+                        //        case "800":
+                        //            inoutInfo.StatusCount8 = Convert.ToInt32(dr["StatusCount"].ToString());
+                        //            break;
+                        //        case "900":
+                        //            inoutInfo.StatusCount9 = Convert.ToInt32(dr["StatusCount"].ToString());
+                        //            break;
+                        //    }
+                        //}
+
+                        //动态获取对应客户的所有订单状态值及每个状态值的订单数量(jifeng.cao 20140418)
+                        inoutInfo.StatusManagerList = DataTableToObject.ConvertToList<StatusManager>(ds1.Tables[0]);
+                    }
+                }
+                 * **/
+
+                #endregion
+                //获取总数量
+                // int iCount = inoutService.SearchInoutCount(orderSearchInfo);//cSqlMapper.Instance(loggingSessionInfo.CurrentLoggingManager).QueryForObject<int>("Inout.SearchCount", orderSearchInfo);
+                int iCount = inoutService.SearchInoutCount2(orderSearchInfo);
+                IList<InoutInfo> inoutInfoList = new List<InoutInfo>();
+                DataSet ds = new DataSet();
+                //获取订单列表
+                //  ds = inoutService.SearchInoutInfo_lj(orderSearchInfo);  //这里真正查数据
+                ds = inoutService.SearchInoutInfo_lj2(orderSearchInfo);
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    inoutInfoList = DataTableToObject.ConvertToList<InoutInfo>(ds.Tables[0]);
+                }
+                inoutInfo.ICount = iCount;
+
+                List<InoutDetailInfo> inoutDetailInfoDataList = GetInoutDetailInfoByOrderDate(orderSearchInfo.order_date_begin, orderSearchInfo.order_date_end, loggingSessionInfo.CurrentLoggingManager.Customer_Id).ToList();
+
+                foreach (var item in inoutInfoList)
+                {
+                    item.InoutDetailList = inoutDetailInfoDataList.AsEnumerable().Where(t => t.order_id == item.order_id).ToList();
+                    
+                }
+
+                //if (getDetail)
+                //{
+                //    foreach (var item in inoutInfoList)
+                //    {
+                //        item.InoutDetailList = GetInoutDetailInfoByOrderId(item.order_id, loggingSessionInfo.CurrentLoggingManager.Customer_Id); //根据订单的ID取数据，查找详细信息
+                //    }
+                //}
+
+                inoutInfo.InoutInfoList = inoutInfoList;
+                return inoutInfo;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
 
 
         /// <summary>
@@ -1273,7 +1446,23 @@ namespace JIT.CPOS.BS.BLL
             }
         }
 
-
+        public IList<InoutDetailInfo> GetInoutDetailInfoByOrderDate(string order_date_begin, string order_date_end, string strCustomerId)
+        {
+            try
+            {
+                IList<InoutDetailInfo> inoutDetailList = new List<InoutDetailInfo>();
+                DataSet ds = inoutService.GetInoutDetailInfoByOrderDate(order_date_begin,order_date_end, strCustomerId);
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
+                {
+                    inoutDetailList = DataTableToObject.ConvertToList<InoutDetailInfo>(ds.Tables[0]);
+                }
+                return inoutDetailList;
+            }
+            catch (Exception ex)
+            {
+                throw (ex);
+            }
+        }
         #endregion
 
         #region 根据班次获取inout pos小票集合

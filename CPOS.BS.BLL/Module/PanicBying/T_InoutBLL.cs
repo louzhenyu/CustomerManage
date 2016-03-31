@@ -467,12 +467,14 @@ namespace JIT.CPOS.BS.BLL
                     orderinfo.PaymentTypeCode = item.Payment_Type_Code;//支付方式
                     orderinfo.ReturnCash = item.ReturnCash == null ? 0.00m : Convert.ToDecimal(item.ReturnCash);//佣金
                     orderinfo.IsEvaluation = item.IsEvaluation == null ? 0 : item.IsEvaluation.Value;//是否评论
+                    orderinfo.IsPayed = item.Field1 == null ? "0" : item.Field1;
                     #region 根据OrderInfo组织detail
 
                     var templist = detailEntitys.Where(t => t.order_id == item.order_id).ToArray();
                     var tempDetailInfos = new List<JIT.CPOS.DTO.Module.VIP.Order.Response.OrderDetailInfo> { };
                     foreach (var it in templist)
                     {
+                        
                         var detailInfo = new JIT.CPOS.DTO.Module.VIP.Order.Response.OrderDetailInfo();
                         detailInfo.ItemID = it.ItemID; //商品ID
                         detailInfo.ItemName = it.ItemName; //商品名称
@@ -482,6 +484,11 @@ namespace JIT.CPOS.BS.BLL
                         detailInfo.SalesPrice = it.SalesPrice; //实际单价
                         detailInfo.ImageUrl = ImagePathUtil.GetImagePathStr(it.ImageUrl, "240"); //Url图片 update by Henry 2014-12-8
                         detailInfo.ReturnCash = it.ReturnCash;
+                        detailInfo.isGB = it.isGB;
+                        if (it.isGB == 0)
+                        {
+                            orderinfo.IsIncludeGB = 1;
+                        }
 
                         #region 新增规格
 
@@ -554,6 +561,7 @@ namespace JIT.CPOS.BS.BLL
                         grouporder4.GroupingType = 4;
                         grouporder4.OrderCount = int.Parse(ds.Tables[0].Rows[0]["RowRnt4"].ToString());
                         Grouplist.Add(grouporder4);
+
                     }
                     else
                     {

@@ -105,10 +105,11 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public string GetUnitIDByUserId(string userId, string customerId)
         {
-            string sql = @" SELECT top 1 R.UnitID              
-                        FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList ('{0}',UR.unit_id,205)  R                
-                        WHERE user_id='{1}' order by create_time desc";
-            sql = string.Format(sql, customerId, userId);
+//            string sql = @" SELECT top 1 R.UnitID              
+//                        FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList ('{0}',UR.unit_id,205)  R                
+//                        WHERE user_id='{1}' order by create_time desc";
+            string sql = @"select top 1 UR.Unit_ID from T_User_Role UR where user_id = '{0}'and status = 1 and default_flag = 1";
+            sql = string.Format(sql, userId);
             return SQLHelper.ExecuteScalar(sql) as string;
         }
         /// <summary>

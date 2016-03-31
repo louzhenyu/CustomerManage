@@ -646,6 +646,7 @@ and a.type_id=(select MAX(type_id) from T_Type where type_code = '总部') ",
                       + " ,isnull(b.prop_5_detail_name,'') prop_5_detail_name "
                       + " ,(select discount_rate from t_inout where order_id = a.order_id)  order_discount_rate "
                       + " ,isnull((select i.ifservice from dbo.T_Item i where i.item_id in (select item_id from dbo.T_Sku s where s.sku_id = a.sku_id  )),0) as IfService "
+                      + " ,isnull(d.isGB,1) as isGB"
                       + " ,a.Field1 "
                         + " ,a.Field2 "
                         + " ,a.Field3 "

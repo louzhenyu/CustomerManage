@@ -1276,7 +1276,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 if(string.IsNullOrEmpty(form.order_date_begin))
                 {
                     form.order_date_begin = DateTime.Now.Date.AddMonths(-1).ToString("yyyy-MM-dd HH:mm:ss");
-                    form.order_date_end = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    form.order_date_end = DateTime.Now.Date.ToString("yyyy-MM-dd HH:mm:ss");
                 }
                 else if (Convert.ToDateTime(form.order_date_begin).Date < Convert.ToDateTime(form.order_date_end).Date.AddMonths(-1))
                 {
@@ -1293,7 +1293,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 //string purchase_unit_id = form.purchase_unit_id;
                 string status = FormatParamValue(form.status);
                 string order_date_begin = FormatParamValue(Convert.ToDateTime(form.order_date_begin).ToString("yyyy-MM-dd HH:mm:ss"));
-                string order_date_end = FormatParamValue(Convert.ToDateTime(form.order_date_end).AddHours(+23).AddMinutes(+59).AddSeconds(+59).ToString("yyyy-MM-dd HH:mm:ss"));
+                string order_date_end = FormatParamValue(Convert.ToDateTime(form.order_date_end).Date.AddHours(+23).AddMinutes(+59).AddSeconds(+59).ToString("yyyy-MM-dd HH:mm:ss"));
                 string complete_date_begin = FormatParamValue(form.complete_date_begin);
                 string complete_date_end = FormatParamValue(form.complete_date_end);
                 string data_from_id = FormatParamValue(form.data_from_id);
@@ -1325,7 +1325,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 string paymentcenter_id = FormatParamValue(form.paymentcenter_id);
                 string PayId = FormatParamValue(form.Field11);
 
-                data = inoutService.SearchInoutInfo_lj2(
+                data = inoutService.SearchInoutInfo_lj4(
                 paymentcenter_id,
                 PayId,
                 PayStatus,

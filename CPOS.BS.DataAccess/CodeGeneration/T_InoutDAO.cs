@@ -76,9 +76,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [T_Inout](");
-            strSql.Append("[order_no],[VipCardCode],[order_type_id],[order_reason_id],[red_flag],[ref_order_id],[ref_order_no],[warehouse_id],[order_date],[request_date],[complete_date],[create_unit_id],[unit_id],[related_unit_id],[related_unit_code],[pos_id],[shift_id],[sales_user],[total_amount],[discount_rate],[actual_amount],[receive_points],[pay_points],[pay_id],[print_times],[carrier_id],[remark],[status],[status_desc],[total_qty],[total_retail],[keep_the_change],[wiping_zero],[vip_no],[create_time],[create_user_id],[approve_time],[approve_user_id],[send_time],[send_user_id],[accpect_time],[accpect_user_id],[modify_time],[modify_user_id],[data_from_id],[sales_unit_id],[purchase_unit_id],[if_flag],[customer_id],[bat_id],[sales_warehouse_id],[purchase_warehouse_id],[Field1],[Field2],[Field3],[Field4],[Field5],[Field6],[Field7],[Field8],[Field9],[Field10],[Field11],[Field12],[Field13],[Field14],[Field15],[Field16],[Field17],[Field18],[Field19],[Field20],[paymentcenter_id],[ReturnCash],[IsEvaluation],[order_id])");
+            strSql.Append("[order_no],[VipCardCode],[order_type_id],[order_reason_id],[red_flag],[ref_order_id],[ref_order_no],[warehouse_id],[order_date],[request_date],[complete_date],[create_unit_id],[unit_id],[related_unit_id],[related_unit_code],[pos_id],[shift_id],[sales_user],[total_amount],[discount_rate],[actual_amount],[receive_points],[pay_points],[pay_id],[print_times],[carrier_id],[remark],[status],[status_desc],[total_qty],[total_retail],[keep_the_change],[wiping_zero],[vip_no],[create_time],[create_user_id],[approve_time],[approve_user_id],[send_time],[send_user_id],[accpect_time],[accpect_user_id],[modify_time],[modify_user_id],[data_from_id],[sales_unit_id],[purchase_unit_id],[if_flag],[customer_id],[bat_id],[sales_warehouse_id],[purchase_warehouse_id],[Field1],[Field2],[Field3],[Field4],[Field5],[Field6],[Field7],[Field8],[Field9],[Field10],[Field11],[Field12],[Field13],[Field14],[Field15],[Field16],[Field17],[Field18],[Field19],[Field20],[paymentcenter_id],[ReturnCash],[IsEvaluation],[reserveDay],[reserveQuantum],[reserveQuantumID],[order_id])");
             strSql.Append(" values (");
-            strSql.Append("@order_no,@VipCardCode,@order_type_id,@order_reason_id,@red_flag,@ref_order_id,@ref_order_no,@warehouse_id,@order_date,@request_date,@complete_date,@create_unit_id,@unit_id,@related_unit_id,@related_unit_code,@pos_id,@shift_id,@sales_user,@total_amount,@discount_rate,@actual_amount,@receive_points,@pay_points,@pay_id,@print_times,@carrier_id,@remark,@status,@status_desc,@total_qty,@total_retail,@keep_the_change,@wiping_zero,@vip_no,@create_time,@create_user_id,@approve_time,@approve_user_id,@send_time,@send_user_id,@accpect_time,@accpect_user_id,@modify_time,@modify_user_id,@data_from_id,@sales_unit_id,@purchase_unit_id,@if_flag,@customer_id,@bat_id,@sales_warehouse_id,@purchase_warehouse_id,@Field1,@Field2,@Field3,@Field4,@Field5,@Field6,@Field7,@Field8,@Field9,@Field10,@Field11,@Field12,@Field13,@Field14,@Field15,@Field16,@Field17,@Field18,@Field19,@Field20,@paymentcenter_id,@ReturnCash,@IsEvaluation,@order_id)");            
+            strSql.Append("@order_no,@VipCardCode,@order_type_id,@order_reason_id,@red_flag,@ref_order_id,@ref_order_no,@warehouse_id,@order_date,@request_date,@complete_date,@create_unit_id,@unit_id,@related_unit_id,@related_unit_code,@pos_id,@shift_id,@sales_user,@total_amount,@discount_rate,@actual_amount,@receive_points,@pay_points,@pay_id,@print_times,@carrier_id,@remark,@status,@status_desc,@total_qty,@total_retail,@keep_the_change,@wiping_zero,@vip_no,@create_time,@create_user_id,@approve_time,@approve_user_id,@send_time,@send_user_id,@accpect_time,@accpect_user_id,@modify_time,@modify_user_id,@data_from_id,@sales_unit_id,@purchase_unit_id,@if_flag,@customer_id,@bat_id,@sales_warehouse_id,@purchase_warehouse_id,@Field1,@Field2,@Field3,@Field4,@Field5,@Field6,@Field7,@Field8,@Field9,@Field10,@Field11,@Field12,@Field13,@Field14,@Field15,@Field16,@Field17,@Field18,@Field19,@Field20,@paymentcenter_id,@ReturnCash,@IsEvaluation,@reserveDay,@reserveQuantum,@reserveQuantumID,@order_id)");            
 
 			string pkString = pEntity.order_id;
 
@@ -159,6 +159,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@paymentcenter_id",SqlDbType.NVarChar),
 					new SqlParameter("@ReturnCash",SqlDbType.Decimal),
 					new SqlParameter("@IsEvaluation",SqlDbType.Int),
+					new SqlParameter("@reserveDay",SqlDbType.VarChar),
+					new SqlParameter("@reserveQuantum",SqlDbType.VarChar),
+					new SqlParameter("@reserveQuantumID",SqlDbType.VarChar),
 					new SqlParameter("@order_id",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.order_no;
@@ -236,7 +239,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[72].Value = pEntity.paymentcenter_id;
 			parameters[73].Value = pEntity.ReturnCash;
 			parameters[74].Value = pEntity.IsEvaluation;
-			parameters[75].Value = pkString;
+			parameters[75].Value = pEntity.reserveDay;
+			parameters[76].Value = pEntity.reserveQuantum;
+			parameters[77].Value = pEntity.reserveQuantumID;
+			parameters[78].Value = pkString;
 
             //执行并将结果回写
             int result;
@@ -477,7 +483,13 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.ReturnCash!=null)
                 strSql.Append( "[ReturnCash]=@ReturnCash,");
             if (pIsUpdateNullField || pEntity.IsEvaluation!=null)
-                strSql.Append( "[IsEvaluation]=@IsEvaluation");
+                strSql.Append( "[IsEvaluation]=@IsEvaluation,");
+            if (pIsUpdateNullField || pEntity.reserveDay!=null)
+                strSql.Append( "[reserveDay]=@reserveDay,");
+            if (pIsUpdateNullField || pEntity.reserveQuantum!=null)
+                strSql.Append( "[reserveQuantum]=@reserveQuantum,");
+            if (pIsUpdateNullField || pEntity.reserveQuantumID!=null)
+                strSql.Append( "[reserveQuantumID]=@reserveQuantumID");
             strSql.Append(" where order_id=@order_id ");
             SqlParameter[] parameters = 
             {
@@ -556,6 +568,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@paymentcenter_id",SqlDbType.NVarChar),
 					new SqlParameter("@ReturnCash",SqlDbType.Decimal),
 					new SqlParameter("@IsEvaluation",SqlDbType.Int),
+					new SqlParameter("@reserveDay",SqlDbType.VarChar),
+					new SqlParameter("@reserveQuantum",SqlDbType.VarChar),
+					new SqlParameter("@reserveQuantumID",SqlDbType.VarChar),
 					new SqlParameter("@order_id",SqlDbType.NVarChar)
             };
 			parameters[0].Value = pEntity.order_no;
@@ -633,7 +648,10 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[72].Value = pEntity.paymentcenter_id;
 			parameters[73].Value = pEntity.ReturnCash;
 			parameters[74].Value = pEntity.IsEvaluation;
-			parameters[75].Value = pEntity.order_id;
+			parameters[75].Value = pEntity.reserveDay;
+			parameters[76].Value = pEntity.reserveQuantum;
+			parameters[77].Value = pEntity.reserveQuantumID;
+			parameters[78].Value = pEntity.order_id;
 
             //执行语句
             int result = 0;
@@ -1071,6 +1089,12 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ReturnCash", Value = pQueryEntity.ReturnCash });
             if (pQueryEntity.IsEvaluation!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsEvaluation", Value = pQueryEntity.IsEvaluation });
+            if (pQueryEntity.reserveDay!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "reserveDay", Value = pQueryEntity.reserveDay });
+            if (pQueryEntity.reserveQuantum!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "reserveQuantum", Value = pQueryEntity.reserveQuantum });
+            if (pQueryEntity.reserveQuantumID!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "reserveQuantumID", Value = pQueryEntity.reserveQuantumID });
 
             return lstWhereCondition.ToArray();
         }
@@ -1409,6 +1433,18 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsEvaluation"] != DBNull.Value)
 			{
 				pInstance.IsEvaluation =   Convert.ToInt32(pReader["IsEvaluation"]);
+			}
+			if (pReader["reserveDay"] != DBNull.Value)
+			{
+				pInstance.reserveDay =  Convert.ToString(pReader["reserveDay"]);
+			}
+			if (pReader["reserveQuantum"] != DBNull.Value)
+			{
+				pInstance.reserveQuantum =  Convert.ToString(pReader["reserveQuantum"]);
+			}
+			if (pReader["reserveQuantumID"] != DBNull.Value)
+			{
+				pInstance.reserveQuantumID =  Convert.ToString(pReader["reserveQuantumID"]);
 			}
 
         }

@@ -68,37 +68,123 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.PayChannel
                     PaymentTypeID = rp.Parameters.AddPayChannelData[0].PaymentTypeId,
                     CustomerId = customerId
                 }, null);
-
-            var paychannelUrl = ConfigurationManager.AppSettings["payChannelUrl"];
-
-            string reqs = "request" + pRequest;
-
-            string str = "{\"ClientID\":\"" + loggingSessionInfo.ClientID + "\","
-                         + "\"UserID\":\"" + loggingSessionInfo.UserID + "\","
-                         + "\"Token\":null,\"AppID\":1,"
-                         + "\"Parameters\":" + rp.Parameters.ToJSON() + "}";
-            var result = HttpWebClient.DoHttpRequest(paychannelUrl + "Gateway.ashx?action=SetPayChannel", "request=" +
-                HttpUtility.UrlEncode(str));
-
-            string loggerStr = paychannelUrl + "Gateway.ashx?action=SetPayChannel&" +
-                    str;
-            Loggers.Debug(new DebugLogInfo()
+            if (rp.Parameters.AddPayChannelData[0].PayType > 0) //非货到付款
             {
-                Message = loggerStr
-            });
 
-            var channelList = result.DeserializeJSONTo<PayChannelReturnResult>();
+                var paychannelUrl = ConfigurationManager.AppSettings["payChannelUrl"];
 
-            if (channelList.Datas == null)
-            {
-                throw new APIException("创建失败：" + result) { ErrorCode = 122 };
+                string reqs = "request" + pRequest;
+
+                string str = "{\"ClientID\":\"" + loggingSessionInfo.ClientID + "\","
+                             + "\"UserID\":\"" + loggingSessionInfo.UserID + "\","
+                             + "\"Token\":null,\"AppID\":1,"
+                             + "\"Parameters\":" + rp.Parameters.ToJSON() + "}";
+                var result = HttpWebClient.DoHttpRequest(paychannelUrl + "Gateway.ashx?action=SetPayChannel", "request=" +
+                    HttpUtility.UrlEncode(str));
+
+                string loggerStr = paychannelUrl + "Gateway.ashx?action=SetPayChannel&" +
+                        str;
+                Loggers.Debug(new DebugLogInfo()
+                {
+                    Message = loggerStr
+                });
+
+                var channelList = result.DeserializeJSONTo<PayChannelReturnResult>();
+
+                if (channelList.Datas == null)
+                {
+                    throw new APIException("创建失败：" + result) { ErrorCode = 122 };
+                }
+
+                if (channelList.Datas.PayChannelIdList[0].ChannelId == 0)
+                {
+                    throw new APIException("创建失败：" + result) { ErrorCode = 122 };
+                }
+                else
+                {
+                    if (tPaymentTypeCustomerMappingEntityList != null && tPaymentTypeCustomerMappingEntityList.Length > 0)
+                    {
+                        tPaymentTypeCustomerMappingBll.Delete(tPaymentTypeCustomerMappingEntityList);
+                    }
+
+
+                    var tPaymentTypeCustomerMappingEntity = new TPaymentTypeCustomerMappingEntity();
+
+                    tPaymentTypeCustomerMappingEntity.MappingId = Guid.NewGuid();
+                    tPaymentTypeCustomerMappingEntity.CustomerId = loggingSessionInfo.ClientID;
+                    tPaymentTypeCustomerMappingEntity.PaymentTypeID = rp.Parameters.AddPayChannelData[0].PaymentTypeId;
+                    tPaymentTypeCustomerMappingEntity.APPId = "1";
+                    tPaymentTypeCustomerMappingEntity.Currency = 1;
+                    tPaymentTypeCustomerMappingEntity.PayDeplyType = 1;
+
+                    tPaymentTypeCustomerMappingBll.Create(tPaymentTypeCustomerMappingEntity);
+
+
+                    var payTypeId = rp.Parameters.AddPayChannelData[0].PayType;
+
+                    var updateSql = "";
+                    if (payTypeId == 1 || payTypeId == 2)
+                    {
+                        var unionPayData = rp.Parameters.AddPayChannelData[0].UnionPayData;
+
+                        var merchantId = unionPayData.MerchantID;
+                        var certificateFilePath = unionPayData.CertificateFilePath;
+                        var certificateFilePassword = unionPayData.CertificateFilePassword;
+                        var decryptCertificateFilePath = unionPayData.DecryptCertificateFilePath;
+                        var packetEncryptKey = unionPayData.PacketEncryptKey;
+
+                        updateSql = "PayAccountNumber = '" + merchantId + "',"
+                        + "EncryptionCertificate = '" + certificateFilePath + "',"
+                        + "EncryptionPwd ='" + certificateFilePassword + "',"
+                        + "DecryptionCertificate ='" + decryptCertificateFilePath + "',"
+                        + "DecryptionPwd ='" + packetEncryptKey + "',"
+                        + "PayDeplyType=1";
+
+
+                    }
+                    if (payTypeId == 3 || payTypeId == 4)
+                    {
+                        var wapData = rp.Parameters.AddPayChannelData[0].WapData;
+
+                        var partner = wapData.Partner;
+                        var sellerAccountName = wapData.SellerAccountName;
+                        var RSA_PublicKey = wapData.RSA_PublicKey;
+                        var RSA_PrivateKey = wapData.RSA_PrivateKey;
+                        var MD5Key = wapData.MD5Key;
+
+                        updateSql = "PayAccountNumber ='" + partner + "',"
+                                + "PayAccounPublic='" + RSA_PublicKey + "',"
+                                + "PayPrivate='" + RSA_PrivateKey + "',"
+                                + "SalesTBAccess='" + sellerAccountName + "',"
+                                + "ApplyMD5Key='" + MD5Key + "',"
+                                + "PayDeplyType=1";
+                    }
+                    if (payTypeId == 5 || payTypeId == 6)
+                    {
+                        var wxData = rp.Parameters.AddPayChannelData[0].WxPayData;
+                        var appID = wxData.AppID;
+                        //var appSecret = wxData.AppSecret;
+                        //var parnterID = wxData.ParnterID;
+                        //var parnterKey = wxData.ParnterKey;
+                        //var PaySignKey = wxData.PaySignKey;
+                        var mch_id = wxData.Mch_ID;
+                        var signKey = wxData.SignKey;
+
+                        updateSql = "AccountIdentity='" + appID + "',"
+                            //+ "PublicKey='" + appSecret + "',"
+                            //+ "TenPayIdentity='" + parnterID + "',"
+                            //+ "TenPayKey='" + parnterKey + "',"
+                            //+ "PayEncryptedPwd='" + PaySignKey + "',"
+                             + "TenPayIdentity='" + mch_id + "',"
+                            + "TenPayKey='" + signKey + "',"
+                            + "PayDeplyType=1";
+                    }
+
+                    tPaymentTypeCustomerMappingBll.UpdatePaymentMap(updateSql, channelList.Datas.PayChannelIdList[0].ChannelId + 1
+                        , rp.Parameters.AddPayChannelData[0].PaymentTypeId, customerId);
+                }
             }
-
-            if (channelList.Datas.PayChannelIdList[0].ChannelId == 0)
-            {
-                throw new APIException("创建失败：" + result) { ErrorCode = 122 };
-            }
-            else
+            else //货到付款
             {
                 if (tPaymentTypeCustomerMappingEntityList != null && tPaymentTypeCustomerMappingEntityList.Length > 0)
                 {
@@ -116,72 +202,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.PayChannel
                 tPaymentTypeCustomerMappingEntity.PayDeplyType = 1;
 
                 tPaymentTypeCustomerMappingBll.Create(tPaymentTypeCustomerMappingEntity);
-
-
-                var payTypeId = rp.Parameters.AddPayChannelData[0].PayType;
-
-                var updateSql = "";
-                if (payTypeId == 1 || payTypeId == 2)
-                {
-                    var unionPayData = rp.Parameters.AddPayChannelData[0].UnionPayData;
-
-                    var merchantId = unionPayData.MerchantID;
-                    var certificateFilePath = unionPayData.CertificateFilePath;
-                    var certificateFilePassword = unionPayData.CertificateFilePassword;
-                    var decryptCertificateFilePath = unionPayData.DecryptCertificateFilePath;
-                    var packetEncryptKey = unionPayData.PacketEncryptKey;
-
-                    updateSql = "PayAccountNumber = '" + merchantId + "',"
-                    + "EncryptionCertificate = '" + certificateFilePath + "',"
-                    + "EncryptionPwd ='" + certificateFilePassword + "',"
-                    + "DecryptionCertificate ='" + decryptCertificateFilePath + "',"
-                    + "DecryptionPwd ='" + packetEncryptKey + "',"
-                    + "PayDeplyType=1";
-
-
-                }
-                if (payTypeId == 3 || payTypeId == 4)
-                {
-                    var wapData = rp.Parameters.AddPayChannelData[0].WapData;
-
-                    var partner = wapData.Partner;
-                    var sellerAccountName = wapData.SellerAccountName;
-                    var RSA_PublicKey = wapData.RSA_PublicKey;
-                    var RSA_PrivateKey = wapData.RSA_PrivateKey;
-                    var MD5Key = wapData.MD5Key;
-
-                    updateSql = "PayAccountNumber ='" + partner + "',"
-                            + "PayAccounPublic='" + RSA_PublicKey + "',"
-                            + "PayPrivate='" + RSA_PrivateKey + "',"
-                            + "SalesTBAccess='" + sellerAccountName + "',"
-                            + "ApplyMD5Key='" + MD5Key + "',"
-                            + "PayDeplyType=1";
-                }
-                if (payTypeId == 5 || payTypeId == 6)
-                {
-                    var wxData = rp.Parameters.AddPayChannelData[0].WxPayData;
-                    var appID = wxData.AppID;
-                    //var appSecret = wxData.AppSecret;
-                    //var parnterID = wxData.ParnterID;
-                    //var parnterKey = wxData.ParnterKey;
-                    //var PaySignKey = wxData.PaySignKey;
-                    var mch_id = wxData.Mch_ID;
-                    var signKey = wxData.SignKey;
-
-                    updateSql = "AccountIdentity='" + appID + "',"
-                        //+ "PublicKey='" + appSecret + "',"
-                        //+ "TenPayIdentity='" + parnterID + "',"
-                        //+ "TenPayKey='" + parnterKey + "',"
-                        //+ "PayEncryptedPwd='" + PaySignKey + "',"
-                         + "TenPayIdentity='" + mch_id + "',"
-                        + "TenPayKey='" + signKey + "',"
-                        + "PayDeplyType=1";
-                }
-
-                tPaymentTypeCustomerMappingBll.UpdatePaymentMap(updateSql, channelList.Datas.PayChannelIdList[0].ChannelId + 1
-                    , rp.Parameters.AddPayChannelData[0].PaymentTypeId, customerId);
             }
-
             var rd = new EmptyResponseData();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();

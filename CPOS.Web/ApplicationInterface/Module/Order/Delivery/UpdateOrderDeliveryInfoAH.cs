@@ -45,6 +45,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Delivery
             string Email = pRequest.Parameters.Email;    //邮箱
             string ReceiverAddress = pRequest.Parameters.ReceiverAddress;  //收货人地址
             string ReceiverName = pRequest.Parameters.ReceiverName;        //收货人姓名
+            string reserveDay = pRequest.Parameters.PickingDate;
+            string reserveQuantum = pRequest.Parameters.PickingTime;
             T_InoutBLL _TInoutbll = new T_InoutBLL(this.CurrentUserInfo);  //订单表
             var pTran = _TInoutbll.GetTran();
             #region 更新配送方式
@@ -66,6 +68,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Delivery
                     entity.Field5 = Email;                            //邮箱
                     entity.Field4 = ReceiverAddress;                  //配送地址
                     entity.Field14 = ReceiverName;                      //收件人姓名
+                    entity.reserveDay = reserveDay;
+                    entity.reserveQuantum = reserveQuantum;
                     #region  更新时候更新时间和更新人同时更新
                     entity.modify_time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");  //更新时间
                     entity.modify_user_id = CurrentUserInfo.UserID;//更新人 

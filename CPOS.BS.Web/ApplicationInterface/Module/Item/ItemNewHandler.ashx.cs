@@ -179,6 +179,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             item.SalesPromotionList = rp.Parameters.SalesPromotionList;//促销分组
             item.OperationType = rp.Parameters.OperationType;//促销分组
             item.ifservice = rp.Parameters.ifservice;
+            item.isGB = 1; //默认为1 标准商品
 
 
             //sku值

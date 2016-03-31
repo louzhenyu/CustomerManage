@@ -840,6 +840,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                         tInoutEntity.Field1 = "1";
                     tInoutEntity.Remark = rp.Parameters.Remark;    //备注
                     tInoutEntity.Field19 = rp.Parameters.Invoice;  //发票信息
+                    tInoutEntity.Field20 = rp.Parameters.RetailTraderId; //分销商Id
                     tInoutEntity.VipCardCode = vipInfo.VipCode;    //会员卡号
                     tInoutEntity.Field7 = status;
                     tInoutEntity.OrderDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");  ///提交订单时间
@@ -2279,6 +2280,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 店主VIPID
         /// </summary>
         public string OwnerVipID { get; set; }
+
+        /// <summary>
+        /// 分销商ID 
+        /// </summary>
+        public string RetailTraderId { get; set; }
         public void Validate()
         {
         }

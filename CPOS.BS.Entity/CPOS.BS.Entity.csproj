@@ -284,6 +284,7 @@
     <Compile Include="CodeGeneration\SysCSServiceTypeEntity.cs" />
     <Compile Include="CodeGeneration\SysModulePageMappingEntity.cs" />
     <Compile Include="CodeGeneration\SysPageEntity.cs" />
+    <Compile Include="CodeGeneration\SysTimeQuantumEntity.cs" />
     <Compile Include="CodeGeneration\SysVirtualItemTypeEntity.cs" />
     <Compile Include="CodeGeneration\SysVocationEntity.cs" />
     <Compile Include="CodeGeneration\SysVocationVersionMappingEntity.cs" />
@@ -1010,6 +1011,7 @@
     <Compile Include="SysReservationPositionStatusEntity.cs" />
     <Compile Include="SysReservationReserveTypeEntity.cs" />
     <Compile Include="SysReservationStatusEntity.cs" />
+    <Compile Include="SysTimeQuantumEntity.cs" />
     <Compile Include="SysVipCardGradeEntity.cs" />
     <Compile Include="SysVipCardStatusEntity.cs" />
     <Compile Include="SysVipCardTypeEntity.cs" />

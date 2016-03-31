@@ -425,6 +425,20 @@ namespace JIT.CPOS.BS.Entity
         public decimal? ReturnCash { get; set; }
 
 		public Int32? IsEvaluation { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public String reserveDay { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String reserveQuantum { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String reserveQuantumID { get; set; }
         #endregion
 
     }

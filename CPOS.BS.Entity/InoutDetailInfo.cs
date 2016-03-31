@@ -205,5 +205,7 @@ namespace JIT.CPOS.BS.Entity
 
 
         public decimal SalesPrice { get; set; }//销售价格
+
+        public int isGB { get; set; } //是否为标准商品 1-标准商品 0-非标准商品
     }
 }

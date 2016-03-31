@@ -597,6 +597,7 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field19 "
                         + " ,a.Field20 "
                         + " ,a.paymentcenter_id"
+                        + " ,(a.reserveDay +  ' ' + a.reserveQuantum ) as ReserveTime"
                         + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"
                         + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.pay_id ) DefrayTypeName "
                 //有一个客户，时间里含有.却没有带毫秒
@@ -1387,6 +1388,7 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ,a.Field18 "
                         + " ,a.Field19"
                         + " ,a.Field20 "
+                        + " ,a.reserveDay+' '+a.reserveQuantum as ReserveTime"
                         + " ,paymentcenter_id "
                          + " ,(select DeliveryName From Delivery x WHERE x.DeliveryId = a.Field8 ) DeliveryName"  //配送方式
                         + " ,(select DefrayTypeName From DefrayType x WHERE x.DefrayTypeId = a.Field11 ) DefrayTypeName "
@@ -1618,6 +1620,78 @@ WHERE     1=1) as t";
                       + " on(a.order_id = c.order_id)"
                       + " LEFT JOIN (SELECT *,ROW_NUMBER() OVER(PARTITION BY ObjectId  ORDER BY DisplayIndex ASC ) rowIndex FROM  ObjectImages  WHERE CustomerId='" + strCustomerId + "'  and Description != '自动生成的产品二维码' AND isdelete = 0 ) oi ON oi.objectID=b.item_id AND oi.rowIndex=1 " //AND oi.isdelete = 0 "
                       + " where a.order_id= '" + orderId + "' order by b.item_code";
+            #endregion
+            DataSet ds = new DataSet();
+            ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+
+        /// <summary>
+        /// 根据订单时间段获取单据明细详细信息
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        public DataSet GetInoutDetailInfoByOrderDate(string order_date_begin, string order_date_end, string strCustomerId)
+        {
+            #region
+            string sql = "select a.order_detail_id "
+                      + " ,a.order_id "
+                      + " ,a.ref_order_detail_id "
+                      + "  ,oi.ImageUrl "
+                      + " ,a.sku_id "
+                      + " ,a.unit_id "
+                      + " ,convert(decimal(18,4),a.order_qty) order_qty " //*c.red_flag
+                      + " ,convert(decimal(18,4),a.enter_qty) enter_qty " //*c.red_flag
+                      + " ,convert(decimal(18,4),a.enter_price) enter_price " //*c.red_flag
+                      + " ,convert(decimal(18,4),a.enter_amount) enter_amount " //*c.red_flag
+                      + " ,convert(decimal(18,4),a.std_price) std_price "
+                      + " ,a.discount_rate "
+                      + " ,convert(decimal(18,4),a.retail_price) retail_price " //*c.red_flag
+                      + " ,convert(decimal(18,4),a.retail_amount) retail_amount " //*c.red_flag
+                      + " ,convert(decimal(18,4),a.plan_price) plan_price "
+                      + " ,a.receive_points "
+                      + " ,a.pay_points "
+                      + " ,a.remark "
+                      + " ,a.pos_order_code "
+                      + " ,a.order_detail_status "
+                      + " ,a.display_index "
+                      + " ,a.create_time "
+                      + " ,a.create_user_id "
+                      + " ,a.modify_time "
+                      + " ,a.modify_user_id "
+                      + " ,a.ref_order_id "
+                      + " ,a.if_flag "
+                      + " ,b.item_id "
+                      + " ,b.item_code "
+                      + " ,b.item_name "
+                      + " ,b.prop_1_detail_name "
+                      + " ,b.prop_2_detail_name "
+                      + " ,b.prop_3_detail_name "
+                      + " ,b.prop_4_detail_name "
+                      + " ,b.prop_5_detail_name "
+                      + " ,(select discount_rate from t_inout where order_id = a.order_id)  order_discount_rate "
+
+                      + " ,a.Field1 "
+                        + " ,a.Field2 "
+                        + " ,a.Field3 "
+                        + " ,a.Field4 "
+                        + " ,a.Field5 "
+                        + " ,a.Field6 "
+                        + " ,a.Field7 "
+                        + " ,a.Field8 "
+                        + " ,a.Field9 "
+                        + " ,a.Field10 "
+                        + ",(SELECT y.item_category_name  FROM dbo.T_Item x INNER JOIN dbo.T_Item_Category y ON(x.item_category_id = y.item_category_id) WHERE x.item_id = b.item_id ) itemCategoryName "
+                        + " ,isnull(datediff(day,a.Field1,a.Field2),0) DayCount "
+
+                      + " From t_inout_detail a WITH(NOLOCK)  "
+                      + " inner join vw_sku b "
+                      + " on(a.sku_id = b.sku_id) "
+                      + " inner join t_inout c WITH(NOLOCK)  "
+                      + " on(a.order_id = c.order_id)"
+                      + " LEFT JOIN (SELECT *,ROW_NUMBER() OVER(PARTITION BY ObjectId  ORDER BY DisplayIndex ASC ) rowIndex FROM  ObjectImages  WHERE CustomerId='" + strCustomerId + "'  and Description != '自动生成的产品二维码' AND isdelete = 0 ) oi ON oi.objectID=b.item_id AND oi.rowIndex=1 " //AND oi.isdelete = 0 "
+                      + "where c.order_date >= '" + order_date_begin + "' and c.order_date <= '" + order_date_end + "'";
+            // + " where a.order_id= '" + orderId + "' order by b.item_code";
             #endregion
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(sql);

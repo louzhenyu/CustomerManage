@@ -188,13 +188,20 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// 是否已评论 0=未评；2=已评
         /// </summary>
         public int IsEvaluation { get; set; }
+
+        /// <summary>
+        /// 提货时间
+        /// </summary>
+        public string ReserveTime { get; set; }
     }
     public class OrderDetailEntity
     {
         public string SkuID { get; set; }
         public string ItemID { get; set; }
         public string ItemName { get; set; }
-       public GuiGeInfo GG { get; set; }
+        public GuiGeInfo GG { get; set; }
+
+        public string Field9 { get; set; }
 
         public decimal SalesPrice { get; set; }
         public decimal StdPrice { get; set; }
@@ -211,6 +218,8 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public int SalesReturnFlag { get; set; }
 
         public int IfService { get; set; }
+
+        public int isGB { get; set; }
     }
     public class OrderDetailImage
     {

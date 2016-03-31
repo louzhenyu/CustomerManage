@@ -213,6 +213,19 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Delivery
                 {
                     DeliveryInfo.Status = 0;
                 }
+                SysTimeQuantumBLL sysTimeQuantumBll = new SysTimeQuantumBLL(loggingSessionInfo);
+                SysTimeQuantumEntity[] sysTimeQuantumEntityArray = sysTimeQuantumBll.QueryByEntity(new SysTimeQuantumEntity() { CustomerID = loggingSessionInfo.ClientID }, new OrderBy[] { new OrderBy() { FieldName = "Quantum", Direction = OrderByDirections.Asc } });
+                DeliveryInfo.QuantumList = new List<QuantumInfo>();
+
+                if (sysTimeQuantumEntityArray.Length != 0)
+                {
+                    for (int i = 0; i < sysTimeQuantumEntityArray.Length; i++)
+                    {
+                        QuantumInfo quantum = new QuantumInfo();
+                        quantum.Quantum = sysTimeQuantumEntityArray[i].Quantum;
+                        DeliveryInfo.QuantumList.Add(quantum);
+                    }
+                }
             }
             else
             {
@@ -339,6 +352,49 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Delivery
                     Status = rp.Parameters.Status
                 };
 
+                #region 配送时间段
+
+                SysTimeQuantumBLL sysTimeQuantumBll = new SysTimeQuantumBLL(loggingSessionInfo);
+                SysTimeQuantumEntity[] sysTimeQuantumEntityArray = sysTimeQuantumBll.QueryByEntity(new SysTimeQuantumEntity() { CustomerID = loggingSessionInfo.ClientID }, null);
+
+                if (rp.Parameters.QuantumList.Count != 0)
+                {
+                    for (int i = 0; i < sysTimeQuantumEntityArray.Length; i++)
+                    {
+                        if (i < rp.Parameters.QuantumList.Count) 
+                        {
+                            sysTimeQuantumEntityArray[i].Quantum = rp.Parameters.QuantumList[i].Quantum;
+                            sysTimeQuantumBll.Update(sysTimeQuantumEntityArray[i]);
+                        }
+                        else
+                        {
+                            sysTimeQuantumBll.Delete(sysTimeQuantumEntityArray[i]);
+                        }
+                    }
+                    if (sysTimeQuantumEntityArray.Length < rp.Parameters.QuantumList.Count)
+                    {
+                        for (int i = sysTimeQuantumEntityArray.Length; i < rp.Parameters.QuantumList.Count; i++)
+                        {
+                            SysTimeQuantumEntity sysTimeQuantumEntity = new SysTimeQuantumEntity()
+                            {
+                                QuantumID = Guid.NewGuid().ToString(),
+                                Quantum = rp.Parameters.QuantumList[i].Quantum,
+                                Type = 10,
+                                CustomerID = loggingSessionInfo.ClientID
+                            };
+                            sysTimeQuantumBll.Create(sysTimeQuantumEntity);
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < sysTimeQuantumEntityArray.Length; i++)
+                    {
+                        sysTimeQuantumBll.Delete(sysTimeQuantumEntityArray[i]);
+                    }
+                }
+                #endregion
+
                 if (!string.IsNullOrWhiteSpace(rp.Parameters.TakeDeliveryId))
                 {
                     takeDeliveryEntity.Id = new Guid(rp.Parameters.TakeDeliveryId);
@@ -433,9 +489,19 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Delivery
         /// </summary>
         public int? MaxDelivery { get; set; }
 
+        //配送时间段
+        public List<QuantumInfo> QuantumList { get; set; }
+        
+
+
         public void Validate()
         {
         }
+    }
+
+    public class QuantumInfo
+    {
+        public string Quantum { get; set; }
     }
 
     /// <summary>
@@ -495,6 +561,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Delivery
         /// 提货期最长
         /// </summary>
         public int? MaxDelivery{get;set;}
+
+        public List<QuantumInfo> QuantumList { get; set; }
     }
 
 
