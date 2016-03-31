@@ -418,7 +418,7 @@
                        }
                        that.loadData.opertionField.DeliveryCode=orderinfo.Field2;//配送号
 
-                       /*    purchase_unit_id: "0da0d3a6a0d899e6d639bfbf25005300"
+                       /*purchase_unit_id: "0da0d3a6a0d899e6d639bfbf25005300"
                         purchase_unit_name: "浙江巨圣鞋业(桥下店)"*/
 
                        debugger
@@ -529,7 +529,7 @@
                         }
 
                     },
-                    {field : 'item_name',title : '商品名称',width:225,align:"left",resizable:false,
+                    {field : 'item_name',title : '商品名称',width:200,align:"left",resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value&&value.length>long){
@@ -539,7 +539,7 @@
                             }
                         }
                     },
-                    {field : 'prop_1_detail_name',title : '规格',width:263,align:'center',resizable:false,
+                    {field : 'prop_1_detail_name',title : '规格',width:60,align:'center',resizable:false,
                         formatter:function(value,row,index){
                             var value=""
 
@@ -559,12 +559,12 @@
 
                         }
                     },
-                    {field : 'order_qty',title : '数量',width:60,align:'center',resizable:false,
+                    {field : 'enter_qty',title : '数量',width:60,align:'center',resizable:false,
                         formatter:function(value,row,index){
-                            if(isNaN(parseInt(value))){
-                                return 0;
+                            if(isNaN(value)){
+                                return 0+row.Field9;
                             }else{
-                                return parseInt(value);
+                                return value+row.Field9;
                             }
                         },editor: {
                         type: 'numberbox',
@@ -580,7 +580,7 @@
 
                     },
 
-                    {field : 'std_price',title : '单价',width:60,align:'center',resizable:false,
+                    {field : 'enter_price',title : '单价(元)',width:60,align:'center',resizable:false,
                         formatter:function(value,row,index){
                             if(isNaN(parseInt(value))){
                                 return 0;
@@ -598,9 +598,29 @@
 
                         }
                     }
-
-
                     },
+					
+					{field : 'enter_amount',title : '金额(元)',width:60,align:'center',resizable:false,
+                        formatter:function(value,row,index){
+                            if(isNaN(parseInt(value))){
+                                return 0;
+                            }else{
+                                return value;
+                            }
+                        },editor: {
+                        type: 'numberbox',
+                        options: {
+                            min: 0,
+                            precision:2,
+                            height: 31,
+                            width: 136
+
+
+                        }
+                    }
+                    },
+					
+					
                     { title: "操作", field: '', width: 180, align: 'center',hidden:that.elems.ishideOption, resizable: false,
                         formatter: function (value, row, index) {
                           return "<div class='fontC' data-index="+index+">修改</div>"

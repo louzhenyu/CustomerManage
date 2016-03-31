@@ -126,15 +126,14 @@
 				//单选框绑定事件
 				$('.jui-dialog-dispatching .radioBox').bind('click',function(){
 					var $this = $(this);
-						
 					$('#jui-dialog-'+that.elems.dataObj.typeid+' .radioBox').removeClass('on');
 					$this.addClass('on');
 					if($this.hasClass('unstartUs')){
 						$this.parents('.dispatchingContent').find('.formInputBox').attr('disabled','disabled').parent().css({'border':'none'});
 					}else{
-						$this.parents('.dispatchingContent').find('.formInputBox').attr('disabled',false).parent().css({'border':'1px solid #dedede'});
+						$this.parents('.dispatchingContent').find('.formInputBox').attr('disabled',false).parent().css({'border':'1px solid #ddd'});
 					}
-				});	
+				});
 				
 				//复选框选择
 				$('.dispatchingListArea').delegate('.checkBox','click',function(){
@@ -145,6 +144,87 @@
 						$this.addClass('on');
 					}
 				});
+				
+				//到店自提，提货设置
+				$('.timePassageArea').delegate('.timeItem .editBtn','click',function(){
+					var $this = $(this),
+						$timeItem = $this.parents('.timeItem'),
+						$startTime = $('.startTime',$timeItem),
+						$endTime = $('.endTime',$timeItem);
+					//that.timeIndex = $($timeItem,'.timePassage').index();
+					//alert(that.timeIndex);
+					that.IsEdit = 1;
+					$('.addTimePassageBox').show();
+					$('#dispatching_startTime').val($startTime.text());
+					$('#dispatching_endTime').val($endTime.text());
+					$timeItem.remove();
+						
+				});
+				
+				$('.timePassageArea').delegate('.timeItem .removeBtn','click',function(){
+					var $this = $(this);
+					$this.parents('.timeItem').remove();
+				});
+				
+				$('.checkBox').bind('click',function(){
+					var $this = $(this);
+					if($this.hasClass('on')){
+						$this.removeClass('on');
+					}else{
+						$this.addClass('on');
+					}
+				});
+				
+				//保存时间段
+				$('.timeSaveBtn').bind('click',function(){
+					var startTime = $("#dispatching_startTime").val(),
+						endTime = $("#dispatching_endTime").val();
+					that.IsEdit = 0;	
+					if(startTime == ''){
+						that.alert('开始时间段不能为空！');
+						return ;
+					}
+					if(endTime == ''){
+						that.alert('结束时间段不能为空！');
+						return ;
+					}
+					if(startTime >= endTime){
+						that.alert('开始时间段不能大于或等于结束时间段！');
+						return ;
+					}
+					
+					var timeStr = '<div class="timeItem">\
+						<p><span class="startTime">'+startTime+'</span> 至 <span class="endTime">'+endTime+'</span></p>\
+						<span class="editBtn">修改</span>\
+						<span class="removeBtn">删除</span>\
+					</div>';
+					$('.timePassage').append(timeStr);
+					$("#dispatching_startTime").val('');
+					$("#dispatching_endTime").val('');
+					$('.addTimePassageBox').hide();
+				});
+				//取消时间段
+				$('.timeCancelBtn').bind('click',function(){
+					if(that.IsEdit==1){
+						$('.timeSaveBtn').trigger('click');
+					}else{
+						$("#dispatching_startTime").val('');
+						$("#dispatching_endTime").val('');
+						$('.addTimePassageBox').hide();
+					}
+				});
+				
+				
+				$('#addTimeBtn').bind('click',function(){
+					var isDis = $('.addTimePassageBox').css('display'),
+						isChecked = $('.timePassageArea .checkBox').hasClass('on');
+					if(isDis == 'none'){
+						$('.addTimePassageBox').show();
+					}else{
+						alert('请把当前的时间段设置完成，再添加！');
+					}
+				});
+				
 				
 				//编辑操作
 				$('.tableWrap').delegate('.operateWrap','click',function(e){
@@ -172,10 +252,28 @@
 							$('#dispatching_mincost').val(item.AmountEnd);
 						
 						}else if(deliveryId == '2'){//到店自提
-							$('#dispatching_stockup').val(item.StockUpPeriod);
-							$('#dispatching_startTime').val(item.BeginWorkTime.substr(11,5));
-							$('#dispatching_endTime').val(item.EndWorkTime.substr(11,5));
-							$('#dispatching_pickup').val(item.MaxDelivery);
+							$('#dispatching_stockup').val(item.StockUpPeriod);//备货期
+							//$('#dispatching_startTime').val(item.BeginWorkTime.substr(11,5));
+							//$('#dispatching_endTime').val(item.EndWorkTime.substr(11,5));
+							$('#dispatching_pickup').val(item.MaxDelivery);//可提货天数
+							if(!!item.MaxDelivery){
+								$('.deliveryNumBox .checkBox').addClass('on');
+							}
+							//提货时间段
+							var quantumList = item.QuantumList || [];
+							if(!!quantumList.length){
+								$('.timePassageArea .checkBox').addClass('on');
+								var timeStr = '';
+								for(var i=0;i<quantumList.length;i++){
+									var splitObj = quantumList[i].Quantum.split('-');
+									timeStr += '<div class="timeItem">\
+										<p><span class="startTime">'+splitObj[0]+'</span> 至 <span class="endTime">'+splitObj[1]+'</span></p>\
+										<span class="editBtn">修改</span>\
+										<span class="removeBtn">删除</span>\
+									</div>';
+								}
+								$('.timePassage').html(timeStr);
+							}
 						}
 						
 					})
@@ -225,7 +323,6 @@
 								that.alert('配送费描述不能为空！');
 								return ;
 							}
-
 							if($("#dispatching_cost").val() == ''){
 								that.alert('默认配送费不能为空！');
 								return ;
@@ -251,25 +348,15 @@
 							obj.Parameters.DeliveryAmount = $('#dispatching_cost').val();//默认配送费
 							obj.Parameters.AmountEnd = $('#dispatching_mincost').val()||0 ;//免配送费最低订单金额
 						}else if(deliveryId=='2'){
-							/*
+							if($('.addTimePassageBox').css('display')!='none'){
+								that.alert('请把当前的时间段设置完毕，再保存！');
+								return ;
+							}
 							if($("#dispatching_stockup").val() == ''){
 								that.alert('备货期不能为空！');
 								return ;
 							}else if(!REG_INT.test(parseInt($("#dispatching_stockup").val()))){
 								that.alert('备货期为大于0的整数！');
-								return ;
-							}
-							
-							if($("#dispatching_startTime").val() == ''){
-								that.alert('门店开始工作时间不能为空！');
-								return ;
-							}
-							if($("#dispatching_endTime").val() == ''){
-								that.alert('门店结束工作时间不能为空！');
-								return ;
-							}
-							if($("#dispatching_startTime").val()>= $("#dispatching_endTime").val()){
-								that.alert('开始时间不能大于或等于结束时间！');
 								return ;
 							}
 							
@@ -280,17 +367,30 @@
 								that.alert('提货期为大于0的整数！');
 								return ;
 							}
-							
-							obj.Parameters.StockUpPeriod = $('#dispatching_stockup').val(); //备货期
+							/*
 							obj.Parameters.BeginWorkTime = dateStr+$('#dispatching_startTime').val()+':00';//门店工作时间开始
 							obj.Parameters.EndWorkTime = dateStr+$('#dispatching_endTime').val()+':00';//门店工作时间结束
-							obj.Parameters.MaxDelivery = $('#dispatching_pickup').val();//提货期最长
 							*/
+							obj.Parameters.StockUpPeriod = $('#dispatching_stockup').val() || 0; //备货期
+							obj.Parameters.MaxDelivery = 0;
+							if($('.deliveryNumBox .checkBox').hasClass('on')){
+								obj.Parameters.MaxDelivery = $('#dispatching_pickup').val();//提货期最长
+							}
+							obj.Parameters.QuantumList = [];
+							if($('.timePassageArea .checkBox').hasClass('on')){
+								var $timeItem = $('.timePassage .timeItem');
+								for(var i=0;i<$timeItem.length;i++){
+									var timeStr = $('.startTime',$timeItem.eq(i)).text()+'-'+$('.endTime',$timeItem.eq(i)).text();
+									obj.Parameters.QuantumList.push({"Quantum":timeStr});
+								}
+							}
+							
 						}
 					}
 					var obj2=obj;
 					obj = JSON.stringify(obj);
 					//{ "Parameters": { "DeliveryId": "2", "TakeDeliveryId": null, "Status": 1, "StockUpPeriod":1, "BeginWorkTime":"0001-01-01T00:00:00", "EndWorkTime":"0001-01-01T00:00:00", "MaxDelivery":2 } }	
+					
 					that.saveDeliveryInfo(obj,function(data){
 						that.queryDispatchingList();
 						if(obj2.Parameters.Status){

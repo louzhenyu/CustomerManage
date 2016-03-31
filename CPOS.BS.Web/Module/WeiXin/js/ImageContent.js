@@ -1262,6 +1262,10 @@
                 alert("请上传封面图片");
                 return false;
             }
+			if (this.unionType == 0) {
+				alert("请选择点击关联到，此选项不能为空！");
+				return false;
+			}
             //表示链接的时候进行验证
             if (this.unionType == 1) {
                 var linkUrl = $("#urlAddress").val();

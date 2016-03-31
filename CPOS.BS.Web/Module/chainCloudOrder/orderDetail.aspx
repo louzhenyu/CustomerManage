@@ -53,7 +53,7 @@
                       <div class="commonSelectWrap">
                          <em class="tit">订单编号：</em>
                          <div class="searchInput">
-                          <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="order_no"/>
+                          <input type="text" readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="order_no"/>
                          </div>
                          
                       </div>
@@ -91,9 +91,16 @@
                       
                       <div class="commonSelectWrap">
                            <div class="tit">备注：</div>
-                           <div class="searchInput" style="width:760px;">
+                           <div class="searchInput">
                               <textarea type="text"  readonly="readonly"  class="easyui-validatebox" data-options="disabled:true" name="remark"> </textarea>
                             </div>
+                       </div>
+                       
+                       <div class="commonSelectWrap">
+                           <div class="tit">提货时间：</div>
+                           <div class="searchInput">
+                              <input type="text"   readonly="readonly" class="easyui-validatebox" data-options="disabled:true" name="ReserveTime"/>
+                           </div>
                        </div>
                       
                      </div> <!--panl   END-->
