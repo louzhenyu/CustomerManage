@@ -419,7 +419,6 @@
 
                                 //that.elems.simpleQuery.find(".panelDiv").fadeOut(0).eq(2).fadeIn("slow");
 
-
                                 debugger;
                                 $("#nav0_1").form("load", dataInfo.data);
                                 if (dataInfo.data.SalesPromotionList) {  //促销分组赋值
@@ -472,92 +471,95 @@
                                 // that.elems.simpleQuery.find(".panelDiv").fadeOut(0).eq(2).fadeIn(0);
 
                                 that.elems.dataInfo = dataInfo;
+                                that.loadData.getItemType(function(ItemData) {
+                                    debugger;
 
+                                    if (ItemData.Data.VirtualItemTypeInfo && ItemData.Data.VirtualItemTypeInfo.length > 0) {
+                                        ItemData.Data.VirtualItemTypeInfo.push({"VirtualItemTypeId":-1,VirtualItemTypeName:"请选择",selected:true});
+                                        $("#itemType").combobox({
+                                            width: wd,
+                                            height: H,
+                                            panelHeight: that.elems.panlH,
+                                            valueField: 'VirtualItemTypeId',
+                                            textField: 'VirtualItemTypeName',
+                                            data: ItemData.Data.VirtualItemTypeInfo,
+                                            onSelect:function(record){
+                                                $("#ObjecetType").combobox({data:[]});
+                                                if(record.VirtualItemTypeId==-1){
+                                                    $("#ObjecetType").combobox("setValue","请选择");
+                                                }else {
+                                                    var selectData = record.VirtualItemTypeCode;
+                                                    if (selectData == "VipCard") {
+                                                        that.loadData.getSysVipCardTypeList(function (cardData) {
+                                                            if (cardData.Data.SysVipCardTypeList && cardData.Data.SysVipCardTypeList.length > 0) {
+                                                                cardData.Data.SysVipCardTypeList[0]["selected"] = true;
+                                                                $("#ObjecetType").combobox({
+                                                                    width: wd,
+                                                                    height: H,
+                                                                    panelHeight: that.elems.panlH,
+                                                                    valueField: 'VipCardTypeID',
+                                                                    textField: 'VipCardTypeName',
+                                                                    data: cardData.Data.SysVipCardTypeList
+                                                                });
+                                                                if (dataInfo.data.ObjecetTypeId) {
+                                                                    $("#ObjecetType").combobox("setValue", dataInfo.data.ObjecetTypeId);
+                                                                    dataInfo.data.ObjecetTypeId="";
+                                                                }
+                                                            } else {
+                                                                console.log("未创建任何类型的卡")
+                                                            }
+
+                                                        });
+
+                                                    } else if (selectData == "Coupon") {
+
+                                                        that.loadData.getCouponTypeList(function (couponData) {
+                                                            debugger;
+                                                            if (couponData.Data.CouponTypeList && couponData.Data.CouponTypeList.length > 0) {
+                                                                couponData.Data.CouponTypeList[0]["selected"] = true;
+                                                                $("#ObjecetType").combobox({
+                                                                    width: wd,
+                                                                    height: H,
+                                                                    panelHeight: that.elems.panlH,
+                                                                    valueField: 'CouponTypeID',
+                                                                    textField: 'CouponTypeName',
+                                                                    data: couponData.Data.CouponTypeList
+                                                                });
+
+                                                                if (dataInfo.data.ObjecetTypeId) {
+                                                                    $("#ObjecetType").combobox("setValue", dataInfo.data.ObjecetTypeId);
+                                                                    dataInfo.data.ObjecetTypeId = "";
+                                                                }
+                                                            } else {
+                                                                console.log("我创建任何优惠券类型")
+                                                            }
+
+                                                        });
+                                                    }
+                                                }
+
+                                            }
+
+                                        });
+                                        if(dataInfo.data.ifservice==1){
+                                            $('[data-name="ifservice"]').eq(1).trigger("click");
+                                            $("#itemType").combobox("select",dataInfo.data.VirtualItemTypeId);
+                                        }else{
+                                            $('[data-name="ifservice"]').eq(0).trigger("click");
+                                        }
+
+
+                                    } else{
+                                        $('[data-name="ifservice"]').eq(1).remove();
+                                    }
+
+                                });
                             });
                         });
 
 
 
-                        that.loadData.getItemType(function(ItemData) {
-                            debugger;
 
-                            if (ItemData.Data.VirtualItemTypeInfo && ItemData.Data.VirtualItemTypeInfo.length > 0) {
-                                ItemData.Data.VirtualItemTypeInfo.push({"VirtualItemTypeId":-1,VirtualItemTypeName:"请选择",selected:true});
-                                $("#itemType").combobox({
-                                    width: wd,
-                                    height: H,
-                                    panelHeight: that.elems.panlH,
-                                    valueField: 'VirtualItemTypeId',
-                                    textField: 'VirtualItemTypeName',
-                                    data: ItemData.Data.VirtualItemTypeInfo,
-                                    onSelect:function(record){
-                                        $("#ObjecetType").combobox({data:[]});
-                                        if(record.VirtualItemTypeId==-1){
-                                            $("#ObjecetType").combobox("setValue","请选择");
-                                        }else {
-                                            var selectData = record.VirtualItemTypeCode;
-                                            if (selectData == "VipCard") {
-                                                that.loadData.getSysVipCardTypeList(function (cardData) {
-                                                    if (cardData.Data.SysVipCardTypeList && cardData.Data.SysVipCardTypeList.length > 0) {
-                                                        cardData.Data.SysVipCardTypeList[0]["selected"] = true;
-                                                        $("#ObjecetType").combobox({
-                                                            width: wd,
-                                                            height: H,
-                                                            panelHeight: that.elems.panlH,
-                                                            valueField: 'VipCardTypeID',
-                                                            textField: 'VipCardTypeName',
-                                                            data: cardData.Data.SysVipCardTypeList
-                                                        });
-                                                        if (dataInfo.data.ObjecetTypeId) {
-                                                            $("#ObjecetType").combobox("setValue", dataInfo.data.ObjecetTypeId);
-                                                            dataInfo.data.ObjecetTypeId="";
-                                                        }
-                                                    } else {
-                                                        console.log("未创建任何类型的卡")
-                                                    }
-
-                                                });
-
-                                            } else if (selectData == "Coupon") {
-
-                                                that.loadData.getCouponTypeList(function (couponData) {
-                                                    debugger;
-                                                    if (couponData.Data.CouponTypeList && couponData.Data.CouponTypeList.length > 0) {
-                                                        couponData.Data.CouponTypeList[0]["selected"] = true;
-                                                        $("#ObjecetType").combobox({
-                                                            width: wd,
-                                                            height: H,
-                                                            panelHeight: that.elems.panlH,
-                                                            valueField: 'CouponTypeID',
-                                                            textField: 'CouponTypeName',
-                                                            data: couponData.Data.CouponTypeList
-                                                        });
-
-                                                        if (dataInfo.data.ObjecetTypeId) {
-                                                            $("#ObjecetType").combobox("setValue", dataInfo.data.ObjecetTypeId);
-                                                            dataInfo.data.ObjecetTypeId = "";
-                                                        }
-                                                    } else {
-                                                        console.log("我创建任何优惠券类型")
-                                                    }
-
-                                                });
-                                            }
-                                        }
-
-                                    }
-
-                                });
-                                if(dataInfo.data.ifservice==1){
-                                    $("#itemType").combobox("select",dataInfo.data.VirtualItemTypeId);
-                                }
-
-
-                            } else{
-                                $('[data-name="ifservice"]').eq(1).remove();
-                            }
-
-                        });
                         debugger;
                         if(dataInfo.data.ifservice==1){
                             $('[data-name="ifservice"]').eq(1).trigger("click");

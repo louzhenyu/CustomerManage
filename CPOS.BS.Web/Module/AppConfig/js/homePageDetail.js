@@ -84,26 +84,16 @@
         initSort: function () {
 
             var self = this;
-            self.ele.sortableDiv.sortable({
-                revert: true,
+            $("#sortable").sortable({
                 opacity: 0.8,
                 cancel:'[data-type="navList"],[data-type="followInfo"]',
                 axis: "y",
-                'distance':20,
-                start: function () {
-                    var str = this;
-
-                },
-                drag: function () {
-
-                },
+                cursor: "move",
                 stop: function () {
-                    debugger;
-                    self.sortAction();
+                   self.sortAction();
 
                 }
             });
-
             self.ele.classAction.disableSelection();
 
         },
@@ -3464,7 +3454,7 @@
                                             //var table = $('table.dataTable');//that.tableMap[that.status];
                                             //var length = table.find("thead th").length;
                                             //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
-                                            self.commodityGroupLayer.pageIndex=n;
+                                            self.commodityGroupLayer.pageIndex=n-1;
                                             self.commodityGroupLayer.loadDate();
                                         },
                                         //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
