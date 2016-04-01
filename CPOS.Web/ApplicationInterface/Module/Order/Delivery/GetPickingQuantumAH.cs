@@ -33,9 +33,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Delivery
             SysTimeQuantumEntity[] sysTimeQuantumEntity = sysTimeQuantumBll.QueryByEntity(new SysTimeQuantumEntity() { CustomerID = CurrentUserInfo.ClientID }, new OrderBy[] { new OrderBy() { FieldName = "Quantum", Direction = OrderByDirections.Asc } });
             string beginDate = DateTime.Now.Date.ToString("yyyy-MM-dd");
             string pickingDate = "";
+            getPickingQuantunRD.QuantumList = new List<QuantumInfo>();
+
             if (sysTimeQuantumEntity.Length == 0)
             {
-                throw new APIException("该商户没有配置配送时间段"){ ErrorCode = 250};
+                return getPickingQuantunRD;
             }
             if (!string.IsNullOrEmpty(getPickingQuantunRP.BeginDate))
             {
@@ -46,8 +48,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Delivery
                 pickingDate = Convert.ToDateTime(getPickingQuantunRP.PickingDate).ToString("yyyy-MM-dd");
             }
             else
-            {
-                getPickingQuantunRD.QuantumList = new List<QuantumInfo>(); //前端需要空数组，所以new空List
+            {      
                 return getPickingQuantunRD;
             }
             
