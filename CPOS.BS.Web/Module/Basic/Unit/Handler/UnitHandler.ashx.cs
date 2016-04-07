@@ -351,9 +351,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 responseData.msg = "门店名称不能为空";
                 return responseData.ToJSON();
             }
-            obj.Code = obj.Name;//没有编码的时候，就传名称
+                        
             if (obj.Code == null || obj.Code.Trim().Length == 0)
             {
+                obj.Code = obj.Name;//没有编码的时候，就传名称
                 responseData.success = false;
                 responseData.msg = "门店编码不能为空";
                 return responseData.ToJSON();

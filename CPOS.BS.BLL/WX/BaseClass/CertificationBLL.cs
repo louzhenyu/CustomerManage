@@ -66,18 +66,21 @@ namespace JIT.CPOS.BS.BLL.WX.BaseClass
                 ////保存用户信息///// <param name="isShow">1： 关注  0： 取消关注</param>
                 commonService.SaveUserInfo(requestParams.OpenId, requestParams.WeixinId, "1", entity.AppID, entity.AppSecret, qrcodeId, requestParams.LoggingSessionInfo);
             }
+
+            int sendMessageCount = 0;
+
             if (eventKey != null && eventKey.InnerText.Contains("qrscene_"))//如果是二维码的就之返回二维码的
             {
                 qrcodeId = eventKey.InnerText.Substring(8);
 
                 eventsBll.SendQrCodeWxMessage(requestParams.LoggingSessionInfo, requestParams.LoggingSessionInfo.CurrentLoggingManager.Customer_Id, requestParams.WeixinId, qrcodeId,
-               requestParams.OpenId, this.httpContext, requestParams); //保存用户信息时，有推送消息
+               requestParams.OpenId, this.httpContext, requestParams, out sendMessageCount); //保存用户信息时，有推送消息
                 //eventsBll.QrCodeHandlerText(qrcodeId, requestParams.LoggingSessionInfo,
                 // requestParams.WeixinId, 4, requestParams.OpenId, httpContext, requestParams);
                 //ds = modelDAO.GetMaterialByWeixinIdJermyn(requestParams.WeixinId, 4);
             }
-            else
-            {
+           
+           if(  sendMessageCount ==0) {//这种情况，就是没有eventKey，或者这个eventkey没有设置对应的关键字回复
                 #region  处理关注事件的图文信息
                 ds = modelDAO.GetMaterialByWeixinIdJermyn(requestParams.WeixinId, 2);
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)

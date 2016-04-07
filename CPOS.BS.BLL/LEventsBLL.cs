@@ -883,9 +883,9 @@ namespace JIT.CPOS.BS.BLL
         }
 
         public void SendQrCodeWxMessage(LoggingSessionInfo loggingSessionInfo, string customerId,
-            string weixinId, string qrCode, string openId, HttpContext httpContext, RequestParams requestParams)
+            string weixinId, string qrCode, string openId, HttpContext httpContext, RequestParams requestParams, out int sendMessageCount)
         {
-
+            sendMessageCount=0;
             try
             {
 
@@ -1100,19 +1100,25 @@ namespace JIT.CPOS.BS.BLL
                     }
                     #endregion
 
+             //   sendMessageCount=0;  //     int
                     if (!string.IsNullOrWhiteSpace(weixinId))//处理素材的
                     {
+
                         if (qrCodeTypeInfo.TypeCode == "UserQrCode")//员工二维码（员工二维码的图文素材加上是哪个员工的二维码，以方便分享时查看）
                         {
                             //根据员工类型QRCodeTypeId
-                            QrCodeHandlerText(qrCodeEntity.QRCodeTypeId.ToString(), loggingSessionInfo,
-                                weixinId, 4, openId, httpContext, requestParams, qrCodeEntity.ObjectId);
+                            //QrCodeHandlerText(qrCodeEntity.QRCodeTypeId.ToString(), loggingSessionInfo, 
+                            //    weixinId, 4, openId, httpContext, requestParams, qrCodeEntity.ObjectId);
+                            //下面是2016-4-4日新改的
+                            QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
+                                weixinId, 4, openId, httpContext, requestParams,  out  sendMessageCount,  qrCodeEntity.ObjectId);
                         }
                         else
                         {
-                            QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
-                                weixinId, 4, openId, httpContext, requestParams);
+                            QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,   //用QRCodeId作关键字回复里的关键字，而QRCode的code生成二维码的内容
+                                weixinId, 4, openId, httpContext, requestParams,out  sendMessageCount );
                         }
+                       //上面的代码感觉有问题，应该不分员工或者其他类型的二维码，而分享时，为了看到是哪个人分享的应该是在前端加吧，加上当前会员的userid？？
 
                         Loggers.Debug(new DebugLogInfo()
                         {
@@ -1144,7 +1150,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="requestParams"></param>
         /// <param name="objectId">员工ID</param>
         public void QrCodeHandlerText(string content, LoggingSessionInfo loggingSessionInfo,
-            string weixinId, int keywordType, string openId, HttpContext httpContext, RequestParams requestParams, string objectId = null)
+            string weixinId, int keywordType, string openId, HttpContext httpContext, RequestParams requestParams, out int sendMessageCount, string objectId = null)
         {
             var keywordDAO = new WKeywordReplyDAO(loggingSessionInfo);
 
@@ -1156,9 +1162,11 @@ namespace JIT.CPOS.BS.BLL
             BaseService.WriteLogWeixin("content:" + content);
             BaseService.WriteLogWeixin("weixinId:" + weixinId);
             BaseService.WriteLogWeixin(ds.Tables[0].Rows.Count.ToString());
-
+            sendMessageCount = 0;// 默认是0
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)//只回复一条关键字
             {
+
+                sendMessageCount = ds.Tables.Count;//推送关键字的数量***
                 string Text = ds.Tables[0].Rows[0]["Text"].ToString();  //素材类型
                 string ReplyId = ds.Tables[0].Rows[0]["ReplyId"].ToString();  //素材ID
                 string typeId = ds.Tables[0].Rows[0]["ReplyType"].ToString();  //素材ID
