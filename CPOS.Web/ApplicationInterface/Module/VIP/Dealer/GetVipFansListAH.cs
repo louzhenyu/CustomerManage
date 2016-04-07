@@ -19,9 +19,25 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Dealer
         {
             var rd = new GetVipFansListRD();
             var VipBLL = new VipBLL(CurrentUserInfo);
+            var RetailTraderBLL = new RetailTraderBLL(CurrentUserInfo);
 
-            rd.VipFansList = VipBLL.GetVipFansList(pRequest.UserID, pRequest.Parameters.Code,pRequest.Parameters.VipName);
+            //var RetailTrader = RetailTraderBLL.GetByID(pRequest.UserID);
+            //string vipid = RetailTrader == null ? "" : RetailTrader.MultiLevelSalerFromVipId;
 
+            int StarePage = pRequest.Parameters.PageIndex * pRequest.Parameters.PageSize;
+            int EndPage = (pRequest.Parameters.PageIndex + 1) * pRequest.Parameters.PageSize;
+
+            rd.VipFansList = VipBLL.GetVipFansList(pRequest.UserID, pRequest.Parameters.Code, pRequest.Parameters.VipName, StarePage, EndPage);
+            rd.TotalCount = VipBLL.GetVipFansListCount(pRequest.UserID, pRequest.Parameters.Code, pRequest.Parameters.VipName);
+            int PageSum = 0;
+            //分页
+            if (rd.TotalCount > 0)
+            {
+                PageSum = rd.TotalCount / pRequest.Parameters.PageSize;
+                if (rd.TotalCount % pRequest.Parameters.PageSize != 0)
+                    PageSum++;
+            }
+            rd.TotalPageCount = PageSum;
             return rd;
         }
     }

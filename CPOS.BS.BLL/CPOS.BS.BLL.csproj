@@ -456,6 +456,7 @@
     <Compile Include="CodeGeneration\t_award_poolBLL.cs" />
     <Compile Include="CodeGeneration\T_CityBLL.cs" />
     <Compile Include="CodeGeneration\t_customerBLL.cs" />
+    <Compile Include="CodeGeneration\T_HierarchySystemExNodeBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_CategoryBLL.cs" />
@@ -1055,6 +1056,7 @@
     <Compile Include="t_award_poolBLL.cs" />
     <Compile Include="T_CityBLL.cs" />
     <Compile Include="t_customerBLL.cs" />
+    <Compile Include="T_HierarchySystemExNodeBLL.cs" />
     <Compile Include="T_InoutBLL.cs" />
     <Compile Include="T_Item_CategoryBLL.cs" />
     <Compile Include="T_Item_PriceBLL.cs" />

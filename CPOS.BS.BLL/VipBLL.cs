@@ -75,7 +75,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 string sql = string.Format(@"
                                             SELECT c.Prices FROM VipCardVipMapping as a 
-                                            inner join VipCard as b on a.vipcardid=b.VipCardID and b.IsDelete =0 and b.VipCardStatusId=1 
+                                            inner join VipCard as b on a.vipcardid=b.VipCardID and b.IsDelete =0  
                                             left join SysVipCardType as c on b.VipCardTypeID=c.VipCardTypeID and c.IsDelete=0 
                                             where a.IsDelete=0 and a.CustomerId='{0}' and a.VIPID='{1}'", CurrentUserInfo.ClientID, VipID);
                 decimal Prices = this._currentDAO.GetAmount(sql);
@@ -154,10 +154,10 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="HigherVipID"></param>
         /// <returns></returns>
 
-        public List<VipFansInfo> GetVipFansList(string HigherVipID, string Code,string VipName)
+        public List<VipFansInfo> GetVipFansList(string Col20, string Code, string VipName, int StartPage, int EndPage)
         {
             var ReturnList = new List<VipFansInfo>();
-            DataSet ds = this._currentDAO.GetVipFansList(HigherVipID, Code, VipName);
+            DataSet ds = this._currentDAO.GetVipFansList(Col20, Code, VipName, StartPage, EndPage);
             if (ds != null && ds.Tables[0].Rows.Count > 0)
             {
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
@@ -198,6 +198,17 @@ namespace JIT.CPOS.BS.BLL
 
             }
             return ReturnList;
+        }
+        /// <summary>
+        /// 获取会员经销商粉丝数据集总数
+        /// </summary>
+        /// <param name="Col20"></param>
+        /// <param name="Code"></param>
+        /// <param name="VipName"></param>
+        /// <returns></returns>
+        public int GetVipFansListCount(string Col20, string Code, string VipName)
+        {
+            return this._currentDAO.GetVipFansListCount(Col20, Code, VipName);
         }
         #endregion
 

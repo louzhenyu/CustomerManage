@@ -104,14 +104,29 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                 if (RP.Parameters.VipDCode == 9)    //永久二维码
                 {
                     var userQrCodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
-                    var userQrCode = userQrCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ObjectId = objectid }, null);
+                    //if (!string.IsNullOrWhiteSpace(RP.Parameters.QRCodeId)) //如果是分享二维码，QRCodeId是有值的
+                    //{
+                        
+                    //    var userQrCode = userQrCodeBll.GetByID(RP.Parameters.QRCodeId);
 
-                    if (userQrCode != null && userQrCode.Length > 0)
-                    {
-                        RD.imageUrl = userQrCode[0].ImageUrl;
-                        RD.paraTmp = userQrCode[0].QRCode;
-                        return rsp.ToJSON();
-                    }
+                    //    if (userQrCode != null )
+                    //    {
+                    //        RD.imageUrl = userQrCode.ImageUrl;
+                    //        RD.paraTmp = userQrCode.QRCode;
+                    //        return rsp.ToJSON();
+                    //    }
+                    //}
+                    //else
+                    //{
+                        var userQrCode = userQrCodeBll.QueryByEntity(new WQRCodeManagerEntity() { ObjectId = objectid }, null);
+
+                        if (userQrCode != null && userQrCode.Length > 0)
+                        {
+                            RD.imageUrl = userQrCode[0].ImageUrl;
+                            RD.paraTmp = userQrCode[0].QRCode;
+                            return rsp.ToJSON();
+                        }
+                    //}
 
                     //获取当前二维码 最大值
                     iResult = new WQRCodeManagerBLL(loggingSessionInfo).GetMaxWQRCod() + 1;
@@ -279,6 +294,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
 
             public string TypeCode { get; set; }
             public string ObjectID { get; set; }
+
+            public string QRCodeId { get; set; }//二维码ID（分享）
             public string RetailTraderName { get; set; }//分销商名称
 
             public string ShareUserId { get; set; }//分享经销商的vipid

@@ -203,6 +203,8 @@
     <Compile Include="Module\Report\DayReport\Response\DayVendingRD.cs" />
     <Compile Include="Module\Report\VipReport\Request\VipBirthdayRP.cs" />
     <Compile Include="Module\Report\VipReport\Response\VipBirthdayRD.cs" />
+    <Compile Include="Module\RetailTrader\Request\RetailTraderRP.cs" />
+    <Compile Include="Module\RetailTrader\Response\VipMultiLevelSalerConfigRP.cs" />
     <Compile Include="Module\VIP\Attribute\Request\GetAttributeListRP.cs" />
     <Compile Include="Module\VIP\Attribute\Request\SetAttributeRP.cs" />
     <Compile Include="Module\VIP\Attribute\Response\GetAttributeListRD.cs" />

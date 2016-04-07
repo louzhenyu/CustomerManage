@@ -9,6 +9,14 @@ namespace JIT.CPOS.DTO.Module.VIP.Dealer.Response
     public class GetVipFansListRD : IAPIResponseData
     {
         public List<VipFansInfo> VipFansList { get; set; }
+        /// <summary>
+        /// 总记录数
+        /// </summary>
+        public int TotalCount { get; set; }
+        /// <summary>
+        /// 总页数
+        /// </summary>
+        public int TotalPageCount { get; set; }
     }
 
     public class VipFansInfo

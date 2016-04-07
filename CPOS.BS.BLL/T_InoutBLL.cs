@@ -175,6 +175,8 @@ namespace JIT.CPOS.BS.BLL
             //处理销量库存业务
             inoutBll.SetStock(orderId, inoutDetailList, 2, loggingSessionInfo);
         }
+
+        #region 处理商品销量库存
         /// <summary>
         /// 处理商品销量库存
         /// </summary>
@@ -239,6 +241,9 @@ namespace JIT.CPOS.BS.BLL
                 }
             }
         }
+        #endregion
+
+        #region 支付回调/收款处理虚拟商品订单
         /// <summary>
         /// 支付回调/收款处理虚拟商品订单
         /// </summary>
@@ -258,7 +263,7 @@ namespace JIT.CPOS.BS.BLL
                     T_VirtualItemTypeSettingBLL virtualItemTypeSettingBLL = new T_VirtualItemTypeSettingBLL(loggingSessionInfo);
                     VipCardVipMappingBLL vipCardVipMappingBLL = new VipCardVipMappingBLL(loggingSessionInfo);
                     T_Inout_DetailBLL inoutDetailBLL = new T_Inout_DetailBLL(loggingSessionInfo);
-
+                    var VipBLL=new VipBLL(loggingSessionInfo);
                     var inoutDetail = inoutService.GetInoutDetailInfoByOrderId(orderId).FirstOrDefault();
                     string itemId = inoutDetail.item_id;
 
@@ -275,8 +280,24 @@ namespace JIT.CPOS.BS.BLL
                             inoutDetailBLL.Update(inoutDetailEntity);
                         }
                     }
+                    //将Col48至为1
+                    var VipData = VipBLL.GetByID(inoutInfo.vip_no);
+                    if (VipData != null)
+                    {
+                        VipData.Col48 = "1";
+                        VipBLL.Update(VipData);
+                    }
+                    // 判断客户是否是符合潜在经销商条件
+                    var isCan = VipBLL.IsSetVipDealer(inoutInfo.vip_no);
+
+                    if (isCan)
+                    {
+                        new RetailTraderBLL(loggingSessionInfo).CreatePrepRetailTrader(loggingSessionInfo, inoutInfo.vip_no); // 创建潜在经销商
+                    }
                 }
             }
         }
+        #endregion
+
     }
 }

@@ -169,5 +169,30 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetObjectImagesByEventId(EventId);
         }
+
+        /// <summary>
+        /// 保存经销商头像
+        /// </summary>
+        /// <param name="vipEntity"></param>
+        /// <param name="pEntity"></param>
+        internal void SaveRetailTraderHeadImg(VipEntity vipEntity, RetailTraderEntity pEntity)
+        {
+            ObjectImagesEntity imgEntity = new ObjectImagesEntity();
+            imgEntity.ImageId = System.Guid.NewGuid().ToString();
+            imgEntity.CustomerId = pEntity.CustomerId;
+            imgEntity.ObjectId = pEntity.RetailTraderID;
+            imgEntity.ImageURL = vipEntity.HeadImgUrl;
+            imgEntity.DisplayIndex = 0;
+            imgEntity.CreateTime = DateTime.Now;
+            imgEntity.CreateBy = "sys";
+            imgEntity.LastUpdateBy = "sys";
+            imgEntity.LastUpdateTime = DateTime.Now;
+            imgEntity.IsDelete = 0;
+            imgEntity.Title = "";
+            imgEntity.Description = "";
+
+            this._currentDAO.Create(imgEntity);
+        }
+
     }
 }

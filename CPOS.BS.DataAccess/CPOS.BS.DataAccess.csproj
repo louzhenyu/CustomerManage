@@ -421,6 +421,7 @@
     <Compile Include="CodeGeneration\t_award_poolDAO.cs" />
     <Compile Include="CodeGeneration\T_CityDAO.cs" />
     <Compile Include="CodeGeneration\t_customerDAO.cs" />
+    <Compile Include="CodeGeneration\T_HierarchySystemExNodeDAO.cs" />
     <Compile Include="CodeGeneration\T_InoutDAO.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailDAO.cs" />
     <Compile Include="CodeGeneration\T_Item_CategoryDAO.cs" />
@@ -969,6 +970,7 @@
     <Compile Include="t_award_poolDAO.cs" />
     <Compile Include="T_CityDAO.cs" />
     <Compile Include="t_customerDAO.cs" />
+    <Compile Include="T_HierarchySystemExNodeDAO.cs" />
     <Compile Include="T_InoutDAO.cs" />
     <Compile Include="T_Item_CategoryDAO.cs" />
     <Compile Include="T_Item_PriceDAO.cs" />

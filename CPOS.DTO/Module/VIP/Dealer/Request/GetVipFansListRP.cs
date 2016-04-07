@@ -14,6 +14,9 @@ namespace JIT.CPOS.DTO.Module.VIP.Dealer.Request
         public string Code { get; set; }
 
         public string VipName { get; set; }
+
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
         public void Validate()
         {
 

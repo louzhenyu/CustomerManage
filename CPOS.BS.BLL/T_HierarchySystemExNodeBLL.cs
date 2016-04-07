@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015-06-08 20:59:54
+ * Create On	:2016/4/6 17:09:41
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -31,16 +31,19 @@ namespace JIT.CPOS.BS.BLL
     /// <summary>
     /// 业务处理：  
     /// </summary>
-    public partial class t_unitBLL
+    public partial class T_HierarchySystemExNodeBLL
     {
         /// <summary>
-        /// 获取总部门店信息
+        /// 新增经销商拓展记录
         /// </summary>
-        /// <param name="clientID"></param>
-        /// <returns></returns>
-        public t_unitEntity GetMainUnit(string clientID)
+        /// <param name="RetailTraderID"></param>
+        public void AddHierarchySystemExNode(string RetailTraderID)
         {
-            return _currentDAO.GetMainUnit(clientID);
+            var Data = new T_HierarchySystemExNodeEntity();
+            Data.HierarchySystemConfigId = null;
+            Data.RetailTraderID = RetailTraderID;
+            Data.CustomerId = CurrentUserInfo.ClientID;
+            this._currentDAO.Create(Data);
         }
     }
 }

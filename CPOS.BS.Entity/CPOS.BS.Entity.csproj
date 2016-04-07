@@ -314,6 +314,7 @@
     <Compile Include="CodeGeneration\t_award_poolEntity.cs" />
     <Compile Include="CodeGeneration\T_CityEntity.cs" />
     <Compile Include="CodeGeneration\t_customerEntity.cs" />
+    <Compile Include="CodeGeneration\T_HierarchySystemExNodeEntity.cs" />
     <Compile Include="CodeGeneration\T_InoutEntity.cs" />
     <Compile Include="CodeGeneration\T_Inout_DetailEntity.cs" />
     <Compile Include="CodeGeneration\T_Item_CategoryEntity.cs" />
@@ -1046,6 +1047,7 @@
     <Compile Include="t_award_poolEntity.cs" />
     <Compile Include="T_CityEntity.cs" />
     <Compile Include="t_customerEntity.cs" />
+    <Compile Include="T_HierarchySystemExNodeEntity.cs" />
     <Compile Include="T_InoutEntity.cs" />
     <Compile Include="T_Inout_DetailEntity.cs" />
     <Compile Include="T_Item_CategoryEntity.cs" />

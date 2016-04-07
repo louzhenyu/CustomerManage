@@ -2701,6 +2701,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                         }
                         else if (status == "700")//完成操作
                         {
+
                             if (string.IsNullOrEmpty(order.Field1) || order.Field1 == "0")
                             {
                                 responseData.success = true;

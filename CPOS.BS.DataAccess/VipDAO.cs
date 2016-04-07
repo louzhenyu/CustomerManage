@@ -119,17 +119,17 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="HigherVipID"></param>
         /// <returns></returns>
-        public DataSet GetVipFansList(string HigherVipID, string Code,string VipName)
+        public DataSet GetVipFansList(string Col20, string Code, string VipName, int StartPage, int EndPage)
         {
             var ds = new DataSet();
-            if (!string.IsNullOrWhiteSpace(HigherVipID))
+            if (!string.IsNullOrWhiteSpace(Col20))
             {
                 StringBuilder sqlstr = new StringBuilder();
-                sqlstr.AppendFormat(@"select a.vipid,a.HeadImgUrl,a.vipname,c.prices,a.Phone,a.col48 from Vip as a 
+                sqlstr.AppendFormat(@"SELECT * FROM (select ROW_NUMBER() Over(order by a.LastUpdateTime desc ) as rowNum,a.vipid,a.HeadImgUrl,a.vipname,c.prices,a.Phone,a.col48 from Vip as a 
                                         left join VipCardVipMapping as m on a.VIPID=m.VIPID and m.IsDelete=0 
                                         left join VipCard as b on m.vipcardid=b.VipCardID and b.IsDelete =0  
                                         left join SysVipCardType as c on b.VipCardTypeID=c.VipCardTypeID and c.IsDelete=0 
-                                where a.ClientID='{0}' and a.HigherVipID='{1}' ", CurrentUserInfo.ClientID, HigherVipID);
+                                where a.ClientID='{0}' and a.Col20='{1}' ", CurrentUserInfo.ClientID, Col20);
 
                 if (!string.IsNullOrWhiteSpace(Code))
                 {
@@ -137,14 +137,16 @@ namespace JIT.CPOS.BS.DataAccess
                     {
                         sqlstr.Append("and a.col48='1' ");
                     }
-                    if (Code.Equals("N")) {
+                    if (Code.Equals("N"))
+                    {
                         sqlstr.Append("and ISNULL(a.col48,0)=0 ");
                     }
                 }
 
                 if (!string.IsNullOrWhiteSpace(VipName))
-                    sqlstr.AppendFormat("and a.VipName like '%{0}%' ",VipName);
+                    sqlstr.AppendFormat("and a.VipName like '%{0}%' ", VipName);
 
+                sqlstr.AppendFormat(") as t where rowNum between {0} and {1}", StartPage, EndPage);
                 ds = this.SQLHelper.ExecuteDataset(sqlstr.ToString());
             }
             else
@@ -155,6 +157,43 @@ namespace JIT.CPOS.BS.DataAccess
 
 
             return ds;
+        }
+
+        /// <summary>
+        /// 获取会员经销商粉丝数据集总数
+        /// </summary>
+        /// <param name="Col20"></param>
+        /// <param name="Code"></param>
+        /// <param name="VipName"></param>
+        /// <returns></returns>
+        public int GetVipFansListCount(string Col20, string Code, string VipName)
+        {
+            int Num = 0;
+            if (!string.IsNullOrWhiteSpace(Col20))
+            {
+                var sqlstr = new StringBuilder();
+                sqlstr.AppendFormat(@"select count(1) from vip where ClientID='{0}' and Col20='{1}'", CurrentUserInfo.ClientID, Col20);
+
+                if (!string.IsNullOrWhiteSpace(Code))
+                {
+                    if (Code.Equals("Y"))
+                    {
+                        sqlstr.Append("and col48='1' ");
+                    }
+                    if (Code.Equals("N"))
+                    {
+                        sqlstr.Append("and ISNULL(col48,0)=0 ");
+                    }
+                }
+
+                if (!string.IsNullOrWhiteSpace(VipName))
+                    sqlstr.AppendFormat("and VipName like '%{0}%' ", VipName);
+
+                var Result = this.SQLHelper.ExecuteScalar(sqlstr.ToString());
+                if (Result != null)
+                    Num = Convert.ToInt32(Result);
+            }
+            return Num;
         }
 
         #endregion

@@ -70,6 +70,11 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public String SalesType { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public String RetailTraderMan { get; set; }
 
 		/// <summary>
@@ -90,17 +95,22 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String SalesType { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
 		public String SellUserID { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
 		public String UnitID { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String MultiLevelSalerFromVipId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String HigheRetailTraderID { get; set; }
 
 		/// <summary>
 		/// 
