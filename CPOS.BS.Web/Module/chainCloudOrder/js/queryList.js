@@ -39,8 +39,20 @@
 					$notShow.addClass('on');
 				}
 			});
+			
+			$('.unfoldMoreBtn').bind('click',function(){
+				$('.unfoldBox').show();
+				$(this).hide();
+				$('.packupBtn').show();
+			});
+			
+			$('.packupBtn').bind('click',function(){
+				$('.unfoldBox').hide();
+				$(this).hide();
+				$('.unfoldMoreBtn').show();
+			});
+			
             //点击查询按钮进行数据查询
-
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
                 that.setCondition();
@@ -176,8 +188,8 @@
                     data:data.topics
                 });
             });
-
-            $('#payment').combobox({
+			
+			$('#payment').combobox({
                 width:wd,
                 height:H,
                 panelHeight:that.elems.panlH,
@@ -194,6 +206,33 @@
                     "id":0,
                     "text":" 未付款"
                 }]
+            });
+			
+			
+			that.loadData.getVipCardGrade(function(data){
+                data.push({ "VipCardTypeID": "", "VipCardTypeName": "请选择", "selected": true });
+                $('#vipCardGrade').combobox({
+                    width:wd,
+                    height:H,
+                    panelHeight:that.elems.panlH,
+                    valueField: 'VipCardTypeID',
+                    textField: 'VipCardTypeName',
+                    data:data
+                });
+            });
+
+			that.loadData.getClassify(function(data) {
+                data.push({"id":"","text":"请选择","selected": true});
+                $('#storeList').combotree({
+                    width:wd,
+					height:H,
+                    editable:true,
+                    lines:true,
+                    panelHeight:that.elems.panlH,
+                    valueField: 'id',
+                    textField: 'text',
+                    data:data
+                });
             });
 
             /**************** -------------------弹出easyui 控件  End****************/
@@ -607,7 +646,7 @@
                 var dataLink = JSON.stringify(data);
                 var form = $('<form>');
                 form.attr('style', 'display:none;');
-                form.attr('target', '');
+                form.attr('target', '_blank');
                 form.attr('method', 'post');
                 form.attr('action', url);
                 var input1 = $('<input>');
@@ -704,6 +743,43 @@
                         }
                         else {
                             alert("支付方式加载异常");
+                        }
+                    }
+                });
+            },
+			getVipCardGrade:function(callback){
+				$.util.ajax({
+                    url: "/ApplicationInterface/Gateway.ashx",
+                    data:{
+                        action:"VIP.SysVipCardType.GetSysVipCardTypeList",
+                        PageIndex:1,
+						PageSize:10
+                    },
+                    success: function (data) {
+                        if (data.ResultCode==0) {
+                            if(callback){
+								callback(data.Data.SysVipCardTypeList);
+							}
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+			},
+			getClassify: function(callback){
+                $.util.oldAjax({
+                    url: "/ApplicationInterface/Module/Basic/UnitAndType/UnitTypeTreeHandler.ashx",
+                    data:{
+						hasShop:1
+					},
+                    success: function(data){
+                        if(data){
+                            if(callback)
+                                callback(data);
+                        }
+                        else{
+                            alert('数据加载失败');
                         }
                     }
                 });

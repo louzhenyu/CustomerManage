@@ -350,7 +350,7 @@
         },
 
         //设置查询条件   取得动态的表单查询参数
-        setCondition: function () {
+        setCondition: function(){
              var that=this;
             that.elems.dataMessage.html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');

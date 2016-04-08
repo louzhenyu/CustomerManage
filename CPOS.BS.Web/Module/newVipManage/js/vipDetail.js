@@ -129,6 +129,47 @@
 
         //事件绑定方法
         initEvent: function () {
+			$('#win').delegate('.tit .radioBox','click',function(){
+				var $this = $(this);
+				if($this.hasClass('on')){
+					return;
+				}else{
+					$('#win .tit .radioBox').removeClass('on');
+					$this.addClass('on');
+					/*
+					$('#NewCardCode').attr('disabled','disabled');
+					$('#ChangeVipCard').attr('disabled','disabled');
+					var tit = $this.data('rd');
+					if(tit==1){
+						$('#NewCardCode').attr('disabled',false);
+					}else if(tit==2){
+						$('#ChangeVipCard').attr('disabled',false);
+					}
+					*/
+					
+					var tit = $this.data('rd');
+					if(tit==1){
+						$('#NewCardCode').validatebox({
+							required:true
+						});
+						$('#ChangeVipCard').combobox({
+							required:false,
+							validType:''
+						});
+					}else if(tit==2){
+						$('#ChangeVipCard').combobox({
+							required:true,
+							validType:'selectIndex'
+						});
+						$('#NewCardCode').validatebox({
+							required:false
+						});
+					}
+					
+					
+				}
+			});
+			
             $("#leftMenu").find("li").removeClass("on").each(function(){
                 if( $(this).find("em").hasClass("newVipManage_querylist")){
                     $(this).addClass("on");
@@ -1577,9 +1618,11 @@
             var html=bd.template('tpl_setVipCard');
             if(that.loadData.args.OperationType==10){
                 html= bd.template('tpl_activate');
-                height=300;
+                height=450;
                 width=380
-            }  var dataReason=[];
+            }
+			var dataReason=[],
+				dataVipCard=[];
             switch (that.loadData.args.OperationType){
                 case 1:
 
@@ -1598,6 +1641,18 @@
                         "value":"请选择" ,
                         "selected":true
                     }];
+					
+					that.loadData.getVipCardTypeList(function(data){
+						dataVipCard = data.Data.VipCardTypeIdList;
+						dataVipCard = dataVipCard ? dataVipCard : [];
+						dataVipCard.push({
+							"VipCardTypeId": "",
+							"VipCardTypeName": "请选择",
+							"selected":true
+						});
+						console.log(dataVipCard);
+					});
+					
 
                     break;
                 case 3:   //挂失
@@ -1700,9 +1755,10 @@
                 case 10: //激活
                     break;
             }
-            $("#ChangeReason").combobox({data:dataReason})
+            $("#ChangeReason").combobox({data:dataReason});
+			$("#ChangeVipCard").combobox({data:dataVipCard});//选择会员卡
             var top=$(document).scrollTop()+60;
-            $('#win').window({title:data.title,width:width,height:height,top:top,left:($(window).width()-width)*0.5});
+            $('#win').window({title:data.title,width:width,height:450,top:top,left:($(window).width()-width)*0.5});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
 
@@ -1732,7 +1788,8 @@
             $('#win').window('open');
             $("#optionform").form('load',that.elems.vipCardInfo);
             that.registerUploadImgBtn ();
-            $("#ChangeReason").combobox({data:dataReason})
+            $("#ChangeReason").combobox({data:dataReason});
+			$("#ChangeVipCard").combobox({data:dataVipCard});//选择会员卡
             that.loadData.args.imgSrc=""
         },
 
@@ -2279,6 +2336,28 @@
                     }
                 });
             },
+			
+			 //获取会员卡类型列表
+            getVipCardTypeList: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Gateway.ashx",
+					async: false,
+                    data: {
+                        action: "VIP.VIPCard.GetVipCardTypeList",
+                        VipId: this.args.VipId   //参数会员id
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback) {
+                                callback(data);
+                            }
+
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
 
             //获取优惠券
             getVipConsumeCardList: function (callback) {
@@ -2440,6 +2519,14 @@
                             prams.data.action = "VIP.VipAmount.SetVipAmount";
                         }else {
                             prams.data.action = "VIP.VIPCard.SetVipCard";
+							
+							
+							var tit = $('#win .tit .radioBox.on').data('rd');
+							if(tit==1){
+								delete prams.data.VipCardTypeId;
+							}else if(tit==2){
+								delete prams.data.NewCardCode;
+							}
                         }
 
                         break;
@@ -2489,9 +2576,6 @@
                 }
                 prams.data["VipID"]=this.args.VipId;
                 if(!submit.is) {$.messager.alert("提示",submit.msg); return false;}
-
-
-
 
 
                 $.util.ajax({

@@ -432,7 +432,7 @@
                         obj = JSON.stringify(obj);
                         that.startPayment(obj, function () {
                             //location.reload();
-                            alert('启用账号成功');
+                            alert('启用成功');
                             $('input', $this.parents('.jui-dialog')).val('');
                             $tr.text('已启用').removeClass('blue');
                             that.elems.uiMask.slideUp();

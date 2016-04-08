@@ -34,6 +34,21 @@
                                              </div>
                                          </div>
                                          </div>
+                                         
+                                         
+                                         
+                                       <div class="item" id="bulkBox">
+                                          <div class="commonSelectWrap">
+                                              <em class="tit"></em>
+                                              <div class="selectBox" style="width:302px;line-height:16px;">
+                                              <div class="checkBox line14" data-name="isBulk"><em></em><span>散装商品<br/>（称重结算）</span></div>
+                                              </div>
+                                          </div>
+                                       </div>
+                                         
+                                         
+                                         
+                                         
                                          <div class="item" data-flag="ifservice">
                                                <div class="commonSelectWrap">
                                                                     <em class="tit">选择种类：</em>

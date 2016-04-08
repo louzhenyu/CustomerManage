@@ -180,9 +180,7 @@
 
                 </ul>
             </div>
-            
-            
-            
+
             <!--返现记录-->
             <div id="nav011" style="display:none;">
                  <!--<div class="tableHandleBox">
@@ -906,17 +904,31 @@
 
 
          <div class="commonSelectWrap showHide" data-show="2,5" style="float: none; width: 500px;">
-                                <em class="tit">卡号：</em>
+                               <em class="tit">
+							   		<span class="showHide radioBox on" data-rd=1 data-show="2," style="margin-left:48px;"></span>
+									<span>卡号：</span>
+								</em>
                                <div class="searchInput">
-                                  <input type="text" name="NewCardCode"  class="easyui-validatebox" data-options="required:true"  />  <em class="hint">提示:可刷卡</em>
+                                  <input type="text" id="NewCardCode" name="NewCardCode"  class="easyui-validatebox" data-options="required:true" />  <em class="hint">提示:可刷卡</em>
                               </div>
                           </div>
+						  
+		<div class="commonSelectWrap showHide" data-show="2," style="padding-left:38px;">
+                               <em class="tit">
+							   		<span class="radioBox" data-rd=2></span>
+									<span>选择会员卡：</span>
+							   </em>
+                               <div class="searchInput bonone " style="width:165px;">
+                                     <input  id="ChangeVipCard" name="VipCardTypeId" class="easyui-combobox" data-options="editable:false,width:165,height:32,valueField: 'VipCardTypeId',textField: 'VipCardTypeName'" />
+                              </div>
+                          </div>				  
+						  
+						  
+						  
          <div class="commonSelectWrap">
                                 <em class="tit">原因：</em>
                                <div class="searchInput bonone " style="width: 460px;">
                                      <input  id="ChangeReason" name="ChangeReason" class="easyui-combobox" data-options="validType:'selectIndex',editable:false,width:460,height:32,valueField: 'label',textField: 'value'"/>
-
-
                               </div>
                           </div>
         <!--         <div class="commonSelectWrap">

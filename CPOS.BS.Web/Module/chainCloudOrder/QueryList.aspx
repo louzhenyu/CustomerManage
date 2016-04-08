@@ -58,6 +58,34 @@
                                                    <select id="txtDataFromIDs" class="easyui-combobox" name="data_from_id" data-options="width:200" ></select>
 </div>
 </div>
+
+													<div class="unfoldMoreBtn">展开更多</div>
+                                                    
+                                                    <div class="unfoldBox">
+                                                    <div class="commonSelectWrap">
+                                                          <em class="tit">门店查询：</em>
+                                                          <div class="selectBox">
+                                                                   <select id="storeList" name="UnitId" class="easyui-combobox" data-options="width:200,height:30" ></select>
+                                                          </div>
+                                                    </div>
+                                                  
+                                                  	<div class="commonSelectWrap">
+                                                          <em class="tit">会员卡等级：</em>
+                                                          <div class="selectBox">
+                                                                   <select id="vipCardGrade" name="VipCardTypeID" class="easyui-combobox" data-options="width:200" ></select>
+                                                          </div>
+                                                    </div>
+                                                    
+                                                    
+                                                    <div class="commonSelectWrap">
+                                                       <em class="tit">提货日期：</em>
+                                                       <div class="searchInput bordernone whauto"  style="width: 202px; background: none;">
+                                                           <div class="line">
+                                                                 <input id="reserveDateBegin"  name="ReserveDateBegin" class="easyui-datebox"  data-options="width:100,height:32" /><span>至</span><input id="reserveDateEnd" name="ReserveDateEnd" class="easyui-datebox" data-options="width:100,height:32" validType="compareDate[$('#reserveDateBegin').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/>
+                                                           </div>
+                                                     	</div>
+                                                     </div>
+                                                    
                                                    <div class="commonSelectWrap">
                                                        <em class="tit">下单日期：</em>
                          <div class="searchInput bordernone whauto"  style="width: 202px; background: none;">
@@ -65,6 +93,11 @@
                                  <input id="startDate"  name="order_date_begin" class="easyui-datebox"  data-options="width:100,height:32" /><span>至</span> <input id="expireDate" name="order_date_end" class="easyui-datebox" data-options="width:100,height:32" validType="compareDate[$('#startDate').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/></div>
                               </div>
                               </div>
+                              					   
+                                                   <div class="packupBtn">收起</div>
+                              
+                              
+                              						</div>
                                                   </form>
 
                         </div>

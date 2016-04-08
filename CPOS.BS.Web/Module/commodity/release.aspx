@@ -25,16 +25,28 @@
                     <form></form>
                     <form id="nav0_1">
                    <div class="panelDiv" id="nav01" data-index="0">
-                    <div class="item"  >
-                      <div class="commonSelectWrap">
-                          <em class="tit">商品类型：</em>
-                          <div class="selectBox" style="width: 302px;">
-                          <div class="radio line14 on" data-name="ifservice" data-value="0"><em></em><span>实物商品<br/>（物流发货）</span></div>
-                          <div class="radio line14 " data-name="ifservice" data-value="1" ><em></em><span>虚拟商品<br/> （无需物流）</span> </div>
+                        <div class="item"  >
+                          <div class="commonSelectWrap">
+                              <em class="tit">商品类型：</em>
+                              <div class="selectBox" style="width: 302px;">
+                              <div class="radio line14 on" data-name="ifservice" data-value="0"><em></em><span>实物商品<br/>（物流发货）</span></div>
+                              <div class="radio line14 " data-name="ifservice" data-value="1" ><em></em><span>虚拟商品<br/> （无需物流）</span> </div>
+                              </div>
                           </div>
-                      </div>
-                      </div>
-                      <div class="item" data-flag="ifservice">
+                         </div>
+                         
+                         
+                         <div class="item" id="bulkBox">
+                          <div class="commonSelectWrap">
+                              <em class="tit"></em>
+                              <div class="selectBox" style="width:302px;line-height:16px;">
+                              <div class="checkBox line14" data-name="isBulk" data-value="1"><em></em><span>散装商品<br/>（称重结算）</span></div>
+                              </div>
+                          </div>
+                         </div>
+                      
+                      
+                        <div class="item" data-flag="ifservice">
                             <div class="commonSelectWrap">
                                                  <em class="tit">选择种类：</em>
                                                  <label class="selectBox">

@@ -62,3 +62,9 @@
 .quicklyBtnBox a span{padding-right:18px;background:url(../images/icon-href.png) no-repeat right center;}
 .nextNotShow span{display:inline-block;margin-left:10px;line-height:20px;padding-left:22px;font-size:12px;background:url(../images/icon-check.png) no-repeat left center;color:#666;cursor:pointer;}
 .nextNotShow span.on{background:url(../images/icon-checked.png) no-repeat left center;}
+
+
+.unfoldMoreBtn{float:left;height:30px;line-height:30px;padding-right:13px;margin-top:10px;font-size:12px;background:url(../images/icon-unfold.png) no-repeat right center;color:#00a0e8;cursor:pointer;}
+.packupBtn{display:none;float:left;height:30px;line-height:30px;padding-right:13px;margin-top:10px;    margin-left:612px;font-size:12px;background:url(../images/icon-unfold.png) no-repeat right center;color:#00a0e8;cursor:pointer;}
+.unfoldBox{display:none;}
+

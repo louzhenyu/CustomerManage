@@ -123,7 +123,7 @@
 
 
 <!-- 弹出，到店自提 -->
-<div id="jui-dialog-2" class="jui-dialog jui-dialog-dispatching" style="width:550px;min-height:200px;margin-left:-275px;">
+<div id="jui-dialog-2" class="jui-dialog jui-dialog-dispatching" style="width:580px;min-height:200px;margin-left:-290px;">
 	<div class="jui-dialog-tit">
     	<h2>到店自提</h2>
         <span class="jui-dialog-close"></span>
@@ -139,7 +139,7 @@
         
         <div class="commonSelectWrap">
             <em class="tit">备货期：</em>
-            <p class="searchInput" style="width:120px;"><input class="formInputBox" id="dispatching_stockup" type="text" /></p>
+            <p class="searchInput" style="width:120px;"><input class="formInputBox" id="dispatching_stockup" type="text" value=0/></p>
             <span class="tip-text">小时</span>
         </div>
         

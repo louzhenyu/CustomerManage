@@ -102,7 +102,7 @@
 .linePanel .exitDiv .selectBox{ width: 200px;}
 .linePanel .exitDiv .searchInput{ width: 200px;}
 .widthMax{ width:460px}
-.commonSelectWrap .hint{ color: #cc0000; line-height: 35px; font-size: 15px; padding-left: 8px;}
+.commonSelectWrap .hint{ color: #cc0000; line-height: 35px; font-size: 15px; padding-left: 30px;}
 .adjustList {height:45px; line-height: 45px; font-size: 14px;margin-top: 10px; margin-bottom: 20px}
 .linePanel .commonBtn{  width: 80px; height: 30px;  line-height: 30px;  float: left;  margin: 0 auto; border-radius: 6px;}
 .adjustList .commonSelectWrap{margin: 0 auto;}
@@ -113,3 +113,7 @@
 #win .commonSelectWrap .hint{ position: absolute; left: 300px; width: 300px; font-size: 14px; color: #07c8cf; }
 .commonSelectWrap .selectBox.bigColor input{ font-size: 18px; font-weight: 800; color: #fb7a52;}
 .cursorDef .fontC{ cursor: pointer;}
+
+#optionform .commonSelectWrap .tit{width:115px;}
+#optionform .commonSelectWrap .tit .radioBox{float:left;width:30px;height:30px;margin-left:10px;background:url(../images/icon-radio.png) no-repeat center center;}
+#optionform .commonSelectWrap .tit .radioBox.on{background:url(../images/icon-radio-on.png) no-repeat center center;}

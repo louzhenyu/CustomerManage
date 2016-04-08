@@ -288,7 +288,6 @@
                 //渲染table
                 that.renderTable(data);
                 that.elems.categoryList=data;
-
             });
         },
 

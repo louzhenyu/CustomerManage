@@ -136,7 +136,8 @@
                     $("#itemType").combobox({
                         novalidate:false
                     })
-                    $(".commonBtn.addSKU").hide()
+                    $(".commonBtn.addSKU").hide();
+					$('#bulkBox').hide();
                 }else{
                     $("[data-flag="+name+"]").hide();
                     $("#ObjecetType").combobox({
@@ -146,7 +147,18 @@
                         novalidate:true
                     })
                     $(".commonBtn.addSKU").show()
+					$('#bulkBox').show();
                 }
+            });
+			
+			
+			$("#nav0_1").delegate(".checkBox","click",function(){
+                var me=$(this);
+				if(!me.hasClass('on')){
+					me.addClass('on');
+				}else{
+					me.removeClass('on');
+				}
             });
             /**************** -------------------初始化easyui 控件  End****************/
             that.elems.optPanel.delegate("li", "click", function (e) {
@@ -421,6 +433,13 @@
 
                                 debugger;
                                 $("#nav0_1").form("load", dataInfo.data);
+								
+								if(dataInfo.data.isGB==1){
+									$('#bulkBox .checkBox').removeClass('on');
+								}else{
+									$('#bulkBox .checkBox').addClass('on');
+								}
+								
                                 if (dataInfo.data.SalesPromotionList) {  //促销分组赋值
                                     var promotionList = [];
                                     for (var i = 0; i < dataInfo.data.SalesPromotionList.length; i++) {
@@ -1703,6 +1722,7 @@
             },
             addCommodity: function (callback) {
                 $.util.isLoading();
+				var isFalse = $('#bulkBox .checkBox').hasClass('on') && $('#bulkBox').css('display')!='none';
                 $.util.ajax({
                     url: "/ApplicationInterface/Module/Item/ItemNewHandler.ashx",
                     data: {
@@ -1719,7 +1739,8 @@
                         T_ItemSkuProp: this.addPram.T_ItemSkuProp, //  商品sku名列 (基础数据)
                         SkuList: this.addPram.SkuList, // 商品sku值列表
                         ItemImageList: this.addPram.ItemImageList, //图片信息
-                        OperationType: 'ADD' //add
+                        OperationType: 'ADD', //add
+						IsGB:isFalse?0:1
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {
