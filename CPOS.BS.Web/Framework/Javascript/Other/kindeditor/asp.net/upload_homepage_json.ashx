@@ -12,24 +12,33 @@ using JIT.CPOS.BS.Web.Framework.Upload;
 /// <summary>
 /// 上传图片并生成缩略图
 /// </summary>
-public class UploadHomePage : IHttpHandler
+public class UploadHomePage : IHttpHandler, System.Web.SessionState.IRequiresSessionState
 {
     private HttpContext context;
 
     public void ProcessRequest(HttpContext context)
     {
+        if (!new JIT.CPOS.BS.Web.PageBase.JITPage().CheckUserLogin())
+        {
+            showError("未登录，请先登录");
+        }
+
+        var loginInfo = new JIT.CPOS.BS.Web.PageBase.JITPage().CurrentUserInfo;
         //获得文件名
-        String aspxUrl = context.Request.Path.Substring(0, context.Request.Path.LastIndexOf("/") + 1);
+        //String aspxUrl = "/images/";//context.Request.Path.Substring(0, context.Request.Path.LastIndexOf("/") + 1);
         //网站域名
-        //string host = ConfigurationManager.AppSettings["host"];
-        string host = "";
+        string host = ConfigurationManager.AppSettings["host"];
+        //string host = "";
         Loggers.Debug(new DebugLogInfo() { Message = "ProcessRequest" + " host: " + ConfigurationManager.AppSettings["host"] });
 
         //文件保存目录路径
-        String savePath = "../attached/";
+        String savePath = "/upload/" + loginInfo.CurrentLoggingManager.Customer_Code + "/";
         //文件保存目录URL
-        String saveUrl = context.Request.Url.Scheme + "://" + context.Request.Url.Authority + "" + aspxUrl + "../attached/";
-
+        String saveUrl = "/upload/" + loginInfo.CurrentLoggingManager.Customer_Code + "/";
+        if (string.IsNullOrEmpty(host))
+        {
+            saveUrl = context.Request.Url.Scheme + "://" + context.Request.Url.Authority + "" + saveUrl;
+        }
 
         String dirPath = context.Server.MapPath(savePath);
         if (!Directory.Exists(dirPath))
@@ -91,7 +100,7 @@ public class UploadHomePage : IHttpHandler
 
         if (String.IsNullOrEmpty(fileExt) || Array.IndexOf(((String)extTable[dirName]).Split(','), fileExt.Substring(1).ToLower()) == -1)
         {
-            showError("上传文件扩展名是不允许的扩展名。只允许" + ((String)extTable[dirName]) + "格式。");
+            showError("上传文件扩展名是不允许的扩展名。\n只允许" + ((String)extTable[dirName]) + "格式。");
         }
 
 
