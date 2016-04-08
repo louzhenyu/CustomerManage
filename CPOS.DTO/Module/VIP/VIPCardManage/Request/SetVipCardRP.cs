@@ -37,8 +37,17 @@ namespace JIT.CPOS.DTO.Module.VIP.VIPCardManage.Request
         /// 新卡号
         /// </summary>
         public string NewCardCode { get; set; }
+
+
+        /// <summary>
+        /// 会员卡类型Id
+        /// </summary>
+        public int VipCardTypeId { get; set; }
+
         
 
         public void Validate() { }
+
+        
     }
 }

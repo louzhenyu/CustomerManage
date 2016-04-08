@@ -416,5 +416,10 @@ namespace JIT.CPOS.BS.BLL
             return Data;
         }
         #endregion
+
+        public VipCardEntity GetVipCardByVipMapping(string vipId)
+        {
+            return this._currentDAO.GetVipCardByVipMapping(vipId);
+        }
     }
 }

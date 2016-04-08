@@ -163,5 +163,26 @@ namespace JIT.CPOS.BS.Entity
         /// 支付方式ID
         /// </summary>
         public string PayId { get; set; }
+
+        /// <summary>
+        /// 门店
+        /// </summary>
+        public string UnitId{ get; set; }
+
+        /// <summary>
+        /// 会员卡等级
+        /// </summary>
+        public string VipCardTypeID { get; set; }
+
+        /// <summary>
+        /// 提货开始时间
+        /// </summary>
+        public string ReserveDateBegin { get; set; }
+
+        /// <summary>
+        /// 提货结束时间
+        /// </summary>
+        public string ReserveDateEnd { get; set; }
+
     }
 }

@@ -145,36 +145,36 @@ namespace JIT.CPOS.BS.BLL
             //var vipCardTypeInfo = sysVipCardTypeBLL.QueryByEntity(new SysVipCardTypeEntity() { CustomerID = CurrentUserInfo.ClientID, Category = 0 }, new OrderBy[] { new OrderBy() { FieldName = "vipcardlevel", Direction = OrderByDirections.Asc } }).FirstOrDefault();
             //if (vipCardTypeInfo != null)
             //{
-            //查询此类型会员卡是否存在
-            var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardTypeID = ObjecetTypeId, VipCardStatusId = 0, MembershipUnit = "" }, null).FirstOrDefault();
-            //不存在,制卡
-            if (vipCardInfo == null)
-            {
-                vipCardInfo = new VipCardEntity();
-                vipCardInfo.VipCardID = Guid.NewGuid().ToString();
-                vipCardInfo.VipCardTypeID = ObjecetTypeId;
-                //vipCardInfo.VipCardTypeName = vipCardTypeInfo.VipCardTypeName;
-                vipCardInfo.VipCardCode = vipCode;
-                vipCardInfo.VipCardStatusId = 1;//正常
-                vipCardInfo.MembershipUnit = unitId;
-                vipCardInfo.MembershipTime = DateTime.Now;
-                vipCardInfo.CustomerID = CurrentUserInfo.ClientID;
-                vipCardBLL.Create(vipCardInfo);
-            }
-            ObjectNo = vipCardInfo.VipCardCode;
-            //绑定会员卡和会员
-            var vipCardVipMappingEntity = new VipCardVipMappingEntity()
-            {
-                MappingID = Guid.NewGuid().ToString().Replace("-", ""),
-                VIPID = vipId,
-                VipCardID = vipCardInfo.VipCardID,
-                CustomerID = CurrentUserInfo.ClientID
-            };
-            vipCardVipMappingBLL.Create(vipCardVipMappingEntity);
-
-
+          
+           
             if (vipCardMappingInfo == null)//绑卡
             {
+                //查询此类型会员卡是否存在
+                var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardTypeID = ObjecetTypeId, VipCardStatusId = 0, MembershipUnit = "" }, null).FirstOrDefault();
+                //不存在,制卡
+                if (vipCardInfo == null)
+                {
+                    vipCardInfo = new VipCardEntity();
+                    vipCardInfo.VipCardID = Guid.NewGuid().ToString();
+                    vipCardInfo.VipCardTypeID = ObjecetTypeId;
+                    //vipCardInfo.VipCardTypeName = vipCardTypeInfo.VipCardTypeName;
+                    vipCardInfo.VipCardCode = vipCode;
+                    vipCardInfo.VipCardStatusId = 1;//正常
+                    vipCardInfo.MembershipUnit = unitId;
+                    vipCardInfo.MembershipTime = DateTime.Now;
+                    vipCardInfo.CustomerID = CurrentUserInfo.ClientID;
+                    vipCardBLL.Create(vipCardInfo);
+                }
+                ObjectNo = vipCardInfo.VipCardCode;
+                //绑定会员卡和会员
+                var vipCardVipMappingEntity = new VipCardVipMappingEntity()
+                {
+                    MappingID = Guid.NewGuid().ToString().Replace("-", ""),
+                    VIPID = vipId,
+                    VipCardID = vipCardInfo.VipCardID,
+                    CustomerID = CurrentUserInfo.ClientID
+                };
+                vipCardVipMappingBLL.Create(vipCardVipMappingEntity);
                 //新增会员卡操作状态信息
                 var vipCardStatusChangeLogEntity = new VipCardStatusChangeLogEntity()
                 {
@@ -190,36 +190,40 @@ namespace JIT.CPOS.BS.BLL
             }
             else //升级
             {
-                #region 新卡业务处理
+               // #region 新卡业务处理
 
                 //新增会员卡操作状态信息
-                var vipCardStatusChangeLogEntity = new VipCardStatusChangeLogEntity()
-                {
-                    LogID = Guid.NewGuid().ToString().Replace("-", ""),
-                    VipCardStatusID = vipCardInfo.VipCardStatusId,
-                    VipCardID = vipCardInfo.VipCardID,
-                    Action = "升级",
-                    UnitID = unitId,
-                    CustomerID = CurrentUserInfo.ClientID
-                };
-                vipCardStatusChangeLogBLL.Create(vipCardStatusChangeLogEntity);
+                //var vipCardStatusChangeLogEntity = new VipCardStatusChangeLogEntity()
+                //{
+                //    LogID = Guid.NewGuid().ToString().Replace("-", ""),
+                //    VipCardStatusID = vipCardInfo.VipCardStatusId,
+                //    VipCardID = vipCardInfo.VipCardID,
+                //    Action = "升级",
+                //    UnitID = unitId,
+                //    CustomerID = CurrentUserInfo.ClientID
+                //};
+                //vipCardStatusChangeLogBLL.Create(vipCardStatusChangeLogEntity);
 
 
-                #endregion
+               // #endregion
 
                 #region 老卡业务处理
+
+
+
                 var oldVipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardID = vipCardMappingInfo.VipCardID }, null).FirstOrDefault();
                 if (oldVipCardInfo != null)
                 {
-                    oldVipCardInfo.VipCardStatusId = 3;//失效
+                    //更新卡信息
+                    oldVipCardInfo.VipCardTypeID = ObjecetTypeId;
                     vipCardBLL.Update(oldVipCardInfo);
                 }
                 //老卡操作状态信息
                 var oldVipCardStatusChangeLogEntity = new VipCardStatusChangeLogEntity()
                 {
                     LogID = Guid.NewGuid().ToString().Replace("-", ""),
-                    VipCardStatusID = vipCardInfo.VipCardStatusId,
-                    VipCardID = vipCardInfo.VipCardID,
+                    VipCardStatusID = oldVipCardInfo.VipCardStatusId,
+                    VipCardID = oldVipCardInfo.VipCardID,
                     Action = "升级处理",
                     UnitID = unitId,
                     CustomerID = CurrentUserInfo.ClientID
@@ -229,6 +233,66 @@ namespace JIT.CPOS.BS.BLL
                 #endregion
             }
             return ObjectNo;
+        }
+
+        public void updateVipCardByType(string vipId, int vipCardTypeId,string changeReason,string remark, string vipCode, IDbTransaction pTran)
+        {
+            var vipCardVipMappingBLL = new VipCardVipMappingBLL(CurrentUserInfo);
+            var sysVipCardTypeBLL = new SysVipCardTypeBLL(CurrentUserInfo);
+            var vipCardBLL = new VipCardBLL(CurrentUserInfo);
+            var vipCardStatusChangeLogBLL = new VipCardStatusChangeLogBLL(CurrentUserInfo);
+
+            UnitService unitServer = new UnitService(CurrentUserInfo);
+            string unitId = unitServer.GetUnitByUnitTypeForWX("总部", null).Id; //获取总部门店标识
+
+            VipCardEntity vipCardInfo = vipCardBLL.GetVipCardByVipMapping(vipId);
+
+            //更新卡信息
+            vipCardInfo.VipCardTypeID = vipCardTypeId;
+            vipCardBLL.Update(vipCardInfo,pTran);
+
+            //var vipCardInfo = vipCardBLL.QueryByEntity(new VipCardEntity() { VipCardTypeID = vipCardTypeId, VipCardStatusId = 0, MembershipUnit = "" }, null).FirstOrDefault();
+            
+            //不存在，制卡
+            //if (vipCardInfo == null)
+            //{
+            //    vipCardInfo = new VipCardEntity();
+            //    vipCardInfo.VipCardID = Guid.NewGuid().ToString();
+            //    vipCardInfo.VipCardTypeID = vipCardTypeId;
+            //    vipCardInfo.VipCardTypeName = vipCardTypeName;
+            //    vipCardInfo.VipCardCode = vipCode;
+            //    vipCardInfo.VipCardStatusId = 1;//正常
+            //    vipCardInfo.MembershipUnit = unitId;
+            //    vipCardInfo.MembershipTime = DateTime.Now;
+            //    vipCardInfo.CustomerID = CurrentUserInfo.ClientID;
+            //    vipCardBLL.Create(vipCardInfo, pTran);
+            //}
+
+            //新增会员卡操作状态信息
+            var vipCardStatusChangeLogEntity = new VipCardStatusChangeLogEntity()
+            {
+                LogID = Guid.NewGuid().ToString().Replace("-", ""),
+                VipCardStatusID = vipCardInfo.VipCardStatusId,
+                VipCardID = vipCardInfo.VipCardID,
+                Action = "注册",
+                Reason = changeReason,
+                Remark = remark,
+                UnitID = unitId,
+                CustomerID = CurrentUserInfo.ClientID
+            };
+            vipCardStatusChangeLogBLL.Create(vipCardStatusChangeLogEntity, pTran);
+
+            //绑定会员卡和会员
+            //var vipCardVipMappingEntity = new VipCardVipMappingEntity()
+            //{
+            //    MappingID = Guid.NewGuid().ToString().Replace("-", ""),
+            //    VIPID = vipId,
+            //    VipCardID = vipCardInfo.VipCardID,
+            //    CustomerID = CurrentUserInfo.ClientID
+            //};
+            //vipCardVipMappingBLL.Create(vipCardVipMappingEntity, pTran);
+            
+            
         }
     }
 }

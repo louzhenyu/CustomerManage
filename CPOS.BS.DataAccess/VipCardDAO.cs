@@ -520,5 +520,21 @@ namespace JIT.CPOS.BS.DataAccess
 
         }
         #endregion
+
+        public VipCardEntity GetVipCardByVipMapping(string vipId)
+        {
+            string sql = @"select top 1 b.* from vipcardvipmapping a inner join vipcard b on a.vipcardid = b.vipcardid where b.VipCardStatusId = 1 and a.vipid = '" + vipId + "'";
+
+            VipCardEntity vipCardEntity = new VipCardEntity();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    this.Load(rdr,out vipCardEntity);
+                    break;
+                }
+            }
+            return vipCardEntity;
+        }
     }
 }

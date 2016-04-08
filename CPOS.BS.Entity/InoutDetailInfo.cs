@@ -141,6 +141,31 @@ namespace JIT.CPOS.BS.Entity
         /// 商品名称【显示】
         /// </summary>
         public string item_name { get; set; }
+
+        /// <summary>
+        /// 属性1名称
+        /// </summary>
+        public string prop_1_name { get; set; }
+
+        /// <summary>
+        /// 属性2名称
+        /// </summary>
+        public string prop_2_name { get; set; }
+
+        /// <summary>
+        /// 属性3名称
+        /// </summary>
+        public string prop_3_name { get; set; }
+
+        /// <summary>
+        /// 属性4名称
+        /// </summary>
+        public string prop_4_name { get; set; }
+
+        /// <summary>
+        /// 属性5名称
+        /// </summary>
+        public string prop_5_name { get; set; }
         /// <summary>
         /// 属性1值【显示】
         /// </summary>

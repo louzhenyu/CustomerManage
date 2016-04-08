@@ -580,7 +580,18 @@ namespace JIT.CPOS.BS.Entity
         public int Integral { get; set; }
 
         /// <summary>
+        /// 提货日期
+        /// </summary>
+        public string ReserveDay { get; set; }
+
+
+        /// <summary>
         /// 提货时间
+        /// </summary>
+        public string ReserveQuantum { get; set; }
+
+        /// <summary>
+        /// 提货日期 + 时间
         /// </summary>
         public string ReserveTime { get; set; }
 

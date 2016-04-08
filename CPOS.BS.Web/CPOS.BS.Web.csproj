@@ -6761,6 +6761,7 @@
     <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetVipAmountDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipAmount\SetVipAmountAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipCardTransLog\GetVipCardTransLogListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\VIPCard\GetVipCardTypeListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VIPCard\SetVipCardAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Tags\GetTagsByTypeNameAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VIPCard\OpenVipCardAH.cs" />

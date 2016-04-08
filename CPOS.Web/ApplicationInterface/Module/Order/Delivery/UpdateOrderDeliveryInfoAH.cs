@@ -68,7 +68,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Delivery
                     entity.Field5 = Email;                            //邮箱
                     entity.Field4 = ReceiverAddress;                  //配送地址
                     entity.Field14 = ReceiverName;                      //收件人姓名
-                    entity.reserveDay = reserveDay;
+                    entity.reserveDay = Convert.ToDateTime(reserveDay).ToString("yyyy-MM-dd");
                     entity.reserveQuantum = reserveQuantum;
                     #region  更新时候更新时间和更新人同时更新
                     entity.modify_time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");  //更新时间

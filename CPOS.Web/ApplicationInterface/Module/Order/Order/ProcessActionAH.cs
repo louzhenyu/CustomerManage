@@ -111,24 +111,35 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                         //更新订单支付状态
                         entity.Field1 = "1";
 
+
+                   
+
                         #region 提货，订单明细修改
 
                         T_Inout_DetailBLL inoutDetailBll = new T_Inout_DetailBLL(CurrentUserInfo);
+                        VipAmountDetailBLL vipAmountDetailBll = new VipAmountDetailBLL(CurrentUserInfo);
                         if (pRequest.Parameters.OrderItemInfoList != null)
                         {
                             foreach (var item in pRequest.Parameters.OrderItemInfoList)
                             {
                                 T_Inout_DetailEntity inoutDetailEntity = inoutDetailBll.QueryByEntity(new T_Inout_DetailEntity() { order_id = OrderID, sku_id = item.SkuId }, null).FirstOrDefault();
+                                var vipAmountDetailEntity = vipAmountDetailBll.QueryByEntity(new VipAmountDetailEntity() { ObjectId = OrderID, AmountSourceId = "1" }, null).FirstOrDefault();
+                                //将提货金额 + 余额 = SumPrice
+                                if (vipAmountDetailEntity != null)
+                                {
+                                    item.SumPrice += Math.Abs(Convert.ToDecimal(vipAmountDetailEntity.Amount));
+                                } 
                                 inoutDetailEntity.enter_qty = item.EnterQty;
                                 inoutDetailEntity.Field9 = "kg";
                                 inoutDetailEntity.enter_amount = item.SumPrice;
                                 inoutDetailEntity.enter_price = Convert.ToDecimal(Math.Round(item.SumPrice / item.EnterQty, 2));
-                                entity.total_amount = entity.total_amount + item.SumPrice - inoutDetailEntity.retail_amount;
-                                entity.actual_amount = entity.actual_amount + item.SumPrice - inoutDetailEntity.retail_amount;
+                                entity.total_amount = entity.total_amount + Math.Round(Convert.ToDecimal(item.SumPrice / (entity.discount_rate / 100)), 2) - inoutDetailEntity.retail_amount;
+                                entity.actual_amount = entity.actual_amount + Math.Round(Convert.ToDecimal(item.SumPrice / (entity.discount_rate / 100)), 2) - inoutDetailEntity.retail_amount;
                                 inoutDetailBll.Update(inoutDetailEntity, tran);
                             }
                         }
                         #endregion
+
                     }
                     _TInoutbll.Update(entity, tran); //用事物更新订单表(T_Inout)
                     #endregion

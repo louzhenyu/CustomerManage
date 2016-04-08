@@ -260,7 +260,7 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             StringBuilder propDetailName = new StringBuilder();//"商品规格"字符串
             for (int i = 0; i < propValueList.Count && i < propNameList.Count; i++)
             {
-                string prop_detail_name = setPropDetailName(propNameList[i], propValueList[i]);
+                string prop_detail_name = setPropDetailName(propValueList[i]);
                 if (prop_detail_name != string.Empty)
                     propDetailName.AppendFormat("{0};", prop_detail_name);
             }
@@ -765,6 +765,12 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             string sales_warehouse_id = FormatParamValue(form.sales_warehouse_id);
             string vip_no = FormatParamValue(form.vip_no);
             string InoutSort = FormatParamValue(form.InoutSort); //排序
+
+            string UnitId = FormatParamValue(form.UnitId); //门店
+            string VipCardTypeID = FormatParamValue(form.VipCardTypeID); //会员等级
+            string reserveDateBegin = FormatParamValue(form.ReserveDateBegin); //提货开始时间
+            string reserveDateEnd = FormatParamValue(form.ReserveDateEnd); //提货结束时间
+
             int maxRowCount = PageSize;
             int startRowIndex = Utils.GetIntVal(Request("start"));
 
@@ -779,6 +785,10 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
             string PayId = FormatParamValue(form.Field11);
 
             data = inoutService.SearchInoutInfo_lj2(
+                UnitId,
+                VipCardTypeID,
+                reserveDateBegin,
+                reserveDateEnd,
                 paymentcenter_id,
                 PayId,
                 PayStatus,
@@ -1315,6 +1325,11 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 int maxRowCount = Utils.GetIntVal(Request("limit"));
                 int startRowIndex = Utils.GetIntVal(Request("start"));
 
+                string UnitId = FormatParamValue(form.UnitId); //门店
+                string VipCardTypeID = FormatParamValue(form.VipCardTypeID); //会员等级
+                string reserveDateBegin = FormatParamValue(form.ReserveDateBegin); //提货开始时间
+                string reserveDateEnd = FormatParamValue(form.ReserveDateEnd); //提货结束时间
+
                 string key = string.Empty;
                 if (Request("id") != null && Request("id") != string.Empty)
                 {
@@ -1326,6 +1341,10 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 string PayId = FormatParamValue(form.Field11);
 
                 data = inoutService.SearchInoutInfo_lj4(
+                UnitId,
+                VipCardTypeID,
+                reserveDateBegin,
+                reserveDateEnd,
                 paymentcenter_id,
                 PayId,
                 PayStatus,
@@ -1357,8 +1376,12 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 Aspose.Cells.License lic = new Aspose.Cells.License();
                 lic.SetLicense("Aspose.Total.lic");
                 Workbook workbook = new Workbook();
-                Worksheet sheet = workbook.Worksheets[0];
-                Cells cells = sheet.Cells;//单元格
+                Worksheet sheetOne = workbook.Worksheets[0];
+                workbook.Worksheets.Add();
+                Worksheet sheetTwo = workbook.Worksheets[1];
+
+                Cells sheetOneCells = sheetOne.Cells;//单元格
+                Cells sheetTwoCells = sheetTwo.Cells;
 
                 #region excel初始化
                 //为标题设置样式    
@@ -1392,79 +1415,130 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 #endregion
 
                 //生成行1 标题行  
-                cells.Merge(0, 0, 1, 15);//合并单元格
+                sheetOneCells.Merge(0, 0, 1, 15);//合并单元格
+                sheetTwoCells.Merge(0, 0, 1, 15);//合并单元格
                 if (Field7.Equals("100"))
                 {
-                    cells[0, 0].PutValue("订单集合");//填写内容
+                    sheetOneCells[0, 0].PutValue("订单集合");//填写内容
+                    sheetTwoCells[0, 0].PutValue("订单集合");
                 }
                 else
                 {
-                    cells[0, 0].PutValue("订单集合");//填写内容
+                    sheetOneCells[0, 0].PutValue("订单集合");//填写内容
+                    sheetTwoCells[0, 0].PutValue("订单集合");
                 }
-                cells[0, 0].SetStyle(styleTitle);
-                cells.SetRowHeight(0, 38);
+                sheetOneCells[0, 0].SetStyle(styleTitle);
+                sheetTwoCells[0, 0].SetStyle(styleTitle);
+
+                sheetOneCells.SetRowHeight(0, 38);
+                sheetTwoCells.SetRowHeight(0, 38);
 
                 //生成行2 列名行
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 21; i++)
                 {
                     //cells[1, i].PutValue(dt.Columns[i].ColumnName);
                     //cells[1, i].SetStyle(style2);
                     //cells.SetRowHeight(1, 25);
-                    cells.SetColumnWidth(i, 30);
+                    sheetOneCells.SetColumnWidth(i, 30);
+                    sheetTwoCells.SetColumnWidth(i, 30);
                 }
-                cells.SetColumnWidth(2, 90);
+            //    sheetOneCells.SetColumnWidth(2, 90);
 
                 #region 列明
-                cells[1, 0].PutValue("单据号码");
-                cells[1, 0].SetStyle(style2);
+                //第一张sheet
+                sheetOneCells[1, 0].PutValue("订单号");
+                sheetOneCells[1, 0].SetStyle(style2);
 
-                cells[1, 1].PutValue("单据日期");
-                cells[1, 1].SetStyle(style2);
+                sheetOneCells[1, 1].PutValue("下单日期");
+                sheetOneCells[1, 1].SetStyle(style2);
 
-                cells[1, 2].PutValue("商品明细");
-                cells[1, 2].SetStyle(style2);
+                sheetOneCells[1, 2].PutValue("提货日期");
+                sheetOneCells[1, 2].SetStyle(style2);
 
-                cells[1, 3].PutValue("规格");
-                cells[1, 3].SetStyle(style2);
+                sheetOneCells[1, 3].PutValue("提货时间");
+                sheetOneCells[1, 3].SetStyle(style2);
 
-                cells[1, 4].PutValue("消费金额");
-                cells[1, 4].SetStyle(style2);
+                sheetOneCells[1, 4].PutValue("商户单号");
+                sheetOneCells[1, 4].SetStyle(style2);
 
-                cells[1, 5].PutValue("发票抬头");
-                cells[1, 5].SetStyle(style2);
+                sheetOneCells[1, 5].PutValue("商品明细");
+                sheetOneCells[1, 5].SetStyle(style2);
 
-                cells[1, 6].PutValue("消费门店");
-                cells[1, 6].SetStyle(style2);
-                cells[1, 7].PutValue("会员");
-                cells[1, 7].SetStyle(style2);
-                cells[1, 8].PutValue("交易时间");
-                cells[1, 8].SetStyle(style2);
-                cells[1, 9].PutValue("支付方式");
-                cells[1, 9].SetStyle(style2);
-                cells[1, 10].PutValue("配送方式");
-                cells[1, 10].SetStyle(style2);
-                cells[1, 11].PutValue("发货时间");
-                cells[1, 11].SetStyle(style2);
-                cells[1, 12].PutValue("配送地址");
-                cells[1, 12].SetStyle(style2);
+                sheetOneCells[1, 6].PutValue("消费金额");
+                sheetOneCells[1, 6].SetStyle(style2);
 
-                cells[1, 13].PutValue("收货人");
-                cells[1, 13].SetStyle(style2);
-                cells[1, 14].PutValue("电话");
-                cells[1, 14].SetStyle(style2);
-                cells[1, 15].PutValue("来源");
-                cells[1, 15].SetStyle(style2);
-                cells[1, 16].PutValue("商户单号");
-                cells[1, 16].SetStyle(style2);
-                cells[1, 17].PutValue("支付方式");
-                cells[1, 17].SetStyle(style2);
-                cells[1, 18].PutValue("联系人");
-                cells[1, 18].SetStyle(style2);
-                cells[1, 19].PutValue("联系人电话");
-                cells[1, 19].SetStyle(style2);
-                //cells[1, 13].PutValue("操作人");
-                //cells[1, 13].SetStyle(style2);
-                cells.SetRowHeight(1, 25);
+                sheetOneCells[1, 7].PutValue("发票抬头");
+                sheetOneCells[1, 7].SetStyle(style2);
+
+                sheetOneCells[1, 8].PutValue("订单备注");
+                sheetOneCells[1, 8].SetStyle(style2);
+
+                sheetOneCells[1, 9].PutValue("消费门店");
+                sheetOneCells[1, 9].SetStyle(style2);
+
+                sheetOneCells[1, 10].PutValue("会员姓名");
+                sheetOneCells[1, 10].SetStyle(style2);
+
+                sheetOneCells[1, 11].PutValue("支付状态");
+                sheetOneCells[1, 11].SetStyle(style2);
+
+                sheetOneCells[1, 12].PutValue("支付方式");
+                sheetOneCells[1, 12].SetStyle(style2);
+
+                sheetOneCells[1, 13].PutValue("支付时间");
+                sheetOneCells[1, 13].SetStyle(style2);
+
+                sheetOneCells[1, 14].PutValue("配送方式");
+                sheetOneCells[1, 14].SetStyle(style2);
+
+                sheetOneCells[1, 15].PutValue("提货人/收货人");
+                sheetOneCells[1, 15].SetStyle(style2);
+
+                sheetOneCells[1, 16].PutValue("电话");
+                sheetOneCells[1, 16].SetStyle(style2);
+
+                sheetOneCells[1, 17].PutValue("收货地址");
+                sheetOneCells[1, 17].SetStyle(style2);
+
+                sheetOneCells[1, 18].PutValue("订单来源");
+                sheetOneCells[1, 18].SetStyle(style2);
+
+                //第二张sheet
+                sheetTwoCells[1, 0].PutValue("订单号");
+                sheetTwoCells[1, 0].SetStyle(style2);
+
+                sheetTwoCells[1, 1].PutValue("提货日期");
+                sheetTwoCells[1, 1].SetStyle(style2);
+
+                sheetTwoCells[1, 2].PutValue("提货时间");
+                sheetTwoCells[1, 2].SetStyle(style2);
+
+                sheetTwoCells[1, 3].PutValue("商品名称");
+                sheetTwoCells[1, 3].SetStyle(style2);
+
+                sheetTwoCells[1, 4].PutValue("商品数量");
+                sheetTwoCells[1, 4].SetStyle(style2);
+
+                sheetTwoCells[1, 5].PutValue("商品重量");
+                sheetTwoCells[1, 5].SetStyle(style2);
+
+                sheetTwoCells[1, 6].PutValue("商品规格");
+                sheetTwoCells[1, 6].SetStyle(style2);
+
+                sheetTwoCells[1, 7].PutValue("支付状态");
+                sheetTwoCells[1, 7].SetStyle(style2);
+
+                sheetTwoCells[1, 8].PutValue("会员姓名");
+                sheetTwoCells[1, 8].SetStyle(style2);
+
+                sheetTwoCells[1, 9].PutValue("提货人");
+                sheetTwoCells[1, 9].SetStyle(style2);
+
+                sheetTwoCells[1, 10].PutValue("电话");
+                sheetTwoCells[1, 10].SetStyle(style2);
+    
+                sheetOneCells.SetRowHeight(1, 25);
+                sheetTwoCells.SetRowHeight(1, 25);
 
                 style3.IsTextWrapped = true;
                 #endregion
@@ -1472,103 +1546,114 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                 #region 生成数据行
                 for (int i = 0; i < data.InoutInfoList.Count; i++)
                 {
+                    //第一张sheet
+                    sheetOneCells[2 + i, 0].PutValue(data.InoutInfoList[i].order_no);
+                    sheetOneCells[2 + i, 0].SetStyle(style3);
 
-                    cells[2 + i, 0].PutValue(data.InoutInfoList[i].order_no);
-                    cells[2 + i, 0].SetStyle(style3);
+                    sheetOneCells[2 + i, 1].PutValue(data.InoutInfoList[i].order_date);
+                    sheetOneCells[2 + i, 1].SetStyle(style3);
 
-                    cells[2 + i, 1].PutValue(data.InoutInfoList[i].order_date);
-                    cells[2 + i, 1].SetStyle(style3);
+                    sheetOneCells[2 + i, 2].PutValue(data.InoutInfoList[i].ReserveDay);
+                    sheetOneCells[2 + i, 2].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 3].PutValue(data.InoutInfoList[i].ReserveQuantum);
+                    sheetOneCells[2 + i, 3].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 4].PutValue(data.InoutInfoList[i].paymentcenter_id);
+                    sheetOneCells[2 + i, 4].SetStyle(style3);
 
                     StringBuilder sbDetail = new StringBuilder();
                     foreach (var item in data.InoutInfoList[i].InoutDetailList)
                     {
                         sbDetail.AppendFormat("{0}*{1}；\n", item.item_name, Convert.ToInt32(item.order_qty));
                     }
-                    cells[2 + i, 2].PutValue(sbDetail.ToString());
-                    cells[2 + i, 2].SetStyle(style3);
+                    sheetOneCells[2 + i, 5].PutValue(sbDetail.ToString());
+                    sheetOneCells[2 + i, 5].SetStyle(style3);
 
-                    StringBuilder propDetailName = new StringBuilder();
+                    sheetOneCells[2 + i, 6].PutValue(data.InoutInfoList[i].total_amount);
+                    sheetOneCells[2 + i, 6].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 7].PutValue(data.InoutInfoList[i].Field19);
+                    sheetOneCells[2 + i, 7].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 8].PutValue(data.InoutInfoList[i].remark);
+                    sheetOneCells[2 + i, 8].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 9].PutValue(data.InoutInfoList[i].sales_unit_name);
+                    sheetOneCells[2 + i, 9].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 10].PutValue(data.InoutInfoList[i].vip_name);
+                    sheetOneCells[2 + i, 10].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 11].PutValue(data.InoutInfoList[i].Field1 == "1" ? "已付款" : "未付款");
+                    sheetOneCells[2 + i, 11].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 12].PutValue(data.InoutInfoList[i].payment_name);
+                    sheetOneCells[2 + i, 12].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 13].PutValue(data.InoutInfoList[i].complete_date);
+                    sheetOneCells[2 + i, 13].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 14].PutValue(data.InoutInfoList[i].DeliveryName);
+                    sheetOneCells[2 + i, 14].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 15].PutValue(data.InoutInfoList[i].linkMan);
+                    sheetOneCells[2 + i, 15].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 16].PutValue(data.InoutInfoList[i].linkTel);
+                    sheetOneCells[2 + i, 16].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 17].PutValue(data.InoutInfoList[i].address);
+                    sheetOneCells[2 + i, 17].SetStyle(style3);
+
+                    sheetOneCells[2 + i, 18].PutValue(data.InoutInfoList[i].data_from_name);
+                    sheetOneCells[2 + i, 18].SetStyle(style3);
+
+
+                    //第二张sheet
                     for (int j = 0; j < data.InoutInfoList[i].InoutDetailList.Count; j++)
                     {
+                        sheetTwoCells[2 + i, 0].PutValue(data.InoutInfoList[i].order_no);
+                        sheetTwoCells[2 + i, 0].SetStyle(style3);
 
-                        SkuService skuService = new SkuService(CurrentUserInfo);
-                        IList<SkuInfo> sku = skuService.GetSkuInfoByOne(data.InoutInfoList[i].order_id); //"商品规格"所需,需取出属性标识明细
-                        if (j >= sku.Count)
-                            break; //保证不超出索引
-                        string prop_detail_name = setPropDetailName(sku[j], data.InoutInfoList[i].InoutDetailList[j]); //存储"商品规格"的字符串
-                        if (prop_detail_name != string.Empty)
-                            propDetailName.AppendFormat("{0};\n", prop_detail_name);
+                        sheetTwoCells[2 + i, 1].PutValue(data.InoutInfoList[i].ReserveDay);
+                        sheetTwoCells[2 + i, 1].SetStyle(style3);
 
+                        sheetTwoCells[2 + i, 2].PutValue(data.InoutInfoList[i].ReserveQuantum);
+                        sheetTwoCells[2 + i, 2].SetStyle(style3);
+
+                        sheetTwoCells[2 + i, 3].PutValue(data.InoutInfoList[i].InoutDetailList[j].item_name);
+                        sheetTwoCells[2 + i, 3].SetStyle(style3);
+
+                        sheetTwoCells[2 + i, 4].PutValue(data.InoutInfoList[i].InoutDetailList[j].order_qty);
+                        sheetTwoCells[2 + i, 4].SetStyle(style3);
+
+                        if(!string.IsNullOrEmpty(data.InoutInfoList[i].InoutDetailList[j].Field9))
+                        {
+                            sheetTwoCells[2 + i, 5].PutValue(data.InoutInfoList[i].InoutDetailList[j].enter_qty + " " + data.InoutInfoList[i].InoutDetailList[j].Field9); 
+                        }
+                        sheetTwoCells[2 + i, 5].SetStyle(style3);
+
+                        string propDetailName = setPropDetailName(data.InoutInfoList[i].InoutDetailList[j]);
+                        sheetTwoCells[2 + i, 6].PutValue(propDetailName);
+                        sheetTwoCells[2 + i, 6].SetStyle(style3);
+
+                        sheetTwoCells[2 + i, 7].PutValue(data.InoutInfoList[i].Field1 == "1" ? "已付款" : "未付款");
+                        sheetTwoCells[2 + i, 7].SetStyle(style3);
+
+                        sheetTwoCells[2 + i, 8].PutValue(data.InoutInfoList[i].vip_name);
+                        sheetTwoCells[2 + i, 8].SetStyle(style3);
+
+                        sheetTwoCells[2 + i, 9].PutValue(data.InoutInfoList[i].linkMan);
+                        sheetTwoCells[2 + i, 9].SetStyle(style3);
+
+                        sheetTwoCells[2 + i, 10].PutValue(data.InoutInfoList[i].linkTel);
+                        sheetTwoCells[2 + i, 10].SetStyle(style3);
+                   
                     }
-                    cells[2 + i, 3].PutValue(propDetailName.ToString());
-                    cells[2 + i, 3].SetStyle(style3);
 
-                    cells[2 + i, 4].PutValue(data.InoutInfoList[i].total_amount);
-                    cells[2 + i, 4].SetStyle(style3);
-
-                    cells[2 + i, 5].PutValue(data.InoutInfoList[i].Field19);
-                    cells[2 + i, 5].SetStyle(style3);
-
-                    cells[2 + i, 6].PutValue(data.InoutInfoList[i].sales_unit_name);
-                    cells[2 + i, 6].SetStyle(style3);
-
-                    cells[2 + i, 7].PutValue(data.InoutInfoList[i].vip_name);
-                    cells[2 + i, 7].SetStyle(style3);
-
-                    cells[2 + i, 8].PutValue(data.InoutInfoList[i].create_time);
-                    cells[2 + i, 8].SetStyle(style3);
-
-                    cells[2 + i, 9].PutValue(data.InoutInfoList[i].payment_name);
-                    cells[2 + i, 9].SetStyle(style3);
-
-                    cells[2 + i, 10].PutValue(data.InoutInfoList[i].DeliveryName);
-                    cells[2 + i, 10].SetStyle(style3);
-
-                    string Time = "";
-                    if (!string.IsNullOrWhiteSpace(data.InoutInfoList[i].Field9))
-                    {
-                        Time = Convert.ToDateTime(data.InoutInfoList[i].Field9).ToString("yyyy-MM-dd HH:mm:ss");
-                    }
-                    cells[2 + i, 11].PutValue(Time);
-                    cells[2 + i, 11].SetStyle(style3);
-
-                    cells[2 + i, 12].PutValue(data.InoutInfoList[i].address);
-                    cells[2 + i, 12].SetStyle(style3);
-
-                    cells[2 + i, 13].PutValue(data.InoutInfoList[i].linkMan);
-                    cells[2 + i, 13].SetStyle(style3);
-
-                    cells[2 + i, 14].PutValue(data.InoutInfoList[i].linkTel);
-                    cells[2 + i, 14].SetStyle(style3);
-
-                    cells[2 + i, 15].PutValue(data.InoutInfoList[i].data_from_name);
-                    cells[2 + i, 15].SetStyle(style3);
-
-                    cells[2 + i, 16].PutValue(data.InoutInfoList[i].paymentcenter_id);//商户单号
-                    cells[2 + i, 16].SetStyle(style3);
-
-                    cells[2 + i, 17].PutValue(data.InoutInfoList[i].payment_name);//支付方式名称
-                    cells[2 + i, 17].SetStyle(style3);
-
-                    string VipName = "";
-                    if (!string.IsNullOrWhiteSpace(data.InoutInfoList[i].linkMan))
-                        VipName = data.InoutInfoList[i].linkMan;
-                    else
-                        VipName = data.InoutInfoList[i].vip_name;
-                    cells[2 + i, 18].PutValue(VipName);//联系人
-                    cells[2 + i, 18].SetStyle(style3);
-                    string Phone = "";
-                    if (!string.IsNullOrWhiteSpace(data.InoutInfoList[i].linkTel))
-                        Phone = data.InoutInfoList[i].linkTel;
-                    else
-                        Phone = data.InoutInfoList[i].vipPhone;
-                    cells[2 + i, 19].PutValue(Phone);//联系人电话
-                    cells[2 + i, 19].SetStyle(style3);
-
-                    //cells[2 + i, 13].PutValue(data.InoutInfoList[i].create_user_name);
-                    //cells[2 + i, 13].SetStyle(style3);
-
-                    cells.SetRowHeight(2 + i, 24);
+                    sheetOneCells.SetRowHeight(2 + i, 24);
+                    sheetTwoCells.SetRowHeight(2 + i, 24);
                 }
                 #endregion
 
@@ -1593,22 +1678,22 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
         //完成订单中"商品规格"数据的字符串拼接
         //目前只完成三个参数的拼接,如果以后需要可在下面添加
         //</summary>
-        public string setPropDetailName(SkuInfo pSkuInfo, InoutDetailInfo pInoutDetilInfo)
+        public string setPropDetailName(InoutDetailInfo pPropDetailName)
         {
             string propDetailName = string.Empty;
 
-            if (!string.IsNullOrEmpty(pInoutDetilInfo.prop_1_detail_name)&&!string.IsNullOrEmpty(pSkuInfo.prop_1_name))
-                propDetailName = pSkuInfo.prop_1_name.ToString() + ":" + propDetailName + pInoutDetilInfo.prop_1_detail_name.ToString();
+            if (!string.IsNullOrEmpty(pPropDetailName.prop_1_detail_name) && !string.IsNullOrEmpty(pPropDetailName.prop_1_name))
+                propDetailName = pPropDetailName.prop_1_name.ToString() + ":" + propDetailName + pPropDetailName.prop_1_detail_name.ToString();
 
-            if (propDetailName != string.Empty && !string.IsNullOrEmpty(pInoutDetilInfo.prop_2_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_2_name))
-                propDetailName = propDetailName + "," + pSkuInfo.prop_2_name.ToString() + ":" + pInoutDetilInfo.prop_2_detail_name.ToString();
-            else if (propDetailName == string.Empty && !string.IsNullOrEmpty(pInoutDetilInfo.prop_2_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_2_name))
-                propDetailName = propDetailName + pSkuInfo.prop_2_name.ToString() + ":" + pInoutDetilInfo.prop_2_detail_name.ToString();
+            if (propDetailName != string.Empty && !string.IsNullOrEmpty(pPropDetailName.prop_2_detail_name) && !string.IsNullOrEmpty(pPropDetailName.prop_2_name))
+                propDetailName = propDetailName + "," + pPropDetailName.prop_2_name.ToString() + ":" + pPropDetailName.prop_2_detail_name.ToString();
+            else if (propDetailName == string.Empty && !string.IsNullOrEmpty(pPropDetailName.prop_2_detail_name) && !string.IsNullOrEmpty(pPropDetailName.prop_2_name))
+                propDetailName = propDetailName + pPropDetailName.prop_2_name.ToString() + ":" + pPropDetailName.prop_2_detail_name.ToString();
 
-            if (propDetailName != string.Empty && !string.IsNullOrEmpty(pInoutDetilInfo.prop_3_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_3_name))
-                propDetailName = propDetailName + "," + pSkuInfo.prop_3_name.ToString() + ":" + pInoutDetilInfo.prop_3_detail_name.ToString();
-            else if (propDetailName == string.Empty && string.IsNullOrEmpty(pInoutDetilInfo.prop_3_detail_name) && !string.IsNullOrEmpty(pSkuInfo.prop_3_name))
-                propDetailName = propDetailName + pSkuInfo.prop_3_name.ToString() + ":" + pInoutDetilInfo.prop_3_detail_name.ToString();
+            if (propDetailName != string.Empty && !string.IsNullOrEmpty(pPropDetailName.prop_3_detail_name) && !string.IsNullOrEmpty(pPropDetailName.prop_3_name))
+                propDetailName = propDetailName + "," + pPropDetailName.prop_3_name.ToString() + ":" + pPropDetailName.prop_3_detail_name.ToString();
+            else if (propDetailName == string.Empty && string.IsNullOrEmpty(pPropDetailName.prop_3_detail_name) && !string.IsNullOrEmpty(pPropDetailName.prop_3_name))
+                propDetailName = propDetailName + pPropDetailName.prop_3_name.ToString() + ":" + pPropDetailName.prop_3_detail_name.ToString();
 
             return propDetailName;
         }
@@ -3340,6 +3425,10 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
         public string Field1;
         public string paymentcenter_id;//商户单号
         public string Field11;//支付方式
+        public string UnitId; //门店Id
+        public string VipCardTypeID; //会员卡等级id
+        public string ReserveDateBegin; //提货开始日期
+        public string ReserveDateEnd; //提货结束日期
     }
     #endregion
 }

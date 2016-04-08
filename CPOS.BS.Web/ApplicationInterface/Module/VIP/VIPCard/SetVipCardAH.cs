@@ -41,10 +41,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
             #endregion
 
 
+
             using (pTran.Connection)
             {
                 try
                 {
+
+
                     if (string.IsNullOrWhiteSpace(para.VipCardID) || para.OperationType <= 0)
                     {
                         throw new APIException("卡ID或者操作类型参数不合法！") { ErrorCode = ERROR_CODES.INVALID_REQUEST_LACK_REQUEST_PARAMETER };
@@ -89,6 +92,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                     AddVCStatusEntity.Remark = para.Remark;
                     AddVCStatusEntity.UnitID = loggingSessionInfo.CurrentUserRole.UnitId;
                     #endregion
+
 
 
                     #region 新卡
@@ -214,143 +218,156 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                             break;
                         case 2:
                             #region 卡升级
-                            #region 原卡
-                            #region 更新原卡
-                            changeEntity.VipCardStatusId = 3;
-                            //当前月，累计金额清0
-                            changeEntity.BalanceAmount = 0;
-                            changeEntity.TotalAmount = 0;
-                            VipCardBLL.Update(changeEntity, pTran);//执行
-                            #endregion
-
-                            #region 新增原卡状态记录
-                            AddVCStatusEntity.VipCardStatusID = 3;
-                            AddVCStatusEntity.Action = "卡升级";
-                            AddVCStatusEntity.Remark += "已升级为：" + NewChangeVipCardData.VipCardCode;
-                            VipCardStatusChangeLogBLL.Create(AddVCStatusEntity, pTran);//执行
-                            #endregion
-
-                            #region 新增原卡余额变动记录
-                            if (OldMoney > 0)
+       
+                            //卡类型升级
+                            if (para.VipCardTypeId != 0)
                             {
-                                VipCardBalanceChangeEntity AddOldCardBalanceData = new VipCardBalanceChangeEntity();
-                                AddOldCardBalanceData.ChangeID = System.Guid.NewGuid().ToString();
-                                AddOldCardBalanceData.VipCardCode = changeEntity.VipCardCode;
-                                AddOldCardBalanceData.ChangeAmount = -OldMoney;
-                                //变动前卡内余额
-                                AddOldCardBalanceData.ChangeBeforeBalance = OldMoney;
-                                //变动后卡内余额
-                                AddOldCardBalanceData.ChangeAfterBalance = 0;
-                                AddOldCardBalanceData.ChangeReason = para.ChangeReason;
-                                AddOldCardBalanceData.Status = 1;
-                                AddOldCardBalanceData.Remark = para.Remark;
-                                AddOldCardBalanceData.CustomerID = loggingSessionInfo.ClientID;
-                                AddOldCardBalanceData.UnitID = loggingSessionInfo.CurrentUserRole.UnitId;
-                                VipCardBalanceChangeBLL.Create(AddOldCardBalanceData, pTran);//执行
-                                //增加图片上传
-                                if (!string.IsNullOrEmpty(para.ImageUrl))
-                                {
-                                    var objectImagesEntity = new ObjectImagesEntity()
-                                    {
-                                        ImageId = Guid.NewGuid().ToString(),
-                                        ObjectId = AddOldCardBalanceData.ChangeID,
-                                        ImageURL = para.ImageUrl
-                                    };
-                                    objectImagesBLL.Create(objectImagesEntity, pTran);
-                                }
+                                VipCardVipMappingBLL.updateVipCardByType(VipData.VIPID, para.VipCardTypeId, para.ChangeReason, para.Remark, VipData.VipCode, pTran);
+                            }
+                            //卡号升级
+                            else
+                            {
+                                #region 原卡
+
+                                #region 更新原卡
+                                changeEntity.VipCardStatusId = 3;
+                                //当前月，累计金额清0
+                                //changeEntity.BalanceAmount = 0;
+                                //changeEntity.TotalAmount = 0;
+                                VipCardBLL.Update(changeEntity, pTran);//执行
+                                #endregion
+
+                                #region 新增原卡状态记录
+                                AddVCStatusEntity.VipCardStatusID = 3;
+                                AddVCStatusEntity.Action = "卡升级";
+                                AddVCStatusEntity.Remark += "已升级为：" + NewChangeVipCardData.VipCardCode;
+                                VipCardStatusChangeLogBLL.Create(AddVCStatusEntity, pTran);//执行
+                                #endregion
+
+                                #region 新增原卡余额变动记录
+                                //if (OldMoney > 0)
+                                //{
+                                //    VipCardBalanceChangeEntity AddOldCardBalanceData = new VipCardBalanceChangeEntity();
+                                //    AddOldCardBalanceData.ChangeID = System.Guid.NewGuid().ToString();
+                                //    AddOldCardBalanceData.VipCardCode = changeEntity.VipCardCode;
+                                //    AddOldCardBalanceData.ChangeAmount = -OldMoney;
+                                //    //变动前卡内余额
+                                //    AddOldCardBalanceData.ChangeBeforeBalance = OldMoney;
+                                //    //变动后卡内余额
+                                //    AddOldCardBalanceData.ChangeAfterBalance = 0;
+                                //    AddOldCardBalanceData.ChangeReason = para.ChangeReason;
+                                //    AddOldCardBalanceData.Status = 1;
+                                //    AddOldCardBalanceData.Remark = para.Remark;
+                                //    AddOldCardBalanceData.CustomerID = loggingSessionInfo.ClientID;
+                                //    AddOldCardBalanceData.UnitID = loggingSessionInfo.CurrentUserRole.UnitId;
+                                //    VipCardBalanceChangeBLL.Create(AddOldCardBalanceData, pTran);//执行
+                                //    //增加图片上传
+                                //    if (!string.IsNullOrEmpty(para.ImageUrl))
+                                //    {
+                                //        var objectImagesEntity = new ObjectImagesEntity()
+                                //        {
+                                //            ImageId = Guid.NewGuid().ToString(),
+                                //            ObjectId = AddOldCardBalanceData.ChangeID,
+                                //            ImageURL = para.ImageUrl
+                                //        };
+                                //        objectImagesBLL.Create(objectImagesEntity, pTran);
+                                //    }
+                                //}
+                                #endregion
+
+                                #endregion
+
+                                #region 新卡
+
+                                VipData.VipCode = para.NewCardCode;
+                                VipBLL.Update(VipData, pTran);
+
+                                #region 更新新卡
+                                if (!string.IsNullOrEmpty(NewChangeVipCardData.MembershipUnit))
+                                    throw new APIException("该会员卡已绑定会员！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
+                                if (NewChangeVipCardData.VipCardStatusId != 0)
+                                    throw new APIException("该会员卡已激活！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
+                                if (NewChangeVipCardData.VipCardTypeID.Value == changeEntity.VipCardTypeID.Value)
+                                    throw new APIException("该卡号与原卡等级相同，请更换卡号后重新尝试！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
+
+                                #region 返回新卡卡ID
+                                rd.VipCardID = NewChangeVipCardData.VipCardID;
+                                #endregion
+                                NewChangeVipCardData.MembershipUnit = changeEntity.MembershipUnit;
+                                NewChangeVipCardData.VipCardStatusId = 1;
+                                VipCardBLL.Update(NewChangeVipCardData, pTran);//执行
+                                #endregion
+
+                                #region 新增新卡卡关系
+                                VipCardVipMappingEntity AddVipCardVipMappingData = new VipCardVipMappingEntity();
+                                AddVipCardVipMappingData.MappingID = System.Guid.NewGuid().ToString();
+                                AddVipCardVipMappingData.VIPID = OldVipCardVipMappingData.VIPID;
+                                AddVipCardVipMappingData.VipCardID = NewChangeVipCardData.VipCardID;
+                                AddVipCardVipMappingData.CustomerID = loggingSessionInfo.ClientID;
+                                VipCardVipMappingBLL.Create(AddVipCardVipMappingData, pTran);//执行
+                                #endregion
+
+                                #region 更新会员编号
+                                //VipEntity SJ_VipData = VipBLL.GetByID(OldVipCardVipMappingData.VIPID);
+                                //if (VipData == null)
+                                //    throw new APIException("会员不存在！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
+
+                                //VipData.VipCode = NewChangeVipCardData.VipCardCode;
+                                //VipBLL.Update(VipData, pTran);//执行
+                                #endregion
+
+                                #region 新增新卡状态记录
+                                //新增新卡状态记录
+
+                                VipCardStatusChangeLogEntity AddNewVCStatusEntity = new VipCardStatusChangeLogEntity();
+                                AddNewVCStatusEntity.LogID = System.Guid.NewGuid().ToString();
+                                AddNewVCStatusEntity.VipCardID = NewChangeVipCardData.VipCardID;
+                                AddNewVCStatusEntity.VipCardStatusID = 1;
+                                AddNewVCStatusEntity.Reason = para.ChangeReason;
+                                AddNewVCStatusEntity.OldStatusID = 0;
+                                AddNewVCStatusEntity.CustomerID = loggingSessionInfo.ClientID;
+                                AddNewVCStatusEntity.Action = "卡升级";
+                                AddNewVCStatusEntity.Remark = para.Remark + "由旧卡：" + changeEntity.VipCardCode + "升级";
+                                AddNewVCStatusEntity.UnitID = loggingSessionInfo.CurrentUserRole.UnitId;
+                                VipCardStatusChangeLogBLL.Create(AddNewVCStatusEntity, pTran);//执行
+
+                                #endregion
+
+                                #region 新增新卡余额记录
+                                //新增余额记录
+                                //if (OldMoney > 0)
+                                //{
+                                //    VipCardBalanceChangeEntity AddNewCardBalanceData = new VipCardBalanceChangeEntity();
+                                //    AddNewCardBalanceData.ChangeID = System.Guid.NewGuid().ToString();
+                                //    AddNewCardBalanceData.VipCardCode = NewChangeVipCardData.VipCardCode;
+                                //    AddNewCardBalanceData.ChangeAmount = OldMoney;
+                                //    //变动前卡内余额
+                                //    AddNewCardBalanceData.ChangeBeforeBalance = 0;
+                                //    //变动后卡内余额
+                                //    AddNewCardBalanceData.ChangeAfterBalance = NewChangeVipCardData.BalanceAmount == null ? 0 : NewChangeVipCardData.BalanceAmount.Value;
+                                //    AddNewCardBalanceData.ChangeReason = para.ChangeReason;
+                                //    AddNewCardBalanceData.Status = 1;
+                                //    AddNewCardBalanceData.Remark = para.Remark;
+                                //    AddNewCardBalanceData.CustomerID = loggingSessionInfo.ClientID;
+                                //    VipCardBalanceChangeBLL.Create(AddNewCardBalanceData, pTran);//执行
+                                //    //增加图片上传
+                                //    if (!string.IsNullOrEmpty(para.ImageUrl))
+                                //    {
+                                //        var objectImagesEntity = new ObjectImagesEntity()
+                                //        {
+                                //            ImageId = Guid.NewGuid().ToString(),
+                                //            ObjectId = AddNewCardBalanceData.ChangeID,
+                                //            ImageURL = para.ImageUrl
+                                //        };
+                                //        objectImagesBLL.Create(objectImagesEntity, pTran);
+                                //    }
+                                //}
+                                #endregion
+
+                                #endregion
                             }
                             #endregion
-
-
-                            #endregion
-                            #region 新卡
-                            #region 更新新卡
-                            if (!string.IsNullOrEmpty(NewChangeVipCardData.MembershipUnit))
-                                throw new APIException("该会员卡已绑定会员！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
-                            if (NewChangeVipCardData.VipCardStatusId != 0)
-                                throw new APIException("该会员卡已激活！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
-                            if (NewChangeVipCardData.VipCardTypeID.Value == changeEntity.VipCardTypeID.Value)
-                                throw new APIException("该卡号与原卡等级相同，请更换卡号后重新尝试！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
-
-                            #region 返回新卡卡ID
-                            rd.VipCardID = NewChangeVipCardData.VipCardID;
-                            #endregion
-                            NewChangeVipCardData.MembershipUnit = changeEntity.MembershipUnit;
-                            NewChangeVipCardData.VipCardStatusId = 1;
-                            VipCardBLL.Update(NewChangeVipCardData, pTran);//执行
-                            #endregion
-
-                            #region 新增新卡卡关系
-                            VipCardVipMappingEntity AddVipCardVipMappingData = new VipCardVipMappingEntity();
-                            AddVipCardVipMappingData.MappingID = System.Guid.NewGuid().ToString();
-                            AddVipCardVipMappingData.VIPID = OldVipCardVipMappingData.VIPID;
-                            AddVipCardVipMappingData.VipCardID = NewChangeVipCardData.VipCardID;
-                            AddVipCardVipMappingData.CustomerID = loggingSessionInfo.ClientID;
-                            VipCardVipMappingBLL.Create(AddVipCardVipMappingData, pTran);//执行
-                            #endregion
-
-                            #region 更新会员编号
-                            //VipEntity SJ_VipData = VipBLL.GetByID(OldVipCardVipMappingData.VIPID);
-                            if (VipData == null)
-                                throw new APIException("会员不存在！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
-
-                            VipData.VipCode = NewChangeVipCardData.VipCardCode;
-                            VipBLL.Update(VipData, pTran);//执行
-                            #endregion
-
-                            #region 新增新卡状态记录
-                            //新增新卡状态记录
-
-                            VipCardStatusChangeLogEntity AddNewVCStatusEntity = new VipCardStatusChangeLogEntity();
-                            AddNewVCStatusEntity.LogID = System.Guid.NewGuid().ToString();
-                            AddNewVCStatusEntity.VipCardID = NewChangeVipCardData.VipCardID;
-                            AddNewVCStatusEntity.VipCardStatusID = 1;
-                            AddNewVCStatusEntity.Reason = para.ChangeReason;
-                            AddNewVCStatusEntity.OldStatusID = 0;
-                            AddNewVCStatusEntity.CustomerID = loggingSessionInfo.ClientID;
-                            AddNewVCStatusEntity.Action = "卡升级";
-                            AddNewVCStatusEntity.Remark = para.Remark + "由旧卡：" + changeEntity.VipCardCode + "升级";
-                            AddNewVCStatusEntity.UnitID = loggingSessionInfo.CurrentUserRole.UnitId;
-                            VipCardStatusChangeLogBLL.Create(AddNewVCStatusEntity, pTran);//执行
-
-                            #endregion
-
-                            #region 新增新卡余额记录
-                            //新增余额记录
-                            if (OldMoney > 0)
-                            {
-                                VipCardBalanceChangeEntity AddNewCardBalanceData = new VipCardBalanceChangeEntity();
-                                AddNewCardBalanceData.ChangeID = System.Guid.NewGuid().ToString();
-                                AddNewCardBalanceData.VipCardCode = NewChangeVipCardData.VipCardCode;
-                                AddNewCardBalanceData.ChangeAmount = OldMoney;
-                                //变动前卡内余额
-                                AddNewCardBalanceData.ChangeBeforeBalance = 0;
-                                //变动后卡内余额
-                                AddNewCardBalanceData.ChangeAfterBalance = NewChangeVipCardData.BalanceAmount == null ? 0 : NewChangeVipCardData.BalanceAmount.Value;
-                                AddNewCardBalanceData.ChangeReason = para.ChangeReason;
-                                AddNewCardBalanceData.Status = 1;
-                                AddNewCardBalanceData.Remark = para.Remark;
-                                AddNewCardBalanceData.CustomerID = loggingSessionInfo.ClientID;
-                                VipCardBalanceChangeBLL.Create(AddNewCardBalanceData, pTran);//执行
-                                //增加图片上传
-                                if (!string.IsNullOrEmpty(para.ImageUrl))
-                                {
-                                    var objectImagesEntity = new ObjectImagesEntity()
-                                    {
-                                        ImageId = Guid.NewGuid().ToString(),
-                                        ObjectId = AddNewCardBalanceData.ChangeID,
-                                        ImageURL = para.ImageUrl
-                                    };
-                                    objectImagesBLL.Create(objectImagesEntity, pTran);
-                                }
-                            }
-                            #endregion
-
-                            #endregion
-
-                            #endregion
-
-
+                            
                             break;
                         case 3:
                             #region 挂失
@@ -585,7 +602,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.VIP.VIPCard
                     };
                     pTran.Commit();
                     #region 卡升级，转卡操作转移消费记录表
-                    if (para.OperationType == 2 || para.OperationType == 5)
+                    if ((para.OperationType == 2 || para.OperationType == 5) && string.IsNullOrEmpty(para.VipCardTypeId.ToString())) //卡类型升级不执行此操作
                     {
                         string StrSql = string.Format("update VipCardTransLog set VipCardCode='{0}',OldVipCardCode='{1}' where VipCardCode='{1}'", NewVipCardCode,OldVipCardCode);   
                         vipCardTransLogBLL.UpdateVipCardTransLog(StrSql);//执行

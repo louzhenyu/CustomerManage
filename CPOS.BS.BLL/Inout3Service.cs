@@ -210,7 +210,11 @@ namespace JIT.CPOS.BS.BLL
 
         //返回订单数据的优化接口，不返回各种状态订单数量
         public InoutInfo SearchInoutInfo_lj2(
-                                     string paymentcenter_id
+                                     string UnitId
+                                    , string VipCardTypeID
+                                    ,string reserveDateBegin
+                                    ,string reserveDateEnd
+                                    ,string paymentcenter_id
                                     , string PayId
                                     , string PayStatus
                                     , string order_no
@@ -277,6 +281,10 @@ namespace JIT.CPOS.BS.BLL
             //商户订单号，支付方式
             orderSearchInfo.paymentcenter_id = paymentcenter_id;
             orderSearchInfo.PayId = PayId;
+            orderSearchInfo.UnitId = UnitId;
+            orderSearchInfo.VipCardTypeID = VipCardTypeID;
+            orderSearchInfo.ReserveDateBegin = reserveDateBegin;
+            orderSearchInfo.ReserveDateEnd = reserveDateEnd;
 
             inoutInfo = SearchInoutInfo_lj2(orderSearchInfo, getDetail);
             return inoutInfo;
@@ -352,7 +360,11 @@ namespace JIT.CPOS.BS.BLL
         }
 
         public InoutInfo SearchInoutInfo_lj4(
-                                    string paymentcenter_id
+                                    string UnitId
+                                    , string VipCardTypeID
+                                    ,string reserveDateBegin
+                                    ,string reserveDateEnd
+                                    ,string paymentcenter_id
                                    , string PayId
                                    , string PayStatus
                                    , string order_no
@@ -419,6 +431,11 @@ namespace JIT.CPOS.BS.BLL
             //商户订单号，支付方式
             orderSearchInfo.paymentcenter_id = paymentcenter_id;
             orderSearchInfo.PayId = PayId;
+
+            orderSearchInfo.UnitId = UnitId;
+            orderSearchInfo.VipCardTypeID = VipCardTypeID;
+            orderSearchInfo.ReserveDateBegin = reserveDateBegin;
+            orderSearchInfo.ReserveDateEnd = reserveDateEnd;
 
             inoutInfo = SearchInoutInfo_lj4(orderSearchInfo, getDetail);
             return inoutInfo;
@@ -1178,7 +1195,7 @@ namespace JIT.CPOS.BS.BLL
                 DataSet ds = new DataSet();
                 //获取订单列表
                 //  ds = inoutService.SearchInoutInfo_lj(orderSearchInfo);  //这里真正查数据
-                ds = inoutService.SearchInoutInfo_lj2(orderSearchInfo);
+                ds = inoutService.SearchInoutInfo_lj4(orderSearchInfo);
                 if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
                     inoutInfoList = DataTableToObject.ConvertToList<InoutInfo>(ds.Tables[0]);
@@ -1187,20 +1204,14 @@ namespace JIT.CPOS.BS.BLL
 
                 List<InoutDetailInfo> inoutDetailInfoDataList = GetInoutDetailInfoByOrderDate(orderSearchInfo.order_date_begin, orderSearchInfo.order_date_end, loggingSessionInfo.CurrentLoggingManager.Customer_Id).ToList();
 
+                string begin = DateTime.Now.ToString();
                 foreach (var item in inoutInfoList)
                 {
+                    var i = inoutDetailInfoDataList.AsEnumerable();
                     item.InoutDetailList = inoutDetailInfoDataList.AsEnumerable().Where(t => t.order_id == item.order_id).ToList();
                     
                 }
-
-                //if (getDetail)
-                //{
-                //    foreach (var item in inoutInfoList)
-                //    {
-                //        item.InoutDetailList = GetInoutDetailInfoByOrderId(item.order_id, loggingSessionInfo.CurrentLoggingManager.Customer_Id); //根据订单的ID取数据，查找详细信息
-                //    }
-                //}
-
+                string end = DateTime.Now.ToString();
                 inoutInfo.InoutInfoList = inoutInfoList;
                 return inoutInfo;
             }

@@ -179,7 +179,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             item.SalesPromotionList = rp.Parameters.SalesPromotionList;//促销分组
             item.OperationType = rp.Parameters.OperationType;//促销分组
             item.ifservice = rp.Parameters.ifservice;
-            item.isGB = 1; //默认为1 标准商品
+            item.isGB = rp.Parameters.IsGB; // 0-非标商品，1-标准商品
 
 
             //sku值
@@ -627,6 +627,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
         /// 优惠券类型ID或者卡类型ID
         /// </summary>
         public string ObjecetTypeId { get; set; }
+
+        /// <summary>
+        /// 是否为标准商品 
+        /// </summary>
+        public int IsGB { get; set; } 
         public void Validate()
         {
         }
