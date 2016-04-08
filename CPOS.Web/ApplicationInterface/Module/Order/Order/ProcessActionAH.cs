@@ -134,6 +134,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                                 inoutDetailEntity.enter_amount = item.SumPrice;
                                 inoutDetailEntity.enter_price = Convert.ToDecimal(Math.Round(item.SumPrice / item.EnterQty, 2));
                                 entity.total_amount = entity.total_amount + Math.Round(Convert.ToDecimal(item.SumPrice / (entity.discount_rate / 100)), 2) - inoutDetailEntity.retail_amount;
+                                entity.total_retail = entity.total_amount;
                                 entity.actual_amount = entity.actual_amount + Math.Round(Convert.ToDecimal(item.SumPrice / (entity.discount_rate / 100)), 2) - inoutDetailEntity.retail_amount;
                                 inoutDetailBll.Update(inoutDetailEntity, tran);
                             }

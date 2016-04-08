@@ -2096,7 +2096,8 @@ WHERE     1=1) as t";
                       + " inner join t_inout c WITH(NOLOCK)  "
                       + " on(a.order_id = c.order_id)"
                       + " LEFT JOIN (SELECT *,ROW_NUMBER() OVER(PARTITION BY ObjectId  ORDER BY DisplayIndex ASC ) rowIndex FROM  ObjectImages  WHERE CustomerId='" + strCustomerId + "'  and Description != '自动生成的产品二维码' AND isdelete = 0 ) oi ON oi.objectID=b.item_id AND oi.rowIndex=1 " //AND oi.isdelete = 0 "
-                      + "where c.order_date >= '" + order_date_begin + "' and c.order_date <= '" + order_date_end + "'";
+                      + "where c.order_date >= '" + order_date_begin + "' and c.order_date <= '" + order_date_end + "'"
+                      + " and customer_id = '" + strCustomerId + "'";
             // + " where a.order_id= '" + orderId + "' order by b.item_code";
             #endregion
             DataSet ds = new DataSet();
