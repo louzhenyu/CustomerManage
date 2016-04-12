@@ -44,16 +44,15 @@ namespace JIT.CPOS.BS.BLL
         {
             //查询参数
             List<IWhereCondition> lstWhere_DayVipCardType = new List<IWhereCondition> { };
-            lstWhere_DayVipCardType.Add(new DirectCondition("DateCode <= '" + dateCode.ToString("yyyy-MM-dd") + "'"));
+            lstWhere_DayVipCardType.Add(new DirectCondition("DateCode = (SELECT MAX(t.DateCode) FROM Agg_UnitDaily_VipCardType t WHERE t.DateCode <= '" + dateCode.ToString("yyyy-MM-dd") + "' AND t.CustomerId = [Agg_UnitDaily_VipCardType].CustomerId AND t.UnitID = [Agg_UnitDaily_VipCardType].UnitId)"));
             lstWhere_DayVipCardType.Add(new EqualsCondition() { FieldName = "UnitId", Value = unitId });
             lstWhere_DayVipCardType.Add(new EqualsCondition() { FieldName = "CustomerId", Value = customerId });
             lstWhere_DayVipCardType.Add(new DirectCondition("VipCardTypeID >= 0"));
             //排序
             List<OrderBy> lstOrder_DayVipCardType = new List<OrderBy> { };
-            lstOrder_DayVipCardType.Add(new OrderBy() { FieldName = "DateCode", Direction = OrderByDirections.Desc });
             lstOrder_DayVipCardType.Add(new OrderBy() { FieldName = "VipCardLevel", Direction = OrderByDirections.Desc });
             //查询
-            return _currentDAO.Query(lstWhere_DayVipCardType.ToArray(), lstOrder_DayVipCardType.ToArray(), 1);
+            return _currentDAO.Query(lstWhere_DayVipCardType.ToArray(), lstOrder_DayVipCardType.ToArray());
         }
     }
 }
