@@ -35,6 +35,18 @@ namespace JIT.CPOS.BS.BLL
     /// </summary>
     public partial class CouponTypeBLL
     {
+
+
+        /// <summary>
+        /// 获取已被会员领取的优惠券统计
+        /// </summary>
+        /// <param name="CouponTypeID"></param>
+        /// <returns></returns>
+        public int GetCouponCount(string CouponTypeID)
+        {
+            return _currentDAO.GetCouponCount(CouponTypeID);
+        }
+
         #region GetCouponType
         /// <summary>
         /// 获取所有优惠劵类别

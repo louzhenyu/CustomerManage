@@ -41,14 +41,14 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="isStore"></param>
         /// <param name="socialSalesType">类型(0=按订单；1=按商品)</param>
         /// <returns></returns>
-        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType, string strSortName, string strSort, int intVirtual,double Price)
+        public DataSet GetWelfareItemList(string userId, string itemName, string itemTypeId, int page, int pageSize, bool isKeep, string isExchange, string storeId, string isGroupBy, string ChannelId, int isStore, int socialSalesType, string strSortName, string strSort, int intVirtual, double Price)
         {
             //page = page < 0 ? 0 : page;
             page = page <= 0 ? 0 : page;
             pageSize = pageSize <= 0 ? 15 : pageSize;
             int beginSize = page * pageSize + 1;
             int endSize = page * pageSize + pageSize;
-            
+
             /*
              *modify by donal 2014-9-25 17:53:16
              * 
@@ -62,7 +62,7 @@ namespace JIT.CPOS.BS.DataAccess
              */
 
             StringBuilder dbdSql = new StringBuilder();
-            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy, ChannelId, socialSalesType,  strSortName, strSort,intVirtual,isStore));
+            dbdSql.Append(GetWelfareItemListSql(userId, itemName, itemTypeId, isKeep, isExchange, storeId, isGroupBy, ChannelId, socialSalesType, strSortName, strSort, intVirtual, isStore));
 
             if (intVirtual == 1)
             {
@@ -76,14 +76,14 @@ namespace JIT.CPOS.BS.DataAccess
 
             if (Price != null || Price.ToString() != "")
             {
-                dbdSql.AppendFormat("and a.salesPrice >= {0} ",Price);
+                dbdSql.AppendFormat("and a.salesPrice >= {0} ", Price);
             }
 
 
 
             dbdSql.Append(string.Format(@" and a.displayIndex between '{0}' and '{1}' order by a.displayindex;", beginSize, endSize));
-            dbdSql.Append("select count(*) count From #tmp a where ");        
-            dbdSql.Append("a.UnixLocalTime BETWEEN a.UnixBeginTime AND a.UnixEndTime; drop table #tmp;");                     
+            dbdSql.Append("select count(*) count From #tmp a where ");
+            dbdSql.Append("a.UnixLocalTime BETWEEN a.UnixBeginTime AND a.UnixEndTime; drop table #tmp;");
 
             DataSet ds = new DataSet();
             ds = this.SQLHelper.ExecuteDataset(dbdSql.ToString());
@@ -116,7 +116,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
 
             //string sql = @"SELECT   displayIndex = Row_number() over(order by isnull(t.ItemDisplayIndex,0),t.BeginTime DESC) ,* 
-            string sql = @"SELECT   displayIndex = Row_number() over(order by t."+strSortName+" "+strSort+" ) ,* ";
+            string sql = @"SELECT   displayIndex = Row_number() over(order by t." + strSortName + " " + strSort + " ) ,* ";
             sql += " into #tmp ";
             sql += " FROM ";
             sql += " (";
@@ -225,7 +225,7 @@ namespace JIT.CPOS.BS.DataAccess
             //    sql += string.Format(" inner join (select CategoryID from fnGetChildCategoryByID('{0}',1)) e on a.item_category_id=e.CategoryID ", itemTypeId);
             //}
             sql += " WHERE 1 = 1 and item_category_id<>'-1' and a.customerId = '" + this.CurrentUserInfo.CurrentLoggingManager.Customer_Id + "' ";
-            if (intVirtual==1)//是否虚拟商品
+            if (intVirtual == 1)//是否虚拟商品
             {
                 sql += " AND ifservice=1";
             }
@@ -235,7 +235,13 @@ namespace JIT.CPOS.BS.DataAccess
             }
             if (!string.IsNullOrEmpty(itemTypeId))
             {
-                sql += " AND ( item_id IN (SELECT item_id FROM dbo.ItemCategoryMapping WHERE IsDelete=0 and ItemCategoryId='" + itemTypeId + "') ";
+                T_Item_CategoryEntity t_Item_CategoryEntity = new T_Item_CategoryEntity();
+                t_Item_CategoryEntity.item_category_id = itemTypeId;
+                T_Item_CategoryEntity[] t_Item_CategoryArray;
+                var dao = new T_Item_CategoryDAO(CurrentUserInfo);
+                t_Item_CategoryArray = dao.QueryByEntity(new T_Item_CategoryEntity() { parent_id = itemTypeId }, null);
+                string subCategoryID = GetRelateSubCategory(t_Item_CategoryEntity, t_Item_CategoryArray);
+                sql += " AND ( a.item_category_id IN (" + subCategoryID + ") ";
                 sql += "     OR  a.item_category_id ='" + itemTypeId + "') ";
             }
             //if (!string.IsNullOrEmpty(itemTypeId))
@@ -253,10 +259,10 @@ namespace JIT.CPOS.BS.DataAccess
                 sql += " AND a.PTypeId = '2' "; //团购商品
             }
             //员工销售/会员创客时，并且按商品设置时执行
-            if ((channelId == "6" || channelId == "10") && socialSalesType==1)
+            if ((channelId == "6" || channelId == "10") && socialSalesType == 1)
             {
-                sql += " AND a.EveryoneSalesPrice != 0 "; 
-            
+                sql += " AND a.EveryoneSalesPrice != 0 ";
+
             }
             //会员小店和员工小店过滤活动商品
             if ((channelId == "6" || channelId == "10"))
@@ -269,6 +275,28 @@ namespace JIT.CPOS.BS.DataAccess
             return sql;
         }
         #endregion
+        string subCategoryID = string.Empty;
+        public string GetRelateSubCategory(T_Item_CategoryEntity t_Item_Category, T_Item_CategoryEntity[] t_Item_CategoryArray)
+        {
+
+            foreach (T_Item_CategoryEntity subCategory in t_Item_CategoryArray)//遍历所有的CategoryID
+            {
+                if (subCategory.parent_id == t_Item_Category.item_category_id)
+                {
+                    var dao = new T_Item_CategoryDAO(CurrentUserInfo);
+                    t_Item_CategoryArray = dao.QueryByEntity(new T_Item_CategoryEntity() { parent_id = subCategory.item_category_id }, null);
+                    subCategoryID += "'" + subCategory.item_category_id + "',";
+                    GetRelateSubCategory(subCategory, t_Item_CategoryArray);//递归查找子元素的节点
+                }
+            }
+            if (subCategoryID.EndsWith(","))
+            {
+                subCategoryID = subCategoryID.Substring(0, subCategoryID.Length - 1);
+            }
+            return subCategoryID;
+        }
+
+
 
         #region 获取福利商品明细信息
 
@@ -593,7 +621,7 @@ where sds.Isdelete=0 and sku.status=1 and sds.StatusDate between '{0}' and '{1}'
             return SQLHelper.ExecuteDataset(strSql.ToString());
         }
 
-        public DataSet GetStoreItemDailyStatuses(string beginDate, string endDate, string storeId, string itemId,string userId,string customerId)
+        public DataSet GetStoreItemDailyStatuses(string beginDate, string endDate, string storeId, string itemId, string userId, string customerId)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.AppendFormat(@"
@@ -607,7 +635,7 @@ sds.Col6,sds.Col7,sds.Col8,sds.Col9,sds.Col10,sds.ClientID,
 sds.CreateBy,sds.CreateTime,sds.LastUpdateBy,sds.LastUpdateTime,sds.IsDelete 
 from StoreItemDailyStatus sds
 inner join t_sku sku on sds.SkuID=sku.Sku_ID 
-where sds.Isdelete=0 and sku.status=1 and sds.StatusDate between '{0}' and '{1}'", beginDate, endDate,userId,customerId);
+where sds.Isdelete=0 and sku.status=1 and sds.StatusDate between '{0}' and '{1}'", beginDate, endDate, userId, customerId);
             if (!string.IsNullOrEmpty(storeId))
                 strSql.AppendFormat(" AND sds.StoreID='{0}'", storeId);
             if (!string.IsNullOrEmpty(itemId))
@@ -722,10 +750,10 @@ where sds.Isdelete=0 and sku.status=1 and sds.StatusDate between '{0}' and '{1}'
         public DataSet GetStoreListByCityName(Dictionary<string, string> pParams)
         {
 
-           //    -- ,convert(nvarchar(18),convert(decimal(18,2),property.MinPrice*dbo.Fn_GetVipDiscountRate('{0}','{7}') ) ) MinPrice
-           //,convert(nvarchar(18),convert(decimal(18,0),   isnull((select	AVG(LowestPrice) from   StoreItemDailyStatus sids where IsDelete=0 
+            //    -- ,convert(nvarchar(18),convert(decimal(18,2),property.MinPrice*dbo.Fn_GetVipDiscountRate('{0}','{7}') ) ) MinPrice
+            //,convert(nvarchar(18),convert(decimal(18,0),   isnull((select	AVG(LowestPrice) from   StoreItemDailyStatus sids where IsDelete=0 
             //and sids.storeid=unit.unit_id   and StatusDate>=cast('{4}' as datetime)  and StatusDate<cast('{5}' as datetime)),0)*dbo.Fn_GetVipDiscountRate('{7}','{0}')      ) )	 as MinPrice
-		
+
             //拼接SQL
             StringBuilder strSql = new StringBuilder();
             strSql.AppendFormat(@"
@@ -1752,7 +1780,7 @@ where sds.Isdelete=0 and sku.status=1 and sds.StatusDate between '{0}' and '{1}'
                 ,nc.ShareNum as ShareCount
                 ,nc.BookmarkNum as BookmarkCount
                 ,L.CollCount
-                ,nc.ObjectID", pEntity.special.NewsID,this.CurrentUserInfo.ClientID);
+                ,nc.ObjectID", pEntity.special.NewsID, this.CurrentUserInfo.ClientID);
             if (CurrentUserInfo.UserID == "1")
             {
 
@@ -1766,7 +1794,7 @@ where sds.Isdelete=0 and sku.status=1 and sds.StatusDate between '{0}' and '{1}'
             left join EventStats as nc on  nc.ObjectID=l.NewsID
             and nc.IsDelete=l.IsDelete and nc.IsDelete='0'
             and nc.ObjectType='3'
-            where l.NewsId='{0}'",pEntity.special.NewsID);
+            where l.NewsId='{0}'", pEntity.special.NewsID);
 
             strb.AppendLine(string.Format(@" 
             insert into EventStatsDetail(DetailID,ObjectID,ObjectType,CountType,VipID,CustomerID,CreateBy,IsDelete)
@@ -1808,10 +1836,10 @@ where sds.Isdelete=0 and sku.status=1 and sds.StatusDate between '{0}' and '{1}'
         /// <returns></returns>
         public int SubmitVipPayMent(T_InoutEntity pEntity, string ItemId, string VipId)
         {
-           
+
             var tran = this.SQLHelper.CreateTransaction();
             int res = 0;
-            using(tran.Connection)
+            using (tran.Connection)
             {
                 try
                 {
@@ -1819,12 +1847,12 @@ where sds.Isdelete=0 and sku.status=1 and sds.StatusDate between '{0}' and '{1}'
                     strb.AppendLine(string.Format(@"
                      declare @sku_id nvarchar(50)
                      select @sku_id=sku_id from T_Sku where item_id='{0}'", ItemId));
-//                    strb.AppendLine(string.Format(@"declare @begin datetime
-//                                                  declare @end datetime"));
-//                    strb.Append(string.Format(@"select @begin=BeginTime,@end=EndTime from T_ITEM where item_id='{0}'",ItemId));
+                    //                    strb.AppendLine(string.Format(@"declare @begin datetime
+                    //                                                  declare @end datetime"));
+                    //                    strb.Append(string.Format(@"select @begin=BeginTime,@end=EndTime from T_ITEM where item_id='{0}'",ItemId));
                     strb.AppendLine(@"Insert into T_Inout(order_id,order_no,order_type_id,order_reason_id,red_flag,warehouse_id,total_amount,status,status_desc,vip_no,customer_id,order_date,Field7)");
                     strb.AppendLine(string.Format(@"Values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}','{11},'{12}'')",
-                    pEntity.order_id, pEntity.order_no, pEntity.order_type_id, pEntity.order_reason_id, pEntity.red_flag, pEntity.warehouse_id, pEntity.total_amount, pEntity.status, pEntity.status_desc, pEntity.vip_no, CurrentUserInfo.ClientID,pEntity.order_date,pEntity.Field7));
+                    pEntity.order_id, pEntity.order_no, pEntity.order_type_id, pEntity.order_reason_id, pEntity.red_flag, pEntity.warehouse_id, pEntity.total_amount, pEntity.status, pEntity.status_desc, pEntity.vip_no, CurrentUserInfo.ClientID, pEntity.order_date, pEntity.Field7));
 
                     strb.AppendLine(@"Insert into T_Inout_Detail(");
                     strb.AppendLine(@"order_detail_id,order_id,sku_id,order_qty)");
@@ -1836,15 +1864,15 @@ where sds.Isdelete=0 and sku.status=1 and sds.StatusDate between '{0}' and '{1}'
 
                     res = this.SQLHelper.ExecuteNonQuery(strb.ToString());
                     tran.Commit();
-  
-                 
+
+
                 }
-                catch (Exception )
+                catch (Exception)
                 {
 
                     throw;
                 }
-               
+
             }
             return res;
         }

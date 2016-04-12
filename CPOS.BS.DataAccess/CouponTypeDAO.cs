@@ -42,6 +42,27 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class CouponTypeDAO : Base.BaseCPOSDAO, ICRUDable<CouponTypeEntity>, IQueryable<CouponTypeEntity>
     {
+
+
+        /// <summary>
+        /// 获取已被会员领取的优惠券统计
+        /// </summary>
+        /// <param name="CouponTypeID"></param>
+        /// <returns></returns>
+        public int GetCouponCount(string CouponTypeID)
+        {
+            int num = 0;
+
+            string sql = string.Format(@"select count(1) from coupon as a 
+                                         inner join VipCouponMapping as b on a.CouponID=b.CouponID and b.IsDelete=0 
+                                         where a.CustomerID='{0}' and a.CouponTypeID='{1}'", CurrentUserInfo.ClientID, CouponTypeID);
+
+            var Result = this.SQLHelper.ExecuteScalar(sql);
+            if (Result != null)
+                num = Convert.ToInt32(Result);
+            return num;
+        }
+
         #region 获取优惠劵类别
         /// <summary>
         /// 获取优惠劵列表
@@ -70,7 +91,7 @@ namespace JIT.CPOS.BS.DataAccess
                         LEFT JOIN PrizeCouponTypeMapping p ON CAST(c.CouponTypeID AS NVARCHAR(200)) = p.CouponTypeID 
                         LEFT JOIN dbo.LPrizes l ON l.PrizesID = p.PrizesID AND [PrizeTypeId] ='Coupon'  
                         where  C.IsDelete='0' and   C.CustomerId='" + this.CurrentUserInfo.ClientID + "' AND ((EndTime IS NULL AND ServiceLife IS NOT NULL) OR (EndTime IS NOT NULL AND EndTime >getdate())) GROUP BY c.CouponTypeID,c.CouponTypeName";
-             return this.SQLHelper.ExecuteDataset(sql);
+            return this.SQLHelper.ExecuteDataset(sql);
 
         }
         #endregion

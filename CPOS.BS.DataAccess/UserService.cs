@@ -851,7 +851,7 @@ insert into @TmpTable(user_id,row_no)
         /// <returns></returns>
         public bool IsExistUserCode(string strUserCode, LoggingSessionInfo loggingSessionInfo, string strUserId)
         {
-            string strSql = string.Format("select isnull(count(*),0) from t_user a where  a.user_status=1 AND A.customer_id='{0}' AND A.user_code='{1}' and a.user_id<>'{2}'", loggingSessionInfo.CurrentLoggingManager.Customer_Id, strUserCode, strUserId);
+            string strSql = string.Format("select isnull(count(*),0) from t_user a where  A.customer_id='{0}' AND A.user_code='{1}' and a.user_id<>'{2}'", loggingSessionInfo.CurrentLoggingManager.Customer_Id, strUserCode, strUserId);
             var count = Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
             return count > 0 ? true : false;
         }

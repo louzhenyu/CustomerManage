@@ -54,7 +54,7 @@ namespace JIT.CPOS.BS.DataAccess
         public string GetRetailHeadImage(string RetailTraderID)
         {
             string sql = string.Format("select ImageURL from ObjectImages where objectid='{0}'", RetailTraderID);
-            var Result= this.SQLHelper.ExecuteScalar(sql);
+            var Result = this.SQLHelper.ExecuteScalar(sql);
 
             return Result == null ? "" : Result.ToString();
         }
@@ -1063,55 +1063,56 @@ where a.CustomerId=@CustomerId  AND    a.isdelete = 0   {4} ";
 			ls.Add(new SqlParameter("@CustomerId", CustomerID));
 			ls.Add(new SqlParameter("@RetailTraderID", RetailTraderID));
 
-			string sqlWhere = "";
-			string strSql = "";
-			string strColumn = "";
-			if (Status != -1)
-			{
-				ls.Add(new SqlParameter("@Status", Status));
-				sqlWhere += " and a.Status=@Status";
-			}
-			if (Status == 1)//已核销
-			{
-				strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
-				strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID";
-			}
-			else
-			{
-				strColumn = "";
-				strSql += " INNER JOIN CouponTypeUnitMapping e ON ( a.CouponTypeID = e.CouponTypeID AND e.ObjectID = @RetailTraderID ) ";
-			}
-			//总数据表
-			string sql = @"  SELECT Count(1) TotalCount
-						FROM    Coupon a WITH ( NOLOCK )
-								INNER JOIN VipCouponMapping b WITH ( NOLOCK ) ON a.CouponID = b.CouponID
-								INNER JOIN vip c WITH ( NOLOCK ) ON b.VIPID = c.VIPID AND c.ClientID = @CustomerId
-							   {5}
-						WHERE   1 = 1 and  a.CustomerID=@CustomerId
-							   {4}
-				  ";
-			//取到某一页的
-			sql += @"SELECT * FROM (
-					SELECT  ROW_NUMBER()over(order by {0} {3}) _row,c.HeadImgUrl ,
-					c.VipName ,
-					c.VipRealName ,
-					a.CoupnName ,
-					a.CouponCode ,
-					{6}
-					a.Status ,
-					( CASE a.Status
-						WHEN 1 THEN '已核销'
-						ELSE '未核销'
-					  END ) AS StatusDesc
-				  FROM      Coupon a WITH ( NOLOCK )
-							INNER JOIN VipCouponMapping b WITH ( NOLOCK ) ON a.CouponID = b.CouponID
-							INNER JOIN vip c WITH ( NOLOCK ) ON b.VIPID = c.VIPID   AND c.ClientID = @CustomerId
-							{5}
-				  WHERE     1 = 1 and  a.CustomerID=@CustomerId
-							{4}
-				";
-			sql += @") t
-				  where t._row>{1}*{2} and t._row<=({1}+1)*{2}";
+            string sqlWhere = "";
+            string strSql = "";
+            string strColumn = "";
+            if (Status != -1)
+            {
+                ls.Add(new SqlParameter("@Status", Status));
+                sqlWhere += " and a.Status=@Status";
+            }
+            if (Status == 1)//已核销
+            {
+                strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
+                strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID";
+            }
+            else
+            {//未核销
+                strColumn = "";
+                //strSql += " INNER JOIN CouponTypeUnitMapping e ON ( a.CouponTypeID = e.CouponTypeID AND e.ObjectID = @RetailTraderID ) ";
+                strSql += " INNER JOIN CouponUse f ON a.CouponID <> f.CouponID  AND f.UnitID = @RetailTraderID";
+            }
+            //总数据表
+            string sql = @"  SELECT Count(1) TotalCount
+                        FROM    Coupon a WITH ( NOLOCK )
+                                INNER JOIN VipCouponMapping b WITH ( NOLOCK ) ON a.CouponID = b.CouponID
+                                INNER JOIN vip c WITH ( NOLOCK ) ON b.VIPID = c.VIPID AND c.ClientID = @CustomerId
+                               {5}
+                        WHERE   1 = 1 and  a.CustomerID=@CustomerId
+                               {4}
+                  ";
+            //取到某一页的
+            sql += @"SELECT * FROM (  
+                    SELECT  ROW_NUMBER()over(order by {0} {3}) _row,c.HeadImgUrl ,
+                    c.VipName ,
+                    c.VipRealName ,
+                    a.CoupnName ,
+                    a.CouponCode ,
+                    {6}
+                    a.Status ,
+                    ( CASE a.Status
+                        WHEN 1 THEN '已核销'
+                        ELSE '未核销'
+                      END ) AS StatusDesc
+                  FROM      Coupon a WITH ( NOLOCK )
+                            INNER JOIN VipCouponMapping b WITH ( NOLOCK ) ON a.CouponID = b.CouponID
+                            INNER JOIN vip c WITH ( NOLOCK ) ON b.VIPID = c.VIPID   AND c.ClientID = @CustomerId
+                            {5}
+                  WHERE     1 = 1 and  a.CustomerID=@CustomerId
+                            {4}
+                ";
+            sql += @") t
+                  where t._row>{1}*{2} and t._row<=({1}+1)*{2}";
 
 			sql = string.Format(sql, OrderBy, pageIndex - 1, pageSize, sortType, sqlWhere, strSql, strColumn);
 

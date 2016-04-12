@@ -505,7 +505,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             var bll = new RetailTraderBLL(loggingSessionInfo);
             var rd = new RetailTraderMainRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
-
+            var CouponTypeBll = new CouponTypeBLL(loggingSessionInfo);
             //  BringVipCount//我为兰博士带多少会员
             //  RewardAmount//奖励多少钱
             //累计会员数量
@@ -547,6 +547,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
 
             rd.SendCouponCount = rd.UsedCoupon + NoWriteOffCouponCount;//	兰博士为我发券数量
 
+            #region 获取适用所有门店的券
+            var CouponTypeList = CouponTypeBll.QueryByEntity(new CouponTypeEntity() { SuitableForStore = 3, CustomerId = loggingSessionInfo.ClientID }, null).ToList();
+            if (CouponTypeList.Count > 0)
+            {
+                foreach (var item in CouponTypeList)
+                {
+                    int Count = CouponTypeBll.GetCouponCount(item.CouponTypeID.ToString());
+                    rd.SendCouponCount += Count;
+                }
+            }
+            #endregion
 
 
             return rsp.ToJSON();
@@ -571,6 +582,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             var bll = new RetailTraderBLL(loggingSessionInfo);
             var rd = new RetailCouponRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            var CouponTypeBll = new CouponTypeBLL(loggingSessionInfo);
+
 
             //优惠券状态为1代表已经使用，为0
             //已核销优惠券列表
@@ -592,6 +605,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             }
 
             rd.AllCouponCouponCount = rd.WriteOffCouponCount + rd.NoWriteOffCouponCount;
+
+            #region 获取适用所有门店的券
+            var CouponTypeList = CouponTypeBll.QueryByEntity(new CouponTypeEntity() { SuitableForStore = 3, CustomerId = loggingSessionInfo.ClientID },null).ToList();
+            if (CouponTypeList.Count > 0)
+            {
+                foreach (var item in CouponTypeList)
+                {
+                    int Count= CouponTypeBll.GetCouponCount(item.CouponTypeID.ToString());
+                    rd.AllCouponCouponCount += Count;
+                }
+            }
+            #endregion
 
             return rsp.ToJSON();
         }
