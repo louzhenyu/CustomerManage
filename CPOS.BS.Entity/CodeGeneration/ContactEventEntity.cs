@@ -137,7 +137,7 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public String LastUpdateBy { get; set; }
 
-
+        public int IsCTW { get; set; }
         #endregion
 
     }

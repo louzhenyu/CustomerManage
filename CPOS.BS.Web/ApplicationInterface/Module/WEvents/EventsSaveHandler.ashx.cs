@@ -1485,7 +1485,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         public Int32? IsPointsLottery { get; set; }
 
         /// <summary>
-        /// 
+        /// 参与游戏所需积分
         /// </summary>
         public Int32? PointsLottery { get; set; }
 

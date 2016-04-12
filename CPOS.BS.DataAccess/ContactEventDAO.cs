@@ -106,7 +106,27 @@ namespace JIT.CPOS.BS.DataAccess
             };
             return this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "[Proc_AddContactEventPrize]", parameters);
         }
-       
+        /// <summary>
+        /// 添加创意仓库中的触点活动奖品
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public int AddContactEventPrizeForCTW(LPrizesEntity entity)
+        {
+            
+            SqlParameter[] parameters = new SqlParameter[6] 
+            { 
+                new SqlParameter{ParameterName="@EventId",SqlDbType=SqlDbType.NVarChar,Value=entity.EventId},
+         
+                new SqlParameter{ParameterName="@PrizesID",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizesID},
+                new SqlParameter{ParameterName="@PrizeTypeId",SqlDbType=SqlDbType.NVarChar,Value=entity.PrizeTypeId},
+                
+                new SqlParameter{ParameterName="@CouponTypeID",SqlDbType=SqlDbType.NVarChar,Value=entity.CouponTypeID},
+                new SqlParameter{ParameterName="@CountTotal",SqlDbType=SqlDbType.Int,Value=entity.CountTotal},
+                new SqlParameter{ParameterName="@Creator",SqlDbType=SqlDbType.NVarChar,Value=entity.CreateBy}
+            };
+            return this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "[Proc_AddContactEventPrize_CTW]", parameters);
+        }
         /// <summary>
         /// 触点是否已存在
         /// </summary>

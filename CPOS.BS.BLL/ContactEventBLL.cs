@@ -41,7 +41,15 @@ namespace JIT.CPOS.BS.BLL
         {
             this._currentDAO.AddContactEventPrize(pEntity);
         }
-      
+        /// <summary>
+        /// 添加创意仓库中的触点活动奖品
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public void AddContactEventPrizeForCTW(LPrizesEntity pEntity)
+        {
+            this._currentDAO.AddContactEventPrizeForCTW(pEntity);
+        }
         /// <summary>
         ///  触点是否已存在
         /// </summary>

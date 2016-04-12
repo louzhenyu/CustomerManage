@@ -858,5 +858,12 @@ namespace JIT.CPOS.BS.DataAccess
         #endregion
 
 
+        #region 获取未开始和正在运行中的活动列表
+        public DataSet GetNoStartAndWorkingEventList()
+        {
+            string strSql = "Select EventID,Title FROM LEvents WHERE [EventStatus] in(10,20,30) and CustomerId='" + CurrentUserInfo.ClientID + "' ORDER BY CreateTime DESC";
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, strSql);
+        }
+        #endregion
     }
 }

@@ -48,7 +48,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 case "GetEventList":  //活动列表 
                     rst = this.GetEventList(pRequest);
                     break;
-            
+
                 case "DeleteEvent"://删除活动
                     rst = this.DeleteEvent(pRequest);
                     break;
@@ -58,6 +58,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                     break;
                 case "GetWorkingEventList":
                     rst = this.GetWorkingEventList(pRequest);
+                    break;
+                case "GetNoStartAndWorkingEventList":
+                    rst = this.GetNoStartAndWorkingEventList(pRequest);
                     break;
                 case "ExportJoinData":
                     rst = this.ExportJoinData(pRequest);
@@ -101,6 +104,23 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             LEventsBLL bll = new LEventsBLL(loggingSessionInfo);
             var ds = bll.GetWorkingEventList();
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                rd.LEventsList = DataTableToObject.ConvertToList<EventsList>(ds.Tables[0]).ToArray();//直接根据所需要的字段反序列化
+
+            }
+            var rsp = new SuccessResponse<IAPIResponseData>(rd);
+            return rsp.ToJSON();
+        }
+        #endregion
+        #region
+        public string GetNoStartAndWorkingEventList(string pRequest)
+        {
+            EventListRD rd = new EventListRD();
+            var reqObj = pRequest.DeserializeJSONTo<APIRequest<EventListRP>>();
+            var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            LEventsBLL bll = new LEventsBLL(loggingSessionInfo);
+            var ds = bll.GetNoStartAndWorkingEventList();
             if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
             {
                 rd.LEventsList = DataTableToObject.ConvertToList<EventsList>(ds.Tables[0]).ToArray();//直接根据所需要的字段反序列化
