@@ -241,8 +241,16 @@ namespace JIT.CPOS.BS.DataAccess
                 var dao = new T_Item_CategoryDAO(CurrentUserInfo);
                 t_Item_CategoryArray = dao.QueryByEntity(new T_Item_CategoryEntity() { parent_id = itemTypeId }, null);
                 string subCategoryID = GetRelateSubCategory(t_Item_CategoryEntity, t_Item_CategoryArray);
-                sql += " AND ( a.item_category_id IN (" + subCategoryID + ") ";
-                sql += "     OR  a.item_category_id ='" + itemTypeId + "') ";
+                if (subCategoryID != "")
+                {
+                    sql += " AND ( a.item_category_id IN (" + subCategoryID + ") ";
+                    sql += "     OR  a.item_category_id ='" + itemTypeId + "') ";
+                }
+                else 
+                {
+                    sql += "     and  a.item_category_id ='" + itemTypeId + "' ";
+                }
+                
             }
             //if (!string.IsNullOrEmpty(itemTypeId))
             //{
