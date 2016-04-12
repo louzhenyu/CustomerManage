@@ -2243,6 +2243,13 @@
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\GetQuestionnaireAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\SetQuestionnaireAnswerRecordAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitMonthReportAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitBirthdayVipReportAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitOldVipBackReportAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitVipListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitVipOverviewReportAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitSalesBoardAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitWeekReportAH.cs" />
     <Compile Include="ApplicationInterface\Module\Test\Test\TestAH.cs" />
     <Compile Include="ApplicationInterface\Module\UnitAndItem\Item\Item.ashx.cs">
       <DependentUpon>Item.ashx</DependentUpon>
@@ -2495,6 +2502,7 @@
       <DependentUpon>StructureData.aspx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\Project\YiMa\Order\Order\OrderPayAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\StoreManagerReport\GetUnitDayReportAH.cs" />
     <Compile Include="ApplicationInterface\Services\ServiceGateway.ashx.cs">
       <DependentUpon>ServiceGateway.ashx</DependentUpon>
     </Compile>
@@ -3118,6 +3126,10 @@
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
       <Project>{6D911430-7243-4AB2-B70E-4DAFFC4D1B22}</Project>
       <Name>CPOS.BS.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CPOS.BS.Web\CPOS.BS.Web.csproj">
+      <Project>{d5725cd5-20aa-4a3e-b72e-146f781c4fda}</Project>
+      <Name>CPOS.BS.Web</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.Common\CPOS.Common.csproj">
       <Project>{4E164CF5-3114-4C70-874F-1353FB6A6215}</Project>

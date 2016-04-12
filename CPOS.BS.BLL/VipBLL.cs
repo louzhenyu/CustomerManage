@@ -1840,6 +1840,33 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetVipList(pWhereConditions, pOrderBys, type, pPageSize, pCurrentPageIndex);
         }
+
+        /// <summary>
+        /// 按分页得到店铺当前会员列表
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <param name="unitId"></param>
+        /// <param name="dateCode"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public PagedQueryResult<VipEntity> PagedQueryForCurrentVip(string customerId, string unitId, int pageIndex, int pageSize)
+        {
+            //查询参数
+            List<IWhereCondition> lstWhere = new List<IWhereCondition> { };
+            lstWhere.Add(new EqualsCondition() { FieldName = "ClientID", Value = customerId });
+            lstWhere.Add(new EqualsCondition() { FieldName = "CouponInfo", Value = unitId });
+            lstWhere.Add(new DirectCondition("Status = 2"));
+
+            //排序参数
+            List<OrderBy> lstOrder = new List<OrderBy> { };
+            lstOrder.Add(new OrderBy() { FieldName = "VipName", Direction = OrderByDirections.Asc });
+            lstOrder.Add(new OrderBy() { FieldName = "Phone", Direction = OrderByDirections.Asc });
+
+            //查询
+            return PagedQuery(lstWhere.ToArray(), lstOrder.ToArray(), pageSize, pageIndex + 1);
+        }
+
         public DataSet ExcelToDb(string strPath, LoggingSessionInfo CurrentUserInfo)
         {
             DataSet ds; //要插入的数据  
