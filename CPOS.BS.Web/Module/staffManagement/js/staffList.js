@@ -197,6 +197,9 @@
             var fileds=$("#seach").serializeArray();
             $.each(fileds,function(i,filed){
                 //filed.value=filed.value==0?"":filed.value;
+				if(filed.name=='user_status' && filed.value==''){
+					filed.value = 1;
+				}
                 that.loadData.seach[filed.name]=filed.value;
             });
 			//查询数据
@@ -226,6 +229,7 @@
             });
 			//获取角色列表
 			that.getRoleList();
+			that.getUserStatus();
         },
         downloadFile: function (fileName, content) {
 
@@ -292,14 +296,18 @@
                              return value;
                         }
                     },
-					{field : 'User_Status_Desc',title : '状态',width:50,align:'center',resizable:false,
+					{field : 'User_Status',title : '状态',width:50,align:'center',resizable:false,
                         formatter:function(value ,row,index){
-                           	return value;
+							if(value==1){
+								return '正常';
+							}else if(value==-1){
+								return '停用';
+							}
                         }
                     },
 					{field : 'WqrURL',title : '下载二维码',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
-                            return row.User_Id ? '<a href="/Module/Basic/User/Handler/UserHandler.ashx?method=DownloadQRCodeNew&user_id=' + row.User_Id + '" target="_brank" class="downImg">下载</a>' : '';
+                            return row.User_Id ? '<a href="/Module/Basic/User/Handler/UserHandler.ashx?method=DownloadQRCodeNew&user_id=' + row.User_Id + '" target="_brank" class="downImg" style="color:#00a0e8">下载</a>' : '';
                         }
                     },
 					{field : 'User_Id',title : '操作',width:100,align:'left',resizable:false,
@@ -478,6 +486,31 @@
 						alert('加载数据失败');
 					}
 				}
+			});
+		},
+		getUserStatus:function(){
+			var that = this,
+				result = [
+					{
+						user_status:"",
+						user_status_name:"请选择"
+					},
+					{
+						user_status:1,
+						user_status_name:"正常"
+					},
+					{
+						user_status:-1,
+						user_status_name:"停用"
+					}
+				];
+			$('#user_status').combobox({
+				width:that.elems.width,
+				height:that.elems.height,
+				panelHeight:115,
+				valueField: 'user_status',
+				textField: 'user_status_name',
+				data:result
 			});
 		},
 		setSaveRole:function(){

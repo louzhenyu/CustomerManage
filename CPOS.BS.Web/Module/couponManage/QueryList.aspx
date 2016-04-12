@@ -92,7 +92,7 @@
                
                              <div class="title">数量:</div>
                                 <div class="borderNone" >
-                                 <input id="Amount" class="easyui-numberbox" data-options="width:180,height:34,min:0,precision:0,max:10000" name="IssuedQty" />
+                                 <input id="Amount" class="easyui-numberbox" data-options="width:180,height:34,min:1,precision:0,max:10000" name="IssuedQty" />
                                </div>
                
             </div>

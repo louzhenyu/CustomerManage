@@ -72,6 +72,15 @@
                                   </div>
                               </div>
                               
+                              <div class="commonSelectWrap">
+                                  <em class="tit">状态：</em>
+                                  <div class="selectBox">
+                                       <select id="user_status" name="user_status" class="easyui-combobox"   data-options="width:200,height:30"></select>
+                                  </div>
+                              </div>
+                              
+                              
+                              
                         </form>
                         </div>
                     <!--<h2 class="commonTitle">会员查询</h2>-->

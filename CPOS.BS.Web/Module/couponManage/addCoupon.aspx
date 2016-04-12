@@ -5,11 +5,11 @@
     <meta charset="UTF-8" />
     <title>新增优惠券</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link href="<%=StaticUrl+"/module/couponManage/css/addCoupon.css?v=0.4"%>" rel="stylesheet"
+    <link href="<%=StaticUrl+"/module/couponManage/css/addCoupon.css?v=0.5"%>" rel="stylesheet"
         type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="allPage" id="section" data-js="js/addCoupon.js?ver=0.3" >
+    <div class="allPage" id="section" data-js="js/addCoupon.js?ver=0.5" >
         <!-- 内容区域 -->
         <div class="contentArea_vipquery">
             <!--个别信息查询-->
@@ -42,7 +42,7 @@
                 <div class="commonSelectWrap">
                     <em class="tit w120">优惠券数量：</em>
                         <label class="searchInput bordernone">
-                             <input data-text="优惠券数量" class="easyui-numberbox" data-options="min:1,precision:0,required:true,width:160,height:32" data-flag="IssuedQty" name="IssuedQty" type="text" value="0">
+                             <input data-text="优惠券数量" class="easyui-numberbox" data-options="min:1,precision:0,max:10000,required:true,width:160,height:32" data-flag="IssuedQty" name="IssuedQty" type="text" value="0">
                         </label>
                 </div>
                 </div><!--panlDivEnd-->
