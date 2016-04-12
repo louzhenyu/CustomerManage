@@ -1127,7 +1127,7 @@ where a.CustomerId=@CustomerId  AND    a.isdelete = 0   {4} ";
 		/// <returns></returns>
 		public DataSet RetailTraderItemQRCode(string strRetailTraderId)
 		{
-            string strSql = string.Format("SELECT  i.item_id ItemId,i.item_name ItemName,o.ImageURL FROM    dbo.RetailTraderItemMapping r INNER JOIN dbo.ObjectImages o ON r.MappingId = o.ObjectId AND o.IsDelete=0 INNER JOIN t_item i ON r.ItemId = i.item_id AND i.status=1 WHERE r.IsDelete=0 and RetailTraderId='{0}'", strRetailTraderId);
+            string strSql = string.Format("SELECT  i.item_id ItemId,i.item_name ItemName,o.ImageURL FROM    dbo.RetailTraderItemMapping r INNER JOIN dbo.ObjectImages o ON CAST(r.MappingId as nvarchar(200)) = o.ObjectId AND o.IsDelete=0 INNER JOIN t_item i ON r.ItemId = i.item_id AND i.status=1 WHERE r.IsDelete=0 and RetailTraderId='{0}'", strRetailTraderId);
 			return this.SQLHelper.ExecuteDataset(strSql);
 		}
 

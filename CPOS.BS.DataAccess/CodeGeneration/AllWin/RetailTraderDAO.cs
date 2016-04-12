@@ -263,6 +263,10 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[CustomerId]=@CustomerId,");
             if (pIsUpdateNullField || pEntity.Status!=null)
                 strSql.Append( "[Status]=@Status");
+
+            var sqlStr=strSql.ToString().TrimEnd(',');
+            strSql = new StringBuilder();
+            strSql.Append(sqlStr);
             strSql.Append(" where RetailTraderID=@RetailTraderID ");
             SqlParameter[] parameters = 
             {

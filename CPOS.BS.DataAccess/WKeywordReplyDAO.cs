@@ -229,7 +229,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql.Append(" select c.ReplyId,a.TextId,a.Title,a.CoverImageUrl,b.DisplayIndex,a.Text,a.OriginalUrl,a.Author ");
             sql.Append(" from WMaterialText a,WMenuMTextMapping b,WKeywordReply c");
             sql.Append(" where a.TextId = b.TextId and b.MenuId = c.ReplyId");
-            sql.Append(" and c.ReplyId =  @pReplyId and a.isdelete = 0 and b.isdelete = 0");
+            sql.Append(" and c.ReplyId =  @pReplyId and a.isdelete = 0 and b.isdelete = 0 order by b.DisplayIndex");
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
         }
