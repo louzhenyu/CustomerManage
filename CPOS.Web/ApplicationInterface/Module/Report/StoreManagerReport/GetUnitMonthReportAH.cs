@@ -38,7 +38,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             var lastYearAggUnitMonthlyEntity = default(Agg_UnitMonthlyEntity);  //  去年同月
             var rUnitProductMonthSalesTopEntities = default(R_UnitProductMonthSalesTopEntity[]);  //  销量榜
             var aggUnitMonthlyEmplEntities = default(Agg_UnitMonthly_EmplEntity[]);   // 业绩榜
-            var setoffAggUnitMonthlyEmplEntities = default(Agg_UnitMonthly_EmplEntity[]);  // 集客榜  
+            //var setoffAggUnitMonthlyEmplEntities = default(Agg_UnitMonthly_EmplEntity[]);  // 集客榜  
             var aggUnitNowEmplEntities = default(Agg_UnitNow_EmplEntity[]);   //  员工总数据
             var t_UserEntities = default(T_UserEntity[]);//门店员工
 
@@ -92,47 +92,35 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             }));
             tasks.Add(Task.Factory.StartNew(() =>
             {
-                aggUnitMonthlyEmplEntities = aggUnitMonthlyEmplBLL.PagedQueryByEntity(new Agg_UnitMonthly_EmplEntity
+                aggUnitMonthlyEmplEntities = aggUnitMonthlyEmplBLL.QueryByEntity(new Agg_UnitMonthly_EmplEntity
                 {
                     CustomerId = rp.CustomerID,
                     UnitId = rp.UnitID,
                     DateCode = Convert.ToDateTime(date.Year + "-" + date.Month + "-01")
-                }, new OrderBy[]
-                {
-                    new OrderBy
-                    {
-                        FieldName="saleSamount",
-                        Direction= OrderByDirections.Desc
-                    },
-                    new OrderBy
-                    {
-                        FieldName="EmplName",
-                        Direction=OrderByDirections.Asc
-                    }
-                }, 10, 1).Entities;
+                }, null);
             }));
-            tasks.Add(Task.Factory.StartNew(() =>
-            {
-                setoffAggUnitMonthlyEmplEntities = aggUnitMonthlyEmplBLL.PagedQueryByEntity(new Agg_UnitMonthly_EmplEntity
-                {
-                    CustomerId = rp.CustomerID,
-                    UnitId = rp.UnitID,
-                    DateCode = Convert.ToDateTime(date.Year + "-" + date.Month + "-01")
-                }, new OrderBy[]
-                {
-                    new OrderBy
-                    {
-                        FieldName="setoffCount",
-                        Direction= OrderByDirections.Desc
-                    },
-                    new OrderBy
-                    {
-                        FieldName="EmplName",
-                        Direction=OrderByDirections.Asc
-                    }
+            //tasks.Add(Task.Factory.StartNew(() =>
+            //{
+            //    setoffAggUnitMonthlyEmplEntities = aggUnitMonthlyEmplBLL.PagedQueryByEntity(new Agg_UnitMonthly_EmplEntity
+            //    {
+            //        CustomerId = rp.CustomerID,
+            //        UnitId = rp.UnitID,
+            //        DateCode = Convert.ToDateTime(date.Year + "-" + date.Month + "-01")
+            //    }, new OrderBy[]
+            //    {
+            //        new OrderBy
+            //        {
+            //            FieldName="setoffCount",
+            //            Direction= OrderByDirections.Desc
+            //        },
+            //        new OrderBy
+            //        {
+            //            FieldName="EmplName",
+            //            Direction=OrderByDirections.Asc
+            //        }
 
-                }, 10, 1).Entities;
-            }));
+            //    }, 10, 1).Entities;
+            //}));
             tasks.Add(Task.Factory.StartNew(() =>
             {
                 aggUnitNowEmplEntities = aggUnitNowEmplBLL.QueryByEntity(new Agg_UnitNow_EmplEntity
@@ -199,7 +187,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             rd.UnitCurrentMonthSalesAmountEmplTopList = new List<UnitSalesAmountEmplTop>();
             if (aggUnitMonthlyEmplEntities != null && aggUnitMonthlyEmplEntities.Length > 0)
             {
-                var list = aggUnitMonthlyEmplEntities.ToList();
+                var list = aggUnitMonthlyEmplEntities.OrderByDescending(p => p.SalesAmount).ThenBy(p => p.EmplName).ToList();
                 var i = 1;
                 foreach (var item in list)
                 {
@@ -216,14 +204,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                         SalesAmount = item.SalesAmount
                     });
                     i++;
+                    if (i > 10)
+                    {
+                        break;
+                    }
                 }
             }
 
             // 集客榜
             rd.UnitCurrentMonthSetoffEmplTopList = new List<UnitMonthSetoffEmplTop>();
-            if (setoffAggUnitMonthlyEmplEntities != null && setoffAggUnitMonthlyEmplEntities.Length > 0)
+            if (aggUnitMonthlyEmplEntities != null && aggUnitMonthlyEmplEntities.Length > 0)
             {
-                var list = setoffAggUnitMonthlyEmplEntities.ToList();
+                var list = aggUnitMonthlyEmplEntities.OrderByDescending(p => p.SetoffCount).ThenBy(p => p.EmplName).ToList();
                 var i = 1;
                 foreach (var item in list)
                 {
@@ -233,7 +225,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                         continue;
                     }
 
-                    var empSum = aggUnitNowEmplEntities.FirstOrDefault(it => item.EmplID == item.EmplID);
+                    var empSum = aggUnitNowEmplEntities.FirstOrDefault(it => it.EmplID == item.EmplID);
                     rd.UnitCurrentMonthSetoffEmplTopList.Add(new UnitMonthSetoffEmplTop
                     {
                         TopIndex = i,
@@ -242,6 +234,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                         AllSetoffCount = empSum != null ? empSum.SetoffCount : 0
                     });
                     i++;
+                    if (i > 10)
+                    {
+                        break;
+                    }
                 }
             }
 

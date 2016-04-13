@@ -37,7 +37,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             var oldAggUnitDailyEntity = default(Agg_UnitDailyEntity);   // 昨日
             var rUnitProductDaySalesTopEntities = default(R_UnitProductDaySalesTopEntity[]);  //销量榜
             var aggUnitDailyEmplEntities = default(Agg_UnitDaily_EmplEntity[]);   // 业绩榜
-            var aggUnitDailyEmplEntities2 = default(Agg_UnitDaily_EmplEntity[]);   // 集客榜
+            //var aggUnitDailyEmplEntities2 = default(Agg_UnitDaily_EmplEntity[]);   // 集客榜
             var t_UserEntities = default(T_UserEntity[]);//门店员工
 
             //
@@ -78,46 +78,34 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
              }));
             tasks.Add(Task.Factory.StartNew(() =>
             {
-                aggUnitDailyEmplEntities = aggUnitDailyEmplBLL.PagedQueryByEntity(new Agg_UnitDaily_EmplEntity
+                aggUnitDailyEmplEntities = aggUnitDailyEmplBLL.QueryByEntity(new Agg_UnitDaily_EmplEntity
                 {
                     DateCode = Convert.ToDateTime(rp.Date),
                     UnitId = rp.UnitID,
                     CustomerId = rp.CustomerID
-                }, new OrderBy[]
-                {
-                    new OrderBy
-                    {
-                        FieldName="SalesAmount",
-                        Direction=OrderByDirections.Desc
-                    },
-                    new OrderBy
-                    {
-                        FieldName="EmplName",
-                        Direction=OrderByDirections.Asc
-                    }
-                }, 10, 1).Entities;
+                }, null);
             }));
-            tasks.Add(Task.Factory.StartNew(() =>
-            {
-                aggUnitDailyEmplEntities2 = aggUnitDailyEmplBLL.PagedQueryByEntity(new Agg_UnitDaily_EmplEntity
-                {
-                    DateCode = Convert.ToDateTime(rp.Date),
-                    UnitId = rp.UnitID,
-                    CustomerId = rp.CustomerID
-                }, new OrderBy[]
-                {
-                    new OrderBy
-                    {
-                        FieldName="SetoffCount",
-                        Direction=OrderByDirections.Desc
-                    },
-                    new OrderBy
-                    {
-                        FieldName="EmplName",
-                        Direction=OrderByDirections.Asc
-                    }
-                }, 10, 1).Entities;
-            }));
+            //tasks.Add(Task.Factory.StartNew(() =>
+            //{
+            //    aggUnitDailyEmplEntities2 = aggUnitDailyEmplBLL.PagedQueryByEntity(new Agg_UnitDaily_EmplEntity
+            //    {
+            //        DateCode = Convert.ToDateTime(rp.Date),
+            //        UnitId = rp.UnitID,
+            //        CustomerId = rp.CustomerID
+            //    }, new OrderBy[]
+            //    {
+            //        new OrderBy
+            //        {
+            //            FieldName="SetoffCount",
+            //            Direction=OrderByDirections.Desc
+            //        },
+            //        new OrderBy
+            //        {
+            //            FieldName="EmplName",
+            //            Direction=OrderByDirections.Asc
+            //        }
+            //    }, 10, 1).Entities;
+            //}));
             tasks.Add(Task.Factory.StartNew(() =>
             {
                 t_UserEntities = t_UserBLL.GetEntitiesByCustomerIdUnitId(rp.CustomerID, rp.UnitID);
@@ -169,8 +157,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             rd.UnitCurrentDaySalesAmountEmplTopList = new List<UnitSalesAmountEmplTop>();
             if (aggUnitDailyEmplEntities != null && aggUnitDailyEmplEntities.Length > 0)
             {
-                var list = aggUnitDailyEmplEntities.ToList();
-                var i = 1;
+                var list = aggUnitDailyEmplEntities.OrderByDescending(p => p.SalesAmount).ThenBy(p => p.EmplName).ToList();
+               var i = 1;
                 foreach (var item in list)
                 {
                     var user = t_UserEntities.Where(p => p.user_id == item.EmplID).FirstOrDefault();
@@ -186,16 +174,20 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                         SalesAmount = item.SalesAmount
                     });
                     i++;
+                    if(i>10)
+                    {
+                        break;
+                    }
                 }
             }
 
             // 集客榜
             rd.UnitCurrentDaySetoffEmplTopList = new List<UnitDaySetoffEmplTop>();
-            if (aggUnitDailyEmplEntities2 != null && aggUnitDailyEmplEntities2.Length > 0)
+            if (aggUnitDailyEmplEntities != null && aggUnitDailyEmplEntities.Length > 0)
             {
-                var list = aggUnitDailyEmplEntities2.ToList();
+                var list = aggUnitDailyEmplEntities.OrderByDescending(p => p.SetoffCount).ThenBy(p => p.EmplName).ToList();
                 var i = 1;
-                foreach (var item in aggUnitDailyEmplEntities2)
+                foreach (var item in list)
                 {
                     var user = t_UserEntities.Where(p => p.user_id == item.EmplID).FirstOrDefault();
                     if (user == null)
@@ -210,6 +202,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                         SetoffCount = item.SetoffCount
                     });
                     i++;
+                    if (i > 10)
+                    {
+                        break;
+                    }
                 }
             }
 

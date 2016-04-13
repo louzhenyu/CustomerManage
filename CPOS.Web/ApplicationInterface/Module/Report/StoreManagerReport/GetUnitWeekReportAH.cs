@@ -40,7 +40,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             var lastAggUnitDailyEntities = default(Agg_UnitDailyEntity[]);  // 上七天门店
             var rUnitProductWeekSalesTopEntities = default(R_UnitProductWeekSalesTopEntity[]);  // 商品销量榜
             var salesAggUnitWeeklyEmplEntities = default(Agg_UnitWeekly_EmplEntity[]);  // 本周员工业绩
-            var setoffAggUnitWeeklyEmplEntities = default(Agg_UnitWeekly_EmplEntity[]);  // 本周员工集客
+            //var setoffAggUnitWeeklyEmplEntities = default(Agg_UnitWeekly_EmplEntity[]);  // 本周员工集客
             var aggUnitMonthlyEmplEntities = default(Agg_UnitMonthly_EmplEntity[]);   // 本月员工
             var t_UserEntities = default(T_UserEntity[]);//门店员工
 
@@ -136,46 +136,34 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             }));
             tasks.Add(Task.Factory.StartNew(() =>
             {
-                salesAggUnitWeeklyEmplEntities = aggUnitWeeklyEmplBLL.PagedQueryByEntity(new Agg_UnitWeekly_EmplEntity
+                salesAggUnitWeeklyEmplEntities = aggUnitWeeklyEmplBLL.QueryByEntity(new Agg_UnitWeekly_EmplEntity
                 {
                     CustomerId = rp.CustomerID,
                     UnitId = rp.UnitID,
                     DateCode = Convert.ToDateTime(rp.Date)
-                }, new OrderBy[]
-                {
-                    new OrderBy
-                    {
-                        FieldName="SalesAmount",
-                        Direction= OrderByDirections.Desc
-                    },
-                    new OrderBy
-                    {
-                        FieldName="EmplName",
-                        Direction=OrderByDirections.Asc
-                    }
-                }, 10, 1).Entities;
+                }, null);
             }));
-            tasks.Add(Task.Factory.StartNew(() =>
-            {
-                setoffAggUnitWeeklyEmplEntities = aggUnitWeeklyEmplBLL.PagedQueryByEntity(new Agg_UnitWeekly_EmplEntity
-                {
-                    CustomerId = rp.CustomerID,
-                    UnitId = rp.UnitID,
-                    DateCode = Convert.ToDateTime(rp.Date)
-                }, new OrderBy[]
-                {
-                    new OrderBy
-                    {
-                        FieldName="setoffcount",
-                        Direction= OrderByDirections.Desc
-                    },
-                    new OrderBy
-                    {
-                        FieldName="EmplName",
-                        Direction=OrderByDirections.Asc
-                    }
-              }, 10, 1).Entities;
-            }));
+            //tasks.Add(Task.Factory.StartNew(() =>
+            //{
+            //    setoffAggUnitWeeklyEmplEntities = aggUnitWeeklyEmplBLL.PagedQueryByEntity(new Agg_UnitWeekly_EmplEntity
+            //    {
+            //        CustomerId = rp.CustomerID,
+            //        UnitId = rp.UnitID,
+            //        DateCode = Convert.ToDateTime(rp.Date)
+            //    }, new OrderBy[]
+            //    {
+            //        new OrderBy
+            //        {
+            //            FieldName="setoffcount",
+            //            Direction= OrderByDirections.Desc
+            //        },
+            //        new OrderBy
+            //        {
+            //            FieldName="EmplName",
+            //            Direction=OrderByDirections.Asc
+            //        }
+            //  }, 10, 1).Entities;
+            //}));
             tasks.Add(Task.Factory.StartNew(() =>
             {
                 var date = Convert.ToDateTime(rp.Date);
@@ -331,9 +319,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             rd.UnitCurrentWeekSalesAmountEmplTopList = new List<UnitSalesAmountEmplTop>();  // 员工业绩榜
             if (salesAggUnitWeeklyEmplEntities != null && salesAggUnitWeeklyEmplEntities.Length > 0)
             {
-                var list = salesAggUnitWeeklyEmplEntities.ToList();
+                var list = salesAggUnitWeeklyEmplEntities.OrderByDescending(p => p.SalesAmount).ThenBy(p => p.EmplName).ToList();
                 var i = 1;
-                foreach (var item in salesAggUnitWeeklyEmplEntities)
+                foreach (var item in list)
                 {
                     var user = t_UserEntities.Where(p => p.user_id == item.EmplID).FirstOrDefault();
                     if (user == null)
@@ -348,14 +336,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                         SalesAmount = item.SalesAmount
                     });
                     i++;
+                    if (i > 10)
+                    {
+                        break;
+                    }
                 }
             }
 
             // 
             rd.UnitCurrentWeekSetoffEmplTopList = new List<UnitWeekSetoffEmplTop>();  // 员工集客榜
-            if (setoffAggUnitWeeklyEmplEntities != null && setoffAggUnitWeeklyEmplEntities.Length > 0)
+            if (salesAggUnitWeeklyEmplEntities != null && salesAggUnitWeeklyEmplEntities.Length > 0)
             {
-                var list = setoffAggUnitWeeklyEmplEntities.ToList();
+                var list = salesAggUnitWeeklyEmplEntities.OrderByDescending(p => p.SetoffCount).ThenBy(p => p.EmplName).ToList();
                 var i = 1;
                 foreach (var item in list)
                 {
@@ -374,6 +366,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                         MonthSetoffCount = empMothData != null ? empMothData.SetoffCount : 0
                     });
                     i++;
+                    if (i > 10)
+                    {
+                        break;
+                    }
                 }
             }
 
