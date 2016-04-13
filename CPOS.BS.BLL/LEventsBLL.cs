@@ -885,7 +885,7 @@ namespace JIT.CPOS.BS.BLL
         public void SendQrCodeWxMessage(LoggingSessionInfo loggingSessionInfo, string customerId,
             string weixinId, string qrCode, string openId, HttpContext httpContext, RequestParams requestParams, out int sendMessageCount)
         {
-            sendMessageCount = 0;
+            sendMessageCount = 0;//有多少条图文信息***
             try
             {
 
@@ -1196,12 +1196,23 @@ namespace JIT.CPOS.BS.BLL
 
                         if (qrCodeTypeInfo.TypeCode == "UserQrCode")//员工二维码（员工二维码的图文素材加上是哪个员工的二维码，以方便分享时查看）
                         {
-                            //根据员工类型QRCodeTypeId
-                            //QrCodeHandlerText(qrCodeEntity.QRCodeTypeId.ToString(), loggingSessionInfo, 
-                            //    weixinId, 4, openId, httpContext, requestParams, qrCodeEntity.ObjectId);
                             //下面是2016-4-4日新改的
+                            //先根据每个员工的二维码的QRCodeId去回复
+                          
                             QrCodeHandlerText(qrCodeEntity.QRCodeId.ToString(), loggingSessionInfo,
                                 weixinId, 4, openId, httpContext, requestParams, out  sendMessageCount, qrCodeEntity.ObjectId);
+
+                            if (sendMessageCount == 0)//如果这个员工的二维码没有对应的回复信息，就用员工二维码类型来找
+                            {
+                                //根据员工类型QRCodeTypeId（用于“打赏”等功能，所有的员工二维码用统一的员工"二维码类型"作为关键字回复的关键字）   
+                                //这里加了一个条件ApplicationId，因为这里用员工类型做二维码，只给需要的商户配置“打赏”图文素材(applicationid可以通过customerid对应商户)
+                                //***而其他普通的关键字回复信息，则不需要考虑这个，不需要加这个条件，
+                                //（因为有多号运营的问题，现在生成图文素材和二维码都是取得第一个公众号的ApplicationId，所以这里加ApplicationId可能会到普通的生成的二维码的关键字出问题，所以只在打赏这里加***）
+                                //***不需要加这个applicationId了，已经通过weixinid做过判断了
+                                QrCodeHandlerText(qrCodeEntity.QRCodeTypeId.ToString(), loggingSessionInfo,
+                                    weixinId, 4, openId, httpContext, requestParams,   out  sendMessageCount, qrCodeEntity.ObjectId);
+                            }                    
+                        
                         }
                         else
                         {
