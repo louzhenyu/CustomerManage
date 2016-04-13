@@ -31,6 +31,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             var aggUnitWeeklyBLL = new Agg_UnitWeeklyBLL(CurrentUserInfo);
             var rUnitProductWeekSalesTopBLL = new R_UnitProductWeekSalesTopBLL(CurrentUserInfo);
             var aggUnitMonthlyEmplBLL = new Agg_UnitMonthly_EmplBLL(CurrentUserInfo);
+            var t_UserBLL = new T_UserBLL(CurrentUserInfo);
 
             //
             var aggUnitWeeklyEntity = default(Agg_UnitWeeklyEntity);  // 本周
@@ -41,6 +42,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             var salesAggUnitWeeklyEmplEntities = default(Agg_UnitWeekly_EmplEntity[]);  // 本周员工业绩
             var setoffAggUnitWeeklyEmplEntities = default(Agg_UnitWeekly_EmplEntity[]);  // 本周员工集客
             var aggUnitMonthlyEmplEntities = default(Agg_UnitMonthly_EmplEntity[]);   // 本月员工
+            var t_UserEntities = default(T_UserEntity[]);//门店员工
 
             //
             var tasks = new List<Task>();
@@ -183,6 +185,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                     UnitId = rp.UnitID,
                     DateCode = Convert.ToDateTime(date.Year.ToString() + "-" + date.Month.ToString() + "-01")
                 }, null);
+            }));
+            tasks.Add(Task.Factory.StartNew(() =>
+            {
+                t_UserEntities = t_UserBLL.GetEntitiesByCustomerIdUnitId(rp.CustomerID, rp.UnitID);
             }));
             Task.WaitAll(tasks.ToArray());
 
@@ -329,6 +335,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                 var i = 1;
                 foreach (var item in salesAggUnitWeeklyEmplEntities)
                 {
+                    var user = t_UserEntities.Where(p => p.user_id == item.EmplID).FirstOrDefault();
+                    if (user == null)
+                    {
+                        continue;
+                    }
+
                     rd.UnitCurrentWeekSalesAmountEmplTopList.Add(new UnitSalesAmountEmplTop
                     {
                         TopIndex = i,
@@ -347,6 +359,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                 var i = 1;
                 foreach (var item in list)
                 {
+                    var user = t_UserEntities.Where(p => p.user_id == item.EmplID).FirstOrDefault();
+                    if (user == null)
+                    {
+                        continue;
+                    }
+
                     var empMothData = aggUnitMonthlyEmplEntities.FirstOrDefault(it => it.EmplID == item.EmplID);
                     rd.UnitCurrentWeekSetoffEmplTopList.Add(new UnitWeekSetoffEmplTop
                     {

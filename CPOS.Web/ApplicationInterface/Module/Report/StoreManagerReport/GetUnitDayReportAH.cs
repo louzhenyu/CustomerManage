@@ -30,6 +30,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             var aggUnitDailyEmplBLL = new Agg_UnitDaily_EmplBLL(CurrentUserInfo);
             var aggUnitDailyBLL = new Agg_UnitDailyBLL(CurrentUserInfo);
             var rUnitProductDaySalesTopBLL = new R_UnitProductDaySalesTopBLL(CurrentUserInfo);
+            var t_UserBLL = new T_UserBLL(CurrentUserInfo);
 
             //
             var currentAggUnitDailyEntity = default(Agg_UnitDailyEntity);   // 当日
@@ -37,6 +38,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             var rUnitProductDaySalesTopEntities = default(R_UnitProductDaySalesTopEntity[]);  //销量榜
             var aggUnitDailyEmplEntities = default(Agg_UnitDaily_EmplEntity[]);   // 业绩榜
             var aggUnitDailyEmplEntities2 = default(Agg_UnitDaily_EmplEntity[]);   // 集客榜
+            var t_UserEntities = default(T_UserEntity[]);//门店员工
 
             //
             var tasks = new List<Task>();
@@ -116,6 +118,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                     }
                 }, 10, 1).Entities;
             }));
+            tasks.Add(Task.Factory.StartNew(() =>
+            {
+                t_UserEntities = t_UserBLL.GetEntitiesByCustomerIdUnitId(rp.CustomerID, rp.UnitID);
+            }));
             Task.WaitAll(tasks.ToArray());
 
             // 当日            
@@ -167,6 +173,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                 var i = 1;
                 foreach (var item in list)
                 {
+                    var user = t_UserEntities.Where(p => p.user_id == item.EmplID).FirstOrDefault();
+                    if(user == null)
+                    {
+                        continue;
+                    }
+
                     rd.UnitCurrentDaySalesAmountEmplTopList.Add(new UnitSalesAmountEmplTop
                     {
                         TopIndex = i,
@@ -185,6 +197,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                 var i = 1;
                 foreach (var item in aggUnitDailyEmplEntities2)
                 {
+                    var user = t_UserEntities.Where(p => p.user_id == item.EmplID).FirstOrDefault();
+                    if (user == null)
+                    {
+                        continue;
+                    }
+
                     rd.UnitCurrentDaySetoffEmplTopList.Add(new UnitDaySetoffEmplTop
                     {
                         TopIndex = i,

@@ -30,6 +30,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             var rUnitProductMonthSalesTopBLL = new R_UnitProductMonthSalesTopBLL(CurrentUserInfo);
             var aggUnitMonthlyEmplBLL = new Agg_UnitMonthly_EmplBLL(CurrentUserInfo);
             var aggUnitNowEmplBLL = new Agg_UnitNow_EmplBLL(CurrentUserInfo);
+            var t_UserBLL = new T_UserBLL(CurrentUserInfo);
 
             //
             var aggUnitMonthlyEntity = default(Agg_UnitMonthlyEntity);   // 本月
@@ -39,6 +40,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
             var aggUnitMonthlyEmplEntities = default(Agg_UnitMonthly_EmplEntity[]);   // 业绩榜
             var setoffAggUnitMonthlyEmplEntities = default(Agg_UnitMonthly_EmplEntity[]);  // 集客榜  
             var aggUnitNowEmplEntities = default(Agg_UnitNow_EmplEntity[]);   //  员工总数据
+            var t_UserEntities = default(T_UserEntity[]);//门店员工
 
             //
             var tasks = new List<Task>();
@@ -140,6 +142,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                     DateCode = Convert.ToDateTime(rp.Date)
                 }, null);
             }));
+            tasks.Add(Task.Factory.StartNew(() =>
+            {
+                t_UserEntities = t_UserBLL.GetEntitiesByCustomerIdUnitId(rp.CustomerID, rp.UnitID);
+            }));
             Task.WaitAll(tasks.ToArray());
 
             // 本月
@@ -197,6 +203,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                 var i = 1;
                 foreach (var item in list)
                 {
+                    var user = t_UserEntities.Where(p => p.user_id == item.EmplID).FirstOrDefault();
+                    if (user == null)
+                    {
+                        continue;
+                    }
+
                     rd.UnitCurrentMonthSalesAmountEmplTopList.Add(new UnitSalesAmountEmplTop
                     {
                         TopIndex = i,
@@ -215,6 +227,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Report.StoreManagerReport
                 var i = 1;
                 foreach (var item in list)
                 {
+                    var user = t_UserEntities.Where(p => p.user_id == item.EmplID).FirstOrDefault();
+                    if (user == null)
+                    {
+                        continue;
+                    }
+
                     var empSum = aggUnitNowEmplEntities.FirstOrDefault(it => item.EmplID == item.EmplID);
                     rd.UnitCurrentMonthSetoffEmplTopList.Add(new UnitMonthSetoffEmplTop
                     {

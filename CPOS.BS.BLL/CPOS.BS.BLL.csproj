@@ -104,6 +104,9 @@
     <Compile Include="BillOperateStateService.cs" />
     <Compile Include="BrandDetailBLL.cs" />
     <Compile Include="BrowseHistoryBLL.cs" />
+    <Compile Include="BuryingPoint\BaseBuryingPoint.cs" />
+    <Compile Include="BuryingPoint\BuryingPointEntity.cs" />
+    <Compile Include="BuryingPoint\BuryingPoint_Gateway.cs" />
     <Compile Include="CardChannelInfoBLL.cs" />
     <Compile Include="CardCouponMappingBLL.cs" />
     <Compile Include="CardDepositBLL.cs" />
@@ -1125,6 +1128,7 @@
     <Compile Include="T_SkuBLL.cs" />
     <Compile Include="T_Sku_PriceBLL.cs" />
     <Compile Include="T_Sku_PropertyBLL.cs" />
+    <Compile Include="T_UserBLL.cs" />
     <Compile Include="t_unitBLL.cs" />
     <Compile Include="T_VirtualItemTypeSettingBLL.cs" />
     <Compile Include="VipFeedbackInfoBLL.cs" />

@@ -1038,6 +1038,7 @@
     <Compile Include="T_SkuDAO.cs" />
     <Compile Include="T_Sku_PriceDAO.cs" />
     <Compile Include="T_Sku_PropertyDAO.cs" />
+    <Compile Include="T_UserDAO.cs" />
     <Compile Include="t_unitDAO.cs" />
     <Compile Include="T_VirtualItemTypeSettingDAO.cs" />
     <Compile Include="VipFeedbackInfoDAO.cs" />
