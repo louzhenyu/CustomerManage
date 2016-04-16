@@ -184,6 +184,29 @@ namespace JIT.CPOS.BS.DataAccess
             //返回
             return m;
         }
+
+
+        
+
+              #region 获取活动商品规格
+        public DataSet GetTCTWPanicbuyingEventKV(string CTWEventId)
+        {
+
+            var paras = new List<SqlParameter>{
+            new SqlParameter{ ParameterName="@CTWEventId",Value=CTWEventId },
+        
+            };
+            //js和更新时的操作都是正确的，查询时出错了
+            StringBuilder strb = new StringBuilder();
+            strb.Append(@"                       
+select  a.*,ImageURL from  T_CTW_PanicbuyingEventKV  a inner join objectimages b
+on a.imageid=b.imageid   where CTWEventId=@CTWEventId  ");
+            DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, strb.ToString(), paras.ToArray());
+            return ds;
+        
+        }
+        #endregion
+
   
     }
 }

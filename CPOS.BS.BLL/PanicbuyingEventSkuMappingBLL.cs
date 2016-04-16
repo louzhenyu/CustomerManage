@@ -63,5 +63,10 @@ namespace JIT.CPOS.BS.BLL
         }
 
 
+
+        public DataSet GetTCTWPanicbuyingEventKV(string EventId)
+        {
+            return this._currentDAO.GetTCTWPanicbuyingEventKV(EventId);
+        }
     }
 }

@@ -313,6 +313,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                     break;
             }
 
+            T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(CurrentUserInfo);
+            if (!string.IsNullOrEmpty(pRequest.Parameters.CTWEventId))
+            {
+                lEventRegVipLogBll.CTWRegOrFocusLog(pRequest.Parameters.CTWEventId, pRequest.UserID, "");
+            }
+
+
 
 
             #region 将验证码设置为已验证

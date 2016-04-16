@@ -105,7 +105,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@PrizeTypeId",SqlDbType.Int),
+					new SqlParameter("@PrizeTypeId",SqlDbType.NVarChar),
 					new SqlParameter("@Point",SqlDbType.Int),
 					new SqlParameter("@IsAutoPrizes",SqlDbType.Int),
 					new SqlParameter("@PrizesID",SqlDbType.NVarChar)

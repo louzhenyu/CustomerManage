@@ -206,7 +206,15 @@ namespace JIT.CPOS.Web.WXOAuth
                                 goUrl = goUrl + "?channelId=" + strChannelID + "";
                             }
                         }
-                        //同样可以把商品的标识也这样处理goodsId
+                        //同样可以把商品的标识也这样处理goodsId,因为如下：
+                      //  string itemUrl = weixinDomain + "/WXOAuth/AuthUniversal.aspx?customerId=" + CurrentUserInfo.ClientID
+                      //+ "&applicationId=" + applicationId
+                        //+ "&goUrl=" + weixinDomain + "/HtmlApps/html/public/shop/goods_detail.html?goodsId="     //把goodsId直接放在了gourl后面，系统会把它作为gourl的参数
+                      //+ itemId + "&scope=snsapi_userinfo";
+
+                        //把goodsId直接放在了gourl后面，系统会把它作为gourl的参数，不会吧他作为AuthUniversal的参数，所以不能通过 Request["的方式获取，
+                        //也就不需要另外再拼接到gourl后面了***
+
                         //Response.End();
                     }
                     else

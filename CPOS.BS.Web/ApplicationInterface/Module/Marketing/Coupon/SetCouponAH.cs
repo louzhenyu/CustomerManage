@@ -73,7 +73,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                                 couponTypeUnitMappingBLL.Create(mapping, pTran);
                             }
                         }
-                        if (para.BindTypeIdList != null)
+                        if (!string.IsNullOrEmpty(para.BindType) && para.BindTypeIdList != null)
                         {
                             foreach (var objId in para.BindTypeIdList)
                             {

@@ -628,11 +628,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             decimal firstTradeAmount = bll.RetailRewardByAmountSource(UserOrRetailID, loggingSessionInfo.ClientID, year, month, -1, "14");   //获取 = MonthTradeCount;
             //本月三月内消费奖励
             decimal threeMonthAmount = bll.RetailRewardByAmountSource(UserOrRetailID, loggingSessionInfo.ClientID, year, month, -1, "15");   //获取 = MonthTradeCount;
+            //销售奖励
+            decimal salesAmount = bll.RetailRewardByAmountSource(UserOrRetailID, loggingSessionInfo.ClientID, year, month, -1, "18");   //获取 = salesAmount;
 
 
             rd.MonthVipRewards = attenAmount;
-            rd.MonthTradeRewards = firstTradeAmount + threeMonthAmount;
+            rd.MonthTradeRewards = firstTradeAmount + threeMonthAmount + salesAmount;
             rd.MonthRewards = rd.MonthVipRewards + rd.MonthTradeRewards;
+            rd.SalesRewards = salesAmount;
             return rsp.ToJSON();
         }
 
@@ -890,6 +893,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
         public decimal MonthRewards { get; set; }
         public decimal MonthVipRewards { get; set; }
         public decimal MonthTradeRewards { get; set; }
+        public decimal SalesRewards { get; set; }
 
     }
 

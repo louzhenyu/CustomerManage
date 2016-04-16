@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/2/22 9:51:44
+ * Create On	:2016/3/19 18:04:05
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -26,7 +26,7 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class T_CTW_LEventThemeEntity : BaseEntity 
+    public partial class CTW_LEventInteractionEntity : BaseEntity 
     {
         #region 属性集
 

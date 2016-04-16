@@ -2210,6 +2210,7 @@
     <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerVersionAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\ContactPrizeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Log\CTWEventShareLogAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetImageAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeLocationListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeWinnerListAH.cs" />
@@ -3116,11 +3117,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
-      <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
+      <Project>{9adf4825-9b7c-4bb1-a05c-9c137b33d81b}</Project>
       <Name>CPOS.BS.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.DataAccess\CPOS.BS.DataAccess.csproj">
-      <Project>{928C0A63-F799-49B5-A566-65BE4ABC9F56}</Project>
+      <Project>{928c0a63-f799-49b5-a566-65be4abc9f56}</Project>
       <Name>CPOS.BS.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">

@@ -71,7 +71,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
                 case "GetItemType":
                     rst = GetItemType();
                     break;
-
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
                     {

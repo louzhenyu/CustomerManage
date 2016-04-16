@@ -73,6 +73,7 @@ namespace JIT.CPOS.Web.WeiXin
             Response.ContentEncoding = Encoding.UTF8;
             Response.Write(content);
             Response.End();
+        //    Response.End();
         }
 
         #region 用户关注

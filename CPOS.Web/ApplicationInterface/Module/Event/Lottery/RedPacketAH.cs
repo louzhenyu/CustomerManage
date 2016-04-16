@@ -14,6 +14,7 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.BLL.WX;
 
+using System.Threading;
 namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
 {
     public class RedPacketAH : BaseActionHandler<LotteryRP, LotteryRD>
@@ -48,6 +49,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
 
             return rd;
           
+        }
+
+        public static void TestMethod(LoggingSessionInfo userinfo,string strUserId,string strEventId,string strCustomerId)
+        {
+            var bllPrize = new LPrizesBLL(userinfo);
+
+            bllPrize.RedPacket2(strUserId, strEventId, strCustomerId);
         }
 
     }

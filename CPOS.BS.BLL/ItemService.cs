@@ -1145,5 +1145,16 @@ namespace JIT.CPOS.BS.BLL
             return host;
         }
         #endregion
+        /// <summary>
+        /// 根据分类/分组查询商品sku信息
+        /// </summary>
+        /// <param name="strCategory"></param>
+        /// <param name="strItemName"></param>
+        /// <param name="strBatId"></param>
+        /// <returns></returns>
+        public DataSet GetItemSkuInfoByCategory(string strCategory, string strItemName, string strBatId)
+        {
+            return itemService.GetItemSkuInfoByCategory(strCategory, strItemName, strBatId);
+        }
     }
 }

@@ -60,6 +60,25 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.ExistsContact(entityContact);
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="strEventId"></param>
+        /// <returns></returns>
+        public int DeleteContact(string strEventId)
+        {
 
+            return this._currentDAO.DeleteContact(strEventId);
+        }
+        /// <summary>
+        /// 获取创意仓库下的触点活动
+        /// </summary>
+        /// <param name="strCTWEventId"></param>
+        /// <returns></returns>
+        public DataSet GetContactEventByCTWEventId(string strCTWEventId)
+        {
+            return this._currentDAO.GetContactEventByCTWEventId(strCTWEventId);
+
+        }
     }
 }

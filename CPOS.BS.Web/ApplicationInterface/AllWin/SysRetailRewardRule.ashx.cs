@@ -95,12 +95,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
             if (rp.Parameters.IsTemplate==0)//非模板时
             {
                  bll.UpdateSysRetailRewardRule(rp.Parameters.IsTemplate, "","", rp.Parameters.RetailTraderID, loggingSessionInfo.ClientID);
-        
-                //RetailTraderEntity enRT = new RetailTraderEntity();
-                //enRT.RetailTraderID = rp.Parameters.RetailTraderID;
-                //enRT.CooperateType = "";//修改合作方式
-                //enRT.SalesType = "";//修改销售方式
-                //_RetailTraderBLL.Update(enRT, null, false);//不更新空的
+
+                 RetailTraderEntity enRT = new RetailTraderEntity();
+                 enRT.RetailTraderID = rp.Parameters.RetailTraderID;
+                 enRT.CooperateType = "";//修改合作方式
+                 enRT.SalesType = "";//修改销售方式
+                 _RetailTraderBLL.Update(enRT, null, false);//不更新空的
             }
             else
             {
@@ -183,10 +183,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
             {
                 throw new APIException("缺少参数【IsTemplate】或参数值为空") { ErrorCode = 135 };
             }
-            if ( string.IsNullOrEmpty(  rp.Parameters.CooperateType))
-            {
-                throw new APIException("缺少参数【CooperateType】或参数值为空") { ErrorCode = 135 };
-            }
+            //if ( string.IsNullOrEmpty(  rp.Parameters.CooperateType))
+            //{
+            //    throw new APIException("缺少参数【CooperateType】或参数值为空") { ErrorCode = 135 };
+            //}
             if (rp.Parameters.IsTemplate == 0 && string.IsNullOrEmpty(rp.Parameters.RetailTraderID))
             {
                 throw new APIException("缺少参数【RetailTraderID】或参数值为空") { ErrorCode = 135 };

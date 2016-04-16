@@ -38,6 +38,11 @@ namespace JIT.CPOS.DTO.Module.VIP.Login.Request
         /// </summary>
         public string VipRealName { get; set; }
 
+        /// <summary>
+        /// 创意活动参数
+        /// </summary>
+        public string CTWEventId { get; set; }
+
         public void Validate()
         {
 

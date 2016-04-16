@@ -97,7 +97,13 @@
     <Compile Include="AppSysService.cs" />
     <Compile Include="APPVersionDownloadVIPLogBLL.cs" />
     <Compile Include="APPVersionManagerBLL.cs" />
-    <Compile Include="AP\T_CTW_LEventThemeBLL.cs" />
+    <Compile Include="AP\CreativityWarehouse\CTW_LEventInteractionBLL.cs" />
+    <Compile Include="AP\CreativityWarehouse\CTW_SpreadSettingBLL.cs" />
+    <Compile Include="AP\CreativityWarehouse\SysMarketingGroupTypeBLL.cs" />
+    <Compile Include="AP\CreativityWarehouse\T_CTW_LEventsBLL.cs" />
+    <Compile Include="AP\CreativityWarehouse\T_CTW_LEventTemplateBLL.cs" />
+    <Compile Include="AP\CreativityWarehouse\CTW_LEventThemeBLL.cs" />
+    <Compile Include="AP\CreativityWarehouse\T_CTW_PanicbuyingEventBLL.cs" />
     <Compile Include="AttachmentBLL.cs" />
     <Compile Include="AttributeFormBLL.cs" />
     <Compile Include="BaseService.cs" />
@@ -128,7 +134,13 @@
     <Compile Include="CodeGeneration\APPUpgradeBLL.cs" />
     <Compile Include="CodeGeneration\APPVersionDownloadVIPLogBLL.cs" />
     <Compile Include="CodeGeneration\APPVersionManagerBLL.cs" />
-    <Compile Include="CodeGeneration\AP\T_CTW_LEventThemeBLL.cs" />
+    <Compile Include="CodeGeneration\AP\CreativityWarehouse\CTW_LEventInteractionBLL.cs" />
+    <Compile Include="CodeGeneration\AP\CreativityWarehouse\CTW_SpreadSettingBLL.cs" />
+    <Compile Include="CodeGeneration\AP\CreativityWarehouse\SysMarketingGroupTypeBLL.cs" />
+    <Compile Include="CodeGeneration\AP\CreativityWarehouse\T_CTW_LEventsBLL.cs" />
+    <Compile Include="CodeGeneration\AP\CreativityWarehouse\T_CTW_LEventTemplateBLL.cs" />
+    <Compile Include="CodeGeneration\AP\CreativityWarehouse\CTW_LEventThemeBLL.cs" />
+    <Compile Include="CodeGeneration\AP\CreativityWarehouse\T_CTW_PanicbuyingEventBLL.cs" />
     <Compile Include="CodeGeneration\AttachmentBLL.cs" />
     <Compile Include="CodeGeneration\AttributeFormBLL.cs" />
     <Compile Include="CodeGeneration\BrandBLL.cs" />
@@ -484,6 +496,11 @@
     <Compile Include="CodeGeneration\TUserThirdPartyMappingBLL.cs" />
     <Compile Include="CodeGeneration\t_award_poolBLL.cs" />
     <Compile Include="CodeGeneration\T_CityBLL.cs" />
+    <Compile Include="CodeGeneration\T_CTW_LEventBLL.cs" />
+    <Compile Include="CodeGeneration\T_CTW_LEventInteractionBLL.cs" />
+    <Compile Include="CodeGeneration\T_CTW_LEventThemeBLL.cs" />
+    <Compile Include="CodeGeneration\T_CTW_PanicbuyingEventKVBLL.cs" />
+    <Compile Include="CodeGeneration\T_CTW_SpreadSettingBLL.cs" />
     <Compile Include="CodeGeneration\t_customerBLL.cs" />
     <Compile Include="CodeGeneration\T_HierarchySystemExNodeBLL.cs" />
     <Compile Include="CodeGeneration\T_InoutBLL.cs" />
@@ -492,6 +509,8 @@
     <Compile Include="CodeGeneration\T_Item_PriceBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_Price_TypeBLL.cs" />
     <Compile Include="CodeGeneration\T_Item_PropertyBLL.cs" />
+    <Compile Include="CodeGeneration\T_LEventsRegVipLogBLL.cs" />
+    <Compile Include="CodeGeneration\T_LEventsSharePersonLogBLL.cs" />
     <Compile Include="CodeGeneration\T_Payment_detailBLL.cs" />
     <Compile Include="CodeGeneration\T_Payment_TypeBLL.cs" />
     <Compile Include="CodeGeneration\T_ItemBLL.cs" />
@@ -1111,6 +1130,11 @@
     <Compile Include="TUserThirdPartyMappingBLL.cs" />
     <Compile Include="t_award_poolBLL.cs" />
     <Compile Include="T_CityBLL.cs" />
+    <Compile Include="T_CTW_LEventBLL.cs" />
+    <Compile Include="T_CTW_LEventInteractionBLL.cs" />
+    <Compile Include="T_CTW_LEventThemeBLL.cs" />
+    <Compile Include="T_CTW_PanicbuyingEventKVBLL.cs" />
+    <Compile Include="T_CTW_SpreadSettingBLL.cs" />
     <Compile Include="t_customerBLL.cs" />
     <Compile Include="T_HierarchySystemExNodeBLL.cs" />
     <Compile Include="T_InoutBLL.cs" />
@@ -1118,6 +1142,8 @@
     <Compile Include="T_Item_PriceBLL.cs" />
     <Compile Include="T_Item_Price_TypeBLL.cs" />
     <Compile Include="T_Item_PropertyBLL.cs" />
+    <Compile Include="T_LEventsRegVipLogBLL.cs" />
+    <Compile Include="T_LEventsSharePersonLogBLL.cs" />
     <Compile Include="T_Payment_detailBLL.cs" />
     <Compile Include="T_Payment_TypeBLL.cs" />
     <Compile Include="T_ItemBLL.cs" />
@@ -1298,7 +1324,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CPOS.BS.DataAccess\CPOS.BS.DataAccess.csproj">
-      <Project>{928C0A63-F799-49B5-A566-65BE4ABC9F56}</Project>
+      <Project>{928c0a63-f799-49b5-a566-65be4abc9f56}</Project>
       <Name>CPOS.BS.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">

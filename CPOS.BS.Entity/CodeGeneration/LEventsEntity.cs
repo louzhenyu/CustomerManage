@@ -326,6 +326,9 @@ namespace JIT.CPOS.BS.Entity
         public int VipCardType { get; set; }
         public int VipCardGrade { get; set; }
 
+        public int? LotteryNum { get; set; }
+        public int? IsCTW { get; set; }
+
         #endregion
 
     }

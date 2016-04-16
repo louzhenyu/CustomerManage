@@ -27,7 +27,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Market.MarketNameApply
 
         protected override void AjaxRequest(HttpContext pContext)
         {
-            string content = "";
+            //string content = "";
            // string method = pContext.Request.QueryString["method"];
             MarketNamedApplyBLL marketNameApplyBll = new MarketNamedApplyBLL(CurrentUserInfo);
             EmptyResponseData emptyRD = new EmptyResponseData();

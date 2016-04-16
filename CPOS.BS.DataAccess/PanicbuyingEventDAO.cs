@@ -393,5 +393,38 @@ namespace JIT.CPOS.BS.DataAccess
 
             return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Proc_GetKJEventList", parameters);
         }
+        /// <summary>
+        /// 根据主题id结束促销活动
+        /// </summary>
+        /// <param name="strCTWEventId"></param>
+        public void EndOfEvent (string strCTWEventId)
+        {
+            string strSql = string.Format(@"UPDATE dbo.PanicbuyingEvent
+                                            SET EndTime=GETDATE()-1
+                                            WHERE EventId IN(
+                                            SELECT LeventId FROM dbo.T_CTW_LEventInteraction
+                                            WHERE CTWEventId='{0}' and isDelete=0)", strCTWEventId);
+            this.SQLHelper.ExecuteNonQuery(strSql);
+        }
+        public void DelayEvent(string strCTWEventId,string strEndDate)
+        {
+            string strSql = string.Format(@"
+                                            DECLARE @EventId UNIQUEIDENTIFIER
+                                            SELECT  @EventId=EventId
+                                            FROM    ( SELECT   EventId, ROW_NUMBER() OVER ( ORDER BY endtime DESC ) num
+                                                      FROM      dbo.PanicbuyingEvent
+                                                      WHERE     EventId IN ( SELECT LeventId
+                                                                             FROM   dbo.T_CTW_LEventInteraction 
+								                                             WHERE CTWEventId='{0}' and isDelete=0
+								                                             )
+                                                    ) A
+                                            WHERE   A.num = 1
+
+
+                                            UPDATE PanicbuyingEvent
+                                            SET EndTime='{1}'
+                                            WHERE EventId=@EventId", strCTWEventId, strEndDate);
+            this.SQLHelper.ExecuteNonQuery(strSql);
+        }
     }
 }

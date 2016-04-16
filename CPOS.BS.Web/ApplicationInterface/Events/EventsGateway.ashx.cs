@@ -409,8 +409,22 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
             if (rp.Parameters.EventTypeId != 0)
             {
                 complexCondition.Add(new EqualsCondition() { FieldName = "EventTypeId", Value = rp.Parameters.EventTypeId });
-                complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });
+                complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = loggingSessionInfo.ClientID });                         
             }
+
+            //IsCTW是1时是创意活动，为0或者null时为非创意活动****
+            if(rp.Parameters.EventTypeId ==1)
+            {
+               complexCondition.Add(new EqualsCondition() { FieldName = "IsCTW", Value = rp.Parameters.IsCTW });
+            }else{
+                 complexCondition.Add(new DirectCondition(" (IsCTW is null or  IsCTW=0) ") );
+            }
+            if (!string.IsNullOrEmpty(rp.Parameters.CTWEventId))
+            {
+                complexCondition.Add(new DirectCondition(" (Eventid in  (select leventid from T_CTW_LEventInteraction where  convert(varchar(50), ctwEventid)='" + rp.Parameters.CTWEventId + "' )) "));
+            }
+
+            
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "StatusValue", Direction = OrderByDirections.Desc });
@@ -494,6 +508,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
             entity.BeginTime = rp.Parameters.BeginTime;
             entity.EndTime = rp.Parameters.EndTime;
             entity.CustomerID = loggingSessionInfo.ClientID;
+            entity.IsCTW = rp.Parameters.IsCTW;
+
             rd.EventID = eventBll.AddPanicbuyingEvent(entity, null);
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -554,6 +570,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
             entity.CustomerID = loggingSessionInfo.ClientID;
             entity.BeginTime = rp.Parameters.BeginTime;
             entity.EndTime = rp.Parameters.EndTime;
+            entity.IsCTW = rp.Parameters.IsCTW;
+
             eventBll.Update(entity);
 
             #region 修改商品状态
@@ -845,6 +863,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
         /// </summary>
         public List<Item> ItemList { set; get; }
 
+        public PanicbuyingEvent PanicbuyingEvent { set; get; }
+
     }
     public class Item
     {
@@ -860,6 +880,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
         /// 规格集合
         /// </summary>
         public List<Sku> SkuList { set; get; }
+        public int buycount { set; get; }  //购买次数
+        
 
     }
     public class Sku
@@ -1007,6 +1029,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
         /// 每页显示个数
         /// </summary>
         public int PageSize { get; set; }
+        //是否是创意活动（1：是，空或者0：否）
+        public int IsCTW { get; set; }
+
+        public string CTWEventId { get; set; }
         public void Validate()
         {
         }
@@ -1048,6 +1074,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
         /// 
         /// </summary>
         public string EndTime { get; set; }
+        public string BeginTimeName { get; set; }
+        
 
         /// <summary>
         /// 
@@ -1059,6 +1087,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
         public int Qty { get; set; }
 
         public int RemainQty { get; set; }
+        public int DeadlineSecond { get; set; }
+        public string DeadlineTime{ get; set; }
+        
+        
     }
     /// <summary>
     /// 添加活动参数对象
@@ -1090,6 +1122,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
         public DateTime EndTime { get; set; }
 
         public int EventStatus { get; set; }
+
+        public int IsCTW { get; set; }
         public void Validate()
         {
         }

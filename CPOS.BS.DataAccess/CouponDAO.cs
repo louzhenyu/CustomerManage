@@ -703,7 +703,11 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public DataSet GetCouponIdByCouponTypeID(string strCouponTypeId)
         {
-            string strSql = string.Format("select top 1  a. *,C.CouponTypeName,C.ParValue from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID LEFT JOIN dbo.CouponType C ON A.CouponTypeID=C.CouponTypeID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
+            string strSql = string.Format(@"select top 1  a. *,C.CouponTypeName,C.ParValue 
+                                            from Coupon a WITH(NOLOCK) 
+                                            INNER JOIN dbo.CouponType C ON A.CouponTypeID=C.CouponTypeID 
+                                            WHERE   a.IsDelete = 0 AND a.[Status] = 0  and a.CouponTypeID='{0}'"
+                                        , strCouponTypeId);
             return this.SQLHelper.ExecuteDataset(strSql);
         }
         /// <summary>
@@ -713,8 +717,34 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public int GetCouponCountByCouponTypeID(string strCouponTypeId)
         {
-            string strSql = string.Format("select  count(1)CouponCount from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
+            //string strSql = string.Format("select  count(1)CouponCount from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
+            string strSql = string.Format("SELECT  COUNT(1) CouponCount FROM    Coupon a WITH ( NOLOCK )WHERE   a.IsDelete = 0     AND a.[Status] = 0 AND a.CouponTypeID = '{0}'", strCouponTypeId);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+        }
+        /// <summary>
+        /// ”≈ª›»Ø∞Û∂®vip
+        /// </summary>
+        /// <param name="strVipId"></param>
+        /// <param name="strCouponTypeID"></param>
+        /// <returns></returns>
+        public int CouponBindVip(string strVipId, string strCouponTypeID)
+        {
+            var parameters = new List<SqlParameter>();
+            var para = new SqlParameter("@VipId", SqlDbType.NVarChar);
+            para.Value = strVipId;
+            parameters.Add(para);
+
+            para = new SqlParameter("@CouponTypeID", SqlDbType.NVarChar);
+            para.Value = strCouponTypeID;
+            parameters.Add(para);
+
+            var result = new SqlParameter("@Result", SqlDbType.Int);
+            result.Direction = ParameterDirection.Output;
+            parameters.Add(result);
+
+            SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "Proc_CouponBindVip", parameters.ToArray());
+
+            return Convert.ToInt32(result.Value.ToString());
         }
      }
 }

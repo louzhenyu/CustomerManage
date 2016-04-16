@@ -6679,10 +6679,29 @@
     <Compile Include="ApplicationInterface\Module\CardProduct\MakeVipCard\GetMakeVipCardListAH.cs" />
     <Compile Include="ApplicationInterface\Module\CardProduct\MakeVipCard\ImportVipCardISNAH.cs" />
     <Compile Include="ApplicationInterface\Module\CardProduct\MakeVipCard\MakeVipCardAH.cs" />
-    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Theme\ApplyAH.cs" />
-    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Theme\GetAllThemeListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Theme\InSeasonListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Theme\NextSeasonListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\ChangeCTWEventStatusAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\DelayEventAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\EndOfEventAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\GetInteractionModeListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\GetLingKinSignAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\GetSkuInfoByCategoryOrNameAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\GetTemplateDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\GetTemplateListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\GetMyActivityListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingActivity\SetCTWEventAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\ExportExcelHandler.ashx.cs">
+      <DependentUpon>ExportExcelHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GeEventItemDetailListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GeEventItemListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GetLEventStatsAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GetEventPrizeDetailListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GetEventPrizeListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GetMarketingGroupTypeAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GetPanicbuyingEventRankingStatsAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GetPanicbuyingEventStatsAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GetTCTWLEventListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\GetVipAddRankingStatsAH.cs" />
     <Compile Include="ApplicationInterface\Module\Item\ItemHandler.ashx.cs">
       <DependentUpon>ItemHandler.ashx</DependentUpon>
     </Compile>
@@ -6827,7 +6846,7 @@
     <Content Include="ApplicationInterface\Module\Order\SalesReturn\DownLoadSales.ashx" />
     <Content Include="ApplicationInterface\Module\Questionnaire\Questionnaire\DownLoadQuestionnaireInfor.ashx" />
     <Content Include="ApplicationInterface\Module\Market\MarketNameApply\GenerateMarketEventQR.ashx" />
-    <Content Include="ApplicationInterface\WXSalesRebate\Gateway.ashx" />
+    <Content Include="ApplicationInterface\Module\CreativityWarehouse\MarketingData\ExportExcelHandler.ashx" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\demo.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\file_manager_json.jsp" />
     <None Include="Framework\Javascript\Other\kindeditor\jsp\upload_json.jsp" />
@@ -8807,6 +8826,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ApplicationInterface\Module\CreativityWarehouse\Theme\" />
     <Folder Include="ApplicationInterface\Module\VIP\VipGe\" />
     <Folder Include="File\Delivery\" />
     <Folder Include="File\hs\images\" />
@@ -8835,8 +8855,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
-      <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
+      <Project>{9adf4825-9b7c-4bb1-a05c-9c137b33d81b}</Project>
       <Name>CPOS.BS.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CPOS.BS.DataAccess\CPOS.BS.DataAccess.csproj">
+      <Project>{928c0a63-f799-49b5-a566-65be4abc9f56}</Project>
+      <Name>CPOS.BS.DataAccess</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
       <Project>{6D911430-7243-4AB2-B70E-4DAFFC4D1B22}</Project>

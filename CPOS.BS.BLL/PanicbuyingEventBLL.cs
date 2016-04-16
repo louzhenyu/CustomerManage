@@ -71,10 +71,26 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetPanicbuyingEventDetails(pID);
         }
-
+        
         public DataSet GetKJEventList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
         {
             return this._currentDAO.GetKJEventList(pageIndex, pageSize, strEventName, intEventStatus, strBeginTime, strEndTime);
+        }
+        /// <summary>
+        /// 根据主题id结束促销活动
+        /// </summary>
+        /// <param name="strCTWEventId"></param>
+        public void EndOfEvent(string strCTWEventId)
+        {
+            this._currentDAO.EndOfEvent(strCTWEventId);
+        }
+        /// <summary>
+        /// 根据主题id推迟促销活动
+        /// </summary>
+        /// <param name="strCTWEventId"></param>
+        public void DelayEvent(string strCTWEventId,string strEndDate)
+        {
+            this._currentDAO.DelayEvent(strCTWEventId, strEndDate);
         }
     }
 }

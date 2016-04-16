@@ -91,6 +91,26 @@ namespace JIT.CPOS.BS.DataAccess
             }
             return list.ToArray();
         }
+        public SysPageEntity[] GetPageByCustomerIdAndPageKey(string strCustomerId,string strPageKey)
+        {
+            List<SysPageEntity> list = new List<SysPageEntity> { };
+            List<SqlParameter> paras = new List<SqlParameter> { };
+            paras.Add(new SqlParameter() { ParameterName = "@CustomerID", Value = strCustomerId });
+            paras.Add(new SqlParameter() { ParameterName = "@PageKey", Value = strPageKey });
+            string sql = "select * from vwPageInfo where isdelete=0 and CustomerID=@CustomerID and PageKey=@PageKey";
+            using (var rd = this.SQLHelper.ExecuteReader(CommandType.Text, sql, paras.ToArray()))
+            {
+                while (rd.Read())
+                {
+                    SysPageEntity m;
+                    this.Load(rd, out m);
+                    m.Node = rd["Node"].ToString();
+                    m.NodeValue = rd["NodeValue"].ToString();
+                    list.Add(m);
+                }
+            }
+            return list.ToArray();
+        }
         /// <summary>
         /// 判断数据库中书否存在PageKey
         /// </summary>

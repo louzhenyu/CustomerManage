@@ -1460,5 +1460,42 @@ namespace JIT.CPOS.BS.DataAccess
 
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="strCategory"></param>
+        /// <param name="strItemName"></param>
+        /// <param name="strBatId"></param>
+        /// <returns></returns>
+        public DataSet GetItemSkuInfoByCategory(string strCategory, string strItemName, string strBatId)
+        {
+            string strSql = "SELECT  item_name ,item_code , sku_id , bat_id , item_id , item_code ,"
+                            + "prop_1_detail_id , prop_1_detail_name , prop_2_detail_id , prop_2_detail_name ,"
+                            + "prop_3_detail_id , prop_3_detail_name , prop_4_detail_id , prop_4_detail_name ,"
+                            + "prop_5_detail_id , prop_5_detail_name , prop_1_detail_code , prop_2_detail_code,"
+                            + "prop_3_detail_code , prop_4_detail_code , prop_5_detail_code , status ,"
+                            + "create_user_id , create_time , modify_user_id , modify_time , prop_1_id ,"
+                            + "prop_1_name , prop_2_id , prop_2_name , prop_3_id , prop_3_name , prop_4_id ,"
+                            + "prop_4_name , prop_5_id , prop_5_name , barcode , prop_1_code , prop_2_code ,"
+                            + "prop_3_code , prop_4_code , prop_5_code "
+                            + " FROM    vw_sku a with(nolock) "
+                            + " WHERE   a.status = '1' AND A.Customerid='" + CurrentUserInfo.ClientID + "'";
+            if (!string.IsNullOrEmpty(strItemName))
+            {
+                strSql += " and item_name like '%" + strItemName + "%'";
+            }
+            if (strBatId == "2")//分组
+            {
+
+                strSql += string.Format(" AND a.item_id in (SELECT ItemId FROM ItemCategoryMapping WHERE IsDelete=0 AND ItemCategoryId='{0}' )", strCategory);
+            }
+            else if (strBatId == "1")//分类
+            {
+                strSql += string.Format(" AND a.item_id in (SELECT item_id FROM T_Item with(nolock) WHERE status=1 and CustomerId='{1}' AND item_category_id='{0}')", strCategory, CurrentUserInfo.ClientID);
+
+            }
+            strSql = strSql + "  ORDER BY a.item_code ,a.barcode ,a.prop_1_detail_code ,a.prop_2_detail_code ,a.prop_3_detail_code";
+            return SQLHelper.ExecuteDataset(strSql);
+        }
     }
 }

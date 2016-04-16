@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CPOS.BS.BLL\CPOS.BS.BLL.csproj">
-      <Project>{9ADF4825-9B7C-4BB1-A05C-9C137B33D81B}</Project>
+      <Project>{9adf4825-9b7c-4bb1-a05c-9c137b33d81b}</Project>
       <Name>CPOS.BS.BLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">

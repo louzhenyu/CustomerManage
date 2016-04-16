@@ -852,7 +852,18 @@ namespace JIT.CPOS.BS.BLL
         public int GetCouponCountByCouponTypeID(string strCouponTypeId)
         {
             return this._currentDAO.GetCouponCountByCouponTypeID(strCouponTypeId);
-        }    
+        }
+        /// <summary>
+        /// ”≈ª›»Ø∞Û∂®vip
+        /// </summary>
+        /// <param name="strVipId"></param>
+        /// <param name="strCouponTypeID"></param>
+        /// <returns></returns>
+        public int CouponBindVip(string strVipId, string strCouponTypeID)
+        {
+            return this._currentDAO.CouponBindVip(strVipId, strCouponTypeID);
+
+        }
 
     }
 

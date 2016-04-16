@@ -103,6 +103,13 @@ namespace JIT.CPOS.BS.Entity
 		public Int32? EventStatus { get; set; }
 
 
+
+        	/// <summary>
+		/// 
+		/// </summary>
+        public Int32? IsCTW { get; set; }
+        
+
         #endregion
 
     }

@@ -143,6 +143,22 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql = string.Format("SELECT COUNT(1) FROM ContactEvent With(nolock) WHERE IsDelete=0 and [Status]=2  and CustomerId='{0}' and [ContactTypeCode] ='{1}' AND '{2}'>=BeginDate", CurrentUserInfo.ClientID, entityContact.ContactTypeCode, entityContact.BeginDate);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
-       
+        /// <summary>
+        /// É¾³ý´¥µã»î¶¯
+        /// </summary>
+        /// <param name="strEventId"></param>
+        /// <returns></returns>
+        public int DeleteContact(string strEventId)
+        {
+            string sql = "DELETE ContactEvent  WHERE EventId='" + strEventId + "'";
+            return this.SQLHelper.ExecuteNonQuery(sql);
+        }
+        public DataSet GetContactEventByCTWEventId(string strCTWEventId)
+        {
+            DataSet ds = new DataSet();
+            string strSql = string.Format(" SELECT ContactTypeCode,ContactEventId FROM ContactEvent WHERE IsDelete=0 and EventId='{0}'", strCTWEventId);
+            return this.SQLHelper.ExecuteDataset(strSql);
+        }
+
     }
 }

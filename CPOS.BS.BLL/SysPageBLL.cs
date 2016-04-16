@@ -51,6 +51,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetPageByID(pPageID);
         }
+        public SysPageEntity[] GetPageByCustomerIdAndPageKey(string strCustomerId, string strPageKey)
+        {
+            return this._currentDAO.GetPageByCustomerIdAndPageKey(strCustomerId, strPageKey);
+        }
         /// <summary>
         /// 查询数据库表SysPage 中是否存在该PageKey数据 Add By changjian.tian 2014-05-16 
         /// </summary>

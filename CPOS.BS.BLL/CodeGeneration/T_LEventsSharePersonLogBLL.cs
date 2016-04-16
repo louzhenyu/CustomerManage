@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/2/22 16:17:07
+ * Create On	:2016/4/14 16:14:12
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -28,25 +28,22 @@ using JIT.CPOS.BS.DataAccess;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
 
-using System.Configuration;
-
 namespace JIT.CPOS.BS.BLL
 {   
     /// <summary>
     /// 业务处理：  
     /// </summary>
-    public partial class T_CTW_LEventThemeBLL
+    public partial class T_LEventsSharePersonLogBLL
     {
         private BasicUserInfo CurrentUserInfo;
-        private T_CTW_LEventThemeDAO _currentDAO;
-        private string connectionString = ConfigurationManager.AppSettings["Conn_ap"];
+        private T_LEventsSharePersonLogDAO _currentDAO;
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public T_CTW_LEventThemeBLL(LoggingSessionInfo pUserInfo)
+        public T_LEventsSharePersonLogBLL(LoggingSessionInfo pUserInfo)
         {
-            this._currentDAO = new T_CTW_LEventThemeDAO(pUserInfo, connectionString);// new T_CTW_LEventThemeDAO(pUserInfo);
+            this._currentDAO = new T_LEventsSharePersonLogDAO(pUserInfo);
             this.CurrentUserInfo = pUserInfo;
         }
         #endregion
@@ -55,7 +52,7 @@ namespace JIT.CPOS.BS.BLL
         /// 创建一个新实例
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Create(T_CTW_LEventThemeEntity pEntity)
+        public void Create(T_LEventsSharePersonLogEntity pEntity)
         {
             _currentDAO.Create(pEntity);
         }
@@ -66,7 +63,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Create(T_CTW_LEventThemeEntity pEntity, IDbTransaction pTran)
+        public void Create(T_LEventsSharePersonLogEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Create(pEntity,pTran);
         }
@@ -75,7 +72,7 @@ namespace JIT.CPOS.BS.BLL
         /// 根据标识符获取实例
         /// </summary>
         /// <param name="pID">标识符的值</param>
-        public T_CTW_LEventThemeEntity GetByID(object pID)
+        public T_LEventsSharePersonLogEntity GetByID(object pID)
         {
             return _currentDAO.GetByID(pID);
         }
@@ -84,7 +81,7 @@ namespace JIT.CPOS.BS.BLL
         /// 获取所有实例
         /// </summary>
         /// <returns></returns>
-        public T_CTW_LEventThemeEntity[] GetAll()
+        public T_LEventsSharePersonLogEntity[] GetAll()
         {
             return _currentDAO.GetAll();
         }
@@ -94,7 +91,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(T_CTW_LEventThemeEntity pEntity , IDbTransaction pTran)
+        public void Update(T_LEventsSharePersonLogEntity pEntity , IDbTransaction pTran)
         {
             _currentDAO.Update(pEntity,pTran);
         }
@@ -104,7 +101,7 @@ namespace JIT.CPOS.BS.BLL
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(T_CTW_LEventThemeEntity pEntity )
+        public void Update(T_LEventsSharePersonLogEntity pEntity )
         {
             _currentDAO.Update(pEntity);
         }
@@ -113,7 +110,7 @@ namespace JIT.CPOS.BS.BLL
         /// 删除
         /// </summary>
         /// <param name="pEntity"></param>
-        public void Delete(T_CTW_LEventThemeEntity pEntity)
+        public void Delete(T_LEventsSharePersonLogEntity pEntity)
         {
             _currentDAO.Delete(pEntity);
         }
@@ -123,7 +120,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(T_CTW_LEventThemeEntity pEntity, IDbTransaction pTran)
+        public void Delete(T_LEventsSharePersonLogEntity pEntity, IDbTransaction pTran)
         {
             _currentDAO.Delete(pEntity,pTran);
         }
@@ -143,7 +140,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(T_CTW_LEventThemeEntity[] pEntities, IDbTransaction pTran)
+        public void Delete(T_LEventsSharePersonLogEntity[] pEntities, IDbTransaction pTran)
         {
             _currentDAO.Delete(pEntities,pTran);
         }
@@ -152,7 +149,7 @@ namespace JIT.CPOS.BS.BLL
         /// 批量删除
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
-        public void Delete(T_CTW_LEventThemeEntity[] pEntities)
+        public void Delete(T_LEventsSharePersonLogEntity[] pEntities)
         { 
             _currentDAO.Delete(pEntities);
         }
@@ -184,7 +181,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pWhereConditions">筛选条件</param>
         /// <param name="pOrderBys">排序</param>
         /// <returns></returns>
-        public T_CTW_LEventThemeEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        public T_LEventsSharePersonLogEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
            return _currentDAO.Query(pWhereConditions,pOrderBys);
         }
@@ -197,7 +194,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<T_CTW_LEventThemeEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<T_LEventsSharePersonLogEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
            return _currentDAO.PagedQuery(pWhereConditions,pOrderBys,pPageSize,pCurrentPageIndex);
         }
@@ -208,7 +205,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public T_CTW_LEventThemeEntity[] QueryByEntity(T_CTW_LEventThemeEntity pQueryEntity, OrderBy[] pOrderBys)
+        public T_LEventsSharePersonLogEntity[] QueryByEntity(T_LEventsSharePersonLogEntity pQueryEntity, OrderBy[] pOrderBys)
         {
            return _currentDAO.QueryByEntity(pQueryEntity,pOrderBys);
         }
@@ -219,7 +216,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public PagedQueryResult<T_CTW_LEventThemeEntity> PagedQueryByEntity(T_CTW_LEventThemeEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<T_LEventsSharePersonLogEntity> PagedQueryByEntity(T_LEventsSharePersonLogEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
            return _currentDAO.PagedQueryByEntity(pQueryEntity,pOrderBys,pPageSize,pCurrentPageIndex);
         }

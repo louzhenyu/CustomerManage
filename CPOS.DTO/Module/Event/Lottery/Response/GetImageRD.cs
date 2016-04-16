@@ -36,6 +36,20 @@ namespace JIT.CPOS.DTO.Module.Event.Lottery.Response
         public List<ObjectImagesEntity> ImageList { get; set; }
 
         public LCoverEntity CoverInfo { get; set; }
+        public ButtonInfo Reg { get; set; }
+        public string BGImageUrl { get; set; }
+        public string LeadPageQRCodeImageUrl { get; set; }
+        public ButtonInfo Share { get; set; }
+        /// <summary>
+        /// 1:创意仓库 0：一般活动
+        /// </summary>
+        public int IsCTW { get; set; }
+        public string CTWEventId { get; set; }
+        public string EventId { get; set; }
     }
-
+    public class ButtonInfo
+    {
+        public string Text { get; set; }
+        public string Color { get; set; }
+    }
 }

@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/2/22 9:51:44
+ * Create On	:2016/3/23 10:45:49
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -31,32 +31,25 @@ namespace JIT.CPOS.BS.BLL
     /// <summary>
     /// 业务处理：  
     /// </summary>
-    public partial class T_CTW_LEventThemeBLL
-    {  
+    public partial class T_CTW_LEventInteractionBLL
+    {
         /// <summary>
-        /// 获取当季活动列表
+        /// 获取促销活动的开始时间和结束时间
         /// </summary>
+        /// <param name="strCTWEventId"></param>
         /// <returns></returns>
-         public DataSet GetInSeasonThemeList()
+        public DataSet GetPanicbuyingEventDate(string strCTWEventId)
         {
-            return this._currentDAO.GetInSeasonThemeList();
+            return this._currentDAO.GetPanicbuyingEventDate(strCTWEventId);
         }
-        /// <summary>
-        /// 获取下季活动列表
-        /// </summary>
-        /// <returns></returns>
-        public DataSet GetNextSeasonThemeList()
-         {
-             return this._currentDAO.GetNextSeasonThemeList();
-
-         }
-        /// <summary>
-        /// 获取ap库商户信息
-        /// </summary>
-        /// <returns></returns>
-        public DataSet GetCustomerInfo()
+        public void DeleteByCTWEventID(string strCTWEventId)
         {
-            return this._currentDAO.GetCustomerInfo();
+            this._currentDAO.DeleteByCTWEventID(strCTWEventId);
+        }
+        public DataSet GetCTWLEventInteraction(string strObjectId)
+        {
+            return this._currentDAO.GetCTWLEventInteraction(strObjectId);
+
         }
     }
 }

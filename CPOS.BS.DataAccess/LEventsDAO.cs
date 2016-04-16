@@ -817,13 +817,15 @@ namespace JIT.CPOS.BS.DataAccess
                 t1.[DrawMethodId] ,
                 t2.DrawMethodName  
                 ,DrawMethodCode      ,         
-                t1.BeginTime ,
-                t1.EndTime ,
+                Convert(NVARCHAR(10),t1.BeginTime,120)BeginTime ,
+                Convert(NVARCHAR(10),t1.EndTime,120)EndTime ,
                   t1.[VipCardType] ,
                 t1.[VipCardGrade] ,
 				t1.EventStatus,
 				t1.EventTypeId,
 				t3.Title EventTypeName,
+                t1.PersonCount ,
+                t1.LotteryNum ,
 				CASE	
 						WHEN CAST(t1.BeginTime AS DATETIME)>GETDATE()  THEN	'未开始'
 						WHEN GETDATE()>=CAST(t1.BeginTime AS DATETIME) AND GETDATE()<=CAST(t1.EndTime AS DATETIME) AND t1.EventStatus=20 THEN	'运行中'
@@ -856,8 +858,6 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(CommandType.Text, strSql);
         }
         #endregion
-
-
         #region 获取未开始和正在运行中的活动列表
         public DataSet GetNoStartAndWorkingEventList()
         {

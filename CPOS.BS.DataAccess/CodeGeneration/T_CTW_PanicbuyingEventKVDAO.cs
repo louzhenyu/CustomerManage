@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/2/22 16:17:07
+ * Create On	:2016/3/18 14:58:43
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -33,40 +33,29 @@ namespace JIT.CPOS.BS.DataAccess
 {
     /// <summary>
     /// 数据访问：  
-    /// 表T_CTW_LEventTheme的数据访问类     
+    /// 表T_CTW_PanicbuyingEventKV的数据访问类     
     /// 1.实现ICRUDable接口
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class T_CTW_LEventThemeDAO : Base.BaseCPOSDAO, ICRUDable<T_CTW_LEventThemeEntity>, IQueryable<T_CTW_LEventThemeEntity>
+    public partial class T_CTW_PanicbuyingEventKVDAO : Base.BaseCPOSDAO, ICRUDable<T_CTW_PanicbuyingEventKVEntity>, IQueryable<T_CTW_PanicbuyingEventKVEntity>
     {
         #region 构造函数
         /// <summary>
         /// 构造函数 
         /// </summary>
-        public T_CTW_LEventThemeDAO(LoggingSessionInfo pUserInfo, string connectionString)
+        public T_CTW_PanicbuyingEventKVDAO(LoggingSessionInfo pUserInfo)
             : base(pUserInfo)
         {
-            this.StaticConnectionString = connectionString;
         }
         #endregion
-        public string StaticConnectionString { get; set; }
-        private ISQLHelper staticSqlHelper;
-        protected ISQLHelper StaticSqlHelper
-        {
-            get
-            {
-                if (null == staticSqlHelper)
-                    staticSqlHelper = new DefaultSQLHelper(StaticConnectionString);
-                return staticSqlHelper;
-            }
-        }
+
         #region ICRUDable 成员
         /// <summary>
         /// 创建一个新实例
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Create(T_CTW_LEventThemeEntity pEntity)
+        public void Create(T_CTW_PanicbuyingEventKVEntity pEntity)
         {
             this.Create(pEntity, null);
         }
@@ -76,7 +65,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Create(T_CTW_LEventThemeEntity pEntity, IDbTransaction pTran)
+        public void Create(T_CTW_PanicbuyingEventKVEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
@@ -91,67 +80,53 @@ namespace JIT.CPOS.BS.DataAccess
 
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into [T_CTW_LEventTheme](");
-            strSql.Append("[ThemeName],[ThemeDesc],[ThemeStatus],[ThemeStartMonth],[ThemeEndMonth],[RCodeURL],[ImageURL],[StartDate],[EndDate],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsDelete],[CustomerId],[ThemeId])");
+            strSql.Append("insert into [T_CTW_PanicbuyingEventKV](");
+            strSql.Append("[CTWEventId],[EventName],[ImageId],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[EventId])");
             strSql.Append(" values (");
-            strSql.Append("@ThemeName,@ThemeDesc,@ThemeStatus,@ThemeStartMonth,@ThemeEndMonth,@RCodeURL,@ImageURL,@StartDate,@EndDate,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsDelete,@CustomerId,@ThemeId)");            
+            strSql.Append("@CTWEventId,@EventName,@ImageId,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@EventId)");            
 
 			Guid? pkGuid;
-			if (pEntity.ThemeId == null)
+			if (pEntity.EventId == null)
 				pkGuid = Guid.NewGuid();
 			else
-				pkGuid = pEntity.ThemeId;
+				pkGuid = pEntity.EventId;
 
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@ThemeName",SqlDbType.NVarChar),
-					new SqlParameter("@ThemeDesc",SqlDbType.NVarChar),
-					new SqlParameter("@ThemeStatus",SqlDbType.Int),
-					new SqlParameter("@ThemeStartMonth",SqlDbType.VarChar),
-					new SqlParameter("@ThemeEndMonth",SqlDbType.VarChar),
-					new SqlParameter("@RCodeURL",SqlDbType.VarChar),
-					new SqlParameter("@ImageURL",SqlDbType.VarChar),
-					new SqlParameter("@StartDate",SqlDbType.Date),
-					new SqlParameter("@EndDate",SqlDbType.Date),
+					new SqlParameter("@CTWEventId",SqlDbType.UniqueIdentifier),
+					new SqlParameter("@EventName",SqlDbType.NVarChar),
+					new SqlParameter("@ImageId",SqlDbType.NVarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.VarChar),
-					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
+					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@CustomerId",SqlDbType.VarChar),
-					new SqlParameter("@ThemeId",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.ThemeName;
-			parameters[1].Value = pEntity.ThemeDesc;
-			parameters[2].Value = pEntity.ThemeStatus;
-			parameters[3].Value = pEntity.ThemeStartMonth;
-			parameters[4].Value = pEntity.ThemeEndMonth;
-			parameters[5].Value = pEntity.RCodeURL;
-			parameters[6].Value = pEntity.ImageURL;
-			parameters[7].Value = pEntity.StartDate;
-			parameters[8].Value = pEntity.EndDate;
-			parameters[9].Value = pEntity.CreateTime;
-			parameters[10].Value = pEntity.CreateBy;
-			parameters[11].Value = pEntity.LastUpdateTime;
-			parameters[12].Value = pEntity.LastUpdateBy;
-			parameters[13].Value = pEntity.IsDelete;
-			parameters[14].Value = pEntity.CustomerId;
-			parameters[15].Value = pkGuid;
+			parameters[0].Value = pEntity.CTWEventId;
+			parameters[1].Value = pEntity.EventName;
+			parameters[2].Value = pEntity.ImageId;
+			parameters[3].Value = pEntity.CreateTime;
+			parameters[4].Value = pEntity.CreateBy;
+			parameters[5].Value = pEntity.LastUpdateBy;
+			parameters[6].Value = pEntity.LastUpdateTime;
+			parameters[7].Value = pEntity.IsDelete;
+			parameters[8].Value = pkGuid;
 
             //执行并将结果回写
             int result;
             if (pTran != null)
-                result = this.StaticSqlHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-                result = this.StaticSqlHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
-            pEntity.ThemeId = pkGuid;
+               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
+            pEntity.EventId = pkGuid;
         }
 
         /// <summary>
         /// 根据标识符获取实例
         /// </summary>
         /// <param name="pID">标识符的值</param>
-        public T_CTW_LEventThemeEntity GetByID(object pID)
+        public T_CTW_PanicbuyingEventKVEntity GetByID(object pID)
         {
             //参数检查
             if (pID == null)
@@ -159,10 +134,10 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [T_CTW_LEventTheme] where ThemeId='{0}'  and isdelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [T_CTW_PanicbuyingEventKV] where EventId='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
-            T_CTW_LEventThemeEntity m = null;
-            using (SqlDataReader rdr = this.StaticSqlHelper.ExecuteReader(sql.ToString()))
+            T_CTW_PanicbuyingEventKVEntity m = null;
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
@@ -178,18 +153,18 @@ namespace JIT.CPOS.BS.DataAccess
         /// 获取所有实例
         /// </summary>
         /// <returns></returns>
-        public T_CTW_LEventThemeEntity[] GetAll()
+        public T_CTW_PanicbuyingEventKVEntity[] GetAll()
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [T_CTW_LEventTheme] where 1=1  and isdelete=0");
+            sql.AppendFormat("select * from [T_CTW_PanicbuyingEventKV] where 1=1  and isdelete=0");
             //读取数据
-            List<T_CTW_LEventThemeEntity> list = new List<T_CTW_LEventThemeEntity>();
-            using (SqlDataReader rdr = this.StaticSqlHelper.ExecuteReader(sql.ToString()))
+            List<T_CTW_PanicbuyingEventKVEntity> list = new List<T_CTW_PanicbuyingEventKVEntity>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    T_CTW_LEventThemeEntity m;
+                    T_CTW_PanicbuyingEventKVEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -203,7 +178,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(T_CTW_LEventThemeEntity pEntity , IDbTransaction pTran)
+        public void Update(T_CTW_PanicbuyingEventKVEntity pEntity , IDbTransaction pTran)
         {
             Update(pEntity , pTran,true);
         }
@@ -213,12 +188,12 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(T_CTW_LEventThemeEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
+        public void Update(T_CTW_PanicbuyingEventKVEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (!pEntity.ThemeId.HasValue)
+            if (!pEntity.EventId.HasValue)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
@@ -229,75 +204,47 @@ namespace JIT.CPOS.BS.DataAccess
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update [T_CTW_LEventTheme] set ");
-                        if (pIsUpdateNullField || pEntity.ThemeName!=null)
-                strSql.Append( "[ThemeName]=@ThemeName,");
-            if (pIsUpdateNullField || pEntity.ThemeDesc!=null)
-                strSql.Append( "[ThemeDesc]=@ThemeDesc,");
-            if (pIsUpdateNullField || pEntity.ThemeStatus!=null)
-                strSql.Append( "[ThemeStatus]=@ThemeStatus,");
-            if (pIsUpdateNullField || pEntity.ThemeStartMonth!=null)
-                strSql.Append( "[ThemeStartMonth]=@ThemeStartMonth,");
-            if (pIsUpdateNullField || pEntity.ThemeEndMonth!=null)
-                strSql.Append( "[ThemeEndMonth]=@ThemeEndMonth,");
-            if (pIsUpdateNullField || pEntity.RCodeURL!=null)
-                strSql.Append( "[RCodeURL]=@RCodeURL,");
-            if (pIsUpdateNullField || pEntity.ImageURL!=null)
-                strSql.Append( "[ImageURL]=@ImageURL,");
-            if (pIsUpdateNullField || pEntity.StartDate!=null)
-                strSql.Append( "[StartDate]=@StartDate,");
-            if (pIsUpdateNullField || pEntity.EndDate!=null)
-                strSql.Append( "[EndDate]=@EndDate,");
-            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
-                strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            strSql.Append("update [T_CTW_PanicbuyingEventKV] set ");
+                        if (pIsUpdateNullField || pEntity.CTWEventId!=null)
+                strSql.Append( "[CTWEventId]=@CTWEventId,");
+            if (pIsUpdateNullField || pEntity.EventName!=null)
+                strSql.Append( "[EventName]=@EventName,");
+            if (pIsUpdateNullField || pEntity.ImageId!=null)
+                strSql.Append( "[ImageId]=@ImageId,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
-            if (pIsUpdateNullField || pEntity.CustomerId!=null)
-                strSql.Append( "[CustomerId]=@CustomerId");
-            strSql.Append(" where ThemeId=@ThemeId ");
+            if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
+                strSql.Append( "[LastUpdateTime]=@LastUpdateTime");
+            strSql.Append(" where EventId=@EventId ");
             SqlParameter[] parameters = 
             {
-					new SqlParameter("@ThemeName",SqlDbType.NVarChar),
-					new SqlParameter("@ThemeDesc",SqlDbType.NVarChar),
-					new SqlParameter("@ThemeStatus",SqlDbType.Int),
-					new SqlParameter("@ThemeStartMonth",SqlDbType.VarChar),
-					new SqlParameter("@ThemeEndMonth",SqlDbType.VarChar),
-					new SqlParameter("@RCodeURL",SqlDbType.VarChar),
-					new SqlParameter("@ImageURL",SqlDbType.VarChar),
-					new SqlParameter("@StartDate",SqlDbType.Date),
-					new SqlParameter("@EndDate",SqlDbType.Date),
-					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@CTWEventId",SqlDbType.UniqueIdentifier),
+					new SqlParameter("@EventName",SqlDbType.NVarChar),
+					new SqlParameter("@ImageId",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
-					new SqlParameter("@CustomerId",SqlDbType.VarChar),
-					new SqlParameter("@ThemeId",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
+					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.ThemeName;
-			parameters[1].Value = pEntity.ThemeDesc;
-			parameters[2].Value = pEntity.ThemeStatus;
-			parameters[3].Value = pEntity.ThemeStartMonth;
-			parameters[4].Value = pEntity.ThemeEndMonth;
-			parameters[5].Value = pEntity.RCodeURL;
-			parameters[6].Value = pEntity.ImageURL;
-			parameters[7].Value = pEntity.StartDate;
-			parameters[8].Value = pEntity.EndDate;
-			parameters[9].Value = pEntity.LastUpdateTime;
-			parameters[10].Value = pEntity.LastUpdateBy;
-			parameters[11].Value = pEntity.CustomerId;
-			parameters[12].Value = pEntity.ThemeId;
+			parameters[0].Value = pEntity.CTWEventId;
+			parameters[1].Value = pEntity.EventName;
+			parameters[2].Value = pEntity.ImageId;
+			parameters[3].Value = pEntity.LastUpdateBy;
+			parameters[4].Value = pEntity.LastUpdateTime;
+			parameters[5].Value = pEntity.EventId;
 
             //执行语句
             int result = 0;
             if (pTran != null)
-                result = this.StaticSqlHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-                result = this.StaticSqlHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
         }
 
         /// <summary>
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(T_CTW_LEventThemeEntity pEntity )
+        public void Update(T_CTW_PanicbuyingEventKVEntity pEntity )
         {
             this.Update(pEntity, null);
         }
@@ -306,7 +253,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 删除
         /// </summary>
         /// <param name="pEntity"></param>
-        public void Delete(T_CTW_LEventThemeEntity pEntity)
+        public void Delete(T_CTW_PanicbuyingEventKVEntity pEntity)
         {
             this.Delete(pEntity, null);
         }
@@ -316,17 +263,17 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(T_CTW_LEventThemeEntity pEntity, IDbTransaction pTran)
+        public void Delete(T_CTW_PanicbuyingEventKVEntity pEntity, IDbTransaction pTran)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (!pEntity.ThemeId.HasValue)
+            if (!pEntity.EventId.HasValue)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.ThemeId.Value, pTran);           
+            this.Delete(pEntity.EventId.Value, pTran);           
         }
 
         /// <summary>
@@ -340,17 +287,17 @@ namespace JIT.CPOS.BS.DataAccess
                 return ;   
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [T_CTW_LEventTheme] set  isdelete=1 where ThemeId=@ThemeId;");
+            sql.AppendLine("update [T_CTW_PanicbuyingEventKV] set  isdelete=1 where EventId=@EventId;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@ThemeId",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
+                new SqlParameter{ParameterName="@EventId",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
             };
             //执行语句
             int result = 0;
             if (pTran != null)
-                result=this.StaticSqlHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result=this.StaticSqlHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
             return ;
         }
 
@@ -359,7 +306,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(T_CTW_LEventThemeEntity[] pEntities, IDbTransaction pTran)
+        public void Delete(T_CTW_PanicbuyingEventKVEntity[] pEntities, IDbTransaction pTran)
         {
             //整理主键值
             object[] entityIDs = new object[pEntities.Length];
@@ -369,11 +316,11 @@ namespace JIT.CPOS.BS.DataAccess
                 //参数校验
                 if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (!pEntity.ThemeId.HasValue)
+                if (!pEntity.EventId.HasValue)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = pEntity.ThemeId;
+                entityIDs[i] = pEntity.EventId;
             }
             Delete(entityIDs, pTran);
         }
@@ -382,7 +329,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 批量删除
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
-        public void Delete(T_CTW_LEventThemeEntity[] pEntities)
+        public void Delete(T_CTW_PanicbuyingEventKVEntity[] pEntities)
         { 
             Delete(pEntities, null);
         }
@@ -412,13 +359,13 @@ namespace JIT.CPOS.BS.DataAccess
                 primaryKeys.AppendFormat("'{0}',",item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [T_CTW_LEventTheme] set  isdelete=1 where ThemeId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [T_CTW_PanicbuyingEventKV] set  isdelete=1 where EventId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
             int result = 0;   
             if (pTran == null)
-                result = this.StaticSqlHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.StaticSqlHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
         }
         #endregion
 
@@ -429,11 +376,11 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pWhereConditions">筛选条件</param>
         /// <param name="pOrderBys">排序</param>
         /// <returns></returns>
-        public T_CTW_LEventThemeEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
+        public T_CTW_PanicbuyingEventKVEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [T_CTW_LEventTheme] where 1=1  and isdelete=0 ");
+            sql.AppendFormat("select * from [T_CTW_PanicbuyingEventKV] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -451,12 +398,12 @@ namespace JIT.CPOS.BS.DataAccess
                 sql.Remove(sql.Length - 1, 1);
             }
             //执行SQL
-            List<T_CTW_LEventThemeEntity> list = new List<T_CTW_LEventThemeEntity>();
-            using (SqlDataReader rdr = this.StaticSqlHelper.ExecuteReader(sql.ToString()))
+            List<T_CTW_PanicbuyingEventKVEntity> list = new List<T_CTW_PanicbuyingEventKVEntity>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    T_CTW_LEventThemeEntity m;
+                    T_CTW_PanicbuyingEventKVEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
@@ -472,7 +419,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pPageSize">每页的记录数</param>
         /// <param name="pCurrentPageIndex">以0开始的当前页码</param>
         /// <returns></returns>
-        public PagedQueryResult<T_CTW_LEventThemeEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<T_CTW_PanicbuyingEventKVEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             //组织SQL
             StringBuilder pagedSql = new StringBuilder();
@@ -492,11 +439,11 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
             {
-                pagedSql.AppendFormat(" [ThemeId] desc"); //默认为主键值倒序
+                pagedSql.AppendFormat(" [EventId] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [T_CTW_LEventTheme] where 1=1  and isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [T_CTW_PanicbuyingEventKV] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [T_CTW_LEventTheme] where 1=1  and isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [T_CTW_PanicbuyingEventKV] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -513,19 +460,19 @@ namespace JIT.CPOS.BS.DataAccess
             //取指定页的数据
             pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
-            PagedQueryResult<T_CTW_LEventThemeEntity> result = new PagedQueryResult<T_CTW_LEventThemeEntity>();
-            List<T_CTW_LEventThemeEntity> list = new List<T_CTW_LEventThemeEntity>();
-            using (SqlDataReader rdr = this.StaticSqlHelper.ExecuteReader(pagedSql.ToString()))
+            PagedQueryResult<T_CTW_PanicbuyingEventKVEntity> result = new PagedQueryResult<T_CTW_PanicbuyingEventKVEntity>();
+            List<T_CTW_PanicbuyingEventKVEntity> list = new List<T_CTW_PanicbuyingEventKVEntity>();
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(pagedSql.ToString()))
             {
                 while (rdr.Read())
                 {
-                    T_CTW_LEventThemeEntity m;
+                    T_CTW_PanicbuyingEventKVEntity m;
                     this.Load(rdr, out m);
                     list.Add(m);
                 }
             }
             result.Entities = list.ToArray();
-            int totalCount = Convert.ToInt32(this.StaticSqlHelper.ExecuteScalar(totalCountSql.ToString()));    //计算总行数
+            int totalCount = Convert.ToInt32(this.SQLHelper.ExecuteScalar(totalCountSql.ToString()));    //计算总行数
             result.RowCount = totalCount;
             int remainder = 0;
             result.PageCount = Math.DivRem(totalCount, pPageSize, out remainder);
@@ -540,7 +487,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public T_CTW_LEventThemeEntity[] QueryByEntity(T_CTW_LEventThemeEntity pQueryEntity, OrderBy[] pOrderBys)
+        public T_CTW_PanicbuyingEventKVEntity[] QueryByEntity(T_CTW_PanicbuyingEventKVEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return Query(queryWhereCondition,  pOrderBys);            
@@ -552,7 +499,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pQueryEntity">以实体形式传入的参数</param>
         /// <param name="pOrderBys">排序组合</param>
         /// <returns>符合条件的实体集</returns>
-        public PagedQueryResult<T_CTW_LEventThemeEntity> PagedQueryByEntity(T_CTW_LEventThemeEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
+        public PagedQueryResult<T_CTW_PanicbuyingEventKVEntity> PagedQueryByEntity(T_CTW_PanicbuyingEventKVEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
@@ -565,42 +512,28 @@ namespace JIT.CPOS.BS.DataAccess
         /// 根据实体非Null属性生成查询条件。
         /// </summary>
         /// <returns></returns>
-        protected IWhereCondition[] GetWhereConditionByEntity(T_CTW_LEventThemeEntity pQueryEntity)
+        protected IWhereCondition[] GetWhereConditionByEntity(T_CTW_PanicbuyingEventKVEntity pQueryEntity)
         { 
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.ThemeId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ThemeId", Value = pQueryEntity.ThemeId });
-            if (pQueryEntity.ThemeName!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ThemeName", Value = pQueryEntity.ThemeName });
-            if (pQueryEntity.ThemeDesc!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ThemeDesc", Value = pQueryEntity.ThemeDesc });
-            if (pQueryEntity.ThemeStatus!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ThemeStatus", Value = pQueryEntity.ThemeStatus });
-            if (pQueryEntity.ThemeStartMonth!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ThemeStartMonth", Value = pQueryEntity.ThemeStartMonth });
-            if (pQueryEntity.ThemeEndMonth!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ThemeEndMonth", Value = pQueryEntity.ThemeEndMonth });
-            if (pQueryEntity.RCodeURL!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "RCodeURL", Value = pQueryEntity.RCodeURL });
-            if (pQueryEntity.ImageURL!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ImageURL", Value = pQueryEntity.ImageURL });
-            if (pQueryEntity.StartDate!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "StartDate", Value = pQueryEntity.StartDate });
-            if (pQueryEntity.EndDate!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EndDate", Value = pQueryEntity.EndDate });
+            if (pQueryEntity.EventId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventId", Value = pQueryEntity.EventId });
+            if (pQueryEntity.CTWEventId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CTWEventId", Value = pQueryEntity.CTWEventId });
+            if (pQueryEntity.EventName!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventName", Value = pQueryEntity.EventName });
+            if (pQueryEntity.ImageId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ImageId", Value = pQueryEntity.ImageId });
             if (pQueryEntity.CreateTime!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
             if (pQueryEntity.CreateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateTime!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
             if (pQueryEntity.LastUpdateBy!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
+            if (pQueryEntity.LastUpdateTime!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
-            if (pQueryEntity.CustomerId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
 
             return lstWhereCondition.ToArray();
         }
@@ -609,52 +542,28 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pReader">向前只读器</param>
         /// <param name="pInstance">实体实例</param>
-        protected void Load(IDataReader pReader, out T_CTW_LEventThemeEntity pInstance)
+        protected void Load(IDataReader pReader, out T_CTW_PanicbuyingEventKVEntity pInstance)
         {
             //将所有的数据从SqlDataReader中读取到Entity中
-            pInstance = new T_CTW_LEventThemeEntity();
+            pInstance = new T_CTW_PanicbuyingEventKVEntity();
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["ThemeId"] != DBNull.Value)
+			if (pReader["EventId"] != DBNull.Value)
 			{
-				pInstance.ThemeId =  (Guid)pReader["ThemeId"];
+				pInstance.EventId =  (Guid)pReader["EventId"];
 			}
-			if (pReader["ThemeName"] != DBNull.Value)
+			if (pReader["CTWEventId"] != DBNull.Value)
 			{
-				pInstance.ThemeName =  Convert.ToString(pReader["ThemeName"]);
+				pInstance.CTWEventId =  (Guid)pReader["CTWEventId"];
 			}
-			if (pReader["ThemeDesc"] != DBNull.Value)
+			if (pReader["EventName"] != DBNull.Value)
 			{
-				pInstance.ThemeDesc =  Convert.ToString(pReader["ThemeDesc"]);
+				pInstance.EventName =  Convert.ToString(pReader["EventName"]);
 			}
-			if (pReader["ThemeStatus"] != DBNull.Value)
+			if (pReader["ImageId"] != DBNull.Value)
 			{
-				pInstance.ThemeStatus =   Convert.ToInt32(pReader["ThemeStatus"]);
-			}
-			if (pReader["ThemeStartMonth"] != DBNull.Value)
-			{
-				pInstance.ThemeStartMonth =  Convert.ToString(pReader["ThemeStartMonth"]);
-			}
-			if (pReader["ThemeEndMonth"] != DBNull.Value)
-			{
-				pInstance.ThemeEndMonth =  Convert.ToString(pReader["ThemeEndMonth"]);
-			}
-			if (pReader["RCodeURL"] != DBNull.Value)
-			{
-				pInstance.RCodeURL =  Convert.ToString(pReader["RCodeURL"]);
-			}
-			if (pReader["ImageURL"] != DBNull.Value)
-			{
-				pInstance.ImageURL =  Convert.ToString(pReader["ImageURL"]);
-			}
-			if (pReader["StartDate"] != DBNull.Value)
-			{
-				pInstance.StartDate = Convert.ToDateTime(pReader["StartDate"]);
-			}
-			if (pReader["EndDate"] != DBNull.Value)
-			{
-				pInstance.EndDate = Convert.ToDateTime(pReader["EndDate"]);
+				pInstance.ImageId =  Convert.ToString(pReader["ImageId"]);
 			}
 			if (pReader["CreateTime"] != DBNull.Value)
 			{
@@ -664,21 +573,17 @@ namespace JIT.CPOS.BS.DataAccess
 			{
 				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
 			}
-			if (pReader["LastUpdateTime"] != DBNull.Value)
-			{
-				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
-			}
 			if (pReader["LastUpdateBy"] != DBNull.Value)
 			{
 				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
 			}
+			if (pReader["LastUpdateTime"] != DBNull.Value)
+			{
+				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
+			}
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
-			}
-			if (pReader["CustomerId"] != DBNull.Value)
-			{
-				pInstance.CustomerId =  Convert.ToString(pReader["CustomerId"]);
 			}
 
         }

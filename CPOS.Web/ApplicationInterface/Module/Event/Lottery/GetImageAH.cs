@@ -25,9 +25,56 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             LEventsBLL bllEvent = new LEventsBLL(this.CurrentUserInfo);
             LCoverBLL bllCover = new LCoverBLL(CurrentUserInfo);
 
+            string strEventId = pRequest.Parameters.EventId;
+            string strCTWEventId = string.Empty;
 
-            var image = bllImage.QueryByEntity(new ObjectImagesEntity() { ObjectId = pRequest.Parameters.EventId ,IsDelete=0}, null).ToList();
-            var eventInfo = bllEvent.GetByID(pRequest.Parameters.EventId);
+            rd.EventId = strEventId;
+            rd.IsCTW = 0;
+            //if (!string.IsNullOrEmpty(pRequest.Parameters.CTWEventId))
+            //{
+                T_CTW_LEventInteractionBLL bllLEventInteraction = new T_CTW_LEventInteractionBLL(this.CurrentUserInfo);
+                //var entityLEventInteraction = bllLEventInteraction.QueryByEntity(new T_CTW_LEventInteractionEntity() { LeventId=strEventId, IsDelete = 0 }, null).FirstOrDefault();
+                DataSet ds = bllLEventInteraction.GetCTWLEventInteraction(strEventId);
+                if (ds != null && ds.Tables[0].Rows.Count>0)
+                {
+                    strEventId = ds.Tables[0].Rows[0]["LeventId"].ToString();
+                    strCTWEventId=ds.Tables[0].Rows[0]["CTWEventId"].ToString();
+                    ContactEventBLL bllContact = new ContactEventBLL(this.CurrentUserInfo);
+                    var contactList = bllContact.QueryByEntity(new ContactEventEntity() { EventId = strCTWEventId, IsCTW = 1, IsDelete = 0 }, null).ToList();
+                    if(contactList.Count>0)
+                    {
+                        if (contactList.Where(a => a.ContactTypeCode == "Reg").Count() > 0)
+                        {
+                            ButtonInfo reg = new ButtonInfo();
+                            reg.Text = "注册有奖";
+                            rd.Reg = reg;
+                        }
+                        if (contactList.Where(a => a.ContactTypeCode == "Share").Count() > 0)
+                        {
+                            ButtonInfo share = new ButtonInfo();
+                            share.Text = "分享有奖";
+                            rd.Share = share;
+                        }
+                        if (contactList.Where(a => a.ContactTypeCode == "Focus").Count() > 0)
+                        {
+                            T_CTW_SpreadSettingBLL bllSpreadSetting = new T_CTW_SpreadSettingBLL(this.CurrentUserInfo);
+                            DataSet dsSpreadSetting = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId);
+                            if (dsSpreadSetting != null && dsSpreadSetting.Tables.Count > 0)
+                            {
+                                rd.BGImageUrl = dsSpreadSetting.Tables[0].Rows[0]["BGImageUrl"].ToString();
+                                rd.LeadPageQRCodeImageUrl = dsSpreadSetting.Tables[0].Rows[0]["LeadPageQRCodeImageUrl"].ToString();
+                            }
+                        }
+                    }
+                    rd.IsCTW = 1;
+                    rd.CTWEventId = strCTWEventId;
+                    rd.EventId = strEventId;
+
+                }
+            //}
+
+            var image = bllImage.QueryByEntity(new ObjectImagesEntity() { ObjectId = strEventId ,IsDelete=0}, null).ToList();
+            var eventInfo = bllEvent.GetByID(strEventId);
             
             if (image.Count != 0)
             {
@@ -53,8 +100,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         rd.LT_regularpic = i.ImageURL;
                 };
                 rd.RuleContent = image.FirstOrDefault().RuleContent;
-                rd.RuleId = (int)image.FirstOrDefault().RuleId;
-                rd.ImageList = bllImage.QueryByEntity(new ObjectImagesEntity() { ObjectId = pRequest.Parameters.EventId, BatId = "list", IsDelete = 0 }, null).ToList();
+                rd.RuleId = image.FirstOrDefault().RuleId??0;
+                rd.ImageList = bllImage.QueryByEntity(new ObjectImagesEntity() { ObjectId = strEventId, BatId = "list", IsDelete = 0 }, null).ToList();
             }
             rd.EventTitle = eventInfo.Title;
             rd.EventContent = eventInfo.Content;
@@ -65,7 +112,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             rd.ShareLogoUrl = eventInfo.ShareLogoUrl;
             rd.IsShare = eventInfo.IsShare == null ? 0 : (int)eventInfo.IsShare;
 
-            var entityCover = bllCover.QueryByEntity(new LCoverEntity() { EventId = pRequest.Parameters.EventId, IsDelete = 0,IsShow=1 }, null).FirstOrDefault();
+            var entityCover = bllCover.QueryByEntity(new LCoverEntity() { EventId = strEventId, IsDelete = 0,IsShow=1 }, null).FirstOrDefault();
             if (entityCover!=null)
             {
                 rd.CoverInfo = entityCover;

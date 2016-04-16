@@ -9,7 +9,8 @@ namespace JIT.CPOS.DTO.Module.Event.Lottery.Request
 {
    public class GetImageRP : IAPIRequestParameter
     {
-       public string EventId { get; set; }
+        public string EventId { get; set; }
+        public string CTWEventId { get; set; }
         public void Validate()
         {
         }

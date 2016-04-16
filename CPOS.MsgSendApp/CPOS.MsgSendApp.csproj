@@ -120,10 +120,6 @@
       <Project>{9adf4825-9b7c-4bb1-a05c-9c137b33d81b}</Project>
       <Name>CPOS.BS.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CPOS.BS.DataAccess\CPOS.BS.DataAccess.csproj">
-      <Project>{928C0A63-F799-49B5-A566-65BE4ABC9F56}</Project>
-      <Name>CPOS.BS.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CPOS.BS.Entity\CPOS.BS.Entity.csproj">
       <Project>{6d911430-7243-4ab2-b70e-4daffc4d1b22}</Project>
       <Name>CPOS.BS.Entity</Name>
