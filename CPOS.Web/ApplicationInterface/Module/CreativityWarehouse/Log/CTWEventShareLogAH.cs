@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
-using JIT.CPOS.BS.Web.ApplicationInterface.Base;
+using JIT.CPOS.Web.ApplicationInterface.Base;
 using JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingActivity.Request;
 using JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingActivity.Response;
 using JIT.CPOS.BS.BLL;
@@ -11,9 +12,6 @@ using JIT.CPOS.DTO.Base;
 using JIT.Utility.Log;
 using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess.Query;
-using JIT.Utility.Notification;
-using JIT.CPOS.BS.Web.Session;
-using System.Data;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.CreativityWarehouse.Log
 {

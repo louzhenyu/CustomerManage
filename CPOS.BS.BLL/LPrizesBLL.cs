@@ -824,7 +824,7 @@ namespace JIT.CPOS.BS.BLL
             lotteryEntityOld = bllLottery.QueryByEntity(new LLotteryLogEntity() { EventId = strEventId, VipId = strVipId }, null).FirstOrDefault();
             switch (eventEntity.PersonCount)
             {
-                case 1://仅能参加一次抽奖
+                case 1://活动期间参与N次 
                     if (lotteryEntityOld != null)
                     {
                         boolHaveChange = false;

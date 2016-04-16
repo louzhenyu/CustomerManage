@@ -2199,6 +2199,7 @@
       <DependentUpon>CouponHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="ApplicationInterface\Module\Coupon\Grant\GrantCouponAH.cs" />
+    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Log\CTWEventShareLogAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\AddVipFeedbackInfoAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetApiVipServicesLogListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetApiCouponUserListAH.cs" />
@@ -2209,8 +2210,8 @@
     <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerVersionAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Event\Lottery\ContactAwardAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\ContactPrizeAH.cs" />
-    <Compile Include="ApplicationInterface\Module\CreativityWarehouse\Log\CTWEventShareLogAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetImageAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeLocationListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\Lottery\GetPrizeWinnerListAH.cs" />
