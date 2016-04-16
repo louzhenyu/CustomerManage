@@ -31,6 +31,7 @@
                 currentClass : namespace + "-nav-item-current",
                 duration : 350,
                 mouseTouch : true,
+                isCirculation:true,
                 change : $.noop
                 // [container, scroller]
             }, options);
@@ -113,10 +114,26 @@
                         },
                         to : function(toIndex, opt) {
                             opt = opt || {};
-                            if (toIndex >= slides.length) {
-                                toIndex = 0;
-                            } else if (toIndex < 0) {
-                                toIndex = slides.length - 1;
+                            if(options.isCirculation) {
+                                if (toIndex >= slides.length) {
+                                    toIndex = 0;
+                                } else if (toIndex < 0) {
+                                    toIndex = slides.length - 1;
+                                }
+                            }else{
+                                if (toIndex >= slides.length) {
+                                    toIndex = slides.length - 1;
+                                } else if (toIndex < 0) {
+                                    toIndex =0;
+
+                                }
+                            }
+                            $(options.container).find(options.next,options.prev).removeClass("on");
+                            if(toIndex==0){
+                                $(options.container).find(options.prev).addClass("on");
+
+                            }else if(toIndex == slides.length-1){
+                                $(options.container).find(options.next).addClass("on");
                             }
                             var duration = options.duration, node = slides.eq(toIndex), indexInViewport = $.inArray(toIndex, inViewport), nodeLeft = 0;
 

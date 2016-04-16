@@ -70,7 +70,6 @@ define(['jquery','tools','template', 'kindeditor',"easyui"], function ($) {
             });
         },
         uploadImg: function (btn, callback) {
-            console.log("uploadImg");
             setTimeout(function () {
                 var uploadBtn = KE.uploadbutton({
                     width: "100%",

@@ -7,30 +7,33 @@
 .listBtn.show{   border: 2px solid #00a0e8;}
 .listBtn.show .on{ display: block;}
 
-
-.panlDiv{ display: block;  border-bottom: 1px solid #d0d5d8;padding-top:5px; padding-bottom: 5px; position: relative; }
-.panlDiv .commonSelectWrap{ display: block; float: none; margin-top: 20px;}
+.panelDiv{ display: block; float: none;  border-bottom: 1px solid #d0d5d8;padding:5px;padding-left:20px; position: relative; }
+.panelDiv .commonSelectWrap{ display: block; float: none; margin-top: 20px;}
 /*.panlDiv .commonSelectWrap .searchInput{ width: 238px;}*/
-.panlDiv .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
-.panlDiv .commonSelectWrap .searchInput .line{ height: 46px;}
-.panlDiv .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
-.panlDiv .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
-.panlDiv .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
-.panlDiv .commonSelectWrap .tit .checkBox{float: right}
+.panelDiv .commonSelectWrap .searchInput.whauto{ width: auto; height: auto;}
+.panelDiv .commonSelectWrap .searchInput .line{ height: 46px;}
+.panelDiv .commonSelectWrap .searchInput .linetext{ height: 28px; line-height: 28px; padding-left:10px;   color: #666; float: left; display: inline;}
+.panelDiv .commonSelectWrap .searchInput .linetext input{ width: 100px; height: 28px; }
+.panelDiv .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
+.panelDiv .commonSelectWrap .tit .checkBox{float: right}
+.panelDiv .linetext .tipBox{display:inline-block;margin-left:10px;padding-left:46px;background:url(../images/icon-tips.png) no-repeat left center;color:#fe2222;}
+.panelDiv .selectGroupBtn,.panlDiv .selectShopBtn{display:inline-block;width:100px;height:32px;line-height:32px;font-size:14px;text-align:center;border-radius:5px;background:#0cc;color:#fff;cursor:pointer;}
+.panelDiv .selectNum{font-size:14px;}
+.panelDiv .selectNum span{color:#09f;}
+
 .pl_45{padding-left:45px;}
 /*.commonSelectWrap .tit{ text-align: left; padding-left: 28px;} */  /*左对齐文本框 */
 .panlDiv .commonSelectWrap .searchInput  .explain{ color: #999}
+.selectGroupTreeBox{width:340px;height:300px;margin:30px auto 0;padding:0 5px;border:1px solid #ddd;overflow:auto;}
 
 .listItem{padding-top:12px; padding-left: 123px;}
 .listItem .icon{ background:url(../images/iconDel.png) no-repeat 0 0; width: 30px; height: 30px; position: absolute;display: none;cursor: pointer;}
 .listItem .unitBtn{cursor: pointer; min-width: 32px; height: 32px; padding:0 8px; border: 1px solid #00a0e8; position: relative; float: left; margin-right:30px; line-height: 32px; color: #00a0e8; font-size: 15px;}
 .listItem .unitBtn .icon{ top: -16px; right: -16px;}
 .listItem .unitBtn:last-of-type { margin-right: 12px;}
-.panlDiv .listTable{padding-left: 80px;  float: left; width: 640px;}
-.panlDiv .listTable .datagrid {  border: 1px solid #d0d5d8;}
-.panlDiv .listTable .datagrid .panel-header{ border-bottom: none}
-.panlDiv .listTable .datagrid-header{border-bottom: none;}
-
+.panelDiv .listTable{padding-left: 80px;  float: left; width:100%; display: none;}
+.panelDiv .listTable .datagrid {  border: 1px solid #d0d5d8;}
+.lineText{padding: 0 10px ;}
 #Tooltip .treeNode { width: 222px;min-height: 65px; max-height: 150px; overflow: auto;}
 .btnlist{ padding-top:5px; padding-bottom: 15px;width: 100%;  height: auto; float: left;}
 .addunitBtn {height: 32px; float: left; cursor: pointer; border: #ccc 1px solid;font-size: 15px; color:#00a0e8; width: 160px; line-height: 32px; text-align: center;}
@@ -45,11 +48,61 @@
 
 
 .bordernone{ border: none;}
-.searchBtn{float: left;width: 88px; margin-left: 346px;height: 33px;line-height: 33px;}
+/*.searchBtn{float: left;width: 88px; margin-left: 346px;height: 33px;line-height: 33px;}*/
 .searchGrid{ width: 338px; height: 280px; border:#00cccc solid 1px; margin: 0 auto; margin-top: 10px;}
 .radio { float: left;}
 .r{ float: right;}
 .checkBox.r{ margin-left: 25px; margin-top: 10px;}
 .texlist{ line-height: 30px; text-align: left;width: 88%}
 .texlist img{ float: right; margin-right: 35px; margin-top: 5px;}
-.panlDiv .datagrid-header-row{ display: none}
+
+.panelDiv .selectNumBox{display:none;}
+
+.radioBtn {margin-left: 15px; float: right; display: none;}
+
+
+.optionPanel{width: 1120px; height: 460px; margin: 0 auto;padding-top: 15px;}
+.optionPanel .contentDiv{ float:left; }
+.optionPanel .explain{ height: 40px; font-size: 12px; line-height: 40px;color: #666}
+.optionPanel .explain em{float: left;}
+.optionPanel .explain span{ float: left;}
+.optionPanel .explain  .optBtn{ float: right; color: #00a0e8;cursor: pointer;}
+.optionPanel .explain .searchBtn{ height: 30px; width: 70px; float: right;}
+.optionPanel .explain .commonSelectWrap{margin:0 10px;}
+.optionPanel .content{border:1px solid #e1e7ea; height: 430px;border-radius: 6px; overflow-y: auto; }
+.optionPanel .center{width: 570px; margin: 0 10px; }
+.optionPanel .center .content{overflow-y: hidden;}
+.optionPanel .tree-node{ height: 30px;}
+.optionPanel .tree-node-selected{background:#d9f1fc;}
+
+.optionPanel .tree-title {color: #666; line-height: 30px;}
+.tree-expanded {
+    background: url('../images/tree-expanded.png') no-repeat;
+}
+.tree-expanded-hover {
+    background: url('../images/tree-expanded-hover.png') no-repeat;
+}
+.tree-collapsed {
+    background: url('../images/tree-collapsed.png') no-repeat;
+}
+.tree-collapsed-hover {
+    background: url('../images/tree-collapsed-hover.png') no-repeat;
+}
+.tree-node-hover{
+    background:#d9f1fc;
+}
+.tree-expanded,
+.tree-collapsed,.tree-checkbox{
+    display: inline-block;
+    width: 20px;
+    height: 30px;
+    vertical-align: top;
+    overflow: hidden;
+    background-position:center center;
+}
+.tree-checkbox0{ background-image:url("../images/check.png")}
+.tree-checkbox2 { background-image:url("../images/check.png")}
+.tree-checkbox1{ background-image:url("../images/checkon.png")}
+#unitTreeSelect .tree-title{ width: 258px;}
+#unitTreeSelect .tree-title .delete{float: right;}
+.content .datagrid-header-check, .content .datagrid-cell-check { background-position:left center;}

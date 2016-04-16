@@ -1,5 +1,14 @@
 ﻿@charset "utf-8";
 body{overflow-x: hidden;}
+.navigation{ height: 52px;  width: 100%;  background-color: #f2f2f2; }
+
+.navigation  li{ position:relative; text-align: center; width: 180px; height:50px; float:left; font-size: 13px; line-height: 50px; background: url("../../images/newYear/nav/jt.png") right center no-repeat #fafafa;}
+.navigation  li.on{background: url("../../images/newYear/nav/jton.png") right center no-repeat #fff;  color: #00a0e8}
+.navigation  li.one{ background-image: none;}
+.navigation  li em{ background: url("../../images/newYear/nav/round.png") no-repeat center center; width: 27px; height: 50px;display: inline-block ; color: #fff;  font-size:14px;margin-right: 10px;  }
+.navigation  li.on em{ background-image: url("../../images/newYear/nav/roundSelect.png");  color: #fff}
+.navigation  li img{ float: right; margin-right:-11px;}
+.hide{ display: none;}
 /*右侧浮动*/
 .leftsead{width:34px;height:143px;position:fixed;top:258px;right:0; z-index:99999}
 *html .leftsead{margin-top:258px;position:absolute;top:expression(eval(document.documentElement.scrollTop));}
@@ -36,6 +45,11 @@ body{overflow-x: hidden;}
 .icon_save{background-image:url("../../images/newYear/icon_save.png") }
 /*按钮宽度*/
 .moreQueryWrap .queryBtn {width: 70px;}
+/***公共标题样式***/
+.panelDiv{width: 100%;  float: left;padding:10px 10px 35px 0}
+.panelDiv .title{text-align:left;width: 100%; display: inline-block;  margin: 10px 0;font-size: 14px;  color: #666666;border-left: 4px solid #00a0e8;padding-left: 4px;height: 14px;line-height: 14px;}
+
+
 
 /*复选框*/
 .checkBoxWrap label.on{background:url(../../images/skin/bg02/radio3.png) no-repeat left center;}
@@ -165,7 +179,7 @@ body{overflow-x: hidden;}
 .commonSelectWrap .selectBox .text{display:block;width:150px;line-height:34px;text-indent:5px;}
 .commonSelectWrap .searchInput {display:block;float:left;width:200px;height:30px;line-height:30px;margin-left: 2px;border:1px solid #ddd;border-radius:3px;}
 .commonSelectWrap .searchInput  input{float:left;width:100%;height:30px;border:none;color:#666;}
-.commonSelectWrap .searchInput  textarea{white-space: normal; line-height:22px;float:left;width:100%;height:100%;border:none;color:#666; padding-left: 10px;}
+.commonSelectWrap .searchInput  textarea{white-space: normal; line-height:22px;float:left;width:100%;height:100%;border:none;color:#666; text-indent: 5px;}
 
 /**列表页面---表头的操作按钮栏**/
 .zsy{clear: both;font-size:0; line-height:0px; display:block;}
@@ -326,7 +340,7 @@ body{overflow-x: hidden;}
 
 
 .radio{height: 28px; line-height: 28px;  }
-.radio  span{ float: left; color: #666; padding-left: 10px; white-space:normal;padding-right: 40px;}
+.radio  span{ float: left; color: #666; padding-left: 10px; white-space:normal;}
 .radio em{  height: 28px;   width: 28px; background: url("../../images/newYear/radio.png") center center no-repeat; float: left; }
 .radio.on em{ background-image: url("../../images/newYear/radioOn.png")}
 .zsy{clear: both;font-size:0; line-height:0; display:block;}
@@ -425,3 +439,18 @@ body{overflow-x: hidden;}
 .tooltip-left .tooltip-arrow-outer{ top:-1px}
 .tooltip-right .tooltip-arrow-outer{ top:-1px}
 */
+/*上传*/
+.ke-button-common{display: none;}
+.ke-upload-area{ width:180px;}
+
+.jsUploadBtn{ position:absolute; top:0; left:0;}
+.lineText{width:100%; position: relative; line-height: 33px;display: inline-block; padding-top: 10px; padding-bottom: 10px;}
+.lineText .tit{ float: left;  width: 76px;  height: 30px;  line-height: 30px;  text-align: right;  font-size: 12px;  color: #666;}
+.lineText .inputBox{ position: relative; min-width: 300px;line-height: 33px; float: left; width: auto; display: block;}
+.lineText .logo{width: 214px; height: 67px; border: 1px solid #d0d5d8; text-align: center; vertical-align: middle; line-height: 67px; display: table-cell;}
+.lineText .logo img {max-width:100%;max-height:100%}
+.lineText .uploadBtn{ width: 70px;height: 30px; border-radius: 3px; float:left; line-height: 30px; font-size:14px; color: #fff; background: #00a0e8; text-align: center;}
+.lineText .uploadBtn .ke-upload-file{opacity:0; left: -90px;position: absolute;top: 0;}
+.lineText .uploadTip{position: absolute; left: 235px;bottom: 0;width:348px;height: 32px;}
+
+.tip{font-size: 14px; color: #fe0000; line-height: 33px; padding-left: 50px; background: url("../../images/newYear/tips.png") no-repeat left center; display: inline-block}

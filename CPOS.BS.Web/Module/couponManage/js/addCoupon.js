@@ -5,7 +5,8 @@
             simpleQueryDiv: $("#simpleQuery"),     //简单查询条件的层dom
             listItem: $("#unitList"),             //所有的查询条件层dom
             Tooltip:$("#Tooltip"),
-            listTable:$(".listTable .easyui-datagrid"), //
+            listTable:$(".listTable .datagrid"), //
+            productTable:$(".listTable .productGrid"),
             click:true,
 
             panlH:116                           // 下来框统一高度
@@ -17,10 +18,10 @@
             tagType:[],                             //标签类型
             tagList:[]                              //标签列表
         },
+        selectDataUnit:[],
+        selectDataUnitList:[],
         init: function () {
             this.initEvent();
-
-
         },
         unitBtnEvent:function(){
             var that = this;
@@ -43,90 +44,133 @@
         initEvent: function () {
             var that = this;
             //点击查询按钮进行数据查询
+            that.elems.simpleQueryDiv.delegate(".listBtn", "click", function () {
+                debugger;
+                var me = $(this);
 
-             that.elems.simpleQueryDiv.delegate(".listBtn","click",function(){
-                 debugger;
-                  var me=$(this);
+                if (!me.hasClass("show")) {
+                    that.elems.simpleQueryDiv.find(".listBtn").removeClass("show");
+                    me.addClass("show");
+                    debugger;
+                    if (me.data("coupontype") == 1) {
+                        $('#ParValue').numberbox({
+                            max: 0,
+                            disabled: true
+                        });
+                        $('#ParValue').siblings(".textbox.numberbox").css({"background": "#efefef"});
+                        var classs = "." + me.data("hide");
 
-                  if(!me.hasClass("show")){
-                      that.elems.simpleQueryDiv.find(".listBtn").removeClass("show");
-                       me.addClass("show");
-                      debugger;
-                      if(me.data("coupontype")==1){
-                          $('#ParValue').numberbox({
-                              max:0,
-                              disabled:true
-                          });
-                          $('#ParValue').siblings(".textbox.numberbox").css({"background":"#efefef"});
-                          var classs="."+me.data("hide");
+                        $(classs).hide(0);
+                    } else if (me.data("coupontype") == 0) {
+                        $('#ParValue').numberbox({
+                            max: null,
+                            disabled: false
+                        });
+                        var classs = "." + me.data("show");
+                        $(classs).show();
 
-                          $(classs).hide(0);
-                      }else if(me.data("coupontype")==0){
-                          $('#ParValue').numberbox({
-                              max:null,
-                              disabled:false
-                          });
-                          var classs="."+me.data("show");
-                          $(classs).show();
-
-                          $('#ParValue').siblings(".textbox.numberbox").css({"background":"#fff"});
-                      }
-                  }
+                        $('#ParValue').siblings(".textbox.numberbox").css({"background": "#fff"});
+                    }
+                }
 
 
-             }) ;
+            });
             that.elems.simpleQueryDiv.find(".listBtn").eq(0).trigger("click");
-            that.elems.sectionPage.delegate(".radio","click",function(e){
-                var me= $(this), name= me.data("name");
+            that.elems.sectionPage.delegate(".radio", "click", function (e) {
+                var me = $(this), name = me.data("name");
                 me.toggleClass("on");
-                if(name){
-                    var  selector="[data-name='{0}']".format(name);
+                if (name) {
+                    var selector = "[data-name='{0}']".format(name);
                     $(selector).removeClass("on");
                     me.addClass("on");
                     $(selector).siblings().find(".easyui-numberbox").numberbox({
-                        disabled:true
+                        disabled: true
                         //required: false
                     });
                     $(selector).siblings().find(".easyui-datebox").datebox({
-                        disabled:true
+                        disabled: true
                         //required: false
                     });
-                    if(me.data("validity")=="time") {
+                    if (me.data("validity") == "time") {
                         me.siblings().find(".easyui-datebox").datebox({
-                            disabled:false,
+                            disabled: false,
                             required: true
                         });
-                    } else if(me.data("validity")=="day"){
+                    } else if (me.data("validity") == "day") {
                         me.siblings().find(".easyui-numberbox").numberbox({
-                            disabled:false,
+                            disabled: false,
                             required: true
                         });
                     }
+                    var valueType = me.data("valuetype");
+                    if (name == "unit") {
+                        debugger;
+                        if (valueType == "portion") {
+                            me.siblings(".radioBtn").show();
+
+                            if(that.selectDataUnitList.length>0){
+                                $('[data-name="unit" ].listTable').show();
+                            } else{
+                                $('[data-name="unit"].listTable').hide();
+                            }
+                            that.selectUnit();
+                        } else {
+                            me.siblings(".radioBtn").hide();
+                            $('[data-name="unit" ].listTable').hide();
+                        }
+                    }
+                    if (name == "product") {
+                        debugger;
+                        if (valueType == "portion") {
+                            that.selectProduct();
+                            me.siblings(".radioBtn").show();
+                        } else {
+
+                            me.siblings(".radioBtn").hide();
+                        }
+                    }
+
                 }
                 $.util.stopBubble(e);
-            }).delegate(".submitBtn","click",function(){ //新增优惠券
-                if($("#addCoupon").form("validate")){
-                     var fields=$("#addCoupon").serializeArray();
+            }).delegate(".submitBtn", "click", function () { //新增优惠券
 
-                    that.loadData.operation(fields,"addCoupon",function(){
-                          alert("操作成功");
-                        var mid = JITMethod.getUrlParam("mid");
-                        location.href = "queryList.aspx?mid=" + mid;
+                if ($("#addCoupon").form("validate")) {
+                    var fields = $("#addCoupon").serializeArray();
+
+                    that.loadData.operation(fields, "addCoupon", function () {
+                        if($('#win1', window.parent.document).length>0) {
+                            window.parent.$('#win1').window('close');
+                        } else{
+                            alert("操作成功");
+                            var mid = JITMethod.getUrlParam("mid");
+                            location.href = "queryList.aspx?mid=" + mid;
+                        }
+
                     })
                 }
 
+            }).delegate(".radioBtn", "click", function () {
+                if($(this).data("name")=="product"){
+                    that.selectProduct();
+                }else {
+                    that.selectUnit();
+
+                }
             });
 
             that.elems.sectionPage.find("[data-validity].radio").eq(0).trigger("click");
-            $(".listTable").delegate(".del","click",function(e){
+            $(".listTable").delegate(".delete","click",function(e){
                 debugger;
-                  var  index=$(this).data("index");
+                  var  index=$(this).data("index"),id=$(this).data("id");
                    // index=parseInt(index);
                   that.elems.listTable.datagrid("deleteRow",index);
 
                 var  data=that.elems.listTable.datagrid("getData");
                 that.elems.listTable.datagrid("loadData",data);
-
+                if(data.rows.length==0){
+                    that.elems.listTable.parents(".listTable").hide();
+                }
+                that.reloadUnitData([{id:id}]) ;
             });
             that.elems.sectionPage.delegate(".checkBox","click",function(e){
                 var me= $(this);
@@ -156,25 +200,14 @@
                 }
             });
             that.elems.sectionPage.find(".checkBox").trigger("click").trigger("click");
-            that.elems.Tooltip.delegate(".commonBtn","click",function(e){
+          /*  that.elems.Tooltip.delegate(".commonBtn","click",function(e){
                   debugger;
                 var  type= $(this).data("flag");
                 var parms={};
                 if(type=="sales"){
                     var nodes=$("#Tooltip").find(".treeNode").tree('getChecked');
 
-                    that.elems.listTable.datagrid({
 
-                        data:nodes,
-                        columns:[[
-                            {field:'text',title:'',width:100,
-                                formatter: function(value,row,index){
-                                      return '<div class="texlist">'+value+' <img class="del" data-index="'+index+'" src="images/delicon.png"></div>'
-                                }
-
-                            }
-                        ]]
-                    })
 
                 }
                 if(type=="cannel"){
@@ -182,10 +215,45 @@
                 }
 
 
-            });
+            });*/
             /**************** -------------------初始化easyui 控件 start****************/
-            var  wd=160,H=32;
-            $("#applicationType").combobox({
+            $("#win").delegate(".optBtn","click",function(){
+                var nodeData= $('#unitTreeSelect').tree("getChecked");
+                 if(nodeData&&nodeData.length>0) {
+                     for(var k=0;k<nodeData.length;k++){
+                         var childen=nodeData.children;
+                         if(!childen){
+                             var id = nodeData[k].id;
+
+                             var nodeList = $("#unitGrid").datagrid('getData').rows;
+                             var isDel = true;
+                             if (nodeList.length > 0) {
+                                 for (var j = 0; j < nodeList.length; j++) {
+                                     if (nodeList[j].Id == id) {
+                                         isDel = false;
+                                         $("#unitGrid").datagrid("uncheckRow", j);
+                                     }
+                                 }
+
+                             }
+                             if (isDel) {
+                                 that.reloadUnitData([{id: id}]);
+                             }
+                         }
+
+
+                     }
+
+
+                 }
+            });
+
+			//链接类型下拉框
+			var  wd=160,H=32;
+
+			
+			
+         /*   $("#applicationType").combobox({
                 valueField: 'id',
                 textField: 'text',
                 onChange:function(newValue, oldValue){
@@ -210,8 +278,8 @@
                 "id":1,
                  "text":"分销商"
 
-            } ]
-            });
+            }]
+            });*/
             that.loadData.get_unit_tree(function(data) {
                 debugger;
                 that.loadData.getUitTree.node=data[0].id;
@@ -221,7 +289,7 @@
                         that.unitTree=data;
                         $("#Tooltip").find(".treeNode").tree({
                             // animate:true
-                            lines: true,
+                            //lines: true,
                             checkbox: true,
                             valueField: 'id',
                             textField: 'text',
@@ -269,6 +337,24 @@
 
 
             /**************** -------------------弹出窗口初始化 start****************/
+          /* 属性名 属性值类型 描述 默认值
+           title        string 窗口的标题文本。 New Window
+           collapsible boolean 定义是否显示可折叠按钮。 true
+           minimizable boolean 定义是否显示最小化按钮。 true
+           maximizable boolean 定义是否显示最大化按钮。 true
+           closable    boolean 定义是否显示关闭按钮。 true
+           closed      boolean 定义是否可以关闭窗口。 false
+           zIndex      number  窗口Z轴坐标。 9000
+           draggable   boolean 定义是否能够拖拽窗口。 true
+           resizable   boolean 定义是否能够改变窗口大小。 true
+           shadow      boolean 如果设置为true，在窗体显示的时候显示阴影。 true
+           inline      boolean 定义如何布局窗口，如果设置为true，窗口将显示在它的父容器中，否则将显示在所有元素的上面。 false
+           modal       boolean 定义是否将窗体显示为模式化窗口。 true
+           */
+
+
+
+
             $('#win').window({
                 modal:true,
                 shadow:false,
@@ -276,134 +362,71 @@
                 minimizable:false,
                 maximizable:false,
                 closed:true,
-                closable:true
+                closable:true,
+                onBeforeOpen:function(){
+                    $("body").css({"overflowY":"hidden"});
+                },
+               /* onBeforeClose:function(){
+
+
+                }*/
             });
             $('#panlconent').layout({
                 fit:true
             });
-            $("#win").delegate(".datagrid-header-check", "mousedown", function (e) {
+           /* $("#win").delegate(".datagrid-header-check", "mouseDown", function (e) {
                 $(this).toggleClass("on");
                 return false;
-            });
-            $('#win').delegate(".saveBtn","click",function(e){
-                var nodes=$("#searchGrid").datagrid("getChecked");
-                var data= that.elems.listTable.datagrid("getData");
-                debugger;
-                var  loadDatas={};
-                if(!(nodes.length>0)){
-                    $.messager.alert("提示" ,"请选择一个分销商");
-                    return false;
-                }
+            });*/
+            $('#win').delegate(".saveBtn","click",function(e) {
+                that.selectDataUnitList=[];
+                if (that.elems.optionType == "selectUnit") {
+                    var nodeData= that.selectDataUnit;
 
-                if(data.rows.length>0){
-                    loadDatas=data;
-                   for(var i=0;i<nodes.length;i++){
-                       var isAdd=true
-                         for(var j=0;j<data.rows.length;j++){
-                             if(data.rows[j].RetailTraderID==nodes[i].RetailTraderID) {
-                                    isAdd=false;
-                             }
-                         }
-                       if(isAdd) {
-                           loadDatas.rows.push(nodes[i])
-                       }
-                    }
 
-                }else{
-
-                    loadDatas.rows= nodes;
-                }
-
-                if(loadDatas.rows.length>0){
-                    that.elems.listTable.datagrid({
-
-                        data:loadDatas,
-                        columns:[[
-                            {field:'RetailTraderName',title:'',width:100,
-                                formatter: function(value,row,index){
-                                    return '<div class="texlist">'+value+' <img class="del" data-index="'+index+'" src="images/delicon.png"></div>'
-                                }
+                    if(nodeData&&nodeData.length>0) {
+                        for (var k = 0; k < nodeData.length; k++) {
+                            var children = nodeData[k].children;
+                            if (children&&children.length>0) {
+                                $.each(children,function(index,filed){
+                                    that.selectDataUnitList.push(children[index]);
+                                });
 
                             }
-                        ]],onLoadSuccess:function(){
-                            $("#win").window("close");
                         }
-                    });
-                }
-
-
-
-            }).delegate(".searchBtn","click",function(){
-                 var t = $('#unitTree').combotree('tree');	// 获取树对象
-                var n = t.tree('getSelected');		// 获取选择的节点
-                debugger;
-                if(!n){
-                    $.messager.alert("提示","必须选择一家门店");
-                    return;
-                }
-                that.loadData.seach.UnitID="";
-                if(n&&n.length>1 ){
-                    that.loadData.seach.UnitID=[];
-                    for(var i=0;i< n.length;i++){
-                        that.loadData.seach.UnitID.push(n[i].id);
                     }
-                } else if(n){
-                    that.loadData.seach.UnitID= n.id;
-                }
-                //that.loadData.seach.UnitID=$('#unitTree').combobox('getValue');
-                that.loadData.seach.RetailTraderName=$()
-                var fields=$("#payOrder").serializeArray();
-                $.each(fields,function(index,field){
-                    that.loadData.seach[field.name]=field.value;
-                });
-                that.loadData.GetRetailTraders(function(data){
-                   var Data=data.Data.RetailTraderList;
-                   if(data.Data.RetailTraderList&&data.Data.RetailTraderList.length>0) {
-                       $("#searchGrid").datagrid({
-                           data: data.Data.RetailTraderList,
-                           singleSelect:false,//多选
-                           frozenColumns: [
-                               [
-                                   {
-                                       field: 'ck',
-                                       width: 70,
-                                       title: '全选',
-                                       align: 'center',
-                                       checkbox: true
-                                   }
-                               ]
-                           ],//显示复选框
-                           columns: [
-                               [
-                                   {field: 'RetailTraderName',align:'left',title: '分销商名称',width:410}
-                               ]
-                           ]
-                       })
-                   }else{
-                       $.messager.alert("提示","该门店无任何分销商");
-                       $("#searchGrid").datagrid({
-                           data:[],
-                           singleSelect:false,//多选
-                           frozenColumns: [
-                               [
-                                   {
-                                       field: 'ck',
-                                       width: 70,
-                                       title: '全选',
-                                       align: 'center',
-                                       checkbox: true
-                                   }
-                               ]
-                           ],//显示复选框
-                           columns: [
-                               [
-                                   {field: 'RetailTraderName',align:'left',title: '分销商名称',width:410}
-                               ]
-                           ]
-                       })
-                   }
-               })
+                    that.elems.listTable.parents(".listTable").show();
+                    var nodes = that.selectDataUnitList;
+                    if(that.selectDataUnitList.length==0){
+                        $.messager.alert("提示",'“已选择的门店中”为空请添加');
+                        return false;
+                    }
+                    that.elems.listTable.datagrid({
 
+                        data: nodes,
+                        rownumbers:true,
+                        singleSelect : true, //单选
+                        height : 332, //高度
+                        fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。                striped : true, //奇偶行颜色不同
+                        collapsible : true,//可折叠
+                        //数据来源
+                        columns : [[
+                            {field : 'text',title : '门店名称',width:81,align:'left',resizable:false,},
+                            {field : 'id',title : '删除',width:81,align:'left',resizable:false,
+                                formatter:function(value ,row,index){
+                                    return '<p class="fontC opt delete" data-id="'+row.id+'" data-index="'+index+'" data-oprtype="del"></p>';
+                                }
+                            }
+                        ]],
+
+                    })
+                }
+                $("body").css({"overflowY":"auto"});
+                     $("#win").window("close");
+            }).delegate(".searchBtn","click",function(){
+                       if( that.elems.optionType=="selectUnit"){
+                           that.renderTableUnit();
+                       }
 
             });
             /**************** -------------------弹出窗口初始化 end****************/
@@ -453,8 +476,492 @@
             });
 
         },
+        //选择门店
+        selectUnit:function(data){
+            var that=this;
+            that.elems.optionType="selectUnit";
+            var top=$(document).scrollTop()+60;
+            var left=$(window).width() - 1140>0 ? ($(window).width() - 1140)*0.5:80;
+            $('#win').window({title:"选择门店",width:1140,height:630,top:top,left:left});
+            $('#panlconent').layout('remove','center');
+            var html=bd.template('tpl_setUnitList');
+            var options = {
+                region: 'center',
+                content:html
+            };
+            $('#panlconent').layout('add',options);
+            $("#win").window("open");
+            //组织层级
+            that.loadData.getUnitClassify(function(data) {
+                if(!(data&&data.length>0)){
+                    data=[];
+                }
+                debugger;
+                $('#unitParentTree').tree({
+                    id: 'id',
+                    text: 'text',
+                    data:data,
+                    onClick:function(node) {
+                        that.renderTableUnit();
+                    }
+                });
+            });
+            $('#unitTreeSelect').tree({
+                id: 'id',
+                text: 'text',
+                checkbox:true,
+                formatter:function(node){
+                    debugger;
+                    var s = node.text;
+                    if (node.children){
+                       // s += '&nbsp;<span style=\'color:blue\'>(' + node.children.length + ')</span>';
+                    }else{
+                         s+='<em class="delete" title="删除" data-target='+node.id+'></em>'
+                    }
+                    return s;
+                },
+                data:[]
+
+            });
+            $("#unitTreeSelect").delegate(".delete","click", function (e) {
+                var id=$(this).data("target");
+
+                var nodeList=[]
+                var isDel=true;
+                    var node= $('#unitParentTree').tree("getSelected");
+                    if(node){
+                         nodeList= $('#unitParentTree').tree("getSelected");
+                    }
+                if(nodeList.length>0){
+                    for(var j=0;j<nodeList.length;j++){
+                       if(nodeList[j].Id==id){
+                           isDel=false;
+                           $("#unitGrid").datagrid("uncheckRow",j);
+                       }
+                    }
+
+                }
+                if(isDel) {
+                    that.reloadUnitData([{id: id}]);
+                }
 
 
+            });
+            that.reloadUnitData();
+        },
+        //刷新选中门店数据
+        reloadUnitData:function(delList){
+            var that=this;
+           var   selectDataUnit=that.selectDataUnit;
+
+            if (selectDataUnit.length > 0&&delList&&delList.length>0) {
+                var dataUnitlist=[];
+                for (var i = 0; i < selectDataUnit.length; i++) {
+                    for(var j=0;j<delList.length;j++) {
+                        var delNode=delList[j]
+                        if (delNode.id !== selectDataUnit[i].id) {
+                            var children=[];
+                            if(selectDataUnit[i].children&&selectDataUnit[i].children.length>0){
+                                for (var K = 0; K < selectDataUnit[i].children.length; K++) {
+                                    if (delNode.id !== selectDataUnit[i].children[K].id) {
+                                        children.push(selectDataUnit[i].children[K])
+                                    }
+                                }
+                            }
+                            if(children.length>0) {
+                                var nodeNew = {
+                                    id: selectDataUnit[i].id,
+                                    text: selectDataUnit[i].text,
+                                    "children": children
+                                };
+
+                                dataUnitlist.push(nodeNew);
+                            }
+                        }
+                    }
+
+                }
+                that.selectDataUnit=dataUnitlist;
+                selectDataUnit=dataUnitlist;
+            }
+
+
+
+            $('#unitTreeSelect').tree("loadData",selectDataUnit);
+
+        },
+
+
+        //缓存选中门店的数据
+        cacheUnitData:function(){
+            debugger;
+            var that=this;
+            var isAdd = true,nodeList=[];
+
+
+              var node= $('#unitParentTree').tree("getSelected");
+               nodeList=$("#unitGrid").datagrid('getChecked');
+              var nodeParent={id:node.id,text:node.text,"children":[]};
+            var nodeObjList=[];
+              if(nodeList.length>0){
+                  for(var j=0;j<nodeList.length;j++){
+                      var obj={};
+                      obj["id"]=nodeList[j].Id;
+                      obj["text"]=nodeList[j].Name;
+                      nodeObjList.push(obj)
+                  }
+                  nodeParent["children"]=nodeObjList;
+              }
+              var dataUnitlist=[],  selectDataUnit=that.selectDataUnit;
+
+              if (selectDataUnit.length > 0) {
+                  for (var i = 0; i < selectDataUnit.length; i++) {
+                      if (nodeParent.id!== selectDataUnit[i].id) {
+                          var nodeNew={id:selectDataUnit[i].id,text:selectDataUnit[i].text,"children":selectDataUnit[i].children};
+                          dataUnitlist.push(nodeNew);
+                      }
+
+                  }
+              }
+              if(nodeObjList.length>0){
+                  dataUnitlist.push(nodeParent)
+              }
+
+            that.selectDataUnit=dataUnitlist;
+            $('#unitTreeSelect').tree("loadData",dataUnitlist);
+        },
+         //绑定门店数据
+        renderTableUnit:function(){
+                 var that=this;
+           var node= $('#unitParentTree').tree("getSelected");
+            if(node){
+                that.loadData.unitSearch.Parent_Unit_ID=node.id;
+            } else{
+                alert("请选择一个门店上级组织");
+                return;
+            }
+            that.loadData.unitSearch.unit_name=$("#unit_name").val();
+
+            that.loadData.getUnitList(function(data){
+                var isSubMit=false;
+                  $("#unitGrid").datagrid({
+                      method : 'post',
+                      iconCls : 'icon-list', //图标
+                      singleSelect : false, //多选false 单选true
+                      height : 430, //高度
+                      fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                      striped : true, //奇偶行颜色不同
+                      collapsible : true,//可折叠
+                      scrollbarSize:18,
+                      //数据来源
+                      data:data.topics,
+                      sortName : 'Id', //排序的列
+                      /*sortOrder : 'desc', //倒序
+                       remoteSort : true, // 服务器排序*/
+                      idField : 'Id', //主键字段
+                      /* pageNumber:1,*/
+
+                      columns : [[
+                          {field : 'Name',title : '店名',width:60,align:'left',resizable:false,
+                              formatter:function(value ,row,index){
+                                  return value;
+                              }
+                          },
+                   /*       {field : 'Contact',title : '联系人',width:70,align:'left',resizable:false,
+                              formatter:function(value ,row,index){
+                                  return value;
+                              }
+                          },
+                          {field : 'Telephone',title : '电话',width:60,resizable:false,align:'left',resizable:false,formatter:function(value ,row,index){
+                              return value;
+                          }
+                          },
+                          {field : 'Parent_Unit_Name',title : '上级组织',width:80,align:'left',resizable:false,
+                              formatter:function(value,row,index){
+                                  return value
+                              }
+                          },
+                          {field : 'StoreType',title : '类型',width:60,align:'left',resizable:false,formatter:function(value ,row,index){
+                              var staus;
+                              switch (value){
+                                  case "DirectStore": staus="直营店";break;
+
+                                  case "NapaStores": staus= "加盟店"; break;
+                              }
+                              return staus;
+                          }
+                          },
+                          {field : 'Status',title : '状态',width:60,align:'left',resizable:false,
+                              formatter:function(value ,row,index){
+                                  var staus;
+                                  switch (value){
+                                      case "1": staus="正常";break;
+
+                                      case "-1": staus= "停用"; break;
+                                  }
+                                  return staus;
+                              }
+                          },*/
+
+                          {
+                              field : 'ck',
+                              width:20,
+                              title:'全选',
+                              align:'center',
+                              checkbox : true
+                          }
+
+
+                      ]],
+                    /*  frozenColumns:[[
+                          {
+                              field : 'ck',
+                              width:70,
+                              title:'全选',
+                              align:'center',
+                              checkbox : true
+                          }
+                      ]],*/
+                      onLoadSuccess : function(data) {
+                          debugger;
+
+                          $("#unitGrid").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                          isSubMit=true;
+                      },
+
+                      onCheck:function(){
+                          var check= $("#unitGrid").datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                          if(check){
+                              $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
+                          } else{
+                              $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
+                          }
+                          if(isSubMit) {
+                              that.cacheUnitData();
+                          }
+
+                      } ,
+                     onUncheck:function(){
+                         var check= $("#unitGrid").datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                         if(check){
+                             $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
+                         } else{
+                             $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
+                         }
+                         if(isSubMit) {
+                             that.cacheUnitData();
+                         }
+
+                      } ,
+                      onCheckAll:function(){
+                          $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
+                          if(isSubMit) {
+                              that.cacheUnitData();
+                          }
+                      } ,onUncheckAll:function(){
+                          $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
+                          if(isSubMit) {
+                              that.cacheUnitData();
+                          }
+                      }
+
+
+                  });
+            })
+
+        },
+
+        renderProductTable :function(){
+            var that=this;
+             var batId=$("#selectType").combobox("getValue");
+            var node= $('#unitParentTree').tree("getSelected");
+            if(node){
+                that.loadData.productSearch.CategoryId=node.id;
+            } else{
+                if(batId==1) {
+                    alert("请选择一个分类");
+
+                }else{
+                    alert("请选择一个分组");
+                }
+                return;
+            }
+            that.loadData.productSearch.ItemName=$("#ItemName").val();
+            that.loadData.getProductList(function(data){
+                debugger;
+                var isSubMit=false;
+                var prdouctList=[];
+                if(data.Data&&data.Data.ItemSkuInfoList.length>0){
+                    prdouctList= data.Data.ItemSkuInfoList;
+                }
+                $("#unitGrid").datagrid({
+                    method : 'post',
+                    iconCls : 'icon-list', //图标
+                    singleSelect : false, //多选false 单选true
+                    height : 430, //高度
+                    fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                    striped : true, //奇偶行颜色不同
+                    collapsible : true,//可折叠
+                    scrollbarSize:18,
+                    //数据来源
+                    data:prdouctList,
+                    sortName : 'Id', //排序的列
+                    /*sortOrder : 'desc', //倒序
+                     remoteSort : true, // 服务器排序*/
+                    idField : 'Id', //主键字段
+                    /* pageNumber:1,*/
+
+                    columns : [[
+                        {field : 'item_name',title : '商品名称',width:60,align:'left',resizable:false,
+                            formatter:function(value ,row,index){
+                                return value;
+                            }
+                        },
+                        {field : 'item_code',title : '商品名称',width:60,align:'left',resizable:false,
+                            formatter:function(value ,row,index){
+                                return value;
+                            }
+                        },
+
+                        {
+                            field : 'ck',
+                            width:20,
+                            title:'全选',
+                            align:'center',
+                            checkbox : true
+                        }
+
+
+                    ]],
+                    /*  frozenColumns:[[
+                     {
+                     field : 'ck',
+                     width:70,
+                     title:'全选',
+                     align:'center',
+                     checkbox : true
+                     }
+                     ]],*/
+                    onLoadSuccess : function(data) {
+                        debugger;
+
+                        $("#unitGrid").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                        isSubMit=true;
+                    },
+
+                    onCheck:function(){
+                        var check= $("#unitGrid").datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                        if(check){
+                            $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
+                        } else{
+                            $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
+                        }
+                        if(isSubMit) {
+                            that.cacheUnitData();
+                        }
+
+                    } ,
+                    onUncheck:function(){
+                        var check= $("#unitGrid").datagrid("getPanel").find(".datagrid-header-check").find("input").get(0).checked
+                        if(check){
+                            $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
+                        } else{
+                            $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
+                        }
+                        if(isSubMit) {
+                            that.cacheUnitData();
+                        }
+
+                    } ,
+                    onCheckAll:function(){
+                        $(this).datagrid("getPanel").find(".datagrid-header-check").addClass("on");
+                        if(isSubMit) {
+                            that.cacheUnitData();
+                        }
+                    } ,onUncheckAll:function(){
+                        $(this).datagrid("getPanel").find(".datagrid-header-check").removeClass("on");
+                        if(isSubMit) {
+                            that.cacheUnitData();
+                        }
+                    }
+
+
+                });
+            })
+
+        },
+        selectProduct:function(data){
+            var that=this;
+            that.elems.optionType="selectUnit";
+            var top=$(document).scrollTop()+60;
+            var left=$(window).width() - 1140>0 ? ($(window).width() - 1140)*0.5:80;
+            $('#win').window({title:"选择商品",width:1140,height:730,top:top,left:left});
+            $('#panlconent').layout('remove','center');
+            var html=bd.template('tpl_setProduct');
+            var options = {
+                region: 'center',
+                content:html
+            };
+            $('#panlconent').layout('add',options);
+            $("#win").window("open");
+            //组织层级
+            that.loadData.getClassify(function(data) {
+                if(!(data&&data.length>0)){
+                    data=[];
+                }
+                debugger;
+                $('#unitParentTree').tree({
+                    id: 'id',
+                    text: 'text',
+                    data:data,
+                    onClick:function(node) {
+                        that.renderProductTable();
+                    }
+                });
+            });
+            $('#unitTreeSelect').tree({
+                id: 'id',
+                text: 'text',
+                checkbox:true,
+                formatter:function(node){
+                    debugger;
+                    var s = node.text;
+                    if (node.children){
+                        // s += '&nbsp;<span style=\'color:blue\'>(' + node.children.length + ')</span>';
+                    }else{
+                        s+='<em class="delete" title="删除" data-target='+node.id+'></em>'
+                    }
+                    return s;
+                },
+                data:[]
+
+            });
+            $("#unitTreeSelect").delegate(".delete","click", function (e) {
+                var id=$(this).data("target");
+
+                var nodeList=[]
+                var isDel=true;
+                var node= $('#unitParentTree').tree("getSelected");
+                if(node){
+                    nodeList= $('#unitParentTree').tree("getSelected");
+                }
+                if(nodeList.length>0){
+                    for(var j=0;j<nodeList.length;j++){
+                        if(nodeList[j].Id==id){
+                            isDel=false;
+                            $("#unitGrid").datagrid("uncheckRow",j);
+                        }
+                    }
+
+                }
+                if(isDel) {
+                    that.reloadUnitData([{id: id}]);
+                }
+
+
+            });
+            //that.reloadUnitData();
+        },
         //收款
         addNumber:function(data){
             debugger;
@@ -547,11 +1054,24 @@
                 Status:-1,
                 page:1,
                 start:0,
-                limit:15
+                limit:15,
+
             },
             tag:{
                 VipId:"",
                 orderID:''
+            },
+            unitSearch:{
+                unit_name:'',//门店名称
+                unit_status:'1',//int	否	状态（1:正常，０：失效）
+                StoreType:'',//string	否	门店类型 直营店：DirectStore，加盟店：NapaStores
+                Parent_Unit_ID:'',
+                OnlyShop:'1' //int	是	只取门店（是：1,否：０）
+            },
+            productSearch :{
+                ItemName:"",
+                CategoryId:"",
+                BatId:"1"
             },
             seach:{
                 item_category_id:null,
@@ -617,7 +1137,27 @@
                     }
                 });
             },
+            getProductList:function(callback){
+                $.util.ajax({
+                    url: "/ApplicationInterface/Gateway.ashx",
+                    data:{
+                        action:"CreativityWarehouse.MarketingActivity.GetSkuInfoByCategoryOrName",
+                        ItemName:this.productSearch.ItemName,
+                        CategoryId:this.productSearch.CategoryId,
+                        BatId:this.productSearch.BatId
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess && data.ResultCode == 0) {
+                            if (callback) {
+                                callback(data);
+                            }
 
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
             GetRetailTraders: function (callback) {
                 debugger;
                 $.util.ajax({
@@ -641,8 +1181,50 @@
                     }
                 });
             },
-
-
+            //获取门店等级
+            getUnitClassify: function(callback){
+                $.util.isLoading()
+                $.util.ajax({
+                    url: "/ApplicationInterface/Module/Basic/UnitAndType/UnitTypeTreeHandler.ashx",
+                    data:{
+                        hasShop:0
+                    },
+                    success: function(data){
+                        if(data){
+                            if(callback)
+                                callback(data);
+                        }
+                        else{
+                            alert("门店数据加载不成功");
+                        }
+                    }
+                });
+            },
+            //只获取门店列表
+            getUnitList: function (callback) {
+                $.util.isLoading();
+            debugger;
+        $.util.oldAjax({
+            url: "/module/basic/unit/Handler/UnitHandler.ashx",
+            data:{
+                action:'search_unit',
+                page:1,
+                //start:this.args.start,
+                limit:100000,
+                form:this.unitSearch
+            },
+            success: function (data) {
+                if (data.topics) {
+                    if (callback) {
+                        callback(data);
+                    }
+                } else {
+                    alert("加载门店列表数据不成功");
+                }
+            }
+        });
+    },
+            //分类
             getClassify: function (callback) {
                 $.util.oldAjax({
                     url: "/module/basic/ItemCategoryNew/Handler/ItemCategoryTreeHandler.ashx",
@@ -676,24 +1258,20 @@
 
                 prams.data["UsableRange"]=$(".radio.on[data-usablerange]").data("usablerange");
 
-                var str= $("#applicationType").combobox("getValue");
+               /* var str= $("#applicationType").combobox("getValue");*/
                 //适用门店(1=所有门店；2=部分门店/分销商;3=所有分销商)
-                        if( $(".checkBox.on[data-flag='SuitableForStore']").length>0){
-                            if(str==0){
-                                prams.data["SuitableForStore"]=1
-                            }else if(str==1){
-                                prams.data["SuitableForStore"]=3
-                            }
+                        if( $(".radio.on[data-name='unit']").data("valuetype")=="all"){
+                            prams.data["SuitableForStore"]=1
                         }else{
                             prams.data["SuitableForStore"]=2;
                             prams.data.ObjectIDList=[];
                            var data= page.elems.listTable.datagrid("getData");
                            for(var i=0;i<data.rows.length; i++){
-                               if(str==0) {
+
                                    prams.data.ObjectIDList.push({"ObjectID": data.rows[i].id});
-                               }else{
-                                   prams.data.ObjectIDList.push({"ObjectID": data.rows[i].RetailTraderID});
-                               }
+
+                                  // prams.data.ObjectIDList.push({"ObjectID": data.rows[i].RetailTraderID});
+
                             }
 
                         }
@@ -701,8 +1279,7 @@
                     if(field.value!=="") {
                         prams.data[field.name] = field.value;
                     }
-                })
-
+                });
                 if(prams.data["ParValue"]==="0.00"||prams.data["ParValue"]==="0"){
                    $.messager.alert("错误提示","优惠券面值必须大于零");
                     return false;
@@ -714,7 +1291,6 @@
                     url: prams.url,
                     data: prams.data,
                     beforeSend: function () {
-
                         $.util.isLoading();
                     },
                     success: function (data) {
@@ -722,7 +1298,6 @@
                             if (callback) {
                                 callback(data);
                             }
-
                         } else {
                             alert(data.Message);
                         }
@@ -731,9 +1306,47 @@
             }
 
 
-        }
-
+        },
+		addGroupDialog:function(){
+            var that=this;
+            $('#win').window({title:"选择品类分组",width:550,height:480,top:50,left:($(window).width() - 550) * 0.5});
+            //改变弹框内容，调用百度模板显示不同内容
+            $('#panlconent').layout('remove','center');
+            var html=bd.template('tpl_addProm');
+            var options = {
+                region: 'center',
+                content:html
+            };
+            $('#panlconent').layout('add',options);
+        },
+		getGroupTree:function(roleId,defAppId){
+			var that = this;
+			$.util.oldAjax({
+				url: "/Module/Basic/Role/Handler/RoleHandler.ashx",
+				  data:{
+					  action:'get_sys_menus_by_role_id',
+					  role_id:roleId,
+					  app_sys_id:defAppId
+				  },
+				  success: function (data) {
+					if(data.totalCount) {
+						var result = data.data;
+						$("#selectGroupTreeBox").tree({
+							//animate:true,
+							//lines: true,
+							checkbox: true,
+							cascadeCheck: false,
+							//valueField: 'id',
+							//textField: 'text',
+							data: result
+						});
+						
+					}else{
+						alert("加载数据不成功");
+					}
+				}
+			});
+		}
     };
     page.init();
 });
-

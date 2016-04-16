@@ -279,7 +279,9 @@
                         field: 'addOptdel', title: '操作', width: 200, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             var str = "<div class='operation'><div data-index=" + index + " data-flag='add' class='btnAdd  opt' title='追加'> </div>";
+
                             str += "<div data-index=" + index + "  data-flag='Download' data-TypeName='" + row.CouponTypeName + "' data-TypeID='" + row.CouponTypeID + "' class='btnDownload  opt' title='下载'> </div>";
+
                             str += "<div data-index=" + index + " data-flag='delete' class='delete opt' title='删除'></div></div>";
                             return str
                         }

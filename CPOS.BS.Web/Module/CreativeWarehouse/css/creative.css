@@ -1,0 +1,156 @@
+@charset "utf-8";
+.tip{ width: 100%;}
+.panelDiv{display: none;}
+.lineText .logo{ width: 265px; height: 265px;}
+.lineText .uploadTip{left: 285px; bottom: 23px;}
+.lineText .uploadTip .tip{ float: none;white-space:nowrap}
+.imgTable{ width: 100%; float: left;}
+.btnopt{margin: 0 auto; width:220px; display: block; }
+.contentArea_vipquery{ min-height: 500px;}
+.panelDiv{ padding-bottom: 40px;padding-top: 44px;}
+.mainPanel{ width: 716px;margin:0 auto;   ;position: relative;}
+.mainPanel .content{height:412px;width:710px;margin: 0 auto;}
+#slider{height:310px;min-width: 756px;}
+.slide{position: relative;width: 230px; height:310px; cursor: pointer;}
+.slide img{width: 172px;height: 270px;}
+.slide.on em{ width: 172px; height:270px; display: block; background: rgba(0,0,0, 0.4) url("../images/applyWhite.png") no-repeat center center; position: absolute ; top:0; left: 0;}
+.slide p{width: 172px;text-align: center;line-height: 40px;font-size: 14px; color: #666; height: 40px; position:absolute;bottom: 0; left: 0;}
+
+
+.btnItem{  width: 260px;float:left; text-align:center;margin-left: 36px; cursor:pointer; height: 60px; border-radius: 6px; border: 2px solid #e1e7ea;  background-color:#f7f7f7}
+.btnItem.on{ background-color:#fff; border-color: #00a0e8;}
+.btnItem p{ width: 100px;  text-align: center; margin: 0 auto; height: 30px; margin-top: 15px;font-size: 16px; line-height: 30px; color:#666;}
+.btnItem.on em{ width: 30px; height: 30px;display: block; float: left; background:url("../images/selectBtn.png") no-repeat center center;}
+.btnItem.disable{ background-color:#fafafa; border: #e9eff2 2px solid;}
+.btnItem.disable p{ color: #ccc;}
+
+/*推广*/
+.spread{ width: 970px;  margin:0 auto;}
+
+.spread  .spreadPanel{width: 280px; height:500px; text-align: center; float: left; background-color: #f7f7f7;position: relative;}
+.spreadPanel .contentDiv{width: 232px;margin: 0 auto}
+.spreadPanel .title{ margin: 20px 0 16px 24px;}
+.spreadPanel .contentDiv .tabDiv{height: 133px;padding: 10px}
+.spreadPanel .contentDiv .tabDiv.on{ background-color: #45d0bf; }
+.spreadPanel .contentDiv .tabDiv .l{width: 66px; height: 106px; border: 2px solid #fff;background-color: #d9dee1}
+.spreadPanel .contentDiv .tabDiv em{float: left; padding-left: 15px; line-height: 133px; white-space: nowrap;font-size: 13px; color:#666;}
+.spreadPanel .contentDiv .tabDiv.on em{color: #fff;}
+.spread .spreadPanel.page{background: url("../images/pagePhone.png") no-repeat;}
+.spread .spreadPanel .phoneTitle{  position: absolute; top: 18px; left: 50px;color: #fff;width: 203px;height: 23px;line-height: 23px;font-size: 12px;}
+/*图文*/
+.spreadPanel .phoneWebDiv{ text-align:left; margin: 0 auto;margin-top:60px;  background: #fff; border:1px solid #dadada; padding-left: 6px; border-radius: 4px;}
+.spreadPanel .phoneWebDiv  .txtTitle{line-height: 32px; font-size: 12px;color: #262626; text-align: left;}
+.spreadPanel .phoneWebDiv span{ color: #8d8d8d; line-height: 22px; font-size: 10px}
+.optionPrize{display:none}
+/*分享*/
+.spreadPanel .phoneWebDiv.share{ width:182px;margin-top:66px; position: relative; float: left;margin-left: 42px;}
+.spreadPanel .phoneWebDiv .shareImg{ width:42px; height: 42px; text-align: center;vertical-align: middle;}
+.spreadPanel .phoneWebDiv .shareImg img{ width: 100%;}
+.shareIcon{position: absolute; top: -12px; left: -37px;}
+.spreadPanel .phoneWebDiv .jt_tip{background: url("../images/icon_jiantou.png") no-repeat ; width: 6px; height: 10px; position: absolute; left: -6px;top: 10px;}
+
+.spreadPanel .phoneWebDiv.attention{padding: 0; margin: 0 0 0 0 }
+.spread .spreadPanel.attention{width: 320px; height: 485px;margin: 0 60px;}
+.erweiMaPanel{position: absolute; top: 88px; left: 50%;width: 156px; margin-left: -77px;}
+.erweiMaPanel p{ background: #fff;height: 30px; width: 100%; margin-bottom: 15px; line-height: 30px; font-size: 12px; border-radius: 3px;}
+.erWeiMa{ width: 155px; line-height: 155px; height: 155px; border-radius: 4px; background-color: #fff;  /* vertical-align:middle */}
+.erweiMaPanel .textBtn{ width: 144px; height: 30px; color: #fff; background-color:#f65564; line-height: 30px; font-size: 12px; margin: 0 auto; border-radius: 2px; margin-top:8px; }
+.radioList{margin-left: 25px;}
+.radio{height:33px; cursor: pointer;}
+.radio span{ font-size: 12px;}
+.checkBox{height:33px}
+.checkBox span{ font-size: 12px;}
+.spreadPanel .phoneWebDiv.attention img{width: 100%;height:100%}
+.radio .numberbox { float: none; margin-left: 5px; margin-right: 5px; padding: 0; cursor: pointer;}
+.listType{ width: 100%; height: 45px;}
+.listType span{cursor:pointer; width:35px; border: 1px solid #e1e7ea; height: 35px;margin-left: 8px; float:left; text-align: center; line-height: 35px; font-size: 14px;}
+.phonePanel{position:relative;overflow:hidden; background: url("../images/pageBg.png") no-repeat center center; height: 500px; width: 320px; }
+.phonePanel .draggable{position: absolute; left:15px; top: 15px; z-index: 99; width: 62px; height: 40px;text-align: left;}
+.action{ position: absolute; width: 100%; bottom: 66px; margin: 0 auto;}
+.spreadPanel .action div{ margin: 0 auto; position:relative; width: 210px; height: auto}
+.spreadPanel .action div em { cursor: pointer; position:absolute; right: 13px; bottom: 8px;font-size:12px; color: #fff;}
+.spreadPanel .action div em i{ font-size: 20px;float: right;padding-left: 3px;line-height: 15px;}
+.subMitPanel{float: left; width: 300px; margin-left: 135px;}
+.example-wp{width: 352px; margin: 0 auto;}
+*{
+    box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    -ms-box-sizing: inherit;
+    -webkit-box-sizing: inherit;
+}
+
+.editIconBtn{ position: absolute;top:0; right: 0; cursor: pointer; width: 24px; height: 24px; display: block; background: url("../images/edit.png") no-repeat;}
+
+
+/*win弹框*/
+.layout-body{ text-align: center;}
+.imgUploadPanel{ width: 509px; height:53px; display: inline-block;margin: 0 auto; text-align: center; }
+.imgUploadPanel p{ font-size: 12px; color: #a7a7a7; line-height: 26px;text-align: left;}
+.imgUploadPanel p b{font-size: 13px;color: #666 }
+.imgUploadPanel .lineText{width: 100px; float: right; padding:0;}
+.imgUploadPanel .lineText .textBtn{color: #00a0e8;width: 72px; font-size: 12px;line-height: 22px;}
+.imgUploadPanel img{max-width: 160px; min-width: 64px;margin-top:20px; }
+
+.imgUploadPanel .imgPanel{ width: 100%; height: auto; text-align: center;float: left;}
+
+/*图文*/
+.imgTextPanel{width: 500px; height: 510px; margin: 0 auto; padding-top: 20px;}
+.imgTextPanel .titleInput{ height: 50px; border: 1px dashed #e5e5e5; margin-bottom:10px;}
+.imgTextPanel .titleInput input{background:#fff; width: 100%; height: 50px; border: none; line-height: 50px;}
+.imgTextPanel .msgInput{ height: 100px; border: 1px dashed #e5e5e5; margin-bottom:10px; margin-top:10px;}
+.imgTextPanel .msgInput textarea{width: 100%; height: 100%;}
+/*分享*/
+.lineText .imgPanel{ width: 100px; height: 100px; margin-bottom:10px; display: inline-block}
+.lineText .imgPanel img{width: 100%; height: 100%;}
+.lineText .l{ width: 100px; float: left;}
+.lineText .r{width: 390px;}
+
+/*引导000*/
+.checkBox .commonBtn{ float: right; display: none;}
+.checkBox em{ float: left;}
+.checkBox span{ float: left; margin:0;}
+.checkBox .commonBtn.icon_add{ margin-right: 10px;}
+
+.taleWarp{ max-height: 600px; display: none;}
+.showPanel{ width: 98%; margin: 0 auto; text-align:left;}
+.w50{ width: 50px;}
+.w60{ width: 60px;}
+
+.datebox .combo-arrow{padding-right:6px;}
+
+.commonSelectWrap .searchInput{ white-space: nowrap;}
+.commonSelectWrap .searchInput em{ font-size: 12px;padding-left: 8px;}
+.listName{
+    position: absolute;
+    top: 218px;
+    left: 50%;
+    color: #ccc;
+    margin-left: -100px;
+}
+
+
+/*发布预览二维码*/
+.QRcode {width:235px;float:left;  margin: 0 24px;}
+.QRcode .title{color:#00a0e8;font-size:13px;line-height: 25px; text-align: left;}
+.QRcode .desc{line-height: 25px;color: #bfbfbf;}
+.QRcode .codeimg{  border: 3px solid #f1f1f1;  padding: 15px;  margin-top: 15px;}
+.QRcode .codeimg img{width:200px;height: 200px; }
+.QRcode .downbtn{}
+.QRcode .downbtn .commonBtn{  width: 80px;margin: 15px auto;}
+.QRcode .address{}
+.QRcode .address input{float:left;height: 30px;width: 188px;}
+.QRcode .address .commonBtn{  width: 40px;float:left;  margin-left: 5px;}
+
+/*推广的文字和颜色编辑*/
+.textColorPanel{ width: 510px;text-align: left; line-height:24px;margin: 20px auto;}
+.textColorPanel .panelTitle{  color: #666;  font-size: 14px;  }
+.textColorPanel .desc{color: #a7a7a7; font-size: 12px;}
+.textColorPanel .textBtn{ width: 195px; height: 40px; font-size: 13px; line-height: 40px; color: #fff;}
+.textColorPanel .textBtn input{ width: 100%; height: 40px; text-align: center;}
+.textColorPanel .inputBox{ margin: 0 auto; width: 258px; margin-top:48px;border:1px solid #ccc;}
+.textColorPanel .inputBox input{ width: 258px; height: 30px; margin: 0 auto; line-height: 30px;}
+
+
+.outside{position: relative; display:inline-block; width: 100%;}
+.outside .editIconBtn{top: -3px; right: -24px;}
+.bx-wrapper{ width:642px; float: left;padding-top: 8px;}

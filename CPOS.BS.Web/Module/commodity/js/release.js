@@ -1190,7 +1190,7 @@
 
                     }else{
                         for (var  i= 0; i < skuList.length; i++) {
-                            debugger;                                                                      i
+                            debugger;
                             var dome = skuList.eq(i);
                             var row = dome.data("row");
                             if (row) {

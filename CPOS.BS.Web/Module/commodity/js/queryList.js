@@ -10,7 +10,6 @@
             thead:$("#thead"),                    //表格head部分
             showDetail: $('#showDetail'),         //弹出框查看详情部分
             operation:$('#opt,#Tooltip'),              //弹出框操作部分
-			 dataMessage:$(".dataMessage"),
             vipSourceId:'',
             click:true,
             dataMessage:  $("#pageContianer").find(".dataMessage"),
@@ -420,7 +419,7 @@
             //分页
             data.Data={};
             data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
-            var page=parseInt(that.loadData.args.start/15);
+            var page=parseInt(that.loadData.args.start/that.loadData.args.limit);
             kkpager.generPageHtml({
                 pno: page?page+1:1,
                 mode: 'click', //设置为click模式
@@ -459,7 +458,7 @@
         //加载更多的资讯或者活动
         loadMoreData: function (currentPage) {
             var that = this;
-            this.loadData.args.start = (currentPage-1)*15;
+            this.loadData.args.start = (currentPage-1)*that.loadData.args.limit;
             that.loadData.getCommodityList(function(data){
                 that.renderTable(data);
             });
@@ -493,7 +492,7 @@
                 Status:-1,
                 page:1,
                 start:0,
-                limit:15
+                limit:10
             },
             tag:{
                 VipId:"",

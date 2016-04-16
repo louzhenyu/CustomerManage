@@ -39,6 +39,29 @@ require.config({
         zTree: {
             deps: ['jquery'],
             exports: 'zTree'
+        },
+        //jvveshowc shim config
+        'jquery-jvve': {
+            'deps': ['jquery'],
+            'init': function(){
+                window.jQjvve = jQuery.noConflict(true);
+                return window.jQjvve;
+            }
+        },
+        'jquery-event-move': {
+            'deps': ['jquery']
+        },
+        'jquery-event-swipe': {
+            'deps': ['jquery-event-move']
+        },
+        'jquery-slimScroll': {
+            'deps': ['jquery']
+        },
+        'jquery-ui': {
+            'deps': ['jquery-jvve']
+        },
+        'jquery-easy-ui': {
+            'deps': ['jquery']
         }
     },
     paths: {
@@ -52,7 +75,8 @@ require.config({
         easyui: '/Module/static/js/lib/jquery.easyui.min',
         langzh_CN: '/Module/static/js/lib/easyui-lang-zh_CN',
         validator: '/Module/static/js/lib/validator',
-        newJquery: '/Module/Withdraw/js/jquery',
+        /*jquery: '/Module/Withdraw/js/jquery',*/
+        newJquery: '/Module/Withdraw/js/jquery',  //jquery版本兼容问题，待定
         pagination: '/Module/static/js/plugin/jquery.jqpagination',
         json2: '/Module/static/js/plugin/json2',
         kindeditor1: '/Module/static/js/plugin/kindeditor',
@@ -63,7 +87,15 @@ require.config({
         kkpager: '/Module/static/js/plugin/kkpager',
         touchslider: '/Module/static/js/plugin/touchslider',
 		highcharts: '/Module/static/js/plugin/highcharts',
+		lang: '/Framework/Javascript/Other/kindeditor/lang/zh_CN',
+        bxslider: '/Module/static/js/plugin/jquery.bxslider',
 
+        'jquery-jvve': '/Module/static/js/vendor/jquery-2.2.0/jquery',
+        'jquery-ui-jvve': '/Module/static/js/vendor/jquery-ui-1.11.4/jquery-ui-jvve',
+        'caman': '/Module/static/js/vendor/CamanJS-4.1.2/caman',
+        'jquery-event-move': '/Module/static/js/vendor/jquery-event-move-1.3.6/jquery.event.move',
+        'jquery-event-swipe': '/Module/static/js/vendor/jquery-event-swipe-0.5/jquery.event.swipe',
+        'jquery-slimScroll': '/Module/static/js/vendor/jquery-slimScroll-1.3.7/jquery.slimscroll'
     }
 });
 
