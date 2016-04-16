@@ -1,0 +1,118 @@
+﻿@charset "utf-8";
+.queryTermArea {background: #fff;}
+.window {position:fixed;}
+.messager-window {  position: absolute;}
+.dataMessage2, .dataMessage3{
+  text-align: center;
+  font-size: 14px;
+  line-height: 35px;
+}
+.addActivityBtn {margin-left: 14px;width:100px;background-color:#f65564;}
+.viewall {  line-height: 30px;color: #00a0e8;margin-left: 100px;}
+.viewdesc {color:#00a0e8;}
+.lineform {text-align: center;  height: 30px;margin: 10px 0px;}
+.lineinput {  width: 200px;display: inline-block;text-align: left;}
+.submit {  border-radius: 38px;color: #fff;border: none; width: 110px;height: 36px;line-height: 36px;}
+.contentArea_vipquery {margin-left:20px;}
+
+/*活动类型start*/
+.ActivityGroups {  margin-top: 10px;  width: 100%;  float: left;}
+.ActivityGroups .graycolor { border: 2px solid #ddd;  color: #ddd; }
+.ActivityGroups .graycolor  .ActivityGroupImg {background-color:#ddd;}
+.hotcolor {background-color:#f65564;}
+.hotbordercolor {border: 2px solid #f65564;  color: #f65564;}
+.holidaycolor {background-color:#f8b62c;}
+.holidaybordercolor {border: 2px solid #f8b62c;  color: #f8b62c;}
+.stockcolor {background-color:#71ba36;}
+.stockbordercolor {border: 2px solid #71ba36;  color: #71ba36;}
+.ActivityGroupName {float: left;  margin-right: 20px;cursor:pointer;}
+.ActivityGroupName .ActivityGroupImg {width: 336px;height: 100px;vertical-align: middle;padding-top: 20px;padding-left:25px;}
+.ActivityGroupName .ActivityGroupstatus {  font-size: 14px;height: 40px;padding-top: 10px;}
+.ActivityGroupName .ActivityGroupstatus .num{  margin-left: 10px;}
+.ActivityGroupName .running {float:left;width: 33%;text-align: center;border-right: 1px solid;}
+.ActivityGroupName .unreleased {float:left;width: 33%;text-align: center;border-right: 1px solid;}
+.ActivityGroupName .invalid {float:left;width: 33%;text-align: center;}
+
+/*活动类型end*/
+.listdata {  margin-top: 10px;float: left;}
+.Activity {  float: left;  width: 250px;  margin-top: 20px;  margin-right: 20px;}
+.Activity .ActivityContent {position:relative;border: 1px solid #e1e7ea;border-bottom:none;}
+.Activity .Activityimg {width:250px;height:250px;}
+.Activity .Activityimg img{width:248px;  max-height: 100%;}
+.Activity .ActivityStatus {  position: absolute;top: 0px;  right: 0px;width: 50px;line-height: 20px; text-align: center;color: #fff;}
+.Activity .ActivityQRcode {  width: 100%;height: 100%;position: absolute; top: 0px;  display: none;background-color:rgba(0,0,0,0.5);}
+.Activity .ActivityQRcode img {width:116px;  position: absolute;top: 50%;left: 50%; margin-left: -58px;margin-top: -58px;}
+.Activity .ActivityDesc {  position: absolute;bottom: 0px;width: 100%;background-color:rgba(0,0,0,0.5);  color: #fff;}
+.Activity .ActivityDesc span {line-height:30px;margin-left: 10px;}
+.Activity .ActivityDesc .edit {float:right;margin-right: 10px;background: url("../../../styles/images/newYear/exit1.png") no-repeat center center;   width: 30px;height: 30px;  cursor: pointer;}
+.Activity .ActivityOpeartion {width: 100%;border: 1px solid #e1e7ea;  display: inline-block;height: 60px;}
+.Activity .ActivityOpeartion  .Opeartiondesc {  width: 100px;float: left;  margin: 10px;}
+.ActivityOpeartion .releasebtn {  float: right;  height: 27px;width: 70px; background-color: #f65564;border-radius: 5px; text-align: center;line-height: 27px;margin: 15px 10px;  color: #fff;cursor: pointer;}
+.ActivityOpeartion .view { background-color: #00a0e8; }
+.Opeartiondesc .viewdata {color:#00a0e8;cursor:pointer;}
+.Opeartiondesc .date {color:#b2b2b2;}
+.blackBG {background-color:#000;}
+.blueBG {background-color:#00a0e8;}
+.redBG {background-color:#f65564;}
+.release, .ReleaseSuccessbtn {background-color: #f65564;}
+.ReleaseSuccess {  margin: 50px 20px;}
+
+/*活动详情*/
+.Activitydesc {width:1200px;}
+.EventDataOperation {margin:30px 50px;}
+.EDO_opt {display:inline-block;width: 100%;margin: 10px 0px;}
+.EDO_opt .commonBtn {float:left;margin-right: 7px;width:70px;}
+.EDO_data {display:inline-block;margin: 10px 0px;width: 100%;}
+.prizecount {background-color:#f7f7f7;width: 615px;height: 250px;border-radius: 10px;border: 1px solid #e0e0e0;  float: left;margin-right: 20px;  padding:0px 25px;font-size:16px;}
+.fansmember {font-size:17px;}
+.fansdata {background:url(../images/fans.png) no-repeat 35px center;  background-color:#f7f7f7;color:#3bc76e;border-radius: 10px;border: 1px solid #e0e0e0;  float: left;width: 430px;height: 120px;margin-bottom: 10px;padding-left: 170px; padding-top: 27px;}
+.fansnum {  font-size: 30px;line-height: 40px; }
+.memberdata {background:url(../images/member.png) no-repeat 35px center;  background-color:#f7f7f7;color:#527ed5;border-radius: 10px;border: 1px solid #e0e0e0;  float: left;width: 430px; height: 120px;padding-left: 170px; padding-top: 27px;}
+.membernum {font-size: 30px;line-height: 40px; }
+.prizecount{color:#f86b19;}
+.prizedata {background:url(../images/prize.png) no-repeat 40px center;   width: 100%;height: 155px;border-bottom: 1px solid #e0e0e0;padding-left:225px;  padding-top: 25px;}
+.prizedata .num {font-size: 50px;line-height: 70px;}
+.prizedata .desc {font-size: 20px;line-height: 30px;}
+.Sales {background:url(../images/ActivitySales.png) no-repeat 40px center;   width: 100%;height: 155px;border-bottom: 1px solid #e0e0e0;padding-left:225px;  padding-top: 25px;}
+.Sales .num {font-size: 50px;line-height: 70px;}
+.Sales .desc {font-size: 20px;line-height: 30px;}
+.parizetype .parizecontainer {float:left;width:180px;  padding: 20px 0px 20px 50px;}
+.parizetype .parizecontainer .value span{font-size: 20px;line-height: 31px;}
+.verticalLine {  width: 0px;height: 35px;float: left;border-left: 1px solid;  margin-top: 30px;}
+
+.prizeExtend {  float: left;width: 100px;line-height:30px;  font-size: 15px;background:url(../images/tips.png) no-repeat 65px center;}
+.exportbtn {width:70px;   float: right;margin-right: 35px;}
+.viewlist {line-height: 30px;color: #00a0e8;}
+
+.EventDataCount{  margin: 30px;text-align: left;}
+.EventDataCount .fans {width:500px; border-radius: 10px;border: 1px solid #e0e0e0;line-height:30px;float:left;margin-right:60px;  margin-bottom: 10px;}
+.EventDataCount .fans .title{padding:10px 15px 10px 45px;height:55px;border-bottom: 1px solid #e0e0e0;background:url(../images/fansicon.png) no-repeat 10px center;  }
+.EventDataCount  .commonBtn{float:right;width:70px;}
+.EventDataCount .register {width:500px;border-radius: 10px;border: 1px solid #e0e0e0;line-height:30px;float:left;}
+.EventDataCount .register .title{padding:10px 15px 10px 45px;height:55px;border-bottom: 1px solid #e0e0e0;background:url(../images/membericon.png) no-repeat 10px center;  }
+.EventDataCount .content {width:497px;height:290px;}
+.EventDataCount .ActivitySales {width:500px; border-radius: 10px;border: 1px solid #e0e0e0;line-height:30px;float:left;margin-right:60px;  margin-bottom: 10px;}
+.EventDataCount .ActivitySales .title{padding:10px 15px 10px 45px;height:55px;border-bottom: 1px solid #e0e0e0;background:url(../images/sales.png) no-repeat 10px center;  }
+.EventDataCount .ActivityOrder {width:500px;border-radius: 10px;border: 1px solid #e0e0e0;line-height:30px;float:left;margin-bottom: 10px;}
+.EventDataCount .ActivityOrder .title{padding:10px 15px 10px 45px;height:55px;border-bottom: 1px solid #e0e0e0;background:url(../images/order.png) no-repeat 10px center;  }
+
+
+/*发布预览二维码*/
+.QRcode {width:235px;float:left;  margin: 0px 24px;}
+.QRcode .title{color:#00a0e8;font-size:13px;line-height: 25px;}
+.QRcode .desc{line-height: 25px;color: #bfbfbf;}
+.QRcode .codeimg{  border: 3px solid #f1f1f1;  padding: 15px;  margin-top: 15px;}
+.QRcode .codeimg img{width:200px;height: 200px; }
+.QRcode .downbtn{}
+.QRcode .downbtn .commonBtn{  width: 80px;margin: 15px auto;}
+.QRcode .address{}
+.QRcode .address input{float:left;height: 30px;width: 188px;}
+.QRcode .address .commonBtn{  width: 40px;float:left;  margin-left: 5px;}
+
+
+/*活动清单 */
+.ActivityOperation {  line-height: 60px;}
+.ActivityDateLayer {float:left;  margin-left: 42px;color:#a3a3a3;}
+.ActivityDateLayer .ActivityDate{}
+.exportlist {width:70px;float:right;  margin: 15px;}
+

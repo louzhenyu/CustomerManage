@@ -15,9 +15,10 @@
 .step1{display:block;}
 .ordernumber{float: left; width: 179px;}
 .commonSelectWrap{width: 100%; margin-top: 25px;}
-.commonHandleBtn.uploadImgBtn{background: url(/module/QuestionnaireNews/images/uploadImgBtn.png) no-repeat 0 0; cursor: pointer;}
+.commonHandleBtn.uploadImgBtn{background: url(/module/QuestionnaireNews/images/uploadImgBtn.png) no-repeat 0 0; cursor: pointer;position:relative;}
 .commonHandleBtn{display: block; width: 132px; height: 32px; line-height: 32px; text-align: center; font-size: 14px; border-radius: 4px; background: #07c8cf; color: #fff;}
 .commonSelectWrap .infoBox{margin-left: 87px;}
+.ke-upload-file {left:0px;}
 .uploadItem .exp{padding-top: 7px; font-size: 13px; color: #999;}
 form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .ke-button-common .ke-button{width: 0px;}

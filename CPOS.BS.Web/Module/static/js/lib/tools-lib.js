@@ -215,6 +215,7 @@
 			//_param.url =  _param.url;
         _param.success= function (data) {
             if (!data.IsSuccess && data.ResultCode == 500) {
+                $.util.isLoading(true);
                 $.messager.alert("提示", data.Message,"error",function() {
                    // location.href = "/default.aspx?method=LogOut";
                 });
@@ -297,7 +298,8 @@
             _param = util.oldBuildAjaxParams(param);
         }
         //_param.url =  _param.url;
-        _param.success= function (data) {
+        _param.success = function (data) {
+            $.util.isLoading(true);
             if (!data.IsSuccess && data.ResultCode == 500) {
                 $.messager.alert("提示", data.Message,"error",function() {
                     location.href = "/default.aspx?method=LogOut";
@@ -305,7 +307,7 @@
 
             } else {
                 param.success(data);
-                $.util.isLoading(true);
+               
                // $(".loading").hide();
             }
 

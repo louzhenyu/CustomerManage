@@ -1,0 +1,162 @@
+﻿@charset "utf-8";
+
+
+.contentleft {  float: left; font-size: 16px;padding-right:10px;color:#666;padding-left: 20px;}
+.spacing { margin: 10px 0px;}
+.thisseason {   width: 770px; }
+.thisseason .title{ padding: 10px 0px;border-bottom: 1px solid #e1e7ea;}
+.titleline {display: inline-block; width: 2px;height: 14px;background-color: #00a0e8;margin-right: 4px;}
+.thisseason .content{ position: relative;}
+.nextseason {   float: left;  min-height: 300px; }
+.nextseason .title{padding: 10px 0px;border-bottom: 1px solid #e1e7ea;}
+.nextseason .content{display: inline-block;  padding: 10px;}
+.nextseason .content .activityimg {  display: inline-block;  position:relative;height: 115px;  margin-bottom: 1px;}
+.nextseason .content .activityimg div{ position:absolute;width:100%;height:25px;background-color:rgba(0,0,0,0.5);color: #fff;  font-size: 12px;line-height: 23px;  bottom: 0px;padding-left: 10px;}
+.nextseason .content .activityimg img{  width: 266px;height: 115px;}
+.activitys {width: 266px;margin-right: 1px;}
+.contentright { float: left;  font-size: 16px;padding:0px 10px;color:#666;}
+.seasonlist { width:275px;}
+.seasonlist .title{padding: 10px;  background-color: #f4f4f4;  border: 1px solid #e1e7ea;}
+.seasonlist .title span{float:right;  color: #00a0e8;  cursor: pointer;}
+.seasonlist .content{padding: 10px;border: 1px solid #e1e7ea;  height: 300px;font-size: 10px;  width: 275px;  overflow: auto;}
+.seasonlist .content li{padding: 10px;}
+.seasonlist .content li span{padding-right: 20px;}
+.seasonbannerlist { width:275px;height:150px;margin: 20px 0px;}
+.QRcode {border: 1px solid #e1e7ea; width:275px;height:150px;font-size: 14px;}
+.QRcode img{width:118px;height:118px;margin: 15px 25px 15px 30px;}
+
+.operation {position: absolute;bottom: 0px;right: 0px;  background-color: #f2f2f2;  padding: 15px;text-align: center;}
+.operationbtn {float:left;width:110px;font-size: 14px;cursor: pointer;}
+.operation .preview {  border-right: 1px solid #e8ebee;}
+.operation .start {  border-right: 1px solid #e8ebee;}
+
+.thisseasontouchslider-item .qcode img{  width: 130px;
+  height: 130px;
+  margin: 14px 20px 14px 14px;}
+
+.touchsliderthisseason {
+position:relative;
+}
+.thisseasontouchslider-nav-item {
+  width: 8px;
+  height: 8px;
+    background: rgba(73, 110, 229, 0.5);
+  margin: 0 3px;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+}
+.thisseasontouchslider-item {width: 770px;
+  height: 340px;
+  display: inline-block;position: relative;}
+.thisseasontouchslider-item img{width: 770px;
+  height: 340px;}
+
+.thisseasontouchslider-nav-item-current {
+  background: #00a0e8;
+}
+
+.thisseasontouchslider-nav {
+  text-align: left;
+  margin-top: 16px;
+    position: absolute;
+  bottom: 0px;
+  width: 100%;
+    height: 25px;
+      padding-left: 30px;
+}
+
+.touchslider {
+position:relative;
+}
+.touchslider-nav-item {
+  width: 8px;
+  height: 8px;
+  background: #ccc2c2;
+  margin: 0 3px;
+  display: inline-block;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+}
+
+.touchslider-nav-item-current {
+  background: #999;
+}
+
+
+.touchslider-nav {
+  text-align: center;
+  margin-top: 16px;
+    position: absolute;
+  bottom: 0px;
+  width: 100%;
+    height: 22px;
+}
+
+
+
+
+/*全年计划*/
+
+#Annualplanlayer {
+position:fixed;
+width:100%;
+height:100%;
+background-color:rgba(0,0,0,0.5);
+top:0px;
+left:0px;
+text-align: center;
+display:none;
+}
+#Annualplanlayer .planlayer {
+ position: absolute;
+  top: 50%;
+  left: 50%;   border: 2px solid #f2f2f2;  border-radius: 4px; 
+}
+#Annualplanlayer .planlayer img{  max-width: 800px;
+}
+#Annualplanlayer .close {
+   position: absolute;
+  top: -20px;
+  right: -10px;
+    
+}
+#Annualplanlayer .Annualplan {min-height:300px;min-width:300px;}
+#Annualplanlayer .plantitle {  position: absolute;top: -25px;left: 10px;color: #fff;font-size: 14px;}
+#Annualplanlayer .plandown {background-color: #fff;line-height:60px;text-align: right;}
+#Annualplanlayer .plandown .downmodel{float: right;margin: 15px 20px;}
+
+
+/*活动数据*/
+
+.Activity {  float: left;  width: 250px;    margin: 10px;}
+.Activity .ActivityContent {position:relative;border: 1px solid #e1e7ea;border-bottom:none;}
+.Activity .Activityimg {}
+.Activity .Activityimg img{width:250px;height:250px;}
+.Activity .ActivityQRcode {  width: 100%;height: 100%;position: absolute; top: 0px;  display: none;background-color:rgba(0,0,0,0.5);}
+.Activity .ActivityQRcode img {width:116px;  position: absolute;top: 50%;left: 50%; margin-left: -58px;margin-top: -58px;}
+.Activity .ActivityDesc {  position: absolute;bottom: 0px;width: 100%;background-color:rgba(0,0,0,0.5);  color: #fff;}
+.Activity .ActivityDesc span {line-height:30px;margin-left: 10px;}
+.Activity .ActivityOpeartion {width: 100%;border: 1px solid #e1e7ea;  display: inline-block;height: 40px;}
+.ActivityOpeartion .releasebtn {  text-align: center;line-height: 40px;margin: 0px auto;  color: #000;cursor:pointer;}
+.Opeartiondesc .viewdata {color:#00a0e8;}
+.Opeartiondesc .date {color:#b2b2b2;}
+.blackBG {background-color:#000;}
+.blueBG {background-color:#00a0e8;}
+.redBG {background-color:#f65564;}
+
+
+/*活动类型start*/
+.ActivityGroups {   padding:  20px;  width: 100%;  float: left;}
+.ActivityGroups .graycolor { border: 2px solid #ddd;  color: #ddd; }
+.ActivityGroups .graycolor  .ActivityGroupImg {background-color:#ddd;}
+.hotcolor {background-color:#f65564;}
+.hotbordercolor {border: 2px solid #f65564;  color: #f65564;}
+.holidaycolor {background-color:#f8b62c;}
+.holidaybordercolor {border: 2px solid #f8b62c;  color: #f8b62c;}
+.stockcolor {background-color:#71ba36;}
+.stockbordercolor {border: 2px solid #71ba36;  color: #71ba36;}
+.ActivityGroupName {float: left;  margin-right: 20px;cursor:pointer;}
+.ActivityGroupName .ActivityGroupImg {width: 336px;height: 100px;vertical-align: middle;padding-top: 20px;padding-left:25px;}
+
+/*活动类型end*/

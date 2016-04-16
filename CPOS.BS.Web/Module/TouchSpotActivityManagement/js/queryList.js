@@ -158,7 +158,7 @@
                 /*  pageNumber:1,*/
                 //frozenColumns:[[]],
                 columns : [[
-                    {field : 'Title',title : '活动名称',width:110,align:'center',resizable:false,
+                    {field : 'Title',title : '活动名称',width:110,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value&&value.length>long){

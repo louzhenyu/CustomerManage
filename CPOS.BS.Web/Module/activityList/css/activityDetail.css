@@ -3,6 +3,7 @@
 .commonSelectWrap .selectBox{ border: 1px solid transparent;}
 .ke-button-common {
 display:none;}
+.ke-upload-file {left:0px;}
 .queryTermArea{ background:none; padding:0px; }
 .contentArea-info .title{border:1px solid #d8d8d8;}
 .contentArea-info .title li{height:50px;line-height:50px;}
@@ -214,7 +215,7 @@ a:hover{color:#fff;}
 .ScratchCard .activityConfigArea .createPic .ActivityRule {position: absolute;top: 305px;left: 40px;width:235px;height:50px;border-radius: 5px;}
 
 /*插件的上传按钮*/
-form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
+form.ke-upload-area.ke-form{opacity:0;cursor:pointer;position:relative;}
 .commonHandleBtn.uploadImgBtn{background:url(../images/uploadImgBtn.png) no-repeat 0 0;cursor:pointer;}
 .ke-upload-file,.ke-button-common,input[type="button"],input[type="submit"],input[type="reset"], input[type="file"]::-webkit-file-upload-button,button{cursor:pointer !important;}
 

@@ -62,7 +62,7 @@ require.config({
         datetimePicker: '/Module/static/js/plugin/jquery.datetimepicker',
         kkpager: '/Module/static/js/plugin/kkpager',
         touchslider: '/Module/static/js/plugin/touchslider',
-		lang: '/Framework/Javascript/Other/kindeditor/lang/zh_CN'
+		highcharts: '/Module/static/js/plugin/highcharts',
 
     }
 });
