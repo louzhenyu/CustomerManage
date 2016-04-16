@@ -147,13 +147,13 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
                             </div>
                 </div> <!--spreadPanel-->
-                           <div class="spreadPanel setSpread" style="width:290px;padding-top: 15px;">
+                           <div class="spreadPanel setSpread" style="padding-top: 15px;">
                             <div  data-tabname="tab01" data-type="Focus" >
                                    <p class="title">选择奖品</p>
                                                   <div class="taleWarp HBList " style="margin-left: 20px;">
                                                    <div id="prize"></div>
                                                  </div>
-                                                <div class="commonBtn icon icon_add w80" style="margin-left: 20px;" data-type="prize">添加奖品</div>
+                                                <div class="commonBtn icon icon_add w64" style="margin-left: 20px;" data-type="prize">添加奖品</div>
                             </div>
 
 
@@ -230,7 +230,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
 
    </div> <!--spreadPanel-->
-              <div class="spreadPanel setSpread optionPrize" style="width:290px;padding-top: 15px;">
+              <div class="spreadPanel setSpread optionPrize" style="padding-top: 15px;">
 
                            <div  data-tabname="tab03"  style="display: none;" data-type="Share" data-msg="引导关注">
                                   <p class="title"> 微信吸粉</p>

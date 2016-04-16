@@ -419,7 +419,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                                     }
 
                                     that.elems.navigation.find("li").removeClass("on");
-                                    $(this).addClass("on");
+                                    me.addClass("on");
                                     $("[data-panel].panelDiv").hide();
                                     $("[data-panel='" + panelName + "'].panelDiv").show();
                                     that.elems.submitBtn.data("flag", panelName);
@@ -1872,7 +1872,7 @@ debugger;
                                  domPanel.find('img.bgPhone').attr("src",spreadObj.ImageURL);
                              }
                              if(self.loadDataInfo.CustomerCTWEventInfo&&self.loadDataInfo.CustomerCTWEventInfo.ContactEventList){
-                                    var contactEventList=that.loadDataInfo.CustomerCTWEventInfo.ContactEventList;
+                                    var contactEventList=self.loadDataInfo.CustomerCTWEventInfo.ContactEventList;
                                     /* prizeListShare:[],//分享奖励
                                      prizeListWatch:[],//关注奖励
                                      prizeListReg:[],//注册奖励*/

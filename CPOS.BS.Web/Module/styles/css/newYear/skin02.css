@@ -26,8 +26,11 @@ body{overflow-x: hidden;}
 
 .commonBtn.icon{ padding-left: 36px;  text-align: left;background-position:10px center;background-repeat: no-repeat; }
 .w80{ width: 80px;}
+.w64{width: 64px;}/*带icon的按钮宽度是100*/
 .w100{width: 100px;}
+.w74{width: 74px;}/*带icon的按钮宽度是110*/
 .w110{width: 110px;}
+.w74{width: 84px;}/*带icon的按钮宽度是120*/
 .w120{width: 120px;}
 /*下架*/
 .icon_downLoad{ background-image: url("../../images/newYear/icon_download.png")}

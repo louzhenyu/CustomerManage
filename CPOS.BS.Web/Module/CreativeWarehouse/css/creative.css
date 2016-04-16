@@ -55,7 +55,7 @@
 .erweiMaPanel p{ background: #fff;height: 30px; width: 100%; margin-bottom: 15px; line-height: 30px; font-size: 12px; border-radius: 3px;}
 .erWeiMa{ width: 155px; line-height: 155px; height: 155px; border-radius: 4px; background-color: #fff;  /* vertical-align:middle */}
 .erweiMaPanel .textBtn{ width: 144px; height: 30px; color: #fff; background-color:#f65564; line-height: 30px; font-size: 12px; margin: 0 auto; border-radius: 2px; margin-top:8px; }
-.radioList{margin-left: 25px;}
+.radioList{margin-left: 20px;}
 .radio{height:33px; cursor: pointer;}
 .radio span{ font-size: 12px;}
 .checkBox{height:33px}
@@ -109,12 +109,12 @@
 .checkBox .commonBtn{ float: right; display: none;}
 .checkBox em{ float: left;}
 .checkBox span{ float: left; margin:0;}
-.checkBox .commonBtn.icon_add{ margin-right: 10px;}
+.checkBox .commonBtn.icon_add{ margin-right: 4px;}
 
 .taleWarp{ max-height: 600px; display: none;}
 .showPanel{ width: 98%; margin: 0 auto; text-align:left;}
 .w50{ width: 50px;}
-.w60{ width: 60px;}
+.w60{ width: 47px;}
 
 .datebox .combo-arrow{padding-right:6px;}
 
