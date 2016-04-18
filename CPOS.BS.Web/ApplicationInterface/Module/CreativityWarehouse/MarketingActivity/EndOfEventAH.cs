@@ -23,7 +23,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             T_CTW_LEventBLL bllCTWEvent = new T_CTW_LEventBLL(loggingSessionInfo);
-            bllCTWEvent.Update(new T_CTW_LEventEntity() { Status = 40,CTWEventId=new Guid(para.CTWEventId) }, null);
+            T_CTW_LEventEntity entityCTWEvent = new T_CTW_LEventEntity();
+            entityCTWEvent=bllCTWEvent.GetByID(para.CTWEventId);
+            entityCTWEvent.Status = 40;
+            bllCTWEvent.Update(entityCTWEvent, null);
 
             if(para.EventType=="Game")
             {
@@ -32,8 +35,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 LEventsBLL bllEvent = new LEventsBLL(loggingSessionInfo);
                 var entityEvent = bllEvent.GetByID(strEventId);
                 entityEvent.EventStatus = 40;
-                bllEvent.Update(entityEvent);
-            }
+                bllEvent.Update(entityEvent,false);
+            }  
             if (para.EventType == "Sales")
             {
                 PanicbuyingEventBLL bllEvent = new PanicbuyingEventBLL(loggingSessionInfo);

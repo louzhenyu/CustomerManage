@@ -16,6 +16,7 @@ using JIT.CPOS.BS.Web.Session;
 using System.Configuration;
 using JIT.CPOS.Common;
 using System.Data;
+using System.Drawing;
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.MarketingActivity
 {
     public class SetCTWEventAH : BaseActionHandler<SetCTWEventRP, SetCTWEventRD>
@@ -77,7 +78,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
 
             }
-          
+            //保存风格
             SaveAndUpdateTheme(para,entityTheme,out strThemeId);
             //互动类型--游戏
             if (para.InteractionType == 1 && para.GameEventInfo != null)
@@ -658,8 +659,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             string currentDomain ="http://"+HttpContext.Current.Request.Url.Host;//当前项目域名
 
             QRCodeUrl=Utils.GenerateQRCode(URL, currentDomain, sourcePath, targetPath);
-            
-           
+            ////二维码中奖加图片
+            //string strQRCodeFilePath = targetPath + QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
+            //Image img = Image.FromFile(strQRCodeFilePath);
+            //System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
+            //Utils.CombinImage(img, HttpContext.Current.Server.MapPath("~/QRCodeImage/33.jpg")).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
+            //Image ii = Image.FromStream(MStream1);
+            //img.Dispose();
+            //ii.Save(strQRCodeFilePath, System.Drawing.Imaging.ImageFormat.Png);
+            //MStream1.Dispose();  
             ObjectImagesBLL bllObjectImages = new ObjectImagesBLL(loggingSessionInfo);
             ObjectImagesEntity entityObjectImages = new ObjectImagesEntity();
 
@@ -715,15 +723,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
             #region 保存
             var unionMappingBll = new WModelTextMappingBLL(loggingSessionInfo);
-            //if (string.IsNullOrEmpty(entity.TextId))
-            //{
-                entity.TextId = Guid.NewGuid().ToString("N");
-                textBll.Create(entity);//创建图文素材
-            //}
-            //else
-            //{
-            //    textBll.Update(entity);
-            //}
+
+            entity.TextId = Guid.NewGuid().ToString("N");
+            textBll.Create(entity);//创建图文素材
+
 
             #endregion
 

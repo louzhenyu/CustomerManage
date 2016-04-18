@@ -19,6 +19,7 @@ using System.Web;
 using System.Xml;
 using ThoughtWorks.QRCode.Codec;
 using System.Globalization;
+using System.Drawing.Drawing2D;
 
 namespace JIT.CPOS.Common
 {
@@ -672,91 +673,68 @@ namespace JIT.CPOS.Common
             return fileUrl;
             #endregion
         }
-        /// <summary>
-        /// 二维码加背景图
-        /// </summary>
-        /// <param name="imgBack"></param>
-        /// <param name="destImg"></param>
-        /// <param name="strData"></param>
-        /// <returns></returns>
-        public static string CombinImage(string imgBack, string destImg, string strData)
+
+
+        /// <summary>    
+        /// 调用此函数后使此两种图片合并，类似相册，有个    
+        /// 背景图，中间贴自己的目标图片    
+        /// </summary>    
+        /// <param name="imgBack">粘贴的源图片</param>    
+        /// <param name="destImg">粘贴的目标图片</param>    
+        public static Image CombinImage(Image imgBack, string destImg)
         {
-            //1、上面的图片部分
-            HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(destImg);
-            WebResponse response_qrcode = null;
-            Stream qrcode_stream = null;
-            response_qrcode = request_qrcode.GetResponse();
-            qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
-
-
-            Bitmap _bmpQrcode1 = new Bitmap(qrcode_stream);//把流转换成Bitmap
-            Bitmap _bmpQrcode = new Bitmap(_bmpQrcode1, 327, 327);//缩放图片           
-            //把二维码由八位的格式转为24位的
-            Bitmap bmpQrcode = new Bitmap(_bmpQrcode.Width, _bmpQrcode.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb); //并用上面图片的尺寸做了一个位图
-            //用上面空的位图生成了一个空的画板
-            Graphics g3 = Graphics.FromImage(bmpQrcode);
-            g3.DrawImageUnscaled(_bmpQrcode, 0, 0);//把原来的图片画了上去
-
-
-            //2、背景部分
-            HttpWebRequest request_backgroup = (HttpWebRequest)WebRequest.Create(imgBack);
-            WebResponse response_keleyi = null;
-            Stream backgroup_stream = null;
-            response_keleyi = request_backgroup.GetResponse();
-            backgroup_stream = response_keleyi.GetResponseStream();//把背景图片转换成流
-
-            Bitmap bmp = new Bitmap(backgroup_stream);
-            Graphics g = Graphics.FromImage(bmp);//生成背景图片的画板
-
-            //3、画上文字
-            //  String str = "文峰美容";
-            System.Drawing.Font font = new System.Drawing.Font("黑体", 25);
-            SolidBrush sbrush = new SolidBrush(Color.White);
-            SizeF sizeText = g.MeasureString(strData, font);
-
-            g.DrawString(strData, font, sbrush, (bmp.Width - sizeText.Width) / 2, 490);
-
-
-            // g.DrawString(str, font, sbrush, new PointF(82, 490));
-
-
-            g.DrawImage(bmp, 0, 0, bmp.Width, bmp.Height);//又把背景图片的位图画在了背景画布上。必须要这个，否则无法处理阴影
-
-            //4.合并图片
-            g.DrawImage(bmpQrcode, 130, 118, bmpQrcode.Width, bmpQrcode.Height);
-
-            MemoryStream ms = new MemoryStream();
-            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            System.Drawing.Image newImg = Image.FromStream(ms);//生成的新的图片
-            //把新图片保存下来
-            string DownloadUrl = ConfigurationManager.AppSettings["website_WWW"];
-            string host = DownloadUrl + "/QRCodeImage/";
-            //创建下载根文件夹
-            //var dirPath = @"C:\DownloadFile\";
-            var dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "QRCodeImage\\";
-            if (!Directory.Exists(dirPath))
+            Image img = Image.FromFile(destImg);        //照片图片      
+            if (img.Height != 65 || img.Width != 65)
             {
-                Directory.CreateDirectory(dirPath);
+                img = KiResizeImage(img, 65, 65, 0);
             }
-            //根据年月日创建下载子文件夹
-            var ymd = DateTime.Now.ToString("yyyyMMdd", DateTimeFormatInfo.InvariantInfo);
-            dirPath += ymd + @"\";
-            host += ymd + "/";
-            if (!Directory.Exists(dirPath))
-            {
-                Directory.CreateDirectory(dirPath);
-            }
+            Graphics g = Graphics.FromImage(imgBack);
 
-            //下载到本地文件
-            var fileExt = Path.GetExtension(destImg).ToLower();
-            var newFileName = DateTime.Now.ToString("yyyyMMddHHmmss_ffff", DateTimeFormatInfo.InvariantInfo) + ".jpg";//+ fileExt;
-            var filePath = dirPath + newFileName;
-            host += newFileName;
+            g.DrawImage(imgBack, 0, 0, imgBack.Width, imgBack.Height);      //g.DrawImage(imgBack, 0, 0, 相框宽, 相框高);     
 
-            newImg.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+            //g.FillRectangle(System.Drawing.Brushes.White, imgBack.Width / 2 - img.Width / 2 - 1, imgBack.Width / 2 - img.Width / 2 - 1,1,1);//相片四周刷一层黑色边框    
 
-            return host;
+            //g.DrawImage(img, 照片与相框的左边距, 照片与相框的上边距, 照片宽, 照片高);    
+
+            g.DrawImage(img, imgBack.Width / 2 - img.Width / 2, imgBack.Width / 2 - img.Width / 2, img.Width, img.Height);
+            GC.Collect();
+            return imgBack;
         }
+
+
+        /// <summary>    
+        /// Resize图片    
+        /// </summary>    
+        /// <param name="bmp">原始Bitmap</param>    
+        /// <param name="newW">新的宽度</param>    
+        /// <param name="newH">新的高度</param>    
+        /// <param name="Mode">保留着，暂时未用</param>    
+        /// <returns>处理以后的图片</returns>    
+        public static Image KiResizeImage(Image bmp, int newW, int newH, int Mode)
+        {
+            try
+            {
+                Image b = new Bitmap(newW, newH);
+                Graphics g = Graphics.FromImage(b);
+                // 插值算法的质量    
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.DrawImage(bmp, new Rectangle(0, 0, newW, newH), new Rectangle(0, 0, bmp.Width, bmp.Height), GraphicsUnit.Pixel);
+                g.Dispose();
+                return b;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool IsReusable
+        {
+            get
+            {
+                return false;
+            }
+        }  
         #endregion
 
         #region SendSMSCode,发送验证码

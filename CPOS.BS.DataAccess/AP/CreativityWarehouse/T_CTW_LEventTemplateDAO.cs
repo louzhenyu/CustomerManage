@@ -85,6 +85,13 @@ namespace JIT.CPOS.BS.DataAccess
                                                             AND RCodeUrl IS NOT NULL
                                                   order by theme.createtime asc
                                                 )QRCodeUrl
+                                         ,
+                                                ( SELECT   
+                                                            COUNT(1) UseCount
+                                                  FROM      [cpos_bs_alading].dbo.T_CTW_LEvent ctw
+                                                  WHERE     IsDelete = 0 AND ctw.TemplateId=a.TemplateId
+                                                  GROUP BY  TemplateId
+                                                ) UserCount
                                 FROM    T_CTW_Banner a
                                         LEFT JOIN SysMarketingGroupType b ON a.ActivityGroupId = b.ActivityGroupId
                                         LEFT JOIN dbo.ObjectImages c ON a.BannerImageId = c.ImageId
