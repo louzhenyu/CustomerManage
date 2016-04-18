@@ -138,7 +138,7 @@
 .QRcode .codeimg{  border: 3px solid #f1f1f1;  padding: 15px;  margin-top: 15px;}
 .QRcode .codeimg img{width:200px;height: 200px; }
 .QRcode .downbtn{}
-.QRcode .downbtn .commonBtn{  width: 80px;margin: 15px auto;}
+.QRcode .downbtn .commonBtn{  width: 40px;margin: 15px auto;}
 .QRcode .address{}
 .QRcode .address input{float:left;height: 30px;width: 188px;}
 .QRcode .address .commonBtn{  width: 40px;float:left;  margin-left: 5px;}

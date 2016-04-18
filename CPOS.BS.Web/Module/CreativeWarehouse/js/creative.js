@@ -2636,7 +2636,13 @@ debugger;
                             }
 
                         } else {
-                            $.messager.alert("提示",data.Message);
+                            if(operationType=="add"){
+                                console.info(data.IsSuccess+"code"+data.ResultCode);
+                                $.messager.alert("提示","系统繁忙，请重新提交");
+                            } else{
+                                $.messager.alert("提示",data.Message);
+                            }
+
                         }
                     }
                 });
