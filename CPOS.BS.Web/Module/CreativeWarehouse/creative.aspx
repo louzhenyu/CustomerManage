@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
      <link href="css/jquery.bxslider.css?v=0.1" rel="stylesheet" type="text/css" />
      <link href="../static/js/vendor/jquery-ui-1.11.4/jquery-ui.css" rel="stylesheet" type="text/css" />
-      <link href="http://test.linkin.mobi/vveshow/plugins/jvveshow/1.0.0/resource/css/jvveshow/jvveshow.css" rel="stylesheet" type="text/css" />
+      <link href="http://www.vveshow.com/plugins/jvveshow/1.0.0/resource/css/jvveshow/jvveshow.min.css" rel="stylesheet" type="text/css" />
     <link href="css/creative.css?v=0.1" rel="stylesheet" type="text/css" />
      <script type="text/javascript">
 window.onbeforeunload = function() {
@@ -357,7 +357,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
      <script type="text/javascript">
          var version=new Date().getTime();
-         var str="<script type='text/javascript' src='//test.linkin.mobi/vveshow/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.js?versionInit='"+version+"'>";
+         var str = "<script type='text/javascript' src='http://www.vveshow.com/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.min.js?versionInit='" + version + "'>";
          str+="\<\/script\>";
      document.write(str);
     </script>
