@@ -12,6 +12,7 @@
 .mainPanel .content{height:412px;width:710px;margin: 0 auto;}
 #slider{height:310px;min-width: 756px;}
 .slide{position: relative;width: 230px; height:310px; cursor: pointer;}
+.slide div{width: 172px;height: 270px;  border: 1px solid #e6e6e6;  }
 .slide img{width: 172px;height: 270px;}
 .slide.on em{ width: 172px; height:270px; display: block; background: rgba(0,0,0, 0.4) url("../images/applyWhite.png") no-repeat center center; position: absolute ; top:0; left: 0;}
 .slide p{width: 172px;text-align: center;line-height: 40px;font-size: 14px; color: #666; height: 40px; position:absolute;bottom: 0; left: 0;}
@@ -55,7 +56,7 @@
 .erweiMaPanel p{ background: #fff;height: 30px; width: 100%; margin-bottom: 15px; line-height: 30px; font-size: 12px; border-radius: 3px;}
 .erWeiMa{ width: 155px; line-height: 155px; height: 155px; border-radius: 4px; background-color: #fff;  /* vertical-align:middle */}
 .erweiMaPanel .textBtn{ width: 144px; height: 30px; color: #fff; background-color:#f65564; line-height: 30px; font-size: 12px; margin: 0 auto; border-radius: 2px; margin-top:8px; }
-.radioList{margin-left: 20px;}
+.radioList{margin-left: 20px;width: 245px;}
 .radio{height:33px; cursor: pointer;}
 .radio span{ font-size: 12px;}
 .checkBox{height:33px}
@@ -84,11 +85,12 @@
 
 /*win弹框*/
 .layout-body{ text-align: center;}
-.imgUploadPanel{ width: 509px; height:53px; display: inline-block;margin: 0 auto; text-align: center; }
+.imgUploadPanel{ width: 500px; height:53px; display: inline-block;margin: 20px auto; text-align: center; }
 .imgUploadPanel p{ font-size: 12px; color: #a7a7a7; line-height: 26px;text-align: left;}
 .imgUploadPanel p b{font-size: 13px;color: #666 }
 .imgUploadPanel .lineText{width: 100px; float: right; padding:0;}
-.imgUploadPanel .lineText .textBtn{color: #00a0e8;width: 72px; font-size: 12px;line-height: 22px;}
+.imgUploadPanel .lineText .textBtn{color: #00a0e8;width: 72px; font-size: 12px;line-height: 22px;cursor:pointer;}
+.imgUploadPanel .uploadBtn{ margin-top:4px; }
 .imgUploadPanel img{max-width: 160px; min-width: 64px;margin-top:20px; }
 
 .imgUploadPanel .imgPanel{ width: 100%; height: auto; text-align: center;float: left;}
@@ -114,7 +116,7 @@
 .taleWarp{ max-height: 600px; display: none;}
 .showPanel{ width: 98%; margin: 0 auto; text-align:left;}
 .w50{ width: 50px;}
-.w60{ width: 47px;}
+.w60{ width: 64px;}
 
 .datebox .combo-arrow{padding-right:6px;}
 
@@ -154,3 +156,4 @@
 .outside{position: relative; display:inline-block; width: 100%;}
 .outside .editIconBtn{top: -3px; right: -24px;}
 .bx-wrapper{ width:642px; float: left;padding-top: 8px;}
+.tableWap .textbox.numberbox{ float: left;}

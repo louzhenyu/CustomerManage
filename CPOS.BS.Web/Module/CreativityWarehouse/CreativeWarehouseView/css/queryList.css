@@ -14,22 +14,36 @@
 .nextseason .content .activityimg div{ position:absolute;width:100%;height:25px;background-color:rgba(0,0,0,0.5);color: #fff;  font-size: 12px;line-height: 23px;  bottom: 0px;padding-left: 10px;}
 .nextseason .content .activityimg img{  width: 266px;height: 115px;}
 .activitys {width: 266px;margin-right: 1px;}
-.contentright { float: left;  font-size: 16px;padding:0px 10px;color:#666;}
-.seasonlist { width:275px;}
-.seasonlist .title{padding: 10px;  background-color: #f4f4f4;  border: 1px solid #e1e7ea;}
+.contentright { float: left;  font-size: 12px;padding:0px 10px;color:#666;}
+.seasonlist { width:260px;border: 1px solid #e1e7ea;}
+.seasonlist .title{padding: 8px 10px 8px 20px;  background-color: #f4f4f4;border-bottom: 1px solid #e1e7ea;  }
 .seasonlist .title span{float:right;  color: #00a0e8;  cursor: pointer;}
-.seasonlist .content{padding: 10px;border: 1px solid #e1e7ea;  height: 300px;font-size: 10px;  width: 275px;  overflow: auto;}
-.seasonlist .content li{padding: 10px;}
-.seasonlist .content li span{padding-right: 20px;}
+.seasonlist .content{padding: 10px;  height: 344px;font-size: 10px;  width: 260px;  overflow: auto;}
+.seasonlist .content li{padding: 10px;  color: #00a0e8;}
+.seasonlist .content li span{padding-right: 20px;  color: #666666;}
 .seasonbannerlist { width:275px;height:150px;margin: 20px 0px;}
 .QRcode {border: 1px solid #e1e7ea; width:275px;height:150px;font-size: 14px;}
 .QRcode img{width:118px;height:118px;margin: 15px 25px 15px 30px;}
 
-.operation {position: absolute;bottom: 0px;right: 0px;  background-color: #f2f2f2;  padding: 15px;text-align: center;}
+.operation {position: absolute;bottom: 0px;right: 0px;  background-color: #f2f2f2;  padding: 10px;text-align: center;z-index: 10;}
 .operationbtn {float:left;width:110px;font-size: 14px;cursor: pointer;}
 .operation .preview {  border-right: 1px solid #e8ebee;}
 .operation .start {  border-right: 1px solid #e8ebee;}
 
+.qcode {  width: 165px;
+  height: 165px;
+  background-color: #fff;
+  position: absolute;
+  top: 380px;
+  right: 200px;
+    background: url(../images/qcodeimg.png) no-repeat;
+      z-index: 11;
+}
+.qcode img {
+width: 135px;
+height: 135px;
+margin: 20px 12px;
+}
 .thisseasontouchslider-item .qcode img{  width: 130px;
   height: 130px;
   margin: 14px 20px 14px 14px;}
@@ -47,10 +61,10 @@ position:relative;
   border-radius: 12px;
 }
 .thisseasontouchslider-item {width: 770px;
-  height: 340px;
+  height: 380px;
   display: inline-block;position: relative;}
 .thisseasontouchslider-item img{width: 770px;
-  height: 340px;}
+  height: 380px;}
 
 .thisseasontouchslider-nav-item-current {
   background: #00a0e8;
@@ -65,6 +79,27 @@ position:relative;
     height: 25px;
       padding-left: 30px;
 }
+
+.thisseasontouchslider-prev {
+	width: 23px;
+    height: 30px;
+    display: block;
+    position: absolute;
+    top: -200px;
+    left: 20px;
+	background: url("../images/prevNext.png") no-repeat -64px 0;
+}
+
+.thisseasontouchslider-next {
+	width: 23px;
+    height: 30px;
+    display: block;
+    position: absolute;
+    top: -200px;
+    right: 20px;
+    background: url("../images/prevNext.png") no-repeat -95px 0;
+}
+
 
 .touchslider {
 position:relative;
@@ -92,6 +127,11 @@ position:relative;
   width: 100%;
     height: 22px;
 }
+.personSum {position: absolute;top: 0px;width: 70px;height: 85px;left: 30px;background: url(../images/bgcolor.png) no-repeat;}
+.personSum .person {background: url(../images/person.png) no-repeat;width: 100%;height: 30px;padding-left: 25px;font-size: 12px;line-height: 30px;color: #fff;}
+.personSum .hot {background: url(../images/hot.png) no-repeat;width: 100%;height: 40px;  background-size: 32px 38px;background-position: 18px;}
+.personSum .holiday{background: url(../images/holiday.png) no-repeat;width: 100%;height: 40px;  background-size: 32px 38px;background-position: 18px;}
+.personSum .store {background: url(../images/store.png) no-repeat;width: 100%;height: 40px;  background-size: 32px 38px;background-position: 18px;}
 
 
 

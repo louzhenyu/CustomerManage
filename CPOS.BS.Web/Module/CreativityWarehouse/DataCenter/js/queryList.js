@@ -36,7 +36,7 @@
                 that.setCondition();
                 //查询数据
                 that.loadData.args.PageIndex = 1;
-
+                that.loadData.seach.form.ActivityGroupId = "";
                 $(".datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                 that.GetTCTWLEventList(function (data) {
                     that.loadActivityData(data);
@@ -56,6 +56,10 @@
                 $("#ActivityGroupCode").combobox("setValue", "");
                 $("#EventName").val("");
 
+                that.loadData.seach.form.EventName = "";
+                that.loadData.seach.form.BeginTime = "";
+                that.loadData.seach.form.EndTime = "";
+                that.loadData.seach.form.EventStatus = '';
                 that.loadData.seach.form.ActivityGroupCode = $(this).data("code");
                 that.loadData.seach.form.ActivityGroupId = $(this).data("codeid");
                 that.GetTCTWLEventList(function (data) {
@@ -75,7 +79,7 @@
                         title: "奖品发放清单", width: 800, height: 500, top: 20,
                         left: ($(window).width() - 800) * 0.5
                     });
-                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?param={'LeventId'='" + that.loadData.details.CTWEventId + "'}&method=GameAwardsListExport");
+                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=GameAwardsListExport");
                     that.GetEventPrizeDetailList(function (data) {
                         that.renderTable3( data);
                     });
@@ -84,7 +88,7 @@
                         title: "销售清单", width: 800, height: 500, top: 20,
                         left: ($(window).width() - 800) * 0.5
                     });
-                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?param={'LeventId'='" + that.loadData.details.CTWEventId + "'}&method=SalesItemsListExport");
+                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=SalesItemsListExport");
 
                     that.GeEventItemDetailList(function (data) {
                         that.renderTable3(data);
@@ -143,7 +147,7 @@
 
                         $.util.isLoading()
                         that.GetEventPrizeList(function (_data) {
-                            that.renderTable2(data);
+                            that.renderTable2(_data);
 
                         });
 
@@ -160,7 +164,7 @@
                         $(this).parents("tr").after(html);
                         $.util.isLoading()
                         that.GeEventItemList(function (_data) {
-                            that.renderTable2(data);
+                            that.renderTable2(_data);
 
                         });
 
@@ -275,24 +279,29 @@
             });
 
             //追加事件
-            $(".tableWrap").on("click", ".addPrizes", function () {
-
+            $("#windesc").on("click", ".addPrizes", function () {
+                $("#addPrize").numberbox("setValue");
                 $('#winadd').window({
-                    title: "追加数量", width: 400, height: 200, top: ($(window).height() - 200) * 0.5,
+                    title: "追加数量", width: 400, height: 240, top: ($(window).height() - 240) * 0.5,
                     left: ($(window).width() - 400) * 0.5
                 });
                 $('#winadd').window('open');
 
 
-                
+
             });
 
             $(".addbtn").on("click", function () {
                 var id = $(this).data("id");
-                that.AppendPrize(id, 0, function (data) {
-                    $('#winadd').window('close');
-                    $.messager.alert("提示","保存成功！");
-                });
+                var addPrize = $("#addPrize").numberbox("getValue");
+                if (addPrize != "") {
+                    that.AppendPrize(id, addPrize, function (data) {
+                        $('#winadd').window('close');
+                        $.messager.alert("提示", "保存成功！");
+                    });
+                } else {
+                    $.messager.alert("提示", "追加数量不能为空！");
+                }
             });
 
             
@@ -584,10 +593,10 @@
                     onLoadSuccess: function (data) {
                         that.elems.tabel2.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                         if (data.rows.length > 0) {
-                            that.elems.dataMessage2.hide();
+                            $(".dataMessage2").hide();
                             $('#kkpager2').show();
                         } else {
-                            that.elems.dataMessage2.show();
+                            $(".dataMessage2").show();
                             $('#kkpager2').hide();
                         }
                         //that.elems.tabel.datagrid('getSelected');
@@ -641,10 +650,10 @@
                     onLoadSuccess: function (data) {
                         that.elems.tabel2.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                         if (data.rows.length > 0) {
-                            that.elems.dataMessage2.hide();
+                            $(".dataMessage2").hide();
                             $('#kkpager2').show();
                         } else {
-                            that.elems.dataMessage2.show();
+                            $(".dataMessage2").show();
                             $('#kkpager2').hide();
                         }
                         //that.elems.tabel.datagrid('getSelected');
@@ -749,10 +758,10 @@
                     onLoadSuccess: function (data) {
                         that.elems.tabel3.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                         if (data.rows.length > 0) {
-                            that.elems.dataMessage3.hide();
+                            $(".dataMessage3").hide();
                             $('#kkpager3').show();
                         } else {
-                            that.elems.dataMessage3.show();
+                            $(".dataMessage3").show();
                             $('#kkpager3').hide();
                         }
                         //that.elems.tabel.datagrid('getSelected');
@@ -800,10 +809,10 @@
                     onLoadSuccess: function (data) {
                         that.elems.tabel3.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                         if (data.rows.length > 0) {
-                            that.elems.dataMessage3.hide();
+                            $(".dataMessage3").hide();
                             $('#kkpager3').show();
                         } else {
-                            that.elems.dataMessage3.show();
+                            $(".dataMessage3").show();
                             $('#kkpager3').hide();
                         }
                         //that.elems.tabel.datagrid('getSelected');
@@ -982,7 +991,7 @@
                 url: "/ApplicationInterface/Gateway.ashx",
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GeEventItemList',
-                    CTWEventId: that.loadData.details.CTWEventId,
+                    LeventId: that.loadData.details.EventId,
                     PageIndex: that.loadData.args.PageIndex,
                     PageSize: that.loadData.args.PageSize
                 },
@@ -1094,7 +1103,7 @@
                 url: "/ApplicationInterface/Gateway.ashx",
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GetEventPrizeDetailList',
-                    CTWEventId: that.loadData.details.CTWEventId,
+                    LeventId: that.loadData.details.EventId,
                     PageIndex: that.loadData.args.PageIndex,
                     PageSize: that.loadData.args.PageSize
                 },
@@ -1124,7 +1133,7 @@
                 url: "/ApplicationInterface/Gateway.ashx",
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GeEventItemDetailList',
-                    CTWEventId: that.loadData.details.CTWEventId,
+                    LeventId: that.loadData.details.EventId,
                     PageIndex: that.loadData.args.PageIndex,
                     PageSize: that.loadData.args.PageSize
                 },

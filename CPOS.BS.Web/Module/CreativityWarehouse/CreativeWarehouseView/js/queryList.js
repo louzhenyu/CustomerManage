@@ -89,6 +89,20 @@
                 $('#win').window('close');
             });
 
+            //banner展示二维码
+            $(".InSeasonList").on("mouseover", ".preview", function (e) {
+                $(".qcode img").attr("src", $(this).data("src"));
+                $(".qcode").show();
+
+            });
+
+
+            //banner隐藏二维码
+            $(".InSeasonList").on("mouseout", ".preview", function (e) {
+                $(".qcode").hide();
+
+
+            });
 
             //显示二维码
             $(".TemplatePreview").on("mouseover", ".ActivityContent", function () {
@@ -146,7 +160,7 @@
                             pagination: ".thisseasontouchslider-nav-item",
                             currentClass: "thisseasontouchslider-nav-item-current", // current 样式指定
                             prev: ".thisseasontouchslider-prev", // prev 样式指定
-                            autoplay: true, // 自动播放
+                            autoplay: false, // 自动播放
                             viewport: ".thisseasontouchslider-viewport"
                         });
                     }

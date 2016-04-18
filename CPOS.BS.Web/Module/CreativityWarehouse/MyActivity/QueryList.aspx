@@ -221,7 +221,7 @@
     <div style="display:none;">
       <div id="winadd" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,draggable:false,maximizable:false,closed:true,closable:true" >
           <div class="easyui-layout" data-options="fit:true" id="panlconent2">
-            <div class="lineform"><span>数量：</span><input  type="text"  placeholder="请输入"    /></div>
+            <div class="lineform" style="  margin-top: 50px;"><span>数量：</span><input id="addPrize" class="easyui-numberbox" data-options="min:1,max:10000,width:260,height:30"  type="text"  placeholder="请输入"    /></div>
 
                <div class="btnWrap" id="Div5" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
       				<a class="easyui-linkbutton commonBtn submit addbtn" >确定</a>
@@ -271,7 +271,7 @@
                           </div>
                       </div>
                   </div>
-                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>">查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?param={'LeventId'='<#=CTWEventId #>'}&method=GivingOutAwardsListExport" download="奖品发放导出.xls" class="exportbtn commonBtn">导出清单</a></div>
+                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>">查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=<#=CTWEventId #>&method=GivingOutAwardsListExport" download="奖品发放导出.xls" class="exportbtn commonBtn">导出清单</a></div>
               </div>
               <div class="PrizeList">
                    <div class="tableWrap" id="tableWrap2" style="display:inline-block;width:100%;">
@@ -336,7 +336,7 @@
                           </div>
                       </div>
                   </div>
-                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>" >查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?param={'LeventId'='<#=CTWEventId #>'}&method=SalesListExport" download="销售清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
+                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>" >查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=<#=CTWEventId #>&method=SalesListExport" download="销售清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
               </div>
               <div class="PrizeList">
                    <div class="tableWrap" id="Div6" style="display:inline-block;width:100%;">

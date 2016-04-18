@@ -1,7 +1,7 @@
 ﻿@charset "utf-8";
 body{overflow-x: hidden;}
-.navigation{ height: 52px;  width: 100%;  background-color: #f2f2f2; }
-
+.navigation{ height: 52px;  width: 100%;min-width: 786px;  background-color: #f2f2f2; }
+.navigation  ul{width: 786px;}
 .navigation  li{ position:relative; text-align: center; width: 180px; height:50px; float:left; font-size: 13px; line-height: 50px; background: url("../../images/newYear/nav/jt.png") right center no-repeat #fafafa;}
 .navigation  li.on{background: url("../../images/newYear/nav/jton.png") right center no-repeat #fff;  color: #00a0e8}
 .navigation  li.one{ background-image: none;}
@@ -244,6 +244,7 @@ body{overflow-x: hidden;}
     text-align: left;
     overflow: hidden;
     background:url("../../images/newYear/check.png") right center no-repeat;
+    cursor: pointer;
 }
 /* 只是点击框就要启用 且 下面input的大小和其一致 .datagrid-header-check{display:block;width: 20px;height: 20px;margin: 0 16px;}*//*大小和背景图片大小一致 防止点图片以外的位置也变成选中状态*/
 .datagrid-header-check input, .datagrid-cell-check input{
@@ -398,6 +399,7 @@ body{overflow-x: hidden;}
 /*关闭按钮重构*/
 .panel-tool-close,.jui-dialog-close {
     background: url('../../images/newYear/hitClose.png') no-repeat center center;
+    padding-right: 0;
 }
 
 /*日期控件*/

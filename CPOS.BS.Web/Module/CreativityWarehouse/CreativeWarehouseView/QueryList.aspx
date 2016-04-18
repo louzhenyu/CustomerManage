@@ -21,8 +21,8 @@
                         <div class="content">
                            
                             <div class="touchsliderthisseason">
-                                <div class="thisseasontouchslider-viewport" style="width:770px;overflow:hidden;position: relative; height: 340px;">
-                                    <div class="InSeasonList" style="width: 100000px; position: absolute; left: 0px; height:340px;">
+                                <div class="thisseasontouchslider-viewport" style="width:770px;overflow:hidden;position: relative; height: 380px;">
+                                    <div class="InSeasonList" style="width: 100000px; position: absolute; left: 0px; height:380px;">
                                         
                                     </div>
                                 </div>
@@ -30,14 +30,15 @@
                                 <div class="thisseasontouchslider-nav">
                                     
                                 </div>
+
                             </div>
-                            
+                             <div class="qcode" style="display:none;"><img  src=""  /></div>
                         </div>
                     </div>
                 </div>
                 <div class="contentright ">
                     <div class="seasonlist spacing">
-                         <div class="title">即将上线<span class="Annualplanbtn">查看全年计划></span></div>
+                         <div class="title">下季活动<span class="Annualplanbtn">查看全年计划></span></div>
                         <div class="content">
                             <ul class="seasonlist_ul">
                             </ul>
@@ -90,8 +91,18 @@
             <# if(_data.ActivityGroupCode=="" ){#>
         <div class="thisseasontouchslider-item Seasondata"> <a href="<#=_data.BannerUrl #>"><img  src="<#=_data.ImageURL #>"  /></a></div>
              <#}else{ #>
-        <div class="thisseasontouchslider-item Seasondata"> <img  src="<#=_data.ImageURL #>"  /></div>
-            <#}} #>
+        <div class="thisseasontouchslider-item Seasondata"> <img  src="<#=_data.ImageURL #>"  />
+            <div class="operation">
+                <div class="preview operationbtn" >预览活动</div>
+                <div class="start operationbtn" >发起活动</div>
+                <div class="viewmore operationbtn" >浏览更多</div>
+            </div>
+            <div class="personSum">
+                <div class="person">20人</div>
+                <div class="hot"></div>
+            </div>
+        </div>
+        <#}} #>
     </script>
 
 

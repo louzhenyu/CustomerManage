@@ -67,12 +67,12 @@ define(function($) {
         <em class="upTip">上传图片</em>    \
         <div class="jsUploadBtn"  data-imgcode="EditImg"></div>\
         </div><!--uploadBtn--> \
-        <p class="textBtn" data-imgurl="<%=imgUrl%>">恢复默认图片</p> \
+        <p class="textBtn" data-imgurl="<%=imgDefault%>">恢复默认图片</p> \
         </div>                             \
        <div class="imgPanel"> <img src="<%=imgUrl%>" data-imgcode="EditImg"/></div>\
         </div>',
-        setPrize:' <div class="lineText"> \
-    <div class="commonSelectWrap"> \
+        setPrize:' <div class="lineText" style="border-bottom: 1px solid #e1e7ea;"> \
+    <div class="commonSelectWrap" style="margin-left: 10px;"> \
         <em class="tit w120">选择奖品类型:</em> \
     <div class="searchInput bordernone"> \
         <input  class="easyui-combobox" id="selectType" data-options="width:160,height:32" name="BatId" type="text" value="0"/>\

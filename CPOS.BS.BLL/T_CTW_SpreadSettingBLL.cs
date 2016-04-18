@@ -41,9 +41,9 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetSpreadSettingByCTWEventId(strCTWEventId);
         }
-        public DataSet GetSpreadSettingQRImageByCTWEventId(string strCTWEventId)
+        public DataSet GetSpreadSettingQRImageByCTWEventId(string strCTWEventId, string strSpreadType)
         {
-            return this._currentDAO.GetSpreadSettingQRImageByCTWEventId(strCTWEventId);
+            return this._currentDAO.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, strSpreadType);
         }
     }
 }

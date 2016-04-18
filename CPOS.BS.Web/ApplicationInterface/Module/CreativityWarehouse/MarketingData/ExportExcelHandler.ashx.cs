@@ -65,10 +65,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
         public void GivingOutAwardsListExport(HttpContext pContext)
         {
-            GetEventPrizeDetailListRP form = Request("param").DeserializeJSONTo<GetEventPrizeDetailListRP>();
+            string LeventId = pContext.Request.QueryString["LeventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
-            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeDetailList(form.LeventId, 60000, 0, CurrentUserInfo.ClientID);//订单导出，记录数0-60000
+            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeDetailList(LeventId, 60000, 0, CurrentUserInfo.ClientID);//订单导出，记录数0-60000
             List<EventPrizeDetailInfo> eventPrizeDetailInfo = new List<EventPrizeDetailInfo>();
 
             if (ds.Tables.Count > 0)
@@ -81,7 +81,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
             if(eventPrizeDetailInfo != null)
             {
-                string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
+                string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/奖品发放清单" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                 Aspose.Cells.License lic = new Aspose.Cells.License();
                 lic.SetLicense("Aspose.Total.lic");
                 Workbook workbook = new Workbook();
@@ -164,10 +164,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         }
         public void SalesListExport(HttpContext pContext)
         {
-            GeEventItemDetailListRP form = Request("param").DeserializeJSONTo<GeEventItemDetailListRP>();
+            string LeventId = pContext.Request.QueryString["LeventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
-            DataSet ds = _T_CTW_LEventBLL.GeEventItemDetailList(form.LeventId,60000,0,CurrentUserInfo.ClientID);
+            DataSet ds = _T_CTW_LEventBLL.GeEventItemDetailList(LeventId,60000,0,CurrentUserInfo.ClientID);
             List<EventItemDetailInfo> eventItemInfo = new List<EventItemDetailInfo>();
 
             if (ds.Tables.Count > 0)
@@ -181,7 +181,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
             if (eventItemInfo != null)
             {
-                string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
+                string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/销售清单" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                 Aspose.Cells.License lic = new Aspose.Cells.License();
                 lic.SetLicense("Aspose.Total.lic");
                 Workbook workbook = new Workbook();
@@ -274,10 +274,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         }
         public void GameAwardsListExport(HttpContext pContext)
         {
-            GetEventPrizeListRP form = Request("param").DeserializeJSONTo<GetEventPrizeListRP>();
+            string LeventId = pContext.Request.QueryString["LeventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
-            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(form.LeventId, 60000, 0, CurrentUserInfo.ClientID);
+            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(LeventId, 60000, 0, CurrentUserInfo.ClientID);
             List<EventPrizeInfo> eventPrizeInfo = new List<EventPrizeInfo>();
 
             if (ds.Tables.Count > 0)
@@ -290,7 +290,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             }
             if (eventPrizeInfo != null)
             {
-                string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
+                string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/游戏奖品清单" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                 Aspose.Cells.License lic = new Aspose.Cells.License();
                 lic.SetLicense("Aspose.Total.lic");
                 Workbook workbook = new Workbook();
@@ -379,10 +379,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         }
         public void SalesItemsListExport(HttpContext pContext)
         {
-            GeEventItemListRP form = Request("param").DeserializeJSONTo<GeEventItemListRP>();
+            string LeventId = pContext.Request.QueryString["LeventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
-            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(form.LeventId, 60000, 0, CurrentUserInfo.ClientID);
+            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(LeventId, 60000, 0, CurrentUserInfo.ClientID);
             List<EventItemInfo> eventItemInfo = new List<EventItemInfo>();
 
             if (ds.Tables.Count > 0)
@@ -395,7 +395,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             }
             if (eventItemInfo != null)
             {
-                string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
+                string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/销售商品清单" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                 Aspose.Cells.License lic = new Aspose.Cells.License();
                 lic.SetLicense("Aspose.Total.lic");
                 Workbook workbook = new Workbook();
@@ -700,7 +700,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     {
                         if (dsVipAddRankingStats.Tables[0].Rows.Count > 0)
                         {
-                            string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/游戏会员增长排行" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
+                            string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/公众号粉丝增长数排行" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                             Aspose.Cells.License lic = new Aspose.Cells.License();
                             lic.SetLicense("Aspose.Total.lic");
                             Workbook workbook = new Workbook();
@@ -740,7 +740,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                             #endregion
 
                             sheetOneCells.Merge(0, 0, 1, 2);//合并单元格
-                            sheetOneCells[0, 0].PutValue("游戏会员增长排行");//填写内容
+                            sheetOneCells[0, 0].PutValue("公众号粉丝增长数排行");//填写内容
                             sheetOneCells[0, 0].SetStyle(styleTitle);
                             sheetOneCells.SetRowHeight(0, 38);
                             //生成行2 列名行
@@ -794,7 +794,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     {
                         if (dsVipAddRankingStats.Tables[1].Rows.Count > 0)
                         {
-                            string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/促销会员增长排行" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
+                            string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/注册会员增长数排行" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                             Aspose.Cells.License lic = new Aspose.Cells.License();
                             lic.SetLicense("Aspose.Total.lic");
                             Workbook workbook = new Workbook();
@@ -834,7 +834,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                             #endregion
 
                             sheetOneCells.Merge(0, 0, 1, 2);//合并单元格
-                            sheetOneCells[0, 0].PutValue("促销会员增长排行");//填写内容
+                            sheetOneCells[0, 0].PutValue("注册会员增长数排行");//填写内容
                             sheetOneCells[0, 0].SetStyle(styleTitle);
                             sheetOneCells.SetRowHeight(0, 38);
                             //生成行2 列名行

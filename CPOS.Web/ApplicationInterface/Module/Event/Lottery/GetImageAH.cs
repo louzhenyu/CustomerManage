@@ -33,7 +33,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
             //if (!string.IsNullOrEmpty(pRequest.Parameters.CTWEventId))
             //{
                 T_CTW_LEventInteractionBLL bllLEventInteraction = new T_CTW_LEventInteractionBLL(this.CurrentUserInfo);
-                //var entityLEventInteraction = bllLEventInteraction.QueryByEntity(new T_CTW_LEventInteractionEntity() { LeventId=strEventId, IsDelete = 0 }, null).FirstOrDefault();
                 DataSet ds = bllLEventInteraction.GetCTWLEventInteraction(strEventId);
                 if (ds != null && ds.Tables[0].Rows.Count>0)
                 {
@@ -43,6 +42,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     var contactList = bllContact.QueryByEntity(new ContactEventEntity() { EventId = strCTWEventId, IsCTW = 1, IsDelete = 0 }, null).ToList();
                     if(contactList.Count>0)
                     {
+                        T_CTW_SpreadSettingBLL bllSpreadSetting = new T_CTW_SpreadSettingBLL(this.CurrentUserInfo);
+
                         if (contactList.Where(a => a.ContactTypeCode == "Reg").Count() > 0)
                         {
                             ButtonInfo reg = new ButtonInfo();
@@ -52,17 +53,28 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         if (contactList.Where(a => a.ContactTypeCode == "Share").Count() > 0)
                         {
                             ButtonInfo share = new ButtonInfo();
+                            DataSet dsSpreadSetting = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Share");
+                            if (dsSpreadSetting != null && dsSpreadSetting.Tables.Count > 0)
+                            {
+                                share.Title = dsSpreadSetting.Tables[0].Rows[0]["Title"].ToString(); 
+                                share.Summary = dsSpreadSetting.Tables[0].Rows[0]["Summary"].ToString();
+                                share.BGImageUrl = dsSpreadSetting.Tables[0].Rows[0]["BGImageUrl"].ToString(); 
+
+                            } 
                             share.Text = "分享有奖";
+                            
                             rd.Share = share;
                         }
                         if (contactList.Where(a => a.ContactTypeCode == "Focus").Count() > 0)
                         {
-                            T_CTW_SpreadSettingBLL bllSpreadSetting = new T_CTW_SpreadSettingBLL(this.CurrentUserInfo);
-                            DataSet dsSpreadSetting = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId);
+                            DataSet dsSpreadSetting = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Focus");
                             if (dsSpreadSetting != null && dsSpreadSetting.Tables.Count > 0)
                             {
-                                rd.BGImageUrl = dsSpreadSetting.Tables[0].Rows[0]["BGImageUrl"].ToString();
-                                rd.LeadPageQRCodeImageUrl = dsSpreadSetting.Tables[0].Rows[0]["LeadPageQRCodeImageUrl"].ToString();
+                                ButtonInfo focus = new ButtonInfo();
+
+                                focus.BGImageUrl = dsSpreadSetting.Tables[0].Rows[0]["BGImageUrl"].ToString();
+                                focus.LeadPageQRCodeImageUrl = dsSpreadSetting.Tables[0].Rows[0]["LeadPageQRCodeImageUrl"].ToString();
+                                rd.Focus = focus;
                             }
                         }
                     }

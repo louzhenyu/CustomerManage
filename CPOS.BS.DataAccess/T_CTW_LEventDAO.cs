@@ -184,12 +184,20 @@ namespace JIT.CPOS.BS.DataAccess
                 ls.Add(new SqlParameter("@ActivityGroupId", ActivityGroupId));
                 sqlWhere += " and temp.ActivityGroupId=@ActivityGroupId";
             }
-            //if (!string.IsNullOrEmpty(BeginTime))//已核销
-            //{
-            //    ls.Add(new SqlParameter("@BeginTime", EventName));
-            //    //strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
-            //    strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
-            //}
+            if (!string.IsNullOrEmpty(BeginTime))//已核销
+            {
+                ls.Add(new SqlParameter("@BeginTime", BeginTime));
+                sqlWhere += " and temp.StartDate>=@BeginTime";
+              // strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
+              //  strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
+            }
+            if (!string.IsNullOrEmpty(EndTime))//已核销
+            {
+                ls.Add(new SqlParameter("@EndDate", EndTime));
+                sqlWhere += " and temp.EndDate<=@EndDate";
+                // strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
+                //  strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
+            }
           
             //总数据表
             string sql = @"  SELECT Count(1) TotalCount

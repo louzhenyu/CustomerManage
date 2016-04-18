@@ -262,7 +262,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 }
 
 
-            }).delegate(".slide img","click",function(){    //主题设置事件页面
+            }).delegate(".slide div","click",function(){    //主题设置事件页面
                    var me=$(this);
 
                 var domIndex= me.parent().data("index");
@@ -373,10 +373,15 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                         }
                     }
                     var InteractionType = $(".btnItem.on").data("interaction");
+                    if(!InteractionType){
+                        $.messager.alert("提示","没有关联活动,请选择其他风格");
+                        return false;
+                    }
+
                     var list = that.TemplateThemeList[index].EventInteractionList;
                     if (that.TemplateThemeList[index]) {
                         self.config.templateId = that.TemplateThemeList[index].H5TemplateId; //作品id
-                        ThemeId = that.TemplateThemeList[index].ThemeId
+                        ThemeId = that.TemplateThemeList[index].ThemeId;
                         drawMethodCode= that.TemplateThemeList[index].DrawMethodCode
                     }
 
@@ -403,6 +408,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                                     if (ThemeId && self.elems.isInitStyle) {      // isInitStyle是否需要从新实例化一个风格
                                         that.initJevvShow(false,drawMethodCode);
                                         that.loadSetPageData(eventInfo);
+                                        that.setDefaultImg(eventInfo);
                                         self.elems.currentStyleId = ThemeId;
                                     }
                                     var navLi = that.elems.navigation.find("li");
@@ -437,8 +443,16 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                     }
                 }
 
-                if(navLiOn=="nav03"){
+                if(navLiOn=="nav03"&&panelName=="nav04"){
                     isPerform=$("#setOptionForm").form("validate");
+                    if(isPerform&&drawMethodCode=="HB"){
+                        if(that.prizeListHB.length==0){
+                            alert("请添加奖品");
+                            isPerform=false;
+                            return false;
+                        }
+
+                    }
                 }
 
                    if(isPerform) {
@@ -446,8 +460,10 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                            that.initJevvShow(false,drawMethodCode);
                            self.elems.currentStyleId = ThemeId;
                            that.loadSetPageData(eventInfo);
+                           that.setDefaultImg(eventInfo);
                        }else if(InteractionType&&that.elems.eventInfoType!=InteractionType){ //选中风格实现功能被切换
                            that.loadSetPageData(eventInfo);
+                           that.setDefaultImg(eventInfo);
                        }
                        var navLi = that.elems.navigation.find("li");
                        if (me.index() == navLi.length - 1) {
@@ -531,10 +547,8 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 debugger;
                     var imgMessage={size:$(this).parent().data("size"),imgUrl:$(this).parent().data("imgurl")};
                     var imgCode= $(this).parent().data("imgcode");//页面每个图片唯一的标识
+                    imgMessage["imgDefault"]=$(this).parent().data("default");
                     that.imgEdit(imgMessage,imgCode);
-
-
-
                 }).delegate('[data-panel="nav04"] .editIconBtn',"click",function(){
                 var type=$(this).data("type");
                     switch (type){
@@ -566,6 +580,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                     if(!type){
                         var imgMessage={size:$(this).parent().data("size"),imgUrl:$(this).parent().data("imgurl")};
                         var imgCode= $(this).parent().data("imgcode");//页面每个图片唯一的标识
+                        imgMessage["imgDefault"]=$(this).parent().data("default");
                         that.imgEdit(imgMessage,imgCode);
                     }
             }).delegate('.checkBox',"click",function(){
@@ -629,6 +644,9 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                         that.addUploadImgEvent(e);
 
                     });
+                    $("#win").window("hcenter");
+                },onClose:function(){
+                    $("body").eq(0).css("overflow-y","auto");
                 }
             });
             $('#win1').window({
@@ -639,6 +657,9 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 maximizable:false,
                 closed:true,
                 closable:true,
+                onOpen:function() {
+                    $("#win1").window("hcenter");
+                },
                 onClose:function(){
                     if(that.elems.optionType1=="coupon"||that.elems.optionType1=="addCouponNumber"){
                         var type=$("#selectType").combobox("getValue");
@@ -681,7 +702,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                            debugger;
                 var objMsg={isAdd:true};
                if(that.elems.optionType=="imgEdit"){
-                   var imgUrl=$("#win").find(".imgUploadPanel").find('[data-imgcode="EditImg"]').attr("src");
+                   var imgUrl=$("#win").find(".imgUploadPanel").find('[data-imgcode="EditImg"]img').attr("src");
                    var imgCode=that.elems.ImgCode,dom=$("[data-imgcode="+imgCode+"]");
                    dom.data("imgurl",imgUrl);
                    if(!dom.hasClass(".jsUploadBtn")) {
@@ -789,7 +810,15 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                            break
                    }
                 $.util.stopBubble(e) ;
+            }).delegate(".lineText .textBtn","click",function(e){
+              var imgUrl= $(this).data("imgurl");
+                if(imgUrl){
+                    $("#win").find(".imgPanel img").attr("src",imgUrl)
+                }
+
+
             });
+
             $('#win1').delegate(".saveBtn","click",function() {
                 var isColse=true;
                 if ($("#win2OptionForm").form("validate")) {
@@ -1042,6 +1071,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 for(var index=0;index<dataList.length;index++) {
                     $("#prizeListGrid").datagrid('beginEdit', index);
                 }
+                $("#win .tableWap").find(".textbox.numberbox").css({width:81});
             }
             objMsg.list=list;
             return objMsg;
@@ -1212,7 +1242,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
             that.elems.optionType=type;//"setPrize";
             var top=$(document).scrollTop()+0;
             var left=$(window).width() - 1140>0 ? ($(window).width() - 1140)*0.5:80;
-            $('#win').window({title:"选择奖品",width:$(window).width(),height:$(window).height(),top:top,left:0});
+            $('#win').window({title:"选择奖品",width:$(window).width(),height:$(window).height(),top:top});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=that.render(that.template.setPrize,rowData);
@@ -1229,7 +1259,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 textField:'text',
                 data:[{
                     "id":1,
-                    "text":"礼品券"
+                    "text":"兑换券"
                 },{
                     "id":0,
                     "text":"代金券"
@@ -1259,8 +1289,8 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                            dataListName="已有积分列表";
                            that.integralRenderList();
                            break
-                       case 1:   //礼品券
-                           dataListName="已有礼品券列表";
+                       case 1:   //兑换券
+                           dataListName="已有兑换券列表";
                              that.couponRenderList(type);
                         break;
                        case 0:  //代金券
@@ -1273,7 +1303,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                    // dom.find(".listName").html(dataListName);
                 }
             });
-
+            $("body").eq(0).css("overflow-y","hidden");
 
 
 
@@ -1294,7 +1324,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
              }
              var top=$(document).scrollTop()+100;
              var left=$(window).width() - 420>0 ? ($(window).width() - 420)*0.5:80;
-             $('#win1').window({title:title,width:420,height:260,top:top,left:left});
+             $('#win1').window({title:title,width:420,height:260,top:top});
              //改变弹框内容，调用百度模板显示不同内容
              $('#panlconent1').layout('remove','center');
              var html=that.render(that.template.addNumber);
@@ -1320,7 +1350,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
             that.elems.optionType1="integral";//"setPrize";
             var top=$(document).scrollTop()+100;
             var left=$(window).width() - 420>0 ? ($(window).width() - 420)*0.5:80;
-            $('#win1').window({title:"添加积分",width:420,height:260,top:top,left:left});
+            $('#win1').window({title:"添加积分",width:420,height:260,top:top});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent1').layout('remove','center');
             var html=that.render(that.template.addIntegral,rowData);
@@ -1427,7 +1457,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
             that.elems.optionType1="coupon";//"setPrize";
             var top=$(document).scrollTop()+0;
             //var left=$(window).width() - 640>0 ? ($(window).width() - 640)*0.5:80;
-            $('#win1').window({title:"添加优惠券",width:$(window).width(),height:$(window).height(),top:top,left:0});
+            $('#win1').window({title:"添加优惠券",width:$(window).width(),height:$(window).height(),top:top});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent1').layout('remove','center');
             var str='<iframe id="addCouponIframe" src="/module/couponManage/addCoupon.aspx?couponType"'+type+' width="100%" height="100%"></iframe>';
@@ -1528,24 +1558,24 @@ debugger;
                       } //显示复选框
                       ] ],
                      columns: [[
-                         {field: 'CouponTypeName', title: '代金券名称', width: 80, resizable: false, align: 'left'},
+                         {field: 'CouponTypeName', title: '代金券名称', width:100, resizable: false, align: 'left'},
                          {field: 'ParValue', title: '面值', width: 70, align: 'center', resizable: false},
-                         {field: 'ValidityPeriod', title: '失效日期', width: 70, align: 'left', resizable: false},
+                         {field: 'ValidityPeriod', title: '失效日期', width: 80, align: 'left', resizable: false},
                          {field: 'SurplusQty', title: '已有数量', width: 70, align: 'center', resizable: false},
                          {
-                             field: 'PrizeCount', title: '奖品数量', width: 70, align: 'center', resizable: false,
+                             field: 'PrizeCount', title: '奖品数量', width: 60, align: 'left', resizable: false,
                              editor: {
                              type: 'numberbox',
                              options: {
                                  min: 1,
                                  precision: 0,
                                  height: 31,
-                                 width: 136,
+                                 width: 136
                              }
                          }
                          },
                          {
-                             field: 'TemplateId', title: '操作', width: 100, align: 'left', resizable: false,
+                             field: 'TemplateId', title: '操作', width: 30, align: 'left', resizable: false,
                              formatter: function (value, row, index) {
                                  var str = "<div class='operation'>";
                                  str += "<div class='opt' data-opttype='addCoupon'  data-index="+index+"  data-type="+type+" data-id="+row.CouponTypeID+">追加券数量</div>";
@@ -1596,6 +1626,7 @@ debugger;
                     /* var ed = $('prizeListGrid').datagrid('getEditor', {index:index,field:'prizeNumber'});
                      $(ed.target).numberbox('setValue', type1List[index].SurplusQty);*/
                  }
+
              }
              if(type==1) {
                  if(type1List.length>0){
@@ -1603,7 +1634,7 @@ debugger;
                  }else{
                      $("#win").find(".listName").show();
                  }
-                 $("#win").find(".listName").html("你目前没有礼品券奖品，请点击新增");
+                 $("#win").find(".listName").html("你目前没有兑换券奖品，请点击新增");
                     $("#prizeListGrid").datagrid({
                         method: 'post',
                         iconCls: 'icon-list', //图标
@@ -1625,11 +1656,11 @@ debugger;
                          } //显示复选框
                          ] ],
                         columns: [[
-                            {field: 'CouponTypeName', title: '代金券名称', width: 80, resizable: false, align: 'left'},
-                            {field: 'ValidityPeriod', title: '失效日期', width: 70, align: 'center', resizable: false},
-                            {field: 'SurplusQty', title: '已有数量', width: 70, align: 'center', resizable: false},
+                            {field: 'CouponTypeName', title: '兑换券名称', width: 100, resizable: false, align: 'left'},
+                            {field: 'ValidityPeriod', title: '失效日期', width: 70, align: 'left', resizable: false},
+                            {field: 'SurplusQty', title: '已有数量', width: 80, align: 'left', resizable: false},
                             {
-                                field: 'PrizeCount', title: '奖品数量', width: 70, align: 'left', resizable: false,
+                                field: 'PrizeCount', title: '奖品数量', width: 60, align: 'left', resizable: false,
                                 formatter: function (value, row, index) {
                                     return row.SurplusQty
                                 }, editor: {
@@ -1638,12 +1669,12 @@ debugger;
                                     min: 1,
                                     precision: 0,
                                     height: 31,
-                                    width: 136,
+                                    width: 80
                                 }
                             }
                             },
                             {
-                                field: 'TemplateId', title: '操作', width: 100, align: 'left', resizable: false,
+                                field: 'TemplateId', title: '操作', width: 30, align: 'left', resizable: false,
                                 formatter: function (value, row, index) {
                                     var str = "<div class='operation'>";
                                     str += "<div class='opt' data-opttype='addCoupon'  data-index="+index+"  data-type="+type+" data-id="+row.CouponTypeID+">追加券数量</div>";
@@ -1695,8 +1726,13 @@ debugger;
                      $(ed.target).numberbox('setValue', type1List[index].SurplusQty);*/
 
                  }
+
                 }
+                setTimeout(function(){
+                    $("#win .tableWap").find(".textbox.numberbox").css({width:81});
+                },400)
             });
+
         },
 
         //加载页面的数据请求
@@ -1711,10 +1747,10 @@ debugger;
                 $("#slider").html("");
                 var startSlide=0;
                 for(var i=0;i<ThemeList.length;i++) {
-                    var html = '<div class="slide" data-index="' + i + '"><img src="' + ThemeList[i].ImageURL + '" /><em></em><p>'+ThemeList[i].ThemeName+'</p></div>';
+                    var html = '<div class="slide" data-index="' + i + '"><div><img src="' + ThemeList[i].ImageURL + '" /><em></em><p>'+ThemeList[i].ThemeName+'</p></div</div>';
                     if (data.Data.CustomerCTWEventInfo && data.Data.CustomerCTWEventInfo.OriginalThemeId == ThemeList[i].ThemeId) {
                         startSlide=i;
-                        html = '<div class="slide on" data-index="' + i + '"><img src="' + ThemeList[i].ImageURL + '" /><em></em><p>'+ThemeList[i].ThemeName+'</p></div>';
+                        html = '<div class="slide on" data-index="' + i + '"><div><img src="' + ThemeList[i].ImageURL + '" /><em></em><p>'+ThemeList[i].ThemeName+'</p><div></div>';
                     }
 
                     $("#slider").append(html);
@@ -1765,9 +1801,66 @@ debugger;
             });
         },
 
+         //设置默认图片
+        setDefaultImg:function(eventInfo,spreadList){
+            if(eventInfo) {         //nav03的默认图片处理
+                var code = eventInfo.DrawMethodCode, dom = $('[data-panel="nav03" ]'), selected = "", selectAll = '[data-interaction]';
+                if (eventInfo.InteractionType == 1) { // 关注
+                    selected = '[data-interaction="1"]';
+                } else if (eventInfo.InteractionType == 2) {   //成交
+                    selected = '[data-interaction="2"]';
+                }
+                /* DZP 大转盘
+                 HB   红包
+                 QN  问卷
+                 QG  抢购/秒杀
+                 TG  团购
+                 RX  热销*/
 
-        setDefultImg:function(){
+                switch (code) {
+                    case "DZP":
+                        break;
+                    case "HB":
+                        var domList = dom.find(selected).find(".attention").find("[data-imgcode]");
 
+                        if (eventInfo.GameEventImageList && eventInfo.GameEventImageList.length > 0) {
+                            for (var i = 0; i < eventInfo.GameEventImageList.length; i++) {
+                                var imgObj = eventInfo.GameEventImageList[i];
+                                $.each(domList, function () {
+                                    if ($(this).data("imgcode").indexOf(imgObj.BatId) != -1) {
+                                        if ($(this).data("edit")) {
+                                            $(this).data("default", imgObj.ImageURL)
+                                        }
+                                    }
+
+                                })
+                            }
+                        } else {
+                            console.info("红包图片数据异常")
+                        }
+                        break;
+                    case "QN":
+                        break;
+                    case "QG":
+                        break;
+                    case "TG":
+                        break;
+                }
+            }
+            if(spreadList&&spreadList.length>0){     //nav04的默认图片处理
+                dom=$('[data-panel="nav04"]');
+                for(var i=0;i<spreadList.length;i++){
+
+                    var spreadObj=spreadList[i]
+                    switch(spreadObj.SpreadType.toLocaleLowerCase()){
+                        case "focus":  //引导关注
+                          var  domPanel=dom.find('.phoneWebDiv[ data-type="Focus"]');
+                                domPanel.find('[data-imgcode="bgPhone"]').data("default",spreadObj.ImageURL);
+                            break;
+                    }
+
+                }
+            }
         },
 
         //设置页面的（nav03）赋值
@@ -1974,6 +2067,7 @@ debugger;
 
             } else{
                 self.loadGeneralizePageData(loadData.TemplateSpreadSettingList);
+                self.setDefaultImg(null,loadData.TemplateSpreadSettingList)
             }
 
         },
@@ -2096,7 +2190,7 @@ debugger;
             var left=($(window).width()-680)*0.5>0?($(window).width()-680)*0.5:80;
             var title="更改" ;
 
-            $('#win').window({title:title,width:680,height:670,top:top,left:left});
+            $('#win').window({title:title,width:680,height:670,top:top});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=that.render(that.template.imgText,rowData);
@@ -2117,7 +2211,7 @@ debugger;
         var left=($(window).width()-680)*0.5>0?($(window).width()-680)*0.5:80;
         var title="更改" ;
 
-        $('#win').window({title:title,width:600,height:670,top:top,left:left});
+        $('#win').window({title:title,width:600,height:670,top:top});
         //改变弹框内容，调用百度模板显示不同内容
         $('#panlconent').layout('remove','center');
         var html=that.render(that.template.shareInfo,rowData);
@@ -2138,7 +2232,7 @@ debugger;
             var left=($(window).width()-680)*0.5>0?($(window).width()-680)*0.5:80;
             var title="更改" ;
 
-            $('#win').window({title:title,width:600,height:400,top:top,left:left});
+            $('#win').window({title:title,width:600,height:400,top:top});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=that.render(that.template.editText,rowData);
@@ -2160,7 +2254,7 @@ debugger;
             var left=($(window).width()-760)*0.5>0?($(window).width()-760)*0.5:80;
             var title="更改图片" ;
 
-            $('#win').window({title:title,width:670,height:600,top:top,left:left});
+            $('#win').window({title:title,width:670,height:600,top:top});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
             var html=that.render(that.template.imgEdit,rowData);
@@ -2186,92 +2280,7 @@ debugger;
         }
     },
 
-        //添加风格
-        addActivity:function(rowData){
-            debugger;
-            var that=this;
-            that.elems.optionType="addActivity";
-            var top=$(document).scrollTop()+60;
-            var title="添加活动" ;
-            if(rowData) {
-                title = "编辑活动";
-                that.loadData.args.InteractionId=rowData.InteractionId;
-            }
 
-            $('#win').window({title:title,width:760,height:300,top:top,left:($(window).width()-760)*0.5});
-            //改变弹框内容，调用百度模板显示不同内容
-            $('#panlconent').layout('remove','center');
-            var html=that.render(that.template.addActivity);
-            var options = {
-                region: 'center',
-                content:html
-            };
-            $('#panlconent').layout('add',options);
-            that.loadData.getLEventThemeList(function(data){
-                if(data.Data&&data.Data.LEventThemeList) {
-                   data.Data.LEventThemeList.push({ThemeName:"请选择",ThemeId:"-1",selected:true});
-                    var list=data.Data.LEventThemeList;
-                    $("#style").combobox({
-                        panelHeight:that.elems.panlH,
-                        valueField: 'ThemeId',
-                        textField: 'ThemeName',
-                        data: list
-                    }) ;
-                    if(rowData) {
-                        $("#style").combobox("select", rowData.ThemeId);
-                    }
-                }
-            });
-
-            $('#win').window('open');
-            $("#InteractionType").combobox({
-                panelHeight:that.elems.panlH,
-                valueField: 'id',
-                textField: 'text',
-                data:[{id:"1",text:"游戏"},{id:"2",text:"促销"},{id:"-1",text:"请选择",selected:true}],
-                onSelect:function(record){
-                     var list=[];
-                    $.each(that.select.ToolList,function(i,filed){
-                       if(record.id==filed.InteractionType){
-                           list.push(filed);
-                       }
-                    });
-                    list.push({DrawMethodId:"-1",DrawMethodName:"请选择",selected:true});
-                    $("#DrawMethodId").combobox({
-                        panelHeight:that.elems.panlH,
-                        valueField: 'DrawMethodId',
-                        textField: 'DrawMethodName',
-                        data: list,
-                        onSelect:function(record){
-                            var fileds=[{name:"EventCode",value:record.DrawMethodCode}];
-
-                            that.loadData.operation(fileds,"select",function(data){
-                                var eventList=[];
-                                if(data.Data.PanicbuyingEventList&&data.Data.PanicbuyingEventList.length>0){
-                                    eventList=data.Data.PanicbuyingEventList
-                                }
-                                eventList.push({EventId:"-1",EventName:"请选择",selected:true});
-                              $("#LeventId").combobox({
-                                  panelHeight:that.elems.panlH,
-                                  valueField: 'EventId',
-                                  textField: 'EventName',
-                                  data: eventList,
-                              });
-                                if(rowData) {
-                                    $("#LeventId").combobox("select", rowData.LeventId);
-                                }
-                            });
-
-                        }
-                    });
-                }
-            }) ;
-            if(rowData) {
-                $("#InteractionType").combobox("select", rowData.InteractionType);
-                $("#DrawMethodId").combobox("select", rowData.DrawMethodId);
-            }
-
-        },
         setCTWEvent:function(){
 
           var pram=[],that=this;

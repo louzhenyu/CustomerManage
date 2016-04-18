@@ -13,7 +13,8 @@
 .lineform {text-align: center;  height: 30px;margin: 10px 0px;}
 .lineinput {  width: 200px;display: inline-block;text-align: left;}
 .submit {  border-radius: 38px;color: #fff;border: none; width: 110px;height: 36px;line-height: 36px;}
-.contentArea_vipquery {margin-left:20px;}
+.contentArea_vipquery {  margin-left: 48px;}
+.addPrizes {color: #0099ff;}
 
 /*活动类型start*/
 .ActivityGroups {  margin-top: 10px;  width: 100%;  float: left;}

@@ -15,7 +15,7 @@
             <!--个别信息查询-->
             <div class="queryTermArea" id="simpleQuery" style="width: 100%;">
               <div class="listBtn" data-coupontype="0" data-show="panltext">代金券<div class="on"></div></div>
-              <div class="listBtn" data-coupontype="1" data-hide="panltext">礼品券<div class="on"></div></div>
+              <div class="listBtn" data-coupontype="1" data-hide="panltext">兑换券<div class="on"></div></div>
             </div>
             <form></form>
             <form id="addCoupon">

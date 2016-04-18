@@ -147,7 +147,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
                             </div>
                 </div> <!--spreadPanel-->
-                           <div class="spreadPanel setSpread" style="padding-top: 15px;">
+                           <div class="spreadPanel setSpread">
                             <div  data-tabname="tab01" data-type="Focus" >
                                    <p class="title">选择奖品</p>
                                                   <div class="taleWarp HBList " style="margin-left: 20px;">

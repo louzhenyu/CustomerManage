@@ -37,8 +37,7 @@ namespace JIT.CPOS.DTO.Module.Event.Lottery.Response
 
         public LCoverEntity CoverInfo { get; set; }
         public ButtonInfo Reg { get; set; }
-        public string BGImageUrl { get; set; }
-        public string LeadPageQRCodeImageUrl { get; set; }
+        public ButtonInfo Focus { get; set; }
         public ButtonInfo Share { get; set; }
         /// <summary>
         /// 1:创意仓库 0：一般活动
@@ -51,5 +50,22 @@ namespace JIT.CPOS.DTO.Module.Event.Lottery.Response
     {
         public string Text { get; set; }
         public string Color { get; set; }
+        /// <summary>
+        /// 标题
+        /// </summary>
+        public string Title { get; set; }
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Summary { get; set; }
+        /// <summary>
+        /// 背景图片
+        /// </summary>
+        public string BGImageUrl { get; set; }
+        /// <summary>
+        /// 关注二维码
+        /// </summary>
+        public string LeadPageQRCodeImageUrl { get; set; }
+
     }
 }

@@ -829,6 +829,22 @@ namespace JIT.CPOS.BS.BLL
                     {
                         boolHaveChange = false;
                     }
+                    else
+                    {
+                        if (eventEntity.LotteryNum!=null && eventEntity.LotteryNum > 0)
+                        {
+                            for (int i = 1; i < eventEntity.LotteryNum; i++)
+                            {
+                                entityEventsVipObject = new LEventsVipObjectEntity()
+                                {
+                                    IsLottery = 0,
+                                    EventId = strEventId,
+                                    VipId = strVipId
+                                };
+                                bllEventsVipObject.Create(entityEventsVipObject);
+                            }
+                        }
+                    }
                     if (!boolHaveChange && intChange == 0)
                     {
                         rd.PrizeName = "你已经参与过活动啦~请继续关注品牌其它活动哦";
@@ -888,6 +904,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 entityEventsVipObject.IsLottery = 1;
                 bllEventsVipObject.Update(entityEventsVipObject, false, null);
+                
             }
             VipIntegralBLL bllVipIntegral = new VipIntegralBLL(this.CurrentUserInfo);
             VipIntegralDetailEntity IntegralDetail = new VipIntegralDetailEntity();
