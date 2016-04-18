@@ -1,20 +1,21 @@
 ﻿@charset "utf-8";
 
-
-.contentleft {  float: left; font-size: 16px;padding-right:10px;color:#666;padding-left: 20px;}
-.spacing { margin: 10px 0px;}
-.thisseason {   width: 770px; }
+.contentArea_vipquery {width: 1140px;}
+.bannercontent {  width: 100%;float: left;margin-top: 20px;}
+.contentleft {  float: left; font-size: 16px;padding-right:10px;color:#666;padding-left: 10px;}
+.spacing { margin:  0px;}
+.thisseason {   width: 840px; }
 .thisseason .title{ padding: 10px 0px;border-bottom: 1px solid #e1e7ea;}
 .titleline {display: inline-block; width: 2px;height: 14px;background-color: #00a0e8;margin-right: 4px;}
 .thisseason .content{ position: relative;}
-.nextseason {   float: left;  min-height: 300px; }
+.nextseason {   float: left;  min-height: 300px;  width: 100%; }
 .nextseason .title{padding: 10px 0px;border-bottom: 1px solid #e1e7ea;}
-.nextseason .content{display: inline-block;  padding: 10px;}
+.nextseason .content{display: inline-block;}
 .nextseason .content .activityimg {  display: inline-block;  position:relative;height: 115px;  margin-bottom: 1px;}
 .nextseason .content .activityimg div{ position:absolute;width:100%;height:25px;background-color:rgba(0,0,0,0.5);color: #fff;  font-size: 12px;line-height: 23px;  bottom: 0px;padding-left: 10px;}
 .nextseason .content .activityimg img{  width: 266px;height: 115px;}
 .activitys {width: 266px;margin-right: 1px;}
-.contentright { float: left;  font-size: 12px;padding:0px 10px;color:#666;}
+.contentright { float: left;  font-size: 12px;padding-left: 10px;color:#666;}
 .seasonlist { width:260px;border: 1px solid #e1e7ea;}
 .seasonlist .title{padding: 8px 10px 8px 20px;  background-color: #f4f4f4;border-bottom: 1px solid #e1e7ea;  }
 .seasonlist .title span{float:right;  color: #00a0e8;  cursor: pointer;}
@@ -60,10 +61,10 @@ position:relative;
   -webkit-border-radius: 12px;
   border-radius: 12px;
 }
-.thisseasontouchslider-item {width: 770px;
+.thisseasontouchslider-item {width: 840px;
   height: 380px;
   display: inline-block;position: relative;}
-.thisseasontouchslider-item img{width: 770px;
+.thisseasontouchslider-item img{width: 840px;
   height: 380px;}
 
 .thisseasontouchslider-nav-item-current {
@@ -127,11 +128,14 @@ position:relative;
   width: 100%;
     height: 22px;
 }
-.personSum {position: absolute;top: 0px;width: 70px;height: 85px;left: 30px;background: url(../images/bgcolor.png) no-repeat;}
-.personSum .person {background: url(../images/person.png) no-repeat;width: 100%;height: 30px;padding-left: 25px;font-size: 12px;line-height: 30px;color: #fff;}
-.personSum .hot {background: url(../images/hot.png) no-repeat;width: 100%;height: 40px;  background-size: 32px 38px;background-position: 18px;}
-.personSum .holiday{background: url(../images/holiday.png) no-repeat;width: 100%;height: 40px;  background-size: 32px 38px;background-position: 18px;}
-.personSum .store {background: url(../images/store.png) no-repeat;width: 100%;height: 40px;  background-size: 32px 38px;background-position: 18px;}
+.personSum {position: absolute;top: 0px;width: 70px;height: 85px;left: 30px;}
+.bgcolor {background: url(../images/bgcolor.png) no-repeat;}
+.bgcolor1 {background: url(../images/bgcolor1.png) no-repeat;}
+.bgcolor2 {background: url(../images/bgcolor2.png) no-repeat;}
+.personSum .person {background: url(../images/person.png) no-repeat;  background-position: 4px;width: 100%;height: 30px;padding-left: 25px;font-size: 12px;line-height: 30px;color: #fff;}
+.personSum .hot {background: url(../images/hot.png) no-repeat;width: 100%;height: 40px;  background-position: 18px;}
+.personSum .holiday{background: url(../images/holiday.png) no-repeat;width: 100%;height: 40px;  background-position: 18px;}
+.personSum .store {background: url(../images/store.png) no-repeat;width: 100%;height: 40px;  background-position: 18px;}
 
 
 
@@ -147,6 +151,7 @@ top:0px;
 left:0px;
 text-align: center;
 display:none;
+  z-index: 15;
 }
 #Annualplanlayer .planlayer {
  position: absolute;
@@ -162,23 +167,25 @@ display:none;
     
 }
 #Annualplanlayer .Annualplan {min-height:300px;min-width:300px;}
-#Annualplanlayer .plantitle {  position: absolute;top: -25px;left: 10px;color: #fff;font-size: 14px;}
+#Annualplanlayer .plantitle {  position: absolute;top: -25px;left: 0px;color: #fff;font-size: 20px;}
 #Annualplanlayer .plandown {background-color: #fff;line-height:60px;text-align: right;}
 #Annualplanlayer .plandown .downmodel{float: right;margin: 15px 20px;}
 
 
 /*活动数据*/
 
-.Activity {  float: left;  width: 250px;    margin: 10px;}
-.Activity .ActivityContent {position:relative;border: 1px solid #e1e7ea;border-bottom:none;}
+.Activity {  float: left;  width: 265px;    margin: 10px;position: relative;}
+.Activity .ActivityContent {position:relative;border: 1px solid #9da1a3;border-bottom:none;}
 .Activity .Activityimg {}
-.Activity .Activityimg img{width:250px;height:250px;}
-.Activity .ActivityQRcode {  width: 100%;height: 100%;position: absolute; top: 0px;  display: none;background-color:rgba(0,0,0,0.5);}
-.Activity .ActivityQRcode img {width:116px;  position: absolute;top: 50%;left: 50%; margin-left: -58px;margin-top: -58px;}
+.Activity .Activityimg img{width:263px;height:263px;}
+.Activity .ActivityQRcode {  width: 100%;height: 100%;position: absolute; top: 0px;  display: none;background-color:rgba(0,0,0,0.5);  z-index: 1;}
+.Activity .ActivityQRcode img {width:180px;  position: absolute;top: 50%;left: 50%; margin-left: -90px;margin-top: -90px;}
 .Activity .ActivityDesc {  position: absolute;bottom: 0px;width: 100%;background-color:rgba(0,0,0,0.5);  color: #fff;}
 .Activity .ActivityDesc span {line-height:30px;margin-left: 10px;}
-.Activity .ActivityOpeartion {width: 100%;border: 1px solid #e1e7ea;  display: inline-block;height: 40px;}
-.ActivityOpeartion .releasebtn {  text-align: center;line-height: 40px;margin: 0px auto;  color: #000;cursor:pointer;}
+.Activity .ActivityOpeartion {width: 100%;border: 1px solid #9da1a3;  display: inline-block;height: 40px;}
+.ActivityOpeartion .releasebtn {  text-align: center;line-height: 38px;margin: 0px auto;  color: #7c7c7c;cursor:pointer;background-color: #f2f2f2;}
+.Activity .ActivityPersonSum {position: absolute;  top: 1px; width: 40px;  height: 85px;  left: 30px;  background: url(../images/bgcolor.png) no-repeat;background-size: 40px;}
+.Activity .ActivityPersonSum .person{background: url(../images/person.png) no-repeat;background-position: center;background-position-y: 4px;width: 100%;height: 30px;  padding-top: 15px;font-size: 12px;line-height: 30px;color: #fff;text-align: center;}
 .Opeartiondesc .viewdata {color:#00a0e8;}
 .Opeartiondesc .date {color:#b2b2b2;}
 .blackBG {background-color:#000;}
@@ -187,16 +194,26 @@ display:none;
 
 
 /*活动类型start*/
-.ActivityGroups {   padding:  20px;  width: 100%;  float: left;}
+.ActivityGroups {   margin:  20px;  width: 100%;  float: left;  margin-right: 0px;margin-left: 10px;}
 .ActivityGroups .graycolor { border: 2px solid #ddd;  color: #ddd; }
 .ActivityGroups .graycolor  .ActivityGroupImg {background-color:#ddd;}
+.ActivityGroups .ActivityGroupImg .ActivityGroupIcon img{width: 100px;height: 100px;float: left;}
+.ActivityGroups .ActivityGroupImg .ActivityGroupDesc{float: left;width: 256px; height: 100%;  color: #fff;  padding: 15px; text-align: center;}
+.ActivityGroups .ActivityGroupImg .ActivityGroupDesc .DescTitle{  font-size: 26px;line-height: 45px;}
+.ActivityGroups .ActivityGroupImg .ActivityGroupDesc .Desckey{font-size: 18px;line-height: 25px;}
+.ActivityGroups .ActivityGroupImg .ActivityGroupDesc .Desckey span{margin: 0px 10px;}
+.ActivityGroups .ActivityGroupImg .arrow{width: 14px;height: 7px; position: absolute;bottom: -9px;left: 175px;}
 .hotcolor {background-color:#f65564;}
+.hotcolor .arrow{background-color: #f65564;display:none;}
 .hotbordercolor {border: 2px solid #f65564;  color: #f65564;}
 .holidaycolor {background-color:#f8b62c;}
+.holidaycolor .arrow{background-color: #f8b62c;display:none;}
 .holidaybordercolor {border: 2px solid #f8b62c;  color: #f8b62c;}
 .stockcolor {background-color:#71ba36;}
+.stockcolor .arrow{background-color: #71ba36;display:none;}
 .stockbordercolor {border: 2px solid #71ba36;  color: #71ba36;}
 .ActivityGroupName {float: left;  margin-right: 20px;cursor:pointer;}
-.ActivityGroupName .ActivityGroupImg {width: 336px;height: 100px;vertical-align: middle;padding-top: 20px;padding-left:25px;}
+.nomarginright {margin-right:0px;}
+.ActivityGroupName .ActivityGroupImg {width: 356px;height: 100px;vertical-align: middle;  position: relative;}
 
 /*活动类型end*/

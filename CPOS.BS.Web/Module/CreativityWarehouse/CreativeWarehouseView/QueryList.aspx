@@ -16,12 +16,13 @@
            
             <!-- 内容区域 -->
             <div class="contentArea_vipquery">
+                <div class="bannercontent">
                 <div class="contentleft">
                     <div class="thisseason spacing">
                         <div class="content">
                            
                             <div class="touchsliderthisseason">
-                                <div class="thisseasontouchslider-viewport" style="width:770px;overflow:hidden;position: relative; height: 380px;">
+                                <div class="thisseasontouchslider-viewport" style="width:840px;overflow:hidden;position: relative; height: 380px;">
                                     <div class="InSeasonList" style="width: 100000px; position: absolute; left: 0px; height:380px;">
                                         
                                     </div>
@@ -47,23 +48,46 @@
                     </div>
                     
                 </div>
-
+                </div>
                
                   <div class="ActivityGroups">
                     <div id="Product"  data-code="Product" class="ActivityGroupName hotbordercolor graycolor">
-                        <div class="ActivityGroupImg hotcolor "><img src="../MyActivity/images/ActivityGroup01.png" /></div>
+                        <div class="ActivityGroupImg hotcolor ">
+                            <div class="ActivityGroupIcon"><img src="images/hottype.png" /></div>
+                            <div class="ActivityGroupDesc">
+                                <div class="DescTitle">爆款</div>
+                                <div  class="Desckey"><span>新品</span><span>热销</span><span>滞销</span></div>
+                            </div>
+                            <div class="arrow"><img src="images/arrow.png" /></div>
+                        </div>
                         
                     </div>
 
-                    <div id="Holiday"   data-code="Holiday"  class="ActivityGroupName holidaybordercolor graycolor">
-                        <div class="ActivityGroupImg holidaycolor"><img src="../MyActivity/images/ActivityGroup02.png" /></div>
+                      <div id="Holiday"  data-code="Holiday" class="ActivityGroupName holidaybordercolor graycolor">
+                        <div class="ActivityGroupImg holidaycolor ">
+                            <div class="ActivityGroupIcon"><img src="images/holidaytype.png" /></div>
+                            <div class="ActivityGroupDesc">
+                                <div class="DescTitle">节假日</div>
+                                <div  class="Desckey"><span>旺季</span><span>热点</span><span>消费</span></div>
+                            </div>
+                            <div class="arrow"><img src="images/arrow.png" /></div>
+                        </div>
                         
                     </div>
 
-                    <div id="Unit"  data-code="Unit" class="ActivityGroupName stockbordercolor graycolor">
-                        <div class="ActivityGroupImg stockcolor"><img src="../MyActivity/images/ActivityGroup03.png" /></div>
-                       
+                     <div id="Unit"  data-code="Unit" class="ActivityGroupName stockbordercolor graycolor">
+                        <div class="ActivityGroupImg stockcolor ">
+                            <div class="ActivityGroupIcon"><img src="images/storetype.png" /></div>
+                            <div class="ActivityGroupDesc">
+                                <div class="DescTitle">门店</div>
+                                <div  class="Desckey"><span>线下活动</span><span>终端引流</span></div>
+                            </div>
+                            <div class="arrow"><img src="images/arrow.png" /></div>
+                        </div>
+                        
                     </div>
+
+                    
                 </div>
 
                     <div class="nextseason spacing">
@@ -93,14 +117,29 @@
              <#}else{ #>
         <div class="thisseasontouchslider-item Seasondata"> <img  src="<#=_data.ImageURL #>"  />
             <div class="operation">
-                <div class="preview operationbtn" >预览活动</div>
-                <div class="start operationbtn" >发起活动</div>
+                <div class="preview operationbtn" data-src="<#=_data.QRCodeUrl #>" >预览活动</div>
+                <div class="start operationbtn" data-id="<#=_data.TemplateId #>" >发起活动</div>
                 <div class="viewmore operationbtn" >浏览更多</div>
             </div>
-            <div class="personSum">
-                <div class="person">20人</div>
+             <# if(_data.ActivityGroupCode.replace(/^\s+|\s+$/g, "")=="Product" ){#>
+            <div class="personSum bgcolor">
+                <div class="person"><#=_data.UserCount #>人</div>
                 <div class="hot"></div>
             </div>
+            <#}#>
+             <# if(_data.ActivityGroupCode.replace(/^\s+|\s+$/g, "")=="Holiday" ){#>
+            <div class="personSum bgcolor1">
+                <div class="person"><#=_data.UserCount #>人</div>
+                <div class="holiday"></div>
+            </div>
+            <#}#>
+             <# if(_data.ActivityGroupCode.replace(/^\s+|\s+$/g, "")=="Unit" ){#>
+            <div class="personSum bgcolor2">
+                <div class="person"><#=_data.UserCount #>人</div>
+                <div class="store"></div>
+            </div>
+            <#}#>
+
         </div>
         <#}} #>
     </script>
@@ -120,13 +159,16 @@
                     <div class="ActivityOpeartion"><div class="releasebtn"  data-id="<#=_data.TemplateId #>" >
                         发起活动
                      </div></div>
+                 <div class="ActivityPersonSum">
+                    <div class="person"><#=_data.UserCount #>人</div>
+                </div>
                 </div>
              <#} #>
 
     </script>
      <%-- 年度活动计划 --%>
     <script id="tpl_seasonlist" type="text/html">
-         <# for(i=0;i<PlanList.length;i++){ if(i<7){ _data=PlanList[i]; #>
+         <# for(i=0;i<PlanList.length;i++){ if(i<8){ _data=PlanList[i]; #>
               <li><span> <#=_data.PlanDate.substring(5) #></span> <#=_data.PlanName #></li>
             <#}} #>
 

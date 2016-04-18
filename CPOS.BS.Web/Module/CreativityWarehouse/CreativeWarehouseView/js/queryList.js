@@ -71,7 +71,8 @@
 
                 $(".ActivityGroupName").addClass("graycolor");
                 $(this).removeClass("graycolor");
-
+                $(".arrow").hide();
+                $(this).find(".arrow").show();
                 that.loadData.seach.form.ActivityGroupCode = $(this).data("code");
                 that.GetTemplateList(function (data) {
                     //活动数据
@@ -103,6 +104,33 @@
 
 
             });
+
+            //banner发起活动
+            $(".InSeasonList").on("click", ".start", function (e) {
+
+                $.util.toNewUrlPath("/Module/CreativeWarehouse/creative.aspx?TemplateId=" + $(this).data("id"));
+
+            });
+
+            //banner浏览更多
+            $(".InSeasonList").on("click", ".viewmore", function (e) {
+
+                $(".ActivityGroupName").removeClass("graycolor");
+                $(".arrow").show();
+                that.loadData.seach.form.ActivityGroupCode = "";
+                that.GetTemplateList(function (data) {
+                    //活动数据
+                    if (data.TemplateList) {
+                        $(".TemplatePreview").html(bd.template("tpl_NextSeasonList", data));
+                    } else {
+                        $(".TemplatePreview").html("");
+                    }
+
+                });
+
+            });
+
+            
 
             //显示二维码
             $(".TemplatePreview").on("mouseover", ".ActivityContent", function () {
