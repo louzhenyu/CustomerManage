@@ -480,9 +480,9 @@
         selectUnit:function(data){
             var that=this;
             that.elems.optionType="selectUnit";
-            var top=$(document).scrollTop()+60;
+            var top=$(document).scrollTop()+0;
             var left=$(window).width() - 1140>0 ? ($(window).width() - 1140)*0.5:80;
-            $('#win').window({title:"选择门店",width:1140,height:630,top:top,left:left});
+            $('#win').window({title:"选择门店",width:1140,height:430,top:top,left:left});
             $('#panlconent').layout('remove','center');
             var html=bd.template('tpl_setUnitList');
             var options = {

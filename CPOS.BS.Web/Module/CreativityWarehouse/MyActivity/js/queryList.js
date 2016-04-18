@@ -609,7 +609,7 @@
             //var page=parseInt(that.loadData.args.start/15);
             kkpager.generPageHtml({
                 pagerid: 'kkpager2',
-                pno: that.loadData.args.PageIndex,
+                pno: that.loadData.args1.PageIndex,
                 mode: 'click', //设置为click模式
                 //总页码
                 total: data.PageCount,
@@ -628,7 +628,7 @@
                     //var length = table.find("thead th").length;
                     //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
 
-                    that.loadMoreData(n);
+                    that.loadMoreData1(n);
                 },
                 //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
                 getHref: function (n) {
@@ -767,7 +767,7 @@
             //var page=parseInt(that.loadData.args.start/15);
             kkpager.generPageHtml({
                 pagerid: 'kkpager3',
-                pno: that.loadData.args.PageIndex,
+                pno: that.loadData.args2.PageIndex,
                 mode: 'click', //设置为click模式
                 //总页码
                 total: data.PageCount,
@@ -786,7 +786,7 @@
                     //var length = table.find("thead th").length;
                     //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
 
-                    that.loadMoreData(n);
+                    that.loadMoreData2(n);
                 },
                 //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
                 getHref: function (n) {
@@ -1310,6 +1310,40 @@
                 that.loadActivityData(data);
             });
         },
+        //加载更多的资讯或者活动
+        loadMoreData1: function (currentPage) {
+            var that = this;
+            that.loadData.args1.PageIndex = currentPage;
+
+            $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+            if (that.loadData.details.InteractionType == 1) {
+                that.GetEventPrizeList(function (_data) {
+                    that.renderTable2(_data);
+
+                });
+            } else if (that.loadData.details.InteractionType == 2) {
+                that.GeEventItemList(function (_data) {
+                    that.renderTable2(_data);
+
+                });
+            }
+        },
+        //加载更多的资讯或者活动
+        loadMoreData2: function (currentPage) {
+            var that = this;
+            that.loadData.args2.PageIndex = currentPage;
+
+            $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+            if (that.loadData.details.InteractionType == 1) {
+                that.GetEventPrizeDetailList(function (data) {
+                    that.renderTable3(data);
+                });
+            } else if (that.loadData.details.InteractionType == 2) {
+                that.GeEventItemDetailList(function (data) {
+                    that.renderTable3(data);
+                });
+            }
+        },
         //我的活动
         GetMyActivityList: function (callback) {
 			var that = this;
@@ -1379,6 +1413,28 @@
                 page:1,
                 start:0,
                 limit:15
+            }, args1: {
+                bat_id: "1",
+                PageIndex: 1,
+                PageSize: 10,
+                SearchColumns: {},    //查询的动态表单配置
+                OrderBy: "",           //排序字段
+                SortType: 'DESC',    //如果有提供OrderBy，SortType默认为'ASC'
+                Status: -1,
+                page: 1,
+                start: 0,
+                limit: 15
+            }, args2: {
+                bat_id: "1",
+                PageIndex: 1,
+                PageSize: 10,
+                SearchColumns: {},    //查询的动态表单配置
+                OrderBy: "",           //排序字段
+                SortType: 'DESC',    //如果有提供OrderBy，SortType默认为'ASC'
+                Status: -1,
+                page: 1,
+                start: 0,
+                limit: 15
             },
             details: {
                 EventId: "",

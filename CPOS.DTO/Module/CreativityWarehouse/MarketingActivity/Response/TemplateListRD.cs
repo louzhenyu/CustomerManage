@@ -58,6 +58,10 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingActivity.Response
         public string ActivityGroupCode { get; set; }
         public string ActivityGroupId { get; set; }
         public string RCodeUrl { get; set; }
+        /// <summary>
+        /// 主题被使用用户数
+        /// </summary>
+        public int UserCount { get; set; }
     }
     /// <summary>
     /// 全年计划信息

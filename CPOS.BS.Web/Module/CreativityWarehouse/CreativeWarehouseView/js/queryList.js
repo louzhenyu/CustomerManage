@@ -188,7 +188,7 @@
                             pagination: ".thisseasontouchslider-nav-item",
                             currentClass: "thisseasontouchslider-nav-item-current", // current 样式指定
                             prev: ".thisseasontouchslider-prev", // prev 样式指定
-                            autoplay: false, // 自动播放
+                            autoplay: true, // 自动播放
                             viewport: ".thisseasontouchslider-viewport"
                         });
                     }

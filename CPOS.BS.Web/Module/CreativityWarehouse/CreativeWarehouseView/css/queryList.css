@@ -1,6 +1,8 @@
 ﻿@charset "utf-8";
 
+
 .contentArea_vipquery {width: 1140px;}
+.window-mask {  position: fixed;}
 .bannercontent {  width: 100%;float: left;margin-top: 20px;}
 .contentleft {  float: left; font-size: 16px;padding-right:10px;color:#666;padding-left: 10px;}
 .spacing { margin:  0px;}
@@ -197,7 +199,7 @@ display:none;
 .ActivityGroups {   margin:  20px;  width: 100%;  float: left;  margin-right: 0px;margin-left: 10px;}
 .ActivityGroups .graycolor { border: 2px solid #ddd;  color: #ddd; }
 .ActivityGroups .graycolor  .ActivityGroupImg {background-color:#ddd;}
-.ActivityGroups .ActivityGroupImg .ActivityGroupIcon img{width: 100px;height: 100px;float: left;}
+.ActivityGroups .ActivityGroupImg .ActivityGroupIcon img{width: 100px;height: 96px;float: left;}
 .ActivityGroups .ActivityGroupImg .ActivityGroupDesc{float: left;width: 256px; height: 100%;  color: #fff;  padding: 15px; text-align: center;}
 .ActivityGroups .ActivityGroupImg .ActivityGroupDesc .DescTitle{  font-size: 26px;line-height: 45px;}
 .ActivityGroups .ActivityGroupImg .ActivityGroupDesc .Desckey{font-size: 18px;line-height: 25px;}
@@ -214,6 +216,6 @@ display:none;
 .stockbordercolor {border: 2px solid #71ba36;  color: #71ba36;}
 .ActivityGroupName {float: left;  margin-right: 20px;cursor:pointer;}
 .nomarginright {margin-right:0px;}
-.ActivityGroupName .ActivityGroupImg {width: 356px;height: 100px;vertical-align: middle;  position: relative;}
+.ActivityGroupName .ActivityGroupImg {width: 356px;height: 96px;vertical-align: middle;  position: relative;}
 
 /*活动类型end*/

@@ -364,6 +364,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
 
                 var ThemeId="",drawMethodCode="";      var  isPerform=true;  //能继续执行 true  可以继续执行false;
                 var eventInfo="";//当前选中的风格实现的方案对象，用于设置页面对象实例化赋值
+
                 if(navLiOn=="nav01") {
                     var index = $("#slider").find(".slide.on").data("index");
                     if (!index) {
@@ -384,6 +385,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                         ThemeId = that.TemplateThemeList[index].ThemeId;
                         drawMethodCode= that.TemplateThemeList[index].DrawMethodCode
                     }
+
 
                     if(list&&list.length>0){
                         $.each(list,function(index,filed){
@@ -444,6 +446,19 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 }
 
                 if(navLiOn=="nav03"&&panelName=="nav04"){
+                     index = $("#slider").find(".slide.on").data("index");
+                     list = that.TemplateThemeList[index].EventInteractionList;
+                    var InteractionType = $(".btnItem.on").data("interaction");
+                    if (that.TemplateThemeList[index]) {
+                        if(list&&list.length>0){
+                            $.each(list,function(index,filed){
+                                if(InteractionType==filed.InteractionType){
+                                    drawMethodCode=filed. DrawMethodCode;
+                                    eventInfo = list[index];
+                                }
+                            })
+                        }
+                    }
                     isPerform=$("#setOptionForm").form("validate");
                     if(isPerform&&drawMethodCode=="HB"){
                         if(that.prizeListHB.length==0){
@@ -1241,6 +1256,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
             debugger;
             that.elems.optionType=type;//"setPrize";
             var top=$(document).scrollTop()+0;
+            $("body").eq(0).css("overflow-y","hidden");
             var left=$(window).width() - 1140>0 ? ($(window).width() - 1140)*0.5:80;
             $('#win').window({title:"选择奖品",width:$(window).width(),height:$(window).height(),top:top});
             //改变弹框内容，调用百度模板显示不同内容
@@ -1303,7 +1319,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                    // dom.find(".listName").html(dataListName);
                 }
             });
-            $("body").eq(0).css("overflow-y","hidden");
+
 
 
 
@@ -1400,7 +1416,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                        {field : 'integral',title : '积分',width:80,resizable:false,align:'left'},
                        {field : 'number',title : '已有数量',width:70,align:'center',resizable:false},
 
-                       {field: 'id', title: '操作', width: 100, align: 'left', resizable: false,
+                       {field: 'id', title: '操作', width: 30, align: 'left', resizable: false,
                            formatter: function (value, row, index) {
                                var str = "<div class='operation'>";
                                str += "<div class='opt' data-opttype='addIntegral' data-index="+index+" data-id='"+row.id+"'>追加数量</div>";
@@ -1505,6 +1521,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                     list = that.prizeListReg
                 }
             }
+            $.util.isLoading();
             that.loadData.getCouponTypeList(function(data){
                 var type0List=[],type1List=[];
               debugger;
@@ -2321,22 +2338,31 @@ debugger;
 
 
             var  GameEventInfo={}; //游戏活动信息
-            GameEventInfo["BeginTime"]=$('#startDate').datebox('getValue');
-            GameEventInfo["EndTime"]=$('#endDate').datebox('getValue');
+            if(DrawMethodCode=="HB") {
+                if($('#startDate').datebox('getValue').length==0||$('#startDate').datebox('getValue').length==0||that.prizeListHB.length==0) {
+                    alert("设置未完成，请完成设置");
+                    that.elems.navigation.find("li").eq(2).trigger("click");
+                    return false;
+                }
 
-            GameEventInfo["PersonCount"]=$('[data-name="HB"].radio.on').data("value");
-            if(GameEventInfo["PersonCount"]==1) {
-               //
-                GameEventInfo["LotteryNum"]=$("#frequency").numberbox("getValue");
+                GameEventInfo["BeginTime"] = $('#startDate').datebox('getValue');
+                GameEventInfo["EndTime"] = $('#endDate').datebox('getValue');
+
+                GameEventInfo["PersonCount"] = $('[data-name="HB"].radio.on').data("value");
+                if (GameEventInfo["PersonCount"] == 1) {
+                    //
+                    GameEventInfo["LotteryNum"] = $("#frequency").numberbox("getValue");
+                }
+                var imgList = [];
+                imgList.push({BatId: "BackGround", ImageURL: $('[data-imgcode="BackGroundImageUrl"]').data("imgurl")})
+                imgList.push({BatId: "Logo", ImageURL: $('[data-imgcode="LogoImageUrl"]').data("imgurl")})
+                imgList.push({BatId: "NotReceive", ImageURL: $('[data-imgcode="NotReceiveImageUr"]').data("imgurl")})
+                imgList.push({BatId: "Receive", ImageURL: $('[data-imgcode="ReceiveImageUr"]').data("imgurl")})
+
+                GameEventInfo["ImageList"] = imgList;
+                GameEventInfo["PrizeList"] = that.prizeListHB;
             }
-            var imgList=[];
-            imgList.push({BatId:"BackGround",ImageURL:$('[data-imgcode="BackGroundImageUrl"]').data("imgurl")})
-            imgList.push({BatId:"Logo",ImageURL: $('[data-imgcode="LogoImageUrl"]').data("imgurl")})
-            imgList.push({BatId:"NotReceive",ImageURL:$('[data-imgcode="NotReceiveImageUr"]').data("imgurl")})
-            imgList.push({BatId:"Receive",ImageURL: $('[data-imgcode="ReceiveImageUr"]').data("imgurl")})
 
-            GameEventInfo["ImageList"]=imgList;
-            GameEventInfo["PrizeList"]=that.prizeListHB;
             pram.push({name:"GameEventInfo",value:GameEventInfo});
 
            /* Title	String	标题

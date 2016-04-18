@@ -87,7 +87,7 @@ namespace JIT.CPOS.BS.DataAccess
                                                 )QRCodeUrl
                                          ,
                                                 ( SELECT   
-                                                            COUNT(1) UseCount
+                                                            COUNT(DISTINCT CustomerId) UseCount
                                                   FROM      [cpos_bs_alading].dbo.T_CTW_LEvent ctw
                                                   WHERE     IsDelete = 0 AND ctw.TemplateId=a.TemplateId
                                                   GROUP BY  TemplateId
@@ -114,7 +114,13 @@ namespace JIT.CPOS.BS.DataAccess
                                                   WHERE     theme.TemplateId = Tem.TemplateId
                                                             AND RCodeUrl IS NOT NULL
                                                   order by theme.createtime asc
-                                                )RCodeUrl
+                                                )RCodeUrl,
+                                                ( SELECT   
+                                                            COUNT(DISTINCT CustomerId) UseCount
+                                                  FROM      [cpos_bs_alading].dbo.T_CTW_LEvent ctw
+                                                  WHERE     IsDelete = 0 AND ctw.TemplateId=Tem.TemplateId
+                                                  GROUP BY  TemplateId
+                                                ) UserCount
                                 FROM    T_CTW_LEventTemplate Tem
                                         
                                         LEFT JOIN dbo.ObjectImages Img ON Tem.ImageId = Img.ImageId

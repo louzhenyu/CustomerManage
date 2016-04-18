@@ -1,6 +1,7 @@
 ﻿@charset "utf-8";
 
 .queryTermArea {background: #fff;}
+.window-mask {  position: fixed;}
 .window {position:fixed;}
 .messager-window {  position: absolute;}
 .dataMessage2, .dataMessage3{
@@ -40,10 +41,10 @@
 
 /*活动详情*/
 .Activitydesc {width:1140px;}
-.EventDataOperation {margin:30px;}
+.EventDataOperation {margin:30px 30px 10px 30px;}
 .EDO_opt {display:inline-block;width: 100%;margin: 10px 0px;}
 .EDO_opt .commonBtn {float:left;margin-right: 7px;width:70px;}
-.EDO_data {display:inline-block;margin: 10px 0px;width: 100%;}
+.EDO_data {display:inline-block;margin: 10px 0px 23px 0px;width: 100%;}
 .EDO_export {text-align:left;}
 .prizecount {background-color:#f7f7f7;width: 615px;height: 250px;border-radius: 10px;border: 1px solid #e0e0e0;  float: left;margin-right: 20px;  padding:0px 25px;font-size:16px;}
 .fansmember {font-size:17px;}

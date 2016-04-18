@@ -1,6 +1,7 @@
 ﻿@charset "utf-8";
 .queryTermArea {background: #fff;}
 .window {position:fixed;}
+.window-mask {  position: fixed;}
 .messager-window {  position: absolute;}
 .dataMessage2, .dataMessage3{
   text-align: center;
@@ -13,7 +14,7 @@
 .lineform {text-align: center;  height: 30px;margin: 10px 0px;}
 .lineinput {  width: 200px;display: inline-block;text-align: left;}
 .submit {  border-radius: 38px;color: #fff;border: none; width: 110px;height: 36px;line-height: 36px;}
-.contentArea_vipquery {  margin-left: 48px;}
+.contentArea_vipquery {  margin-left: 48px;  width: 1100px;}
 .addPrizes {color: #0099ff;}
 
 /*活动类型start*/
@@ -35,7 +36,7 @@
 .ActivityGroupName .invalid {float:left;width: 33%;text-align: center;}
 
 /*活动类型end*/
-.listdata {  margin-top: 10px;float: left;}
+.listdata {  margin-top: 10px;float: left;  width: 100%;}
 .Activity {  float: left;  width: 250px;  margin-top: 20px;  margin-right: 20px;}
 .Activity .ActivityContent {position:relative;border: 1px solid #e1e7ea;border-bottom:none;}
 .Activity .Activityimg {width:250px;height:250px;}
@@ -60,10 +61,10 @@
 
 /*活动详情*/
 .Activitydesc {width:1200px;}
-.EventDataOperation {margin:30px 50px;}
+.EventDataOperation {margin:30px 50px 10px 50px;  }
 .EDO_opt {display:inline-block;width: 100%;margin: 10px 0px;}
 .EDO_opt .commonBtn {float:left;margin-right: 7px;width:70px;}
-.EDO_data {display:inline-block;margin: 10px 0px;width: 100%;}
+.EDO_data {display:inline-block;margin: 10px 0px 23px 0px;width: 100%;}
 .prizecount {background-color:#f7f7f7;width: 615px;height: 250px;border-radius: 10px;border: 1px solid #e0e0e0;  float: left;margin-right: 20px;  padding:0px 25px;font-size:16px;}
 .fansmember {font-size:17px;}
 .fansdata {background:url(../images/fans.png) no-repeat 35px center;  background-color:#f7f7f7;color:#3bc76e;border-radius: 10px;border: 1px solid #e0e0e0;  float: left;width: 430px;height: 120px;margin-bottom: 10px;padding-left: 170px; padding-top: 27px;}

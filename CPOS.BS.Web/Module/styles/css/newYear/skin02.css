@@ -10,7 +10,7 @@ body{overflow-x: hidden;}
 .navigation  li img{ float: right; margin-right:-11px;}
 .hide{ display: none;}
 /*右侧浮动*/
-.leftsead{width:34px;height:143px;position:fixed;top:258px;right:0; z-index:99999}
+.leftsead{width:34px;height:143px;position:fixed;top:258px;right:0; z-index:999}
 *html .leftsead{margin-top:258px;position:absolute;top:expression(eval(document.documentElement.scrollTop));}
 .leftsead li{height:35px;}
 .leftsead .index{ height: 35px;}

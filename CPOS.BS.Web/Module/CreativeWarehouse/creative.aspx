@@ -99,9 +99,9 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
 
              <div class="content">
-               <div class="commonSelectWrap" >
-                  <em class="tit" style="width: 120px;">活动主题：</em>
-                  <div class="searchInput">
+               <div class="commonSelectWrap" style="width:100px" >
+                  <em class="tit">活动主题：</em>
+                  <div class="searchInput" style="margin-right: 15px;">
                    <input  id="tempName" class="easyui-validatebox"  />
                 </div> <!--inputBox-->
               </div><!--lineText-->
@@ -188,7 +188,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
              <p class="txtTitle" data-view="Title">我是一个图文标题</p>
              <div style="position: relative">
 
-             <img src="images/tuwen.png" width="294"   data-imgcode="picText" >
+             <img src="images/tuwen.png" width="294"  height="163"  data-imgcode="picText" >
              <em class="editIconBtn" data-type="imgText"></em>
              </div>
              <span data-view="Summary" >这是一个图文素材图文素材这是一个图文素材图文素材这是一个图文素材图
