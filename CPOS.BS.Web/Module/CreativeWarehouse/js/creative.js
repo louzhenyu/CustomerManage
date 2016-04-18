@@ -950,7 +950,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 method : 'post',
                 iconCls : 'icon-list', //图标
                 singleSelect : false, //多选
-                // height : 332, //高度
+                 height : 270, //高度
                 fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped : true, //奇偶行颜色不同
                 collapsible : true,//可折叠
@@ -1090,7 +1090,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 method : 'post',
                 iconCls : 'icon-list', //图标
                 singleSelect : false, //多选
-                // height : 332, //高度
+                height : 270, //高度
                 fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped : true, //奇偶行颜色不同
                 collapsible : true,//可折叠
