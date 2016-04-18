@@ -175,7 +175,7 @@
     <tr class="tr_DataDetail"><td colspan='7' >
     <div class="Activitydesc">
               <div class="EventDataOperation">
-                  <div class="EDO_opt"><a href="javascript:;"  data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" class="commonBtn defer">活动延期</a><a href="javascript:;" class="commonBtn endbtn">结束活动</a><a href="javascript:;" class="commonBtn .returnbtn">返回</a></div>
+                  <div class="EDO_opt"><a href="javascript:;"  data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" class="commonBtn defer">活动延期</a><a href="javascript:;" class="commonBtn endbtn">结束活动</a><a href="javascript:;" class="commonBtn returnbtn">返回</a></div>
                   <div class="EDO_data">
                       <div class="prizecount">
                           <div class="prizedata">

@@ -1305,7 +1305,6 @@
             var that = this;
             that.loadData.args.PageIndex = currentPage;
 
-            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             that.GetMyActivityList(function (data) {
                 that.loadActivityData(data);
             });
@@ -1315,7 +1314,6 @@
             var that = this;
             that.loadData.args1.PageIndex = currentPage;
 
-            $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             if (that.loadData.details.InteractionType == 1) {
                 that.GetEventPrizeList(function (_data) {
                     that.renderTable2(_data);
@@ -1333,7 +1331,6 @@
             var that = this;
             that.loadData.args2.PageIndex = currentPage;
 
-            $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             if (that.loadData.details.InteractionType == 1) {
                 that.GetEventPrizeDetailList(function (data) {
                     that.renderTable3(data);
