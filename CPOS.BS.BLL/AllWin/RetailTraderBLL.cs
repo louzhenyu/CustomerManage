@@ -254,7 +254,7 @@ namespace JIT.CPOS.BS.BLL
 
             // todo
             CommonBLL commonBll = new CommonBLL();
-            string content = "您的帐号:" + pEntity.RetailTraderLogin + ",密码:888888,已经在连锁掌柜注册成功,请在地址http://app.chainclouds.com/apps.html下载一起发码APP,早下载早成为经销商赚钱";
+            string content = "您的帐号:" + pEntity.RetailTraderLogin + ",密码:888888,已经在连锁掌柜注册成功,请在地址http://app.chainclouds.com/download/chengguo/下载一起发码APP,早下载早成为经销商赚钱";
             JIT.CPOS.BS.Entity.WX.SendMessageEntity messageEntity = new JIT.CPOS.BS.Entity.WX.SendMessageEntity();
             messageEntity.content = content;
             messageEntity.touser = vipEntity.WeiXinUserId;
