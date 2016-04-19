@@ -428,7 +428,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                 if (sItem.SpreadType == "Focus" && !string.IsNullOrEmpty(sItem.LeadPageQRCodeImageUrl))
                 {
-                    CreateFocusQRCode(para, wapentity, out QRCodeUrl);
+                    //CreateFocusQRCode(para, wapentity, out QRCodeUrl);
                     imageEntity = new ObjectImagesEntity();
                     imageEntity.ImageURL = QRCodeUrl;// sItem.LeadPageQRCodeImageUrl;
                     imageEntity.ObjectId = "";
