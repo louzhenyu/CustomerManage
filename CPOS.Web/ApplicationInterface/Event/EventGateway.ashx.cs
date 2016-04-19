@@ -149,10 +149,17 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
                 eventEntity.Qty = tempEvent.Qty;
                 eventEntity.RemainQty = tempEvent.RemainQty;
                 eventEntity.EventStatus = tempEvent.EventStatus.ToString();
-                TimeSpan nowSpan = DateTime.Now - tempEvent.EndTime;
+                //倒计时
+                TimeSpan nowSpan = tempEvent.EndTime - DateTime.Now;//应该是结束时间减去当前时间     
+               eventEntity.DeadlineSecond =  nowSpan.TotalSeconds<=0?0:  Convert.ToInt32( nowSpan.TotalSeconds);
+                if (eventEntity.DeadlineSecond > 0)
+                {
+                    eventEntity.DeadlineTime = nowSpan.Days + "天" + nowSpan.Hours + "时" + nowSpan.Minutes + "分" + nowSpan.Seconds;
+                }
+                else {
+                    eventEntity.DeadlineTime = 0+ "天" + 0 + "时" + 0+ "分" + 0;
+                }
 
-                eventEntity.DeadlineTime = nowSpan.Days + "天" + nowSpan.Hours + "时" + nowSpan.Minutes + "分" + nowSpan.Seconds;
-                    eventEntity.DeadlineSecond =Convert.ToInt32( nowSpan.TotalSeconds);
 
                 rd.PanicbuyingEvent = eventEntity;
 
@@ -315,8 +322,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
                 case "GetEventUserPrizeList":
                     rst = GetEventUserPrizeList(pRequest);
                     break;
-                case "GetTCTWPanicbuyingEventKV":
-                    rst = this.GetTCTWPanicbuyingEventKV(pRequest);
+                case "GetPanicbuyingEvent"://活动列表
+                    rst = this.GetPanicbuyingEvent(pRequest);
+                    break;
+                case "GetEventMerchandise":
+                    rst = this.GetEventMerchandise(pRequest);
                     break;
                 //case "SendQrCodeWxMessage":
                 //    rst = SendQrCodeWxMessage(pRequest);

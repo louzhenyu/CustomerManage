@@ -221,6 +221,9 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
+            if (pIsUpdateNullField || pEntity.IsCTW != null)
+                strSql.Append("[IsCTW]=@IsCTW,");
+
             if (pIsUpdateNullField || pEntity.EventStatus!=null)
                 strSql.Append( "[EventStatus]=@EventStatus");
             if (strSql.ToString().EndsWith(","))
@@ -237,7 +240,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@EventStatus",SqlDbType.Int),
-					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier)
+                    	
+					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
+                    new SqlParameter("@IsCTW",SqlDbType.Int)
             };
 			parameters[0].Value = pEntity.EventName;
 			parameters[1].Value = pEntity.EventTypeId;
@@ -249,6 +254,7 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[7].Value = pEntity.LastUpdateTime;
 			parameters[8].Value = pEntity.EventStatus;
 			parameters[9].Value = pEntity.EventId;
+            parameters[10].Value = pEntity.IsCTW;
 
             //Ö´ÐÐÓï¾ä
             int result = 0;

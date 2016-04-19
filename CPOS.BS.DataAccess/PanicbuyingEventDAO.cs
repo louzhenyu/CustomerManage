@@ -62,9 +62,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [PanicbuyingEvent](");
-            strSql.Append("[EventName],[EventTypeId],[BeginTime],[EndTime],[EventRemark],[CustomerID],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[EventStatus],[EventId])");
+            strSql.Append("[EventName],[EventTypeId],[BeginTime],[EndTime],[EventRemark],[CustomerID],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[EventStatus],[EventId],[IsCTW])");
             strSql.Append(" values (");
-            strSql.Append("@EventName,@EventTypeId,@BeginTime,@EndTime,@EventRemark,@CustomerID,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@EventStatus,@EventId)");
+            strSql.Append("@EventName,@EventTypeId,@BeginTime,@EndTime,@EventRemark,@CustomerID,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@EventStatus,@EventId,@IsCTW)");
 
             Guid? pkGuid;
             if (pEntity.EventId == null)
@@ -86,7 +86,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@EventStatus",SqlDbType.Int),
-					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
+                    	new SqlParameter("@IsCTW",SqlDbType.Int)
+                    
             };
             parameters[0].Value = pEntity.EventName;
             parameters[1].Value = pEntity.EventTypeId;
@@ -101,6 +103,7 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[10].Value = pEntity.IsDelete;
             parameters[11].Value = pEntity.EventStatus;
             parameters[12].Value = pkGuid;
+            parameters[13].Value = pEntity.IsCTW;
 
             //执行并将结果回写
             int result;

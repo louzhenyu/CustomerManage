@@ -55,18 +55,30 @@ namespace JIT.CPOS.BS.DataAccess
             new SqlParameter{ParameterName="@pCustomerId",Value=this.CurrentUserInfo.ClientID}
             };
             StringBuilder strb = new StringBuilder();
-            strb.Append(@"select item_id ItemID,item_name ItemName ,isnull(DisplayIndex,0)displayindex,ISNULL(SinglePurchaseQty,0) as SinglePurchaseQty
-                            ,(case when ObjectURL is null or ObjectURL='' then Imageurl else ObjectUrl end)Imageurl
-                            ,EventItemMappingId
-                            from
-                            (select item_id,item_name,DisplayIndex,EventItemMappingId,SinglePurchaseQty,
-                            (select top 1 imageUrl from ObjectImages as img where T.item_id=img.ObjectId and IsDelete=0 AND DisplayIndex IS NOT NULL  order by displayindex) Imageurl,
-                            (select top 1 ImageURL from ObjectImages where ObjectImages.ObjectId=cast(Pe.EventItemMappingId as nvarchar(200)) order by createtime desc) ObjectURL
-                            from PanicbuyingEventItemMapping as Pe
-                            inner join T_Item as T on T.item_id=Pe.ItemId
-                            where Pe.EventId=@EventId 
-                            and T.CustomerId=@pCustomerId
-                            and Pe.IsDelete=0)X order by DisplayIndex Asc");
+            strb.Append(@"
+SELECT item_id ItemID,item_name ItemName ,isnull(DisplayIndex,0)displayindex,ISNULL(SinglePurchaseQty,0) AS SinglePurchaseQty 
+            ,(CASE  WHEN ObjectURL IS NULL OR ObjectURL='' THEN Imageurl  END)Imageurl , EventItemMappingId,buycount
+            FROM
+              (SELECT item_id,item_name,DisplayIndex,EventItemMappingId,SinglePurchaseQty,
+                 (SELECT top 1 imageUrl
+                  FROM ObjectImages AS img
+                  WHERE T.item_id=img.ObjectId
+                    AND IsDelete=0
+                    AND DisplayIndex IS NOT NULL
+                  ORDER BY displayindex) Imageurl,
+                 (SELECT top 1 ImageURL
+                  FROM ObjectImages
+                  WHERE ObjectImages.ObjectId=cast(Pe.EventItemMappingId AS nvarchar(200))
+                  ORDER BY createtime DESC) ObjectURL,
+  (select  count(1) from    PanicbuyingEventOrderMapping x inner join t_inout_Detail y on x.orderid=y.order_id
+  inner join t_sku z on y.sku_id=z.sku_id where  x.EventId=pe.EventId and z.item_id=pe.ItemId )  as buycount  ----¹ºÂò´ÎÊý
+
+               FROM PanicbuyingEventItemMapping AS Pe
+               INNER JOIN T_Item AS T ON T.item_id=Pe.ItemId
+               WHERE Pe.EventId=@EventId
+                 AND T.CustomerId=@pCustomerId
+                 AND Pe.IsDelete=0)X
+            ORDER BY DisplayIndex ASC");
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, strb.ToString(), paras.ToArray());
             return ds;
 
@@ -200,7 +212,7 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder strb = new StringBuilder();
             strb.Append(@"                       
 select  a.*,ImageURL from  T_CTW_PanicbuyingEventKV  a inner join objectimages b
-on a.imageid=b.imageid   where CTWEventId=@CTWEventId  ");
+on a.imageid=b.imageid   where CONVERT(varchar(50), CTWEventId)=@CTWEventId  ");
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, strb.ToString(), paras.ToArray());
             return ds;
         
