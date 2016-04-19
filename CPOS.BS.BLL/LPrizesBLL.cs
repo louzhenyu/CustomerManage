@@ -384,7 +384,7 @@ namespace JIT.CPOS.BS.BLL
                         {
                             entityCoupon.BeginDate = DateTime.Now.Date;
                             entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife - 1).ToShortDateString() + " 23:59:59.998");
-
+                            entityCoupon.Status = 2;
                             bllCoupon.Update(entityCoupon);
 
                         }
