@@ -1605,7 +1605,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql.Append(" select user_id,user_name,user_status,user from t_user where customer_id = @pCustomerId and ");
             sql.Append(" (user_code = @pUserName or user_telephone = @pUserName)");
             sql.Append(" and user_password = @pPassword ");
-            sql.Append(" order by user_status desc ");//按照状态倒序排，如果有一个账号已经被停用了，又用这个账号建了一个，先取没被停用的
+            sql.Append("  order by convert(int, user_status ) desc ");//按照状态倒序排，如果有一个账号已经被停用了，又用这个账号建了一个，先取没被停用的
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
         }
