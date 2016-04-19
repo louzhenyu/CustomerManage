@@ -216,9 +216,9 @@
         _param.success= function (data) {
             if (!data.IsSuccess && data.ResultCode == 500) {
                 $.util.isLoading(true);
-                $.messager.alert("提示", data.Message,"error",function() {
+              /*  $.messager.alert("提示", data.Message,"error",function() {
                    // location.href = "/default.aspx?method=LogOut";
-                });
+                });*/
 
             } else {
                 param.success(data);
@@ -301,9 +301,9 @@
         _param.success = function (data) {
             $.util.isLoading(true);
             if (!data.IsSuccess && data.ResultCode == 500) {
-                $.messager.alert("提示", data.Message,"error",function() {
+              /*  $.messager.alert("提示", data.Message,"error",function() {
                     location.href = "/default.aspx?method=LogOut";
-                });
+                });*/
 
             } else {
                 param.success(data);

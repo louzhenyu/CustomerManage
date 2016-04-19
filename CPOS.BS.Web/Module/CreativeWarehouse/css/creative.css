@@ -14,7 +14,7 @@
 .slide{position: relative;width: 230px; height:310px; cursor: pointer;}
 .slide div{width: 172px;height: 270px;  border: 1px solid #e6e6e6;  }
 .slide img{width: 172px;height: 270px;}
-.slide.on em{ width: 172px; height:270px; display: block; background: rgba(0,0,0, 0.4) url("../images/applyWhite.png") no-repeat center center; position: absolute ; top:0; left: 0;}
+.slide.on em{ width: 174px; height:272px; display: block; background: rgba(0,0,0, 0.4) url("../images/applyWhite.png") no-repeat center center; position: absolute ; top:0; left: 0;}
 .slide p{width: 172px;text-align: center;line-height: 40px;font-size: 14px; color: #666; height: 40px; position:absolute;bottom: 0; left: 0;}
 
 
@@ -31,7 +31,7 @@
 .spread  .spreadPanel{width: 280px; height:500px; text-align: center; float: left; background-color: #f7f7f7;position: relative;}
 .spreadPanel .contentDiv{width: 232px;margin: 0 auto}
 .spreadPanel .title{ margin: 20px 0 16px 24px;}
-.spreadPanel .contentDiv .tabDiv{height: 133px;padding: 10px}
+.spreadPanel .contentDiv .tabDiv{height: 110px;padding: 10px}
 .spreadPanel .contentDiv .tabDiv.on{ background-color: #45d0bf; }
 .spreadPanel .contentDiv .tabDiv .l{width: 66px; height: 106px; border: 2px solid #fff;background-color: #d9dee1}
 .spreadPanel .contentDiv .tabDiv em{float: left; padding-left: 15px; line-height: 133px; white-space: nowrap;font-size: 13px; color:#666;}
@@ -45,13 +45,13 @@
 .optionPrize{display:none}
 /*分享*/
 .spreadPanel .phoneWebDiv.share{ width:182px;margin-top:66px; position: relative; float: left;margin-left: 42px;}
-.spreadPanel .phoneWebDiv .shareImg{ width:42px; height: 42px; text-align: center;vertical-align: middle;}
-.spreadPanel .phoneWebDiv .shareImg img{ width: 100%;}
+.spreadPanel .phoneWebDiv .shareImg{ width:42px; height: 42px; text-align: center;vertical-align: middle;margin-bottom: 6px;}
+.spreadPanel .phoneWebDiv .shareImg img{ width: 100%;height: 100%;}
 .shareIcon{position: absolute; top: -12px; left: -37px;}
 .spreadPanel .phoneWebDiv .jt_tip{background: url("../images/icon_jiantou.png") no-repeat ; width: 6px; height: 10px; position: absolute; left: -6px;top: 10px;}
 
 .spreadPanel .phoneWebDiv.attention{padding: 0; margin: 0 0 0 0 }
-.spread .spreadPanel.attention{width: 320px; height: 485px;margin: 0 60px;}
+.spread .spreadPanel.attention{width: 320px; height: 500px;margin: 0 60px;}
 .erweiMaPanel{position: absolute; top: 88px; left: 50%;width: 156px; margin-left: -77px;}
 .erweiMaPanel p{ background: #fff;height: 30px; width: 100%; margin-bottom: 15px; line-height: 30px; font-size: 12px; border-radius: 3px;}
 .erWeiMa{ width: 155px; line-height: 155px; height: 155px; border-radius: 4px; background-color: #fff;  /* vertical-align:middle */}

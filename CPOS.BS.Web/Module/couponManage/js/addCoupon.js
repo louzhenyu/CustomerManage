@@ -366,10 +366,10 @@
                 onBeforeOpen:function(){
                     $("body").css({"overflowY":"hidden"});
                 },
-               /* onBeforeClose:function(){
+                onBeforeClose:function(){
 
-
-                }*/
+                    $("body").css({"overflowY":"auto"});
+                }
             });
             $('#panlconent').layout({
                 fit:true
@@ -412,7 +412,7 @@
                         //数据来源
                         columns : [[
                             {field : 'text',title : '门店名称',width:81,align:'left',resizable:false,},
-                            {field : 'id',title : '删除',width:81,align:'left',resizable:false,
+                            {field : 'id',title : '删除',width:20,align:'left',resizable:false,
                                 formatter:function(value ,row,index){
                                     return '<p class="fontC opt delete" data-id="'+row.id+'" data-index="'+index+'" data-oprtype="del"></p>';
                                 }
@@ -421,7 +421,7 @@
 
                     })
                 }
-                $("body").css({"overflowY":"auto"});
+
                      $("#win").window("close");
             }).delegate(".searchBtn","click",function(){
                        if( that.elems.optionType=="selectUnit"){
@@ -637,7 +637,7 @@
             if(node){
                 that.loadData.unitSearch.Parent_Unit_ID=node.id;
             } else{
-                alert("请选择一个门店上级组织");
+                $.messager.alert("提示","请选择一个门店上级组织");
                 return;
             }
             that.loadData.unitSearch.unit_name=$("#unit_name").val();

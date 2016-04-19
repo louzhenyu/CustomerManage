@@ -101,7 +101,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
              <div class="content">
                <div class="commonSelectWrap" style="width:100px" >
                   <em class="tit">活动主题：</em>
-                  <div class="searchInput" style="margin-right: 15px;">
+                  <div class="searchInput" style="margin-left: 15px;">
                    <input  id="tempName" class="easyui-validatebox"  />
                 </div> <!--inputBox-->
               </div><!--lineText-->
@@ -150,7 +150,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                            <div class="spreadPanel setSpread">
                             <div  data-tabname="tab01" data-type="Focus" >
                                    <p class="title">选择奖品</p>
-                                                  <div class="taleWarp HBList " style="margin-left: 20px;">
+                                                  <div class="tableWap HBList " style="margin-bottom: 10px;">
                                                    <div id="prize"></div>
                                                  </div>
                                                 <div class="commonBtn icon icon_add w64" style="margin-left: 20px;" data-type="prize">添加奖品</div>
@@ -214,7 +214,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
                  </div> <!--phoneWebDiv share-->
     <div class="phoneWebDiv attention" data-flag="引导" data-tabname="tab03"  style="display: none; text-align: center" data-type="Focus">
-             <div  data-edit="true"  data-size="640X1008px" data-imgurl="images/bgPhone.png" data-imgcode="bgPhone" >
+             <div  data-edit="true"  data-size="640X1008px" data-imgurl="images/bgPhone.png" data-imgcode="bgPhone" style="height: 500px;" >
                <img src="images/bgPhone.png" class="bgPhone" data-imgcode="bgPhone" >
              </div>
 
@@ -230,17 +230,17 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
 
    </div> <!--spreadPanel-->
-              <div class="spreadPanel setSpread optionPrize" style="padding-top: 15px;">
+              <div class="spreadPanel setSpread optionPrize">
 
                            <div  data-tabname="tab03"  style="display: none;" data-type="Share" data-msg="引导关注">
                                   <p class="title"> 微信吸粉</p>
                                   <div class="radioList" id="release" >
-                                   <div class="checkBox" data-type="share" > <em></em> <span>分享有奖</span> <div class="commonBtn w50" data-option="select">查看</div> <div class="commonBtn icon icon_add w60" data-option="add"> 添加奖品</div>  </div>
-                                   <div class="checkBox" data-type="watch"> <em></em> <span>关注有奖</span>  <div class="commonBtn w50" data-option="select">查看</div> <div class="commonBtn icon icon_add w60"  data-option="add"> 添加奖品</div></div>
-                                   <div class="checkBox" data-type="reg"> <em></em> <span>注册有奖</span>  <div class="commonBtn w50" data-option="select">查看</div> <div class="commonBtn icon icon_add w60"  data-option="add">添加奖品</div> </div>
+                                   <div class="checkBox" data-type="share" > <em></em> <span>分享有奖</span> <div class="btnList"><div class="commonBtn w50" data-option="select">查看</div> <div class="commonBtn icon icon_add w60" data-option="add"> 添加奖品</div> </div> </div>
+                                   <div class="checkBox" data-type="watch"> <em></em> <span>关注有奖</span> <div class="btnList"> <div class="commonBtn w50" data-option="select">查看</div> <div class="commonBtn icon icon_add w60"  data-option="add"> 添加奖品</div></div></div>
+                                   <div class="checkBox" data-type="reg"> <em></em> <span>注册有奖</span> <div class="btnList"> <div class="commonBtn w50" data-option="select">查看</div> <div class="commonBtn icon icon_add w60"  data-option="add">添加奖品</div> </div></div>
 </div>
 
-                                   <div class="taleWarp expandList" style="display: none">
+                                   <div class="tableWap expandList" style="display: none">
                                    <table id="expandGrid"></table>
 
 </div>

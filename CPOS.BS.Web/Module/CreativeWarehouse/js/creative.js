@@ -601,13 +601,25 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
             }).delegate('.checkBox',"click",function(){
                 $(this).toggleClass("on");
                 $(this).find(".commonBtn").toggle();
-                var type=$(this).data("type")
+                var type=$(this).data("type");
                 var selected='[data-type="'+type+'"]';
                 if($(this).hasClass("on")){
                     $(".erweiMaPanel").find(selected).show();
+
                 }else{
                     $(".erweiMaPanel").find(selected).hide();
+
                 }
+                if( that.elems.selectType==type) {
+                    if($(this).hasClass("on")){
+                        $("#expandGrid").parents(".tableWap").show();
+                    }else{
+                        $("#expandGrid").parents(".tableWap").hide();
+                    }
+
+                }
+
+
 
             }).delegate('.checkBox .commonBtn',"click",function(e){
                 var type=$(this).parents(".checkBox").data("type"),option=$(this).data("option");
@@ -618,6 +630,8 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 }
 
 
+                $.util.stopBubble(e);
+            }).delegate('.checkBox  .btnList',"click",function(e){
                 $.util.stopBubble(e);
             });
             /**************** -------------------弹出easyui 控件 start****************/
@@ -914,10 +928,10 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
          if(data) {
              $("#winrelease .OnlineQRCodeId .codeimg img").attr("src", data.OnlineQRCodeUrl);
              $("#winrelease .OnlineQRCodeId .downaddress").attr("href", data.OnlineQRCodeUrl);
-             $("#winrelease .OnlineQRCodeId .addressinput").val(data.OnlineQRCodeUrl);
+             $("#winrelease .OnlineQRCodeId .addressinput").val(data.OnlineRedirectUrl);
              $("#winrelease .OnfflineQRCodeId .codeimg img").attr("src", data.OfflineQRCodeUrl);
              $("#winrelease .OnfflineQRCodeId .downaddress").attr("href", data.OfflineQRCodeUrl);
-             $("#winrelease .OnfflineQRCodeId .addressinput").val(data.OfflineQRCodeUrl);
+             $("#winrelease .OnfflineQRCodeId .addressinput").val(data.OfflineRedirectUrl);
 
              $('#winrelease').window('open');
              if (self.elems.isloadzclip) {
@@ -956,19 +970,20 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
             }
 
             if(nodeList.length>0){
-                $("#expandGrid").parents(".taleWarp").show();
+                $("#expandGrid").parents(".tableWap").show();
             }else{
-                $("#expandGrid").parents(".taleWarp").hide();
+                $("#expandGrid").parents(".tableWap").hide();
             }
             $("#expandGrid").datagrid({
 
                 method : 'post',
                 iconCls : 'icon-list', //图标
                 singleSelect : false, //多选
-                 height : 270, //高度
+                 height : 281, //高度
                 fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped : true, //奇偶行颜色不同
                 collapsible : true,//可折叠
+               //scrollbarSize:36,
                 //数据来源
                 data:nodeList,
                 sortName : 'brandCode', //排序的列
@@ -1000,6 +1015,11 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 ]]
 
             });
+            setTimeout(function(){
+                if($("#expandGrid").datagrid("getData").rows.length>6) {
+                    $("#expandGrid").parents(".tableWap").find(".datagrid-body").css({width: "280px"});
+                }
+            },400)
 
         },
 
@@ -1096,19 +1116,20 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
             var that=this;
             debugger;
             if(that.prizeListHB.length>0){
-                $("#prize").parents(".taleWarp").show();
+                $("#prize").parents(".tableWap").show();
             }else{
-                $("#prize").parents(".taleWarp").hide();
+                $("#prize").parents(".tableWap").hide();
             }
             $("#prize").datagrid({
 
                 method : 'post',
                 iconCls : 'icon-list', //图标
                 singleSelect : false, //多选
-                height : 270, //高度
+                height : 281, //高度
                 fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped : true, //奇偶行颜色不同
                 collapsible : true,//可折叠
+               // scrollbarSize:36,
                 //数据来源
                 data:that.prizeListHB,
                 sortName : 'brandCode', //排序的列
@@ -1140,6 +1161,12 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 ]]
 
             });
+            setTimeout(function(){
+                if($("#prize").datagrid("getData").rows.length>6) {
+                    $("#prize").parents(".tableWap").find(".datagrid-body").css({width: "280px"});
+                }
+            },400)
+
         },
         //风格表格加载
         loadThemeList:function(){
@@ -1414,7 +1441,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                ] ],
                    columns : [[
                        {field : 'integral',title : '积分',width:80,resizable:false,align:'left'},
-                       {field : 'number',title : '已有数量',width:70,align:'center',resizable:false},
+                       {field : 'number',title : '奖品数量',width:70,align:'center',resizable:false},
 
                        {field: 'id', title: '操作', width: 30, align: 'left', resizable: false,
                            formatter: function (value, row, index) {
@@ -2445,19 +2472,21 @@ debugger;
             pram.push({name:'MaterialText',value:MaterialText});
 
            // 风格 设置的的id
+
             self.saveJevvSHow(function(){       //先保存已经更改的风格，提交保存后台。
-                pram.push({name:"worksId",value:self.elems.editor1.worksId});
-                $.util.isLoading();
-                that.loadData.operation(pram,"add",function(data){
-                    that.releaseOpen(data.Data);
 
-                   /* if(data.Data&&data.Data.CTWEventId) {
-                        that.loadData.args.CTWEventId = data.Data.CTWEventId
-                    }*/
-
-                });
 
             }) ;
+            $.util.isLoading();
+            pram.push({name:"worksId",value:self.elems.editor1.worksId});
+            that.loadData.operation(pram,"add",function(data){
+                that.releaseOpen(data.Data);
+
+                /* if(data.Data&&data.Data.CTWEventId) {
+                 that.loadData.args.CTWEventId = data.Data.CTWEventId
+                 }*/
+
+            });
             //pram.push({name:"worksId",value:self.elems.editor1.worksId});
             //$.util.isLoading();
             //that.loadData.operation(pram,"add",function(data){
