@@ -22,6 +22,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             var rd = new DelayEventRD();
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            T_CTW_LEventBLL bllCTWEvent = new T_CTW_LEventBLL(loggingSessionInfo);
+            T_CTW_LEventEntity entityCTWEvent = new T_CTW_LEventEntity();
+            entityCTWEvent = bllCTWEvent.GetByID(para.CTWEventId);
+            entityCTWEvent.EndDate = Convert.ToDateTime(para.EndDate);
+            bllCTWEvent.Update(entityCTWEvent, null);
             if (para.EventType == "Game")
             {
                 T_CTW_LEventInteractionBLL bllEventInteraction = new T_CTW_LEventInteractionBLL(loggingSessionInfo);

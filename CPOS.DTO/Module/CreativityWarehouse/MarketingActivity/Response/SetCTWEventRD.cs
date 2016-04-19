@@ -10,6 +10,16 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingActivity.Response
     {
         public string CTWEventId { get; set; }
         public string OnlineQRCodeUrl { get; set; }
+        /// <summary>
+        /// 线上复制地址
+        /// </summary>
+        public string OnlineRedirectUrl { get; set; }
         public string OfflineQRCodeUrl { get; set; }
+        /// <summary>
+        /// 线下复制地址
+        /// </summary>
+        public string OfflineRedirectUrl { get; set; }
+
+
     }
 }

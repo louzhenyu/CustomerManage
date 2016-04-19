@@ -837,6 +837,7 @@ namespace JIT.CPOS.BS.BLL
                             {
                                 entityEventsVipObject = new LEventsVipObjectEntity()
                                 {
+                                    MappingId=Guid.NewGuid().ToString(),
                                     IsLottery = 0,
                                     EventId = strEventId,
                                     VipId = strVipId
