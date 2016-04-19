@@ -119,7 +119,7 @@
             <div class="operation">
                 <div class="preview operationbtn" data-src="<#=_data.QRCodeUrl #>" >预览活动</div>
                 <div class="start operationbtn" data-id="<#=_data.TemplateId #>" >发起活动</div>
-                <div class="viewmore operationbtn" >浏览更多</div>
+                <div class="viewmore operationbtn" data-code="<#=_data.ActivityGroupCode.replace(/^\s+|\s+$/g, "") #>" >浏览更多</div>
             </div>
              <# if(_data.ActivityGroupCode.replace(/^\s+|\s+$/g, "")=="Product" ){#>
             <div class="personSum bgcolor">
@@ -159,9 +159,24 @@
                     <div class="ActivityOpeartion"><div class="releasebtn"  data-id="<#=_data.TemplateId #>" >
                         发起活动
                      </div></div>
-                 <div class="ActivityPersonSum">
+
+                 <# if(_data.ActivityGroupCode.replace(/^\s+|\s+$/g, "")=="Product" ){#>
+                <div class="ActivityPersonSum bgcolor">
                     <div class="person"><#=_data.UserCount #>人</div>
                 </div>
+                <#}#>
+                    <# if(_data.ActivityGroupCode.replace(/^\s+|\s+$/g, "")=="Holiday" ){#>
+                <div class="ActivityPersonSum bgcolor1">
+                    <div class="person"><#=_data.UserCount #>人</div>
+                </div>
+                <#}#>
+                    <# if(_data.ActivityGroupCode.replace(/^\s+|\s+$/g, "")=="Unit" ){#>
+                <div class="ActivityPersonSum bgcolor2">
+                    <div class="person"><#=_data.UserCount #>人</div>
+                </div>
+                <#}#>
+
+                 
                 </div>
              <#} #>
 

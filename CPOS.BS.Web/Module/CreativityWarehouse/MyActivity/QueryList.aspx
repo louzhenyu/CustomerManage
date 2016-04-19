@@ -193,7 +193,6 @@
       <div style="display:none;">
       <div id="windesc" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
           <div class="easyui-layout" data-options="fit:true" id="panlconent">
-            
 
              
 
@@ -235,7 +234,7 @@
 
     <!--数据详情部分-->
 <script id="tpl_gameEventDataDetail" type="text/html">
-    <div class="Activitydesc">
+    <div class="Activitydesc Activitydatadesc">
               <div class="EventDataOperation">
                   <div class="EDO_opt"><a href="javascript:;" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" class="commonBtn defer">活动延期</a><a href="javascript:;" class="commonBtn endbtn">结束活动</a><a href="javascript:;" class="commonBtn returnbtn">返回</a></div>
                   <div class="EDO_data">
@@ -303,7 +302,7 @@
 
     <!--数据详情部分-->
 <script id="tpl_EventDataDetail" type="text/html">
-    <div class="Activitydesc">
+    <div class="Activitydesc Activitydatadesc">
               <div class="EventDataOperation">
                   <div class="EDO_opt"><a href="javascript:;" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  class="commonBtn defer">活动延期</a><a href="javascript:;" class="commonBtn endbtn">结束活动</a><a href="javascript:;" class="commonBtn returnbtn">返回</a></div>
                   <div class="EDO_data">

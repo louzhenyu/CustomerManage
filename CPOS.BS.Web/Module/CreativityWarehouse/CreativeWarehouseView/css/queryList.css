@@ -22,7 +22,7 @@
 .seasonlist .title{padding: 8px 10px 8px 20px;  background-color: #f4f4f4;border-bottom: 1px solid #e1e7ea;  }
 .seasonlist .title span{float:right;  color: #00a0e8;  cursor: pointer;}
 .seasonlist .content{padding: 10px;  height: 344px;font-size: 10px;  width: 260px;  overflow: auto;}
-.seasonlist .content li{padding: 10px;  color: #00a0e8;}
+.seasonlist .content li{padding: 10px;  color: #00a0e8;  cursor: default;}
 .seasonlist .content li span{padding-right: 20px;  color: #666666;}
 .seasonbannerlist { width:275px;height:150px;margin: 20px 0px;}
 .QRcode {border: 1px solid #e1e7ea; width:275px;height:150px;font-size: 14px;}
@@ -162,12 +162,7 @@ display:none;
 }
 #Annualplanlayer .planlayer img{  max-width: 800px;
 }
-#Annualplanlayer .close {
-   position: absolute;
-  top: -20px;
-  right: -10px;
-    
-}
+#Annualplanlayer .close {position: absolute; top: -20px;right: -10px;cursor: pointer;}
 #Annualplanlayer .Annualplan {min-height:300px;min-width:300px;}
 #Annualplanlayer .plantitle {  position: absolute;top: -25px;left: 0px;color: #fff;font-size: 20px;}
 #Annualplanlayer .plandown {background-color: #fff;line-height:60px;text-align: right;}
@@ -186,7 +181,7 @@ display:none;
 .Activity .ActivityDesc span {line-height:30px;margin-left: 10px;}
 .Activity .ActivityOpeartion {width: 100%;border: 1px solid #9da1a3;  display: inline-block;height: 40px;}
 .ActivityOpeartion .releasebtn {  text-align: center;line-height: 38px;margin: 0px auto;  color: #7c7c7c;cursor:pointer;background-color: #f2f2f2;}
-.Activity .ActivityPersonSum {position: absolute;  top: 1px; width: 40px;  height: 85px;  left: 30px;  background: url(../images/bgcolor.png) no-repeat;background-size: 40px;}
+.Activity .ActivityPersonSum {position: absolute;  top: 1px; width: 40px;  height: 85px;  left: 30px;  background-size: 40px;}
 .Activity .ActivityPersonSum .person{background: url(../images/person.png) no-repeat;background-position: center;background-position-y: 4px;width: 100%;height: 30px;  padding-top: 15px;font-size: 12px;line-height: 30px;color: #fff;text-align: center;}
 .Opeartiondesc .viewdata {color:#00a0e8;}
 .Opeartiondesc .date {color:#b2b2b2;}

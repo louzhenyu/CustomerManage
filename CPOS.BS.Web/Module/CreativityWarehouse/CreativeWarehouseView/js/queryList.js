@@ -115,9 +115,11 @@
             //banner浏览更多
             $(".InSeasonList").on("click", ".viewmore", function (e) {
 
-                $(".ActivityGroupName").removeClass("graycolor");
-                $(".arrow").show();
-                that.loadData.seach.form.ActivityGroupCode = "";
+                that.loadData.seach.form.ActivityGroupCode = $(this).data("code");
+                $(".ActivityGroupName").addClass("graycolor");
+                $("#" + that.loadData.seach.form.ActivityGroupCode).removeClass("graycolor");
+                $(".arrow").hide();
+                $("#" + that.loadData.seach.form.ActivityGroupCode).find(".arrow").show();
                 that.GetTemplateList(function (data) {
                     //活动数据
                     if (data.TemplateList) {

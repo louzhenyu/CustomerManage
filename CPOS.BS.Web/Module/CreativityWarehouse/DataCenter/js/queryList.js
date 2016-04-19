@@ -20,6 +20,9 @@
             click:true,
             panlH:116                           // 下来框统一高度
         },
+        Activity: {
+            enddate: ''  //活动结束时间
+        },
         init: function () {
             this.initEvent();
             this.loadPageData();
@@ -110,122 +113,12 @@
                 that.loadData.details.EventId = $(this).data("id");
                 that.loadData.details.InteractionType = $(this).data("interactiontype");
                 that.loadData.details.CTWEventId = $(this).data("eventid");
-                var startdate = $(this).data("startdate");
-                var enddate = $(this).data("enddate");
-                var html = "";
-                var data = [];
-                data.InteractionType = that.loadData.details.InteractionType;
-                data.EventId = that.loadData.details.EventId;
-                data.CTWEventId = that.loadData.details.CTWEventId;
-                data.startdate = startdate;
-                data.enddate = enddate;
-                if (that.loadData.details.InteractionType == 1) {
-                    that.loadData.details.EventType = "Game";
-                } else {
-                    that.loadData.details.EventType = "Sales";
-                }
-               
-                var isshow = $(this).data("isshow");
-                $(".tr_DataDetail").remove();
-
-                if (!isshow) {
-                    $(".viewdesc").data("isshow", false);
-                    $(this).data("isshow", true);
-
-
-                  
-                    if (that.loadData.details.InteractionType == 1) {
-                        that.GetLEventStats(function (_data) {
-
-                            data.LeventsStats = _data.LeventsStats;
-                        });
-
-                        $(".tr_DataDetail").remove();
-                        html = bd.template('tpl_gameEventDataDetail', data);
-                        $(".datagrid-body,.datagrid-view").css("height", "initial");
-                        $(this).parents("tr").after(html);
-
-                        $.util.isLoading()
-                        that.GetEventPrizeList(function (_data) {
-                            that.renderTable2(_data);
-
-                        });
-
-
-                       
-                    } else if (that.loadData.details.InteractionType == 2) {
-                        
-                        that.GetPanicbuyingEventStats(function (_data) {
-                            data.LeventsStats = _data.PanicbuyingEventStatsInfo;
-                        });
-                        $(".tr_DataDetail").remove();
-                        html = bd.template('tpl_EventDataDetail', data);
-                        $(".datagrid-body,.datagrid-view").css("height", "initial");
-                        $(this).parents("tr").after(html);
-                        $.util.isLoading()
-                        that.GeEventItemList(function (_data) {
-                            that.renderTable2(_data);
-
-                        });
-
-                        //活动销量，活动订单
-                        that.GetPanicbuyingEventRankingStats(function (_data) {
-                            var data_categories = [];
-                            var data_series = [];
-                            var data = _data.OrderMoneyRankList;
-                            for (var i = 0; i < data.length; i++) {
-                                data_categories.push(data[i].DateStr);
-                                data_series.push(data[i].OrderActualAmount);
-                            }
-                            that.inithighcharts("ActivitySales", data_categories, data_series);
-                            data_categories = [];
-                            data_series = [];
-                            var data = _data.OrderCountRankList;
-                            for (var i = 0; i < data.length; i++) {
-
-                                data_categories.push(data[i].DateStr);
-                                data_series.push(data[i].OrderCount);
-                            }
-                            that.inithighcharts("ActivityOrder", data_categories, data_series);
-                        });
-
-                    }
-
-                   
-
-                    
-
-                  
-
-                    //粉丝，会员增长
-                    that.GetVipAddRankingStats(function (_data) {
-
-                        var data_categories = [];
-                        var data_series = [];
-                        var data= _data.GameVipAddRankingList;
-                        for (var i = 0; i < data.length; i++) {
-                            data_categories.push(data[i].DateStr);
-                            data_series.push(data[i].FocusVipCount);
-                        }
-                        that.inithighcharts("fansContainer", data_categories, data_series);
-                        data_categories = [];
-                        data_series = [];
-                        var data = _data.PromotionVipAddRankingList;
-                        for (var i = 0; i < data.length; i++) {
-
-                            data_categories.push(data[i].DateStr);
-                            data_series.push(data[i].RegVipCount);
-                        }
-                        that.inithighcharts("registerContainer", data_categories, data_series);
-                    });
-
-                   
-
-
-
-                } else {
-                    $(this).data("isshow", false);
-                }
+                that.loadData.datedetails.startdate = $(this).data("startdate");
+                that.loadData.datedetails.enddate = $(this).data("enddate");
+                $.util.isLoading();
+                var self=this
+                setTimeout(function () { that.loadActivityDescData(that, self) }, 100);
+                
                 
             });
 
@@ -236,7 +129,8 @@
                 $.messager.confirm('是否结束', '是否确认结束活动?', function (r) {
                     if (r) {
                         that.EndOfEvent(function (data) {
-
+                            $.messager.alert("提示", "活动结束成功！");
+                            window.location.href = window.location.href;
 
                         });
                     }
@@ -245,14 +139,14 @@
             });
 
             //返回事件
-            $("#windesc").on("click", ".returnbtn", function () {
+            $(".tableWrap").on("click", ".returnbtn", function () {
 
                 $(".tr_DataDetail").remove();
                 $(".viewdesc").data("isshow", false);
                
             });
 
-            //延期事件
+            //打开延期层
             $(".tableWrap").on("click", ".defer", function () {
 
                 $('#windefer').window({
@@ -260,18 +154,28 @@
                     left: ($(window).width() - 400) * 0.5
                 });
                 $("._startdate").html($(this).data("startdate"));
-                $("#_endTime").datebox("setValue", $(this).data("enddate").replace("/", "-").replace("/", "-"));
+                that.Activity.enddate = $(this).data("enddate").replace("/", "-").replace("/", "-");
+                $("#_endTime").datebox('calendar').calendar({
+                    validator: function (date) {
+                        var now = new Date(that.Activity.enddate);
+                        return (date > now || date.getTime() == now.getTime());
+                    }
+                });
+                $("#_endTime").datebox("setValue", that.Activity.enddate);
+
                 $('#windefer').window('open');
 
                 
             });
 
+            //延期事件
             $(".deferbtn").on("click", function () {
                 var startdate = $("._startdate").html();
                 var enddate = $("#_endTime").datebox("getValue");
                 if (startdate != "" && enddate != "") {
                     that.DelayEvent(startdate, enddate, function (data) {
-                        $('#windefer').window('close');
+                        $.messager.alert("提示","延期成功！");
+                        window.location.href = window.location.href;
                         
                     });
                 }
@@ -360,7 +264,128 @@
                 }]
             });
         },
-          
+        //加载活动详细数据
+        loadActivityDescData: function (that,self)
+        {
+            $.util.isLoading(true);
+            var html = "";
+            var data = [];
+            console.log(1);
+            data.InteractionType = that.loadData.details.InteractionType;
+            data.EventId = that.loadData.details.EventId;
+            data.CTWEventId = that.loadData.details.CTWEventId;
+            data.startdate = that.loadData.datedetails.startdate;
+            data.enddate = that.loadData.datedetails.enddate;
+            if (that.loadData.details.InteractionType == 1) {
+                that.loadData.details.EventType = "Game";
+            } else {
+                that.loadData.details.EventType = "Sales";
+            }
+
+            var isshow = $(self).data("isshow");
+            $(".tr_DataDetail").remove();
+
+            if (!isshow) {
+                $(".viewdesc").data("isshow", false);
+                $(self).data("isshow", true);
+
+
+
+                if (that.loadData.details.InteractionType == 1) {
+                    that.GetLEventStats(function (_data) {
+
+                        data.LeventsStats = _data.LeventsStats;
+                    });
+
+                    $(".tr_DataDetail").remove();
+                    html = bd.template('tpl_gameEventDataDetail', data);
+                    $(".datagrid-body,.datagrid-view").css("height", "initial");
+                    $(self).parents("tr").after(html);
+
+                    $.util.isLoading()
+                    that.GetEventPrizeList(function (_data) {
+                        that.renderTable2(_data);
+
+                    });
+
+
+
+                } else if (that.loadData.details.InteractionType == 2) {
+
+                    that.GetPanicbuyingEventStats(function (_data) {
+                        data.LeventsStats = _data.PanicbuyingEventStatsInfo;
+                    });
+                    $(".tr_DataDetail").remove();
+                    html = bd.template('tpl_EventDataDetail', data);
+                    $(".datagrid-body,.datagrid-view").css("height", "initial");
+                    $(self).parents("tr").after(html);
+                    $.util.isLoading()
+                    that.GeEventItemList(function (_data) {
+                        that.renderTable2(_data);
+
+                    });
+
+                    //活动销量，活动订单
+                    that.GetPanicbuyingEventRankingStats(function (_data) {
+                        var data_categories = [];
+                        var data_series = [];
+                        var data = _data.OrderMoneyRankList;
+                        for (var i = 0; i < data.length; i++) {
+                            data_categories.push(data[i].DateStr);
+                            data_series.push(data[i].OrderActualAmount);
+                        }
+                        that.inithighcharts("ActivitySales", data_categories, data_series);
+                        data_categories = [];
+                        data_series = [];
+                        var data = _data.OrderCountRankList;
+                        for (var i = 0; i < data.length; i++) {
+
+                            data_categories.push(data[i].DateStr);
+                            data_series.push(data[i].OrderCount);
+                        }
+                        that.inithighcharts("ActivityOrder", data_categories, data_series);
+                    });
+
+                }
+
+
+
+
+
+
+
+                //粉丝，会员增长
+                that.GetVipAddRankingStats(function (_data) {
+
+                    var data_categories = [];
+                    var data_series = [];
+                    var data = _data.GameVipAddRankingList;
+                    for (var i = 0; i < data.length; i++) {
+                        data_categories.push(data[i].DateStr);
+                        data_series.push(data[i].FocusVipCount);
+                    }
+                    that.inithighcharts("fansContainer", data_categories, data_series);
+                    data_categories = [];
+                    data_series = [];
+                    var data = _data.PromotionVipAddRankingList;
+                    for (var i = 0; i < data.length; i++) {
+
+                        data_categories.push(data[i].DateStr);
+                        data_series.push(data[i].RegVipCount);
+                    }
+                    that.inithighcharts("registerContainer", data_categories, data_series);
+                });
+
+
+
+
+
+            } else {
+                $(self).data("isshow", false);
+                
+            }
+        }
+        ,
         loadActivityData: function (data) {
             var that = this;
 
@@ -1313,6 +1338,10 @@
                 InteractionType: "",
                 EventType: "",
                 CTWEventId:""
+            },
+            datedetails: {
+                startdate: '',
+                enddate:''
             },
             seach:{
                 form:{

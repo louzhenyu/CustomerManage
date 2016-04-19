@@ -218,7 +218,7 @@
 				*/
                 columns: [[
                     {
-                        field: 'ContactEventName', title: '活动名称', width: 200, align: 'center', resizable: false,
+                        field: 'ContactEventName', title: '活动名称', width: 200, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             var long = 17;
                             var html = ""
