@@ -1698,7 +1698,7 @@ select @ReturnValue", pCustomerID);
             var sql = new StringBuilder();
 
             sql.Append("select count(1) from VipCouponMapping as a ");
-            sql.Append("inner join Coupon as b on a.CouponID=b.CouponID and b.IsDelete=0 and b.Status=0 and  convert(varchar(10),b.EndDate,120) >= convert(varchar(10),getdate(),120)  ");
+            sql.Append("inner join Coupon as b on a.CouponID=b.CouponID and b.IsDelete=0 and b.Status=2 and  convert(varchar(10),b.EndDate,120) >= convert(varchar(10),getdate(),120)  ");
             sql.AppendFormat("where a.IsDelete=0 and a.VIPID='{0}'", vipId);//没有被使用，并且没有过期
 
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(sql.ToString()));
@@ -1961,7 +1961,7 @@ select @ReturnValue", pCustomerID);
             sql.Append(" INNER JOIN CouponType b ON CONVERT(NVARCHAR(200), a.CouponTypeID) = CONVERT(NVARCHAR(200), b.CouponTypeID) ");
             sql.Append(" INNER JOIN VipCouponMapping c ON c.CouponID = a.CouponID ");
             sql.Append(" LEFT JOIN dbo.CouponTypeUnitMapping d ON d.CouponTypeID = b.CouponTypeID ");
-            sql.Append(" WHERE     a.Status = 0 ");
+            sql.Append(" WHERE     a.Status = 2 ");
             sql.Append(" AND a.IsDelete = 0 ");
             sql.Append(" AND EndDate > GETDATE() ");
             sql.Append(" AND c.VIPID = @pVipId ");
