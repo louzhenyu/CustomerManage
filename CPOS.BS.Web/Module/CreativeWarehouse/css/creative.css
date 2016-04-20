@@ -34,7 +34,7 @@
 .spreadPanel .contentDiv .tabDiv{height: 110px;padding: 10px}
 .spreadPanel .contentDiv .tabDiv.on{ background-color: #45d0bf; }
 .spreadPanel .contentDiv .tabDiv .l{width: 66px; height: 106px; border: 2px solid #fff;background-color: #d9dee1}
-.spreadPanel .contentDiv .tabDiv em{float: left; padding-left: 15px; line-height: 133px; white-space: nowrap;font-size: 13px; color:#666;}
+.spreadPanel .contentDiv .tabDiv em{float: left; padding-left: 15px; line-height: 110px; white-space: nowrap;font-size: 13px; color:#666;}
 .spreadPanel .contentDiv .tabDiv.on em{color: #fff;}
 .spread .spreadPanel.page{background: url("../images/pagePhone.png") no-repeat;}
 .spread .spreadPanel .phoneTitle{  position: absolute; top: 18px; left: 50px;color: #fff;width: 203px;height: 23px;line-height: 23px;font-size: 12px;}
@@ -61,7 +61,7 @@
 .radio span{ font-size: 12px;}
 .checkBox{height:33px}
 .checkBox span{ font-size: 12px;}
-.spreadPanel .phoneWebDiv.attention img{width: 100%;height:100%}
+.spreadPanel .phoneWebDiv.attention img{max-width: 100%;max-height: 100%;}
 .radio .numberbox { float: none; margin-left: 5px; margin-right: 5px; padding: 0; cursor: pointer;}
 .listType{ width: 100%; height: 45px;}
 .listType span{cursor:pointer; width:35px; border: 1px solid #e1e7ea; height: 35px;margin-left: 8px; float:left; text-align: center; line-height: 35px; font-size: 14px;}

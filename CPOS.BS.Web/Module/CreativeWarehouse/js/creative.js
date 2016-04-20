@@ -476,9 +476,10 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                            self.elems.currentStyleId = ThemeId;
                            that.loadSetPageData(eventInfo);
                            that.setDefaultImg(eventInfo);
-                       }else if(InteractionType&&that.elems.eventInfoType!=InteractionType){ //选中风格实现功能被切换
+                       }else if(InteractionType&&that.elems.eventInfoType&&that.elems.eventInfoType!=InteractionType){ //选中风格实现功能被切换
                            that.loadSetPageData(eventInfo);
                            that.setDefaultImg(eventInfo);
+                           that.elems.eventInfoType=InteractionType
                        }
                        var navLi = that.elems.navigation.find("li");
                        if (me.index() == navLi.length - 1) {
@@ -1234,12 +1235,13 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 //注意后面的参数，dir表示文件类型，width表示缩略图的宽，height表示高
                 url: '/Framework/Javascript/Other/kindeditor/asp.net/upload_homepage_json.ashx?dir=image',
                 afterUpload: function (data) {
+                    $.util.isLoading(true);
                     if (data.error === 0) {
                         if (callback) {
                             debugger  ;
                             callback(btn, data);
                         }
-                        $.util.isLoading(true);
+
                         //取返回值,注意后台设置的key,如果要取原值
                         //取缩略图地址
                         //var thumUrl = KE.formatUrl(data.thumUrl, 'absolute');
@@ -1247,11 +1249,11 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                         //取原图地址
                         //var url = KE.formatUrl(data.url, 'absolute');
                     } else {
-                        alert(data.message);
+                        $.messager.alert("提示",data.message);
                     }
                 },
                 afterError: function (str) {
-                    alert('自定义错误信息: ' + str);
+                    $.messager.alert("提示",'自定义错误信息: ' + str);     $.util.isLoading(true)
                 }
             });
             debugger;

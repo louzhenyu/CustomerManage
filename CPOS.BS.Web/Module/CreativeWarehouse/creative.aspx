@@ -183,7 +183,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
    </div> <!--contentDiv-->
    </div> <!--spreadPanel-->
               <div class="spreadPanel center attention" >
-              <div class="phoneTitle">商户公众号名称</div>
+              <!--<div class="phoneTitle">商户公众号名称</div>-->
               <div class="phoneWebDiv" data-flag="微信图文" data-tabname="tab01" data-type="Reg">
              <p class="txtTitle" data-view="Title">我是一个图文标题</p>
              <div style="position: relative">
