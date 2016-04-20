@@ -1354,13 +1354,22 @@
                         }
                         break;
                     case 3:
+                        
                     case 4:
                         if (this.toSave.domObj.find("input").val() == "") {
                             alert("请选择一个活动!");
                             return false;
                         }
                         //抽奖 活动详情
-                        var domVal = this.toSave.domObj.attr("data-value");
+                        var domVal;
+                        if (this.toSave.domObj.find("input").attr("data-value") != ""&&this.toSave.domObj.find("input").attr("data-value")!=undefined) {
+                            domVal = this.toSave.domObj.find("input").attr("data-value");
+                        }
+                        else {
+                            domVal = this.toSave.domObj.attr("data-value");
+                        }
+                        
+                
                         if (domVal != "") {
                             //活动详情
                             var eventDetailJson = JSON.parse(domVal);

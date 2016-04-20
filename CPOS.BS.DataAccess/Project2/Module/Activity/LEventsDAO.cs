@@ -186,14 +186,18 @@ namespace JIT.CPOS.BS.DataAccess
              
             sql.Append(
                 " select isnull(count(1),null) as num ");
-            sql.Append(" from Levents a inner join LEventsType b on a.EventTypeId = b.EventTypeId ");
-            sql.Append(" inner join LEventDrawMethodMapping c on a.eventId = c.EventId");
-            sql.Append(" inner join LEventDrawMethod d on c.DrawMethodId = d.DrawMethodID");
-
+            //sql.Append(" from Levents a inner join LEventsGenre b on a.EventGenreId = b.EventGenreId ");
+            sql.Append(" from Levents a left join LEventsGenre b on a.EventGenreId = b.EventGenreId ");
             sql.Append(" where ");
             sql.Append(" a.customerId = @pCustomerId");
-            sql.Append(" and (b.EventTypeId = @pEventTypeId or isnull(@pEventTypeId,'') = '')");
-            sql.Append(" and c.isdelete = 0 and d.isdelete = 0 and (d.DrawMethodId = @pDrawMethodId or @pDrawMethodId = 0) ");
+            sql.Append(" and a.isdelete =0 and IsCTW=0 ");
+            //sql.Append(" inner join LEventDrawMethodMapping c on a.eventId = c.EventId");
+            //sql.Append(" inner join LEventDrawMethod d on c.DrawMethodId = d.DrawMethodID");
+
+            //sql.Append(" where ");
+            //sql.Append(" a.customerId = @pCustomerId");
+            //sql.Append(" and (b.EventTypeId = @pEventTypeId or isnull(@pEventTypeId,'') = '')");
+            //sql.Append(" and c.isdelete = 0 and d.isdelete = 0 and (d.DrawMethodId = @pDrawMethodId or @pDrawMethodId = 0) ");
 
             sql.Append(sqlWhere);
 
