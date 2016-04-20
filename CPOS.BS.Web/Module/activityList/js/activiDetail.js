@@ -17,7 +17,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             loadAlert:null,
             priceFilde:"item_price_type_name_",//数据库价格相关的字段，一般有销量库存，价格实体价格
             allData:{}, //页面所有存放对象基础数据
-            eventId: $.util.getUrlParam('EventID'),
+            eventId: '',
             CoverId:"",
             eventName:"",
             DrawMethod:1,
@@ -31,11 +31,13 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
             this.loadDataPage();
             this.initEvent();
         },
-		loadDataPage: function(){
+        loadDataPage: function () {
+
 			var that = this,
 				$centreArea = $('.centreArea'),
 				$contentArea = $('#contentArea'),
 				h = $centreArea.height();
+			that.elems.eventId = $.util.getUrlParam('EventID');
 			$contentArea.css({'minHeight':h+'px'});
 			$('#nav01').fadeIn("slow");
 

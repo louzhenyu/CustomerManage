@@ -33,7 +33,7 @@
             that.elems.sectionPage.delegate(".queryBtn", "click", function (e) {
 
 
-                $(".ActivityGroupName").addClass("graycolor");
+                $(".ActivityGroupName").removeClass("graycolor");
 
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
                 that.setCondition();
@@ -433,10 +433,12 @@
                 }, {
                     ID: "20",
                     Name: "运行中"
-                }, {
-                    ID: "30",
-                    Name: "暂停"
-                }, {
+                },
+                //{
+                //    ID: "30",
+                //    Name: "暂停"
+                //},
+                {
                     ID: "40",
                     Name: "结束"
                 }, {
@@ -939,10 +941,7 @@
 				      PageIndex: that.loadData.args.PageIndex,
 				      PageSize: that.loadData.args.PageSize
 				  },
-				  beforeSend: function () {
-				      $.util.isLoading()
-
-				  },
+				  
 				  success: function (data) {
 				      if (data.IsSuccess && data.ResultCode == 0) {
 				          var result = data.Data;

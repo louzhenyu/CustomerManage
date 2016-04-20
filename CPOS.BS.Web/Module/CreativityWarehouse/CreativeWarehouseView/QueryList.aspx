@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
-    <title>计划活动管理</title>
+    <title>发起活动</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/CreativityWarehouse/CreativeWarehouseView/css/queryList.css?v=0.4"%>" rel="stylesheet" type="text/css" />
