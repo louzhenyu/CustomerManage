@@ -20,6 +20,7 @@ using System.Xml;
 using ThoughtWorks.QRCode.Codec;
 using System.Globalization;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 
 namespace JIT.CPOS.Common
 {
@@ -688,9 +689,28 @@ namespace JIT.CPOS.Common
             {
                 img = KiResizeImage(img, 65, 65, 0);
             }
-            Graphics g = Graphics.FromImage(imgBack);
 
-            g.DrawImage(imgBack, 0, 0, imgBack.Width, imgBack.Height);      //g.DrawImage(imgBack, 0, 0, 相框宽, 相框高);     
+            Graphics g =null;
+            if (IsPixelFormatIndexed(imgBack.PixelFormat))
+            {
+                Bitmap bmp = new Bitmap(imgBack.Width, img.Height, PixelFormat.Format32bppArgb);
+                using (g = Graphics.FromImage(bmp))
+                {
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                    g.DrawImage(img, 0, 0, imgBack.Width, imgBack.Height);
+                }
+                //下面的水印操作，就直接对 bmp 进行了
+                //......
+            }
+            else
+            {
+                g = Graphics.FromImage(imgBack);
+                g.DrawImage(imgBack, 0, 0, imgBack.Width, imgBack.Height);      //g.DrawImage(imgBack, 0, 0, 相框宽, 相框高);     
+
+            }
+
 
             //g.FillRectangle(System.Drawing.Brushes.White, imgBack.Width / 2 - img.Width / 2 - 1, imgBack.Width / 2 - img.Width / 2 - 1,1,1);//相片四周刷一层黑色边框    
 
@@ -727,7 +747,24 @@ namespace JIT.CPOS.Common
                 return null;
             }
         }
+        private static PixelFormat[] indexedPixelFormats = { PixelFormat.Undefined, PixelFormat.DontCare,
+PixelFormat.Format16bppArgb1555, PixelFormat.Format1bppIndexed, PixelFormat.Format4bppIndexed,
+PixelFormat.Format8bppIndexed
+    };
+        /// <summary>
+        /// 判断图片的PixelFormat 是否在 引发异常的 PixelFormat 之中
+        /// </summary>
+        /// <param name="imgPixelFormat">原图片的PixelFormat</param>
+        /// <returns></returns>
+        private static bool IsPixelFormatIndexed(PixelFormat imgPixelFormat)
+        {
+            foreach (PixelFormat pf in indexedPixelFormats)
+            {
+                if (pf.Equals(imgPixelFormat)) return true;
+            }
 
+            return false;
+        }
         public bool IsReusable
         {
             get

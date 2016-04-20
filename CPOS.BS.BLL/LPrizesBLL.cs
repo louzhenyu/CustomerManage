@@ -360,39 +360,39 @@ namespace JIT.CPOS.BS.BLL
                         bllPrizePool.Update(entityPrizePool);
 
                         CouponBLL bllCoupon = new CouponBLL(this.CurrentUserInfo);
-                        //int intResult = bllCoupon.CouponBindVip(strVipId, entityPrize.CouponTypeID);
+                        int intResult = bllCoupon.CouponBindVip(strVipId, entityPrize.CouponTypeID);
 
 
-                        CouponEntity entityCoupon = null;
+                        //CouponEntity entityCoupon = null;
                         
-                        entityCoupon = DataTableToObject.ConvertToList<CouponEntity>(bllCoupon.GetCouponIdByCouponTypeID(entityPrize.CouponTypeID).Tables[0]).FirstOrDefault();
+                        //entityCoupon = DataTableToObject.ConvertToList<CouponEntity>(bllCoupon.GetCouponIdByCouponTypeID(entityPrize.CouponTypeID).Tables[0]).FirstOrDefault();
 
-                        VipCouponMappingEntity entityVipCouponMapping = null;
-                        VipCouponMappingBLL bllVipCouponMapping = new VipCouponMappingBLL(this.CurrentUserInfo);
+                        //VipCouponMappingEntity entityVipCouponMapping = null;
+                        //VipCouponMappingBLL bllVipCouponMapping = new VipCouponMappingBLL(this.CurrentUserInfo);
 
-                        entityVipCouponMapping = new VipCouponMappingEntity()
-                        {
-                            VipCouponMapping = Guid.NewGuid().ToString(),
-                            VIPID = strVipId,
-                            CouponID = entityCoupon.CouponID,
-                            CouponSourceId = strCouponSourceId
-                        };
-                        bllVipCouponMapping.Create(entityVipCouponMapping);
-                        //更新CouponType的IsVoucher(被领用数量)
-                        CouponTypeBLL bllCouponType = new CouponTypeBLL(this.CurrentUserInfo);
-                        CouponTypeEntity entityCouponType = bllCouponType.GetByID(entityPrize.CouponTypeID);
-                        entityCouponType.IsVoucher = entityCouponType.IsVoucher + 1;
-                        bllCouponType.Update(entityCouponType);
-                        ///更新优惠券有效期
-                        if (entityCouponType.ServiceLife != null && entityCouponType.ServiceLife > 0)
-                        {
-                            entityCoupon.BeginDate = DateTime.Now.Date;
-                            entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife - 1).ToShortDateString() + " 23:59:59.998");
+                        //entityVipCouponMapping = new VipCouponMappingEntity()
+                        //{
+                        //    VipCouponMapping = Guid.NewGuid().ToString(),
+                        //    VIPID = strVipId,
+                        //    CouponID = entityCoupon.CouponID,
+                        //    CouponSourceId = strCouponSourceId
+                        //};
+                        //bllVipCouponMapping.Create(entityVipCouponMapping);
+                        ////更新CouponType的IsVoucher(被领用数量)
+                        //CouponTypeBLL bllCouponType = new CouponTypeBLL(this.CurrentUserInfo);
+                        //CouponTypeEntity entityCouponType = bllCouponType.GetByID(entityPrize.CouponTypeID);
+                        //entityCouponType.IsVoucher = entityCouponType.IsVoucher + 1;
+                        //bllCouponType.Update(entityCouponType);
+                        /////更新优惠券有效期
+                        //if (entityCouponType.ServiceLife != null && entityCouponType.ServiceLife > 0)
+                        //{
+                        //    entityCoupon.BeginDate = DateTime.Now.Date;
+                        //    entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife - 1).ToShortDateString() + " 23:59:59.998");
                             
 
-                        }
-                        entityCoupon.Status = 2;
-                        bllCoupon.Update(entityCoupon);
+                        //}
+                        //entityCoupon.Status = 2;
+                        //bllCoupon.Update(entityCoupon);
                     }
                     else if (entityPrize.PrizeTypeId == "Chance" && !string.IsNullOrEmpty(strEventId) && contactEvent.ChanceCount>0)
                     {
@@ -679,10 +679,11 @@ namespace JIT.CPOS.BS.BLL
                 }
                 if (prize.PrizeTypeId == "Coupon")
                 {
+
                     CouponEntity entityCoupon = null;
                     CouponBLL bllCoupon = new CouponBLL(this.CurrentUserInfo);
-                    entityCoupon = DataTableToObject.ConvertToList<CouponEntity>(bllCoupon.GetCouponIdByCouponTypeID(prize.CouponTypeID).Tables[0]).FirstOrDefault();
-                    if (entityCoupon == null)
+                    int intResult = bllCoupon.CouponBindVip(strVipId, prize.CouponTypeID);
+                    if (intResult == 0)
                     {
                         int intLocation = bllPrize.GetLocationByEventID(strEventId);
                         rd.Location = intLocation;
@@ -690,32 +691,41 @@ namespace JIT.CPOS.BS.BLL
                         rd.PrizeName = "啊呜  手气不是时时有 下次再接再厉哦";
                         return rd;
                     }
-                    VipCouponMappingEntity entityVipCouponMapping = null;
-                    VipCouponMappingBLL bllVipCouponMapping = new VipCouponMappingBLL(this.CurrentUserInfo);
+                    //entityCoupon = DataTableToObject.ConvertToList<CouponEntity>(bllCoupon.GetCouponIdByCouponTypeID(prize.CouponTypeID).Tables[0]).FirstOrDefault();
+                    //if (entityCoupon == null)
+                    //{
+                    //    int intLocation = bllPrize.GetLocationByEventID(strEventId);
+                    //    rd.Location = intLocation;
+                    //    rd.PrizeId = "0";
+                    //    rd.PrizeName = "啊呜  手气不是时时有 下次再接再厉哦";
+                    //    return rd;
+                    //}
+                    //VipCouponMappingEntity entityVipCouponMapping = null;
+                    //VipCouponMappingBLL bllVipCouponMapping = new VipCouponMappingBLL(this.CurrentUserInfo);
 
-                    entityVipCouponMapping = new VipCouponMappingEntity()
-                    {
-                        VipCouponMapping = Guid.NewGuid().ToString(),
-                        VIPID = CurrentUserInfo.UserID,
-                        CouponID = entityCoupon.CouponID,
-                        CouponSourceId = "7D87E7E1-66AC-403B-9BB4-80AE4278F6A4"
-                    };
+                    //entityVipCouponMapping = new VipCouponMappingEntity()
+                    //{
+                    //    VipCouponMapping = Guid.NewGuid().ToString(),
+                    //    VIPID = CurrentUserInfo.UserID,
+                    //    CouponID = entityCoupon.CouponID,
+                    //    CouponSourceId = "7D87E7E1-66AC-403B-9BB4-80AE4278F6A4"
+                    //};
 
-                    bllVipCouponMapping.Create(entityVipCouponMapping);
-                    //更新CouponType的IsVoucher(被领用数量)
-                    CouponTypeBLL bllCouponType = new CouponTypeBLL(this.CurrentUserInfo);
-                    CouponTypeEntity entityCouponType = bllCouponType.GetByID(prize.CouponTypeID);
-                    entityCouponType.IsVoucher = entityCouponType.IsVoucher + 1;
-                    bllCouponType.Update(entityCouponType);
-                    ///更新优惠券有效期
-                    if (entityCouponType.ServiceLife != null && entityCouponType.ServiceLife > 0)
-                    {
-                        entityCoupon.BeginDate = DateTime.Now.Date;
-                        entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife - 1).ToShortDateString() + " 23:59:59.998");
+                    //bllVipCouponMapping.Create(entityVipCouponMapping);
+                    ////更新CouponType的IsVoucher(被领用数量)
+                    //CouponTypeBLL bllCouponType = new CouponTypeBLL(this.CurrentUserInfo);
+                    //CouponTypeEntity entityCouponType = bllCouponType.GetByID(prize.CouponTypeID);
+                    //entityCouponType.IsVoucher = entityCouponType.IsVoucher + 1;
+                    //bllCouponType.Update(entityCouponType);
+                    /////更新优惠券有效期
+                    //if (entityCouponType.ServiceLife != null && entityCouponType.ServiceLife > 0)
+                    //{
+                    //    entityCoupon.BeginDate = DateTime.Now.Date;
+                    //    entityCoupon.EndDate = Convert.ToDateTime(DateTime.Now.Date.AddDays((int)entityCouponType.ServiceLife - 1).ToShortDateString() + " 23:59:59.998");
 
-                        bllCoupon.Update(entityCoupon);
+                    //    bllCoupon.Update(entityCoupon);
 
-                    }
+                    //}
                 }
 
 

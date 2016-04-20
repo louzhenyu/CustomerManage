@@ -54,7 +54,9 @@ namespace JIT.CPOS.BS.DataAccess
         }
         public DataSet GetCTWLEventInteraction(string strObjectId)
         {
-            string strSql = string.Format("SELECT * FROM T_CTW_LEventInteraction  WHERE IsDelete=0 AND CAST(CTWEventId AS NVARCHAR(50))='{0}' Or LeventId='{0}'", strObjectId);
+            string strSql = string.Format(@"SELECT a.*,b.OnLineRedirectUrl FROM T_CTW_LEventInteraction  a
+                                            INNER JOIN dbo.T_CTW_LEvent b ON a.CTWEventId=b.CTWEventId
+                                            WHERE a.IsDelete=0 AND CAST(a.CTWEventId AS NVARCHAR(50))='{0}' Or a.LeventId='{0}'", strObjectId);
             return SQLHelper.ExecuteDataset(strSql);
         }
     }

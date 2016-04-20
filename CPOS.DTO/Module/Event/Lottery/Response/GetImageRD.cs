@@ -45,6 +45,9 @@ namespace JIT.CPOS.DTO.Module.Event.Lottery.Response
         public int IsCTW { get; set; }
         public string CTWEventId { get; set; }
         public string EventId { get; set; }
+
+        public string OnLineRedirectUrl { get; set; }
+
     }
     public class ButtonInfo
     {

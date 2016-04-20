@@ -61,13 +61,13 @@ namespace JIT.CPOS.BS.DataAccess
             strSql += string.Format(" WHERE a.isdelete=0 AND  a.[CTWEventId]='{0}'", strCTWEventId);
             return SQLHelper.ExecuteDataset(strSql);
         }
-        public DataSet GetMaterialTextInfo(string eventId)
+        public DataSet GetMaterialTextInfo(string strOnlineQRCodeId)
         {
             string sql = @"   	    select d.*,b.ReplyId,c.MappingId from WQRCodeManager  a
 	                    inner join WKeywordReply b on CONVERT(varchar(50), a.QRCodeId)=b.Keyword
 	                    inner join  WMenuMTextMapping c on b.ReplyId=c.MenuId
 	                    inner join WMaterialText d on c.TextId=d.TextId
-	                    where a.ObjectId = '" + eventId + "'";
+	                    where a.QRCodeId = '" + strOnlineQRCodeId + "'";
             var ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }
@@ -92,7 +92,10 @@ namespace JIT.CPOS.BS.DataAccess
                                             e.StartDate,
                                             e.EndDate,
                                             e.ActivityGroupId,
-                                            e.TemplateId
+                                            e.TemplateId,
+                                            e.OfflineRedirectUrl,
+                                            e.OnlineRedirectUrl,
+                                            e.OnlineQRCodeId
                                     FROM    T_CTW_LEvent e
                                             INNER JOIN T_CTW_LEventTheme t ON e.CTWEventId = t.CTWEventId
                                             INNER JOIN T_CTW_LEventInteraction i ON e.CTWEventId = i.CTWEventId

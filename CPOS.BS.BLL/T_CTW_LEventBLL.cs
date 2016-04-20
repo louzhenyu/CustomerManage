@@ -42,9 +42,9 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetLeventInfoByCTWEventId(strCTWEventId);
         }
-        public DataSet GetMaterialTextInfo(string strCTWEventId)
+        public DataSet GetMaterialTextInfo(string strOnlineQRCodeId)
         {
-            return this._currentDAO.GetMaterialTextInfo(strCTWEventId);
+            return this._currentDAO.GetMaterialTextInfo(strOnlineQRCodeId);
         }
         /// <summary>
         /// 获取商户所有主题活动

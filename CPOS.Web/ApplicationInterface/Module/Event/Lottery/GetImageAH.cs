@@ -27,6 +27,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
 
             string strEventId = pRequest.Parameters.EventId;
             string strCTWEventId = string.Empty;
+            string strOnLineRedirectUrl = string.Empty;
 
             rd.EventId = strEventId;
             rd.IsCTW = 0;
@@ -38,6 +39,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                 {
                     strEventId = ds.Tables[0].Rows[0]["LeventId"].ToString();
                     strCTWEventId=ds.Tables[0].Rows[0]["CTWEventId"].ToString();
+                    strOnLineRedirectUrl = ds.Tables[0].Rows[0]["OnLineRedirectUrl"].ToString();
                     ContactEventBLL bllContact = new ContactEventBLL(this.CurrentUserInfo);
                     var contactList = bllContact.QueryByEntity(new ContactEventEntity() { EventId = strCTWEventId, IsCTW = 1, IsDelete = 0 }, null).ToList();
                     if(contactList.Count>0)
@@ -54,7 +56,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         {
                             ButtonInfo share = new ButtonInfo();
                             DataSet dsSpreadSetting = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Share");
-                            if (dsSpreadSetting != null && dsSpreadSetting.Tables.Count > 0)
+                            if (dsSpreadSetting != null && dsSpreadSetting.Tables.Count > 0 && dsSpreadSetting.Tables[0].Rows.Count > 0)
                             {
                                 share.Title = dsSpreadSetting.Tables[0].Rows[0]["Title"].ToString(); 
                                 share.Summary = dsSpreadSetting.Tables[0].Rows[0]["Summary"].ToString();
@@ -68,7 +70,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         if (contactList.Where(a => a.ContactTypeCode == "Focus").Count() > 0)
                         {
                             DataSet dsSpreadSetting = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Focus");
-                            if (dsSpreadSetting != null && dsSpreadSetting.Tables.Count > 0)
+                            if (dsSpreadSetting != null && dsSpreadSetting.Tables.Count > 0 && dsSpreadSetting.Tables[0].Rows.Count > 0)
                             {
                                 ButtonInfo focus = new ButtonInfo();
 
@@ -81,6 +83,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     rd.IsCTW = 1;
                     rd.CTWEventId = strCTWEventId;
                     rd.EventId = strEventId;
+                    rd.OnLineRedirectUrl = strOnLineRedirectUrl;
 
                 }
             //}

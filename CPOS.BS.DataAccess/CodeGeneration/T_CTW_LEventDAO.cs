@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/4/6 20:31:13
+ * Create On	:2016/4/20 11:28:20
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [T_CTW_LEvent](");
-            strSql.Append("[TemplateId],[Name],[Desc],[StartDate],[EndDate],[ActivityGroupId],[InteractionType],[ImageURL],[OnlineQRCodeId],[OfflineQRCodeId],[Status],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[CustomerId],[IsDelete],[CTWEventId])");
+            strSql.Append("[TemplateId],[Name],[Desc],[StartDate],[EndDate],[ActivityGroupId],[InteractionType],[ImageURL],[OnlineQRCodeId],[OfflineQRCodeId],[Status],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[CustomerId],[IsDelete],[OfflineRedirectUrl],[OnlineRedirectUrl],[CTWEventId])");
             strSql.Append(" values (");
-            strSql.Append("@TemplateId,@Name,@Desc,@StartDate,@EndDate,@ActivityGroupId,@InteractionType,@ImageURL,@OnlineQRCodeId,@OfflineQRCodeId,@Status,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@CustomerId,@IsDelete,@CTWEventId)");            
+            strSql.Append("@TemplateId,@Name,@Desc,@StartDate,@EndDate,@ActivityGroupId,@InteractionType,@ImageURL,@OnlineQRCodeId,@OfflineQRCodeId,@Status,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@CustomerId,@IsDelete,@OfflineRedirectUrl,@OnlineRedirectUrl,@CTWEventId)");            
 
 			Guid? pkGuid;
 			if (pEntity.CTWEventId == null)
@@ -100,7 +100,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@EndDate",SqlDbType.DateTime),
 					new SqlParameter("@ActivityGroupId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@InteractionType",SqlDbType.Int),
-					new SqlParameter("@ImageURL",SqlDbType.VarChar),
+					new SqlParameter("@ImageURL",SqlDbType.NVarChar),
 					new SqlParameter("@OnlineQRCodeId",SqlDbType.VarChar),
 					new SqlParameter("@OfflineQRCodeId",SqlDbType.VarChar),
 					new SqlParameter("@Status",SqlDbType.Int),
@@ -110,6 +110,8 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@CustomerId",SqlDbType.VarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
+					new SqlParameter("@OfflineRedirectUrl",SqlDbType.NVarChar),
+					new SqlParameter("@OnlineRedirectUrl",SqlDbType.NVarChar),
 					new SqlParameter("@CTWEventId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.TemplateId;
@@ -129,7 +131,9 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[14].Value = pEntity.LastUpdateBy;
 			parameters[15].Value = pEntity.CustomerId;
 			parameters[16].Value = pEntity.IsDelete;
-			parameters[17].Value = pkGuid;
+			parameters[17].Value = pEntity.OffLineRedirectUrl;
+			parameters[18].Value = pEntity.OnLineRedirectUrl;
+			parameters[19].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -250,7 +254,11 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.CustomerId!=null)
-                strSql.Append( "[CustomerId]=@CustomerId");
+                strSql.Append( "[CustomerId]=@CustomerId,");
+            if (pIsUpdateNullField || pEntity.OffLineRedirectUrl!=null)
+                strSql.Append( "[OfflineRedirectUrl]=@OfflineRedirectUrl,");
+            if (pIsUpdateNullField || pEntity.OnLineRedirectUrl!=null)
+                strSql.Append( "[OnlineRedirectUrl]=@OnlineRedirectUrl");
             strSql.Append(" where CTWEventId=@CTWEventId ");
             SqlParameter[] parameters = 
             {
@@ -261,13 +269,15 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@EndDate",SqlDbType.DateTime),
 					new SqlParameter("@ActivityGroupId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@InteractionType",SqlDbType.Int),
-					new SqlParameter("@ImageURL",SqlDbType.VarChar),
+					new SqlParameter("@ImageURL",SqlDbType.NVarChar),
 					new SqlParameter("@OnlineQRCodeId",SqlDbType.VarChar),
 					new SqlParameter("@OfflineQRCodeId",SqlDbType.VarChar),
 					new SqlParameter("@Status",SqlDbType.Int),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@CustomerId",SqlDbType.VarChar),
+					new SqlParameter("@OfflineRedirectUrl",SqlDbType.NVarChar),
+					new SqlParameter("@OnlineRedirectUrl",SqlDbType.NVarChar),
 					new SqlParameter("@CTWEventId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.TemplateId;
@@ -284,7 +294,9 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[11].Value = pEntity.LastUpdateTime;
 			parameters[12].Value = pEntity.LastUpdateBy;
 			parameters[13].Value = pEntity.CustomerId;
-			parameters[14].Value = pEntity.CTWEventId;
+			parameters[14].Value = pEntity.OffLineRedirectUrl;
+			parameters[15].Value = pEntity.OnLineRedirectUrl;
+			parameters[16].Value = pEntity.CTWEventId;
 
             //执行语句
             int result = 0;
@@ -606,6 +618,10 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
             if (pQueryEntity.IsDelete!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
+            if (pQueryEntity.OffLineRedirectUrl!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "OfflineRedirectUrl", Value = pQueryEntity.OffLineRedirectUrl });
+            if (pQueryEntity.OnLineRedirectUrl!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "OnlineRedirectUrl", Value = pQueryEntity.OnLineRedirectUrl });
 
             return lstWhereCondition.ToArray();
         }
@@ -692,6 +708,14 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsDelete"] != DBNull.Value)
 			{
 				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
+			}
+			if (pReader["OfflineRedirectUrl"] != DBNull.Value)
+			{
+				pInstance.OffLineRedirectUrl =  Convert.ToString(pReader["OfflineRedirectUrl"]);
+			}
+			if (pReader["OnlineRedirectUrl"] != DBNull.Value)
+			{
+				pInstance.OnLineRedirectUrl =  Convert.ToString(pReader["OnlineRedirectUrl"]);
 			}
 
         }

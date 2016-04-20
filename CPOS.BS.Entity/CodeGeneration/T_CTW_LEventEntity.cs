@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/4/6 20:31:13
+ * Create On	:2016/4/20 11:28:19
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -126,6 +126,16 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public Int32? IsDelete { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String OffLineRedirectUrl { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String OnLineRedirectUrl { get; set; }
 
 
         #endregion

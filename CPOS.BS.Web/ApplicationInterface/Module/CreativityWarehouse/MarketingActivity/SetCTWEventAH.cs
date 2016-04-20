@@ -49,9 +49,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             {
                 throw new APIException("微信公众号未授权");
             }
+            
             var rd = new SetCTWEventRD();
             
             var para = pRequest.Parameters;
+            //string ss = "http://bs.test.chainclouds.com/Framework/Javascript/Other/kindeditor/attached/image/20160420/20160420144313_8917.jpg";
+            //string dd = string.Empty;
+            //CreateFocusQRCode(para, ss, wapentity, out dd);
 
             strCTWEventId = para.CTWEventId;
             string strThemeId = string.Empty;
@@ -137,7 +141,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             rd.OfflineQRCodeUrl = strOfflineQRCodeUrl;
             rd.OnlineQRCodeUrl=strOnlineQRCodeUrl;
             rd.OfflineRedirectUrl = strOfflineRedirectUrl;
-            rd.OnlineRedirectUrl = strOnlineRedirectUrl;
+            rd.OnlineRedirectUrl = strOnlineRedirectUrl;//strFocesQRCodeUrl;
 
             if (entityCustomerEvent != null)
             {   //活动主表
@@ -150,6 +154,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 entityCustomerEvent.EndDate = Convert.ToDateTime(strEndDate);
                 entityCustomerEvent.OnlineQRCodeId = strOnlineQRCodeId;
                 entityCustomerEvent.OfflineQRCodeId = strOfflineQRCodeId;
+                entityCustomerEvent.OffLineRedirectUrl = strOfflineRedirectUrl;
+                entityCustomerEvent.OnLineRedirectUrl = strOnlineRedirectUrl;
                 bllCustomerEvent.Update(entityCustomerEvent);
 
             }
@@ -169,7 +175,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     StartDate = Convert.ToDateTime(strStartDate),
                     EndDate = Convert.ToDateTime(strEndDate),
                     OfflineQRCodeId=strOfflineQRCodeId,
-                    OnlineQRCodeId=strOnlineQRCodeId
+                    OnlineQRCodeId=strOnlineQRCodeId,
+                    OffLineRedirectUrl = strOfflineRedirectUrl,
+                    OnLineRedirectUrl = strOnlineRedirectUrl
 
                 };
                 bllCustomerEvent.Create(entityCustomerEvent);
@@ -261,7 +269,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     eventEntity.PersonCount = para.GameEventInfo.PersonCount;
                     eventEntity.PointsLottery = para.GameEventInfo.PointsLottery;
                     eventEntity.LotteryNum = para.GameEventInfo.LotteryNum;
-                    eventEntity.EventStatus = 10;
+
+                    if (DateTime.Compare(Convert.ToDateTime(para.GameEventInfo.BeginTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <= 0 && DateTime.Compare(Convert.ToDateTime(para.GameEventInfo.EndTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) >= 0)
+                    {
+                        eventEntity.EventStatus = 20;//10=未开始,20=运行中,30=暂停,40=结束
+
+                    }
+                    else if (DateTime.Compare(Convert.ToDateTime(para.GameEventInfo.BeginTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) > 0)
+                    {
+                        eventEntity.EventStatus = 10;//10=未开始,20=运行中,30=暂停,40=结束
+
+                    }
                     eventEntity.IsCTW = 1;
                     eventEntity.CustomerId = loggingSessionInfo.ClientID;
                     bllGameEvent.Create(eventEntity);
@@ -428,9 +446,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                 if (sItem.SpreadType == "Focus" && !string.IsNullOrEmpty(sItem.LeadPageQRCodeImageUrl))
                 {
-                    //CreateFocusQRCode(para, wapentity, out QRCodeUrl);
+                    //CreateFocusQRCode(para, sItem.LeadPageQRCodeImageUrl, wapentity, out QRCodeUrl);
+                    //string currentDomain = "http://" + HttpContext.Current.Request.Url.Host;//当前项目域名
+
+                    //string logoImage = "~" + sItem.LeadPageQRCodeImageUrl.Substring(currentDomain.Length);
                     imageEntity = new ObjectImagesEntity();
-                    imageEntity.ImageURL = QRCodeUrl;// sItem.LeadPageQRCodeImageUrl;
+                    imageEntity.ImageURL = sItem.LeadPageQRCodeImageUrl;
                     imageEntity.ObjectId = "";
                     imageEntity.CreateBy = loggingSessionInfo.UserID;
                     imageEntity.IsDelete = 0;
@@ -473,7 +494,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             {
                 bllContactEvent.DeleteContact(para.CTWEventId);
             }
-            if (para.ContactPrizeList.Count>0)
+            if (para.ContactPrizeList!=null && para.ContactPrizeList.Count > 0)
             {
                 foreach (var cItem in para.ContactPrizeList)
                 {
@@ -577,7 +598,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             string URL = string.Empty;
 
             #region 系统模块
-            //var page = pageBll.QueryByEntity(new SysPageEntity() { CustomerID = loggingSessionInfo.ClientID,PageKey=strPageKey },null).SingleOrDefault();
             var page = pageBll.GetPageByCustomerIdAndPageKey(loggingSessionInfo.ClientID, strPageKey).SingleOrDefault();
             if (page==null)
                 throw new APIException("未找到Page信息" ) { ErrorCode = 341 };
@@ -668,7 +688,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             string currentDomain ="http://"+HttpContext.Current.Request.Url.Host;//当前项目域名
 
             QRCodeUrl=Utils.GenerateQRCode(URL, currentDomain, sourcePath, targetPath);
-            ////二维码中奖加图片
+            //////二维码中奖加图片
             //string strQRCodeFilePath = targetPath + QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
             //Image img = Image.FromFile(strQRCodeFilePath);
             //System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
@@ -754,6 +774,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                     , null).FirstOrDefault();
                 var wxCode = CretaeWxCode();
+
+
+
 
                 var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);
 
@@ -841,17 +864,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         /// <param name="wapentity"></param>
         /// <param name="strQRCode"></param>
         /// <param name="QRCodeUrl"></param>
-        public void CreateFocusQRCode(SetCTWEventRP para, WApplicationInterfaceEntity wapentity,out string QRCodeUrl)
+        public void CreateFocusQRCode(SetCTWEventRP para, string strLeadPageQRCodeImageUrl, WApplicationInterfaceEntity wapentity, out string QRCodeUrl)
         {
             
             QRCodeUrl = string.Empty;
 
 
             var wqrCodeManagerEntity = new WQRCodeManagerBLL(loggingSessionInfo).QueryByEntity(new WQRCodeManagerEntity() { ObjectId = strCTWEventId }, null).FirstOrDefault();
-            Guid QRCodeId;
+            
             if (wqrCodeManagerEntity == null)
             {
-                #region 生成二维码
+                //#region 生成二维码
 
                 var wqrentity = new WQRCodeTypeBLL(loggingSessionInfo).QueryByEntity(
 
@@ -859,66 +882,98 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                     , null).FirstOrDefault();
                 var wxCode = CretaeWxCode();
-                if (!string.IsNullOrEmpty(wxCode.ImageUrl))
-                {
+                string targetPath = HttpContext.Current.Server.MapPath("/QRCodeImage/");
+                string currentDomain = "http://bs.test.chainclouds.com";// "http://" + HttpContext.Current.Request.Url.Host;//当前项目域名
+                QRCodeUrl = "http://bs.test.chainclouds.com/QRCodeImage/dfaacf4a508c4501aea8fa61995b681a.jpg";// wxCode.ImageUrl;
+                string strQRCodeFilePath = targetPath + QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
+                HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(QRCodeUrl);
+                WebResponse response_qrcode = null;
+                Stream qrcode_stream = null;
+                response_qrcode = request_qrcode.GetResponse();
+                qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
 
+                Image bgImage = Image.FromStream(qrcode_stream);
+                Guid gCTWEventId = new Guid(para.CTWEventId);
 
-                    string targetPath = HttpContext.Current.Server.MapPath("/QRCodeImage/");
-                    ////二维码中奖加图片
-                    string currentDomain = "http://" + HttpContext.Current.Request.Url.Host;//当前项目域名
-
-                    string strQRCodeFilePath = targetPath + QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
-
-                    HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(wxCode.ImageUrl);
-                    WebResponse response_qrcode = null;
-                    Stream qrcode_stream = null;
-                    response_qrcode = request_qrcode.GetResponse();
-                    qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
-
-                    Image bgImage= Image.FromStream(qrcode_stream);
-                    Guid gCTWEventId = new Guid(para.CTWEventId);
-
-                    var logoImageObject = para.SpreadSettingList.Where(a => a.SpreadType == "Focus" && a.CTWEventId == gCTWEventId).SingleOrDefault();
-                    string logoImage = "~" + logoImageObject.LeadPageQRCodeImageUrl.Substring(currentDomain.Length);
+                string logoImage = "~" + strLeadPageQRCodeImageUrl.Substring(currentDomain.Length);
 
 
 
-                    System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
-                    Utils.CombinImage(bgImage, HttpContext.Current.Server.MapPath(logoImage)).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
-                    Image ii = Image.FromStream(MStream1);
-                    bgImage.Dispose();
-                    ii.Save(strQRCodeFilePath, System.Drawing.Imaging.ImageFormat.Png);
-                    MStream1.Dispose();
+                System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
+                Utils.CombinImage(bgImage, HttpContext.Current.Server.MapPath(logoImage)).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
+                Image ii = Image.FromStream(MStream1);
+                bgImage.Dispose();
+                ii.Save(strQRCodeFilePath, System.Drawing.Imaging.ImageFormat.Png);
+                MStream1.Dispose();
+                //try
+                //{
 
-                    var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);
 
-                    QRCodeId = Guid.NewGuid();
+                //    if (!string.IsNullOrEmpty(wxCode.ImageUrl))
+                //    {
 
-                    if (!string.IsNullOrEmpty(wxCode.ImageUrl))
-                    {
-                        wqrCodeManagerEntity = new WQRCodeManagerEntity()
-                        {
-                            QRCodeId = QRCodeId,
-                            QRCode = wxCode.MaxWQRCod.ToString(),
-                            QRCodeTypeId = wqrentity.QRCodeTypeId,
-                            IsUse = 1,
-                            ObjectId = strCTWEventId,
-                            CreateBy = loggingSessionInfo.UserID,
-                            ApplicationId = wapentity.ApplicationId,
-                            IsDelete = 0,
-                            ImageUrl = wxCode.ImageUrl,
-                            CustomerId = loggingSessionInfo.ClientID
-                        };
-                        WQRCodeManagerbll.Create(wqrCodeManagerEntity);
-                    }
-                    else
-                    {
-                        throw new APIException(wxCode.msg) { ErrorCode = 342 };
 
-                    }
-                #endregion
-                    QRCodeUrl = strCTWEventId;
-                }
+                //        string targetPath = HttpContext.Current.Server.MapPath("/QRCodeImage/");
+                //        ////二维码中奖加图片
+                //        string currentDomain = "http://" + HttpContext.Current.Request.Url.Host;//当前项目域名
+
+                //        string strQRCodeFilePath = targetPath + QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
+
+                //        HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(wxCode.ImageUrl);
+                //        WebResponse response_qrcode = null;
+                //        Stream qrcode_stream = null;
+                //        response_qrcode = request_qrcode.GetResponse();
+                //        qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
+
+                //        Image bgImage = Image.FromStream(qrcode_stream);
+                //        Guid gCTWEventId = new Guid(para.CTWEventId);
+
+                //        string logoImage = "~" + strLeadPageQRCodeImageUrl.Substring(currentDomain.Length);
+
+
+
+                //        System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
+                //        Utils.CombinImage(bgImage, HttpContext.Current.Server.MapPath(logoImage)).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
+                //        Image ii = Image.FromStream(MStream1);
+                //        bgImage.Dispose();
+                //        ii.Save(strQRCodeFilePath, System.Drawing.Imaging.ImageFormat.Png);
+                //        MStream1.Dispose();
+
+                //        var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);
+
+                //        QRCodeId = Guid.NewGuid();
+
+                //        if (!string.IsNullOrEmpty(wxCode.ImageUrl))
+                //        {
+                //            wqrCodeManagerEntity = new WQRCodeManagerEntity()
+                //            {
+                //                QRCodeId = QRCodeId,
+                //                QRCode = wxCode.MaxWQRCod.ToString(),
+                //                QRCodeTypeId = wqrentity.QRCodeTypeId,
+                //                IsUse = 1,
+                //                ObjectId = strCTWEventId,
+                //                CreateBy = loggingSessionInfo.UserID,
+                //                ApplicationId = wapentity.ApplicationId,
+                //                IsDelete = 0,
+                //                ImageUrl = wxCode.ImageUrl,
+                //                CustomerId = loggingSessionInfo.ClientID
+                //            };
+                //            WQRCodeManagerbll.Create(wqrCodeManagerEntity);
+                //        }
+                //        else
+                //        {
+                //            throw new APIException(wxCode.msg) { ErrorCode = 342 };
+
+                //        }
+                //#endregion
+                //        QRCodeUrl = strCTWEventId;
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+
+                //    QRCodeUrl = ex.ToString();
+                //}
             }
         }
         #region new 生成活动二维码

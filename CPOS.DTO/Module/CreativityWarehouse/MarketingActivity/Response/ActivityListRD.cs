@@ -76,6 +76,10 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingActivity.Response
         public int InteractionType { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
+        public string OnLineRedirectUrl { get; set; }
+        public string OffLineRedirectUrl { get; set; }
+
+
     }
     /// <summary>
     /// 活动信息
