@@ -71,6 +71,8 @@
 
     <link href="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/Resources/css/ext-all-gray.css"%>" rel="stylesheet" type="text/css" />
     <link href="<%=StaticUrl+"/Lib/Css/jit-all.css"%>" rel="stylesheet" type="text/css" />
+    
+	<script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/ext-all.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Lib/Javascript/Ext4.1.0/locale/ext-lang-zh_CN.js"%>" type="text/javascript"></script>
     <script src="<%=StaticUrl+"/Lib/Javascript/Jit/jit-all-dev.js"%>" type="text/javascript"></script>
@@ -99,7 +101,6 @@
         }
     
     </script>
-	<script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 
 </head>

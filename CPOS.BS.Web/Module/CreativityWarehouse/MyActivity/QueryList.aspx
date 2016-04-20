@@ -130,7 +130,7 @@
                 您的活动即将发布，发布后，您的活动将无法进行界面和奖励的修改。
                     </div>
                 <div class="btnWrap" id="Div9" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
-      				<a class="easyui-linkbutton commonBtn saveBtn ReleaseSuccessbtn" onclick="javascript:$('#winReleaseSuccess').window('close')" >确定</a>
+      				<a class="easyui-linkbutton commonBtn saveBtn ReleaseSuccessbtn" >确定</a>
       			</div>
                </div>
         </div>
@@ -152,11 +152,11 @@
                     <#}#>
                 </div>
             </div>
-            <div class="ActivityOpeartion"><div class="Opeartiondesc"><div class="viewdata" data-startdate="<#=_data.StartDate #>" data-enddate="<#=_data.EndDate #>" data-interactiontype="<#=_data.InteractionType #>" data-eventid="<#= _data.CTWEventId #>" data-id="<#=_data.LeventId #>">查看活动数据</div>
+            <div class="ActivityOpeartion"><div class="Opeartiondesc"><div class="viewdata" data-startdate="<#=_data.StartDate #>" data-enddate="<#=_data.EndDate #>" data-interactiontype="<#=_data.InteractionType #>" data-status="<#=_data.Status #>" data-eventid="<#= _data.CTWEventId #>" data-id="<#=_data.LeventId #>">查看活动数据</div>
                <# if(_data.EventInfo){#>
                 <div class="date"><#=(_data.StartDate.substring(0,_data.StartDate.indexOf(" "))+"-"+_data.EndDate.substring(5,_data.EndDate.indexOf(" "))) #></div>
                  <#} #>
-                                           </div><div class="releasebtn <#=_data.Status=="10"?"":"view" #>" data-onfflineqrcode="<#=_data.QRCodeImageUrlForUnit #>" data-onlineqrcode="<#=_data.QRCodeImageUrlForOnline #>" data-eventid="<#= _data.CTWEventId #>" data-status="<#=_data.Status #>"  ><#=_data.Status=="10"?"发布":"预览" #></div></div>
+                                           </div><div class="releasebtn <#=_data.Status=="10"?"":"view" #>" data-onfflineqrcode="<#=_data.QRCodeImageUrlForUnit #>" data-onlineqrcode="<#=_data.QRCodeImageUrlForOnline #>" data-onlineredirecturl="<#=_data.OnLineRedirectUrl #>" data-offlineredirecturl="<#=_data.OffLineRedirectUrl #>" data-eventid="<#= _data.CTWEventId #>" data-status="<#=_data.Status #>"  ><#=_data.Status=="10"?"发布":"预览" #></div></div>
         </div>
           <#} #>
 
@@ -236,7 +236,12 @@
 <script id="tpl_gameEventDataDetail" type="text/html">
     <div class="Activitydesc Activitydatadesc">
               <div class="EventDataOperation">
-                  <div class="EDO_opt"><a href="javascript:;" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" class="commonBtn defer">活动延期</a><a href="javascript:;" class="commonBtn endbtn">结束活动</a><a href="javascript:;" class="commonBtn returnbtn">返回</a></div>
+                  <div class="EDO_opt">
+                      <# if(Status!="40"){#>
+                        <a href="javascript:;" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" class="commonBtn defer">活动延期</a>
+                      <a href="javascript:;" class="commonBtn endbtn">结束活动</a>
+                      <#}#>
+                      <a href="javascript:;" class="commonBtn returnbtn">返回</a></div>
                   <div class="EDO_data">
                       <div class="prizecount">
                           <div class="prizedata">
@@ -304,7 +309,13 @@
 <script id="tpl_EventDataDetail" type="text/html">
     <div class="Activitydesc Activitydatadesc">
               <div class="EventDataOperation">
-                  <div class="EDO_opt"><a href="javascript:;" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  class="commonBtn defer">活动延期</a><a href="javascript:;" class="commonBtn endbtn">结束活动</a><a href="javascript:;" class="commonBtn returnbtn">返回</a></div>
+                  <div class="EDO_opt">
+                      <# if(Status!="40"){#>
+                        <a href="javascript:;" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" class="commonBtn defer">活动延期</a>
+                      <a href="javascript:;" class="commonBtn endbtn">结束活动</a>
+                      <#}#>
+                      
+                      <a href="javascript:;" class="commonBtn returnbtn">返回</a></div>
                   <div class="EDO_data">
                       <div class="prizecount">
                           <div class="Sales">

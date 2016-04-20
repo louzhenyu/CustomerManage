@@ -113,6 +113,7 @@
                 that.loadData.details.EventId = $(this).data("id");
                 that.loadData.details.InteractionType = $(this).data("interactiontype");
                 that.loadData.details.CTWEventId = $(this).data("eventid");
+                that.loadData.details.Status = $(this).data("status");
                 that.loadData.datedetails.startdate = $(this).data("startdate");
                 that.loadData.datedetails.enddate = $(this).data("enddate");
                 $.util.isLoading();
@@ -276,6 +277,8 @@
             data.CTWEventId = that.loadData.details.CTWEventId;
             data.startdate = that.loadData.datedetails.startdate;
             data.enddate = that.loadData.datedetails.enddate;
+            data.Status = that.loadData.details.Status;
+
             if (that.loadData.details.InteractionType == 1) {
                 that.loadData.details.EventType = "Game";
             } else {
@@ -665,7 +668,7 @@
                         {
                             field: 'item_id', title: '操作', width: 50, align: 'left', resizable: false,
                             formatter: function (value, row, index) {
-                                return "<a class='viewdesc' data-interactiontype='" + row.InteractionType + "' data-id='" + value + "' href='javascript:void(0);' >查看详情</a>";
+                                return "<a class='viewdesc' data-interactiontype='" + row.InteractionType + "' data-status='" + row.Status + "' data-id='" + value + "' href='javascript:void(0);' >查看详情</a>";
 
                             }
                         }
@@ -1336,7 +1339,8 @@
                 EventId: "",
                 InteractionType: "",
                 EventType: "",
-                CTWEventId:""
+                CTWEventId: "",
+                Status: ''
             },
             datedetails: {
                 startdate: '',

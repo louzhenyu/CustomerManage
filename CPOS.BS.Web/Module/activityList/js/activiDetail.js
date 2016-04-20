@@ -845,13 +845,15 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						        debugger;
 						        if (data) {
 						            data = data.CoverInfo;
-						            if (data.IsShow||data.IsShow == "0") {
-						                $(".EnableCover").removeClass("on");
-                                        $(".checkvalue").val(0);
-						            } else {
-						                $(".EnableCover").addClass("on");
-						                $(".checkvalue").val(1);
-
+						            if(data.IsShow)
+						            {
+						                if (data.IsShow == "1") {
+						                    $(".EnableCover").addClass("on");
+						                    $(".checkvalue").val(1);
+						                } else {
+						                    $(".EnableCover").removeClass("on");
+						                    $(".checkvalue").val(0);
+						                }
 						            }
 
 						            $("#QRegular").val(data.RuleText);

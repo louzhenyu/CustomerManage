@@ -106,6 +106,7 @@
                 that.loadData.details.EventId = $(this).data("id");
                 that.loadData.details.InteractionType = $(this).data("interactiontype");
                 that.loadData.details.CTWEventId = $(this).data("eventid");
+                that.loadData.details.Status = $(this).data("status");
                 that.loadData.datedetails.startdate = $(this).data("startdate");
                 that.loadData.datedetails.enddate = $(this).data("enddate");
                 $.util.isLoading();
@@ -233,6 +234,9 @@
 
                 var OnfflineQRCodeId = $(this).data("onfflineqrcode");
                 var OnlineQRCodeId = $(this).data("onlineqrcode");
+
+                var OnLineRedirectUrl = $(this).data("onlineredirecturl");
+                var OffLineRedirectUrl = $(this).data("offlineredirecturl");
                 var status = $(this).data("status");
 
                 that.loadData.details.CTWEventId = $(this).data("eventid");
@@ -248,6 +252,8 @@
                 $("#winrelease .OnlineQRCodeId .downaddress").attr("href", OnlineQRCodeId);
                 $("#winrelease .OnfflineQRCodeId .codeimg img").attr("src", OnfflineQRCodeId);
                 $("#winrelease .OnfflineQRCodeId .downaddress").attr("href", OnfflineQRCodeId);
+                $("#winrelease .OnlineQRCodeId .addressinput").val(OnLineRedirectUrl);
+                $("#winrelease .OnfflineQRCodeId .addressinput").val(OffLineRedirectUrl);
                 $("#winrelease .addressinput").val("");
 
 
@@ -284,15 +290,19 @@
             });
             
 
-            //活动发布
+            //打开活动发布
             $("#winrelease").on("click", ".release", function () {
-                that.ChangeCTWEventStatus(function () {
                     $('#winReleaseSuccess').window({
                         title: "直接发布", width: 472, height: 274, top: ($(window).height() - 274) * 0.5,
                         left: ($(window).width() - 472) * 0.5
                     });
                     $('#winReleaseSuccess').window('open');
-                    that.loadPageData();
+            });
+
+            //活动发布
+            $("#winReleaseSuccess").on("click", ".ReleaseSuccessbtn", function () {
+                that.ChangeCTWEventStatus(function () {
+                    window.location.href = window.location.href;
                 });
             });
             
@@ -371,6 +381,7 @@
             data.EventId = that.loadData.details.EventId;
             data.startdate = that.loadData.datedetails.startdate;
             data.enddate = that.loadData.datedetails.enddate;
+            data.Status = that.loadData.details.Status;
 
             $('#windesc').window({
                 title: "活动详情", width: 1220, height: 600, top: 20,
@@ -1461,7 +1472,8 @@
                 EventId: "",
                 InteractionType: "",
                 EventType: "",
-                CTWEventId: ""
+                CTWEventId: "",
+                Status:''
             },
             datedetails: {
                 startdate: '',
