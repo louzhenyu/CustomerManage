@@ -1819,7 +1819,7 @@ debugger;
                     pager:false, //分页定位不显示
                     hideControlOnEnd:true,
                     infiniteLoop:true,
-                    responsive:true,
+                    responsive:false,
                     slideWidth: 230,
                     minSlides: 1,
                     maxSlides: 3,
