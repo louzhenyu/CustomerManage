@@ -74,8 +74,8 @@ namespace JIT.CPOS.BS.DataAccess
         {
             var sqlWhere = new StringBuilder();
 
-          
-            sqlWhere.Append(" and 1 = 1 ");
+
+            sqlWhere.Append(" and 1 = 1 and IsCTW=0");
 
             if (!string.IsNullOrEmpty(beginFlag.ToString()))
             {
