@@ -82,7 +82,7 @@ define(function($) {
     <div class="showPanel" style="display: none"> \
         <div class="optionBtn">\
         <span class="listName"></span>  \
-        <div class="commonBtn icon icon_add r w50">新增</div> \
+        <div class="commonBtn icon icon_add r"  style="width: 40px; padding-left: 30px;">新增</div> \
         </div><!--optionBrn-->\
         <div class="tableWap"> \
         <div id="prizeListGrid"></div> \

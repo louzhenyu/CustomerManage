@@ -7,6 +7,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
     KE = KindEditor;
     var page = {
         template: temp,
+        //salesObj: salesPromtion,//促销对象的操作
         elems: {
             sectionPage:$("#section"),
             navigation:$(".contentArea_vipquery .navigation"),
@@ -180,6 +181,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
         } ,
     init: function () {
         this.initEvent();
+        //this.salesObj.init(1213);
         debugger;
         var templateId= $.util.getUrlParam("TemplateId");
         var CTWEventId=$.util.getUrlParam("CTWEventId");
@@ -1505,7 +1507,8 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
             $('#win1').window({title:"添加优惠券",width:$(window).width(),height:$(window).height(),top:top});
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent1').layout('remove','center');
-            var str='<iframe id="addCouponIframe" src="/module/couponManage/addCoupon.aspx?couponType"'+type+' width="100%" height="100%"></iframe>';
+            var href= "/module/couponManage/addCoupon.aspx?couponType="+type;
+            var str='<iframe id="addCouponIframe" src="'+href+'" width="100%" height="100%"></iframe>';
             var html=that.render(str);
             var options = {
                 region: 'center',
@@ -1524,7 +1527,6 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 $("#addCouponIframe").contents().find(".contentArea_vipquery").find(".submitBtn").hide();
                 $("#addCouponIframe").contents().find(".commonHeader").hide();
                 $("#addCouponIframe").contents().find(".leftsead").hide();
-                $("#addCouponIframe").contents().find("#simpleQuery").find("[data-coupontype="+type+"].listBtn").trigger("click");
                 $("#addCouponIframe").contents().find(".kf_qycn_com_cckf_icon").hide()
 
             });
@@ -2110,7 +2112,16 @@ debugger;
                 }
                 self.loadSetPageData(eventInfo);
                 self.loadGeneralizePageData(loadData.CustomerCTWEventInfo.SpreadSettingList,loadData.CustomerCTWEventInfo.MaterialText);
-
+                var index = $("#slider").find(".slide.on").data("index");
+                var list =self.TemplateThemeList[index].EventInteractionList;
+                if(list&&list.length>0){
+                    $.each(list,function(index,filed){
+                        if(InteractionType==filed.InteractionType){
+                            eventInfo = list[index];
+                        }
+                    })
+                }
+                self.setDefaultImg(eventInfo)
             } else{
                 self.loadGeneralizePageData(loadData.TemplateSpreadSettingList);
                 self.setDefaultImg(null,loadData.TemplateSpreadSettingList)

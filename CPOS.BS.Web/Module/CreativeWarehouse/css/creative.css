@@ -65,7 +65,7 @@
 .radio .numberbox { float: none; margin-left: 5px; margin-right: 5px; padding: 0; cursor: pointer;}
 .listType{ width: 100%; height: 45px;}
 .listType span{cursor:pointer; width:35px; border: 1px solid #e1e7ea; height: 35px;margin-left: 8px; float:left; text-align: center; line-height: 35px; font-size: 14px;}
-.phonePanel{position:relative;overflow:hidden; background: url("../images/pageBg.png") no-repeat center center; height: 500px; width: 320px; }
+.phonePanel{position:relative;overflow:hidden; background: url("../images/pageBg.png") no-repeat center center; height: 500px; width: 320px; background-size: cover;}
 .phonePanel .draggable{position: absolute; left:15px; top: 15px; z-index: 99; width: 62px; height: 40px;text-align: left;}
 .action{ position: absolute; width: 100%; bottom: 66px; margin: 0 auto;}
 .spreadPanel .action div{ margin: 0 auto; position:relative; width: 210px; height: auto}
@@ -158,3 +158,7 @@
 .bx-wrapper{ width:642px; float: left;padding-top: 8px;}
 .tableWap .textbox.numberbox{ float: left;}
 .tableWap .datagrid{ border:1px solid #e1e7ea;}
+
+
+.addSales{ width: 532px; height:208px;}
+.addSales .explain { line-height: 30px; white-space:nowrap; padding-left:10px; }

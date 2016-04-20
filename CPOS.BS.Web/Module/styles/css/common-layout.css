@@ -99,7 +99,7 @@ box-shadow:inset 0 1px 3px rgba(0,0,0,0.1),0 0 8px rgba(82,168,236,0.6);
 
 /*common*/
 body{font:12px/1.5em "Microsoft YaHei";background:#fff;color:#4d4d4d; text-align: center;}
-input{border:1px solid #ccc;border-radius:3px;height:33px;height:31px\9;line-height:33px\9;text-indent:5px;font-family:"Microsoft YaHei";color:#666;}
+input{border:1px solid #ccc;border-radius:3px;height:30px;height:29px\9;line-height:29px\9;text-indent:5px;font-family:"Microsoft YaHei";color:#666;}
 .fontRed{font-family:"宋体";color:#f00;}
 .commonBtn{display:block;width:140px;height:30px;cursor:pointer; line-height:30px;text-align:center;font-size:14px;border-radius:5px;color:#fff;}
 .commonBtn:hover{color:#fff;}
