@@ -1763,7 +1763,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + @",( select top 1  isnull(integral,0)  as integral from vipIntegralDetail 
                                     where objectId = a.order_id     and vipId =vip_no  and  IntegralSourceID=20 order by createtime  )  as integral"
                 //优惠券折扣
-                + @"   ,(0-(select isnull(b.ParValue,0) from TOrderCouponMapping d,CouponType b ,Coupon c
+                + @"   ,(0-(select isnull(b.ParValue,0) from couponUse d,CouponType b ,Coupon c
    where d.CouponId = c.CouponID
    and b.CouponTypeID =CONVERT(NVARCHAR(200), c.CouponTypeID ) and d.orderId=a.order_id )) as couponAmount"
                 //余额支付 AmountSourceId=1 才是订单消费的，AmountSourceId=2是订单返现的
