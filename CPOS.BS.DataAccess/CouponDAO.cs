@@ -721,13 +721,15 @@ namespace JIT.CPOS.BS.DataAccess
             string strSql = string.Format("SELECT  COUNT(1) CouponCount FROM    Coupon a WITH ( NOLOCK )WHERE   a.IsDelete = 0     AND a.[Status] = 0 AND a.CouponTypeID = '{0}'", strCouponTypeId);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
-        /// <summary>
+       /// <summary>
         /// 优惠券绑定vip
-        /// </summary>
-        /// <param name="strVipId"></param>
-        /// <param name="strCouponTypeID"></param>
-        /// <returns></returns>
-        public int CouponBindVip(string strVipId, string strCouponTypeID)
+       /// </summary>
+       /// <param name="strVipId">vipid</param>
+       /// <param name="strCouponTypeID">优惠券类型</param>
+       /// <param name="strEventId">活动id</param>
+        /// <param name="strType">类型（Reg,Comment,Focus,Share,Game,CTW）</param>
+       /// <returns></returns>
+        public int CouponBindVip(string strVipId, string strCouponTypeID,string strEventId,string strType)
         {
             var parameters = new List<SqlParameter>();
             var para = new SqlParameter("@VipId", SqlDbType.NVarChar);
@@ -736,6 +738,14 @@ namespace JIT.CPOS.BS.DataAccess
 
             para = new SqlParameter("@CouponTypeID", SqlDbType.NVarChar);
             para.Value = strCouponTypeID;
+            parameters.Add(para);
+
+            para = new SqlParameter("@EventId", SqlDbType.NVarChar);
+            para.Value = strEventId;
+            parameters.Add(para);
+
+            para = new SqlParameter("@Type", SqlDbType.NVarChar);
+            para.Value = strType;
             parameters.Add(para);
 
             var result = new SqlParameter("@Result", SqlDbType.Int);

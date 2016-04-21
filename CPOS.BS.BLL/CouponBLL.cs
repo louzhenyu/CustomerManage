@@ -859,9 +859,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="strVipId"></param>
         /// <param name="strCouponTypeID"></param>
         /// <returns></returns>
-        public int CouponBindVip(string strVipId, string strCouponTypeID)
+        public int CouponBindVip(string strVipId, string strCouponTypeID, string strEventId, string strType)
         {
-            return this._currentDAO.CouponBindVip(strVipId, strCouponTypeID);
+            return this._currentDAO.CouponBindVip(strVipId, strCouponTypeID, strEventId, strType);
 
         }
 

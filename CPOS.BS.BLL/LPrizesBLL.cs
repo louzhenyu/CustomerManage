@@ -255,6 +255,7 @@ namespace JIT.CPOS.BS.BLL
                 {
                     contactEvent = bllContactEvent.QueryByEntity(new ContactEventEntity() { ShareEventId = strEventId, IsDelete = 0, Status = 2, CustomerID = this.CurrentUserInfo.ClientID }, null).FirstOrDefault();
                     strCouponSourceId = "5F671057-E6B5-4B5E-B2D4-AC3A64F6710F";
+                    strType = "Share";
                 }
                 else
                 {
@@ -360,7 +361,7 @@ namespace JIT.CPOS.BS.BLL
                         bllPrizePool.Update(entityPrizePool);
 
                         CouponBLL bllCoupon = new CouponBLL(this.CurrentUserInfo);
-                        int intResult = bllCoupon.CouponBindVip(strVipId, entityPrize.CouponTypeID);
+                        int intResult = bllCoupon.CouponBindVip(strVipId, entityPrize.CouponTypeID, contactEvent.ContactEventId.ToString(), strType);
 
 
                         //CouponEntity entityCoupon = null;
@@ -638,6 +639,7 @@ namespace JIT.CPOS.BS.BLL
                 rd.Location = intLocation;
                 rd.PrizeId = "0";
                 rd.PrizeName = "啊呜  手气不是时时有 下次再接再厉哦";
+                
                 return rd;
             }
             if (awardEntity != null)
@@ -682,7 +684,7 @@ namespace JIT.CPOS.BS.BLL
 
                     CouponEntity entityCoupon = null;
                     CouponBLL bllCoupon = new CouponBLL(this.CurrentUserInfo);
-                    int intResult = bllCoupon.CouponBindVip(strVipId, prize.CouponTypeID);
+                    int intResult = bllCoupon.CouponBindVip(strVipId, prize.CouponTypeID, strEventId, "Game");
                     if (intResult == 0)
                     {
                         int intLocation = bllPrize.GetLocationByEventID(strEventId);
@@ -1001,7 +1003,7 @@ namespace JIT.CPOS.BS.BLL
                 if (prize.PrizeTypeId == "Coupon")
                 {
 
-                    int intResult=bllCoupon.CouponBindVip(strVipId, prize.CouponTypeID);
+                    int intResult = bllCoupon.CouponBindVip(strVipId, prize.CouponTypeID, strEventId, "Game");
                     if(intResult==0)
                     {
                         int intLocation = bllPrize.GetLocationByEventID(strEventId);

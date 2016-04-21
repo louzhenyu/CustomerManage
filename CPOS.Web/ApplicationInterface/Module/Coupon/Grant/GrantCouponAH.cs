@@ -41,7 +41,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Coupon.Grant
                 }
                 CouponBLL bll = new CouponBLL(this.CurrentUserInfo);
                 DataSet ds = bll.GetCouponDetail(pRequest.Parameters.CouponId, "");
-                if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0]["Status"].ToString() == "0")
+                if (ds.Tables != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count > 0 && ds.Tables[0].Rows[0]["Status"].ToString() == "2")
                 {
 
                     if (bllVipCoupon.GrantCoupon(param.Giver, pRequest.UserID, param.CouponId) > 0)
