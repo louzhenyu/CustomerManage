@@ -8,6 +8,7 @@
   font-size: 14px;
   line-height: 35px;
 }
+
 .addActivityBtn {margin-left: 14px;width:100px;background-color:#f65564;}
 .viewall {  line-height: 30px;color: #00a0e8;margin-left: 100px;}
 .viewdesc {color:#00a0e8;}
@@ -80,6 +81,7 @@
 .Sales .desc {font-size: 20px;line-height: 30px;}
 .parizetype .parizecontainer {float:left;width:180px;  padding: 20px 0px 20px 50px;}
 .parizetype .parizecontainer .value span{font-size: 20px;line-height: 31px;}
+.parizetype .w280 {width:280px;}
 .verticalLine {  width: 0px;height: 35px;float: left;border-left: 1px solid;  margin-top: 30px;}
 
 .prizeExtend {  float: left;width: 100px;line-height:30px;  font-size: 15px;background:url(../images/tips.png) no-repeat 65px center;}

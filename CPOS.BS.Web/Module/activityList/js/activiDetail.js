@@ -172,9 +172,11 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
                 if (checkvalue.val() == 1) {
                     checkvalue.val(0);
                     $("#QRegular").data("required", false);
+                    $("#ruleType").combobox({ required: false });
                 } else {
                     checkvalue.val(1);
                     $("#QRegular").data("required", true);
+                    $("#ruleType").combobox({ required: true });
 
                 }
 
@@ -666,6 +668,12 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
                 if (param.RuleType == "2") {
 
                     param.RuleText = $("#QRegular").val();
+
+                    if (param.RuleText == "")
+                    {
+                        return alert('请填写规则内容！')
+                    }
+
                 } else {
 
                     param.RuleImageUrl = $("#RuleImageUrl").data('url');

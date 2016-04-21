@@ -23,8 +23,27 @@
             this.loadPageData();
         },
         initEvent: function () {
+            
+
+
             var that = this,
 				$notShow = $('.nextNotShow span');
+
+
+            $("#leftMenu li").each(function () {
+                debugger;
+                $(this).removeClass("on");
+                var urlPath = location.pathname.replace(/\//g, "_");
+                var classNameList = $(this).find("em").attr("class").split(" ");
+                if (classNameList.length > 1) {
+                    if (urlPath.indexOf(classNameList[1]) != -1) {
+                        $(this).addClass("on");
+                    }
+                }
+
+            });
+
+
             $notShow.on('click', function () {
                 if ($notShow.hasClass('on')) {
                     $notShow.removeClass('on');

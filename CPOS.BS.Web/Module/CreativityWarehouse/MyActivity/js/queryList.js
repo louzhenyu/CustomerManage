@@ -30,6 +30,21 @@
         },
         initEvent: function () {
             var that = this;
+
+            $("#leftMenu li").each(function () {
+                debugger;
+                $(this).removeClass("on");
+                var urlPath = location.pathname.replace(/\//g, "_");
+                var classNameList = $(this).find("em").attr("class").split(" ");
+                if (classNameList.length > 1) {
+                    if (urlPath.indexOf(classNameList[1]) != -1) {
+                        $(this).addClass("on");
+                    }
+                }
+
+            });
+
+
             //点击查询按钮进行数据查询
             that.elems.sectionPage.delegate(".queryBtn", "click", function (e) {
 
@@ -254,7 +269,7 @@
                 $("#winrelease .OnfflineQRCodeId .downaddress").attr("href", OnfflineQRCodeId);
                 $("#winrelease .OnlineQRCodeId .addressinput").val(OnLineRedirectUrl);
                 $("#winrelease .OnfflineQRCodeId .addressinput").val(OffLineRedirectUrl);
-                $("#winrelease .addressinput").val("");
+                
 
 
                 if (!that.elems.isloadzclip) {

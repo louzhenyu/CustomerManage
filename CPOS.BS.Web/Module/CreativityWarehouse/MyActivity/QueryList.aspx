@@ -260,7 +260,7 @@
                               
                               <div class="verticalLine"></div>
                               <div class="GiftCard parizecontainer">
-                                  <div class="title">礼品券</div>
+                                  <div class="title">兑换券</div>
                                   <div class="value"><span class="GiftCardvalue"><#=LeventsStats.PrizeCount #></span>份</div></div>
                           </div>
                       </div>
@@ -323,12 +323,12 @@
                               <div class="desc">活动总销量</div>
                           </div>
                           <div class="parizetype">
-                              <div class="integral parizecontainer">
+                              <div class="integral parizecontainer w280">
                                   <div class="title">订单数</div>
                                   <div class="value"><span class="integralvalue"><#=LeventsStats.OrderCount #></span>个</div>
                               </div>
                               <div class="verticalLine"></div>
-                              <div class="Vouchers parizecontainer">
+                              <div class="Vouchers parizecontainer w280">
                                   <div class="title">客单价</div>
                                   <div class="value"><span class="Vouchersvalue"><#=LeventsStats.CustSinglePrice #></span>元</div></div>
                               

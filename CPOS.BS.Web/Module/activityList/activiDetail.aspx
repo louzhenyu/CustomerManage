@@ -113,11 +113,11 @@
                     </div>
                     <div class="startpageContent">
                         <div class="CoverSetting">
-                            <div class="EnableCover checkBox on">
+                            <div class="EnableCover checkBox">
                                   <em></em>
                                   <span>启用封面</span>
                                  <div style="display:none;">
-                                    <input class="checkvalue activityListdata"    data-text="活动规则启用" data-idname="IsShowQRegular" value="1"  type="text" />
+                                    <input class="checkvalue activityListdata"    data-text="活动规则启用" data-idname="IsShowQRegular" value="0"  type="text" />
                                 </div>
                             </div>
                             <div class="commonSelectWrap">
@@ -151,7 +151,7 @@
                             <div  class="commonSelectWrap" style="margin-top: 20px;" >
                         	<p class="tit">活动规则：</p>
                             <div class="on rulebtn" data-flag="Cover1" data-name="r1" >
-                                <input data-text="活动规则" class="easyui-combobox textbox combo" data-options="required:true,width:200,height:32" id="ruleType"   name="ruleType" type="text" value="">
+                                <input data-text="活动规则" class="easyui-combobox textbox combo" data-options="width:200,height:32" id="ruleType"   name="ruleType" type="text" value="">
                               </div>
                             <div class="infoBox CoverruleText" style="display: none;">
                             	<textarea id="QRegular"  class="activityListdata"  placeholder="请输入"  data-alerttext="规则内容不能为空！" data-required="true"  data-idname="QRegular"   ></textarea>
