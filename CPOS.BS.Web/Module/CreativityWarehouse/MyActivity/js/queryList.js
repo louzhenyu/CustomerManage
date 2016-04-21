@@ -324,6 +324,9 @@
             $(".viewall").on("click", function () {
 
                 $(".ActivityGroupName").removeClass("graycolor");
+                $("#Status").combobox("setValue", "");
+                $("#ActivityGroupCode").combobox("setValue", "");
+                $("#EventName").val("");
                 that.loadData.seach.form.ActivityGroupCode = "";
                 that.loadData.seach.form.Status = "";
                 that.loadData.seach.form.EventName = "";

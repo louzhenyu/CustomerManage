@@ -183,9 +183,9 @@
     </script>
      <%-- 年度活动计划 --%>
     <script id="tpl_seasonlist" type="text/html">
-         <# for(i=0;i<PlanList.length;i++){ if(i<8){ _data=PlanList[i]; #>
+         <# for(i=0;i<PlanList.length;i++){ _data=PlanList[i]; #>
               <li><span> <#=_data.PlanDate.substring(5) #></span> <#=_data.PlanName #></li>
-            <#}} #>
+            <#} #>
 
            
     </script>
