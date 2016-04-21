@@ -676,7 +676,7 @@
                                 amount.TotalPages, amount.TotalCount);
                             break;
                         case 'nav06':
-                            that.createPager('nav04', online.PageIndex,
+                            that.createPager('nav06', online.PageIndex,
                                 online.TotalPages, online.TotalCount);
                             break;
                         case 'nav05':
@@ -1007,12 +1007,7 @@
                                         }
                                     }
                                 });
-                                point.TotalCount = data.Data.TotalCount;
-                                point.TotalPages = data.Data.TotalPageCount;
-								
-								if (data.Data.TotalPageCount > 0) {
-                                    that.createPager('nav03', 1, data.Data.TotalPageCount, data.Data.TotalCount);
-                                }
+
 							
                             panel.attr(loadKey, true);
                         });
@@ -1074,6 +1069,7 @@
                         break;
                     case 'nav04':  //优惠券
                         that.loadData.getVipConsumeCardList(function (data) {
+                            debugger;
                             var list = data.Data.VipConsumeCardList;
                             list = list ? list : [];
 
@@ -1139,7 +1135,7 @@
                                 });
                                 amount.TotalCount = data.Data.TotalCount;
                                 amount.TotalPages = data.Data.TotalPages;
-                                if (data.Data.TotalPageCount > 0) {
+                                if (data.Data.TotalPages > 0) {
                                     that.createPager('nav04', 1, data.Data.TotalPages, data.Data.TotalCount);
                                 }
 
@@ -1853,14 +1849,14 @@
                     break;
                 //消费卡
                 case 'nav05':
-                    this.loadData.args.cardList.PageIndex = currentPage;
+                  /*  this.loadData.args.cardList.PageIndex = currentPage;
                     that.loadData.getVipConsumeCardList(function (data) {
                         var list = list ? list : [];
                         if(list.length){
                             var html = bd.template('tpl_consumer', { list: list });
                             that.elems.consumerTable.html(html);
                         }
-                    });
+                    });*/
                     break;
                 //上线与下线
                 case 'nav06':
@@ -1877,6 +1873,7 @@
                 //帐内余额
                 case 'nav04':
                     this.loadData.args.amount.PageIndex = currentPage;
+                    debugger;
                     that.loadData.getVipConsumeCardList(function (data) {
                         var list = data.Data.VipConsumeCardList;
                         list = list ? list : [];
@@ -2103,10 +2100,10 @@
                     TotalCount: 0,
                     OrderType:'DESC'
                 },
-                //帐内余额
+
                 amount: {
                     PageIndex: 1,
-                    PageSize: 20,
+                    PageSize: 10,
                     TotalPages: 0,
                     TotalCount: 0,
                     OrderType:'DESC'
@@ -2366,8 +2363,8 @@
                     data: {
                         action: 'GetVipConsumeCardList',
                         VipId:this.args.VipId,
-                        PageIndex: this.args.consumerCard.PageIndex,
-                        PageSize: this.args.consumerCard.PageSize
+                        PageIndex: this.args.amount.PageIndex,
+                        PageSize: this.args.amount.PageSize
                     },
                     success: function (data) {
                         if (data.IsSuccess && data.ResultCode == 0) {

@@ -560,7 +560,7 @@
                                 amount.TotalPages, amount.TotalCount);
                             break;
                         case 'nav06':
-                            that.createPager('nav04', online.PageIndex,
+                            that.createPager('nav06', online.PageIndex,
                                 online.TotalPages, online.TotalCount);
                             break;
                         case 'nav05':
