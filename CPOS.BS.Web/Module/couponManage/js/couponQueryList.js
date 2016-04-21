@@ -73,7 +73,7 @@
                 textField: 'text',
                 data: [{
                     "id": 0,
-                    "text": "未核销"
+                    "text": "未使用"
                 }, {
                     "id": 1,
                     "text": "已核销"
