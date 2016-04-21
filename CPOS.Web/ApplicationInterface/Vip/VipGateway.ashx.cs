@@ -742,18 +742,43 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
                         discountAmount = discountAmount + couponTypeEntity.ParValue ?? 0;
 
-                        #region Insert优惠券与订单的映射表
+                        #region Insert CouponUse
 
-                        var tOrderCouponMapping = new TOrderCouponMappingBLL(loggingSessionInfo);
+                        //var tOrderCouponMapping = new TOrderCouponMappingBLL(loggingSessionInfo);
 
-                        var tOrderCouponMappingEntity = new TOrderCouponMappingEntity
+                        //var tOrderCouponMappingEntity = new TOrderCouponMappingEntity
+                        //{
+                        //    MappingId = Utils.NewGuid(),
+                        //    OrderId = orderId,
+                        //    CouponId = couponId
+                        //};
+
+                        //tOrderCouponMapping.Create(tOrderCouponMappingEntity, tran);
+
+                        var couponUseBll = new CouponUseBLL(loggingSessionInfo);
+                        var couponUseEntity = new CouponUseEntity()
                         {
-                            MappingId = Utils.NewGuid(),
-                            OrderId = orderId,
-                            CouponId = couponId
+                            CouponUseID = Guid.NewGuid(),
+                            CouponID = couponId,
+                            VipID = rp.UserID,
+                            UnitID = tInoutEntity.UnitID,
+                            OrderID = tInoutEntity.OrderID,
+                            Comment = "商城使用电子券",
+                            CustomerID = rp.CustomerID,
+                            CreateBy = rp.UserID,
+                            CreateTime = DateTime.Now,
+                            LastUpdateBy = rp.UserID,
+                            LastUpdateTime = DateTime.Now,
+                            IsDelete = 0
                         };
-
-                        tOrderCouponMapping.Create(tOrderCouponMappingEntity, tran);
+                        couponUseBll.Create(couponUseEntity, tran);
+                        #endregion
+                        
+                        #region 更新CouponType数量
+                        var conponTypeBll = new CouponTypeBLL(loggingSessionInfo);
+                        var conponTypeEntity = conponTypeBll.QueryByEntity(new CouponTypeEntity() { CouponTypeID = new Guid(couponEntity.CouponTypeID), CustomerId = rp.CustomerID }, null).FirstOrDefault();
+                        conponTypeEntity.IsVoucher += 1;
+                        conponTypeBll.Update(conponTypeEntity, tran);
 
                         #endregion
 

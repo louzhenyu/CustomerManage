@@ -112,7 +112,7 @@ namespace JIT.CPOS.BS.Entity
         /// <summary>
         /// 
         /// </summary>
-        public object CouponTypeID { get; set; }
+        public string CouponTypeID { get; set; }
 
         /// <summary>
         /// 
