@@ -278,7 +278,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                   			<div data-options="region:'center'" style="padding:10px;">
 
                   			</div>
-                  			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
+                  			<div class="btnWrap" id="btnWrap1" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
                   				<a class="easyui-linkbutton commonBtn saveBtn" >确定</a>
 
                   			</div>
@@ -303,7 +303,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                                      <div class="address"><input type="text" class="addressinput" /><div style="position:relative;"><a  href="#none"      class="commonBtn copybtn addrcopy">复制</a></div></div>
                                  </div>
                               </div>
-                              <div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
+                              <div class="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
                         				<a class="easyui-linkbutton commonBtn saveBtn release" style="background-color: #ff343f;margin-right: 12px;" >直接发布</a>
                         				<a class="easyui-linkbutton commonBtn closeBtn"  href="javascript:void(0)" onclick="javascript:$('#winrelease').window('close')" >完成</a>
                         			</div>

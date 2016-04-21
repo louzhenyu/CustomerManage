@@ -691,6 +691,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 closable:true,
                 onOpen:function() {
                     $("#win1").window("hcenter");
+                    $("#btnWrap1").show();
                 },
                 onClose:function(){
                     if(that.elems.optionType1=="coupon"||that.elems.optionType1=="addCouponNumber"){
@@ -910,7 +911,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                         that.couponRenderList(type);
                     }else if(that.elems.optionType1 == "coupon"){  //因为iframe引用，添加券会触发，Iframe中的保存时间，子页面保存完成以后会关闭，父页面 win1
                          isColse=false;
-                        $("#addCouponIframe").contents().find(".saveBtn").trigger("click");
+                       // $("#addCouponIframe").contents().find(".saveBtn").trigger("click");
 
                     }
                     if(isColse) {
@@ -1524,11 +1525,11 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 $.util.isLoading(true);
                 $("#addCouponIframe").contents().find("#simpleQuery").hide();
                 $("#addCouponIframe").contents().find("#commonNav").hide();
-                $("#addCouponIframe").contents().find(".contentArea_vipquery").find(".submitBtn").hide();
+                //$("#addCouponIframe").contents().find(".contentArea_vipquery").find(".submitBtn").hide();
                 $("#addCouponIframe").contents().find(".commonHeader").hide();
                 $("#addCouponIframe").contents().find(".leftsead").hide();
                 $("#addCouponIframe").contents().find(".kf_qycn_com_cckf_icon").hide()
-
+                  $("#btnWrap1").hide();
             });
 
 
@@ -1795,10 +1796,10 @@ debugger;
                 $("#slider").html("");
                 var startSlide=0;
                 for(var i=0;i<ThemeList.length;i++) {
-                    var html = '<div class="slide" data-index="' + i + '"><div><img src="' + ThemeList[i].ImageURL + '" /><em></em><p>'+ThemeList[i].ThemeName+'</p></div</div>';
+                    var html = '<div class="slide" data-index="' + i + '"><div><img src="' + ThemeList[i].ImageURL + '" /><em></em></div><p>'+ThemeList[i].ThemeName+'</p></div>';
                     if (data.Data.CustomerCTWEventInfo && data.Data.CustomerCTWEventInfo.OriginalThemeId == ThemeList[i].ThemeId) {
                         startSlide=i;
-                        html = '<div class="slide on" data-index="' + i + '"><div><img src="' + ThemeList[i].ImageURL + '" /><em></em><p>'+ThemeList[i].ThemeName+'</p><div></div>';
+                        html = '<div class="slide on" data-index="' + i + '"><div><img src="' + ThemeList[i].ImageURL + '" /><em></em></div><p>'+ThemeList[i].ThemeName+'</p></div>';
                     }
 
                     $("#slider").append(html);
@@ -2420,9 +2421,19 @@ debugger;
                 Summary:$('[data-tabname="tab02"] .share').find('[data-view="Summary"]').html(),
                 BGImageUrl:$('[data-tabname="tab02"] .share').find('img').attr("src"),
 
-            }
-
-            SpreadSettingList.push(SpreadSetting)
+            };
+            jvveshow
+                .setShare(self.elems.editor1.worksId, {
+                    title: SpreadSetting.Title,
+                    desc: SpreadSetting.Summary,
+                    imgUrl: SpreadSetting.BGImageUrl
+                })
+                .then(function(data){
+                    console.info("设置作品分享成功！", data);
+                }, function(data){
+                    console.error("设置作品分享失败！", data);
+                });
+            SpreadSettingList.push(SpreadSetting);
 
              SpreadSetting={
                 SpreadType:"Focus",
@@ -2487,10 +2498,8 @@ debugger;
 
            // 风格 设置的的id
 
-            self.saveJevvSHow(function(){       //先保存已经更改的风格，提交保存后台。
+            self.saveJevvSHow(function(){ }) ;
 
-
-            }) ;
             $.util.isLoading();
             pram.push({name:"worksId",value:self.elems.editor1.worksId});
             that.loadData.operation(pram,"add",function(data){
