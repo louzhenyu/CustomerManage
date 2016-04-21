@@ -2018,11 +2018,11 @@ debugger;
                                      prizeListWatch:[],//关注奖励
                                      prizeListReg:[],//注册奖励*/
                                    if(contactEventList.length>0){
-                                       for(var i=0;i<contactEventList.length; i++){
-                                           var code=contactEventList[i].ContactTypeCode;
+                                       for(var j=0;j<contactEventList.length; j++){
+                                           var code=contactEventList[j].ContactTypeCode;
                                            var list=[];
-                                           if(contactEventList[i].ContactPrizeList&&contactEventList[i].ContactPrizeList.length>0){
-                                               list=contactEventList[i].ContactPrizeList;
+                                           if(contactEventList[j].ContactPrizeList&&contactEventList[j].ContactPrizeList.length>0){
+                                               list=contactEventList[j].ContactPrizeList;
                                            }
                                            switch (code){
                                                case "Share":  //分享
@@ -2064,6 +2064,7 @@ debugger;
 
            if(materialText){
                spreadObj=materialText;
+               spreadObj["Summary"]=materialText.Text;
                 domPanel=dom.find('.phoneWebDiv[ data-type="Reg"]');
                if(domPanel.find('[data-view]').length>0) {
                    $.each(domPanel.find('[data-view]'), function () {
@@ -2451,7 +2452,7 @@ debugger;
             if($("#release").find('[data-type="reg"]').hasClass("on")){  //注册
                 ContactPrizeList.push({ContactTypeCode:"Reg",PrizeList:that.prizeListReg});
             }else{
-                SpreadSetting.LeadPageSharePromptText="";
+                SpreadSetting.LeadPageRegPromptText="";
                 ContactPrizeList.push({ContactTypeCode:"Reg",PrizeList:[]});
             }
 
