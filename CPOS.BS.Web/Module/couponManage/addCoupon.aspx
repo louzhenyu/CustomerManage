@@ -55,7 +55,7 @@
                         <label class="searchInput bordernone whauto">
                               <div class="radio on" data-name="r1" data-UsableRange="1"><em></em><span>仅云店使用</span></div>
                               <div class="radio" data-name="r1"  data-UsableRange="2"><em></em><span>仅门店使用</span></div>
-                              <div class="radio" data-name="r1"  data-UsableRange="3"><em></em><span>云店门店通用</span></div>
+                             <!-- <div class="radio" data-name="r1"  data-UsableRange="3"><em></em><span>云店门店通用</span></div>-->
                         </label>
                 </div>
 

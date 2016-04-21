@@ -162,3 +162,34 @@
 
 .addSales{ width: 532px; height:208px;}
 .addSales .explain { line-height: 30px; white-space:nowrap; padding-left:10px; }
+
+.skillPanel{ width: 320px; height: 500px;background-color: #f0f3f5; margin: 0 auto; border: 1px solid #e1e7ea }
+.skillPanel .timekeeping{ height:55px; display: inline-block;}
+.timekeeping .title{ width: 180px;height: 25px; margin: 0 auto; font-size:12px; line-height: 25px; color: #999;position: relative;  }
+.timekeeping .title p{ background-color: #f0f3f5; display:inline-block; position:absolute; top:0; width: 120px;left: 30px;line-height: 25px;}
+.timekeeping .title hr{border-color: #e3e3e3; position: absolute; top: 8px; }
+.skillPanel{ width: 320px; height: 500px;background-color: #f0f3f5; margin: 0 auto; }
+.skillPanel .timekeeping{ height:55px; display: inline-block;}
+.timekeeping .title{ width: 180px;height: 25px; margin: 0 auto; font-size:12px; line-height: 25px; color: #999;position: relative;  }
+.timekeeping .title p{ background-color: #f0f3f5; display:inline-block; position:absolute; top:0; width: 120px;left: 30px;line-height: 25px;}
+.timekeeping .title hr{border-color: #e3e3e3; position: absolute; top: 8px; }
+.timekeeping .time{width: 180px; text-align: center; height: 30px;}
+.timekeeping .time em{padding: 0 2px; height: 23px; line-height: 23px; font-size: 13px; background-color: #010101; color: #fff; border-radius: 2px; margin-left: 2px}
+.productList{height: 155px;}
+.product{ height: 135px; background: #fff; display: inline-block;width: 100% }
+.product .l{width:135px; height: 135px; vertical-align:middle; text-align: left;}
+.product .l img{max-height: 100%; max-width: 100%;}
+.product .r{ width: 165px; text-align: left; padding-right:15px; padding-top: 8px; }
+.product .r p{ line-height: 22px; color: #5d5d5d; font-size: 10px;}
+.product .r p.tit{ color: #434546; font-size: 12px;}
+.product .r p i{ text-decoration: line-through;}
+.product .r p.skill{text-align: right}
+.product .r p.skill em{ width: 41px; height: 16px; color: #fff; line-height: 16px; margin-right:6px; display:inline-block; background: url("../images/piceBg.png") no-repeat; text-align: center; margin-top: 4px; }
+
+.product .textBtn{ width: 80px; height: 26px; line-height: 26px; font-size: 13px; text-align: center; color: #fff; background: #010101; border-radius: 3px; float: right;}
+
+.eventList{height: 40px; line-height: 40px;}
+.eventList li{ height: 40px; width: 79px; border-right: 1px solid #c3c6c7; float: left; background-color: #000;}
+.eventList li.on{ background-color: #ff343f;}
+.eventList .eventAddBtn{ width: 78px; float: left; border: 1px dashed #e2e7ea; color: #00a0e8;}
+.eventList .eventAddBtn .icon{ width: 10px; height: 10px; background()}
