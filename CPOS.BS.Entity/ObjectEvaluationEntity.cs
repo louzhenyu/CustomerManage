@@ -37,6 +37,8 @@ namespace JIT.CPOS.BS.Entity
         /// µ„∆¿Õ≥º∆
         /// </summary>
         public int Count { get; set; }
+
+        public string HeadImgUrl { get; set; }
         #endregion
     }
 }

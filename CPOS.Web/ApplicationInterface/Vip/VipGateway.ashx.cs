@@ -602,6 +602,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
                     //获取会员信息
                     var vipInfo = vipBLL.GetByID(rp.UserID);
+                    //更新会员最后一次交易时间
+                    vipInfo.RecentlySalesTime = DateTime.Now;
+                    vipBLL.Update(vipInfo, tran);
                     //获取门店信息
                     t_unitEntity unitInfo = null;
                     if (!string.IsNullOrEmpty(tInoutEntity.SalesUnitID))
@@ -917,6 +920,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                         }
                     }
                     #endregion
+
+                    
 
                     tran.Commit();
 

@@ -2304,7 +2304,7 @@ select @ReturnValue", pCustomerID);
                 where  a.IsDelete = 0 and b.IsDelete = 0  
                  and c.IsDelete = 0  and b.vipId = '{0}' and a.EndDate>GetDate() 
                  ) t 
-                where t._row between {1} and {2}";
+                where t._row > {1} and t._row <= {2}";
 
             return this.SQLHelper.ExecuteDataset(string.Format(sql.ToString(), vipId, (pageIndex - 1) * pageSize, pageIndex * pageSize, sortType));
         }

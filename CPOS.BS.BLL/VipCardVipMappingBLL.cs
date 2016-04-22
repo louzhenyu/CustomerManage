@@ -274,7 +274,7 @@ namespace JIT.CPOS.BS.BLL
                 LogID = Guid.NewGuid().ToString().Replace("-", ""),
                 VipCardStatusID = vipCardInfo.VipCardStatusId,
                 VipCardID = vipCardInfo.VipCardID,
-                Action = "注册",
+                Action = "升级",
                 Reason = changeReason,
                 Remark = remark,
                 UnitID = unitId,
@@ -282,6 +282,11 @@ namespace JIT.CPOS.BS.BLL
             };
             vipCardStatusChangeLogBLL.Create(vipCardStatusChangeLogEntity, pTran);
 
+            var vipCardVipMappingEntity = new VipCardVipMappingEntity()
+            {
+                LastUpdateTime = DateTime.Now
+            };
+            vipCardVipMappingBLL.Update(vipCardVipMappingEntity, pTran);
             //绑定会员卡和会员
             //var vipCardVipMappingEntity = new VipCardVipMappingEntity()
             //{

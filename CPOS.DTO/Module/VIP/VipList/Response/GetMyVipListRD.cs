@@ -64,6 +64,11 @@ namespace JIT.CPOS.DTO.Module.VIP.VipList.Response
         /// 城市
         /// </summary>
         public string City { get; set; }
+
+        /// <summary>
+        /// 集客时间
+        /// </summary>
+        public string SetOffTime { get; set; }
         public string CreateTime { get; set; }
         /// <summary>
         /// 会员状态

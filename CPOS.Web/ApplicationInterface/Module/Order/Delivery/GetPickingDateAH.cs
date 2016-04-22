@@ -32,7 +32,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Delivery
             SysTimeQuantumEntity sysTimeQuantumEntity = sysTimeQuantumBll.QueryByEntity(new SysTimeQuantumEntity() { CustomerID = CurrentUserInfo.ClientID }, new OrderBy[] { new OrderBy() { FieldName = "Quantum", Direction = OrderByDirections.Desc } }).FirstOrDefault();
             
             int? stockUpPeriod = customerTakeDeliveryEntity.StockUpPeriod == null ? 0 : customerTakeDeliveryEntity.StockUpPeriod;
-
+            int? maxDelivery = customerTakeDeliveryEntity.MaxDelivery == null ? 0 : customerTakeDeliveryEntity.MaxDelivery;
 
             if (sysTimeQuantumEntity == null)
             {
@@ -55,13 +55,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Delivery
                 }
             }
 
-            if (string.IsNullOrEmpty(customerTakeDeliveryEntity.MaxDelivery.ToString()) && sysTimeQuantumEntity == null)
+            if (maxDelivery == 0 && sysTimeQuantumEntity == null)
             {
                 getPickingDateRD.IsDisplay = 0; //都不显示
             }
 
-            int? maxDelivery = customerTakeDeliveryEntity.MaxDelivery == 0 ? 0 : customerTakeDeliveryEntity.MaxDelivery - 1;
-            getPickingDateRD.EndDate = Convert.ToDateTime(getPickingDateRD.BeginDate).AddDays(Convert.ToDouble(maxDelivery)).ToString("yyyy-MM-dd");
+            int? addMaxDelivery = maxDelivery == 0 ? 0 : customerTakeDeliveryEntity.MaxDelivery - 1;
+            getPickingDateRD.EndDate = Convert.ToDateTime(getPickingDateRD.BeginDate).AddDays(Convert.ToDouble(addMaxDelivery)).ToString("yyyy-MM-dd");
 
             return getPickingDateRD;
         }

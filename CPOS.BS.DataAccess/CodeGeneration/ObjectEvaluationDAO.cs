@@ -661,7 +661,11 @@ namespace JIT.CPOS.BS.DataAccess
                 var vipDao = new VipDAO(CurrentUserInfo);
                 var vipInfo = vipDao.GetByID(pInstance.VipID);
                 if (vipInfo != null)
+                {
                     pInstance.VipName = vipInfo.VipName;
+                    pInstance.HeadImgUrl = vipInfo.HeadImgUrl;
+                }
+
 			}
 			if (pReader["CustomerID"] != DBNull.Value)
 			{

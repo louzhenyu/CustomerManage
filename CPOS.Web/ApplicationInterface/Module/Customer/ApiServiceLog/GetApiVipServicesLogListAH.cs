@@ -51,7 +51,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Customer.ApiServiceLog
             rd.VipServicesLogList = tempList.Entities.Select(t => new VipServicesLogInfo()
             {
                 ServicesLogID = t.ServicesLogID.ToString(),
-                ServicesTime = t.ServicesTime == null ? "" : t.ServicesTime.Value.ToString("yyyy-MM-dd hh:mm"),
+                ServicesTime = t.ServicesTime == null ? "" : t.ServicesTime.Value.ToString("yyyy-MM-dd HH:mm"),
                 ServicesMode = t.ServicesMode,
                 UnitName = t.UnitName,
                 UserName = t.UserName,

@@ -694,6 +694,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                 Phone = t.Phone,
                 Birthday = string.IsNullOrEmpty(t.Birthday) ? "" : t.Birthday,
                 City = (string.IsNullOrEmpty(t.City) && t.City == "0") ? "" : t.City,
+                SetOffTime = t.Col21.ToString(),
                 CreateTime = t.CreateTime.ToString(),
                 Status = t.Status
             }).ToArray();

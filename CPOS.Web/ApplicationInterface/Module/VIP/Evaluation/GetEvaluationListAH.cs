@@ -47,7 +47,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
                 StarLevel = t.StarLevel,
                 CreateTime = t.CreateTime.Value.ToString("yyyy-MM-dd"),
                 IsAnonymity = t.IsAnonymity,
-                Remark = t.Remark
+                Remark = t.Remark,
+                HeadImgUrl = t.HeadImgUrl
             }).ToArray();
             return rd;
         }

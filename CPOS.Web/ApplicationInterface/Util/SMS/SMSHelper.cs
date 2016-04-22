@@ -13,7 +13,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Util.SMS
 {
     public static class SMSHelper
     {
-        public static bool Send(string customerId,string pPhone, string pContent, string pSign, out string msg)
+        public static bool Send(string customerId,string pPhone, string pContent, string pSign, out string msg ,int type) //type两种短信发送方式，0-HuYi 1-Alidayu
         {
             try
             {
@@ -22,9 +22,20 @@ namespace JIT.CPOS.Web.ApplicationInterface.Util.SMS
                 if (string.IsNullOrEmpty(url))
                     throw new Exception("未配置短信服务URL");
                 //var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的验证码是：【{0}】", pContent), Sign = pSign };
-              var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的验证码是：{1}，请不要把验证码泄露给其他人。", currentUserInfo.ClientName , pContent), Sign = pSign };
-                var request = new { Action = "SendMessage", Parameters = para };
-                string str = string.Format("request={0}", request.ToJSON());//请求参数
+                string str = "";
+                if (type == 0)
+                {
+                    var para = new { MobileNO = pPhone, SMSContent = string.Format(@"您的验证码是：{1}，请不要把验证码泄露给其他人。", currentUserInfo.ClientName, pContent), Sign = pSign };
+                    var request = new { Action = "SendMessage", Parameters = para };
+                    str = string.Format("request={0}", request.ToJSON());//请求参数
+                }
+                else
+                {
+                    var para = new { MobileNO = pPhone, SMSContent = pContent, Sign = pSign };
+                    var request = new { Action = "AliDayuMessage", Parameters = para };
+                    str = string.Format("request={0}", request.ToJSON());//请求参数
+                }
+                
                 Loggers.Debug(new DebugLogInfo() { Message = "发送短信:" + str });
                 var res = HttpClient.PostQueryString(url, str);//发送请求，开始发送短信
               

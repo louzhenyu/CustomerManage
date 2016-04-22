@@ -58,5 +58,10 @@ namespace JIT.CPOS.DTO.Module.VIP.Evaluation.Response
         /// </summary>
         public string Remark { get; set; }
 
+        /// <summary>
+        /// 头像信息
+        /// </summary>
+        public string HeadImgUrl { get; set; }
+
     }
 }

@@ -404,7 +404,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         {
                             vipInfo.CouponInfo = tt;//设为门店
                             vipInfo.SetoffUserId = RP.UserID;//设为门店员工
-                            vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
+                            vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
                         }
                     }
                     else if (UserStatus.Trim().Equals("-1"))
@@ -413,7 +413,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         {
                             vipInfo.CouponInfo = tt;//设为门店
                             vipInfo.SetoffUserId = RP.UserID;//设为门店员工
-                            vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
+                            vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
                         }
                     }
                     else if (tempUnit.type_id == "2F35F85CF7FF4DF087188A7FB05DED1D")//是总部标识
@@ -422,7 +422,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                         {
                             vipInfo.CouponInfo = tt;//设为门店
                             vipInfo.SetoffUserId = RP.UserID;//设为门店员工
-                            vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
+                            vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
                         }
                     }
                     #endregion
@@ -435,7 +435,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Stores
                             //if (!vipInfo.HigherVipID.Equals(RP.UserID))
                             //{
                                 vipInfo.HigherVipID = RP.UserID;
-                                vipInfo.Col21 = DateTime.Now.ToString();//集客时间*****
+                                vipInfo.Col21 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//集客时间*****
                             //}
                         }
                     }

@@ -1778,7 +1778,7 @@ select TOP 1 '{0}',{1},{5},'{2}','{3}' from T_City WHERE substring(city_code,1,{
                     #region 发送短信
                     string msg;
 
-                    if (!SMSHelper.Send(rp.CustomerID, rp.Parameters.LoginName, code, rp.Parameters.Sign, out msg))
+                    if (!SMSHelper.Send(rp.CustomerID, rp.Parameters.LoginName, code, rp.Parameters.Sign, out msg,0))
                     {
                         throw new Exception("短信发送失败:" + msg);
                     }
