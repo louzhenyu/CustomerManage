@@ -784,6 +784,7 @@
                                 {
                                     case "0": result = "否"; break;
                                     case "1": result = "是"; break;
+                                    case "2": result = "否"; break;
                                     default: result = ""; break;
                                 }
                                 return result;
