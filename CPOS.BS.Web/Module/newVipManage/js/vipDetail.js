@@ -372,7 +372,7 @@
                     $("#optionform").form('load',row);
                     var isqita=true;
                     $("#optionform").find(".radio").each(function(){
-                        if($(this).find("span").html().trim()==row.ServicesMode) {
+                        if($(this).find("span").html().trim()==row.ServicesMode.trim()) {
                             $(this).trigger("click");
                             isqita=false;
                         }
@@ -1834,13 +1834,7 @@
                         list = list ? list : [];
                         debugger;
                         if (list.length) {
-                            ServicesLog.TotalCount = data.Data.TotalCount;
-                            ServicesLog.TotalPages = data.Data.TotalPageCount;
                             that.elems.servicesLog.datagrid("loadData",list);
-
-                            if (data.Data.TotalPages > 0) {
-                                that.createPager('nav07', 1, data.Data.TotalPageCount, data.Data.TotalCount);
-                            }
                         }else {
 
                         }

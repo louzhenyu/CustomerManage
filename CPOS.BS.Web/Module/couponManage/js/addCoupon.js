@@ -528,12 +528,11 @@
             $("#unitTreeSelect").delegate(".delete","click", function (e) {
                 var id=$(this).data("target");
 
-                var nodeList=[]
+                var nodeList=[] ;
                 var isDel=true;
                     var node= $('#unitParentTree').tree("getSelected");
-                    if(node){
-                         nodeList= $('#unitParentTree').tree("getSelected");
-                    }
+                   nodeList = $("#unitGrid").datagrid('getData').rows;
+
                 if(nodeList.length>0){
                     for(var j=0;j<nodeList.length;j++){
                        if(nodeList[j].Id==id){
@@ -1259,7 +1258,12 @@
 
 
                 prams.data["UsableRange"]=$(".radio.on[data-usablerange]").data("usablerange");
+                if($(".listBtn.show").data("coupontype")==1){  //是兑换券
+                    prams.data["CouponCategory"]="GIFT";
 
+                }else if($(".listBtn.show").data("coupontype")==0){  //是现金券
+                    prams.data["CouponCategory"]="CASH";
+                }
                /* var str= $("#applicationType").combobox("getValue");*/
                 //适用门店(1=所有门店；2=部分门店/分销商;3=所有分销商)
                         if( $(".radio.on[data-name='unit']").data("valuetype")=="all"){
