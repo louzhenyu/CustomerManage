@@ -1429,8 +1429,9 @@ namespace JIT.CPOS.Web.WeiXin
                             bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
                             #endregion
                             #region 创意仓库关注log
+                            BaseService.WriteLogWeixin(" 二维码code：" + qrcode_id);
                             WQRCodeManagerBLL bllWQRCodeManage = new WQRCodeManagerBLL(tmpUser);
-                            var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode_id }, null).SingleOrDefault();
+                            var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode_id, Remark = "CTW", CustomerId = tmpUser.CurrentUser.customer_id }, null).SingleOrDefault();
                             if(entityWQRCodeManage!=null)
                             {
                                 T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
@@ -1463,10 +1464,12 @@ namespace JIT.CPOS.Web.WeiXin
                         bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
                         #endregion
                         #region 创意仓库关注log
+                        BaseService.WriteLogWeixin(" 二维码code：" + qrcode_id);
                         WQRCodeManagerBLL bllWQRCodeManage = new WQRCodeManagerBLL(tmpUser);
-                        var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode_id }, null).SingleOrDefault();
+                        var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode_id, Remark = "CTW", CustomerId = tmpUser.CurrentUser.customer_id }, null).SingleOrDefault();
                         if (entityWQRCodeManage != null)
                         {
+                            BaseService.WriteLogWeixin(" 创意仓库日志：" + entityWQRCodeManage.ObjectId);
                             T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
                             if (!string.IsNullOrEmpty(entityWQRCodeManage.ObjectId))
                             {

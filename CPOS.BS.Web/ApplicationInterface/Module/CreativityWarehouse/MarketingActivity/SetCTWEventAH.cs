@@ -911,6 +911,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                                  QRCodeTypeId = wqrentity.QRCodeTypeId,
                                  IsUse = 1,
                                  ObjectId = strCTWEventId,
+                                 Remark="CTW",
                                  CreateBy = loggingSessionInfo.UserID,
                                  ApplicationId = wapentity.ApplicationId,
                                  IsDelete = 0,
