@@ -462,12 +462,12 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
             string sql = " select distinct a.* "
                       + " , '' as unit_city_name "
                       + " , '' as unit_type_name "
-                      + " , (select src_unit_id From T_Unit_Relation where dst_unit_id = a.unit_id and status='1') parent_unit_id "
+                      + " , (select src_unit_id From T_Unit_Relation where dst_unit_id = a.unit_id and status='1') parent_unit_id  ,default_flag  "
                       + " from t_unit a"
                       + " inner join T_User_Role b "
                       + " on(a.unit_id = b.unit_id) "
                       + " where b.user_id= '" + userId + "' "
-                      + " order by a.unit_code ";
+                      + "  order by  default_flag desc    ";//把默认的门店放在第一位，以方便后面取默认门店信息
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }

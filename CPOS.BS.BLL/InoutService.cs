@@ -2200,7 +2200,7 @@ namespace JIT.CPOS.BS.BLL
         {
             try
             {
-              //  IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
+             //  IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByRoleCode("CustomerService");
                 IList<UserInfo> userInfos = new cUserService(loggingSessionInfo).GetUserListByMenuCode("CustomerOrders");
                 Loggers.Debug(new DebugLogInfo() { Message = "客服列表，userInfos:" + userInfos.ToJSON() });
 

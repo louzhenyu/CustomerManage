@@ -1987,6 +1987,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                 case "VoucherCouponOrder":
                     rst = this.VoucherCouponOrder(pRequest);
                     break;
+
+
                 default:
                     throw new APIException(string.Format("找不到名为：{0}的action处理方法.", pAction))
                     {

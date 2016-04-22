@@ -520,8 +520,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             #endregion
 
             string errorMsg = "";
-
-            string wxCodeImageUrl = CreateUserWxCode(user, unitName,loggingSessionInfo, out errorMsg);
+            //下载的时候再生成,这里就不生成了，业务太多
+       //     string wxCodeImageUrl = CreateUserWxCode(user, unitName,loggingSessionInfo, out errorMsg);
             if (errorMsg != "")
             {
                 responseData.success = false;
