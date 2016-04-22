@@ -363,6 +363,12 @@ union all
             //    strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
             //}
 
+
+
+                //(select count(1) from coupon x 
+                //           inner join PrizeCouponTypeMapping y on x.coupontypeid=y.coupontypeid
+                //           inner join vipcouponmapping z on x.couponid=z.couponid 
+                //              where y.PrizesID=a.PrizesID    and z.objectid=a.EventId  and x.status=0  ) as NotUsedCount 
             //总数据表
             string sql = @"  SELECT Count(1) TotalCount                   
                                 from LPrizes   a
@@ -380,10 +386,11 @@ a.*,
 	                       inner join PrizeCouponTypeMapping y on x.coupontypeid=y.coupontypeid
 						   inner join vipcouponmapping z on x.couponid=z.couponid 
 						      where y.PrizesID=a.PrizesID    and z.objectid=a.EventId  and x.status=1   )  as UsedCount  ,  ----已经使用的
-		(select count(1) from coupon x 
+	          	(select count(1) from LPrizeWinner where PrizeID=a.prizesID)	-
+                                (select count(1) from coupon x 
 	                       inner join PrizeCouponTypeMapping y on x.coupontypeid=y.coupontypeid
 						   inner join vipcouponmapping z on x.couponid=z.couponid 
-						      where y.PrizesID=a.PrizesID    and z.objectid=a.EventId  and x.status=0  ) as NotUsedCount ,----已发放未使用
+						      where y.PrizesID=a.PrizesID    and z.objectid=a.EventId  and x.status=1   )  as NotUsedCount ,----已发放未使用
  ---代动销量
        (select     isnull(sum(actual_amount) ,0) from vipcouponmapping x   ---如果是游戏活动，则objectid是游戏活动的id
 											 inner join TOrderCouponMapping y   on x.couponid=y.couponid
@@ -436,26 +443,30 @@ from LPrizes   a
         
 
             //总数据表
-            string sql = @"  SELECT Count(1) TotalCount                   
-                                from    LPrizes a  ,PrizeCouponTypeMapping c ,vipcouponmapping d  ,coupon e ,Vip 
-where  c.prizesid=a.prizesid   and     a.eventid= d.objectid  and e.coupontypeid=  c.coupontypeid and d.couponid=e.couponid    and vip.vipid=d.VIPID
-                                                  
+            string sql = @"    SELECT Count(1) TotalCount                   
+                               
+ from  LPrizes a    inner join  LPrizeWinner b on a.PrizesID=b.PrizeID
+                 inner join Vip    c on  b.VipID=c.VIPID       
+                   WHERE   1 = 1                      
                                {4}
                   ";
             //取到某一页的
             sql += @"SELECT * FROM (  
                     SELECT  ROW_NUMBER()over(order by {0} {3}) _row,
 
- a.*,d.CreateTime as winTime,d.VipID,
+   a.*,b.CreateTime as winTime,b.VipID,
  vipname,viprealname , 
- e.status as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
-  (case  vip.vipsourceid when 3  then (case when vip.status>=1 then 1 else 0 end  )    else 0 end)  as subscribe     -----0代表未关注
- 
-               
- from  LPrizes a  ,PrizeCouponTypeMapping c ,vipcouponmapping d  ,coupon e ,Vip    
+ (select x.Status  from coupon x 
+	                       inner join PrizeCouponTypeMapping y on x.coupontypeid=y.coupontypeid
+						   inner join vipcouponmapping z on x.couponid=z.couponid 
+						      where y.PrizesID=a.PrizesID    and z.objectid=a.EventId)     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
+  (case  c.vipsourceid when 3  then (case when c.status>=1 then 1 else 0 end  )    else 0 end)  as subscribe     -----0代表未关注
+          ,prizeName as Name     
+ from  LPrizes a    inner join  LPrizeWinner b on a.PrizesID=b.PrizeID
+                 inner join Vip    c on  b.VipID=c.VIPID      
 
                             {5}
-                  WHERE     c.prizesid=a.prizesid   and     a.eventid= d.objectid  and e.coupontypeid=  c.coupontypeid and d.couponid=e.couponid    and vip.vipid=d.VIPID
+                  WHERE    1=1
                             {4}
                 ";
             sql += @") t

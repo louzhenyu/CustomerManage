@@ -83,6 +83,8 @@
                         left: ($(window).width() - 800) * 0.5
                     });
                     $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=GameAwardsListExport");
+
+                    $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GetEventPrizeDetailList(function (data) {
                         that.renderTable3( data);
                     });
@@ -92,7 +94,7 @@
                         left: ($(window).width() - 800) * 0.5
                     });
                     $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=SalesItemsListExport");
-
+                    $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GeEventItemDetailList(function (data) {
                         that.renderTable3(data);
                     });
@@ -144,6 +146,8 @@
 
                 $(".tr_DataDetail").remove();
                 $(".viewdesc").data("isshow", false);
+
+                that.loadkkpager();
                
             });
 
@@ -205,6 +209,8 @@
                 if (that.loadData.AppendPrize.CountTotal != "") {
                     that.AppendPrize(function (data) {
                         $('#winadd').window('close');
+
+                        $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                         that.GetEventPrizeList(function (_data) {
                             that.renderTable2(_data);
 
@@ -313,6 +319,8 @@
                     $(self).parents("tr").after(html);
 
                     $.util.isLoading()
+
+                    $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GetEventPrizeList(function (_data) {
                         that.renderTable2(_data);
 
@@ -330,6 +338,8 @@
                     $(".datagrid-body,.datagrid-view").css("height", "initial");
                     $(self).parents("tr").after(html);
                     $.util.isLoading()
+
+                    $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GeEventItemList(function (_data) {
                         that.renderTable2(_data);
 
@@ -392,6 +402,7 @@
 
             } else {
                 $(self).data("isshow", false);
+                that.loadkkpager();
                 
             }
         }
@@ -550,6 +561,8 @@
             //data.Data={};
             //data.Data.TotalPageCount = data.totalCount%that.loadData.args.limit==0? data.totalCount/that.loadData.args.limit: data.totalCount/that.loadData.args.limit +1;
             //var page=parseInt(that.loadData.args.start/15);
+            that.loadData.args.TotalPage = data.TotalPage;
+            that.loadData.args.TotalCount = data.TotalCount;
              kkpager.generPageHtml({
 				pagerid:'kkpager',
                 pno: that.loadData.args.PageIndex,
@@ -584,6 +597,7 @@
         //渲染tabel
         renderTable2: function (data) {
             debugger;
+
             var that = this;
             if (that.loadData.details.InteractionType == 1) {
                 if (!data.EventPrizeList) {
@@ -738,6 +752,7 @@
         //渲染tabel
         renderTable3: function (data) {
             debugger;
+
             var that = this;
             if (that.loadData.details.InteractionType == 1) {
                 if (!data.EventPrizeDetailList) {
@@ -898,7 +913,7 @@
         loadMoreData: function (currentPage) {
             var that = this;
             that.loadData.args.PageIndex = currentPage;
-
+            $("#tableWrap .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
             that.GetTCTWLEventList(function (data) {
                 that.loadActivityData(data);
             });
@@ -909,6 +924,7 @@
             var that = this;
             that.loadData.args1.PageIndex = currentPage;
 
+            $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
             if (that.loadData.details.InteractionType == 1) {
                 that.GetEventPrizeList(function (_data) {
                     that.renderTable2(_data);
@@ -926,6 +942,7 @@
             var that = this;
             that.loadData.args2.PageIndex = currentPage;
 
+            $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
             if (that.loadData.details.InteractionType == 1) {
                 that.GetEventPrizeDetailList(function (data) {
                     that.renderTable3(data);
@@ -1278,6 +1295,39 @@
                 }
             });
         },
+        loadkkpager:function()//初始化加载列表分页
+        {
+            var that=this;
+            kkpager.generPageHtml({
+                pagerid:'kkpager',
+                pno: that.loadData.args.PageIndex,
+                mode: 'click', //设置为click模式
+                //总页码
+                total: that.loadData.args.TotalPage,
+                totalRecords: that.loadData.args.TotalCount,
+                isShowTotalPage: true,
+                isShowTotalRecords: true,
+                //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
+                //适用于不刷新页面，比如ajax
+                click: function (n) {
+                    //这里可以做自已的处理
+                    //...
+                    //处理完后可以手动条用selectPage进行页码选中切换
+                    this.selectPage(n);
+                    //让  tbody的内容变成加载中的图标
+                    //var table = $('table.dataTable');//that.tableMap[that.status];
+                    //var length = table.find("thead th").length;
+                    //table.find("tbody").html('<tr ><td style="height: 150px;text-align: center;vertical-align: middle;" colspan="' + (length + 1) + '" align="center"> <span><img src="../static/images/loading.gif"></span></td></tr>');
+
+                    that.loadMoreData(n);
+                },
+                //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
+                getHref: function (n) {
+                    return '#';
+                }
+
+            }, true);
+        },
         //追加
         AppendPrize: function (callback) {
             var that = this;
@@ -1312,7 +1362,9 @@
         loadData: {
             args: {
                 PageIndex: 1,
-                PageSize: 10
+                PageSize: 10,
+                TotalPage: 0,
+                TotalCount:0
             }, args1: {
                 PageIndex: 1,
                 PageSize: 10

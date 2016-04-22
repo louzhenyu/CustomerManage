@@ -81,6 +81,7 @@
                     });
                     $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=GameAwardsListExport");
 
+                    $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GetEventPrizeDetailList(function (data) {
                         that.renderTable3(data);
                     });
@@ -91,6 +92,7 @@
                     });
                     $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=SalesItemsListExport");
 
+                    $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GeEventItemDetailList(function (data) {
                         that.renderTable3(data);
                     });
@@ -215,6 +217,8 @@
                     that.AppendPrize(function (data) {
                         $('#winadd').window('close');
                         $.messager.alert("提示", "保存成功！");
+
+                        $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                         that.GetEventPrizeList(function (_data) {
                             that.renderTable2(_data);
 
@@ -436,6 +440,7 @@
 
 
 
+                    $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GetEventPrizeList(function (_data) {
                         that.renderTable2(_data);
 
@@ -461,6 +466,7 @@
                     $('#panlconent').layout('add', options);
 
 
+                    $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GeEventItemList(function (_data) {
                         that.renderTable2(_data);
 
@@ -546,6 +552,7 @@
         },
         //渲染tabel
         renderTable2: function (data) {
+
             debugger;
             var that = this;
             if (that.loadData.details.InteractionType == 1) {
@@ -701,6 +708,7 @@
         //渲染tabel
         renderTable3: function (data) {
             debugger;
+
             var that = this;
             if (that.loadData.details.InteractionType == 1) {
                 if (!data.EventPrizeDetailList) {
@@ -1377,6 +1385,7 @@
             var that = this;
             that.loadData.args1.PageIndex = currentPage;
 
+            $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
             if (that.loadData.details.InteractionType == 1) {
                 that.GetEventPrizeList(function (_data) {
                     that.renderTable2(_data);
@@ -1394,6 +1403,7 @@
             var that = this;
             that.loadData.args2.PageIndex = currentPage;
 
+            $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
             if (that.loadData.details.InteractionType == 1) {
                 that.GetEventPrizeDetailList(function (data) {
                     that.renderTable3(data);
