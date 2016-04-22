@@ -285,7 +285,7 @@ from (
                     count(case when FocusVipId is not null and FocusVipId != '' then 1 end) NewAtten
                from T_LEventsRegVipLog WITH (NOLOCK)
               group by T_LEventsRegVipLog.objectid
-            ) t on a.CTWEventId = t.objectid
+            ) t on CAST(a.CTWEventId AS NVARCHAR(50)) = t.objectid
 
 union all
 
