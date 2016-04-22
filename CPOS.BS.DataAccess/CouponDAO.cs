@@ -394,7 +394,7 @@ namespace JIT.CPOS.BS.DataAccess
             LEFT JOIN couponUse u on  a.CouponID=u.CouponID 
             WHERE a.IsDelete = 0 AND b.IsDelete = 0 AND d.IsDelete = 0 AND a.Status=2 and convert(varchar(10),a.EndDate,120) >= convert(varchar(10),getdate(),120)  "+
       //     AND NOT EXISTS(SELECT 1 FROM TOrderCouponMapping t WHERE t.IsDelete = 0 AND t.CouponId = a.CouponId
-         @") 
+         @"
             AND d.VIPID = '{0}'
             ", vipID);
             if (!string.IsNullOrEmpty(TypeID))
