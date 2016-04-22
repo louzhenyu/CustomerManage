@@ -317,7 +317,7 @@
 						}
 					}else{
 						obj.Parameters.Status = 1;
-						//判断配送方式[1送货上门\2到店自提]
+						//判断配送方式[1送货上门\2店自提]
 						if(deliveryId=='1'){
 							if($("#dispatching_describe").val() == ''){
 								that.alert('配送费描述不能为空！');
@@ -355,16 +355,16 @@
 							if($("#dispatching_stockup").val() == ''){
 								that.alert('备货期不能为空！');
 								return ;
-							}else if(!REG_INT.test(parseInt($("#dispatching_stockup").val()))){
-								that.alert('备货期为大于0的整数！');
+							}else if(!REG_INT.test($("#dispatching_stockup").val())){
+								that.alert('备货期只能为正整数！');
 								return ;
 							}
 							
 							if($("#dispatching_pickup").val() == ''){
-								that.alert('提货期最长不能为空！');
+								that.alert('提货期不能为空！');
 								return ;
-							}else if(!REG_INT.test(parseInt($("#dispatching_pickup").val()))){
-								that.alert('提货期为大于0的整数！');
+							}else if(!REG_INT.test($("#dispatching_pickup").val())){
+								that.alert('提货期只能为正整数！');
 								return ;
 							}
 							/*

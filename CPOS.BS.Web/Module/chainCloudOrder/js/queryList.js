@@ -496,7 +496,7 @@
 
                         $("#optBtnss").show();
                     }else{
-                        $("#optBtnss").hide()
+                        $("#optBtnss").hide();
                     }
 					
                 },

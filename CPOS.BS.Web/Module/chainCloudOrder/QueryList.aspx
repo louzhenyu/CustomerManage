@@ -6,7 +6,7 @@
     <title>订单管理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="<%=StaticUrl+"/module/chainCloudOrder/css/style.css?v=0.2"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/chainCloudOrder/css/style.css?v=0.3"%>" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

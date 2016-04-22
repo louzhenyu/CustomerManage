@@ -38,7 +38,6 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			
 			//第一步
 			that.getClassify();//获取上级组织层级
-			that.getCityInfo('');//获取省，市，区
 			
 			//遍历图文素材下拉框
 			$('#ReplyType').combobox({
@@ -70,7 +69,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			$('#ReplyType').combobox('setText',"请选择");
 			
 			
-			that.getStoreInfo(that.elems.unitId);//获取门店信息
+			//获取省，市，区  待开发
+			that.getCityInfo('',function(){
+				that.getStoreInfo(that.elems.unitId);//获取门店信息
+			});
 			
 		},
 		
@@ -155,7 +157,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							$qrInfoBox = $('.qrInfoBox img'),
 							unitObj = JSON.parse(prams.unit);
 						prams.action = 'unit_save';
-
+						prams.unit_id = that.elems.unitId;
+						
 						unitObj.WXCodeImageUrl = $qrInfoBox.attr('src');//二维码地址
 						unitObj.MaxWQRCod = $qrInfoBox.data('code');//二维码标识
 						unitObj.ReplyType = $('#ReplyType').combobox('getValue')-0;//消息类型（1：文本，3：图文）
@@ -487,7 +490,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				                    }
 				                    var html = bd.template("addImageItemTmpl", obj);
 				                    that.elems.imageContentDiv.find(".list").html(html);
-
+									$('#hasChoosed').text(result.listMenutext.length);
 				                }
 
 				            }
@@ -550,7 +553,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			
 			
 		},
-		getCityInfo:function(id){
+		getCityInfo:function(id,callback){
 			var that = this;
 			$.util.oldAjax({
 				url: "/Framework/Javascript/Biz/Handler/CitySelectTreeHandler.ashx",
@@ -603,7 +606,9 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 							});
 							//$('#CityId').combobox('setText',"请选择");
 						}
-						
+						if(callback){
+							callback();
+						}
 						
 					}else{
 						alert(data.msg);

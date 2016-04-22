@@ -71,14 +71,14 @@
                               <div class="commonSelectWrap">
                                   <em class="tit">用户名：</em>
                                   <label class="searchInput" style="width:232px;">
-                                      <input data-text="用户名" class="easyui-validatebox" data-flag="user_code" name="User_Code"   id="user_code" type="text" value="" data-options="required:true" placeholder="请输入">
+                                      <input data-text="用户名" class="easyui-validatebox" data-flag="user_code" name="User_Code"   id="user_code" type="text" value="" data-options="required:true,validType:'maxLength[20]',invalidMessage:'输入的用户名长度不能超20个字符'" placeholder="请输入">
                                   </label>
                               </div>
                               
                               <div class="commonSelectWrap">
                                   <em class="tit">姓名：</em>
                                   <label class="searchInput" style="width:232px;">
-                                      <input data-text="姓名" class="easyui-validatebox" name="User_Name" id="user_name" type="text" value="" data-options="required:true" placeholder="请输入">
+                                      <input data-text="姓名" class="easyui-validatebox" name="User_Name" id="user_name" type="text" value="" data-options="required:true,validType:'maxLength[10]',invalidMessage:'输入的姓名长度不能超10个字符'" placeholder="请输入">
                                   </label>
                               </div>
                               
@@ -143,7 +143,7 @@
 				<div class="commonSelectWrap">
 				  <em class="tit">单位：</em>
 					<label class="searchInput clearBorder">
-					  <input data-text="单位" class="easyui-combobox" id="type_id" data-options="required:true,invalidMessage:'必填'"  name="UnitId" type="text" value="" validType='selectIndex'>
+					  <input data-text="单位" class="easyui-combobox" id="type_id" data-options="required:true,invalidMessage:'必填'" name="UnitId" type="text" value="" validType='selectIndex'>
 				   </label>
 				</div>
 				

@@ -185,15 +185,15 @@ form.ke-upload-area.ke-form{opacity:0;cursor:pointer;}
                       <div class="commonSelectWrap cityLinkageBox">
                         <em class="tit">地址：</em>
                         <label class="searchInput clearBorder" style="width:70px;" >
-                          <input class="easyui-combobox" id="provinceId" data-flag="provinceId" name="provinceId" type="text" value="" data-options="required:true,width:70,height:32"  validType='selectIndex'>
+                          <input class="easyui-combobox" id="provinceId" data-flag="provinceId" name="provinceId" type="text" value="" data-options="required:true,width:70,height:32" >
                         </label>
                         
                         <label class="searchInput clearBorder" style="width:70px;">
-                          <input class="easyui-combobox" id="townId" data-flag="townId" name="townId" type="text" value="" data-options="required:true,width:70,height:32"  validType='selectIndex'>
+                          <input class="easyui-combobox" id="townId" data-flag="townId" name="townId" type="text" value="" data-options="required:true,width:70,height:32">
                         </label>
                         
                         <label class="searchInput clearBorder" style="width:70px;">
-                          <input class="easyui-combobox" id="CityId" data-flag="CityId" name="CityId" type="text" value="" data-options="required:true,width:70,height:32"  validType='selectIndex'>
+                          <input class="easyui-combobox" id="CityId" data-flag="CityId" name="CityId" type="text" value="" data-options="required:true,width:70,height:32">
                         </label>
                       </div>
                       

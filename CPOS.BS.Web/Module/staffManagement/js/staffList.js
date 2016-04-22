@@ -93,13 +93,13 @@
 					case 'pause':
 						that.setStatusEvent(userId,1,function(){
 							$this.attr('class','handle runningBtn opt').attr('title','停用').data('flag','running');
-							$('td[field="User_Status_Desc"]',$tr).find('div').text('正常');
+							$('td[field="User_Status"]',$tr).find('div').text('正常');
 						});
 					break;
 					case 'running':
 						that.setStatusEvent(userId,-1,function(){
 							$this.attr('class','handle pauseBtn opt').attr('title','启用').data('flag','pause');
-							$('td[field="User_Status_Desc"]',$tr).find('div').text('停用');
+							$('td[field="User_Status"]',$tr).find('div').text('停用');
 						});
 					break;
 					case 'delete':
@@ -729,7 +729,7 @@
             seach:{
 				"user_code":"",
 				"user_name":"",
-				//"user_status":"1",
+				"user_status":1,
 				"role_id":"",
 				"unit_id":""
 			},

@@ -500,7 +500,7 @@
                 $('#type_id').combotree({
                     width:that.elems.width,
 					height:that.elems.height,
-                    editable:true,
+                    //editable:true,
                     lines:true,
                     panelHeight:that.elems.panlH,
                     valueField: 'id',
@@ -538,6 +538,7 @@
 							width:that.elems.width,
 							height:that.elems.height,
 							panelHeight:115,
+							editable:false,
 							valueField: 'Def_App_Id',
 							textField: 'Def_App_Name',
 							data:result,
@@ -572,6 +573,7 @@
 							width:that.elems.width,
 							height:that.elems.height,
 							panelHeight:115,
+							editable:false,
 							valueField: 'Role_Id',
 							textField: 'Role_Name',
 							data:result
@@ -628,7 +630,7 @@
 						$('#limitsTreeBox').combotree({
 							width:that.elems.width,
 							height:that.elems.height,
-							editable:true,
+							//editable:true,
 							lines:true,
 							panelHeight:500,
 							valueField: 'id',
