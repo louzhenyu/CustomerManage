@@ -444,7 +444,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 bgimageEntity.ImageId = Guid.NewGuid().ToString();
                 imageBll.Create(bgimageEntity);
 
-                if (sItem.SpreadType == "Focus" && !string.IsNullOrEmpty(sItem.LeadPageQRCodeImageUrl))
+                if (sItem.SpreadType == "Focus")
                 {
 
                     CreateFocusQRCode(para, sItem.LeadPageQRCodeImageUrl, wapentity, out QRCodeUrl);

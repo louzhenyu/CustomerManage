@@ -456,10 +456,10 @@ from LPrizes   a
 
    a.*,b.CreateTime as winTime,b.VipID,
  vipname,viprealname , 
- (select x.Status  from coupon x 
+ isnull((select x.Status  from coupon x 
 	                       inner join PrizeCouponTypeMapping y on x.coupontypeid=y.coupontypeid
 						   inner join vipcouponmapping z on x.couponid=z.couponid 
-						      where y.PrizesID=a.PrizesID    and z.objectid=a.EventId)     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
+						      where y.PrizesID=a.PrizesID    and z.objectid=a.EventId),'0')     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
   (case  c.vipsourceid when 3  then (case when c.status>=1 then 1 else 0 end  )    else 0 end)  as subscribe     -----0代表未关注
           ,prizeName as Name     
  from  LPrizes a    inner join  LPrizeWinner b on a.PrizesID=b.PrizeID

@@ -117,9 +117,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [CouponType](");
-            strSql.Append("[CouponTypeName],[ParValue],[Discount],[ConditionValue],[IsRepeatable],[IsMixable],[CouponSourceID],[ValidPeriod],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[IssuedQty],[IsVoucher],[UsableRange],[ServiceLife],[SuitableForStore],[BeginTime],[EndTime],[CouponTypeDesc],[CouponTypeID])");
+            strSql.Append("[CouponTypeName],[CouponTypeCode],[CouponCategory],[ParValue],[Discount],[ConditionValue],[IsRepeatable],[IsMixable],[CouponSourceID],[ValidPeriod],[LastUpdateTime],[LastUpdateBy],[CreateTime],[CreateBy],[IsDelete],[CustomerId],[IssuedQty],[IsVoucher],[UsableRange],[ServiceLife],[SuitableForStore],[BeginTime],[EndTime],[CouponTypeDesc],[CouponTypeID])");
             strSql.Append(" values (");
-            strSql.Append("@CouponTypeName,@ParValue,@Discount,@ConditionValue,@IsRepeatable,@IsMixable,@CouponSourceID,@ValidPeriod,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@IssuedQty,@IsVoucher,@UsableRange,@ServiceLife,@SuitableForStore,@BeginTime,@EndTime,@CouponTypeDesc,@CouponTypeID)");
+            strSql.Append("@CouponTypeName,@CouponTypeCode,@CouponCategory,@ParValue,@Discount,@ConditionValue,@IsRepeatable,@IsMixable,@CouponSourceID,@ValidPeriod,@LastUpdateTime,@LastUpdateBy,@CreateTime,@CreateBy,@IsDelete,@CustomerId,@IssuedQty,@IsVoucher,@UsableRange,@ServiceLife,@SuitableForStore,@BeginTime,@EndTime,@CouponTypeDesc,@CouponTypeID)");
 
             Guid? pkGuid;
             if (pEntity.CouponTypeID == null)
@@ -151,7 +151,9 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@BeginTime",SqlDbType.DateTime),
 					new SqlParameter("@EndTime",SqlDbType.DateTime),
 					new SqlParameter("@CouponTypeDesc",SqlDbType.NVarChar),
-					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@CouponTypeID",SqlDbType.UniqueIdentifier),
+                    new SqlParameter("@CouponTypeCode",SqlDbType.VarChar),
+					new SqlParameter("@CouponCategory",SqlDbType.VarChar)
             };
             parameters[0].Value = pEntity.CouponTypeName;
             parameters[1].Value = pEntity.ParValue;
@@ -176,6 +178,8 @@ namespace JIT.CPOS.BS.DataAccess
             parameters[20].Value = pEntity.EndTime;
             parameters[21].Value = pEntity.CouponTypeDesc;
             parameters[22].Value = pkGuid;
+            parameters[23].Value = pEntity.CouponTypeCode;
+            parameters[24].Value = pEntity.CouponCategory;
 
             //执行并将结果回写
             int result;

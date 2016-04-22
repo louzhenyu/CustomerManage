@@ -1430,7 +1430,7 @@ namespace JIT.CPOS.Web.WeiXin
                             #endregion
                             #region 创意仓库关注log
                             WQRCodeManagerBLL bllWQRCodeManage = new WQRCodeManagerBLL(tmpUser);
-                            var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode, QRCodeId =new Guid(qrcode_id) },null).SingleOrDefault();
+                            var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode_id }, null).SingleOrDefault();
                             if(entityWQRCodeManage!=null)
                             {
                                 T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
@@ -1461,6 +1461,18 @@ namespace JIT.CPOS.Web.WeiXin
                         #region 关注触点活动奖励
 
                         bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
+                        #endregion
+                        #region 创意仓库关注log
+                        WQRCodeManagerBLL bllWQRCodeManage = new WQRCodeManagerBLL(tmpUser);
+                        var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode_id }, null).SingleOrDefault();
+                        if (entityWQRCodeManage != null)
+                        {
+                            T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
+                            if (!string.IsNullOrEmpty(entityWQRCodeManage.ObjectId))
+                            {
+                                lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID);
+                            }
+                        }
                         #endregion
                     }
                     vipId = vipInfo.VIPID;

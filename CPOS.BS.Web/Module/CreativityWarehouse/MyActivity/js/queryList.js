@@ -737,8 +737,8 @@
                             formatter: function (value, row, index) {
                                 var result = "";
                                 switch (value) {
-                                    case 0: result = "否"; break;
-                                    case 1: result = "是"; break;
+                                    case "0": result = "否"; break;
+                                    case "1": result = "是"; break;
                                     default: result = ""; break;
                                 }
                                 return result;
@@ -750,8 +750,8 @@
                             formatter: function (value, row, index) {
                                 var result = "";
                                 switch (value) {
-                                    case 0: result = "否"; break;
-                                    case 1: result = "是"; break;
+                                    case "0": result = "否"; break;
+                                    case "1": result = "是"; break;
                                     default: result = ""; break;
                                 }
                                 return result;

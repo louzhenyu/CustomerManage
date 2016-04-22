@@ -28,6 +28,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             if(!string.IsNullOrEmpty(para.CTWEventId) && para.Status>0)
             {
                 var entityCTWEvent = bllCTWEvent.GetByID(para.CTWEventId);
+                
                 if(entityCTWEvent!=null)
                 {
                     entityCTWEvent.Status = para.Status;
