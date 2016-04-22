@@ -193,7 +193,11 @@
 
             //追加事件
             $("#windesc").on("click", ".addPrizes", function () {
-                $("#addPrize").numberbox("setValue");
+                $("#addPrize").numberbox("setValue","");
+                that.loadData.AppendPrize.PrizesId = $(this).data("id");
+                that.loadData.AppendPrize.CouponTypeID = $(this).data("coupontypeid");
+                that.loadData.AppendPrize.PrizeType = $(this).data("prizetype");
+
                 $('#winadd').window({
                     title: "追加数量", width: 400, height: 240, top: ($(window).height() - 240) * 0.5,
                     left: ($(window).width() - 400) * 0.5
@@ -205,12 +209,16 @@
             });
 
             $(".addbtn").on("click", function () {
-                var id = $(this).data("id");
-                var addPrize = $("#addPrize").numberbox("getValue");
-                if (addPrize != "") {
-                    that.AppendPrize(id, addPrize, function (data) {
+
+                that.loadData.AppendPrize.CountTotal = $("#addPrize").numberbox("getValue");
+                if (that.loadData.AppendPrize.CountTotal != "") {
+                    that.AppendPrize(function (data) {
                         $('#winadd').window('close');
                         $.messager.alert("提示", "保存成功！");
+                        that.GetEventPrizeList(function (_data) {
+                            that.renderTable2(_data);
+
+                        });
                     });
                 } else {
                     $.messager.alert("提示", "追加数量不能为空！");
@@ -573,7 +581,7 @@
                         {
                             field: 'PrizesID', title: '操作', width: 50, align: 'left', resizable: false,
                             formatter: function (value, row, index) {
-                                return "<a class='addPrizes'  data-id='" + value + "' href='javascript:void(0);' >追加奖品</a>";
+                                return "<a class='addPrizes'  data-id='" + value + "' data-prizetype='" + row.PrizeTypeId + "' data-coupontypeid='" + row.CouponTypeID + "'  href='javascript:void(0);' >追加奖品</a>";
 
                             }
                         }
@@ -665,7 +673,7 @@
                 pno: that.loadData.args1.PageIndex,
                 mode: 'click', //设置为click模式
                 //总页码
-                total: data.PageCount,
+                total: data.TotalPage,
                 totalRecords: data.TotalCount,
                 isShowTotalPage: true,
                 isShowTotalRecords: true,
@@ -823,7 +831,7 @@
                 pno: that.loadData.args2.PageIndex,
                 mode: 'click', //设置为click模式
                 //总页码
-                total: data.PageCount,
+                total: data.TotalPage,
                 totalRecords: data.TotalCount,
                 isShowTotalPage: true,
                 isShowTotalRecords: true,
@@ -856,8 +864,8 @@
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GetEventPrizeList',
                     LeventId: that.loadData.details.EventId,
-                    PageIndex: that.loadData.args.PageIndex,
-                    PageSize: that.loadData.args.PageSize
+                    PageIndex: that.loadData.args1.PageIndex,
+                    PageSize: that.loadData.args1.PageSize
                 },
                 beforeSend: function () {
                     $.util.isLoading()
@@ -871,7 +879,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -898,7 +906,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -913,8 +921,8 @@
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GeEventItemList',
                     LeventId: that.loadData.details.EventId,
-                    PageIndex: that.loadData.args.PageIndex,
-                    PageSize: that.loadData.args.PageSize
+                    PageIndex: that.loadData.args1.PageIndex,
+                    PageSize: that.loadData.args1.PageSize
                 },
                 beforeSend: function () {
                     $.util.isLoading()
@@ -928,7 +936,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -955,7 +963,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -982,7 +990,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -1009,7 +1017,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -1024,8 +1032,8 @@
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GetEventPrizeDetailList',
                     LeventId: that.loadData.details.EventId,
-                    PageIndex: that.loadData.args.PageIndex,
-                    PageSize: that.loadData.args.PageSize
+                    PageIndex: that.loadData.args2.PageIndex,
+                    PageSize: that.loadData.args2.PageSize
                 },
                 beforeSend: function () {
                     $.util.isLoading()
@@ -1039,7 +1047,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -1054,8 +1062,8 @@
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GeEventItemDetailList',
                     LeventId: that.loadData.details.EventId,
-                    PageIndex: that.loadData.args.PageIndex,
-                    PageSize: that.loadData.args.PageSize
+                    PageIndex: that.loadData.args2.PageIndex,
+                    PageSize: that.loadData.args2.PageSize
                 },
                 beforeSend: function () {
                     $.util.isLoading()
@@ -1069,7 +1077,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -1097,7 +1105,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -1127,7 +1135,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -1155,22 +1163,24 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
             });
         },
         //追加
-        AppendPrize: function (PrizesID, CountTotal, callback) {
+        AppendPrize: function ( callback) {
             var that = this;
             $.util.ajax({
                 url: "/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
                 data: {
                     action: 'AppendPrize',
                     EventId: that.loadData.details.EventId,
-                    PrizesID: PrizesID,
-                    CountTotal: CountTotal
+                    CouponTypeID: that.loadData.AppendPrize.CouponTypeID,
+                    PrizeType: that.loadData.AppendPrize.PrizeType,
+                    PrizesID: that.loadData.AppendPrize.PrizesId,
+                    CountTotal: that.loadData.AppendPrize.CountTotal
                 },
                 beforeSend: function () {
                     $.util.isLoading()
@@ -1184,7 +1194,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -1328,7 +1338,7 @@
                 pno: that.loadData.args.PageIndex,
                 mode: 'click', //设置为click模式
                 //总页码
-                total: data.PageCount,
+                total: data.TotalPage,
                 totalRecords: data.TotalCount,
                 isShowTotalPage: true,
                 isShowTotalRecords: true,
@@ -1417,7 +1427,7 @@
 				          }
 				      } else {
 				          debugger;
-				          alert(data.Message);
+				          $.messager.alert("提示", data.Message);
 
 				      }
 				  }
@@ -1443,7 +1453,7 @@
                         }
                     } else {
                         debugger;
-                        alert(data.Message);
+                        $.messager.alert("提示", data.Message);
 
                     }
                 }
@@ -1453,38 +1463,14 @@
        
         loadData: {
             args: {
-                bat_id:"1",
                 PageIndex: 1,
-                PageSize: 10,
-                SearchColumns:{},    //查询的动态表单配置
-                OrderBy:"",           //排序字段
-                SortType: 'DESC',    //如果有提供OrderBy，SortType默认为'ASC'
-                Status:-1,
-                page:1,
-                start:0,
-                limit:15
+                PageSize: 10
             }, args1: {
-                bat_id: "1",
                 PageIndex: 1,
-                PageSize: 10,
-                SearchColumns: {},    //查询的动态表单配置
-                OrderBy: "",           //排序字段
-                SortType: 'DESC',    //如果有提供OrderBy，SortType默认为'ASC'
-                Status: -1,
-                page: 1,
-                start: 0,
-                limit: 15
+                PageSize: 10
             }, args2: {
-                bat_id: "1",
                 PageIndex: 1,
-                PageSize: 10,
-                SearchColumns: {},    //查询的动态表单配置
-                OrderBy: "",           //排序字段
-                SortType: 'DESC',    //如果有提供OrderBy，SortType默认为'ASC'
-                Status: -1,
-                page: 1,
-                start: 0,
-                limit: 15
+                PageSize: 10
             },
             details: {
                 EventId: "",
@@ -1497,6 +1483,13 @@
                 startdate: '',
                 enddate: ''
             },
+            AppendPrize: {//追加奖品参数
+                PrizesId:"",
+                CouponTypeID: "",
+                CountTotal: "",
+                PrizeType: ""
+            },
+
             seach:{
                 form:{
                     EventName: "",
