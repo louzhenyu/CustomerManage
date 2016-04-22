@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013-12-14 15:57
+ * Create On	:2016/4/22 11:41:32
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -25,7 +25,7 @@ namespace JIT.CPOS.BS.Entity
     /// <summary>
     /// 实体：  
     /// </summary>
-    public partial class CouponTypeEntity : BaseEntity
+    public partial class CouponTypeEntity : BaseEntity 
     {
         #region 构造函数
         /// <summary>
@@ -34,7 +34,7 @@ namespace JIT.CPOS.BS.Entity
         public CouponTypeEntity()
         {
         }
-        #endregion
+        #endregion     
 
         #region 属性集
 		/// <summary>
@@ -46,6 +46,16 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String CouponTypeName { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CouponTypeCode { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String CouponCategory { get; set; }
 
 		/// <summary>
 		/// 面值

@@ -42,43 +42,56 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     strOnLineRedirectUrl = ds.Tables[0].Rows[0]["OnLineRedirectUrl"].ToString();
                     ContactEventBLL bllContact = new ContactEventBLL(this.CurrentUserInfo);
                     var contactList = bllContact.QueryByEntity(new ContactEventEntity() { EventId = strCTWEventId, IsCTW = 1, IsDelete = 0 }, null).ToList();
-                    if(contactList.Count>0)
-                    {
-                        T_CTW_SpreadSettingBLL bllSpreadSetting = new T_CTW_SpreadSettingBLL(this.CurrentUserInfo);
+                 
+                    T_CTW_SpreadSettingBLL bllSpreadSetting = new T_CTW_SpreadSettingBLL(this.CurrentUserInfo);
 
+                    DataSet dsReg = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Reg");
+                    
+
+                    if (dsReg != null && dsReg.Tables.Count > 0 && dsReg.Tables[0].Rows.Count > 0)
+                    {
+                        ButtonInfo reg = new ButtonInfo();
+                        reg.Text = "注册";
+                        reg.Title = dsReg.Tables[0].Rows[0]["Title"].ToString();
+                        reg.Summary = dsReg.Tables[0].Rows[0]["Summary"].ToString();
+                        reg.BGImageUrl = dsReg.Tables[0].Rows[0]["BGImageUrl"].ToString();
                         if (contactList.Where(a => a.ContactTypeCode == "Reg").Count() > 0)
                         {
-                            ButtonInfo reg = new ButtonInfo();
                             reg.Text = "注册有奖";
-                            rd.Reg = reg;
                         }
-                        if (contactList.Where(a => a.ContactTypeCode == "Share").Count() > 0)
-                        {
-                            ButtonInfo share = new ButtonInfo();
-                            DataSet dsSpreadSetting = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Share");
-                            if (dsSpreadSetting != null && dsSpreadSetting.Tables.Count > 0 && dsSpreadSetting.Tables[0].Rows.Count > 0)
-                            {
-                                share.Title = dsSpreadSetting.Tables[0].Rows[0]["Title"].ToString(); 
-                                share.Summary = dsSpreadSetting.Tables[0].Rows[0]["Summary"].ToString();
-                                share.BGImageUrl = dsSpreadSetting.Tables[0].Rows[0]["BGImageUrl"].ToString(); 
+                        rd.Reg = reg;
+                    }
 
-                            } 
+                    DataSet dsShare = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Share");
+
+                    if (dsShare != null && dsShare.Tables.Count > 0 && dsShare.Tables[0].Rows.Count > 0)
+                    {
+                        ButtonInfo share = new ButtonInfo();
+
+                        share.Text = "分享";
+                        share.Title = dsShare.Tables[0].Rows[0]["Title"].ToString();
+                        share.Summary = dsShare.Tables[0].Rows[0]["Summary"].ToString();
+                        share.BGImageUrl = dsShare.Tables[0].Rows[0]["BGImageUrl"].ToString();
+                        if (contactList.Count > 0 && contactList.Where(a => a.ContactTypeCode == "Share").Count() > 0)
+                        {
                             share.Text = "分享有奖";
-                            
-                            rd.Share = share;
                         }
-                        if (contactList.Where(a => a.ContactTypeCode == "Focus").Count() > 0)
-                        {
-                            DataSet dsSpreadSetting = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Focus");
-                            if (dsSpreadSetting != null && dsSpreadSetting.Tables.Count > 0 && dsSpreadSetting.Tables[0].Rows.Count > 0)
-                            {
-                                ButtonInfo focus = new ButtonInfo();
+                        rd.Share = share;
+                    }
 
-                                focus.BGImageUrl = dsSpreadSetting.Tables[0].Rows[0]["BGImageUrl"].ToString();
-                                focus.LeadPageQRCodeImageUrl = dsSpreadSetting.Tables[0].Rows[0]["LeadPageQRCodeImageUrl"].ToString();
-                                rd.Focus = focus;
-                            }
+
+                    DataSet dsFocus = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Focus");
+                    if (dsFocus != null && dsFocus.Tables.Count > 0 && dsFocus.Tables[0].Rows.Count > 0)
+                    {
+                        ButtonInfo focus = new ButtonInfo();
+                        focus.Text = "扫码关注";
+                        focus.BGImageUrl = dsFocus.Tables[0].Rows[0]["BGImageUrl"].ToString();
+                        focus.LeadPageQRCodeImageUrl = dsFocus.Tables[0].Rows[0]["LeadPageQRCodeImageUrl"].ToString();
+                        if (contactList.Count > 0 && contactList.Where(a => a.ContactTypeCode == "Focus").Count() > 0)
+                        {
+                            focus.Text = "关注有奖";
                         }
+                        rd.Focus = focus;
                     }
                     rd.IsCTW = 1;
                     rd.CTWEventId = strCTWEventId;

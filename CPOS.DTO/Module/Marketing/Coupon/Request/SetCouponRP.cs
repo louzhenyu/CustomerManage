@@ -11,6 +11,7 @@ namespace JIT.CPOS.DTO.Module.Marketing.Coupon.Request
         public string CouponTypeID { get; set; }
         public string CouponTypeName { get; set; }
         public string CouponTypeDesc { get; set; }
+        public string CouponCategory { get; set; }
         public decimal ParValue { get; set; }
         public int IssuedQty { get; set; }
         public decimal ConditionValue { get; set; }

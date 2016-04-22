@@ -38,6 +38,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
 
                         couponTypeEntity.CouponTypeName = para.CouponTypeName;
                         couponTypeEntity.CouponTypeDesc = para.CouponTypeDesc;
+                        couponTypeEntity.CouponCategory = para.CouponCategory;
                         couponTypeEntity.ParValue = para.ParValue;
                         couponTypeEntity.IssuedQty = para.IssuedQty;
                         couponTypeEntity.UsableRange = para.UsableRange;

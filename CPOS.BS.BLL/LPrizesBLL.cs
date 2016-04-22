@@ -217,6 +217,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetPirzeList(strEventId);
         }
+        public DataSet GetPirzeListForCTW(string strEventId)
+        {
+            return this._currentDAO.GetPirzeListForCTW(strEventId);
+        }
         public DataSet GetCouponTypeIDByPrizeId(string strPrizesID)
         {
             return this._currentDAO.GetCouponTypeIDByPrizeId(strPrizesID);
@@ -331,7 +335,7 @@ namespace JIT.CPOS.BS.BLL
                             {
                                 Integral = entityPrize.Point,
                                 IntegralSourceID = "22",
-                                ObjectId = ""
+                                ObjectId = contactEvent.ContactEventId.ToString()
                             };
                             //变动前积分
                             string OldIntegral=(vipInfo.Integration??0).ToString();
@@ -612,7 +616,7 @@ namespace JIT.CPOS.BS.BLL
                 {
                     Integral = -eventEntity.PointsLottery,
                     IntegralSourceID = "24",
-                    ObjectId = "",
+                    ObjectId =strEventId,
                     UnitID = vipInfo.CouponInfo
                 };
                 //变动前积分
@@ -660,7 +664,7 @@ namespace JIT.CPOS.BS.BLL
                     {
                         Integral = prize.Point,
                         IntegralSourceID = "22",
-                        ObjectId = "",
+                        ObjectId = strEventId,
                         UnitID = vipInfo.CouponInfo
                     };
                     //变动前积分
@@ -933,7 +937,7 @@ namespace JIT.CPOS.BS.BLL
                 {
                     Integral = -eventEntity.PointsLottery,
                     IntegralSourceID = "24",
-                    ObjectId = "",
+                    ObjectId = strEventId,
                     UnitID = vipInfo.CouponInfo
                 };
                 //变动前积分
@@ -981,7 +985,7 @@ namespace JIT.CPOS.BS.BLL
                     {
                         Integral = prize.Point,
                         IntegralSourceID = "22",
-                        ObjectId = "",
+                        ObjectId = strEventId,
                         UnitID = vipInfo.CouponInfo
                     };
                     //变动前积分

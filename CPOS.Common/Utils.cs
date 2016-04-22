@@ -675,13 +675,57 @@ namespace JIT.CPOS.Common
             #endregion
         }
 
+        /// <summary>
+        /// 微信二维码中间加图片
+        /// </summary>
+        /// <param name="bgImagePath">微信二维码地址</param>
+        /// <param name="destImg">前景图片</param>
+        /// <returns></returns>
+        public static Image CombinImage(string bgImagePath, string destImg)
+        {
+            Image img = Image.FromFile(destImg);        //照片图片      
+            if (img.Height != 65 || img.Width != 65)
+            {
+                img = KiResizeImage(img, 65, 65, 0);
+            }
+
+            Graphics g = null;
+            Image imgBack = null;
+            //背景图片
+            HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(bgImagePath);
+            WebResponse response_qrcode = null;
+            Stream qrcode_stream = null;
+            response_qrcode = request_qrcode.GetResponse();
+            qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
+            Bitmap _bmpQrcode1 = new Bitmap(qrcode_stream);//把流转换成Bitmap
+            Bitmap _bmpQrcode = new Bitmap(_bmpQrcode1, 327, 327);//缩放图片           
+            //把二维码由八位的格式转为24位的
+            Bitmap bmp = new Bitmap(_bmpQrcode.Width, _bmpQrcode.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb); //并用上面图片的尺寸做了一个位图
+            //用上面空的位图生成了一个空的画板
+            Graphics g3 = Graphics.FromImage(bmp);
+            g3.DrawImageUnscaled(_bmpQrcode, 0, 0);//把原来的图片画了上去
+            //前景图片
+            Bitmap befBmp = new Bitmap(img);
+            //合并
+            System.Drawing.Graphics g2 = System.Drawing.Graphics.FromImage(bmp);
+            g2.DrawImage(befBmp, bmp.Width / 2 - befBmp.Width / 2, bmp.Width / 2 - befBmp.Width / 2, befBmp.Width, befBmp.Height);
+
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            imgBack = Image.FromStream(ms);
+
+
+
+            GC.Collect();
+            return imgBack;
+        }
 
         /// <summary>    
         /// 调用此函数后使此两种图片合并，类似相册，有个    
         /// 背景图，中间贴自己的目标图片    
         /// </summary>    
         /// <param name="imgBack">粘贴的源图片</param>    
-        /// <param name="destImg">粘贴的目标图片</param>    
+        /// <param name="destImg">粘贴的目标图片</param>  
         public static Image CombinImage(Image imgBack, string destImg)
         {
             Image img = Image.FromFile(destImg);        //照片图片      
@@ -690,33 +734,12 @@ namespace JIT.CPOS.Common
                 img = KiResizeImage(img, 65, 65, 0);
             }
 
-            Graphics g =null;
-            if (IsPixelFormatIndexed(imgBack.PixelFormat))
-            {
-                Bitmap bmp = new Bitmap(imgBack.Width, img.Height, PixelFormat.Format32bppArgb);
-                using (g = Graphics.FromImage(bmp))
-                {
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                    g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                    g.DrawImage(img, 0, 0, imgBack.Width, imgBack.Height);
-                }
-                //下面的水印操作，就直接对 bmp 进行了
-                //......
-            }
-            else
-            {
-                g = Graphics.FromImage(imgBack);
-                g.DrawImage(imgBack, 0, 0, imgBack.Width, imgBack.Height);      //g.DrawImage(imgBack, 0, 0, 相框宽, 相框高);     
-
-            }
-
-
-            //g.FillRectangle(System.Drawing.Brushes.White, imgBack.Width / 2 - img.Width / 2 - 1, imgBack.Width / 2 - img.Width / 2 - 1,1,1);//相片四周刷一层黑色边框    
-
-            //g.DrawImage(img, 照片与相框的左边距, 照片与相框的上边距, 照片宽, 照片高);    
-
+            Graphics g = Graphics.FromImage(imgBack);
+            g.DrawImage(imgBack, 0, 0, imgBack.Width, imgBack.Height);      //g.DrawImage(imgBack, 0, 0, 相框宽, 相框高);  
             g.DrawImage(img, imgBack.Width / 2 - img.Width / 2, imgBack.Width / 2 - img.Width / 2, img.Width, img.Height);
+
+
+
             GC.Collect();
             return imgBack;
         }

@@ -1428,6 +1428,20 @@ namespace JIT.CPOS.Web.WeiXin
 
                             bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
                             #endregion
+                            #region 创意仓库关注log
+                            WQRCodeManagerBLL bllWQRCodeManage = new WQRCodeManagerBLL(tmpUser);
+                            var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode, QRCodeId =new Guid(qrcode_id) },null).SingleOrDefault();
+                            if(entityWQRCodeManage!=null)
+                            {
+                                T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
+                                if (!string.IsNullOrEmpty(entityWQRCodeManage.ObjectId))
+                                {
+                                    lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID);
+                                }
+                            }
+                            #endregion
+
+
                         }
                         //已关注了绑定公众号中的其他公众号
                         WXUserInfoBLL wxUserInfoBLL = new WXUserInfoBLL(tmpUser);

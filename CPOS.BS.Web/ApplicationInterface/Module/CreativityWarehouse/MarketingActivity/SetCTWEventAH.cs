@@ -446,12 +446,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                 if (sItem.SpreadType == "Focus" && !string.IsNullOrEmpty(sItem.LeadPageQRCodeImageUrl))
                 {
-                    //CreateFocusQRCode(para, sItem.LeadPageQRCodeImageUrl, wapentity, out QRCodeUrl);
-                    //string currentDomain = "http://" + HttpContext.Current.Request.Url.Host;//当前项目域名
 
-                    //string logoImage = "~" + sItem.LeadPageQRCodeImageUrl.Substring(currentDomain.Length);
+                    CreateFocusQRCode(para, sItem.LeadPageQRCodeImageUrl, wapentity, out QRCodeUrl);
                     imageEntity = new ObjectImagesEntity();
-                    imageEntity.ImageURL = sItem.LeadPageQRCodeImageUrl;
+                    imageEntity.ImageURL = QRCodeUrl;
                     imageEntity.ObjectId = "";
                     imageEntity.CreateBy = loggingSessionInfo.UserID;
                     imageEntity.IsDelete = 0;
@@ -506,48 +504,47 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                         {
                             PrizeCount = PrizeCount + ItemPrize.PrizeCount;
                         }
-                    }
-                    contactEvent.PrizeCount = PrizeCount;
-                    contactEvent.ContactTypeCode = cItem.ContactTypeCode;
-                    contactEvent.ContactEventName = cItem.ContactTypeCode;
-                    contactEvent.BeginDate = Convert.ToDateTime(strStartDate);
-                    contactEvent.EndDate = Convert.ToDateTime(strEndDate);
-                    contactEvent.PrizeType = "";
-                    contactEvent.CustomerID = loggingSessionInfo.ClientID;
-                    contactEvent.RewardNumber = "OnlyOne";
-                    contactEvent.EventId = strCTWEventId;
-                    contactEvent.Status = 1;
-                    contactEvent.IsCTW = 1;
-                    bllContactEvent.Create(contactEvent);
-                    ///保存奖品 生成奖品池
-                    var entityPrize = new LPrizesEntity();
-                    entityPrize.EventId = contactEvent.ContactEventId.ToString();
-                    entityPrize.PrizeName = cItem.ContactTypeCode;
-                    entityPrize.PrizeTypeId = cItem.PrizeType;
-                    entityPrize.Point = cItem.Point;
-                    entityPrize.CountTotal = PrizeCount;
-                    entityPrize.CreateBy = loggingSessionInfo.UserID;
-                    entityPrize.PrizesID = Guid.NewGuid().ToString();
-                    bllPrize.Create(entityPrize);
+                        contactEvent.PrizeCount = PrizeCount;
+                        contactEvent.ContactTypeCode = cItem.ContactTypeCode;
+                        contactEvent.ContactEventName = cItem.ContactTypeCode;
+                        contactEvent.BeginDate = Convert.ToDateTime(strStartDate);
+                        contactEvent.EndDate = Convert.ToDateTime(strEndDate);
+                        contactEvent.PrizeType = "";
+                        contactEvent.CustomerID = loggingSessionInfo.ClientID;
+                        contactEvent.RewardNumber = "OnlyOne";
+                        contactEvent.EventId = strCTWEventId;
+                        contactEvent.Status = 1;
+                        contactEvent.IsCTW = 1;
+                        bllContactEvent.Create(contactEvent);
+                        ///保存奖品 生成奖品池
+                        var entityPrize = new LPrizesEntity();
+                        entityPrize.EventId = contactEvent.ContactEventId.ToString();
+                        entityPrize.PrizeName = cItem.ContactTypeCode;
+                        entityPrize.PrizeTypeId = cItem.PrizeType;
+                        entityPrize.Point = cItem.Point;
+                        entityPrize.CountTotal = PrizeCount;
+                        entityPrize.CreateBy = loggingSessionInfo.UserID;
+                        entityPrize.PrizesID = Guid.NewGuid().ToString();
+                        bllPrize.Create(entityPrize);
 
-                    if (cItem.PrizeType == "Coupon")
-                    {
-                        if (cItem.PrizeList != null && cItem.PrizeList.Count > 0)
+                        if (cItem.PrizeType == "Coupon")
                         {
-                            foreach (var ItemPrize in cItem.PrizeList)
-                            {
-                                entityPrize = new LPrizesEntity();
-                                entityPrize.EventId = contactEvent.ContactEventId.ToString();
-                                entityPrize.PrizeName = ItemPrize.PrizeName;
-                                entityPrize.PrizeTypeId = ItemPrize.PrizeTypeId;
-                                entityPrize.PrizesID = entityPrize.PrizesID;
-                                entityPrize.CouponTypeID = ItemPrize.CouponTypeID;
-                                entityPrize.CountTotal = ItemPrize.PrizeCount;
-                                entityPrize.CreateBy = loggingSessionInfo.UserID;
-                                bllContactEvent.AddContactEventPrizeForCTW(entityPrize);
-                            }
+                                foreach (var ItemPrize in cItem.PrizeList)
+                                {
+                                    entityPrize = new LPrizesEntity();
+                                    entityPrize.EventId = contactEvent.ContactEventId.ToString();
+                                    entityPrize.PrizeName = ItemPrize.PrizeName;
+                                    entityPrize.PrizeTypeId = ItemPrize.PrizeTypeId;
+                                    entityPrize.PrizesID = entityPrize.PrizesID;
+                                    entityPrize.CouponTypeID = ItemPrize.CouponTypeID;
+                                    entityPrize.CountTotal = ItemPrize.PrizeCount;
+                                    entityPrize.CreateBy = loggingSessionInfo.UserID;
+                                    bllContactEvent.AddContactEventPrizeForCTW(entityPrize);
+                                }
+                            
                         }
                     }
+                    
                 }
             };
         }
@@ -872,8 +869,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
             var wqrCodeManagerEntity = new WQRCodeManagerBLL(loggingSessionInfo).QueryByEntity(new WQRCodeManagerEntity() { ObjectId = strCTWEventId }, null).FirstOrDefault();
             
-            if (wqrCodeManagerEntity == null)
-            {
+
                 //#region 生成二维码
 
                 var wqrentity = new WQRCodeTypeBLL(loggingSessionInfo).QueryByEntity(
@@ -881,100 +877,56 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     new WQRCodeTypeEntity { TypeCode = "CreativeCode" }
 
                     , null).FirstOrDefault();
-                var wxCode = CretaeWxCode();
-                string targetPath = HttpContext.Current.Server.MapPath("/QRCodeImage/");
-                string currentDomain = "http://bs.test.chainclouds.com";// "http://" + HttpContext.Current.Request.Url.Host;//当前项目域名
-                QRCodeUrl = "http://bs.test.chainclouds.com/QRCodeImage/dfaacf4a508c4501aea8fa61995b681a.jpg";// wxCode.ImageUrl;
-                string strQRCodeFilePath = targetPath + QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
-                HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(QRCodeUrl);
-                WebResponse response_qrcode = null;
-                Stream qrcode_stream = null;
-                response_qrcode = request_qrcode.GetResponse();
-                qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
+                    var wxCode = CretaeWxCode();
+                    QRCodeUrl = wxCode.ImageUrl;
+                    if (!string.IsNullOrEmpty(QRCodeUrl))
+                    {
 
-                Image bgImage = Image.FromStream(qrcode_stream);
-                Guid gCTWEventId = new Guid(para.CTWEventId);
+                        if (!string.IsNullOrEmpty(strLeadPageQRCodeImageUrl))//如果有值则生成二维码中间带图
+                        {
+                            string targetPath = HttpContext.Current.Server.MapPath("/QRCodeImage/");
+                            ////二维码中奖加图片
+                            string currentDomain = "http://" + HttpContext.Current.Request.Url.Host;//当前项目域名
+                            string strFileNmae = QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
+                            string strQRCodeFilePath = targetPath + strFileNmae;
+                            string logoImage = "~" + strLeadPageQRCodeImageUrl.Substring(currentDomain.Length);
 
-                string logoImage = "~" + strLeadPageQRCodeImageUrl.Substring(currentDomain.Length);
+                            System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
+                            Utils.CombinImage(wxCode.ImageUrl, HttpContext.Current.Server.MapPath(logoImage)).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
+                            Image ii = Image.FromStream(MStream1);
+                            ii.Save(strQRCodeFilePath, System.Drawing.Imaging.ImageFormat.Png);
+                            MStream1.Dispose();
 
+                            QRCodeUrl = currentDomain + "/QRCodeImage/" + strFileNmae;
+                        }
+                        var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);
+                        var QRCodeId = Guid.NewGuid();
+                         
+                         if (wqrCodeManagerEntity == null)
+                         {
+                             wqrCodeManagerEntity = new WQRCodeManagerEntity()
+                             {
+                                 QRCodeId = QRCodeId,
+                                 QRCode = wxCode.MaxWQRCod.ToString(),
+                                 QRCodeTypeId = wqrentity.QRCodeTypeId,
+                                 IsUse = 1,
+                                 ObjectId = strCTWEventId,
+                                 CreateBy = loggingSessionInfo.UserID,
+                                 ApplicationId = wapentity.ApplicationId,
+                                 IsDelete = 0,
+                                 ImageUrl = QRCodeUrl,
+                                 CustomerId = loggingSessionInfo.ClientID
+                             };
+                             WQRCodeManagerbll.Create(wqrCodeManagerEntity);
+                         }
+                         else
+                         {
+                             wqrCodeManagerEntity.ImageUrl = QRCodeUrl;
+                             WQRCodeManagerbll.Update(wqrCodeManagerEntity);
 
+                         }
+                    }
 
-                System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
-                Utils.CombinImage(bgImage, HttpContext.Current.Server.MapPath(logoImage)).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
-                Image ii = Image.FromStream(MStream1);
-                bgImage.Dispose();
-                ii.Save(strQRCodeFilePath, System.Drawing.Imaging.ImageFormat.Png);
-                MStream1.Dispose();
-                //try
-                //{
-
-
-                //    if (!string.IsNullOrEmpty(wxCode.ImageUrl))
-                //    {
-
-
-                //        string targetPath = HttpContext.Current.Server.MapPath("/QRCodeImage/");
-                //        ////二维码中奖加图片
-                //        string currentDomain = "http://" + HttpContext.Current.Request.Url.Host;//当前项目域名
-
-                //        string strQRCodeFilePath = targetPath + QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
-
-                //        HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(wxCode.ImageUrl);
-                //        WebResponse response_qrcode = null;
-                //        Stream qrcode_stream = null;
-                //        response_qrcode = request_qrcode.GetResponse();
-                //        qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
-
-                //        Image bgImage = Image.FromStream(qrcode_stream);
-                //        Guid gCTWEventId = new Guid(para.CTWEventId);
-
-                //        string logoImage = "~" + strLeadPageQRCodeImageUrl.Substring(currentDomain.Length);
-
-
-
-                //        System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
-                //        Utils.CombinImage(bgImage, HttpContext.Current.Server.MapPath(logoImage)).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
-                //        Image ii = Image.FromStream(MStream1);
-                //        bgImage.Dispose();
-                //        ii.Save(strQRCodeFilePath, System.Drawing.Imaging.ImageFormat.Png);
-                //        MStream1.Dispose();
-
-                //        var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);
-
-                //        QRCodeId = Guid.NewGuid();
-
-                //        if (!string.IsNullOrEmpty(wxCode.ImageUrl))
-                //        {
-                //            wqrCodeManagerEntity = new WQRCodeManagerEntity()
-                //            {
-                //                QRCodeId = QRCodeId,
-                //                QRCode = wxCode.MaxWQRCod.ToString(),
-                //                QRCodeTypeId = wqrentity.QRCodeTypeId,
-                //                IsUse = 1,
-                //                ObjectId = strCTWEventId,
-                //                CreateBy = loggingSessionInfo.UserID,
-                //                ApplicationId = wapentity.ApplicationId,
-                //                IsDelete = 0,
-                //                ImageUrl = wxCode.ImageUrl,
-                //                CustomerId = loggingSessionInfo.ClientID
-                //            };
-                //            WQRCodeManagerbll.Create(wqrCodeManagerEntity);
-                //        }
-                //        else
-                //        {
-                //            throw new APIException(wxCode.msg) { ErrorCode = 342 };
-
-                //        }
-                //#endregion
-                //        QRCodeUrl = strCTWEventId;
-                //    }
-                //}
-                //catch (Exception ex)
-                //{
-
-                //    QRCodeUrl = ex.ToString();
-                //}
-            }
         }
         #region new 生成活动二维码
         public WxCode CretaeWxCode()

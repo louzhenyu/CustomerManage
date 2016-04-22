@@ -262,7 +262,7 @@ namespace JIT.CPOS.BS.DataAccess
 
         public DataSet GetPirzeList(string strEventId)
         {
-            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId "
+            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId ,l.Point"
                         +"From dbo.LPrizes l "
                         +"LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
                         +"LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "
@@ -273,7 +273,19 @@ namespace JIT.CPOS.BS.DataAccess
                         + " order by l.CreateTime asc ";
             return this.SQLHelper.ExecuteDataset(sql);
         }
-
+        public DataSet GetPirzeListForCTW(string strEventId)
+        {
+            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId "
+                        + "From dbo.LPrizes l "
+                        + "LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
+                        + "LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "
+                        + "LEFT JOIN Options o ON l.PrizeLevel=o.OptionValue "
+                        + "LEFT JOIN (SELECT PrizeID,COUNT(1) RemainCount FROM dbo.LPrizePools WITH(NOLOCK) WHERE Status=1 and EventId = '" + strEventId + "'  GROUP BY PrizeID) pool ON pool.PrizeID=l.PrizesID "
+                        + " where l.IsDelete = '0' "
+                        + " and l.EventId = '" + strEventId + "' "
+                        + " order by l.CreateTime asc ";
+            return this.SQLHelper.ExecuteDataset(sql);
+        }
         #endregion
         public DataSet GetCouponTypeIDByPrizeId(string strPrizesID)
         {

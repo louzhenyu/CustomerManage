@@ -1183,6 +1183,7 @@ namespace JIT.CPOS.BS.BLL
                                 CommonBLL.SendWeixinMessage(pushContent, vipEntity.VIPID, loggingSessionInfo, vipEntity);
                                 #endregion
                                 break;
+                            case "CreativeCode":
 
                             default:
                                 break;
