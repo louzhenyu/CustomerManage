@@ -363,7 +363,7 @@
 <li data-menucode="qdcx"><a href="JavaScript:void(0)" class="menusrc" ><img src="/Framework/Image/leftImgList/04L.png" alt="" class="hides" /> <img src="/Framework/Image/leftImgList/04.png" alt="" class="shows"/></a></li>
 </ul>
 <div class="help   hover" >
-<a href="/Module/helpCenter/helpCenter.aspx" ><img src="/Framework/Image/leftImgList/help.png" alt="" class="shows"/><img src="/Framework/Image/leftImgList/helpon.png" alt="" class="hides" style="display:none;" /> </a>
+<a href="http://help.chainclouds.cn/" target="_blank"><img src="/Framework/Image/leftImgList/help.png" alt="" class="shows"/><img src="/Framework/Image/leftImgList/helpon.png" alt="" class="hides" style="display:none;" /> </a>
 </div>
 </div>
 

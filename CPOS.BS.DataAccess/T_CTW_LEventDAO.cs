@@ -391,7 +391,8 @@ a.*,
                                                inner join coupon  on coupon.couponid=x.couponid
 												inner join PrizeCouponTypeMapping PrizeCou on coupon.coupontypeid=PrizeCou.coupontypeid    ---是这个奖品对应的
 												where x.objectid=a.EventId  and PrizeCou.PrizesID=a.PrizesID
-											)  as  prizeSales
+											)  as  prizeSales,
+  isnull((select top 1 coupontypeid  from prizecoupontypemapping where prizesid=a.prizesid),'') CouponTypeID 
 from LPrizes   a
 
                             {5}
@@ -437,7 +438,7 @@ from LPrizes   a
             //总数据表
             string sql = @"  SELECT Count(1) TotalCount                   
                                 from    LPrizes a  ,PrizeCouponTypeMapping c ,vipcouponmapping d  ,coupon e ,Vip 
-where  c.prizesid=a.prizesid   and     a.eventid= d.objectid  and e.coupontypeid=  c.coupontypeid and d.couponid=e.couponid 
+where  c.prizesid=a.prizesid   and     a.eventid= d.objectid  and e.coupontypeid=  c.coupontypeid and d.couponid=e.couponid    and vip.vipid=d.VIPID
                                                   
                                {4}
                   ";
@@ -454,7 +455,7 @@ where  c.prizesid=a.prizesid   and     a.eventid= d.objectid  and e.coupontypeid
  from  LPrizes a  ,PrizeCouponTypeMapping c ,vipcouponmapping d  ,coupon e ,Vip    
 
                             {5}
-                  WHERE     c.prizesid=a.prizesid   and     a.eventid= d.objectid  and e.coupontypeid=  c.coupontypeid and d.couponid=e.couponid 
+                  WHERE     c.prizesid=a.prizesid   and     a.eventid= d.objectid  and e.coupontypeid=  c.coupontypeid and d.couponid=e.couponid    and vip.vipid=d.VIPID
                             {4}
                 ";
             sql += @") t

@@ -25,6 +25,7 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingData.Response
 
     public class EventPrizeInfo
     {
+        public string CouponTypeID { get; set; }
         public int winnerCount { get; set; }
         public int RemindCount { get; set; }
 
