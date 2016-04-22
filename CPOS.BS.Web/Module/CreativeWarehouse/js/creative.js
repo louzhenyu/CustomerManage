@@ -235,7 +235,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
           $("[data-edit='true']").each(function(i,index){
               if($(this).is("img")){
 
-              } else if($(this).is("div")){
+              } else if($(this).is("div")||$(this).is("p")){
                   $(this).css({"position":"relative"});
                   $(this).prepend("<em class='editIconBtn'></em>");
 
@@ -251,6 +251,25 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
               that.addUploadImgEvent(e);
 
             });
+            $('#startDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    //var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
+                    //return d1<=date && date<=d2;
+                    return d1 <= date;
+                }
+            });
+            $('#endDate').datebox().datebox('calendar').calendar({
+                validator: function (date) {
+                    var now = new Date();
+                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                    //var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
+                    //return d1<=date && date<=d2;
+                    return d1 <= date;
+                }
+            });
+
             that.elems.sectionPage.delegate(".spreadPanel .tabDiv","click",function(){
                 $(this).siblings(".tabDiv").removeClass("on");
                 $(this).addClass("on");
@@ -461,9 +480,10 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                             })
                         }
                     }
-                    isPerform=$("#setOptionForm").form("validate");
+
                     if(isPerform&&drawMethodCode=="HB"){
-                        if(that.prizeListHB.length==0){
+                        isPerform=$("#setOptionForm").form("validate");
+                        if(isPerform&&that.prizeListHB.length==0){
                             alert("请添加奖品");
                             isPerform=false;
                             return false;
@@ -581,9 +601,9 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                             var title=$('[data-tabname="tab02"] .share').find('[data-view="Title"]').html();
                             var summary=$('[data-tabname="tab02"] .share').find('[data-view="Summary"]').html();
                             var imgUrl= $('[data-tabname="tab02"] .share').find('img').attr("src");
-                            var data={title:title,summary:summary,imgUrl:imgUrl}
+                            var data={title:title,summary:summary,imgUrl:imgUrl};
                             that.shareEdit(data);
-                            break
+                            break;
                         case "text":
                            var dom =$(this).siblings(".editText");
                             var data={text:""};
@@ -1047,7 +1067,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                     if(!nodelist[i].number){
                         objMsg.isAdd=false;
                         objMsg.index=i;
-                        objMsg.msg="请填写第"+(objMsg.index+1)+"项的奖品数量";
+                        objMsg.msg="请填写第"+(objMsg.index+1)+"行的奖品数量";
                     }
                     var obj = {
                         PrizeName: nodelist[i].integral+"积分",
@@ -1064,7 +1084,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                     if(!nodelist[i].PrizeCount){
                         objMsg.isAdd=false;
                         objMsg.index=i;
-                        objMsg.msg="请填写第"+(objMsg.index+1)+"项的奖品数量";
+                        objMsg.msg="请填写第"+(objMsg.index+1)+"行的奖品数量";
                     }
                     var obj = {
                         PrizeName: nodelist[i].CouponTypeName,
@@ -1075,7 +1095,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                     if(nodelist[i].SurplusQty<obj.PrizeCount){
                         objMsg.isAdd=false;
                         objMsg.index=i;
-                        objMsg.msg="第"+(objMsg.index+1)+"项的已有券数量不足，请追加券数量";
+                        objMsg.msg="第"+(objMsg.index+1)+"行的已有券数量不足，请追加券数量";
                     }
 
                     list.push(obj)
@@ -1607,6 +1627,11 @@ debugger;
                       } //显示复选框
                       ] ],
                      columns: [[
+                         {field :"BeginTime",title : '序号',width:20,resizable:false,align:'center',
+                             formatter:function(value ,row,index){
+                                 return index+1;
+                             }
+                         },
                          {field: 'CouponTypeName', title: '代金券名称', width:100, resizable: false, align: 'left'},
                          {field: 'ParValue', title: '面值', width: 70, align: 'center', resizable: false},
                          {field: 'ValidityPeriod', title: '失效日期', width: 80, align: 'left', resizable: false},
@@ -1705,6 +1730,11 @@ debugger;
                          } //显示复选框
                          ] ],
                         columns: [[
+                            {field :"BeginTime",title : '序号',width:20,resizable:false,align:'center',
+                                formatter:function(value ,row,index){
+                                    return index+1;
+                                }
+                            },
                             {field: 'CouponTypeName', title: '兑换券名称', width: 100, resizable: false, align: 'left'},
                             {field: 'ValidityPeriod', title: '失效日期', width: 70, align: 'left', resizable: false},
                             {field: 'SurplusQty', title: '已有数量', width: 80, align: 'left', resizable: false},
@@ -1847,6 +1877,7 @@ debugger;
 
 
                 that.elems.navigation.find("li").eq(0).trigger("click")
+
             });
         },
 
@@ -1890,7 +1921,10 @@ debugger;
                         break;
                     case "QN":
                         break;
-                    case "QG":
+                    case "QG"://抢购
+                        if(eventInfo.PanicbuyingEventImage){
+                            $('[data-imgcode="ImageURL01"]').data("default",eventInfo.PanicbuyingEventImage.ImageURL);
+                        }
                         break;
                     case "TG":
                         break;
@@ -1958,7 +1992,12 @@ debugger;
                   }
                   break;
               case "QN": break;
-              case "QG": break;
+              case "QG"://抢购
+                   if(eventInfo.PanicbuyingEventImage){
+                          $('[data-imgcode="ImageURL01"]').data("imgurl",eventInfo.PanicbuyingEventImage.ImageURL);
+                          $('[data-imgcode="ImageURL01"]').find("img").attr("src",eventInfo.PanicbuyingEventImage.ImageURL)
+                   }
+                  break;
               case "TG": break;
           }
 
@@ -2001,7 +2040,9 @@ debugger;
                                  $("#release").find('[data-type="share"]').trigger("click");
                              }
                              if(spreadObj.PromptText&&spreadObj.PromptText!="无"){
-                                 $("#release").find('[data-type="watch"]').trigger("click");
+                                 if(materialText) {  //编辑状态选中执行
+                                     $("#release").find('[data-type="watch"]').trigger("click");
+                                 }
                              }
 
                              if(materialText){ //对象存在证明是编辑的
@@ -2086,7 +2127,8 @@ debugger;
                 self.elems.currentStyleId=loadData.CustomerCTWEventInfo.OriginalThemeId;
                 var InteractionType=loadData.CustomerCTWEventInfo.InteractionType;
                 self.elems.eventInfoType=InteractionType;
-                $("[data-interaction].btnItem").removeClass("disable");
+                //$("[data-interaction].btnItem").removeClass("disable");
+                $("#slider").find(".slide.on div").trigger("click");
                 $("[data-interaction="+InteractionType+"].btnItem").trigger("click");
                 self.initJevvShow(true,loadData.CustomerCTWEventInfo.DrawMethodCode);
                 debugger;
@@ -2446,7 +2488,9 @@ debugger;
                 /* LeadPageFocusPromptText:"关注有奖",   //引导页关注提示*/
                  LeadPageRegPromptText:"注册有奖"     //引导注册提示
             };
-
+               if(SpreadSetting.LeadPageQRCodeImageUrl.indexOf("images/imgDefault")!=-1){
+                   SpreadSetting.LeadPageQRCodeImageUrl="";
+               }
             var ContactPrizeList=[];//触点活动奖励
           if($("#release").find('[data-type="share"]').hasClass("on")){    //分享
               ContactPrizeList.push({ContactTypeCode:"Share",PrizeList:that.prizeListShare});

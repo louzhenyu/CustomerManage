@@ -159,7 +159,7 @@ define(function($) {
         </div> \
         </form>',
         editText:'<div class="textColorPanel"> \
-    <div class="panelTitle">注册有奖话术建议：</div> \
+    <div class="panelTitle">关注有奖话术建议：</div> \
         <div class="desc">话术字数请在12个汉子字以内</div>\
         <div class="inputBox" ><input type="text" class="easyui-validatebox" data-options="required:true" value="<%=text%>" ></div>\
         </div>'

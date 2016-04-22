@@ -160,7 +160,58 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                 </div>   <!--spreadPanel-->
                 </form>
             </div>
-             <div class="spread" data-interaction="2"> 促销功能待开发</div>
+             <div class="spread" data-interaction="2">
+                      <div class="skillPanel" style="display: none">
+                          <p  data-imgcode="ImageURL01" data-edit="true" data-size="640X370px" data-imgurl="images/skillKV.png" ><img src="images/skillKV.png" width="320" height="185"></p>
+                          <div class="eventList">
+                              <ul>
+                                  <li class="on">3月28日<em class="editIconBtn"></em></li>
+                                  <li>3月29日<em class="editIconBtn"></em></li>
+                                  <li>3月27日<em class="editIconBtn"></em></li>
+                                  <!--<li></li>-->
+                              </ul>
+                             <div class="eventAddBtn"> <em class="icon"> </em> <em class="textTip">添加秒杀</em></div>
+                          </div>
+
+                          <div class="timekeeping">
+                              <div class="title"> <hr width="100%" size="1"> <p>距离抢购结束还剩</p></div>
+                              <p class="time"><em>0</em><em>0</em>时<em>0</em><em>0</em>分<em>0</em><em>0</em>秒</p>
+                          </div>
+                          <div class="productList">
+                              <div class="product">
+
+                                  <div class="l"><img src="images/img.png" ></div>
+                                    <div class=""></div>
+                                   <div class="r">
+                                       <p class="tit">麦斯威尔低脂三合一原味咖啡
+                                           全新包装  待你品味 </p>
+                                       <p class="info"><em>已有65人参加</em> <span>  &nbsp&nbsp 原价 <i>￥68</i></span></p>
+                                       <p class="skill">抢购价 <em>￥38</em> </p>
+                                       <div class="textBtn"> 立即抢购 </div>
+
+                                   </div>
+                                  <em class="editIconBtn"></em>
+                              </div><!--product-->
+                              <div class="product">
+
+                                  <div class="l"><img src="images/img.png" ></div>
+                                  <div class=""></div>
+                                  <div class="r">
+                                      <p class="tit">麦斯威尔低脂三合一原味咖啡
+                                          全新包装  待你品味 </p>
+                                      <p class="info"><em>已有65人参加</em> <span>  &nbsp&nbsp 原价 <i>￥68</i></span></p>
+                                      <p class="skill">抢购价 <em>￥38</em> </p>
+                                      <div class="textBtn"> 立即抢购 </div>
+
+                                  </div>
+                                  <em class="editIconBtn"></em>
+                              </div><!--product-->
+                          </div> <!--productList-->
+
+                          <div class="productAdd"> <em class="icon"> 添加商品</em></div>
+
+                      </div>  <!--skillPanel-->
+             </div>
          </div> <!-- data-panel="nav03"-->
              <div class="panelDiv" data-panel="nav04">
 
