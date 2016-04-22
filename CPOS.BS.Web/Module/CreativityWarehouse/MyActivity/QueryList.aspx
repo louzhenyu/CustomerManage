@@ -261,7 +261,7 @@
                               <div class="verticalLine"></div>
                               <div class="GiftCard parizecontainer">
                                   <div class="title">兑换券</div>
-                                  <div class="value"><span class="GiftCardvalue"><#=LeventsStats.PrizeCount #></span>份</div></div>
+                                  <div class="value"><span class="GiftCardvalue"><#=LeventsStats.GIFTCouponValue #></span>份</div></div>
                           </div>
                       </div>
                       <div class="fansmember">
