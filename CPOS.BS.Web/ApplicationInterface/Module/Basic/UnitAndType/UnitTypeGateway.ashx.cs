@@ -269,6 +269,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.UnitAndType
            string errorMsg= unitService.SetUnitInfo(loggingSessionInfo, en);
            if (!string.IsNullOrEmpty(errorMsg) && errorMsg!="成功")
            {
+               if (errorMsg.IndexOf("该门店编码已经存在")!=-1)
+               {
+                   errorMsg = "组织结构名称已存在,请不要填写相同的组织结构名称";               
+               }
                throw new APIException(errorMsg) { ErrorCode = 135 };
            }
             ////创建门店上下级关系

@@ -923,6 +923,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
         #region RevertPassword
         public string RevertPassword()
         {
+            string user_id = Request("user");
             var responseData = new ResponseData();
             LoggingSessionInfo loggingSessionInfo = null;
             if (CurrentUserInfo != null)
@@ -957,7 +958,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.User.Handler
             {
                 UserInfo user = new UserInfo();
                 var userService = new cUserService(loggingSessionInfo);//使用兼容模式
-                userService.SetUserPwd(loggingSessionInfo, MD5Helper.Encryption(Request("password")), out error);//使用兼容模式
+                userService.SetUserPwd(loggingSessionInfo, user_id, MD5Helper.Encryption(Request("password")), out error);//使用兼容模式
                 responseData.success = true;
             }
             catch (Exception)

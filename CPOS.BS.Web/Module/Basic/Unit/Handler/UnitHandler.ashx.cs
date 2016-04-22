@@ -27,6 +27,7 @@ using JIT.Utility.Log;
 using CPOS.Common;
 using JIT.CPOS.BS.Web.Base.Excel;
 using Aspose.Cells;
+using System.Drawing;
 
 
 namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
@@ -425,8 +426,13 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                 // obj.TypeId=
             }
 
-            unitService.SetUnitInfo(CurrentUserInfo, obj);
-
+            string refMessage=unitService.SetUnitInfo(CurrentUserInfo, obj);
+            if (refMessage != "成功")
+            {
+                responseData.success = false;
+                responseData.msg = refMessage;
+                return responseData.ToJSON();
+            }
 
 
             #region 生成二维码
@@ -878,14 +884,19 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 
                 //获取当前二维码 最大值
                 var MaxWQRCod = new WQRCodeManagerBLL(this.CurrentUserInfo).GetMaxWQRCod() + 1;
-
+                var unit_id = Request("unit_id");   
                 if (wapentity == null)
                 {
                     responseData.success = false;
                     responseData.msg = "无设置微信公众平台!";
                     return responseData.ToJSON();
                 }
-
+                if (unit_id == "" || unit_id == null)
+                {
+                    responseData.success = false;
+                    responseData.msg = "请您先保存门店信息，再生成二维码!";
+                    return responseData.ToJSON();
+                }
                 string imageUrl = string.Empty;
 
                 #region 生成二维码
@@ -914,10 +925,29 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 
 
                     var unitTypeBll = new WQRCodeTypeBLL(this.CurrentUserInfo);
-                    var unitType = unitTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = "UnitQrCode" }, null);
-                    var unit_id = Request("unit_id");
+                    var unitType = unitTypeBll.QueryByEntity(new WQRCodeTypeEntity() { TypeCode = "UnitQrCode" }, null);                                     
                     if (!string.IsNullOrEmpty(unit_id) && unitType != null && unitType.Length > 0)
                     {
+                        var t_unitentity = new t_unitBLL(this.CurrentUserInfo).QueryByEntity(
+                        new t_unitEntity { unit_id = unit_id }, null).FirstOrDefault();
+                        //如果名称不为空，就把图片放在一定的背景下面
+                        if (!string.IsNullOrEmpty(t_unitentity.unit_name))
+                        {
+                            try
+                            {
+                                string apiDomain = ConfigurationManager.AppSettings["original_url"];
+                                imageUrl = CombinImage(apiDomain + @"/HeadImage/qrcodeBack.jpg", imageUrl, t_unitentity.unit_name);
+                            }
+                            catch
+                            {
+                                responseData.msg = "生成二维码失败"; return responseData.ToJSON(); ;
+                            }
+                        }
+                        else
+                        {
+                            responseData.msg = "生成二维码失败"; return responseData.ToJSON(); ;
+                        }
+
                         var unitQrcodeBll = new WQRCodeManagerBLL(this.CurrentUserInfo);
                         var unitQrCode = new WQRCodeManagerEntity();
                         unitQrCode.QRCode = MaxWQRCod.ToString();
@@ -932,7 +962,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
                     }
                 }
                 #endregion
-                responseData.success = true;
+                responseData.success = true;                
                 responseData.msg = "二维码生成成功!";
                 var rp = new ReposeData()
                 {
@@ -1069,7 +1099,89 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Unit.Handler
 
         }
         #endregion
+
+        public static string CombinImage(string imgBack, string destImg, string strData)
+        {
+            //1、上面的图片部分
+            HttpWebRequest request_qrcode = (HttpWebRequest)WebRequest.Create(destImg);
+            WebResponse response_qrcode = null;
+            Stream qrcode_stream = null;
+            response_qrcode = request_qrcode.GetResponse();
+            qrcode_stream = response_qrcode.GetResponseStream();//把要嵌进去的图片转换成流
+
+
+            Bitmap _bmpQrcode1 = new Bitmap(qrcode_stream);//把流转换成Bitmap
+            Bitmap _bmpQrcode = new Bitmap(_bmpQrcode1, 327, 327);//缩放图片           
+            //把二维码由八位的格式转为24位的
+            Bitmap bmpQrcode = new Bitmap(_bmpQrcode.Width, _bmpQrcode.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb); //并用上面图片的尺寸做了一个位图
+            //用上面空的位图生成了一个空的画板
+            Graphics g3 = Graphics.FromImage(bmpQrcode);
+            g3.DrawImageUnscaled(_bmpQrcode, 0, 0);//把原来的图片画了上去
+
+
+            //2、背景部分
+            HttpWebRequest request_backgroup = (HttpWebRequest)WebRequest.Create(imgBack);
+            WebResponse response_keleyi = null;
+            Stream backgroup_stream = null;
+            response_keleyi = request_backgroup.GetResponse();
+            backgroup_stream = response_keleyi.GetResponseStream();//把背景图片转换成流
+
+            Bitmap bmp = new Bitmap(backgroup_stream);
+            Graphics g = Graphics.FromImage(bmp);//生成背景图片的画板
+
+            //3、画上文字
+            //  String str = "文峰美容";
+            System.Drawing.Font font = new System.Drawing.Font("黑体", 25);
+            SolidBrush sbrush = new SolidBrush(Color.White);
+            SizeF sizeText = g.MeasureString(strData, font);
+
+            g.DrawString(strData, font, sbrush, (bmp.Width - sizeText.Width) / 2, 490);
+
+
+            // g.DrawString(str, font, sbrush, new PointF(82, 490));
+
+
+            g.DrawImage(bmp, 0, 0, bmp.Width, bmp.Height);//又把背景图片的位图画在了背景画布上。必须要这个，否则无法处理阴影
+
+            //4.合并图片
+            g.DrawImage(bmpQrcode, 130, 118, bmpQrcode.Width, bmpQrcode.Height);
+
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            System.Drawing.Image newImg = Image.FromStream(ms);//生成的新的图片
+            //把新图片保存下来
+            string DownloadUrl = ConfigurationManager.AppSettings["website_WWW"];
+            string host = DownloadUrl + "/HeadImage/";
+            //创建下载根文件夹
+            //var dirPath = @"C:\DownloadFile\";
+            var dirPath = System.AppDomain.CurrentDomain.BaseDirectory + "HeadImage\\";
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+            //根据年月日创建下载子文件夹
+            var ymd = DateTime.Now.ToString("yyyyMMdd", DateTimeFormatInfo.InvariantInfo);
+            dirPath += ymd + @"\";
+            host += ymd + "/";
+            if (!Directory.Exists(dirPath))
+            {
+                Directory.CreateDirectory(dirPath);
+            }
+
+            //下载到本地文件
+            var fileExt = Path.GetExtension(destImg).ToLower();
+            var newFileName = DateTime.Now.ToString("yyyyMMddHHmmss_ffff", DateTimeFormatInfo.InvariantInfo) + ".jpg";//+ fileExt;
+            var filePath = dirPath + newFileName;
+            host += newFileName;
+
+            newImg.Save(filePath, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            return host;
+        }
     }
+
+
+    
 
     #region QueryEntity
     public class UnitQueryEntity

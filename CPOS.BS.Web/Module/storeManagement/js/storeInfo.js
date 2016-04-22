@@ -727,7 +727,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				url: "/Module/Basic/Unit/Handler/UnitHandler.ashx",
 				data: {
 					action:'CretaeWxCode',
-					unit_id:unitId
+					unit_id:that.elems.unitId
 				},
 				success: function(data) {
 					if(data.success) {

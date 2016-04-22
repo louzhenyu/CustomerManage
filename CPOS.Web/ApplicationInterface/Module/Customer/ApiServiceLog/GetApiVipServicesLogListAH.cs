@@ -29,15 +29,22 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Customer.ApiServiceLog
                 if (!string.IsNullOrWhiteSpace(CurrentUserInfo.CurrentUserRole.UnitId))
                     UnitId = CurrentUserInfo.CurrentUserRole.UnitId;
 
-            if (!string.IsNullOrWhiteSpace(UnitId))
-                complexCondition.Add(new EqualsCondition() { FieldName = "UnitID", Value = CurrentUserInfo.CurrentUserRole.UnitId });
-            else
-                return rd;
+            if (!string.IsNullOrWhiteSpace(para.VipID))
+            {
+                complexCondition.Add(new EqualsCondition() { FieldName = "VipID", Value = para.VipID });
+            }
+            //if (!string.IsNullOrWhiteSpace(UnitId))   //过滤门店的要去掉
+            //    complexCondition.Add(new EqualsCondition() { FieldName = "UnitID", Value = CurrentUserInfo.CurrentUserRole.UnitId });
+            //else
+            //    return rd;
             #endregion
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
             lstOrder.Add(new OrderBy() { FieldName = "ServicesTime", Direction = OrderByDirections.Desc });
-
+            if (para.PageIndex <= 0)
+            {
+                para.PageIndex = 1;
+            }
             var tempList = vipServicesLogBLL.PagedQuery(complexCondition.ToArray(), lstOrder.ToArray(), para.PageSize, para.PageIndex);
             rd.TotalPageCount = tempList.PageCount;
             rd.TotalCount = tempList.RowCount;

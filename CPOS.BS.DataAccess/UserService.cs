@@ -781,7 +781,8 @@ insert into @TmpTable(user_id,row_no)
             string sql = " select user_role_id Id, user_id userId, role_id RoleId, unit_id UnitId,default_flag defaultFlag, "
             + " null as userName, null as unitName, null as RoleName, null as applicationDescription "
             + "  from t_user_role "
-            + "  where default_flag=1 and user_id='" + userId + "' and role_id='" + roleId + "' and  status = '1'";
+            + "  where user_id='" + userId + "' and role_id='" + roleId + "' and  status = '1'";
+            //+ "  where default_flag=1 and user_id='" + userId + "' and role_id='" + roleId + "' and  status = '1'";
             ds = this.SQLHelper.ExecuteDataset(sql);
             return ds;
         }

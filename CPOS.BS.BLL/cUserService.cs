@@ -583,12 +583,15 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="loggingSessionInfo"></param>
         /// <param name="pwd"></param>
         /// <returns></returns>
-        public bool SetUserPwd(LoggingSessionInfo loggingSessionInfo, string pwd,out string strError)
+        public bool SetUserPwd(LoggingSessionInfo loggingSessionInfo, string pwd, out string strError)
         {
+          
+          
             try
             {
                 bool bReturn = true;
                 UserInfo userInfo = new UserInfo();
+
                 userInfo.User_Id = loggingSessionInfo.CurrentUser.User_Id;
                 userInfo.User_Password = pwd;
                 UpdateUserPassword(userInfo.User_Id, userInfo.User_Password);
@@ -615,6 +618,54 @@ namespace JIT.CPOS.BS.BLL
             }
             catch (Exception ex) {
                 strError = "修改密码失败."+ex.ToString();
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 修改用户密码（重置员工密码）
+        /// </summary>
+        /// <param name="loggingSessionInfo">当前登录信息</param>
+        /// <param name="user_id">要修改人ID</param>
+        /// <param name="pwd">密码</param>
+        /// <param name="strError">返回信息</param>
+        /// <returns></returns>
+        public bool SetUserPwd(LoggingSessionInfo loggingSessionInfo, string user_id,string pwd, out string strError)
+        {
+
+
+            try
+            {
+                bool bReturn = true;
+                UserInfo userInfo = new UserInfo();
+
+                userInfo.User_Id = user_id;
+                userInfo.User_Password = pwd;
+                UpdateUserPassword(userInfo.User_Id, userInfo.User_Password);
+                //提交管理平台
+                if (!SetManagerExchangeUserInfo(loggingSessionInfo, userInfo, 5))
+                {
+                    strError = "修改密码失败.提交管理平台失败";
+                    bReturn = false;
+                    return bReturn;
+                }
+
+                // 提交接口
+                userInfo.ModifyPassword = true;
+                string strResult = SetDexUserCertificate(loggingSessionInfo, userInfo);
+                if (!(strResult.Equals("True") || strResult.Equals("true")))
+                {
+                    strError = "修改密码失败.提交接口失败";
+                    bReturn = false;
+                    return bReturn;
+                }
+
+                strError = "修改密码成功.";
+                return bReturn;
+            }
+            catch (Exception ex)
+            {
+                strError = "修改密码失败." + ex.ToString();
                 return false;
             }
         }

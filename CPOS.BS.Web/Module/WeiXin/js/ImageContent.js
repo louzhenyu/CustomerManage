@@ -1183,7 +1183,7 @@
                 }
             });
             //选择活动详情的时候事件
-            this.elems.eventDetailSelect.bind("click", function () {
+            this.elems.eventDetailSelect.bind("click", function (e) {
                 //数据恢复
                 that.currentPage = 0;
                 that.events.eventName = "";
