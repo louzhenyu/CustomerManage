@@ -771,7 +771,7 @@
                     data: data.EventPrizeDetailList,
                     columns: [[
                         {
-                            field: 'PrizeName', title: '奖品名称', width: 110, align: 'left', resizable: false
+                            field: 'Name', title: '奖品名称', width: 110, align: 'left', resizable: false
                         }, {
                             field: 'vipname', title: '中奖人', width: 110, align: 'left', resizable: false
                         }, {
