@@ -263,7 +263,7 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetPirzeList(string strEventId)
         {
             string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId ,l.Point"
-                        +"From dbo.LPrizes l "
+                        +" From dbo.LPrizes l "
                         +"LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
                         +"LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "
                         + "LEFT JOIN Options o ON l.PrizeLevel=o.OptionValue "
