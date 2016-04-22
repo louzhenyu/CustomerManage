@@ -440,8 +440,9 @@ CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))
    SELECT @AllUnit=unit_id FROM t_unit   WITH(NOLOCK) WHERE customer_id=@CustomerId  AND type_id='2F35F85CF7FF4DF087188A7FB05DED1D'
    ----上面查找了该客户@CustomerId 下总店的unit_id
 
-	SELECT * INTO #TmpTBL FROM  RetailTrader   WITH(NOLOCK) where CustomerId=@CustomerId  AND ISNULL(CustomerId,'')!=''  -----	 不要没有CustomerId的
-   UPDATE #TmpTBL SET UnitID=@AllUnit WHERE ISNULL(UnitID,'')=''----把CouponInfo为空的，门店变为总部
+    SELECT * INTO #TmpTBL FROM  RetailTrader   WITH(NOLOCK) where CustomerId=@CustomerId  AND ISNULL(CustomerId,'')!=''  -----	 不要没有CustomerId的 
+    AND (RetailTraderType <> 'MultiLevelSaler' or RetailTraderType is null or RetailTraderType='')  
+   UPDATE #TmpTBL SET UnitID=@AllUnit WHERE ISNULL(UnitID,'')=''----把CouponInfo为空的，门店变为总部  
 ----取出这个数据做为会员表的代替
 select RetailTraderID  into #TempTable	 from  #TmpTBL L , #UnitSET R where L.IsDelete=0
 	 AND  L.UnitID=R.UnitID    ----只取出改账号能看到的会员信息

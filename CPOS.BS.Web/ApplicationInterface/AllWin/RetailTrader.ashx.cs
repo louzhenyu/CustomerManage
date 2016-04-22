@@ -219,20 +219,32 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.AllWin
             HttpContext context = System.Web.HttpContext.Current;
             var entityRetailTrader = bll.GetByID(rp.Parameters.RetailTraderId);
             DataSet ds = bll.RetailTraderItemQRCode(rp.Parameters.RetailTraderId);
-            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            try
             {
-                List<GetRetailTraderItemQRCode> list = DataTableToObject.ConvertToList<GetRetailTraderItemQRCode>(ds.Tables[0]).ToList();
-                path = CreateZipAndResponse(list, context.Response, entityRetailTrader.RetailTraderName);
-                if (!string.IsNullOrEmpty(path))
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
                 {
-                    rd.FilePath = path;
+                    List<GetRetailTraderItemQRCode> list = DataTableToObject.ConvertToList<GetRetailTraderItemQRCode>(ds.Tables[0]).ToList();
+                    path = CreateZipAndResponse(list, context.Response, entityRetailTrader.RetailTraderName);
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        rd.FilePath = path;
+                    }
+                }
+                else
+                {
+
+                    throw new Exception("未绑定商品！");
+                    //context.Response.Write("<script languge='javascript'>alert('No Data'); window.location.href='index.aspx'</script>");
+
                 }
             }
-            else
+            catch (Exception ex)
             {
-                context.Response.Write("<script languge='javascript'>alert('No Data'); window.location.href='index.aspx'</script>");
-
+                
+                throw ex;
             }
+
+            
             return rsp.ToJSON();
 
         }
