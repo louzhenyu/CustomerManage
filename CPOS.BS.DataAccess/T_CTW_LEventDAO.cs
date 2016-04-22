@@ -454,16 +454,16 @@ from LPrizes   a
             sql += @"SELECT * FROM (  
                     SELECT  ROW_NUMBER()over(order by {0} {3}) _row,
 
-   a.*,b.CreateTime as winTime,b.VipID,
+ a.*,b.CreateTime as winTime,b.VipID,
  vipname,viprealname , 
- isnull((select x.Status  from coupon x 
-	                       inner join PrizeCouponTypeMapping y on x.coupontypeid=y.coupontypeid
-						   inner join vipcouponmapping z on x.couponid=z.couponid 
-						      where y.PrizesID=a.PrizesID    and z.objectid=a.EventId),'0')     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
+ isnull( x.Status ,0   )     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
   (case  c.vipsourceid when 3  then (case when c.status>=1 then 1 else 0 end  )    else 0 end)  as subscribe     -----0代表未关注
           ,prizeName as Name     
  from  LPrizes a    inner join  LPrizeWinner b on a.PrizesID=b.PrizeID
-                 inner join Vip    c on  b.VipID=c.VIPID      
+                 inner join Vip    c on  b.VipID=c.VIPID   
+				 left join   vipcouponmapping z  on  ( z.objectid=a.EventId and z.vipid=b.vipid)
+				 left join PrizeCouponTypeMapping  y on y.PrizesID=a.PrizesID
+				 left join coupon x on x.couponid=z.couponid and  x.coupontypeid=y.coupontypeid	
 
                             {5}
                   WHERE    1=1
