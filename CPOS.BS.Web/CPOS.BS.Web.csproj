@@ -1907,6 +1907,7 @@
     <Content Include="Module\WeChatAuthor\css\style.css" />
     <Content Include="Module\WeChatAuthor\images\bind.png" />
     <Content Include="Module\WeChatAuthor\images\loading.gif" />
+    <Content Include="Module\WeChatAuthor\images\SetWeChat-Butter.png" />
     <Content Include="Module\WeChatAuthor\js\queryList.js" />
     <Content Include="Module\WeChatAuthor\QueryList.aspx" />
     <Content Include="Module\WeiXin\css\images\add-icon.png" />

@@ -17,6 +17,7 @@ using System.Collections;
 using System.Text;
 using System.Configuration;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.BLL.WX;
 
 namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
 {
@@ -34,6 +35,9 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
             string content = "";
             switch (pContext.Request.QueryString["method"])
             {
+                case "SetWeChatTemplate":
+                    content = SetWeChatTemplate();
+                    break;
                 case "search_wapplication":
                     content = GetWApplicationListData();
                     break;
@@ -215,6 +219,79 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
             pContext.Response.Write(content);
             pContext.Response.End();
         }
+
+        #region 设置微信消息模板
+        public string SetWeChatTemplate()
+        {
+            var CommonBLL = new CommonBLL();
+            var WXTMConfigBLL = new WXTMConfigBLL(CurrentUserInfo);
+            string content = string.Empty;
+            bool status = true;
+            string message = string.Empty;
+            var responseData = new ResponseData();
+            string ApplicationId = Request("ApplicationId").ToString();
+
+            var Result = WXTMConfigBLL.QueryByEntity(new WXTMConfigEntity() { CustomerId = CurrentUserInfo.ClientID }, null).ToList();
+            if (Result.Count > 0)
+            {
+                responseData.success = status;
+                responseData.msg = "已设置微信消息模板！";
+                content = responseData.ToJSON();
+                return content;
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(ApplicationId))
+            {
+                string FirstText = "连锁掌柜欢迎你！";
+                string RemarkText = "连锁掌柜谢谢你！";
+
+                var ArrayList = (new string[15] { "TM00014", "OPENTM202243887", "OPENTM200474379", "OPENTM204537469", "TM00230", "TM00232", "OPENTM202354605", "OPENTM200565259", "OPENTM206706184", "OPENTM205454780", "TM00184", "TM00211", "OPENTM202723917", "OPENTM202849987", "TM00398" }).ToList();
+
+                foreach (var item in ArrayList)
+                {
+                    #region 匹配标题，备注内容
+                    switch (item)
+                    {
+                        case "OPENTM200565259"://发货通知
+                            FirstText = "亲，宝贝已经启程了，好想快点来到你身边";
+                            RemarkText = "如有问题请直接在微信里留言，我们将在第一时间为您服务！";
+                            break;
+                        case "TM00211"://返现通知
+                            FirstText = "您的返现到账啦~";
+                            RemarkText = "到期时间：";
+                            break;
+                        case "TM00398"://付款成功通知
+                            FirstText = "您的订单已完成付款，商家将即时为您发货。";
+                            RemarkText = ">>查看订单详情";
+                            break;
+                        case "TM00230"://积分变动通知
+                            FirstText = "您的积分账户变更如下";
+                            RemarkText = "立即查看我的账户";
+                            break;
+                        case "OPENTM205454780"://账户余额变动通知
+                            FirstText = "您的账户余额发生变动如下。";
+                            RemarkText = "如对上述余额变动有异议，请联系客服人员协助处理。";
+                            break;
+                    }
+                    #endregion
+
+                    CommonBLL.AddWXTemplateID(ApplicationId, item, FirstText, RemarkText, CurrentUserInfo);
+                    FirstText = "连锁掌柜欢迎你！";
+                    RemarkText = "连锁掌柜谢谢你！";
+                }
+                message = "设置成功！";
+            }
+            else
+            {
+                message = "已设置微信消息模板！";
+            }
+            responseData.success = status;
+            responseData.msg = message;
+            content = responseData.ToJSON();
+            return content;
+        }
+        #endregion
 
         #region GetWApplicationListData
         /// <summary>
@@ -822,7 +899,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
                 responseData.msg = "标题不能为空";
                 return responseData.ToJSON();
             }
-            if (item.DisplayIndex == null || item.DisplayIndex.ToString().Length== 0)
+            if (item.DisplayIndex == null || item.DisplayIndex.ToString().Length == 0)
             {
                 item.DisplayIndex = 0;
             }
@@ -2624,7 +2701,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
                 VipBLL Vip = new VipBLL(this.CurrentUserInfo);
                 string VipCode = Vip.GetMaxVipCode();
                 JIT.CPOS.BS.BLL.WX.CommonBLL bll = new BLL.WX.CommonBLL();
-                int Length =Convert.ToInt32(VipCode.Replace("Vip", ""));
+                int Length = Convert.ToInt32(VipCode.Replace("Vip", ""));
                 bool bl = bll.NewImportUserInfo(appId, appSecret, weixinId, this.CurrentUserInfo, Length);
                 if (bl == true)
                 {
@@ -2668,7 +2745,7 @@ namespace JIT.CPOS.BS.Web.Module.Basic.WApplication.Handler
                     int Length = Convert.ToInt32(VipCode.Replace("Vip", ""));
                     bl = bll.ImportUserInfo(item.AppID, item.AppSecret, item.WeiXinID, this.CurrentUserInfo, Length, appInterfaceList.Count());
                 }
-                
+
                 if (bl == true)
                 {
                     responseData.success = true;

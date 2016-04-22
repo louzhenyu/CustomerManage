@@ -1,14 +1,75 @@
-@charset "utf-8";
-.zsy{clear: both;font-size:0px; line-height:0px; display:block;}
-.commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.optionBtn{height:65px; padding-top:18px; background: #f4f8fa; border: solid  1px #eee; border-bottom:none;}
-.optionBtn .commonBtn{float:left;}
-.optionBtn .sales{position: relative;}
-.optionBtn .sales img{margin-top: -3px; margin-right: 6px;}
-.moreQueryWrap{float:left;margin-top:9px; }
-.unbundling{background-image:url(../images/bind.png); width: 16px; height: 16px; margin: 0 auto;}
+﻿@charset "utf-8";
 
-.optionBtn .sales .authBtn{ position: absolute; top:-10px;left:-10px;opacity:0}
+.zsy {
+    clear: both;
+    font-size: 0px;
+    line-height: 0px;
+    display: block;
+}
 
-.loadImg{  text-align: center; line-height: 39px;font-size: 17px;margin: 30px;}
-.PromptInfor{ width: 90%;margin: 0px auto;font-size: 14px;color: #797979;font-weight: 600;}
+.commonSelectWrap .selectBox {
+    border: 1px solid transparent;
+}
+
+.optionBtn {
+    height: 65px;
+    padding-top: 18px;
+    background: #f4f8fa;
+    border: solid 1px #eee;
+    border-bottom: none;
+}
+
+    .optionBtn .commonBtn {
+        float: left;
+    }
+
+    .optionBtn .sales {
+        position: relative;
+    }
+
+        .optionBtn .sales img {
+            margin-top: -3px;
+            margin-right: 6px;
+        }
+
+.moreQueryWrap {
+    float: left;
+    margin-top: 9px;
+}
+
+.unbundling {
+    background-image: url(../images/bind.png);
+    width: 16px;
+    height: 16px;
+    margin: 0 auto;
+}
+
+.optionBtn .sales .authBtn {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    opacity: 0;
+}
+
+.loadImg {
+    text-align: center;
+    line-height: 39px;
+    font-size: 17px;
+    margin: 30px;
+}
+
+.PromptInfor {
+    width: 90%;
+    margin: 0px auto;
+    font-size: 14px;
+    color: #797979;
+    font-weight: 600;
+}
+
+.SetWeChat {
+    cursor: pointer;
+    background-image: url(../images/SetWeChat-Butter.png);
+    height: 16px;
+    width: 16px;
+    background-repeat: no-repeat;
+}
