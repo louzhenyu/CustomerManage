@@ -54,7 +54,7 @@
 .spread .spreadPanel.attention{width: 320px; height: 500px;margin: 0 60px;}
 .erweiMaPanel{position: absolute; top: 88px; left: 50%;width: 156px; margin-left: -77px;}
 .erweiMaPanel p{ background: #fff;height: 30px; width: 100%; margin-bottom: 15px; line-height: 30px; font-size: 12px; border-radius: 3px;}
-.erWeiMa{ width: 155px; line-height: 155px; height: 155px; border-radius: 4px; background-color: #fff;  /* vertical-align:middle */}
+.erWeiMa{ position: relative; width: 155px; line-height: 155px; height: 155px; border-radius: 4px; background-color: #fff; background:url("../images/erweima.png") no-repeat center center; background-size: contain; /* vertical-align:middle */}
 .erweiMaPanel .textBtn{ width: 144px; height: 30px; color: #fff; background-color:#f65564; line-height: 30px; font-size: 12px; margin: 0 auto; border-radius: 2px; margin-top:8px; }
 .radioList{margin-left: 20px;width: 245px;}
 .radio{height:33px; cursor: pointer;}
@@ -65,7 +65,7 @@
 .radio .numberbox { float: none; margin-left: 5px; margin-right: 5px; padding: 0; cursor: pointer;}
 .listType{ width: 100%; height: 45px;}
 .listType span{cursor:pointer; width:35px; border: 1px solid #e1e7ea; height: 35px;margin-left: 8px; float:left; text-align: center; line-height: 35px; font-size: 14px;}
-.phonePanel{position:relative;overflow:hidden; background: url("../images/pageBg.png") no-repeat center center; height: 500px; width: 320px; background-size: cover;}
+.phonePanel{position:relative;overflow:hidden; background: url("../images/pageBg.png") no-repeat center center; height: 500px; width: 320px; background-size:contain;}
 .phonePanel .draggable{position: absolute; left:15px; top: 15px; z-index: 99; width: 62px; height: 40px;text-align: left;}
 .action{ position: absolute; width: 100%; bottom: 66px; margin: 0 auto;}
 .spreadPanel .action div{ margin: 0 auto; position:relative; width: 210px; height: auto}
@@ -189,3 +189,16 @@
 .eventList .eventAddBtn .icon{ width: 16px; height: 10px; background: url("../images/addIcon.png") no-repeat center center; display: inline-block;}
 .productAdd{ width: 192px; height: 44px; background-color:#fff; border: 1px dashed #e1e7ea; text-align: center;  margin: 10px auto; cursor: pointer;}
 .productAdd .icon{height: 19px; padding-left: 27px; margin-top: 13px; font-size: 13px; display: block;background: url("../images/icon_add.png" ) center center no-repeat; margin-right: 12px; text-align: right;width: 104px;}
+.skuPanel{ width: 780px; height: 508px;}
+.skuPanel .commonSelectWrap{ width: 176px;margin:0 0 5px 0;}
+.skuPanel .commonSelectWrap .selectBox{width: 80px;}
+.skuPanel .top{ height: 100px; padding: 10px 0 0 20px; background-color:#f3f3f6 ; display: block;text-align: center;}
+.skuPanel .top .productInfo{width: 734px; margin: 0 auto;display: block;height: 50px;}
+.skuPanel .top .productInfo p{float:left;width:558px;height:58px;line-height:29px;overflow:hidden;color:#333; text-align:left;}
+
+.skuPanel .bottom{ height: 400px; padding: 20px 0 0 20px;}
+.skuList{ width:500px; height: 400px;}
+.skuObj{ width: 400px; padding-left: 5px;}
+.skuObj .checkBox{ margin-top: 6px;}
+.skuObj .r{width: 378px;}
+

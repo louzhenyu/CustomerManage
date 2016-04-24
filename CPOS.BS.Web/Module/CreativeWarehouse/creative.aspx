@@ -271,9 +271,12 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
               <div class="erweiMaPanel">
                 <div  class="outside" style="display: none"  data-type="watch"><p data-view="PromptText" class="editText" >长按次二维码进行关注   </p> <em class="editIconBtn" data-type="text"></em></div>
-                <div class="erWeiMa" data-edit="true"  data-size="310X310px" data-imgurl="images/imgDefault.png" data-default="images/imgDefault.png" data-imgcode="erWeiMa">
-                 <img src="images/imgDefault.png" data-imgcode="erWeiMa"  >
-               </div>
+                <div class="erWeiMa">
+                  <div data-edit="true" data-size="100X100px" data-imgurl="images/imgDefault.png" data-default="images/imgDefault.png" data-imgcode="erWeiMa" style="width: 80px; margin: 0px auto; top: 62px; position: relative;"><em class="editIconBtn"></em>
+                       <img src="images/imgDefault.png" data-imgcode="erWeiMa">
+                  </div>
+                      <p style="background: rgba(255, 255, 255, 0.8);position: absolute;bottom: -15px;"> 请上传您的品牌logo</p>
+                  </div>
                   <div class="textBtn"  data-type="share"  style="display: none"  >分享有奖</div>
                   <div class="textBtn"  data-type="reg"  style="display: none" >注册有奖</div>
               </div>

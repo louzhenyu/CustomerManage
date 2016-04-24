@@ -1066,7 +1066,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 for (var i = 0; i < nodelist.length; i++) {
                     if(!nodelist[i].number){
                         objMsg.isAdd=false;
-                        objMsg.index=i;
+                        objMsg.index=$("#prizeListGrid").datagrid("getRowIndex",nodelist[i]);
                         objMsg.msg="请填写第"+(objMsg.index+1)+"行的奖品数量";
                     }
                     var obj = {
@@ -1083,7 +1083,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                 for (var i = 0; i < nodelist.length; i++) {
                     if(!nodelist[i].PrizeCount){
                         objMsg.isAdd=false;
-                        objMsg.index=i;
+                        objMsg.index=$("#prizeListGrid").datagrid("getRowIndex",nodelist[i]);
                         objMsg.msg="请填写第"+(objMsg.index+1)+"行的奖品数量";
                     }
                     var obj = {
@@ -1094,7 +1094,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                     };
                     if(nodelist[i].SurplusQty<obj.PrizeCount){
                         objMsg.isAdd=false;
-                        objMsg.index=i;
+                        objMsg.index=$("#prizeListGrid").datagrid("getRowIndex",nodelist[i]);
                         objMsg.msg="第"+(objMsg.index+1)+"行的已有券数量不足，请追加券数量";
                     }
 
@@ -1126,7 +1126,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                     }
                 }
             }else{
-                var dataList=$("#prizeListGrid").datagrid("getData").rows
+                var dataList=$("#prizeListGrid").datagrid("getData").rows;
                 for(var index=0;index<dataList.length;index++) {
                     $("#prizeListGrid").datagrid('beginEdit', index);
                 }
@@ -2496,19 +2496,19 @@ debugger;
               ContactPrizeList.push({ContactTypeCode:"Share",PrizeList:that.prizeListShare});
             }else{
               SpreadSetting.LeadPageSharePromptText="";
-              ContactPrizeList.push({ContactTypeCode:"Share",PrizeList:[]});
+              //ContactPrizeList.push({ContactTypeCode:"Share",PrizeList:[]});
           }
             if($("#release").find('[data-type="watch"]').hasClass("on")){//引导关注
                 ContactPrizeList.push({ContactTypeCode:"Focus",PrizeList:that.prizeListWatch});
             }else{
                 SpreadSetting.PromptText="";
-                ContactPrizeList.push({ContactTypeCode:"Focus",PrizeList:[]});
+               // ContactPrizeList.push({ContactTypeCode:"Focus",PrizeList:[]});
             }
             if($("#release").find('[data-type="reg"]').hasClass("on")){  //注册
                 ContactPrizeList.push({ContactTypeCode:"Reg",PrizeList:that.prizeListReg});
             }else{
                 SpreadSetting.LeadPageRegPromptText="";
-                ContactPrizeList.push({ContactTypeCode:"Reg",PrizeList:[]});
+              //  ContactPrizeList.push({ContactTypeCode:"Reg",PrizeList:[]});
             }
 
             SpreadSettingList.push(SpreadSetting);

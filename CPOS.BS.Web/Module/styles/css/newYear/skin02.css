@@ -50,7 +50,7 @@ body{overflow-x: hidden;}
 .moreQueryWrap .queryBtn {width: 70px;}
 /***公共标题样式***/
 .panelDiv{width: 100%;  float: left;padding:10px 10px 35px 0}
-.panelDiv .title{text-align:left;width: 100%; display: inline-block;  margin: 10px 0;font-size: 14px;  color: #666666;border-left: 4px solid #00a0e8;padding-left: 4px;height: 14px;line-height: 14px;}
+.panelDiv .title,.skuPanel .title{text-align:left;width: 100%; display: inline-block;  margin: 10px 0;font-size: 14px;  color: #666666;border-left: 4px solid #00a0e8;padding-left: 4px;height: 14px;line-height: 14px;}
 
 
 
