@@ -148,6 +148,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                             #region 注册会员触点活动奖励
                             bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
                             #endregion
+
                         }
                         else if (vipByID != null)
                         {
@@ -316,7 +317,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(CurrentUserInfo);
             if (!string.IsNullOrEmpty(pRequest.Parameters.CTWEventId))
             {
-                lEventRegVipLogBll.CTWRegOrFocusLog(pRequest.Parameters.CTWEventId, pRequest.UserID, "");
+                lEventRegVipLogBll.CTWRegOrFocusLog(pRequest.Parameters.CTWEventId, pRequest.UserID, "",CurrentUserInfo);
             }
 
 

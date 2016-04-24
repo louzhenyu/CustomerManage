@@ -47,7 +47,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     
                     T_CTW_SpreadSettingBLL bllSpreadSetting = new T_CTW_SpreadSettingBLL(this.CurrentUserInfo);
 
-                    DataSet dsReg = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Reg");
 
                     var regContact = contactList.Where(a => a.ContactTypeCode == "Reg").SingleOrDefault();
                     if (regContact!=null)
@@ -66,6 +65,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     {
                         ButtonInfo share = new ButtonInfo();
                         share.Text = "分享";
+                         DataSet dsShare = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Share");
+                         if (dsShare != null && dsShare.Tables.Count > 0 && dsShare.Tables[0].Rows.Count > 0)
+                        {
+                            share.Text = "分享";
+                            share.Title = dsShare.Tables[0].Rows[0]["Title"].ToString();
+                            share.Summary = dsShare.Tables[0].Rows[0]["Summary"].ToString();
+                            share.BGImageUrl = dsShare.Tables[0].Rows[0]["BGImageUrl"].ToString();
+                        }
+
                         if (bllPrize.QueryByEntity(new LPrizesEntity() { EventId = shareContact.EventId }, null).SingleOrDefault() != null)
                         {
                             share.Text = "分享有奖";

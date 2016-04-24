@@ -429,6 +429,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         public void SaveSpreadSetting(SetCTWEventRP para, T_CTW_SpreadSettingBLL bllSpreadSetting, ObjectImagesBLL imageBll, WApplicationInterfaceEntity wapentity,out string QRCodeUrl)
         {
             QRCodeUrl = string.Empty;
+            string QRCodeId = string.Empty;
             if (!string.IsNullOrEmpty(para.CTWEventId))
             {
                 bllSpreadSetting.DeleteByCTWEventID(para.CTWEventId);
@@ -447,15 +448,15 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 if (sItem.SpreadType == "Focus")
                 {
 
-                    CreateFocusQRCode(para, sItem.LeadPageQRCodeImageUrl, wapentity, out QRCodeUrl);
-                    imageEntity = new ObjectImagesEntity();
-                    imageEntity.ImageURL = QRCodeUrl;
-                    imageEntity.ObjectId = "";
-                    imageEntity.CreateBy = loggingSessionInfo.UserID;
-                    imageEntity.IsDelete = 0;
-                    imageEntity.CustomerId = loggingSessionInfo.ClientID;
-                    imageEntity.ImageId = Guid.NewGuid().ToString();
-                    imageBll.Create(imageEntity);
+                    CreateFocusQRCode(para, sItem.LeadPageQRCodeImageUrl, wapentity, out QRCodeUrl, out QRCodeId);
+                    //imageEntity = new ObjectImagesEntity();
+                    //imageEntity.ImageURL = QRCodeUrl;
+                    //imageEntity.ObjectId = "";
+                    //imageEntity.CreateBy = loggingSessionInfo.UserID;
+                    //imageEntity.IsDelete = 0;
+                    //imageEntity.CustomerId = loggingSessionInfo.ClientID;
+                    //imageEntity.ImageId = Guid.NewGuid().ToString();
+                    //imageBll.Create(imageEntity);
                 }
 
                 entitySpreadSetting = new T_CTW_SpreadSettingEntity()
@@ -465,7 +466,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     ImageId = bgimageEntity.ImageId,
                     Summary = sItem.Summary,
                     PromptText = sItem.PromptText,
-                    LeadPageQRCodeImageId = string.IsNullOrEmpty(sItem.LeadPageQRCodeImageUrl) == true ? "" : imageEntity.ImageId,
+                    LeadPageQRCodeImageId = QRCodeId,
                     LeadPageSharePromptText = sItem.LeadPageSharePromptText,
                     LeadPageFocusPromptText = sItem.LeadPageFocusPromptText,
                     LeadPageRegPromptText = sItem.LeadPageRegPromptText,
@@ -482,7 +483,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         /// <param name="bllPrize"></param>
         /// <param name="strStartDate"></param>
         /// <param name="strEndDate"></param>
-        public void SaveContactPrize(SetCTWEventRP para, LPrizesBLL bllPrize, string strStartDate, string strEndDate)
+        public void SaveContactPrize(SetCTWEventRP para, LPrizesBLL bllPrize, string strStartDate, string strEndDate) 
         {
             var bllContactEvent = new ContactEventBLL(loggingSessionInfo);
 
@@ -492,61 +493,73 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             {
                 bllContactEvent.DeleteContact(para.CTWEventId);
             }
-            if (para.ContactPrizeList!=null && para.ContactPrizeList.Count > 0)
+            foreach (var cItem in para.ContactPrizeList)
             {
-                foreach (var cItem in para.ContactPrizeList)
+                ContactEventEntity contactEvent = new ContactEventEntity();
+                int PrizeCount = 0;
+                if (cItem.PrizeList != null && cItem.PrizeList.Count > 0)
                 {
-                    ContactEventEntity contactEvent = new ContactEventEntity();
-                    int PrizeCount = 0;
-                    if (cItem.PrizeList != null && cItem.PrizeList.Count > 0)
+                    foreach (var ItemPrize in cItem.PrizeList)
+                    {
+                        PrizeCount = PrizeCount + ItemPrize.PrizeCount;
+                    }
+                    contactEvent.PrizeCount = PrizeCount;
+                    contactEvent.ContactTypeCode = cItem.ContactTypeCode;
+                    contactEvent.ContactEventName = cItem.ContactTypeCode;
+                    contactEvent.BeginDate = Convert.ToDateTime(strStartDate);
+                    contactEvent.EndDate = Convert.ToDateTime(strEndDate);
+                    contactEvent.PrizeType = "";
+                    contactEvent.CustomerID = loggingSessionInfo.ClientID;
+                    contactEvent.RewardNumber = "OnlyOne";
+                    contactEvent.EventId = strCTWEventId;
+                    contactEvent.Status = 1;
+                    contactEvent.IsCTW = 1;
+                    bllContactEvent.Create(contactEvent);
+                    ///保存奖品 生成奖品池
+                    var entityPrize = new LPrizesEntity();
+                    entityPrize.EventId = contactEvent.ContactEventId.ToString();
+                    entityPrize.PrizeName = cItem.ContactTypeCode;
+                    entityPrize.PrizeTypeId = cItem.PrizeType;
+                    entityPrize.Point = cItem.Point;
+                    entityPrize.CountTotal = PrizeCount;
+                    entityPrize.CreateBy = loggingSessionInfo.UserID;
+                    entityPrize.PrizesID = Guid.NewGuid().ToString();
+                    bllPrize.Create(entityPrize);
+
+                    if (cItem.PrizeType == "Coupon")
                     {
                         foreach (var ItemPrize in cItem.PrizeList)
                         {
-                            PrizeCount = PrizeCount + ItemPrize.PrizeCount;
+                            entityPrize = new LPrizesEntity();
+                            entityPrize.EventId = contactEvent.ContactEventId.ToString();
+                            entityPrize.PrizeName = ItemPrize.PrizeName;
+                            entityPrize.PrizeTypeId = ItemPrize.PrizeTypeId;
+                            entityPrize.PrizesID = entityPrize.PrizesID;
+                            entityPrize.CouponTypeID = ItemPrize.CouponTypeID;
+                            entityPrize.CountTotal = ItemPrize.PrizeCount;
+                            entityPrize.CreateBy = loggingSessionInfo.UserID;
+                            bllContactEvent.AddContactEventPrizeForCTW(entityPrize);
                         }
-                        contactEvent.PrizeCount = PrizeCount;
-                        contactEvent.ContactTypeCode = cItem.ContactTypeCode;
-                        contactEvent.ContactEventName = cItem.ContactTypeCode;
-                        contactEvent.BeginDate = Convert.ToDateTime(strStartDate);
-                        contactEvent.EndDate = Convert.ToDateTime(strEndDate);
-                        contactEvent.PrizeType = "";
-                        contactEvent.CustomerID = loggingSessionInfo.ClientID;
-                        contactEvent.RewardNumber = "OnlyOne";
-                        contactEvent.EventId = strCTWEventId;
-                        contactEvent.Status = 1;
-                        contactEvent.IsCTW = 1;
-                        bllContactEvent.Create(contactEvent);
-                        ///保存奖品 生成奖品池
-                        var entityPrize = new LPrizesEntity();
-                        entityPrize.EventId = contactEvent.ContactEventId.ToString();
-                        entityPrize.PrizeName = cItem.ContactTypeCode;
-                        entityPrize.PrizeTypeId = cItem.PrizeType;
-                        entityPrize.Point = cItem.Point;
-                        entityPrize.CountTotal = PrizeCount;
-                        entityPrize.CreateBy = loggingSessionInfo.UserID;
-                        entityPrize.PrizesID = Guid.NewGuid().ToString();
-                        bllPrize.Create(entityPrize);
 
-                        if (cItem.PrizeType == "Coupon")
-                        {
-                                foreach (var ItemPrize in cItem.PrizeList)
-                                {
-                                    entityPrize = new LPrizesEntity();
-                                    entityPrize.EventId = contactEvent.ContactEventId.ToString();
-                                    entityPrize.PrizeName = ItemPrize.PrizeName;
-                                    entityPrize.PrizeTypeId = ItemPrize.PrizeTypeId;
-                                    entityPrize.PrizesID = entityPrize.PrizesID;
-                                    entityPrize.CouponTypeID = ItemPrize.CouponTypeID;
-                                    entityPrize.CountTotal = ItemPrize.PrizeCount;
-                                    entityPrize.CreateBy = loggingSessionInfo.UserID;
-                                    bllContactEvent.AddContactEventPrizeForCTW(entityPrize);
-                                }
-                            
-                        }
                     }
-                    
                 }
-            };
+                else
+                {
+                    contactEvent.PrizeCount = 0;
+                    contactEvent.ContactTypeCode = cItem.ContactTypeCode;
+                    contactEvent.ContactEventName = cItem.ContactTypeCode;
+                    contactEvent.BeginDate = Convert.ToDateTime(strStartDate);
+                    contactEvent.EndDate = Convert.ToDateTime(strEndDate);
+                    contactEvent.PrizeType = "";
+                    contactEvent.CustomerID = loggingSessionInfo.ClientID;
+                    contactEvent.RewardNumber = "OnlyOne";
+                    contactEvent.EventId = strCTWEventId;
+                    contactEvent.Status = 1;
+                    contactEvent.IsCTW = 1;
+                    bllContactEvent.Create(contactEvent);
+                }
+
+            }
         }
         public int GetDrawMethodIdByDrawMethodCode(string strCode)
         {
@@ -861,11 +874,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         /// <param name="wapentity"></param>
         /// <param name="strQRCode"></param>
         /// <param name="QRCodeUrl"></param>
-        public void CreateFocusQRCode(SetCTWEventRP para, string strLeadPageQRCodeImageUrl, WApplicationInterfaceEntity wapentity, out string QRCodeUrl)
+        public void CreateFocusQRCode(SetCTWEventRP para, string strLeadPageQRCodeImageUrl, WApplicationInterfaceEntity wapentity, out string QRCodeUrl,out string QRCodeId)
         {
             
             QRCodeUrl = string.Empty;
-
+            QRCodeId = string.Empty;
 
             var wqrCodeManagerEntity = new WQRCodeManagerBLL(loggingSessionInfo).QueryByEntity(new WQRCodeManagerEntity() { ObjectId = strCTWEventId }, null).FirstOrDefault();
             
@@ -892,7 +905,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                             string logoImage = "~" + strLeadPageQRCodeImageUrl.Substring(currentDomain.Length);
 
                             System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
-                            Utils.CombinImage(wxCode.ImageUrl, HttpContext.Current.Server.MapPath(logoImage)).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
+                            Utils.CombinImage(QRCodeUrl, HttpContext.Current.Server.MapPath(logoImage)).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
                             Image ii = Image.FromStream(MStream1);
                             ii.Save(strQRCodeFilePath, System.Drawing.Imaging.ImageFormat.Png);
                             MStream1.Dispose();
@@ -900,13 +913,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                             QRCodeUrl = currentDomain + "/QRCodeImage/" + strFileNmae;
                         }
                         var WQRCodeManagerbll = new WQRCodeManagerBLL(loggingSessionInfo);
-                        var QRCodeId = Guid.NewGuid();
-                         
+                                                 
                          if (wqrCodeManagerEntity == null)
                          {
                              wqrCodeManagerEntity = new WQRCodeManagerEntity()
                              {
-                                 QRCodeId = QRCodeId,
+                                 QRCodeId = Guid.NewGuid(),
                                  QRCode = wxCode.MaxWQRCod.ToString(),
                                  QRCodeTypeId = wqrentity.QRCodeTypeId,
                                  IsUse = 1,
@@ -926,6 +938,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                              WQRCodeManagerbll.Update(wqrCodeManagerEntity);
 
                          }
+                         QRCodeId = wqrCodeManagerEntity.QRCodeId.ToString();
                     }
 
         }

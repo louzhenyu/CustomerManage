@@ -1437,7 +1437,7 @@ namespace JIT.CPOS.Web.WeiXin
                                 T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
                                 if (!string.IsNullOrEmpty(entityWQRCodeManage.ObjectId))
                                 {
-                                    lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID);
+                                    lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID,tmpUser);
                                 }
                             }
                             #endregion
@@ -1473,7 +1473,7 @@ namespace JIT.CPOS.Web.WeiXin
                             T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
                             if (!string.IsNullOrEmpty(entityWQRCodeManage.ObjectId))
                             {
-                                lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID);
+                                lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID,tmpUser);
                             }
                         }
                         #endregion
