@@ -452,9 +452,9 @@ from LPrizes   a
                   ";
             //取到某一页的
             sql += @"SELECT * FROM (  
-                    SELECT   DISTINCT b.CreateTime ,ROW_NUMBER()over(order by {0} {3}) _row,--Distinct为了处理同一个活动领了同一张券两次，在查看清单会出现重复数据的问题
+                    SELECT   DISTINCT b.CreateTime as winTime,ROW_NUMBER()over(order by {0} {3}) _row,--Distinct为了处理同一个活动领了同一张券两次，在查看清单会出现重复数据的问题
 
-                     a.*,b.CreateTime as winTime,b.VipID,
+                     a.*,b.VipID,
                      vipname,viprealname , 
                      isnull( x.Status ,0   )     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
                       (case  c.vipsourceid when 3  then (case when c.status>=1 then 1 else 0 end  )    else 0 end)  as subscribe     -----0代表未关注
