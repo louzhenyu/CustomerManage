@@ -454,12 +454,12 @@ from LPrizes   a
             sql += @"SELECT * FROM (  
                     SELECT  ROW_NUMBER()over(order by {0} {3}) _row,
 
- a.*,b.CreateTime as winTime,b.VipID,
- vipname,viprealname , 
- isnull( x.Status ,0   )     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
-  (case  c.vipsourceid when 3  then (case when c.status>=1 then 1 else 0 end  )    else 0 end)  as subscribe     -----0代表未关注
-          ,prizeName as Name     
- from  LPrizes a    inner join  LPrizeWinner b on a.PrizesID=b.PrizeID
+                     DISTINCT b.CreateTime ,a.*,b.CreateTime as winTime,b.VipID,--Distinct为了处理同一个活动领了同一张券两次，在查看清单会出现重复数据的问题
+                     vipname,viprealname , 
+                     isnull( x.Status ,0   )     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
+                      (case  c.vipsourceid when 3  then (case when c.status>=1 then 1 else 0 end  )    else 0 end)  as subscribe     -----0代表未关注
+                              ,prizeName as Name     
+                     from  LPrizes a    inner join  LPrizeWinner b on a.PrizesID=b.PrizeID
                  inner join Vip    c on  b.VipID=c.VIPID   
 				 left join   vipcouponmapping z  on  ( z.objectid=a.EventId and z.vipid=b.vipid)
 				 left join PrizeCouponTypeMapping  y on y.PrizesID=a.PrizesID
