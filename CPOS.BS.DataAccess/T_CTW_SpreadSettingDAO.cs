@@ -52,7 +52,7 @@ namespace JIT.CPOS.BS.DataAccess
             string strSql = string.Format(@"    SELECT a.*,b.ImageURL BGImageUrl ,c.ImageURL LeadPageQRCodeImageUrl
                                                 FROM [dbo].[T_CTW_SpreadSetting] a 
                                                 LEFT JOIN dbo.ObjectImages b ON a.ImageId=b.ImageId
-                                                LEFT JOIN dbo.ObjectImages c ON a.LeadPageQRCodeImageId=CAST(c.QRCodeId AS NVARCHAR(50))
+                                                LEFT JOIN dbo.WQRCodeManager c ON a.LeadPageQRCodeImageId=CAST(c.QRCodeId AS NVARCHAR(50))
                                                 WHERE CTWEventId='{0}'", strCTWEventId);
             return this.SQLHelper.ExecuteDataset(strSql);
         }

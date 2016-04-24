@@ -1437,7 +1437,7 @@ namespace JIT.CPOS.Web.WeiXin
                                 T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
                                 if (!string.IsNullOrEmpty(entityWQRCodeManage.ObjectId))
                                 {
-                                    lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID,tmpUser);
+                                    lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID, tmpUser, "Focus");
                                 }
                             }
                             #endregion
@@ -1460,10 +1460,32 @@ namespace JIT.CPOS.Web.WeiXin
                     {
                         vipServiceUnion.Create(vipInfo);
                         #region 关注触点活动奖励
-
-                        bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
+                        
+                            bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
                         #endregion
-                        #region 创意仓库关注log
+                            #region 创意仓库关注log
+                            BaseService.WriteLogWeixin(" 二维码code：" + qrcode_id);
+                            WQRCodeManagerBLL bllWQRCodeManage = new WQRCodeManagerBLL(tmpUser);
+                            var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode_id, Remark = "CTW", CustomerId = tmpUser.CurrentUser.customer_id }, null).SingleOrDefault();
+                            if (entityWQRCodeManage != null)
+                            {
+                                BaseService.WriteLogWeixin(" 创意仓库日志：" + entityWQRCodeManage.ObjectId);
+                                T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
+                                if (!string.IsNullOrEmpty(entityWQRCodeManage.ObjectId))
+                                {
+                                    lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID, tmpUser, "Focus");
+                                }
+                            }
+                        
+                        #endregion
+                    }
+                    vipId = vipInfo.VIPID;
+                }
+                else
+                {
+                    #region 创意仓库关注log
+                    if (vipObj[0].Status == 0)
+                    {
                         BaseService.WriteLogWeixin(" 二维码code：" + qrcode_id);
                         WQRCodeManagerBLL bllWQRCodeManage = new WQRCodeManagerBLL(tmpUser);
                         var entityWQRCodeManage = bllWQRCodeManage.QueryByEntity(new WQRCodeManagerEntity() { QRCode = qrcode_id, Remark = "CTW", CustomerId = tmpUser.CurrentUser.customer_id }, null).SingleOrDefault();
@@ -1473,15 +1495,12 @@ namespace JIT.CPOS.Web.WeiXin
                             T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(tmpUser);
                             if (!string.IsNullOrEmpty(entityWQRCodeManage.ObjectId))
                             {
-                                lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipInfo.VIPID,tmpUser);
+                                lEventRegVipLogBll.CTWRegOrFocusLog(entityWQRCodeManage.ObjectId, "", vipObj[0].VIPID, tmpUser, "Focus");
                             }
                         }
-                        #endregion
                     }
-                    vipId = vipInfo.VIPID;
-                }
-                else
-                {
+                    #endregion
+
                     vipInfo.VIPID = vipObj[0].VIPID;
                     vipId = vipObj[0].VIPID;
                     #region Jermyn20140819 处理会员状态，根据手机号码判断

@@ -40,7 +40,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="strCTWEventId">主题活动标识</param>
         /// <param name="strVipId">注册操作的vipid</param>
         /// <param name="strFocusVipId">关注操作的vipid</param>
-        public void CTWRegOrFocusLog(string strCTWEventId, string strRegVipId, string strFocusVipId, LoggingSessionInfo loggingSession)
+        public void CTWRegOrFocusLog(string strCTWEventId, string strRegVipId, string strFocusVipId, LoggingSessionInfo loggingSession,string strType)
         {
             T_LEventsRegVipLogEntity entityRegVipLog = new T_LEventsRegVipLogEntity();
             
@@ -48,6 +48,7 @@ namespace JIT.CPOS.BS.BLL
             entityRegVipLog.ObjectId = strCTWEventId;
             entityRegVipLog.RegVipId = strRegVipId;
             entityRegVipLog.FocusVipId = strFocusVipId;
+            entityRegVipLog.CustomerId = loggingSession.ClientID;
             this._currentDAO.Create(entityRegVipLog);
             //触点奖励
             ContactEventBLL bllContactEvent = new ContactEventBLL(loggingSession);
@@ -59,7 +60,16 @@ namespace JIT.CPOS.BS.BLL
                 if(prize!=null)
                 {
                     CouponBLL bllCoupon = new CouponBLL(loggingSession);
-                    bllCoupon.CouponBindVip(strRegVipId, prize.CouponTypeID, entityContact.ContactEventId.ToString(), "CTW");
+                    string strVipId = string.Empty;
+                    if (strType == "Reg")
+                    {
+                        strVipId = strRegVipId;
+                    }
+                    if (strType == "Focus")
+                    {
+                        strVipId = strFocusVipId;
+                    }
+                    bllCoupon.CouponBindVip(strVipId, prize.CouponTypeID, entityContact.ContactEventId.ToString(), strType);
                 }
 
             }

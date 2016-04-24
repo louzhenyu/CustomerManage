@@ -317,7 +317,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
             T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(CurrentUserInfo);
             if (!string.IsNullOrEmpty(pRequest.Parameters.CTWEventId))
             {
-                lEventRegVipLogBll.CTWRegOrFocusLog(pRequest.Parameters.CTWEventId, pRequest.UserID, "",CurrentUserInfo);
+                lEventRegVipLogBll.CTWRegOrFocusLog(pRequest.Parameters.CTWEventId, pRequest.UserID, "",CurrentUserInfo,"Reg");
             }
 
 

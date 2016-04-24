@@ -15,11 +15,11 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingData.Response
         /// <summary>
         /// 现金券
         /// </summary>
-        public int CASHCouponValue { get; set; }
+        public decimal CASHCouponValue { get; set; }
         /// <summary>
         /// 折扣券
         /// </summary>
-        public int DISCOUNTCouponValue { get; set; }
+        public decimal DISCOUNTCouponValue { get; set; }
         /// <summary>
         /// 礼物券
         /// </summary>
