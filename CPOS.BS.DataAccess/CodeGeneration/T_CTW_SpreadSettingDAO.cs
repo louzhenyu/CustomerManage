@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/3/18 14:58:43
+ * Create On	:2016/4/24 16:19:43
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [T_CTW_SpreadSetting](");
-            strSql.Append("[SpreadType],[Title],[ImageId],[Summary],[PromptText],[LeadPageQRCodeImageId],[LeadPageSharePromptText],[LeadPageFocusPromptText],[LeadPageRegPromptText],[CTWEventId],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[CustomerId],[IsDelete],[Id])");
+            strSql.Append("[SpreadType],[Title],[ImageId],[Summary],[PromptText],[LeadPageQRCodeImageId],[LeadPageSharePromptText],[LeadPageFocusPromptText],[LeadPageRegPromptText],[LogoUrl],[CTWEventId],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[CustomerId],[IsDelete],[Id])");
             strSql.Append(" values (");
-            strSql.Append("@SpreadType,@Title,@ImageId,@Summary,@PromptText,@LeadPageQRCodeImageId,@LeadPageSharePromptText,@LeadPageFocusPromptText,@LeadPageRegPromptText,@CTWEventId,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@CustomerId,@IsDelete,@Id)");            
+            strSql.Append("@SpreadType,@Title,@ImageId,@Summary,@PromptText,@LeadPageQRCodeImageId,@LeadPageSharePromptText,@LeadPageFocusPromptText,@LeadPageRegPromptText,@LogoUrl,@CTWEventId,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@CustomerId,@IsDelete,@Id)");            
 
 			Guid? pkGuid;
 			if (pEntity.Id == null)
@@ -102,6 +102,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LeadPageSharePromptText",SqlDbType.NVarChar),
 					new SqlParameter("@LeadPageFocusPromptText",SqlDbType.NVarChar),
 					new SqlParameter("@LeadPageRegPromptText",SqlDbType.NVarChar),
+					new SqlParameter("@LogoUrl",SqlDbType.NVarChar),
 					new SqlParameter("@CTWEventId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.VarChar),
@@ -120,14 +121,15 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[6].Value = pEntity.LeadPageSharePromptText;
 			parameters[7].Value = pEntity.LeadPageFocusPromptText;
 			parameters[8].Value = pEntity.LeadPageRegPromptText;
-			parameters[9].Value = pEntity.CTWEventId;
-			parameters[10].Value = pEntity.CreateTime;
-			parameters[11].Value = pEntity.CreateBy;
-			parameters[12].Value = pEntity.LastUpdateTime;
-			parameters[13].Value = pEntity.LastUpdateBy;
-			parameters[14].Value = pEntity.CustomerId;
-			parameters[15].Value = pEntity.IsDelete;
-			parameters[16].Value = pkGuid;
+			parameters[9].Value = pEntity.LogoUrl;
+			parameters[10].Value = pEntity.CTWEventId;
+			parameters[11].Value = pEntity.CreateTime;
+			parameters[12].Value = pEntity.CreateBy;
+			parameters[13].Value = pEntity.LastUpdateTime;
+			parameters[14].Value = pEntity.LastUpdateBy;
+			parameters[15].Value = pEntity.CustomerId;
+			parameters[16].Value = pEntity.IsDelete;
+			parameters[17].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -239,6 +241,8 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[LeadPageFocusPromptText]=@LeadPageFocusPromptText,");
             if (pIsUpdateNullField || pEntity.LeadPageRegPromptText!=null)
                 strSql.Append( "[LeadPageRegPromptText]=@LeadPageRegPromptText,");
+            if (pIsUpdateNullField || pEntity.LogoUrl!=null)
+                strSql.Append( "[LogoUrl]=@LogoUrl,");
             if (pIsUpdateNullField || pEntity.CTWEventId!=null)
                 strSql.Append( "[CTWEventId]=@CTWEventId,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
@@ -259,6 +263,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LeadPageSharePromptText",SqlDbType.NVarChar),
 					new SqlParameter("@LeadPageFocusPromptText",SqlDbType.NVarChar),
 					new SqlParameter("@LeadPageRegPromptText",SqlDbType.NVarChar),
+					new SqlParameter("@LogoUrl",SqlDbType.NVarChar),
 					new SqlParameter("@CTWEventId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
@@ -274,11 +279,12 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[6].Value = pEntity.LeadPageSharePromptText;
 			parameters[7].Value = pEntity.LeadPageFocusPromptText;
 			parameters[8].Value = pEntity.LeadPageRegPromptText;
-			parameters[9].Value = pEntity.CTWEventId;
-			parameters[10].Value = pEntity.LastUpdateTime;
-			parameters[11].Value = pEntity.LastUpdateBy;
-			parameters[12].Value = pEntity.CustomerId;
-			parameters[13].Value = pEntity.Id;
+			parameters[9].Value = pEntity.LogoUrl;
+			parameters[10].Value = pEntity.CTWEventId;
+			parameters[11].Value = pEntity.LastUpdateTime;
+			parameters[12].Value = pEntity.LastUpdateBy;
+			parameters[13].Value = pEntity.CustomerId;
+			parameters[14].Value = pEntity.Id;
 
             //执行语句
             int result = 0;
@@ -584,6 +590,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LeadPageFocusPromptText", Value = pQueryEntity.LeadPageFocusPromptText });
             if (pQueryEntity.LeadPageRegPromptText!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LeadPageRegPromptText", Value = pQueryEntity.LeadPageRegPromptText });
+            if (pQueryEntity.LogoUrl!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LogoUrl", Value = pQueryEntity.LogoUrl });
             if (pQueryEntity.CTWEventId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CTWEventId", Value = pQueryEntity.CTWEventId });
             if (pQueryEntity.CreateTime!=null)
@@ -652,6 +660,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["LeadPageRegPromptText"] != DBNull.Value)
 			{
 				pInstance.LeadPageRegPromptText =  Convert.ToString(pReader["LeadPageRegPromptText"]);
+			}
+			if (pReader["LogoUrl"] != DBNull.Value)
+			{
+				pInstance.LogoUrl =  Convert.ToString(pReader["LogoUrl"]);
 			}
 			if (pReader["CTWEventId"] != DBNull.Value)
 			{

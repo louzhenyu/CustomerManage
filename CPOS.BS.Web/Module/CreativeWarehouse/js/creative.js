@@ -1,19 +1,19 @@
 /*define(['jquery', 'tools','js/tempModel.js','template', 'kindeditor','kkpager', 'artDialog'], function ($,temp) {*/
 
 
-define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslider','kkpager','easyui','copy','artTemplate','tools', 'artDialog'],
-    function ($,jvveshow,temp,jQjvve) {
+define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','js/salesPromotion.js','kindeditor','bxslider','kkpager','easyui','copy','artTemplate','tools', 'artDialog'],
+    function ($,jvveshow,temp,jQjvve,salesPromtion) {
     //上传图片
     KE = KindEditor;
     var page = {
         template: temp,
-        //salesObj: salesPromtion,//促销对象的操作
+        salesObj: salesPromtion,//促销对象的操作
         elems: {
             sectionPage:$("#section"),
             navigation:$(".contentArea_vipquery .navigation"),
             submitBtn:$("#submitBtn"),
             editor1:"",
-            isEdit:false,//是否是编辑
+            isInitEdit:false,//是否直接实例化编辑器
             selectType:"",//查看是那一项的奖品
             setUpTheType:"",//获取该活动实现的目的类型。1关注，2是成交
             isSaveJvveShow:false, //风格是否保存过，如果保存，风格再次切换的时候有提示。
@@ -187,7 +187,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
         var CTWEventId=$.util.getUrlParam("CTWEventId");
         if (CTWEventId) {
             self.loadData.args.CTWEventId = CTWEventId;
-            self.elems.isEdit=true;
+            self.elems.isInitEdit=true;
             self.elems.isInitStyle=false;//编辑状态首次加载不需要从新实例化风格。
 
         }
@@ -464,6 +464,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                                 }
                             });
                     }
+
                 }
 
                 if(navLiOn=="nav03"&&panelName=="nav04"){
@@ -503,6 +504,7 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                            that.setDefaultImg(eventInfo);
                            that.elems.eventInfoType=InteractionType
                        }
+
                        var navLi = that.elems.navigation.find("li");
                        if (me.index() == navLi.length - 1) {
                            that.elems.navigation.find("ul img").hide(0);
@@ -529,9 +531,12 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
                            $(".btnopt").css({width: "280px"});
                        }
 
+                       if(panelName=="nav02"&&self.elems.isInitEdit) {
+                           self.elems.isInitEdit=false;
+                           self.initJevvShow(true,drawMethodCode);
+                       }
 
                    }
-
 
                 if(panelName){ //编辑的时候；
                     self.renderTablePrize();
@@ -582,11 +587,12 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
 
 
             }).delegate('[data-panel="nav03"] .editIconBtn',"click",function(){
-                debugger;
-                    var imgMessage={size:$(this).parent().data("size"),imgUrl:$(this).parent().data("imgurl")};
-                    var imgCode= $(this).parent().data("imgcode");//页面每个图片唯一的标识
-                    imgMessage["imgDefault"]=$(this).parent().data("default");
-                    that.imgEdit(imgMessage,imgCode);
+                if($(this).parents('[data-type="dataEdit"]').length==0) {
+                    var imgMessage = {size: $(this).parent().data("size"), imgUrl: $(this).parent().data("imgurl")};
+                    var imgCode = $(this).parent().data("imgcode");//页面每个图片唯一的标识
+                    imgMessage["imgDefault"] = $(this).parent().data("default");
+                    that.imgEdit(imgMessage, imgCode);
+                  }
                 }).delegate('[data-panel="nav04"] .editIconBtn',"click",function(){
                 var type=$(this).data("type");
                     switch (type){
@@ -942,6 +948,8 @@ define(['jquery',"jvveshow",'js/tempModel.js','jquery-jvve','kindeditor','bxslid
 
             });
 
+
+            that.salesObj.initEvent();
         },
         releaseOpen:function( data){
             var top=$(document).scrollTop()+60;
@@ -2048,10 +2056,11 @@ debugger;
                              if(materialText){ //对象存在证明是编辑的
                                  domPanel.find('img.bgPhone').attr("src",spreadObj.BGImageUrl);
                                  domPanel.find('[data-imgcode="bgPhone"]').data("imgurl",spreadObj.BGImageUrl);
-                                 domPanel.find('.erWeiMa img').attr("src",spreadObj.LeadPageQRCodeImageUrl);
-                                 domPanel.find('.erWeiMa').data("imgurl",spreadObj.LeadPageQRCodeImageUrl)
+                                 domPanel.find(".erWeiMa img").attr("src",spreadObj.LogoUrl);
+                                 domPanel.find('.erWeiMa').css({"backgroundImage":spreadObj.LeadPageQRCodeImageUrl});
+                                 domPanel.find('.erWeiMa div').data("imgurl",spreadObj.LogoUrl)
                              }else{
-                                 domPanel.find('[data-imgcode="bgPhone"]').data("imgurl",spreadObj.ImageURL)
+                                 domPanel.find('[data-imgcode="bgPhone"]').data("imgurl",spreadObj.ImageURL);
                                  domPanel.find('img.bgPhone').attr("src",spreadObj.ImageURL);
                              }
                              if(self.loadDataInfo.CustomerCTWEventInfo&&self.loadDataInfo.CustomerCTWEventInfo.ContactEventList){
@@ -2130,7 +2139,7 @@ debugger;
                 //$("[data-interaction].btnItem").removeClass("disable");
                 $("#slider").find(".slide.on div").trigger("click");
                 $("[data-interaction="+InteractionType+"].btnItem").trigger("click");
-                self.initJevvShow(true,loadData.CustomerCTWEventInfo.DrawMethodCode);
+               // self.initJevvShow(true,loadData.CustomerCTWEventInfo.DrawMethodCode);
                 debugger;
                 var eventInfo= loadData.CustomerCTWEventInfo.EventInfo;
                 if(InteractionType==1){  //关注
@@ -2483,13 +2492,13 @@ debugger;
                 Summary:"",
                 BGImageUrl: $('[data-tabname="tab03"]').find('[data-imgcode="bgPhone"]').data("imgurl"),
                  PromptText:$('[data-tabname="tab03"]').find('[data-view="PromptText"]').html(),
-                 LeadPageQRCodeImageUrl:$('[data-tabname="tab03"] .erWeiMa').find('img').attr("src"),   //引导页二维码图片
+                 LogoUrl:$('[data-tabname="tab03"] .erWeiMa').find('img').attr("src"),   //引导页二维码图片
                  LeadPageSharePromptText:"分享有奖",  //引导页分享项提示
                 /* LeadPageFocusPromptText:"关注有奖",   //引导页关注提示*/
                  LeadPageRegPromptText:"注册有奖"     //引导注册提示
             };
-               if(SpreadSetting.LeadPageQRCodeImageUrl.indexOf("images/imgDefault")!=-1){
-                   SpreadSetting.LeadPageQRCodeImageUrl="";
+               if(SpreadSetting.LogoUrl.indexOf("images/imgDefault")!=-1){
+                   SpreadSetting.LogoUrl="";
                }
             var ContactPrizeList=[];//触点活动奖励
           if($("#release").find('[data-type="share"]').hasClass("on")){    //分享

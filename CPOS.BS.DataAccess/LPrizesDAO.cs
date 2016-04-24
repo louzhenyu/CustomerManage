@@ -262,7 +262,7 @@ namespace JIT.CPOS.BS.DataAccess
 
         public DataSet GetPirzeList(string strEventId)
         {
-            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId ,l.Point"
+            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId ,l.Point "
                         +" From dbo.LPrizes l "
                         +"LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
                         +"LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "
@@ -275,7 +275,7 @@ namespace JIT.CPOS.BS.DataAccess
         }
         public DataSet GetPirzeListForCTW(string strEventId)
         {
-            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId "
+            string sql = "select l.PrizesID ,l.EventId ,l.PrizeName,l.PrizeLevel,o.OptionText PrizeLevelName,l.CountTotal,l.CountTotal PrizeCount ,l.Probability ,c.CouponTypeName,c.CouponTypeID ,c.IssuedQty,l.ImageUrl,pool.RemainCount,l.PrizeTypeId ,l.Point "
                         + "From dbo.LPrizes l "
                         + "LEFT JOIN PrizeCouponTypeMapping p ON l.PrizesID = p.PrizesID "
                         + "LEFT JOIN CouponType c ON p.CouponTypeID = CAST(c.CouponTypeID AS NVARCHAR(200)) "
@@ -290,6 +290,12 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetCouponTypeIDByPrizeId(string strPrizesID)
         {
             string strSql = string.Format("SELECT top 1 l.*,CouponTypeID,Location FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID LEFT JOIN dbo.LPrizeLocation lc WITH(NOLOCK) ON l.PrizesID=lc.PrizeID where l.PrizesID='{0}' ", strPrizesID);
+            return this.SQLHelper.ExecuteDataset(strSql);
+
+        }
+        public DataSet GetCouponTypeIDByEventId(string strEventId)
+        {
+            string strSql = string.Format("SELECT  l.*,CouponTypeID  FROM LPrizes l WITH(NOLOCK) INNER JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID  where l.EventId='{0}' ", strEventId);
             return this.SQLHelper.ExecuteDataset(strSql);
 
         }

@@ -130,7 +130,7 @@
                     </div>
                 </div>
 
-             <div class="btnWrap" id="Div1" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
+             <div class="btnWrap" id="Div1" data-options="region:'south',border:false">
       				<a  class="easyui-linkbutton commonBtn submit" >确定</a>
       			</div>
 

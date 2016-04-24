@@ -131,16 +131,17 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                             ContactEventInfo ContactInfo = new ContactEventInfo();                   
                             foreach(DataRow dr in dsContact.Tables[0].Rows)
                             {
+                                ContactInfo = new ContactEventInfo();    
                                 ContactInfo.ContactTypeCode = dr["ContactTypeCode"].ToString();
                                 DataSet dsPrizes = bllPrizes.GetPirzeListForCTW(dr["ContactEventId"].ToString());
                                 if (dsPrizes.Tables != null && dsPrizes.Tables.Count > 0 && dsPrizes.Tables[0] != null && dsPrizes.Tables[0].Rows.Count > 0)
                                 {
                                     ContactInfo.ContactPrizeList = DataTableToObject.ConvertToList<Prize>(dsPrizes.Tables[0]);
                                 }
-
+                                ContactInfoList.Add(ContactInfo);
                             }
-                            ContactInfoList.Add(ContactInfo);
                             rd.CustomerCTWEventInfo.ContactEventList = ContactInfoList;
+
                         }
                     }
 

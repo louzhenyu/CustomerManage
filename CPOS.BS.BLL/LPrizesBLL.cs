@@ -226,6 +226,11 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetCouponTypeIDByPrizeId(strPrizesID);
 
         }
+        public DataSet GetCouponTypeIDByEventId(string strPrizesID)
+        {
+            return this._currentDAO.GetCouponTypeIDByEventId(strPrizesID);
+
+        }
         /// <summary>
         /// 根据活动id返回未中奖的位置
         /// </summary>

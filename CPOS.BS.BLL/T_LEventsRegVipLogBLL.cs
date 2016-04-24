@@ -25,6 +25,8 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.Entity;
+using CPOS.Common;
+using JIT.CPOS.BS.BLL.WX;
 
 
 namespace JIT.CPOS.BS.BLL
@@ -52,11 +54,12 @@ namespace JIT.CPOS.BS.BLL
             this._currentDAO.Create(entityRegVipLog);
             //触点奖励
             ContactEventBLL bllContactEvent = new ContactEventBLL(loggingSession);
-            var entityContact = bllContactEvent.QueryByEntity(new ContactEventEntity() { EventId = strCTWEventId, IsDelete = 0, IsCTW = 1 }, null).SingleOrDefault();
+            var entityContact = bllContactEvent.QueryByEntity(new ContactEventEntity() { EventId = strCTWEventId, IsDelete = 0, IsCTW = 1,ContactTypeCode=strType}, null).SingleOrDefault();
             if(entityContact!=null)
             {
                 LPrizesBLL bllPrize = new LPrizesBLL(loggingSession);
-                var prize = bllPrize.QueryByEntity(new LPrizesEntity() { EventId = entityContact.ContactEventId.ToString(), IsDelete = 0 }, null).SingleOrDefault();
+                var prize = DataTableToObject.ConvertToList<LPrizesEntity>(bllPrize.GetCouponTypeIDByEventId(entityContact.ContactEventId.ToString()).Tables[0]).FirstOrDefault();
+
                 if(prize!=null)
                 {
                     CouponBLL bllCoupon = new CouponBLL(loggingSession);
@@ -69,7 +72,38 @@ namespace JIT.CPOS.BS.BLL
                     {
                         strVipId = strFocusVipId;
                     }
-                    bllCoupon.CouponBindVip(strVipId, prize.CouponTypeID, entityContact.ContactEventId.ToString(), strType);
+                    if (prize.PrizeTypeId == "Coupon")
+                    {
+                        bllCoupon.CouponBindVip(strVipId, prize.CouponTypeID, entityContact.ContactEventId.ToString(), strType);
+                    }
+                    if (prize.PrizeTypeId == "Point")
+                    {
+                        #region 调用积分统一接口
+                        var salesReturnBLL = new T_SalesReturnBLL(loggingSession);
+                        VipIntegralBLL bllVipIntegral = new VipIntegralBLL(loggingSession);
+                        var vipBLL = new VipBLL(loggingSession);
+
+                        var vipInfo = vipBLL.GetByID(strVipId);
+                        var IntegralDetail = new VipIntegralDetailEntity()
+                        {
+                            Integral = prize.Point,
+                            IntegralSourceID = "22",
+                            ObjectId = entityContact.ContactEventId.ToString()
+                        };
+                        //变动前积分
+                        string OldIntegral = (vipInfo.Integration ?? 0).ToString();
+                        //变动积分
+                        string ChangeIntegral = (IntegralDetail.Integral ?? 0).ToString();
+                        var vipIntegralDetailId = bllVipIntegral.AddIntegral(ref vipInfo, null, IntegralDetail, null, loggingSession);
+                        //发送微信积分变动通知模板消息
+                        if (!string.IsNullOrWhiteSpace(vipIntegralDetailId))
+                        {
+                            var CommonBLL = new CommonBLL();
+                            CommonBLL.PointsChangeMessage(OldIntegral, vipInfo, ChangeIntegral, vipInfo.WeiXinUserId, loggingSession);
+                        }
+
+                        #endregion
+                    }
                 }
 
             }

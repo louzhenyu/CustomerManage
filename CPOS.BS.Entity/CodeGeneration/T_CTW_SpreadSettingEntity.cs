@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/3/18 14:58:43
+ * Create On	:2016/4/24 16:19:43
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -86,6 +86,11 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String LeadPageRegPromptText { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String LogoUrl { get; set; }
 
 		/// <summary>
 		/// 

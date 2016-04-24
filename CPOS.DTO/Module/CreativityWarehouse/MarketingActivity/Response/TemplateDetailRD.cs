@@ -146,6 +146,8 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingActivity.Response
         public string ImageUrl { get; set; }
         //剩余数量
         public int RemainCount { get; set; }
+
+        public int Point { get; set; }
     }
     public  class ContactEventInfo
     {

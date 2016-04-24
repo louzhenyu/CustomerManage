@@ -448,7 +448,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 if (sItem.SpreadType == "Focus")
                 {
 
-                    CreateFocusQRCode(para, sItem.LeadPageQRCodeImageUrl, wapentity, out QRCodeUrl, out QRCodeId);
+                    CreateFocusQRCode(para, sItem.LogoUrl, wapentity, out QRCodeUrl, out QRCodeId);
                     //imageEntity = new ObjectImagesEntity();
                     //imageEntity.ImageURL = QRCodeUrl;
                     //imageEntity.ObjectId = "";
@@ -470,6 +470,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     LeadPageSharePromptText = sItem.LeadPageSharePromptText,
                     LeadPageFocusPromptText = sItem.LeadPageFocusPromptText,
                     LeadPageRegPromptText = sItem.LeadPageRegPromptText,
+                    LogoUrl=sItem.LogoUrl,
                     CustomerId = loggingSessionInfo.ClientID,
                     CTWEventId = new Guid(strCTWEventId)
                 };
@@ -508,40 +509,46 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     contactEvent.ContactEventName = cItem.ContactTypeCode;
                     contactEvent.BeginDate = Convert.ToDateTime(strStartDate);
                     contactEvent.EndDate = Convert.ToDateTime(strEndDate);
-                    contactEvent.PrizeType = "";
+                    contactEvent.PrizeType ="";
                     contactEvent.CustomerID = loggingSessionInfo.ClientID;
                     contactEvent.RewardNumber = "OnlyOne";
                     contactEvent.EventId = strCTWEventId;
+                    //if (cItem.ContactTypeCode=="Share")
+                    //{
+                    //    contactEvent.ShareEventId = strCTWEventId;
+                    //}
                     contactEvent.Status = 1;
                     contactEvent.IsCTW = 1;
                     bllContactEvent.Create(contactEvent);
                     ///保存奖品 生成奖品池
                     var entityPrize = new LPrizesEntity();
-                    entityPrize.EventId = contactEvent.ContactEventId.ToString();
-                    entityPrize.PrizeName = cItem.ContactTypeCode;
-                    entityPrize.PrizeTypeId = cItem.PrizeType;
-                    entityPrize.Point = cItem.Point;
-                    entityPrize.CountTotal = PrizeCount;
-                    entityPrize.CreateBy = loggingSessionInfo.UserID;
-                    entityPrize.PrizesID = Guid.NewGuid().ToString();
-                    bllPrize.Create(entityPrize);
+                    //entityPrize.EventId = contactEvent.ContactEventId.ToString();
+                    //entityPrize.PrizeName = cItem.ContactTypeCode;
+                    //entityPrize.PrizeTypeId = cItem.PrizeType;
+                    //entityPrize.Point = cItem.Point;
+                    //entityPrize.CountTotal = PrizeCount;
+                    //entityPrize.CreateBy = loggingSessionInfo.UserID;
+                    //entityPrize.PrizesID = Guid.NewGuid().ToString();
+                    //bllPrize.Create(entityPrize);
 
-                    if (cItem.PrizeType == "Coupon")
-                    {
+                    //if (cItem.PrizeType == "Coupon")
+                    //{
                         foreach (var ItemPrize in cItem.PrizeList)
                         {
                             entityPrize = new LPrizesEntity();
                             entityPrize.EventId = contactEvent.ContactEventId.ToString();
                             entityPrize.PrizeName = ItemPrize.PrizeName;
                             entityPrize.PrizeTypeId = ItemPrize.PrizeTypeId;
-                            entityPrize.PrizesID = entityPrize.PrizesID;
+                            entityPrize.Point = ItemPrize.Point;
                             entityPrize.CouponTypeID = ItemPrize.CouponTypeID;
                             entityPrize.CountTotal = ItemPrize.PrizeCount;
                             entityPrize.CreateBy = loggingSessionInfo.UserID;
-                            bllContactEvent.AddContactEventPrizeForCTW(entityPrize);
+                            entityPrize.PrizesID = Guid.NewGuid().ToString(); 
+                            //bllContactEvent.AddContactEventPrizeForCTW(entityPrize);
+                            bllContactEvent.AddContactEventPrize(entityPrize);
                         }
 
-                    }
+                    //}
                 }
                 else
                 {
@@ -874,7 +881,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         /// <param name="wapentity"></param>
         /// <param name="strQRCode"></param>
         /// <param name="QRCodeUrl"></param>
-        public void CreateFocusQRCode(SetCTWEventRP para, string strLeadPageQRCodeImageUrl, WApplicationInterfaceEntity wapentity, out string QRCodeUrl,out string QRCodeId)
+        public void CreateFocusQRCode(SetCTWEventRP para, string strLogoUrl, WApplicationInterfaceEntity wapentity, out string QRCodeUrl,out string QRCodeId)
         {
             
             QRCodeUrl = string.Empty;
@@ -895,14 +902,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     if (!string.IsNullOrEmpty(QRCodeUrl))
                     {
 
-                        if (!string.IsNullOrEmpty(strLeadPageQRCodeImageUrl))//如果有值则生成二维码中间带图
+                        if (!string.IsNullOrEmpty(strLogoUrl))//如果有值则生成二维码中间带图
                         {
                             string targetPath = HttpContext.Current.Server.MapPath("/QRCodeImage/");
                             ////二维码中奖加图片
                             string currentDomain = "http://" + HttpContext.Current.Request.Url.Host;//当前项目域名
                             string strFileNmae = QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
                             string strQRCodeFilePath = targetPath + strFileNmae;
-                            string logoImage = "~" + strLeadPageQRCodeImageUrl.Substring(currentDomain.Length);
+                            string logoImage = "~" + strLogoUrl.Substring(currentDomain.Length);
 
                             System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
                             Utils.CombinImage(QRCodeUrl, HttpContext.Current.Server.MapPath(logoImage)).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
