@@ -451,8 +451,13 @@ from LPrizes   a
                                {4}
                   ";
             //取到某一页的
-            sql += @"SELECT * FROM (  
-                    SELECT   DISTINCT b.CreateTime as winTime,ROW_NUMBER()over(order by {0} {3}) _row,--Distinct为了处理同一个活动领了同一张券两次，在查看清单会出现重复数据的问题
+            sql += @"
+    SELECT   *
+        FROM     ( SELECT    ROW_NUMBER() OVER ( ORDER BY winTime DESC ) _row ,--Distinct为了处理同一个活动领了同一张券两次，在查看清单会出现重复数据的问题
+                            *
+                    FROM      ( 
+                
+                    SELECT   DISTINCT b.CreateTime as winTime,--Distinct为了处理同一个活动领了同一张券两次，在查看清单会出现重复数据的问题
 
                      a.*,b.VipID,
                      vipname,viprealname , 
@@ -469,8 +474,9 @@ from LPrizes   a
                   WHERE    1=1
                             {4}
                 ";
-            sql += @") t
-                  where t._row>{1}*{2} and t._row<=({1}+1)*{2}";
+            sql += @") t  
+                        ) u
+                  where u._row>{1}*{2} and u._row<=({1}+1)*{2}";
 
             sql = string.Format(sql, OrderBy, PageIndex - 1, PageSize, sortType, sqlWhere, strSql, strColumn);
 
