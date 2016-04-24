@@ -115,6 +115,7 @@
       <div style="display:none;">
       <div id="win" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,draggable:false,minimizable:false,maximizable:false,closed:true,closable:true" >
           <div class="easyui-layout" data-options="fit:true" id="panlconent">
+           <div data-options="region:'center'" style="overflow-x:hidden">
               <div class="ActivityOperation">
               <div class="ActivityDateLayer">活动日期：<span class="ActivityDate">2016/4/4-2016/4/5</span></div><a  href="javascript:;"  download="清单导出.xls" href="javascript:;" class="commonBtn exportlist">导出清单</a>
                   </div>
@@ -129,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-
+              </div>
              <div class="btnWrap" id="Div1" data-options="region:'south',border:false">
       				<a  class="easyui-linkbutton commonBtn submit" >确定</a>
       			</div>

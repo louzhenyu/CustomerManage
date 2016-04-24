@@ -70,7 +70,26 @@
                 });
             });
 
-           
+            $('#win').window({
+                modal: true,
+                shadow: false,
+                collapsible: false,
+                minimizable: false,
+                maximizable: false,
+                closed: true,
+                closable: true,
+                onOpen: function () {
+                    $("body").css("overflow-y", "hidden");
+                    $("#win").window("hcenter");
+                }, onClose: function () {
+                    $("body").css("overflow-y", "auto");
+                    //关闭之后，所有的分页都初始化为起始页。
+                    that.loadData.args.PageIndex=1;
+                    that.loadData.args1.PageIndex=1;
+                    that.loadData.args2.PageIndex=1;
+
+                }
+            });
 
             $(".tableWrap").on("click", ".viewlist", function () {
                 $(".ActivityDate").html("");
@@ -79,7 +98,7 @@
                 if (that.loadData.details.InteractionType == 1) {
 
                     $('#win').window({
-                        title: "奖品发放清单", width: 800, height: 500, top: 20,
+                        title: "奖品发放清单", width: 800, height: 520, top: 20,
                         left: ($(window).width() - 800) * 0.5
                     });
                     $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=GameAwardsListExport");
@@ -90,7 +109,7 @@
                     });
                 } else if (that.loadData.details.InteractionType == 2) {
                     $('#win').window({
-                        title: "销售清单", width: 800, height: 500, top: 20,
+                        title: "销售清单", width: 800, height: 520, top: 20,
                         left: ($(window).width() - 800) * 0.5
                     });
                     $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=SalesItemsListExport");
@@ -925,7 +944,7 @@
             var that = this;
             that.loadData.args1.PageIndex = currentPage;
 
-            $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
+            //$("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
             if (that.loadData.details.InteractionType == 1) {
                 that.GetEventPrizeList(function (_data) {
                     that.renderTable2(_data);
@@ -943,7 +962,7 @@
             var that = this;
             that.loadData.args2.PageIndex = currentPage;
 
-            $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
+           // $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
             if (that.loadData.details.InteractionType == 1) {
                 that.GetEventPrizeDetailList(function (data) {
                     that.renderTable3(data);
@@ -969,7 +988,10 @@
 				      PageIndex: that.loadData.args.PageIndex,
 				      PageSize: that.loadData.args.PageSize
 				  },
-				  
+                beforeSend: function () {
+                    $.util.isLoading()
+
+                },
 				  success: function (data) {
 				      if (data.IsSuccess && data.ResultCode == 0) {
 				          var result = data.Data;
@@ -1191,7 +1213,7 @@
                     PageSize: that.loadData.args2.PageSize
                 },
                 beforeSend: function () {
-                    $.util.isLoading()
+                   $.util.isLoading()
 
                 },
                 success: function (data) {
