@@ -79,25 +79,31 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     }
                     rd.Share = share;
 
-                    var focusContact = contactList.Where(a => a.ContactTypeCode == "Focus").SingleOrDefault();
-                    if (focusContact != null)
+
+
+                    ButtonInfo focus = new ButtonInfo();
+                    focus.Text = "扫码关注";
+                    DataSet dsFocus = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Focus");
+                    if (dsFocus != null && dsFocus.Tables.Count > 0 && dsFocus.Tables[0].Rows.Count > 0)
                     {
-                        ButtonInfo focus = new ButtonInfo();
-                        focus.Text = "扫码关注";
-                        DataSet dsFocus = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Focus");
-                        if (dsFocus != null && dsFocus.Tables.Count > 0 && dsFocus.Tables[0].Rows.Count > 0)
+                        focus.BGImageUrl = dsFocus.Tables[0].Rows[0]["BGImageUrl"].ToString();
+                        focus.LeadPageQRCodeImageUrl = dsFocus.Tables[0].Rows[0]["LeadPageQRCodeImageUrl"].ToString();
+                        var focusContact = contactList.Where(a => a.ContactTypeCode == "Focus").SingleOrDefault();
+                        if (focusContact != null)
                         {
-                              focus.Text = dsFocus.Tables[0].Rows[0]["prompttext"].ToString();
-                              focus.BGImageUrl = dsFocus.Tables[0].Rows[0]["BGImageUrl"].ToString();
-                              focus.LeadPageQRCodeImageUrl = dsFocus.Tables[0].Rows[0]["LeadPageQRCodeImageUrl"].ToString();
-                              if (bllPrize.QueryByEntity(new LPrizesEntity() { EventId = focusContact.EventId }, null).SingleOrDefault() != null)
-                              {
-                                  focus.Text = dsFocus.Tables[0].Rows[0]["prompttext"].ToString();
-                              }
+                            if (bllPrize.QueryByEntity(new LPrizesEntity() { EventId = focusContact.EventId }, null).SingleOrDefault() != null)
+                            {
+                                focus.Text = dsFocus.Tables[0].Rows[0]["prompttext"].ToString();
+                            }
                         }
-                        
-                        rd.Focus = focus;
                     }
+
+                    rd.Focus = focus;
+                   
+ 
+                        
+                        
+                    
 
 
 

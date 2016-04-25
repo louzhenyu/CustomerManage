@@ -1184,7 +1184,7 @@ namespace JIT.CPOS.BS.BLL
                                 #endregion
                                 break;
                             case "creativecode":
-                                if(vipEntity.Status==1)
+                                if (vipEntity.Status == 1)
                                 {
                                     T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(loggingSessionInfo);
                                     if (!string.IsNullOrEmpty(qrCodeEntity.ObjectId))
@@ -1195,7 +1195,7 @@ namespace JIT.CPOS.BS.BLL
                                     }
 
                                 }
-                                
+
                                 break;
                             default:
                                 break;

@@ -44,9 +44,17 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="strFocusVipId">¹Ø×¢²Ù×÷µÄvipid</param>
         public void CTWRegOrFocusLog(string strCTWEventId, string strRegVipId, string strFocusVipId, LoggingSessionInfo loggingSession,string strType)
         {
-
-            if (this._currentDAO.IsExistsLog(strCTWEventId, strRegVipId, strType) == 0)
+            string strVipId = string.Empty;
+            if (strType == "Reg")
             {
+                strVipId = strRegVipId;
+            }
+            if (strType == "Focus")
+            {
+                strVipId = strFocusVipId;
+            }
+            //if (this._currentDAO.IsExistsLog(strCTWEventId, strVipId, strType) == 0)
+            //{
                 T_LEventsRegVipLogEntity entityRegVipLog = new T_LEventsRegVipLogEntity();
 
                 entityRegVipLog.BusTypeCode = "CTW";
@@ -60,15 +68,7 @@ namespace JIT.CPOS.BS.BLL
                 var entityContact = bllContactEvent.QueryByEntity(new ContactEventEntity() { EventId = strCTWEventId, IsDelete = 0, IsCTW = 1, ContactTypeCode = strType }, null).SingleOrDefault();
                 if (entityContact != null)
                 {
-                    string strVipId = string.Empty;
-                    if (strType == "Reg")
-                    {
-                        strVipId = strRegVipId;
-                    }
-                    if (strType == "Focus")
-                    {
-                        strVipId = strFocusVipId;
-                    }
+
 
                     LPrizesBLL bllPrize = new LPrizesBLL(loggingSession);
                     var prize = DataTableToObject.ConvertToList<LPrizesEntity>(bllPrize.GetCouponTypeIDByEventId(entityContact.ContactEventId.ToString()).Tables[0]).FirstOrDefault();
@@ -110,7 +110,7 @@ namespace JIT.CPOS.BS.BLL
                         }
                     }
 
-                }
+                //}
             }
         }
     }
