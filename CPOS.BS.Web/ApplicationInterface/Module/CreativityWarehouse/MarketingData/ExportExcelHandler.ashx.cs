@@ -68,7 +68,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             string LeventId = pContext.Request.QueryString["LeventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
-            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeDetailList(LeventId, 60000, 0, CurrentUserInfo.ClientID);//订单导出，记录数0-60000
+            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeDetailList(LeventId, 10000, 1, CurrentUserInfo.ClientID);//订单导出，记录数0-60000
             List<EventPrizeDetailInfo> eventPrizeDetailInfo = new List<EventPrizeDetailInfo>();
 
             if (ds.Tables.Count > 0)
@@ -147,10 +147,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     sheetOneCells[i + 2, 2].PutValue(eventPrizeDetailInfo[i].winTime);
                     sheetOneCells[i + 2, 2].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 3].PutValue(eventPrizeDetailInfo[i].PrizeUsed);
+                    sheetOneCells[i + 2, 3].PutValue(eventPrizeDetailInfo[i].PrizeUsed == "1" ? "已使用":"未使用");
                     sheetOneCells[i + 2, 3].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 4].PutValue(eventPrizeDetailInfo[i].subscribe);
+                    sheetOneCells[i + 2, 4].PutValue(eventPrizeDetailInfo[i].subscribe == "1" ? "已关注":"未关注");
                     sheetOneCells[i + 2, 4].SetStyle(style3);
 
                     sheetOneCells.SetRowHeight(2 + i, 24);
@@ -167,7 +167,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             string LeventId = pContext.Request.QueryString["LeventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
-            DataSet ds = _T_CTW_LEventBLL.GeEventItemDetailList(LeventId,60000,0,CurrentUserInfo.ClientID);
+            DataSet ds = _T_CTW_LEventBLL.GeEventItemDetailList(LeventId,10000,1,CurrentUserInfo.ClientID);
             List<EventItemDetailInfo> eventItemInfo = new List<EventItemDetailInfo>();
 
             if (ds.Tables.Count > 0)
@@ -277,7 +277,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             string LeventId = pContext.Request.QueryString["LeventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
-            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(LeventId, 60000, 0, CurrentUserInfo.ClientID);
+            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(LeventId, 10000, 1, CurrentUserInfo.ClientID);
             List<EventPrizeInfo> eventPrizeInfo = new List<EventPrizeInfo>();
 
             if (ds.Tables.Count > 0)
@@ -382,7 +382,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             string LeventId = pContext.Request.QueryString["LeventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
-            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(LeventId, 60000, 0, CurrentUserInfo.ClientID);
+            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(LeventId, 10000, 1, CurrentUserInfo.ClientID);
             List<EventItemInfo> eventItemInfo = new List<EventItemInfo>();
 
             if (ds.Tables.Count > 0)

@@ -101,8 +101,8 @@
                         title: "奖品发放清单", width: 800, height: 520, top: 20,
                         left: ($(window).width() - 800) * 0.5
                     });
-                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=GameAwardsListExport");
-
+                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.EventId + "&method=GivingOutAwardsListExport");
+                    $(".exportlist").attr("download", "奖品发放清单.xls");
                     $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GetEventPrizeDetailList(function (data) {
                         that.renderTable3( data);
@@ -112,7 +112,8 @@
                         title: "销售清单", width: 800, height: 520, top: 20,
                         left: ($(window).width() - 800) * 0.5
                     });
-                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.CTWEventId + "&method=SalesItemsListExport");
+                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.EventId + "&method=SalesListExport");
+                    $(".exportlist").attr("download", "销售清单.xls");
                     $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GeEventItemDetailList(function (data) {
                         that.renderTable3(data);
@@ -1393,7 +1394,7 @@
                 PageSize: 10
             }, args2: {
                 PageIndex: 1,
-                PageSize: 10
+                PageSize: 5
             },
             details: {
                 EventId: "",

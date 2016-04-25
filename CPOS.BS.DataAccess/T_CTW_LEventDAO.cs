@@ -446,32 +446,49 @@ from LPrizes   a
             string sql = @"    SELECT Count(1) TotalCount                   
                                
  from  LPrizes a    inner join  LPrizeWinner b on a.PrizesID=b.PrizeID
-                 inner join Vip    c on  b.VipID=c.VIPID       
+                -- left join Vip    c on  b.VipID=c.VIPID       
                    WHERE   1 = 1                      
                                {4}
                   ";
             //取到某一页的
             sql += @"
     SELECT   *
-        FROM     ( SELECT    ROW_NUMBER() OVER ( ORDER BY winTime DESC ) _row ,--Distinct为了处理同一个活动领了同一张券两次，在查看清单会出现重复数据的问题
+        FROM     ( SELECT    ROW_NUMBER() OVER ( ORDER BY winTime DESC ) _row , 
                             *
                     FROM      ( 
                 
-                    SELECT   DISTINCT b.CreateTime as winTime,--Distinct为了处理同一个活动领了同一张券两次，在查看清单会出现重复数据的问题
+                   
 
-                     a.*,b.VipID,
+                     SELECT  
+				
+                     a.*,b.VipID,b.CreateTime as winTime,
                      vipname,viprealname , 
-                     isnull( x.Status ,0   )     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
+                       0     as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
                       (case  c.vipsourceid when 3  then (case when c.status>=1 then 1 else 0 end  )    else 0 end)  as subscribe     -----0代表未关注
                               ,prizeName as Name     
                      from  LPrizes a    inner join  LPrizeWinner b on a.PrizesID=b.PrizeID
-                 inner join Vip    c on  b.VipID=c.VIPID   
-				 left join   vipcouponmapping z  on  ( z.objectid=a.EventId and z.vipid=b.vipid)
-				 left join PrizeCouponTypeMapping  y on y.PrizesID=a.PrizesID
-				 left join coupon x on x.couponid=z.couponid and  x.coupontypeid=y.coupontypeid	
+						  left join Vip    c on  b.VipID=c.VIPID   
+				 	 left join PrizeCouponTypeMapping  y on y.PrizesID=a.PrizesID
+					 where 1=1 and y.CouponTypeID is null
+					            {4}         ----查询条件
 
-                            {5}
-                  WHERE    1=1
+					 union all
+
+					  
+					 select    a.*,z.VipID,z.CreateTime as winTime,
+                     vipname,viprealname , 
+                       x.Status    as PrizeUsed ,  ---获取券是否被使用,0未使用，1已经使用
+                      (case  c.vipsourceid when 3  then (case when c.status>=1 then 1 else 0 end  )    else 0 end)  as subscribe     -----0代表未关注
+                              ,prizeName as Name  
+					   from 
+					  LPrizes a    
+						 inner join PrizeCouponTypeMapping b on a.PrizesID=b.PrizesID
+				  	 inner join   vipcouponmapping z  on  ( z.objectid=a.EventId )
+				   inner join coupon x on x.couponid=z.couponid and  x.coupontypeid=b.coupontypeid					
+							 left join Vip    c on  z.VipID=c.VIPID  
+
+				    WHERE    
+	                     1=1
                             {4}
                 ";
             sql += @") t  
