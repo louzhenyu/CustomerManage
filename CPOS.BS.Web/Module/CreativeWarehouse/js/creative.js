@@ -2498,9 +2498,9 @@ debugger;
                 BGImageUrl: $('[data-tabname="tab03"]').find('[data-imgcode="bgPhone"]').data("imgurl"),
                  PromptText:$('[data-tabname="tab03"]').find('[data-view="PromptText"]').html(),
                  LogoUrl:$('[data-tabname="tab03"] .erWeiMa').find('img').attr("src"),   //引导页二维码图片
-                 LeadPageSharePromptText:"分享有奖",  //引导页分享项提示
-                /* LeadPageFocusPromptText:"关注有奖",   //引导页关注提示*/
-                 LeadPageRegPromptText:"注册有奖"     //引导注册提示
+                 LeadPageSharePromptText:"分享",  //引导页分享项提示
+                 LeadPageFocusPromptText:$('[data-tabname="tab03"]').find('[data-view="PromptText"]').html(),   //引导页关注提示*/
+                 LeadPageRegPromptText:"注册"     //引导注册提示
             };
                if(SpreadSetting.LogoUrl.indexOf("images/imgDefault")!=-1){
                    SpreadSetting.LogoUrl="";
@@ -2516,6 +2516,7 @@ debugger;
                 ContactPrizeList.push({ContactTypeCode:"Focus",PrizeList:that.prizeListWatch});
             }else{
                 SpreadSetting.PromptText="";
+                SpreadSetting.LeadPageFocusPromptText="";
                // ContactPrizeList.push({ContactTypeCode:"Focus",PrizeList:[]});
             }
             if($("#release").find('[data-type="reg"]').hasClass("on")){  //注册
