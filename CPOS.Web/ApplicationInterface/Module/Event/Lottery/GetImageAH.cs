@@ -47,18 +47,24 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     
                     T_CTW_SpreadSettingBLL bllSpreadSetting = new T_CTW_SpreadSettingBLL(this.CurrentUserInfo);
 
-
+                    DataSet dsFocus = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Focus");
                     var regContact = contactList.Where(a => a.ContactTypeCode == "Reg").SingleOrDefault();
+                    ButtonInfo reg = new ButtonInfo();
+                    reg.Text = "注册";
                     if (regContact!=null)
                     {
-                        ButtonInfo reg = new ButtonInfo();
-                        reg.Text = "注册";
+                        if (dsFocus != null && dsFocus.Tables[0].Rows.Count>0)
+                        {
+                            reg.Text = dsFocus.Tables[0].Rows[0]["LeadPageRegPromptText"].ToString();
+                        }
+                        
                         if(bllPrize.QueryByEntity(new LPrizesEntity() { EventId=regContact.EventId},null).SingleOrDefault()!=null)
                         {
                             reg.Text = "注册有奖";
                         }
-                        rd.Reg = reg;
+                        
                     }
+                    rd.Reg = reg;
 
                     ButtonInfo share = new ButtonInfo();
                     share.Text = "分享";
@@ -72,18 +78,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     var shareContact = contactList.Where(a => a.ContactTypeCode == "Share").SingleOrDefault();
                     if (shareContact != null)
                     {
-                        if (bllPrize.QueryByEntity(new LPrizesEntity() { EventId = shareContact.EventId }, null).SingleOrDefault() != null)
+                        if (dsFocus != null && dsFocus.Tables[0].Rows.Count > 0)
                         {
-                            share.Text = "分享有奖";
+                            share.Text = dsFocus.Tables[0].Rows[0]["LeadPageSharePromptText"].ToString();
                         }
                     }
                     rd.Share = share;
 
-
-
                     ButtonInfo focus = new ButtonInfo();
                     focus.Text = "扫码关注";
-                    DataSet dsFocus = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Focus");
+                    
                     if (dsFocus != null && dsFocus.Tables.Count > 0 && dsFocus.Tables[0].Rows.Count > 0)
                     {
                         focus.BGImageUrl = dsFocus.Tables[0].Rows[0]["BGImageUrl"].ToString();
@@ -91,68 +95,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         var focusContact = contactList.Where(a => a.ContactTypeCode == "Focus").SingleOrDefault();
                         if (focusContact != null)
                         {
-                            if (bllPrize.QueryByEntity(new LPrizesEntity() { EventId = focusContact.EventId }, null).SingleOrDefault() != null)
-                            {
-                                focus.Text = dsFocus.Tables[0].Rows[0]["prompttext"].ToString();
-                            }
+                            focus.Text = dsFocus.Tables[0].Rows[0]["LeadPageFocusPromptText"].ToString();
                         }
                     }
 
                     rd.Focus = focus;
-                   
- 
-                        
-                        
-                    
 
-
-
-
-                    //if (dsReg != null && dsReg.Tables.Count > 0 && dsReg.Tables[0].Rows.Count > 0)
-                    //{
-                    //    ButtonInfo reg = new ButtonInfo();
-                    //    reg.Text = "注册";
-                    //    reg.Title = dsReg.Tables[0].Rows[0]["Title"].ToString();
-                    //    reg.Summary = dsReg.Tables[0].Rows[0]["Summary"].ToString();
-                    //    reg.BGImageUrl = dsReg.Tables[0].Rows[0]["BGImageUrl"].ToString();
-
-                    //    if (contactList.Where(a => a.ContactTypeCode == "Reg").Count() > 0)
-                    //    {
-                    //        reg.Text = "注册有奖";
-                    //    }
-                    //    rd.Reg = reg;
-                    //}
-
-                    //DataSet dsShare = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Share");
-
-
-                    //    if (contactList.Count > 0 && contactList.Where(a => a.ContactTypeCode == "Share").Count() > 0)
-                    //    {
-                    //        ButtonInfo share = new ButtonInfo();
-
-                    //        share.Text = "分享";
-                    //        share.Title = dsShare.Tables[0].Rows[0]["Title"].ToString();
-                    //        share.Summary = dsShare.Tables[0].Rows[0]["Summary"].ToString();
-                    //        share.BGImageUrl = dsShare.Tables[0].Rows[0]["BGImageUrl"].ToString();
-                    //        share.Text = "分享有奖";
-                    //        rd.Share = share;
-
-                    //    }
-
-
-                    //DataSet dsFocus = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Focus");
-                    //if (dsFocus != null && dsFocus.Tables.Count > 0 && dsFocus.Tables[0].Rows.Count > 0)
-                    //{
-                    //    ButtonInfo focus = new ButtonInfo();
-                    //    focus.Text = "扫码关注";
-                    //    focus.BGImageUrl = dsFocus.Tables[0].Rows[0]["BGImageUrl"].ToString();
-                    //    focus.LeadPageQRCodeImageUrl = dsFocus.Tables[0].Rows[0]["LeadPageQRCodeImageUrl"].ToString();
-                    //    if (contactList.Count > 0 && contactList.Where(a => a.ContactTypeCode == "Focus").Count() > 0)
-                    //    {
-                    //        focus.Text = "关注有奖";
-                    //    }
-                    //    rd.Focus = focus;
-                    //}
                     rd.IsCTW = 1;
                     rd.CTWEventId = strCTWEventId;
                     rd.EventId = strEventId;

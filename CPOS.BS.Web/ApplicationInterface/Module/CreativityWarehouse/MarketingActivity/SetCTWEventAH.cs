@@ -37,6 +37,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         protected override SetCTWEventRD ProcessRequest(APIRequest<SetCTWEventRP> pRequest)
         {
 
+
             //图文信息
             //微信 公共平台
             var wapentity = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity

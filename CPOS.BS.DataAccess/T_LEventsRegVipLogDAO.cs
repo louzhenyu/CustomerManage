@@ -28,7 +28,6 @@ using JIT.Utility.Log;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.Entity;
 using JIT.CPOS.BS.DataAccess.Base;
-
 namespace JIT.CPOS.BS.DataAccess
 {
     
@@ -49,23 +48,24 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="strVipId"></param>
         /// <param name="strType"></param>
         /// <returns></returns>
-        public int IsExistsLog(string strCTWEventId,string strVipId,string strType)
+        public int IsExistsLog(string strCTWEventId,string strVipId,string strType,string strCustomerId)
         {
 
             string strSql = string.Empty;
             if (strType=="Reg")
             {
-                strSql = string.Format(@"SELECT COUNT(1) LogCount 
+                strSql = string.Format(@"SELECT COUNT(1) LogCount  
                                         FROM T_LEventsRegVipLog With(nolock) 
-                                        WHERE CustomerId={0} and ObjectId={1} and RegVipId={2}",this.loggingSessionInfo.ClientID, strCTWEventId, strVipId);
+                                        WHERE CustomerId='{0}' and ObjectId='{1}' and RegVipId='{2}'", strCustomerId, strCTWEventId, strVipId);
             }
             if (strType == "Focus")
             {
-                strSql = string.Format(@"SELECT COUNT(1) LogCount 
+                strSql = string.Format(@"SELECT COUNT(1) LogCount  
                                         FROM T_LEventsRegVipLog With(nolock) 
-                                        WHERE CustomerId={0} and ObjectId={1} and FocusVipId={2}", this.loggingSessionInfo.ClientID, strCTWEventId, strVipId);
+                                        WHERE CustomerId='{0}' and ObjectId='{1}' and FocusVipId='{2}'", strCustomerId, strCTWEventId, strVipId);
             }
-            return Convert.ToInt32(SQLHelper.ExecuteScalar(strSql).ToString());
+
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
     }
 }
