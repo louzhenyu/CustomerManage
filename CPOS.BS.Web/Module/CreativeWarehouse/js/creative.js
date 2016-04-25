@@ -2473,17 +2473,22 @@ debugger;
                 BGImageUrl:$('[data-tabname="tab02"] .share').find('img').attr("src"),
 
             };
-            jvveshow
-                .setShare(self.elems.editor1.worksId, {
-                    title: SpreadSetting.Title,
-                    desc: SpreadSetting.Summary,
-                    imgUrl: SpreadSetting.BGImageUrl
-                })
-                .then(function(data){
-                    console.info("设置作品分享成功！", data);
-                }, function(data){
-                    console.error("设置作品分享失败！", data);
-                });
+            self.saveJevvSHow(function(){
+                jvveshow
+                    .setShare(self.elems.editor1.worksId, {
+                        title: $('[data-tabname="tab02"] .share').find('[data-view="Title"]').html(),
+                        desc: $('[data-tabname="tab02"] .share').find('[data-view="Summary"]').html(),
+                        imgUrl: $('[data-tabname="tab02"] .share').find('img').attr("src")
+                    })
+                    .then(function(data){
+                        console.info("设置作品分享成功！", data);
+                    }, function(data){
+                        console.error("设置作品分享失败！", data);
+                    });
+
+            }) ;
+
+
             SpreadSettingList.push(SpreadSetting);
 
              SpreadSetting={
@@ -2551,7 +2556,6 @@ debugger;
 
            // 风格 设置的的id
 
-            self.saveJevvSHow(function(){ }) ;
 
             $.util.isLoading();
             pram.push({name:"worksId",value:self.elems.editor1.worksId});
