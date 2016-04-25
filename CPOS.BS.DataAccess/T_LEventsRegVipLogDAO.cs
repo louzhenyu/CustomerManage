@@ -42,5 +42,30 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class T_LEventsRegVipLogDAO : Base.BaseCPOSDAO, ICRUDable<T_LEventsRegVipLogEntity>, IQueryable<T_LEventsRegVipLogEntity>
     {
+        /// <summary>
+        /// ÊÇ·ñ´æÔÚ¼ÇÂ¼
+        /// </summary>
+        /// <param name="strCTWEventId"></param>
+        /// <param name="strVipId"></param>
+        /// <param name="strType"></param>
+        /// <returns></returns>
+        public int IsExistsLog(string strCTWEventId,string strVipId,string strType)
+        {
+
+            string strSql = string.Empty;
+            if (strType=="Reg")
+            {
+                strSql = string.Format(@"SELECT COUNT(1) LogCount 
+                                        FROM T_LEventsRegVipLog With(nolock) 
+                                        WHERE CustomerId={0} and ObjectId={1} and RegVipId={2}",this.loggingSessionInfo.ClientID, strCTWEventId, strVipId);
+            }
+            if (strType == "Focus")
+            {
+                strSql = string.Format(@"SELECT COUNT(1) LogCount 
+                                        FROM T_LEventsRegVipLog With(nolock) 
+                                        WHERE CustomerId={0} and ObjectId={1} and FocusVipId={2}", this.loggingSessionInfo.ClientID, strCTWEventId, strVipId);
+            }
+            return Convert.ToInt32(SQLHelper.ExecuteScalar(strSql).ToString());
+        }
     }
 }

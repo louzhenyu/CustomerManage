@@ -447,8 +447,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                 if (sItem.SpreadType == "Focus")
                 {
-
-                    CreateFocusQRCode(para, sItem.LogoUrl, wapentity, out QRCodeUrl, out QRCodeId);
+                    bool IsSuccess = true;
+                    CreateFocusQRCode(para, sItem.LogoUrl, wapentity, out QRCodeUrl, out QRCodeId, out IsSuccess);
+                    if(!IsSuccess)
+                    {
+                        throw new APIException(111, "关注二维码生成失败!请重新提交");
+                    }
                     //imageEntity = new ObjectImagesEntity();
                     //imageEntity.ImageURL = QRCodeUrl;
                     //imageEntity.ObjectId = "";
@@ -881,7 +885,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         /// <param name="wapentity"></param>
         /// <param name="strQRCode"></param>
         /// <param name="QRCodeUrl"></param>
-        public void CreateFocusQRCode(SetCTWEventRP para, string strLogoUrl, WApplicationInterfaceEntity wapentity, out string QRCodeUrl,out string QRCodeId)
+        public void CreateFocusQRCode(SetCTWEventRP para, string strLogoUrl, WApplicationInterfaceEntity wapentity, out string QRCodeUrl,out string QRCodeId,out bool IsSuccess)
         {
             
             QRCodeUrl = string.Empty;
@@ -898,6 +902,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                     , null).FirstOrDefault();
                     var wxCode = CretaeWxCode();
+
+
+                    IsSuccess = true;
+                    if (string.IsNullOrEmpty(wxCode.ImageUrl))
+                    {
+                        IsSuccess = false;
+                    }
                     QRCodeUrl = wxCode.ImageUrl;
                     if (!string.IsNullOrEmpty(QRCodeUrl))
                     {

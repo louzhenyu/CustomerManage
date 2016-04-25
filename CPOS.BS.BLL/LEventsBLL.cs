@@ -1183,8 +1183,20 @@ namespace JIT.CPOS.BS.BLL
                                 CommonBLL.SendWeixinMessage(pushContent, vipEntity.VIPID, loggingSessionInfo, vipEntity);
                                 #endregion
                                 break;
-                            case "CreativeCode":
+                            case "creativecode":
+                                if(vipEntity.Status==1)
+                                {
+                                    T_LEventsRegVipLogBLL lEventRegVipLogBll = new T_LEventsRegVipLogBLL(loggingSessionInfo);
+                                    if (!string.IsNullOrEmpty(qrCodeEntity.ObjectId))
+                                    {
+                                        T_CTW_LEventBLL bllCTWEvent = new T_CTW_LEventBLL(loggingSessionInfo);
+                                        var CTWEvent = bllCTWEvent.QueryByEntity(new T_CTW_LEventEntity() { OnlineQRCodeId = qrCodeEntity.QRCodeId.ToString() }, null).SingleOrDefault();
+                                        lEventRegVipLogBll.CTWRegOrFocusLog(CTWEvent.CTWEventId.ToString(), "", vipEntity.VIPID, loggingSessionInfo, "Focus");
+                                    }
 
+                                }
+                                
+                                break;
                             default:
                                 break;
                         }

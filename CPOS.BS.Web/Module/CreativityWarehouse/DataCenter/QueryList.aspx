@@ -2,7 +2,6 @@
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <meta charset="UTF-8" />
     <title>数据中心</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 

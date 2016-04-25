@@ -59,27 +59,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         }
                         rd.Reg = reg;
                     }
-                   
+
+                    ButtonInfo share = new ButtonInfo();
+                    share.Text = "分享";
+                    DataSet dsShare = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Share");
+                    if (dsShare != null && dsShare.Tables.Count > 0 && dsShare.Tables[0].Rows.Count > 0)
+                    {
+                        share.Title = dsShare.Tables[0].Rows[0]["Title"].ToString();
+                        share.Summary = dsShare.Tables[0].Rows[0]["Summary"].ToString();
+                        share.BGImageUrl = dsShare.Tables[0].Rows[0]["BGImageUrl"].ToString();
+                    }
                     var shareContact = contactList.Where(a => a.ContactTypeCode == "Share").SingleOrDefault();
                     if (shareContact != null)
                     {
-                        ButtonInfo share = new ButtonInfo();
-                        share.Text = "分享";
-                         DataSet dsShare = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(strCTWEventId, "Share");
-                         if (dsShare != null && dsShare.Tables.Count > 0 && dsShare.Tables[0].Rows.Count > 0)
-                        {
-                            share.Text = "分享";
-                            share.Title = dsShare.Tables[0].Rows[0]["Title"].ToString();
-                            share.Summary = dsShare.Tables[0].Rows[0]["Summary"].ToString();
-                            share.BGImageUrl = dsShare.Tables[0].Rows[0]["BGImageUrl"].ToString();
-                        }
-
                         if (bllPrize.QueryByEntity(new LPrizesEntity() { EventId = shareContact.EventId }, null).SingleOrDefault() != null)
                         {
                             share.Text = "分享有奖";
                         }
-                        rd.Share = share;
                     }
+                    rd.Share = share;
+
                     var focusContact = contactList.Where(a => a.ContactTypeCode == "Focus").SingleOrDefault();
                     if (focusContact != null)
                     {

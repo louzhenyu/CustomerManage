@@ -2,9 +2,7 @@
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <meta charset="UTF-8" />
     <title>发起活动</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
      <link href="css/jquery.bxslider.css?v=0.1" rel="stylesheet" type="text/css" />
      <link href="../static/js/vendor/jquery-ui-1.11.4/jquery-ui.css" rel="stylesheet" type="text/css" />
       <link href="http://www.vveshow.com/plugins/jvveshow/1.0.0/resource/css/jvveshow/jvveshow.min.css" rel="stylesheet" type="text/css" />
@@ -93,7 +91,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
 </div><!--mainPanel-->
            </div>  <!--panelDiv-->
-         <div class="panelDiv" data-panel="nav02">
+         <div class="panelDiv" data-panel="nav02" >
 
 
 
@@ -106,7 +104,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                 </div> <!--inputBox-->
               </div><!--lineText-->
 
-                <div class="example-wp "></div>
+                <div class="example-wp " style="width: 320px; height: 486px;"></div>
              </div>
 
    <div class="zsy"></div>
@@ -161,9 +159,9 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                 </form>
             </div>
              <div class="spread" data-interaction="2">
-                      <div class="skillPanel" style="display: none" >
+                      <div class="skillPanel" >
                           <p  data-imgcode="ImageURL01" data-edit="true" data-size="640X370px" data-imgurl="images/skillKV.png" ><img src="images/skillKV.png" width="320" height="185"></p>
-                          <div class="eventList">
+                          <div class="eventList" data-type="dataEdit">
                               <ul>
                                   <li class="on">3月28日<em class="editIconBtn"></em></li>
                                   <li>3月29日<em class="editIconBtn"></em></li>
@@ -173,11 +171,11 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                              <div class="eventAddBtn"> <em class="icon"> </em> <em class="textTip">添加秒杀</em></div>
                           </div>
 
-                          <div class="timekeeping">
+                          <div class="timekeeping" >
                               <div class="title"> <hr width="100%" size="1"> <p>距离抢购结束还剩</p></div>
                               <p class="time"><em>0</em><em>0</em>时<em>0</em><em>0</em>分<em>0</em><em>0</em>秒</p>
                           </div>
-                          <div class="productList">
+                          <div class="productList"  data-type="dataEdit">
                               <div class="product">
 
                                   <div class="l"><img src="images/img.png" ></div>

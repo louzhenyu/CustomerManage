@@ -2,9 +2,7 @@
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <meta charset="UTF-8" />
     <title>我的活动</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
 
     <link href="<%=StaticUrl+"/module/CreativityWarehouse/MyActivity/css/queryList.css?v=0.4"%>" rel="stylesheet" type="text/css" />
