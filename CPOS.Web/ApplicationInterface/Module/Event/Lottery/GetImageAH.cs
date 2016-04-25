@@ -60,7 +60,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                         
                         if(bllPrize.QueryByEntity(new LPrizesEntity() { EventId=regContact.EventId},null).SingleOrDefault()!=null)
                         {
-                            reg.Text = "注册有奖";
+                            reg.Text = "注册有惊喜";
                         }
                         
                     }
@@ -78,10 +78,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     var shareContact = contactList.Where(a => a.ContactTypeCode == "Share").SingleOrDefault();
                     if (shareContact != null)
                     {
-                        if (dsFocus != null && dsFocus.Tables[0].Rows.Count > 0)
+                        if (bllPrize.QueryByEntity(new LPrizesEntity() { EventId = shareContact.EventId }, null).SingleOrDefault() != null)
                         {
-                            share.Text = dsFocus.Tables[0].Rows[0]["LeadPageSharePromptText"].ToString();
+                            share.Text = "分享有惊喜";
                         }
+                        //if (dsFocus != null && dsFocus.Tables[0].Rows.Count > 0)
+                        //{
+                        //    share.Text = dsFocus.Tables[0].Rows[0]["LeadPageSharePromptText"].ToString();
+                        //}
                     }
                     rd.Share = share;
 
