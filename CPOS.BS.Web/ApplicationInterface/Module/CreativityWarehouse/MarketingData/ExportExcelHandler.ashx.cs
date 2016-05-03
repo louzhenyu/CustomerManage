@@ -232,11 +232,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                 sheetOneCells[1, 0].PutValue("订单号");
                 sheetOneCells[1, 1].PutValue("商品名称");
-                sheetOneCells[1, 2].PutValue("原价");
-                sheetOneCells[1, 3].PutValue("团购价");
-                sheetOneCells[1, 4].PutValue("订购人");
-                sheetOneCells[1, 5].PutValue("配送方式");
-                sheetOneCells[1, 6].PutValue("成交日期");
+                sheetOneCells[1, 2].PutValue("规格");
+                sheetOneCells[1, 3].PutValue("原价");
+                sheetOneCells[1, 4].PutValue("团购价");
+                sheetOneCells[1, 5].PutValue("订购人");
+                sheetOneCells[1, 6].PutValue("配送方式");
+                sheetOneCells[1, 7].PutValue("成交日期");
 
                 for (int i = 0; i < eventItemInfo.Count; i++)
                 {
@@ -246,23 +247,23 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     sheetOneCells[i + 2, 1].PutValue(eventItemInfo[i].item_name);
                     sheetOneCells[i + 2, 1].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 1].PutValue(eventItemInfo[i].price);
-                    sheetOneCells[i + 2, 1].SetStyle(style3);
-
-                    sheetOneCells[i + 2, 2].PutValue(eventItemInfo[i].SalesPrice);
+                    sheetOneCells[i + 2, 2].PutValue(eventItemInfo[i].SkuName);
                     sheetOneCells[i + 2, 2].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 3].PutValue(eventItemInfo[i].vipname);
+                    sheetOneCells[i + 2, 3].PutValue(eventItemInfo[i].price);
                     sheetOneCells[i + 2, 3].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 4].PutValue(eventItemInfo[i].DeliveryName);
+                    sheetOneCells[i + 2, 4].PutValue(eventItemInfo[i].SalesPrice);
                     sheetOneCells[i + 2, 4].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 5].PutValue(eventItemInfo[i].create_time);
+                    sheetOneCells[i + 2, 5].PutValue(eventItemInfo[i].vipname);
                     sheetOneCells[i + 2, 5].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 6].PutValue(eventItemInfo[i].create_time);
+                    sheetOneCells[i + 2, 6].PutValue(eventItemInfo[i].DeliveryName);
                     sheetOneCells[i + 2, 6].SetStyle(style3);
+
+                    sheetOneCells[i + 2, 7].PutValue(eventItemInfo[i].create_time);
+                    sheetOneCells[i + 2, 7].SetStyle(style3);
 
                     sheetOneCells.SetRowHeight(2 + i, 24);
                 }
@@ -450,7 +451,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 sheetOneCells[1, 3].PutValue("团购价");
                 sheetOneCells[1, 4].PutValue("已售数量");
                 sheetOneCells[1, 5].PutValue("总销售额");
-                sheetOneCells[1, 6].PutValue("当前库存");
+                sheetOneCells[1, 6].PutValue("团购库存剩余");
              
 
                 for (int i = 0; i < eventItemInfo.Count; i++)
