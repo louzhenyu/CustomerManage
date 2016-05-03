@@ -366,6 +366,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
                 case "GetEventMerchandise":
                     rst = this.GetEventMerchandise(pRequest);
                     break;
+                case "GetTCTWPanicbuyingEventKV":
+                    rst = this.GetTCTWPanicbuyingEventKV(pRequest);
+                    break;
                 //case "SendQrCodeWxMessage":
                 //    rst = SendQrCodeWxMessage(pRequest);
                 //    break;
