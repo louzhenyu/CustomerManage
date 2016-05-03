@@ -65,7 +65,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " LEFT JOIN dbo.LEvents d WITH(NOLOCK) ON a.EventId=d.EventID AND A.CustomerId=D.CustomerId";
             sql += " LEFT JOIN dbo.LEvents e WITH(NOLOCK) ON a.ShareEventId=e.EventID AND A.CustomerId=e.CustomerId";
             sql += " LEFT JOIN (SELECT EventId,COUNT(DISTINCT VIPID) JoinCount FROM dbo.LLotteryLog	GROUP BY EventId) t3 ON CAST(a.ContactEventId AS NVARCHAR(50))= t3.EventId";
-            sql += " WHERE A.IsDelete=0 AND A.CustomerId = '" + CurrentUserInfo.ClientID + "') a";
+            sql += " WHERE A.IsCTW=0 AND A.IsDelete=0 AND A.CustomerId = '" + CurrentUserInfo.ClientID + "') a";
             return sql;
         }
         public DataSet GetContactEventList(int pPageSize, int pCurrentPageIndex)

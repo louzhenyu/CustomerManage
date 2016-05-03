@@ -93,6 +93,7 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingActivity.Response
         /// 促销活动列表
         /// </summary>
         public T_CTW_PanicbuyingEventKVEntity PanicbuyingEventInfo { get; set; }
+        
         /// <summary>
         /// 图文信息
         /// </summary>
@@ -155,4 +156,5 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingActivity.Response
         public List<Prize> ContactPrizeList { get; set; }
 
     }
+
 }

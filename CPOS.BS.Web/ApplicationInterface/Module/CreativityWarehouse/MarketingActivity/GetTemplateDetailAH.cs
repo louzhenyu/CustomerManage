@@ -107,8 +107,18 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                         if (dsCTWEvent.Tables[0].Rows[0]["InteractionType"].ToString() == "2")
                         {
                             T_CTW_PanicbuyingEventKVBLL bllPanicbuyingEventKV = new T_CTW_PanicbuyingEventKVBLL(loggingSessionInfo);
-                            rd.CustomerCTWEventInfo.PanicbuyingEventInfo =DataTableToObject.ConvertToObject<T_CTW_PanicbuyingEventKVEntity>( bllPanicbuyingEventKV.GetPanicbuyingEventKV(dsCTWEvent.Tables[0].Rows[0]["LeventId"].ToString()).Tables[0].Rows[0]);
+                            rd.CustomerCTWEventInfo.PanicbuyingEventInfo = DataTableToObject.ConvertToObject<T_CTW_PanicbuyingEventKVEntity>(bllPanicbuyingEventKV.GetPanicbuyingEventKV(para.CTWEventId).Tables[0].Rows[0]);
+                            T_CTW_LEventInteractionBLL bllEventInteraction = new T_CTW_LEventInteractionBLL(loggingSessionInfo);
+                            DataSet dsP=bllEventInteraction.GetPanicbuyingEventId(para.CTWEventId);
+                            if(dsP!=null && dsP.Tables.Count>0 && dsP.Tables[0].Rows.Count>0)
+                            {
+                                rd.CustomerCTWEventInfo.PanicbuyingEventInfo.PanicbuyingEventList = DataTableToObject.ConvertToList<PanicbuyingEventId>(dsP.Tables[0]);
+                            }
+                            
+                            
                         }
+
+                        //图文信息
                         var ds2 = bllCTWEvent.GetMaterialTextInfo(dsCTWEvent.Tables[0].Rows[0]["OnlineQRCodeId"].ToString());//活动图文素材对应的keyword其实是这个活动的标识，也就是生成二维码的关键字
                         if (ds2 != null && ds2.Tables.Count > 0 && ds2.Tables[0].Rows.Count > 0)
                         {

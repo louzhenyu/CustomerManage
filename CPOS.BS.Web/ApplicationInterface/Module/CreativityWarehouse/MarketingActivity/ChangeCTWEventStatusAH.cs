@@ -31,9 +31,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 
                 if(entityCTWEvent!=null)
                 {
+                    if(entityCTWEvent.EndDate<DateTime.Now.Date)
+                    {
+                        throw new APIException(999, "活动已经过期请调整时间后再发布！");
+                    }
                     entityCTWEvent.Status = para.Status;
                     bllCTWEvent.Update(entityCTWEvent);
-
+                    
                     rd.CTWEventId = para.CTWEventId;
                     rd.Status = para.Status;
                 }

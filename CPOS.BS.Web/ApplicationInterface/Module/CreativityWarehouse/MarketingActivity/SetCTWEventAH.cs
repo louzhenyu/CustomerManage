@@ -51,12 +51,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 throw new APIException("微信公众号未授权");
             }
             
-            var rd = new SetCTWEventRD();
+             var rd = new SetCTWEventRD();
             
             var para = pRequest.Parameters;
-            //string ss = "http://bs.test.chainclouds.com/Framework/Javascript/Other/kindeditor/attached/image/20160420/20160420144313_8917.jpg";
-            //string dd = string.Empty;
-            //CreateFocusQRCode(para, ss, wapentity, out dd);
 
             strCTWEventId = para.CTWEventId;
             string strThemeId = string.Empty;
@@ -84,7 +81,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
 
 
-            }
+             }
             //保存风格
             SaveAndUpdateTheme(para,entityTheme,out strThemeId);
             //互动类型--游戏
@@ -99,8 +96,24 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             if (para.InteractionType == 2 && para.PanicbuyingEventInfo != null)
             {
                 SavePanicbuyingEvent(para, bllPanicbuyingEventKV, imageBll, bllCustomerInteraction, strThemeId, out strStartDate, out strEndDate);
-                para.MaterialText.PageParamJson = "[{\"key\":\"CTWEventId\",\"value\":\"" + strCTWEventId + "\"}]";
-                strPageParamJson = "[{\"key\":\"CTWEventId\",\"value\":\"" + strCTWEventId + "\"}]";
+                string strEventType = string.Empty;
+                switch (para.DrawMethodCode)
+                {
+                    case "TG":
+                        strEventType = "1";
+                        break;
+                    case "QG":
+                        strEventType = "2";
+                        break;
+                    case "RX":
+                        strEventType = "3";
+                        break;
+                    default:
+                        strEventType = "99";
+                        break;
+                }
+                para.MaterialText.PageParamJson = "[{\"key\":\"CTWEventId\",\"value\":\"" + strCTWEventId + "\"},{\"key\":\"eventTypeId\",\"value\":\"" + strEventType + "\"}]";
+                strPageParamJson = "[{\"key\":\"CTWEventId\",\"value\":\"" + strCTWEventId + "\"},{\"key\":\"eventTypeId\",\"value\":\"" + strEventType + "\"}]";
 
 
                 //SaveAndUpdatePanicbuyingEvent(para,bllPrize,bllPanicbuyingEventKV,imageBll,bllCustomerInteraction, strThemeId, out strStartDate, out strEndDate);
@@ -195,7 +208,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         {
             T_CTW_LEventThemeBLL bllCustomerTheme = new T_CTW_LEventThemeBLL(loggingSessionInfo);
 
-            if (entityTheme.ThemeId == null)
+            if (entityTheme== null || entityTheme.ThemeId == null)
             {
 
                 ///风格表
@@ -518,10 +531,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     contactEvent.CustomerID = loggingSessionInfo.ClientID;
                     contactEvent.RewardNumber = "OnlyOne";
                     contactEvent.EventId = strCTWEventId;
-                    //if (cItem.ContactTypeCode=="Share")
-                    //{
-                    //    contactEvent.ShareEventId = strCTWEventId;
-                    //}
+                    if (cItem.ContactTypeCode == "Share")
+                    {
+                        contactEvent.ShareEventId = strCTWEventId;
+                    }
                     contactEvent.Status = 1;
                     contactEvent.IsCTW = 1;
                     bllContactEvent.Create(contactEvent);
@@ -610,7 +623,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     strPageKey = "Questionnaire";
                     break;
                 default:
-                    strPageKey = "RedPacket";
+                    strPageKey = "NewsActivityList";
                     break;
             }
             #endregion
@@ -681,6 +694,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 if (item.ContainsKey("key") && item.ContainsKey("value"))
                     urlTemplate = urlTemplate.Replace("{" + item["key"] + "}", item["value"].ToString());
             }
+
             #endregion
 
             //根据规则组织URL
@@ -710,15 +724,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             string currentDomain ="http://"+HttpContext.Current.Request.Url.Host;//当前项目域名
 
             QRCodeUrl=Utils.GenerateQRCode(URL, currentDomain, sourcePath, targetPath);
-            //////二维码中奖加图片
-            //string strQRCodeFilePath = targetPath + QRCodeUrl.Substring(QRCodeUrl.LastIndexOf("/") + 1);
-            //Image img = Image.FromFile(strQRCodeFilePath);
-            //System.IO.MemoryStream MStream1 = new System.IO.MemoryStream();
-            //Utils.CombinImage(img, HttpContext.Current.Server.MapPath("~/QRCodeImage/33.jpg")).Save(MStream1, System.Drawing.Imaging.ImageFormat.Png);
-            //Image ii = Image.FromStream(MStream1);
-            //img.Dispose();
-            //ii.Save(strQRCodeFilePath, System.Drawing.Imaging.ImageFormat.Png);
-            //MStream1.Dispose();  
+
             ObjectImagesBLL bllObjectImages = new ObjectImagesBLL(loggingSessionInfo);
             ObjectImagesEntity entityObjectImages = new ObjectImagesEntity();
 

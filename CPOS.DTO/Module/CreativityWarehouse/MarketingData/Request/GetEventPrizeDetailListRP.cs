@@ -9,5 +9,8 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingData.Request
    public class GetEventPrizeDetailListRP : PageQueryRequestParameter
     {
         public string LeventId { get; set; }
+        public string CTWEventId { get; set; }
+
+       
     }
 }

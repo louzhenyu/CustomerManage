@@ -80,15 +80,15 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.GetT_CTW_LEventList(EventName, BeginTime, EndTime, EventStatus, ActivityGroupId, PageSize, PageIndex, customerid);
         }
 
-        public DataSet GetEventPrizeList(string LeventId, int PageSize, int PageIndex, string customerid)
+        public DataSet GetEventPrizeList(string CTWEventId, int PageSize, int PageIndex, string customerid)
         {
-            return this._currentDAO.GetEventPrizeList(LeventId, PageSize, PageIndex, customerid);
+            return this._currentDAO.GetEventPrizeList(CTWEventId, PageSize, PageIndex, customerid);
         }
 
 
-        public DataSet GetEventPrizeDetailList(string LeventId, int PageSize, int PageIndex, string customerid)
+        public DataSet GetEventPrizeDetailList(string CTWEventId, int PageSize, int PageIndex, string customerid)
         {
-            return this._currentDAO.GetEventPrizeDetailList(LeventId, PageSize, PageIndex, customerid);
+            return this._currentDAO.GetEventPrizeDetailList(CTWEventId, PageSize, PageIndex, customerid);
         }
         /// <summary>
         /// 带游戏的创意仓库活动统计
@@ -111,14 +111,14 @@ namespace JIT.CPOS.BS.BLL
 
 
 
-        public DataSet GeEventItemList(string LeventId, int PageSize,int PageIndex,string customerid)
+        public DataSet GeEventItemList(string CTWEventId, int PageSize, int PageIndex, string customerid)
         {
-            return this._currentDAO.GeEventItemList(LeventId,PageSize,PageIndex,customerid);
+            return this._currentDAO.GeEventItemList(CTWEventId, PageSize, PageIndex, customerid);
         }
 
-        public DataSet GeEventItemDetailList(string LeventId,int PageSize,int PageIndex,string customerid)
+        public DataSet GeEventItemDetailList(string CTWEventId, int PageSize, int PageIndex, string customerid)
         {
-            return this._currentDAO.GeEventItemDetailList(LeventId,PageSize,PageIndex,customerid);
+            return this._currentDAO.GeEventItemDetailList(CTWEventId, PageSize, PageIndex, customerid);
         }
 
         /// <summary>

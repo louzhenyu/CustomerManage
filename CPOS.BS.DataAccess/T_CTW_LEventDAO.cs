@@ -51,14 +51,14 @@ namespace JIT.CPOS.BS.DataAccess
         {
 
             string strSql = "SELECT a.TemplateId,a.[CTWEventId],a.name,a.[ActivityGroupId],a.InteractionType,a.ImageURL,a.OnlineQRCodeId,a.OfflineQRCodeId,a.Status,b.OriginalThemeId,b.[ThemeId],b.H5Url,b.H5TemplateId";
-            strSql += ",c.InteractionType,c.DrawMethodCode,c.LeventId,d.ActivityGroupCode ";
+            strSql += " ,c.DrawMethodCode,c.LeventId,d.ActivityGroupCode ";
             strSql += ",e.ImageUrl QRCodeImageUrlForOnline,f.ImageUrl QRCodeImageUrlForUnit,b.worksId ";
             strSql += " FROM [dbo].[T_CTW_LEvent]a	LEFT JOIN [dbo].[T_CTW_LEventTheme]b ON a.[CTWEventId]=b.[CTWEventId] AND b.isdelete=0 ";
-            strSql += " LEFT JOIN  T_CTW_LEventInteraction c ON a.[CTWEventId] = c.[CTWEventId] AND c.isdelete = 0 ";
+            strSql += string.Format(" LEFT JOIN (select top 1 DrawMethodCode,LeventId,CTWEventId from T_CTW_LEventInteraction WHERE CAST(CTWEventId AS NVARCHAR(50))='{0}' AND isdelete = 0) c ON a.[CTWEventId] = c.[CTWEventId] ", strCTWEventId);
             strSql += " LEFT JOIN dbo.SysMarketingGroupType d ON a.ActivityGroupId=d.ActivityGroupId ";
             strSql += " LEFT JOIN dbo.WQRCodeManager e ON a.OnlineQRCodeId=e.ObjectId ";
             strSql += " LEFT JOIN dbo.WQRCodeManager f ON a.OfflineQRCodeId=e.ObjectId ";
-            strSql += string.Format(" WHERE a.isdelete=0 AND  a.[CTWEventId]='{0}'", strCTWEventId);
+            strSql += string.Format(" WHERE a.isdelete=0 AND  CAST(a.[CTWEventId] AS NVARCHAR(50))='{0}'", strCTWEventId);
             return SQLHelper.ExecuteDataset(strSql);
         }
         public DataSet GetMaterialTextInfo(string strOnlineQRCodeId)
@@ -82,9 +82,7 @@ namespace JIT.CPOS.BS.DataAccess
                                                  WHEN Status = 30 THEN '暂停'
                                                  WHEN Status = 40 THEN '结束'
                                             END StatusName ,
-                                            i.ThemeId ,
                                             i.DrawMethodCode ,
-                                            i.LeventId ,
                                             wqrOffLine.ImageUrl QRCodeImageUrlForUnit,
                                             wqrOnLine.ImageUrl QRCodeImageUrlForOnline,
                                             s.ActivityGroupCode,
@@ -95,10 +93,12 @@ namespace JIT.CPOS.BS.DataAccess
                                             e.TemplateId,
                                             e.OfflineRedirectUrl,
                                             e.OnlineRedirectUrl,
-                                            e.OnlineQRCodeId
+                                            e.OnlineQRCodeId,
+                                            e.EndDate,
+		                                    e.StartDate
                                     FROM    T_CTW_LEvent e
                                             INNER JOIN T_CTW_LEventTheme t ON e.CTWEventId = t.CTWEventId
-                                            INNER JOIN T_CTW_LEventInteraction i ON e.CTWEventId = i.CTWEventId
+                                            INNER JOIN (SELECT DISTINCT DrawMethodCode,InteractionType,CTWEventId FROM T_CTW_LEventInteraction WHERE CustomerId='{0}' AND IsDelete=0)i ON e.CTWEventId = i.CTWEventId
                                             LEFT JOIN dbo.ObjectImages wqrOffLine ON e.OfflineQRCodeId = wqrOffLine.ImageId
                                             LEFT JOIN WQRCodeManager wqrOnLine ON e.OnlineQRCodeId= wqrOnLine.QRCodeId
                                             INNER JOIN SysMarketingGroupType S on e.ActivityGroupId=s.ActivityGroupId
@@ -190,14 +190,14 @@ namespace JIT.CPOS.BS.DataAccess
             if (!string.IsNullOrEmpty(BeginTime))//已核销
             {
                 ls.Add(new SqlParameter("@BeginTime", BeginTime));
-                sqlWhere += " and temp.StartDate>=@BeginTime";
+                sqlWhere += " and temp.EventBeginTime>=@BeginTime";
               // strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
               //  strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
             }
             if (!string.IsNullOrEmpty(EndTime))//已核销
             {
                 ls.Add(new SqlParameter("@EndDate", EndTime));
-                sqlWhere += " and temp.EndDate<=@EndDate";
+                sqlWhere += " and temp.EventEndTime<=@EndDate";
                 // strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
                 //  strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
             }
@@ -250,70 +250,122 @@ namespace JIT.CPOS.BS.DataAccess
                     SELECT  ROW_NUMBER()over(order by {0} {3}) _row,*  ";
             sql += @"
 from (
-      select
-                     a.*,
-       b.LeventId, ----游戏或促销活动Id
-       ----- 1.吸粉：游戏  --2.促销：团购，抢购
-         c.BeginTime as   EventBeginTime, ---开始时间
-        c.EndTime                            
-        EventEndTime, ---结束时间
-       ---奖品发送
-       t2.PrizeGet  PrizeGet,
-       ----活动销售（如果是游戏，则取由优惠券导致的金额，如果是团购抢购，则取团购抢购的金额）
-      t3.EventSales  as EventSales,
-       t.NewVip, ---新增会员（注册的）
-       t.NewAtten ---新增粉丝（关注的）
-  from T_CTW_LEvent a
-  inner join T_CTW_LEventInteraction b on a.CTWEventId = b.CTWEventId 
-			  and a.interactiontype=1 
-			  and b.interactiontype=1
-  inner  join Levents c on b.LeventId = c.eventid    ----游戏的
-   left join (
-				select LPrizes.EventId,count(1) PrizeGet
-                  from lprizewinner  WITH (NOLOCK)  
-                  inner join LPrizes WITH (NOLOCK)  on lprizewinner.PrizeID = LPrizes.PrizesID
-			       group by LPrizes.EventId
-				   )  t2 on t2.EventId = b.LeventId
-       left  join (select vipcouponmapping.objectid,isnull(sum(actual_amount), 0) EventSales
-               from vipcouponmapping WITH (NOLOCK)
-              inner join TOrderCouponMapping WITH (NOLOCK) on vipcouponmapping.couponid = TOrderCouponMapping.couponid
-              inner join t_inout  WITH (NOLOCK) on TOrderCouponMapping.OrderId =t_inout.order_id
-              group by vipcouponmapping.objectid
-			) t3 on t3.objectid = b.LeventId
-    left join (select T_LEventsRegVipLog.objectid,
-                    count(case when RegVipId is not null and RegVipId != '' then 1 end) NewVip,
-                    count(case when FocusVipId is not null and FocusVipId != '' then 1 end) NewAtten
-               from T_LEventsRegVipLog WITH (NOLOCK)
-              group by T_LEventsRegVipLog.objectid
-            ) t on CAST(a.CTWEventId AS NVARCHAR(50)) = t.objectid
+      
 
-union all
 
-    select a.*,
-        b.LeventId, ----游戏或促销活动Id
-       ----- 1.吸粉：游戏  --2.促销：团购，抢购
-          d.BeginTime  EventBeginTime, ---开始时间
-       d.EndTime   EventEndTime, ---结束时间
+   
+
+
+
+
+
+SELECT  a.CTWEventId ,
+        Name ,
+        a.ActivityGroupId ,
+        a.status ,
+        a.CreateTime ,
+        a.CustomerID ,a.interactiontype,
+        startdate AS EventBeginTime , ---开始时间
+        EndDate AS EventEndTime , ---结束时间
        ---奖品发送
-         0  PrizeGet,
+        isnull(SUM(t2.PrizeGet),0) PrizeGet ,
        ----活动销售（如果是游戏，则取由优惠券导致的金额，如果是团购抢购，则取团购抢购的金额）
-        t4.EventSales   as EventSales,
-       t.NewVip, ---新增会员（注册的）
-       t.NewAtten ---新增粉丝（关注的）
-  from T_CTW_LEvent a
-  inner join T_CTW_LEventInteraction b on   (a.CTWEventId = b.CTWEventId and a.interactiontype=2 and b.interactiontype=2)
-  left join PanicbuyingEvent  d on b.LeventId = d.eventid  ---促销
-  left join (select   eventid,isnull(sum(actual_amount), 0) EventSales
-               from PanicbuyingEventOrderMapping WITH (NOLOCK)
-              inner join t_inout WITH (NOLOCK) on PanicbuyingEventOrderMapping.OrderId = t_inout.order_id
-			   group by eventid
-            ) t4 on   t4.eventid=b.LeventId
-  left join (select T_LEventsRegVipLog.objectid,
-                    count(case when RegVipId is not null and RegVipId != '' then 1 end) NewVip,
-                    count(case when FocusVipId is not null and FocusVipId != '' then 1 end) NewAtten
-               from T_LEventsRegVipLog WITH (NOLOCK)
-              group by T_LEventsRegVipLog.objectid
-            ) t on CAST(a.CTWEventId AS nvarchar(50)) = t.objectid
+        isnull(SUM(t3.EventSales),0) AS EventSales ,
+        isnull(SUM(t.NewVip),0) AS NewVip , ---新增会员（注册的）
+        isnull(SUM(t.NewAtten),0) AS NewAtten  ---新增粉丝（关注的）
+FROM    T_CTW_LEvent a
+        INNER JOIN T_CTW_LEventInteraction b ON a.CTWEventId = b.CTWEventId
+                                                AND a.interactiontype = 1
+                                                AND b.interactiontype = 1
+        INNER  JOIN Levents c ON b.LeventId = c.eventid    ----游戏的
+        LEFT JOIN ( SELECT  LPrizes.EventId ,
+                            COUNT(1) PrizeGet
+                    FROM    lprizewinner WITH ( NOLOCK )
+                            INNER JOIN LPrizes WITH ( NOLOCK ) ON lprizewinner.PrizeID = LPrizes.PrizesID
+                    GROUP BY LPrizes.EventId
+                  ) t2 ON t2.EventId = b.LeventId
+        LEFT  JOIN ( SELECT vipcouponmapping.objectid ,
+                            ISNULL(SUM(actual_amount), 0) EventSales
+                     FROM   vipcouponmapping WITH ( NOLOCK )
+                            INNER JOIN TOrderCouponMapping WITH ( NOLOCK ) ON vipcouponmapping.couponid = TOrderCouponMapping.couponid
+                            INNER JOIN t_inout WITH ( NOLOCK ) ON TOrderCouponMapping.OrderId = t_inout.order_id
+                     GROUP BY vipcouponmapping.objectid
+                   ) t3 ON t3.objectid = b.LeventId
+        LEFT JOIN ( SELECT  T_LEventsRegVipLog.objectid ,
+                            COUNT(CASE WHEN RegVipId IS NOT NULL
+                                            AND RegVipId != '' THEN 1
+                                  END) NewVip ,
+                            COUNT(CASE WHEN FocusVipId IS NOT NULL
+                                            AND FocusVipId != '' THEN 1
+                                  END) NewAtten
+                    FROM    T_LEventsRegVipLog WITH ( NOLOCK )
+                    GROUP BY T_LEventsRegVipLog.objectid
+                  ) t ON CAST(a.CTWEventId AS NVARCHAR(50)) = t.objectid
+GROUP BY a.CTWEventId ,
+        Name ,
+        startdate ,
+        EndDate ,
+        a.ActivityGroupId ,
+        a.status ,
+        a.CreateTime ,
+        a.CustomerID,a.interactiontype
+UNION ALL
+SELECT  a.CTWEventId ,
+        Name ,
+        a.ActivityGroupId ,
+        a.status ,
+        a.CreateTime ,
+        a.CustomerID,a.interactiontype ,         
+                    --- a.*,
+      -- b.LeventId, ----游戏或促销活动Id
+       ----- 1.吸粉：游戏  --2.促销：团购，抢购
+        startdate AS EventBeginTime , ---开始时间
+        EndDate AS EventEndTime , ---结束时间
+       ---奖品发送
+        0 PrizeGet ,
+       ----活动销售（如果是游戏，则取由优惠券导致的金额，如果是团购抢购，则取团购抢购的金额）
+        isnull(SUM(t4.EventSales),0) AS EventSales ,
+        isnull(SUM(t.NewVip),0) AS NewVip , ---新增会员（注册的）
+        isnull(SUM(t.NewAtten),0) AS NewAtten ---新增粉丝（关注的）
+FROM    T_CTW_LEvent a
+        INNER JOIN T_CTW_LEventInteraction b ON ( a.CTWEventId = b.CTWEventId
+                                                  AND a.interactiontype = 2
+                                                  AND b.interactiontype = 2
+                                                )
+        LEFT JOIN PanicbuyingEvent d ON b.LeventId = d.eventid  ---促销
+        LEFT JOIN ( SELECT  eventid ,
+                            ISNULL(SUM(actual_amount), 0) EventSales
+                    FROM    PanicbuyingEventOrderMapping WITH ( NOLOCK )
+                            INNER JOIN t_inout WITH ( NOLOCK ) ON PanicbuyingEventOrderMapping.OrderId = t_inout.order_id
+                    GROUP BY eventid
+                  ) t4 ON t4.eventid = b.LeventId
+        LEFT JOIN ( SELECT  T_LEventsRegVipLog.objectid ,
+                            COUNT(CASE WHEN RegVipId IS NOT NULL
+                                            AND RegVipId != '' THEN 1
+                                  END) NewVip ,
+                            COUNT(CASE WHEN FocusVipId IS NOT NULL
+                                            AND FocusVipId != '' THEN 1
+                                  END) NewAtten
+                    FROM    T_LEventsRegVipLog WITH ( NOLOCK )
+                    GROUP BY T_LEventsRegVipLog.objectid
+                  ) t ON CAST(a.CTWEventId AS NVARCHAR(50)) = t.objectid
+GROUP BY a.CTWEventId ,
+        Name ,
+        startdate ,
+        EndDate ,
+        a.ActivityGroupId ,
+        a.status ,
+        a.CreateTime ,
+        a.CustomerID   ,a.interactiontype       
+
+
+
+
+
+
+
+
+
 
 ) temp
 
@@ -336,7 +388,7 @@ union all
         }
 
 
-        public DataSet GetEventPrizeList(string LeventId,
+        public DataSet GetEventPrizeList(string CTWEventId,
             int PageSize,
          int PageIndex,
     string customerid)
@@ -351,10 +403,11 @@ union all
             string sqlWhere = "";
             string strSql = "";
             string strColumn = "";
-            if (!string.IsNullOrEmpty(LeventId))
+            if (!string.IsNullOrEmpty(CTWEventId))
             {
-                ls.Add(new SqlParameter("@LeventId", LeventId));
-                sqlWhere += " and a.EventId=@LeventId";
+                ls.Add(new SqlParameter("@CTWEventId", CTWEventId));
+                // sqlWhere += " and a.EventId=@LeventId";
+                sqlWhere += " and a.EventId   in (  select leventid from T_CTW_LEventInteraction where CTWEventId= @CTWEventId)";
             }        
             //if (!string.IsNullOrEmpty(BeginTime))//已核销
             //{
@@ -420,7 +473,7 @@ from LPrizes   a
 
 
 
-        public DataSet GetEventPrizeDetailList(string LeventId,
+        public DataSet GetEventPrizeDetailList(string CTWEventId,
             int PageSize,
          int PageIndex,
     string customerid)
@@ -435,10 +488,11 @@ from LPrizes   a
             string sqlWhere = "";
             string strSql = "";
             string strColumn = "";
-            if (!string.IsNullOrEmpty(LeventId))
+            if (!string.IsNullOrEmpty(CTWEventId))
             {
-                ls.Add(new SqlParameter("@LeventId", LeventId));
-                sqlWhere += " and a.EventId=@LeventId";
+                ls.Add(new SqlParameter("@CTWEventId", CTWEventId));
+               // sqlWhere += " and a.EventId=@LeventId";
+                sqlWhere += " and a.EventId   in (  select leventid from T_CTW_LEventInteraction where CTWEventId= @CTWEventId)";
             }        
         
 
@@ -532,7 +586,7 @@ from LPrizes   a
 
 
 
-        public DataSet GeEventItemList(string LeventId,
+        public DataSet GeEventItemList(string CTWEventId,
             int PageSize,
          int PageIndex,
     string customerid)
@@ -547,10 +601,11 @@ from LPrizes   a
             string sqlWhere = "";
             string strSql = "";
             string strColumn = "";
-            if (!string.IsNullOrEmpty(LeventId))
+            if (!string.IsNullOrEmpty(CTWEventId))
             {
-                ls.Add(new SqlParameter("@LeventId", LeventId));
-                sqlWhere += " and ps.EventId=@LeventId";
+                ls.Add(new SqlParameter("@CTWEventId", CTWEventId));
+               // sqlWhere += " and ps.EventId=@LeventId";
+                sqlWhere += " and ps.EventId   in (  select leventid from T_CTW_LEventInteraction where CTWEventId= @CTWEventId)";
             }        
             //if (!string.IsNullOrEmpty(BeginTime))//已核销
             //{
@@ -625,7 +680,7 @@ from LPrizes   a
 
 
 
-        public DataSet GeEventItemDetailList(string LeventId, int PageSize,int PageIndex,string customerid)
+        public DataSet GeEventItemDetailList(string CTWEventId, int PageSize, int PageIndex, string customerid)
         {
 
             //if (string.IsNullOrEmpty(OrderBy))
@@ -637,11 +692,18 @@ from LPrizes   a
             string sqlWhere = "";
             string strSql = "";
             string strColumn = "";
-            if (!string.IsNullOrEmpty(LeventId))
+            //if (!string.IsNullOrEmpty(LeventId))
+            //{
+            //   // ls.Add(new SqlParameter("@LeventId", LeventId));
+            //   // sqlWhere += " and ps.EventId=@LeventId";
+            //}        
+            if (!string.IsNullOrEmpty(CTWEventId))
             {
-                ls.Add(new SqlParameter("@LeventId", LeventId));
-                sqlWhere += " and ps.EventId=@LeventId";
+                ls.Add(new SqlParameter("@CTWEventId", CTWEventId));
+                // sqlWhere += " and ps.EventId=@LeventId";
+                sqlWhere += " and ps.EventId   in (  select leventid from T_CTW_LEventInteraction where CTWEventId= @CTWEventId)";
             }        
+
             //if (!string.IsNullOrEmpty(BeginTime))//已核销
             //{
             //    ls.Add(new SqlParameter("@BeginTime", EventName));

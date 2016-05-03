@@ -23,7 +23,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(loggingSessionInfo);
 
             DataSet ds = _T_CTW_LEventBLL.GeEventItemList(
-            pRequest.Parameters.LeventId,
+            pRequest.Parameters.CTWEventId,
 
                          pRequest.Parameters.PageSize,
                       pRequest.Parameters.PageIndex,

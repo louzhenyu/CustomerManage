@@ -51,8 +51,26 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
             var Domain = ConfigurationManager.AppSettings["interfacehost"].Replace("http://", "");
             var Domain1 = ConfigurationManager.AppSettings["interfacehost1"].Replace("http://", "");
 
-            string strParamJson = "[{\"key\":\"eventId\",\"value\":\"" + para.CTWEventId + "\"}]";
-
+            string strEventType = string.Empty;
+            string strParamJson = "";
+            switch (para.DrawMethodCode)
+            {
+                case "TG":
+                    strEventType = "1";
+                    strParamJson = "[{\"key\":\"CTWEventId\",\"value\":\"" + para.CTWEventId + "\"},{\"key\":\"eventTypeId\",\"value\":\"" + strEventType + "\"}]";
+                    break;
+                case "QG":
+                    strEventType = "2";
+                    strParamJson = "[{\"key\":\"CTWEventId\",\"value\":\"" + para.CTWEventId + "\"},{\"key\":\"eventTypeId\",\"value\":\"" + strEventType + "\"}]";
+                    break;
+                case "RX":
+                    strEventType = "3";
+                    strParamJson = "[{\"key\":\"CTWEventId\",\"value\":\"" + para.CTWEventId + "\"},{\"key\":\"eventTypeId\",\"value\":\"" + strEventType + "\"}]";
+                    break;
+                default:
+                    strParamJson = "[{\"key\":\"eventId\",\"value\":\"" + para.CTWEventId + "\"}]";
+                    break;
+            }
             switch (para.DrawMethodCode)
             {
                 case "HB":
@@ -65,7 +83,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     strPageKey = "Questionnaire";
                     break;
                 default:
-                    strPageKey = "RedPacket";
+                    strPageKey = "NewsActivityList";
                     break;
             }
 

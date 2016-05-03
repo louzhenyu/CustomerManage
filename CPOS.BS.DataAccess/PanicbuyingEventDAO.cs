@@ -207,9 +207,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [EventId] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [VwPanicBuyingEvent] WITH(NOLOCK) where 1=1 and EventStatus='已上架'");
+            pagedSql.AppendFormat(") as ___rn,* from [VwPanicBuyingEvent] WITH(NOLOCK) where 1=1 and EventStatus='抢购中'");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [VwPanicBuyingEvent] WITH(NOLOCK) where 1=1  and EventStatus='已上架' ");
+            totalCountSql.AppendFormat("select count(1) from [VwPanicBuyingEvent] WITH(NOLOCK) where 1=1  and EventStatus='抢购中' ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -425,6 +425,19 @@ namespace JIT.CPOS.BS.DataAccess
 
 
                                             UPDATE PanicbuyingEvent
+                                            SET EndTime='{1}'
+                                            WHERE EventId=@EventId
+                                            
+                                            DECLARE @BegTime datetime
+                                            DECLARE @EndTime datetime
+                                            
+                                            
+                                            UPDATE  PanicbuyingEvent
+                                            SET EventStatus=20
+                                            WHERE EventId=@EventId      
+                                                    AND GETDATE() BETWEEN BeginTime AND EndTime
+                                            
+                                            UPDATE PanicbuyingEventItemMapping
                                             SET EndTime='{1}'
                                             WHERE EventId=@EventId", strCTWEventId, strEndDate);
             this.SQLHelper.ExecuteNonQuery(strSql);

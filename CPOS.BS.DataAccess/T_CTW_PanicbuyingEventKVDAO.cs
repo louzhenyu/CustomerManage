@@ -44,7 +44,7 @@ namespace JIT.CPOS.BS.DataAccess
     {
         public DataSet GetPanicbuyingEventKV(string strCTWEventId)
         {
-            string strSql = string.Format("SELECT *,b.ImageURL FROM [dbo].[T_CTW_PanicbuyingEventKV] a LEFT JOIN dbo.ObjectImages b ON a.ImageId=b.ImageId  and WHERE CTWEventId='{0}'", strCTWEventId);
+            string strSql = string.Format("SELECT *,b.ImageURL FROM [dbo].[T_CTW_PanicbuyingEventKV] a LEFT JOIN dbo.ObjectImages b ON a.ImageId=b.ImageId  WHERE  a.CTWEventId='{0}'", strCTWEventId);
             return SQLHelper.ExecuteDataset(strSql);
         }
         public void DeleteByCTWEventID(string strCTWEventId)

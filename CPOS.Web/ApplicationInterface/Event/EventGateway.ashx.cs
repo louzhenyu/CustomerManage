@@ -24,7 +24,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
             try
             {
                 var rp = pRequest.DeserializeJSONTo<APIRequest<EventCommentListRP>>();
-                
+
                 var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
                 QuestionnaireBLL bll = new QuestionnaireBLL(loggingSessionInfo);
                 var ds = bll.GetCommentList(rp.Parameters.QuestionnaireID, rp.UserID);
@@ -57,7 +57,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
         public string GetPanicbuyingEvent(string pRequest)
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<GetPanicbuyingEventRP>>();
-             var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
+            var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
             //var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var rd = new PanicbuyingEventRD();
             var eventBll = new PanicbuyingEventBLL(loggingSessionInfo);
@@ -70,7 +70,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
             }
 
             //IsCTW是1时是创意活动，为0或者null时为非创意活动****
-            if (rp.Parameters.EventTypeId == 1)
+            if (rp.Parameters.IsCTW == 1)
             {
                 complexCondition.Add(new EqualsCondition() { FieldName = "IsCTW", Value = rp.Parameters.IsCTW });
             }
@@ -86,7 +86,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
 
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
-            lstOrder.Add(new OrderBy() { FieldName = "StatusValue", Direction = OrderByDirections.Desc });
+            //  lstOrder.Add(new OrderBy() { FieldName = "StatusValue", Direction = OrderByDirections.Desc });
+            lstOrder.Add(new OrderBy() { FieldName = "BeginTime", Direction = OrderByDirections.Asc });
             //查询
 
             var tempEvent = eventBll.GetPanicbuyingEvent(complexCondition.ToArray(), lstOrder.ToArray(), rp.Parameters.PageSize, rp.Parameters.PageIndex + 1);
@@ -98,7 +99,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
                 EventTypeId = t.EventTypeId,
                 BeginTime = t.BeginTime.ToString("yyyy-MM-dd HH:mm"),
                 EndTime = t.EndTime.ToString("yyyy-MM-dd HH:mm"),
-                BeginTimeName =  t.BeginTime.Month+"月"+t.BeginTime.Day+"日",  //t.BeginTime.ToString("MM-dd HH:mm"),
+                BeginTimeName = t.BeginTime.Month + "月" + t.BeginTime.Day + "日",  //t.BeginTime.ToString("MM-dd HH:mm"),
                 CustomerID = t.CustomerID,
                 Qty = t.Qty,
                 RemainQty = t.RemainQty,
@@ -106,6 +107,18 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
             }));
             rd.PanicbuyingEventList = eventList.ToArray();
             rd.TotalPage = tempEvent.PageCount;
+            //创意仓库分享信息
+            Share share = new Share();
+            T_CTW_SpreadSettingBLL bllSpreadSetting = new T_CTW_SpreadSettingBLL(loggingSessionInfo);
+            DataSet dsShare = bllSpreadSetting.GetSpreadSettingQRImageByCTWEventId(rp.Parameters.CTWEventId, "Share");
+            if (dsShare != null && dsShare.Tables.Count > 0 && dsShare.Tables[0].Rows.Count > 0)
+            {
+                share.Title = dsShare.Tables[0].Rows[0]["Title"].ToString();
+                share.Summary = dsShare.Tables[0].Rows[0]["Summary"].ToString();
+                share.ImageUrl = dsShare.Tables[0].Rows[0]["BGImageUrl"].ToString();
+                share.OnLineRedirectUrl = dsShare.Tables[0].Rows[0]["OnLineRedirectUrl"].ToString();
+            }
+            rd.ShareInfo = share;
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
             //return "{\"ResultCode\":0,\"Message\":\"OK\",\"IsSuccess\":true,\"Data\":{\"TotalPage\":1,\"PanicbuyingEventList\":[{\"CustomerID\":\"1E8CFF7F-214A-4DC2-BA1D-F61576A39824\",\"EventTypeId\":1,\"EventId\":\"1E8CFF7F-214A-4DC2-BA1D-F61576A39824\",\"EventName\":\"\u9524\u5B50\u624B\u673A\u56E2\u8D2D\",\"BeginTime\":\"2014-07-25 10:00\",\"EndTime\":\"2014-07-29 20:00\",\"Qty\":100,\"RemainQty\":10,\"EventStatus\":\"\u5DF2\u4E0A\u67B6\"},{\"CustomerID\":\"1E8CFF7F-214A-4DC2-BA1D-F61576A39824\",\"EventTypeId\":1,\"EventId\":\"1E8CFF7F-214A-4DC2-BA1D-F61576A39824\",\"EventName\":\"\u82F9\u679C\u624B\u673A\u56E2\u8D2D\",\"BeginTime\":\"2014-07-25 10:00\",\"EndTime\":\"2014-07-29 20:00\",\"Qty\":100,\"RemainQty\":10,\"EventStatus\":\"\u5DF2\u4E0A\u67B6\"}]}}";
@@ -150,15 +163,40 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
                 eventEntity.RemainQty = tempEvent.RemainQty;
                 eventEntity.EventStatus = tempEvent.EventStatus.ToString();
                 //倒计时
-                TimeSpan nowSpan = tempEvent.EndTime - DateTime.Now;//应该是结束时间减去当前时间     
-               eventEntity.DeadlineSecond =  nowSpan.TotalSeconds<=0?0:  Convert.ToInt32( nowSpan.TotalSeconds);
-                if (eventEntity.DeadlineSecond > 0)
+             //   TimeSpan nowSpan = tempEvent.EndTime - DateTime.Now;//应该是结束时间减去当前时间     
+             //  eventEntity.DeadlineSecond =  nowSpan.TotalSeconds<=0?0:  Convert.ToInt32( nowSpan.TotalSeconds);
+             
+
+                rd.TimeFlag = "begin";
+                if (tempEvent.BeginTime > DateTime.Now)
                 {
-                    eventEntity.DeadlineTime = nowSpan.Days + "天" + nowSpan.Hours + "时" + nowSpan.Minutes + "分" + nowSpan.Seconds;
+                    TimeSpan nowSpan = tempEvent.BeginTime - DateTime.Now;//应该是结束时间减去当前时间     
+                    eventEntity.DeadlineSecond = nowSpan.TotalSeconds <= 0 ? 0 : Convert.ToInt32(nowSpan.TotalSeconds);
+                    if (eventEntity.DeadlineSecond > 0)
+                    {
+                        eventEntity.DeadlineTime = nowSpan.Days + "天" + nowSpan.Hours + "时" + nowSpan.Minutes + "分" + nowSpan.Seconds;
+                    }
+                    else
+                    {
+                        eventEntity.DeadlineTime = 0 + "天" + 0 + "时" + 0 + "分" + 0;
+                    }
                 }
-                else {
-                    eventEntity.DeadlineTime = 0+ "天" + 0 + "时" + 0+ "分" + 0;
+                else
+                {
+                    rd.TimeFlag = "end";
+                    TimeSpan nowSpan = tempEvent.EndTime - DateTime.Now;//应该是结束时间减去当前时间   
+                    eventEntity.DeadlineSecond = nowSpan.TotalSeconds <= 0 ? 0 : Convert.ToInt32(nowSpan.TotalSeconds);
+
+                       if (eventEntity.DeadlineSecond > 0)
+                        {
+                            eventEntity.DeadlineTime = nowSpan.Days + "天" + nowSpan.Hours + "时" + nowSpan.Minutes + "分" + nowSpan.Seconds;
+                        }
+                        else {
+                            eventEntity.DeadlineTime = 0+ "天" + 0 + "时" + 0+ "分" + 0;
+                        }
                 }
+                rd.BeginTime = tempEvent.BeginTime.ToString("MM月dd日");
+
 
 
                 rd.PanicbuyingEvent = eventEntity;
@@ -186,11 +224,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
                 var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, rp.UserID);
                 var bll = new PanicbuyingEventSkuMappingBLL(loggingSessionInfo);
                 DataSet ds = bll.GetTCTWPanicbuyingEventKV(rp.Parameters.CTWEventId);
-                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count!=0)
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0] != null && ds.Tables[0].Rows.Count != 0)
                 {
                     rd.TCTWPanicbuyingEventKVInfo = DataTableToObject.ConvertToObject<T_CTW_PanicbuyingEventKVEntity>(ds.Tables[0].Rows[0]);
 
-                  
+
                 }
                 var rsp = new SuccessResponse<IAPIResponseData>(rd);
                 return rsp.ToJSON();
@@ -229,7 +267,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
         //    var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
 
         //    var eventsBll = new LEventsBLL(loggingSessionInfo);
-                    
+
 
         //    var qrCodeBll = new WQRCodeManagerBLL(loggingSessionInfo);
 
@@ -266,7 +304,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
         //    var rsp = new SuccessResponse<IAPIResponseData>(rd);
 
         //    return rsp.ToJSON();
-            
+
         //}
 
 
@@ -277,14 +315,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
             var rp = pRequest.DeserializeJSONTo<APIRequest<GetEventUserPrizeListRP>>();
             var rd = new GetEventUserPirzeListRD();
 
-          
+
             if (rp.Parameters.EventId == "" || string.IsNullOrEmpty(rp.Parameters.EventId))
             {
-                throw new APIException("活动标识不能为空") { ErrorCode = 121 };                
+                throw new APIException("活动标识不能为空") { ErrorCode = 121 };
             }
             if (rp.UserID == "" || string.IsNullOrEmpty(rp.UserID))
             {
-                throw new APIException("会员标识不能为空") { ErrorCode = 121 };             
+                throw new APIException("会员标识不能为空") { ErrorCode = 121 };
             }
             if (rp.CustomerID == "" || string.IsNullOrEmpty(rp.CustomerID))
             {
@@ -296,7 +334,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
 
             var ds = poolsServer.GetUserPrizeWinnerLog(rp.Parameters.EventId, rp.UserID);
 
-            if(ds.Tables[0].Rows.Count>0)
+            if (ds.Tables[0].Rows.Count > 0)
             {
                 var temp = ds.Tables[0].AsEnumerable().Select(t => new GetEventUserPrizeListInfo()
                 {
@@ -306,7 +344,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
                 rd.GetEventUserPirzeList = temp.ToArray();
 
             }
-            
+
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
@@ -370,7 +408,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Event
         public string EventId { get; set; }
 
         public void Validate()
-        {            
+        {
         }
     }
 

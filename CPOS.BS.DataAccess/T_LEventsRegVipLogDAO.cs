@@ -56,13 +56,13 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 strSql = string.Format(@"SELECT COUNT(1) LogCount  
                                         FROM T_LEventsRegVipLog With(nolock) 
-                                        WHERE CustomerId='{0}' and ObjectId='{1}' and RegVipId='{2}'", strCustomerId, strCTWEventId, strVipId);
+                                        WHERE CustomerId='{0}' and  RegVipId='{1}'", strCustomerId, strVipId);
             }
             if (strType == "Focus")
             {
                 strSql = string.Format(@"SELECT COUNT(1) LogCount  
                                         FROM T_LEventsRegVipLog With(nolock) 
-                                        WHERE CustomerId='{0}' and ObjectId='{1}' and FocusVipId='{2}'", strCustomerId, strCTWEventId, strVipId);
+                                        WHERE CustomerId='{0}' and FocusVipId='{1}'", strCustomerId, strVipId);
             }
 
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));

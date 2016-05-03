@@ -47,6 +47,11 @@ namespace JIT.CPOS.BS.DataAccess
             string strSql = string.Format("SELECT MIN(BeginTime)BeginTime,MAX(endtime)EndTime FROM T_CTW_LEventInteraction a INNER JOIN dbo.PanicbuyingEvent b ON a.LeventId=b.EventId WHERE CTWEventId='{0}'", strCTWEventId);
             return SQLHelper.ExecuteDataset(strSql);
         }
+        public DataSet GetPanicbuyingEventId(string strCTWEventId)
+        {
+            string strSql = string.Format("SELECT DrawMethodCode,LeventId FROM T_CTW_LEventInteraction a  WHERE CTWEventId='{0}' AND a.isdelete=0", strCTWEventId);
+            return SQLHelper.ExecuteDataset(strSql);
+        }
         public void DeleteByCTWEventID(string strCTWEventId)
         {
             string strSql = string.Format("DELETE [dbo].[T_CTW_LEventInteraction] WHERE CTWEventId='{0}'", strCTWEventId);

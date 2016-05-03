@@ -42,6 +42,15 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetPanicbuyingEventDate(strCTWEventId);
         }
+        /// <summary>
+        /// 获取相关主题下的所有促销活动id
+        /// </summary>
+        /// <param name="strCTWEventId"></param>
+        /// <returns></returns>
+        public DataSet GetPanicbuyingEventId(string strCTWEventId)
+        {
+            return this._currentDAO.GetPanicbuyingEventId(strCTWEventId);
+        }
         public void DeleteByCTWEventID(string strCTWEventId)
         {
             this._currentDAO.DeleteByCTWEventID(strCTWEventId);

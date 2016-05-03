@@ -58,11 +58,13 @@ namespace JIT.CPOS.BS.DataAccess
         }
         public DataSet GetSpreadSettingQRImageByCTWEventId(string strCTWEventId, string strSpreadType)
         {
-            string strSql = string.Format(@"    SELECT a.*,b.ImageURL BGImageUrl ,c.ImageURL LeadPageQRCodeImageUrl
+            string strSql = string.Format(@"    SELECT a.*,b.ImageURL BGImageUrl ,c.ImageURL LeadPageQRCodeImageUrl,d.OnLineRedirectUrl
                                                 FROM [dbo].[T_CTW_SpreadSetting] a 
                                                 LEFT JOIN dbo.ObjectImages b ON a.ImageId=b.ImageId
                                                 LEFT JOIN dbo.WQRCodeManager c ON a.LeadPageQRCodeImageId=CAST(c.QRCodeId AS NVARCHAR(50))
-                                                WHERE SpreadType ='{1}' and CTWEventId='{0}'", strCTWEventId, strSpreadType);
+                                                INNER JOIN dbo.T_CTW_LEvent d ON a.CTWEventId=d.CTWEventId
+                                                
+                                                WHERE SpreadType ='{1}' and a.CTWEventId='{0}'", strCTWEventId, strSpreadType);
             return this.SQLHelper.ExecuteDataset(strSql);
         }
     }

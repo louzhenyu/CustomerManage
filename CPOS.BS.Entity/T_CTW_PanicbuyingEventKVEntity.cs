@@ -31,6 +31,13 @@ namespace JIT.CPOS.BS.Entity
         #region  Ù–‘ºØ
 
         public string ImageURL { get; set; }
+        public List<PanicbuyingEventId> PanicbuyingEventList { get; set; }
         #endregion
+    }
+    public class PanicbuyingEventId
+    {
+        public string DrawMethodCode { get; set; }
+
+        public string LeventId { get; set; }
     }
 }

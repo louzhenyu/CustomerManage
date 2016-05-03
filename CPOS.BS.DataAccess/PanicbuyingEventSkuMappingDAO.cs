@@ -57,7 +57,9 @@ namespace JIT.CPOS.BS.DataAccess
             StringBuilder strb = new StringBuilder();
             strb.Append(@"
 SELECT item_id ItemID,item_name ItemName ,isnull(DisplayIndex,0)displayindex,ISNULL(SinglePurchaseQty,0) AS SinglePurchaseQty 
-            ,(CASE  WHEN ObjectURL IS NULL OR ObjectURL='' THEN Imageurl  END)Imageurl , EventItemMappingId,buycount
+            ,(CASE  WHEN ObjectURL IS NULL OR ObjectURL='' THEN Imageurl  END)Imageurl , EventItemMappingId,buycount ,SalesPersonCount
+  ,SalesPrice
+  ,Price
             FROM
               (SELECT item_id,item_name,DisplayIndex,EventItemMappingId,SinglePurchaseQty,
                  (SELECT top 1 imageUrl
@@ -71,7 +73,15 @@ SELECT item_id ItemID,item_name ItemName ,isnull(DisplayIndex,0)displayindex,ISN
                   WHERE ObjectImages.ObjectId=cast(Pe.EventItemMappingId AS nvarchar(200))
                   ORDER BY createtime DESC) ObjectURL,
   (select  count(1) from    PanicbuyingEventOrderMapping x inner join t_inout_Detail y on x.orderid=y.order_id
-  inner join t_sku z on y.sku_id=z.sku_id where  x.EventId=pe.EventId and z.item_id=pe.ItemId )  as buycount  ----购买次数
+  inner join t_sku z on y.sku_id=z.sku_id where  x.EventId=pe.EventId and z.item_id=pe.ItemId )  as buycount,  ----购买次数
+ (select  count(1) from    PanicbuyingEventOrderMapping x inner join t_inout_Detail y on x.orderid=y.order_id
+  inner join t_sku z on y.sku_id=z.sku_id where  x.EventId=pe.EventId and z.item_id=pe.ItemId )+isnull(pe.KeepQty,0)     as SalesPersonCount  ----购买次数
+
+
+ , Pe.SalesPrice  --抢购价格  
+  ,pe.Price   --商品价格        
+
+
 
                FROM PanicbuyingEventItemMapping AS Pe
                INNER JOIN T_Item AS T ON T.item_id=Pe.ItemId
@@ -82,6 +92,15 @@ SELECT item_id ItemID,item_name ItemName ,isnull(DisplayIndex,0)displayindex,ISN
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, strb.ToString(), paras.ToArray());
             return ds;
 
+
+    //        , ISNULL(                    
+    //(SELECT COUNT(DISTINCT z.vip_no)                     
+    // FROM PanicbuyingEventOrderMapping y                    
+    //  INNER JOIN T_Inout z ON y.orderid = z.order_id                    
+    //  inner join t_inout_detail aa on z.order_id=aa.order_id                    
+    //  inner join T_Sku bb on aa.sku_id=bb.sku_id                    
+    // where bb.item_id=T.item_id and y.EventID=pe.EventID and y.IsDelete=0)                    
+    //, 0)+isnull(pe.KeepQty,0) AS SalesPersonCount ---购买人数 
         }
         /// <summary>
         /// 获取活动

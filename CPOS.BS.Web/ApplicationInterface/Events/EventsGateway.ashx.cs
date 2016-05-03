@@ -48,6 +48,21 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
                         }
                     }
                 }
+                var eventBll = new PanicbuyingEventBLL(loggingSessionInfo);
+                var tempEvent = eventBll.GetPanicbuyingEventDetails(rp.Parameters.EventId);
+                rd.TimeFlag = "begin";
+                if (tempEvent.BeginTime >DateTime.Now)
+                {
+                    TimeSpan nowSpan = tempEvent.BeginTime - DateTime.Now;//应该是结束时间减去当前时间     
+                   rd.DeadlineSecond=   nowSpan.TotalSeconds <= 0 ? 0 : Convert.ToInt32(nowSpan.TotalSeconds);
+                }
+                else {
+                    rd.TimeFlag = "end";
+                    TimeSpan nowSpan = tempEvent.EndTime - DateTime.Now;//应该是结束时间减去当前时间   
+                    rd.DeadlineSecond = nowSpan.TotalSeconds <= 0 ? 0 : Convert.ToInt32(nowSpan.TotalSeconds);
+                }
+                rd.BeginTime = tempEvent.BeginTime.ToString("MM月dd日");
+
                 var rsp = new SuccessResponse<IAPIResponseData>(rd);
                 return rsp.ToJSON();
             }
@@ -413,7 +428,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
             }
 
             //IsCTW是1时是创意活动，为0或者null时为非创意活动****
-            if(rp.Parameters.EventTypeId ==1)
+            if(rp.Parameters.IsCTW ==1)
             {
                complexCondition.Add(new EqualsCondition() { FieldName = "IsCTW", Value = rp.Parameters.IsCTW });
             }else{
@@ -427,7 +442,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
             
             //排序参数
             List<OrderBy> lstOrder = new List<OrderBy> { };
-            lstOrder.Add(new OrderBy() { FieldName = "StatusValue", Direction = OrderByDirections.Desc });
+          //  lstOrder.Add(new OrderBy() { FieldName = "StatusValue", Direction = OrderByDirections.Desc });
+            lstOrder.Add(new OrderBy() { FieldName = "BeginTime", Direction = OrderByDirections.Asc });
             //查询
 
             var tempEvent = eventBll.GetPanicbuyingEvent(complexCondition.ToArray(), lstOrder.ToArray(), rp.Parameters.PageSize, rp.Parameters.PageIndex + 1);
@@ -514,6 +530,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
+
+
 
             //return "{\"ResultCode\":0,\"Message\":\"OK\"}";
         }
@@ -734,6 +752,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
                     ItemCategoryName = t["categoryName"].ToString()
                 });
                 rd.ItemInfoList = tmp.ToArray();
+                rd.TotalCount = totalCount;
                 int remainder = 0;
                 rd.TotalPage = Math.DivRem(totalCount, rp.Parameters.PageSize, out remainder);
                 if (remainder > 0)
@@ -864,6 +883,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
         public List<Item> ItemList { set; get; }
 
         public PanicbuyingEvent PanicbuyingEvent { set; get; }
+        public string TimeFlag { set; get; }
+     //   EmptyRequestParameter
+        public int DeadlineSecond { set; get; }
+
+        public string BeginTime { set; get; }
+
+        
+        
 
     }
     public class Item
@@ -881,6 +908,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
         /// </summary>
         public List<Sku> SkuList { set; get; }
         public int buycount { set; get; }  //购买次数
+
+        public int? SalesPersonCount { get; set; }
+        public decimal SalesPrice { get; set; }
+        public decimal Price { get; set; }
         
 
     }
@@ -1043,7 +1074,27 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
     public class PanicbuyingEventRD : IAPIResponseData
     {
         public PanicbuyingEvent[] PanicbuyingEventList { get; set; }
+        public Share ShareInfo { get; set; }
         public int TotalPage { get; set; }
+    }
+    public class Share
+    {
+        /// <summary>
+        /// 标题
+        /// </summary>
+        public string Title { get; set; }
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Summary { get; set; }
+        /// <summary>
+        /// 背景图片
+        /// </summary>
+        public string ImageUrl { get; set; }
+        /// <summary>
+        /// H5地址
+        /// </summary>
+        public string OnLineRedirectUrl { get; set; }
     }
     /// <summary>
     /// 返回列表实体
@@ -1189,6 +1240,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
     {
         public ItemInfoList[] ItemInfoList { get; set; }
         public int TotalPage { get; set; }
+        public int TotalCount { get; set; }
+        
     }
     /// <summary>
     /// 商品对象
