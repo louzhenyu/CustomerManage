@@ -6,10 +6,10 @@
             allQueryDiv: $("#allQuery"),             //所有的查询条件层dom
             uiMask: $("#ui-mask"),
             tabel:$("#gridTable"),                   //表格body部分
-            tabel2: $("#gridTable2"),
+            tabel2: $(".gridTable2"),
             tabel3: $("#gridTable3"),
             tabelWrap:$('#tableWrap'),
-			tabelWrap2:$('#tableWrap2'),
+			tabelWrap2:$('.tableWrap2'),
             thead:$("#thead"),                    //表格head部分
             showDetail: $('#showDetail'),         //弹出框查看详情部分
             operation:$('#opt,#Tooltip'),              //弹出框操作部分
@@ -101,7 +101,7 @@
                         title: "奖品发放清单", width: 800, height: 520, top: 20,
                         left: ($(window).width() - 800) * 0.5
                     });
-                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.EventId + "&method=GivingOutAwardsListExport");
+                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=" + that.loadData.details.CTWEventId + "&method=GivingOutAwardsListExport");
                     $(".exportlist").attr("download", "奖品发放清单.xls");
                     $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GetEventPrizeDetailList(function (data) {
@@ -112,7 +112,7 @@
                         title: "销售清单", width: 800, height: 520, top: 20,
                         left: ($(window).width() - 800) * 0.5
                     });
-                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=" + that.loadData.details.EventId + "&method=SalesListExport");
+                    $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=" + that.loadData.details.CTWEventId + "&method=SalesListExport");
                     $(".exportlist").attr("download", "销售清单.xls");
                     $("#tableWrap3 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GeEventItemDetailList(function (data) {
@@ -120,7 +120,7 @@
                     });
                 }
 
-                $(".ActivityDate").html(startdate.substring(0, startdate.indexOf(" ")) + "-" + enddate.substring(0, enddate.indexOf(" ")));
+                $(".ActivityDate").html(new Date(startdate).format("yyyy/MM/dd") + "-" + new Date(enddate).format("yyyy/MM/dd"));
                 $('#win').window('open');
 
             });
@@ -178,15 +178,15 @@
                     title: "活动延期", width: 400, height: 250, top: ($(window).height() - 250) * 0.5,
                     left: ($(window).width() - 400) * 0.5
                 });
-                $("._startdate").html($(this).data("startdate"));
-                that.Activity.enddate = $(this).data("enddate").replace("/", "-").replace("/", "-");
+                $("._startdate").html(new Date($(this).data("startdate")).format("yyyy-MM-dd"));
+                that.Activity.enddate = new Date($(this).data("enddate")).format("yyyy/MM/dd");//时间格式为/分隔符，否则new Date会有出现时间的值为8，赋值时会出现Cannot read property 'getFullYear' of null错误
                 $("#_endTime").datebox('calendar').calendar({
                     validator: function (date) {
                         var now = new Date(that.Activity.enddate);
                         return (date > now || date.getTime() == now.getTime());
                     }
                 });
-                $("#_endTime").datebox("setValue", that.Activity.enddate);
+                $("#_endTime").datebox("setValue", new Date(that.Activity.enddate).format("yyyy-MM-dd"));
 
                 $('#windefer').window('open');
 
@@ -230,7 +230,7 @@
                     that.AppendPrize(function (data) {
                         $('#winadd').window('close');
 
-                        $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
+                        $(".tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                         that.GetEventPrizeList(function (_data) {
                             that.renderTable2(_data);
 
@@ -340,7 +340,7 @@
 
                     $.util.isLoading()
 
-                    $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
+                    $(".tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GetEventPrizeList(function (_data) {
                         that.renderTable2(_data);
 
@@ -359,7 +359,7 @@
                     $(self).parents("tr").after(html);
                     $.util.isLoading()
 
-                    $("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
+                    $(".tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                     that.GeEventItemList(function (_data) {
                         that.renderTable2(_data);
 
@@ -542,7 +542,7 @@
                      }, {
                          field: 'EventEndTime', title: '结束时间', width: 110, align: 'left', resizable: false,
                          formatter: function (value, row, index) {
-                             return value.substring(0, value.indexOf(" "));
+                             return new Date(value).format("yyyy-MM-dd hh:mm:ss");
 
                          }
                      }, {
@@ -625,7 +625,7 @@
                 }
 
                 //jQuery easy datagrid  表格处理
-                $("#gridTable2").datagrid({
+                $(".gridTable2").datagrid({
 
                     method: 'post',
                     singleSelect: true, //单选
@@ -662,7 +662,7 @@
 
                     ]],
                     onLoadSuccess: function (data) {
-                        that.elems.tabel2.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                        $(".gridTable2").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                         if (data.rows.length > 0) {
                             $(".dataMessage2").hide();
                             $('#kkpager2').show();
@@ -680,7 +680,7 @@
                 }
 
                 //jQuery easy datagrid  表格处理
-                that.elems.tabel2.datagrid({
+                $(".gridTable2").datagrid({
 
                     method: 'post',
                     singleSelect: true, //单选
@@ -699,27 +699,28 @@
                         }, {
                             field: 'SalesPrice', title: '团购价', width: 110, align: 'left', resizable: false
                         }, {
-                            field: 'KeepQty', title: '已销售', width: 110, align: 'left', resizable: false
+                            field: 'SoldQty', title: '已销售', width: 110, align: 'left', resizable: false
                         }, {
-                            field: 'SoldQty', title: '总销量', width: 110, align: 'left', resizable: false
+                            field: 'TotalSales', title: '总销售额', width: 110, align: 'left', resizable: false
                         }, {
                             field: 'InverTory', title: '团购库存剩余', width: 110, align: 'left', resizable: false
-                        },
-
-                        {
-                            field: 'item_id', title: '操作', width: 50, align: 'left', resizable: false,
-                            formatter: function (value, row, index) {
-                                return "<a class='viewdesc' data-interactiontype='" + row.InteractionType + "' data-status='" + row.Status + "' data-id='" + value + "' href='javascript:void(0);' >查看详情</a>";
-
-                            }
                         }
+                        //,
+
+                        //{
+                        //    field: 'item_id', title: '操作', width: 50, align: 'left', resizable: false,
+                        //    formatter: function (value, row, index) {
+                        //        return "<a class='addPrizes'  data-id='" + value + "'    href='javascript:void(0);' >追加数量</a>";
+
+                        //    }
+                        //}
 
 
 
 
                     ]],
                     onLoadSuccess: function (data) {
-                        that.elems.tabel2.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                        $(".gridTable2").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                         if (data.rows.length > 0) {
                             $(".dataMessage2").hide();
                             $('#kkpager2').show();
@@ -829,7 +830,7 @@
 
                     ]],
                     onLoadSuccess: function (data) {
-                        that.elems.tabel3.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                        $("#gridTable3").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                         if (data.rows.length > 0) {
                             $(".dataMessage3").hide();
                             $('#kkpager3').show();
@@ -847,7 +848,7 @@
                 }
 
                 //jQuery easy datagrid  表格处理
-                that.elems.tabel3.datagrid({
+                $("#gridTable3").datagrid({
 
                     method: 'post',
                     singleSelect: true, //单选
@@ -880,7 +881,7 @@
 
                     ]],
                     onLoadSuccess: function (data) {
-                        that.elems.tabel3.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                        $("#gridTable3").datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                         if (data.rows.length > 0) {
                             $(".dataMessage3").hide();
                             $('#kkpager3').show();
@@ -945,7 +946,7 @@
             var that = this;
             that.loadData.args1.PageIndex = currentPage;
 
-            //$("#tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
+            //$(".tableWrap2 .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
             if (that.loadData.details.InteractionType == 1) {
                 that.GetEventPrizeList(function (_data) {
                     that.renderTable2(_data);
@@ -1014,7 +1015,7 @@
                 url: "/ApplicationInterface/Gateway.ashx",
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GetEventPrizeList',
-                    LeventId: that.loadData.details.EventId,
+                    CTWEventId: that.loadData.details.CTWEventId,
                     PageIndex: that.loadData.args1.PageIndex,
                     PageSize: that.loadData.args1.PageSize
                 },
@@ -1097,7 +1098,7 @@
                 url: "/ApplicationInterface/Gateway.ashx",
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GeEventItemList',
-                    LeventId: that.loadData.details.EventId,
+                    CTWEventId: that.loadData.details.CTWEventId,
                     PageIndex: that.loadData.args1.PageIndex,
                     PageSize: that.loadData.args1.PageSize
                 },
@@ -1209,7 +1210,7 @@
                 url: "/ApplicationInterface/Gateway.ashx",
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GetEventPrizeDetailList',
-                    LeventId: that.loadData.details.EventId,
+                    CTWEventId: that.loadData.details.CTWEventId,
                     PageIndex: that.loadData.args2.PageIndex,
                     PageSize: that.loadData.args2.PageSize
                 },
@@ -1239,7 +1240,7 @@
                 url: "/ApplicationInterface/Gateway.ashx",
                 data: {
                     action: 'CreativityWarehouse.MarketingData.GeEventItemDetailList',
-                    LeventId: that.loadData.details.EventId,
+                    CTWEventId: that.loadData.details.CTWEventId,
                     PageIndex: that.loadData.args2.PageIndex,
                     PageSize: that.loadData.args2.PageSize
                 },

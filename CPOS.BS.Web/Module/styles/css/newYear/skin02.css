@@ -317,11 +317,11 @@ body{overflow-x: hidden;}
     clear:none;
     height:30px;
     line-height: 23px;
-    margin-top:20px;
+    margin-top: 15px;
     color:#323232;
     font-size:12px;
     text-align: right;
-    padding-right: 65px;
+    padding-right: 30px;
 }
 .kkPager span.normalsize{ color:#323232;}
 .kkPager span.disabled{color: #999999;border: none; }

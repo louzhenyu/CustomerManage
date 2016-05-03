@@ -160,36 +160,37 @@
 .tableWap .datagrid{ border:1px solid #e1e7ea;}
 
 
-.addSales{ width: 532px; height:208px;}
+.addSales{ width: 532px; height:208px; margin-top: 30px;}
 .addSales .explain { line-height: 30px; white-space:nowrap; padding-left:10px; }
-.skillPanel{ width: 320px; height: 500px; background-color: #f0f3f5; margin: 0 auto; text-align: center;}
+.skillPanel{ width: 320px; height: 500px; background-color: #f0f3f5; margin: 0 auto; text-align: center;position: relative;}
 .skillPanel .timekeeping{ height:55px; display: inline-block;margin:0 auto;}
 .timekeeping .title{ width: 180px;height: 25px; margin: 0 auto; font-size:12px; line-height: 25px; color: #999;position: relative; border:none }
 .timekeeping .title p{ background-color: #f0f3f5; display:inline-block; position:absolute; top:0; width: 120px;left: 30px;line-height: 25px;}
 .timekeeping .title hr{border-color: #e3e3e3; position: absolute; top: 8px; }
 .timekeeping .time{width: 180px; text-align: center; height: 30px;}
 .timekeeping .time em{padding: 0 2px; height: 23px; line-height: 23px; font-size: 13px; background-color: #010101; color: #fff; border-radius: 2px; margin-left: 2px}
-.productList{height: 155px; overflow-y: auto;width: 338px; text-align: left;}
+.productList{height: 166px; overflow-y: hidden;width: 320px; text-align: left;}
 .product{ width: 320px; height: 135px; background: #fff; display: inline-block; position: relative;}
 .product .l{width:135px; height: 135px; vertical-align:middle; text-align: left;}
 .product .l img{max-height: 100%; max-width: 100%;}
 .product .r{ width: 165px; text-align: left; padding-right:15px; padding-top: 8px; }
 .product .r p{ line-height: 22px; color: #5d5d5d; font-size: 10px;}
 .product .r p.tit{ color: #434546; font-size: 12px;}
+.product .r p.tit .easyui-tooltip{ cursor: pointer; font-size: 14px; font-weight: bold;}
 .product .r p i{ text-decoration: line-through;}
 .product .r p.skill{text-align: right}
 .product .r p.skill em{ width: 41px; height: 16px; color: #fff; line-height: 16px; margin-right:6px; display:inline-block; background: url("../images/piceBg.png") no-repeat; text-align: center; margin-top: 4px; }
 
-.product .textBtn{ width: 80px; height: 26px; line-height: 26px; font-size: 13px; text-align: center; color: #fff; background: #010101; border-radius: 3px; float: right;}
+.product .textBtn{ cursor: pointer; width: 80px; height: 26px; line-height: 26px; font-size: 13px; text-align: center; border-radius: 3px; float: right;position: absolute;right: 15px;bottom: 2px;border: 1px solid #ff343f;color: #ff343f;}
 
 .eventList{height: 40px; line-height: 40px;}
-.eventList li{ height: 40px; width: 79px; font-size: 13px; color: #fff; border-right: 1px solid #c3c6c7; float: left; background-color: #000; position: relative;}
+.eventList li{ height: 40px; width: 79px; cursor: pointer; font-size: 13px; color: #fff; border-right: 1px solid #c3c6c7; float: left; background-color: #000; position: relative;}
 .eventList li.on{ background-color: #ff343f;}
 .eventList .eventAddBtn{ width: 76px; background-color:#fff; float: left; border: 1px dashed #e2e7ea; color: #00a0e8;cursor: pointer;height: 38px;line-height: 38px; font-size:12px;}
 .eventList .eventAddBtn .icon{ width: 16px; height: 10px; background: url("../images/addIcon.png") no-repeat center center; display: inline-block;}
-.productAdd{ width: 192px; height: 44px; background-color:#fff; border: 1px dashed #e1e7ea; text-align: center;  margin: 10px auto; cursor: pointer;}
+.productAdd{ width: 192px; height: 44px; background-color:#fff; border: 1px dashed #e1e7ea; text-align: center;   cursor: pointer;position: absolute;bottom: 3px;left: 68px;}
 .productAdd .icon{height: 19px; padding-left: 27px; margin-top: 13px; font-size: 13px; display: block;background: url("../images/icon_add.png" ) center center no-repeat; margin-right: 12px; text-align: right;width: 104px;}
-.skuPanel{ width: 780px; height: 508px;}
+.skuPanel{ width: 780px; height: 500px;margin: 0 auto;margin-top: 13px;}
 .skuPanel .commonSelectWrap{ width: 176px;margin:0 0 5px 0;}
 .skuPanel .commonSelectWrap .selectBox{width: 80px;}
 .skuPanel .top{ height: 100px; padding: 10px 0 0 20px; background-color:#f3f3f6 ; display: block;text-align: center;}
@@ -197,8 +198,10 @@
 .skuPanel .top .productInfo p{float:left;width:558px;height:58px;line-height:29px;overflow:hidden;color:#333; text-align:left;}
 
 .skuPanel .bottom{ height: 400px; padding: 20px 0 0 20px;}
-.skuList{ width:500px; height: 400px;}
-.skuObj{ width: 400px; padding-left: 5px;}
+.skuList{ width: 100%; height: 400px;overflow-y: auto;}
+.skuObj{ width: 560px; padding-left: 5px;display: inline-block;float: left;margin-bottom: 15px;}
 .skuObj .checkBox{ margin-top: 6px;}
 .skuObj .r{width: 378px;}
 
+.eventList li .editIconBtn{background: url("../images/editBtnMin.png") top right no-repeat;}
+#winProduct .datagrid {border-left:1px solid #e2e7eb;}

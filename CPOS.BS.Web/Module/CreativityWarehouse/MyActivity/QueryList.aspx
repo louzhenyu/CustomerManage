@@ -151,9 +151,7 @@
                 </div>
             </div>
             <div class="ActivityOpeartion"><div class="Opeartiondesc"><div class="viewdata" data-startdate="<#=_data.StartDate #>" data-enddate="<#=_data.EndDate #>" data-interactiontype="<#=_data.InteractionType #>" data-status="<#=_data.Status #>" data-eventid="<#= _data.CTWEventId #>" data-id="<#=_data.LeventId #>">查看活动数据</div>
-               <# if(_data.EventInfo){#>
                 <div class="date"><#=(_data.StartDate.substring(0,_data.StartDate.indexOf(" "))+"-"+_data.EndDate.substring(5,_data.EndDate.indexOf(" "))) #></div>
-                 <#} #>
                                            </div><div class="releasebtn <#=_data.Status=="10"?"":"view" #>" data-onfflineqrcode="<#=_data.QRCodeImageUrlForUnit #>" data-onlineqrcode="<#=_data.QRCodeImageUrlForOnline #>" data-onlineredirecturl="<#=_data.OnLineRedirectUrl #>" data-offlineredirecturl="<#=_data.OffLineRedirectUrl #>" data-eventid="<#= _data.CTWEventId #>" data-status="<#=_data.Status #>"  ><#=_data.Status=="10"?"发布":"预览" #></div></div>
         </div>
           <#} #>
@@ -273,12 +271,12 @@
                           </div>
                       </div>
                   </div>
-                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>">查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=<#=EventId #>&method=GameAwardsListExport" download="清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
+                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>">查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=<#=CTWEventId #>&method=GameAwardsListExport" download="清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
               </div>
               <div class="PrizeList">
-                   <div class="tableWrap" id="tableWrap2" style="display:inline-block;width:100%;">
+                   <div class="tableWrap tableWrap2"  style="display:inline-block;width:100%;">
 
-                   <table class="dataTable" id="gridTable2">
+                   <table class="dataTable gridTable2" >
                           
                    </table>
                     <div id="pageContianer2">
@@ -344,12 +342,12 @@
                           </div>
                       </div>
                   </div>
-                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>" >查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=<#=EventId #>&method=SalesItemsListExport" download="清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
+                  <div class="EDO_export"><div class="prizeExtend">商品销量</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>"  href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>" >查看销售清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=<#=CTWEventId #>&method=SalesItemsListExport" download="清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
               </div>
               <div class="PrizeList">
-                   <div class="tableWrap" id="Div6" style="display:inline-block;width:100%;">
+                   <div class="tableWrap tableWrap2"  style="display:inline-block;width:100%;">
 
-                   <table class="dataTable" id="Table1">
+                   <table class="dataTable gridTable2" >
                           
                    </table>
                     <div id="Div7">

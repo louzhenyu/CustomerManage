@@ -89,6 +89,7 @@ require.config({
 		highcharts: '/Module/static/js/plugin/highcharts',
 		lang: '/Framework/Javascript/Other/kindeditor/lang/zh_CN',
         bxslider: '/Module/static/js/plugin/jquery.bxslider',
+        nicescroll:'/Module/static/js/plugin/jquery.nicescroll',
 
         'jquery-jvve': '/Module/static/js/vendor/jquery-2.2.0/jquery',
         'jquery-ui-jvve': '/Module/static/js/vendor/jquery-ui-1.11.4/jquery-ui-jvve',

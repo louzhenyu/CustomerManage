@@ -214,12 +214,12 @@
                           </div>
                       </div>
                   </div>
-                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>">查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=<#=EventId #>&method=GameAwardsListExport" download="清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
+                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>">查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=<#=CTWEventId #>&method=GameAwardsListExport" download="清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
               </div>
               <div class="PrizeList">
-                   <div class="tableWrap" id="tableWrap2" style="display:inline-block;width:100%;">
+                   <div class="tableWrap tableWrap2"  style="display:inline-block;width:100%;">
 
-                   <table class="dataTable" id="gridTable2">
+                   <table class="dataTable gridTable2" >
                           
                    </table>
                     <div id="pageContianer2">
@@ -286,12 +286,12 @@
                           </div>
                       </div>
                   </div>
-                  <div class="EDO_export"><div class="prizeExtend">奖品发放</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>" >查看发放清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?LeventId=<#=EventId #>&method=SalesItemsListExport" download="清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
+                  <div class="EDO_export"><div class="prizeExtend">商品销量</div><a class="viewlist" data-startdate="<#=startdate #>" data-enddate="<#=enddate #>" href="javascript:void(0)" data-id="<#=EventId #>" data-interactiontype="<#=InteractionType #>" >查看销售清单</a><a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=<#=CTWEventId #>&method=SalesItemsListExport" download="清单导出.xls" class="exportbtn commonBtn">导出清单</a></div>
               </div>
               <div class="PrizeList">
-                   <div class="tableWrap" id="tableWrap2" style="display:inline-block;width:100%;">
+                   <div class="tableWrap tableWrap2"  style="display:inline-block;width:100%;">
 
-                   <table class="dataTable" id="gridTable2">
+                   <table class="dataTable gridTable2" >
                           
                    </table>
                     <div id="pageContianer2">

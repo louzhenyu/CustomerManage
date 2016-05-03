@@ -160,26 +160,26 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
             </div>
              <div class="spread" data-interaction="2">
                       <div class="skillPanel" >
-                          <p  data-imgcode="ImageURL01" data-edit="true" data-size="640X370px" data-imgurl="images/skillKV.png" ><img src="images/skillKV.png" width="320" height="185"></p>
+                          <p  data-imgcode="ImageURL01" data-edit="true" data-size="640X370px" data-imgurl="images/skillKV.png" ><img id="eventImg" src="images/skillKV.png" width="320" height="185"></p>
                           <div class="eventList" data-type="dataEdit">
-                              <ul>
-                                  <li class="on">3月28日<em class="editIconBtn"></em></li>
+                              <ul id="eventList">
+                            <!--  <li class="on" data-id="9c3063ef-46a7-4674-a27b-208a90795c7d" data-time="12345">3月28日<em class="editIconBtn"></em></li>-->
+                                  <!--<li class="on">3月28日<em class="editIconBtn"></em></li>
                                   <li>3月29日<em class="editIconBtn"></em></li>
-                                  <li>3月27日<em class="editIconBtn"></em></li>
+                                  <li>3月27日<em class="editIconBtn"></em></li>-->
                                   <!--<li></li>-->
                               </ul>
-                             <div class="eventAddBtn"> <em class="icon"> </em> <em class="textTip">添加秒杀</em></div>
+                             <div class="eventAddBtn"> <em class="icon"> </em> <em class="textTip">添加活动</em></div>
                           </div>
 
                           <div class="timekeeping" >
-                              <div class="title"> <hr width="100%" size="1"> <p>距离抢购结束还剩</p></div>
+                              <div class="title"> <hr width="100%" size="1"> <p id="timeInfo">距离抢购结束还剩</p></div>
                               <p class="time"><em>0</em><em>0</em>时<em>0</em><em>0</em>分<em>0</em><em>0</em>秒</p>
                           </div>
-                          <div class="productList"  data-type="dataEdit">
-                              <div class="product">
+                          <div class="productList" id="eventItemList"  data-type="dataEdit">
+                            <!--  <div class="product" >
 
                                   <div class="l"><img src="images/img.png" ></div>
-                                    <div class=""></div>
                                    <div class="r">
                                        <p class="tit">麦斯威尔低脂三合一原味咖啡
                                            全新包装  待你品味 </p>
@@ -189,21 +189,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 
                                    </div>
                                   <em class="editIconBtn"></em>
-                              </div><!--product-->
-                              <div class="product">
-
-                                  <div class="l"><img src="images/img.png" ></div>
-                                  <div class=""></div>
-                                  <div class="r">
-                                      <p class="tit">麦斯威尔低脂三合一原味咖啡
-                                          全新包装  待你品味 </p>
-                                      <p class="info"><em>已有65人参加</em> <span>  &nbsp&nbsp 原价 <i>￥68</i></span></p>
-                                      <p class="skill">抢购价 <em>￥38</em> </p>
-                                      <div class="textBtn"> 立即抢购 </div>
-
-                                  </div>
-                                  <em class="editIconBtn"></em>
-                              </div><!--product-->
+                              </div>&lt;!&ndash;product&ndash;&gt;-->
                           </div> <!--productList-->
 
                           <div class="productAdd"> <em class="icon"> 添加商品</em></div>
@@ -324,7 +310,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
          		</div>
 
          </div>
-          <div id="win1" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
+         <div id="win1" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
                   		<div class="easyui-layout" data-options="fit:true" id="panlconent1">
 
                   			<div data-options="region:'center'" style="padding:10px;">
@@ -337,7 +323,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                   		</div>
 
                   </div>
-                   <div id="winrelease" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
+         <div id="winrelease" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
                           <div class="easyui-layout" data-options="fit:true" id="Div1">
                               <div data-options="region:'center'" style="padding:10px;">
                                  <div class="QRcode OnlineQRCodeId">
@@ -361,6 +347,64 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                         			</div>
                           </div>
                       </div>
+
+
+         <div id="winSales" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
+                 		<div class="easyui-layout" data-options="fit:true" id="SalesPanel">
+
+                 			<div data-options="region:'center'" style="padding:10px;">
+
+                 			</div>
+                 			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
+                 				<a class="easyui-linkbutton commonBtn saveBtn" >确定</a>
+
+                 			</div>
+                 		</div>
+
+                 </div>
+
+          <div id="winProduct" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,minimizable:false,maximizable:false,closed:true,closable:true" >
+                           		<div class="easyui-layout" data-options="fit:true">
+
+                           			<div data-options="region:'center'" style="padding:10px;">
+                           			<div style="width: 790px; margin: 0 auto; text-align: center">
+                                      <form id="search">
+                                          <div class="commonSelectWrap">
+                                              <em class="tit">请选择分类：</em>
+                                              <div class="selectBox">
+                                                  <input id="itemCategory" class="easyui-combobox" name="ItemCategoryID" data-options="width:200,height:30" />
+                                              </div>
+                                          </div>
+                                          <div class="commonSelectWrap">
+                                          <em class="tit">商品名称：</em>
+                                          <label class="searchInput" style="width: 315px;">
+                                              <input  class="easyui-validatebox"  name="ItemName" type="text" value=""/>
+                                          </label>
+                                          </div>
+
+                                          <div class="moreQueryWrap">
+                                              <a href="javascript:;" class="commonBtn queryBtn">查询</a>
+                                          </div>
+
+
+
+                                      </form>
+                                      <div class="tableWrap" id="tableWrap" style="width: 99%;" >
+
+                                          <div class="dataTable" id="productTable"></div>
+                                            <div class="dataMessage" >没有符合条件的查询记录</div>
+                                      </div>
+
+                                      <div id="pageContianer" style="width: 100%; display: inline-block">
+
+                                          <div id="kkpager" >
+                                          </div>
+                                      </div>
+                                      </div>
+                           			</div>
+                           		</div>
+
+                           </div>
      </div>
 
          <script id="tpl_selectPrize" type="text/html">

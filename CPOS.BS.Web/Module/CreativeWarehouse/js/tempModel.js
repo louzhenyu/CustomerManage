@@ -57,7 +57,7 @@ define(function($) {
          </div>\
            </div>\
         </div><form>',
-        imgEdit:'         <div class="imgUploadPanel">\
+        imgEdit: '         <div class="imgUploadPanel">\
     <div class="l">\
         <p><b>图片尺寸建议</b></p>\
     <p>格式：JPG、PNG      尺寸：<%=size%>     大小：100KB</p>\
@@ -71,7 +71,7 @@ define(function($) {
         </div>                             \
        <div class="imgPanel"> <img src="<%=imgUrl%>" data-imgcode="EditImg"/></div>\
         </div>',
-        setPrize:' <div class="lineText" style="border-bottom: 1px solid #e1e7ea;"> \
+        setPrize: ' <div class="lineText" style="border-bottom: 1px solid #e1e7ea;"> \
     <div class="commonSelectWrap" style="margin-left: 10px;"> \
         <em class="tit w120">选择奖品类型:</em> \
     <div class="searchInput bordernone"> \
@@ -88,7 +88,7 @@ define(function($) {
         <div id="prizeListGrid"></div> \
         </div><!--tableWap--> \
         </div> <!--showPanel-->',
-        imgText:'                     <div class="imgTextPanel">\
+        imgText: '                     <div class="imgTextPanel">\
     <div class="titleInput"><input type="text" id="title" value="<%=title%>" placeholder="填写图文标题">   </div>\
         <div class="imgUploadPanel" style="height: auto;">\
         <div class="imgPanel"> <img src="<%=imgUrl%>" id="imgShare" data-imgcode="EditImg"/></div>\
@@ -108,7 +108,7 @@ define(function($) {
         <textarea name="Summary" id="Summary" placeholder="请填写摘要"><%=summary%></textarea>\
         </div>\
         </div><!--imgTextPanel-->',
-        shareInfo:'<div class="imgTextPanel" style="height: 300px;"><div class="imgUploadPanel"><div class="l"> <p><b>图片尺寸建议</b></p>\
+        shareInfo: '<div class="imgTextPanel" style="height: 300px;"><div class="imgUploadPanel"><div class="l"> <p><b>图片尺寸建议</b></p>\
         <p>格式：JPG、PNG      尺寸：200*200px;  大小：100KB</p>\
     </div> \
     </div><!--imgUploadPanel--> \
@@ -135,7 +135,7 @@ define(function($) {
         </div> <!--texList-->\
         </div> <!--l-->\
         </div><!--imgTextPanel-->',
-        addIntegral:'<form id="win2OptionForm">\
+        addIntegral: '<form id="win2OptionForm">\
     <div class="commonSelectWrap">  \
         <em class="tit w120">赠送积分值：</em> \
     <div class="searchInput bordernone"> \
@@ -149,7 +149,7 @@ define(function($) {
         </div>  \
         </div>\
         </form>',
-        addNumber:'<form id="win2OptionForm" style="padding-top: 40px;">\
+        addNumber: '<form id="win2OptionForm" style="padding-top: 40px;">\
         <input name="id" type="text" style="display: none" data-flag="缓存id">\
     <div class="commonSelectWrap">  \
         <em class="tit w120">追加：</em> \
@@ -158,13 +158,117 @@ define(function($) {
         </div> \
         </div> \
         </form>',
-        editText:'<div class="textColorPanel"> \
+        editText: '<div class="textColorPanel"> \
     <div class="panelTitle">关注有奖话术建议：</div> \
         <div class="desc">话术字数请在12个汉子字以内</div>\
         <div class="inputBox" ><input type="text" class="easyui-validatebox" data-options="required:true" value="<%=text%>" ></div>\
-        </div>'
+        </div>',
 
+        setEvent: ' <div class="addSales">\
+    <form id="eventInfo">  \
+        <div class="commonSelectWrap">  \
+        <em class="tit w120">活动名称：</em>\
+    <div class="searchInput">  \
+        <input type="text" name="EventName"  class="easyui-validatebox" data-options="required:true,validType:\'maxLength[16]\'"  />  \
+        </div>     \
+        <em class="explain">例如：微商城7月上旬团购</em>   \
+    </div>                                                \
+    <div class="commonSelectWrap"> \
+        <em class="tit w120">开始时间：</em>   \
+    <div class="selectBox">       \
+        <input type="text" class="easyui-datetimebox" name="BeginTime" id="BeginTime"  data-options="required:true,showSeconds:false,width:200,height:30" value="" />\
+        </div> \
+        <em class="explain">示例：2016-03-18  09:00</em>\
+    </div>   \
+    <div class="commonSelectWrap">  \
+        <em class="tit w120">结束时间：</em> \
+    <div class="selectBox">  \
+        <input type="text" class="easyui-datetimebox" name="EndTime"  id="EndTime" data-options="required:true,showSeconds:false,width:200,height:30" validType="compareDate[$(\'#BeginTime\').datetimebox(\'getText\'),\'结束时间应该大于开始时间\']"   value="" />\
+        </div> \
+        <em class="explain">示例：2016-03-18  09:00</em> \
+    </div> \
+    <div class="commonSelectWrap" style="display: none"> \
+        <em class="tit w120">上架状态：</em>\
+    <div class="selectBox">  \
+        <input type="text"  name="EventStatus" class="easyui-combobox" data-options="width:200,height:30,\
+    valueField: \'label\',\
+        textField: \'value\',\
+        data: [{     \
+        label: \'10\', \
+        value: \'不在商城显示\'  \
+    },{   \
+        label: \'20\',  \
+        value: \'在商城显示\', \
+        selected:true \
+    }]"  />  \
+    </div>  \
+    <em class="explain">上架商品显示在推出的活动中</em> \
+        </div> \
+        </form>\
+        </div>',
+        skuItemList:' <div class="skuPanel" data-id="<%=ItemId%>"> \
+    <div class="top">  \
+        <p class="title">商品信息</p> \
+        <div class="productInfo"> \
+        <p><%=ItemName%></p>\
+        <div class="commonSelectWrap" >\
+        <em class="tit">每人限购：</em> \
+    <div class="selectBox" >\
+        <input   class="easyui-numberbox" name="SinglePurchaseQty" value="<%=SinglePurchaseQty%>" data-options="min:0,precision:0,width:80,height:30" />\
+        </div> <!--inputBox--> \
+        </div><!--lineText--> \
+        </div>   \
+        </div>\
+        <div class="bottom"> \
+        <p class="title">规格信息</p> \
+        <div class="skuList" id="skuList">\
+        <%for(var i=0;i<SkuList.length;i++){var idata = SkuList[i];%> \
+        <div class="skuObj"> \
+        <div class="l"> \
+        <div class="checkBox" data-MappingId="<%=idata.MappingId%>"  data-skuid="<%=idata.SkuID%>" data-select="<%=idata.IsSelected%>"><em></em><span><%=idata.SkuName%></span></div>  \
+    </div> \
+    <div class="r"> <div class="commonSelectWrap" > \
+        <em class="tit">商品数量：</em>   \
+    <div class="selectBox" > \
+        <input   class="easyui-numberbox" name="Qty" data-options="value:<%=idata.Qty%>,min:0,precision:0,width:80,height:30,disabled:true" />\
+        </div> <!--inputBox-->\
+        </div><!--lineText--> \
+        <div class="commonSelectWrap" >\
+        <em class="tit" style="width: 85px;">已售数量基数：</em>\
+    <div class="selectBox" >  \
+        <input   class="easyui-numberbox" name="KeepQty" data-options="value:<%=idata.KeepQty%>,min:0,precision:0,width:80,height:30,disabled:true" /> \
+        </div> <!--inputBox-->  \
+        </div><!--lineText-->  \
+        <div class="commonSelectWrap" > \
+        <em class="tit">原价：</em>  \
+    <div class="selectBox" >  \
+<input name="price" class="skuPrice" readonly="readonly" value="<%=idata.price%>" type="text" />\
+        </div> <!--inputBox-->\
+        </div><!--lineText-->\
+        <div class="commonSelectWrap" >  \
+        <em class="tit" style="width: 85px;">活动价：</em> \
+    <div class="selectBox" >\
+        <input   class="easyui-numberbox" name="SalesPrice"  data-options="value:<%=idata.SalesPrice%>,min:0,precision:0,width:80,height:30,disabled:true" />\
+        </div> <!--inputBox-->   \
+        </div><!--lineText--></div>\
+    </div> <!--skuObj-->\
+     <%}%> \
+    </div> \
+    </div> \
+    </div>',
+        eventItemList:'  <%for(var i=0;i<ItemList.length;i++){var idata = ItemList[i];%> \
+        <div class="product" data-id="<%=idata.EventItemMappingId%>" data-itemid="<%=idata.ItemID%>" data-itemname="<%=idata.ItemName%>">\
+    <div class="l"><img src="<%=idata.ImageUrl%>" ></div> \
+        <div class="r">   \
+        <p class="tit"><%=$ItemNameSub(idata.ItemName)%> </p> \
+    <p class="info" ><em>已有<%=idata.SalesPersonCount%>人参加</em> <span>  &nbsp&nbsp 原价 <i>￥<%=idata.Price%></i></span></p> \
+    <p class="skill"  >抢购价 <em>￥<%=idata.SalesPrice%></em> </p>\
+    <div class="textBtn"> 删除商品 </div> \
+        </div> \
+        <em class="editIconBtn"></em> \
+        </div><!--product-->\
+            <%}%>'
 
-	};
-	return temp;
+    };
+    return temp;
 });
