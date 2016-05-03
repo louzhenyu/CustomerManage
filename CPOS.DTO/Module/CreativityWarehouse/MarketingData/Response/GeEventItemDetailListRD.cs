@@ -30,7 +30,7 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingData.Response
 
 
         public string order_no { get; set; }
-        public DateTime create_time { get; set; }
+        public string create_time { get; set; }
         public string vipname { get; set; }
         public string viprealname { get; set; }
         public string DeliveryName { get; set; }

@@ -24,11 +24,11 @@ namespace JIT.CPOS.DTO.Module.CreativityWarehouse.MarketingData.Response
         public string SkuName { get; set; }
         public decimal price { get; set; }
         public decimal SalesPrice { get; set; }
-           public int Qty { get; set; }
-    public int KeepQty { get; set; }
-          public int SoldQty { get; set; }
-       public int InverTory { get; set; }
-        public int TotalSales { get; set; }
+        public int Qty { get; set; }
+        public int KeepQty { get; set; }
+        public int SoldQty { get; set; }
+        public int InverTory { get; set; }
+        public decimal TotalSales { get; set; }
         public int TurnoverRate { get; set; }
 
 
