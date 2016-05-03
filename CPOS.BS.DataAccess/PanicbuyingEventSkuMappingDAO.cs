@@ -74,7 +74,7 @@ SELECT item_id ItemID,item_name ItemName ,isnull(DisplayIndex,0)displayindex,ISN
                   ORDER BY createtime DESC) ObjectURL,
   (select  count(1) from    PanicbuyingEventOrderMapping x inner join t_inout_Detail y on x.orderid=y.order_id
   inner join t_sku z on y.sku_id=z.sku_id where  x.EventId=pe.EventId and z.item_id=pe.ItemId )  as buycount,  ----购买次数
- (select  count(1) from    PanicbuyingEventOrderMapping x inner join t_inout_Detail y on x.orderid=y.order_id
+ (select  count(DISTINCT za.vip_no) from    PanicbuyingEventOrderMapping x inner join t_inout za on x.OrderId = za.order_id inner join t_inout_Detail y on x.orderid=y.order_id
   inner join t_sku z on y.sku_id=z.sku_id where  x.EventId=pe.EventId and z.item_id=pe.ItemId )+isnull(pe.KeepQty,0)     as SalesPersonCount  ----购买次数
 
 

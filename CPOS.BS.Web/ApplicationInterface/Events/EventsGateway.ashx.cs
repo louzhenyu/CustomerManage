@@ -225,7 +225,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
                 var entity = new PanicbuyingEventItemMappingBLL(loggingSessionInfo).QueryByEntity(new PanicbuyingEventItemMappingEntity { EventId = rp.Parameters.EventId, ItemId = rp.Parameters.ItemID }, null).FirstOrDefault();
 
                 int disindex = new PanicbuyingEventItemMappingBLL(loggingSessionInfo).GteDisIndex(rp.Parameters.EventId.ToString());
-                var skulist = rp.Parameters.SkuList;
+                var skulist = rp.Parameters.SkuList.OrderBy(n => n.SalesPrice).ToList();
                 if (skulist == null || skulist.Count <= 0)
                 {
                     return "{\"ResultCode\": 100,\"Message\": \"保存失败!未选择商品规格 \"}";
@@ -262,7 +262,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
                         AddedTime=evententity.BeginTime,
                         Price=skulist[0].price,
                         SalesPrice=skulist[0].SalesPrice,
-                        DiscountRate = decimal.Parse((skulist[0].SalesPrice / skulist[0].price).ToString("f2")) * 100,
+                        DiscountRate = skulist[0].price.ToString("0.00")=="0.00"? 100:decimal.Parse((skulist[0].SalesPrice / skulist[0].price).ToString("f2")) * 100,
                         EndTime = evententity.EndTime,
                         Qty = myQty,
                         KeepQty = myKeepQty,//

@@ -65,7 +65,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
         public void GivingOutAwardsListExport(HttpContext pContext)
         {
-            string LeventId = pContext.Request.QueryString["LeventId"];
+            string LeventId = pContext.Request.QueryString["ctweventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
             DataSet ds = _T_CTW_LEventBLL.GetEventPrizeDetailList(LeventId, 10000, 1, CurrentUserInfo.ClientID);//订单导出，记录数0-60000
@@ -164,7 +164,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         }
         public void SalesListExport(HttpContext pContext)
         {
-            string LeventId = pContext.Request.QueryString["LeventId"];
+            string LeventId = pContext.Request.QueryString["ctweventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
             DataSet ds = _T_CTW_LEventBLL.GeEventItemDetailList(LeventId,10000,1,CurrentUserInfo.ClientID);
@@ -274,7 +274,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         }
         public void GameAwardsListExport(HttpContext pContext)
         {
-            string LeventId = pContext.Request.QueryString["LeventId"];
+            string LeventId = pContext.Request.QueryString["ctweventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
             DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(LeventId, 10000, 1, CurrentUserInfo.ClientID);
@@ -379,10 +379,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
         }
         public void SalesItemsListExport(HttpContext pContext)
         {
-            string LeventId = pContext.Request.QueryString["LeventId"];
+            string LeventId = pContext.Request.QueryString["ctweventId"];
             T_CTW_LEventBLL _T_CTW_LEventBLL = new JIT.CPOS.BS.BLL.T_CTW_LEventBLL(CurrentUserInfo);
 
-            DataSet ds = _T_CTW_LEventBLL.GetEventPrizeList(LeventId, 10000, 1, CurrentUserInfo.ClientID);
+            DataSet ds = _T_CTW_LEventBLL.GeEventItemList(LeventId, 10000, 1, CurrentUserInfo.ClientID);
             List<EventItemInfo> eventItemInfo = new List<EventItemInfo>();
 
             if (ds.Tables.Count > 0)
@@ -445,14 +445,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 sheetOneCells.SetRowHeight(1, 25);
 
                 sheetOneCells[1, 0].PutValue("商品名称");
-                sheetOneCells[1, 1].PutValue("原价");
-                sheetOneCells[1, 2].PutValue("团购价");
-                sheetOneCells[1, 3].PutValue("商品数量");
-                sheetOneCells[1, 4].PutValue("已售数量基数");
-                sheetOneCells[1, 5].PutValue("真实销售");
+                sheetOneCells[1, 1].PutValue("规格");
+                sheetOneCells[1, 2].PutValue("原价");
+                sheetOneCells[1, 3].PutValue("团购价");
+                sheetOneCells[1, 4].PutValue("已售数量");
+                sheetOneCells[1, 5].PutValue("总销售额");
                 sheetOneCells[1, 6].PutValue("当前库存");
-                sheetOneCells[1, 7].PutValue("总销售额");
-                sheetOneCells[1, 8].PutValue("成交率");
              
 
                 for (int i = 0; i < eventItemInfo.Count; i++)
@@ -460,31 +458,24 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     sheetOneCells[i + 2, 0].PutValue(eventItemInfo[i].item_name);
                     sheetOneCells[i + 2, 0].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 1].PutValue(eventItemInfo[i].price);
+                    sheetOneCells[i + 2, 1].PutValue(eventItemInfo[i].SkuName);
                     sheetOneCells[i + 2, 1].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 2].PutValue(eventItemInfo[i].SalesPrice);
+                    sheetOneCells[i + 2, 2].PutValue(eventItemInfo[i].price);
                     sheetOneCells[i + 2, 2].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 3].PutValue(eventItemInfo[i].Qty);
+                    sheetOneCells[i + 2, 3].PutValue(eventItemInfo[i].SalesPrice);
                     sheetOneCells[i + 2, 3].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 4].PutValue(eventItemInfo[i].KeepQty);
+                    sheetOneCells[i + 2, 4].PutValue(eventItemInfo[i].SoldQty);
                     sheetOneCells[i + 2, 4].SetStyle(style3);
 
-                    sheetOneCells[i + 2, 5].PutValue(eventItemInfo[i].SoldQty);
+                    sheetOneCells[i + 2, 5].PutValue(eventItemInfo[i].TotalSales);
                     sheetOneCells[i + 2, 5].SetStyle(style3);
 
                     sheetOneCells[i + 2, 6].PutValue(eventItemInfo[i].InverTory);
                     sheetOneCells[i + 2, 6].SetStyle(style3);
-
-                    sheetOneCells[i + 2, 7].PutValue(eventItemInfo[i].TotalSales);
-                    sheetOneCells[i + 2, 7].SetStyle(style3);
-
-                    sheetOneCells[i + 2, 8].PutValue(eventItemInfo[i].TurnoverRate);
-                    sheetOneCells[i + 2, 8].SetStyle(style3);
-
-
+                    
                     sheetOneCells.SetRowHeight(2 + i, 24);
                 }
 
