@@ -237,6 +237,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
                 {
                     myQty += item.Qty;
                     myKeepQty += item.KeepQty;
+                    if (item.Qty < rp.Parameters.SinglePurchaseQty)
+                    {
+                        return "{\"ResultCode\": 100,\"Message\": \"保存失败!每人限购数应小于等于商品数量 \"}";
+                    }
                     if (item.Qty < item.SoldQty)
                     {
                         return "{\"ResultCode\": 100,\"Message\": \"保存失败!已售基数不能大于商品数量 \"}";
