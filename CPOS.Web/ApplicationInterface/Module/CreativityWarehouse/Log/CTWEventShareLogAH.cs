@@ -35,12 +35,26 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.CreativityWarehouse.Log
                 entityLeventShareLog.ObjectId = para.CTWEventId;
                 entityLeventShareLog.ShareURL = para.ShareURL;
                 bllLeventShareLog.Create(entityLeventShareLog);
+                //是否分享给自己
+                if(para.Sender==para.BEsharedUserId)
+                {
+                    return rd;
+                }
                 //触点奖励
                 ContactEventBLL bllContactEvent = new ContactEventBLL(this.CurrentUserInfo);
                 var entityContact = bllContactEvent.QueryByEntity(new ContactEventEntity() { EventId = para.CTWEventId, IsDelete = 0, IsCTW = 1, ContactTypeCode = "Share" }, null).SingleOrDefault();
                 if (entityContact != null)
                 {
                     LPrizesBLL bllPrize = new LPrizesBLL(this.CurrentUserInfo);
+                    LPrizeWinnerBLL bllPrizeWinner = new LPrizeWinnerBLL(this.CurrentUserInfo);
+                    LLotteryLogBLL bllLottery = new LLotteryLogBLL(this.CurrentUserInfo);
+                    ///判断是否已经获得奖励
+                    int intLogCount = bllLottery.GetEventLotteryLogByEventId(entityContact.ContactEventId.ToString(),para.Sender);
+                    if (intLogCount >0)
+                    {
+                        return rd;
+                    }
+
                     var prize = DataTableToObject.ConvertToList<LPrizesEntity>(bllPrize.GetCouponTypeIDByEventId(entityContact.ContactEventId.ToString()).Tables[0]).FirstOrDefault();
                     if (prize != null)
                     {
@@ -61,7 +75,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.CreativityWarehouse.Log
                             var IntegralDetail = new VipIntegralDetailEntity()
                             {
                                 Integral = prize.Point,
-                                IntegralSourceID = "22",
+                                IntegralSourceID = "28",
                                 ObjectId = entityContact.ContactEventId.ToString()
                             };
                             //变动前积分
@@ -78,6 +92,34 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.CreativityWarehouse.Log
 
                             #endregion
                         }
+
+                        #region 奖励日志
+                        LPrizeWinnerEntity entityPrizeWinner = new LPrizeWinnerEntity()
+                        {
+                            PrizeWinnerID = Guid.NewGuid().ToString(),
+                            VipID = para.Sender,
+                            PrizeID = prize.PrizesID,
+                            PrizeName = prize.PrizeName,
+                            PrizePoolID = "",
+                            CreateBy = this.CurrentUserInfo.UserID,
+                            CreateTime = DateTime.Now,
+                            IsDelete = 0
+                        };
+
+                        bllPrizeWinner.Create(entityPrizeWinner);
+
+
+                        LLotteryLogEntity lotteryEntity = new LLotteryLogEntity()
+                        {
+                            LogId = Guid.NewGuid().ToString(),
+                            VipId = para.Sender,
+                            EventId = entityContact.ContactEventId.ToString(),
+                            LotteryCount = 1,
+                            IsDelete = 0
+
+                        };
+                        bllLottery.Create(lotteryEntity);
+                        #endregion
                     }
 
                 }

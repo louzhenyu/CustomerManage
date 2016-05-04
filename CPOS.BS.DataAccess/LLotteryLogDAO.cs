@@ -81,5 +81,10 @@ namespace JIT.CPOS.BS.DataAccess
             return sql;
         }
         #endregion
+        public int GetEventLotteryLogByEventId(string strEventId,string strVipId)
+        {
+            string strSql = string.Format("SELECT COUNT(1) LogCount from LLotteryLog where EventId='{0}' and VipId='{1}'", strEventId, strVipId);
+            return Convert.ToInt32(SQLHelper.ExecuteScalar(strSql));
+        }
     }
 }

@@ -104,6 +104,10 @@ namespace JIT.CPOS.BS.BLL
             }
         }
         #endregion
+        public int GetEventLotteryLogByEventId(string strEventId, string strVipId)
+        {
+            return this._currentDAO.GetEventLotteryLogByEventId(strEventId, strVipId);
+        }
 
  
     }

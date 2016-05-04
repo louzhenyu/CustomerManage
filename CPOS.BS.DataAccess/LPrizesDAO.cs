@@ -295,7 +295,7 @@ namespace JIT.CPOS.BS.DataAccess
         }
         public DataSet GetCouponTypeIDByEventId(string strEventId)
         {
-            string strSql = string.Format("SELECT  l.*,CouponTypeID  FROM LPrizes l WITH(NOLOCK) INNER JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID  where l.EventId='{0}' ", strEventId);
+            string strSql = string.Format("SELECT  l.*,CouponTypeID  FROM LPrizes l WITH(NOLOCK) LEFT JOIN dbo.PrizeCouponTypeMapping p WITH(NOLOCK)  ON l.PrizesID=p.PrizesID  where l.EventId='{0}' ", strEventId);
             return this.SQLHelper.ExecuteDataset(strSql);
 
         }
