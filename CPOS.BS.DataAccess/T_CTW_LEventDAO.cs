@@ -174,8 +174,8 @@ namespace JIT.CPOS.BS.DataAccess
             string strColumn = "";
             if (!string.IsNullOrEmpty(EventName))
             {
-                ls.Add(new SqlParameter("@EventName", EventName));
-                sqlWhere += " and temp.Name=@EventName";
+                ls.Add(new SqlParameter("@EventName", "%" + EventName+"%"));
+                sqlWhere += " and temp.Name like @EventName";
             }
             if (!string.IsNullOrEmpty(EventStatus) && EventStatus!="-1")
             {
@@ -190,14 +190,14 @@ namespace JIT.CPOS.BS.DataAccess
             if (!string.IsNullOrEmpty(BeginTime))//已核销
             {
                 ls.Add(new SqlParameter("@BeginTime", BeginTime));
-                sqlWhere += " and temp.EventBeginTime>=@BeginTime";
+                sqlWhere += " and temp.startdate>=@BeginTime";
               // strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
               //  strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
             }
             if (!string.IsNullOrEmpty(EndTime))//已核销
             {
                 ls.Add(new SqlParameter("@EndDate", EndTime));
-                sqlWhere += " and temp.EventEndTime<=@EndDate";
+                sqlWhere += " and temp.EndDate<=@EndDate";
                 // strColumn = " CONVERT(VARCHAR(50), f.CreateTime, 23) AS UseTime ,";
                 //  strSql += " INNER JOIN CouponUse f ON a.CouponID = f.CouponID  AND f.UnitID = @RetailTraderID"; //内链接的****
             }
@@ -205,44 +205,11 @@ namespace JIT.CPOS.BS.DataAccess
             //总数据表
             string sql = @"  SELECT Count(1) TotalCount
                         FROM     T_CTW_LEvent temp
-                            inner join T_CTW_LEventInteraction  b on temp.CTWEventId=b.CTWEventId
-                             WHERE   1 = 1 and  temp.CustomerID=@CustomerId
+                           -- inner join T_CTW_LEventInteraction  b on temp.CTWEventId=b.CTWEventId
+                             WHERE   1 = 1 and isdelete=0 and  temp.CustomerID=@CustomerId
                                {4}
                   ";
 
-            /**
-                               a.*, 
-      b.LeventId,----游戏或促销活动Id
-	---  b.InteractionType  ,----- 1.吸粉：游戏  --2.促销：团购，抢购
- (case   a.InteractionType when 1 then (select BeginTime from Levents  c where c.eventid=b.LeventId  ) when 2 then  (select BeginTime from PanicbuyingEvent   d where d.eventid=b.LeventId  )  end) EventBeginTime,---开始时间
-
-     (case   a.InteractionType when 1 then (select EndTime from Levents  c where c.eventid=b.LeventId  ) when 2 then  (select EndTime from PanicbuyingEvent   d where d.eventid=b.LeventId  )  end) EventEndTime,---结束时间
-          ---奖品发送
-	 (case  a.InteractionType when 1  then (	select isnull(count(1),0)   from lprizewinner x inner join LPrizes  y    on x.PrizeID=y.PrizesID where y.EventId=  b.LeventId ) else 0 end ) PrizeGet,
-	
-		   ----活动销售（如果是游戏，则取由优惠券导致的金额，如果是团购抢购，则取团购抢购的金额）
-  	(case  a.InteractionType when 1 then   ---游戏的
-	                  (select     isnull(sum(actual_amount) ,0) from 
-											vipcouponmapping x
-											 inner join TOrderCouponMapping y   on x.couponid=y.couponid
-												inner join t_inout  z on  y.OrderId=z.order_id
-												where x.objectid=b.LeventId
-											) 
-					   else 
-						 (select isnull(sum(actual_amount),0) from PanicbuyingEventOrderMapping x inner join  t_inout  z on x.OrderId=z.order_id)
-				   
-		 end)
-					 as EventSales  ,
-	(select count(1) from  T_LEventsRegVipLog x where objectid=a.CTWEventId and (RegVipId is not null and RegVipId!='')  )  NewVip, ---新增会员（注册的）
-	 (select count(1) from  T_LEventsRegVipLog x where objectid=a.CTWEventId and (FocusVipId is not null and FocusVipId!='')  ) NewAtten  ---新增粉丝（关注的）
-                    {6}
-                  
-                  FROM     T_CTW_LEvent a
-  inner join T_CTW_LEventInteraction  b on a.CTWEventId=b.CTWEventId
-
-             * 
-             * ***/
-            
 
             //取到某一页的
             //优化后的***
@@ -255,110 +222,83 @@ from (
 
    
 
+SELECT a.CTWEventId ,
+       a.Name ,
+       a.ActivityGroupId ,
+       a.status ,
+       a.CreateTime ,
+       a.CustomerID ,
+       a.interactiontype,
+	    a.startdate  , ---开始时间
+        a.EndDate  ,
+       a.startdate AS EventBeginTime ,
+       ---开始时间
+       a.EndDate AS EventEndTime ,
+       ---结束时间
+ ---奖品发送
+  (SELECT COUNT(1) PrizeGet
+   FROM lprizewinner WITH (NOLOCK)
+   INNER JOIN LPrizes WITH (NOLOCK) ON lprizewinner.PrizeID = LPrizes.PrizesID
+    INNER JOIN T_CTW_LEventInteraction b ON  EventId = b.LeventId
+	where a.CTWEventId = b.CTWEventId
+   ) PrizeGet ,
+----活动销售（如果是游戏，则取由优惠券导致的金额，如果是团购抢购，则取团购抢购的金额）
 
-
-
-
-SELECT  a.CTWEventId ,
-        Name ,
-        a.ActivityGroupId ,
-        a.status ,
-        a.CreateTime ,
-        a.CustomerID ,a.interactiontype,
-        startdate AS EventBeginTime , ---开始时间
-        EndDate AS EventEndTime , ---结束时间
-       ---奖品发送
-        isnull(SUM(t2.PrizeGet),0) PrizeGet ,
-       ----活动销售（如果是游戏，则取由优惠券导致的金额，如果是团购抢购，则取团购抢购的金额）
-        isnull(SUM(t3.EventSales),0) AS EventSales ,
-        isnull(SUM(t.NewVip),0) AS NewVip , ---新增会员（注册的）
-        isnull(SUM(t.NewAtten),0) AS NewAtten  ---新增粉丝（关注的）
-FROM    T_CTW_LEvent a
-        INNER JOIN T_CTW_LEventInteraction b ON a.CTWEventId = b.CTWEventId
-                                                AND a.interactiontype = 1
-                                                AND b.interactiontype = 1
-        INNER  JOIN Levents c ON b.LeventId = c.eventid    ----游戏的
-        LEFT JOIN ( SELECT  LPrizes.EventId ,
-                            COUNT(1) PrizeGet
-                    FROM    lprizewinner WITH ( NOLOCK )
-                            INNER JOIN LPrizes WITH ( NOLOCK ) ON lprizewinner.PrizeID = LPrizes.PrizesID
-                    GROUP BY LPrizes.EventId
-                  ) t2 ON t2.EventId = b.LeventId
-        LEFT  JOIN ( SELECT vipcouponmapping.objectid ,
-                            ISNULL(SUM(actual_amount), 0) EventSales
-                     FROM   vipcouponmapping WITH ( NOLOCK )
-                            INNER JOIN TOrderCouponMapping WITH ( NOLOCK ) ON vipcouponmapping.couponid = TOrderCouponMapping.couponid
-                            INNER JOIN t_inout WITH ( NOLOCK ) ON TOrderCouponMapping.OrderId = t_inout.order_id
-                     GROUP BY vipcouponmapping.objectid
-                   ) t3 ON t3.objectid = b.LeventId
-        LEFT JOIN ( SELECT  T_LEventsRegVipLog.objectid ,
-                            COUNT(CASE WHEN RegVipId IS NOT NULL
-                                            AND RegVipId != '' THEN 1
-                                  END) NewVip ,
-                            COUNT(CASE WHEN FocusVipId IS NOT NULL
-                                            AND FocusVipId != '' THEN 1
-                                  END) NewAtten
-                    FROM    T_LEventsRegVipLog WITH ( NOLOCK )
-                    GROUP BY T_LEventsRegVipLog.objectid
-                  ) t ON CAST(a.CTWEventId AS NVARCHAR(50)) = t.objectid
-GROUP BY a.CTWEventId ,
-        Name ,
-        startdate ,
-        EndDate ,
-        a.ActivityGroupId ,
-        a.status ,
-        a.CreateTime ,
-        a.CustomerID,a.interactiontype
+ ISNULL(
+            (SELECT SUM(actual_amount)
+                        FROM vipcouponmapping WITH (NOLOCK)
+                        INNER JOIN TOrderCouponMapping WITH (NOLOCK) ON vipcouponmapping.couponid = TOrderCouponMapping.couponid
+                                INNER JOIN t_inout WITH (NOLOCK) ON TOrderCouponMapping.OrderId = t_inout.order_id
+                                 INNER JOIN T_CTW_LEventInteraction b ON vipcouponmapping.objectid =b.LeventId
+                                 WHERE a.CTWEventId = b.CTWEventId and t_inout.field1=1    ),0) EventSales,
+  (SELECT COUNT(CASE WHEN RegVipId IS NOT NULL
+                AND RegVipId != '' THEN 1 END)
+   FROM T_LEventsRegVipLog WITH (NOLOCK)
+   WHERE CAST(a.CTWEventId AS NVARCHAR(50)) = objectid) NewVip,
+  (SELECT COUNT(CASE WHEN FocusVipId IS NOT NULL
+                AND FocusVipId != '' THEN 1 END) NewAtten
+   FROM T_LEventsRegVipLog WITH (NOLOCK)
+   WHERE CAST(a.CTWEventId AS NVARCHAR(50)) = objectid) NewAtten
+FROM T_CTW_LEvent a
+WHERE a.interactiontype = 1
+  AND isdelete=0
 UNION ALL
-SELECT  a.CTWEventId ,
-        Name ,
-        a.ActivityGroupId ,
-        a.status ,
-        a.CreateTime ,
-        a.CustomerID,a.interactiontype ,         
-                    --- a.*,
-      -- b.LeventId, ----游戏或促销活动Id
+SELECT a.CTWEventId ,
+       a.Name ,
+       a.ActivityGroupId ,
+       a.status ,
+       a.CreateTime ,
+       a.CustomerID,
+       a.interactiontype ,
        ----- 1.吸粉：游戏  --2.促销：团购，抢购
-        startdate AS EventBeginTime , ---开始时间
-        EndDate AS EventEndTime , ---结束时间
-       ---奖品发送
-        0 PrizeGet ,
-       ----活动销售（如果是游戏，则取由优惠券导致的金额，如果是团购抢购，则取团购抢购的金额）
-        isnull(SUM(t4.EventSales),0) AS EventSales ,
-        isnull(SUM(t.NewVip),0) AS NewVip , ---新增会员（注册的）
-        isnull(SUM(t.NewAtten),0) AS NewAtten ---新增粉丝（关注的）
-FROM    T_CTW_LEvent a
-        INNER JOIN T_CTW_LEventInteraction b ON ( a.CTWEventId = b.CTWEventId
-                                                  AND a.interactiontype = 2
-                                                  AND b.interactiontype = 2
-                                                )
-        LEFT JOIN PanicbuyingEvent d ON b.LeventId = d.eventid  ---促销
-        LEFT JOIN ( SELECT  eventid ,
-                            ISNULL(SUM(actual_amount), 0) EventSales
-                    FROM    PanicbuyingEventOrderMapping WITH ( NOLOCK )
-                            INNER JOIN t_inout WITH ( NOLOCK ) ON PanicbuyingEventOrderMapping.OrderId = t_inout.order_id
-                    GROUP BY eventid
-                  ) t4 ON t4.eventid = b.LeventId
-        LEFT JOIN ( SELECT  T_LEventsRegVipLog.objectid ,
-                            COUNT(CASE WHEN RegVipId IS NOT NULL
-                                            AND RegVipId != '' THEN 1
-                                  END) NewVip ,
-                            COUNT(CASE WHEN FocusVipId IS NOT NULL
-                                            AND FocusVipId != '' THEN 1
-                                  END) NewAtten
-                    FROM    T_LEventsRegVipLog WITH ( NOLOCK )
-                    GROUP BY T_LEventsRegVipLog.objectid
-                  ) t ON CAST(a.CTWEventId AS NVARCHAR(50)) = t.objectid
-GROUP BY a.CTWEventId ,
-        Name ,
-        startdate ,
-        EndDate ,
-        a.ActivityGroupId ,
-        a.status ,
-        a.CreateTime ,
-        a.CustomerID   ,a.interactiontype       
+	    a.startdate  , ---开始时间
+        a.EndDate  ,
+       a.startdate AS EventBeginTime ,
+       ---开始时间
+       a.EndDate AS EventEndTime ,
+       ---结束时间
+ ---奖品发送
+
+       0 PrizeGet ,
+         ----活动销售（如果是游戏，则取由优惠券导致的金额，如果是团购抢购，则取团购抢购的金额）
 
 
+  (SELECT ISNULL(SUM(actual_amount), 0) 
+   FROM PanicbuyingEventOrderMapping WITH (NOLOCK)
+   INNER JOIN t_inout WITH (NOLOCK) ON PanicbuyingEventOrderMapping.OrderId = t_inout.order_id INNER
+   JOIN T_CTW_LEventInteraction b ON eventid = b.LeventId
+   WHERE CONVERT(varchar(50), a.CTWEventId) = CONVERT(varchar(50),b.CTWEventId)       and t_inout.field1=1   ) AS EventSales ,
+  (SELECT COUNT(CASE WHEN RegVipId IS NOT NULL
+                AND RegVipId != '' THEN 1 END)
+   FROM T_LEventsRegVipLog WITH (NOLOCK)
+   WHERE CAST(a.CTWEventId AS NVARCHAR(50)) = objectid) NewVip,
+  (SELECT COUNT(CASE WHEN FocusVipId IS NOT NULL
+                AND FocusVipId != '' THEN 1 END) NewAtten
+   FROM T_LEventsRegVipLog WITH (NOLOCK)
+   WHERE CAST(a.CTWEventId AS NVARCHAR(50)) = objectid) NewAtten
+FROM T_CTW_LEvent a
+WHERE a.interactiontype = 2
+  AND isdelete=0
 
 
 
@@ -450,7 +390,7 @@ a.*,
 												inner join t_inout  z on  y.OrderId=z.order_id
                                                inner join coupon  on coupon.couponid=x.couponid
 												inner join PrizeCouponTypeMapping PrizeCou on coupon.coupontypeid=PrizeCou.coupontypeid    ---是这个奖品对应的
-												where x.objectid=a.EventId  and PrizeCou.PrizesID=a.PrizesID
+												where x.objectid=a.EventId  and PrizeCou.PrizesID=a.PrizesID and z.field1=1  ---已经付款的
 											)  as  prizeSales,
   isnull((select top 1 coupontypeid  from prizecoupontypemapping where prizesid=a.prizesid),'') CouponTypeID 
 from LPrizes   a
@@ -624,11 +564,8 @@ from LPrizes   a
                                 WHERE   1 = 1  and   vw.status='1'    and pe.IsDelete=0                    
                                {4}
                   ";
-            //取到某一页的
-            sql += @"SELECT * FROM (  
-                    SELECT  ROW_NUMBER()over(order by {0} {3}) _row,
-               
-     pe.createtime,vw.item_id
+            /**
+             pe.createtime,vw.item_id
                             MappingId,vw.sku_id  as SkuID 
                             ,isnull(vp.price,0)price 
 							---,ps.price as skuPrice  --这个不准
@@ -663,6 +600,13 @@ from LPrizes   a
 							inner join   PanicbuyingEventItemMapping ps  on ps.EventItemMappingId=pe.EventItemMappingId and ps.IsDelete=0  
 						    inner join  	vw_sku  as vw on pe.SkuId=vw.sku_id                       
                             inner join vw_sku_price vp on vp.sku_id=vw.sku_id and  vp.item_price_type_id='77850286E3F24CD2AC84F80BC625859D'
+            **/
+
+            //取到某一页的
+            sql += @"SELECT * FROM (  
+                    SELECT  ROW_NUMBER()over(order by {0} {3}) _row,
+               
+    
             
                             {5}
                   WHERE     1 = 1  and vw.status='1'   and pe.IsDelete=0     
@@ -723,7 +667,7 @@ from LPrizes   a
 						 inner join vip on vip.vipid=t_inout.vip_no
 						 inner join Delivery on t_inout.field8=Delivery.DeliveryId
 
-                                WHERE   1 = 1   and  vw.status='1'       and pe.IsDelete=0                    
+                                WHERE   1 = 1   and  vw.status='1'       and pe.IsDelete=0     and  t_inout.field1=1              
                                {4}
                   ";
             //取到某一页的
@@ -775,7 +719,7 @@ from LPrizes   a
 						 inner join Delivery on t_inout.field8=Delivery.DeliveryId
 
                             {5}
-                  WHERE     1 = 1  and vw.status='1'  and pe.IsDelete=0 
+                  WHERE     1 = 1  and vw.status='1'  and pe.IsDelete=0 and  t_inout.field1=1
                             {4}
                 ";
             sql += @") t
