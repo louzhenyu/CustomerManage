@@ -109,8 +109,8 @@
                     });
                 } else if (that.loadData.details.InteractionType == 2) {
                     $('#win').window({
-                        title: "销售清单", width: 800, height: 520, top: 20,
-                        left: ($(window).width() - 800) * 0.5
+                        title: "销售清单", width: 900, height: 520, top: 20,
+                        left: ($(window).width() - 900) * 0.5
                     });
                     $(".exportlist").attr("href", "/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=" + that.loadData.details.CTWEventId + "&method=SalesListExport");
                     $(".exportlist").attr("download", "销售清单.xls");
@@ -863,15 +863,15 @@
                         }, {
                             field: 'item_name', title: '商品名称', width: 110, align: 'left', resizable: false
                         }, {
-                            field: 'SkuName', title: '规格', width: 110, align: 'left', resizable: false
+                            field: 'SkuName', title: '规格', width: 50, align: 'left', resizable: false
                         }, {
-                            field: 'price', title: '原价', width: 110, align: 'left', resizable: false
+                            field: 'price', title: '原价', width: 50, align: 'left', resizable: false
                         }, {
-                            field: 'SalesPrice', title: '团购价', width: 110, align: 'left', resizable: false
+                            field: 'SalesPrice', title: '团购价', width: 50, align: 'left', resizable: false
                         }, {
-                            field: 'vipname', title: '订购人', width: 110, align: 'left', resizable: false
+                            field: 'vipname', title: '订购人', width: 50, align: 'left', resizable: false
                         }, {
-                            field: 'DeliveryName', title: '配送方式', width: 110, align: 'left', resizable: false
+                            field: 'DeliveryName', title: '配送方式', width: 70, align: 'left', resizable: false
                         }, {
                             field: 'create_time', title: '成交日期', width: 110, align: 'left', resizable: false
                         }

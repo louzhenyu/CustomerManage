@@ -360,11 +360,11 @@
               </div>
               <div class="EventDataCount">
                   <div class="ActivitySales">
-                      <div class="title">活动每日销量<a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=<#=CTWEventId #>&method=PromotionVipAddExport" download="活动每日销量.xls" class="fansexportbtn commonBtn">导出清单</a></div>
+                      <div class="title">活动每日销量<a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=<#=CTWEventId #>&method=OrderMoneyExport" download="活动每日销量.xls" class="fansexportbtn commonBtn">导出清单</a></div>
                       <div id="ActivitySales" class="content "></div>
                   </div>
                   <div class="ActivityOrder">
-                      <div class="title">活动每日订单<a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=<#=CTWEventId #>&method=PromotionVipAddExport" download="活动每日订单.xls" class="registerexportbtn commonBtn">导出清单</a></div>
+                      <div class="title">活动每日订单<a href="/ApplicationInterface/Module/CreativityWarehouse/MarketingData/ExportExcelHandler.ashx?ctweventId=<#=CTWEventId #>&method=OrderCountExport" download="活动每日订单.xls" class="registerexportbtn commonBtn">导出清单</a></div>
                       <div  id="ActivityOrder" class="content"></div>
                   </div>
                   <div class="fans">
