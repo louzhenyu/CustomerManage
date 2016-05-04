@@ -716,70 +716,90 @@ from LPrizes   a
             //}
 
             //总数据表
-            string sql = @"  SELECT Count(1) TotalCount                   
-                                    from PanicbuyingEventSkuMapping as pe 							
-							inner join   PanicbuyingEventItemMapping ps  on ps.EventItemMappingId=pe.EventItemMappingId and ps.IsDelete=0  
-						    inner join  	vw_sku  as vw on pe.SkuId=vw.sku_id                       
-                            inner join vw_sku_price vp on vp.sku_id=vw.sku_id and  vp.item_price_type_id='77850286E3F24CD2AC84F80BC625859D'
-                             inner join PanicbuyingEventOrderMapping pOrder  on  pOrder.eventid=ps.EventId 							
-							 inner join  t_inout_detail on (t_inout_detail.order_id=pOrder.orderid and t_inout_detail.sku_id=pe.skuid)
-						 inner join t_inout  on t_inout.order_id=t_inout_detail.order_id --订单和订单详情数据关联
-						 inner join vip on vip.vipid=t_inout.vip_no
-						 inner join Delivery on t_inout.field8=Delivery.DeliveryId
-
-                                WHERE   1 = 1   and  vw.status='1'       and pe.IsDelete=0     and  t_inout.field1=1              
+            string sql = @"     SELECT COUNT(1) TotalCount
+     FROM   PanicbuyingEventSkuMapping AS pe
+            INNER JOIN PanicbuyingEventItemMapping ps ON ps.EventItemMappingId = pe.EventItemMappingId
+                                                         AND ps.IsDelete = 0
+            INNER JOIN vw_sku AS vw ON pe.SkuId = vw.sku_id
+            INNER JOIN vw_sku_price vp ON vp.sku_id = vw.sku_id
+                                          AND vp.item_price_type_id = '77850286E3F24CD2AC84F80BC625859D'
+            INNER JOIN PanicbuyingEventOrderMapping pOrder ON pOrder.eventid = ps.EventId
+            INNER JOIN t_inout_detail ON ( t_inout_detail.order_id = pOrder.orderid
+                                           AND t_inout_detail.sku_id = pe.skuid
+                                         )
+            INNER JOIN t_inout ON t_inout.order_id = t_inout_detail.order_id --订单和订单详情数据关联
+            INNER JOIN vip ON vip.vipid = t_inout.vip_no
+            INNER JOIN Delivery ON t_inout.field8 = Delivery.DeliveryId
+     WHERE  1 = 1
+            AND vw.status = '1'
+            AND pe.IsDelete = 0
+            AND t_inout.field1 = 1             
                                {4}
                   ";
             //取到某一页的
             sql += @"SELECT * FROM (  
                     SELECT  ROW_NUMBER()over(order by {0} {3}) _row,
                
-     pe.createtime,
-                            pe.MappingId,vw.sku_id  as SkuID 
-                            ,isnull(vp.price,0)price 
+ pe.createtime ,
+                        pe.MappingId ,
+                        vw.sku_id AS SkuID ,
+                        ISNULL(vp.price, 0) price 
 							--,ps.price as skuPrice
-							,ISNULL(pe.SalesPrice,0)SalesPrice
-                            ,(CASE WHEN LEN(vw.prop_1_detail_name) > 0
-                                   THEN vw.prop_1_detail_name
-                                        + CASE WHEN LEN(vw.prop_2_detail_name) > 0
-                                               THEN ',' + vw.prop_2_detail_name
-                                               ELSE ''
-                                          END + CASE WHEN LEN(vw.prop_3_detail_name) > 0
-                                                     THEN ',' + vw.prop_3_detail_name
-                                                     ELSE ''
-                                                END
-                                        + CASE WHEN LEN(vw.prop_4_detail_name) > 0
-                                               THEN ',' + vw.prop_4_detail_name
-                                               ELSE ''
-                                          END + CASE WHEN LEN(vw.prop_5_detail_name) > 0
-                                                     THEN ',' + vw.prop_5_detail_name
-                                                     ELSE ''
-                                                END
-                                   ELSE ''
-                              END ) SkuName
-							    ,vw.item_name
-                            ,ISNULL(pe.Qty,0) Qty,ISNULL(pe.KeepQty,0) KeepQty,ISNULL(pe.SoldQty,0) SoldQty,
-                            (ISNULL(pe.Qty,0)-ISNULL(pe.KeepQty,0)-ISNULL(pe.SoldQty,0)) InverTory,
-                            (case when pe.MappingId is null or CONVERT(NVARCHAR(50),pe.MappingId)='' then 'false' else 'true' end)IsSelected
-                          ,t_inout.order_no
-						 ,t_inout.create_time
-						 ,vip.vipname
-						  ,vip.viprealname
-						  ,Delivery.DeliveryName                      
-
-
-                             from PanicbuyingEventSkuMapping as pe 							
-							inner join   PanicbuyingEventItemMapping ps  on ps.EventItemMappingId=pe.EventItemMappingId and ps.IsDelete=0  
-						    inner join  	vw_sku  as vw on pe.SkuId=vw.sku_id                           
-                            inner join vw_sku_price vp on vp.sku_id=vw.sku_id and  vp.item_price_type_id='77850286E3F24CD2AC84F80BC625859D'
-                             inner join PanicbuyingEventOrderMapping pOrder  on  pOrder.eventid=ps.EventId 							
-							 inner join  t_inout_detail on (t_inout_detail.order_id=pOrder.orderid and t_inout_detail.sku_id=pe.skuid)
-						 inner join t_inout  on t_inout.order_id=t_inout_detail.order_id --订单和订单详情数据关联
-						 inner join vip on vip.vipid=t_inout.vip_no
-						 inner join Delivery on t_inout.field8=Delivery.DeliveryId
-
-                            {5}
-                  WHERE     1 = 1  and vw.status='1'  and pe.IsDelete=0 and  t_inout.field1=1
+                        ,
+                        ISNULL(pe.SalesPrice, 0) SalesPrice ,
+                        ( CASE WHEN LEN(vw.prop_1_detail_name) > 0
+                               THEN vw.prop_1_detail_name
+                                    + CASE WHEN LEN(vw.prop_2_detail_name) > 0
+                                           THEN ',' + vw.prop_2_detail_name
+                                           ELSE ''
+                                      END
+                                    + CASE WHEN LEN(vw.prop_3_detail_name) > 0
+                                           THEN ',' + vw.prop_3_detail_name
+                                           ELSE ''
+                                      END
+                                    + CASE WHEN LEN(vw.prop_4_detail_name) > 0
+                                           THEN ',' + vw.prop_4_detail_name
+                                           ELSE ''
+                                      END
+                                    + CASE WHEN LEN(vw.prop_5_detail_name) > 0
+                                           THEN ',' + vw.prop_5_detail_name
+                                           ELSE ''
+                                      END
+                               ELSE ''
+                          END ) SkuName ,
+                        vw.item_name ,
+                        ISNULL(pe.Qty, 0) Qty ,
+                        ISNULL(pe.KeepQty, 0) KeepQty ,
+                        ISNULL(pe.SoldQty, 0) SoldQty ,
+                        ( ISNULL(pe.Qty, 0) - ISNULL(pe.KeepQty, 0)
+                          - ISNULL(pe.SoldQty, 0) ) InverTory ,
+                        ( CASE WHEN pe.MappingId IS NULL
+                                    OR CONVERT(NVARCHAR(50), pe.MappingId) = ''
+                               THEN 'false'
+                               ELSE 'true'
+                          END ) IsSelected ,
+                        t_inout.order_no ,
+                        t_inout.create_time ,
+                        vip.vipname ,
+                        vip.viprealname ,
+                        Delivery.DeliveryName
+              FROM      PanicbuyingEventSkuMapping AS pe
+                        INNER JOIN PanicbuyingEventItemMapping ps ON ps.EventItemMappingId = pe.EventItemMappingId
+                                                              AND ps.IsDelete = 0
+                        INNER JOIN vw_sku AS vw ON pe.SkuId = vw.sku_id
+                        INNER JOIN vw_sku_price vp ON vp.sku_id = vw.sku_id
+                                                      AND vp.item_price_type_id = '77850286E3F24CD2AC84F80BC625859D'
+                        INNER JOIN PanicbuyingEventOrderMapping pOrder ON pOrder.eventid = ps.EventId
+                        INNER JOIN t_inout_detail ON ( t_inout_detail.order_id = pOrder.orderid
+                                                       AND t_inout_detail.sku_id = pe.skuid
+                                                     )
+                        INNER JOIN t_inout ON t_inout.order_id = t_inout_detail.order_id --订单和订单详情数据关联
+                        INNER JOIN vip ON vip.vipid = t_inout.vip_no
+                        INNER JOIN Delivery ON t_inout.field8 = Delivery.DeliveryId
+              WHERE     1 = 1
+                        AND vw.status = '1'
+                        AND pe.IsDelete = 0
+                        AND t_inout.field1 = 1
                             {4}
                 ";
             sql += @") t
