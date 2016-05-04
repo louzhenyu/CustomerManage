@@ -2067,7 +2067,7 @@ namespace JIT.CPOS.BS.BLL.WX
             if (WXTMConfigData == null)
                 return new ResultEntity();
 
-            string ItemName = GetItemName(Inout.order_id, loggingSessionInfo);
+            string ItemName = GetItemName(Inout.order_no, loggingSessionInfo);
             PaySuccess PaySuccessData = new PaySuccess();
             PaySuccessData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             PaySuccessData.orderProductPrice = new DataInfo() { value = Math.Round(Inout.actual_amount ?? 0, 2).ToString(), color = WXTMConfigData.Colour1 };
