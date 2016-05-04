@@ -155,7 +155,7 @@ namespace JIT.CPOS.BS.DataAccess
         }
         public int DeleteContactPrize(string strEventId)
         {
-            string sql = "DELETE [LPrizes]  WHERE EventId='" + strEventId + "' Go DELETE LPrizePools  WHERE EventId='" + strEventId + "'";
+            string sql = "DELETE [LPrizes]  WHERE EventId='" + strEventId + "'   DELETE LPrizePools  WHERE EventId='" + strEventId + "'";
             return this.SQLHelper.ExecuteNonQuery(sql);
         }
         public DataSet GetContactEventByCTWEventId(string strCTWEventId)

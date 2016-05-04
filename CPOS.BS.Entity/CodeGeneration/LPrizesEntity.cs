@@ -147,6 +147,7 @@ namespace JIT.CPOS.BS.Entity
         public int PrizeLevel { get; set; }
 
         public decimal Probability { get; set; }
+        
 
         #endregion
 

@@ -47,6 +47,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     rd.ShareEventName = entityContactEvent.ShareEventName;
                     rd.EventName = entityContactEvent.EventName;
                     rd.CouponTypeName = entityContactEvent.CouponTypeName;
+                    rd.UnLimited = Convert.ToInt32(entityContactEvent.UnLimited);
                     
                 }
             }

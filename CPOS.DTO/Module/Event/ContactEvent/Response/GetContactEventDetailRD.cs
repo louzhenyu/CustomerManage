@@ -29,6 +29,8 @@ namespace JIT.CPOS.DTO.Module.Event.ContactEvent.Response
         public string EventName { get; set; }
 
         public string CouponTypeName { get; set; }
+        public int UnLimited { get; set; }
+
 
     }
 }

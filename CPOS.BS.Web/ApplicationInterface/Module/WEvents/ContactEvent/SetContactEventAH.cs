@@ -58,7 +58,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                                    
                                 }
                             }
-                            if(string.IsNullOrEmpty(strErrMsg))
+                            if (string.IsNullOrEmpty(strErrMsg) && strErrMsg.Length > 0)
                             {
                                 rd.Success = false;
                                 rd.ErrMsg = strErrMsg;
@@ -92,7 +92,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
 
                                 }
                             }
-                            if (string.IsNullOrEmpty(strErrMsg))
+                            if (string.IsNullOrEmpty(strErrMsg) && strErrMsg.Length > 0)
                             {
                                 rd.Success = false;
                                 rd.ErrMsg = strErrMsg;
@@ -127,6 +127,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         contactEvent.CustomerID = CurrentUserInfo.ClientID;
                         contactEvent.RewardNumber = para.RewardNumber;
                         contactEvent.ShareEventId = para.ShareEventId;
+                        contactEvent.UnLimited = para.UnLimited;
+                        contactEvent.IsCTW = 0;
+
                         if (para.ContactTypeCode=="Share" && para.ShareEventId != null && para.ShareEventId != "")
                             bllEvent.UpdateEventIsShare(para.ShareEventId);
                         //开始日期是当天的 状态直接变为运行中
@@ -199,7 +202,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
 
                             }
                         }
-                        if (string.IsNullOrEmpty(strErrMsg))
+                        if (string.IsNullOrEmpty(strErrMsg) && strErrMsg.Length>0)
                         {
                             rd.Success = false;
                             rd.ErrMsg = strErrMsg;
@@ -233,6 +236,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                     entityContactEvent.PrizeType = para.PrizeType;
                     entityContactEvent.CustomerID = CurrentUserInfo.ClientID;
                     entityContactEvent.RewardNumber = para.RewardNumber;
+                    entityContactEvent.UnLimited = para.UnLimited;
+                    entityContactEvent.IsCTW = 0;
                     //开始日期是当天的 状态直接变为运行中
                     if (DateTime.Compare(Convert.ToDateTime(para.BeginDate), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <= 0 && DateTime.Compare(Convert.ToDateTime(para.EndDate), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) >= 0)
                     {

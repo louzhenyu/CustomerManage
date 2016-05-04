@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2015/11/11 17:58:00
+ * Create On	:2016/5/4 19:37:22
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -137,7 +137,17 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
 		public String LastUpdateBy { get; set; }
 
-        public int IsCTW { get; set; }
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? IsCTW { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? UnLimited { get; set; }
+
+
         #endregion
 
     }

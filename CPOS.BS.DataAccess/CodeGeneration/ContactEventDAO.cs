@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/3/24 14:15:36
+ * Create On	:2016/5/4 19:37:22
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [ContactEvent](");
-            strSql.Append("[ContactTypeCode],[ContactEventName],[BeginDate],[EndDate],[PrizeType],[PrizeCount],[Integral],[CouponTypeID],[EventId],[ChanceCount],[ShareEventId],[RewardNumber],[Status],[IsDelete],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsCTW],[ContactEventId])");
+            strSql.Append("[ContactTypeCode],[ContactEventName],[BeginDate],[EndDate],[PrizeType],[PrizeCount],[Integral],[CouponTypeID],[EventId],[ChanceCount],[ShareEventId],[RewardNumber],[Status],[IsDelete],[CustomerID],[CreateTime],[CreateBy],[LastUpdateTime],[LastUpdateBy],[IsCTW],[UnLimited],[ContactEventId])");
             strSql.Append(" values (");
-            strSql.Append("@ContactTypeCode,@ContactEventName,@BeginDate,@EndDate,@PrizeType,@PrizeCount,@Integral,@CouponTypeID,@EventId,@ChanceCount,@ShareEventId,@RewardNumber,@Status,@IsDelete,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsCTW,@ContactEventId)");            
+            strSql.Append("@ContactTypeCode,@ContactEventName,@BeginDate,@EndDate,@PrizeType,@PrizeCount,@Integral,@CouponTypeID,@EventId,@ChanceCount,@ShareEventId,@RewardNumber,@Status,@IsDelete,@CustomerID,@CreateTime,@CreateBy,@LastUpdateTime,@LastUpdateBy,@IsCTW,@UnLimited,@ContactEventId)");            
 
 			Guid? pkGuid;
 			if (pEntity.ContactEventId == null)
@@ -113,6 +113,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsCTW",SqlDbType.Int),
+					new SqlParameter("@UnLimited",SqlDbType.Int),
 					new SqlParameter("@ContactEventId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.ContactTypeCode;
@@ -135,7 +136,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[17].Value = pEntity.LastUpdateTime;
 			parameters[18].Value = pEntity.LastUpdateBy;
 			parameters[19].Value = pEntity.IsCTW;
-			parameters[20].Value = pkGuid;
+			parameters[20].Value = pEntity.UnLimited;
+			parameters[21].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -262,7 +264,9 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.IsCTW!=null)
-                strSql.Append( "[IsCTW]=@IsCTW");
+                strSql.Append( "[IsCTW]=@IsCTW,");
+            if (pIsUpdateNullField || pEntity.UnLimited!=null)
+                strSql.Append( "[UnLimited]=@UnLimited");
             strSql.Append(" where ContactEventId=@ContactEventId ");
             SqlParameter[] parameters = 
             {
@@ -283,6 +287,7 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@IsCTW",SqlDbType.Int),
+					new SqlParameter("@UnLimited",SqlDbType.Int),
 					new SqlParameter("@ContactEventId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.ContactTypeCode;
@@ -302,7 +307,8 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[14].Value = pEntity.LastUpdateTime;
 			parameters[15].Value = pEntity.LastUpdateBy;
 			parameters[16].Value = pEntity.IsCTW;
-			parameters[17].Value = pEntity.ContactEventId;
+			parameters[17].Value = pEntity.UnLimited;
+			parameters[18].Value = pEntity.ContactEventId;
 
             //执行语句
             int result = 0;
@@ -630,6 +636,8 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
             if (pQueryEntity.IsCTW!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsCTW", Value = pQueryEntity.IsCTW });
+            if (pQueryEntity.UnLimited!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "UnLimited", Value = pQueryEntity.UnLimited });
 
             return lstWhereCondition.ToArray();
         }
@@ -695,7 +703,7 @@ namespace JIT.CPOS.BS.DataAccess
 			}
 			if (pReader["RewardNumber"] != DBNull.Value)
 			{
-				pInstance.RewardNumber = pReader["RewardNumber"].ToString();
+				pInstance.RewardNumber = Convert.ToString(pReader["RewardNumber"]);
 			}
 			if (pReader["Status"] != DBNull.Value)
 			{
@@ -728,6 +736,10 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["IsCTW"] != DBNull.Value)
 			{
 				pInstance.IsCTW =   Convert.ToInt32(pReader["IsCTW"]);
+			}
+			if (pReader["UnLimited"] != DBNull.Value)
+			{
+				pInstance.UnLimited =   Convert.ToInt32(pReader["UnLimited"]);
 			}
 
         }

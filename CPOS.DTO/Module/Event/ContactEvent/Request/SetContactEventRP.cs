@@ -65,6 +65,7 @@ namespace JIT.CPOS.DTO.Module.Event.ContactEvent.Request
         /// Add,Append
        /// </summary>
         public string Method { get; set; }
+        public int UnLimited { get; set; }
         public void Validate()
         {
         }
