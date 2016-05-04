@@ -236,7 +236,7 @@ namespace JIT.CPOS.BS.BLL
             #region 活动有效性
 
             var eventBll = new vwItemPEventDetailBLL(loggingSessionInfo);
-            var detail = eventBll.GetByEventIDAndItemID(para.eventId);
+            var detail = eventBll.GetByEventIDAndSkuID(para.eventId, para.orderDetailList[0].skuId.ToString());
             if (detail == null)
                 throw new Exception("未找到相关活动商品信息");
             //1.	需要判断，该订单的商品是否还有盈余

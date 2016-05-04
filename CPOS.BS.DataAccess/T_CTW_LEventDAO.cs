@@ -684,7 +684,7 @@ from LPrizes   a
         {
 
             //if (string.IsNullOrEmpty(OrderBy))
-            string OrderBy = "ps.CreateTime";
+            string OrderBy = "t_inout.create_time";
             //  if (string.IsNullOrEmpty(sortType))
             string sortType = "DESC";
             List<SqlParameter> ls = new List<SqlParameter>();

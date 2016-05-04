@@ -219,11 +219,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                 style3.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
                 #endregion
 
-                sheetOneCells.Merge(0, 0, 1, 7);//合并单元格
+                sheetOneCells.Merge(0, 0, 1, 8);//合并单元格
                 sheetOneCells[0, 0].PutValue("销售清单");//填写内容
                 sheetOneCells[0, 0].SetStyle(styleTitle);
                 sheetOneCells.SetRowHeight(0, 38);
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 8; i++)
                 {
                     sheetOneCells[1, i].SetStyle(style2);
                     sheetOneCells.SetColumnWidth(i, 30);
@@ -504,7 +504,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                         {
                             //rd.OrderMoneyRankList = DataTableToObject.ConvertToList<OrderMoneyRank>(ds.Tables[0]);                            
 
-                            string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/订单金额5天排行" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
+                            string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/活动每日销量" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                             Aspose.Cells.License lic = new Aspose.Cells.License();
                             lic.SetLicense("Aspose.Total.lic");
                             Workbook workbook = new Workbook();
@@ -544,7 +544,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                             #endregion
 
                             sheetOneCells.Merge(0, 0, 1, 2);//合并单元格
-                            sheetOneCells[0, 0].PutValue("订单数5天排行");//填写内容
+                            sheetOneCells[0, 0].PutValue("活动每日销量");//填写内容
                             sheetOneCells[0, 0].SetStyle(styleTitle);
                             sheetOneCells.SetRowHeight(0, 38);
                             //生成行2 列名行
@@ -598,7 +598,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                         {
                             //rd.OrderMoneyRankList = DataTableToObject.ConvertToList<OrderMoneyRank>(ds.Tables[0]);                            
 
-                            string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/订单数5天排行" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
+                            string MapUrl = pContext.Server.MapPath(@"~/Framework/Upload/活动每日订单" + DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss.ms") + ".xls");
                             Aspose.Cells.License lic = new Aspose.Cells.License();
                             lic.SetLicense("Aspose.Total.lic");
                             Workbook workbook = new Workbook();
@@ -638,7 +638,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                             #endregion
 
                             sheetOneCells.Merge(0, 0, 1, 2);//合并单元格
-                            sheetOneCells[0, 0].PutValue("订单数5天排行");//填写内容
+                            sheetOneCells[0, 0].PutValue("活动每日订单");//填写内容
                             sheetOneCells[0, 0].SetStyle(styleTitle);
                             sheetOneCells.SetRowHeight(0, 38);
                             //生成行2 列名行

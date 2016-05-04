@@ -211,10 +211,10 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(sql);
         }
 
-        public vwItemPEventDetailEntity[] GetByEventIDAndItemID(Guid? eventId)
+        public vwItemPEventDetailEntity[] GetByEventIDAndSkuID(Guid? eventId,string SkuID)
         {
             List<vwItemPEventDetailEntity> list = new List<vwItemPEventDetailEntity> { };
-            string sql = string.Format("select * from vwItemPEventDetail where 1=1 and eventId='{0}'", eventId);
+            string sql = string.Format("select * from vwItemPEventDetail where 1=1 and eventId='{0}' and skuId='{1}'", eventId, SkuID);
             using (var rd = this.SQLHelper.ExecuteReader(sql))
             {
                 while (rd.Read())

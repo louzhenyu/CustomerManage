@@ -491,9 +491,9 @@ namespace JIT.CPOS.BS.BLL
                 singlePurchaseQty = int.Parse(dsEventInfo.Tables[0].Rows[0]["SinglePurchaseQty"].ToString());
             return singlePurchaseQty;
         }
-        public vwItemPEventDetailEntity GetByEventIDAndItemID(Guid? eventId)
+        public vwItemPEventDetailEntity GetByEventIDAndSkuID(Guid? eventId, string skuId)
         {
-            var temp = this._currentDAO.GetByEventIDAndItemID(eventId);
+            var temp = this._currentDAO.GetByEventIDAndSkuID(eventId, skuId);
             if (temp.Length > 0)
                 return temp[0];
             else
