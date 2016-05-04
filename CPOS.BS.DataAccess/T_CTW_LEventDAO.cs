@@ -605,10 +605,70 @@ from LPrizes   a
             //取到某一页的
             sql += @"SELECT * FROM (  
                     SELECT  ROW_NUMBER()over(order by {0} {3}) _row,
+
                
-    
+           pe.createtime,vw.item_id
+                            MappingId,vw.sku_id  as SkuID 
+                            ,isnull(vp.price,0)price 
+							---,ps.price as skuPrice  --这个不准
+							,ISNULL(pe.SalesPrice,0)SalesPrice
+                            ,(CASE WHEN LEN(vw.prop_1_detail_name) > 0
+                                   THEN vw.prop_1_detail_name
+                                        + CASE WHEN LEN(vw.prop_2_detail_name) > 0
+                                               THEN ',' + vw.prop_2_detail_name
+                                               ELSE ''
+                                          END + CASE WHEN LEN(vw.prop_3_detail_name) > 0
+                                                     THEN ',' + vw.prop_3_detail_name
+                                                     ELSE ''
+                                                END
+                                        + CASE WHEN LEN(vw.prop_4_detail_name) > 0
+                                               THEN ',' + vw.prop_4_detail_name
+                                               ELSE ''
+                                          END + CASE WHEN LEN(vw.prop_5_detail_name) > 0
+                                                     THEN ',' + vw.prop_5_detail_name
+                                                     ELSE ''
+                                                END
+                                   ELSE ''
+                              END ) SkuName
+							    ,vw.item_name
+
+
+							
+
+                           ,ISNULL(pe.Qty,0) Qty
+							,ISNULL(pe.KeepQty,0) KeepQty   ---已售数量基数
+							----,ISNULL(pe.SoldQty,0) SoldQty2 ---已经销售数量
+								,convert(int,isnull((    select  sum(order_qty)  from PanicbuyingEventOrderMapping pOrder  						
+							 inner join  t_inout_detail on (t_inout_detail.order_id=pOrder.orderid )
+						 inner join t_inout  on t_inout.order_id=t_inout_detail.order_id --订单和订单详情数据关联
+						 where   pOrder.eventid=ps.EventId 	and t_inout_detail.sku_id=pe.skuid and t_inout.Field1=1),0)) SoldQty,
+
+                            (ISNULL(pe.Qty,0)-ISNULL(pe.KeepQty,0)-
+                   convert(int, isnull((    select  sum(order_qty)  from PanicbuyingEventOrderMapping pOrder  						
+							 inner join  t_inout_detail on (t_inout_detail.order_id=pOrder.orderid )
+						 inner join t_inout  on t_inout.order_id=t_inout_detail.order_id --订单和订单详情数据关联
+						 where   pOrder.eventid=ps.EventId 	and t_inout_detail.sku_id=pe.skuid and t_inout.Field1=1),0) )) InverTory,  ----剩余数量
+
+							--ISNULL(pe.SoldQty,0)*ISNULL(pe.SalesPrice,0)  TotalSales,
+						convert(int,	isnull((    select  sum(order_qty)  from PanicbuyingEventOrderMapping pOrder  						
+							 inner join  t_inout_detail on (t_inout_detail.order_id=pOrder.orderid )
+						 inner join t_inout  on t_inout.order_id=t_inout_detail.order_id --订单和订单详情数据关联
+						 where   pOrder.eventid=ps.EventId 	and t_inout_detail.sku_id=pe.skuid and t_inout.Field1=1),0) )*ISNULL(pe.SalesPrice,0)   TotalSales,
+
+								---ISNULL(pe.SoldQty,0)/ISNULL(pe.Qty,1)  TurnoverRate,
+								convert(int,	isnull((    select  sum(order_qty)  from PanicbuyingEventOrderMapping pOrder  						
+							 inner join  t_inout_detail on (t_inout_detail.order_id=pOrder.orderid )
+						 inner join t_inout  on t_inout.order_id=t_inout_detail.order_id --订单和订单详情数据关联
+						 where   pOrder.eventid=ps.EventId 	and t_inout_detail.sku_id=pe.skuid and t_inout.Field1=1),0))/ISNULL(pe.Qty,1)  TurnoverRate,
+
+                            (case when MappingId is null or CONVERT(NVARCHAR(50),MappingId)='' then 'false' else 'true' end)IsSelected
+                            from PanicbuyingEventSkuMapping as pe 							
+							inner join   PanicbuyingEventItemMapping ps  on ps.EventItemMappingId=pe.EventItemMappingId and ps.IsDelete=0  
+						    inner join  	vw_sku  as vw on pe.SkuId=vw.sku_id                       
+                            inner join vw_sku_price vp on vp.sku_id=vw.sku_id and  vp.item_price_type_id='77850286E3F24CD2AC84F80BC625859D'
             
-                            {5}
+            
+                          
                   WHERE     1 = 1  and vw.status='1'   and pe.IsDelete=0     
                             {4}
                 ";
