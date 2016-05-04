@@ -25,12 +25,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
             var bllContactEvent = new ContactEventBLL(loggingSessionInfo);
             var bllEvent = new LEventsBLL(loggingSessionInfo);
             var bllPrizes = new LPrizesBLL(loggingSessionInfo);
-            
+            string strErrMsg = string.Empty;
             try
             {
-           
-                
-                
+
+
+                string[] CouponTypeIdList = para.CouponTypeID;
+
                 if (para.ContactEventId != null && para.ContactEventId != "")
                 {
                     var contactEvent = bllContactEvent.GetByID(para.ContactEventId);
@@ -41,21 +42,30 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         LPrizesBLL bllPrize = new LPrizesBLL(loggingSessionInfo);
                         var entityPrize = bllPrize.QueryByEntity(new LPrizesEntity() { EventId = para.ContactEventId, IsDelete = 0 }, null).FirstOrDefault();
 
-                        if (!string.IsNullOrEmpty(para.CouponTypeID))
+                        if (CouponTypeIdList.Count()>0)
                         {
 
                             var bllCoupon = new CouponBLL(loggingSessionInfo);
-                            string strCouponTypeID = para.CouponTypeID;
-                            //优惠券未被使用了的数量
-                            int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
-                            int intHaveCout = (int)entityPrize.CountTotal;
-                            if (intUnUsedCouponCount < (para.PrizeCount + intHaveCout))
+                            
+                            foreach(var cou in CouponTypeIdList)
                             {
-
+                                //优惠券未被使用了的数量
+                                int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(cou);
+                                int intHaveCout = (int)entityPrize.CountTotal;
+                                if (intUnUsedCouponCount < (para.PrizeCount + intHaveCout))
+                                {
+                                    strErrMsg += "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString()+"<br/>";
+                                   
+                                }
+                            }
+                            if(string.IsNullOrEmpty(strErrMsg))
+                            {
                                 rd.Success = false;
-                                rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
+                                rd.ErrMsg = strErrMsg;
                                 return rd;
                             }
+                            
+                          
                         }
 
                         entityPrize.CountTotal = para.PrizeCount;
@@ -68,19 +78,39 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                             contactEvent.Integral = para.Integral;
                         if (para.PrizeType == "Coupon")
                         {
-                            contactEvent.CouponTypeID = para.CouponTypeID;
+                            contactEvent.CouponTypeID = string.Join(",", para.CouponTypeID);
                             var bllCoupon = new CouponBLL(loggingSessionInfo);
-                            string strCouponTypeID = para.CouponTypeID;
-                            //优惠券未被使用了的数量
-                            int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
-                            if (intUnUsedCouponCount < para.PrizeCount)
+
+                            foreach (var cou in CouponTypeIdList)
                             {
+                                //优惠券未被使用了的数量
+                                int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(cou);
+                                
+                                if (intUnUsedCouponCount < (para.PrizeCount ))
+                                {
+                                    strErrMsg += "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString() + "<br/>";
 
+                                }
+                            }
+                            if (string.IsNullOrEmpty(strErrMsg))
+                            {
                                 rd.Success = false;
-                                rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
-
+                                rd.ErrMsg = strErrMsg;
                                 return rd;
                             }
+
+
+                            //string strCouponTypeID = para.CouponTypeID;
+                            ////优惠券未被使用了的数量
+                            //int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                            //if (intUnUsedCouponCount < para.PrizeCount)
+                            //{
+
+                            //    rd.Success = false;
+                            //    rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
+
+                            //    return rd;
+                            //}
                         }
                         if (para.PrizeType == "Chance")
                         {
@@ -155,19 +185,38 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         entityContactEvent.Integral = para.Integral;
                     if (para.PrizeType == "Coupon")
                     {
-                        entityContactEvent.CouponTypeID = para.CouponTypeID;
+                        entityContactEvent.CouponTypeID = string.Join(",", para.CouponTypeID); ;
+
                         var bllCoupon = new CouponBLL(loggingSessionInfo);
-                        string strCouponTypeID = para.CouponTypeID;
-                        //优惠券未被使用了的数量
-                        int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
-                        if (intUnUsedCouponCount < para.PrizeCount)
+                        foreach (var cou in CouponTypeIdList)
                         {
+                            //优惠券未被使用了的数量
+                            int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(cou);
 
+                            if (intUnUsedCouponCount < (para.PrizeCount))
+                            {
+                                strErrMsg += "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString() + "<br/>";
+
+                            }
+                        }
+                        if (string.IsNullOrEmpty(strErrMsg))
+                        {
                             rd.Success = false;
-                            rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
-
+                            rd.ErrMsg = strErrMsg;
                             return rd;
                         }
+
+                        //string strCouponTypeID = para.CouponTypeID;
+                        ////优惠券未被使用了的数量
+                        //int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                        //if (intUnUsedCouponCount < para.PrizeCount)
+                        //{
+
+                        //    rd.Success = false;
+                        //    rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
+
+                        //    return rd;
+                        //}
                     }
                     if (para.PrizeType == "Chance")
                     {
@@ -201,9 +250,11 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         entityPrize.PrizeName = para.ContactEventName;
                         entityPrize.PrizeTypeId = para.PrizeType;
                         entityPrize.Point = para.Integral;
-                        entityPrize.CouponTypeID = para.CouponTypeID;
+                        entityPrize.CouponTypeID = string.Join(",", para.CouponTypeID); ;
                         entityPrize.CountTotal = para.PrizeCount;
                         entityPrize.CreateBy = loggingSessionInfo.UserID;
+
+                        bllContactEvent.DeleteContactPrize(entityContactEvent.ContactEventId.ToString());
                         bllContactEvent.AddContactEventPrize(entityPrize);
 
                   

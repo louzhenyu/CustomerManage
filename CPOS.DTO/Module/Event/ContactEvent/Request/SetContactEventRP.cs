@@ -39,7 +39,7 @@ namespace JIT.CPOS.DTO.Module.Event.ContactEvent.Request
         /// <summary>
         /// 
         /// </summary>
-        public String CouponTypeID { get; set; }
+        public String[] CouponTypeID { get; set; }
        /// <summary>
        /// 奖品数量
        /// </summary>

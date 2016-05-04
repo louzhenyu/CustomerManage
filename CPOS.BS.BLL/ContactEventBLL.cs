@@ -70,6 +70,11 @@ namespace JIT.CPOS.BS.BLL
 
             return this._currentDAO.DeleteContact(strEventId);
         }
+        public int DeleteContactPrize(string strEventId)
+        {
+
+            return this._currentDAO.DeleteContactPrize(strEventId);
+        }
         /// <summary>
         /// 获取创意仓库下的触点活动
         /// </summary>

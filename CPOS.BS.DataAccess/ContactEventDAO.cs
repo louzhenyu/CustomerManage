@@ -153,6 +153,11 @@ namespace JIT.CPOS.BS.DataAccess
             string sql = "DELETE ContactEvent  WHERE EventId='" + strEventId + "'";
             return this.SQLHelper.ExecuteNonQuery(sql);
         }
+        public int DeleteContactPrize(string strEventId)
+        {
+            string sql = "DELETE [LPrizes]  WHERE EventId='" + strEventId + "' Go DELETE LPrizePools  WHERE EventId='" + strEventId + "'";
+            return this.SQLHelper.ExecuteNonQuery(sql);
+        }
         public DataSet GetContactEventByCTWEventId(string strCTWEventId)
         {
             DataSet ds = new DataSet();

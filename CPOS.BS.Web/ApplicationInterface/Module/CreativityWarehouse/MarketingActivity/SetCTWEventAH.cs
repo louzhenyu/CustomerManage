@@ -551,13 +551,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
                     //if (cItem.PrizeType == "Coupon")
                     //{
+                    bllContactEvent.DeleteContactPrize(contactEvent.ContactEventId.ToString());
                         foreach (var ItemPrize in cItem.PrizeList)
                         {
                             entityPrize = new LPrizesEntity();
                             entityPrize.EventId = contactEvent.ContactEventId.ToString();
                             entityPrize.PrizeName = ItemPrize.PrizeName;
                             entityPrize.PrizeTypeId = ItemPrize.PrizeTypeId;
-                            entityPrize.Point = ItemPrize.Point;
+                            entityPrize.Point = ItemPrize.Point == null ? 0 : ItemPrize.Point;
                             entityPrize.CouponTypeID = ItemPrize.CouponTypeID;
                             entityPrize.CountTotal = ItemPrize.PrizeCount;
                             entityPrize.CreateBy = loggingSessionInfo.UserID;
