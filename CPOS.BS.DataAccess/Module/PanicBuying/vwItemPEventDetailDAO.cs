@@ -214,7 +214,7 @@ namespace JIT.CPOS.BS.DataAccess
         public vwItemPEventDetailEntity[] GetByEventIDAndSkuID(Guid? eventId,string SkuID)
         {
             List<vwItemPEventDetailEntity> list = new List<vwItemPEventDetailEntity> { };
-            string sql = string.Format("select * from vwItemPEventDetail where 1=1 and eventId='{0}' and skuId='{1}'", eventId, SkuID);
+            string sql = string.Format("select * from [vwSkuPEventDetail] where 1=1 and eventId='{0}' and skuId='{1}'", eventId, SkuID);
             using (var rd = this.SQLHelper.ExecuteReader(sql))
             {
                 while (rd.Read())

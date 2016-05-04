@@ -1034,6 +1034,12 @@ namespace JIT.CPOS.BS.DataAccess
                         + " ON(a.sku_prop_id2 = b.prop_id "
                         + " AND b.status = '1') "
                         + " LEFT JOIN vw_sku_detail c ON a.sku_Id=c.sku_Id ";
+             if (type == 1)
+             {
+                 sql = sql + " WHERE a.status = '1' "
+                        + " AND a.sku_prop_id1 = '" + propDetailId + "' "
+                        + " AND a.item_id = '" + itemId + "'";
+             }
             if (type == 2)
             {
                 sql += "inner join PanicbuyingEventItemMapping z on z.itemid = c.item_Id "
