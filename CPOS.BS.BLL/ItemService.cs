@@ -635,9 +635,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="itemId"></param>
         /// <param name="propDetailId"></param>
         /// <returns></returns>
-        public DataSet GetItemProp2List(string itemId, string propDetailId)
+        public DataSet GetItemProp2List(string itemId, string propDetailId,int type,string eventId)
         {
-            return itemService.GetItemProp2List(itemId, propDetailId);
+            return itemService.GetItemProp2List(itemId, propDetailId, type, eventId);
         }
         #endregion
 

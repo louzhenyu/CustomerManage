@@ -2703,6 +2703,8 @@ namespace JIT.CPOS.Web.LJ.data
                 #endregion
                 //查询参数
                 string userId = reqObj.common.userId;
+                int type = reqObj.special.Type;
+                string eventId = reqObj.special.EventId;
 
                 respData.content = new getSkuProp2ListRespContentData();
                 respData.content.prop2List = new List<getSkuProp2ListRespContentItemTypeData>();
@@ -2710,7 +2712,7 @@ namespace JIT.CPOS.Web.LJ.data
                 ItemService itemService = new ItemService(loggingSessionInfo);
 
                 #region 获取商品属性集合
-                var dsProp2 = itemService.GetItemProp2List(reqObj.special.itemId, reqObj.special.propDetailId);
+                var dsProp2 = itemService.GetItemProp2List(reqObj.special.itemId, reqObj.special.propDetailId,type,eventId);
                 if (dsProp2 != null && dsProp2.Tables.Count > 0 && dsProp2.Tables[0].Rows.Count > 0)
                 {
                     respData.content.prop2List = DataTableToObject.ConvertToList<getSkuProp2ListRespContentItemTypeData>(dsProp2.Tables[0]);
@@ -2749,6 +2751,9 @@ namespace JIT.CPOS.Web.LJ.data
         {
             public string itemId { get; set; }
             public string propDetailId { get; set; }
+            public int  Type { get; set; }
+
+            public string EventId { get; set; }
         }
         #endregion
         #endregion

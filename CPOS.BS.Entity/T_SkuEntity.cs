@@ -32,4 +32,19 @@ namespace JIT.CPOS.BS.Entity
 
         #endregion
     }
+    /// <summary>
+    /// 活动商品 规格1信息
+    /// </summary>
+    public class  prop1Info 
+    {
+        public string skuId { get; set; }
+
+        public string prop1DetailId { get; set; }
+
+        public string prop1DetailName { get; set; }
+
+        public int stock { get; set; }
+
+        public int salesCount { get; set; }
+    }
 }

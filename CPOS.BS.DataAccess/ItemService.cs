@@ -1014,17 +1014,45 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(sql);
         }
 
-        public DataSet GetItemProp2List(string itemId, string propDetailId)
+        public DataSet GetItemProp2List(string itemId, string propDetailId,int type,string eventId)
         {
-            string sql = "SELECT DISTINCT a.sku_id skuId,a.sku_prop_id2 prop2DetailId,ISNULL(b.prop_name,a.sku_prop_id2) prop2DetailName,c.Stock,c.SalesCount"
-                        + " FROM dbo.T_Sku a "
+            string sql = "SELECT DISTINCT a.sku_id skuId,a.sku_prop_id2 prop2DetailId,ISNULL(b.prop_name,a.sku_prop_id2) prop2DetailName,";
+            if(type == 1)
+            {
+                sql += @"c.Stock,c.SalesCount";
+            }
+            if(type == 2)
+            {
+                sql += @"d.qty as Stock,d.SoldQty as SalesCount";
+            }
+            if (type == 3)
+            {
+                sql += @"x.qty as Stock,x.SoldQty as SalesCount";
+            }
+             sql = sql  + " FROM dbo.T_Sku a "
                         + " LEFT JOIN dbo.T_Prop b "
                         + " ON(a.sku_prop_id2 = b.prop_id "
                         + " AND b.status = '1') "
-                        + " LEFT JOIN vw_sku_detail c ON a.sku_Id=c.sku_Id "
-                        + " WHERE a.status = '1' "
+                        + " LEFT JOIN vw_sku_detail c ON a.sku_Id=c.sku_Id ";
+            if (type == 2)
+            {
+                sql += "inner join PanicbuyingEventItemMapping z on z.itemid = c.item_Id "
+                        + "inner join PanicbuyingEventSkuMapping d on z.EventItemMappingId = d.EventItemMappingId and d.skuId = c.sku_Id "
+                        + " WHERE a.status = '1' " 
                         + " AND a.sku_prop_id1 = '" + propDetailId + "' "
-                        + " AND a.item_id = '" + itemId + "'";
+                        + " AND a.item_id = '" + itemId + "'"
+                        + " AND z.EventId = '" + eventId +"'";
+            }
+            if (type == 3)
+            {
+                sql += "inner join PanicbuyingKJEventItemMapping z on z.itemid = c.item_Id"
+                        + "inner join PanicbuyingKJEventSkuMapping d on z.EventItemMappingId = d.EventItemMappingId and d.skuId = c.sku_Id "
+                        + " WHERE a.status = '1' " 
+                        + " AND a.sku_prop_id1 = '" + propDetailId + "' "
+                        + " AND a.item_id = '" + itemId + "'"
+                        + " AND z.EventId = '" + eventId +"'";
+            }
+                      
             return this.SQLHelper.ExecuteDataset(sql);
         }
         #endregion

@@ -309,7 +309,7 @@ namespace JIT.CPOS.BS.BLL
             #endregion
 
             #region  Ù–‘–≈œ¢
-            IList<object> prop1List = new List<object>();
+            IList<prop1Info> prop1List = new List<prop1Info>();
             object prop1 = null;
             //update by wzq 20140724
             if (skulist.Count() > 0)
@@ -320,13 +320,13 @@ namespace JIT.CPOS.BS.BLL
                     //var dsProp = inoutbll.GetItemProp1List(para.itemId);
                     if (dsProp.Tables[0].Rows.Count > 0)
                     {
-                        prop1List.Add( dsProp.Tables[0].AsEnumerable().Select(t => new
+                        prop1List.Add(dsProp.Tables[0].AsEnumerable().Select(t => new prop1Info
                         {
-                            skuId = t["skuId"],
-                            prop1DetailId = t["prop1DetailId"],
-                            prop1DetailName = t["prop1DetailName"],
-                            stock=t["stock"],
-                            salesCount=t["salesCount"]
+                            skuId = t["skuId"].ToString(),
+                            prop1DetailId = t["prop1DetailId"].ToString(),
+                            prop1DetailName = t["prop1DetailName"].ToString(),
+                            stock=Convert.ToInt32(t["stock"]),
+                            salesCount=Convert.ToInt32(t["salesCount"])
                         }).First());
                     }
                     if (c == 0)
@@ -340,7 +340,17 @@ namespace JIT.CPOS.BS.BLL
                             salesCount = t["salesCount"]
                         }).First();
                     }
+
                 }
+          
+                prop1List = prop1List.GroupBy(t => new { t.prop1DetailId, t.prop1DetailName }).Select(n => new prop1Info
+                {
+                    skuId = n.Max(t => t.skuId),
+                    prop1DetailId = n.Key.prop1DetailId,
+                    prop1DetailName = n.Key.prop1DetailName,
+                    stock = n.Sum(t => t.stock),
+                    salesCount = n.Sum(t => t.salesCount)
+                }).ToList();
             }
             
             #endregion
