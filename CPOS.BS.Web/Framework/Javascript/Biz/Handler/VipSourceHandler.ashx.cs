@@ -52,9 +52,15 @@ namespace JIT.CPOS.BS.Web.Framework.Javascript.Biz.Handler
             SysVipSourceBLL service = new SysVipSourceBLL(new SessionManager().CurrentUserLoginInfo);
             SysVipSourceEntity[] dataList = null;
             if (!string.IsNullOrEmpty(vipSourceType))
+            {
                 dataList = service.QueryByEntity(new SysVipSourceEntity() { VipSourceType = int.Parse(vipSourceType) }, null);
+                //移除创意仓库 类型
+                dataList = dataList.Where(m => !m.VipSourceName.Contains("创意仓库订单")).ToArray();
+            }
             else
+            {
                 dataList = service.GetAll();
+            }
             foreach (var dataItem in dataList)
             {
                 list.Add(new BillStatusModel()

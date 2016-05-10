@@ -54,10 +54,6 @@
       <HintPath>..\ReferenceDll\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ReferenceDll\Microsoft.SqlServer.Types.dll</HintPath>
-    </Reference>
     <Reference Include="NetDimension.Weibo">
       <HintPath>..\ReferenceDll\NetDimension.Weibo.dll</HintPath>
     </Reference>
@@ -299,7 +295,11 @@
     <Content Include="Images\mingLong\question9\b2.png" />
     <Content Include="Images\mingLong\question9\topic01.jpg" />
     <Content Include="Images\mingLong\question9\topic02.jpg" />
-    <Content Include="HeadImage\qrcodeBack.png" />
+    <Content Include="Interface\Images\bg.png" />
+    <Content Include="Interface\Images\bg2.png" />
+    <Content Include="Interface\Images\btn1.png" />
+    <Content Include="Interface\Images\btn2.png" />
+    <Content Include="Interface\Images\msg_vip.jpg" />
     <Content Include="HtmlApp\Demo\html\WQuestion.html" />
     <Content Include="HtmlApp\Demo\images\icon_gift.png" />
     <Content Include="HtmlApp\Demo\images\sprites.png" />
@@ -1108,9 +1108,9 @@
     <Content Include="ApplicationInterface\Project\HuaAn\HuaAnRetCallbackHandler.ashx" />
     <Content Include="ApplicationInterface\Customer\CloudGateway.ashx" />
     <Content Include="ApplicationInterface\AllWin\SellUser.ashx" />
+    <Content Include="ApplicationInterface\AllWin\RetailTrader.ashx" />
     <Content Include="ApplicationInterface\EveryoneSale\EveryoneGetway.ashx" />
     <Content Include="ApplicationInterface\Washing\OrderGateway.ashx" />
-    <Content Include="ApplicationInterface\AllWin\RetailTrader.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewApp.ashx" />
     <Content Include="ApplicationInterface\Module\NewAppContent\NewWXGateway.ashx" />
     <Content Include="ApplicationInterface\AllWin\Sales.ashx" />
@@ -2192,9 +2192,6 @@
     </Compile>
     <Compile Include="ApplicationInterface\Module\AppConfig\HomePageConfig\HomePageConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\AppConfig\HomePageConfig\HomePageConfigV2AH.cs" />
-    <Compile Include="ApplicationInterface\Module\AP\ZMBA\GetZMBACourseDetailListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\AP\ZMBA\GetZMBACourseListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\AP\ZMBA\SetZMBACourseDetailReadLogAH.cs" />
     <Compile Include="ApplicationInterface\Module\Coupon\CouponHandler.ashx.cs">
       <DependentUpon>CouponHandler.ashx</DependentUpon>
     </Compile>
@@ -2203,10 +2200,10 @@
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\AddVipFeedbackInfoAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetApiVipServicesLogListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetApiCouponUserListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerBasicSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetDeliveryOrderListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\GetVipAmountdetailListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\ApiServiceLog\SetApiVipServicesLogAH.cs" />
-    <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerBasicSettingAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\Customer\Basic\GetCustomerVersionAH.cs" />
     <Compile Include="ApplicationInterface\Module\Event\EventPrizes\GetPrizeEventAH.cs" />
@@ -2308,14 +2305,24 @@
     <Compile Include="ApplicationInterface\Module\VIP\Register\SetRegisterFormItemsAH.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ApplicationInterface\Module\VIP\Reward\GetConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Reward\GetTopRewardListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\Reward\SetRewardOrderAH.cs" />
+    <Compile Include="ApplicationInterface\Module\VIP\Reward\GetConfigAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipAmount\GetVipAmountDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipCard\GetVipCardAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipListNum\GetVipListNumAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipList\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\WifiSign\WifiSignAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\AddKJEventJoinDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\DeleteKJEventJoinAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetBuyerListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetEventItemStatusAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetKJEventJoinListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetItemListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetPanicbuyingKJEventListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetPanicBuyingKJItemDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetHelperListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\JoinInKJEventAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextListAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextTypeListAH.cs" />
@@ -2329,6 +2336,9 @@
     <Compile Include="ApplicationInterface\Module\WX\SysPage\SetSysPageAH.cs" />
     <Compile Include="ApplicationInterface\Module\ZiXun\ZiXunInfo\AddZiXunCommentAH.cs" />
     <Compile Include="ApplicationInterface\Module\ZiXun\ZiXunInfo\SeacherNewsListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\AP\ZMBA\GetZMBACourseDetailListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\AP\ZMBA\GetZMBACourseListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\AP\ZMBA\SetZMBACourseDetailReadLogAH.cs" />
     <Compile Include="ApplicationInterface\Order\OrderGateway.ashx.cs">
       <DependentUpon>OrderGateway.ashx</DependentUpon>
     </Compile>
@@ -3221,7 +3231,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1953/</IISUrl>
+          <IISUrl>http://localhost:1953</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -19,7 +19,7 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public string OrderCode { get; set; }
         public string OrderDate { get; set; }
         public decimal TotalQty { get; set; }
-        public decimal TotalAmount { get; set; }
+        public dynamic TotalAmount { get; set; }
         public string Remark { get; set; }
 
         public decimal ActualDecimal { get; set; }
