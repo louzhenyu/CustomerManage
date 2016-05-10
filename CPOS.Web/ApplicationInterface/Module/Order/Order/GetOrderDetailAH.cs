@@ -9,7 +9,6 @@ using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using System.Data;
 using JIT.CPOS.Common;
-using JIT.Utility.DataAccess.Query;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
 {
@@ -128,14 +127,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.discount_rate = orderList[0].discount_rate ?? 100;//订单折扣
                 rd.OrderListInfo.OrderID = orderList[0].order_id;
                 rd.OrderListInfo.OrderCode = orderList[0].order_no;
-                rd.OrderListInfo.OrderDate = orderList[0].order_date;
+                rd.OrderListInfo.OrderDate = orderList[0].order_date; 
                 rd.OrderListInfo.ReceiverName = orderList[0].Field14; //收件人             
                 rd.OrderListInfo.TotalQty = Convert.ToDecimal(orderList[0].total_qty);
-
-                string TotalAmount = String.Format("{0:F}",orderList[0].total_amount ?? 0);
-
-                rd.OrderListInfo.TotalAmount = TotalAmount;
-
+                rd.OrderListInfo.TotalAmount = Convert.ToDecimal(orderList[0].total_amount);
                 rd.OrderListInfo.Total_Retail = Convert.ToDecimal(orderList[0].total_retail);
                 rd.OrderListInfo.Remark = orderList[0].remark;
                 rd.OrderListInfo.Status = orderList[0].status;
@@ -150,14 +145,13 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.IsPayment = orderList[0].Field1;
                 rd.OrderListInfo.ReceivePoints = orderList[0].receive_points;
                 rd.OrderListInfo.PaymentTime = orderList[0].Field1 == "1" ? orderList[0].complete_date : null;
-                
-                //rd.OrderListInfo.ActualDecimal = orderList[0].actual_amount ?? 0;
+                rd.OrderListInfo.ActualDecimal = orderList[0].actual_amount ?? 0;
 
 
                 rd.OrderListInfo.PaymentTypeCode = orderList[0].Payment_Type_Code;
                 rd.OrderListInfo.PaymentTypeName = orderList[0].Payment_Type_Name;
 
-                rd.OrderListInfo.ReserveTime = orderList[0].reserveDay + " " + orderList[0].reserveQuantum;
+                rd.OrderListInfo.ReserveTime = orderList[0].reserveDay + " " +orderList[0].reserveQuantum;
 
                 var deliveryBll = new TOrderCustomerDeliveryStrategyMappingBLL(this.CurrentUserInfo);
                 rd.OrderListInfo.DeliveryAmount = deliveryBll.GetDeliverAmount(orderId);//配送费 add by henry***

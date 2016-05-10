@@ -50,8 +50,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 CouponTypeName = t.CouponTypeName,
                 ParValue = t.ParValue,
                 IssuedQty = t.IssuedQty,
-                SurplusQty = t.IssuedQty - (t.IsVoucher ?? 0),
-                ValidityPeriod = t.BeginTime == null ? ("领取后" + (t.ServiceLife == 0 ? "1天内有效" : t.ServiceLife.ToString() + "天内有效")) : (t.BeginTime.Value.ToString("yyyy-MM-dd") + "至" + t.EndTime.Value.ToString("yyyy-MM-dd")),
+                SurplusQty = t.IssuedQty - (t.IsVoucher??0),
+                ValidityPeriod = t.BeginTime == null ? (t.ServiceLife + "天") : (t.BeginTime.Value.ToString("yyyy-MM-dd") + "至" + t.EndTime.Value.ToString("yyyy-MM-dd")),
                 BeginTime = t.BeginTime,
                 EndTime = t.EndTime,
                 ServiceLife = t.ServiceLife

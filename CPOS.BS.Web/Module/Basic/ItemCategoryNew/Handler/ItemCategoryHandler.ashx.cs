@@ -57,7 +57,7 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
         /// </summary>
         protected string ToggoleItemCategoryStatus()
         {
-            // string res = "{success:false}";
+           // string res = "{success:false}";
             var rsp = new ResponseData();
             string checkRes = "";
 
@@ -71,7 +71,7 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                 if (bllItem.GetItemCountByCategory(id, bat_id) > 0)
                 {
                     rsp.success = false;
-                    rsp.msg = "该" + bat_id == "1" ? "分类" : "分组" + "下有商品，请先处理商品状态";
+                    rsp.msg = "该" + bat_id =="1"?"分类":"分组"+ "下有商品，请先处理商品状态";
                 }
                 else
                 {
@@ -121,30 +121,30 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
         protected string GetALDByCategoryId()
         {
             var data = this.DeserializeJSONContent<ItemCategoryInfo>();
-            //同步到ALDCategoryID分类 data.CustomerID，      data.Item_Category_Id. data.ALDCategoryID
+              //同步到ALDCategoryID分类 data.CustomerID，      data.Item_Category_Id. data.ALDCategoryID
             var url = ConfigurationManager.AppSettings["ALDApiURL"].ToString() + "/Gateway.ashx";
-            var request = new ItemCategory2ALDRequest()
-            {
-                Parameters = data
-            };
-            var res = new MallALDCategoryEntity();//
-            var resstr = "";
-            try
-            {
-                resstr = JIT.Utility.Web.HttpClient.GetQueryString(url, string.Format("Action=GetALDByCategoryId&ReqContent={0}", request.ToJSON()));
-                Loggers.Debug(new DebugLogInfo() { Message = "调用获取ALD类别接口:" + resstr });
-                //   res = resstr.DeserializeJSONTo<MallALDCategoryEntity>();
-            }
-            catch (Exception ex)
-            {
-                Loggers.Exception(new ExceptionLogInfo(ex));
-                throw new Exception("调用ALD平台失败:" + ex.Message);
-            }
+                var request = new ItemCategory2ALDRequest()
+                {
+                    Parameters = data                   
+                };
+                var res = new MallALDCategoryEntity();//
+                var resstr = "";
+                try
+                {
+                   resstr = JIT.Utility.Web.HttpClient.GetQueryString(url, string.Format("Action=GetALDByCategoryId&ReqContent={0}", request.ToJSON()));
+                    Loggers.Debug(new DebugLogInfo() { Message = "调用获取ALD类别接口:" + resstr });
+                 //   res = resstr.DeserializeJSONTo<MallALDCategoryEntity>();
+                }
+                catch (Exception ex)
+                {
+                    Loggers.Exception(new ExceptionLogInfo(ex));
+                    throw new Exception("调用ALD平台失败:" + ex.Message);
+                }
 
 
 
 
-            return resstr;
+                return resstr;
         }
 
 
@@ -158,21 +158,6 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
             var bll = new ItemCategoryService(this.CurrentUserInfo);
             var list = bll.GetItemCagegoryList("", "");
             return list.ToJSON();
-        }
-
-        /// <summary>
-        /// 判断商品 品类 名称是否存在
-        /// </summary>
-        /// <param name="CatelogId">品类标志</param>
-        /// <param name="CatelogName">名称</param>
-        /// <param name="models">商户所有品类集合</param>
-        /// <returns>
-        /// true 已经存在 不能执行添加{修改}操作
-        /// false  可以执行相应逻辑
-        /// </returns>
-        public bool CheckCategoryNameIsExist(string CatelogId, string CatelogName, IList<ItemCategoryInfo> models)
-        {
-            return models.Where(m => m.Item_Category_Name == CatelogName.Trim() && m.Item_Category_Id != CatelogId).Count() > 0;
         }
 
         /// <summary>
@@ -193,13 +178,6 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                     rsp.msg = "上级分类不能选择自身下级";
                     return rsp.ToJSON();
 
-                }
-
-                if (CheckCategoryNameIsExist(data.Item_Category_Id, data.Item_Category_Name, listdata))
-                {
-                    rsp.success = false;
-                    rsp.msg = "商品品类不能重复";
-                    return rsp.ToJSON();
                 }
 
                 if (string.IsNullOrWhiteSpace(data.Item_Category_Code))
@@ -225,8 +203,34 @@ namespace JIT.CPOS.BS.Web.Module2.BaseData.ItemCategory.Handler
                 data.Create_Time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 data.Create_User_Name = CurrentUserInfo.CurrentUser.User_Name;
                 data.CustomerID = CurrentUserInfo.CurrentUser.customer_id;
-
+                //
                 bll.SetItemCategoryInfo(this.CurrentUserInfo, data);
+
+                //同步到ALDCategoryID分类 data.CustomerID，      data.Item_Category_Id. data.ALDCategoryID
+                //var url = ConfigurationManager.AppSettings["ALDApiURL"].ToString() + "/Gateway.ashx";
+                //var request = new ItemCategory2ALDRequest()
+                //{
+                //    Parameters = data
+                    //new
+                    //{
+                    //    MemberId = new Guid(rp.UserID),
+                    //    Amount = vipEndAmount/0.01M,
+                    //    AmountSourceId = "11",
+                    //    ObjectId = orderId,
+                    //    IsALD = 1
+                    //}
+                //};
+                //try
+                //{
+                    //var resstr = JIT.Utility.Web.HttpClient.GetQueryString(url, string.Format("Action=ItemCategoty2ALD&ReqContent={0}", request.ToJSON()));
+                    //Loggers.Debug(new DebugLogInfo() { Message = "调用ALD同步商品类别接口:" + resstr });
+                 //   var res = resstr.DeserializeJSONTo<ItemCategory2ALDResponse>();
+                //}
+                //catch (Exception ex)
+                //{
+                //    Loggers.Exception(new ExceptionLogInfo(ex));
+                //    throw new Exception("调用ALD平台失败:" + ex.Message);
+                //}
             }
 
             rsp.success = true;

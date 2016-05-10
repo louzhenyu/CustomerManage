@@ -163,10 +163,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             {
                 //if (!string.IsNullOrEmpty(item.Item_Id))
                 //{
-                if (!itemService.IsExistItemCode(loggingSessionInfo, item.Item_Code, item.Item_Id))
-                {
-                    throw new APIException("商品编码不能重复。") { ErrorCode = 135 };
-                }
+                    if (!itemService.IsExistItemCode(loggingSessionInfo, item.Item_Code, item.Item_Id))
+                    {
+                        throw new APIException("商品编码不能重复。") { ErrorCode = 135 };
+                    }
                 //}
             }
             item.OperationType = rp.Parameters.OperationType;
@@ -228,7 +228,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
                 T_VirtualItemTypeSettingBLL bllVirtualItem = new T_VirtualItemTypeSettingBLL(loggingSessionInfo);
                 T_VirtualItemTypeSettingEntity entityVirtualItem = new T_VirtualItemTypeSettingEntity();
                 //entityVirtualItem = bllVirtualItem.QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = rp.Parameters.Item_Id, SkuId = rp.Parameters.SkuList[0].sku_id }, null).FirstOrDefault();
-                entityVirtualItem = bllVirtualItem.QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = rp.Parameters.Item_Id }, null).FirstOrDefault();
+                entityVirtualItem = bllVirtualItem.QueryByEntity(new T_VirtualItemTypeSettingEntity() { ItemId = rp.Parameters.Item_Id}, null).FirstOrDefault();
                 if (entityVirtualItem != null)
                 {
                     entityVirtualItem.VirtualItemTypeId = new Guid(rp.Parameters.VirtualItemTypeId);
@@ -240,7 +240,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
                     entityVirtualItem = new T_VirtualItemTypeSettingEntity
                     {
                         Id = Guid.NewGuid(),
-                        ItemId = item.Item_Id,
+                        ItemId =item.Item_Id,
                         SkuId = rp.Parameters.SkuList[0].sku_id,
                         VirtualItemTypeId = new Guid(rp.Parameters.VirtualItemTypeId),
                         ObjecetTypeId = rp.Parameters.ObjecetTypeId,
@@ -336,14 +336,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
             //    var brandDetailBLL = new BrandDetailBLL(CurrentUserInfo);
             var skuPropServer = new SkuPropServer(loggingSessionInfo);//保存到T_Sku_Property
             var propInfo = rp.Parameters.SkuProp;
-           
-            //验证重复性
-            int DistinctchildrenCount = propInfo.Children.Select(m => m.Prop_Name).Distinct().Count();
-            if (DistinctchildrenCount != propInfo.Children.Count)
-            {
-                throw new APIException("规格的值不能重复添加") { ErrorCode = 135 };
-            }
-
             if (string.IsNullOrEmpty(propInfo.Prop_Name))
             {
                 throw new APIException("缺少参数【Prop_Name】或参数值为空") { ErrorCode = 135 };
@@ -568,14 +560,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
         public string GetItemType()
         {
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
-
+        
             SysVirtualItemTypeBLL bllSysVirtualItemType = new SysVirtualItemTypeBLL(loggingSessionInfo);
             var itemService = new ItemService(loggingSessionInfo);
             string content = string.Empty;
             var rd = new VirtualItemType();
 
-            rd.VirtualItemTypeInfo = bllSysVirtualItemType.QueryByEntity(new SysVirtualItemTypeEntity() { IsDelete = 0 }, null).ToList();
-
+            rd.VirtualItemTypeInfo = bllSysVirtualItemType.QueryByEntity(new SysVirtualItemTypeEntity() {IsDelete=0}, null).ToList();
+            
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
 
             return rsp.ToJSON();
@@ -638,7 +630,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Item
         /// <summary>
         /// 是否为标准商品 
         /// </summary>
-        public int IsGB { get; set; }
+        public int IsGB { get; set; } 
         public void Validate()
         {
         }
