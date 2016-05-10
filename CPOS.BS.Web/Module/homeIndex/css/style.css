@@ -2,6 +2,7 @@
 .zsy{clear: both;font-size:0; line-height:0; display:block;}
 .main{ padding-left:80px; width: 100%; text-align: center; padding-top: 40px;}
 .mainMenuList{ width: 518px;border: solid #00a0e8 1px;border-radius: 6px; height: 56px; margin: 0 auto;}
+.mainMenuList ul{width: 518px;}
 .mainMenuList li{cursor: pointer; width: 129px; height: 54px; line-height: 30px; float: left;}
 .mainMenuList li span{color:#999; font-size:15px;display:block; height: 30px;margin-top:13px; border-right:transparent 1px solid}
 .mainMenuList li.on{background-color: #d9f7f7}
@@ -11,7 +12,7 @@
 .mainMenuList li.on span{ color: #00a0e8; border-color: #aeeeee}
 .mainMenuList li.hoverDiv{background-color: #d9f7f7}
 .mainMenuList li.hoverDiv span{ color: #00a0e8; border-color: #aeeeee}
-.phonePanel{ width: 100%; padding-top: 58px;min-width:958px}
+.phonePanel{ width: 100%; padding-top: 58px;min-width:1000px}
 .phone{ float: left; position: relative; width: 347px;height: 703px; background: url("../images/phoneBg.png") no-repeat center center; }
 .phone .screen{ width: 304px; height: 480px; position: absolute; left: 22px; top: 144px;  }
 #pageTitle{ display: none; color: #fff; line-height:40px; height: 40px; font-size: 17px;width: 87%;position: absolute;top: 104px;z-index: 99;right: 21px;}
@@ -57,7 +58,7 @@ select{ background: url("../images/select.png") no-repeat 98% center; border:sol
 .scheme span.one{ background-image: url("../images/writecolor.png")}
 .scheme span.two{ background-image: url("../images/blackcolor.png")}
 .scheme span.all{background-image: url("../images/allcolor.png")}
-.colorPanel{position: absolute; border: 2px solid #d1d1d1; width: 394px; z-index: 10; background-color: #fff; padding: 10px; left: 200px; top: -24px; display: none;}
+.colorPanel{position: absolute; border: 2px solid #d1d1d1; width: 394px; z-index: 1000; background-color: #fff; padding: 10px; left: 200px; top: -24px; display: none;}
 .colorPanel div{width: 35px; height: 35px; float: left; margin: 1px; position: relative; border-radius: 4px; border: 1px solid #f0f0f0; cursor: pointer; text-align: center; line-height: 35px;}
 .colorPanel div.on{border: 1px solid #cc0001; width: 37px; height: 37px; position: absolute; left: -3px; top: -3px;}
 
