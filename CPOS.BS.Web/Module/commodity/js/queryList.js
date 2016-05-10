@@ -25,12 +25,11 @@
         init: function () {
             this.initEvent();
             this.loadPageData();
-
         },
         initEvent: function () {
             var that = this;
             //点击查询按钮进行数据查询
-           //
+            //
 
             $("#leftMenu li").each(function(){
                 debugger;
@@ -42,7 +41,6 @@
                         $(this).addClass("on");
                     }
                 }
-
             });
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
@@ -52,9 +50,8 @@
                     //写死的数据
                     //data={"ResultCode":0,"Message":null,"IsSuccess":true,"Data":{"DicColNames":{"UserName":"姓名","Phone":"手机","Email":"邮箱","Col9":"人数","Col8":"职位","Col7":"公司","Col3":"性别"},"SignUpList":[{"SignUpID":"60828091-F8F4-4C97-8F6C-6AC9E627DF97","EventID":"16856b2950892b62473798f3a88ee3e3","UserName":"王孟孟","Phone":"18621865591","Email":"mengmeng.wang@jitmarketing.cn","Col9":"1","Col8":"研发总监","Col7":"上海杰亦特有限公司","Col3":"男"}],"TotalCountUn":1,"TotalCountYet":9,"TotalPage":1}};
                     //渲染table
-
+		
                     that.renderTable(data);
-
 
                 });
                 $.util.stopBubble(e);
@@ -294,7 +291,7 @@
                     }//显示复选框
                 ]],
                 columns : [[
-                    {field : 'Image_Url',title : '图片',width:40,align:'left',resizable:false,
+                    {field : 'Image_Url',title : '图片',width:50,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var html=' <img src="images/商品.png" width="40" height="40"  />';
                             if(value){
@@ -305,7 +302,7 @@
                         }
 
                     },
-                    {field : 'Item_Name',title : '商品名称',width:125,align:'left',resizable:false,
+                    {field : 'Item_Name',title : '商品名称',width:120,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;
                             if(value&&value.length>long){
@@ -325,8 +322,8 @@
                             }
                         }
                     } ,
-                    {field : 'minPrice',title : '价格(元)',width:80,resizable:false,align:'center'},
-                    {field : 'stock',title : '库存',width:58,align:'center',resizable:false,
+                    {field : 'minPrice',title : '价格(元)',width:50,resizable:false,align:'center'},
+                    {field : 'stock',title : '库存',width:50,align:'center',resizable:false,
                         formatter:function(value,row,index){
                            if(isNaN(parseInt(value))){
                              return 0;
@@ -335,7 +332,7 @@
                            }
                         }
                     },
-                    {field : 'SalesCount',title : '销量',width:60,align:'center',resizable:false,
+                    {field : 'SalesCount',title : '销量',width:50,align:'center',resizable:false,
                         formatter:function(value,row,index){
                             if(isNaN(parseInt(value))){
                                 return 0;
@@ -343,7 +340,7 @@
                                 return parseInt(value);
                             }
                         }},
-                    {field : 'SalesPromotion',title : '商品分组',width:120,align:'left',resizable:false,
+                    {field : 'SalesPromotion',title : '商品分组',width:60,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=18;
                             var html=""
@@ -356,12 +353,12 @@
                             return  html
                     }},
                     {field : 'Item_Category_Name',title : '商品品类',width:60,align:'left',resizable:false} ,
-                    {field : 'Modify_Time',title : '更新时间',width:100,align:'left',resizable:false,
+                    {field : 'Modify_Time',title : '更新时间',width:60,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return new Date(value).format("yyyy-MM-dd hh:mm");
                         }
                     },
-                    {field : 'Status',title : '状态',width:80,align:'center',resizable:false,
+                    {field : 'Status',title : '状态',width:50,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                             debugger;
                             var staus;
@@ -374,14 +371,31 @@
                         }
                     },
                     {
-                        field: 'Item_Id', title: '下载二维码', width:90, align: 'left', resizable: false,
+                        field: 'Item_Id', title: '下载二维码', width:50, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
 
-                            return value ? '<a target="_blank" style="padding-left:20px;" href="/Module/Basic/Item/Handler/ItemHandler.ashx?method=download_qrcode&item_id=' + value + '&item_name=' + row.Item_Name + '"><img width="16" height="16" src="images/QRcode.png"></span>' : '';
+                            return value ? '<a target="_blank" style="padding-left:20px" href="/Module/Basic/Item/Handler/ItemHandler.ashx?method=download_qrcode&item_id=' + value + '&item_name=' + row.Item_Name + '"><img width="16" height="16" src="images/QRcode.png"></a>' : '';
+                        }
+                    },
+					{
+                        field: 'customer_id', title: '操作', width:60, align: 'left', resizable: false,
+                        formatter: function (value, row, index) {
+							var hast = location.host,
+								hastname = '',
+								goodsUrl = '';
+							if(hast == 'bs.test.chainclouds.com'){
+								hastname = 'api.test.chainclouds.cn';
+							}else if(hast == 'bs.dev.chainclouds.com'){
+								hastname = 'api.dev.chainclouds.cn';
+							}else if(hast == 'bs.chainclouds.com'){
+								hastname = 'api.chainclouds.cn';
+							}else{
+								hastname = '192.168.1.104';
+							}
+							goodsUrl = 'http://'+hastname+'/HtmlApps/html/public/shop/goods_detail.html?customerId='+value+'&goodsId='+row.Item_Id+'&isPreview=1&APP_TYPE=SUBSCIBE&version=111';
+                            return 1 ? '<a  target="_blank" href="'+goodsUrl+'"><img width="18" height="12" src="images/icon-preview.png"  style="margin:3px 0 0 3px;"></a>' : '';
                         }
                     }
-
-
                 ]],
 
                 onLoadSuccess : function(data) {
@@ -394,18 +408,18 @@
                     }
                 },
                 onClickRow:function(rowindex,rowData){
-                      debugger;
+                     debugger;
                      if(that.elems.click){
                      that.elems.click = true;
                      debugger;
 
                      //var mid = JITMethod.getUrlParam("mid");
-                    var url = "commodityExit.aspx?Item_Id=" + rowData.Item_Id;
+                     var url = "commodityExit.aspx?Item_Id=" + rowData.Item_Id;
                          $.util.toNewUrlPath(url);
                      }
 
                 },onClickCell:function(rowIndex, field, value){
-                    if (field == "ck" || field == "Item_Id") {    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
+                    if (field == "ck" || field == "Item_Id" || field =="customer_id") {    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
                      that.elems.click=false;
                      }else{
                      that.elems.click=true;
