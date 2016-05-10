@@ -271,9 +271,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
             //rd.OrderListInfo.UseIntegralToAmount =rd.OrderListInfo.OrderIntegral*(integralAmountPre>0?integralAmountPre:0.01M);
             rd.OrderListInfo.UseIntegralToAmount = vipBll.GetAmountByIntegralPer(CurrentUserInfo.ClientID, rd.OrderListInfo.OrderIntegral);
 
-            var tOrderCouponMappingBll = new TOrderCouponMappingBLL(this.CurrentUserInfo);
+            var couponUseBll = new CouponUseBLL(this.CurrentUserInfo);
 
-            var couponParValue = tOrderCouponMappingBll.GetCouponParValue(orderId);
+            var couponParValue = couponUseBll.GetCouponParValue(orderId);
             rd.OrderListInfo.CouponAmount = couponParValue;
 
 

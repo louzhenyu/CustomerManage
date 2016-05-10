@@ -2292,7 +2292,7 @@ select @ReturnValue", pCustomerID);
                  cast(a.CouponTypeID as nvarchar(100))=c.coupontypeid left join options o on a.CollarCardMode=o.OptionValue and o.optionname='CollarCardMode'
                  --where o.optionname='CollarCardMode'
                   where  a.IsDelete = 0 and b.IsDelete = 0  
-                 and c.IsDelete = 0  and b.vipId = '{0}'
+                 and c.IsDelete = 0  and b.vipId = '{0}' and a.EndDate>GetDate() 
                 ) tmp
                 select @totalPages as totalPages
                 select * from ( select ROW_NUMBER()over(order by a.CreateTime {3}) _row, 

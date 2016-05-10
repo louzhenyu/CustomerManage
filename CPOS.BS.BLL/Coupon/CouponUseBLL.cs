@@ -58,5 +58,10 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+
+        public decimal GetCouponParValue(string orderId)
+        {
+            return this._currentDAO.GetCouponParValue(orderId);
+        }
     }
 }

@@ -53,6 +53,10 @@ namespace JIT.CPOS.BS.Entity
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(stdPrice))
+                    {
+                        return 100;
+                    }
                     return (Convert.ToDecimal(salesPrice) / Convert.ToDecimal(stdPrice)) * 100;
                 }
                 catch

@@ -233,7 +233,7 @@ namespace JIT.CPOS.BS.BLL
             {
                 var vipIntegralDetailBll = new VipIntegralDetailBLL(pUserInfo);
                 var vipBll = new VipBLL(pUserInfo);
-                var tOrderCouponMappingBll = new TOrderCouponMappingBLL(pUserInfo);
+                var couponUseBll = new CouponUseBLL(pUserInfo);
                 var vipAmountDetailBll = new VipAmountDetailBLL(pUserInfo);
                 var deliveryBll = new TOrderCustomerDeliveryStrategyMappingBLL(pUserInfo);
                 //使用积分
@@ -249,7 +249,7 @@ namespace JIT.CPOS.BS.BLL
                 else
                     inoutInfo.IntegralAmount = 0;//积分抵扣
                 //优惠券抵扣
-                var couponParValue = tOrderCouponMappingBll.GetCouponParValue(orderId);
+                var couponParValue = couponUseBll.GetCouponParValue(orderId);
                 inoutInfo.CouponAmount = couponParValue;
 
                 //使用的账户余额

@@ -114,6 +114,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                     SettingValue = para.CustomerGreeting
                 });
             }
+            else
+            {
+                list.Add(new CustomerBasicSettingEntity()
+                {//客服欢迎语
+                    SettingCode = "CustomerGreeting",
+                    SettingValue = "感谢您关注"+ para.CustomerShortName +"！您的支持是我们无限的动力~",
+                });
+            }
             #endregion
             if (list.Count > 0)
                 customerBasicSettingBLL.SaveustomerBasicrInfo(list);

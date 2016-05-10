@@ -427,7 +427,7 @@ as CollectIncome");
             //and (isnull('{0}','')='' or order_id like '%{0}%' ),, orderId
             // //a.status not in( '-1' , '700','800') and
             sql.AppendFormat("  {0}", sqlWhere);
-            sql.Append(" ) t where t._row>@pPageIndex*@pPageSize and t._row<=(@pPageIndex+1)*@pPageSize");
+            sql.Append(" ) t where t._row>@pPageIndex*@pPageSize and t._row<=(@pPageIndex+1)*@pPageSize order by t.orderdate desc");
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
 

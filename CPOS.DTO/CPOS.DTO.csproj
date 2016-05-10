@@ -171,6 +171,8 @@
     <Compile Include="Module\Extension\PointMark\Response\GetVipPointMarkRD.cs" />
     <Compile Include="Module\Extension\Question\Request\GetQuestionListRP.cs" />
     <Compile Include="Module\Extension\Question\Response\GetQuestionListRD.cs" />
+    <Compile Include="Module\Item\QRCode\Request\GetQRCodeRP.cs" />
+    <Compile Include="Module\Item\QRCode\Response\GetQRCodeRD.cs" />
     <Compile Include="Module\Marketing\Activity\Request\DelPrizesDetailRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\GetActivityDeatilRP.cs" />
     <Compile Include="Module\Marketing\Activity\Request\GetActivityListRP.cs" />

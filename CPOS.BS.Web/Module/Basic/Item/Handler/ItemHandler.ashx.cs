@@ -87,6 +87,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
             string itemName = FormatParamValue(Request("item_name"));//商品名
             string imageURL;
 
+          
+
             ObjectImagesBLL objectImagesBLL = new ObjectImagesBLL(CurrentUserInfo);
             //查找是否已经生成了二维码
             ObjectImagesEntity[] objectImagesEntityArray = objectImagesBLL.QueryByEntity(new ObjectImagesEntity() { ObjectId = itemId, Description = "自动生成的产品二维码" }, null);
@@ -95,8 +97,8 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
             {
                 string applicationId = "";
                 //根据CustomerId去取公众号信息
-               
-                var list = new WApplicationInterfaceBLL(CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity { CustomerId = CurrentUserInfo.ClientID   , IsDelete = 0}, null).ToList();
+
+                var list = new WApplicationInterfaceBLL(CurrentUserInfo).QueryByEntity(new WApplicationInterfaceEntity { CustomerId = CurrentUserInfo.ClientID, IsDelete = 0 }, null).ToList();
 
                 if (list != null && list.Count > 0)
                 {
@@ -118,10 +120,10 @@ namespace JIT.CPOS.BS.Web.Module.Basic.Item.Handler
                     + "&goUrl=" + weixinDomain + "/HtmlApps/html/public/shop/goods_detail.html?goodsId="
                     + itemId + "&scope=snsapi_userinfo";
 
-                //  string itemUrl = "http://localhost:1950/" + "/WXOAuth/AuthUniversal.aspx?customerId=" + CurrentUserInfo.ClientID
+                //  string itemUrl = "http://localhost:1950/" + "/WXOAuth/AuthUniversal.aspx?customerId=" + loggingSessionInfo.ClientID
                 //      + "&goUrl=" + weixinDomain + "/HtmlApps/html/public/shop/goods_detail.html?rootPage=true&rootPage=true&goodsId="
                 //      + itemId + "&scope=snsapi_userinfo";
-                ////原来的老页面  weixinDomain + "/HtmlApps/Auth.html?pageName=GoodsDetail&rootPage=true&customerId=" + CurrentUserInfo.ClientID + "&goodsId=" + itemId
+                ////原来的老页面  weixinDomain + "/HtmlApps/Auth.html?pageName=GoodsDetail&rootPage=true&customerId=" + loggingSessionInfo.ClientID + "&goodsId=" + itemId
              
                 //常链接转短链接
                   JIT.CPOS.BS.BLL.WX.CommonBLL commonServer = new JIT.CPOS.BS.BLL.WX.CommonBLL();

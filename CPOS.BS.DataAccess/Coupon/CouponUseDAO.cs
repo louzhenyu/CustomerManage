@@ -84,5 +84,30 @@ namespace JIT.CPOS.BS.DataAccess
             return ds;
         }
 
+        public decimal GetCouponParValue(string orderId)
+        {
+            var sql = new StringBuilder();
+            sql.Append("select b.ParValue from CouponUse a,CouponType b ,Coupon c");
+            sql.Append(" where a.CouponId = c.CouponID");
+            sql.Append(" and b.CouponTypeID = c.CouponTypeID");
+            sql.Append(" and a.OrderId =@pOrderId");
+
+            var paras = new List<SqlParameter>
+            {
+                new SqlParameter() {ParameterName = "@pOrderId", Value = orderId}
+            };
+
+            var result = this.SQLHelper.ExecuteScalar(CommandType.Text, sql.ToString(), paras.ToArray());
+
+            if (result == null || string.IsNullOrEmpty(result.ToString()) || result.ToString() == "")
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToDecimal(result);
+            }
+        }
+
     }
 }

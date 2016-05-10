@@ -2227,6 +2227,7 @@
     <Compile Include="ApplicationInterface\Module\Extension\PointMark\GetVipPointMarkAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\PointMark\SetVipPointMarkAH.cs" />
     <Compile Include="ApplicationInterface\Module\Extension\Question\GetQuestionListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Item\QRCode\GetQRCodeAH.cs" />
     <Compile Include="ApplicationInterface\Module\Market\MarketSignIn\SetMarketSignInAH.cs" />
     <Compile Include="ApplicationInterface\Module\NewAppContent\NewApp.ashx.cs">
       <DependentUpon>NewApp.ashx</DependentUpon>
@@ -3152,7 +3153,7 @@
     <Folder Include="EMBA\" />
     <Folder Include="Lj\qrcode_images\" />
     <Folder Include="OnlineClothing\boot\js\" />
-    <Folder Include="qrcode_images\" />
+    <Folder Include="QRCodeImage\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="HeadImage\20131114\20131114114527_2095" />

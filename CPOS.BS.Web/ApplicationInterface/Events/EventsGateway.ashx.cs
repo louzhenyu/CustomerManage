@@ -624,6 +624,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Events
                 {
                     item.Status = itemStatus;
                     item.BeginTime = entity.BeginTime;
+                    item.AddedTime = entity.BeginTime;
                     item.EndTime = entity.EndTime;
                     eventItemBll.Update(item);//修改商品状态，和老版本兼容
                 }

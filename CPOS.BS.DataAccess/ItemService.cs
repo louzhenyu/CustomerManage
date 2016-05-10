@@ -67,6 +67,7 @@ namespace JIT.CPOS.BS.DataAccess
                       + " ,a.ifoften "
                       + " ,a.ifservice "
                       + " ,a.isGB "
+                      + " ,a.CustomerId as customer_id"
                       + " ,a.data_from "
                       + " ,a.display_index "
                       + ",(  select case when COUNT(1)>0 then 'true' else 'false' end from  T_Item_Category where item_category_id=a.item_category_id and status='-1') isItemCategory"
