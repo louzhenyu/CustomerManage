@@ -125,7 +125,7 @@
         <div class="easyui-layout" data-options="fit:true" id="Div10">
             <div data-options="region:'center'" style="padding:10px;">
                 <div class="ReleaseSuccess">
-                您的活动即将发布，发布后，您的活动将无法进行界面和奖励的修改。
+                发布后，您将无法修改活动内容、奖品，但可以追加奖品数量。
                     </div>
                 <div class="btnWrap" id="Div9" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
       				<a class="easyui-linkbutton commonBtn saveBtn ReleaseSuccessbtn" >确定</a>

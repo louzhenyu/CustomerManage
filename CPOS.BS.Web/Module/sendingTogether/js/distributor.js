@@ -193,98 +193,91 @@
 
         },
         windowsLoadData:function(type){
-            var that=this;
-            if(type.toLocaleLowerCase()=="oneway"){
-				that.loadData.args.CooperateType="oneway" ;
-                that.loadData.GetSysRetailRewardRule(function (data) {
-                    debugger;
-                    if (data.Data.SysRetailRewardRuleList && data.Data.SysRetailRewardRuleList.length > 0) {
-                        var SysRetailRewardRuleList = data.Data.SysRetailRewardRuleList;
-                        var fields = $("#addOneWay").serializeArray();
-                        var loadData = {},
-							loadData2={};
-                        $.each(fields, function (index, field) {
-                            for (var i = 0; i < SysRetailRewardRuleList.length; i++) {
-                                var item = SysRetailRewardRuleList[i];
-                                if (field.name.indexOf(item.RewardTypeCode) != -1) {    //确定是那个类别的
-                                    if (field.name.indexOf("SellUserReward") != -1) {         //不同类别的销售员奖励
-                                        loadData[field.name] = SysRetailRewardRuleList[i]["SellUserReward"];
-                                    }
-                                    if (field.name.indexOf("RetailTraderReward") != -1) {  //不同类别的分销商奖励
-                                        loadData[field.name] = SysRetailRewardRuleList[i]["RetailTraderReward"];
-                                    }
-                                    if (field.name.indexOf("RetailRewardRuleID") != -1) {  //不同类别的分销商奖励
-                                        loadData[field.name] = SysRetailRewardRuleList[i]["RetailRewardRuleID"];
-                                    }
+            var that = this;
+            var addWay = "";
+            var isoneway = true;
+
+            that.loadData.args.CooperateType = "";
+            if (type.toLocaleLowerCase() == "oneway") {
+                that.loadData.args.CooperateType = "oneway";
+            }
+
+            if (type.toLocaleLowerCase() == "twoway") {
+                that.loadData.args.CooperateType = "TwoWay";
+
+            }
+
+            that.loadData.GetSysRetailRewardRule(function (data) {
+                debugger;
+                if (data.Data.SysRetailRewardRuleList && data.Data.SysRetailRewardRuleList.length > 0) {
+                    var SysRetailRewardRuleList = data.Data.SysRetailRewardRuleList;
+
+                    for (var i = 0; i < SysRetailRewardRuleList.length; i++)
+                    {
+                        if (SysRetailRewardRuleList[i].CooperateType == "TwoWay")
+                        {
+                            addWay = "#addTwoWay";
+                            isoneway = false;
+                            break;
+                        }
+                        if (SysRetailRewardRuleList[i].CooperateType == "OneWay") {
+                            addWay = "#addOneWay";
+                            isoneway = true;
+                            break;
+                        }
+                    }
+                    var fields = $(addWay).serializeArray();
+                    var loadData = {},
+                        loadData2 = {};
+                    $.each(fields, function (index, field) {
+                        for (var i = 0; i < SysRetailRewardRuleList.length; i++) {
+                            var item = SysRetailRewardRuleList[i];
+                            if (field.name.indexOf(item.RewardTypeCode) != -1) {    //确定是那个类别的
+                                if (field.name.indexOf("SellUserReward") != -1) {         //不同类别的销售员奖励
+                                    loadData[field.name] = SysRetailRewardRuleList[i]["SellUserReward"];
                                 }
-								//是否选择引流 或者 销售模块
-								if(item.CooperateType == 'Sales' && item.Status == 1){
-									loadData2 = item;
-									$('#marketTag').addClass('on');
-								}
-								if(item.CooperateType == 'OneWay'){
-									$('#drainageTag').addClass('on');
-								}
+                                if (field.name.indexOf("RetailTraderReward") != -1) {  //不同类别的分销商奖励
+                                    loadData[field.name] = SysRetailRewardRuleList[i]["RetailTraderReward"];
+                                }
+                                if (field.name.indexOf("RetailRewardRuleID") != -1) {  //不同类别的分销商奖励
+                                    loadData[field.name] = SysRetailRewardRuleList[i]["RetailRewardRuleID"];
+                                }
 
                             }
+                            //是否选择引流 或者 销售模块
+                            if (item.CooperateType == 'Sales' && item.Status == 1) {
+                                loadData2 = item;
+                                $('#marketTag').addClass('on');
+                            }
+                            if (that.loadData.args.CooperateType != "") {
+                                if (item.CooperateType == 'TwoWay' || item.CooperateType == 'OneWay') {
+                                    $('#drainageTag').addClass('on');
+                                }
+                            }
+
+                        }
 
 
-                        });
+                    })
 
-                        debugger;
+                    debugger;
+                    if (isoneway) {
                         $("#addOneWay").form('load', loadData);
-						$('#addSalseWay').form('load',loadData2);
-
+                    } else {
+                        $("#addTwoWay").form('load', loadData);
                     }
+                    $('#addSalseWay').form('load', loadData2);
+
+                }
+                if (isoneway) {
                     $("[data-show='oneway'].radio").trigger("click");
-                });
-            }
-            if(type.toLocaleLowerCase()=="twoway"){
-                that.loadData.args.CooperateType="TwoWay" ;
-                that.loadData.GetSysRetailRewardRule(function(data) {
-                    debugger;
-                    if (data.Data.SysRetailRewardRuleList && data.Data.SysRetailRewardRuleList.length > 0) {
-                        var SysRetailRewardRuleList = data.Data.SysRetailRewardRuleList;
-                        var fields = $("#addTwoWay").serializeArray();
-                        var loadData={},
-							loadData2={};
-                        $.each(fields, function (index, field) {
-                            for (var i = 0; i < SysRetailRewardRuleList.length; i++) {
-                                var item = SysRetailRewardRuleList[i];
-                                if (field.name.indexOf(item.RewardTypeCode) != -1) {    //确定是那个类别的
-                                    if (field.name.indexOf("SellUserReward") != -1) {         //不同类别的销售员奖励
-                                        loadData[field.name]=SysRetailRewardRuleList[i]["SellUserReward"];
-                                    }
-                                    if (field.name.indexOf("RetailTraderReward") != -1) {  //不同类别的分销商奖励
-                                        loadData[field.name]=SysRetailRewardRuleList[i]["RetailTraderReward"] ;
-                                    }
-                                    if (field.name.indexOf("RetailRewardRuleID") != -1) {  //不同类别的分销商奖励
-                                        loadData[field.name]=SysRetailRewardRuleList[i]["RetailRewardRuleID"] ;
-                                    }
-
-                                }
-								//是否选择引流 或者 销售模块
-								if(item.CooperateType == 'Sales' && item.Status == 1){
-									loadData2 = item;
-									$('#marketTag').addClass('on');
-								}
-								if(item.CooperateType == 'TwoWay'){
-									$('#drainageTag').addClass('on');
-								}
-
-                            }
-
-
-                        })
-
-                        debugger;
-                        $("#addTwoWay").form('load',loadData);
-						$('#addSalseWay').form('load',loadData2);
-
-                    }
+                } else {
                     $("[data-show='twoway'].radio").trigger("click");
-                });
-            }
+                }
+            });
+
+
+
         },
         setReward:function(data){
             var that=this;
@@ -723,7 +716,7 @@
 						
 						
 						//判断是否选择销售模块
-						//if($('#marketTag').hasClass('on')){
+						if($('#marketTag').hasClass('on')){
 						   if($('#addSalseWay').form("validate")) {
 							   var salseField = $("#addSalseWay").serializeArray(),
 								   saleaObj = {"CooperateType":"Sales","RewardTypeName":"销售奖励","RewardTypeCode":"Sales","AmountOrPercent":"2"};
@@ -739,7 +732,7 @@
 							   
 							   SysRetailRewardRuleList.push(saleaObj);
 						   }
-						//}
+						}
 						//console.log(SysRetailRewardRuleList);
 						
 						

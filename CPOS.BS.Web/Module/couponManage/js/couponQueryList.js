@@ -176,9 +176,9 @@
                     },
                     { field: 'Phone', title: '手机号', width: 100, resizable: false, align: 'center' },
                     {
-                        field: 'CouponName', title: '优惠券名称', width: 100, align: 'center', resizable: false,
+                        field: 'CouponName', title: '优惠券名称', width: 200, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
-                            var long = 8;
+                            var long = 18;
                             var html = ""
                             if (value && value.length > long) {
                                 html = '<div class="rowTextnew" title="' + value + '">' + value.substring(0, long) + '...</div>'
@@ -205,7 +205,7 @@
                     {
                         field: 'CouponID', title: '操作', width: 80, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
-                            if (row.ConponStatus == "未核销") {
+                            if (row.ConponStatus == "未使用") {
                                 return "<div data-index=" + index + " data-flag='CouponEvent' class='CouponEventBtn'>核销</div>"
                             } else {
                                 return "";

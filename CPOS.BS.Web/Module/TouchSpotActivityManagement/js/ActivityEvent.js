@@ -179,7 +179,7 @@
 			that.loadData.getCommodityList(function(data){
 				that.renderTable(data);
 			});
-			that.getWorkingEventList();
+			that.GetNoStartAndWorkingEventList();
         },
 		
 		
@@ -787,12 +787,12 @@
 		        }
 		    });
 		},
-		getWorkingEventList:function(){
+		GetNoStartAndWorkingEventList: function () {
 			var that = this;
 			$.util.ajax({
 				url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsListHandler.ashx",
 				data: {
-					action: 'GetWorkingEventList'
+				    action: 'GetNoStartAndWorkingEventList'
 				},
 				success: function(data) {
 					if (data.IsSuccess && data.ResultCode == 0) {
