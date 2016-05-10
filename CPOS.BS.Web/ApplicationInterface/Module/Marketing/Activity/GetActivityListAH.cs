@@ -26,7 +26,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Activity
             if (!string.IsNullOrEmpty(para.ActivityType))
                 complexCondition.Add(new EqualsCondition() { FieldName = "ActivityType", Value = para.ActivityType });
             if (!string.IsNullOrEmpty(para.ActivityName))
-                complexCondition.Add(new LikeCondition() { FieldName = "ActivityName", Value = para.ActivityName + "%" });
+                complexCondition.Add(new LikeCondition() { FieldName = "ActivityName", Value = "%"+para.ActivityName + "%" });
             if (!string.IsNullOrEmpty(para.Status))
             {
                 if (para.Status.Equals("1"))

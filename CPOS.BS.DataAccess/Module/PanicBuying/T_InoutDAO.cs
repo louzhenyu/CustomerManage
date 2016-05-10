@@ -447,7 +447,7 @@ as CollectIncome");
             sqlWhere += "  and customer_id=@pCustomerId ";
 
             //所有订单（包括分销商）
-            sqlWhere += @" and SetoffUserId=@pUserId ";
+            sqlWhere += @" and SetoffUserId=@pUserId and a.create_time>=Col21 ";//订单时间大于时间
 
             if (!string.IsNullOrEmpty(order_no))
             {
@@ -488,7 +488,7 @@ as CollectIncome");
             sql.Append(" from t_inout a ");
             //  sql.Append("inner join #tmp bon a.sales_unit_id = b.unit_id ");
             sql.Append(" left join vip c on a.vip_no = c.vipId");
-            sql.AppendFormat(" where a.status not in( '-1' ) and field7 <> 0 and field7<>-99 ");
+            sql.AppendFormat(" where a.status not in( '-1' ) and field7 <> 0 and field7<>-99 AND a.status=700 ");
             //and (isnull('{0}','')='' or order_id like '%{0}%' ),, orderId
             //a.status not in( '-1' , '700','800') and
             sql.AppendFormat("  {0}", sqlWhere);

@@ -528,16 +528,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.AllWin
             var ds4 = bll.GetRetailCoupon(rp.Parameters.RetailTraderID, loggingSessionInfo.ClientID, 0, pageIndex ?? 1, pageSize ?? 15, rp.Parameters.OrderBy, rp.Parameters.OrderType);   //获取        
             if (ds4 != null && ds4.Tables.Count > 0 && ds4.Tables[0].Rows.Count > 0)
             {
-                var tempDt = ds4.Tables[0];
-               NoWriteOffCouponCount = tempDt.Rows.Count;
+                //var tempDt = ds4.Tables[0];
+                NoWriteOffCouponCount = Convert.ToInt32(ds4.Tables[0].Rows[0]["TotalCount"].ToString());//tempDt.Rows.Count;
                 //  rd.WriteOffCouponList = DataTableToObject.ConvertToList<RetailCouponInfo>(ds4.Tables[1]);
             }
 
             var ds5 = bll.GetRetailCoupon(rp.Parameters.RetailTraderID, loggingSessionInfo.ClientID, 1, pageIndex ?? 1, pageSize ?? 15, rp.Parameters.OrderBy, rp.Parameters.OrderType);   //获取        
             if (ds5 != null && ds5.Tables.Count > 0 && ds5.Tables[0].Rows.Count > 0)
             {
-                var tempDt = ds5.Tables[0];
-                rd.UsedCoupon = tempDt.Rows.Count;
+                //var tempDt = ds5.Tables[0];
+                rd.UsedCoupon = Convert.ToInt32(ds5.Tables[0].Rows[0]["TotalCount"].ToString());
                 //  rd.WriteOffCouponList = DataTableToObject.ConvertToList<RetailCouponInfo>(ds3.Tables[1]);
             }
 
