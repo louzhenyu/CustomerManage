@@ -127,10 +127,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                 rd.OrderListInfo.discount_rate = orderList[0].discount_rate ?? 100;//订单折扣
                 rd.OrderListInfo.OrderID = orderList[0].order_id;
                 rd.OrderListInfo.OrderCode = orderList[0].order_no;
-                rd.OrderListInfo.OrderDate = orderList[0].order_date;
+                rd.OrderListInfo.OrderDate = orderList[0].order_date; 
                 rd.OrderListInfo.ReceiverName = orderList[0].Field14; //收件人             
                 rd.OrderListInfo.TotalQty = Convert.ToDecimal(orderList[0].total_qty);
                 rd.OrderListInfo.TotalAmount = Convert.ToDecimal(orderList[0].total_amount);
+                rd.OrderListInfo.Total_Retail = Convert.ToDecimal(orderList[0].total_retail);
                 rd.OrderListInfo.Remark = orderList[0].remark;
                 rd.OrderListInfo.Status = orderList[0].status;
                 rd.OrderListInfo.OrderStatus = int.Parse(orderList[0].Field7);

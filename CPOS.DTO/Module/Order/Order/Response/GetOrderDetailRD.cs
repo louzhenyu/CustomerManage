@@ -23,6 +23,7 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public string Remark { get; set; }
 
         public decimal ActualDecimal { get; set; }
+        public decimal? Total_Retail { get; set; }
         /// <summary>
         /// 订单状态
         /// </summary>

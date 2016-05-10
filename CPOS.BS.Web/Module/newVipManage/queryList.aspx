@@ -74,7 +74,7 @@
                                     <div class="menber_centernr">
                                         <div class="menber_centernrt">
                                             <p>请按照数据模板的格式准备要导入的数据<a  style="display:none;" href="http://help.chainclouds.cn/?p=733">（如何导入？）</a></p>
-                                            <p><a href="/File/ExcelTemplate/会员导入数据模板.xlsx">下载模板</a></p>
+                                            <p><a href="/File/ExcelTemplate/会员导入数据模板.xls">下载模板</a></p>
                                             <div class="attention"><span>注意事项：</span>
                                                 1.模板中的表头名称不可更改、表头行不能删除。<br />
                                                 2.项目顺序可以调整，不需要的项目可以删除。<br />
@@ -83,7 +83,7 @@
                                             </div>
                                         </div>
                                         <div class="menber_centernrb" id="editLayer">
-                                            选择需要导入的xlsx文件
+                                            选择需要导入的xls文件
                                             <p id="nofiletext" >未选择文件</p>
                                              <div class="CSVFilelist"></div>
                                             <input id="CSVFileurl" value="" type="hidden"  />
