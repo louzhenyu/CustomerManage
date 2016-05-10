@@ -3221,7 +3221,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1953/</IISUrl>
+          <IISUrl>http://localhost:1953</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

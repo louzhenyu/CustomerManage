@@ -180,8 +180,13 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             {
                                 if (int.Parse(htSetting["enableVipSales"].ToString()) > 0)//启用会员小店
                                 {
-                                    item.salesPrice = item.salesPrice * (decimal.Parse(htSetting["vDistributionPricePer"].ToString()) / 100);
-                                    item.ReturnAmount = item.salesPrice * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100);
+
+                                    string salesPrice = String.Format("{0:F}", item.salesPrice * (decimal.Parse(htSetting["vDistributionPricePer"].ToString()) / 100));
+
+                                    string ReturnAmount = String.Format("{0:F}", item.salesPrice * (decimal.Parse(htSetting["vOrderCommissionPer"].ToString()) / 100));
+
+                                    item.salesPrice = salesPrice;
+                                    item.ReturnAmount = ReturnAmount;
                                 }
                             }
                             else if (reqObj.common.channelId == "10")//员工小店
@@ -258,7 +263,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string TargetUrl { get; set; }
 
             public decimal price { get; set; }        //商品原价
-            public decimal salesPrice { get; set; }   //商品零售价（优惠价）
+            public dynamic salesPrice { get; set; }   //商品零售价（优惠价）
             public decimal discountRate { get; set; } //商品折扣
             public Int64 displayIndex { get; set; }  //排序
             public string pTypeId { get; set; }      //福利类别标识（团购=2，优惠=1）
@@ -281,7 +286,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
             public string deadlineTime { get; set; }    //还有多少时间截止（16天5小时34分）
             public IList<StoreItemDailyStatusEntity> storeItemDailyStatus;
             public decimal EveryoneSalesPrice { get; set; } // 人人销售价 add by doanl 2014-9-23 10:06:58
-            public decimal ReturnAmount { get; set; } //佣金 add by donal 2014-11-25 17:56:36
+            public dynamic ReturnAmount { get; set; } //佣金 add by donal 2014-11-25 17:56:36
             public int isStore { get; set; } //是否我的小店商品
 
             public string eventId { get; set; }  ///商品活动id(抢购，团购，秒杀)
