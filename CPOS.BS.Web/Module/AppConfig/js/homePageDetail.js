@@ -66,35 +66,48 @@
                         self.ele.type = "Edit";
                         this.loadData();
                         this.initEvent();
-                        this.initSort();
+                       // this.initSort();
                     }else{
-                        console.log("地址栏数据异常。"+ex);
+                        console.info("地址栏数据异常。"+ex);
                     }
                 }catch(ex){
-                    console.log("地址栏数据异常。"+ex);
+                    console.info("地址栏数据异常。"+ex);
                 }
             } else{
                 this.loadData();
                 this.initEvent();
-                this.initSort();
+                //this.initSort();
             }
 
 
         },
         initSort: function () {
-
+            //http://www.runoob.com/jqueryui/api-sortable.html参数实例
             var self = this;
             $("#sortable").sortable({
                 opacity: 0.8,
                 cancel:'[data-type="navList"],[data-type="followInfo"]',
                 axis: "y",
+                cursorAt:{left:20},
+                forceHelperSize:true,
+                items:">.action",
                 cursor: "move",
-                stop: function () {
-                   self.sortAction();
+                scrollSpeed:100,
+                distance:15,//防止误点误拖动排序delay
+                delay:150,
+                tolerance: "pointer",
+                placeholder:"placeholder",
+                revert:true,
+                containment: $("#sortable"),
+                stop: function (event,dom) {
+                    if($(dom.item).find(".jsListItemEmpty").length==0){
+                        self.sortAction();
+                    }
 
-                }
-            });
-            self.ele.classAction.disableSelection();
+                },
+                connectWith: ".connectedSortable"
+            }).disableSelection();
+
 
         },
         sortAction: function (isLoadInfo) {
@@ -226,7 +239,9 @@
             this.currentEditData = null;        //编辑数据
 
             this.GetLevel1ItemCategory();       //加载弹层一集分类
-            this.GetHomePageConfigInfo();       //获取左侧数据
+            this.GetHomePageConfigInfo(function(){
+                self.initSort()
+            });       //获取左侧数据
         },
         stopBubble: function (e) {              //阻止冒泡方法
             if (e && e.stopPropagation) {
@@ -857,7 +872,6 @@
                     type=type.dataset.createype;
                 }
                 var html="";
-
 
                 switch (type) {
                     case "Search":
@@ -2251,6 +2265,9 @@
                         }else{
                             //空白模板，无任何数据
                         }
+                     if(callback){
+                         callback(data)
+                     }
 
 
                     }

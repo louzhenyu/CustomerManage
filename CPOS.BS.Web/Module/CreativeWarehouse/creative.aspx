@@ -343,7 +343,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                               </div>
                               <div class="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
                         				<a class="easyui-linkbutton commonBtn saveBtn release" style="background-color: #ff343f;margin-right: 12px;" >直接发布</a>
-                        				<a class="easyui-linkbutton commonBtn closeBtn"  href="javascript:void(0)" onclick="javascript:$('#winrelease').window('close')" >完成</a>
+                        				<a class="easyui-linkbutton commonBtn closeBtn"  href="javascript:void(0)" onclick="javascript:$('#winrelease').window('close')" >关闭</a>
                         			</div>
                           </div>
                       </div>
@@ -407,46 +407,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                            </div>
      </div>
 
-         <script id="tpl_selectPrize" type="text/html">
-          <div class="lineText">
-                             <div class="commonSelectWrap">
-                                       <em class="tit w120">选择查看类型:</em>
-                                    <div class="searchInput bordernone">
-                                            <input  class="easyui-combobox" id="selectType" data-options="width:160,height:32,valueField: 'label',
-                                            textField: 'value',
-                                            data: [{
-                                              label: '0',
-                                              value: '代金券',
 
-                                           },
-
-                                           {
-                                              label: '1',
-                                              value: '礼品券'
-                                           }
-                                           {
-                                              label: '2',
-                                              value: '积分'
-                                           }
-                                           {
-                                              label: '-1',
-                                              value: '选择奖品类型',
-                                               selected:true
-                                           }
-                                           ]"  name="BatId" type="text" value="0"/>
-                                    </div>
-                             </div>
-          </div> <!--lineText-->
-        <div class="showPanel" style="display: none">
-        <div class="optionBtn">
-                <span class="listName"></span>
-                <div class="commonBtn icon icon_add r">新增</div>
-        </div><!--optionBrn-->
-         <div class="tableWap">
-                <div id="prizeListGrid"></div>
-         </div><!--tableWap-->
-        </div> <!--showPanel-->
-</script>
 
 
        <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"  data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>

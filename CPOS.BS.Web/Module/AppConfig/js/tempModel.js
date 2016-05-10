@@ -959,7 +959,7 @@
 		<b>销量:</b> <b>18285</b></p>   \
 	</div>  \
 	</div>\
-	<div class="item"> \
+	<div class="item" style="display:none"> \
 		<img src="images/publicList/1_2.png"> \
 		<div class="txtPanel">\
 		<p class="name <%if(object.showName==0){%> hide <%}%>"> \

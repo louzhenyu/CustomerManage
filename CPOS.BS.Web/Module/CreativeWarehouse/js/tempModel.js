@@ -154,7 +154,7 @@ define(function($) {
     <div class="commonSelectWrap">  \
         <em class="tit w120">追加：</em> \
     <div class="searchInput bordernone"> \
-        <input class="easyui-numberbox" data-options="min:1,precision:0,max:10000,required:true,width:200,height:32" name="number" type="text"><em id="addIntegralNumber">积分</em>\
+        <input class="easyui-numberbox" data-options="min:1,precision:0,max:10000,required:true,width:200,height:32" name="number" type="text"><em id="addIntegralNumber">份</em>\
         </div> \
         </div> \
         </form>',
