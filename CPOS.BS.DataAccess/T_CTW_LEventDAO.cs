@@ -154,7 +154,29 @@ namespace JIT.CPOS.BS.DataAccess
 		                                            ) a PIVOT(max(TotalCount) FOR StatusName IN(Prepare,Running,[Pause],[End])) ab", strCustomerId);
             return this.SQLHelper.ExecuteDataset(strSql);
         }
+        /// <summary>
+        /// 立即发布改变状态
+        /// </summary>
+        /// <param name="strCTWEventId"></param>
+        public void ChangeCTWEventStart(string strCTWEventId)
+        {
+            string strSql = string.Format(@"  UPDATE T_CTW_LEvent 
+                                                SET Status=20 
+                                              WHERE CTWEventId='{0}' 
+                                                AND CONVERT(NVARCHAR(10),GETDATE(),120) BETWEEN StartDate AND EndDate
+                                               
+                                              UPDATE dbo.LEvents
+                                              SET EventStatus=20
+                                              WHERE EventID IN(
+                                              SELECT  LeventId FROM dbo.T_CTW_LEventInteraction
+                                              WHERE CTWEventId='{0}' 
+                                              AND IsDelete=0
+                                              )
+                                              AND CONVERT(NVARCHAR(10),GETDATE(),120) BETWEEN BeginTime AND EndTime
 
+                                        
+                                        ");
+        }
         public DataSet GetT_CTW_LEventList(string EventName,
         string BeginTime,
                 string EndTime,

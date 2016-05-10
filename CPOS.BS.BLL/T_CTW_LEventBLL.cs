@@ -46,6 +46,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetMaterialTextInfo(strOnlineQRCodeId);
         }
+        public void ChangeCTWEventStart(string strCTWEventId)
+        {
+            this._currentDAO.ChangeCTWEventStart(strCTWEventId);
+        }
         /// <summary>
         /// 获取商户所有主题活动
         /// </summary>

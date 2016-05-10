@@ -105,7 +105,7 @@ namespace JIT.CPOS.BS.DataAccess
         public MHAdAreaEntity[] GetAdByHomeId(string strHomeId)
         {
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select a.* from dbo.MHAdArea a  where a.homeid='{0}' and a.IsDelete=0 ", strHomeId);
+            sql.AppendFormat("select a.* from dbo.MHAdArea a  where a.homeid='{0}' and a.IsDelete=0 order by DisplayIndex", strHomeId);
 
             List<MHAdAreaEntity> list = new List<MHAdAreaEntity>();
             using (var rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
