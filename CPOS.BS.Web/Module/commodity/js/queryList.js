@@ -383,14 +383,12 @@
 							var hast = location.host,
 								hastname = '',
 								goodsUrl = '';
-							if(hast == 'bs.test.chainclouds.com'){
+							if(hast == 'bs.test.chainclouds.com' || hast == 'bs.test.chainclouds.cn'){
 								hastname = 'api.test.chainclouds.cn';
-							}else if(hast == 'bs.dev.chainclouds.com'){
+							}else if(hast == 'bs.dev.chainclouds.com' || hast == 'bs.dev.chainclouds.cn'){
 								hastname = 'api.dev.chainclouds.cn';
-							}else if(hast == 'bs.chainclouds.com'){
+							}else if(hast == 'bs.chainclouds.com' || hast == 'bs.chainclouds.cn'){
 								hastname = 'api.chainclouds.cn';
-							}else{
-								hastname = '192.168.1.104';
 							}
 							goodsUrl = 'http://'+hastname+'/HtmlApps/html/public/shop/goods_detail.html?customerId='+value+'&goodsId='+row.Item_Id+'&isPreview=1&APP_TYPE=SUBSCIBE&version=111';
                             return 1 ? '<a  target="_blank" href="'+goodsUrl+'"><img width="18" height="12" src="images/icon-preview.png"  style="margin:3px 0 0 3px;"></a>' : '';
