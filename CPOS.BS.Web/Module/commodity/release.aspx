@@ -71,7 +71,7 @@
                       <div class="commonSelectWrap">
                           <em class="tit">商品编码：</em>
                           <label class="searchInput">
-                            <input data-text="商品编码" data-flag="Item_Code" class="easyui-validatebox" data-options="required:true" name="Item_Code" type="text" value="">
+                            <input data-text="商品编码" data-flag="Item_Code" class="easyui-validatebox" data-options="required:true,validType:'stringCheck'" name="Item_Code" type="text" value="">
                           </label>
                       </div>
                       <div class="commonSelectWrap">

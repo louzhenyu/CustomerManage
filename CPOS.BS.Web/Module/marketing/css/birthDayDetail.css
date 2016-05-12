@@ -59,7 +59,7 @@
 .btnopt .commonBtn.cancel{ background-color: #cccccc}
 .btnopt .commonBtn.bgWhite{display:none;}
 
-.tablePanel .datagrid{ border:none}
+.tablePanel .datagrid{ border-left:1px solid #e1e7ea;}
 
 .checkBoxList{padding-left:8px; width: 278px; height: 100px; float: left; }
 .borderNone{ border: 1px solid  transparent;border-bottom:none; background: none}

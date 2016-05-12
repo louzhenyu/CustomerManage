@@ -615,7 +615,7 @@
                 }
                 if (proList.length > 0) { //表示是添加规格保存的sku值， 需要遍历生成skulist表格
                     for (var i = 0; i < proList.length; i++) {
-                        that.elems.sku.find(".addSKU").trigger("click");
+                        that.elems.sku.find(".addSKU").trigger("click",true);
                         var skuList = that.elems.sku.find(".skuList");
                         var proListdom = skuList.eq(i).find(".proList"); //寻找规格
                         proListdom.combobox('select', proList[i].prop_id); //赋值
@@ -768,11 +768,15 @@
                 $(this).find(".icon").show(0)
             }).delegate(".pro,.btn", "mouseleave", function () {
                 $(this).find(".icon").hide(0)
-            }).delegate(".addSKU", "click", function () {  //添加sku分类事件
+            }).delegate(".addSKU", "click", function (e,data) {  //添加sku分类事件
                 $("#dataState").fadeOut(10);
                 var long = that.elems.sku.find(".skuList").length;
                 if (long >= 3) {
                     alert("最多只能添加3个规格");
+                    return;
+                }
+                if(that.elems.allData.SKUPropList.length==long&&!data){
+                    alert("没有新的规格可供添加");
                     return;
                 }
                 var html = bd.template("tpl_AddPro");

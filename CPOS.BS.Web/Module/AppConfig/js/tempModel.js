@@ -608,7 +608,7 @@
 						<%}%>\
 					<%}else{%>\
 						<%for(var i=0;i<length;i++){%>\
-							<div class="jsAreaItem uploadArea clearfix">\
+							<div class="jsAreaItem uploadArea clearfix" data-typeid="null">\
 								<div class="wrapPic">\
 								<p><img src="images/handleLayer/default.png"></p>\
 									<span class="uploadBtn"><em class="upTit">上传</em><input class="uploadImgBtn input" type="file" /></span>\
@@ -624,7 +624,7 @@
 										<option value ="cg-99" >无</option>\
 									</select>\
 									</p>\
-									<p class="infoContainer clearfix">\
+									<p class="infoContainer clearfix" style="display:none">\
 										<input class="jsNameInput" type="text" value="">\
 										<span class="jsChooseBtn tagBtn">选择</span>\
 									</p>\

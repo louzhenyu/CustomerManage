@@ -3,7 +3,7 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
-    <title>销活动设置</title>
+    <title>营销活动设置</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link href="css/birthDayDetail.css" rel="stylesheet" type="text/css" />
 </asp:Content>
@@ -417,7 +417,7 @@
                                             <div class="commonBtn" style="display: none" >
                                                 选择模板</div>
                                             <div class="text">
-                                                <textarea  class="easyui-validatebox" data-options="validType:'maxLength[50]'" placeholder="<#=item.type=='SMS'?'短信长度为66个字，标点符号、汉字、英文字母等都各算一个字。':'微信群发消息长度为600个字，标点符号、汉字、英文字母等都各算一个字。'#>"><#=item.Content#></textarea>
+                                                <textarea  class="easyui-validatebox" data-options="validType:'maxLength[50]'" placeholder="<#=item.MessageType=='SMS'?'短信长度为66个字，标点符号、汉字、英文字母等都各算一个字。':'微信群发消息长度为600个字，标点符号、汉字、英文字母等都各算一个字。'#>"><#=item.Content#></textarea>
                                             </div>
                                         </div>
                                         <!--panelDiv-->

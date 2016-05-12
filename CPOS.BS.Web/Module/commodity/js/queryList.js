@@ -287,11 +287,10 @@
                     {
                         field : 'ck',
                         title:'全选',
-                        checkbox : true
-                    }//显示复选框
-                ]],
-                columns : [[
-                    {field : 'Image_Url',title : '图片',width:50,align:'left',resizable:false,
+                        checkbox : true,
+                        width:50,
+                    },//显示复选框
+                    {field : 'Image_Url',title : '图片',width:50,align:'center',resizable:false,
                         formatter:function(value ,row,index){
                             var html=' <img src="images/商品.png" width="40" height="40"  />';
                             if(value){
@@ -302,6 +301,19 @@
                         }
 
                     },
+                ]],
+                columns : [[
+                  /*  {field : 'Image_Url',title : '图片',width:50,align:'left',resizable:false,
+                        formatter:function(value ,row,index){
+                            var html=' <img src="images/商品.png" width="40" height="40"  />';
+                            if(value){
+                                html=' <img src="'+value+'" width="40" height="40"  />'
+                            }
+
+                            return html;
+                        }
+
+                    },*/
                     {field : 'Item_Name',title : '商品名称',width:120,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=56;

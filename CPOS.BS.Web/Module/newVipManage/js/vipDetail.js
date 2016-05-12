@@ -442,10 +442,14 @@
                 });
 
 
+            }).delegate(".tagbtn .icon", "mouseenter", function () {  //停靠显示和隐藏删除按钮
+                $(this).find(".icon").stop().show(110)
+            }).delegate(".tagbtn .icon", "mouseleave", function () {
+                $(this).find(".icon").stop().hide(800)
             }).delegate(".tagbtn", "mouseenter", function () {  //停靠显示和隐藏删除按钮
-                $(this).find(".icon").show(0)
+                $(this).find(".icon").stop().show(110)
             }).delegate(".tagbtn", "mouseleave", function () {
-                $(this).find(".icon").hide(0)
+                $(this).find(".icon").stop().hide(800)
             }).delegate(".tagbtn", "click", function () {
                 var node=$(this);
                 var obj={}

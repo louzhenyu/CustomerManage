@@ -75,8 +75,8 @@ require.config({
         easyui: '/Module/static/js/lib/jquery.easyui.min',
         langzh_CN: '/Module/static/js/lib/easyui-lang-zh_CN',
         validator: '/Module/static/js/lib/validator',
-        /*jquery: '/Module/Withdraw/js/jquery',*/
-        newJquery: '/Module/Withdraw/js/jquery',  //jquery版本兼容问题，待定
+        jquery: '/Module/Withdraw/js/jquery',
+       // newJquery: '/Module/Withdraw/js/jquery',  //jquery版本兼容问题，待定
         pagination: '/Module/static/js/plugin/jquery.jqpagination',
         json2: '/Module/static/js/plugin/json2',
         kindeditor1: '/Module/static/js/plugin/kindeditor',
@@ -100,7 +100,7 @@ require.config({
     }
 });
 
-define(['newJquery'], function () {
+define(['jquery'], function () {
         var pageJs = $("#section").data("js"),
         pageJsPrefix = '';
         if (pageJs.length) {

@@ -13,7 +13,7 @@
         init: function () {
             this.initEvent();
             this.loadPageData();
-            $(".panelMenu").height($(window).height());
+            $(".panelMenu").height($(window).height()-60);
         },
         initEvent: function () {
             var that = this;
@@ -46,7 +46,7 @@
                             title: data["name"],
                             iconCls: name,
                             //href:"http://bs.chainclouds.cn/WebReport/ReportServer?reportlet=demo/chart/axis.cpt&op=fs_load&cmd=sso&fr_username=admin&fr_password=i15617945",
-                            content: '<iframe width="' + ($("#section").width() - $(".panelMenu").width() - 10) + 'px" id="iframe" height="' + ($("#section").height() - 35) + 'px" src="' + url + '"></iframe>',
+                            content: '<iframe width="' + ($("#section").width() - $(".panelMenu").width() - 10) + 'px" id="iframe" height="' + ($("#section").height() - 80) + 'px" src="' + url + '"></iframe>',
                             closable: true
 
                         });

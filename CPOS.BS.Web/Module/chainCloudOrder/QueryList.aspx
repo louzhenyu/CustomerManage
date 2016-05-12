@@ -109,7 +109,7 @@
                                      <div class="commonBtn w100 batch optionCheck" style="position: relative" data-show="0,100,500" data-flag="batch"   >批量操作
                                      <div class="panelTab" >
                                      <p class="optionCheck check01" data-optiontype="audit" data-show="0,100" >批量审核</p>
-                                     <p class="optionCheck check02" data-optiontype="shipments" data-show="0,500">批量发货</p>
+                                   <!--  <p class="optionCheck check02" data-optiontype="shipments" data-show="0,500">批量发货</p>-->
                                      <p class="optionCheck check03" data-optiontype="cancel" data-show="0,占位">批量取消</p>
                 </div>
                                      </div>

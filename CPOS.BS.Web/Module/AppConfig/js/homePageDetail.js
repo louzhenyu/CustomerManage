@@ -54,7 +54,7 @@
             }
         },
         init: function () {
-            var that=$(this);
+            var that=this;
             if(this.ele.type.indexOf("#")!=-1) {
                 var sear=location.hash;
                 sear=decodeURIComponent(sear);
@@ -64,9 +64,11 @@
                     if (result.homeId) {
                         self.ele.homeId = result.homeId;
                         self.ele.type = "Edit";
-                        this.loadData();
+                        this.loadData(function(){
+                            that.initSort();
+                        });
                         this.initEvent();
-                       // this.initSort();
+                       //
                     }else{
                         console.info("地址栏数据异常。"+ex);
                     }
@@ -74,7 +76,9 @@
                     console.info("地址栏数据异常。"+ex);
                 }
             } else{
-                this.loadData();
+                this.loadData(function(){
+                    that.initSort();
+                });
                 this.initEvent();
                 //this.initSort();
             }
@@ -114,7 +118,7 @@
             debugger
             self.sotrActionJson=[];
             var displayIndexList=[];
-            var  actiondom;
+            var  actiondom,followInfo,navList;
             $("#sortable .action").each(function () {
                 if(!$(this).html()){
                     $(this).remove();
@@ -126,9 +130,22 @@
                     }
                 }
                 $(this).find(".select").remove();
-
+                var me=$(this);
+                switch (me.data("type")) {
+                    case "followInfo":
+                        followInfo=me;
+                        break;
+                    case "navList":
+                        navList = me;
+                        break;
+                }
             });
-
+            if(followInfo){
+                self.ele.sortableDiv.prepend(followInfo);
+            }
+            if(navList){
+                self.ele.sortableDiv.append(navList);
+            }
             $("#sortable .action").each(function () {
                 var name = "未知模块", me = $(this), index = me.index(), groupId = me.find(".jsListItem ").data("id");
 
@@ -180,11 +197,18 @@
             //self.sotrActionJson=[{"type":"search","name":"搜索"},{"type":"adList","name":"幻灯片播放"},{"type":"categoryEntrance","name":"分类导航"},{"type":"secondKill","name":"限时抢购"},{"type":"eventList","name":"热销榜单/疯狂团购/限时抢购组合框"},{"type":"originalityList","name":"创意组合"},{"type":"productList","name":"商品列表"},{"type":"productList","name":"商品列表"},{"type":"originalityList","name":"创意组合"},{"type":"secondKill","name":"限时抢购"},{"type":"navList","name":"菜单导航"}]
 
             self.SaveActionStore(self.sotrActionJson, isLoadInfo,displayIndexList);
-            if(self.ele.sortableDiv.find('[data-type="navList"]').length>0) {
-                self.ele.sortableDiv.find('[data-type="navList"]').before(actiondom)
 
-            } else{
-                self.ele.sortableDiv.append(actiondom);
+            //空的对象不入库处理
+            if(actiondom&&actiondom.data("type")=='followInfo'){
+                self.ele.sortableDiv.prepend(actiondom)
+            } else {
+
+                if (actiondom&&actiondom.data("type")!='navList'&&self.ele.sortableDiv.find('[data-type="navList"]').length > 0) {
+                    self.ele.sortableDiv.find('[data-type="navList"]').before(actiondom)
+
+                } else {
+                    self.ele.sortableDiv.append(actiondom);
+                }
             }
             var ele = {
                 adList: $("[data-type='adList']"),  //幻灯片播放
@@ -229,7 +253,7 @@
             }
             return index
         },
-        loadData: function () {
+        loadData: function (callback) {
             this.allData = null;                //保存所有左侧load下来的数据 A B Ｃ区
             this.eventTypeList = [
                 { key: 2, value: "限时抢购" },
@@ -240,8 +264,10 @@
 
             this.GetLevel1ItemCategory();       //加载弹层一集分类
             this.GetHomePageConfigInfo(function(){
-                self.initSort()
-            });       //获取左侧数据
+                if(callback){
+                    callback();
+                }
+            });      //获取左侧数据
         },
         stopBubble: function (e) {              //阻止冒泡方法
             if (e && e.stopPropagation) {
@@ -901,8 +927,6 @@
                         }else{
                             alert("幻灯片已存在");
                         }
-
-
                         break; //头部幻灯片
                     case "entranceList":
                         if(self.isAdd(self.ele.entranceList)){
@@ -921,6 +945,7 @@
 
                         break; //团购活动
                     case "originalityList":
+                        self.ele.originalityList=$("[data-type='originalityList']");
                         if (self.ele.originalityList.find(".jsListItemEmpty").length == 0) {
                             html=self.render(self.template.titleModel,{title:"创意组合"})+self.render(self.template.categoryEmptyModel);
                             if(self.ele.sortableDiv.find('[data-type="navList"]').length>0) {
@@ -930,15 +955,14 @@
                                 self.ele.sortableDiv.append("<div class='action' data-type='originalityList'>" + html + "</div>")
                             }
 
-                            self.ele.originalityList=$("[data-type='originalityList']");
-
 
                         } else {
                             alert("请先编辑空白模板并保存");
                         }
                         break;  //创意组合
                     case "productList":
-                        if (self.ele.originalityList.find(".jsListItemEmpty").length == 0) {
+                        self.ele.productList = $("[data-type='productList']");
+                        if (self.ele.productList.find(".jsListItemEmpty").length == 0) {
 
                             self.ele.productListObject={
                                 showDiscount:1, //显示折扣
@@ -958,8 +982,6 @@
                             }else{
                                 self.ele.sortableDiv.append("<div class='action' data-type='productList'>" + html + "</div>");
                             }
-
-                            self.ele.productList = $("[data-type='productList']");
 
 
                         } else {
@@ -1000,7 +1022,7 @@
                         }else{
                             alert("请先编辑空白模板并保存");
                         }
-
+                        break;
 
                 }
                 // self.sortAction(true);
@@ -1035,6 +1057,7 @@
                 //选择select类型  产品、资讯、类型....
                 var $this = $(this);
                 $this.parent().siblings(".infoContainer").children(".jsChooseBtn").show();
+                $this.parent().siblings(".infoContainer").show().children(".jsNameInput").css({"width":"83%"});
                 //$this.parent().siblings(".infoContainer").children(".jsNameInput").css({"width":"86%"});
                 //$this.siblings(".delIcon").show();
                 if(!isSimulation) {
@@ -1099,6 +1122,7 @@
 
                 var $this=$(this);
                 self.categoryLayer.pageIndex = 0;
+                self.categoryLayer.pageIndex1 = 0;
                 self.categoryLayer.shopType=self.ele.editLayer.find(".jsTabContainer .on").data("typeid");
                 if(self.categoryLayer.shopType) {
                     self.categoryLayer.showActivity(function (key, name) {
@@ -1289,8 +1313,14 @@
                 currentTab.data("inputvalue", self.ele.editLayer.find(".jsAreaTitle .jsNameInput").val());
                 //修改itemId和eventId
                 currentTab.data("currentitemid", itemData.itemid).data("eventid", itemData.eventid);
-
-
+                var radio=$(this).find(".radio")
+                    var radioType =radio.data("name");
+                    var value=radio.data("value");
+                    if(radioType) {
+                        var selector = "[data-name='{0}']".format(radioType);
+                        $(selector).removeClass("on");
+                        radio.addClass("on");
+                    }
             }).delegate(".jsSaveEventBtn", "click", function () {
                 // 保存活动
                 //debugger;
@@ -1305,6 +1335,8 @@
                 if($this.parent().find(".jsAreaItem").length<5){
                     $this.before(self.render(self.template.adItemListTemp, { length: 1 }));
                     self.addUploadImgEvent($this.prev().find(".uploadImgBtn")[0]);
+                }else{
+                    alert("最多可以添加5张");
                 }
 
 
@@ -1332,7 +1364,11 @@
 
                 //obj["objectId"] = $this.data("objectid")||$(this).attr("data-objectid");
                 obj["objectName"] = $this.data("name");
-
+              if(!obj.typeId || obj.typeId=="null"){
+                    flag = false;
+                    alert("第" + (i + 1) + "项展示广告不能为空，请选择展示的商品或填写资讯链接地址");
+                    return false;
+                }
                 switch (obj.typeId.toString()){
                     case "3": obj["url"] = $this.find(".jsNameInput").val();  break;//自定义链接
                     case "99": obj["url"] = "nothing";  break;  //无
@@ -1363,16 +1399,8 @@
                             alert("第" + (i + 1) + "项展示广告不能为空，请选择展示的分类、分组或商品");
                             return false;
                         }
-                    }else if(obj.typeId=="null"){
-                        flag = false;
-                        alert("第" + (i + 1) + "项展示广告不能为空，请选择展示的商品或填写资讯链接地址");
-                        return false;
                     }
 
-                } else  {
-                    flag = false;
-                    alert("第" + (i + 1) + "项展示广告不能为空，请选择展示的商品或填写资讯链接地址");
-                    return false;
                 }
 
                 list.push(obj);
@@ -1695,16 +1723,8 @@
                     obj["categoryAreaId"] = $this.data("categoryareaid");
                     obj["groupId"] = self.currentEditData.groupId;
                 }
-                switch (obj.typeId.toString()){
-                    case "3": obj["url"] = $this.find(".jsNameInput").val();  break; //自定义链接
-                    case "31": obj["url"] = "IndexShopApp"; break;  //首页
-                    case "32": obj["url"] ="Category";  break;
-                    case "33": obj["url"] = "GoodsCart";  break;
-                    case "34": obj["url"] = "MyOrder";  break;
-                    case "37": obj["url"] = "GetVipCard";  break;
-                    case "99": obj["url"] = "nothing";  break;
-                    default: obj["objectId"] = $this.data("objectid")||$this.attr("data-objectid"); break;  //1商品类型  2商品链接  4商品分组
-                }
+
+
                 if (!obj.imageUrl) {
                     flag = false;
                     alert("第" + (i + 1) + "项信息已编辑，图片不完善");
@@ -1715,6 +1735,16 @@
                     alert("第" + (i + 1) + "项信息已编辑，选项分类不完善");
                     return false;
                 }else{
+                    switch (obj.typeId.toString()){
+                        case "3": obj["url"] = $this.find(".jsNameInput").val();  break; //自定义链接
+                        case "31": obj["url"] = "IndexShopApp"; break;  //首页
+                        case "32": obj["url"] ="Category";  break;
+                        case "33": obj["url"] = "GoodsCart";  break;
+                        case "34": obj["url"] = "MyOrder";  break;
+                        case "37": obj["url"] = "GetVipCard";  break;
+                        case "99": obj["url"] = "nothing";  break;
+                        default: obj["objectId"] = $this.data("objectid")||$this.attr("data-objectid"); break;  //1商品类型  2商品链接  4商品分组
+                    }
                     if(obj["typeId"]==3){
                         if(!obj["url"]){
                             flag = false;
@@ -1826,28 +1856,35 @@
                 case "99": obj["url"] = "nothing";  break;
                 default: obj["textId"] = $this.data("id");  obj["textTitle"]=$this.find(".jsNameInput").val(); break;  //1商品类型  2商品链接  4商品分组
             }
-            if(data.typeid==35){
-                if( !obj["textId"]){
-                    flag=false;
-                    alert("选择的图文素材不能为空");
-                }
-            }else{
-                if( !obj["url"]){
-                    flag=false;
-                    alert("自定义链接不可为空");
-                }
-            }
             if(obj["title"]){
                 if(obj["title"].length>16&&obj["title"].length<2) {
-                    flag = false;
                     alert("请输入欢迎语的长度在2-16个");
+                    return false
                 }
             }else{
                 alert("欢迎语不可为空");
+                return false
             }
-            if(flag){
+            if(data.typeid=="null"){
+                alert("请选择一个链接类型");
+                return false;
+            }
+            if(data.typeid==35){
+                if( !obj["textId"]){
+
+                    alert("选择的图文素材不能为空");
+                    return false
+                }
+            }else{
+                if( !obj["url"]){
+                    alert("自定义链接不可为空");
+                    return false
+                }
+            }
+
+
                 self.savItemeFollowInfo(obj);
-            }
+
         },
         saveSearch:function(){
             debugger;
@@ -2103,7 +2140,10 @@
                         debugger
 
                         if(data.data) {
-                            $("#searchType").val(data.data.title);
+                            if($("#searchType").val()==""){
+                                $("#searchType").val(data.data.title);
+                            }
+
                             debugger;
                             var json=data.data.sortActionJson||"[]"
                             self.sotrActionJson = JSON.parse(json);

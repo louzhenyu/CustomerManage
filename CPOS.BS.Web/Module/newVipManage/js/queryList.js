@@ -399,7 +399,7 @@
             if(data.Data.VipInfoList.length==1){
                 var rowData= data.Data.VipInfoList[0];
                 if(rowData.VIPID||rowData.VipCardID) {
-                    location.href = "VipDetail.aspx?vipId=" + rowData.VIPID + "&VipCardId=" + rowData.VipCardID + "&mid=" + $.util.getUrlParam("mid");
+                    $.util.toNewUrlPath("VipDetail.aspx?vipId=" + rowData.VIPID + "&VipCardId=" + rowData.VipCardID)
                   console.log("此卡没有绑定会员信息")
                 }else{
                     data.Data.VipInfoList=[];

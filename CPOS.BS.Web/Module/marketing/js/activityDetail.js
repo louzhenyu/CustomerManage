@@ -609,7 +609,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                                    }
                                }
 
-                               $.parser.parse();
+                               //$.parser.parse();
                                $(select).find(".templatePanel:last").addClass("borderNone");
                                /*var day= $.util.GetDateDiff (filed.SendTime,window.StartTime,"day");
                                var hour=new Date(filed.SendTime).format("hh")+":00";*/
@@ -617,11 +617,13 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                            })
                        }
 
-                       $.parser.parse();
-                       $('#nav0_2').form('load', data.Data);
-                       $('#nav0_1').form('load', data.Data);
-                       $(".tooltip ").hide();
+                       //$.parser.parse();
 
+                       setTimeout(function(){
+                           $('#nav0_2').form('load', data.Data);
+                           $('#nav0_1').form('load', data.Data);
+                           $(".tooltip ").hide();
+                       },400)
                    });
                }
         },
@@ -683,7 +685,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                         }
                     } ,
 
-                    {field : 'PrizesDetailID',title : '删除',width:23,align:'center',resizable:false,
+                    {field : 'PrizesDetailID',title : '删除',width:23,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             return '<p class="fontC delete" data-id='+value+' data-index="'+index+'" data-oprtype="delete"></p>';
                         }

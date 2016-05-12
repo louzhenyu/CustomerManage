@@ -131,8 +131,8 @@
                     })
                 }
                 if (optType == "exit") {
-                    var mid = JITMethod.getUrlParam("mid");
-                    $.util.toNewUrlPath("birthDayDetail.aspx?mid=" + mid + "&ActivityID=" + row.ActivityID);
+                    var mid = $.util.getUrlParam("mid");
+                    $.util.toNewUrlPath("birthDayDetail.aspx?ActivityID=" + row.ActivityID);
                 }
                 if(optType=="start"||optType=="end"){
                     that.loadData.operation(row,optType,function(){

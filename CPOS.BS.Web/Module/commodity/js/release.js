@@ -113,7 +113,7 @@
                     });
                     $("#itemType").combobox({
                         novalidate:true
-                    })
+                    });
                     $(".commonBtn.addSKU").show();
 					$('#bulkBox').show();
                 }
@@ -542,16 +542,19 @@
                 $(this).find(".icon").show(0)
             }).delegate(".pro,.btn","mouseleave",function(){
                 $(this).find(".icon").hide(0)
-            }).delegate(".addSKU","click",function(){  //添加sku品类事件
+            }).delegate(".addSKU","click",function(data){  //添加sku品类事件
                 $("#dataState").fadeOut(10);
                 var long=that.elems.sku.find(".skuList").length;
                 if(long>=3){
                     alert("最多只能添加3个规格");
                     return;
                 }
+                if(that.elems.allData.SKUPropList.length==long&&!data){
+                    alert("没有新的规格可供添加");
+                    return;
+                }
                 var html = bd.template("tpl_AddPro");
                 that.elems.sku.append(html);
-
                 that.proAdd(long);
 
 

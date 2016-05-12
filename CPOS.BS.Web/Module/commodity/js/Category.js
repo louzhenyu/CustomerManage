@@ -314,6 +314,7 @@
                 columns : [[
                     {field : 'text',title : '分类名称',width:120,align:'left',resizable:false,
                         formatter:function(value ,row,index){
+                            debugger;
                             var long=12;
                             var html='';
                             if(value&&value.length>long){

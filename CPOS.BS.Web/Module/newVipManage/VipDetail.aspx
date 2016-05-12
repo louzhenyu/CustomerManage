@@ -775,7 +775,7 @@
                     <div class="radio L" data-name="r1"><em></em> <span> 电话</span></div>
                     <div class="radio L" data-name="r1"><em></em> <span> 微信</span></div>
                     <div class="radio L out" data-name="r1"><em></em> <span> 其他</span></div>
-                    <input type="text" class="easyui-validatebox L" name="ServicesMode"  style="border:1px solid #ccc;width:80px;height:32px "  />
+                    <input type="text" class="easyui-validatebox L" name="ServicesMode"  style="border:1px solid #ccc;width:80px;height:30px; margin-left: 6px; "  />
                </div>
            </div>
          <div class="commonSelectWrap">

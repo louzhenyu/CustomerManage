@@ -303,7 +303,8 @@ body{overflow-x: hidden;}
 .combobox-item-hover {
     color: #fff; background-color: #00a0e8;
 }
-
+.datagrid-row-over td{position: relative;z-index: 1;}
+.datagrid-row-over .shift{display: block}
 
 /*linkBtn*/
 .l-btn{color: #fff;}
