@@ -53,7 +53,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 
 
             #endregion
-            if (!SMSHelper.Send(pRequest.CustomerID,pRequest.Parameters.Mobile, code, sign, out msg,0))
+            if (!SMSHelper.Send(pRequest.CustomerID,pRequest.Parameters.Mobile, code, sign, out msg))
             {
                 //throw new APIException("短信发送失败:" + msg) { ErrorCode = ERROR_SMS_FAILD };
                 throw new APIException(msg) { ErrorCode = ERROR_SMS_FAILD };
