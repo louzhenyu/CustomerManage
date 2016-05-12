@@ -445,7 +445,8 @@
 					if(result){
 						$('#seach').form('load',result);
 						if(result.User_Password != null){
-							$('#User_Password').attr('disabled','disabled');
+							$('#User_Password').attr('readonly','readonly');
+							$('#User_Code').attr('readonly','readonly');
 						}
 					}else{
 						alert('加载数据失败');

@@ -71,7 +71,7 @@
                               <div class="commonSelectWrap">
                                   <em class="tit">用户名：</em>
                                   <label class="searchInput" style="width:232px;">
-                                      <input data-text="用户名" class="easyui-validatebox" data-flag="user_code" name="User_Code"   id="user_code" type="text" value="" data-options="required:true,validType:'maxLength[20]',invalidMessage:'输入的用户名长度不能超20个字符'" placeholder="请输入">
+                                      <input data-text="用户名" class="easyui-validatebox" data-flag="User_Code" name="User_Code"   id="User_Code" type="text" value="" data-options="required:true,validType:'maxLength[20]',invalidMessage:'输入的用户名长度不能超20个字符'" placeholder="请输入">
                                   </label>
                               </div>
                               
