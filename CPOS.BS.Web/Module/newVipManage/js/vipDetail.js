@@ -891,7 +891,7 @@
                                                  return '<p class="fontC exit" data-index="'+index+'" data-oprtype="exit"></p>';
                                              }
                                          },
-                                         {field : '',title : '删除',width:81,align:'left',resizable:false,
+                                         {field : 'VipID',title : '删除',width:81,align:'left',resizable:false,
                                              formatter:function(value ,row,index){
                                                  return '<p class="fontC delete" data-index="'+index+'" data-oprtype="del"></p>';
                                              }
