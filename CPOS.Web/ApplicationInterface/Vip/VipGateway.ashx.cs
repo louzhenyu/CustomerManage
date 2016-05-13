@@ -865,10 +865,10 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
 
                     //订单金额正值(正常的买单),订单金额负值(退订订单)
-                    if (tInoutEntity.ActualAmount >= 0)
-                        tInoutEntity.OrderReasonID = "2F6891A2194A4BBAB6F17B4C99A6C6F5";
-                    else
-                        tInoutEntity.OrderReasonID = "21B88CE9916A4DB4A1CAD8E3B4618C10";
+                    //if (tInoutEntity.ActualAmount >= 0)
+                    //    tInoutEntity.OrderReasonID = "2F6891A2194A4BBAB6F17B4C99A6C6F5";  //正常pos订单Order_Reason_id
+                    //else
+                    //    tInoutEntity.OrderReasonID = "21B88CE9916A4DB4A1CAD8E3B4618C10";
 
 
                     //如果实付金额 = 各种优惠活动的综合 设置付款状态=1【已付款】
