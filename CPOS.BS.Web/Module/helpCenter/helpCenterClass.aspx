@@ -162,7 +162,7 @@ ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBas
         </div>
              <div class="class">
             <div class="classify">优惠券管理</div>
-            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=1141">优惠券设置</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=814">优惠券查询</a></span></div>
+            <div class="options"><span><a target="_blank" href="http://help.chainclouds.cn/?p=1141">优惠券设置</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=814">优惠券查询</a></span><span><a target="_blank" href="http://help.chainclouds.cn/?p=2085">线下优惠券核销</a></span></div>
         </div>
             <div class="class">
             <div class="classify">营销工具</div>
