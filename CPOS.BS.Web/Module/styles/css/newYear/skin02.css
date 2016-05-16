@@ -373,13 +373,20 @@ body{overflow-x: hidden;}
 .noOpt{ float: left;margin: 6px 10px;}
 .noDelete{background:no-repeat center center;background-image:url(../../images/newYear/nodel.png);   width: 16px; height: 16px; }
 .delete{background:no-repeat center center; background-image:url(../../images/newYear/del.png); width: 16px; height: 16px;  cursor: pointer}
+.del2{background:no-repeat center center; background-image:url(../../images/newYear/del2.png); width: 16px; height: 16px;  cursor: pointer}
 .down{ background:no-repeat center center; background-image:url(../../images/newYear/down.png); width: 18px; height: 17px; cursor: pointer}
 .exit{background:no-repeat center center; background-image:url(../../images/newYear/exit.png); width: 16px; height: 16px;cursor: pointer}
+.exit2{background:no-repeat center center; background-image:url(../../images/newYear/exit2.png); width: 16px; height: 16px;cursor: pointer}
 .btnAdd{background:url(../../images/newYear/addstr.png) center center  no-repeat; width: 18px; height: 18px;  cursor: pointer}
 .btnDownload{background:url(../../images/newYear/Download.png) center center  no-repeat;width: 16px; height: 16px;cursor:pointer;}
 .reset{ background:no-repeat center center; background-image:url(../../images/newYear/reset.png);width:16px;height:16px;cursor:pointer;}
 .runningBtn{float:left;background:no-repeat center center; background-image:url(../../images/newYear/runningBtn.png);width:16px;height:16px;cursor:pointer;}
 .pauseBtn{float:left;background:no-repeat center center; background-image:url(../../images/newYear/pauseBtn.png);width:16px;height:16px;cursor:pointer;}
+.watch{float:left;background:no-repeat center center; background-image:url(../../images/newYear/watch.png);width:16px;height:16px;cursor:pointer;}
+.watchOn{float:left;background:no-repeat center center; background-image:url(../../images/newYear/watchOn.png);width:16px;height:16px;cursor:pointer;}
+.stopOut{float:left;background:no-repeat center center; background-image:url(../../images/newYear/stopOut.png);width:16px;height:16px;cursor:pointer;}
+.stopOn{float:left;background:no-repeat center center; background-image:url(../../images/newYear/stopOn.png);width:16px;height:16px;cursor:pointer;}
+
 
 .rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left;}
 

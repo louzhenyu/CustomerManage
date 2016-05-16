@@ -1,54 +1,73 @@
-Ôªø<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
+<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <meta charset="UTF-8" />
-    <title>Á†ç‰ª∑Ê¥ªÂä®ÂàóË°®</title>
+    <title>ªÓ∂Ø¡–±Ì</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-    <link href="css/style.css?v=0.4" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/bargainManage/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
         <div class="allPage" id="section" data-js="js/queryList.js?ver=0.3">
-            <!-- ÂÜÖÂÆπÂå∫Âüü -->
+            <!-- ƒ⁄»›«¯”Ú -->
             <div class="contentArea_vipquery">
-                <!--‰∏™Âà´‰ø°ÊÅØÊü•ËØ¢-->
+                <!--∏ˆ±–≈œ¢≤È—Ø-->
                 <div class="queryTermArea" id="simpleQuery" style="display: inline-block; width: 100%;">
                         <div class="item">
                           <form></form>
                           <form id="seach">
                                                   <div class="commonSelectWrap">
-                                                      <em class="tit">‰ºòÊÉ†Âà∏ÂêçÁß∞Ôºö</em>
-                                                      <label class="searchInput" style="width: 487px;">
-                                                          <input data-text="‰ºòÊÉ†Âà∏ÂêçÁß∞" data-flag="CouponTypeName" name="CouponTypeName" type="text"
-                                                              value="">
+                                                      <em class="tit">ªÓ∂Ø√˚≥∆£∫</em>
+                                                      <label class="searchInput">
+                                                          <input data-text="ªÓ∂Ø√˚≥∆" data-flag="EventName" name="EventName" type="text" placeholder="«Î ‰»ÎªÓ∂Ø√˚≥∆" value="">
                                                       </label>
                                                   </div>
                                                   <div class="commonSelectWrap">
-                                                      <em class="tit">Èù¢ÂÄºÔºö</em>
+                                                      <em class="tit">◊¥Ã¨£∫</em>
                                                       <div class="searchInput bordernone">
-                                                         <input data-text="Èù¢ÂÄº" data-flag="ParValue" class="easyui-numberbox" data-options="min:0,precision:2, width:160,height:32" name="ParValue" type="text" value="">
+                                                         <input id="item_status" data-text="◊¥Ã¨" data-flag="Status" class="easyui-combobox" data-options="min:0,precision:2, width:198,height:32" name="EventStatus" type="text" placeholder="«Î ‰»Î◊¥Ã¨" value="" >
                                                       </div>
                                                   </div>
                                                   <div class="moreQueryWrap">
-                                                                             <a href="javascript:;" class="commonBtn queryBtn">Êü•ËØ¢</a>
-                                                                           </div>
+                                                     <a href="javascript:;" class="commonBtn queryBtn">≤È—Ø</a>
+                                                   </div>
+                                                   <div class="clear"></div>
+                                                   
+
+                                                   <div class="commonSelectWrap">
+                                                      <em class="tit">ø™ º ±º‰£∫</em>
+                                                      <div class="searchInput bordernone">
+                                                         <input id="BeginTime"  name="BeginTime" class="easyui-datebox"  data-options="width:198,height:32" />
+                                                      </div>
+                                                  </div>
+
+                                                  <div class="commonSelectWrap">
+                                                      <em class="tit">Ω· ¯ ±º‰£∫</em>
+                                                      <div class="searchInput bordernone">
+                                                         <input id="EndTime" name="EndTime" class="easyui-datebox" data-options="width:198,height:32" validType="compareDate[$('#BeginTime').datebox('getText'),'µ±«∞—°‘Òµƒ ±º‰±ÿ–ÎÕÌ”⁄«∞√Ê—°‘Òµƒ ±º‰']"/>
+                                                      </div>
+                                                  </div>
+                           
+                              
+                              </div>
+
 
                                                   </form>
 
                         </div>
 
-                    <!--<h2 class="commonTitle">‰ºöÂëòÊü•ËØ¢</h2>-->
+                    <!--<h2 class="commonTitle">ª·‘±≤È—Ø</h2>-->
 
                 </div>
                 <div class="tableWrap" id="tableWrap">
-                <div class="optionBtn" id="opt">
-                 <div class="commonBtn sales" data-flag="add" id="sales"> <img src="images/add.png"  >Êñ∞Â¢ûÁ†ç‰ª∑</div>
+                  <div class="optionBtn" id="opt">
+                    <div class="commonBtn r sales" data-flag="add" id="sales"> <img src="images/add.png"  >–¬‘ˆø≥º€</div>
 
 
-                </div>
+                  </div>
                 <div class="cursorDef">
                    <div  id="gridTable" class="gridLoading">
                          <div  class="loading">
@@ -58,7 +77,7 @@
                    </div>
                    </div>
                     <div id="pageContianer">
-                    <div class="dataMessage" >Ê≤°ÊúâÁ¨¶ÂêàÊù°‰ª∂ÁöÑÊü•ËØ¢ËÆ∞ÂΩï</div>
+                    <div class="dataMessage" >√ª”–∑˚∫œÃıº˛µƒ≤È—Øº«¬º</div>
                         <div id="kkpager" >
                         </div>
                     </div>
@@ -70,34 +89,52 @@
       		<div class="easyui-layout" data-options="fit:true" id="panlconent">
 
       			<div data-options="region:'center'" style="padding:10px;">
-      				ÊåáÂÆöÁöÑÊ®°ÊùøÊ∑ªÂä†ÂÜÖÂÆπ
+      				÷∏∂®µƒƒ£∞ÂÃÌº”ƒ⁄»›
       			</div>
       			<div class="btnWrap" id="btnWrap" data-options="region:'south',border:false" style="height:80px;text-align:center;padding:5px 0 0;">
-      				<a class="easyui-linkbutton commonBtn saveBtn" >Á°ÆÂÆö</a>
-      				<a class="easyui-linkbutton commonBtn cancelBtn"  href="javascript:void(0)" onclick="javascript:$('#win').window('close')" >ÂèñÊ∂à</a>
+      				<a class="easyui-linkbutton commonBtn saveBtn" >»∑∂®</a>
+      				<a class="easyui-linkbutton commonBtn cancelBtn"  href="javascript:void(0)" onclick="javascript:$('#win').window('close')" >»°œ˚</a>
       			</div>
       		</div>
 
       	</div>
       </div>
-
-
-        <!--Êî∂Ê¨æ-->
-         <script id="tpl_AddNumber" type="text/html">
-            <form id="optionForm">
-
-
-            <div class="optionclass">
-               <div class="commonSelectWrap">
-                             <em class="tit">Êï∞Èáè:</em>
-                                <div class="borderNone" >
-                                 <input id="Amount" class="easyui-numberbox" data-options="width:180,height:34,min:0,precision:0,max:10000" name="IssuedQty" />
-                               </div>
-                </div>
+      <!--…Ã∆∑ª˘±æ–≈œ¢±‡º≠-->
+      <div class="ui-pc-mask" id="ui-mask" style="display:none;"></div>
+      <div id="goodsBasic_exit"  class="jui-dialog jui-dialog-addGoogs" style="display:none;">
+        
+          <div class="jui-dialog-tit">
+            <h2>ÃÌº”ø≥º€</h2>
+              <a href="javascript:;" class="jui-dialog-close hintClose"></a>
+          </div>
+          <div class="optionclass">
+             
+            <div class="title">ªÓ∂Ø√˚≥∆:</div>
+            <div class="borderNone" >
+             <input id="campaignName" data-options="width:260,height:34,min:1,precision:0,max:10000" name="IssuedQty" style="width:260px" placeholder="«Î—°‘ÒªÓ∂Ø√˚≥∆" />
             </div>
-                </form>
-                </script>
-
+          </div>
+          <div class="optionclass">
+            <div class="title">ø™ º ±º‰:</div>
+            <div class="searchInput bordernone">
+              <input id="campaignBegin"  name="order_date_begin" style="width:260px" placeholder="«Î—°‘ÒªÓ∂Øø™ º ±º‰" />
+            </div>
+            
+          </div>
+          <div class="optionclass">
+            <div class="title">Ω· ¯ ±º‰:</div>
+            <div class="searchInput bordernone">
+              <input id="campaignEnd" name="order_date_end" style="width:260px" placeholder="«Î—°‘ÒªÓ∂ØΩ· ¯ ±º‰" />
+            </div>
+            
+          </div>
+          <div class="btnWrap">
+              <a href="javascript:;" id="saveCampaign" class="commonBtn saveBtn">Ã·Ωª</a>
+              <a href="javascript:;" class="commonBtn cancelBtn hintClose">»°œ˚</a>
+          </div>
+        
+        
+      </div>
 
        <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
             defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>

@@ -381,7 +381,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 砍价列表
         /// </summary>
         /// <returns></returns>
-        public DataSet GetKJEventList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
+        public DataSet BargainList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
         {
             SqlParameter[] parameters = new SqlParameter[7] 
             { 
@@ -394,7 +394,7 @@ namespace JIT.CPOS.BS.DataAccess
                 new SqlParameter{ParameterName="@CustomerId",SqlDbType=SqlDbType.NVarChar,Value=CurrentUserInfo.ClientID},
             };
 
-            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Proc_GetKJEventList", parameters);
+            return this.SQLHelper.ExecuteDataset(CommandType.StoredProcedure, "Proc_GetBargainList", parameters);
         }
         /// <summary>
         /// 根据主题id结束促销活动
@@ -442,5 +442,103 @@ namespace JIT.CPOS.BS.DataAccess
                                             WHERE EventId=@EventId", strCTWEventId, strEndDate);
             this.SQLHelper.ExecuteNonQuery(strSql);
         }
+
+        public DataSet GetKJEventWithItemList(string customerId)
+        {
+            string sql = @" select 
+                            a.EventId,
+                            c.Item_Id as ItemId,
+                            c.Item_Name as ItemName,
+                            c.ImageUrl,
+                            b.MinPrice,
+                            b.MinBasePrice,
+                            b.Qty,
+                            b.SoldQty,
+                            b.PromotePersonCount
+                            from PanicbuyingEvent a
+                            inner join PanicbuyingKJEventItemMapping b on a.EventId = b.EventId 
+                            inner join vw_item_detail c on b.ItemId = c.item_id
+                            where a.EventTypeId = 4 
+                            and a.customerId = '" + customerId + @"'
+                            and a.EventStatus = 20
+                            and a.IsDelete = 0
+                            and b.IsDelete = 0  
+                            order by a.LastUpdateTime asc  
+                         ";
+
+            DataSet ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+
+        public DataSet GetKJEventWithItemDetail(string eventId, string itemId)
+        {
+            string sql = @"
+                            select 
+                            a.ItemId,
+                            b.Item_Name as ItemName,
+                            a.SinglePurchaseQty,
+                            a.MinPrice,
+                            a.MinBasePrice,
+                            a.PromotePersonCount,
+                            a.Qty - a.SoldQty  as CurrentQty,
+                            a.SoldQty,
+                            a.KeepQty,
+                            a.BargaingingInterval,
+                            c.EndTime as EventEndTime,
+                            c.BeginTime as EventBeginTime,
+                            b.Prop1Name,
+                            b.Prop2Name,
+                            b.ItemIntroduce,
+                            a.EventItemMappingID
+                            from PanicbuyingKJEventItemMapping a 
+                            inner join dbo.vw_item_detail b on a.itemId = b.item_id
+                            inner join dbo.PanicbuyingEvent c on a.EventId = c.EventId 
+                            where a.itemId = '" + itemId + @"' 
+                            and c.EventId = '" + eventId + @"' 
+                            and a.isdelete = 0
+                            and b.isdelete = 0
+                            and c.isdelete = 0
+                        ";
+            DataSet ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+        public DataSet GetKJEventWithSkuDetail(string eventId, string SkuId)
+        {
+            string sql = @"
+                            select 
+                            a.ItemId,
+                            a.EventItemMappingID,
+                            b.Item_Name as ItemName,
+                            a.SinglePurchaseQty,
+                            a.MinPrice,
+                            a.MinBasePrice,
+                            a.BargainPersonCount,
+                            a.Qty as CurrentQty,
+                            a.SoldQty,
+                            a.KeepQty,
+                            a.BargaingingInterval,
+                            a.Qty - a.SoldQty as RemainingQty,
+                            a.StatusReason as StopReason,
+                            c.EndTime as EventEndTime,
+                            c.BeginTime as EventBeginTime,
+                            b.Prop1Name,
+                            b.Prop2Name,
+                            b.ItemIntroduce
+                            from PanicbuyingKJEventItemMapping a 
+                            inner join dbo.vw_item_detail b on a.itemId = b.item_id
+                            inner join dbo.PanicbuyingKJEventSkuMapping x on a.EventItemMappingID = x.EventItemMappingID
+                            inner join dbo.PanicbuyingEvent c on a.EventId = c.EventId 
+                            where x.SkuId = '" + SkuId + @"' 
+                            and c.EventId = '" + eventId + @"' 
+                            and c.EndTime >= getdate()
+                            and a.isdelete = 0
+                            and b.isdelete = 0
+                            and c.isdelete = 0
+                        ";
+            DataSet ds = this.SQLHelper.ExecuteDataset(sql);
+            return ds;
+        }
+
+ 
     }
 }

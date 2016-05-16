@@ -262,6 +262,10 @@
     <Compile Include="CodeGeneration\PanicbuyingEventItemMappingEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventOrderMappingEntity.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventSkuMappingEntity.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventItemMappingEntity.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventJoinDetailEntity.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventJoinEntity.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventSkuMappingEntity.cs" />
     <Compile Include="CodeGeneration\PgUserEntity.cs" />
     <Compile Include="CodeGeneration\PowerHourEntity.cs" />
     <Compile Include="CodeGeneration\PowerHourInviteEntity.cs" />
@@ -597,6 +601,10 @@
     <Compile Include="PanicbuyingEventItemMappingEntity.cs" />
     <Compile Include="PanicbuyingEventOrderMappingEntity.cs" />
     <Compile Include="PanicbuyingEventSkuMappingEntity.cs" />
+    <Compile Include="PanicbuyingKJEventItemMappingEntity.cs" />
+    <Compile Include="PanicbuyingKJEventJoinDetailEntity.cs" />
+    <Compile Include="PanicbuyingKJEventJoinEntity.cs" />
+    <Compile Include="PanicbuyingKJEventSkuMappingEntity.cs" />
     <Compile Include="PaymentTypeInfo.cs" />
     <Compile Include="CityInfo.cs" />
     <Compile Include="CodeGeneration\ActivityMediaEntity.cs" />

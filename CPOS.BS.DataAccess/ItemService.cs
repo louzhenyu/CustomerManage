@@ -1015,7 +1015,7 @@ namespace JIT.CPOS.BS.DataAccess
             return this.SQLHelper.ExecuteDataset(sql);
         }
 
-        public DataSet GetItemProp2List(string itemId, string propDetailId,int type,string eventId)
+        public DataSet GetItemProp2List(string itemId, string propDetailId,int type,string eventId) //1-普通商品 2-团购抢购 3-砍价
         {
             string sql = "SELECT DISTINCT a.sku_id skuId,a.sku_prop_id2 prop2DetailId,ISNULL(b.prop_name,a.sku_prop_id2) prop2DetailName,";
             if(type == 1)
@@ -1028,7 +1028,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             if (type == 3)
             {
-                sql += @"x.qty as Stock,x.SoldQty as SalesCount";
+                sql += @"d.qty as Stock,d.SoldQty as SalesCount";
             }
              sql = sql  + " FROM dbo.T_Sku a "
                         + " LEFT JOIN dbo.T_Prop b "
@@ -1052,7 +1052,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             if (type == 3)
             {
-                sql += "inner join PanicbuyingKJEventItemMapping z on z.itemid = c.item_Id"
+                sql += "inner join PanicbuyingKJEventItemMapping z on z.itemid = c.item_Id "
                         + "inner join PanicbuyingKJEventSkuMapping d on z.EventItemMappingId = d.EventItemMappingId and d.skuId = c.sku_Id "
                         + " WHERE a.status = '1' " 
                         + " AND a.sku_prop_id1 = '" + propDetailId + "' "

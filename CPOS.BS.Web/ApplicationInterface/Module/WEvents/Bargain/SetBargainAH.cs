@@ -26,26 +26,58 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.Bargain
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var bllPanicbuyingEvent = new PanicbuyingEventBLL(loggingSessionInfo);
-            var entityPanicbuyingEvent = new PanicbuyingEventEntity();
+            string REventId = string.Empty;
 
-            entityPanicbuyingEvent.EventName = para.EventName;
-            entityPanicbuyingEvent.BeginTime = para.BeginTime;
-            entityPanicbuyingEvent.EndTime = para.EndTime;
-            entityPanicbuyingEvent.EventTypeId = 4;
-            entityPanicbuyingEvent.EventStatus = 10;
 
             if (string.IsNullOrEmpty(para.EventId))
             {
-                bllPanicbuyingEvent.Create(entityPanicbuyingEvent);
+                var entityPanicbuyingEvent = new PanicbuyingEventEntity();
+                entityPanicbuyingEvent.EventId = System.Guid.NewGuid();
+                entityPanicbuyingEvent.EventName = para.EventName;
 
+                #region 名称重复处理
+                var Result = bllPanicbuyingEvent.QueryByEntity(new PanicbuyingEventEntity() { EventName = para.EventName, EventTypeId = 4 }, null).ToList();
+                if (Result.Count() > 0)
+                    throw new APIException("已有相同的砍价活动名称,请重新命名！");
+                #endregion
+
+                entityPanicbuyingEvent.BeginTime = para.BeginTime;
+                entityPanicbuyingEvent.EndTime = para.EndTime;
+                //
+                entityPanicbuyingEvent.EventTypeId = 4;
+                entityPanicbuyingEvent.EventStatus = 20;
+                entityPanicbuyingEvent.PromotePersonCount = 0;
+                entityPanicbuyingEvent.BargainPersonCount = 0;
+                entityPanicbuyingEvent.ItemQty = 0;
+                entityPanicbuyingEvent.CustomerID = loggingSessionInfo.ClientID;
+                bllPanicbuyingEvent.Create(entityPanicbuyingEvent);
+                //
+                REventId = entityPanicbuyingEvent.EventId.ToString();
             }
             else
             {
-                entityPanicbuyingEvent.EventId =new Guid(para.EventId);
-                bllPanicbuyingEvent.Update(entityPanicbuyingEvent,false);
+                var UpdateData = bllPanicbuyingEvent.GetByID(para.EventId);
+                if (UpdateData==null)
+                    throw new APIException("未找到砍价活动！");
+
+                #region 名称重复处理
+                if (!UpdateData.EventName.Trim().Equals(para.EventName.Trim()))
+                {
+                    var Result = bllPanicbuyingEvent.QueryByEntity(new PanicbuyingEventEntity() { EventName = para.EventName, EventTypeId = 4 }, null).ToList();
+                    if (Result.Count() > 0)
+                        throw new APIException("已有相同的砍价活动名称,请重新命名！");
+                }
+                #endregion
+
+                UpdateData.EventName = para.EventName;
+                UpdateData.BeginTime = para.BeginTime;
+                UpdateData.EndTime = para.EndTime;
+                bllPanicbuyingEvent.Update(UpdateData);
+                //
+                REventId = para.EventId;
 
             }
-            rd.EventId = entityPanicbuyingEvent.EventId.ToString();
+            rd.EventId = REventId;
 
             return rd;
         }

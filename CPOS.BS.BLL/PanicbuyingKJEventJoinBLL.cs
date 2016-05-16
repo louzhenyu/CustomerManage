@@ -32,6 +32,23 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理：  
     /// </summary>
     public partial class PanicbuyingKJEventJoinBLL
-    {  
+    {
+        public DataSet GetBuyerList(string EventId, string ItemId, int PageSize, int PageIndex)
+        {
+            return this._currentDAO.GetBuyerList(EventId, ItemId, PageSize, PageIndex);
+        }
+
+        public DataSet GetKJEventJoinList(string Vipid, int PageIndex, int PageSize)
+        {
+           return this._currentDAO.GetKJEventJoinList(Vipid, PageIndex, PageSize);
+        }
+        /// <summary>
+        /// 获取商品图片URL
+        /// </summary>
+        /// <param name="ItemID"></param>
+        /// <returns></returns>
+        public string GetItemImageURL(string ItemID) {
+            return this._currentDAO.GetItemImageURL(ItemID);
+        }
     }
 }

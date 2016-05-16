@@ -1,271 +1,531 @@
-﻿define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialog'], function ($) {
+define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialog','datetimePicker'], function ($) {
     var page = {
+        url: "/ApplicationInterface/Events/EventsGateway.ashx",
         elems: {
             sectionPage:$("#section"),
             simpleQueryDiv: $("#simpleQuery"),     //简单查询条件的层dom
-            listItem: $("#unitList"),             //所有的查询条件层dom
-            Tooltip:$("#Tooltip"),
-            listTable:$(".listTable .easyui-datagrid"), //
+            allQueryDiv: $("#allQuery"),             //所有的查询条件层dom
+            uiMask: $("#ui-mask"),
+            tabel:$("#gridTable"),                   //表格body部分
+            tabelWrap:$('#tableWrap'),
+            thead:$("#thead"),                    //表格head部分
+            showDetail: $('#showDetail'),         //弹出框查看详情部分
+            operation:$('#opt,#Tooltip'),              //弹出框操作部分
+            vipSourceId:'',
             click:true,
+            dataMessage:  $("#pageContianer").find(".dataMessage"),
+            panlH:116,                       // 下来框统一高度
+            searchBtn: $("#searchBtn"), 
+            keyword:$("#keyword"),
 
-            panlH:116                           // 下来框统一高度
         },
         detailDate:{},
-        ValueCard:'',//储值卡号
+        ValueCard: '',//储值卡号
+        submitappcount: false,//是否正在提交追加表单
         select:{
             isSelectAllPage:false,                 //是否是选择所有页面
             tagType:[],                             //标签类型
             tagList:[]                              //标签列表
         },
+        stopBubble: function (e) {
+            if (e && e.stopPropagation) {
+                //因此它支持W3C的stopPropagation()方法
+                e.stopPropagation();
+            }
+            else {
+                //否则，我们需要使用IE的方式来取消事件冒泡
+                window.event.cancelBubble = true;
+            }
+            e.preventDefault();
+        },
+        //获得页面分类和
+        initObj:function(){
+            var that=this;
+            //活动id
+            var eventId = $.util.getUrlParam("eventId");
+            var commodityStatus = $.util.getUrlParam("CommodityStatus");
+            that.eventId=eventId;
+            that.commodityStatus=commodityStatus;
+            var pageStr = "";
+        },
         init: function () {
+            var that=this;
+            this.initObj();
             this.initEvent();
+            this.loadPageData();
 
 
         },
-        unitBtnEvent:function(){
-            var that = this;
-            that.elems.listItem.delegate(".icon", "click", function () {   //删除操作按钮操作
+        //初始化团购的商品列表
+        initEventGoodsList:function(){
+            var that=this;
 
-                var me = $(this);
-                if (me.parent().hasClass('pro')) {
-                    me.parents(".skuList").remove();
-                    if (that.elems.sku.find(".skuList").length == 0) {
-                        $("#dataState").fadeIn();
-                    }
-                }
-                me.parent().remove();
-            }).delegate(".unitBtn", "mouseenter", function () {  //停靠显示和隐藏删除按钮
-                $(this).find(".icon").show(0)
-            }).delegate(".unitBtn", "mouseleave", function () {
-                $(this).find(".icon").hide(0)
-            })
+            //请求结果
+            this.loadData.getEventGoodsList(function(data){
+                var list=data.Data.ItemList;
+                list=(list&&list.length)?list:[];
+                var html=bd.template("tpl_goodsItem",{list:list});
+                $("#goodsList").html(html);
+                //动画让其出现
+                $("#"+that.showPage).show(1000);
+            });
+        },
+        //显示弹层
+        showElements:function(selector){
+            this.elems.uiMask.show();
+            $(selector).slideDown();
+        },
+        hideElements:function(selector){
+
+            this.elems.uiMask.fadeOut(500);
+            $(selector).slideUp(500);
+        },
+        //加载商品列表
+        loadMoreData: function (currentPage) {
+            var that = this;
+            this.loadData.goods.pageIndex=currentPage-1;
+            this.loadData.getQueryGoods(function(data){
+                var list=data.Data.ItemInfoList;
+                list=list?list:[];
+                var html=bd.template("tpl_goods_list",{list:list})
+                $("#searchList").html(html);
+            });
         },
         initEvent: function () {
             var that = this;
             //点击查询按钮进行数据查询
 
-             that.elems.simpleQueryDiv.delegate(".listBtn","click",function(){
-                 debugger;
-                  var me=$(this);
-
-                  if(!me.hasClass("show")){
-                      that.elems.simpleQueryDiv.find(".listBtn").removeClass("show");
-                       me.addClass("show");
-                      debugger;
-                      if(me.data("coupontype")==1){
-                          $('#ParValue').numberbox({
-                              max:0,
-                              disabled:true
-                          });
-                          $('#ParValue').siblings(".textbox.numberbox").css({"background":"#efefef"});
-                          var classs="."+me.data("hide");
-
-                          $(classs).hide(0);
-                      }else if(me.data("coupontype")==0){
-                          $('#ParValue').numberbox({
-                              max:null,
-                              disabled:false
-                          });
-                          var classs="."+me.data("show");
-                          $(classs).show();
-
-                          $('#ParValue').siblings(".textbox.numberbox").css({"background":"#fff"});
-                      }
-                  }
-
-
-             }) ;
-            that.elems.simpleQueryDiv.find(".listBtn").eq(0).trigger("click");
-            that.elems.sectionPage.delegate(".radio","click",function(e){
-                var me= $(this), name= me.data("name");
-                me.toggleClass("on");
-                if(name){
-                    var  selector="[data-name='{0}']".format(name);
-                    $(selector).removeClass("on");
-                    me.addClass("on");
-                    $(selector).siblings().find(".easyui-numberbox").numberbox({
-                        disabled:true
-                        //required: false
-                    });
-                    $(selector).siblings().find(".easyui-datebox").datebox({
-                        disabled:true
-                        //required: false
-                    });
-                    if(me.data("validity")=="time") {
-                        me.siblings().find(".easyui-datebox").datebox({
-                            disabled:false,
-                            required: true
-                        });
-                    } else if(me.data("validity")=="day"){
-                        me.siblings().find(".easyui-numberbox").numberbox({
-                            disabled:false,
-                            required: true
-                        });
-                    }
-                }
+            that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
+                //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
+                that.setCondition();
+                //查询数据
+                
+                that.loadData.getBargainItemList(function(data){
+                    debugger;
+					var list=data.Data;
+					list=list?list:[];
+					var html=bd.template("tpl_goods_basic",{list:list})
+					$("#barginTitleInfo").html(html);
+					//根据不同状态判断页面
+					that.CommodityStatusInit();
+                    that.renderTable(data);
+                });
                 $.util.stopBubble(e);
-            }).delegate(".submitBtn","click",function(){ //新增优惠券
-                if($("#addCoupon").form("validate")){
-                     var fields=$("#addCoupon").serializeArray();
-
-                    that.loadData.operation(fields,"addCoupon",function(){
-                          alert("操作成功");
-                        var mid = JITMethod.getUrlParam("mid");
-                        location.href = "queryList.aspx?mid=" + mid;
-                    })
-                }
 
             });
-
-            that.elems.sectionPage.find("[data-validity].radio").eq(0).trigger("click");
-            $(".listTable").delegate(".del","click",function(e){
-                debugger;
-                  var  index=$(this).data("index");
-                   // index=parseInt(index);
-                  that.elems.listTable.datagrid("deleteRow",index);
-
-                var  data=that.elems.listTable.datagrid("getData");
-                that.elems.listTable.datagrid("loadData",data);
-
+            debugger;
+           
+            //点击添加商品
+            $("#addShopBtn").delegate(".commonBtn","click",function(e){
+                that.showElements("#addNewGoods");
+                
+                //获得分类
+                that.loadData.getCategory(function(data){
+                    //debugger;
+                    var list=data.Data.ItemCategoryInfoList;
+                    list=list?list:[];
+                    var html=bd.template("tpl_category",{list:list})
+                    $("#category").html(html);
+                });
+                //触发查询事件 获得所有的商品列表
+                that.elems.searchBtn.trigger("click");
+                that.stopBubble(e);
             });
-            that.elems.sectionPage.delegate(".checkBox","click",function(e){
-                var me= $(this);
-                me.toggleClass("on");
-                $.util.stopBubble(e);
-                debugger;
-                $('#addUnit').tooltip("hide");  //取消按钮
-                var  className="."+me.data("toggleclass");
-                if(me.hasClass("on")&&me.data("flag")=="SuitableForStore"){
-                   $(className).hide(0);
-                }else if(me.data("flag")=="SuitableForStore") {
-                    $(className).show(0);
-                }
-                if(me.hasClass("on")&&me.data("flag")=="ConditionValue") {
-                    $('#ConditionValue').numberbox({
-                        min: 0,
-                        max:null,
-                        disabled: false
+            //商品基本信息编辑
+            $("#barginTitleInfo").delegate(".commonBtn","click",function(e){
+                that.showElements("#goodsBasic_exit");
+                that.loadData.getBargainItemList(function(data){
+                    var name = data.Data.EventName;
+                    var start = data.Data.BeginTime;
+                    var end = data.Data.EndTime;
+					
+                    $('#campaignName').val(name);
+					$('#campaignBegin').val(start);
+					$('#campaignEnd').val(end);
+					if(page.commodityStatus=='2'){
+						$('#goodsBasic_exit').find('input').attr('disabled',true);
+						$('#campaignName').attr('disabled',false);
+						$('#campaignBegin').css('background','#ccc');
+						$('#campaignEnd').css('background','#ccc');
+						
+					}
+					else if(page.commodityStatus=='3'){
+						$('#goodsBasic_exit').find('input').attr('disabled',true);
+						$('#campaignName').attr('disabled',false);
+						$('#campaignBegin').css('background','#ccc');
+						$('#campaignEnd').css('background','#ccc');
+					}
+                    
+                })
+            });
+            //新增活动(编辑活动)
+            $('#saveCampaign').bind('click',function(){
+                var event_name = $('#campaignName').val();
+                var event_start = $('#campaignBegin').val();
+                var event_end = $('#campaignEnd').val();
+                that.loadData.commodity.EventName = event_name;
+                that.loadData.commodity.BeginTime = event_start;
+                that.loadData.commodity.EndTime = event_end;
+				if(event_start<event_end){
+					that.loadData.setBargain(function(data){
+						that.loadPageData();
+						window.location.reload();//刷新当前页面.
+					})
+				}
+				else{
+					$.messager.alert('提示','活动开始时间不能大于结束时间'); 
+				}
+                //var event_id = data.Data.EventId;
+                
+
+            })
+            //关闭弹出层
+            $(".hintClose").bind("click",function(){
+                that.elems.uiMask.slideUp();
+                $(this).parent().parent().fadeOut();
+            });
+            //搜索商品名称
+            that.elems.searchBtn.click(function(e){
+                var keyword=that.elems.keyword.val();
+                that.loadData.goods.itemName=keyword;
+                that.loadData.goods.pageIndex=0;
+                that.loadData.goods.categoryId=$("#categoryText").data("categoryid");
+                //查询商品
+                that.loadData.getQueryGoods(function(data){
+                    var list=data.Data.ItemInfoList;
+                    list=list?list:[];
+                    var html=bd.template("tpl_goods_list",{list:list})
+                    $("#searchList").html(html);
+                    kkpager.generPageHtml({
+                        pagerid: 'kkpager1',
+                        pno: that.loadData.args.PageIndex,
+                        mode: 'click', //设置为click模式
+                        //总页码
+                        total: data.Data.TotalPage,
+                        isShowTotalPage: false,
+                        isShowTotalRecords: false,
+                        //点击页码、页码输入框跳转、以及首页、下一页等按钮都会调用click
+                        //适用于不刷新页面，比如ajax
+                        click: function (n) {
+                            //这里可以做自已的处理
+                            //...
+                            //处理完后可以手动条用selectPage进行页码选中切换
+                            this.selectPage(n);
+
+                            that.loadMoreData(n);
+                        },
+                        //getHref是在click模式下链接算法，一般不需要配置，默认代码如下
+                        getHref: function (n) {
+                            return '#';
+                        }
+
+                    }, true);
+                });
+                that.stopBubble(e);
+            });
+            //选中一个商品则弹出新增规格的层
+            $("#searchList").delegate("li","click",function(e){
+                var $t=$(this);
+                var itemId=$t.data("itemid"),shopName=$t.data("name");  //商品id 和商品名称
+                that.loadData.sku.ItemId=itemId;
+				that.loadData.args.EventItemMappingID="";
+                //设置商品名称
+                $("#goodsInfo .shopName").html(shopName);
+				
+                that.hideElements("#addNewGoods");
+                setTimeout(function(){
+                    //获得sku
+                    that.loadData.getBargainDetails(function(data){
+						var list = data.Data.SkuInfoList;
+                        list=list?list:[];
+                        if(list.length==0){
+                            var d = dialog({
+                                fixed:true,
+                                title: '提示',
+                                content: '该商品暂未配置规格，不能添加规格!'
+                            });
+                            d.showModal();
+                            setTimeout(function () {
+                                d.close().remove();
+                            }, 3500);
+                        }else{
+                            var html=bd.template("tpl_rule",{list:list});
+                            $("#rules").html(html);
+							var inputs=$("#rules").find("input");
+							inputs.each(function(i){
+								var $tt=$(this).val();
+								if($tt=='null'){
+									$(this).val("");
+								}	
+							})
+							$('#goodsInfo .quotaBox').find('input').removeClass('disab');
+							$('#goodsInfo .quotaBox').find('input').attr('disabled',false);
+							$('#goodsInfo .quotaBox').find('input').val('');
+                            $("#rules .editArea .shopName").html(shopName);
+                            $("#singleCount").css({border:"1px solid ccc"});
+                            $("#barginTime").css({border:"1px solid ccc"});
+                            that.showElements("#addNewRules");
+                        }
                     });
-                    $('#ConditionValue').siblings(".textbox.numberbox").css({"background":"#fff"});
-                }else if(me.data("flag")=="ConditionValue"){
-                    $('#ConditionValue').numberbox({
-                      /*  max: 0,*/
-                        disabled: true
-                    });
-                    $('#ConditionValue').siblings(".textbox.numberbox").css({"background":"#efefef"});
-                }
+
+                },550);
+                that.stopBubble(e);
             });
-            that.elems.sectionPage.find(".checkBox").trigger("click").trigger("click");
-            that.elems.Tooltip.delegate(".commonBtn","click",function(e){
-                  debugger;
-                var  type= $(this).data("flag");
-                var parms={};
-                if(type=="sales"){
-                    var nodes=$("#Tooltip").find(".treeNode").tree('getChecked');
-
-                    that.elems.listTable.datagrid({
-
-                        data:nodes,
-                        columns:[[
-                            {field:'text',title:'',width:100,
-                                formatter: function(value,row,index){
-                                      return '<div class="texlist">'+value+' <img class="del" data-index="'+index+'" src="images/delicon.png"></div>'
-                                }
-
+            //选中规格和取消规格
+            $("#rules").delegate(".item","click",function(e){
+                var $t=$(this);
+				var typeDisable = $t.attr('data-Disable');
+				if(typeDisable =='false'){
+					if(e.target.className=="checkBox"||e.target.nodeName=="SPAN"){
+						$t.toggleClass("on");
+					}
+					var inputs=$t.find("input");
+					
+					if($t.hasClass("on")){
+						
+							inputs.each(function(i){
+								var $tt=$(this);
+								$tt.removeAttr("disabled");
+								$t.find("input").eq(1).attr("disabled","disabled");
+								$t.find("input").eq(2).css({'border':'1px solid #ccc','background':'fff'});
+							});
+						
+						
+					}else{
+						
+						inputs.each(function(i){
+							var $tt=$(this);
+							$tt.attr("disabled",true);
+							$t.find("input").eq(2).css({'border':'1px solid #ccc','background':'none'});
+							
+						})
+						
+						
+					}
+				}	
+				
+                that.stopBubble(e);
+            });
+            //保存规格
+            $("#saveRules").click(function(e){
+                //获得所有的选中的规格
+                var isBool = true,priceEorr={isSubMit:true,indexList:""};
+                var singlePurchaseQtyInput = $("#singleCount");
+                var BargaingingIntervalInput = $("#barginTime");
+                var items=$("#rules").find(".on");
+				var itemMappingId = $('#rules').attr('data_itemmappingid');
+                var SkuInfoList=[];
+                var exp =/^[0-9]*[1-9][0-9]*$/;//正整数正则
+                var reg =/^\-[1-9][0-9]*$/;//负整数正则
+                that.loadData.sku.SinglePurchaseQty = singlePurchaseQtyInput.val()||0;
+                that.loadData.sku.BargaingingInterval = BargaingingIntervalInput.val();
+				that.loadData.sku.mappingId=itemMappingId;
+                $('#goodsInfo .quotaBox').find('input').click(function(){
+                   $(this).css('border','1px solid #ccc');
+                })
+                if(items.length==0){
+                    alert("请至少选择一个规格后再提交!");
+                    return;
+                }
+                if(singlePurchaseQtyInput.val()!=""){
+                    if(singlePurchaseQtyInput.val()!=0){
+                        if(!exp.test(singlePurchaseQtyInput.val())){
+                            if(reg.test(singlePurchaseQtyInput.val())){
+                                $.messager.alert("提示","不能输入负数,请重新输入！")
+                                othis.css({border:"1px solid red"});
+                                isBool = false;
+                                return fasle;
+                            }else{
+                                isBool = false
+                                $.messager.alert("提示","砍价商品每人限购格式不对,请输入整数！");
+                                singlePurchaseQtyInput.css({border:"1px solid red"});
+                                return false;
                             }
-                        ]]
-                    })
+                        }
+                    }
+                }
+				if(BargaingingIntervalInput.val()!=""){
+
+					if(!exp.test(BargaingingIntervalInput.val())){
+                        if(BargaingingIntervalInput.val()=="0"){
+                            isBool = false;
+                            $.messager.alert("提示","砍价商品可砍时间不能为0!");
+                            BargaingingIntervalInput.css({border:"1px solid red"});
+                            return false;
+                        }
+                        else if(reg.test(BargaingingIntervalInput.val())){
+                            $.messager.alert("提示","不能输入负数,请重新输入！")
+                            othis.css({border:"1px solid red"});
+                            isBool = false;
+                            return fasle;
+                        }else{
+                            isBool = false
+                            $.messager.alert("提示","砍价商品可砍时间格式不对,请输入整数！");
+                            BargaingingIntervalInput.css({border:"1px solid red"});
+                            return false;
+                        }
+					}
+				}
+				else{
+					isBool = false;
+					$.messager.alert("提示","砍价商品可砍时间不能为空!");
+                    BargaingingIntervalInput.css({border:"1px solid red"});
+					return false;
+				}
+				
+                items.each(function(i,o){
+                    //每个item
+                    var $t=$(this);
+                    var mappingid=$t.data("mappingid");
+                    var skuMapid = $t.data("skumappid");
+                    var skuId=$t.data("skuid");
+                    var obj={};
+                    obj.SkuID=skuId;
+					obj.EventSKUMappingId=skuMapid;
+                    var inputList=$t.find("input");
+
+                    inputList.click(function(){
+                        var othis=$(this);
+                        othis.css('border','1px solid #ccc');
+                    });
+                    inputList.each(function(j,k){
+                        var othis=$(this);
+                        var value=othis.val();
+                        var ago=value+"";//如果出错则恢复
+						if(value!=""){
+							if(isNaN(value)){
+							   $.messager.alert("提示","只能输入数字")
+								othis.css({border:"1px solid red"});
+								isBool = false;
+								return fasle;
+							}
+							else if(parseInt(value)=="0"){
+								$.messager.alert("提示","数值不能为0")
+								othis.css({border:"1px solid red"});
+								isBool = false;
+								return fasle;
+							}
+							else if(!exp.test(value)){
+                                if(reg.test(value)){
+                                    $.messager.alert("提示","不能输入负数,请重新输入！")
+                                    othis.css({border:"1px solid red"});
+                                    isBool = false;
+                                    return fasle;
+                                }else{
+                                    $.messager.alert("提示","数值格式不对，请输入整数")
+                                    othis.css({border:"1px solid red"});
+                                    isBool = false;
+                                    return fasle;
+                                }
+							}
+							else{
+
+								othis.css({"border-color":"","border-width":1,"border-style":""});
+								if(j==0){
+									obj.Qty=parseInt(value);
+								}
+								if(j==1){
+									obj.Price=parseInt(value);
+								}
+								if(j==2){
+									obj.BasePrice = parseFloat(value);
+								}
+								if(j==3){
+									obj.BargainStartPrice=parseFloat(value);
+								}
+								if(j==4){
+									obj.BargainEndPrice=parseFloat(value);
+								}
+							}
+						}else{
+							if(j==0){
+								$.messager.alert("提示","商品数量不能为空");
+							}
+							if(j==2){
+								$.messager.alert("提示","底价不能为空");
+							}
+							if(j==3){
+								$.messager.alert("提示","砍减价不能为空");
+							}
+							if(j==4){
+								$.messager.alert("提示","砍减价不能为空");
+							}
+							othis.css({border:"1px solid red"});
+							isBool = false;
+							return fasle;
+						}
+
+                    });
+					if(obj.BargainStartPrice>obj.Price){
+                        isBool = false;
+                        $.messager.alert("提示","砍价可砍价格不能大于原价");
+						inputList.eq(3).css({border:"1px solid red"});
+                        return false;
+                    }
+                    if(obj.BargainStartPrice>obj.BargainEndPrice){
+                        isBool = false;
+                        $.messager.alert("提示","砍价区间后面不能小于前面");
+						inputList.eq(4).css({border:"1px solid red"});
+                        return false;
+                    }
+                    if(obj.Price<obj.BasePrice){
+                        priceEorr.isSubMit=false;
+						$.messager.alert("提示","底价不能大于原价");
+						inputList.eq(2).css({border:"1px solid red"});
+						 return false;
+						
+                    }
+                    SkuInfoList.push(obj);
+                });
+                if(!isBool){
+                  return false;
+                }
+                that.loadData.sku.SkuInfoList=SkuInfoList;
+				debugger;
+
+                if(priceEorr.isSubMit) {
+                    that.loadData.setBargainDetails(function (data) {
+                        //初始化详细页面头部信息
+                        
+                        that.loadMoreData2();
+                        that.hideElements("#addNewRules");
+                    });
 
                 }
-                if(type=="cannel"){
-                    $('#addUnit').tooltip("hide");  //取消按钮
-                }
-
-
             });
-            /**************** -------------------初始化easyui 控件 start****************/
+            //分类选择事件
+            $("#category").delegate("span","click",function(e){
+                var $t=$(this);
+                var categoryId=$t.data("categoryid"),categoryName=$t.html();
+                $("#categoryText").data("categoryid",categoryId).html(categoryName);
+                $t.parent().hide(500);
+                that.stopBubble(e);
+            });
+            //获取时间插件
+            $('#campaignBegin').datetimepicker({
+                lang: "ch",
+                format: 'Y-m-d H:i',
+                step: 5 //分钟步长
+            });
+            $('#campaignEnd').datetimepicker({
+                lang: "ch",
+                format: 'Y-m-d H:i',
+                step: 5 //分钟步长
+            });
+
+            //弹出类别选择事件
+            $("#addNewGoods .selectBox").mouseover(function(e){
+                $("#category").stop().show(500);
+                that.stopBubble(e);
+            });
+
+			
+
+            /**************** -------------------弹出easyui 控件 start****************/
             var  wd=160,H=32;
-            $("#applicationType").combobox({
-                valueField: 'id',
-                textField: 'text',
-                onChange:function(newValue, oldValue){
-                    if(newValue=="0"){
-                        that.elems.listTable.datagrid({
-                            title:"已选门店",
-                            data:[]
-                        })
-                    }
-                    if(newValue=="1"){
-                        that.elems.listTable.datagrid({
-                            title:"已选分销商",
-                            data:[]
-                        })
-                    }
-                },
-                data:[{
-                "id":0,
-                    "text":"门店"
 
-            },{
-                "id":1,
-                 "text":"分销商"
 
-            } ]
-            });
-            that.loadData.get_unit_tree(function(data) {
-                debugger;
-                that.loadData.getUitTree.node=data[0].id;
-                   /* that.loadData.get_unit_tree(function(datas) {
-                        debugger;
-                        data[0].children=datas;*/
-                        that.unitTree=data;
-                        $("#Tooltip").find(".treeNode").tree({
-                            // animate:true
-                            lines: true,
-                            checkbox: true,
-                            valueField: 'id',
-                            textField: 'text',
-
-                            data: data
-
-                        });
-                  /*  })*/
-            });
-            $('#addUnit').tooltip({
-                content: function(){
-                   return  $("#Tooltip");
-                },
-                showEvent: 'click',
-                hideEvent:'dblclick',
-                onShow: function(){
-                    var str= $("#applicationType").combobox("getValue");
-                    if(str==0) {
-                        $(this).tooltip('tip').css({"width":"222" });
-                        var nodes = $("#Tooltip").find(".treeNode").tree('getChecked');
-                        /*$.each(nodes, function () {
-                            var me = this;
-                            $("#Tooltip").find(".treeNode").tree('uncheck', me.target);
-                        });*/
-                        var t = $(this);
-                        t.tooltip('tip').unbind().bind('mouseenter', function () {
-                            t.tooltip('show');
-                        }).bind('mouseleave', function () {
-                            t.tooltip('hide');
-                        });
-                    }else{
-                        $(this).tooltip('tip').css({"display":"none"});
-                       that.addNumber();
-                    }
-                },
-                onHide:function(){
-                    var nodes = $("#Tooltip").find(".treeNode").tree('getChecked');
-                    $.each(nodes, function () {
-                     var me = this;
-                     $("#Tooltip").find(".treeNode").tree('uncheck', me.target);
-                     });
-                }
-            });
-            /**************** -------------------初始化easyui 控件  End****************/
+            /**************** -------------------弹出easyui 控件  End****************/
 
 
             /**************** -------------------弹出窗口初始化 start****************/
@@ -281,177 +541,134 @@
             $('#panlconent').layout({
                 fit:true
             });
-            $("#win").delegate(".datagrid-header-check", "mousedown", function (e) {
-                $(this).toggleClass("on");
-                return false;
-            });
             $('#win').delegate(".saveBtn","click",function(e){
-                var nodes=$("#searchGrid").datagrid("getChecked");
-                var data= that.elems.listTable.datagrid("getData");
-                debugger;
-                var  loadDatas={};
-                if(!(nodes.length>0)){
-                    $.messager.alert("提示" ,"请选择一个分销商");
-                    return false;
-                }
 
-                if(data.rows.length>0){
-                    loadDatas=data;
-                   for(var i=0;i<nodes.length;i++){
-                       var isAdd=true
-                         for(var j=0;j<data.rows.length;j++){
-                             if(data.rows[j].RetailTraderID==nodes[i].RetailTraderID) {
-                                    isAdd=false;
-                             }
-                         }
-                       if(isAdd) {
-                           loadDatas.rows.push(nodes[i])
-                       }
+                if (!that.submitappcount) {
+                    that.submitappcount = true;
+
+                    if ($('#optionForm').form('validate')) {
+
+                        var fields = $('#optionForm').serializeArray(); //自动序列化表单元素为JSON对象
+
+                        that.loadData.operation(fields, that.elems.optionType, function (data) {
+
+                            that.submitappcount = false;
+                            $('#win').window('close');
+                            alert("操作成功");
+
+                            that.loadPageData(e);
+
+                        });
                     }
 
-                }else{
+                } else {
 
-                    loadDatas.rows= nodes;
+                    $.messager.alert('提示', '正在提交请稍后！');
                 }
-
-                if(loadDatas.rows.length>0){
-                    that.elems.listTable.datagrid({
-
-                        data:loadDatas,
-                        columns:[[
-                            {field:'RetailTraderName',title:'',width:100,
-                                formatter: function(value,row,index){
-                                    return '<div class="texlist">'+value+' <img class="del" data-index="'+index+'" src="images/delicon.png"></div>'
-                                }
-
-                            }
-                        ]],onLoadSuccess:function(){
-                            $("#win").window("close");
-                        }
-                    });
-                }
-
-
-
-            }).delegate(".searchBtn","click",function(){
-                 var t = $('#unitTree').combotree('tree');	// 获取树对象
-                var n = t.tree('getSelected');		// 获取选择的节点
-                debugger;
-                if(!n){
-                    $.messager.alert("提示","必须选择一家门店");
-                    return;
-                }
-                that.loadData.seach.UnitID="";
-                if(n&&n.length>1 ){
-                    that.loadData.seach.UnitID=[];
-                    for(var i=0;i< n.length;i++){
-                        that.loadData.seach.UnitID.push(n[i].id);
-                    }
-                } else if(n){
-                    that.loadData.seach.UnitID= n.id;
-                }
-                //that.loadData.seach.UnitID=$('#unitTree').combobox('getValue');
-                that.loadData.seach.RetailTraderName=$()
-                var fields=$("#payOrder").serializeArray();
-                $.each(fields,function(index,field){
-                    that.loadData.seach[field.name]=field.value;
-                });
-                that.loadData.GetRetailTraders(function(data){
-                   var Data=data.Data.RetailTraderList;
-                   if(data.Data.RetailTraderList&&data.Data.RetailTraderList.length>0) {
-                       $("#searchGrid").datagrid({
-                           data: data.Data.RetailTraderList,
-                           singleSelect:false,//多选
-                           frozenColumns: [
-                               [
-                                   {
-                                       field: 'ck',
-                                       width: 70,
-                                       title: '全选',
-                                       align: 'center',
-                                       checkbox: true
-                                   }
-                               ]
-                           ],//显示复选框
-                           columns: [
-                               [
-                                   {field: 'RetailTraderName',align:'left',title: '分销商名称',width:410}
-                               ]
-                           ]
-                       })
-                   }else{
-                       $.messager.alert("提示","该门店无任何分销商");
-                       $("#searchGrid").datagrid({
-                           data:[],
-                           singleSelect:false,//多选
-                           frozenColumns: [
-                               [
-                                   {
-                                       field: 'ck',
-                                       width: 70,
-                                       title: '全选',
-                                       align: 'center',
-                                       checkbox: true
-                                   }
-                               ]
-                           ],//显示复选框
-                           columns: [
-                               [
-                                   {field: 'RetailTraderName',align:'left',title: '分销商名称',width:410}
-                               ]
-                           ]
-                       })
-                   }
-               })
-
 
             });
             /**************** -------------------弹出窗口初始化 end****************/
 
             /**************** -------------------列表操作事件用例 start****************/
-            /*that.elems.tabelWrap.delegate(".opt","click",function(e){
+            that.elems.tabelWrap.delegate(".opt","click",function(e){
+                debugger;
                 var rowIndex=$(this).data("index");
-                var optType=$(this).data("flag");
+                var optType = $(this).data("flag");
+                var couponTypeID = $(this).data("typeid");
+                var CouponTypeName = $(this).data("typename");
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
-                if(optType=="add") {
-                    if(row.IsPaid!=1&&row.Status!=10&&row.Status!=11) {
-                        that.addNumber(row);
-                    }
+                that.loadData.args.EventItemMappingID = row.EventItemMappingID;
+				
+                if(optType=="exit"){
+                    var $t=$(this);
+                    var itemId=$t.data("itemid"),shopName=$t.data("name");  //商品id 和商品名称
+                    that.loadData.sku.ItemId=itemId;
+                    setTimeout(function(){
+                    //获得sku
+                      that.loadData.getBargainDetails(function(data){
+						  var SinglePurchaseQty = data.Data.SinglePurchaseQty;
+						  var BargaingingInterval = data.Data.BargaingingInterval
+                          var list=data.Data.SkuInfoList;
+                          list=list?list:[];
+
+
+                          if(list.length==0){
+                              var d = dialog({
+                                  fixed:true,
+                                  title: '提示',
+                                  content: '该商品暂未配置规格，不能添加规格!'
+                              });
+                              d.showModal();
+                              setTimeout(function () {
+                                  d.close().remove();
+                              }, 3500);
+                          }else{
+                              
+                              
+                              var html=bd.template("tpl_rule",{list:list});
+                              $("#rules").html(html);
+							  var inputs=$("#rules").find("input");
+							  
+								inputs.each(function(i){
+									var $tt=$(this).val();
+									if($tt=="null"){
+										$(this).val("");
+									}
+									
+								})
+							  $("#rules").attr('data_itemMappingId',row.EventItemMappingID);
+							  $('#goodsInfo').find('.quotaBox').eq(1).find('input').val(BargaingingInterval);
+							  $('#goodsInfo').find('.quotaBox').eq(0).find('input').val(SinglePurchaseQty);
+							  $('#goodsInfo .quotaBox').find('input').addClass('disab');
+							  $('#goodsInfo .quotaBox').find('input').attr('disabled',true);
+                              var data_id = $('#rules').find('.item');
+                              for(var i=0;i<data_id.length;i++){
+                                  var rr = data_id.eq(i).attr('data-mappingid');
+                                  if(rr!='null'){
+                                    data_id.eq(i).addClass('on');
+									data_id.eq(i).addClass('disab');
+									data_id.eq(i).attr('data-Disable','true');
+									data_id.eq(i).find('input').eq(0).attr('disabled',false);
+									data_id.eq(i).find('input').eq(2).css('border','none');	
+									data_id.eq(i).find('input').eq(3).attr('disabled',false);
+									data_id.eq(i).find('input').eq(4).attr('disabled',false);
+                                  }
+                              }
+                              $("#goodsInfo .shopName").html(shopName);
+                              $("#rules .editArea .shopName").html(shopName);
+                              $("#singleCount").css({border:"1px solid ccc"});
+                              $("#barginTime").css({border:"1px solid ccc"});
+                              that.showElements("#addNewRules");
+                          }
+                      });
+
+                    },550);
+                
                 }
+
                 if(optType=="delete"){
-                    $.messager.confirm("删除优惠券操作","确认要删除该条记录",function(r){
-                             if(r){
-                                 alert("执行删除")
-                             }
+                    if (row.BeginTime&&row.EndTime) {
+                        var Begindate = Date.parse(new Date(row.BeginTime).format("yyyy-MM-dd").replace(/-/g, "/"));
+                        var Enddate = Date.parse(new Date(row.EndTime).format("yyyy-MM-dd").replace(/-/g, "/"));
+                        var now = new Date();
+                        // if (Begindate <= now && Enddate >= now) {
+                        //     $.messager.alert("操作提示","优惠券在使用时间范围内不可删除");
+                        //     return false;
+                        // }
+                    }
+                    $.messager.confirm("提示","是否确认删除?",function(r){
+                        if(r){
+                            that.loadData.deleteBargainItem(function(){
+                                alert("操作成功");
+                                that.loadPageData()
+                            })
+
+                        }
                     })
                 }
-            })*/
+            })
             /**************** -------------------列表操作事件用例 End****************/
-
-            that.unitBtnEvent();
-
-
-
-            $('#startDate').datebox().datebox('calendar').calendar({
-                validator: function(date){
-                    var now = new Date();
-                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                   //var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
-                    //return d1<=date && date<=d2;
-                    return d1<=date;
-                }
-            });
-            $('#expireDate').datebox().datebox('calendar').calendar({
-                validator: function(date){
-                    var now = new Date();
-                    var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
-                    //var d2 = new Date(now.getFullYear(), now.getMonth(), now.getDate()+10);
-                    //return d1<=date && date<=d2;
-                    return d1<=date;
-                }
-            });
-
         },
 
 
@@ -460,55 +677,30 @@
             debugger;
             var that=this;
             that.elems.optionType="add";
-            $('#win').window({title:"选择分销商",width:470,height:530,top:($("body").height() - 530),
-                left:($(window).width() - 530) * 0.5});
+            $('#win').window({title:"优惠券追加",width:430,height:230});
 
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');
-            var html=bd.template('tpl_AddUnitList');
+            var html=bd.template('tpl_AddNumber');
             var options = {
                 region: 'center',
                 content:html
             };
             $('#panlconent').layout('add',options);
-
-              $("#win").window("open");
-
-
-                   $("#unitTree").combotree({
-                       //panelWidth:300,
-                       width:220,
-                       //animate:true,
-                       multiple:false,
-                       valueField: 'id',
-                       textField: 'text',
-                       data:that.unitTree
-                   });
-            $("#unitTree").combotree("setText","选择分销商所属门店");
-
-            $("#searchGrid").datagrid({
-                data:[],
-                height:300,
-                singleSelect:false,//多选
-                frozenColumns: [
-                    [
-                        {
-                            field: 'ck',
-                            width: 70,
-                            title: '全选',
-                            align: 'center',
-                            checkbox: true
-                        }
-                    ]
-                ],//显示复选框
-                columns: [
-                    [
-                        {field: 'RetailTraderName',align:'left',title: '分销商名称',width:410}
-                    ]
-                ]
-            })
+            $('#win').window('open')
         },
-
+		//状态按钮
+		CommodityStatusInit:function(){
+			debugger;
+			if(page.commodityStatus=="3"){
+				$("#barginTitleInfo").undelegate(".commonBtn","click");
+				$("#addShopBtn").undelegate(".commonBtn","click");
+				$("#barginTitleInfo .commonBtn").css('background','#ccc');
+				$("#addShopBtn .commonBtn").css('background','#ccc');
+			}
+			
+		},
+		
         //设置查询条件   取得动态的表单查询参数
         setCondition:function(){
             debugger;
@@ -517,9 +709,7 @@
             that.loadData.args.start=0;
             var fileds=$("#seach").serializeArray();
             $.each(fileds,function(i,filed){
-                filed.value=filed.value=="0"?"":filed.value;
-                that.loadData.seach[filed.name]=filed.value;
-                that.loadData.seach.form[filed.name]=filed.value;
+                that.loadData.seach[filed.name] = filed.value;
             });
 
 
@@ -532,201 +722,589 @@
         loadPageData: function (e) {
             debugger;
             var that = this;
+            that.loadData.seach.PageIndex=1;
             $(that.elems.sectionPage.find(".queryBtn").get(0)).trigger("click");
             $.util.stopBubble(e);
+            
         },
 
+        //渲染tabel
+        renderTable: function (data) {
+            debugger;
+            var that=this;
+            if(!data.Data.ItemMappingInfoList){
+
+                return;
+            }
+            //jQuery easy datagrid  表格处理
+            that.elems.tabel.datagrid({
+                method : 'post',
+                iconCls : 'icon-list', //图标
+                singleSelect : true, //单选
+                // height : 332, //高度
+                fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                striped : true, //奇偶行颜色不同
+                collapsible : true,//可折叠
+                //数据来源
+                data:data.Data.ItemMappingInfoList,
+                sortName : 'brandCode', //排序的列
+                /*sortOrder : 'desc', //倒序
+                 remoteSort : true, // 服务器排序*/
+                idField : 'Item_Id', //主键字段
+                /*  pageNumber:1,*/
+                /* frozenColumns : [ [ {
+                 field : 'brandLevelId',
+                 checkbox : true
+                 } //显示复选框
+                 ] ],*/
+
+                columns : [[
+
+                    {field : 'ItemName',title : '活动名称',width:300,align:'left',resizable:false,
+                        formatter:function(value ,row,index){
+                            var long=56;
+                            if(value&&value.length>long){
+                                return '<div class="rowText" title="'+value+'">'+value.substring(0,long)+'...</div>'
+                            }else{
+                                return '<div class="rowText">'+value+'</div>'
+                            }
+                        }
+                    },
+                    {field : 'SinglePurchaseQty',title : '每人限购',width:250,resizable:false,align:'left',
+						formatter:function(value){
+                            if (value =="0"){
+								return value = "无限制";
+                            }
+							else{
+								return value;
+							}
+                        }
+					
+					}
+                    ,
+                    {field : 'ItemId',title : '操作',width:100,align:'left',resizable:false,
+                        formatter: function (value, row, index) {
+							var str='';
+							if(page.commodityStatus=="3"){
+								str += "<div data-index=" + index + "  data-flag='exit2' data-TypeName='" + row.ItemName + "' data-TypeID='" + row.EventItemMappingID + "' data-name='"+ row.ItemName +"' data-ItemId='"+row.ItemId+"' class='exit2 opt' title='编辑'> </div>";
+								str += "<div data-index=" + index + " data-flag='noDelete' class='noDelete opt' title='删除'></div></div>";
+							}
+							else{
+								str += "<div data-index=" + index + "  data-flag='exit' data-TypeName='" + row.ItemName + "' data-TypeID='" + row.EventItemMappingID + "' data-name='"+ row.ItemName +"' data-ItemId='"+row.ItemId+"' class='exit opt' title='编辑'> </div>";
+								str += "<div data-index=" + index + " data-flag='delete' class='delete opt' title='删除'></div></div>";
+							}
+                            
+                            
+                            
+                            return str
+                        }
+                    }
+
+
+                ]],
+
+                onLoadSuccess : function(data) {
+                    debugger;
+                    that.elems.tabel.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
+                    if(data.rows.length>0) {
+                        that.elems.dataMessage.hide();
+                    }else{
+                        that.elems.dataMessage.show();
+                    }
+                },
+                onClickRow:function(rowindex,rowData){
+
+                },onClickCell:function(rowIndex, field, value){
+                    if(field=="addOpt"||field=="addOptdel"){    //在每一列有操作 而点击行有跳转页面的操作  才使用该功能。 此处不注释 与注释都可以。
+                        that.elems.click=false;
+                    }else{
+                        that.elems.click=true;
+                    }
+                }
+
+            });
+
+            
+            //分页
+
+            if((that.loadData.opertionField.displayIndex||that.loadData.opertionField.displayIndex==0)){  //点击的行索引的  如果不存在表示不是显示详情的修改。
+                that.elems.tabel.find("tr").eq(that.loadData.opertionField.displayIndex).find("td").trigger("click",true);
+                that.loadData.opertionField.displayIndex=null;
+            }
+        },
+        //加载更多的资讯或者活动
+        loadMoreData2: function () {
+            var that = this;
+            this.loadData.seach.PageIndex = 1;
+            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+            that.loadData.getBargainItemList(function(data){
+
+                that.renderTable(data);
+            });
+        },
         loadData: {
             args: {
                 bat_id:"1",
-                PageIndex: 0,
-                PageSize: 6,
+                PageIndex:1,
+                PageSize: 10,
                 SearchColumns:{},    //查询的动态表单配置
                 OrderBy:"",           //排序字段
                 SortType: 'DESC',    //如果有提供OrderBy，SortType默认为'ASC'
-                Status:-1,
-                page:1,
-                start:0,
-                limit:15
-            },
-            tag:{
-                VipId:"",
-                orderID:''
+                EventItemMappingID:''
             },
             seach:{
-                item_category_id:null,
-                SalesPromotion_id:null,
-                form:{
-                    item_code:"",
-                    item_name:"",
-                    item_status:null,
-                    item_can_redeem:null
-                },
-                RetailTraderName:"",
-                UnitID:""
+                CouponTypeName:"",
+                ParValue:"",
+                PageIndex:1,
+                PageSize: 10,
+
             },
-            getUitTree:{
-               node:""
+            //商品规格
+            sku:{
+                numArr:[],  //顺序是 0下标为 商品数量  1为已售商品基数  2为真实销售数量  3为当前库存
+                mappingId:"",
+                eventId:"",
+                ItemId:"",
+                SinglePurchaseQty:"",
+                BargaingingInterval:"",
+                SkuList:[],
+                SkuInfoList:[]
+            },
+            goods:{
+                pageSize:10,
+                pageIndex:1,
+                itemName:""
+            },
+            commodity:{
+              EventName:"",
+              BeginTime:"",
+              EndTime:""
             },
             opertionField:{},
-
-            getCommodityList: function (callback) {
-                $.util.oldAjax({
-                    url: "/module/basic/Item/Handler/ItemHandler.ashx",
-                      data:{
-                          action:'search_item',
-                          item_category_id:this.seach.item_category_id,
-                          SalesPromotion_id:this.seach.SalesPromotion_id,
-                          page:this.args.page,
-                          start:this.args.start,
-                          limit:this.args.limit,
-                          form:{
-                              item_code:"",
-                              item_name:this.seach.form.item_name,
-                              item_status:this.seach.form.item_status,
-                              item_can_redeem:null
-                          }
-                      },
-                      success: function (data) {
-                          debugger;
-                        if (data.topics) {
-                            if (callback) {
-                                callback(data);
-                            }
-
-                        } else {
-                            alert("加载数据不成功");
-                        }
-                    }
-                });
-            },
-            get_unit_tree: function (callback) {
-                $.ajax({
-                    url: "/Framework/Javascript/Biz/Handler/UnitSelectTreeHandler.ashx?method=get_unit_tree&parent_id=&_dc=1433225205961&node="+this.getUitTree.node+"&multiSelect=false&isSelectLeafOnly=false&isAddPleaseSelectItem=false&pleaseSelectText=--%E8%AF%B7%E9%80%89%E6%8B%A9--&pleaseSelectID=-2",
-                    success: function (data) {
-                        debugger;
-                        var datas=JSON.parse(data);
-                        if (datas&&datas.length>0) {
-                            if (callback) {
-                                callback(datas);
-                            }
-
-                        } else {
-                            alert("加载数据不成功");
-                        }
-                    }
-                });
-            },
-
-            GetRetailTraders: function (callback) {
-                debugger;
+            //获取活动详情
+            getEventDetail: function (callback) {
                 $.util.ajax({
-                    url: "/ApplicationInterface/AllWin/RetailTrader.ashx",
-                    data:{
-                        action:"GetRetailTraders",
-                        UnitID:this.seach.UnitID,
-                        PageSize:1000000,
-                        PageIndex:1,
-                        RetailTraderName:this.seach.RetailTraderName
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'GetPanicbuyingEventDetails',
+                        'EventId':page.eventId
                     },
                     success: function (data) {
-                        if (data.IsSuccess && data.ResultCode == 0) {
+                        if (data.ResultCode == 0) {
+                            //表示成功
                             if (callback) {
                                 callback(data);
                             }
-
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //新增商品(编辑商品)
+            setBargain: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Gateway.ashx",
+                    data:{
+                        'action':'WEvents.Bargain.SetBargain',
+                        'EventId':page.eventId,
+                        'EventName':this.commodity.EventName,
+                        'BeginTime':this.commodity.BeginTime,
+                        'EndTime':this.commodity.EndTime,
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess) {
+                            if (callback) {
+                                callback(data.Data);
+                            }
                         } else {
                             alert(data.Message);
                         }
                     }
                 });
             },
-
-
-            getClassify: function (callback) {
-                $.util.oldAjax({
-                    url: "/module/basic/ItemCategoryNew/Handler/ItemCategoryTreeHandler.ashx",
+            //删除商品
+            deleteBargainItem: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Gateway.ashx",
                     data:{
-                        node:"root",
-                        isAddPleaseSelectItem:true,
-                        pleaseSelectText:"请选择",
-                        pleaseSelectID:"0",
-                        bat_id:this.args.bat_id,
-                        Status:"1"
-
-
+                        'action':'WEvents.Bargain.DeleteBargainItem',
+                        'EventItemMappingID':this.args.EventItemMappingID,
+                        'EventId':page.eventId
                     },
                     success: function (data) {
-                        if (data) {
-                            if (callback)
-                                callback(data);
-                        }
-                        else {
-                            alert("分类加载异常请联系管理员");
+                        if (data.IsSuccess) {
+                            if (callback) {
+                                callback(data.Data);
+                            }
+                        } else {
+                            alert(data.Message);
                         }
                     }
                 });
             },
-            operation:function(pram,operationType,callback){
-                debugger;
-                var prams={data:{action:"Marketing.Coupon.SetCoupon"}};
-                prams.url="/ApplicationInterface/Gateway.ashx";
-                //根据不同的操作 设置不懂请求路径和 方法
-
-
-                prams.data["UsableRange"]=$(".radio.on[data-usablerange]").data("usablerange");
-
-                var str= $("#applicationType").combobox("getValue");
-                //适用门店(1=所有门店；2=部分门店/分销商;3=所有分销商)
-                        if( $(".checkBox.on[data-flag='SuitableForStore']").length>0){
-                            if(str==0){
-                                prams.data["SuitableForStore"]=1
-                            }else if(str==1){
-                                prams.data["SuitableForStore"]=3
-                            }
-                        }else{
-                            prams.data["SuitableForStore"]=2;
-                            prams.data.ObjectIDList=[];
-                           var data= page.elems.listTable.datagrid("getData");
-                           for(var i=0;i<data.rows.length; i++){
-                               if(str==0) {
-                                   prams.data.ObjectIDList.push({"ObjectID": data.rows[i].id});
-                               }else{
-                                   prams.data.ObjectIDList.push({"ObjectID": data.rows[i].RetailTraderID});
-                               }
-                            }
-
-                        }
-                $.each(pram, function (index, field) {
-                    if(field.value!=="") {
-                        prams.data[field.name] = field.value;
-                    }
-                })
-
-                if(prams.data["ParValue"]==="0.00"||prams.data["ParValue"]==="0"){
-                   $.messager.alert("错误提示","优惠券面值必须大于零");
-                    return false;
-                }
-
-
-
+            //商品规格创建(编辑)
+            setBargainDetails:function (callback) {
                 $.util.ajax({
-                    url: prams.url,
-                    data:prams.data,
+                    url: "/ApplicationInterface/Gateway.ashx",
+                    data:{
+                        'action':'WEvents.Bargain.SetBargainDetails',
+                        'EventItemMappingID':this.args.EventItemMappingID,
+                        'EventId':page.eventId,
+                        'SinglePurchaseQty':this.sku.SinglePurchaseQty,
+                        'BargaingingInterval':this.sku.BargaingingInterval,
+                        'ItemId':this.sku.ItemId,
+                        'EventSkuInfoList':this.sku.SkuInfoList                 
+                    },
                     success: function (data) {
-                        if (data.IsSuccess && data.ResultCode == 0) {
+                        if (data.IsSuccess) {
+                            if (callback) {
+                                callback(data.Data);
+                            }
+                        } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //修改团购活动
+            updateEvent: function (callback) {
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'UpdatePanicbuyingEvent',
+                        'EventName':this.args.EventName,
+                        'EventTypeId':page.pageType,
+                        'BeginTime':this.args.BeginTime,
+                        'EndTime':this.args.EndTime,
+                        'EventStatus':this.args.EventStatus,
+                        'EventId':page.eventId
+                    },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
                             if (callback) {
                                 callback(data);
                             }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获取砍价活动与商品列表
+            GetCouponTypeList: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Gateway.ashx",
+                    data:{
+                        action:'Marketing.Coupon.GetCouponTypeList',
+                        CouponTypeName:this.seach.CouponTypeName,
+                        ParValue:this.seach.ParValue,
+                        PageIndex:this.args.PageIndex,
+                        PageSize:this.args.PageSize
 
+                    },
+                    success: function (data) {
+                        if (data.IsSuccess) {
+                            if (callback) {
+                                callback(data.Data);
+                            }
                         } else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获得活动商品列表
+            getBargainItemList: function (callback) {
+                $.util.ajax({
+                    url: "/ApplicationInterface/Gateway.ashx",
+                    type: "post",
+                    data:
+                    {
+                        'action': 'WEvents.Bargain.GetBargainItemList',
+                        'EventId':page.eventId,
+                    },
+                    success: function (data) {
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获得活动商品列表
+            getEventGoodsList: function (callback) {
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'GetEventMerchandise',
+                        'EventId':page.eventId
+                    },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获取活动商品的规格
+            getBargainDetails: function (callback) {
+                $.util.ajax({
+                    url: '/ApplicationInterface/Gateway.ashx',
+                    type: "post",
+                    data:
+                    {
+                        'action': 'WEvents.Bargain.GetBargainDetails',
+                        'EventItemMappingID':this.args.EventItemMappingID, //抢购活动商品关联Sku唯一标识
+                        'ItemId':this.sku.ItemId
+                    },
+					beforeSend: function () {
+		                $.util.isLoading()
+
+		            },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //修改活动商品的规格
+            updateEventItemSku: function (callback) {
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'SaveEventItemSku',
+                        'MappingId':this.sku.MappingId,  //抢购活动商品关联Sku唯一标识
+                        'Qty':this.sku.numArr[0],             //商品数量
+                        'KeepQty':this.sku.numArr[1],     //已售商品基数
+                        'SoldQty':this.sku.numArr[2],     //真实销售数量
+                        'InverTory':this.sku.numArr[3],  //库存
+                        'SalesPrice':this.sku.numArr[5]  //活动价格
+                    },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //删除活动商品的规格
+            delEventItemSku: function (callback) {
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'RemoveEventItemSku',
+                        'MappingId':this.sku.MappingId  //抢购活动商品关联Sku唯一标识
+                    },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //添加商品新规格
+            addEventItemSku:function(callback){
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'AddEventItemSku',
+                        'MappingId':this.sku.MappingId,  //抢购活动商品关联Sku唯一标识
+                        'EventId':page.eventId,
+                        'ItemID':this.sku.ItemId,
+                        'SkuList':this.sku.SkuList,
+                        'SinglePurchaseQty':this.sku.SinglePurchaseQty
+                    },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获得商品规格
+            getItemSku:function(callback){
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'GetItemSku',
+                        'EventId':page.eventId,
+                        'ItemId':this.sku.ItemId
+                    },
+                    success: function (data) {
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //删除活动商品
+            delEventGoods: function (callback) {
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'RemoveEventItem',
+                        'EventItemMappingId':this.args.EventMappingId  //抢购活动商品关联Sku唯一标识
+                    },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获得一级分类
+            getCategory: function (callback) {
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'GetParentCategoryList'
+                    },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获得商品列表通过分类
+            getQueryGoods: function (callback) {
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'GetItemList',
+                        'ItemCategoryID':this.goods.categoryId,
+                        'ItemName':this.goods.itemName,
+                        'PageIndex':this.goods.pageIndex,
+                        'PageSize':this.goods.pageSize
+                    },
+					beforeSend: function () {
+		                $.util.isLoading()
+		            },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
+                            alert(data.Message);
+                        }
+                    }
+                });
+            },
+            //获得商品列表通过分类
+            uploadImage: function (callback) {
+                $.util.ajax({
+                    url: page.url,
+                    type: "post",
+                    data:
+                    {
+                        'action': 'SaveImage',
+                        'EventItemMappingId':this.goods.EventItemMappingId,
+                        'ImageUrl':this.goods.ImageUrl
+                    },
+                    success: function (data) {
+
+                        if (data.ResultCode == 0) {
+                            //表示成功
+                            if (callback) {
+                                callback(data);
+                            }
+                        }
+                        else {
                             alert(data.Message);
                         }
                     }
                 });
             }
-
-
         }
 
     };

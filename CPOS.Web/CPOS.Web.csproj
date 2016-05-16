@@ -2316,6 +2316,16 @@
     <Compile Include="ApplicationInterface\Module\VIP\VipListNum\GetVipListNumAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipList\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\WifiSign\WifiSignAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\AddKJEventJoinDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\DeleteKJEventJoinAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetBuyerListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetEventItemStatusAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetKJEventJoinListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetItemListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetPanicbuyingKJEventListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetPanicBuyingKJItemDetailAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\GetHelperListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvent\Bargain\JoinInKJEventAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextListAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\MaterialText\GetMaterialTextTypeListAH.cs" />

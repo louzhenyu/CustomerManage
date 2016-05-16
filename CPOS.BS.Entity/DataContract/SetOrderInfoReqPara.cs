@@ -28,6 +28,7 @@ namespace JIT.CPOS.BS.Entity
         public string joinNo { get; set; }//	参加人数 (Jermyn20140312 -- print_times)
         public string isGroupBy { get; set; }//是否团购订单（Jermyn20140318—Field15，之后也会改为order_reason_type_id）
         public string isPanicbuying { get; set; }//是否抢购订单 （Jermyn20140323—订单类型order_reason_type_id）
+        public string isBargain { get; set; } //是否为砍价订单
         public string salesPrice { get; set; }
         public string stdPrice { get; set; }
         public OrderDetail[] orderDetailList { get; set; }//商品明细

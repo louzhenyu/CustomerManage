@@ -40,6 +40,16 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
+		public Guid? KJEventJoinDetailId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Guid? KJEventJoinId { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public Guid? EventId { get; set; }
 
 		/// <summary>
@@ -56,26 +66,6 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String VipId { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String WXName { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public String OpenId { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Decimal? Price { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Decimal? BasePrice { get; set; }
 
 		/// <summary>
 		/// 
@@ -116,16 +106,6 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String CustomerId { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Guid? KJEventJoinId { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public Guid? KJEventJoinDetailId { get; set; }
 
 
         #endregion

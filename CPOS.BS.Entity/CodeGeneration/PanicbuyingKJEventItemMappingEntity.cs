@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/2/16 14:37:46
+ * Create On	:2016/4/27 13:54:52
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -40,7 +40,7 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Guid? EventItemMappingId { get; set; }
+		public Guid? EventItemMappingID { get; set; }
 
 		/// <summary>
 		/// 
@@ -50,17 +50,22 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String ItemId { get; set; }
+		public String ItemID { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public String SkuId { get; set; }
+		public Decimal? MinPrice { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public DateTime? AddedTime { get; set; }
+		public Decimal? MinBasePrice { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? SoldQty { get; set; }
 
 		/// <summary>
 		/// 
@@ -75,37 +80,37 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? SoldQty { get; set; }
-
-		/// <summary>
-		/// 
-		/// </summary>
 		public Int32? SinglePurchaseQty { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Decimal? Price { get; set; }
+		public Decimal? DiscountRate { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Decimal? BasePrice { get; set; }
+		public Int32? PromotePersonCount { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Decimal? BargainStartPrice { get; set; }
+		public Int32? BargainPersonCount { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Decimal? BargainEndPrice { get; set; }
+		public Int32? PurchasePersonCount { get; set; }
 
 		/// <summary>
-		/// 小时，可以为小数点
+		/// -1 = 不上架   1 = 上架   
 		/// </summary>
-		public Decimal? BargaingingInterval { get; set; }
+		public Int32? Status { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public String StatusReason { get; set; }
 
 		/// <summary>
 		/// 
@@ -113,14 +118,9 @@ namespace JIT.CPOS.BS.Entity
 		public Int32? DisplayIndex { get; set; }
 
 		/// <summary>
-		/// 1=显示   0=不显示
+		/// 
 		/// </summary>
-		public Int32? IsFirst { get; set; }
-
-		/// <summary>
-		/// -1 = 不上架   1 = 上架   
-		/// </summary>
-		public Int32? Status { get; set; }
+		public String customerId { get; set; }
 
 		/// <summary>
 		/// 
@@ -145,13 +145,12 @@ namespace JIT.CPOS.BS.Entity
 		/// <summary>
 		/// 
 		/// </summary>
-		public String CustomerId { get; set; }
+		public Int32? IsDelete { get; set; }
 
 		/// <summary>
 		/// 
 		/// </summary>
-		public Int32? IsDelete { get; set; }
-
+		public Decimal? BargaingingInterval { get; set; }
 
         #endregion
 

@@ -4194,7 +4194,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 {
                     respData.content.prop2List =
                         DataTableToObject.ConvertToList<getSkuProp2ListRespContentItemTypeData>(dsProp2.Tables[0]);
-                    respData.content.prop2List.OrderBy(n => n.prop2DetailName);
+                    respData.content.prop2List = respData.content.prop2List.OrderBy(n => n.prop2DetailName).ToList();
                 }
 
                 #endregion

@@ -1,4 +1,4 @@
-﻿define(['jquery', 'tools', 'template', 'kindeditor', 'lang', 'pagination', 'drag'], function () {
+define(['jquery', 'tools', 'template', 'kindeditor', 'lang', 'pagination', 'drag'], function () {
     //debugger;
     //上传图片
     KE = window.KindEditor;
@@ -1943,6 +1943,7 @@
                     'PageSize': page.pageSize
                 },
                 success: function (data) {
+
                     if (data.ResultCode == 0) {
                         //表示成功
                         if (callback) {
@@ -2048,6 +2049,7 @@
                     'PageIndex': page.pageIndex
                 },
                 success: function (data) {
+                    console.log(data);
                     if (data.ResultCode == 0) {
                         //表示成功
                         if (callback) {
@@ -2146,7 +2148,7 @@
                     'PageIndex': 0
                 },
                 success: function (data) {
-
+                    
                     if (data.ResultCode == 0) {
                         //表示成功
                         if (callback) {

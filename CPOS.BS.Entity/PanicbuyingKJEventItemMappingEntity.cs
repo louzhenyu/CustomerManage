@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/2/16 14:37:46
+ * Create On	:2016/4/27 13:54:52
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -29,7 +29,7 @@ namespace JIT.CPOS.BS.Entity
     public partial class PanicbuyingKJEventItemMappingEntity : BaseEntity 
     {
         #region  Ù–‘ºØ
-
+        public string ItemName { get; set; }
         #endregion
     }
 }

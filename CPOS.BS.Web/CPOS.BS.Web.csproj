@@ -710,13 +710,15 @@
     <Content Include="Module\AppConfig\plugin\kindeditor.js" />
     <Content Include="Module\AppConfig\plugin\template.js" />
     <Content Include="Module\AppConfig\plugin\touchslider.js" />
-    <Content Include="Module\AppConfig\QueryList.aspx" />
     <Content Include="Module\bargainManage\addCommodity.aspx" />
     <Content Include="Module\bargainManage\css\addCoupon.css" />
     <Content Include="Module\bargainManage\css\style.css" />
     <Content Include="Module\bargainManage\images\add.png" />
     <Content Include="Module\bargainManage\images\addstr.png" />
     <Content Include="Module\bargainManage\images\addstr1.png" />
+    <Content Include="Module\bargainManage\images\checkBox01.png" />
+    <Content Include="Module\bargainManage\images\checkBox02.png" />
+    <Content Include="Module\bargainManage\images\checkBox03.png" />
     <Content Include="Module\bargainManage\images\del.png" />
     <Content Include="Module\bargainManage\images\delicon.png" />
     <Content Include="Module\bargainManage\images\Download.png" />
@@ -725,9 +727,11 @@
     <Content Include="Module\bargainManage\images\iconDel.png" />
     <Content Include="Module\bargainManage\images\radio.png" />
     <Content Include="Module\bargainManage\images\radioOn.png" />
+    <Content Include="Module\bargainManage\images\selectIcon.png" />
+    <Content Include="Module\bargainManage\images\start.png" />
     <Content Include="Module\bargainManage\js\addBargin.js" />
     <Content Include="Module\bargainManage\js\queryList.js" />
-    <Content Include="Module\bargainManage\QueryList.aspx" />
+    <Content Include="Module\bargainManage\Querylist.aspx" />
     <Content Include="Module\Basic\ItemCategoryNew\Controller\ItemCategoryManagementCtl.js" />
     <Content Include="Module\Basic\ItemCategoryNew\ItemCategoryManagement.aspx" />
     <Content Include="Module\Basic\ItemCategoryNew\Model\ItemCategoryVM.js" />
@@ -6788,6 +6792,14 @@
     <Compile Include="ApplicationInterface\Module\VIP\VipIntegral\SetVipIntegralAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\GetVipListAH.cs" />
     <Compile Include="ApplicationInterface\Module\VIP\VipManager\UpdateVipAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\DeleteBargainAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\DeleteBargainItemAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\GetBargainDetailsAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\GetBargainItemListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\GetBargainListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\SetBargainAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\SetBargainDetailsAH.cs" />
+    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\SetBargainStatusAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\ContactEvent\ChangeContactEventStatusAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\ContactEvent\GetContactEventDetailAH.cs" />
     <Compile Include="ApplicationInterface\Module\WEvents\ContactEvent\GetContactEventListAH.cs" />
@@ -6804,10 +6816,6 @@
     <Compile Include="ApplicationInterface\Module\WEvents\EventsSaveHandler.ashx.cs">
       <DependentUpon>EventsSaveHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\ChangeKJStatusAH.cs" />
-    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\DeleteBargainAH.cs" />
-    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\BargainListAH.cs" />
-    <Compile Include="ApplicationInterface\Module\WEvents\Bargain\SetBargainAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\Customer\GetDisplaynoneAH.cs" />
     <Compile Include="ApplicationInterface\Module\WX\KeyWord\DeleteKeyWordAH.cs" />
     <Content Include="ApplicationInterface\Vip\VipGateway.ashx" />

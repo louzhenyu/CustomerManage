@@ -111,7 +111,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         }
         #endregion
 
-
         #region 获取会员积分和余额
         /// <summary>
         /// 获取会员积分和余额
@@ -218,7 +217,9 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
             //获取会员折扣
             var sysVipCardGradeBLL = new SysVipCardGradeBLL(loggingSessionInfo);
-            decimal vipDiscount = sysVipCardGradeBLL.GetVipDiscount();
+            decimal vipDiscount =1;//会员折扣
+            if (rp.Parameters.DiscountType == 0)
+                vipDiscount = sysVipCardGradeBLL.GetVipDiscount();
             rd.VipDiscount = vipDiscount;
 
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -526,6 +527,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             var tInoutEntity = tInoutBll.GetByID(orderId);
             if (tInoutEntity == null)
                 throw new APIException("此订单Id无效") { ErrorCode = 103 };
+            //if (tInoutEntity.Field7 == "100")
+            //    throw new APIException("此订单已经提交") { ErrorCode = 122 };
 
             #region 根据渠道判断订单来源
 
@@ -917,15 +920,29 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     tinoutStatusBLL.Create(statusEntity, tran);
                     #endregion
 
-                    #region 抢购团购处理库存
+                    #region 抢购团购砍价处理库存
                     if (AfterPaySetStock != "1")
                     {
                         if (tInoutEntity.OrderReasonID == "CB43DD7DD1C94853BE98C4396738E00C" || tInoutEntity.OrderReasonID == "671E724C85B847BDA1E96E0E5A62055A")
                         {
+                            if (string.IsNullOrEmpty(rp.Parameters.EventId))
+                            {
+                                throw new APIException("活动商品,EventId不能为空");
+                            }
                             //下订单，修改抢购商品的数量信息存储过程ProcPEventItemQty
                             var eventbll = new vwItemPEventDetailBLL(loggingSessionInfo);
                             eventbll.ExecProcPEventItemQty(loggingSessionInfo.ClientID, rp.Parameters.EventId, orderId, tInoutEntity.VipNo, (SqlTransaction)tran);
                         }
+                        if (tInoutEntity.OrderReasonID == "096419BFDF394F7FABFE0DFCA909537F")
+                        {
+                            if (string.IsNullOrEmpty(rp.Parameters.EventId))
+                            {
+                                throw new APIException("活动商品,EventId不能为空");
+                            }
+                            var eventBll = new PanicbuyingEventBLL(loggingSessionInfo);
+                            eventBll.SetKJEventOrder(loggingSessionInfo.ClientID, orderId, rp.Parameters.EventId,rp.Parameters.KJEventJoinId,inoutDetailList.ToList());
+                        }
+
                     }
                     #endregion
 
@@ -955,7 +972,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             return rsp.ToJSON();
         }
         #endregion
-
 
 
         #region 订单提交
@@ -1462,7 +1478,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             return rsp.ToJSON();
         }
         #endregion
-
 
         #region 取消订单
 
@@ -2084,6 +2099,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 是否是抵用券（0=包含抵用券；1=不包含抵用券）
         /// </summary>
         public int Type { get; set; }
+        /// <summary>
+        /// 是否有折扣（1=无折扣；0=有折扣）
+        /// </summary>
+        public int DiscountType { get; set; }
+
         public void Validate()
         {
         }
@@ -2325,6 +2345,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
         /// 分销商ID 
         /// </summary>
         public string RetailTraderId { get; set; }
+
+        /// <summary>
+        /// 砍价参与主标识
+        /// </summary>
+        public string KJEventJoinId { get; set; }
         public void Validate()
         {
         }

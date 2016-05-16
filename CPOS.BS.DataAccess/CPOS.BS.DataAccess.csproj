@@ -322,6 +322,10 @@
     <Compile Include="CodeGeneration\PanicbuyingEventItemMappingDAO.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventOrderMappingDAO.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventSkuMappingDAO.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventItemMappingDAO.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventJoinDAO.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventJoinDetailDAO.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventSkuMappingDAO.cs" />
     <Compile Include="CodeGeneration\PgUserDAO.cs" />
     <Compile Include="CodeGeneration\POPGroupDAO.cs" />
     <Compile Include="CodeGeneration\PowerHourDAO.cs" />
@@ -850,6 +854,10 @@
     <Compile Include="PanicbuyingEventDAO.cs" />
     <Compile Include="PanicbuyingEventItemMappingDAO.cs" />
     <Compile Include="PanicbuyingEventSkuMappingDAO.cs" />
+    <Compile Include="PanicbuyingKJEventItemMappingDAO.cs" />
+    <Compile Include="PanicbuyingKJEventJoinDAO.cs" />
+    <Compile Include="PanicbuyingKJEventJoinDetailDAO.cs" />
+    <Compile Include="PanicbuyingKJEventSkuMappingDAO.cs" />
     <Compile Include="Product\CW\APPUpgradeDAO.cs" />
     <Compile Include="Product\CW\T_UserDAO.cs" />
     <Compile Include="Product\CW\UserFeebackDAO.cs" />

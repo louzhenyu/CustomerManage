@@ -175,7 +175,7 @@ SELECT item_id ItemID,item_name ItemName ,isnull(DisplayIndex,0)displayindex,ISN
                             left join  PanicbuyingEventSkuMapping as pe on pe.SkuId=vw.sku_id  and convert(nvarchar(50),pe.EventItemMappingId)=@EventItemMappingId and pe.IsDelete=0
                             left join  PanicbuyingEventItemMapping ps on ps.EventItemMappingId=pe.EventItemMappingId and ps.ItemId=@ItemId and ps.EventId=@EventId and ps.IsDelete=0 
                             left join vw_sku_price vp on vp.sku_id=vw.sku_id and  vp.item_price_type_id='77850286E3F24CD2AC84F80BC625859D'
-                            where vw.item_id=@ItemId  and vw.status='1'
+                            where vw.item_id=@ItemId  and vw.status='1' and vw.CustomerId=@pCustomerId 
                             order by SkuID desc");
             DataSet ds = this.SQLHelper.ExecuteDataset(CommandType.Text, strb.ToString(), paras.ToArray());
             return ds;

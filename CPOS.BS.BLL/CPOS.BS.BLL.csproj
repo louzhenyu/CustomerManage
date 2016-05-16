@@ -360,6 +360,10 @@
     <Compile Include="CodeGeneration\PanicbuyingEventItemMappingBLL.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventOrderMappingBLL.cs" />
     <Compile Include="CodeGeneration\PanicbuyingEventSkuMappingBLL.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventItemMappingBLL.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventJoinBLL.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventJoinDetailBLL.cs" />
+    <Compile Include="CodeGeneration\PanicbuyingKJEventSkuMappingBLL.cs" />
     <Compile Include="CodeGeneration\PgUserBLL.cs" />
     <Compile Include="CodeGeneration\POPGroupBLL.cs" />
     <Compile Include="CodeGeneration\PowerHourBLL.cs" />
@@ -941,7 +945,8 @@
     <Compile Include="PanicbuyingKJEventItemMappingBLL.cs" />
     <Compile Include="PanicbuyingKJEventJoinBLL.cs" />
     <Compile Include="PanicbuyingKJEventJoinDetailBLL.cs" />
-    <Compile Include="PGPushIOSMessage.cs" />
+    <Compile Include="PanicbuyingKJEventSkuMappingBLL.cs" />
+  <Compile Include="PGPushIOSMessage.cs" />
     <Compile Include="PosService.cs" />
     <Compile Include="PrizeCouponTypeMappingBLL.cs" />
     <Compile Include="ProductAttachmentMappingBLL.cs" />
@@ -1076,7 +1081,6 @@
     <Compile Include="Services\RechargeStrategyBLL.cs" />
     <Compile Include="Services\SysVocationBLL.cs" />
     <Compile Include="Services\UnitBLL.cs" />
-   
     <Compile Include="ShoppingCartBLL.cs" />
     <Compile Include="ShopProductBLL.cs" />
     <Compile Include="ShortUrlChangeBLL.cs" />

@@ -109,7 +109,18 @@ namespace JIT.CPOS.BS.Entity
 		/// </summary>
         public Int32? IsCTW { get; set; }
         
+		/// </summary>
+		public Int32? PromotePersonCount { get; set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? BargainPersonCount { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public Int32? ItemQty { get; set; }
         #endregion
 
     }

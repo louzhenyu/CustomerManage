@@ -32,7 +32,7 @@ namespace JIT.CPOS.BS.BLL
     /// <summary>
     /// </summary>
     public partial class PanicbuyingEventBLL
-    {  
+    {
         /// <summary>
         /// 创建活动
         /// </summary>
@@ -42,7 +42,7 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.AddPanicbuyingEvent(pEntity, pTran);
         }
-         /// <summary>
+        /// <summary>
         /// 获取活动列表
         /// </summary>
         /// <param name="pWhereConditions">筛选条件</param>
@@ -71,10 +71,10 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetPanicbuyingEventDetails(pID);
         }
-        
-        public DataSet GetKJEventList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
+
+        public DataSet BargainList(int pageIndex, int pageSize, string strEventName, int intEventStatus, string strBeginTime, string strEndTime)
         {
-            return this._currentDAO.GetKJEventList(pageIndex, pageSize, strEventName, intEventStatus, strBeginTime, strEndTime);
+            return this._currentDAO.BargainList(pageIndex, pageSize, strEventName, intEventStatus, strBeginTime, strEndTime);
         }
         /// <summary>
         /// 根据主题id结束促销活动
@@ -88,9 +88,82 @@ namespace JIT.CPOS.BS.BLL
         /// 根据主题id推迟促销活动
         /// </summary>
         /// <param name="strCTWEventId"></param>
-        public void DelayEvent(string strCTWEventId,string strEndDate)
+        public void DelayEvent(string strCTWEventId, string strEndDate)
         {
             this._currentDAO.DelayEvent(strCTWEventId, strEndDate);
+        }
+
+
+        public List<KJEventItemInfo> GetKJEventWithItemList(string customerId)
+        {
+            List<KJEventItemInfo> eventItemList = new List<KJEventItemInfo>();
+            DataSet ds = this._currentDAO.GetKJEventWithItemList(customerId);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                eventItemList = DataTableToObject.ConvertToList<KJEventItemInfo>(ds.Tables[0]);
+            }
+            return eventItemList;
+        }
+
+        public KJEventItemDetailInfo GetKJEventWithItemDetail(string eventId, string ItemId)
+        {
+            KJEventItemDetailInfo eventItemDetail = null;
+            DataSet ds = this._currentDAO.GetKJEventWithItemDetail(eventId, ItemId);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                eventItemDetail = DataTableToObject.ConvertToObject<KJEventItemDetailInfo>(ds.Tables[0].Rows[0]);
+            }
+            return eventItemDetail;
+        }
+        public KJEventItemDetailInfo GetKJEventWithSkuDetail(string eventId, string SkuId)
+        {
+            KJEventItemDetailInfo eventItemDetail = null;
+            DataSet ds = this._currentDAO.GetKJEventWithSkuDetail(eventId, SkuId);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                eventItemDetail = DataTableToObject.ConvertToObject<KJEventItemDetailInfo>(ds.Tables[0].Rows[0]);
+            }
+            return eventItemDetail;
+        }
+
+        /// <summary>
+        /// 处理砍价商品的库存销量相关信息
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="inoutDetailList"></param>
+        public void SetKJEventOrder(string customerId, string orderId, string eventId, string KJEventJoinId, List<InoutDetailInfo> inoutDetailList)
+        {
+            PanicbuyingKJEventItemMappingBLL panicbuyingKJEventItemMappingBll = new PanicbuyingKJEventItemMappingBLL(CurrentUserInfo);
+            PanicbuyingKJEventSkuMappingBLL panicbuyingKJEventSkuMappingBll = new PanicbuyingKJEventSkuMappingBLL(CurrentUserInfo);
+            PanicbuyingEventOrderMappingBLL panicbuyingEventOrderMappingBll = new  PanicbuyingEventOrderMappingBLL(CurrentUserInfo);
+            PanicbuyingKJEventJoinBLL panicbuyingKJEventJoinBll = new PanicbuyingKJEventJoinBLL(CurrentUserInfo);
+            
+            foreach(var i in inoutDetailList)
+            {
+                var itemEntity = panicbuyingKJEventItemMappingBll.GetPanicbuyingEventEntity(eventId,i.sku_id);
+                itemEntity.SoldQty += Convert.ToInt32(i.enter_qty);
+                itemEntity.LastUpdateTime = DateTime.Now;
+                panicbuyingKJEventItemMappingBll.Update(itemEntity);
+
+                var skuEntity = panicbuyingKJEventSkuMappingBll.QueryByEntity(new PanicbuyingKJEventSkuMappingEntity(){SkuID = i.sku_id,EventItemMappingID = itemEntity.EventItemMappingID.ToString()},null).FirstOrDefault();
+                skuEntity.SoldQty += Convert.ToInt32(i.enter_qty);
+                skuEntity.LastUpdateTime = DateTime.Now;
+                panicbuyingKJEventSkuMappingBll.Update(skuEntity);
+            }
+
+            PanicbuyingEventOrderMappingEntity PanicbuyingEventOrderMappingEntity = new PanicbuyingEventOrderMappingEntity()
+            {
+                MappingId = Guid.NewGuid(),
+                EventId = new Guid(eventId),
+                OrderId = orderId,
+                CustomerID = customerId
+            };
+            panicbuyingEventOrderMappingBll.Create(PanicbuyingEventOrderMappingEntity);
+
+            var panicbuyingKJEventJoinEntity = panicbuyingKJEventJoinBll.GetByID(KJEventJoinId);
+            panicbuyingKJEventJoinEntity.EventOrderMappingId = PanicbuyingEventOrderMappingEntity.MappingId;
+            panicbuyingKJEventJoinBll.Update(panicbuyingKJEventJoinEntity);
+
         }
     }
 }

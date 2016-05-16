@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2016/2/16 14:37:46
+ * Create On	:2016/4/27 20:28:30
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -38,7 +38,7 @@ namespace JIT.CPOS.BS.DataAccess
     /// 2.实现IQueryable接口
     /// 3.实现Load方法
     /// </summary>
-    public partial class PanicbuyingKJEventItemMappingDAO : Base.BaseCPOSDAO, ICRUDable<PanicbuyingKJEventItemMappingEntity>, IQueryable<PanicbuyingKJEventItemMappingEntity>
+    public partial class PanicbuyingKJEventItemMappingDAO : BaseCPOSDAO, ICRUDable<PanicbuyingKJEventItemMappingEntity>, IQueryable<PanicbuyingKJEventItemMappingEntity>
     {
         #region 构造函数
         /// <summary>
@@ -70,84 +70,88 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            
+
             //初始化固定字段
-			pEntity.IsDelete=0;
-			pEntity.CreateTime=DateTime.Now;
-			pEntity.LastUpdateTime=pEntity.CreateTime;
-			pEntity.CreateBy=CurrentUserInfo.UserID;
-			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+            pEntity.IsDelete = 0;
+            pEntity.CreateTime = DateTime.Now;
+            pEntity.LastUpdateTime = pEntity.CreateTime;
+            pEntity.CreateBy = CurrentUserInfo.UserID;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
 
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [PanicbuyingKJEventItemMapping](");
-            strSql.Append("[EventId],[ItemId],[SkuId],[AddedTime],[Qty],[KeepQty],[SoldQty],[SinglePurchaseQty],[Price],[BasePrice],[BargainStartPrice],[BargainEndPrice],[BargaingingInterval],[DisplayIndex],[IsFirst],[Status],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[CustomerId],[IsDelete],[EventItemMappingId])");
+            strSql.Append("[EventId],[ItemID],[MinPrice],[MinBasePrice],[SoldQty],[Qty],[KeepQty],[SinglePurchaseQty],[DiscountRate],[PromotePersonCount],[BargainPersonCount],[PurchasePersonCount],[Status],[StatusReason],[DisplayIndex],[customerId],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[BargaingingInterval],[EventItemMappingID])");
             strSql.Append(" values (");
-            strSql.Append("@EventId,@ItemId,@SkuId,@AddedTime,@Qty,@KeepQty,@SoldQty,@SinglePurchaseQty,@Price,@BasePrice,@BargainStartPrice,@BargainEndPrice,@BargaingingInterval,@DisplayIndex,@IsFirst,@Status,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@CustomerId,@IsDelete,@EventItemMappingId)");            
 
-			Guid? pkGuid;
-			if (pEntity.EventItemMappingId == null)
-				pkGuid = Guid.NewGuid();
-			else
-				pkGuid = pEntity.EventItemMappingId;
+            strSql.Append("@EventId,@ItemID,@MinPrice,@MinBasePrice,@SoldQty,@Qty,@KeepQty,@SinglePurchaseQty,@DiscountRate,@PromotePersonCount,@BargainPersonCount,@PurchasePersonCount,@Status,@StatusReason,@DisplayIndex,@customerId,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@BargaingingInterval,@EventItemMappingID)");            
+
+
+            Guid? pkGuid;
+            if (pEntity.EventItemMappingID == null)
+                pkGuid = Guid.NewGuid();
+            else
+                pkGuid = pEntity.EventItemMappingID;
 
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
-					new SqlParameter("@ItemId",SqlDbType.NVarChar),
-					new SqlParameter("@SkuId",SqlDbType.NVarChar),
-					new SqlParameter("@AddedTime",SqlDbType.DateTime),
+					new SqlParameter("@ItemID",SqlDbType.VarChar),
+					new SqlParameter("@MinPrice",SqlDbType.Decimal),
+					new SqlParameter("@MinBasePrice",SqlDbType.Decimal),
+					new SqlParameter("@SoldQty",SqlDbType.Int),
 					new SqlParameter("@Qty",SqlDbType.Int),
 					new SqlParameter("@KeepQty",SqlDbType.Int),
-					new SqlParameter("@SoldQty",SqlDbType.Int),
 					new SqlParameter("@SinglePurchaseQty",SqlDbType.Int),
-					new SqlParameter("@Price",SqlDbType.Decimal),
-					new SqlParameter("@BasePrice",SqlDbType.Decimal),
-					new SqlParameter("@BargainStartPrice",SqlDbType.Decimal),
-					new SqlParameter("@BargainEndPrice",SqlDbType.Decimal),
-					new SqlParameter("@BargaingingInterval",SqlDbType.Decimal),
-					new SqlParameter("@DisplayIndex",SqlDbType.Int),
-					new SqlParameter("@IsFirst",SqlDbType.Int),
+					new SqlParameter("@DiscountRate",SqlDbType.Decimal),
+					new SqlParameter("@PromotePersonCount",SqlDbType.Int),
+					new SqlParameter("@BargainPersonCount",SqlDbType.Int),
+					new SqlParameter("@PurchasePersonCount",SqlDbType.Int),
 					new SqlParameter("@Status",SqlDbType.Int),
+					new SqlParameter("@StatusReason",SqlDbType.NVarChar),
+					new SqlParameter("@DisplayIndex",SqlDbType.Int),
+					new SqlParameter("@customerId",SqlDbType.VarChar),
 					new SqlParameter("@CreateTime",SqlDbType.DateTime),
 					new SqlParameter("@CreateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@CustomerId",SqlDbType.VarChar),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
-					new SqlParameter("@EventItemMappingId",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@BargaingingInterval",SqlDbType.Decimal),
+					new SqlParameter("@EventItemMappingID",SqlDbType.UniqueIdentifier)
             };
+
 			parameters[0].Value = pEntity.EventId;
-			parameters[1].Value = pEntity.ItemId;
-			parameters[2].Value = pEntity.SkuId;
-			parameters[3].Value = pEntity.AddedTime;
-			parameters[4].Value = pEntity.Qty;
-			parameters[5].Value = pEntity.KeepQty;
-			parameters[6].Value = pEntity.SoldQty;
+			parameters[1].Value = pEntity.ItemID;
+			parameters[2].Value = pEntity.MinPrice;
+			parameters[3].Value = pEntity.MinBasePrice;
+			parameters[4].Value = pEntity.SoldQty;
+			parameters[5].Value = pEntity.Qty;
+			parameters[6].Value = pEntity.KeepQty;
 			parameters[7].Value = pEntity.SinglePurchaseQty;
-			parameters[8].Value = pEntity.Price;
-			parameters[9].Value = pEntity.BasePrice;
-			parameters[10].Value = pEntity.BargainStartPrice;
-			parameters[11].Value = pEntity.BargainEndPrice;
-			parameters[12].Value = pEntity.BargaingingInterval;
-			parameters[13].Value = pEntity.DisplayIndex;
-			parameters[14].Value = pEntity.IsFirst;
-			parameters[15].Value = pEntity.Status;
+			parameters[8].Value = pEntity.DiscountRate;
+			parameters[9].Value = pEntity.PromotePersonCount;
+			parameters[10].Value = pEntity.BargainPersonCount;
+			parameters[11].Value = pEntity.PurchasePersonCount;
+			parameters[12].Value = pEntity.Status;
+			parameters[13].Value = pEntity.StatusReason;
+			parameters[14].Value = pEntity.DisplayIndex;
+			parameters[15].Value = pEntity.customerId;
 			parameters[16].Value = pEntity.CreateTime;
 			parameters[17].Value = pEntity.CreateBy;
 			parameters[18].Value = pEntity.LastUpdateBy;
 			parameters[19].Value = pEntity.LastUpdateTime;
-			parameters[20].Value = pEntity.CustomerId;
-			parameters[21].Value = pEntity.IsDelete;
+			parameters[20].Value = pEntity.IsDelete;
+			parameters[21].Value = pEntity.BargaingingInterval;
 			parameters[22].Value = pkGuid;
+
 
             //执行并将结果回写
             int result;
             if (pTran != null)
-               result= this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, strSql.ToString(), parameters);
             else
-               result= this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters); 
-            pEntity.EventItemMappingId = pkGuid;
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, strSql.ToString(), parameters);
+            pEntity.EventItemMappingID = pkGuid;
         }
 
         /// <summary>
@@ -162,7 +166,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [PanicbuyingKJEventItemMapping] where EventItemMappingId='{0}'  and isdelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [PanicbuyingKJEventItemMapping] where EventItemMappingID='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             PanicbuyingKJEventItemMappingEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -206,9 +210,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(PanicbuyingKJEventItemMappingEntity pEntity , IDbTransaction pTran)
+        public void Update(PanicbuyingKJEventItemMappingEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity , pTran,true);
+            Update(pEntity, pTran, true);
         }
 
         /// <summary>
@@ -216,105 +220,111 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntity">实体实例</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Update(PanicbuyingKJEventItemMappingEntity pEntity , IDbTransaction pTran,bool pIsUpdateNullField)
+        public void Update(PanicbuyingKJEventItemMappingEntity pEntity, IDbTransaction pTran, bool pIsUpdateNullField)
         {
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (!pEntity.EventItemMappingId.HasValue)
+            if (!pEntity.EventItemMappingID.HasValue)
             {
                 throw new ArgumentException("执行更新时,实体的主键属性值不能为null.");
             }
-             //初始化固定字段
-			pEntity.LastUpdateTime=DateTime.Now;
-			pEntity.LastUpdateBy=CurrentUserInfo.UserID;
+            //初始化固定字段
+            pEntity.LastUpdateTime = DateTime.Now;
+            pEntity.LastUpdateBy = CurrentUserInfo.UserID;
 
 
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [PanicbuyingKJEventItemMapping] set ");
+
                         if (pIsUpdateNullField || pEntity.EventId!=null)
                 strSql.Append( "[EventId]=@EventId,");
-            if (pIsUpdateNullField || pEntity.ItemId!=null)
-                strSql.Append( "[ItemId]=@ItemId,");
-            if (pIsUpdateNullField || pEntity.SkuId!=null)
-                strSql.Append( "[SkuId]=@SkuId,");
-            if (pIsUpdateNullField || pEntity.AddedTime!=null)
-                strSql.Append( "[AddedTime]=@AddedTime,");
+            if (pIsUpdateNullField || pEntity.ItemID!=null)
+                strSql.Append( "[ItemID]=@ItemID,");
+            if (pIsUpdateNullField || pEntity.MinPrice!=null)
+                strSql.Append( "[MinPrice]=@MinPrice,");
+            if (pIsUpdateNullField || pEntity.MinBasePrice!=null)
+                strSql.Append( "[MinBasePrice]=@MinBasePrice,");
+            if (pIsUpdateNullField || pEntity.SoldQty!=null)
+                strSql.Append( "[SoldQty]=@SoldQty,");
             if (pIsUpdateNullField || pEntity.Qty!=null)
                 strSql.Append( "[Qty]=@Qty,");
             if (pIsUpdateNullField || pEntity.KeepQty!=null)
                 strSql.Append( "[KeepQty]=@KeepQty,");
-            if (pIsUpdateNullField || pEntity.SoldQty!=null)
-                strSql.Append( "[SoldQty]=@SoldQty,");
             if (pIsUpdateNullField || pEntity.SinglePurchaseQty!=null)
                 strSql.Append( "[SinglePurchaseQty]=@SinglePurchaseQty,");
-            if (pIsUpdateNullField || pEntity.Price!=null)
-                strSql.Append( "[Price]=@Price,");
-            if (pIsUpdateNullField || pEntity.BasePrice!=null)
-                strSql.Append( "[BasePrice]=@BasePrice,");
-            if (pIsUpdateNullField || pEntity.BargainStartPrice!=null)
-                strSql.Append( "[BargainStartPrice]=@BargainStartPrice,");
-            if (pIsUpdateNullField || pEntity.BargainEndPrice!=null)
-                strSql.Append( "[BargainEndPrice]=@BargainEndPrice,");
-            if (pIsUpdateNullField || pEntity.BargaingingInterval!=null)
-                strSql.Append( "[BargaingingInterval]=@BargaingingInterval,");
-            if (pIsUpdateNullField || pEntity.DisplayIndex!=null)
-                strSql.Append( "[DisplayIndex]=@DisplayIndex,");
-            if (pIsUpdateNullField || pEntity.IsFirst!=null)
-                strSql.Append( "[IsFirst]=@IsFirst,");
+            if (pIsUpdateNullField || pEntity.DiscountRate!=null)
+                strSql.Append( "[DiscountRate]=@DiscountRate,");
+            if (pIsUpdateNullField || pEntity.PromotePersonCount!=null)
+                strSql.Append( "[PromotePersonCount]=@PromotePersonCount,");
+            if (pIsUpdateNullField || pEntity.BargainPersonCount!=null)
+                strSql.Append( "[BargainPersonCount]=@BargainPersonCount,");
+            if (pIsUpdateNullField || pEntity.PurchasePersonCount!=null)
+                strSql.Append( "[PurchasePersonCount]=@PurchasePersonCount,");
             if (pIsUpdateNullField || pEntity.Status!=null)
                 strSql.Append( "[Status]=@Status,");
+            if (pIsUpdateNullField || pEntity.StatusReason!=null)
+                strSql.Append( "[StatusReason]=@StatusReason,");
+            if (pIsUpdateNullField || pEntity.DisplayIndex!=null)
+                strSql.Append( "[DisplayIndex]=@DisplayIndex,");
+            if (pIsUpdateNullField || pEntity.customerId!=null)
+                strSql.Append( "[customerId]=@customerId,");
             if (pIsUpdateNullField || pEntity.LastUpdateBy!=null)
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.CustomerId!=null)
-                strSql.Append( "[CustomerId]=@CustomerId");
-            strSql.Append(" where EventItemMappingId=@EventItemMappingId ");
+            if (pIsUpdateNullField || pEntity.BargaingingInterval!=null)
+                strSql.Append( "[BargaingingInterval]=@BargaingingInterval");
+
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
+            strSql.Append(" where EventItemMappingID=@EventItemMappingID ");
             SqlParameter[] parameters = 
             {
 					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
-					new SqlParameter("@ItemId",SqlDbType.NVarChar),
-					new SqlParameter("@SkuId",SqlDbType.NVarChar),
-					new SqlParameter("@AddedTime",SqlDbType.DateTime),
+					new SqlParameter("@ItemID",SqlDbType.VarChar),
+					new SqlParameter("@MinPrice",SqlDbType.Decimal),
+					new SqlParameter("@MinBasePrice",SqlDbType.Decimal),
+					new SqlParameter("@SoldQty",SqlDbType.Int),
 					new SqlParameter("@Qty",SqlDbType.Int),
 					new SqlParameter("@KeepQty",SqlDbType.Int),
-					new SqlParameter("@SoldQty",SqlDbType.Int),
 					new SqlParameter("@SinglePurchaseQty",SqlDbType.Int),
-					new SqlParameter("@Price",SqlDbType.Decimal),
-					new SqlParameter("@BasePrice",SqlDbType.Decimal),
-					new SqlParameter("@BargainStartPrice",SqlDbType.Decimal),
-					new SqlParameter("@BargainEndPrice",SqlDbType.Decimal),
-					new SqlParameter("@BargaingingInterval",SqlDbType.Decimal),
-					new SqlParameter("@DisplayIndex",SqlDbType.Int),
-					new SqlParameter("@IsFirst",SqlDbType.Int),
+					new SqlParameter("@DiscountRate",SqlDbType.Decimal),
+					new SqlParameter("@PromotePersonCount",SqlDbType.Int),
+					new SqlParameter("@BargainPersonCount",SqlDbType.Int),
+					new SqlParameter("@PurchasePersonCount",SqlDbType.Int),
 					new SqlParameter("@Status",SqlDbType.Int),
+					new SqlParameter("@StatusReason",SqlDbType.NVarChar),
+					new SqlParameter("@DisplayIndex",SqlDbType.Int),
+					new SqlParameter("@customerId",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
-					new SqlParameter("@CustomerId",SqlDbType.VarChar),
-					new SqlParameter("@EventItemMappingId",SqlDbType.UniqueIdentifier)
+					new SqlParameter("@BargaingingInterval",SqlDbType.Decimal),
+					new SqlParameter("@EventItemMappingID",SqlDbType.UniqueIdentifier)
             };
+
 			parameters[0].Value = pEntity.EventId;
-			parameters[1].Value = pEntity.ItemId;
-			parameters[2].Value = pEntity.SkuId;
-			parameters[3].Value = pEntity.AddedTime;
-			parameters[4].Value = pEntity.Qty;
-			parameters[5].Value = pEntity.KeepQty;
-			parameters[6].Value = pEntity.SoldQty;
+			parameters[1].Value = pEntity.ItemID;
+			parameters[2].Value = pEntity.MinPrice;
+			parameters[3].Value = pEntity.MinBasePrice;
+			parameters[4].Value = pEntity.SoldQty;
+			parameters[5].Value = pEntity.Qty;
+			parameters[6].Value = pEntity.KeepQty;
 			parameters[7].Value = pEntity.SinglePurchaseQty;
-			parameters[8].Value = pEntity.Price;
-			parameters[9].Value = pEntity.BasePrice;
-			parameters[10].Value = pEntity.BargainStartPrice;
-			parameters[11].Value = pEntity.BargainEndPrice;
-			parameters[12].Value = pEntity.BargaingingInterval;
-			parameters[13].Value = pEntity.DisplayIndex;
-			parameters[14].Value = pEntity.IsFirst;
-			parameters[15].Value = pEntity.Status;
+			parameters[8].Value = pEntity.DiscountRate;
+			parameters[9].Value = pEntity.PromotePersonCount;
+			parameters[10].Value = pEntity.BargainPersonCount;
+			parameters[11].Value = pEntity.PurchasePersonCount;
+			parameters[12].Value = pEntity.Status;
+			parameters[13].Value = pEntity.StatusReason;
+			parameters[14].Value = pEntity.DisplayIndex;
+			parameters[15].Value = pEntity.customerId;
 			parameters[16].Value = pEntity.LastUpdateBy;
 			parameters[17].Value = pEntity.LastUpdateTime;
-			parameters[18].Value = pEntity.CustomerId;
-			parameters[19].Value = pEntity.EventItemMappingId;
+			parameters[18].Value = pEntity.BargaingingInterval;
+			parameters[19].Value = pEntity.EventItemMappingID;
+
 
             //执行语句
             int result = 0;
@@ -328,7 +338,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        public void Update(PanicbuyingKJEventItemMappingEntity pEntity )
+        public void Update(PanicbuyingKJEventItemMappingEntity pEntity)
         {
             this.Update(pEntity, null);
         }
@@ -352,12 +362,12 @@ namespace JIT.CPOS.BS.DataAccess
             //参数校验
             if (pEntity == null)
                 throw new ArgumentNullException("pEntity");
-            if (!pEntity.EventItemMappingId.HasValue)
+            if (!pEntity.EventItemMappingID.HasValue)
             {
                 throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
             }
             //执行 
-            this.Delete(pEntity.EventItemMappingId.Value, pTran);           
+            this.Delete(pEntity.EventItemMappingID.Value, pTran);
         }
 
         /// <summary>
@@ -368,21 +378,21 @@ namespace JIT.CPOS.BS.DataAccess
         public void Delete(object pID, IDbTransaction pTran)
         {
             if (pID == null)
-                return ;   
+                return;
             //组织参数化SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [PanicbuyingKJEventItemMapping] set  isdelete=1 where EventItemMappingId=@EventItemMappingId;");
+            sql.AppendLine("update [PanicbuyingKJEventItemMapping] set  isdelete=1 where EventItemMappingID=@EventItemMappingID;");
             SqlParameter[] parameters = new SqlParameter[] 
             { 
-                new SqlParameter{ParameterName="@EventItemMappingId",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
+                new SqlParameter{ParameterName="@EventItemMappingID",SqlDbType=SqlDbType.UniqueIdentifier,Value=pID}
             };
             //执行语句
             int result = 0;
             if (pTran != null)
-                result=this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString(), parameters);
             else
-                result=this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
-            return ;
+                result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), parameters);
+            return;
         }
 
         /// <summary>
@@ -400,11 +410,11 @@ namespace JIT.CPOS.BS.DataAccess
                 //参数校验
                 if (pEntity == null)
                     throw new ArgumentNullException("pEntity");
-                if (!pEntity.EventItemMappingId.HasValue)
+                if (!pEntity.EventItemMappingID.HasValue)
                 {
                     throw new ArgumentException("执行删除时,实体的主键属性值不能为null.");
                 }
-                entityIDs[i] = pEntity.EventItemMappingId;
+                entityIDs[i] = pEntity.EventItemMappingID;
             }
             Delete(entityIDs, pTran);
         }
@@ -414,7 +424,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(PanicbuyingKJEventItemMappingEntity[] pEntities)
-        { 
+        {
             Delete(pEntities, null);
         }
 
@@ -424,7 +434,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="pIDs">标识符值数组</param>
         public void Delete(object[] pIDs)
         {
-            Delete(pIDs,null);
+            Delete(pIDs, null);
         }
 
         /// <summary>
@@ -432,24 +442,24 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran) 
+        public void Delete(object[] pIDs, IDbTransaction pTran)
         {
-            if (pIDs == null || pIDs.Length==0)
-                return ;
+            if (pIDs == null || pIDs.Length == 0)
+                return;
             //组织参数化SQL
             StringBuilder primaryKeys = new StringBuilder();
             foreach (object item in pIDs)
             {
-                primaryKeys.AppendFormat("'{0}',",item.ToString());
+                primaryKeys.AppendFormat("'{0}',", item.ToString());
             }
             StringBuilder sql = new StringBuilder();
-            sql.AppendLine("update [PanicbuyingKJEventItemMapping] set  isdelete=1 where EventItemMappingId in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
+            sql.AppendLine("update [PanicbuyingKJEventItemMapping] set  isdelete=1 where EventItemMappingID in (" + primaryKeys.ToString().Substring(0, primaryKeys.ToString().Length - 1) + ");");
             //执行语句
-            int result = 0;   
+            int result = 0;
             if (pTran == null)
                 result = this.SQLHelper.ExecuteNonQuery(CommandType.Text, sql.ToString(), null);
             else
-                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran,CommandType.Text, sql.ToString());       
+                result = this.SQLHelper.ExecuteNonQuery((SqlTransaction)pTran, CommandType.Text, sql.ToString());
         }
         #endregion
 
@@ -514,7 +524,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pOrderBys)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" {0} {1},", StringUtils.WrapperSQLServerObject(item.FieldName), item.Direction == OrderByDirections.Asc ? "asc" : "desc");
                     }
@@ -523,7 +533,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             else
             {
-                pagedSql.AppendFormat(" [EventItemMappingId] desc"); //默认为主键值倒序
+                pagedSql.AppendFormat(" [EventItemMappingID] desc"); //默认为主键值倒序
             }
             pagedSql.AppendFormat(") as ___rn,* from [PanicbuyingKJEventItemMapping] where 1=1  and isdelete=0 ");
             //总记录数SQL
@@ -533,7 +543,7 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 foreach (var item in pWhereConditions)
                 {
-                    if(item!=null)
+                    if (item != null)
                     {
                         pagedSql.AppendFormat(" and {0}", item.GetExpression());
                         totalCountSql.AppendFormat(" and {0}", item.GetExpression());
@@ -542,7 +552,7 @@ namespace JIT.CPOS.BS.DataAccess
             }
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
-            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
+            pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex - 1), pPageSize * (pCurrentPageIndex));
             //执行语句并返回结果
             PagedQueryResult<PanicbuyingKJEventItemMappingEntity> result = new PagedQueryResult<PanicbuyingKJEventItemMappingEntity>();
             List<PanicbuyingKJEventItemMappingEntity> list = new List<PanicbuyingKJEventItemMappingEntity>();
@@ -574,7 +584,7 @@ namespace JIT.CPOS.BS.DataAccess
         public PanicbuyingKJEventItemMappingEntity[] QueryByEntity(PanicbuyingKJEventItemMappingEntity pQueryEntity, OrderBy[] pOrderBys)
         {
             IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
-            return Query(queryWhereCondition,  pOrderBys);            
+            return Query(queryWhereCondition, pOrderBys);
         }
 
         /// <summary>
@@ -585,7 +595,7 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<PanicbuyingKJEventItemMappingEntity> PagedQueryByEntity(PanicbuyingKJEventItemMappingEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity( pQueryEntity);
+            IWhereCondition[] queryWhereCondition = GetWhereConditionByEntity(pQueryEntity);
             return PagedQuery(queryWhereCondition, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
@@ -597,55 +607,55 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <returns></returns>
         protected IWhereCondition[] GetWhereConditionByEntity(PanicbuyingKJEventItemMappingEntity pQueryEntity)
-        { 
+        {
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
-            if (pQueryEntity.EventItemMappingId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventItemMappingId", Value = pQueryEntity.EventItemMappingId });
-            if (pQueryEntity.EventId!=null)
+            if (pQueryEntity.EventItemMappingID != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventItemMappingID", Value = pQueryEntity.EventItemMappingID });
+            if (pQueryEntity.EventId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventId", Value = pQueryEntity.EventId });
-            if (pQueryEntity.ItemId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemId", Value = pQueryEntity.ItemId });
-            if (pQueryEntity.SkuId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "SkuId", Value = pQueryEntity.SkuId });
-            if (pQueryEntity.AddedTime!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "AddedTime", Value = pQueryEntity.AddedTime });
-            if (pQueryEntity.Qty!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Qty", Value = pQueryEntity.Qty });
-            if (pQueryEntity.KeepQty!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "KeepQty", Value = pQueryEntity.KeepQty });
-            if (pQueryEntity.SoldQty!=null)
+            if (pQueryEntity.ItemID != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemID", Value = pQueryEntity.ItemID });
+            if (pQueryEntity.MinPrice != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "MinPrice", Value = pQueryEntity.MinPrice });
+            if (pQueryEntity.MinBasePrice != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "MinBasePrice", Value = pQueryEntity.MinBasePrice });
+            if (pQueryEntity.SoldQty != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SoldQty", Value = pQueryEntity.SoldQty });
-            if (pQueryEntity.SinglePurchaseQty!=null)
+            if (pQueryEntity.Qty != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Qty", Value = pQueryEntity.Qty });
+            if (pQueryEntity.KeepQty != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "KeepQty", Value = pQueryEntity.KeepQty });
+            if (pQueryEntity.SinglePurchaseQty != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SinglePurchaseQty", Value = pQueryEntity.SinglePurchaseQty });
-            if (pQueryEntity.Price!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Price", Value = pQueryEntity.Price });
-            if (pQueryEntity.BasePrice!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BasePrice", Value = pQueryEntity.BasePrice });
-            if (pQueryEntity.BargainStartPrice!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BargainStartPrice", Value = pQueryEntity.BargainStartPrice });
-            if (pQueryEntity.BargainEndPrice!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BargainEndPrice", Value = pQueryEntity.BargainEndPrice });
+            if (pQueryEntity.DiscountRate != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DiscountRate", Value = pQueryEntity.DiscountRate });
+            if (pQueryEntity.PromotePersonCount != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "PromotePersonCount", Value = pQueryEntity.PromotePersonCount });
+            if (pQueryEntity.BargainPersonCount != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BargainPersonCount", Value = pQueryEntity.BargainPersonCount });
+            if (pQueryEntity.PurchasePersonCount != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "PurchasePersonCount", Value = pQueryEntity.PurchasePersonCount });
+            if (pQueryEntity.Status != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Status", Value = pQueryEntity.Status });
+            if (pQueryEntity.StatusReason != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "StatusReason", Value = pQueryEntity.StatusReason });
+            if (pQueryEntity.DisplayIndex != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DisplayIndex", Value = pQueryEntity.DisplayIndex });
+            if (pQueryEntity.customerId != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "customerId", Value = pQueryEntity.customerId });
+            if (pQueryEntity.CreateTime != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
+            if (pQueryEntity.CreateBy != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
+            if (pQueryEntity.LastUpdateBy != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
+            if (pQueryEntity.LastUpdateTime != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
+            if (pQueryEntity.IsDelete != null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
             if (pQueryEntity.BargaingingInterval!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "BargaingingInterval", Value = pQueryEntity.BargaingingInterval });
-            if (pQueryEntity.DisplayIndex!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "DisplayIndex", Value = pQueryEntity.DisplayIndex });
-            if (pQueryEntity.IsFirst!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsFirst", Value = pQueryEntity.IsFirst });
-            if (pQueryEntity.Status!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Status", Value = pQueryEntity.Status });
-            if (pQueryEntity.CreateTime!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateTime", Value = pQueryEntity.CreateTime });
-            if (pQueryEntity.CreateBy!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CreateBy", Value = pQueryEntity.CreateBy });
-            if (pQueryEntity.LastUpdateBy!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateBy", Value = pQueryEntity.LastUpdateBy });
-            if (pQueryEntity.LastUpdateTime!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "LastUpdateTime", Value = pQueryEntity.LastUpdateTime });
-            if (pQueryEntity.CustomerId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
-            if (pQueryEntity.IsDelete!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
 
             return lstWhereCondition.ToArray();
         }
@@ -661,97 +671,100 @@ namespace JIT.CPOS.BS.DataAccess
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
-			if (pReader["EventItemMappingId"] != DBNull.Value)
-			{
-				pInstance.EventItemMappingId =  (Guid)pReader["EventItemMappingId"];
-			}
-			if (pReader["EventId"] != DBNull.Value)
-			{
-				pInstance.EventId =  (Guid)pReader["EventId"];
-			}
-			if (pReader["ItemId"] != DBNull.Value)
-			{
-				pInstance.ItemId =  Convert.ToString(pReader["ItemId"]);
-			}
-			if (pReader["SkuId"] != DBNull.Value)
-			{
-				pInstance.SkuId =  Convert.ToString(pReader["SkuId"]);
-			}
-			if (pReader["AddedTime"] != DBNull.Value)
-			{
-				pInstance.AddedTime =  Convert.ToDateTime(pReader["AddedTime"]);
-			}
-			if (pReader["Qty"] != DBNull.Value)
-			{
-				pInstance.Qty =   Convert.ToInt32(pReader["Qty"]);
-			}
-			if (pReader["KeepQty"] != DBNull.Value)
-			{
-				pInstance.KeepQty =   Convert.ToInt32(pReader["KeepQty"]);
-			}
-			if (pReader["SoldQty"] != DBNull.Value)
-			{
-				pInstance.SoldQty =   Convert.ToInt32(pReader["SoldQty"]);
-			}
-			if (pReader["SinglePurchaseQty"] != DBNull.Value)
-			{
-				pInstance.SinglePurchaseQty =   Convert.ToInt32(pReader["SinglePurchaseQty"]);
-			}
-			if (pReader["Price"] != DBNull.Value)
-			{
-				pInstance.Price =  Convert.ToDecimal(pReader["Price"]);
-			}
-			if (pReader["BasePrice"] != DBNull.Value)
-			{
-				pInstance.BasePrice =  Convert.ToDecimal(pReader["BasePrice"]);
-			}
-			if (pReader["BargainStartPrice"] != DBNull.Value)
-			{
-				pInstance.BargainStartPrice =  Convert.ToDecimal(pReader["BargainStartPrice"]);
-			}
-			if (pReader["BargainEndPrice"] != DBNull.Value)
-			{
-				pInstance.BargainEndPrice =  Convert.ToDecimal(pReader["BargainEndPrice"]);
-			}
+            if (pReader["EventItemMappingID"] != DBNull.Value)
+            {
+                pInstance.EventItemMappingID = (Guid)pReader["EventItemMappingID"];
+            }
+            if (pReader["EventId"] != DBNull.Value)
+            {
+                pInstance.EventId = (Guid)pReader["EventId"];
+            }
+            if (pReader["ItemID"] != DBNull.Value)
+            {
+                pInstance.ItemID = Convert.ToString(pReader["ItemID"]);
+                var ItemData = new T_ItemDAO(this.CurrentUserInfo).GetByID(pInstance.ItemID);
+                if (ItemData != null)
+                    pInstance.ItemName = ItemData.item_name;
+            }
+            if (pReader["MinPrice"] != DBNull.Value)
+            {
+                pInstance.MinPrice = Convert.ToDecimal(pReader["MinPrice"]);
+            }
+            if (pReader["MinBasePrice"] != DBNull.Value)
+            {
+                pInstance.MinBasePrice = Convert.ToDecimal(pReader["MinBasePrice"]);
+            }
+            if (pReader["SoldQty"] != DBNull.Value)
+            {
+                pInstance.SoldQty = Convert.ToInt32(pReader["SoldQty"]);
+            }
+            if (pReader["Qty"] != DBNull.Value)
+            {
+                pInstance.Qty = Convert.ToInt32(pReader["Qty"]);
+            }
+            if (pReader["KeepQty"] != DBNull.Value)
+            {
+                pInstance.KeepQty = Convert.ToInt32(pReader["KeepQty"]);
+            }
+            if (pReader["SinglePurchaseQty"] != DBNull.Value)
+            {
+                pInstance.SinglePurchaseQty = Convert.ToInt32(pReader["SinglePurchaseQty"]);
+            }
+            if (pReader["DiscountRate"] != DBNull.Value)
+            {
+                pInstance.DiscountRate = Convert.ToDecimal(pReader["DiscountRate"]);
+            }
+            if (pReader["PromotePersonCount"] != DBNull.Value)
+            {
+                pInstance.PromotePersonCount = Convert.ToInt32(pReader["PromotePersonCount"]);
+            }
+            if (pReader["BargainPersonCount"] != DBNull.Value)
+            {
+                pInstance.BargainPersonCount = Convert.ToInt32(pReader["BargainPersonCount"]);
+            }
+            if (pReader["PurchasePersonCount"] != DBNull.Value)
+            {
+                pInstance.PurchasePersonCount = Convert.ToInt32(pReader["PurchasePersonCount"]);
+            }
+            if (pReader["Status"] != DBNull.Value)
+            {
+                pInstance.Status = Convert.ToInt32(pReader["Status"]);
+            }
+            if (pReader["StatusReason"] != DBNull.Value)
+            {
+                pInstance.StatusReason = Convert.ToString(pReader["StatusReason"]);
+            }
+            if (pReader["DisplayIndex"] != DBNull.Value)
+            {
+                pInstance.DisplayIndex = Convert.ToInt32(pReader["DisplayIndex"]);
+            }
+            if (pReader["customerId"] != DBNull.Value)
+            {
+                pInstance.customerId = Convert.ToString(pReader["customerId"]);
+            }
+            if (pReader["CreateTime"] != DBNull.Value)
+            {
+                pInstance.CreateTime = Convert.ToDateTime(pReader["CreateTime"]);
+            }
+            if (pReader["CreateBy"] != DBNull.Value)
+            {
+                pInstance.CreateBy = Convert.ToString(pReader["CreateBy"]);
+            }
+            if (pReader["LastUpdateBy"] != DBNull.Value)
+            {
+                pInstance.LastUpdateBy = Convert.ToString(pReader["LastUpdateBy"]);
+            }
+            if (pReader["LastUpdateTime"] != DBNull.Value)
+            {
+                pInstance.LastUpdateTime = Convert.ToDateTime(pReader["LastUpdateTime"]);
+            }
+            if (pReader["IsDelete"] != DBNull.Value)
+            {
+                pInstance.IsDelete = Convert.ToInt32(pReader["IsDelete"]);
+            }
 			if (pReader["BargaingingInterval"] != DBNull.Value)
 			{
 				pInstance.BargaingingInterval =  Convert.ToDecimal(pReader["BargaingingInterval"]);
-			}
-			if (pReader["DisplayIndex"] != DBNull.Value)
-			{
-				pInstance.DisplayIndex =   Convert.ToInt32(pReader["DisplayIndex"]);
-			}
-			if (pReader["IsFirst"] != DBNull.Value)
-			{
-				pInstance.IsFirst =   Convert.ToInt32(pReader["IsFirst"]);
-			}
-			if (pReader["Status"] != DBNull.Value)
-			{
-				pInstance.Status =   Convert.ToInt32(pReader["Status"]);
-			}
-			if (pReader["CreateTime"] != DBNull.Value)
-			{
-				pInstance.CreateTime =  Convert.ToDateTime(pReader["CreateTime"]);
-			}
-			if (pReader["CreateBy"] != DBNull.Value)
-			{
-				pInstance.CreateBy =  Convert.ToString(pReader["CreateBy"]);
-			}
-			if (pReader["LastUpdateBy"] != DBNull.Value)
-			{
-				pInstance.LastUpdateBy =  Convert.ToString(pReader["LastUpdateBy"]);
-			}
-			if (pReader["LastUpdateTime"] != DBNull.Value)
-			{
-				pInstance.LastUpdateTime =  Convert.ToDateTime(pReader["LastUpdateTime"]);
-			}
-			if (pReader["CustomerId"] != DBNull.Value)
-			{
-				pInstance.CustomerId =  Convert.ToString(pReader["CustomerId"]);
-			}
-			if (pReader["IsDelete"] != DBNull.Value)
-			{
-				pInstance.IsDelete =   Convert.ToInt32(pReader["IsDelete"]);
 			}
 
         }

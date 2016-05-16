@@ -80,9 +80,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [PanicbuyingEvent](");
-            strSql.Append("[EventName],[EventTypeId],[BeginTime],[EndTime],[EventRemark],[CustomerID],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[EventStatus],[EventId])");
+            strSql.Append("[EventName],[EventTypeId],[BeginTime],[EndTime],[EventRemark],[CustomerID],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[EventStatus],[IsCTW],[PromotePersonCount],[BargainPersonCount],[ItemQty],[EventId])");
             strSql.Append(" values (");
-            strSql.Append("@EventName,@EventTypeId,@BeginTime,@EndTime,@EventRemark,@CustomerID,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@EventStatus,@EventId)");            
+            strSql.Append("@EventName,@EventTypeId,@BeginTime,@EndTime,@EventRemark,@CustomerID,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@EventStatus,@IsCTW,@PromotePersonCount,@BargainPersonCount,@ItemQty,@EventId)");            
 
 			Guid? pkGuid;
 			if (pEntity.EventId == null)
@@ -104,6 +104,10 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@EventStatus",SqlDbType.Int),
+					new SqlParameter("@IsCTW",SqlDbType.Int),
+					new SqlParameter("@PromotePersonCount",SqlDbType.Int),
+					new SqlParameter("@BargainPersonCount",SqlDbType.Int),
+					new SqlParameter("@ItemQty",SqlDbType.Int),
 					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.EventName;
@@ -118,7 +122,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[9].Value = pEntity.LastUpdateTime;
 			parameters[10].Value = pEntity.IsDelete;
 			parameters[11].Value = pEntity.EventStatus;
-			parameters[12].Value = pkGuid;
+			parameters[12].Value = pEntity.IsCTW;
+			parameters[13].Value = pEntity.PromotePersonCount;
+			parameters[14].Value = pEntity.BargainPersonCount;
+			parameters[15].Value = pEntity.ItemQty;
+			parameters[16].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -141,7 +149,7 @@ namespace JIT.CPOS.BS.DataAccess
             string id = pID.ToString();
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [PanicbuyingEvent] where EventId='{0}' and IsDelete=0 ", id.ToString());
+            sql.AppendFormat("select * from [PanicbuyingEvent] where EventId='{0}'  and isdelete=0 ", id.ToString());
             //读取数据
             PanicbuyingEventEntity m = null;
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -164,7 +172,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [PanicbuyingEvent] where isdelete=0");
+            sql.AppendFormat("select * from [PanicbuyingEvent] where 1=1  and isdelete=0");
             //读取数据
             List<PanicbuyingEventEntity> list = new List<PanicbuyingEventEntity>();
             using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
@@ -221,11 +229,16 @@ namespace JIT.CPOS.BS.DataAccess
                 strSql.Append( "[LastUpdateBy]=@LastUpdateBy,");
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
-            if (pIsUpdateNullField || pEntity.IsCTW != null)
-                strSql.Append("[IsCTW]=@IsCTW,");
-
             if (pIsUpdateNullField || pEntity.EventStatus!=null)
-                strSql.Append( "[EventStatus]=@EventStatus");
+                strSql.Append( "[EventStatus]=@EventStatus,");
+            if (pIsUpdateNullField || pEntity.IsCTW!=null)
+                strSql.Append( "[IsCTW]=@IsCTW,");
+            if (pIsUpdateNullField || pEntity.PromotePersonCount!=null)
+                strSql.Append( "[PromotePersonCount]=@PromotePersonCount,");
+            if (pIsUpdateNullField || pEntity.BargainPersonCount!=null)
+                strSql.Append( "[BargainPersonCount]=@BargainPersonCount,");
+            if (pIsUpdateNullField || pEntity.ItemQty!=null)
+                strSql.Append( "[ItemQty]=@ItemQty");
             if (strSql.ToString().EndsWith(","))
                 strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where EventId=@EventId ");
@@ -240,9 +253,11 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateBy",SqlDbType.NVarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@EventStatus",SqlDbType.Int),
-                    	
-					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
-                    new SqlParameter("@IsCTW",SqlDbType.Int)
+					new SqlParameter("@IsCTW",SqlDbType.Int),
+					new SqlParameter("@PromotePersonCount",SqlDbType.Int),
+					new SqlParameter("@BargainPersonCount",SqlDbType.Int),
+					new SqlParameter("@ItemQty",SqlDbType.Int),
+					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier)
             };
 			parameters[0].Value = pEntity.EventName;
 			parameters[1].Value = pEntity.EventTypeId;
@@ -253,8 +268,11 @@ namespace JIT.CPOS.BS.DataAccess
 			parameters[6].Value = pEntity.LastUpdateBy;
 			parameters[7].Value = pEntity.LastUpdateTime;
 			parameters[8].Value = pEntity.EventStatus;
-			parameters[9].Value = pEntity.EventId;
-            parameters[10].Value = pEntity.IsCTW;
+			parameters[9].Value = pEntity.IsCTW;
+			parameters[10].Value = pEntity.PromotePersonCount;
+			parameters[11].Value = pEntity.BargainPersonCount;
+			parameters[12].Value = pEntity.ItemQty;
+			parameters[13].Value = pEntity.EventId;
 
             //执行语句
             int result = 0;
@@ -410,7 +428,7 @@ namespace JIT.CPOS.BS.DataAccess
         {
             //组织SQL
             StringBuilder sql = new StringBuilder();
-            sql.AppendFormat("select * from [PanicbuyingEvent] where isdelete=0 ");
+            sql.AppendFormat("select * from [PanicbuyingEvent] where 1=1  and isdelete=0 ");
             if (pWhereConditions != null)
             {
                 foreach (var item in pWhereConditions)
@@ -471,9 +489,9 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [EventId] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(") as ___rn,* from [PanicbuyingEvent] where isdelete=0 ");
+            pagedSql.AppendFormat(") as ___rn,* from [PanicbuyingEvent] where 1=1  and isdelete=0 ");
             //总记录数SQL
-            totalCountSql.AppendFormat("select count(1) from [PanicbuyingEvent] where isdelete=0 ");
+            totalCountSql.AppendFormat("select count(1) from [PanicbuyingEvent] where 1=1  and isdelete=0 ");
             //过滤条件
             if (pWhereConditions != null)
             {
@@ -552,9 +570,9 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventName", Value = pQueryEntity.EventName });
             if (pQueryEntity.EventTypeId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventTypeId", Value = pQueryEntity.EventTypeId });
-            if (pQueryEntity.BeginTime!=null)
+            if (pQueryEntity.BeginTime != null && pQueryEntity.BeginTime != DateTime.MinValue)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "BeginTime", Value = pQueryEntity.BeginTime });
-            if (pQueryEntity.EndTime!=null)
+            if (pQueryEntity.EndTime != null && pQueryEntity.BeginTime != DateTime.MinValue)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EndTime", Value = pQueryEntity.EndTime });
             if (pQueryEntity.EventRemark!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventRemark", Value = pQueryEntity.EventRemark });
@@ -572,6 +590,14 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
             if (pQueryEntity.EventStatus!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventStatus", Value = pQueryEntity.EventStatus });
+            if (pQueryEntity.IsCTW!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsCTW", Value = pQueryEntity.IsCTW });
+            if (pQueryEntity.PromotePersonCount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "PromotePersonCount", Value = pQueryEntity.PromotePersonCount });
+            if (pQueryEntity.BargainPersonCount!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BargainPersonCount", Value = pQueryEntity.BargainPersonCount });
+            if (pQueryEntity.ItemQty!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemQty", Value = pQueryEntity.ItemQty });
 
             return lstWhereCondition.ToArray();
         }
@@ -638,6 +664,22 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["EventStatus"] != DBNull.Value)
 			{
 				pInstance.EventStatus =   Convert.ToInt32(pReader["EventStatus"]);
+			}
+			if (pReader["IsCTW"] != DBNull.Value)
+			{
+				pInstance.IsCTW =   Convert.ToInt32(pReader["IsCTW"]);
+			}
+			if (pReader["PromotePersonCount"] != DBNull.Value)
+			{
+				pInstance.PromotePersonCount =   Convert.ToInt32(pReader["PromotePersonCount"]);
+			}
+			if (pReader["BargainPersonCount"] != DBNull.Value)
+			{
+				pInstance.BargainPersonCount =   Convert.ToInt32(pReader["BargainPersonCount"]);
+			}
+			if (pReader["ItemQty"] != DBNull.Value)
+			{
+				pInstance.ItemQty =   Convert.ToInt32(pReader["ItemQty"]);
 			}
 
         }

@@ -42,6 +42,55 @@ namespace JIT.CPOS.BS.DataAccess
     /// </summary>
     public partial class PanicbuyingKJEventJoinDetailDAO : Base.BaseCPOSDAO, ICRUDable<PanicbuyingKJEventJoinDetailEntity>, IQueryable<PanicbuyingKJEventJoinDetailEntity>
     {
+        public DataSet GetHelperList(string EventId, string KJEventJoinId, string SkuId, int PageSize, int PageIndex)
+        {
+            string sql = @" declare @PageSize int
+                            declare @PageIndex int 
+                            declare @TotalCount int  
+                            declare @TotalPage int
+
+                            set @PageSize = " + PageSize + @"
+                            set @PageIndex = " + PageIndex + @"
+
+                            select b.VipId as HelperId,b.VipName as HelperName,b.HeadImgUrl,a.CreateTime,a.BargainPrice
+                            from (select ROW_NUMBER() over(order by createtime desc) as rownum,* from PanicbuyingKJEventJoinDetail) a 
+                            inner join Vip b on a.VipId = b.VipId
+                            inner join PanicbuyingKJEventJoin c on a.KJEventJoinId = c.KJEventJoinId
+                            where c.KJEventJoinId = '" + KJEventJoinId + @"'
+                            and a.EventId = '" + EventId + @"' 
+                            and a.SkuId = '" + SkuId + @"'
+                            and a.rownum >  @PageSize*@PageIndex  
+                            and a.rownum <= @PageSize*(@PageIndex + 1)
+
+                            select @TotalCount = 
+                            count(*) from (select ROW_NUMBER() over(order by createtime desc) as rownum,* from		PanicbuyingKJEventJoinDetail) a 
+                            inner join Vip b on a.VipId = b.VipId
+                            inner join PanicbuyingKJEventJoin c on a.KJEventJoinId = c.KJEventJoinId
+                            where c.KJEventJoinId = '" + KJEventJoinId + @"'
+                            and a.EventId = '" + EventId + @"' 
+                            and a.SkuId = '" + SkuId + @"'
+                            
+                                                        if @PageSize <> 0    
+                            select   @TotalPage =  @TotalCount / @PageSize 
+                            else select @TotalPage = 0
+                            
+                            select @TotalCount
+                            select @TotalPage
+";
+
+            return this.SQLHelper.ExecuteDataset(sql);
+        }
+
+
+        ///// <summary>
+        ///// 获取砍价参与表最小的金额
+        ///// </summary>
+        ///// <param name="KJEventJoinId"></param>
+        ///// <returns></returns>
+        //public decimal GetMinMomentSalesPrice(string KJEventJoinId)
+        //{
+        //    return 0;
+        //}
         
     }
 }

@@ -25,6 +25,7 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.Entity;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -32,6 +33,29 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理：  
     /// </summary>
     public partial class PanicbuyingKJEventJoinDetailBLL
-    {  
+    {
+        /// <summary>
+        /// 事务
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
+        }
+
+        public DataSet GetHelperList(string EventId, string KJEventJoinId, string SkuId, int PageSize, int PageIndex)
+        {
+            return this._currentDAO.GetHelperList(EventId, KJEventJoinId, SkuId, PageSize, PageIndex);
+        }
+
+        ///// <summary>
+        ///// 获取砍价参与表最小的金额
+        ///// </summary>
+        ///// <param name="KJEventJoinId"></param>
+        ///// <returns></returns>
+        //public decimal GetMinMomentSalesPrice(string KJEventJoinId)
+        //{
+        //    return this._currentDAO.GetMinMomentSalesPrice(KJEventJoinId);
+        //}
     }
 }

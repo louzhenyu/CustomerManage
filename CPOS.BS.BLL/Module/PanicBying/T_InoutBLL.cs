@@ -235,19 +235,39 @@ namespace JIT.CPOS.BS.BLL
 
             #region 活动有效性
 
-            var eventBll = new vwItemPEventDetailBLL(loggingSessionInfo);
-            var detail = eventBll.GetByEventIDAndSkuID(para.eventId, para.orderDetailList[0].skuId.ToString());
-            if (detail == null)
-                throw new Exception("未找到相关活动商品信息");
-            //1.	需要判断，该订单的商品是否还有盈余
-            if (detail.RemainingQty <= 0)
-                throw new Exception("活动商品数量不足,当前数量:0");
-            //2.	判断，该商品活动是否已经终止
-            if (!string.IsNullOrEmpty(detail.StopReason))
-                throw new Exception("活动已停止,停止原因:" + detail.StopReason);
-            //3.判断购买个数是否小于等于剩余个数
-            if (int.Parse(para.qty) > detail.RemainingQty)
-                throw new Exception("活动商品数量不足，当前数量：" + detail.RemainingQty);
+            if (para.isBargain == "1")
+            {
+                var eventBll = new PanicbuyingEventBLL(loggingSessionInfo);
+                var detail = eventBll.GetKJEventWithSkuDetail(para.eventId.ToString(), para.orderDetailList[0].skuId.ToString());
+                if (detail == null)
+                    throw new Exception("未找到相关活动商品信息");
+                //1.	需要判断，该订单的商品是否还有盈余
+                if (detail.RemainingQty <= 0)
+                    throw new Exception("活动商品数量不足,当前数量:0");
+                //2.	判断，该商品活动是否已经终止
+                if (!string.IsNullOrEmpty(detail.StopReason))
+                    throw new Exception("活动已停止,停止原因:" + detail.StopReason);
+                //3.判断购买个数是否小于等于剩余个数
+                if (int.Parse(para.qty) > detail.RemainingQty)
+                    throw new Exception("活动商品数量不足，当前数量：" + detail.RemainingQty);
+            }
+            else
+            {
+                var eventBll = new vwItemPEventDetailBLL(loggingSessionInfo);
+                var detail = eventBll.GetByEventIDAndSkuID(para.eventId, para.orderDetailList[0].skuId.ToString());
+                if (detail == null)
+                    throw new Exception("未找到相关活动商品信息");
+                //1.	需要判断，该订单的商品是否还有盈余
+                if (detail.RemainingQty <= 0)
+                    throw new Exception("活动商品数量不足,当前数量:0");
+                //2.	判断，该商品活动是否已经终止
+                if (!string.IsNullOrEmpty(detail.StopReason))
+                    throw new Exception("活动已停止,停止原因:" + detail.StopReason);
+                //3.判断购买个数是否小于等于剩余个数
+                if (int.Parse(para.qty) > detail.RemainingQty)
+                    throw new Exception("活动商品数量不足，当前数量：" + detail.RemainingQty);
+            }
+
             if (string.IsNullOrEmpty(para.userId))
                 throw new Exception("会员信息不存在");
 
@@ -262,6 +282,8 @@ namespace JIT.CPOS.BS.BLL
                 order_reason_id = "CB43DD7DD1C94853BE98C4396738E00C";
             else if (para.isPanicbuying == "1") //抢购
                 order_reason_id = "671E724C85B847BDA1E96E0E5A62055A";
+            else if (para.isBargain == "1")
+                order_reason_id = "096419BFDF394F7FABFE0DFCA909537F";
             else //普通
                 order_reason_id = "2F6891A2194A4BBAB6F17B4C99A6C6F5";
 
@@ -340,6 +362,9 @@ namespace JIT.CPOS.BS.BLL
                         {
                             create_time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                             create_user_id = para.userId,
+                            modify_time = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                            modify_user_id = para.userId,
+                            unit_id = para.storeId,
                             discount_rate = para.Rate,
                             std_price = Convert.ToDecimal(item.salesPrice),
                             enter_price = Convert.ToDecimal(item.salesPrice),

@@ -81,9 +81,9 @@ namespace JIT.CPOS.BS.DataAccess
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [PanicbuyingKJEventJoin](");
-            strSql.Append("[ItemId],[SkuId],[VipId],[BargaingingInterval],[Price],[BasePrice],[SalesPrice],[BargainPersonCount],[EventOrderMappingId],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[EventId],[KJEventJoinId])");
+            strSql.Append("[EventId],[ItemId],[SkuId],[VipId],[SalesPrice],[BargainPersonCount],[EventOrderMappingId],[CreateTime],[CreateBy],[LastUpdateBy],[LastUpdateTime],[IsDelete],[CustomerId],[KJEventJoinId])");
             strSql.Append(" values (");
-            strSql.Append("@ItemId,@SkuId,@VipId,@BargaingingInterval,@Price,@BasePrice,@SalesPrice,@BargainPersonCount,@EventOrderMappingId,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@EventId,@KJEventJoinId)");            
+            strSql.Append("@EventId,@ItemId,@SkuId,@VipId,@SalesPrice,@BargainPersonCount,@EventOrderMappingId,@CreateTime,@CreateBy,@LastUpdateBy,@LastUpdateTime,@IsDelete,@CustomerId,@KJEventJoinId)");            
 
 			Guid? pkGuid;
 			if (pEntity.KJEventJoinId == null)
@@ -93,12 +93,10 @@ namespace JIT.CPOS.BS.DataAccess
 
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@ItemId",SqlDbType.NVarChar),
 					new SqlParameter("@SkuId",SqlDbType.NVarChar),
 					new SqlParameter("@VipId",SqlDbType.NVarChar),
-					new SqlParameter("@BargaingingInterval",SqlDbType.Decimal),
-					new SqlParameter("@Price",SqlDbType.Decimal),
-					new SqlParameter("@BasePrice",SqlDbType.Decimal),
 					new SqlParameter("@SalesPrice",SqlDbType.Decimal),
 					new SqlParameter("@BargainPersonCount",SqlDbType.Int),
 					new SqlParameter("@EventOrderMappingId",SqlDbType.UniqueIdentifier),
@@ -108,26 +106,22 @@ namespace JIT.CPOS.BS.DataAccess
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@IsDelete",SqlDbType.Int),
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
-					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@KJEventJoinId",SqlDbType.UniqueIdentifier)
             };
-			parameters[-1].Value = pEntity.ItemId;
-			parameters[0].Value = pEntity.SkuId;
-			parameters[1].Value = pEntity.VipId;
-			parameters[2].Value = pEntity.BargaingingInterval;
-			parameters[3].Value = pEntity.Price;
-			parameters[4].Value = pEntity.BasePrice;
-			parameters[5].Value = pEntity.SalesPrice;
-			parameters[6].Value = pEntity.BargainPersonCount;
-			parameters[7].Value = pEntity.EventOrderMappingId;
-			parameters[8].Value = pEntity.CreateTime;
-			parameters[9].Value = pEntity.CreateBy;
-			parameters[10].Value = pEntity.LastUpdateBy;
-			parameters[11].Value = pEntity.LastUpdateTime;
-			parameters[12].Value = pEntity.IsDelete;
-			parameters[13].Value = pEntity.CustomerId;
-			parameters[14].Value = pEntity.EventId;
-			parameters[16].Value = pkGuid;
+			parameters[0].Value = pEntity.EventId;
+			parameters[1].Value = pEntity.ItemId;
+			parameters[2].Value = pEntity.SkuId;
+			parameters[3].Value = pEntity.VipId;
+			parameters[4].Value = pEntity.SalesPrice;
+			parameters[5].Value = pEntity.BargainPersonCount;
+			parameters[6].Value = pEntity.EventOrderMappingId;
+			parameters[7].Value = pEntity.CreateTime;
+			parameters[8].Value = pEntity.CreateBy;
+			parameters[9].Value = pEntity.LastUpdateBy;
+			parameters[10].Value = pEntity.LastUpdateTime;
+			parameters[11].Value = pEntity.IsDelete;
+			parameters[12].Value = pEntity.CustomerId;
+			parameters[13].Value = pkGuid;
 
             //执行并将结果回写
             int result;
@@ -221,18 +215,14 @@ namespace JIT.CPOS.BS.DataAccess
             //组织参数化SQL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update [PanicbuyingKJEventJoin] set ");
-                        if (pIsUpdateNullField || pEntity.ItemId!=null)
+                        if (pIsUpdateNullField || pEntity.EventId!=null)
+                strSql.Append( "[EventId]=@EventId,");
+            if (pIsUpdateNullField || pEntity.ItemId!=null)
                 strSql.Append( "[ItemId]=@ItemId,");
             if (pIsUpdateNullField || pEntity.SkuId!=null)
                 strSql.Append( "[SkuId]=@SkuId,");
             if (pIsUpdateNullField || pEntity.VipId!=null)
                 strSql.Append( "[VipId]=@VipId,");
-            if (pIsUpdateNullField || pEntity.BargaingingInterval!=null)
-                strSql.Append( "[BargaingingInterval]=@BargaingingInterval,");
-            if (pIsUpdateNullField || pEntity.Price!=null)
-                strSql.Append( "[Price]=@Price,");
-            if (pIsUpdateNullField || pEntity.BasePrice!=null)
-                strSql.Append( "[BasePrice]=@BasePrice,");
             if (pIsUpdateNullField || pEntity.SalesPrice!=null)
                 strSql.Append( "[SalesPrice]=@SalesPrice,");
             if (pIsUpdateNullField || pEntity.BargainPersonCount!=null)
@@ -244,41 +234,35 @@ namespace JIT.CPOS.BS.DataAccess
             if (pIsUpdateNullField || pEntity.LastUpdateTime!=null)
                 strSql.Append( "[LastUpdateTime]=@LastUpdateTime,");
             if (pIsUpdateNullField || pEntity.CustomerId!=null)
-                strSql.Append( "[CustomerId]=@CustomerId,");
-            if (pIsUpdateNullField || pEntity.EventId!=null)
-                strSql.Append( "[EventId]=@EventId");
+                strSql.Append( "[CustomerId]=@CustomerId");
+            if (strSql.ToString().EndsWith(","))
+                strSql.Remove(strSql.Length - 1, 1);
             strSql.Append(" where KJEventJoinId=@KJEventJoinId ");
             SqlParameter[] parameters = 
             {
+					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@ItemId",SqlDbType.NVarChar),
 					new SqlParameter("@SkuId",SqlDbType.NVarChar),
 					new SqlParameter("@VipId",SqlDbType.NVarChar),
-					new SqlParameter("@BargaingingInterval",SqlDbType.Decimal),
-					new SqlParameter("@Price",SqlDbType.Decimal),
-					new SqlParameter("@BasePrice",SqlDbType.Decimal),
 					new SqlParameter("@SalesPrice",SqlDbType.Decimal),
 					new SqlParameter("@BargainPersonCount",SqlDbType.Int),
 					new SqlParameter("@EventOrderMappingId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@LastUpdateBy",SqlDbType.VarChar),
 					new SqlParameter("@LastUpdateTime",SqlDbType.DateTime),
 					new SqlParameter("@CustomerId",SqlDbType.NVarChar),
-					new SqlParameter("@EventId",SqlDbType.UniqueIdentifier),
 					new SqlParameter("@KJEventJoinId",SqlDbType.UniqueIdentifier)
             };
-			parameters[0].Value = pEntity.ItemId;
-			parameters[1].Value = pEntity.SkuId;
-			parameters[2].Value = pEntity.VipId;
-			parameters[3].Value = pEntity.BargaingingInterval;
-			parameters[4].Value = pEntity.Price;
-			parameters[5].Value = pEntity.BasePrice;
-			parameters[6].Value = pEntity.SalesPrice;
-			parameters[7].Value = pEntity.BargainPersonCount;
-			parameters[8].Value = pEntity.EventOrderMappingId;
-			parameters[9].Value = pEntity.LastUpdateBy;
-			parameters[10].Value = pEntity.LastUpdateTime;
-			parameters[11].Value = pEntity.CustomerId;
-			parameters[12].Value = pEntity.EventId;
-			parameters[13].Value = pEntity.KJEventJoinId;
+			parameters[0].Value = pEntity.EventId;
+			parameters[1].Value = pEntity.ItemId;
+			parameters[2].Value = pEntity.SkuId;
+			parameters[3].Value = pEntity.VipId;
+			parameters[4].Value = pEntity.SalesPrice;
+			parameters[5].Value = pEntity.BargainPersonCount;
+			parameters[6].Value = pEntity.EventOrderMappingId;
+			parameters[7].Value = pEntity.LastUpdateBy;
+			parameters[8].Value = pEntity.LastUpdateTime;
+			parameters[9].Value = pEntity.CustomerId;
+			parameters[10].Value = pEntity.KJEventJoinId;
 
             //执行语句
             int result = 0;
@@ -564,18 +548,16 @@ namespace JIT.CPOS.BS.DataAccess
         { 
             //获取非空属性数量
             List<EqualsCondition> lstWhereCondition = new List<EqualsCondition>();
+            if (pQueryEntity.KJEventJoinId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "KJEventJoinId", Value = pQueryEntity.KJEventJoinId });
+            if (pQueryEntity.EventId!=null)
+                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventId", Value = pQueryEntity.EventId });
             if (pQueryEntity.ItemId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "ItemId", Value = pQueryEntity.ItemId });
             if (pQueryEntity.SkuId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SkuId", Value = pQueryEntity.SkuId });
             if (pQueryEntity.VipId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "VipId", Value = pQueryEntity.VipId });
-            if (pQueryEntity.BargaingingInterval!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BargaingingInterval", Value = pQueryEntity.BargaingingInterval });
-            if (pQueryEntity.Price!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "Price", Value = pQueryEntity.Price });
-            if (pQueryEntity.BasePrice!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "BasePrice", Value = pQueryEntity.BasePrice });
             if (pQueryEntity.SalesPrice!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "SalesPrice", Value = pQueryEntity.SalesPrice });
             if (pQueryEntity.BargainPersonCount!=null)
@@ -594,9 +576,7 @@ namespace JIT.CPOS.BS.DataAccess
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = pQueryEntity.IsDelete });
             if (pQueryEntity.CustomerId!=null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "CustomerId", Value = pQueryEntity.CustomerId });
-            if (pQueryEntity.EventId!=null)
-                lstWhereCondition.Add(new EqualsCondition() { FieldName = "EventId", Value = pQueryEntity.EventId });
-            if (pQueryEntity.KJEventJoinId!=null)
+            if (pQueryEntity.KJEventJoinId != null)
                 lstWhereCondition.Add(new EqualsCondition() { FieldName = "KJEventJoinId", Value = pQueryEntity.KJEventJoinId });
 
             return lstWhereCondition.ToArray();
@@ -613,6 +593,14 @@ namespace JIT.CPOS.BS.DataAccess
             pInstance.PersistenceHandle = new PersistenceHandle();
             pInstance.PersistenceHandle.Load();
 
+			if (pReader["KJEventJoinId"] != DBNull.Value)
+			{
+				pInstance.KJEventJoinId =  (Guid)pReader["KJEventJoinId"];
+			}
+			if (pReader["EventId"] != DBNull.Value)
+			{
+				pInstance.EventId =  (Guid)pReader["EventId"];
+			}
 			if (pReader["ItemId"] != DBNull.Value)
 			{
 				pInstance.ItemId =  Convert.ToString(pReader["ItemId"]);
@@ -624,18 +612,6 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["VipId"] != DBNull.Value)
 			{
 				pInstance.VipId =  Convert.ToString(pReader["VipId"]);
-			}
-			if (pReader["BargaingingInterval"] != DBNull.Value)
-			{
-				pInstance.BargaingingInterval =  Convert.ToDecimal(pReader["BargaingingInterval"]);
-			}
-			if (pReader["Price"] != DBNull.Value)
-			{
-				pInstance.Price =  Convert.ToDecimal(pReader["Price"]);
-			}
-			if (pReader["BasePrice"] != DBNull.Value)
-			{
-				pInstance.BasePrice =  Convert.ToDecimal(pReader["BasePrice"]);
 			}
 			if (pReader["SalesPrice"] != DBNull.Value)
 			{
@@ -672,14 +648,6 @@ namespace JIT.CPOS.BS.DataAccess
 			if (pReader["CustomerId"] != DBNull.Value)
 			{
 				pInstance.CustomerId =  Convert.ToString(pReader["CustomerId"]);
-			}
-			if (pReader["EventId"] != DBNull.Value)
-			{
-				pInstance.EventId =  (Guid)pReader["EventId"];
-			}
-			if (pReader["KJEventJoinId"] != DBNull.Value)
-			{
-				pInstance.KJEventJoinId =  (Guid)pReader["KJEventJoinId"];
 			}
 
         }

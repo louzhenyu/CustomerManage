@@ -25,6 +25,7 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using JIT.CPOS.BS.Entity;
+using System.Data.SqlClient;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -32,6 +33,24 @@ namespace JIT.CPOS.BS.BLL
     /// 业务处理：  
     /// </summary>
     public partial class PanicbuyingKJEventItemMappingBLL
-    {  
+    {
+        /// <summary>
+        /// 事务
+        /// </summary>
+        /// <returns></returns>
+        public SqlTransaction GetTran()
+        {
+            return this._currentDAO.GetTran();
+        }
+
+        public PanicbuyingKJEventItemMappingEntity GetPanicbuyingEventEntity(string eventId,string sku_id)
+        {
+            return this._currentDAO.GetPanicbuyingEventEntity(eventId, sku_id);
+        }
+
+        public DataSet GetKJItemProp1List(string itemId, string EventId)
+        {
+            return _currentDAO.GetKJItemProp1List(itemId, EventId);
+        }
     }
 }
