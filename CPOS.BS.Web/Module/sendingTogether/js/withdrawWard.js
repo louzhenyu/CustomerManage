@@ -34,7 +34,7 @@
             that.loadData.GetRetailMonthRewardList(function(data){
                 debugger;
                 if(!data.Data.RetailMonthRewardList){
-                    return;
+                    data.Data.RetailMonthRewardList=[];
                 }
                 //jQuery easy datagrid  表格处理
                 that.elems.tabel.datagrid({
@@ -217,40 +217,22 @@
                 fit:true
             });
 
+            var year = new Date().getFullYear();
+            var yearlist = [];
+            for (i = (year - 2) ; i < (year+1)  ; i++)
+            {
+                var yearobject = {};
+                yearobject.id = i;
+                yearobject.text = i + "年";
+                yearlist.push(yearobject);
+            }
 
             $("#Year").combobox({//
                 valueField:'id',
                 textField:'text',
                 width:200,
                 height:32,
-                data:[/*{
-                 "id":"0",
-                 "text":"全部",
-                 "selected":true
-                 },*/{
-                    "id":2015,
-                    "text":"2015年"
-                },{
-                    "id":2016,
-                    "text":"2016年"
-
-                },{
-                    "id":2017,
-                    "text":"2017年"
-
-                },{
-                    "id":2018,
-                    "text":"2018年"
-
-                },{
-                    "id":2019,
-                    "text":"2019年"
-
-                },{
-                    "id":2020,
-                    "text":"2020年"
-
-                }]
+                data: yearlist
             });
             $("#Month").combobox({
                 valueField:'id',
