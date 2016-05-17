@@ -33,6 +33,7 @@
             secondKill:$("[data-type='secondKill']"),//抢购
             hotBuy:$("[data-type='hotBuy']"),//  抢购
             groupBuy:$("[data-type='groupBuy']"),//团购
+            bargain:$("[data-type='bargain']"),
             classAction: $("#sortable .action"), //排序元素
             navigation:$("[data-type='navList']"),//顶部导航
             productList:$("[data-type='productList']"), //商品列表
@@ -119,17 +120,19 @@
             self.sotrActionJson=[];
             var displayIndexList=[];
             var  actiondom,followInfo,navList;
+            $("#sortable .action").find(".select").remove();
             $("#sortable .action").each(function () {
-                if(!$(this).html()){
-                    $(this).remove();
-                }
                 if(!isLoadInfo) {
                     if ($(this).find(".jsListItemEmpty").length > 0) {
                         actiondom = $(this);
                         $(this).remove();
                     }
                 }
-                $(this).find(".select").remove();
+                if(!$(this).html()||$(this).find(".jsListItem").length==0){
+                    $(this).remove();
+                }
+
+
                 var me=$(this);
                 switch (me.data("type")) {
                     case "followInfo":
@@ -140,12 +143,7 @@
                         break;
                 }
             });
-            if(followInfo){
-                self.ele.sortableDiv.prepend(followInfo);
-            }
-            if(navList){
-                self.ele.sortableDiv.append(navList);
-            }
+
             $("#sortable .action").each(function () {
                 var name = "未知模块", me = $(this), index = me.index(), groupId = me.find(".jsListItem ").data("id");
 
@@ -171,6 +169,10 @@
                     case "groupBuy":
                         name = "疯狂团购";
                         break;
+                    case "bargain":
+                        name = "砍价";
+                        break;
+
                     case "originalityList":
                         name = "创意组合";
                         break;
@@ -197,7 +199,12 @@
             //self.sotrActionJson=[{"type":"search","name":"搜索"},{"type":"adList","name":"幻灯片播放"},{"type":"categoryEntrance","name":"分类导航"},{"type":"secondKill","name":"限时抢购"},{"type":"eventList","name":"热销榜单/疯狂团购/限时抢购组合框"},{"type":"originalityList","name":"创意组合"},{"type":"productList","name":"商品列表"},{"type":"productList","name":"商品列表"},{"type":"originalityList","name":"创意组合"},{"type":"secondKill","name":"限时抢购"},{"type":"navList","name":"菜单导航"}]
 
             self.SaveActionStore(self.sotrActionJson, isLoadInfo,displayIndexList);
-
+            if(followInfo){
+                self.ele.sortableDiv.prepend(followInfo);
+            }
+            if(navList){
+                self.ele.sortableDiv.append(navList);
+            }
             //空的对象不入库处理
             if(actiondom&&actiondom.data("type")=='followInfo'){
                 self.ele.sortableDiv.prepend(actiondom)
@@ -219,6 +226,7 @@
                 secondKill: $("[data-type='secondKill']"),// 团购 抢购 营销单个
                 hotBuy:$("[data-type='hotBuy']"),//  抢购
                 groupBuy:$("[data-type='groupBuy']"),//团购
+                bargain:$("[data-type='bargain']"),  //砍价
                 navigation: $("[data-type='navList']"),//顶部导航
                 followInfo: $("[data-type='followInfo']"),//关注
                 productList: $("[data-type='productList']") //上班列表
@@ -258,7 +266,8 @@
             this.eventTypeList = [
                 { key: 2, value: "限时抢购" },
                 { key: 1, value: "疯狂团购" },
-                { key: 3, value: "热销榜单"}
+                { key: 3, value: "热销榜单"},
+               /* { key: 4, value: "砍价"}*/
             ];    //B区tab名
             this.currentEditData = null;        //编辑数据
 
@@ -614,6 +623,7 @@
                         case "productList":
                         case "secondKill":
                         case "groupBuy":
+                        case "bargain":
                         case "hotBuy":
                             self.currentEditData=null;
                             if (self.allData[key].length > 0) {
@@ -794,6 +804,8 @@
                                 name="限时抢购";
                             }else if($this.data().typeid==3){
                                 name="热销榜单";
+                            }  else if($this.data().typeid==4){
+                                name="砍价";
                             }
 
                             var object={shopType:$this.data().typeid,titleName:name};
@@ -989,7 +1001,11 @@
                         }
                         break;  //商品分类列表
                     case "secondKill":
-                        if ( self.ele.sortableDiv.find(".jsListItemEmpty").length==0) {
+                        self.ele.secondKill = $("[data-type='secondKill']");// 团购 抢购 营销单个
+                        self.ele.hotBuy = $("[data-type='hotBuy']");//  抢购
+                        self.ele.groupBuy = $("[data-type='groupBuy']");//团购
+                        self.ele.bargain = $("[data-type='bargain']");//砍价
+                        if ( self.ele.sortableDiv.find(".eventInfo").find(".jsListItemEmpty").length==0) {
                             var obj = {};
                             obj.key = "secondKill";  //key是调用数据的核心，如self.allData[key]
                             obj.second = 0;
@@ -1004,6 +1020,9 @@
                             } else if (obj.shopType == 3) {
                                 obj["titleName"] = "热销榜单";
                                 obj.key = "hotBuy";
+                            }else if (obj.shopType == 4) {
+                                obj["titleName"] = "砍价";
+                                obj.key = "bargain";
                             }
 
 
@@ -1011,14 +1030,12 @@
                             obj.length=1;
                             html = '<p class="space"></p>' + self.render(self.template.secondKillModel, obj);
                             if(self.ele.sortableDiv.find('[data-type="navList"]').length>0) {
-                                self.ele.sortableDiv.find('[data-type="navList"]').before("<div class='action' data-type='" + obj.key + "'>" + html + "</div>");
+                                self.ele.sortableDiv.find('[data-type="navList"]').before("<div class='action eventInfo' data-type='" + obj.key + "'>" + html + "</div>");
                             }else{
-                                self.ele.sortableDiv.append("<div class='action' data-type='" + obj.key + "'>" + html + "</div>");
+                                self.ele.sortableDiv.append("<div class='action eventInfo' data-type='" + obj.key + "'>" + html + "</div>");
                             }
 
-                            self.ele.secondKill = $("[data-type='secondKill']");// 团购 抢购 营销单个
-                            self.ele.hotBuy = $("[data-type='hotBuy']");//  抢购
-                            self.ele.groupBuy = $("[data-type='groupBuy']");//团购
+
                         }else{
                             alert("请先编辑空白模板并保存");
                         }
@@ -1099,7 +1116,7 @@
                     $this.parents(".jsAreaItem").eq(0).data("objectid", "").data("typeid", value.substring(value.indexOf("-") + 1));
                 }
 
-            }).delegate(".jsChooseEventBtn","click",function(e){ //团购抢购热销单个，
+            }).delegate(".jsChooseEventBtn","click",function(e){ //团购 抢购 热销 砍价  不是组合模块，
                 debugger;
 
                 var $this=$(this);
@@ -1821,7 +1838,7 @@
                 // model.name = self.currentEditData.modelTypeName;
                 model.groupId = self.currentEditData.groupId;
             }
-            //5：团购6:热销，7：秒杀 8:组合活动
+            //5：团购6:热销，7：秒杀 8:组合活动，9：砍价
             if (model.shopType == 1) {
                 model.modelTypeId=5;
                 model.modelTypeName="groupBuy";
@@ -1834,7 +1851,12 @@
                 model.areaFlag = "hotBuy";
                 model.modelTypeId=6;
                 model.modelTypeName="hotBuy"
+            }else if (model.shopType == 4) {
+                model.areaFlag = "bargain";
+                model.modelTypeId=9;
+                model.modelTypeName="bargain"
             }
+
             model.displayIndex=self.ele.titleDom.parents(".action").index();
             if(flag){
                 self.saveItemSeconKill(list,model);
@@ -2160,6 +2182,7 @@
                                     secondKill: $("[data-type='secondKill']"),// 团购 抢购 营销单个
                                     hotBuy:$("[data-type='hotBuy']"),//  抢购
                                     groupBuy:$("[data-type='groupBuy']"),//团购
+                                    bargain: $("[data-type='bargain']"),
                                     navigation: $("[data-type='navList']"),//顶部导航
                                     followInfo: $("[data-type='followInfo']"),//关注
                                     productList: $("[data-type='productList']") //上班列表
@@ -2210,31 +2233,38 @@
                                     self.ele.followInfo.remove();
                                 }
                                 if (data.data.search&&data.data.search.MHSearchAreaID&&self.ele.SearchDiv.length>0) { //搜索
-                                    isEmpty=false
+                                    isEmpty=false;
                                     self.renderSearchList(data.data.search);
                                 }  else{
                                     self.ele.SearchDiv.remove();
                                 }
                                 if (data.data.secondKill&&data.data.secondKill.length>0&&self.ele.secondKill.length>0) {  //秒杀
-                                    isEmpty=false
+                                    isEmpty=false;
                                     self.renderSecondKillList(data.data.secondKill);
                                 }  else{
                                     self.ele.secondKill.remove();
                                 }
                                 if (data.data.groupBuy&&data.data.groupBuy.length>0&&self.ele.groupBuy.length>0) {//团购
-                                    isEmpty=false
+                                    isEmpty=false;
                                     self.renderSecondKillList(data.data.groupBuy);
                                 } else{
                                     self.ele.groupBuy.remove();
                                 }
+                                if (data.data.bargain&&data.data.bargain.length>0&&self.ele.bargain.length>0) {//团购
+                                    isEmpty=false;
+                                    self.renderSecondKillList(data.data.bargain);
+                                } else{
+                                    self.ele.bargain.remove();
+                                }
+
                                 if (data.data.hotBuy&&data.data.hotBuy.length>0&&self.ele.hotBuy.length>0) {    //热销
-                                    isEmpty=false
+                                    isEmpty=false;
                                     self.renderSecondKillList(data.data.hotBuy);
                                 } else{
                                     self.ele.hotBuy.remove();
                                 }
                                 if (data.data.navList&&data.data.navList.CategoryAreaGroupId&&self.ele.navigation.length>0) {//底部导航
-                                    isEmpty=false
+                                    isEmpty=false ;
                                     self.renderNavigationModel(data.data.navList);
                                 } else{
                                     self.ele.navigation.remove();
@@ -2292,6 +2322,7 @@
                                     secondKill: $("[data-type='secondKill']"),// 团购 抢购 营销单个
                                     hotBuy:$("[data-type='hotBuy']"),//  抢购
                                     groupBuy:$("[data-type='groupBuy']"),//团购
+                                    bargain:$("[data-type='bargain']"),
                                     navigation: $("[data-type='navList']"),//顶部导航
                                     followInfo: $("[data-type='followInfo']"),//关注
                                     productList: $("[data-type='productList']") //上班列表
@@ -2729,6 +2760,19 @@
                             obj["titleName"] = "热销榜单";
                             obj.key = "hotBuy";
                             self.ele.hotBuy.each(function () {
+                                debugger;
+                                var index = $(this).index();
+
+                                if (obj.displayIndex == index) {
+                                    $(this).html('<p class="space"></p>');
+
+                                    $(this).append(self.render(self.template.secondKillModel, obj));
+                                }
+                            });
+                        } else if (obj.shopType == 4) {
+                            obj["titleName"] = "砍价";
+                            obj.key = "bargain";
+                            self.ele.bargain.each(function () {
                                 debugger;
                                 var index = $(this).index();
 
@@ -3369,6 +3413,12 @@
 
                                             if (self.categoryLayer.shopType == 2) {
                                                 pageName = "抢购";
+                                            }
+                                            if (self.categoryLayer.shopType == 3) {
+                                                pageName = "热销";
+                                            }
+                                            if (self.categoryLayer.shopType == 4) {
+                                                $.util.toNewUrlPath("/module/bargainManage/querylist.aspx");
                                             }
                                             $.util.toNewUrlPath("/module/GroupBuy/GroupList.aspx?pageType=" + self.categoryLayer.shopType + "&pageName=" + pageName, 'newwindow');
 
