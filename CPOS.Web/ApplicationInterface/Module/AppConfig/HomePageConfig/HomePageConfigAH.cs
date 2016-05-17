@@ -34,6 +34,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
             resData.secondKill = new List<EventListEntity>();
             resData.groupBuy = new List<EventListEntity>();
             resData.hotBuy = new List<EventListEntity>();
+            resData.bargain = new List<EventListEntity>();
 
             var bllHome = new MobileHomeBLL(logginUserInfo);
             MobileHomeEntity entityHome = new MobileHomeEntity(); ;
@@ -91,7 +92,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
 
             var allGroup = bllCategoryAreaGroup.QueryByEntity(new MHCategoryAreaGroupEntity { CustomerID = this.CurrentUserInfo.ClientID, HomeId = strHomeId }, null);
 
-            var eventGroup = allGroup.Where(a => a.ModelTypeId == 5 || a.ModelTypeId == 6 || a.ModelTypeId == 7 || a.ModelTypeId == 8);
+            var eventGroup = allGroup.Where(a => a.ModelTypeId == 5 || a.ModelTypeId == 6 || a.ModelTypeId == 7 || a.ModelTypeId == 8|| a.ModelTypeId == 9);
             foreach (var item in eventGroup)
             {
 
@@ -130,12 +131,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.AppConfig.HomePageConfig
                     {
                         resData.hotBuy.Add(category);
                     }
+                    if (dsEventList.FirstOrDefault().areaFlag == "bargain")
+                    {
+                        resData.bargain.Add(category);
+                    }
                 }
 
             }
             #endregion
             List<CategoryGroupInfo> allList = new List<CategoryGroupInfo>();
-            eventGroup = allGroup.Where(a => a.ModelTypeId != 5 && a.ModelTypeId != 6 && a.ModelTypeId != 7 && a.ModelTypeId != 8 && a.ModelTypeId != 2);
+            eventGroup = allGroup.Where(a => a.ModelTypeId != 5 && a.ModelTypeId != 6 && a.ModelTypeId != 7 && a.ModelTypeId != 8 && a.ModelTypeId != 9 && a.ModelTypeId != 2);
 
             if (eventGroup != null)
             {

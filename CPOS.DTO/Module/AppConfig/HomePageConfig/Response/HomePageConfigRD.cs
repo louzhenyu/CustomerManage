@@ -19,6 +19,7 @@ namespace JIT.CPOS.DTO.Module.AppConfig.HomePageConfig.Response
         public IList<EventListEntity> secondKill { get; set; }//秒杀
         public IList<EventListEntity> groupBuy { get; set; }   //团购
         public IList<EventListEntity> hotBuy { get; set; }   //热销
+        public IList<EventListEntity> bargain { get; set; }   //砍价
         public MHSearchAreaEntity search { get; set; } //搜索框
         public followInfo follow { get; set; }//立即关注
         public string sortActionJson { get; set; } //整体排序字段
