@@ -86,45 +86,51 @@
                 var event_start = $("#campaignBegin").val();
                 var event_end = $('#campaignEnd').val();
 				var event_Id = that.loadData.args.EventID;
+                var endDate = event_end.substring(0,10).split('-');
+                var endTime = event_end.substring(11,event_end.length).split(':');
+                var end = endDate[0]+endDate[1]+endDate[2]+endTime[0]+endTime[1]
 				var newDate = myDate.toLocaleDateString().split('/');
-				if (newDate[1].length=="1"){
-					newDate[1] = 0+newDate[1];
+                var h = myDate.getHours();//获取本地时间 小时
+                var m = myDate.getMinutes();//获取本地时间 分钟
+				if (newDate[1]>=1&&newDate[1]<=9){
+					newDate[1] = "0"+newDate[1];
 				}
-				if (newDate[2].length=="1"){
-					newDate[2] = 0+newDate[2];
+				if (newDate[2]>=1&&newDate[2]<=9){
+					newDate[2] = "0"+newDate[2];
 				}
-				var newTime = newDate[0]+"-"+newDate[1]+"-"+newDate[2]+" "+myDate.getHours()+":"+myDate.getMinutes();
+                if(h>=0&&h<=9){
+                    h="0"+ h;
+                }
+                if(m>=0&&m<=9){
+                    m="0"+ m;
+                }
+				var newTime = newDate[0]+newDate[1]+newDate[2]+h+m;
                 if(event_name!=""&&event_start!=""&&event_end!=""){
                     that.loadData.goods.EventName = event_name;
                     that.loadData.goods.BeginTime = event_start;
                     that.loadData.goods.EndTime = event_end;					
                     if(event_start<=event_end){
                         if(event_Id==""){
-
                             //var CommodityStatus = 1;
-                            if(event_end<newTime){
-
-                                var CommodityStatus = 3;
+                            if(parseInt(end)<=parseInt(newTime)){
                                 $.messager.alert('提示','无法添加已过期的活动，请重新选择！');
                                 return false;
                             }
                             else if(event_start>newTime){
                                 var CommodityStatus =1;
-
                             }
                             else if(event_start<newTime&&newTime<event_end){
                                 var CommodityStatus = 2;
-
                             }
                             that.loadData.setBargain(function(data){
                                 var event_id = data.EventId;
-                                var mid = JITMethod.getUrlParam("mid");
-                                location.href = "addCommodity.aspx?eventId="+event_id+"&mid="+ mid+"&CommodityStatus="+CommodityStatus;
+                                var mid = $.util.getUrlParam("mid");
+                               location.href = "addCommodity.aspx?eventId="+event_id+"&mid="+ mid+"&CommodityStatus="+CommodityStatus;
                             })
 
                         }
                         else{
-                            that.loadData.setBargain()
+                            that.loadData.setBargain();
                             window.location.reload();//刷新当前页面.
                         }
                     }
@@ -233,98 +239,112 @@
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
                 that.loadData.args.EventID = row.EventId;
-                if(optType=="add") {
-
-                    that.addNumber(row);
-
+                var myDate = new Date();
+                var newDate = myDate.toLocaleDateString().split('/');
+                var h = myDate.getHours();//获取本地时间 小时
+                var m = myDate.getMinutes();//获取本地时间 分钟
+                var name = row.EventName;
+                var start = row.BeginTime;
+                var end = row.EndTime;
+                var endDate = end.substring(0,10).split('-');
+                var endTime = end.substring(11,end.length).split(':');
+                var End = endDate[0]+endDate[1]+endDate[2]+endTime[0]+endTime[1]
+                var CommodityStatus = row.Status;
+                if (newDate[1]>=1&&newDate[1]<=9){
+                    newDate[1] = "0"+newDate[1];
                 }
+                if (newDate[2]>=1&&newDate[2]<=9){
+                    newDate[2] = "0"+newDate[2];
+                }
+                if(h>=0&&h<=9){
+                    h="0"+ h;
+                }
+                if(m>=0&&m<=9){
+                    m="0"+ m;
+                }
+                var newTime = newDate[0]+newDate[1]+newDate[2]+h+m;
                 if(optType=="exit"){
-                    var mid = JITMethod.getUrlParam("mid");
-                    var CommodityStatus = row.Status;
-                    location.href = "addCommodity.aspx?eventId="+couponTypeID+"&mid="+ mid+"&CommodityStatus="+CommodityStatus;
+                    if(parseInt(End)<=parseInt(newTime)&&CommodityStatus=='2'){
+                        $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
+                        return false;
+                    }else{
+                        var mid = $.util.getUrlParam("mid");
+                        location.href = "addCommodity.aspx?eventId="+couponTypeID+"&mid="+ mid+"&CommodityStatus="+CommodityStatus;
+                    }
+
                 
                 }
                 //延长时间
                 if(optType=="watchOn"){
-                    var name = row.EventName;
-                    var start = row.BeginTime;
-                    var end = row.EndTime;
-                    $('#campaignName').val(name);
-					$('#campaignBegin').val(start);
-					$('#campaignEnd').val(end);
-                    $('#goodsBasic_exit').find('input').attr('disabled',true);
-                    $('#campaignName').css('border','none');
-					$('#campaignBegin').css('background','#ccc');
-					$('#campaignEnd').attr('disabled',false);      
-                    that.showElements("#goodsBasic_exit");                
+
+
+                    if(parseInt(End)<=parseInt(newTime)){
+                        $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
+                        return false;
+                    }else{
+                        $('#campaignName').val(name);
+                        $('#campaignBegin').val(start);
+                        $('#campaignEnd').val(end);
+                        $('#goodsBasic_exit').find('input').attr('disabled',true);
+                        $('#campaignName').css('border','none');
+                        $('#campaignBegin').css('background','#ccc');
+                        $('#campaignEnd').attr('disabled',false);
+                        that.showElements("#goodsBasic_exit");
+                    }
+
                 
                 }
                 //提前结束
                 if(optType=="stop"){
-                   $.messager.confirm("提示","是否提前结束活动？",function(r){
-                        if(r){
-                            var name = row.EventName;
-							var start = row.BeginTime;
-							var end = row.EndTime;
-							var myDate = new Date();
-							var newDate = myDate.toLocaleDateString().split('/');
-							if (newDate[1].length=="1"){
-								newDate[1] = 0+newDate[1];
-							}
-							if (newDate[2].length=="1"){
-								newDate[2] = 0+newDate[2];
-							}
-							var newTime = newDate[0]+"-"+newDate[1]+"-"+newDate[2]+" "+myDate.getHours()+":"+myDate.getMinutes();
-							
-                            that.loadData.setBargainStatus(function(data){
-								that.loadData.goods.EventName = name;
-								that.loadData.goods.BeginTime = start;
-								that.loadData.goods.EndTime = newTime;
-								that.loadData.setBargain();
-                                alert("操作成功");
-                                that.loadPageData()
-                            })
+                    if(parseInt(End)<=parseInt(newTime)&&CommodityStatus!="3"){
+                        $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
+                        return false;
+                    }else{
+                        $.messager.confirm("提示","是否提前结束活动？",function(r){
+                            if(r){
+                                var name = row.EventName;
+                                var start = row.BeginTime;
+                                var end = row.EndTime;
+                                that.loadData.setBargainStatus(function(data){
+                                    that.loadData.goods.EventName = name;
+                                    that.loadData.goods.BeginTime = start;
+                                    that.loadData.goods.EndTime = newTime;
+                                    that.loadData.setBargain();
+                                    alert("操作成功");
+                                    that.loadPageData()
+                                })
 
-                        }
-                    })               
-                
-                }
-
-                if(optType=="pause"){
-                    var t = $(this);
-                    $(t).removeClass('pauseBtn');
-                    $(t).addClass('runningBtn');   
-                }
-
-                if (optType == "deleteOn") {
-                    $.messager.alert("提示","进行中的活动无法删除!");
-                }
-
-                if(optType=="delete"){
-                    if (row.BeginTime&&row.EndTime) {
-                        var Begindate = Date.parse(new Date(row.BeginTime).format("yyyy-MM-dd").replace(/-/g, "/"));
-                        var Enddate = Date.parse(new Date(row.EndTime).format("yyyy-MM-dd").replace(/-/g, "/"));
-                        var now = new Date();
-
-                        // if (Begindate <= now && Enddate >= now) {
-                        //     $.messager.alert("操作提示","优惠券在使用时间范围内不可删除");
-                        //     return false;
-                        // }
+                            }
+                        })
                     }
-                    // else{
-                    //     $.messager.alert("操作提示","该优惠券是领取及时生效类型不可删除");
-                    //     return false;
-                    // }
-                    $.messager.confirm("提示","是否确认删除？",function(r){
-                        if(r){
-                            
-                            that.loadData.deleteBargain(function(data){
-                                alert("操作成功");
-                                that.loadPageData()
-                            })
+                }
+                //进行活动判断
+                if (optType == "deleteOn") {
+                    if(parseInt(End)<=parseInt(newTime)&&CommodityStatus=='2'){
+                        $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
+                        return false;
+                    }else{
+                        $.messager.alert("提示","进行中的活动无法删除!");
+                    }
 
-                        }
-                    })
+                }
+                //删除活动
+                if(optType=="delete"){
+                    if(parseInt(End)<=parseInt(newTime)&&CommodityStatus=='2'){
+                        $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
+                        return false;
+                    }else{
+                        $.messager.confirm("提示","是否确认删除？",function(r){
+                            if(r){
+                                that.loadData.deleteBargain(function(data){
+                                    alert("操作成功");
+                                    that.loadPageData()
+                                })
+
+                            }
+                        })
+                    }
+
                 }
             })
             /**************** -------------------列表操作事件用例 End****************/
