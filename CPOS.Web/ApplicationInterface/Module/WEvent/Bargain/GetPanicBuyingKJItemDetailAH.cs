@@ -84,6 +84,11 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WEvent.Bargain
                 {
                     rd.isEventEnd = 0;
                 }
+                else if (eventItemInfo.EventBeginTime > DateTime.Now)
+                {//活动未开始
+                    rd.isEventEnd = 2;
+                    rd.Seconds = Convert.ToInt64(eventItemInfo.EventBeginTime.Subtract(DateTime.Now).TotalSeconds < 0 ? 0 : eventItemInfo.EventBeginTime.Subtract(DateTime.Now).TotalSeconds);
+                }
                 else
                 {
                     rd.isEventEnd = 1;

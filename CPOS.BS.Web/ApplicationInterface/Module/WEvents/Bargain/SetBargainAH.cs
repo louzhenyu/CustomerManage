@@ -57,17 +57,20 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.Bargain
             else
             {
                 var UpdateData = bllPanicbuyingEvent.GetByID(para.EventId);
-                if (UpdateData==null)
-                    throw new APIException("未找到砍价活动！");
+                if (UpdateData == null)
+                    throw new APIException("未找到砍价活动！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
 
                 #region 名称重复处理
                 if (!UpdateData.EventName.Trim().Equals(para.EventName.Trim()))
                 {
                     var Result = bllPanicbuyingEvent.QueryByEntity(new PanicbuyingEventEntity() { EventName = para.EventName, EventTypeId = 4 }, null).ToList();
                     if (Result.Count() > 0)
-                        throw new APIException("已有相同的砍价活动名称,请重新命名！");
+                        throw new APIException("已有相同的砍价活动名称,请重新命名！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
                 }
                 #endregion
+
+                if (UpdateData.EndTime < DateTime.Now)
+                    throw new APIException("砍价活动已经结束了！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
 
                 UpdateData.EventName = para.EventName;
                 UpdateData.BeginTime = para.BeginTime;

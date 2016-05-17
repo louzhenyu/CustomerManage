@@ -20,10 +20,10 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.Bargain
             var bllPanicbuyingEvent = new PanicbuyingEventBLL(loggingSessionInfo);
 
             var UpdateData = bllPanicbuyingEvent.GetByID(para.EventId);
-            if(DateTime.Now>UpdateData.EndTime)
-                throw new APIException("砍价活动已结束！");
+            //if(DateTime.Now>UpdateData.EndTime)
+            //    throw new APIException("砍价活动已结束！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
             if (UpdateData == null)
-                throw new APIException("未找到砍价活动！");
+                throw new APIException("未找到砍价活动！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
 
             UpdateData.EventStatus = 10;//提前结束
             //

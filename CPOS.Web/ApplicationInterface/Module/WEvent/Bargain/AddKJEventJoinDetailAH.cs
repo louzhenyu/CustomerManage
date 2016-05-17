@@ -27,30 +27,30 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WEvent.Bargain
             //
             var EventData = PanicbuyingEventBll.GetByID(rp.EventId);
             if (EventData == null)
-                throw new APIException("找不到砍价活动对象！");
+                throw new APIException("找不到砍价活动对象！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
             //
             var EventItemData = KJEventItemMappingBll.QueryByEntity(new PanicbuyingKJEventItemMappingEntity() { EventId = new System.Guid(rp.EventId), ItemID = rp.ItemId }, null).FirstOrDefault();
             if (EventData == null)
-                throw new APIException("找不到砍价活动商品对象！");
+                throw new APIException("找不到砍价活动商品对象！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
             //
             var EventSkuMappingData = EventSkuMappingBll.QueryByEntity(new PanicbuyingKJEventSkuMappingEntity() { EventItemMappingID = EventItemData.EventItemMappingID.ToString(),SkuID=rp.SkuId }, null).FirstOrDefault();
             if (EventSkuMappingData == null)
-                throw new APIException("找不到砍价活动商品Sku关系对象！");
+                throw new APIException("找不到砍价活动商品Sku关系对象！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
             //
             var KJEventJoinData = KJEventJoinBll.GetByID(rp.KJEventJoinId);
             if (KJEventJoinData == null)
-                throw new APIException("找不到砍价参与主表对象！");
+                throw new APIException("找不到砍价参与主表对象！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
             //判断重复帮砍 
             var Collection = Bll.QueryByEntity(new PanicbuyingKJEventJoinDetailEntity() { KJEventJoinId = KJEventJoinData.KJEventJoinId,VipId = pRequest.UserID }, null).ToList();
             if(Collection.Count>0)
-                throw new APIException("您已经帮砍过了，不能重复帮砍！");
+                throw new APIException("您已经帮砍过了，不能重复帮砍！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
             #region 砍价业务处理
             //当前成交价
             decimal NowMoney = KJEventJoinData.SalesPrice.Value;
             if (NowMoney == EventSkuMappingData.BasePrice)
-                throw new APIException("已经砍到底价，不能继续砍价！");
+                throw new APIException("已经砍到底价，不能继续砍价！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
             if(EventSkuMappingData.BargainStartPrice==null||EventSkuMappingData.BargainEndPrice==null)
-                throw new APIException("砍价起始、结束区间值不能为Null，错误数据！");
+                throw new APIException("砍价起始、结束区间值不能为Null，错误数据！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
             //
             Random ran = new Random();
             int start = Convert.ToInt32(EventSkuMappingData.BargainStartPrice);

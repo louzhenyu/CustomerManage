@@ -63,7 +63,7 @@ namespace JIT.CPOS.DTO.Module.Event.Bargain.Response
 
         public int isPromoted { get; set; } //0-没发起 1-发起
 
-        public int isEventEnd { get; set; } //0活动结束 1-活动没结束
+        public int isEventEnd { get; set; } //0活动结束 1-活动没结束 2-活动未开始
     }
 
     public class SkuProp1

@@ -21,7 +21,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.Bargain
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             var bllPanicbuyingEvent = new PanicbuyingEventBLL(loggingSessionInfo);
-            var MHCategoryAreaBll = new MHCategoryAreaBLL(loggingSessionInfo);//商城装修业务对象
+            var MHItemAreaBll = new MHItemAreaBLL(loggingSessionInfo);//商城装修业务对象
             var entityPanicbuyingEvent = bllPanicbuyingEvent.GetByID(para.EventId);
             if (entityPanicbuyingEvent == null)
             {
@@ -29,9 +29,9 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.Bargain
             }
             else
             {
-                var Result = MHCategoryAreaBll.QueryByEntity(new MHCategoryAreaEntity() { HomeId =new Guid(para.EventId) }, null).ToList();
+                var Result = MHItemAreaBll.QueryByEntity(new MHItemAreaEntity() { EventId = new Guid(para.EventId) }, null).ToList();
                 if(Result.Count>0)
-                    throw new APIException("商城装修以关联当前砍价活动，请先删除商城装修中的砍价活动再删除！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
+                    throw new APIException("商城装修已关联当前砍价活动，请先删除商城装修中的砍价活动再删除！") { ErrorCode = ERROR_CODES.INVALID_BUSINESS };
 
                 bllPanicbuyingEvent.Delete(entityPanicbuyingEvent);
             }

@@ -12,7 +12,7 @@ using JIT.CPOS.DTO.Module.Event.Bargain.Request;
 
 namespace JIT.CPOS.Web.ApplicationInterface.Module.WEvent.Bargain
 {
-    public class GetEventItemStatusAH : Base.BaseActionHandler<GetEventItemStatusRP,GetEventItemStatusRD>
+    public class GetEventItemStatusAH : Base.BaseActionHandler<GetEventItemStatusRP, GetEventItemStatusRD>
     {
         protected override GetEventItemStatusRD ProcessRequest(APIRequest<GetEventItemStatusRP> pRequest)
         {
@@ -22,7 +22,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WEvent.Bargain
             PanicbuyingEventBLL panicbuyingEventbll = new PanicbuyingEventBLL(CurrentUserInfo);
             PanicbuyingKJEventItemMappingBLL panicbuyingKJEventItemMappingBll = new PanicbuyingKJEventItemMappingBLL(CurrentUserInfo);
             rd.status = 0;
-            
+
             var panicbuyingKJEventJoinEntity = panicbuyingKJEventJoinbll.GetByID(rp.KJEventJoinId);
             if (panicbuyingKJEventJoinEntity != null)
             {
@@ -33,12 +33,19 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WEvent.Bargain
                 }
                 else
                 {
+                    if (panicbuyingKJEventJoinEntity.EventOrderMappingId != null)
+                    {//已购买，返回状态4
+                        rd.status = 4;
+                    }
+
+                    //活动已结束
                     var panicbuyingKJEventItemMappingEntity = panicbuyingKJEventItemMappingBll.QueryByEntity(new PanicbuyingKJEventItemMappingEntity() { EventId = panicbuyingKJEventJoinEntity.EventId, ItemID = panicbuyingKJEventJoinEntity.ItemId }, null).FirstOrDefault();
                     bool isEnd = Convert.ToDateTime(panicbuyingKJEventJoinEntity.CreateTime).AddHours(Convert.ToDouble(panicbuyingKJEventItemMappingEntity.BargaingingInterval)) <= DateTime.Now ? true : false;
                     if (isEnd)
                     {
                         rd.status = 3;
                     }
+
                 }
             }
             else
