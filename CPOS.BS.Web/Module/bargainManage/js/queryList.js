@@ -117,10 +117,10 @@
                                 return false;
                             }
                             else if(event_start>newTime){
-                                var CommodityStatus =1;
+                                var CommodityStatus ="1";
                             }
                             else if(event_start<newTime&&newTime<event_end){
-                                var CommodityStatus = 2;
+                                var CommodityStatus ="2";
                             }
                             that.loadData.setBargain(function(data){
                                 var event_id = data.EventId;
