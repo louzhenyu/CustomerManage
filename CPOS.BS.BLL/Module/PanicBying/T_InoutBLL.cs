@@ -131,7 +131,7 @@ namespace JIT.CPOS.BS.BLL
                         CustomerID = LoggingSessionInfo.ClientID,
                         Remark = Remark,
                         OrderStatus = 800,
-                        StatusRemark = "订单状态从" + itemes.OldStatusDesc+ "变为已取消[操作人:" + LoggingSessionInfo.CurrentUser.User_Name + "]"
+                        StatusRemark = "订单状态从" + itemes.OldStatusDesc + "变为已取消[操作人:" + LoggingSessionInfo.CurrentUser.User_Name + "]"
                     };
                     //执行
                     inoutStatus.Create(info);
@@ -250,6 +250,18 @@ namespace JIT.CPOS.BS.BLL
                 //3.判断购买个数是否小于等于剩余个数
                 if (int.Parse(para.qty) > detail.RemainingQty)
                     throw new Exception("活动商品数量不足，当前数量：" + detail.RemainingQty);
+
+                //获取当前会员购买个数
+                List<IWhereCondition> buyCondition = new List<IWhereCondition> { };
+                buyCondition.Add(new EqualsCondition() { FieldName = "VipId", Value = para.userId });
+                buyCondition.Add(new EqualsCondition() { FieldName = "itemId", Value = detail.ItemId });
+                buyCondition.Add(new DirectCondition(" EventOrderMappingId IS NOT NULL "));
+                var panicbuyingKJEventJoinBLL = new PanicbuyingKJEventJoinBLL(loggingSessionInfo);
+                int buyCount =panicbuyingKJEventJoinBLL.Query(buyCondition.ToArray(), null).Count();
+                if (buyCount+int.Parse(para.qty) > detail.SinglePurchaseQty)
+                    throw new Exception("限购" + detail.SinglePurchaseQty + "件,你还能购买" + (detail.SinglePurchaseQty-buyCount) + "件,请修改购买数量");
+
+
             }
             else
             {
@@ -338,7 +350,7 @@ namespace JIT.CPOS.BS.BLL
                         Field16 = para.couponsPrompt,
                         Field15 = order_reason_id,
                         sales_unit_id = para.storeId,
-                        purchase_unit_id=para.storeId
+                        purchase_unit_id = para.storeId
                         #endregion
                     };
                     //订单状态
@@ -499,7 +511,7 @@ namespace JIT.CPOS.BS.BLL
                     var tempDetailInfos = new List<JIT.CPOS.DTO.Module.VIP.Order.Response.OrderDetailInfo> { };
                     foreach (var it in templist)
                     {
-                        
+
                         var detailInfo = new JIT.CPOS.DTO.Module.VIP.Order.Response.OrderDetailInfo();
                         detailInfo.ItemID = it.ItemID; //商品ID
                         detailInfo.ItemName = it.ItemName; //商品名称

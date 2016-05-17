@@ -127,5 +127,7 @@ namespace JIT.CPOS.BS.DataAccess
             return ImageUrl;
         }
 
+
+
     }
 }

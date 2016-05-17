@@ -52,7 +52,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WEvent.Bargain
                             Qty = n.Qty - n.SoldQty,
                             PromotePersonCount = n.PromotePersonCount
                         }).ToList(),
-                    }).OrderBy(n => n.Status).ToList();
+                    }).OrderBy(n => n.Status).ThenBy(n=>n.EndTime).ToList();
 
                     foreach (var item in rd.EventList)
                     {
