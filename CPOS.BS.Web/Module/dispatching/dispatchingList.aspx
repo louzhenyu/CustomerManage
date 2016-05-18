@@ -40,9 +40,9 @@
 	.timeItem span{margin-left:17px;color:#00a0e8;cursor:pointer;}
 	.timeItem .startTime{margin:0 10px 0 0;}
 	.timeItem .endTime{margin:0 0 0 10px;}
-	.addTimePassageBox{display:inline-block;margin-top:3px;}
+	.addTimePassageBox{display:inline-block;margin-top:3px;background:#fff;}
 	.addTimePassageBox .searchInput{background:url(images/icon-time.png) no-repeat 75px center;}
-	.timeSaveBtn,.timeCancelBtn{float:left;line-height:32px;margin-left:17px;color:#00a0e8;cursor:pointer;}
+	.timeSaveBtn,.timeCancelBtn{line-height:32px;margin-left:17px;color:#00a0e8;cursor:pointer;}
 	.checkBox{float:left;width:18px;height:18px;background:url(images/icon-check.png) no-repeat left center;}
 	.checkBox.on{background:url(images/icon-checked.png) no-repeat left center;}
 	.deliveryNumBox .checkBox{margin-top:7px;}

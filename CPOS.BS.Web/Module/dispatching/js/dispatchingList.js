@@ -150,14 +150,17 @@
 					var $this = $(this),
 						$timeItem = $this.parents('.timeItem'),
 						$startTime = $('.startTime',$timeItem),
-						$endTime = $('.endTime',$timeItem);
+						$endTime = $('.endTime',$timeItem),
+						lengthTime = $timeItem.index();//获取当前修改时间所在位置;
 					//that.timeIndex = $($timeItem,'.timePassage').index();
 					//alert(that.timeIndex);
 					that.IsEdit = 1;
 					$('.addTimePassageBox').show();
+					$('.addTimePassageBox').css({'position':'absolute','top':'15px','right':'-30px'});
+					$('.addTimePassageBox').attr('data-length',lengthTime);
 					$('#dispatching_startTime').val($startTime.text());
 					$('#dispatching_endTime').val($endTime.text());
-					$timeItem.remove();
+					//$timeItem.remove();
 						
 				});
 				
@@ -178,8 +181,11 @@
 				//保存时间段
 				$('.timeSaveBtn').bind('click',function(){
 					var startTime = $("#dispatching_startTime").val(),
-						endTime = $("#dispatching_endTime").val();
-					that.IsEdit = 0;	
+						endTime = $("#dispatching_endTime").val()
+						lengthTime = $('.addTimePassageBox').attr('data-length'),//获取当前修改时间所在位置;
+						lengthTimeCount = $('.timePassage').children('.timeItem').length;
+
+					that.IsEdit = 0;
 					if(startTime == ''){
 						that.alert('开始时间段不能为空！');
 						return ;
@@ -192,16 +198,27 @@
 						that.alert('开始时间段不能大于或等于结束时间段！');
 						return ;
 					}
-					
-					var timeStr = '<div class="timeItem">\
+					if(parseInt(lengthTime)+1<=parseInt(lengthTimeCount)){
+						$('.timeItem').eq(lengthTime).find('.startTime').html(startTime);
+						$('.timeItem').eq(lengthTime).find('.endTime').html(endTime);
+						$("#dispatching_startTime").val('');
+						$("#dispatching_endTime").val('');
+						$('.addTimePassageBox').hide();
+					}
+					else if(lengthTime =="null"||parseInt(lengthTime)+1>=parseInt(lengthTimeCount)){
+						var timeStr = '<div class="timeItem">\
 						<p><span class="startTime">'+startTime+'</span> 至 <span class="endTime">'+endTime+'</span></p>\
 						<span class="editBtn">修改</span>\
 						<span class="removeBtn">删除</span>\
-					</div>';
-					$('.timePassage').append(timeStr);
-					$("#dispatching_startTime").val('');
-					$("#dispatching_endTime").val('');
-					$('.addTimePassageBox').hide();
+						</div>';
+						$('.timePassage').append(timeStr);
+						$("#dispatching_startTime").val('');
+						$("#dispatching_endTime").val('');
+						$('.addTimePassageBox').hide();
+					}
+					
+					
+					
 				});
 				//取消时间段
 				$('.timeCancelBtn').bind('click',function(){
@@ -217,8 +234,13 @@
 				
 				$('#addTimeBtn').bind('click',function(){
 					var isDis = $('.addTimePassageBox').css('display'),
-						isChecked = $('.timePassageArea .checkBox').hasClass('on');
+						isChecked = $('.timePassageArea .checkBox').hasClass('on'),
+						isNull = $('.timePassage').children('.timeItem').length;
+					$('.addTimePassageBox').attr('data-length','null');
 					if(isDis == 'none'){
+						if(isNull =='0'){
+							$('.addTimePassageBox').css({'position':'relative','top':'0','right':'0'});
+						}
 						$('.addTimePassageBox').show();
 					}else{
 						alert('请把当前的时间段设置完成，再添加！');
