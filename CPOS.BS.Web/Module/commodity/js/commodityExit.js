@@ -994,7 +994,9 @@
                     field: that.elems.allData.barcode.filed, title: protitle, width: 80,
                     editor: {
                         type: 'validatebox',
+
                         options: {
+                            required:true,
                             height: 31,
                             width: 136,
                             validType:'englishCheckSub'
@@ -1041,7 +1043,8 @@
                                 }, editor: {
                                     type: 'numberbox',
                                     options: {
-                                        min: 0,
+                                        min: 1,
+                                        required:true,
                                         precision: 0,
                                         height: 31,
                                         width: 136,
@@ -1089,15 +1092,20 @@
                             {
                                 field: filed, title: Item.item_price_type_name, width: 60,
                                 formatter: function (value, row, rowindex) {
-                                    return row.sku_price_list[index].sku_price;
+                                    if(row.sku_price_list[index].sku_price) {
+                                        return row.sku_price_list[index].sku_price;
+                                    }else{
+                                        return ""
+                                    }
                                 }, editor: {
                                 type: 'numberbox',
                                 options: {
                                     min: 0,
+                                    required:true,
                                     precision: 2,
                                     height: 31,
-                                    width: 136
-
+                                    width: 136,
+                                    validType:'nonzero'
                                     /* prefix:'￥'*/
                                 }
                             }
@@ -1315,6 +1323,7 @@
                 }
                 debugger;
                 that.loadData.addPram.SkuList = gridData.rows;
+
             } else if(!$("#dataState").is(':hidden')) {
                 that.loadData.addPram.SkuList = [{ bat_id: "1", sku_price_list: []}];
                 $("[data-flag='price']").each(function (index, dom) {

@@ -771,6 +771,7 @@
                     editor: {
                         type: 'validatebox',
                         options: {
+                            required:true,
                             height: 31,
                             width: 136,
                             validType:'englishCheckSub'
@@ -817,7 +818,8 @@
                                     }, editor: {
                                     type: 'numberbox',
                                     options: {
-                                        min: 0,
+                                        min: 1,
+                                        required:true,
                                         precision: 0,
                                         height: 31,
                                         width: 136,
@@ -854,10 +856,11 @@
                                     type: 'numberbox',
                                     options: {
                                         min: 0,
-                                        precision:2,
+                                        required:true,
+                                        precision: 2,
                                         height: 31,
-                                        width: 136
-
+                                        width: 136,
+                                        validType:'nonzero'
                                         /* prefix:'￥'*/
                                     }
                                 }
