@@ -175,7 +175,7 @@ namespace JIT.CPOS.BS.DataAccess
                                               AND CONVERT(NVARCHAR(10),GETDATE(),120) BETWEEN BeginTime AND EndTime
 
                                         
-                                        ");
+                                        ", strCTWEventId);
         }
         public DataSet GetT_CTW_LEventList(string EventName,
         string BeginTime,

@@ -45,7 +45,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
 
             if (wapentity == null)
             {
-                throw new APIException("微信公众号未授权");
+                throw new APIException("微信公众号未授权") { ErrorCode = 343 };
             }
 
             var Domain = ConfigurationManager.AppSettings["interfacehost"].Replace("http://", "");
