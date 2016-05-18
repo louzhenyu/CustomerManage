@@ -193,8 +193,8 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             {
                                 if (int.Parse(htSetting["enableEmployeeSales"].ToString()) > 0)//启用员工小店
                                 {
-                                    item.salesPrice = item.salesPrice * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100);
-                                    item.ReturnAmount = item.salesPrice * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100);
+                                    item.salesPrice = Math.Round(item.salesPrice * (decimal.Parse(htSetting["eDistributionPricePer"].ToString()) / 100),2);
+                                    item.ReturnAmount = Math.Round(item.salesPrice * (decimal.Parse(htSetting["eOrderCommissionPer"].ToString()) / 100),2);
                                 }
                             }
                         }
