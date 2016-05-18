@@ -476,14 +476,14 @@ as CollectIncome");
 
             sql.Append(" select * from (");
             sql.Append(" select row_number() over(order by a.create_time desc) _row,");
-            sql.Append("a.order_id as OrderID,a.order_no as OrderNO,isnull(a.Field8,'0') as DeliveryTypeId,a.create_time OrderDate,create_time,");
+            sql.Append("a.order_id as OrderID,a.order_no as OrderNO,isnull(a.Field8,'0') as DeliveryTypeId,a.create_time OrderDate,a.create_time,");
             sql.Append(" a.status_desc OrderStatusDesc,c.vipName as VipName,");
             sql.Append(" a.status OrderStatus,isnull(a.total_qty,0) TotalQty,isnull(a.total_retail,0) TotalAmount");
             sql.Append(@",ISNULL((select RetailTraderName from RetailTrader  where RetailTraderID=c.Col20),'') as RetailTraderName
 ,ISNULL((select user_name from T_User  where user_id=a.sales_user),'') as ServiceMan
-,ISNULL((select top 1 Amount from VipAmountDetail where ObjectId=a.order_id and VipId= c.SetoffUserId and AmountSourceId in ('10','20')),0)
+,ISNULL((select top 1 Amount from VipAmountDetail where ObjectId=a.order_id and VipId= c.SetoffUserId AND IsDelete=0  and AmountSourceId in ('10','20')),0)
 +   -----OBJECT_ID是订单号，vipID是获取收益的人(集客员工),防止出现脏数据才用了top 1的方式
-ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
+ISNULL((select top 1 Amount from VipAmountDetail  where ObjectId=a.order_id and AmountSourceId in ('14','15') AND IsDelete=0  and VipId=(select SellUserID from RetailTrader where RetailTraderID=c.Col20)),0)
 as CollectIncome");
             sql.Append(" from t_inout a ");
             //  sql.Append("inner join #tmp bon a.sales_unit_id = b.unit_id ");
@@ -492,7 +492,7 @@ as CollectIncome");
             //and (isnull('{0}','')='' or order_id like '%{0}%' ),, orderId
             //a.status not in( '-1' , '700','800') and
             sql.AppendFormat("  {0}", sqlWhere);
-            sql.Append(" ) t where t._row>@pPageIndex*@pPageSize and t._row<=(@pPageIndex+1)*@pPageSize");
+            sql.Append(" ) t where t._row>@pPageIndex*@pPageSize and t._row<=(@pPageIndex+1)*@pPageSize order by t._row ");
 
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sql.ToString(), paras.ToArray());
 

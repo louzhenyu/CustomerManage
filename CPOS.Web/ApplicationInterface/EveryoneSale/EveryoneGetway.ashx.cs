@@ -311,6 +311,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
                     amountmonth.MonthID = int.Parse(dt.Tables[0].Rows[i]["MonthID"].ToString());
                     amountmonth.GetVipAmount = decimal.Parse(dt.Tables[0].Rows[i]["GetVipAmount"].ToString());
                     amountmonth.OrderAmount = decimal.Parse(dt.Tables[0].Rows[i]["OrderAmount"].ToString());
+                    amountmonth.RetailAmount = decimal.Parse(dt.Tables[0].Rows[i]["RetailAmount"].ToString());
                     amountmonth.TotalAmount = decimal.Parse(dt.Tables[0].Rows[i]["TotalAmount"].ToString());
                     AmountMonthList.Add(amountmonth);
 
@@ -1040,6 +1041,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.EveryoneSale
         public int MonthID { get; set; }
         public decimal GetVipAmount { get; set; }
         public decimal OrderAmount { get; set; }
+        public decimal RetailAmount { get; set; }
         public decimal TotalAmount { get; set; }
     }
     /// <summary>

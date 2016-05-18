@@ -2076,7 +2076,7 @@ namespace JIT.CPOS.BS.BLL.WX
             PaySuccessData.orderName = new DataInfo() { value = Inout.order_no, color = WXTMConfigData.Colour3 };
             PaySuccessData.remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
-            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID,null, null, null, PaySuccessData, null, "15", OpenID, VipID, loggingSessionInfo);
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, PaySuccessData, null, "15", OpenID, VipID, loggingSessionInfo);
         }
         /// <summary>
         /// 发货提醒通知
@@ -2124,6 +2124,8 @@ namespace JIT.CPOS.BS.BLL.WX
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00230", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
+            if (ChangeIntegral.Equals("0"))
+                return null;
             IntegralChange IntegralChangeData = new IntegralChange();
             IntegralChangeData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             IntegralChangeData.FieldName = new DataInfo() { value = "更新前积分", color = WXTMConfigData.Colour1 };
@@ -2133,7 +2135,7 @@ namespace JIT.CPOS.BS.BLL.WX
             IntegralChangeData.CreditTotal = new DataInfo() { value = Convert.ToInt32(Convert.ToDouble(vipInfo.Integration)).ToString(), color = WXTMConfigData.Colour3 };
             IntegralChangeData.Remark = new DataInfo() { value = WXTMConfigData.RemarkText, color = WXTMConfigData.RemarkColour };
 
-            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID,null, null, null, null, IntegralChangeData, "5", OpenID, vipInfo.VIPID, loggingSessionInfo);
+            return SendMatchWXTemplateMessage(WXTMConfigData.TemplateID, null, null, null, null, IntegralChangeData, "5", OpenID, vipInfo.VIPID, loggingSessionInfo);
         }
         /// <summary>
         /// 账户余额变动
@@ -2151,6 +2153,8 @@ namespace JIT.CPOS.BS.BLL.WX
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "OPENTM205454780", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
+            if ((vipAmountEntity.EndAmount ?? 0) == 0)
+                return null;
             Balance BalanceData = new Balance();
             BalanceData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             BalanceData.keyword1 = new DataInfo() { value = "客户余额账户", color = WXTMConfigData.Colour1 };
@@ -2177,6 +2181,8 @@ namespace JIT.CPOS.BS.BLL.WX
             var WXTMConfigData = new WXTMConfigBLL(loggingSessionInfo).QueryByEntity(new WXTMConfigEntity() { TemplateIdShort = "TM00211", CustomerId = loggingSessionInfo.ClientID }, null).FirstOrDefault();
             if (WXTMConfigData == null)
                 return new ResultEntity();
+            if ((money ?? 0) == 0)
+                return null;
             CashBack CashBackData = new CashBack();
             CashBackData.first = new DataInfo() { value = WXTMConfigData.FirstText, color = WXTMConfigData.FirstColour };
             CashBackData.order = new DataInfo() { value = OrderNo, color = WXTMConfigData.Colour1 };
