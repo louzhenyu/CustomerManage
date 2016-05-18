@@ -444,9 +444,10 @@
 					var result = data.data;
 					if(result){
 						$('#seach').form('load',result);
-						if(result.User_Password != null){
+						if(result.User_Id != null){
 							$('#User_Password').attr('readonly','readonly');
 							$('#User_Code').attr('readonly','readonly');
+							$('#user_code').attr('disabled','disabled');
 						}
 					}else{
 						alert('加载数据失败');

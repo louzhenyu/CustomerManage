@@ -152,6 +152,8 @@
 						$startTime = $('.startTime',$timeItem),
 						$endTime = $('.endTime',$timeItem),
 						lengthTime = $timeItem.index();//获取当前修改时间所在位置;
+					   
+
 					//that.timeIndex = $($timeItem,'.timePassage').index();
 					//alert(that.timeIndex);
 					that.IsEdit = 1;
@@ -160,7 +162,8 @@
 					$('.addTimePassageBox').attr('data-length',lengthTime);
 					$('#dispatching_startTime').val($startTime.text());
 					$('#dispatching_endTime').val($endTime.text());
-					//$timeItem.remove();
+					
+					$timeItem.remove();
 						
 				});
 				
@@ -319,6 +322,7 @@
 				//点击保存按钮
 				$('.jui-dialog').delegate('.saveBtn','click',function(){
 					var REG_INT = /^[0-9]\d*$/;
+					var floatMath = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
 					var $this = $(this),
 						dateStr = '1970-01-01T',
 						status = that.saveDataInfo.Status,
@@ -354,6 +358,10 @@
 							}else if(parseInt($("#dispatching_cost").val())>1000){
 								that.alert('默认配送费为小于或等于1000的整数！');
 								return ;
+							}
+							else if(!floatMath.test($("#dispatching_cost").val())){
+								that.alert('格式不对,请输入正确的数字');
+								return;
 							}
 							/*
 							if(!REG_INT.test(parseInt($("#dispatching_mincost").val()))){

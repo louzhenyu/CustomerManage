@@ -16,8 +16,9 @@
 	.jui-dialog-dispatching .commonSelectWrap .tit{width:155px;text-align:right;font-size:12px;color:#666;}
 	
 	.jui-dialog-dispatching .radioWrap{margin-left:100px;height:32px;}
-	.jui-dialog-dispatching .searchInput{width:420px;height:32px;border:1px solid #ddd;}
-	.jui-dialog-dispatching .searchInput input{height:32px;}
+	.jui-dialog-dispatching .searchInput{width:420px;height:32px;border:none;}
+	.jui-dialog-dispatching .searchInput input{height:32px;border:none;}
+	.jui-dialog-dispatching .searchInput .textbox{width:420px;height:32px;}
 	.jui-dialog-dispatching .searchInput input[disabled='disabled'],
 	.jui-dialog-dispatching .searchInput textarea[disabled='disabled']{background:#ccc;}
 	
@@ -106,11 +107,11 @@
         </div>
         <div class="commonSelectWrap">
             <em class="tit"><span class="fontRed">*</span>默认配送费:</em>
-            <p class="searchInput"><input class="formInputBox" id="dispatching_cost" type="text" value="" /></p><span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">元</span>
+            <p class="searchInput"><input class="formInputBox easyui-numberbox" id="dispatching_cost" data-options="min:0,precision:2" style="width:420px;height:32px;" type="text" value="" /></p><span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">元</span>
         </div>
 		<div class="commonSelectWrap">
             <em class="tit">免配送费最低订单金额:</em>
-            <p class="searchInput"><input class="formInputBox" id="dispatching_mincost" type="text" value="" /></p><span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">元</span>
+            <p class="searchInput"><input class="formInputBox easyui-numberbox" data-options="min:0,precision:2" id="dispatching_mincost" style="width:420px;height:32px;"  type="text" value="" /></p><span style="display:inline-block;line-height:34px;padding-left:10px;font-size:16px;color:#ccc;">元</span>
         </div>
         
         <div class="btnWrap">
