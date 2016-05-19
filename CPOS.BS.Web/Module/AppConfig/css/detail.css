@@ -48,7 +48,7 @@
 /*定时器*/
 .timeList{padding-left: 8px; line-height:22px;color: #929292; font-size: 9px;  white-space: nowrap }
 .timeList em{display:inline-block; text-align:center;font-size:12px;background: #999;color: #fff; line-height: 16px; width:20px; height:16px;border-radius: 3px;margin-right: 3px;}
-.end{ font-size: 12px; color:#ff6822; line-height: 22px}
+.end{ font-size: 12px; color:#ff6822; line-height: 22px; background:none;}
 
 /**搜索**/
 .commonSearchArea{height: 47px;padding: 8px 10px; display:inline-flex;background:#eee;color:#fff;width: 100%;}
