@@ -435,6 +435,7 @@ body{overflow-x: hidden;}
 .prevStepBtn ,.startStepbtn{width: 110px;height: 35px;line-height: 35px;background: #fff;cursor: pointer;font-size: 12px;text-align: center;display: inline-block;border-radius: 25px;color: #00a0e8; border: 2px solid #00a0e8;margin: 0px 10px;}
 .prevStepBtn:hover ,.startStepbtn:hover{color: #00a0e8;}
 .nextStepBtn {width: 110px;height: 35px;line-height: 35px;background: #00a0e8;cursor: pointer;font-size: 12px;text-align: center;display:block;border-radius: 25px;color: #fff; border: 2px solid #00a0e8;margin: 0px 10px;}
+.endStepBtn {width: 110px;height: 35px;line-height: 35px;background: #00a0e8;cursor: pointer; font-size: 12px; text-align: center; display: inline-block;border-radius: 25px;color: #fff; border: 2px solid #00a0e8;}
 
 /**圆环导航 */
 .NavOuterCircle {width: 33px;height: 33px;background-color: #00a0e8;border-radius: 50%;position: relative;box-sizing: content-box; display: inline-block;  margin: 0px 10px;}

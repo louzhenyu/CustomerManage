@@ -1356,10 +1356,10 @@
                         <div class="addeditimgoption">
                             <img src="/Module/QuestionnaireNews/images/add.png" />添加
                         </div>
-                        <input class="addeditimgoptionbtn" type="file" />
+                        <input class="addeditimgoptionbtn" data-uploadimgwidth=400  type="file" />
                         <div class="alertmessage">
                             <span class="imgmessage">建议尺寸200px*200px，50KB以内</span>
-                            <span class="tips"><span>Tips</span>单次最多可上传5张</span>
+                            <span class="tips"><span>Tips</span>最多可上传5张</span>
                         </div>
                     </div>
                 </div>
@@ -1474,10 +1474,10 @@
                         <div class="addeditimgoption">
                             <img src="/Module/QuestionnaireNews/images/add.png" />添加
                         </div>
-                        <input class="addeditimgoptionbtn" type="file" />
+                        <input class="addeditimgoptionbtn"  data-uploadimgwidth=400 type="file" />
                         <div class="alertmessage">
                             <span class="imgmessage">建议尺寸200px*200px，50KB以内</span>
-                            <span class="tips"><span>Tips</span>单次最多可上传5张</span>
+                            <span class="tips"><span>Tips</span>最多可上传5张</span>
                         </div>
                     </div>
                 </div>

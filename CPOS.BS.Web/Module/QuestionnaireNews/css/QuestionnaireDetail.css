@@ -22,6 +22,9 @@
 .uploadItem .exp{padding-top: 7px; font-size: 13px; color: #999;}
 form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .ke-button-common .ke-button{width: 0px;}
+.combo-panel {  max-height: 300px;}
+
+.ke-upload-area .ke-upload-file{ top:initial;}
 .checkBox{cursor: pointer;}
 .colorplan img{margin-right: 20px; cursor: pointer; margin-left: 5px;}
 .lineTitle  .tips{color:red; text-align: left; display: inline-block;  font-size: 14px;}
@@ -132,8 +135,9 @@ form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .handleLayer .wrapPics .editimgoption .optionclose img{width: 22px; height: 22px; float: none; margin: 0px;  border: 0px;}
 .handleLayer .wrapPics .editimgoptioninput{display: table-cell; height: 100px; vertical-align: middle;}
 .handleLayer .wrapPics .editimgoptioninput input{width:230px;}
-.handleLayer .wrapPics .addeditimgoption{cursor: pointer; display: block; height: 59px; border: 3px dashed #e1e1e1; border-radius: 5px; margin: 10px 0px; padding: 15px;position: absolute; width: 400px;}
+.handleLayer .wrapPics .addeditimgoption{padding-top: 15px;cursor: pointer; display: block; height: 59px; border: 3px dashed #e1e1e1; border-radius: 5px; margin: 10px 0px; position: absolute; width: 400px;}
 .handleLayer .wrapPics .addeditimgoption img{width:22px; background-color: #00cccb; border-radius: 50px; margin: 0px 10px;}
+.handleLayer .wrapPics .addeditimgoption .ke-upload-file {  height: 60px;}
 .handleLayer .wrapPics .addeditimgoptionbtn{cursor: pointer; display: block; height: 59px;  border-radius: 5px; margin: 10px 0px; padding: 15px;}
 .handleLayer .wrapPics .alertmessage{margin: 10px 0px;}
 .handleLayer .wrapPics .alertmessage .tips{color:red; text-align: left; display: block; margin: 10px 0px; font-size: 14px;}

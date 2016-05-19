@@ -401,13 +401,27 @@
 
                     var IsValidateStartDate = question.find(".IsValidateStartDate").eq(0);
                     var IsValidateEndDate = question.find(".IsValidateEndDate").eq(0);
+
+                    if (IsValidateStartDate.val() == "1")
+                    {
+                        var StartDate = question.find(".StartDate").eq(0);
+                        if (StartDate.datebox("getText") == "") {
+                            $.messager.alert("提示", "起始日期未填写！");
+                            return;
+                        }
+                    }
+
+                    if (IsValidateEndDate.val() == "1") {
+                        var EndDate = question.find(".EndDate").eq(0);
+                        if (EndDate.datebox("getText") == "") {
+                            $.messager.alert("提示", "结束日期未填写！");
+                            return;
+                        }
+                    }
+
                     if (IsValidateStartDate.val() == "1" && IsValidateEndDate.val() == "1") {
                         var StartDate = question.find(".StartDate").eq(0);
                         var EndDate = question.find(".EndDate").eq(0);
-                        debugger;
-                        if (StartDate.datebox("getText") == "" || EndDate.datebox("getText") == "") {
-                            return;
-                        }
 
                         if (new Date(StartDate.datebox("getText")) > new Date(EndDate.datebox("getText"))) {
                             $.messager.alert("提示", "开始时间必须小于结束时间！");
@@ -450,7 +464,7 @@
                 {
                     if (question.find(".editimgoption").not(".optiondelete").length < 1)
                     {
-                        $.messager.alert("提示", "选项至少设置一个！");
+                        $.messager.alert("提示", "答案至少设置一个图片选项！");
                         return;
                     }
                 }
@@ -463,7 +477,7 @@
                 question.find(".option,.editimgoption").not(".optiondelete").find(".optiontext").each(function () {
                     if (tempvalidate) {
                         if ($(this).val() == "") {
-                            $.messager.alert("提示", "选项标题不能为空！");
+                            $.messager.alert("提示", "选项内容不能为空！");
                             tempvalidate = false;
                         }
                     }
@@ -1379,7 +1393,7 @@
 
             });
 
-
+            that.elems.tabel.datagrid("resize");
             debugger;
             //分页
             kkpager.generPageHtml({
