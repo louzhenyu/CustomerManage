@@ -252,15 +252,17 @@ namespace JIT.CPOS.BS.BLL
                     throw new Exception("活动商品数量不足，当前数量：" + detail.RemainingQty);
 
                 //获取当前会员购买个数
-                List<IWhereCondition> buyCondition = new List<IWhereCondition> { };
-                buyCondition.Add(new EqualsCondition() { FieldName = "VipId", Value = para.userId });
-                buyCondition.Add(new EqualsCondition() { FieldName = "itemId", Value = detail.ItemId });
-                buyCondition.Add(new DirectCondition(" EventOrderMappingId IS NOT NULL "));
-                var panicbuyingKJEventJoinBLL = new PanicbuyingKJEventJoinBLL(loggingSessionInfo);
-                int buyCount =panicbuyingKJEventJoinBLL.Query(buyCondition.ToArray(), null).Count();
-                if (buyCount+int.Parse(para.qty) > detail.SinglePurchaseQty)
-                    throw new Exception("限购" + detail.SinglePurchaseQty + "件,你还能购买" + (detail.SinglePurchaseQty-buyCount) + "件,请修改购买数量");
-
+                if (detail.SinglePurchaseQty > 0)//限购
+                {
+                    List<IWhereCondition> buyCondition = new List<IWhereCondition> { };
+                    buyCondition.Add(new EqualsCondition() { FieldName = "VipId", Value = para.userId });
+                    buyCondition.Add(new EqualsCondition() { FieldName = "itemId", Value = detail.ItemId });
+                    buyCondition.Add(new DirectCondition(" EventOrderMappingId IS NOT NULL "));
+                    var panicbuyingKJEventJoinBLL = new PanicbuyingKJEventJoinBLL(loggingSessionInfo);
+                    int buyCount = panicbuyingKJEventJoinBLL.Query(buyCondition.ToArray(), null).Count();
+                    if (buyCount + int.Parse(para.qty) > detail.SinglePurchaseQty)
+                        throw new Exception("限购" + detail.SinglePurchaseQty + "件,你还能购买" + (detail.SinglePurchaseQty - buyCount) + "件,请修改购买数量");
+                }
 
             }
             else
