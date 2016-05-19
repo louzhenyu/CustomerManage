@@ -123,7 +123,7 @@
                             <div class="commonSelectWrap">
                                 <em class="tit">按钮名称：</em>
                                 <label class="searchInput" style="width: 180px;">
-                                    <input id="ButtonName" class="activityListdata" data-alerttext="按钮名称不能为空"  data-required="true"  data-idname="ButtonName"   name="ButtonName" type="text"
+                                    <input id="ButtonName" class="activityListdata" maxlength="12" data-alerttext="按钮名称不能为空"  data-required="true"  data-idname="ButtonName"   name="ButtonName" type="text"
                                         value="进入">
                                 </label>
                             </div>
@@ -300,16 +300,16 @@
                         </div>
                         
                         <div id="LT_Data_bgpic1" class="uploadItem"  data-flag=12  data-url="" data-batid="LT_bgpic1">
-                        	<p class="tit">背景颜色1：</p>
+                        	<p class="tit">大转盘背景：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="背景颜色1图片上传成功！">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="大转盘背景图片上传成功！">上传图片</a>
                                 <p class="exp">(尺寸：640*660)</p>
                             </div>
                         </div>
                          <div id="LT_Data_bgpic2" class="uploadItem" data-flag=13  data-url="" data-batid="LT_bgpic2">
-                        	<p class="tit">背景颜色2：</p>
+                        	<p class="tit">转盘图片：</p>
                             <div class="infoBox">
-                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="背景颜色2图片上传成功！">上传图片</a>
+                            	<a href="javascript:;" class="commonHandleBtn uploadImgBtn"  data-alertinfo="转盘图片图片上传成功！">上传图片</a>
                                 <p class="exp">(尺寸：492*492)</p>
                             </div>
                         </div>
@@ -763,7 +763,7 @@
 	<td><#=idata.PrizeName#><span style="display:none"><input class="Prizedata" data-coupontypeid="<#=idata.CouponTypeID #>" type="hidden" /></span></td>
 	<td class="numBox"><#=idata.CountTotal#></td>
 	<td><#=idata.IssuedQty#></td>
-	<td ><#=idata.RemainCount#></td>
+	<td  class="surplusnum" ><#=idata.RemainCount#></td>
 	<td><em class="addBtn" title="追加数量"></em><em class="delBtn" title="删除"></em></td>
 </tr>
 <#}#>
@@ -777,7 +777,7 @@
 	<td><#=idata.PrizeLevelName#><span style="display:none"><input class="Prizedata" data-coupontypeid="<#=idata.CouponTypeID #>" type="hidden" /></span></td>
 	<td><#=idata.PrizeName#></td>
 	<td class="numBox"><#=idata.CountTotal#></td>
-	<td ><#=idata.RemainCount#></td>
+	<td  class="surplusnum" ><#=idata.RemainCount#></td>
 	<td><em class="addBtn" title="追加数量"></em><em class="delBtn" title="删除"></em></td>
 </tr>
 <#}#>

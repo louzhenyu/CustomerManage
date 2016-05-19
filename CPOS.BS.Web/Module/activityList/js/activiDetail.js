@@ -324,8 +324,10 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 			$('#prizeListTable,#LuckyTurnListTable,#QuestionnaireTable').delegate('.addBtn', 'click', function () {
 				var $this = $(this),
 					$tr = $this.parents('tr'),
-					$num = $('.numBox',$tr),
-					num = $num.text()-0,
+					$num = $('.numBox', $tr),
+					$surplusnum = $('.surplusnum', $tr),
+					num = $num.text() - 0,
+					surplusnum = $surplusnum.text() - 0,
 					prizesId = $tr.data('prizesid');
 				var CouponTypeID = $tr.find(".Prizedata").data("coupontypeid");
 				$('.jui-mask').show();
@@ -333,7 +335,8 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				$('.jui-dialog-prizeCountAdd .saveBtn').unbind('click');
 				$('.jui-dialog-prizeCountAdd .saveBtn').bind('click',function(){
 					var addNum = $('#prizeCountAdd').val()-0,
-						count = num+addNum;
+						count = num + addNum;
+					    surplusnum = surplusnum + addNum;
 					//提交接口
 					$.util.ajax({
 						url: that.elems.domain+"/ApplicationInterface/Module/WEvents/EventsSaveHandler.ashx",
@@ -353,6 +356,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 								$('.jui-mask').hide();
 								$('.jui-dialog-prizeCountAdd').hide();
 								$num.text(count);
+								$surplusnum.text(surplusnum);
 							}else{
 								alert(data.Message);
 							}
