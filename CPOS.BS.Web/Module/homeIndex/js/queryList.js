@@ -1394,10 +1394,9 @@ define(['jquery','customerTemp','kindeditor', 'kkpager','artTemplate','tools'], 
             });
         },
         uploadImg: function (btn, callback) {
-            console.log("uploadImg");
             setTimeout(function () {
                 var uploadBtn = KE.uploadbutton({
-                    width: "100%",
+                    width: 100,
                     button: btn,
                     //上传的文件类型
                     fieldName: 'imgFile',

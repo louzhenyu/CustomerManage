@@ -153,12 +153,14 @@
                             objList[1].Item_Category_Id=rowData.id;
                             objList[1].obj=rowData;
                             row.DisplayIndex=rowData.DisplayIndex;
+                            return false;
                         }
                         if(type=="shiftDown"&&row.DisplayIndex<=rowData.DisplayIndex){//下移动
                             objList[1].DisplayIndex=rowData.DisplayIndex;
                             objList[1].Item_Category_Id=rowData.id;
                             objList[1].obj=rowData;
                             row.DisplayIndex=rowData.DisplayIndex;
+                            return false;
                         }
 
                     }
