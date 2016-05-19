@@ -514,8 +514,8 @@ define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager', 'artDialo
             });
 
             //弹出类别选择事件
-            $("#addNewGoods .selectBox").mouseover(function(e){
-                $("#category").stop().show(500);
+            $("#addNewGoods .selectBox").mouseenter(function(e){
+                $("#category").stop().show();
                 that.stopBubble(e);
             });
 

@@ -6,7 +6,7 @@
     <title>砍价列表信息</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <link href="<%=StaticUrl+"/module/bargainManage/css/addCoupon.css?v=0.3"%>" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/bargainManage/css/addCoupon.css?v=0.4"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="allPage" id="section" data-js="js/addBargin.js?ver=0.3" >
@@ -199,7 +199,7 @@
     <div id="goodsBasic_exit"  class="jui-dialog jui-dialog-addGoogs" style="display:none;">
         
           <div class="jui-dialog-tit">
-            <h2>添加商品</h2>
+            <h2>修改活动名称</h2>
               <a href="javascript:;" class="jui-dialog-close hintClose"></a>
           </div>
           <div class="optionclass">

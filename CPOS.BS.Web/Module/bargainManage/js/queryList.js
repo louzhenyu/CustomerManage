@@ -13,11 +13,13 @@
             vipSourceId:'',
             click:true,
             dataMessage:  $("#pageContianer").find(".dataMessage"),
-            panlH:116                           // 下来框统一高度
+            panlH:116 ,                        // 下来框统一高度,
+            CommodityStatus:""
         },
         detailDate:{},
         ValueCard: '',//储值卡号
         submitappcount: false,//是否正在提交追加表单
+		
         select:{
             isSelectAllPage:false,                 //是否是选择所有页面
             tagType:[],                             //标签类型
@@ -81,51 +83,33 @@
              });
             //新增活动(编辑活动)
             $('#saveCampaign').bind('click',function(){
-				var myDate = new Date();	
                 var event_name = $('#campaignName').val();
                 var event_start = $("#campaignBegin").val();
                 var event_end = $('#campaignEnd').val();
 				var event_Id = that.loadData.args.EventID;
-                var endDate = event_end.substring(0,10).split('-');
-                var endTime = event_end.substring(11,event_end.length).split(':');
-                var end = endDate[0]+endDate[1]+endDate[2]+endTime[0]+endTime[1]
-				var newDate = myDate.toLocaleDateString().split('/');
-                var h = myDate.getHours();//获取本地时间 小时
-                var m = myDate.getMinutes();//获取本地时间 分钟
-				if (newDate[1]>=1&&newDate[1]<=9){
-					newDate[1] = "0"+newDate[1];
-				}
-				if (newDate[2]>=1&&newDate[2]<=9){
-					newDate[2] = "0"+newDate[2];
-				}
-                if(h>=0&&h<=9){
-                    h="0"+ h;
-                }
-                if(m>=0&&m<=9){
-                    m="0"+ m;
-                }
-				var newTime = newDate[0]+newDate[1]+newDate[2]+h+m;
+                var newTime = Date.parse(that.currentTime());
+                var end =Date.parse(event_end);
+                var start = Date.parse(event_start);
                 if(event_name!=""&&event_start!=""&&event_end!=""){
                     that.loadData.goods.EventName = event_name;
                     that.loadData.goods.BeginTime = event_start;
                     that.loadData.goods.EndTime = event_end;					
                     if(event_start<=event_end){
                         if(event_Id==""){
-                            //var CommodityStatus = 1;
-                            if(parseInt(end)<=parseInt(newTime)){
+                            if(end<=newTime){
                                 $.messager.alert('提示','无法添加已过期的活动，请重新选择！');
                                 return false;
                             }
-                            else if(event_start>newTime){
-                                var CommodityStatus ="1";
+                            else if(start>newTime){
+                                 that.elems.CommodityStatus ="1";
                             }
-                            else if(event_start<newTime&&newTime<event_end){
-                                var CommodityStatus ="2";
+                            else if(start<newTime&&newTime<end){
+                                that.elems.CommodityStatus ="2";
                             }
                             that.loadData.setBargain(function(data){
                                 var event_id = data.EventId;
                                 var mid = $.util.getUrlParam("mid");
-                               location.href = "addCommodity.aspx?eventId="+event_id+"&mid="+ mid+"&CommodityStatus="+CommodityStatus;
+                               location.href = "addCommodity.aspx?eventId="+event_id+"&mid="+ mid+"&CommodityStatus="+that.elems.CommodityStatus;
                             })
 
                         }
@@ -239,32 +223,15 @@
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
                 that.loadData.args.EventID = row.EventId;
-                var myDate = new Date();
-                var newDate = myDate.toLocaleDateString().split('/');
-                var h = myDate.getHours();//获取本地时间 小时
-                var m = myDate.getMinutes();//获取本地时间 分钟
                 var name = row.EventName;
                 var start = row.BeginTime;
                 var end = row.EndTime;
-                var endDate = end.substring(0,10).split('-');
-                var endTime = end.substring(11,end.length).split(':');
-                var End = endDate[0]+endDate[1]+endDate[2]+endTime[0]+endTime[1]
+                var begin = Date.parse(start);
+                var End = Date.parse(end);
+                var newTime = Date.parse(that.currentTime());
                 var CommodityStatus = row.Status;
-                if (newDate[1]>=1&&newDate[1]<=9){
-                    newDate[1] = "0"+newDate[1];
-                }
-                if (newDate[2]>=1&&newDate[2]<=9){
-                    newDate[2] = "0"+newDate[2];
-                }
-                if(h>=0&&h<=9){
-                    h="0"+ h;
-                }
-                if(m>=0&&m<=9){
-                    m="0"+ m;
-                }
-                var newTime = newDate[0]+newDate[1]+newDate[2]+h+m;
                 if(optType=="exit"){
-                    if(parseInt(End)<=parseInt(newTime)&&CommodityStatus=='2'){
+                    if(End<=newTime&&CommodityStatus=='2'){
                         $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
                         return false;
                     }else{
@@ -278,7 +245,7 @@
                 if(optType=="watchOn"){
 
 
-                    if(parseInt(End)<=parseInt(newTime)){
+                    if(End<=newTime){
                         $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
                         return false;
                     }else{
@@ -290,13 +257,14 @@
                         $('#campaignBegin').css('background','#ccc');
                         $('#campaignEnd').attr('disabled',false);
                         that.showElements("#goodsBasic_exit");
+                        $('#goodsBasic_exit .jui-dialog-tit h2').html('延长活动时间');
                     }
 
                 
                 }
                 //提前结束
                 if(optType=="stop"){
-                    if(parseInt(End)<=parseInt(newTime)&&CommodityStatus!="3"){
+                    if(End<=newTime&&CommodityStatus!="3"){
                         $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
                         return false;
                     }else{
@@ -308,7 +276,7 @@
                                 that.loadData.setBargainStatus(function(data){
                                     that.loadData.goods.EventName = name;
                                     that.loadData.goods.BeginTime = start;
-                                    that.loadData.goods.EndTime = newTime;
+                                    that.loadData.goods.EndTime = that.currentTime();
                                     that.loadData.setBargain();
                                     alert("操作成功");
                                     that.loadPageData()
@@ -320,7 +288,7 @@
                 }
                 //进行活动判断
                 if (optType == "deleteOn") {
-                    if(parseInt(End)<=parseInt(newTime)&&CommodityStatus=='2'){
+                    if(End<=newTime&&CommodityStatus=='2'){
                         $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
                         return false;
                     }else{
@@ -330,7 +298,7 @@
                 }
                 //删除活动
                 if(optType=="delete"){
-                    if(parseInt(End)<=parseInt(newTime)&&CommodityStatus=='2'){
+                    if(End<=newTime&&CommodityStatus=='2'){
                         $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
                         return false;
                     }else{
@@ -349,22 +317,23 @@
             })
             /**************** -------------------列表操作事件用例 End****************/
         },
-        //收款
-        addNumber:function(data){
-            debugger;
-            var that=this;
-            that.elems.optionType="add";
-            $('#win').window({title:"优惠券追加",width:430,height:230});
-
-            //改变弹框内容，调用百度模板显示不同内容
-            $('#panlconent').layout('remove','center');
-            var html=bd.template('tpl_AddNumber');
-            var options = {
-                region: 'center',
-                content:html
-            };
-            $('#panlconent').layout('add',options);
-            $('#win').window('open')
+        //获取当前时间
+        currentTime:function(){
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate
+                + " " + date.getHours() + seperator2 + date.getMinutes();
+            return currentdate;
         },
 
         //设置查询条件   取得动态的表单查询参数
