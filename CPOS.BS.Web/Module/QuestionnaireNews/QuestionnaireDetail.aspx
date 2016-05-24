@@ -319,7 +319,7 @@
                     <div class="Endimg">
                         <img  class="EndBG" src="/Module/QuestionnaireNews/images/EndPage.png" />
                         <img class="end_BGImageSrc" src="" />
-                        <span class="endpagetext">答题已完成是否要分享</span>
+                        <span class="endpagetext"></span>
                         <span class="Endbtn">分享</span>
                         
                     </div>
@@ -1616,7 +1616,7 @@
             <label class=" clearBorder">
               <input data-text="得分段" class="easyui-combobox ScoreRecoverydata " id="MinScore"  name="MinScore" data-options="editable:false,width:100,height:32" data-flag=""   type="text" value="">
                 至
-                <input data-text="得分段" class="easyui-combobox ScoreRecoverydata" id="MaxScore"   name="MaxScore"  data-options="editable:false,width:100,height:32" data-flag=""  type="text" value="">
+                <input data-text="得分段" class="easyui-combobox ScoreRecoverydata" id="MaxScore" data-message="请先选择开始得分"    name="MaxScore"  data-options="editable:false,width:100,height:32" data-flag=""  type="text" value="">
             </label>
         </div>
         

@@ -11,7 +11,9 @@
             QuestionnaireName:"",
             ActivityID:"",
             thead: $("#thead"),                    //表格head部分
-            panlH: 116                           // 下来框统一高度
+            panlH: 116,                           // 下来框统一高度
+            Timer: null,
+            Timercount: 1
         },
         init: function () {
             this.initEvent();
@@ -179,7 +181,7 @@
 
                     //$(".datagrid-view").css("overflow", "auto");
                     $(".datagrid-body").css("height", "100px");
-                   
+                    
 
                 }
                 , onClickCell: function (rowIndex, field, value) {
@@ -191,6 +193,21 @@
                 }
             });
 
+            //循环判断数据列表是否存在样式问题
+            that.elems.Timer = setInterval(function () {
+                that.elems.Timercount++;
+                if (that.elems.Timercount > 20) {
+                    clearInterval(that.elems.Timer);
+                }
+                if (($(".datagrid-view").width() - $(".datagrid-wrap").width()) > 0) {
+                    var width = $(".datagrid-wrap").width();
+                    $(".datagrid-view").width(width);
+                    $(".datagrid-view2").width((width - 40));
+                    $(".datagrid-header").width((width - 40));
+                    $(".datagrid-body").width((width - 40));
+                    clearInterval(that.elems.Timer);
+                }
+            }, 300);
 
         },
         //加载更多的资讯或者活动
@@ -228,7 +245,7 @@
                                             if (result.TitleData[i].NameID == "ID") {
                                                 break;
                                             }
-                                            columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + result.TitleData[i].Name + "',  resizable: true, align: 'left' },";
+                                            columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + result.TitleData[i].Name + "',  resizable: true, align: 'center' },";
                                         }
                                     }
                                 }

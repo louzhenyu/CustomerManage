@@ -22,7 +22,7 @@
                     <div class="navtit">报表统计</div>
                 </div>
                 
-                <div class="tableWrap showcontent" id="tableWrap" style="width:100%;">
+                <div class="tableWrap showcontent" id="tableWrap" style="width:100%; ">
                     <div class="operation optionBtn">
                             <div class="commonBtn batchdelete icon w100 icon_export r" data-flag="export">批量删除</div>
                             <div class="commonBtn exportBtn   icon w80 icon_export r" data-flag="export">导出</div>

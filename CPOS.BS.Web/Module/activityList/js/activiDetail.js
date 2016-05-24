@@ -437,6 +437,23 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				$('.previewDsc').text($(this).val());
 			})
 			
+			if (that.elems.eventId==null||that.elems.eventId=="") {
+
+			    $('#startDate').datebox().datebox('calendar').calendar({
+			        validator: function (date) {
+			            var now = new Date();
+			            var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+			            return d1 <= date;
+			        }
+			    });
+			    $('#endDate').datebox().datebox('calendar').calendar({
+			        validator: function (date) {
+			            var now = new Date();
+			            var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+			            return d1 <= date;
+			        }
+			    });
+			}
             
 			
         },
@@ -600,7 +617,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
                         imgjsonstr += " {PrizeLocationID:" + ($(this).data("prizeLocationid") == undefined ? "''" : "'" + $(this).data("prizeLocationid") + "'") + ",Location:'" + $(this).data("index") + "',PrizeID:'" + $(this).data("prizesid") + "',ImageUrl:'" + $(this).attr("src") + "',PrizeName:'" + $(this).data("prizesname") + "'},";
                     });
                     imgjsonstr = imgjsonstr.trim(",") + "]";
-                    var imgjson = Ext.decode(imgjsonstr);
+                    var imgjson = $.util.decode(imgjsonstr);
                     that.SavePrizeLocation(imgjson);
                 }
 

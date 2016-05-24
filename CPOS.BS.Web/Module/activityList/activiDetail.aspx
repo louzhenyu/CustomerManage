@@ -444,7 +444,7 @@
                 </tbody>
               </table>
               
-              <div class="activityConfigArea">
+              <div class="activityConfigArea" style="height:100px;">
               		  
                     选择表单：<input id="Questionnaires" class="easyui-combobox textbox combo" data-options="required:true,width:190,height:32"  type="text" />
               </div>

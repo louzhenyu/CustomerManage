@@ -21,7 +21,9 @@
             QuestionnaireID:"",
             isEditOption: false,  //是否在编辑题目
             submitstate: false,  //添加描述提交状态
-            isregisterdescribeImg: false  //是否注册了描述上传图
+            isregisterdescribeImg: false,  //是否注册了描述上传图
+            Timer: null,
+            Timercount: 1
         },
         select:{
             isSelectAllPage:false,                 //是否是选择所有页面
@@ -1108,6 +1110,7 @@
 
             });
 
+
           
             /**************** -------------------弹出窗口初始化 start****************/
             $('#win').window({
@@ -1365,8 +1368,8 @@
                         debugger;
                             var status = row.Status;
                             var optstr = "";
-                            optstr += '<p class="handle exit" data-index="' + index + '" data-oprtype="edit"></p>';
-                            optstr += '<p class="handle delete" data-index="' + index + '" data-oprtype="delete"></p>';
+                            optstr += '<p class="handle exit opt" data-index="' + index + '" data-oprtype="edit"></p>';
+                            optstr += '<p class="handle delete opt" data-index="' + index + '" data-oprtype="delete"></p>';
                            
 
                             return optstr;
@@ -1393,7 +1396,20 @@
 
             });
 
-            that.elems.tabel.datagrid("resize");
+            //循环判断数据列表是否存在样式问题
+            that.elems.Timer = setInterval(function () {
+                that.elems.Timercount++;
+                if (that.elems.Timercount > 20)
+                {
+                    clearInterval(that.elems.Timer);
+                }
+                if (($("#tableWraplist .datagrid-btable").height() - $("#tableWraplist .datagrid-body").height()) > 0)
+                {
+                    that.elems.tabel.datagrid("resize");
+                    clearInterval(that.elems.Timer);
+                }
+            }, 500);
+
             debugger;
             //分页
             kkpager.generPageHtml({
@@ -1587,7 +1603,15 @@
                 valueField: 'text',
                 textField: 'text',
                 panelHeight: 'auto',
-                data: MaxScoredata
+                data: MaxScoredata,
+                onShowPanel: function () {
+                    var count = $("#MaxScore").combobox("getData").length;
+                    var message= $("#MaxScore").combobox().data("message");
+                    if (count < 1)
+                    {
+                        $.messager.alert("提示", message);
+                    }
+                }
             });
 
             $("#MinScore").combobox({
@@ -1601,6 +1625,7 @@
                     for (var i = (param.text + 1) ; i < Number(maxvalue) + 1; i++) {
                         _MaxScoredata.push({ "text": i });
                     }
+
                     $("#MaxScore").combobox("loadData", _MaxScoredata);
 
                 }
