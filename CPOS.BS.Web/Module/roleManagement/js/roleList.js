@@ -184,7 +184,11 @@
 			
 			//获取所属层级数据
             that.loadData.getClassify(function(data) {
-                data[0].children.push({id:0,text:"请选择"});
+				if(data[0].children){
+					data[0].children.push({id:0,text:"请选择"});
+				}else{
+					data[0].children = [{id:0,text:"请选择"}];
+				}
                 $('#type_id').combotree({
                     width:that.elems.width,
 					height:that.elems.height,
@@ -426,7 +430,11 @@
 			
 			//获取所属层级数据
             that.loadData.getClassify(function(data) {
-				data[0].children.push({id:0,text:"请选择"});
+				if(data[0].children){
+					data[0].children.push({id:0,text:"请选择"});
+				}else{
+					data[0].children = [{id:0,text:"请选择"}];
+				}
                 $('#type_id2').combotree({
                     width:that.elems.width,
 					height:that.elems.height,

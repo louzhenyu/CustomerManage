@@ -1,9 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-  <meta charset="UTF-8" />
   <title>门店信息</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="<%=StaticUrl+"/module/storeManagement/css/storeInfo.css?v=0.4"%>" rel="stylesheet" type="text/css" />
   <style type="text/css">
 a:hover{color:#fff;}
