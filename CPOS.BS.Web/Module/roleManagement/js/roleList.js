@@ -506,7 +506,7 @@
 							//animate:true,
 							//lines: true,
 							checkbox: true,
-							cascadeCheck: false,
+							cascadeCheck: true,
 							//valueField: 'id',
 							//textField: 'text',
 							data: result
