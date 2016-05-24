@@ -21,12 +21,19 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
         //protected ClientMenuButtonEntity[] MenuList;
         protected IList<MenuModel> MenuList;
         public string strWebLogo = "/framework/image/logo.gif";
+
+        string _mid = string.Empty;
         protected string Mid
         {
             get
             {
-                return Request.QueryString["mid"] == null ? "" : Request.QueryString["mid"].ToString();
-
+                if (string.IsNullOrWhiteSpace(_mid))
+                    return Request.QueryString["mid"] == null ? "" : Request.QueryString["mid"].ToString();
+                return _mid;
+            }
+            set
+            {
+                _mid = value;
             }
         }
         #region LoggingSessionInfo 登录信息类集合
@@ -109,7 +116,6 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
         {
             get { return new SessionManager().CurrentUserLoginInfo.CurrentUserRole.RoleName; }
         }
-
         #region 页面入口
         /// <summary>
         /// pageload
@@ -140,29 +146,68 @@ namespace JIT.CPOS.BS.Web.Framework.MasterPage
                         lblLoginUserName.InnerText = loggingSessionInfo.CurrentUser.User_Name;//因为ChildPage.Master的前台页面Inherits="JIT.CPOS.BS.Web.Framework.MasterPage.CPOS" 但是不含有 lblLoginUserName
                     }
                 }
+
+
+
                 AppSysService appSysService = new AppSysService(loggingSessionInfo);
                 this.MenuList = appSysService.GetRoleMenusList(loggingSessionInfo,
-                    loggingSessionInfo.CurrentUserRole.RoleId);//根据当前用户的角色，来取他拥有的页面
-                MMenuID = Request.QueryString["MMenuID"] == null ? "" : Request.QueryString["MMenuID"].ToString();
-                PMenuID = Request.QueryString["PMenuID"] == null ? "" : Request.QueryString["PMenuID"].ToString();
-                if (PMenuID == "")
-                {
-                    var currentMenu = MenuList.Where(p => p.Menu_Id == Mid).SingleOrDefault();
-                    if (currentMenu != null)
-                    {
-                        PMenuID = currentMenu.Parent_Menu_Id;
-                    }
+            loggingSessionInfo.CurrentUserRole.RoleId);//根据当前用户的角色，来取他拥有的页面
 
-                }
-                if (MMenuID == "")
+                var dbMenuIds = appSysService.GetMenuIds(Request.Url);
+                if (dbMenuIds.Count == 0 && !string.IsNullOrWhiteSpace(Mid))
                 {
-                    var currentMenu = MenuList.Where(p => p.Menu_Id == PMenuID).SingleOrDefault();
-                    if (currentMenu != null)
-                    {
-                        MMenuID = currentMenu.Parent_Menu_Id;
-                    }
-
+                    dbMenuIds.Add(Mid);
                 }
+                foreach (var dbMenuId in dbMenuIds)
+                {
+                    string tempMid = string.Empty;
+                    string tempPMenuID = string.Empty;
+                    string tempMMenuID = string.Empty;
+                    if (!string.IsNullOrWhiteSpace(dbMenuId))
+                    {
+                        tempMid = dbMenuId;
+                    }
+                    //PMenuId
+                    {
+                        var currentMenu = MenuList.Where(p => p.Menu_Id == tempMid).SingleOrDefault();
+                        if (currentMenu != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(currentMenu.Parent_Menu_Id))
+                            {
+                                tempPMenuID = currentMenu.Parent_Menu_Id;
+                            }
+                        }
+                    }
+                    //MMenuId
+                    {
+                        var currentMenu = MenuList.Where(p => p.Menu_Id == tempPMenuID).SingleOrDefault();
+                        if (currentMenu != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(currentMenu.Parent_Menu_Id))
+                            {
+                                tempMMenuID = currentMenu.Parent_Menu_Id;
+                            }
+                        }
+                    }
+                    //防止多条menuId 
+                    if (!string.IsNullOrWhiteSpace(tempMMenuID))
+                    {
+                        Mid = tempMid;
+                        PMenuID = tempPMenuID;
+                        MMenuID = tempMMenuID;
+                        break;
+                    }
+                    else if (!string.IsNullOrWhiteSpace(tempPMenuID) && string.IsNullOrWhiteSpace(PMenuID))
+                    {
+                        Mid = tempMid;
+                        PMenuID = tempPMenuID;
+                    }
+                    else if (!string.IsNullOrWhiteSpace(tempMid) && string.IsNullOrWhiteSpace(Mid))
+                    {
+                        Mid = tempMid;
+                    }
+                }
+
                 if (!IsPostBack)
                 {
                     //Jermyn20140703 修改logo图片来源

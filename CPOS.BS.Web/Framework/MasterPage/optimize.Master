@@ -325,7 +325,7 @@
      <script type="text/javascript">
          if (location.pathname == "/Module/CreativeWarehouse/creative.aspx") {//只有一个页面加载此js
              var version = new Date().getTime();
-             var str = "<script type='text/javascript' src='//test.linkin.mobi/vveshow/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.js?versionInit='" + version + "'>";
+             var str = "<script type='text/javascript' src='http://www.vveshow.com/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.min.js?versionInit='" + version + "'>";
              str += "\<\/script\>";
              document.write(str);
          }
