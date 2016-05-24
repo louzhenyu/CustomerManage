@@ -108,8 +108,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.Bargain
                                     //
                                     SumQty += item.Qty - UpdateSkuData.Qty.Value;
                                     #region 编辑
-                                    UpdateSkuData.BasePrice = item.Price;
-                                    UpdateSkuData.Qty = item.Qty;
+                                    UpdateSkuData.BasePrice = item.BasePrice;                                    
+									UpdateSkuData.Qty = item.Qty;
                                     UpdateSkuData.BargainStartPrice = item.BargainStartPrice;
                                     UpdateSkuData.BargainEndPrice = item.BargainEndPrice;
                                     //

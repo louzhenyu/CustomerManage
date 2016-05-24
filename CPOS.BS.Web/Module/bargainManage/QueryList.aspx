@@ -40,14 +40,14 @@
                                                    <div class="commonSelectWrap">
                                                       <em class="tit">开始时间：</em>
                                                       <div class="searchInput bordernone">
-                                                         <input id="BeginTime"  name="BeginTime" class="easyui-datebox"  data-options="width:198,height:32" />
+                                                         <input id="BeginTime" name="BeginTime" data-options="width:198,height:32" style='border:1px solid #ccc;border-radius:3px;background-color:#fff;background-image:url(images/datebox_arrow.png);background-position:99% center;background-repeat:no-repeat;' />
                                                       </div>
                                                   </div>
 
                                                   <div class="commonSelectWrap">
                                                       <em class="tit">结束时间：</em>
                                                       <div class="searchInput bordernone">
-                                                         <input id="EndTime" name="EndTime" class="easyui-datebox" data-options="width:198,height:32" validType="compareDate[$('#BeginTime').datebox('getText'),'当前选择的时间必须晚于前面选择的时间']"/>
+                                                         <input id="EndTime" name="EndTime" data-options="width:198,height:32" style='border:1px solid #ccc;border-radius:3px;background-color:#fff;background-image:url(images/datebox_arrow.png);background-position:99% center;background-repeat:no-repeat;' />
                                                       </div>
                                                   </div>
                            

@@ -46,16 +46,40 @@
 
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
-                that.setCondition();
-                //查询数据
-                that.loadData.getBargainList(function(data){
-                    //写死的数据
-                    //data={"ResultCode":0,"Message":null,"IsSuccess":true,"Data":{"DicColNames":{"UserName":"姓名","Phone":"手机","Email":"邮箱","Col9":"人数","Col8":"职位","Col7":"公司","Col3":"性别"},"SignUpList":[{"SignUpID":"60828091-F8F4-4C97-8F6C-6AC9E627DF97","EventID":"16856b2950892b62473798f3a88ee3e3","UserName":"王孟孟","Phone":"18621865591","Email":"mengmeng.wang@jitmarketing.cn","Col9":"1","Col8":"研发总监","Col7":"上海杰亦特有限公司","Col3":"男"}],"TotalCountUn":1,"TotalCountYet":9,"TotalPage":1}};
-                    //渲染table
+				var start = $('#BeginTime').val();
+				var end = $('#EndTime').val();
+				if(start<=end&&start!=""&&end!=""){
+					that.setCondition();
+					//查询数据
+					that.loadData.getBargainList(function(data){
+						//写死的数据
+						//data={"ResultCode":0,"Message":null,"IsSuccess":true,"Data":{"DicColNames":{"UserName":"姓名","Phone":"手机","Email":"邮箱","Col9":"人数","Col8":"职位","Col7":"公司","Col3":"性别"},"SignUpList":[{"SignUpID":"60828091-F8F4-4C97-8F6C-6AC9E627DF97","EventID":"16856b2950892b62473798f3a88ee3e3","UserName":"王孟孟","Phone":"18621865591","Email":"mengmeng.wang@jitmarketing.cn","Col9":"1","Col8":"研发总监","Col7":"上海杰亦特有限公司","Col3":"男"}],"TotalCountUn":1,"TotalCountYet":9,"TotalPage":1}};
+						//渲染table
 
-                    that.renderTable(data);
-                });
-                $.util.stopBubble(e);
+						that.renderTable(data);
+					});
+					$.util.stopBubble(e);
+				}
+				else if(start==""||end==""){
+					that.setCondition();
+					//查询数据
+					that.loadData.getBargainList(function(data){
+						//写死的数据
+						//data={"ResultCode":0,"Message":null,"IsSuccess":true,"Data":{"DicColNames":{"UserName":"姓名","Phone":"手机","Email":"邮箱","Col9":"人数","Col8":"职位","Col7":"公司","Col3":"性别"},"SignUpList":[{"SignUpID":"60828091-F8F4-4C97-8F6C-6AC9E627DF97","EventID":"16856b2950892b62473798f3a88ee3e3","UserName":"王孟孟","Phone":"18621865591","Email":"mengmeng.wang@jitmarketing.cn","Col9":"1","Col8":"研发总监","Col7":"上海杰亦特有限公司","Col3":"男"}],"TotalCountUn":1,"TotalCountYet":9,"TotalPage":1}};
+						//渲染table
+
+						that.renderTable(data);
+					});
+					$.util.stopBubble(e);
+				}
+				else{
+					$('#EndTime').css('border','1px solid red');
+					$('#EndTime').click(function(){
+						$(this).css('border','1px solid #ccc');
+					})
+					alert('开始时间不能大于结束时间')
+				}
+                
 
             });
             that.elems.operation.delegate(".commonBtn","click",function(e){
@@ -70,6 +94,16 @@
                 that.elems.uiMask.slideUp();
                 $(this).parent().parent().fadeOut();
             });
+			$('#BeginTime').datetimepicker({
+                lang: "ch",
+                format: 'Y-m-d H:i',
+                step: 5 //分钟步长
+             });
+			 $('#EndTime').datetimepicker({
+                lang: "ch",
+                format: 'Y-m-d H:i',
+                step: 5 //分钟步长
+             });
             //获取时间插件
              $('#campaignBegin').datetimepicker({
                 lang: "ch",
