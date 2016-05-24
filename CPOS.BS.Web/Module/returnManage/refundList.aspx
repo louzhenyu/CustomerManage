@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -62,14 +62,15 @@
                    </ul>
 
                 </div>
-                   <div class=""> <table class="dataTable" id="gridTable">
-                        <div class="dataTable" id="dataTable">
+                   <div class="">
+                   <div class="dataTable" id="gridTable">
+
                           <div class="loading" style="margin-top:55px;">
                                    <span><img src="../static/images/loading.gif"></span>
                             </div>
-                        </div>
 
-                                  </table>  </div>
+                          </div>
+                     </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager" >
@@ -107,6 +108,5 @@
            </form>
        </script>
 
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
+
 </asp:Content>

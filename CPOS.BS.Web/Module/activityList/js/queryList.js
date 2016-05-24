@@ -46,7 +46,7 @@
             });
             
             //列表操作事件用例
-            that.elems.tabelWrap.delegate(".handle","click",function(e){
+            that.elems.tabelWrap.delegate(".opt","click",function(e){
                 var $this = $(this),
 					$tr = $this.parents('tr'),
 					rowIndex=$(this).data("index"),
@@ -69,8 +69,8 @@
 				}
 
 				if (optType == "detail") {
-				    var mid = JITMethod.getUrlParam("mid");
-				    $.util.toNewUrlPath("/Module/QuestionnaireNews/QuestionnaireInforDetail.aspx?EventID=" + row.EventID + "&mid=" + mid);
+				    var mid = $.util.getUrlParam("mid");
+				    $.util.toNewUrlPath("/Module/QuestionnaireNews/QuestionnaireInforDetail.aspx?EventID=" + row.EventID);
 				}
 
 				if((optType=="joinprize" || optType=="winprize")  && $this.text() != '0'){
@@ -111,14 +111,14 @@
 			//跳转详情页
 			that.elems.tabelWrap.delegate("tr","click",function(e){
                 var $this = $(this),
-					mid = JITMethod.getUrlParam("mid");
+					mid = $.util.getUrlParam("mid");
                 var row = that.elems.tabel.datagrid('getSelected');
-                $.util.toNewUrlPath("activiDetail.aspx?EventID=" + row.EventID + "&mid=" + mid);
+                $.util.toNewUrlPath("activiDetail.aspx?EventID=" + row.EventID);
 			});
 			
 			//跳转创建游戏页面
 			$('#addNewGamesBtn').on('click',function(){
-			    $.util.toNewUrlPath('activiDetail.aspx?mid=' + JITMethod.getUrlParam("mid"));
+			    $.util.toNewUrlPath('activiDetail.aspx');
 			})
             
         },
@@ -199,12 +199,12 @@
 					*/
                     {field : 'JoinCount',title : '参与人数',width:58,align:'center',resizable:false,
                         formatter:function(value,row,index){
-                          return '<p class="handle joinprize"  data-index="'+index+'"  data-oprtype="joinprize">'+value+'</p>';
+                          return '<p class="opt joinprize"  data-index="'+index+'"  data-oprtype="joinprize">'+value+'</p>';
                         }
                     },
                     {field : 'WinnerCount',title : '中奖人数',width:60,align:'center',resizable:false,
                         formatter:function(value,row,index){
-                          return '<p class="handle winprize"  data-index="'+index+'"  data-oprtype="winprize">'+value+'</p>';
+                          return '<p class="opt winprize"  data-index="'+index+'"  data-oprtype="winprize">'+value+'</p>';
                         }
 					},
                     {field : 'Status',title : '状态',width:40,align:'center',resizable:false},
@@ -213,21 +213,21 @@
                         var ophtml = "";
 							var status = row.Status;
 							if(status=='未开始'){
-							    ophtml= '<p class="handle delete" title="删除" data-index="'+index+'" data-oprtype="delete"></p>';
+							    ophtml= '<p class="opt delete" title="删除" data-index="'+index+'" data-oprtype="delete"></p>';
 							}else if(status=='运行中'){
-							    ophtml = '<p class="handle running" title="暂停" data-index="' + index + '" data-oprtype="running"></p>';
+							    ophtml = '<p class="opt running" title="暂停" data-index="' + index + '" data-oprtype="running"></p>';
 							}else if(status=='暂停'){
-							    ophtml = '<p class="handle pause" title="启动" data-index="' + index + '" data-oprtype="pause"></p>';
+							    ophtml = '<p class="opt pause" title="启动" data-index="' + index + '" data-oprtype="pause"></p>';
 							}else if(status=='结束'){
 							    ophtml = '';
 							}
 
 							if (row.DrawMethodName == "花样问卷")
 							{
-							    ophtml += '<p class="handle detail"  title="问卷详情" data-index="' + index + '" data-oprtype="detail"></p>';
+							    ophtml += '<p class="opt detail"  title="问卷详情" data-index="' + index + '" data-oprtype="detail"></p>';
 							}
 
-							ophtml += '<p class="handle down" title="下载二维码图片" data-index="' + index + '" data-oprtype="down"></p>';
+							ophtml += '<p class="opt down" title="下载二维码图片" data-index="' + index + '" data-oprtype="down"></p>';
 							return ophtml;
                             
                         }
@@ -332,10 +332,10 @@
 				  success: function (data) {
 					  if(data.IsSuccess && data.ResultCode == 0) {
 						  	if(status==30){
-								$dom.attr('class','handle pause').data('oprtype','pause');
+								$dom.attr('class','opt pause').data('oprtype','pause');
 								$('td[field="Status"] div',$dom.parents('tr')).text('暂停');
 							}else{
-								$dom.attr('class','handle running').data('oprtype','running');
+								$dom.attr('class','opt running').data('oprtype','running');
 								$('td[field="Status"] div',$dom.parents('tr')).text('运行中');
 							}
 					  }else{

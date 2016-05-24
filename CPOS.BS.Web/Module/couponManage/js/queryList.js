@@ -51,8 +51,8 @@
 
             });
             that.elems.operation.delegate(".commonBtn","click",function(e){
-                var mid = JITMethod.getUrlParam("mid");
-                $.util.toNewUrlPath("addCoupon.aspx?mid=" + mid);
+               // var mid = JITMethod.getUrlParam("mid");
+                $.util.toNewUrlPath("addCoupon.aspx");
             });
             /**************** -------------------弹出easyui 控件 start****************/
             var  wd=200,H=32;

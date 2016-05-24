@@ -72,9 +72,7 @@
 
                                 alert("操作成功");
 
-
-                                var mid = JITMethod.getUrlParam("mid");
-                                location.href="/module/massTexting/internalMessage.aspx?mid=" + mid ;
+                                $.util.toNewUrlPath("/module/massTexting/internalMessage.aspx") ;
                             });
 
 

@@ -43,6 +43,13 @@
         },
         initEvent: function () {
             var that = this;
+
+            that.elems.sectionPage.delegate("keyup", ".validDays .numberbox input", function () {
+                $("#validDays").numberbox("setValue", $("#validDays").numberbox("getText"));
+
+            });
+
+
             //点击查询按钮进行数据查询
             that.elems.simpleQueryDiv.delegate(".listBtn", "click", function () {
                 debugger;
@@ -147,8 +154,8 @@
                             window.parent.$('#win1').window('close');
                         } else {
                             alert("操作成功");
-                            var mid = JITMethod.getUrlParam("mid");
-                            location.href = "queryList.aspx?mid=" + mid;
+                           // var mid = JITMethod.getUrlParam("mid");
+                            $.util.toNewUrlPath("queryList.aspx");
                         }
 
                     })

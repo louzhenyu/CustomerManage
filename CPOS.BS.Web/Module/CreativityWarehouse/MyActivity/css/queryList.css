@@ -32,7 +32,7 @@
 .ActivityGroupName .ActivityGroupImg {width: 336px;height: 100px;vertical-align: middle;padding-top: 20px;padding-left:25px;}
 .ActivityGroupName .ActivityGroupstatus {  font-size: 14px;height: 40px;padding-top: 10px;}
 .ActivityGroupName .ActivityGroupstatus .num{  margin-left: 10px;}
-.ActivityGroupName .running {float:left;width: 33%;text-align: center;border-right: 1px solid;}
+.ActivityGroupName .running {float:left;width: 33%;text-align: center;border-right: 1px solid; background: none;}
 .ActivityGroupName .unreleased {float:left;width: 33%;text-align: center;border-right: 1px solid;}
 .ActivityGroupName .invalid {float:left;width: 33%;text-align: center;}
 

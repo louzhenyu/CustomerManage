@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -10,7 +10,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-        <div class="allPage" id="section" data-js="js/queryList.js?ver=0.4">
+        <div class="allPage" id="section" data-js="js/queryList.js">
            
            
             <!-- 内容区域 -->
@@ -90,12 +90,12 @@
                 
                 <div class="tableWrap" id="tableWrap" style="display:inline-block;width:100%;">
 
-                   <table class="dataTable" id="gridTable">
-                          <div  class="loading">
+                   <div class="dataTable" id="gridTable">
+                         <!-- <div  class="loading">
                                    <span>
                                  <img src="../../static/images/loading.gif"></span>
-                            </div>
-                   </table>
+                            </div>-->
+                   </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager">
@@ -120,9 +120,9 @@
                   </div>
             <div class="tableWrap" id="tableWrap3" style="display:inline-block;width:100%;">
                     
-                   <table class="dataTable" id="gridTable3">
+                   <div class="dataTable" id="gridTable3">
                           
-                   </table>
+                   </div>
                     <div id="pageContianer3">
                     <div class="dataMessage3" >没有符合条件的查询记录</div>
                         <div id="kkpager3">
@@ -219,9 +219,9 @@
               <div class="PrizeList">
                    <div class="tableWrap tableWrap2"  style="display:inline-block;width:100%;">
 
-                   <table class="dataTable gridTable2" >
+                   <div class="dataTable gridTable2" >
                           
-                   </table>
+                   </div>
                     <div id="pageContianer2">
                     <div class="dataMessage2" >没有符合条件的查询记录</div>
                         <div id="kkpager2">
@@ -294,7 +294,7 @@
                    <table class="dataTable gridTable2" >
                           
                    </table>
-                    <div id="pageContianer2">
+                    <div id="pageContianer2" style="padding-right: 15px">
                     <div class="dataMessage2" >没有符合条件的查询记录</div>
                         <div id="kkpager2">
                         </div>
@@ -329,7 +329,5 @@
 
 
 
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>
 

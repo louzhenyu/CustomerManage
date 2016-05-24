@@ -159,12 +159,11 @@
             //跳转详情页
             that.elems.tabelWrap.delegate(".datagrid-btable tr", "click", function (e) {
                 var $this = $(this),
-					mid = JITMethod.getUrlParam("mid"),
 					rowIndex = $(this).attr("datagrid-row-index");
                 that.elems.tabel.datagrid('selectRow', rowIndex);
                 var row = that.elems.tabel.datagrid('getSelected');
 
-                location.href = "storeInfo.aspx?Item_Id=" + row.Id + "&mid=" + mid;
+                $.util.toNewUrlPath("storeInfo.aspx?Item_Id=" + row.Id );
                 $.util.stopBubble(e);
             });
 
@@ -174,7 +173,7 @@
                 if (that.elems.ParentUnitIDLength == 0) {
                     alert("未设置组织架构时，不能添加门店");
                 } else {
-                    location.href = "storeInfo.aspx?Item_Id=&mid=" + JITMethod.getUrlParam("mid");
+                    $.util.toNewUrlPath("storeInfo.aspx");
                 }
             });
 
@@ -438,7 +437,7 @@
             $.util.oldAjax({
                 url: "/module/basic/unit/Handler/UnitHandler.ashx",
                 data: {
-                    "mid": $.util.getUrlParam('mid'),
+                    "mid": window.mid,
                     "action": 'unit_delete',
                     "status": tag,
                     "ids": id

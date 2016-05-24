@@ -53,7 +53,17 @@
         init: function () {
             this.loadDataPage();
             this.initEvent();
+            $("#leftMenu li").each(function () {
+                $(this).removeClass("on");
+                var urlPath = location.pathname.replace(/\//g, "_");
+                var classNameList = $(this).find("em").attr("class").split(" ");
+                if (classNameList.length > 1) {
+                    if (urlPath.indexOf(classNameList[1]) != -1) {
+                        $(this).addClass("on");
+                    }
+                }
 
+            });
         },
         //动态创建页面元素
         createDom:function (data){

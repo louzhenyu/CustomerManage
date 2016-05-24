@@ -48,8 +48,8 @@
 
             });
             that.elems.operation.delegate(".commonBtn","click",function(e){
-                var mid = JITMethod.getUrlParam("mid");
-               location.href="/module/massTexting/Addmeass.aspx?mid=" + mid ;
+
+                $.util.toNewUrlPath("/module/massTexting/Addmeass.aspx"); ;
                 //location.href = "refundDetail.aspx?RefundID=" + rowData.RefundID + ;
             });
 

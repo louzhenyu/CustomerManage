@@ -37,7 +37,7 @@
                 that.setCondition();
                 //查询数据
 
-                $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+
                 that.loadData.getSalesReturnList(function(data){
                     //写死的数据
                     //data={"ResultCode":0,"Message":null,"IsSuccess":true,"Data":{"DicColNames":{"UserName":"姓名","Phone":"手机","Email":"邮箱","Col9":"人数","Col8":"职位","Col7":"公司","Col3":"性别"},"SignUpList":[{"SignUpID":"60828091-F8F4-4C97-8F6C-6AC9E627DF97","EventID":"16856b2950892b62473798f3a88ee3e3","UserName":"王孟孟","Phone":"18621865591","Email":"mengmeng.wang@jitmarketing.cn","Col9":"1","Col8":"研发总监","Col7":"上海杰亦特有限公司","Col3":"男"}],"TotalCountUn":1,"TotalCountYet":9,"TotalPage":1}};
@@ -250,50 +250,49 @@
             that.elems.tabel.datagrid({
 
                 method : 'post',
-                iconCls : 'icon-list', //图标
                 singleSelect : true, //单选
-                // height : 332, //高度
                 fitColumns : true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped : true, //奇偶行颜色不同
-                collapsible : true,//可折叠
+                collapsible : false,//可折叠
                 //数据来源
                 data:data.Data.SalesReturnList,
-                sortName : 'brandCode', //排序的列
+               // sortName : 'brandCode', //排序的列
                 /*sortOrder : 'desc', //倒序
                  remoteSort : true, // 服务器排序*/
-                idField : 'Item_Id', //主键字段
+                idField : 'ItemName', //主键字段
                 /*  pageNumber:1,*/
                 /* frozenColumns : [ [ {
                  field : 'brandLevelId',
                  checkbox : true
                  } //显示复选框
                  ] ],*/
-
+                frozenColumns:[[
+                    {field : 'SalesReturnID',title : '',width:0,align:'left',resizable:false,
+                        formatter:function(value ,row,index){
+                            return '';
+                        }
+                    },
+                    {field : 'ImageUrl',title : '图片',width:40,align:'center',resizable:false,
+                        formatter:function(value ,row,index){
+                               var  html=' <img src="'+value+'" width="40" height="40"  />';
+                            return html;
+                        }
+                    }
+                ]],
                 columns : [[
-
                     {field : 'ItemName',title : '商品名称',width:165,align:'left',resizable:false,
                         formatter:function(value ,row,index){
                             var long=26;
                             if(value&&value.length>long){
-                                return '<img src="'+row.ImageUrl+'" width="40" height="40" class="l" /> <div class="rowText" title="'+value+'"><p>退货单号:'+row.SalesReturnNo+'</p>'+value.substring(0,long)+'...</div>'
+                                return '<div class="rowText" title="'+value+'"><p>退货单号:'+row.SalesReturnNo+'</p>'+value.substring(0,long)+'...</div>'
                             }else{
-                                return '<img src="'+row.ImageUrl+'" width="40" height="40" class="l"  /> <div class="rowText"><p>退货单号:'+row.SalesReturnNo+'</p>'+value+'</div>'
+                                return ' <div class="rowText"><p>退货单号:'+row.SalesReturnNo+'</p>'+value+'</div>'
                             }
                         }
                     },
                     {field : 'paymentcenterId',title : '商户单号',width:58,resizable:false,align:'center'},
-                    {field : 'VipName',title : '会员名称',width:90,align:'center',resizable:false},
-                   /* {field : 'DeliveryType',title : '数量',width:58,align:'center',resizable:false,
-                        formatter:function(value,row,index){
-                           if(isNaN(parseInt(value))){
-                             return 0;
-                           }else{
-                              return parseInt(value);
-                           }
-                        }
-                    },*/
-
-                    {field : 'DeliveryType',title : '配送方式',width:120,align:'center',resizable:false,
+                    {field : 'VipName',title : '会员名称',width:90,align:'left',resizable:false},
+                    {field : 'DeliveryType',title : '配送方式',width:120,align:'left',resizable:false,
                      formatter:function(value,row,index){
                          var staus="";
                          switch (value){
@@ -305,29 +304,39 @@
                     },
 
 
-                    {field : 'Status',title : '退货状态',width:80,align:'center',resizable:false,
-                        formatter:function(value ,row,index){
+                    {field : 'Status',title : '退货状态',width:80,align:'left',resizable:false,
+                        formatter:function(value ,row,index) {
                             debugger;
                             var staus;
-                            switch (value){
-                                case 1: staus="待审核";break;
-                                case 2: staus="取消申请";break;
-                                case 3: staus="审核不通过";break;
-                                case 4: staus="待收货（审核通过）";break;
-                                case 5: staus="拒绝收货";break;
-                                case 6: staus="已完成（待退款）";break;
-                                case 7: staus= "已完成（已退款）"; break;
+                            switch (value) {
+                                case 1:
+                                    staus = "待审核";
+                                    break;
+                                case 2:
+                                    staus = "取消申请";
+                                    break;
+                                case 3:
+                                    staus = "审核不通过";
+                                    break;
+                                case 4:
+                                    staus = "待收货（审核通过）";
+                                    break;
+                                case 5:
+                                    staus = "拒绝收货";
+                                    break;
+                                case 6:
+                                    staus = "已完成（待退款）";
+                                    break;
+                                case 7:
+                                    staus = "已完成（已退款）";
+                                    break;
                             }
                             return staus;
-                        },styler: function(index,row){
-
-                            return 'color: #fc7a52;';    // rowStyle是一个已经定义了的ClassName(类名)
-
                         }
 
                     },
-                    {field : 'paymentName',title : '支付方式',width:90,align:'center',resizable:false},
-                    {field : 'CreateTime',title : '申请日期',width:80,align:'center',resizable:false}
+                    {field : 'paymentName',title : '支付方式',width:50,align:'left',resizable:false},
+                    {field : 'CreateTime',title : '申请日期',width:110,align:'left',resizable:false}
 
                 ]],
 
@@ -346,8 +355,8 @@
                      that.elems.click = true;
                      debugger;
 
-                     var mid = JITMethod.getUrlParam("mid");
-                         $.util.toNewUrlPath("salesReturnDetail.aspx?SalesReturnID=" + rowData.SalesReturnID +"&mid=" + mid);
+
+                         $.util.toNewUrlPath("salesReturnDetail.aspx?SalesReturnID=" + rowData.SalesReturnID);
                      }
 
                 },onClickCell:function(rowIndex, field, value){
@@ -439,7 +448,7 @@
                     url: "/Module/PayMent/Handler/PayMentHander.ashx",
                     data:{
                         QueryStringData:{
-                            mid:__mid
+                            mid:window.mid
                         },
                         form:{
                             "Payment_Type_Name": "",
@@ -462,6 +471,7 @@
                 });
             },
             getSalesReturnList: function (callback) {
+               $.util.partialRefresh($("#gridTable"));
                 $.util.ajax({
                     url: "/ApplicationInterface/Gateway.ashx",
                       data:{

@@ -1,5 +1,6 @@
 ﻿@charset "utf-8";
 body{overflow-x: hidden;}
+.commonSelectWrap .selectBox{ border: 1px solid transparent;}
 .navigation{ height: 52px;  width: 100%;min-width: 786px;  background-color: #f2f2f2; }
 .navigation  ul{width: 786px;}
 .navigation  li{ position:relative; text-align: center; width: 180px; height:50px; float:left; font-size: 13px; line-height: 50px; background: url("../../images/newYear/nav/jt.png") right center no-repeat #fafafa;}
@@ -169,7 +170,7 @@ body{overflow-x: hidden;}
 .queryTermArea{min-height:90px;padding:20px 20px 20px 0;background:#fafafa; margin-bottom:0; border: none;}
 .queryTermArea .item{margin-bottom:4px;white-space:nowrap;max-width: 1164px; min-width: 1000px;}
 .moreQueryWrap{ float: left;margin-top: 10px;}
- .add{ cursor:pointer}
+.add{ cursor:pointer}
 /*查询*/
 .queryTermArea .commonSelectWrap{margin-right: 28px; font-size: 12px; }
 .commonSelectWrap{float:left;height:33px;margin:10px 10px 10px 0;position:relative;}
@@ -196,7 +197,7 @@ body{overflow-x: hidden;}
 #tableWrap{}
 #tableWrap .optionBtn .r{margin-right: 0;}
 /*表格顶部状态操作栏*/
-.tableList{ padding-top:5px; background: #fff; border: solid  1px #eee; border-bottom:none; float: left; width: 100%;padding-left: 15px;}
+.tableList{ padding-top:5px; background: #fff;z-index:31;position: relative; border: solid  1px #eee; border-bottom:none; float: left; width: 100%;padding-left: 15px;}
 .tableList ul{ width: 100%; height: 45px; float: left;}
 .tableList li{cursor: pointer; font-size: 13px; color: #999; float: left; padding-right: 35px; line-height:42px; }
 .tableList li.on{color: #00a0e8}
@@ -226,6 +227,9 @@ body{overflow-x: hidden;}
     border-style: solid;
     border-color: transparent;
     border-bottom: 1px solid #e1e7ea;
+}
+.datagrid .panel-body{
+    min-height: 80px;
 }
 .datagrid-body tr:last-of-type td{ border:1px solid transparent}/*最后一个边框透明防止多边框*/
 .treegrid-tr-tree tr:last-of-type td{ border:1px solid transparent; border-bottom-color: #e1e7ea;}
@@ -267,6 +271,7 @@ body{overflow-x: hidden;}
 .imgTable .datagrid-row {
     height:60px;
 }
+.imgTable,.tableWrap{ position: relative;}
 .tree-node{ text-align: left;}
 .tree-folder {
     /* background: url('images/tree_icons.png') no-repeat -208px 0; */
@@ -386,14 +391,24 @@ body{overflow-x: hidden;}
 .watchOn{float:left;background:no-repeat center center; background-image:url(../../images/newYear/watchOn.png);width:16px;height:16px;cursor:pointer;}
 .stopOut{float:left;background:no-repeat center center; background-image:url(../../images/newYear/stopOut.png);width:16px;height:16px;cursor:pointer;}
 .stopOn{float:left;background:no-repeat center center; background-image:url(../../images/newYear/stopOn.png);width:16px;height:16px;cursor:pointer;}
+.start{background-image:url(../../images/newYear/start.png); width: 16px; height: 16px;}
+.end{ background-image:url(../../images/newYear/end.png); width: 16px; height: 16px;}
+.running {
+    background: url(../../images/newYear/end.png) no-repeat center center;
+}
 
+.pause,.iconPause {
+    background:url(../../images/newYear/start.png) no-repeat center center;
+}
+.detail {
+    background:url(../../images/newYear/detail.png) no-repeat center center;
+}
 
 .rowText{ line-height: 22px; white-space:initial; width: 100%; text-align: left;}
-
-.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+.dataMessage{text-align: center;font-size: 14px;line-height: 35px;display: none;position: absolute;width: 100%;margin-top: -44px;}
 .datebox .combo-arrow{padding-right:26px;}
 .gridLoading{display: block} /*所有需要loading的dataGrid*/
-.loading{text-align: center;position:absolute; vertical-align: middle;width: 85%;margin-top: 10px;}
+.loading{text-align: center;position:absolute;vertical-align: middle;width: 100%;margin-top: 40px; padding-top: 50px}
 .datagrid-body{position: relative;z-index: 8}
 .datagrid-body .loading{ z-index:8;}
 
@@ -469,4 +484,11 @@ body{overflow-x: hidden;}
 .lineText .uploadBtn .ke-upload-file{opacity:0; left: -90px;position: absolute;top: 0;}
 .lineText .uploadTip{position: absolute; left: 235px;bottom: 0;width:348px;height: 32px;}
 
-.tip{font-size: 14px; color: #fe0000; line-height: 33px; padding-left: 50px; background: url("../../images/newYear/tips.png") no-repeat left center; display: inline-block}
+.tip-payment{float:right;height:30px;line-height:30px;font-size:12px;text-align:right;padding:0 60px 0 45px;background:url(../../images/newYear/icon-tip.png) no-repeat left center;color:#f00;}
+.tipWx{background:url(../../images/newYear/icon-tip.png) no-repeat left center;clear:left;height:30px;line-height:30px;margin-left:160px;padding-left:45px;font-size:14px;}
+.tip{font-size: 14px; color: #fe0000; line-height: 33px; padding-left: 50px; background: url("../../images/newYear/icon-tip.png") no-repeat left center; display: inline-block}
+.ui-mask{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:999;}
+
+.operation .start{background-image:none;}
+.datagrid-mask{background: #fff;z-index: 30;opacity: 1;top: 40px;}
+.datagrid-mask-msg{background: url("../../../static/images/loading.gif") no-repeat center center transparent;z-index: 30;top: 40px;margin-top: 0;border: 0;}

@@ -1,0 +1,335 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="optimize.master.cs" Inherits="JIT.CPOS.BS.Web.Framework.MasterPage.optimize" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+<link rel="icon" href="/favicon.ico" type="image/x-icon" /><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+
+    <script type="text/javascript" language="javascript">
+        var __button = eval("");
+        function __getHidden(__code) {
+            if (__button == undefined) return;
+            var res = true;
+            for (var i = 0; i < __button.length; i++) {
+                if (__button[i].ButtonCode == __code) {
+                    res = false;
+                }
+            }
+            return res;
+        };
+        function __getText(__code) {
+            var res = '';
+            for (var i = 0; i < __button.length; i++) {
+                if (__button[i].ButtonCode == __code) {
+                    res = __button[i].ButtonText;
+                }
+            }
+            return res;
+        };
+        __mid = "903407F66A2746D689305C7730FA64B5";
+        //前端接口url
+        var apiurl = '<%=System.Web.Configuration.WebConfigurationManager.AppSettings["interfacehost"] %>';
+        window.apiurl = apiurl;
+
+</script>
+
+     <%--模板 公共样式strart--%>   
+     <link href="<%=StaticUrl+"/module/static/css/easyui.css"%>" rel="stylesheet" type="text/css" />   
+       <%--分页--%>
+     <link href="<%=StaticUrl+"/module/static/css/kkpager.css"%>" rel="stylesheet" type="text/css" />
+          <%--时间控件--%>
+      <link href="<%=StaticUrl+"/module/static/css/jquery.datetimepicker.css"%>" rel="stylesheet" type="text/css" />
+      <%--弹框--%>
+    <link href="<%=StaticUrl+"/module/static/css/artDialog.css"%>" rel="stylesheet" type="text/css" /> 
+    <link href="<%=StaticUrl+"/module/styles/css/common-layout.css?v=0.5"%>" rel="stylesheet" /> 
+     
+     <%--模板 公共样式end--%>
+      <%--模板 样式strart 切换模板样式只要更改/alading/skin02.css?v=0.5  alading qixin  college 只要三个模板 --%>
+    <link href="<%=StaticUrl+"/module/styles/css/newYear/skin02.css?v=0.1"%>" rel="stylesheet" />
+      <%--模板 样式End--%>
+       <%--<script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/jquery-1.8.3.min.js" %>"></script>
+       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/plugin/artDialog.js" %>"></script>
+--%>
+    <link href="<%=StaticUrl+"/Framework/Css/cpos.css"%>" rel="stylesheet" type="text/css" />
+   <%-- <script src="<%=StaticUrl+"/Framework/javascript/Other/lightCpos.js?v=0.4"%>" type="text/javascript"></script>--%>
+	<script src="http://kefu.qycn.com/vclient/state.php?webid=112929" language="javascript" type="text/javascript"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+<%--<body cache="true" version="0.1">--%>
+<body version="0.1">
+    <form id="form1" runat="server">
+        <div class="allPage">
+            <!-- 公共的头部，导航，logo，信息 -->
+            <div class="commonHeader">
+            <div class="handleWrap">
+                <%--未审核订单 <%
+                        bool haslink = false;
+                        var level1 = from c in MenuList where c.Parent_Menu_Id == "--" select c;  //在这里取父节点为空的
+                        foreach (var n in level1)
+                        {
+                            var level2 = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
+                            foreach (var m in level2)
+                            {
+                                if (m.Url_Path.IndexOf("Module/Order/InoutOrders/PosOrder3") >= 0 & !haslink)
+                                {
+                                    haslink = true;
+                                    var urlPath = m.Url_Path;
+                                    var result = false;
+                                    result = (urlPath.IndexOf("?") >= 0);
+                                    Response.Write(string.Format("<a href=\"{0}&statusType=100\" class=\"fl mr25 unAuditCout\">未审核订单(<span id=\"unAuditCoutID\" ></span>)</a>",
+                                        (result ? (m.Url_Path + "&mid=" + m.Menu_Id) : (m.Url_Path + "?mid=" + m.Menu_Id))));
+                                }
+                            }
+                        } 
+            %>           --%>
+                <div class="adminIcon">
+                </div>
+                <div class="unitName" id="unitName">
+                </div>
+                <div class="qrBox" style="display: none">
+                    <div class="qrBox-tip">
+                        <img src="/module/styles/images/qrImg.jpg" />
+                    </div>
+                </div>
+                <div class="setBox">
+                    <p id="lblLoginUserName" runat="server">
+                        登陆用户</p>
+                    <div class="setBox-tip">
+                        <%-- <a href="###">个人信息</a>
+                            <a href="###">系统通知(1)</a>--%>
+                        <%--    <a href="#" class="fl mr25 nava3" onclick="fnChangePwd()">修改密码</a>--%>
+                        <span class="commonBtn safetyOutBtn" data-menucode="jysj"><a class="one menusrc" href="#" >经营数据</a>
+                        </span>
+                        <span class="commonBtn safetyOutBtn" data-menucode="fstz"><a  class="four menusrc" href="#" onclick=""> 发送通知</a>
+                        </span>
+                        <span class="commonBtn safetyOutBtn"><a class="two"  onclick="fnChangePwd();">修改密码</a>
+                        </span>
+                        <span class="commonBtn safetyOutBtn"><a class="three" href="/default.aspx?method=LogOut">安全退出</a>
+                        </span>
+                    </div>
+                    
+                </div>
+                  <div class="imgList"><div data-menucode="sz" title="设置"><a href="" class="l menusrc"></a></div>
+                 <div data-menucode="wx"  title="微信"><a href="" class="r menusrc"></a></div>
+                 
+                 </div>
+            </div>
+                           <a href="/Default.aspx" class="logoWrap" style="overflow:hidden;" title="首页">
+ 
+                        <%--<div class="arr"></div>--%>
+                </a>
+                <div class="commonNav" id="commonNav">
+                    <ul class="clearfix addul" >
+                        <%var level1Menu = from c in MenuList where c.Parent_Menu_Id ==MMenuID select c;  //在这里取父节点为六大模块的mid
+                          int i = 0;
+                          //debugger;
+                          foreach (var n in level1Menu)
+                          {
+                              i++;
+                              //默认点击时，跳到第一个子节点的Url_Path
+                              var SubMenuList = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
+                              // var SubMenuList = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
+                              //  SubMenuList.Count();
+                              string urlPath = "";
+                              string childMenuID = "";
+                              string iconType = n.Icon_Path == "" ? "icon" : n.Icon_Path;
+                              var subList = SubMenuList.ToList();
+                              if (SubMenuList != null && SubMenuList.Count() != 0 && MMenuID != "")
+                              {
+                                  urlPath = subList[0].Url_Path;
+                                  childMenuID = subList[0].Menu_Id;
+                              }
+                              Response.Write(string.Format("<li class=\"{3}\"><a href=\"{4}\"  id=\"{0}\" class=\"{1}\" title=\"{2}\" >{2}</a>",
+                                  n.Menu_Id, iconType, n.Menu_Name, "nav" + (i.ToString().PadLeft(3, '0')), urlPath));
+                              
+                              //带id的跳转预留
+                              //Response.Write(string.Format("<li class=\"{3}\"><a href=\"#\"  id=\"{0}\" class=\"{1}\" title=\"{2}\" onclick='PMenuClick(\"{4}\",\"{5}\",\"{6}\",\"{7}\")'>{2}</a>",
+                              //    n.Menu_Id, iconType, n.Menu_Name, "nav" + (i.ToString().PadLeft(3, '0')), urlPath, childMenuID, n.Menu_Id, MMenuID));
+
+                              Response.Write("</li>");
+                          }
+                        %>
+                        <%--	<li class="nav001">
+						<a href="###">微信管理</a>
+					</li>
+					<li class="nav002 on">
+						<a href="###">活动管理</a>
+					</li>
+					<li class="nav003">
+						<a href="###">商品管理</a>
+					</li>
+					<li class="nav004">
+						<a href="###">门店管理</a>
+					</li>
+					<li class="nav005">
+						<a href="###">订单管理</a>
+					</li>
+					<li class="nav005">
+						<a href="###">基础管理</a>
+					</li>
+                    <li class="nav008" style="display:none;">
+                        <a href="http://help.chainclouds.com/" target="_blank" id="" class="" title="帮助手册">帮助手册</a>
+                    </li>--%>
+                        
+                    </ul>
+                </div>
+            </div>
+            <!-- 中间区域-->
+            <div class="centreArea">
+                <!-- 公共的菜单部分-->
+                
+                 <div class="commonMenu" id="leftMenu">
+                <ul>
+                    <%
+                        //   var level2Menu = from c in MenuList where c.Parent_Menu_Id == n.Menu_Id select c;
+                        var level2Menu = from c in MenuList where c.Parent_Menu_Id == PMenuID select c;//要从后台取出当前的PMenuID //父类id
+                        int j = 0;
+                        foreach (var m in level2Menu)
+                        {
+                            
+                            
+                            j++;
+                            var urlPath = m.Url_Path;
+                            if (urlPath == "")
+                            {
+                                continue;
+                            }
+                            //截取moudule之后，.aspx之前的那部分，换成
+                            int PreIndex = urlPath.IndexOf("/module/");      //如果要检索的字符串值没有出现，则该方法返回 -1。  
+                            if (PreIndex == -1)
+                            {
+                                PreIndex = PreIndex + 1;
+                            }
+                            else {
+                                PreIndex = PreIndex + 8;//"/module/"的长度
+                            }                
+                            var tempUrlPath1 = urlPath.Substring(PreIndex);
+                            int AfterIndex = tempUrlPath1.IndexOf(".aspx");//换成新取出的字符串的信息了
+                            
+                            var tempUrlPath2 = tempUrlPath1.Substring(0, AfterIndex).Replace("/","_");
+                            
+                            var result = false;
+                            result = (urlPath.IndexOf("?") >= 0);
+                            //var url=(result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID + "&MMenuID=" + MMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID + "&MMenuID=" + MMenuID));
+                            var url = urlPath;
+                            
+                            Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\"  href=\"{1}\" title=\"{2}\"><em class=\"icon {3}\"></em><span>{2}</span></a></dt>",
+                                m.Menu_Id, url, m.Menu_Name
+                                , tempUrlPath2, "menu" + (j.ToString().PadLeft(3, '0'))));//不用m.Icon_Path，改用urlPath的截取信息 m.Icon_Path != "" ? m.Icon_Path : "icon"
+                            //icon {3}的意思是： 如果没有样式还是要用icon的样式
+
+                        }
+                    %>
+                    <%--<li class="menu001">
+						<a href="###">活动管理</a>
+					</li>
+					<li class="menu002 on">
+						<a href="###">会员等级</a>
+					</li>
+					<li class="menu003">
+						<a href="###">积分规则</a>
+					</li>
+					<li class="menu004">
+						<a href="###">会员转换</a>
+					</li>
+					<li class="menu005">
+						<a href="###">会员标签</a>
+					</li>
+					<li class="menu006">
+						<a href="###">会员奖励</a>
+					</li>
+					<li class="menu007">
+						<a href="###">导购员奖励</a>
+					</li>
+					<li class="menu008">
+						<a href="###">门店奖励</a>
+					</li>--%>
+                </ul>
+            </div>
+                <!-- 内容区域 -->
+                <div class="contentArea" id="contentArea">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+        </div>
+<%--        <img src="" id="imgKeep" style="width: 0px; height: 0px;" />
+        <div id="session"></div>
+        <script language="javascript" type="text/javascript">
+            function keepSession() {
+                document.getElementById("imgKeep").src = "/default.aspx?r=" + Math.random();
+                setTimeout(function () {
+                    keepSession();
+                }, 60000);
+            }
+            setTimeout(function () {
+                keepSession();
+            }, 60000);
+
+        </script>--%>
+
+
+        
+    <!--Piwik Start-->
+    <input type="hidden" class="piwik_piwikUrl" value="http://tjtest.chainclouds.com/piwik.php" />
+    <input type="hidden" class="piwik_siteId" value="5"/>
+    <%--<script type="text/javascript" src="../Javascript/Piwik/jquery-1.12.3.js"></script>--%>
+    <%--<script type="text/javascript" src="<%= StaticUrl+"/Framework/Javascript/Piwik/piwik.js" %>"></script>
+    <script type="text/javascript" src="<%= StaticUrl +"/Framework/Javascript/Piwik/piwik_BI.js" %>"></script>--%>
+    <!--Piwik Start-->
+    </form>
+<div class="leftsead">
+<div class="index hover" style="padding-bottom:1px;" >
+<a href="/module/Index/IndexPage.aspx" ><img src="/Framework/Image/leftImgList/index.png" alt="" class="shows"/><img src="/Framework/Image/leftImgList/indexOn.png" alt="" class="hides" style="display:none;" /> </a>
+</div>
+<ul id="leftsead">
+<li data-menucode="yd"><a href="JavaScript:void(0)" class="menusrc"  ><img src="/Framework/Image/leftImgList/01L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/01.png" alt="" class="shows"/></a></li>
+<li data-menucode="yxlq"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/06L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/06.png" alt="" class="shows"/></a></li>
+<li data-menucode="hyjk"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/05L.png" alt="" class="hides"/><img src="/Framework/Image/leftImgList/05.png" alt="" class="shows"/></a></li>
+<li data-menucode="dzhh"><a href="JavaScript:void(0)" class="menusrc"><img src="/Framework/Image/leftImgList/02L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/02.png" alt="" class="shows"/></a></li>
+<li data-menucode="ygjl"><a href="JavaScript:void(0)"  class="menusrc"><img src="/Framework/Image/leftImgList/03L.png" alt="" class="hides"/> <img src="/Framework/Image/leftImgList/03.png" alt="" class="shows"/></a></li>
+<li data-menucode="qdcx"><a href="JavaScript:void(0)" class="menusrc" ><img src="/Framework/Image/leftImgList/04L.png" alt="" class="hides" /> <img src="/Framework/Image/leftImgList/04.png" alt="" class="shows"/></a></li>
+</ul>
+<div class="help hover">
+<a href="http://help.chainclouds.cn/" target="_blank"><img src="/Framework/Image/leftImgList/help.png" alt="" class="shows"/><img src="/Framework/Image/leftImgList/helpon.png" alt="" class="hides" style="display:none;" /> </a>
+</div>
+</div>
+
+
+<!-- Piwik Image Tracker-->
+<%--<img src="http://tj.chainclouds.com/piwik.php?idsite=1&rec=1" style="border:0" alt="" />--%>
+<!-- End Piwik -->
+<script type="text/javascript">
+        
+                window.clientID = '<%=CustomerID%>';
+                window.adminUserID = '<%=adminUserID%>';
+                window.homeIndexMallUrl="<%=System.Web.Configuration.WebConfigurationManager.AppSettings["interfacehost"]%>"+"/HtmlApps/html/public/index/index_shop_app.html?customerId="+'<%=CustomerID%>'
+                window.UnitName = '<%=UnitName%>';
+                window.UnitID = '<%=UnitID%>';
+                window.UnitShortName = '<%=UnitShortName%>';
+                window.RoleCode = '<%=RoleCode%>';
+                window.RoleName = '<%=RoleName%>';
+                window.statementUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["website_WWW"] %>";
+                window.weixinUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["openOAuthUrl"] %>/receive?clientid=" + window.clientID;
+                window.fsr_userName = "admin";
+                window.fsr_passWord = "123456";
+                window.PMenuID='<%=PMenuID %>';
+                window.mid='<%=Mid%>';
+                window.MMenuID='<%=MMenuID%>' 
+
+</script>
+<script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>" defer async="true" data-main="<%=StaticUrl+"/module/static/js/lib/main.js"%>"></script> 
+
+
+     <script type="text/javascript">
+         if (location.pathname == "/Module/CreativeWarehouse/creative.aspx") {//只有一个页面加载此js
+             var version = new Date().getTime();
+             var str = "<script type='text/javascript' src='//test.linkin.mobi/vveshow/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.js?versionInit='" + version + "'>";
+             str += "\<\/script\>";
+             document.write(str);
+         }
+    </script>
+</body>
+
+</html>

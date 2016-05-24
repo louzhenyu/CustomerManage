@@ -24,14 +24,14 @@
 .seasonlist .content{padding: 10px;  height: 344px;font-size: 10px;  width: 260px;  overflow: auto;}
 .seasonlist .content li{padding: 10px;  color: #00a0e8;  cursor: default;}
 .seasonlist .content li span{padding-right: 20px;  color: #666666;}
-.seasonbannerlist { width:275px;height:150px;margin: 20px 0px;}
+.seasonbannerlist { width:275px;height:150px;margin: 20px 0;}
 .QRcode {border: 1px solid #e1e7ea; width:275px;height:150px;font-size: 14px;}
 .QRcode img{width:118px;height:118px;margin: 15px 25px 15px 30px;}
 
-.operation {position: absolute;bottom: 0px;right: 0px;  background-color: #f2f2f2;  padding: 10px;text-align: center;z-index: 10;}
+.operation {position: absolute;bottom: 0;right: 0;  background-color: #f2f2f2;  padding: 10px;text-align: center;z-index: 10;}
 .operationbtn {float:left;width:110px;font-size: 14px;cursor: pointer;}
 .operation .preview {  border-right: 1px solid #e8ebee;}
-.operation .start {  border-right: 1px solid #e8ebee;}
+.operation .start {  border-right: 1px solid #e8ebee;  background: none}
 
 .qcode {  width: 165px;
   height: 165px;

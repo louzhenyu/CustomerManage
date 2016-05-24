@@ -313,8 +313,9 @@
                                 if (menu.Menu_Code == menucode)
                                 {
                                     if (menu.SubMenuList.length > 0&&menu.SubMenuList[0].SubMenuList&&menu.SubMenuList[0].SubMenuList.length>0) {
-                                        $(this).find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path + "?CustomerId=" + $.util.getUrlParam("CustomerId") + "&mid=" + menu.SubMenuList[0].SubMenuList[0].Menu_Id+ "&PMenuID=" +menu.SubMenuList[0].Menu_Id+ "&MMenuID=" + menu.Menu_Id);
-                                           console.log(menu.Menu_Code+"url____"+menu.SubMenuList[0].SubMenuList[0].Url_Path);
+                                        $(this).find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path);
+                                       // $(this).find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path + "?mid=" + menu.SubMenuList[0].SubMenuList[0].Menu_Id+ "&PMenuID=" +menu.SubMenuList[0].Menu_Id+ "&MMenuID=" + menu.Menu_Id);
+                                          // console.log(menu.Menu_Code+"url____"+menu.SubMenuList[0].SubMenuList[0].Url_Path);
                                     } else {
                                         $(this).find(".menusrc").attr("href", "JavaScript:void(0)");
                                     }

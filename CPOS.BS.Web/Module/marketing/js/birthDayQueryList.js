@@ -45,8 +45,7 @@
 
             });
             that.elems.optionBtn.delegate(".commonBtn", "click", function (e) {
-                var mid = JITMethod.getUrlParam("mid");
-                $.util.toNewUrlPath("birthDayDetail.aspx?mid=" + mid);
+                $.util.toNewUrlPath("birthDayDetail.aspx");
             });
             /**************** -------------------初始化easyui 控件 start****************/
             var  wd=200,H=32;

@@ -307,7 +307,7 @@
 
             } else {
                 param.success(data);
-               
+
                // $(".loading").hide();
             }
 
@@ -318,13 +318,27 @@
 
     };
 
+    util.partialRefresh=function(dom){    //局部刷新
+        debugger;
+        if(dom.parents(".panel-body").length>0) {
+            var _701 = dom.datagrid("getPanel");
+            if (!_701.children("div.datagrid-mask").length) {
+                $("<div class=\"datagrid-mask\" style=\"display:block\"></div>").appendTo(_701);
+                var msg = $("<div class=\"datagrid-mask-msg\" style=\"display:block;left:50%\"></div>").appendTo(_701);
+                msg._outerHeight(40);
+                msg.css({marginLeft: (-msg.outerWidth() / 2), lineHeight: (msg.height() + "px")});
+            }
+        }else{
+              dom.html('<div class="loading" > <span><img src="../static/images/loading.gif"></span> </div>');
+        }
+    };
     util.toNewUrlPath=function(urlPath){
 
-            var childMenuID =this.getUrlParam("mid");
-            var parentMenu_Id = this.getUrlParam("PMenuID");
-            var MMenuID = this.getUrlParam("MMenuID");
+            var childMenuID =window.mid;
+            var parentMenu_Id =window.PMenuID; //this.getUrlParam("PMenuID");
+            var MMenuID =window.MMenuID;
             var result = urlPath.indexOf("?");
-            var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID + "&PMenuID=" + parentMenu_Id + "&MMenuID=" + MMenuID) : (urlPath + "?mid=" + childMenuID + "&PMenuID=" + parentMenu_Id + "&MMenuID=" + MMenuID);
+            var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID) : (urlPath + "?mid=" + childMenuID );
             location.href = newUrl;
 
 
@@ -504,5 +518,17 @@
 		if(cval!=null)
 		document.cookie= name + "="+cval+";expires="+exp.toGMTString();
 	};
+    util.decode =function(json) {
+        return eval("(" + json + ")")
+
+    };
+    util.groupSeparator=function(num){   //分格符号
+        num  =  num+"";
+        var  re=/(-?\d+)(\d{3})/;
+        while(re.test(num)){
+            num=num.replace(re,"$1,$2")
+        }
+        return  num;
+    };
     $.util=util;
 })(jQuery);

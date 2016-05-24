@@ -1735,7 +1735,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 				},
 				success: function(data){
 					if(data.IsSuccess && data.ResultCode == 0){
-						location.href = "QueryList.aspx?&mid=" + JITMethod.getUrlParam("mid");	
+					    $.util.toNewUrlPath("QueryList.aspx");
 					}else{
 						alert(data.Message);
 					}

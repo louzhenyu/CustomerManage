@@ -80,8 +80,8 @@
 
                                 });
                             } else if(data.Data &&data.Data.VipID&&data.Data.VipCardID){
+                                $.util.toNewUrlPath("VipDetail.aspx?vipId=" + data.Data.VipID + "&VipCardId="+data.Data.VipCardID);
 
-                                location.href = "VipDetail.aspx?vipId=" + data.Data.VipID + "&VipCardId="+data.Data.VipCardID+"&mid=" + $.util.getUrlParam("mid");
 
                             } else{
                                 $.messager.alert("提示", "此卡此卡数据异常,请联系管理员","",function(){
@@ -518,7 +518,7 @@
                  debugger;
                  if(that.elems.click){
                      that.elems.click=true;
-                     location.href = "VipDetail.aspx?vipId=" + rowData.VIPID + "&VipCardId="+rowData.VipCardID+"&mid=" + $.util.getUrlParam("mid");
+                     $.util.toNewUrlPath("VipDetail.aspx?vipId=" + rowData.VIPID + "&VipCardId=" + rowData.VipCardID)
                  }
 
                  },onClickCell:function(rowIndex, field, value){

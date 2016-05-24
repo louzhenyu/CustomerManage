@@ -1,4 +1,4 @@
-﻿define(['jquery', 'template', 'tools', 'langzh_CN', 'easyui', 'kkpager', 'kindeditor', "jqueryui"], function ($) {
+﻿define(['jquery', 'template', 'tools', "jqueryui", 'langzh_CN', 'easyui', 'kkpager', 'kindeditor'], function ($) {
     //上传图片
     KE = KindEditor;
     var page = { 
@@ -227,7 +227,7 @@
                     
                 var datajosn = "{Questionid:'',DefaultValue: '',EndDate: '',IsRequired: '0',IsShowAddress: '0',IsShowCity: '1',IsShowCounty: '1',IsShowProvince: '1',IsValidateEndDate: '0',IsValidateMaxChar: '0',IsValidateMinChar: '0',IsValidateStartDate: '0',Isphone: '0',MaxChar: '0',MaxScore: '0',MinChar: '0',MinScore: '0',Name: '" + $(this).data("text") + "',NoRepeat: '0',Optionlist:[],QuestionPicID:'',Src:'',isedit:true,StartDate:'' }";
                 
-                var josn = Ext.decode(datajosn);
+                var josn =$.util.decode(datajosn);
 
                 $(".questionlist").append(bd.template($(this).data("createtype"), josn));
 
@@ -773,7 +773,7 @@
                 if (!JITMethod.getUrlParam("QuestionnaireID") || JITMethod.getUrlParam("QuestionnaireID") == "") {
                     $.util.toNewUrlPath("/Module/QuestionnaireNews/queryList.aspx?isshow=ture&mid=" + JITMethod.getUrlParam("mid"));
                 } else {
-                    $.util.toNewUrlPath("/Module/QuestionnaireNews/queryList.aspx?mid=" + JITMethod.getUrlParam("mid"));
+                    $.util.toNewUrlPath("/Module/QuestionnaireNews/queryList.aspx");
                 }
             });
 
@@ -781,7 +781,7 @@
                 window.onbeforeunload = function () {
 
                 }
-                $.util.toNewUrlPath( "/Module/QuestionnaireNews/queryList.aspx?mid=" + JITMethod.getUrlParam("mid"));
+                $.util.toNewUrlPath( "/Module/QuestionnaireNews/queryList.aspx");
             });
 
             //上一步、下一步点击事件
@@ -962,7 +962,7 @@
                         }
 
                         
-                        that.saveQuestionnaire(Ext.decode(Questionnairedatajson));
+                        that.saveQuestionnaire($.util.decode(Questionnairedatajson));
                     }
                     //提交编辑问卷end
                 }

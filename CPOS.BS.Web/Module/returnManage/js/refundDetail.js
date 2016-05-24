@@ -311,7 +311,7 @@
                      $(".showItem").show();
                 }else{
                     $(".hideItem").show();
-                  var  str="<a target='_blank' href='/module/chainCloudOrder/orderDetail.aspx?orderId=" + salesReturnInfo.OrderID +"&mid=" +  JITMethod.getUrlParam("mid")+ "'style='color: #07c8cf'>订单详情</a>";
+                  var  str="<a target='_blank' href='/module/chainCloudOrder/orderDetail.aspx?orderId=" + salesReturnInfo.OrderID +"'style='color: #07c8cf'>订单详情</a>";
                     $("#hrefOrderDetail").html(str);
                 }
 

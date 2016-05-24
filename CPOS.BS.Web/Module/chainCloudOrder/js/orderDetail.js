@@ -394,7 +394,7 @@
                        });
 
                        //收款按钮单独处理
-                       if (getStr(orderinfo.Field1) == "1") {
+                       if (orderinfo["Field1"] == "1") {
                            orderinfo["paystatus"]= "已付款";
                            $(".commonBtn[data-optType='payment']").hide()
                            $(".Paystatus").html("实付金额：");

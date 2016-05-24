@@ -25,7 +25,7 @@ function SetLogoInfo() {
     $.ajax({
         method: 'GET',
         async: true,
-        url: '/Module/CustomerBasicSetting/Handler/CustomerBasicSettingHander.ashx?mid=' + getUrlParam('mid') + '&method=GetCustomerList',
+        url: '/Module/CustomerBasicSetting/Handler/CustomerBasicSettingHander.ashx?mid=' + window.mid + '&method=GetCustomerList',
         success: function (response) {
             var data = JSON.parse(response);
             var logo = $('#img_logo');
@@ -103,7 +103,7 @@ function SetLogoInfo() {
 }
 
 $(function () {
-   
+
     var height = $(window).outerHeight() - $(".commonHeader").outerHeight();
 
     $("#contentArea").css({ "min-height": height + "px" })
@@ -191,10 +191,10 @@ $(function () {
             if (menuData.IsSuccess && menuData.ResultCode == 0) {
                 var data = menuData.Data;
 
-                if (data&&data.MenuList) {
-//                    if (window.location.pathname.indexOf("Index/IndexPage.aspx") != -1) {
-//                        $("#leftsead").show();
-//                    }
+                if (data && data.MenuList) {
+                    //                    if (window.location.pathname.indexOf("Index/IndexPage.aspx") != -1) {
+                    //                        $("#leftsead").show();
+                    //                    }
                     for (var k = 0; k < data.MenuList.length; k++) {
                         var menu = data.MenuList[k];
 
@@ -207,20 +207,22 @@ $(function () {
                                   params = {};
                                     if (urlstr[1]) {
                                         var items = urlstr[1].split("&");
-                                        for (var j= 0; j< items.length; j++) {
+                                        for (var j = 0; j < items.length; j++) {
                                             var itemarr = items[j].split("=");
                                             params[itemarr[0]] = itemarr[1];
                                         }
                                     }
+                                   
                                     //debugger;
-                                   if (params["MMenuID"] == menu.Menu_Id) {
-                                       me.find(".menusrc .shows").attr("src", "/Framework/Image/leftImgList/" + menucode + "on.png")
-                                   }
+                                    if (window.MMenuID == menu.Menu_Id) {
+                                        me.find(".menusrc .shows").attr("src", "/Framework/Image/leftImgList/" + menucode + "on.png")
+                                    }
 
                                     if (menu.SubMenuList.length > 0 && menu.SubMenuList[0].SubMenuList && menu.SubMenuList[0].SubMenuList.length > 0) {
-                                        me.find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path + "?CustomerId=" + getUrlParam("CustomerId") + "&mid=" + menu.SubMenuList[0].SubMenuList[0].Menu_Id + "&PMenuID=" + menu.SubMenuList[0].Menu_Id + "&MMenuID=" + menu.Menu_Id);
+                                        me.find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path);
+                                        //me.find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path + "?mid=" + menu.SubMenuList[0].SubMenuList[0].Menu_Id + "&PMenuID=" + menu.SubMenuList[0].Menu_Id + "&MMenuID=" + menu.Menu_Id);
                                     } else {
-                                        me.find(".menusrc").attr("href","JavaScript:void(0)");
+                                        me.find(".menusrc").attr("href", "JavaScript:void(0)");
                                     }
                                 }
                             }

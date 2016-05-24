@@ -142,8 +142,7 @@
                             }
                             that.loadData.setBargain(function(data){
                                 var event_id = data.EventId;
-                                var mid = $.util.getUrlParam("mid");
-                               location.href = "addCommodity.aspx?eventId="+event_id+"&mid="+ mid+"&CommodityStatus="+that.elems.CommodityStatus;
+                                $.util.toNewUrlPath("addCommodity.aspx?eventId="+event_id+"&CommodityStatus="+that.elems.CommodityStatus)
                             })
 
                         }
@@ -269,8 +268,7 @@
                         $.messager.alert('提示','活动时间已过期，请刷新页面重新选择。');
                         return false;
                     }else{
-                        var mid = $.util.getUrlParam("mid");
-                        location.href = "addCommodity.aspx?eventId="+couponTypeID+"&mid="+ mid+"&CommodityStatus="+CommodityStatus;
+                        $.util.toNewUrlPath( "addCommodity.aspx?eventId="+couponTypeID+"&CommodityStatus="+CommodityStatus);
                     }
 
                 
@@ -575,7 +573,6 @@
         loadMoreData: function (currentPage) {
             var that = this;
             this.loadData.args.PageIndex = currentPage;
-            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             that.loadData.getBargainList(function(data){
                 that.renderTable(data);
             });

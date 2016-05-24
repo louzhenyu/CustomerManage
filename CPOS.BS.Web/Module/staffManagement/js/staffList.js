@@ -86,7 +86,7 @@
 					break; 
 					
 					case 'edit':
-						location.href = "staffDetail.aspx?userId=" + userId +"&mid=" + JITMethod.getUrlParam("mid");
+						$.util.toNewUrlPath( "staffDetail.aspx?userId=" + userId);
 
 					break;
 					
@@ -146,7 +146,7 @@
 			*/
 			
 			$('#addUserBtn').on('click',function(){
-				location.href = "staffDetail.aspx?userId=&mid=" + JITMethod.getUrlParam("mid");
+				$.util.toNewUrlPath("staffDetail.aspx");
 			});
 
 
@@ -579,11 +579,11 @@
         //执行导入
 		inportEvent: function () {
 		    var that = this;
-		    var mid = JITMethod.getUrlParam("mid");
+
 		    $.util.oldAjax({
 		        url: "/module/basic/user/Handler/UserHandler.ashx",
 		        data: {
-		            "mid": $.util.getUrlParam('mid'),
+		            "mid": window.mid,
 		            "action": 'ImportUser',
 		            filePath: '/' + $('#CSVFileurl').val()
 		        },

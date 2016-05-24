@@ -25,7 +25,7 @@ function SetLogoInfo() {
     Ext.Ajax.request({
         method: 'GET',
         async: true,
-        url: '/Module/CustomerBasicSetting/Handler/CustomerBasicSettingHander.ashx?mid=' + getUrlParam('mid') + '&method=GetCustomerList',
+        url: '/Module/CustomerBasicSetting/Handler/CustomerBasicSettingHander.ashx?mid=' + window.mid + '&method=GetCustomerList',
         success: function (response) {
             debugger;
             var data = Ext.decode(response.responseText);
@@ -205,12 +205,13 @@ $(function () {
                                         }
                                     }
                                     //debugger;
-                                   if (params["MMenuID"] == menu.Menu_Id) {
+                                    if (window.MMenuID == menu.Menu_Id) {
                                         me.find(".menusrc .shows").attr("src", "/Framework/Image/leftImgList/" +menucode+ "on.png")
                                     }
 
-                                    if (menu.SubMenuList.length > 0 && menu.SubMenuList[0].SubMenuList && menu.SubMenuList[0].SubMenuList.length > 0) {
-                                        me.find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path + "?CustomerId=" + getUrlParam("CustomerId") + "&mid=" + menu.SubMenuList[0].SubMenuList[0].Menu_Id + "&PMenuID=" + menu.SubMenuList[0].Menu_Id + "&MMenuID=" + menu.Menu_Id);
+                                    if (menu.SubMenuList.length > 0 && menu.SubMenuList[0].SubMenuList && menu.SubMenuList[0].SubMenuList.length > 0){ 
+                                          me.find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path);
+                                       // me.find(".menusrc").attr("href", menu.SubMenuList[0].SubMenuList[0].Url_Path + "?mid=" + menu.SubMenuList[0].SubMenuList[0].Menu_Id + "&PMenuID=" + menu.SubMenuList[0].Menu_Id + "&MMenuID=" + menu.Menu_Id);
                                     } else {
                                         me.find(".menusrc").attr("href", "JavaScript:void(0)");
                                     }
@@ -2818,19 +2819,19 @@ function setPropReadOnly(id, readonly) {
 
 
 fnGoto1 = function () {
-    location.href = "Event.aspx?mid=" + getUrlParam("mid") + "&MarketEventID=" + getUrlParam("MarketEventID");
+    location.href = "Event.aspx?mid=" + window.mid + "&MarketEventID=" + getUrlParam("MarketEventID");
 }
 fnGoto2 = function () {
-    location.href = "EventTime.aspx?mid=" + getUrlParam("mid") + "&MarketEventID=" + getUrlParam("MarketEventID");
+    location.href = "EventTime.aspx?mid=" + window.mid + "&MarketEventID=" + getUrlParam("MarketEventID");
 }
 fnGoto3 = function () {
-    location.href = "MarketStore.aspx?mid=" + getUrlParam("mid") + "&MarketEventID=" + getUrlParam("MarketEventID");
+    location.href = "MarketStore.aspx?mid=" + window.mid + "&MarketEventID=" + getUrlParam("MarketEventID");
 }
 fnGoto4 = function () {
-    location.href = "MarketPerson.aspx?mid=" + getUrlParam("mid") + "&MarketEventID=" + getUrlParam("MarketEventID");
+    location.href = "MarketPerson.aspx?mid=" + window.mid + "&MarketEventID=" + getUrlParam("MarketEventID");
 }
 fnGoto5 = function () {
-    location.href = "MarketTemplate.aspx?mid=" + getUrlParam("mid") + "&MarketEventID=" + getUrlParam("MarketEventID");
+    location.href = "MarketTemplate.aspx?mid=" + window.mid + "&MarketEventID=" + getUrlParam("MarketEventID");
 }
 
 

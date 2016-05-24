@@ -191,7 +191,7 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 						}else{
 							that.setFirstStep(prams,function(){
 								$.util.isLoading(true);
-								location.href = "queryList.aspx?mid=" + JITMethod.getUrlParam("mid");	
+								$.util.toNewUrlPath("queryList.aspx");
 							});
 						}
 						break;

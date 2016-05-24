@@ -2,7 +2,7 @@
 
 .optionBtn .batch{ position:relative;background:url("../images/jiantouD.png") 90% center no-repeat #00a0e8;}
 .optionBtn .export{float: right; margin-right: 35px; width: 83px; text-align:right;background: url("../images/Share.png") #82ba38 no-repeat 14px center ; padding-right: 18px; }
-.panelTab{display: none; position: absolute; top:0; left: 0; background-color:#fff;width: 108px; border: 1px solid #d0d5d8; border-radius: 3px;}
+.panelTab{display: none; z-index: 32; position: absolute; top:0; left: 0; background-color:#fff;width: 108px; border: 1px solid #d0d5d8; border-radius: 3px;}
 .panelTab p{border-bottom: 1px solid #d0d5d8; display: inline-block; color:#999; height: 33px; line-height:33px;padding-right: 10px; text-align: right; background: 10px center no-repeat  ; width: 100%;   }
 .panelTab p.on{ color: #00a0e8;}
 .panelTab p.check01{ background-image: url("../images/check01.png")  }
@@ -27,7 +27,7 @@
 .commonSelectWrap .searchInput .linetext span{  margin-left:5px; }
 .commonSelectWrap .searchInput textarea{line-height:34px;font-size:12px;background:none;color:#999;height: 35px; }
 .panlDiv .commonSelectWrap .searchInput{ border-width:0;background:none;  width: 370px;}
-
+.loading{padding-top: 50px;}
 .forminput .commonSelectWrap .searchInput{ border-width:1px;background:#fff;}
 
 .forminput .commonSelectWrap .bordrnone.searchInput{ border-width:0;}

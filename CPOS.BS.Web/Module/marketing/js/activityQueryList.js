@@ -46,8 +46,7 @@
 
             });
             that.elems.optionBtn.delegate(".commonBtn", "click", function (e) {
-                var mid = JITMethod.getUrlParam("mid");
-                $.util.toNewUrlPath("activityDetail.aspx?mid=" + mid);
+                $.util.toNewUrlPath("activityDetail.aspx");
             });
             /**************** -------------------初始化easyui 控件 start****************/
             var  wd=200,H=32;
@@ -132,8 +131,7 @@
                     })
                 }
                 if (optType == "exit") {
-                    var mid = JITMethod.getUrlParam("mid");
-                    $.util.toNewUrlPath("activityDetail.aspx?mid=" + mid + "&ActivityID=" + row.ActivityID);
+                    $.util.toNewUrlPath("activityDetail.aspx?ActivityID=" + row.ActivityID);
                 }
                 if(optType=="start"||optType=="end"){
                     that.loadData.operation(row,optType,function(){

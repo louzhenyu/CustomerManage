@@ -1,40 +1,15 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>支付方式管理</title>
-    <style>
-	/***弹出，创建版块，创建期刊***/
-	.jui-dialog{display:none;}
-	.jui-dialog-payMent{width:760px;min-height:468px;top:50px;margin-left:-380px;}
-	.jui-dialog-payMent .payMentContent{padding:30px 35px;}
-	.jui-dialog-payMent .commonSelectWrap{width:100%;margin-bottom:28px;}
-	.jui-dialog-payMent .commonSelectWrap .tit{width:155px;text-align:right;}
-	
-	.jui-dialog-payMent .radioWrap{margin-left:100px;height:35px;}
-	.jui-dialog-payMent .searchInput{width:420px;height:35px;border:1px solid #dedede;}
-	.jui-dialog-payMent .searchInput input{height:33px;}
-	.jui-dialog-payMent .searchInput input[disabled='disabled']{background:#ccc;}
-	.jui-dialog-payMent .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(../styles/images/newYear/radio.png) no-repeat left center;cursor:pointer;}
-	.jui-dialog-payMent .radioBox.on{background:url(../styles/images/newYear/radioOn.png) no-repeat left center;}
-	
-	.jui-dialog-payMent .uploadFileBox,.jui-dialog-payMent .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
-	
-	#CupWap_certificatecilepath_upload{display:none;position:absolute;top:0;left:0;width:90px;height:32px;}
-	#payMentList{min-height:120px;}
-	.tableWrap{border:none;}
-
-	/*.tableWrap .operateWrap .editIcon{cursor:pointer;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px;height: 18px; display: block;}*/
-	.handleGuide{float:right;width:20px;height:30px;margin:3px 112px 0 0;background:url(images/icon-guide.png) no-repeat center center;}
-	.tip-payment{float:right;height:30px;line-height:30px;font-size:12px;text-align:right;padding:0 60px 0 45px;background:url(images/icon-tip.png) no-repeat left center;color:#f00;}
-	.tipWx{background:url(images/icon-tip.png) no-repeat left center;clear:left;height:30px;line-height:30px;margin-left:160px;padding-left:45px;font-size:14px;}
-    </style>
+      <link href="<%=StaticUrl+"/module/PayMent/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
 
-<div class="payMentListArea" id="section" data-js="js/payMentList">
+<div class="payMentListArea" id="section" data-js="js/payMentList.js">
     <div class="tableWrap cursorDef">
         <!-- 已确认名单表格 -->
      <!--   <table class="dataTable" style="display:inline-table;">
@@ -384,7 +359,4 @@
 			</tr>
     <#}#>
 </script>
-
-   <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-        defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

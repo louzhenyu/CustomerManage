@@ -95,8 +95,8 @@
                         list[i].pageStr = (that.pageStr ? that.pageStr : "团购");
                     });
                     //传mid
-                    var mid = JITMethod.getUrlParam("mid");
-                    var pMenuID = JITMethod.getUrlParam("PMenuID");
+                    var mid = window.mid;
+                    var pMenuID = window.PMenuID;
                     debugger;
                     var html = bd.template("tpl_content", { list: list, Mid: mid, PMenuID: pMenuID })
                     $("#goodsList").html(html);
@@ -136,8 +136,8 @@
                     $.each(list, function (i) {
                         list[i].pageStr = (that.pageStr ? that.pageStr : "团购");
                     });
-                    var mid = JITMethod.getUrlParam("mid");
-                    var pMenuID = JITMethod.getUrlParam("PMenuID");
+                    var mid = window.mid;
+                    var pMenuID = window.PMenuID;
                     var html = bd.template("tpl_content", { list: list, Mid: mid, PMenuID: pMenuID })
                     $("#goodsList").html(html);
                 });
@@ -220,11 +220,10 @@
                         
                         //添加新团购
                         that.loadData.addEvent(function (data) {
-                            var mid = JITMethod.getUrlParam("mid");
                             var EventId = data.Data.EventID;
                             $(".hintClose").trigger("click");
                             setTimeout(function () {
-                                location.href = "GroupManage.aspx?pageType=" + (that.pageType ? that.pageType : 1) + "&mid=" + mid + "&eventId=" + EventId + "&showPage=shopManage" + "&pageName=" + (that.pageStr ? that.pageStr : "团购");
+                                $.util.toNewUrlPath("GroupManage.aspx?pageType=" + (that.pageType ? that.pageType : 1) + "&eventId=" + EventId + "&showPage=shopManage" + "&pageName=" + (that.pageStr ? that.pageStr : "团购"));
                             }, 800);
 
                         });

@@ -92,7 +92,7 @@
 
     <link href="<%=StaticUrl+"/Framework/Css/cpos.css"%>" rel="stylesheet" type="text/css" />
     <script src="<%=StaticUrl+"/Framework/javascript/Other/cpos.js?v=0.4"%>" type="text/javascript"></script>
-    <script type="text/javascript">
+<%--    <script type="text/javascript">//带id的跳转预留
         function PMenuClick(urlPath, childMenuID, parentMenu_Id,MMenuID) {
 
             var result = urlPath.indexOf("?");
@@ -100,7 +100,7 @@
             location = newUrl;
         }
     
-    </script>
+    </script>--%>
     <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
 
 </head>
@@ -180,15 +180,21 @@
                               //  SubMenuList.Count();
                               string urlPath = "";
                               string childMenuID = "";
+                              string iconType = n.Icon_Path == "" ? "icon" : n.Icon_Path;
                               var subList = SubMenuList.ToList();
-                              if (SubMenuList != null && SubMenuList.Count() != 0 && MMenuID!="")
+                              if (SubMenuList != null && SubMenuList.Count() != 0 && MMenuID != "")
                               {
-                                 urlPath = subList[0].Url_Path;
-                                 childMenuID = subList[0].Menu_Id;
+                                  urlPath = subList[0].Url_Path;
+                                  childMenuID = subList[0].Menu_Id;
                               }
-
-                              Response.Write(string.Format("<li class=\"{3}\"><a href=\"#\"  id=\"{0}\" class=\"{1}\" title=\"{2}\" onclick='PMenuClick(\"{4}\",\"{5}\",\"{6}\",\"{7}\")'>{2}</a>",
-                                  n.Menu_Id, n.Icon_Path, n.Menu_Name, "nav" + (i.ToString().PadLeft(3, '0')), urlPath, childMenuID, n.Menu_Id, MMenuID));
+                              
+                              
+                              Response.Write(string.Format("<li class=\"{3}\"><a href=\"{4}\"  id=\"{0}\" class=\"{1}\" title=\"{2}\" >{2}</a>",
+                                  n.Menu_Id, iconType, n.Menu_Name, "nav" + (i.ToString().PadLeft(3, '0')), urlPath));
+                              
+                              //带id的跳转预留
+                              //Response.Write(string.Format("<li class=\"{3}\"><a href=\"#\"  id=\"{0}\" class=\"{1}\" title=\"{2}\" onclick='PMenuClick(\"{4}\",\"{5}\",\"{6}\",\"{7}\")'>{2}</a>",
+                              //    n.Menu_Id, n.Icon_Path, n.Menu_Name, "nav" + (i.ToString().PadLeft(3, '0')), urlPath, childMenuID, n.Menu_Id, MMenuID));
 
                               Response.Write("</li>");
                           }
@@ -258,10 +264,14 @@
                             
                             var result = false;
                             result = (urlPath.IndexOf("?") >= 0);
+                            //var url=(result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID + "&MMenuID=" + MMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID + "&MMenuID=" + MMenuID));
+                            var url = urlPath;
+
                             Response.Write(string.Format("<li class=\"{4} \"><a  id=\"{0}\"  href=\"{1}\" title=\"{2}\"><em class=\"icon {3}\"></em><span>{2}</span></a></dt>",
-                                m.Menu_Id, (result ? (m.Url_Path + "&mid=" + m.Menu_Id + "&PMenuID=" + PMenuID + "&MMenuID=" + MMenuID) : (m.Url_Path + "?mid=" + m.Menu_Id + "&PMenuID=" + PMenuID + "&MMenuID=" + MMenuID)), m.Menu_Name
+                                m.Menu_Id, url, m.Menu_Name
                                 , tempUrlPath2, "menu" + (j.ToString().PadLeft(3, '0'))));//不用m.Icon_Path，改用urlPath的截取信息 m.Icon_Path != "" ? m.Icon_Path : "icon"
                             //icon {3}的意思是： 如果没有样式还是要用icon的样式
+
 
                         }
                     %>
@@ -317,7 +327,7 @@
             //主菜单点击
          
             $(function () {
-                var mid = JITMethod.getUrlParam("mid");
+                var mid ="<%=Mid%>";
                 //判断对于没有传PMenuID的情况根据mid去找相应的实体，然后查找出来
                 var PMenuID = "<%=PMenuID %>";//JITMethod.getUrlParam("PMenuID");
                 var MMenuID = "<%=MMenuID %>";
@@ -338,12 +348,12 @@
             });
             //给嵌套页面添加mid
             function AddMid(urlPath) {
-                var childMenuID = JITMethod.getUrlParam("mid");
-                var parentMenu_Id = JITMethod.getUrlParam("PMenuID");
-                var MMenuID = JITMethod.getUrlParam("MMenuID");
+                var childMenuID = window.mid;
+                var parentMenu_Id = window.PMenuID;
+                var MMenuID = window.MMenuID;
                 var result = urlPath.indexOf("?");
                 var newUrl = result != -1 ? (urlPath + "&mid=" + childMenuID + "&PMenuID=" + parentMenu_Id + "&MMenuID=" + MMenuID) : (urlPath + "?mid=" + childMenuID + "&PMenuID=" + parentMenu_Id + "&MMenuID=" + MMenuID);
-                location = newUrl;
+                location = urlPath;
 
             }
 
@@ -424,6 +434,9 @@
                 window.weixinUrl = "<%=System.Web.Configuration.WebConfigurationManager.AppSettings["openOAuthUrl"] %>/receive?clientid=" + window.clientID;
                 window.fsr_userName = "admin";
                 window.fsr_passWord = "123456";
+                window.PMenuID='<%=PMenuID %>';
+                window.mid='<%=Mid%>';
+                window.MMenuID='<%=MMenuID%>' 
                 //     console.log($(".session1").text());
             });
         </script> 

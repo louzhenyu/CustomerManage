@@ -505,9 +505,7 @@
                     if(that.elems.click){
                         that.elems.click = true;
                         debugger;
-
-                        var mid = JITMethod.getUrlParam("mid");
-                        $.util.toNewUrlPath("orderDetail.aspx?orderId=" + rowData.order_id + "&mid=" + mid);
+                        $.util.toNewUrlPath("orderDetail.aspx?orderId=" + rowData.order_id);
                     }
 
                 },onClickCell:function(rowIndex, field, value){
@@ -676,6 +674,7 @@
                 this.exportExcel(data, getUrl);
             },
             getOrderList: function (callback) {
+                $.util.partialRefresh($("#gridTable"))
                 $.util.oldAjax({
                     url: "/Module/Order/InoutOrders/Handler/Inout3Handler.ashx",
                       data:{

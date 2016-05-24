@@ -11,10 +11,7 @@
 
 .fontC{ width: 18px; height: 18px; margin: 0 auto; background:no-repeat center center;}
 .red{color:red}
-.delete{background-image:url(../images/del.png);display: inline-block;  margin: 0px 10px;}
-.exit{background-image:url(../images/editIcon.png);display: inline-block;  margin: 0px 10px;}
-
-.down {background-image:url(../images/down.png)}
+ .hand{width: 18px; height: 18px;display: inline-block;}
 .tableWrapTextBtn   {height: 120px;padding-top: 35px;padding-left: 25px;}
 
 

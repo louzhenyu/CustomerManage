@@ -1,4 +1,4 @@
-﻿define(['jquery', 'homePageTemp','tools', 'touchslider','kkpager', 'jqueryui','template', 'kindeditor','easyui'], function ($, temp, touchslider) {
+﻿define(['jquery', 'js/tempModel.js','tools', 'touchslider','kkpager', 'jqueryui','artTemplate', 'kindeditor','easyui','artDialog'], function ($, temp, touchslider) {
     //console.dir(touchslider);
     //debugger;
     //上传图片
@@ -973,7 +973,6 @@
                         }
                         break;  //创意组合
                     case "productList":
-                        self.ele.productList = $("[data-type='productList']");
                         if (self.ele.productList.find(".jsListItemEmpty").length == 0) {
 
                             self.ele.productListObject={
@@ -1036,6 +1035,7 @@
                             }
 
 
+                            self.ele.bargain = $("[data-type='bargain']");//砍价
                         }else{
                             alert("请先编辑空白模板并保存");
                         }

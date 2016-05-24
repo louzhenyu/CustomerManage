@@ -1,0 +1,22 @@
+/***弹出，创建版块，创建期刊***/
+.jui-dialog{display:none;}
+.jui-dialog-payMent{width:760px;min-height:468px;top:50px;margin-left:-380px;}
+.jui-dialog-payMent .payMentContent{padding:30px 35px;}
+.jui-dialog-payMent .commonSelectWrap{width:100%;margin-bottom:28px;}
+.jui-dialog-payMent .commonSelectWrap .tit{width:155px;text-align:right;}
+
+.jui-dialog-payMent .radioWrap{margin-left:100px;height:35px;}
+.jui-dialog-payMent .searchInput{width:420px;height:35px;border:1px solid #dedede;}
+.jui-dialog-payMent .searchInput input{height:33px;}
+.jui-dialog-payMent .searchInput input[disabled='disabled']{background:#ccc;}
+.jui-dialog-payMent .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(../../styles/images/newYear/radio.png) no-repeat left center;cursor:pointer;}
+.jui-dialog-payMent .radioBox.on{background:url(../../styles/images/newYear/radioOn.png) no-repeat left center;}
+
+.jui-dialog-payMent .uploadFileBox,.jui-dialog-payMent .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
+
+#CupWap_certificatecilepath_upload{display:none;position:absolute;top:0;left:0;width:90px;height:32px;}
+#payMentList{min-height:120px;}
+.tableWrap{border:none;}
+
+/*.tableWrap .operateWrap .editIcon{cursor:pointer;background:url(../styles/images/newYear/exit.png) no-repeat center center; width: 18px;height: 18px; display: block;}*/
+.handleGuide{float:right;width:20px;height:30px;margin:3px 112px 0 0;background:url(../images/icon-guide.png) no-repeat center center;}

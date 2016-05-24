@@ -1,11 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
-    ValidateRequest="false" AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITChildPage" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
+    AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>新版首页管理</title>
-        <link rel="stylesheet" href="<%=StaticUrl+"/Framework/Javascript/Other/kindeditor/themes/default/default.css"%>" />
-
-    <link rel="stylesheet" href="css/detail.css" />
+    <link rel="stylesheet" href="<%=StaticUrl+"/module/AppConfig/css/detail.css?v=0.6"%>" rel="stylesheet" type="text/css"  />
 
      <script type="text/javascript">
 window.onbeforeunload = function() {
@@ -17,6 +15,10 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 }
 </script>
 </asp:Content>
+
+
+
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div id="section"  data-js="js/homePageDetail.js?ver=0.3" class="section m10">
         <form>
@@ -926,6 +928,4 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
         <div class="ui-mask">
         </div>
     </div>
-    <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.js"%>"
-        defer async="true" data-main="<%=StaticUrl+"/module/AppConfig/js/main"%>"></script>
 </asp:Content>

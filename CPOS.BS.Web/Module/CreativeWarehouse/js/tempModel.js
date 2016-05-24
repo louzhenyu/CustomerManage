@@ -228,13 +228,13 @@ define(function($) {
         <div class="checkBox" data-MappingId="<%=idata.MappingId%>"  data-skuid="<%=idata.SkuID%>" data-select="<%=idata.IsSelected%>"><em></em><span><%=idata.SkuName%></span></div>  \
     </div> \
     <div class="r"> <div class="commonSelectWrap" > \
-        <em class="tit">商品数量：</em>   \
+        <em class="tit">商品库存：</em>   \
     <div class="selectBox" > \
         <input   class="easyui-numberbox" name="Qty" data-options="value:<%=idata.Qty%>,min:0,precision:0,width:80,height:30,disabled:true" />\
         </div> <!--inputBox-->\
         </div><!--lineText--> \
         <div class="commonSelectWrap" >\
-        <em class="tit" style="width: 85px;">已售数量基数：</em>\
+        <em class="tit" style="width: 85px;">预设销量：</em>\
     <div class="selectBox" >  \
         <input   class="easyui-numberbox" name="KeepQty" data-options="value:<%=idata.KeepQty%>,min:0,precision:0,width:80,height:30,disabled:true" /> \
         </div> <!--inputBox-->  \
@@ -248,7 +248,7 @@ define(function($) {
         <div class="commonSelectWrap" >  \
         <em class="tit" style="width: 85px;">活动价：</em> \
     <div class="selectBox" >\
-        <input   class="easyui-numberbox" name="SalesPrice"  data-options="value:<%=idata.SalesPrice%>,min:0,precision:0,width:80,height:30,disabled:true" />\
+        <input   class="easyui-numberbox" name="SalesPrice"  data-options="value:<%=idata.SalesPrice%>,min:0,precision:2,width:80,height:30,disabled:true" />\
         </div> <!--inputBox-->   \
         </div><!--lineText--></div>\
     </div> <!--skuObj-->\

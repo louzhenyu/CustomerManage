@@ -3,7 +3,7 @@
     InitVE();
     InitStore();
     InitEditView();
-    JITPage.HandlerUrl.setValue("Handler/WMaterialTextHandler.ashx?mid=" + __mid);
+    JITPage.HandlerUrl.setValue("Handler/WMaterialTextHandler.ashx?mid=" + window.mid);
     fnSearch();
     fnWmaterialType();
 
@@ -28,13 +28,13 @@ function fnSearch() {
 
 function fnCreate() {
     var mid = JITMethod.getUrlParam("mid");
-    var url = "../WeiXin/ImageContent.aspx?type=add" + "&mid=" + mid;;
+    var url = "../WeiXin/ImageContent.aspx?type=add" + "&mid=" + window.mid;;
     window.open(url,"_top");
 
 }
 function fnEdit(id) {
     var mid = JITMethod.getUrlParam("mid");
-    var url = "../WeiXin/ImageContent.aspx?type=edit&imageContentId=" + id+"&mid=" +mid;
+    var url = "../WeiXin/ImageContent.aspx?type=edit&imageContentId=" + id+"&mid=" +window.mid;
     window.open(url, "_top");
 }
 

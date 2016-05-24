@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
@@ -7,30 +7,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/activityList/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-<style type="text/css">
-.commonSelectWrap .tit{width:102px;}
-
-.datagrid-btable .handle{width:25px;height:39px;line-height:38px;cursor:pointer;  display: inline-block;}
-.datagrid-btable .delete{background:url(images/delete.png) no-repeat center center;}
-.datagrid-btable .running{background:url(images/running.png) no-repeat center center;}
-.datagrid-btable .detail{background:url(images/detail.png) no-repeat center center;}
-.datagrid-btable .pause{background:url(images/pause.png) no-repeat center center;}
-.datagrid-btable .down{background-repeat:no-repeat;background-position:center center;}
-
-#tableWrap2 .datagrid-row,#tableWrap2 .datagrid-header-row{height:62px;line-height:61px;}
-#tableWrap2 .datagrid-btable{width:100%;}
-/*活动参与，弹出*/
-.jui-dialog-table{width:1026px;height:576px;position:fixed;top:30px;margin-left:-513px;}
-
-.exportTable{height:75px;background:#f4f8fa;}
-.exportTable .exportBtn{display:none;width:110px;height:32px;line-height:32px;margin:22px 0 0 30px;text-align:center;font-size:14px;border-radius:3px;background:#0cc;color:#f4f8fa;}
-/*弹层，分页*/
-
-
-.joinprize,.winprize{  text-decoration: underline;color:#0099ff;}
-    
-</style>
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -179,7 +155,5 @@
            </tr>
            <#} #>
        </script>
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>
 

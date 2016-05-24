@@ -1,4 +1,4 @@
-﻿define(['jquery', 'template', 'tools','langzh_CN','easyui', 'kkpager'], function ($) {
+﻿define(['jquery', 'template', 'tools','langzh_CN','easyui','artDialog', 'kkpager'], function ($) {
     var page = { 
         elems: {
             sectionPage:$("#section"), 
@@ -27,7 +27,7 @@
 
             this.loadPageData();
 
-            this.elems.isshow = JITMethod.getUrlParam("isshow");
+            this.elems.isshow = $.util.getUrlParam("isshow"); //$.util.getUrlParam("isshow");
 
            
 
@@ -161,7 +161,7 @@
 
 
             /**************** -------------------列表操作事件用例 start****************/
-            that.elems.tabelWrap.delegate(".handle", "click", function (e) {
+            that.elems.tabelWrap.delegate(".opt", "click", function (e) {
                 debugger;
                 var rowIndex = $(this).data("index");
                 var optType = $(this).data("oprtype");
@@ -179,7 +179,7 @@
 
                 }
                 if (optType == "edit") {
-                    $.util.toNewUrlPath("/Module/QuestionnaireNews/QuestionnaireDetail.aspx?type=" + row.QuestionnaireType + "&mid=" + JITMethod.getUrlParam("mid") + "&QuestionnaireID=" + row.QuestionnaireID);
+                    $.util.toNewUrlPath("/Module/QuestionnaireNews/QuestionnaireDetail.aspx?type=" + row.QuestionnaireType + "&QuestionnaireID=" + row.QuestionnaireID);
                     
                 }
 
@@ -268,9 +268,9 @@
                             var status = row.Status;
                             var optstr = "";
                             
-                            optstr += '<p class="handle exit" title="编辑" data-index="' + index + '" data-oprtype="edit"></p>';
+                            optstr += '<p class="opt exit" title="编辑" data-index="' + index + '" data-oprtype="edit"></p>';
                             if (status == 1) {
-                                optstr += '<p class="handle delete"  title="删除" data-index="' + index + '" data-oprtype="delete"></p>';
+                                optstr += '<p class="opt delete"  title="删除" data-index="' + index + '" data-oprtype="delete"></p>';
                             }
                             return optstr;
                         }

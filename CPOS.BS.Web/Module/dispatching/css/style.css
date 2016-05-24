@@ -1,0 +1,42 @@
+.dataTable tbody td{ height: 50px;}
+.jui-dialog{display:none;}
+.jui-dialog-dispatching{width:760px;min-height:468px;top:50px;margin-left:-380px;}
+.jui-dialog-dispatching .dispatchingContent{padding:30px 35px;}
+.jui-dialog-dispatching .commonSelectWrap{width:100%;margin-top:0px;}
+.jui-dialog-dispatching .commonSelectWrap .tit{width:155px;text-align:right;font-size:12px;color:#666;}
+
+.jui-dialog-dispatching .radioWrap{margin-left:100px;height:32px;}
+.jui-dialog-dispatching .searchInput{width:420px;height:32px;border:none;}
+.jui-dialog-dispatching .searchInput input{height:32px;border:none;}
+.jui-dialog-dispatching .searchInput .textbox{width:420px;height:32px;}
+.jui-dialog-dispatching .searchInput input[disabled='disabled'],
+.jui-dialog-dispatching .searchInput textarea[disabled='disabled']{background:#ccc;}
+
+.jui-dialog-dispatching .radioBox{float:left;height:24px;line-height:24px;margin:6px 0 0 24px;padding-left:30px;background:url(../../styles/images/newYear/radio.png) no-repeat left center;cursor:pointer;}
+.jui-dialog-dispatching .radioBox.on{background:url(../../styles/images/newYear/radioOn.png) no-repeat left center;}
+
+.jui-dialog-dispatching .uploadFileBox,.jui-dialog-dispatching .uploadFileBox01{position:relative;display:inline-block;width:90px;height:32px;line-height:32px;margin-left:8px;border-radius:5px;text-align:center;background:#CCC;color:#fff;cursor:pointer;}
+
+#dispatchingList{min-height:120px;}
+.tableWrap{border:none;}
+
+.jui-dialog-dispatching .btnWrap{display:inline-block;width:100%;}
+.tip-text{display:inline-block;line-height:32px;padding-left:10px;font-size:12px;color:#666;}
+.deliveryNumBox .tip-text,.addTimePassageBox .tip-text{float:left;margin-right:10px;}
+.timePassageArea{display:inline-block;font-size:12px;color:#666;}
+.timePassage{width:250px;max-height:100px;padding-bottom:5px;overflow-y:auto;}
+.timeItem{width:220px;height:25px;line-height:25px;margin-bottom:5px;}
+.timeItem > *{float:left;}
+.timeItem span{margin-left:17px;color:#00a0e8;cursor:pointer;}
+.timeItem .startTime{margin:0 10px 0 0;}
+.timeItem .endTime{margin:0 0 0 10px;}
+.addTimePassageBox{display:inline-block;margin-top:3px;background:#fff;}
+.addTimePassageBox .searchInput{background:url(../images/icon-time.png) no-repeat 75px center;}
+.timeSaveBtn,.timeCancelBtn{line-height:32px;margin-left:17px;color:#00a0e8;cursor:pointer;}
+.deliveryNumBox .checkBox{margin-top:7px;}
+.timePassageArea .checkBox{margin-right:10px;}
+.setTimeBox{padding-left:28px;}
+#jui-dialog-2 .tit{width:75px;}
+#jui-dialog-2 .radioWrap{margin-left:75px;}
+#jui-dialog-2 .radioBox{margin:4px 18px 0 2px;padding-left:25px;}
+#addTimeBtn{margin-top:10px;}

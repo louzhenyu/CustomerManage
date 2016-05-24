@@ -1,8 +1,4 @@
 ﻿@charset "utf-8";
 
-.commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.moreQueryWrap{ float: left;margin-top: 12px;}
-.commonSelectWrap .selectBox{ border: 1px solid transparent;}
-.start{background-image:url(../images/start.png); width: 16px; height: 16px;}
-.end{ background-image:url(../images/end.png); width: 16px; height: 16px;}
-.dataMessage{ text-align: center;  font-size: 14px; line-height: 35px; display: none}
+
+

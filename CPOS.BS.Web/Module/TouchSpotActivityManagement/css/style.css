@@ -8,13 +8,6 @@
 #Tooltip  .btnList { margin: 15px; width: 120px;}
 
 .r{float: right}.l{float: left}
-
-.fontC{ width: 18px; height: 18px; margin: 0 auto; background:no-repeat center center;}
-.red{color:red}
-.delete{background-image:url(../images/delete.png)}
-.exit{background-image:url(../images/exit.png)}
-
-.down {background-image:url(../images/down.png)}
 .tableWrapTextBtn   {height: 120px;padding-top: 35px;padding-left: 25px;}
 
 
@@ -57,9 +50,6 @@
 .list .optBtn{ width: 23px; height: 23px; right: 40px; top:-6px;;position: absolute;  display: none }
 .list:hover .optBtn { display: block;}
 .list .optBtn .btn{ width: 31px; height: 31px; float:left; margin-left: 15px;}
-.list .optBtn .add{ background:url(../images/add0rdel.png) no-repeat 0 0;}
-/*.list .optBtn .del{ background:url(../images/add0rdel.png) no-repeat -41px 0;}*/
-.list .optBtn .del{ background:url(../images/del.png) no-repeat 0 0; background-size:16px 16px; cursor:pointer}
 #Children{border: none; max-height: 258px; height: auto;overflow-x: auto;width: 248px;}
 #Children input{ border: 1px solid #ccc; width: 160px;}
 #Children .add{ background:none; color: #00acee; font-size: 15px;}

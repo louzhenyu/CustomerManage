@@ -223,10 +223,11 @@ define(['js/tempModel.js'],function(TEMP) {
                 cursorborder: "1", // 	游标边框css定义
                 cursorborderradius: "5px",//以像素为光标边界半径
                 autohidemode: false, //是否隐藏滚动条
+                horizrailenabled:true,//横向滚动条隐藏
                 //background:"#00a0e8",  //滚动轨迹的背景，
                 zindex:0
             });
-            $("#ascrail2000-hr").hide()
+           $("#ascrail2000-hr").remove()
         },
         //
         getItemList:function(dom){
@@ -411,19 +412,35 @@ define(['js/tempModel.js'],function(TEMP) {
                    SkuList.push(obj);
                 });
                 for(var i=0;i<SkuList.length;i++){
+
                     if(SkuList[i].Qty==0){
                         submitObj.is=false;
-                        submitObj.msg="第"+SkuList[i].index+" 项的商品数量不能为零";
+                        submitObj.msg="第"+SkuList[i].index+" 项的商品库存不能为零";
                         break;
                     }
                     if(SkuList[i].KeepQty>SkuList[i].Qty){
                         submitObj.is=false;
-                        submitObj.msg="第"+SkuList[i].index+" 项的已售数量基数不能大于商品数量";
+                        submitObj.msg="第"+SkuList[i].index+" 项的预设销量不能大于商品库存";
                         break;
                     }
                     if(SkuList[i].SalesPrice>SkuList[i].price){
                         submitObj.is=false;
                         submitObj.msg="第"+SkuList[i].index+" 项的活动价不能大于原价";
+                        break;
+                    }
+                    if(isNaN(SkuList[i].Qty)){
+                        submitObj.is=false;
+                        submitObj.msg="第"+SkuList[i].index+" 项的商品库存不能为为空";
+                        break;
+                    }
+                    if(isNaN(SkuList[i].KeepQty)){
+                        submitObj.is=false;
+                        submitObj.msg="第"+SkuList[i].index+" 项的预设销量不能为空";
+                        break;
+                    }
+                    if(isNaN(SkuList[i].SalesPrice)){
+                        submitObj.is=false;
+                        submitObj.msg="第"+SkuList[i].index+" 项的活动价不能为空";
                         break;
                     }
 

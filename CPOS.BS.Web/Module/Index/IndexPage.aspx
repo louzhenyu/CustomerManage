@@ -1,6 +1,5 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master" AutoEventWireup="true" CodeBehind="IndexPage.aspx.cs" Inherits="JIT.CPOS.BS.Web.Module.Index.IndexPage" %>
-
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
+    AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 	<title>连锁掌柜-首页</title>
     <link href="css/IndexPage.css?ver=2" rel="stylesheet" />
@@ -297,8 +296,4 @@
         </div>
     </div>  
 </div>
-
-
-        
-    <script type="text/JavaScript" src="/Module/static/js/lib/require.js" defer async="true" data-main="/Module/static/js/main"></script>
 </asp:Content>

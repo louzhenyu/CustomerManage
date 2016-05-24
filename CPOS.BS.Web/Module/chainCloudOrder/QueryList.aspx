@@ -1,13 +1,9 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/CPOS.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <meta charset="UTF-8" />
     <title>订单管理</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
     <link href="<%=StaticUrl+"/module/chainCloudOrder/css/style.css?v=0.3"%>" rel="stylesheet" type="text/css" />
-
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -106,7 +102,7 @@
 
                 </div>
                 <div class="optionBtn">
-                                     <div class="commonBtn w100 batch optionCheck" style="position: relative" data-show="0,100,500" data-flag="batch"   >批量操作
+                                     <div class="commonBtn w100 batch optionCheck" style="position: relative" data-show="0,100" data-flag="batch"   >批量操作
                                      <div class="panelTab" >
                                      <p class="optionCheck check01" data-optiontype="audit" data-show="0,100" >批量审核</p>
                                    <!--  <p class="optionCheck check02" data-optiontype="shipments" data-show="0,500">批量发货</p>-->
@@ -136,10 +132,7 @@
 
 
                    <div class="dataTable" id="gridTable">
-                                            <div  class="loading" style="padding-top: 50px;">
-                                                     <span>
-                                                   <img src="../static/images/loading.gif"></span>
-                                              </div>
+
 
 </div>  </div>
                     <div id="pageContianer">
@@ -259,6 +252,4 @@
            </form>
       </script>
 
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"
-            defer async="true" data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
 </asp:Content>

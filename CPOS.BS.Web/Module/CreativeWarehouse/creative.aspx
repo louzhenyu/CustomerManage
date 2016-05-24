@@ -1,12 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/light.Master"
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Framework/MasterPage/optimize.Master"
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <title>发起活动</title>
-     <link href="css/jquery.bxslider.css?v=0.1" rel="stylesheet" type="text/css" />
-     <link href="../static/js/vendor/jquery-ui-1.11.4/jquery-ui.css" rel="stylesheet" type="text/css" />
+     <link href="<%=StaticUrl+"/module/CreativeWarehouse/css/jquery.bxslider.css"%>" rel="stylesheet" type="text/css" />
+     <link href="<%=StaticUrl+"/module/static/js/vendor/jquery-ui-1.11.4/jquery-ui.css"%>" rel="stylesheet" type="text/css" />
       <link href="http://www.vveshow.com/plugins/jvveshow/1.0.0/resource/css/jvveshow/jvveshow.min.css" rel="stylesheet" type="text/css" />
-    <link href="css/creative.css?v=0.1" rel="stylesheet" type="text/css" />
+    <link href="<%=StaticUrl+"/module/CreativeWarehouse/css/creative.css?v=0.1"%>" rel="stylesheet" type="text/css" />
      <script type="text/javascript">
 window.onbeforeunload = function() {
 var n = window.event.screenX - window.screenLeft;
@@ -19,7 +19,7 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-       <div class="allPage" id="section"  data-js="js/creative">
+       <div class="allPage" id="section"  data-js="js/creative.js">
        <div id="closeWin1" style="display: none"></div>
          <div class="contentArea_vipquery">
            <div class="navigation">
@@ -407,16 +407,5 @@ window.event.returnValue = "未保存的数据可能会丢失!"; //这里可以�
                            </div>
      </div>
 
-
-
-
-       <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>"  data-main="<%=StaticUrl+"/module/commodity/js/main.js"%>"></script>
-
-     <script type="text/javascript">
-         var version=new Date().getTime();
-         var str = "<script type='text/javascript' src='http://www.vveshow.com/plugins/jvveshow/1.0.0/resource/app/jvveshow/jvveshow.min.js?versionInit='" + version + "'>";
-         str+="\<\/script\>";
-     document.write(str);
-    </script>
 </asp:Content>
 

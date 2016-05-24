@@ -147,7 +147,7 @@
                 //iconCls : 'icon-list', //图标
                 singleSelect: false, //单选
                 // height : 332, //高度
-                fitColumns: false, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
+                fitColumns: true, //自动调整各列，用了这个属性，下面各列的宽度值就只是一个比例。
                 striped: true, //奇偶行颜色不同
                 //collapsible : true,//可折叠
                 //数据来源
@@ -245,13 +245,13 @@
                                             if (result.TitleData[i].NameID == "ID") {
                                                 break;
                                             }
-                                            columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + result.TitleData[i].Name + "',  resizable: true, align: 'center' },";
+                                            columns += "{ field: '" + result.TitleData[i].NameID + "',width:80, title: '" + result.TitleData[i].Name + "',  resizable: true, align: 'left' },";
                                         }
                                     }
                                 }
                                 columns = "[" + columns + "]";
                                 debugger;
-                                callback(result, Ext.decode( columns));
+                                callback(result, $.util.decode( columns));
                             }
 
 

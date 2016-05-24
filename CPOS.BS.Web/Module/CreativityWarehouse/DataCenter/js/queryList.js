@@ -40,7 +40,7 @@
                 //查询数据
                 that.loadData.args.PageIndex = 1;
                 that.loadData.seach.form.ActivityGroupId = "";
-                $(".datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
+               // $(".datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
                 that.GetTCTWLEventList(function (data) {
                     that.loadActivityData(data);
                 });
@@ -935,7 +935,7 @@
         loadMoreData: function (currentPage) {
             var that = this;
             that.loadData.args.PageIndex = currentPage;
-            $("#tableWrap .datagrid-body").html('<div class="loading"><span><img src="../../static/images/loading.gif"></span></div>');
+
             that.GetTCTWLEventList(function (data) {
                 that.loadActivityData(data);
             });
@@ -978,6 +978,7 @@
         //查询活动列表
         GetTCTWLEventList: function (callback) {
 			var that = this;
+            $.util.partialRefresh($("#gridTable"))
 			$.util.ajax({
 			    url: "/ApplicationInterface/Gateway.ashx",
 				  data:{
@@ -990,10 +991,10 @@
 				      PageIndex: that.loadData.args.PageIndex,
 				      PageSize: that.loadData.args.PageSize
 				  },
-                beforeSend: function () {
+            /*    beforeSend: function () {
                     $.util.isLoading()
 
-                },
+                },*/
 				  success: function (data) {
 				      if (data.IsSuccess && data.ResultCode == 0) {
 				          var result = data.Data;

@@ -51,7 +51,7 @@ require.config({
         newJquery: '/Module/Withdraw/js/jquery',
         pagination: '/Module/static/js/plugin/jquery.jqpagination',
         json2: '/Module/static/js/plugin/json2',
-        kindeditor1: '/Module/static/js/plugin/kindeditor',
+        //kindeditor1: '/Module/static/js/plugin/kindeditor',
         kindeditor: '/Framework/javascript/Other/kindeditor/kindeditor',
         artDialog: '/Module/static/js/plugin/artDialog',
 

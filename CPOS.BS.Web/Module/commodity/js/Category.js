@@ -136,49 +136,61 @@
         },
 
         //排序操作
-        sortUpdte:function(type,rowParent,row){
+        sortUpdte:function(type,rowParent,row) {
 
             debugger;
-            var data=row,that=this,objList=[];
+            var data = row, that = this, objList = [];
 
-           objList.push({Item_Category_Id:row.id,DisplayIndex:row.DisplayIndex,obj:row});
-           objList.push({Item_Category_Id:"",DisplayIndex:""});
+            objList.push({Item_Category_Id: row.id, DisplayIndex: row.DisplayIndex, obj: row});
+            objList.push({Item_Category_Id: "", DisplayIndex: ""});
             //遍历循环取出当前等级小的。
-            if(rowParent&&rowParent.children&&rowParent.children.length>1) {
-                $.each(rowParent.children, function (index, rowData) {
+            if (rowParent && rowParent.children && rowParent.children.length > 1) {
+                if (type == "shiftDown") {
+                    $.each(rowParent.children, function (index, rowData) {
+                        if (row.id != rowData.id) {
+                            if (row.DisplayIndex <= rowData.DisplayIndex) {//下移动
+                                objList[1].DisplayIndex = rowData.DisplayIndex;
+                                objList[1].Item_Category_Id = rowData.id;
+                                objList[1].obj = rowData;
+                                row.DisplayIndex = rowData.DisplayIndex;
+                                console.log("shiftDown执行一次")
+                                return false;
+                            }
 
-                    if (row.id != rowData.id) {
-                        if(type=="shiftUp"&&row.DisplayIndex>=rowData.DisplayIndex){ //上移动
-                            objList[1].DisplayIndex=rowData.DisplayIndex;
-                            objList[1].Item_Category_Id=rowData.id;
-                            objList[1].obj=rowData;
-                            row.DisplayIndex=rowData.DisplayIndex;
-                            return false;
                         }
-                        if(type=="shiftDown"&&row.DisplayIndex<=rowData.DisplayIndex){//下移动
-                            objList[1].DisplayIndex=rowData.DisplayIndex;
-                            objList[1].Item_Category_Id=rowData.id;
-                            objList[1].obj=rowData;
-                            row.DisplayIndex=rowData.DisplayIndex;
-                            return false;
+
+                    });
+                }
+
+                if (type == "shiftUp") {
+                    for (var i = rowParent.children.length-1; i >= 0; i--) {
+                         var rowData=rowParent.children[i];
+                        if (row.id != rowData.id) {
+                            if (row.DisplayIndex >= rowData.DisplayIndex) { //上移动
+                                objList[1].DisplayIndex = rowData.DisplayIndex;
+                                objList[1].Item_Category_Id = rowData.id;
+                                objList[1].obj = rowData;
+                                row.DisplayIndex = rowData.DisplayIndex;
+                                console.log("shiftUp执行一次");
+                                break;
+                            }
                         }
 
                     }
-
-                });
-                if(objList[1].DisplayIndex!=="") {
+                }
+                if (objList[1].DisplayIndex !== "") {
                     var displayIndex = objList[1].DisplayIndex;
                     objList[1].DisplayIndex = objList[0].DisplayIndex;
                     objList[0].DisplayIndex = displayIndex;
-                    that.loadData.args.CategoryList=objList;
+                    that.loadData.args.CategoryList = objList;
                     //缓存需要排序的两个对象，然后进行交换
-                    that.loadData.CategorySort(function(){
+                    that.loadData.CategorySort(function () {
                         that.loadPageData();
                     });
-                } else{
+                } else {
                     alert("移动无效");
                 }
-            }else{
+            } else {
                 alert(" 唯一子节点移动无效");
             }
 
