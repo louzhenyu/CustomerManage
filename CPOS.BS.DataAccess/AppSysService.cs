@@ -30,6 +30,34 @@ namespace JIT.CPOS.BS.DataAccess
         }
         #endregion
 
+        #region 得到MenuId通过UrlPath
+        /// <summary>
+        /// 得到MenuId通过UrlPath xiaowen,qin 2016.5.19
+        /// </summary>
+        /// <param name="targetStr"></param>
+        /// <returns></returns>
+        public List<string> GetMenuIds(string targetStr)
+        {
+            if (CurrentUserInfo == null || string.IsNullOrWhiteSpace(targetStr))
+            {
+                return null;
+            }
+            List<string> list = new List<string>();
+            targetStr = System.Web.HttpUtility.UrlDecode(targetStr);
+            string sql = "select menu_id from t_menu where status=1 and url_path=@targetStr and customer_id=@customer_id";
+            List<SqlParameter> plist = new List<SqlParameter>() { 
+            new SqlParameter("@targetStr",targetStr),
+            new SqlParameter("@customer_id",CurrentUserInfo.ClientID)
+            };
+            var result = this.SQLHelper.ExecuteDataset(CommandType.Text, sql, plist.ToArray());
+            foreach (DataRow dr in result.Tables[0].Rows)
+            {
+                list.Add((string)dr["menu_id"]);
+            }
+            return list;
+        }
+        #endregion
+
         #region 根据角色获取菜单
         /// <summary>
         /// 根据角色获取菜单

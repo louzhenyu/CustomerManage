@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
-using System.Text;
 using JIT.CPOS.BS.Entity;
-using JIT.CPOS.BS.DataAccess;
 using System.Data;
-using System.Data.SqlClient;
+using JIT.CPOS.BS.BLL;
+using System;
 
 namespace JIT.CPOS.BS.BLL
 {
@@ -122,6 +120,26 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion 菜单
+
+        #region 根据Url得到MenuId
+        /// <summary>
+        /// 根据Url得到MenuId xiaowen.qin 2016.5.19
+        /// </summary>
+        /// <param name="currentUri"></param>
+        /// <returns></returns>
+        public List<string> GetMenuIds(Uri currentUri)
+        {
+            //2016.5
+            var targetStr = currentUri.PathAndQuery;
+            var index = targetStr.IndexOf("mid=") - 1;
+            if (index >= 0)
+            {
+                targetStr = targetStr.Substring(0, index);
+            }
+            var result = appSysService.GetMenuIds(targetStr);
+            return result;
+        }
+        #endregion
 
         /// <summary>
         /// 获取某个角色所能操作的菜单列表
