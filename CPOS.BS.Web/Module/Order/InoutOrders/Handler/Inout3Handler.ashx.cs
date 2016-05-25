@@ -1550,12 +1550,8 @@ namespace JIT.CPOS.BS.Web.Module.Order.InoutOrders.Handler
                     sheetOneCells[2 + i, 0].PutValue(data.InoutInfoList[i].order_no);
                     sheetOneCells[2 + i, 0].SetStyle(style3);
 
-                    //修改bug xiaowen.qin 2016.5.21
-                    if (!string.IsNullOrWhiteSpace(data.InoutInfoList[i].order_date)) {
-                        var convertDate = Convert.ToDateTime(data.InoutInfoList[i].order_date).ToString("yyyy-MM-dd HH:mm:ss");
-                        sheetOneCells[2 + i, 1].PutValue(convertDate);
-                        sheetOneCells[2 + i, 1].SetStyle(style3);
-                    }
+                    sheetOneCells[2 + i, 1].PutValue(data.InoutInfoList[i].order_date);
+                    sheetOneCells[2 + i, 1].SetStyle(style3);
 
                     sheetOneCells[2 + i, 2].PutValue(data.InoutInfoList[i].ReserveDay);
                     sheetOneCells[2 + i, 2].SetStyle(style3);
