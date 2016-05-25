@@ -306,7 +306,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                     OperationType = 11,
                                     OperationDesc = "修改信息",
                                     OperatorID = loggingSessionInfo.UserID,
-                                    HisRemark = "修改申请数量为" + para.ActualQty,
+                                    HisRemark = "修改确认退货数量为" + para.ActualQty,
                                     OperatorName = userEntity.user_name,
                                     OperatorType = 1,
                                     IsDelete = 1

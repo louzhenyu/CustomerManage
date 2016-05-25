@@ -257,6 +257,8 @@ namespace JIT.CPOS.BS.BLL
                     List<IWhereCondition> buyCondition = new List<IWhereCondition> { };
                     buyCondition.Add(new EqualsCondition() { FieldName = "VipId", Value = para.userId });
                     buyCondition.Add(new EqualsCondition() { FieldName = "itemId", Value = detail.ItemId });
+                    //修改为商品与活动都筛选 xiaowen.qin 2016.5.21
+                    buyCondition.Add(new EqualsCondition() { FieldName = "EventId", Value = para.eventId });
                     buyCondition.Add(new DirectCondition(" EventOrderMappingId IS NOT NULL "));
                     var panicbuyingKJEventJoinBLL = new PanicbuyingKJEventJoinBLL(loggingSessionInfo);
                     int buyCount = panicbuyingKJEventJoinBLL.Query(buyCondition.ToArray(), null).Count();
