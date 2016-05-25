@@ -1606,11 +1606,12 @@
                 data: MaxScoredata,
                 onShowPanel: function () {
                     var count = $("#MaxScore").combobox("getData").length;
-                    var message= $("#MaxScore").combobox().data("message");
                     if (count < 1)
                     {
-                        $.messager.alert("提示", message);
+                        $("#MaxScore").combobox("hidePanel");
+                        $.messager.alert("提示", "请先选择开始得分！");
                     }
+                    
                 }
             });
 

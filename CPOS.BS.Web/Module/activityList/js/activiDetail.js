@@ -330,6 +330,9 @@ define(['jquery','template','tools','langzh_CN','easyui','artDialog','kkpager','
 					surplusnum = $surplusnum.text() - 0,
 					prizesId = $tr.data('prizesid');
 				var CouponTypeID = $tr.find(".Prizedata").data("coupontypeid");
+
+
+				$('#prizeCountAdd').numberbox("setValue","");
 				$('.jui-mask').show();
 				$('.jui-dialog-prizeCountAdd').show();
 				$('.jui-dialog-prizeCountAdd .saveBtn').unbind('click');

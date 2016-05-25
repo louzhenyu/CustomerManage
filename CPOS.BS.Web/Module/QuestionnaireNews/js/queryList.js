@@ -365,8 +365,13 @@
                         }
 
                     } else {
-                        debugger;
-                        alert(data.Message);
+                        if (data.ResultCode == 300)
+                        {
+                           $.messager.alert("提示","请先删除互动游戏中相关联的问卷表单！");
+
+                        } else {
+                            alert(data.Message);
+                        }
                     }
                 }
             });

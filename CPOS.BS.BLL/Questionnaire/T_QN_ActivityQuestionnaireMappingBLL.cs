@@ -42,6 +42,16 @@ namespace JIT.CPOS.BS.BLL
         {
             return _currentDAO.GetByAID(AID);
         }
+
+        /// <summary>
+        /// 根据问卷id符获取实例
+        /// </summary>
+        /// <param name="QID">问卷id</param>
+        /// <returns></returns>
+        public T_QN_ActivityQuestionnaireMappingEntity GetByQID(object QID)
+        {
+            return _currentDAO.GetByQID(QID);
+        }
        
     }
 }

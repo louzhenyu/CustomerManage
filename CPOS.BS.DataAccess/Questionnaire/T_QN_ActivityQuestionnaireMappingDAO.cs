@@ -68,5 +68,32 @@ namespace JIT.CPOS.BS.DataAccess
             //返回
             return m;
         }
+
+        /// <summary>
+        /// 根据标识符获取实例
+        /// </summary>
+        /// <param name="AID">问卷id</param>
+        public T_QN_ActivityQuestionnaireMappingEntity GetByQID(object QID)
+        {
+            //参数检查
+            if (QID == null)
+                return null;
+            string id = QID.ToString();
+            //组织SQL
+            StringBuilder sql = new StringBuilder();
+            sql.AppendFormat("select * from [T_QN_ActivityQuestionnaireMapping] where  QuestionnaireID='{0}' and  ActivityID in (select EventID from LEvents where isdelete=0 )   and isdelete=0 ", id.ToString());
+            //读取数据
+            T_QN_ActivityQuestionnaireMappingEntity m = null;
+            using (SqlDataReader rdr = this.SQLHelper.ExecuteReader(sql.ToString()))
+            {
+                while (rdr.Read())
+                {
+                    this.Load(rdr, out m);
+                    break;
+                }
+            }
+            //返回
+            return m;
+        }
     }
 }

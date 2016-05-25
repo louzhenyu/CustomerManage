@@ -24,12 +24,24 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Questionnaire.Questionnair
             var para = pRequest.Parameters;
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
             
-
+            //问卷bll
             var QuestionnaireBLL = new T_QN_QuestionnaireBLL(loggingSessionInfo);
 
-            object[] QuestionnaireIDs = new object[] { para.QuestionnaireID };
+            //问卷关联活动
+            var ActivityQuestionnaireMappingBLL = new T_QN_ActivityQuestionnaireMappingBLL(loggingSessionInfo);
+            
+            //查询是否有相关联的活动
+            var AQM= ActivityQuestionnaireMappingBLL.GetByQID(para.QuestionnaireID);
 
-            QuestionnaireBLL.Delete(QuestionnaireIDs);
+            if (AQM == null)
+            {
+                object[] QuestionnaireIDs = new object[] { para.QuestionnaireID };
+                QuestionnaireBLL.Delete(QuestionnaireIDs);
+            }
+            else {
+
+                throw new APIException(300, "有相关联问卷数据不可删除！");
+            }
 
 
             return rd;
