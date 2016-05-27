@@ -44,7 +44,7 @@
         initEvent: function () {
             var that = this;
 
-            that.elems.sectionPage.delegate("keyup", ".validDays .numberbox input", function () {
+            that.elems.sectionPage.on("keyup", ".validDays .numberbox input", function () {
                 $("#validDays").numberbox("setValue", $("#validDays").numberbox("getText"));
 
             });

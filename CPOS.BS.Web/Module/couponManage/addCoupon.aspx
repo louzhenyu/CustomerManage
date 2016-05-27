@@ -66,7 +66,7 @@
                              </div>
                            <div class="line">
                             <div class="radio on" data-name="r2" data-validity="day"><em></em></div>
-                                 <div class="linetext">领券后有效天数：<input name="ServiceLife" class="easyui-numberbox"  data-options="min:0,precision:0,width:160,height:32" />
+                                 <div class="linetext validDays">领券后有效天数：<input id="validDays" name="ServiceLife" class="easyui-numberbox"   data-options="min:1,precision:0,width:160,height:32" />
                                  	<span>天</span>
                                     <span class="tipBox">1天表示领券当天有效</span>
                                  </div>

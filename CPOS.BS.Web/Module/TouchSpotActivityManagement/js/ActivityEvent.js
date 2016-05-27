@@ -46,7 +46,31 @@
                     that.update(row);
                     that.showRewardType(row.PrizeType);
                     that.showShareEventId(row.ContactTypeCode);
+                    
+
+
+                    $('#startDate').datebox().datebox('calendar').calendar({
+                        validator: function (date) {
+                           
+                            return true;
+                        }
+                    });
+                    $('#expireDate').datebox().datebox('calendar').calendar({
+                        validator: function (date) {
+
+                            return true;
+                        }
+                    });
+
                     $('#addShareForm').form('load', { ContactTypeCode: row.ContactTypeCode, ContactEventName: row.ContactEventName, BeginDate: row.BeginDate.split(" ")[0].replace("/", "-").replace("/", "-"), EndDate: row.EndDate.split(" ")[0].replace("/", "-").replace("/", "-"), PrizeType: row.PrizeType, Integral: row.Integral, CouponTypeID: row.CouponTypeID, EventId: row.EventId, ChanceCount: row.ChanceCount, ContactEventId: row.ContactEventId, PrizeCount: row.PrizeCount, ShareEventId: row.ShareEventId, RewardNumber: row.RewardNumber.replace(/\s+/g, "") });
+                    if (row.UnLimited == 1) {
+                        $("#checkUnLimited").attr("checked", "checked");
+                        $("#Activity_PrizeCount").numberbox("setText", "无限制");
+                        $("#Activity_PrizeCount").parents(".commonSelectWrap").find(".textbox").css("background-color", "#f4f5f6");
+                    } else {
+                        $("#checkUnLimited").removeAttr("checked");
+                        $("#Activity_PrizeCount").parents(".commonSelectWrap").find(".textbox").css("background-color", "initial");
+                    }
                 }
                 if(optType=="running"){
                     that.statusEvent(row.ContactEventId, 3, $this);
@@ -66,6 +90,25 @@
             $('#addShareBtn').bind('click', function () {
 
                 that.showEdit();
+                $(this).parents(".commonSelectWrap").find(".textbox").css("background-color", "initial");
+                $("#checkUnLimited").removeAttr("checked");
+                $(".UnLimitedlayer").hide();
+
+                $('#startDate').datebox().datebox('calendar').calendar({
+                    validator: function (date) {
+                        var now = new Date();
+                        var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                        return d1 <= date;
+                    }
+                });
+                $('#expireDate').datebox().datebox('calendar').calendar({
+                    validator: function (date) {
+                        var now = new Date();
+                        var d1 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                        return d1 <= date;
+                    }
+                });
+
                 $('#addShareForm').form('load', { ContactTypeCode: "", ContactEventName: "", BeginDate: "", EndDate: "", PrizeType: "", Integral: "", CouponTypeID: "", EventId: "", ChanceCount: "", ContactEventId: "", PrizeCount: "", RewardNumber: "", ShareEventId: "" });
 			    that.update();
 			});
@@ -152,6 +195,13 @@
 						}
 						
 					}
+					if (prams["CouponTypeID"] != "") {
+					    prams["CouponTypeID"] = $("#Activity_CouponTypeID").combotree("getValues");
+					}
+
+					if (prams["PrizeCount"] == "") {
+					    prams["PrizeCount"] = 0;
+					}
 					console.log(prams);
 					that.setSaveShare(prams);
 				}
@@ -168,6 +218,28 @@
 				$('.jui-dialog').hide();
 			})
             
+            //奖品数量无限制
+			$("#checkUnLimited").bind("click", function () {
+			    var check = $("#checkUnLimited")[0].checked;
+			    if (check) {
+			       
+			        $("#UnLimited").val(1);
+			        $(this).parents(".commonSelectWrap").find(".textbox").css("background-color", "#f4f5f6");
+			        $("#Activity_PrizeCount").numberbox({
+			            required: false,
+			            disabled:true
+			        });
+			        $("#Activity_PrizeCount").numberbox("setText", "无限制");
+			    } else {
+			        $("#UnLimited").val(0);
+			        $(this).parents(".commonSelectWrap").find(".textbox").css("background-color", "initial");
+			        $("#Activity_PrizeCount").numberbox({
+			            required: true,
+			            disabled: false
+			        });
+			    }
+			});
+
         },
 
 		
@@ -252,6 +324,10 @@
                     {
                         field: 'PrizeCount', title: '奖品数量', width: 100, align: 'center', resizable: false,
                         formatter: function (value, row, index) {
+                            if (value == 0)
+                            {
+                                return '<p class="numBox">无限制</p>';
+                            }
                             return '<p class="numBox">' + value + '</p>';
                         }
                     },
@@ -325,7 +401,29 @@
                             that.update(row);
                             that.showRewardType(row.PrizeType);
                             that.showShareEventId(row.ContactTypeCode);
-                            $('#addShareForm').form('load', { ContactTypeCode: row.ContactTypeCode, ContactEventName: row.ContactEventName, BeginDate: row.BeginDate.split(" ")[0].replace("/", "-").replace("/", "-"), EndDate: row.EndDate.split(" ")[0].replace("/", "-").replace("/", "-"), PrizeType: row.PrizeType, Integral: row.Integral, CouponTypeID: row.CouponTypeName, EventId: row.EventName, ChanceCount: row.ChanceCount, ContactEventId: row.ContactEventId, PrizeCount: row.PrizeCount, ShareEventId: row.ShareEventName, RewardNumber: row.RewardNumber.replace(/\s+/g, "") });
+                            
+
+                            $('#startDate').datebox().datebox('calendar').calendar({
+                                validator: function (date) {
+                                    return true;
+                                }
+                            });
+                            $('#expireDate').datebox().datebox('calendar').calendar({
+                                validator: function (date) {
+                                    return true;
+                                }
+                            });
+
+                            $('#addShareForm').form('load', { ContactTypeCode: row.ContactTypeCode, ContactEventName: row.ContactEventName, BeginDate: row.BeginDate.split(" ")[0].replace("/", "-").replace("/", "-"), EndDate: row.EndDate.split(" ")[0].replace("/", "-").replace("/", "-"), PrizeType: row.PrizeType, Integral: row.Integral, CouponTypeID: row.CouponTypeID, EventId: row.EventName, ChanceCount: row.ChanceCount, ContactEventId: row.ContactEventId, PrizeCount: row.PrizeCount, ShareEventId: row.ShareEventName, RewardNumber: row.RewardNumber.replace(/\s+/g, "") });
+                            if (row.UnLimited == 1) {
+                                $("#checkUnLimited").attr("checked", "checked");
+                                $("#Activity_PrizeCount").numberbox("setText", "无限制");
+                                $("#Activity_PrizeCount").parents(".commonSelectWrap").find(".textbox").css("background-color", "#f4f5f6");
+                            } else {
+                                $("#checkUnLimited").removeAttr("checked");
+                                $("#Activity_PrizeCount").parents(".commonSelectWrap").find(".textbox").css("background-color", "initial");
+                            }
+
                             that.hideEdit();
                         }
                 }, onClickCell: function (rowIndex, field, rowData) {
@@ -518,7 +616,7 @@
 		        $("#Activity_Integral").numberbox({
 		            required:false
 		        });
-		        $("#Activity_CouponTypeID").combobox({
+		        $("#Activity_CouponTypeID").combotree({
 		            required: true
 		        });
 
@@ -529,6 +627,8 @@
 		        $("#Activity_ChanceCount").numberbox({
 		            required: false
 		        });
+
+		        $(".UnLimitedlayer").show();
 
 		    } else if (data == 'Chance') {
 		        $ActivityEvent.show();
@@ -537,7 +637,7 @@
 		        $("#Activity_Integral").numberbox({
 		            required: false
 		        });
-		        $("#Activity_CouponTypeID").combobox({
+		        $("#Activity_CouponTypeID").combotree({
 		            required: false
 		        });
 
@@ -548,6 +648,8 @@
 		        $("#Activity_ChanceCount").numberbox({
 		            required: true
 		        });
+
+		        $(".UnLimitedlayer").hide();
 
 		    } if (data == 'Point') {
 		        //获取优惠券列表
@@ -557,7 +659,7 @@
 		            
 		        });
 		       
-		        $("#Activity_CouponTypeID").combobox({
+		        $("#Activity_CouponTypeID").combotree({
 		            required: false
 		        });
 
@@ -569,6 +671,7 @@
 		            required: false
 		        });
 
+		        $(".UnLimitedlayer").hide();
 		    }
 
 		},
@@ -751,7 +854,11 @@
 		            if (data.IsSuccess && data.ResultCode == 0) {
 		                var result = data.Data,
 							CouponTypeList = result.CouponTypeList;
-		                $('#Activity_CouponTypeID').combobox({
+		                for (var i = 0; i < CouponTypeList.length; i++) {
+		                    CouponTypeList[i].id = CouponTypeList[i].CouponTypeID;
+		                    CouponTypeList[i].text = CouponTypeList[i].CouponTypeName;
+		                }
+		                $('#Activity_CouponTypeID').combotree({
 		                    width: 190,
 		                    height: that.elems.height,
 		                    panelHeight: that.elems.panlH,
@@ -823,14 +930,13 @@
 				                alert('操作成功！');
 				            }
 				        } else {
-
 				            $.messager.alert('提示', data.Data.ErrMsg);
 				        }
 
 
 				       
 				    } else {
-						alert(data.Message);
+				        $.messager.alert('提示', data.Message);
 					}
 				}
 			});

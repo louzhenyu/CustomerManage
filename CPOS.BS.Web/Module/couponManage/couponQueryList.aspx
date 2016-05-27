@@ -7,30 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/couponManage/css/style.css?v=0.4"%>" rel="stylesheet" type="text/css" />
-    <style type="text/css">
-
-        .CouponEventBtn {background: #fff;
-            line-height: 32px;
-            height: 32px;
-            float: left;
-            width: 72px;
-            height: 32px;border-radius: 8px;
-            border:solid 1px #7fe5e5;
-            color:#7fe5e5;
-            text-align:center;
-            cursor:pointer;
-        }
-        .winfont {
-        
-        width: 100%;
-line-height: 24px;
-color: #999;
-text-align:center;
-margin-top: 50px;
-font-size: 18px;
-        }
-        .cursorDef .datagrid-body td { cursor: default;}
-    </style>
+    
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 

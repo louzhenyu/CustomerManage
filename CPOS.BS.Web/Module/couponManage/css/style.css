@@ -2,3 +2,25 @@
 .optionclass {text-align: center; padding: 30px;}
 .optionclass .title{display: inline-block;}
 .optionclass .borderNone{display: inline-block;}
+
+ .CouponEventBtn {background: #fff;
+            line-height: 32px;
+            height: 32px;
+            float: left;
+            width: 72px;
+            height: 32px;border-radius: 8px;
+            border:solid 1px #00a0e8;
+            color:#00a0e8;
+            text-align:center;
+            cursor:pointer;
+        }
+        .winfont {
+        
+        width: 100%;
+line-height: 24px;
+color: #999;
+text-align:center;
+margin-top: 50px;
+font-size: 18px;
+        }
+        .cursorDef .datagrid-body td { cursor: default;}
