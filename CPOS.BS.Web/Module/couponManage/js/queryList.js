@@ -119,13 +119,22 @@
                 }
 
                 if (optType == "Download") {
-                    $.messager.confirm('提示', '是否下载?', function (r) {
-                        if (r) {
-                            debugger;
-                            window.open("/ApplicationInterface/Module/Marketing/Coupon/DownLoadCouponTicketNumber.ashx?method=download_CouponTicketNumber&couponTypeID=" + couponTypeID + "&filename=" + CouponTypeName + "_优惠券", "_blank");
+                    var restnum = $(this).parents('tr').find('td').eq(4).find('div').text();
+                    if (restnum > 0) {
+                        $('#DownPaper').window({
+                            title: "下载优惠券", width: 560, height: 400, top: ($(window).height() - 400) * 0.5,
+                            left: ($(window).width() - 560) * 0.5
+                        });
+                        if (restnum < 1000) {
+                            $('#checknum').text("请输入1-" + restnum + "数字");
                         }
-                    });
-
+                        $('#num').attr('placeholder','剩余' + restnum + "张优惠券")
+                        var quanName = $(this).parents('tr').find('div .rowText').text();
+                        $('#DownPaper').find('span').eq(1).text(quanName);
+                        $('#DownPaper').window('open');
+                    } else {
+                        $.messager.alert('提示','优惠券剩余量为0，不提供下载功能')
+                    }
                 }
 
                 if(optType=="delete"){
@@ -151,6 +160,29 @@
                         }
                     })
                 }
+                //确认按钮
+                $('#DownSure').on('click', function () {
+                    $('#checknum').css('visibility', 'hidden');
+                    var downLoadNum = $('#num').val();
+                    var reg = /^(1000|([1-9]{1}[0-9]{0,2}))$/;
+                    var result = reg.test(downLoadNum);
+                    //判断优惠券输入量是否大于剩余量
+                    var restmessage = $('#checknum').text();
+                    var num = restmessage.substring(5, restmessage.length - 2);
+                    if (result && downLoadNum <= num) {
+                        window.open("/ApplicationInterface/Module/Marketing/Coupon/DownLoadCouponTicketNumber.ashx?method=download_CouponTicketNumber&couponTypeID=" + couponTypeID + '&downLoadNum=' + downLoadNum + "&filename=" + CouponTypeName + "_优惠券", "_blank");
+                        $('#DownPaper').window('close');
+                    }
+                    else {
+                       $('#checknum').css('visibility', 'visible');
+                    }
+                    $('#num').val("");
+                });
+                $('#DownCancle').on('click', function (){
+                    $('#DownPaper').window('close');
+                    $('#num').val("");
+                    $('#checknum').css('visibility', 'hidden');
+                })
             })
             /**************** -------------------列表操作事件用例 End****************/
         },

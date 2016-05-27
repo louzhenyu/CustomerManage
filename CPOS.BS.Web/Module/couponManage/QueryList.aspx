@@ -81,8 +81,31 @@
 
       	</div>
       </div>
-
-
+        <!--下载说明框-->
+    <div style="display:none">
+        <div id="DownPaper" class="easyui-window" data-options="modal:true,shadow:false,collapsible:false,draggable:false,minimizable:false,maximizable:false,closed:true,closable:true">
+               <div style="width:370px;margin:50px auto 0px;">
+                    <div style="margin-bottom:10px">
+                        <span style="color:#999999">优惠券名称：</span>
+                        <span ></span>
+                    </div>
+                    <div style="padding-left:10px;margin-bottom:10px;position:relative;">
+                          <span>下载数量:</span>
+                          <input placeholder="请输入不超过xxx的数量"  type="text" style="margin-left:15px; width:200px" id="num" />
+                          <span style="color:red;visibility:hidden;  position: absolute;width: 120px;line-height: 27px;padding-left: 5px;" id="checknum">请输入1-1000数字</span>
+                    </div>
+                    <div style="margin:50px 0px 10px 5px;">下载说明</div>
+                    <div style="margin-bottom:10px; color:#999999"><span>1.每次下载不超过1000张；</span></div>
+                    <div style="margin-bottom:50px; color:#999999"><span>2.下载的券可通过异业合作等渠道发放给客户</span></div>
+                </div>
+            <div style=" border-bottom:1px solid #e5e5e5;margin-bottom:15px"></div>
+                <div class="btnWrap"  data-options="region:'south',border:false" style="text-align:center;padding:5px 0 0;">
+      			    <a class="easyui-linkbutton commonBtn saveBtn" style="margin-bottom:0px;margin-right:15px;color:#00a0e8;border:1px solid #00a0e8  ;background-color:#ffffff" id="DownCancle" >取消</a>
+      		        <a class="easyui-linkbutton commonBtn closeBtn" style="margin-bottom:0px" id="DownSure">确定</a>
+      		    </div>
+            
+        </div>
+        </div>
         <!--收款-->
          <script id="tpl_AddNumber" type="text/html">
             <form id="optionForm">
