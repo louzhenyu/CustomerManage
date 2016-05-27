@@ -2,7 +2,7 @@
  * Author		:CodeGeneration
  * EMail		:
  * Company		:JIT
- * Create On	:2013-12-14 15:57
+ * Create On	:2016/5/21 14:22:42
  * Description	:
  * 1st Modified On	:
  * 1st Modified By	:
@@ -22,19 +22,20 @@ using System.Data;
 using System.Reflection;
 using JIT.Utility;
 using JIT.Utility.ExtensionMethod;
-using JIT.CPOS.BS.DataAccess;
-using JIT.CPOS.BS.Entity;
 using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
+using JIT.CPOS.BS.DataAccess;
+using JIT.CPOS.BS.Entity;
+using JIT.CPOS.BS.DataAccess.Base;
 
 namespace JIT.CPOS.BS.BLL
-{   
+{
     /// <summary>
     /// 业务处理：  
     /// </summary>
     public partial class CouponSourceBLL
     {
-        private LoggingSessionInfo CurrentUserInfo;
+        private BasicUserInfo CurrentUserInfo;
         private CouponSourceDAO _currentDAO;
         #region 构造函数
         /// <summary>
@@ -42,8 +43,8 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         public CouponSourceBLL(LoggingSessionInfo pUserInfo)
         {
-            this.CurrentUserInfo = pUserInfo;
             this._currentDAO = new CouponSourceDAO(pUserInfo);
+            this.CurrentUserInfo = pUserInfo;
         }
         #endregion
         #region ICRUDable 成员
@@ -64,7 +65,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Create(CouponSourceEntity pEntity, IDbTransaction pTran)
         {
-            _currentDAO.Create(pEntity,pTran);
+            _currentDAO.Create(pEntity, pTran);
         }
 
         /// <summary>
@@ -89,14 +90,10 @@ namespace JIT.CPOS.BS.BLL
         /// 更新
         /// </summary>
         /// <param name="pEntity">实体实例</param>
-        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>        
-        public void Update(CouponSourceEntity pEntity , IDbTransaction pTran)
+        /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
+        public void Update(CouponSourceEntity pEntity, IDbTransaction pTran)
         {
-            Update(pEntity,true, pTran);
-        }
-        public void Update(CouponSourceEntity pEntity, bool pIsUpdateNullField , IDbTransaction pTran)
-        {
-            _currentDAO.Update(pEntity,pIsUpdateNullField,pTran);
+            _currentDAO.Update(pEntity, pTran);
         }
 
 
@@ -106,11 +103,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pEntity">实体实例</param>
         public void Update(CouponSourceEntity pEntity)
         {
-            Update(pEntity , true);
-        }
-        public void Update(CouponSourceEntity pEntity , bool pIsUpdateNullField)
-        {
-            _currentDAO.Update(pEntity,pIsUpdateNullField);
+            _currentDAO.Update(pEntity);
         }
 
         /// <summary>
@@ -129,7 +122,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Delete(CouponSourceEntity pEntity, IDbTransaction pTran)
         {
-            _currentDAO.Delete(pEntity,pTran);
+            _currentDAO.Delete(pEntity, pTran);
         }
 
         /// <summary>
@@ -139,7 +132,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Delete(object pID, IDbTransaction pTran)
         {
-            _currentDAO.Delete(pID,pTran);
+            _currentDAO.Delete(pID, pTran);
         }
 
         /// <summary>
@@ -149,7 +142,7 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
         public void Delete(CouponSourceEntity[] pEntities, IDbTransaction pTran)
         {
-            _currentDAO.Delete(pEntities,pTran);
+            _currentDAO.Delete(pEntities, pTran);
         }
 
         /// <summary>
@@ -157,7 +150,7 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pEntities">实体实例数组</param>
         public void Delete(CouponSourceEntity[] pEntities)
-        { 
+        {
             _currentDAO.Delete(pEntities);
         }
 
@@ -175,9 +168,9 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="pIDs">标识符值数组</param>
         /// <param name="pTran">事务实例,可为null,如果为null,则不使用事务来更新</param>
-        public void Delete(object[] pIDs, IDbTransaction pTran) 
+        public void Delete(object[] pIDs, IDbTransaction pTran)
         {
-            _currentDAO.Delete(pIDs,pTran);
+            _currentDAO.Delete(pIDs, pTran);
         }
         #endregion
 
@@ -190,7 +183,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public CouponSourceEntity[] Query(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys)
         {
-           return _currentDAO.Query(pWhereConditions,pOrderBys);
+            return _currentDAO.Query(pWhereConditions, pOrderBys);
         }
 
         /// <summary>
@@ -203,7 +196,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns></returns>
         public PagedQueryResult<CouponSourceEntity> PagedQuery(IWhereCondition[] pWhereConditions, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-           return _currentDAO.PagedQuery(pWhereConditions,pOrderBys,pPageSize,pCurrentPageIndex);
+            return _currentDAO.PagedQuery(pWhereConditions, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
         /// <summary>
@@ -214,7 +207,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns>符合条件的实体集</returns>
         public CouponSourceEntity[] QueryByEntity(CouponSourceEntity pQueryEntity, OrderBy[] pOrderBys)
         {
-           return _currentDAO.QueryByEntity(pQueryEntity,pOrderBys);
+            return _currentDAO.QueryByEntity(pQueryEntity, pOrderBys);
         }
 
         /// <summary>
@@ -225,7 +218,7 @@ namespace JIT.CPOS.BS.BLL
         /// <returns>符合条件的实体集</returns>
         public PagedQueryResult<CouponSourceEntity> PagedQueryByEntity(CouponSourceEntity pQueryEntity, OrderBy[] pOrderBys, int pPageSize, int pCurrentPageIndex)
         {
-           return _currentDAO.PagedQueryByEntity(pQueryEntity,pOrderBys,pPageSize,pCurrentPageIndex);
+            return _currentDAO.PagedQueryByEntity(pQueryEntity, pOrderBys, pPageSize, pCurrentPageIndex);
         }
 
         #endregion

@@ -20,6 +20,9 @@ using JIT.CPOS.DTO.Base;
 using JIT.CPOS.BS.Web.Module.WEvents.Handler;
 using JIT.Utility.DataAccess.Query;
 using Aspose.Cells;
+using RedisOpenAPIClient.Models.CC;
+using RedisOpenAPIClient;
+
 
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
 {
@@ -41,16 +44,38 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                 #region 获取信息
                 string couponTypeID = FormatParamValue(Request("couponTypeID"));//优惠券类型id
                 string filename = FormatParamValue(Request("filename"));//导出的文件名
+                int intDownLoadNum = Request("downLoadNum") == null ? 0 : Convert.ToInt32(Request("downLoadNum"));
 
-
-
+                
 
                 var couponBLL = new CouponBLL(CurrentUserInfo);
 
-                System.Data.DataTable list_CouponEntity = couponBLL.GetCouponIDBycouponType(couponTypeID).Tables[0];
+                var count = RedisOpenAPI.Instance.CCCoupon().GetCouponListLength(new CC_Coupon()
+                {
+                    CustomerId = CurrentUserInfo.ClientID,
+                    CouponTypeId = couponTypeID,
 
+                });
+                if (intDownLoadNum > count.Result)
+                {
+                    throw new APIException("下载数量大于优惠券剩余量") { ErrorCode=333};
+                }
+                //System.Data.DataTable list_CouponEntity = couponBLL.GetCouponIDBycouponType(couponTypeID).Tables[0];
+
+                var redisCouponBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon.RedisCouponBLL();
+                System.Data.DataTable list_CouponEntity = redisCouponBLL.DownloadCoupon(new CC_Coupon()
+                        {
+                            CustomerId = CurrentUserInfo.ClientID,
+                            CouponTypeId = couponTypeID,
+
+                        }, CurrentUserInfo.ClientID, intDownLoadNum);
+                //xu的redis
+                //System.Data.DataTable list_CouponEntity = redisCouponBLL.DownloadCouponNew(CurrentUserInfo.ClientID, couponTypeID, intDownLoadNum);
                 #endregion
-
+                if (list_CouponEntity.Rows.Count == 0)
+                {
+                    return;
+                }
                 if (filename == null || filename == "")
                 {
                     filename = "优惠券";
@@ -108,17 +133,19 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
 
               
                 #region 生成数据行
-                for (int i = 0; i < list_CouponEntity.Rows.Count; i++)
-                {
-                    cells[1 + i, 0].PutValue(list_CouponEntity.Rows[i]["CouponCode"]);
-                    cells[1 + i, 0].SetStyle(style3);
+         
+                    for (int i = 0; i < list_CouponEntity.Rows.Count; i++)
+                    {
+                        cells[1 + i, 0].PutValue(list_CouponEntity.Rows[i]["CouponCode"]);
+                        cells[1 + i, 0].SetStyle(style3);
 
-                    cells.SetRowHeight(1+i, 24);
-                }
+                        cells.SetRowHeight(1 + i, 24);
+                    }
                 #endregion
-                workbook.Save(MapUrl);
+                    workbook.Save(MapUrl);
 
-                Utils.OutputExcel(pContext, MapUrl);//输出Excel文件
+                    Utils.OutputExcel(pContext, MapUrl);//输出Excel文件
+
 
             }
             catch (Exception ex)

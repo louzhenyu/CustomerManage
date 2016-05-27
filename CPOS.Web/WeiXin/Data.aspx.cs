@@ -30,6 +30,7 @@ using System.Globalization;
 using ItemService = JIT.CPOS.BS.BLL.ItemService;
 using UnitService = JIT.CPOS.BS.BLL.UnitService;
 using JIT.CPOS.BS.BLL.CS;
+using JIT.CPOS.BS.BLL.RedisOperationBLL.Contact;
 
 namespace JIT.CPOS.Web.WeiXin
 {
@@ -1426,7 +1427,22 @@ namespace JIT.CPOS.Web.WeiXin
                             vipServiceUnion.Create(vipInfo);
                             #region 关注触点活动奖励
 
-                            bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
+                           // bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
+                            RedisContactBLL redisContactBll = new RedisContactBLL();
+                            if (redisContactBll.GetContactLength(new RedisOpenAPIClient.Models.CC.CC_Contact()
+                                                                    {
+                                                                        CustomerId = tmpUser.CurrentUser.customer_id,
+                                                                        ContactType = "Focus",
+                                                                        VipId = vipInfo.VIPID
+                                                                    }) == 0)
+                            {
+                                redisContactBll.SetRedisContact(new RedisOpenAPIClient.Models.CC.CC_Contact()
+                                {
+                                    CustomerId = tmpUser.CurrentUser.customer_id,
+                                    ContactType = "Focus",
+                                    VipId = vipInfo.VIPID
+                                });
+                            }
                             #endregion
                             #region 创意仓库关注log
                             BaseService.WriteLogWeixin(" 二维码code：" + qrcode_id);
@@ -1461,7 +1477,22 @@ namespace JIT.CPOS.Web.WeiXin
                         vipServiceUnion.Create(vipInfo);
                         #region 关注触点活动奖励
                         
-                            bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
+                           // bllPrize.CheckIsWinnerForShare(vipInfo.VIPID, "", "Focus");
+                            RedisContactBLL redisContactBll = new RedisContactBLL();
+                            if (redisContactBll.GetContactLength(new RedisOpenAPIClient.Models.CC.CC_Contact()
+                            {
+                                CustomerId = tmpUser.CurrentUser.customer_id,
+                                ContactType = "Focus",
+                                VipId = vipInfo.VIPID
+                            }) == 0)
+                            {
+                                redisContactBll.SetRedisContact(new RedisOpenAPIClient.Models.CC.CC_Contact()
+                                {
+                                    CustomerId = tmpUser.CurrentUser.customer_id,
+                                    ContactType = "Focus",
+                                    VipId = vipInfo.VIPID
+                                });
+                            }
                         #endregion
                             #region 创意仓库关注log
                             BaseService.WriteLogWeixin(" 二维码code：" + qrcode_id);

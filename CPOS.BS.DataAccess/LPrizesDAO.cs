@@ -245,6 +245,17 @@ namespace JIT.CPOS.BS.DataAccess
              return this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "Proc_AppendPrizes", parameters);
         }
         #endregion
+
+        public int CreatePrizePoolsReleaseTime(string strEventId, string strCustomerId)
+        {
+
+            SqlParameter[] parameters = new SqlParameter[2] 
+            { 
+                new SqlParameter{ParameterName="@InputEventId",SqlDbType=SqlDbType.NVarChar,Value=strEventId},
+                new SqlParameter{ParameterName="@CustomerId",SqlDbType=SqlDbType.NVarChar,Value=strCustomerId}
+            };
+            return this.SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "Proc_GetPrizePoolsReleaseTime", parameters);
+        }
         #region É¾³ý½±Æ·
         public int DeletePrize(LPrizesEntity entity)
         {
@@ -310,6 +321,10 @@ namespace JIT.CPOS.BS.DataAccess
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql) == null ? "0" : this.SQLHelper.ExecuteScalar(strSql).ToString());
 
         }
- 
+        public DataSet GetAllCouponTypeByPrize(string strPrizeId)
+        {
+            string strSql = string.Format("SELECT  CouponTypeID  FROM  dbo.PrizeCouponTypeMapping p WITH(NOLOCK) where p.IsDelete=0 and p.PrizesID='{0}'  ", strPrizeId);
+            return this.SQLHelper.ExecuteDataset(strSql);
+        }
     }
 }

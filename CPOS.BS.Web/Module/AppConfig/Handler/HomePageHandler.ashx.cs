@@ -310,6 +310,10 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                 var homeEntity = new MobileHomeEntity();
                 var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
 
+                if(homeBll.IsExistsTitle(this.CurrentUserInfo.ClientID,strHomeId,strTitle)>0)
+                {
+                    throw new APIException("模版名称重复，请修改") { ErrorCode=350};
+                }
                 var homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID, HomeId = new Guid(strHomeId) }, null);
 
                 if (homeList != null && homeList.Length > 0)
@@ -1037,11 +1041,17 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
 
                 var homeBll = new MobileHomeBLL(this.CurrentUserInfo);
                 MobileHomeEntity[] homeList = null;
+                string strTitel = "";
                 if (strType == "Add")
-                    homeList = homeBll.QueryByEntity(new MobileHomeEntity { HomeId = new Guid(strHomeId) ,IsTemplate=1}, null);
+                {
+                    homeList = homeBll.QueryByEntity(new MobileHomeEntity { HomeId = new Guid(strHomeId), IsTemplate = 1 }, null);
+                    strTitel = homeList.FirstOrDefault().Title + DateTime.Now.Month.ToString() + DateTime.Now.Day.ToString() + DateTime.Now.Millisecond.ToString();
+                }
                 else
+                {
                     homeList = homeBll.QueryByEntity(new MobileHomeEntity { CustomerId = this.CurrentUserInfo.ClientID, HomeId = new Guid(strHomeId) }, null);
-
+                    strTitel = homeList.FirstOrDefault().Title;
+                }
                 if (homeList != null && homeList.Length > 0)
                 {
                     var homeEntity = homeList.FirstOrDefault();
@@ -1049,7 +1059,7 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     var content = new GetHomePageConfigInfoRespContentData
                     {
                         homeId = new Guid().ToString(),
-                        title = homeEntity.Title,
+                        title = strTitel,
                         adList = new List<AdEntity>(),
                         eventList = new List<EventListEntity>(),
                         secondKill = new List<EventListEntity>(),
@@ -1067,11 +1077,12 @@ namespace JIT.CPOS.BS.Web.Module.AppConfig.Handler
                     if (strType == "Add" && homeEntity.IsTemplate == 1)
                     {
                         string strNewHomeId = Guid.NewGuid().ToString();
-
+                        Random rd = new Random();
+                        int num = rd.Next(100000, 1000000);
                         MobileHomeEntity newHomeEntity = new MobileHomeEntity();
 
                         content.homeId = strNewHomeId;
-                        newHomeEntity.Title = homeEntity.Title;
+                        newHomeEntity.Title = strTitel;
                         newHomeEntity.HomeId = new Guid(strNewHomeId);
                         newHomeEntity.CustomerId = this.CurrentUserInfo.ClientID;
                         newHomeEntity.IsDelete = 0;

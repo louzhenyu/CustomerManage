@@ -9,6 +9,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using RedisOpenAPIClient.Models.CC;
+
 
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
 {
@@ -24,7 +26,12 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
             var couponTypeUnitMappingBLL = new CouponTypeUnitMappingBLL(loggingSessionInfo);
             CouponTypeItemMappingBLL bllCouponTypeItemMapping = new CouponTypeItemMappingBLL(loggingSessionInfo);
             CouponTypeItemMappingEntity entityCouponTypeItemMapping = null;
+            var redisCouponBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon.RedisCouponBLL();
 
+            if(couponTypeBLL.ExistsCouponTypeName(para.CouponTypeName)>0)
+            {
+                throw new APIException(-1,"优惠券名称不可重复！");
+            }
             var pTran = couponTypeBLL.GetTran();//事务 
             using (pTran.Connection)
             {
@@ -59,6 +66,18 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                         couponTypeEntity.ValidPeriod = 0;
 
                         couponTypeEntity.CouponTypeID = couponTypeBLL.CreateReturnID(couponTypeEntity, pTran);
+
+                        redisCouponBLL.RedisSetSingleCoupon(new CC_Coupon()
+                        {
+                            CustomerId = couponTypeEntity.CustomerId,
+                            CouponTypeId = couponTypeEntity.CouponTypeID.ToString(),
+                            CouponTypeDesc = couponTypeEntity.CouponTypeDesc,
+                            CouponTypeName=couponTypeEntity.CouponTypeName,
+                            BeginTime = couponTypeEntity.BeginTime.ToString(),
+                            EndTime = couponTypeEntity.EndTime.ToString(),
+                            ServiceLife=couponTypeEntity.ServiceLife??0,
+                            CouponLenth = couponTypeEntity.IssuedQty??0
+                        });
                         //保存适用门店
                         if (para.SuitableForStore == 2)
                         {
@@ -93,28 +112,41 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                         couponTypeEntity = couponTypeBLL.GetByID(para.CouponTypeID);
                         couponTypeEntity.IssuedQty += para.IssuedQty;
                         couponTypeBLL.Update(couponTypeEntity);
+
+
+                        redisCouponBLL.RedisSetSingleCoupon(new CC_Coupon()
+                        {
+                            CustomerId = couponTypeEntity.CustomerId,
+                            CouponTypeId = couponTypeEntity.CouponTypeID.ToString(),
+                            CouponTypeDesc = couponTypeEntity.CouponTypeDesc,
+                            CouponTypeName = couponTypeEntity.CouponTypeName,
+                            BeginTime = couponTypeEntity.BeginTime.ToString(),
+                            EndTime = couponTypeEntity.EndTime.ToString(),
+                            ServiceLife = couponTypeEntity.ServiceLife ?? 0,
+                            CouponLenth = para.IssuedQty
+                        });
                     }
          
                     pTran.Commit();//提交事物
 
                     //批量生成券
-                    if (couponTypeEntity != null)
-                    {
-                        Hashtable htCouponInfo = new Hashtable();
-                        htCouponInfo["CouponTypeID"] = couponTypeEntity.CouponTypeID;
-                        htCouponInfo["CouponName"] = couponTypeEntity.CouponTypeName;
-                        htCouponInfo["CouponDesc"] = couponTypeEntity.CouponTypeDesc;
-                        if (couponTypeEntity.BeginTime != DateTime.MinValue)
-                            htCouponInfo["BeginTime"] = couponTypeEntity.BeginTime;
-                        else
-                            htCouponInfo["BeginTime"] = null;
-                        if (couponTypeEntity.EndTime != DateTime.MinValue)
-                            htCouponInfo["EndTime"] = couponTypeEntity.EndTime;
-                        else
-                            htCouponInfo["EndTime"] = null;
-                        htCouponInfo["IssuedQty"] = para.IssuedQty;
-                        couponBLL.GenerateCoupon(htCouponInfo);
-                    }
+                    //if (couponTypeEntity != null)
+                    //{
+                    //    Hashtable htCouponInfo = new Hashtable();
+                    //    htCouponInfo["CouponTypeID"] = couponTypeEntity.CouponTypeID;
+                    //    htCouponInfo["CouponName"] = couponTypeEntity.CouponTypeName;
+                    //    htCouponInfo["CouponDesc"] = couponTypeEntity.CouponTypeDesc;
+                    //    if (couponTypeEntity.BeginTime != DateTime.MinValue)
+                    //        htCouponInfo["BeginTime"] = couponTypeEntity.BeginTime;
+                    //    else
+                    //        htCouponInfo["BeginTime"] = null;
+                    //    if (couponTypeEntity.EndTime != DateTime.MinValue)
+                    //        htCouponInfo["EndTime"] = couponTypeEntity.EndTime;
+                    //    else
+                    //        htCouponInfo["EndTime"] = null;
+                    //    htCouponInfo["IssuedQty"] = para.IssuedQty;
+                    //    couponBLL.GenerateCoupon(htCouponInfo);
+                    //}
                 }
                 catch (Exception ex)
                 {

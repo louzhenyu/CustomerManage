@@ -854,16 +854,25 @@ namespace JIT.CPOS.BS.DataAccess
         #region 获取正在运行中的活动列表
         public DataSet GetWorkingEventList()
         {
-            string strSql = "Select EventID,Title FROM LEvents WHERE [EventStatus] in(20,30) and CustomerId='" + CurrentUserInfo.ClientID + "' ORDER BY CreateTime DESC";
+            string strSql = "Select EventID,Title FROM LEvents WHERE [EventStatus] in(20,30) and CustomerId='" + CurrentUserInfo.ClientID + "' AND IsCTW=0 ORDER BY CreateTime DESC";
             return this.SQLHelper.ExecuteDataset(CommandType.Text, strSql);
         }
         #endregion
         #region 获取未开始和正在运行中的活动列表
         public DataSet GetNoStartAndWorkingEventList()
         {
-            string strSql = "Select EventID,Title FROM LEvents WHERE [EventStatus] in(10,20,30) and CustomerId='" + CurrentUserInfo.ClientID + "' ORDER BY CreateTime DESC";
+            string strSql = "Select EventID,Title FROM LEvents WHERE [EventStatus] in(10,20,30) and CustomerId='" + CurrentUserInfo.ClientID + "' AND IsCTW=0 AND IsDelete=0 ORDER BY CreateTime DESC";
             return this.SQLHelper.ExecuteDataset(CommandType.Text, strSql);
         }
         #endregion
+        /// <summary>
+        /// 保存活动第三步把IsDelete置为0
+        /// </summary>
+        /// <param name="strEventId"></param>
+        public void UpdateEventIsDelete(string strEventId)
+        {
+            var sql = string.Format("UPDATE dbo.LEvents SET IsDelete=0 WHERE EventID='{0}'",strEventId);
+            this.SQLHelper.ExecuteNonQuery(sql.ToString());
+        }
     }
 }

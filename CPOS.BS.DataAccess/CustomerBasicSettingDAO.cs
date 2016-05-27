@@ -117,7 +117,6 @@ namespace JIT.CPOS.BS.DataAccess
                     }
                     i = this.SQLHelper.ExecuteNonQuery(strb.ToString());
                     tran.Commit();
-
                 }
                 catch
                 {
@@ -148,13 +147,26 @@ namespace JIT.CPOS.BS.DataAccess
         /// <returns></returns>
         public DataSet GetCustomerBaiscSettingInfo(string customerId)
         {
+
             var paras = new List<SqlParameter> { new SqlParameter() { ParameterName = "@pCustomerId", Value = customerId } };
             StringBuilder sbSQL = new StringBuilder();
-            sbSQL.Append("select SettingCode,SettingValue from customerBasicsetting where isdelete = 0 and customerId = @pCustomerId and SettingCode in ('BrandRelated','AboutUs','BrandStory','IntegralAmountPer','SMSSign','ForwardingMessageLogo','ForwardingMessageTitle','ForwardingMessageSummary','WhatCommonPoints','GetPoints','SetSalesPoints','ImageList');");
+            //sbSQL.Append("select SettingCode,SettingValue from customerBasicsetting where isdelete = 0 and customerId = @pCustomerId and SettingCode in ('BrandRelated','AboutUs','BrandStory','IntegralAmountPer','SMSSign','ForwardingMessageLogo','ForwardingMessageTitle','ForwardingMessageSummary','WhatCommonPoints','GetPoints','SetSalesPoints','ImageList');");
             sbSQL.Append("select b.* From t_unit	 a inner join ObjectImages b on (a.unit_id = b.ObjectId) where a.type_id = '2F35F85CF7FF4DF087188A7FB05DED1D' and a.status = '1' and b.IsDelete = '0' and customer_id =@pCustomerId order by DisplayIndex");
             return this.SQLHelper.ExecuteDataset(CommandType.Text, sbSQL.ToString(), paras.ToArray());
         }
+        /// <summary>
+        /// Redis中没有数据时 执行该方法
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        public DataSet GetCustomerBaiscSettingInfoRedisBackUp(string customerId)
+        {
 
+            var paras = new List<SqlParameter> { new SqlParameter() { ParameterName = "@pCustomerId", Value = customerId } };
+            StringBuilder sbSQL = new StringBuilder();
+            sbSQL.Append("select SettingCode,SettingValue from customerBasicsetting where isdelete = 0 and customerId = @pCustomerId and SettingCode in ('BrandRelated','AboutUs','BrandStory','IntegralAmountPer','SMSSign','ForwardingMessageLogo','ForwardingMessageTitle','ForwardingMessageSummary','WhatCommonPoints','GetPoints','SetSalesPoints','ImageList');");
+            return this.SQLHelper.ExecuteDataset(CommandType.Text, sbSQL.ToString(), paras.ToArray());
+        }
         #region IsAld
         public string GetIsAld()
         {

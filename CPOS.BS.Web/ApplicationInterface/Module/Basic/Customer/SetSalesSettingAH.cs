@@ -95,7 +95,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
                    SettingValue = para.InvitePartnersPoints.ToString()
                });
             }
-            int i = customerBasicSettingBLL.SaveustomerBasicrInfo(list);
+            int i = customerBasicSettingBLL.SaveCustomerBasicInfo(loggingSessionInfo.ClientID,list);
 
             return rd;
         }

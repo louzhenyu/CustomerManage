@@ -266,7 +266,7 @@ namespace JIT.CPOS.BS.Web.Module.CustomerBasicSetting.Handler
             }
 
             #endregion
-            int i = customerBasicSettingBLL.SaveustomerBasicrInfo(list);
+            int i = customerBasicSettingBLL.SaveCustomerBasicInfo(this.CurrentUserInfo.ClientID,list);
             #region 配送费保存
 
             decimal AmountEnd = 0;

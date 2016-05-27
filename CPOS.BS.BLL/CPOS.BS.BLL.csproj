@@ -43,12 +43,18 @@
     <Reference Include="Aspose.Cells">
       <HintPath>..\ReferenceDll\Aspose.Cells.dll</HintPath>
     </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\ReferenceDll\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="JdSoft.Apns.Notifications">
       <HintPath>..\ReferenceDll\JdSoft.Apns.Notifications.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RedisOpenAPIClient">
+      <HintPath>..\ReferenceDll\RedisOpenAPIClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -70,6 +76,10 @@
     <Reference Include="Utility.Message, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Utility.Message.dll</HintPath>
+    </Reference>
+    <Reference Include="ZmindRedis, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferenceDll\ZmindRedis.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -676,6 +686,17 @@
     <Compile Include="CodeGeneration\AP\ZMBA\T_ZMBA_CourseBLL.cs" />
     <Compile Include="CodeGeneration\AP\ZMBA\T_ZMBA_CourseDetailBLL.cs" />
     <Compile Include="CodeGeneration\AP\ZMBA\T_ZMBA_CourseDetailReadLogBLL.cs" />
+    <Compile Include="RedisOperationBLL\BasicSetting\BasicSettingBLL.cs" />
+    <Compile Include="RedisOperationBLL\BasicSetting\SetBasicSettingJobBLL.cs" />
+    <Compile Include="RedisOperationBLL\Connection\RedisConnectionBLL.cs" />
+    <Compile Include="RedisOperationBLL\Connection\RedisConnectionOP.cs" />
+    <Compile Include="RedisOperationBLL\Connection\SetConnectionJobBLL.cs" />
+    <Compile Include="RedisOperationBLL\Contact\RedisContactBLL.cs" />
+    <Compile Include="RedisOperationBLL\Coupon\RedisCouponBLL.cs" />
+    <Compile Include="RedisOperationBLL\Coupon\RedisVipMappingCouponBLL.cs" />
+    <Compile Include="RedisOperationBLL\CustomerBLL.cs" />
+    <Compile Include="RedisOperationBLL\PrizePools\RedisPrizePoolsBLL.cs" />
+    <Compile Include="RedisOperationBLL\PrizePools\SetRedisPrizePoolsJobBLL.cs" />
     <Compile Include="ContactEventBLL.cs" />
     <Compile Include="ContactWeBLL.cs" />
     <Compile Include="CouponBLL.cs" />
@@ -946,7 +967,7 @@
     <Compile Include="PanicbuyingKJEventJoinBLL.cs" />
     <Compile Include="PanicbuyingKJEventJoinDetailBLL.cs" />
     <Compile Include="PanicbuyingKJEventSkuMappingBLL.cs" />
-  <Compile Include="PGPushIOSMessage.cs" />
+    <Compile Include="PGPushIOSMessage.cs" />
     <Compile Include="PosService.cs" />
     <Compile Include="PrizeCouponTypeMappingBLL.cs" />
     <Compile Include="ProductAttachmentMappingBLL.cs" />

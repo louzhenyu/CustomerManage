@@ -720,14 +720,12 @@ namespace JIT.CPOS.BS.BLL
             SuccessResponse<IAPIResponseData> sr = new SuccessResponse<IAPIResponseData>();
 
             //If coupon exists
-            var coupon = _currentDAO.Query(
-                new IWhereCondition[] { 
-                    new EqualsCondition() { FieldName = "CouponID", Value = writeOffCouponRP.CouponID }
-                    , new EqualsCondition() { FieldName = "CustomerID", Value = CurrentUserInfo.ClientID}
-                    , new EqualsCondition() { FieldName = "Status", Value = "0"}
-                    , new EqualsCondition() { FieldName = "IsDelete", Value = "0"}
-                }, null);
-
+            List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+            complexCondition.Add(new EqualsCondition() { FieldName = "CouponID", Value = writeOffCouponRP.CouponID });
+            complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = CurrentUserInfo.ClientID });
+            complexCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value ="0"});    
+            complexCondition.Add(new DirectCondition("  Status<>1 "));
+            var coupon = _currentDAO.Query(complexCondition.ToArray(), null);
             if (coupon.Length == 0)
             {
                 er.Message = "该优惠券不存在或已被使用！";
@@ -849,10 +847,13 @@ namespace JIT.CPOS.BS.BLL
         /// </summary>
         /// <param name="strCouponTypeId"></param>
         /// <returns></returns>
-        public int GetCouponCountByCouponTypeID(string strCouponTypeId)
+        public DataSet GetCouponCountByCouponTypeID(string strCouponTypeId)
         {
+            //return this._currentDAO.GetCouponCountByCouponTypeID(strCouponTypeId);
             return this._currentDAO.GetCouponCountByCouponTypeID(strCouponTypeId);
+
         }
+   
         /// <summary>
         /// 优惠券绑定vip
         /// </summary>
@@ -864,7 +865,20 @@ namespace JIT.CPOS.BS.BLL
             return this._currentDAO.CouponBindVip(strVipId, strCouponTypeID, strEventId, strType);
 
         }
+        /// <summary>
+        /// 多张优惠券绑定vip
+        /// </summary>
+        /// <param name="strVipId"></param>
+        /// <param name="strPrizesId"></param>
+        /// <param name="strEventId"></param>
+        /// <param name="strType"></param>
+        /// <returns></returns>
+        public int MoreCouponBindVip(string strVipId, string strPrizesId, string strEventId, string strType)
+        {
+            return this._currentDAO.MoreCouponBindVip(strVipId, strPrizesId, strEventId, strType);
 
+        }
+        
     }
 
 

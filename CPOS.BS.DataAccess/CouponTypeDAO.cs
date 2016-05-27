@@ -87,10 +87,11 @@ namespace JIT.CPOS.BS.DataAccess
                         , C.CouponTypeName
                         , SUM(c.[IssuedQty]) IssuedQty
                         ,SUM(CountTotal) CountTotal
+                        ,c.CreateTime
                          FROM  CouponType c
                         LEFT JOIN PrizeCouponTypeMapping p ON CAST(c.CouponTypeID AS NVARCHAR(200)) = p.CouponTypeID 
                         LEFT JOIN dbo.LPrizes l ON l.PrizesID = p.PrizesID AND [PrizeTypeId] ='Coupon'  
-                        where  C.IsDelete='0' and   C.CustomerId='" + this.CurrentUserInfo.ClientID + "' AND ((EndTime IS NULL AND ServiceLife IS NOT NULL) OR (EndTime IS NOT NULL AND EndTime >getdate())) GROUP BY c.CouponTypeID,c.CouponTypeName";
+                        where  C.IsDelete='0' and c.IssuedQty>0 and   C.CustomerId='" + this.CurrentUserInfo.ClientID + "' AND ((EndTime IS NULL AND ServiceLife IS NOT NULL) OR (EndTime IS NOT NULL AND EndTime >getdate())) GROUP BY c.CouponTypeID,c.CouponTypeName,c.CreateTime ORDER BY c.CreateTime DESC";
             return this.SQLHelper.ExecuteDataset(sql);
 
         }
@@ -219,6 +220,35 @@ namespace JIT.CPOS.BS.DataAccess
         {
             string strSql = string.Format("SELECT IssuedQty FROM CouponType WHERE CouponTypeID='{0}'", strCouponTypeID);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+        }
+        /// <summary>
+        /// 优惠券名是否重复
+        /// </summary>
+        /// <param name="strConponTypeName"></param>
+        /// <returns></returns>
+        public int ExistsCouponTypeName(string strConponTypeName)
+        {
+            string strSql = string.Format("SELECT Count(1) FROM CouponType WHERE IsDelete=0 and CouponTypeName='{0}'", strConponTypeName);
+            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+        }
+        /// <summary>
+        /// 更新优惠券已使用量
+        /// </summary>
+        /// <returns></returns>
+        public void UpdateCouponTypeIsVoucher(string strCustomerId)
+        {
+            string strSql = string.Format(@"UPDATE dbo.CouponType
+                                                SET IsVoucher=a.CouponCount
+                                            FROM (
+                                                    SELECT CouponTypeID
+                                                        ,COUNT(1)CouponCount 
+                                                    FROM dbo.Coupon
+                                                    WHERE  CustomerId = '{0}'
+                                                    GROUP BY CouponTypeID
+                                                ) a,CouponType b
+                                            WHERE a.CouponTypeID=b.CouponTypeID  
+                                                    AND b.CustomerId='{0}' ", strCustomerId);
+            this.SQLHelper.ExecuteScalar(strSql);
         }
     }
 }

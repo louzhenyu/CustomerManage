@@ -169,6 +169,17 @@ namespace JIT.CPOS.BS.DataAccess
         {
             string strSql = string.Format("SELECT TOP 1* FROM dbo.LPrizePools with(nolock) WHERE Status=1 AND EventId='{0}'	ORDER BY NEWID()", strEventId);
             return SQLHelper.ExecuteDataset(strSql);
-        } 
+        }
+        public DataSet GetPrizePoolsByEvent(string strCustomerId,string strEventId)
+        {
+            string strSql = string.Format(@"SELECT  b.PrizeName,ISNULL(c.Location,0)Location ,a.PrizePoolsID,a.PrizeID,a.Status,a.AppearTime,a.CreateTime,a.EventId,'{1}' CustomerId,
+		Datediff(HOUR,l.BeginTime,l.EndTime+1) ValidHours
+                 FROM dbo.LPrizePools a WITH(NOLOCK)
+		                LEFT JOIN dbo.LPrizes b  WITH(NOLOCK) ON a.PrizeID=b.PrizesID
+		                LEFT JOIN dbo.LPrizeLocation c  WITH(NOLOCK) ON a.PrizeID=c.PrizeID
+                        LEFT JOIN dbo.LEvents l WITH(NOLOCK) ON a.EventId=l.EventID
+                WHERE a.EventId='{0}'", strEventId, strCustomerId);
+            return SQLHelper.ExecuteDataset(strSql);
+        }
     }
 }

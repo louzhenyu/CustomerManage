@@ -33,5 +33,15 @@ namespace JIT.CPOS.BS.BLL
         {
             _currentDAO.CreateStoreDataFromTemplate(strHomeId, strTemplateId);
         }
+        /// <summary>
+        /// 模版名称是否重复
+        /// </summary>
+        /// <param name="strCustomerId"></param>
+        /// <param name="strTitle"></param>
+        /// <returns></returns>
+        public int IsExistsTitle(string strCustomerId, string strHomeId, string strTitle)
+        {
+            return _currentDAO.IsExistsTitle(strCustomerId,strHomeId, strTitle);
+        }
     }
 }

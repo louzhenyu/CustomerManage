@@ -14,6 +14,8 @@ using JIT.Utility.ExtensionMethod;
 using JIT.Utility.DataAccess.Query;
 using CPOS.Common;
 using JIT.CPOS.BS.BLL.WX;
+using RedisOpenAPIClient.Models.CC;
+
 namespace JIT.CPOS.Web.ApplicationInterface.Module.CreativityWarehouse.Log
 {
     public class CTWEventShareLogAH : BaseActionHandler<CTWEventShareLogRP, CTWEventShareLogRD>
@@ -63,6 +65,22 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.CreativityWarehouse.Log
                         if (prize.PrizeTypeId == "Coupon")
                         {
                             bllCoupon.CouponBindVip(para.Sender, prize.CouponTypeID, entityContact.ContactEventId.ToString(), "Share");
+
+                            DataSet ds = bllPrize.GetAllCouponTypeByPrize(prize.PrizesID);
+                            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                            {
+                                var redisVipMappingCouponBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon.RedisVipMappingCouponBLL();
+
+                                foreach (DataRow dr in ds.Tables[0].Rows)
+                                {
+                                    redisVipMappingCouponBLL.SetVipMappingCoupon(new CC_Coupon()
+                                    {
+                                        CustomerId = this.CurrentUserInfo.ClientID,
+                                        CouponTypeId = dr["CouponTypeID"].ToString()
+                                    }, entityContact.ContactEventId.ToString(), para.Sender, "Share");
+                                }
+                            }
+
                         }
                         if (prize.PrizeTypeId == "Point")
                         {

@@ -716,12 +716,32 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="strCouponTypeId"></param>
         /// <returns></returns>
-        public int GetCouponCountByCouponTypeID(string strCouponTypeId)
+        public DataSet GetCouponCountByCouponTypeID(string strCouponTypeId)
         {
-            //string strSql = string.Format("select  count(1)CouponCount from Coupon a WITH(NOLOCK) LEFT join VipCouponMapping b WITH(NOLOCK) ON a.CouponID=b.CouponID WHERE   a.IsDelete = 0 AND a.[Status] = 0 and  b.VIPID is null and a.CouponTypeID='{0}'", strCouponTypeId);
-            string strSql = string.Format("SELECT  COUNT(1) CouponCount FROM    Coupon a WITH ( NOLOCK )WHERE   a.IsDelete = 0     AND a.[Status] = 0 AND a.CouponTypeID = '{0}'", strCouponTypeId);
-            return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
+            //string strSql = string.Format("SELECT  COUNT(1) CouponCount FROM    Coupon a WITH ( NOLOCK )WHERE   a.IsDelete = 0     AND a.[Status] = 0 AND a.CouponTypeID = '{0}'", strCouponTypeId);
+            string strSql = string.Format(@"
+                                            SELECT f.CouponTypeName, F.CouponTypeID,(F.CouponCount-ISNULL(S.CouponCount,0) ) RemainCount
+                                            FROM    ( SELECT    a.CouponTypeID ,a.CouponTypeName,
+                                                                IssuedQty CouponCount
+                                                      FROM      CouponType a WITH ( NOLOCK )
+                                                      WHERE     a.IsDelete = 0
+                                                                AND a.CouponTypeID = '{0}'
+                                                    ) F
+                                                    LEFT JOIN ( SELECT  p.CouponTypeID ,
+                                                                        SUM(CountTotal) CouponCount
+                                                                FROM    dbo.PrizeCouponTypeMapping P WITH ( NOLOCK )
+                                                                        INNER JOIN dbo.LPrizes L WITH ( NOLOCK ) ON P.PrizesID = L.PrizesID
+                                                                                                          AND L.IsDelete = 0
+                                                                WHERE   CouponTypeID = '{0}'
+                                                                        AND P.IsDelete = 0
+                                                                GROUP BY p.CouponTypeID
+                                                              ) S ON F.CouponTypeID = S.CouponTypeID
+                                            ", strCouponTypeId);
+            return SQLHelper.ExecuteDataset(strSql);
+
+            //return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
+    
        /// <summary>
         /// 优惠券绑定vip
        /// </summary>
@@ -754,6 +774,41 @@ namespace JIT.CPOS.BS.DataAccess
             parameters.Add(result);
 
             SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "Proc_CouponBindVip", parameters.ToArray());
+
+            return Convert.ToInt32(result.Value.ToString());
+        }
+        /// <summary>
+        /// 多张优惠券绑定vip
+        /// </summary>
+        /// <param name="strVipId"></param>
+        /// <param name="strPrizesId"></param>
+        /// <param name="strEventId"></param>
+        /// <param name="strType"></param>
+        /// <returns></returns>
+        public int MoreCouponBindVip(string strVipId, string strPrizesId, string strEventId, string strType)
+        {
+            var parameters = new List<SqlParameter>();
+            var para = new SqlParameter("@VipId", SqlDbType.NVarChar);
+            para.Value = strVipId;
+            parameters.Add(para);
+
+            para = new SqlParameter("@PrizesId", SqlDbType.NVarChar);
+            para.Value = strPrizesId;
+            parameters.Add(para);
+
+            para = new SqlParameter("@EventId", SqlDbType.NVarChar);
+            para.Value = strEventId;
+            parameters.Add(para);
+
+            para = new SqlParameter("@Type", SqlDbType.NVarChar);
+            para.Value = strType;
+            parameters.Add(para);
+
+            var result = new SqlParameter("@Result", SqlDbType.Int);
+            result.Direction = ParameterDirection.Output;
+            parameters.Add(result);
+
+            SQLHelper.ExecuteNonQuery(CommandType.StoredProcedure, "Proc_MoreCouponBindVip", parameters.ToArray());
 
             return Convert.ToInt32(result.Value.ToString());
         }

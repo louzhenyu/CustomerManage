@@ -14,7 +14,7 @@ using JIT.CPOS.BS.BLL;
 using JIT.CPOS.BS.Entity;
 using JIT.Utility.ExtensionMethod;
 using JIT.CPOS.DTO.Base;
-
+using JIT.CPOS.BS.BLL.RedisOperationBLL.Contact;
 namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
 {
     public class AuthCodeLoginAH : BaseActionHandler<AuthCodeLoginRP, AuthCodeLoginRD>
@@ -146,7 +146,16 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                             };
                             bll.Create(vipByID);
                             #region 注册会员触点活动奖励
-                            bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
+                            //bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
+
+                            RedisContactBLL redisContactBll = new RedisContactBLL();
+                            redisContactBll.SetRedisContact(new RedisOpenAPIClient.Models.CC.CC_Contact()
+                            {
+                                CustomerId = CurrentUserInfo.ClientID,
+                                ContactType = "Reg",
+                                VipId = CurrentUserInfo.UserID
+                            });
+
                             #endregion
 
                         }
@@ -159,7 +168,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                             vipByID.RegistrationTime = DateTime.Now;
                             bll.Update(vipByID);
                             #region 注册会员触点活动奖励
-                            bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
+                            //bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
+                            RedisContactBLL redisContactBll = new RedisContactBLL();
+                            redisContactBll.SetRedisContact(new RedisOpenAPIClient.Models.CC.CC_Contact()
+                            {
+                                CustomerId = CurrentUserInfo.ClientID,
+                                ContactType = "Reg",
+                                VipId = CurrentUserInfo.UserID
+                            });
                             #endregion
                         }
 
@@ -267,7 +283,14 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                             };
                             bll.Create(vipByPhone);
                             #region 注册会员触点活动奖励
-                            bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
+                            //bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Reg");
+                            RedisContactBLL redisContactBll = new RedisContactBLL();
+                            redisContactBll.SetRedisContact(new RedisOpenAPIClient.Models.CC.CC_Contact()
+                            {
+                                CustomerId = CurrentUserInfo.ClientID,
+                                ContactType = "Reg",
+                                VipId = CurrentUserInfo.UserID
+                            });
                             #endregion
                         }
                         #endregion

@@ -56,9 +56,9 @@ namespace JIT.CPOS.BS.BLL
         /// <param name="strContactType"></param>
         /// <param name="strShareEventId"></param>
         /// <returns></returns>
-        public int ExistsContact(ContactEventEntity entityContact)
+        public int ExistsContact(string strContactTypeCode, string strShareEventId)
         {
-            return this._currentDAO.ExistsContact(entityContact);
+            return this._currentDAO.ExistsContact(strContactTypeCode, strShareEventId);
         }
         /// <summary>
         /// 

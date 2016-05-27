@@ -28,6 +28,8 @@ using JIT.Utility.DataAccess;
 using JIT.Utility.DataAccess.Query;
 using System.Data.SqlClient;
 
+
+
 namespace JIT.CPOS.BS.BLL
 {
     /// <summary>
@@ -98,6 +100,19 @@ namespace JIT.CPOS.BS.BLL
         public int GetCouponCountByCouponTypeID(string strCouponTypeID)
         {
             return this._currentDAO.GetCouponCountByCouponTypeID(strCouponTypeID);
+        }
+        public int ExistsCouponTypeName(string strConponTypeName)
+        {
+            return this._currentDAO.ExistsCouponTypeName(strConponTypeName);
+
+        }
+        /// <summary>
+        /// 更新优惠券已使用量
+        /// </summary>
+        /// <returns></returns>
+        public void UpdateCouponTypeIsVoucher(string strCustomerId)
+        {
+             this._currentDAO.UpdateCouponTypeIsVoucher(strCustomerId);
         }
     }
 }

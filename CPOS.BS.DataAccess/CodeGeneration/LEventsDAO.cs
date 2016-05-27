@@ -76,7 +76,7 @@ namespace JIT.CPOS.BS.DataAccess
             pEntity.CreateBy = CurrentUserInfo.UserID;
             pEntity.LastUpdateTime = pEntity.CreateTime;
             pEntity.LastUpdateBy = CurrentUserInfo.UserID;
-            pEntity.IsDelete = 0;
+            pEntity.IsDelete = pEntity.IsDelete;//确保第三步图文信息都保存了 再更新为0
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into [LEvents](");

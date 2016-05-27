@@ -124,7 +124,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Basic.Customer
             }
             #endregion
             if (list.Count > 0)
-                customerBasicSettingBLL.SaveustomerBasicrInfo(list);
+                customerBasicSettingBLL.SaveCustomerBasicInfo(loggingSessionInfo.ClientID,list);
 
 
 

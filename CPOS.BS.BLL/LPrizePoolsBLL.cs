@@ -179,6 +179,11 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetRandomPrizeByEventId(strEventId);
 
+        }
+        public DataSet GetPrizePoolsByEvent(string strCustomerId,string strEventId)
+        {
+            return this._currentDAO.GetPrizePoolsByEvent(strCustomerId,strEventId);
+
         } 
     }
 }

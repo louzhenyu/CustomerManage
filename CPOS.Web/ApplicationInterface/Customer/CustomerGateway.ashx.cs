@@ -27,15 +27,18 @@ namespace JIT.CPOS.Web.ApplicationInterface
                 var loggingSessionInfo = Default.GetBSLoggingSession(rp.CustomerID, "1");
                 var bll = new CustomerBasicSettingBLL(loggingSessionInfo);
                 var ds = bll.GetCustomerBaiscSettingInfo(rp.CustomerID);  //获取CusertomerBaiscSettingInfo中配置的数据
+
+                var dtBasicSetting = bll.GetBaiscSettingInfoFromRedis(rp.CustomerID);
+
                 List<CustomerImageInfo> list = new List<CustomerImageInfo> { };
                 Dictionary<string, string> DicVersion = new Dictionary<string, string>();
                 if (ds != null && ds.Tables.Count > 0)
                 {
-                    if (ds.Tables[0].Rows.Count > 0)
+                    if (dtBasicSetting.Rows.Count > 0)
                     {
-                        for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+                        for (int i = 0; i < dtBasicSetting.Rows.Count; i++)
                         {
-                            DataRow row = ds.Tables[0].Rows[i];
+                            DataRow row = dtBasicSetting.Rows[i];
                             if (row["SettingCode"].ToString().Equals("AboutUs"))
                             {
                                 rd.AboutUs = DicVersion[row["SettingCode"].ToString()] = row["SettingValue"].ToString();

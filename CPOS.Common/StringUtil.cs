@@ -538,7 +538,24 @@ namespace JIT.CPOS.Common
             }
             return key.ToString();
         }
-
+        /// <summary>
+        /// 随机大写字幕
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string GetRandomUperStr(int length)
+        {
+            string baseString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            Random random = new Random(System.Guid.NewGuid().GetHashCode());
+            StringBuilder key = new StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                int number = random.Next(baseString.Length);
+                char c = baseString[number];
+                key.Append(c);
+            }
+            return key.ToString();
+        }
         /// <summary>
         /// 根据自定义长度生成随机字符串 字符串
         /// </summary>
@@ -547,7 +564,7 @@ namespace JIT.CPOS.Common
         public static string GetRandomStrInt(int length)
         {
             string baseString = "0123456789";
-            Random random = new Random();
+            Random random = new Random(System.Guid.NewGuid().GetHashCode());
             StringBuilder key = new StringBuilder();
             for (int i = 0; i < length; i++)
             {

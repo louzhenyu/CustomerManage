@@ -272,6 +272,24 @@ namespace JIT.CPOS.BS.DataAccess
         public DataSet GetCategoryProductList(string groupId, string homeId, int intShowCount)
         {
             string sql = string.Empty;
+            sql += string.Format(@"
+                    DECLARE @ObjectId NVARCHAR(50)  
+                    SELECT @ObjectId=ObjectId FROM dbo.MHCategoryArea
+                    WHERE GroupID='{0}';
+
+                    WITH tmp(item_category_id, parent_id)
+                      AS(
+                        SELECT  item_category_id ,
+                                parent_id
+                        FROM    T_Item_Category
+                        WHERE   item_category_id =@ObjectId  
+                        UNION ALL
+                        SELECT  a.item_category_id ,
+                                a.parent_id
+                        FROM    T_Item_Category a
+                                JOIN tmp b ON a.parent_id = b.item_category_id
+                        WHERE   a.item_category_id IS NOT NULL
+                    ) ", groupId);
             if (intShowCount > 0)
             {
                 sql += "SELECT Top " + intShowCount + " ";
@@ -295,7 +313,7 @@ namespace JIT.CPOS.BS.DataAccess
             sql += " ,(  select  Cast(prop_value as DECIMAL) prop_value   from  t_prop as tp left join T_Item_Property  as tip on tip.prop_id=tp.prop_id where  tp.prop_code ='SalesCount' and item_id=b.item_id ) SalesCount";
 
             sql += " FROM dbo.MHCategoryArea a ";
-            sql += "  INNER JOIN [vw_item_detail] b ON a.ObjectId=b.item_category_id ";
+            sql += "  INNER JOIN ( SELECT * FROM   [vw_item_detail] WHERE  item_category_id IN ( SELECT  item_category_id FROM tmp ))  b ON a.ObjectId=b.item_category_id ";
             sql += " WHERE a.IsDelete = 0 AND a.GroupID = '" + groupId + "' ";
             sql += " and homeId = '" + homeId + "'";
             sql += " ORDER BY a.DisplayIndex ";

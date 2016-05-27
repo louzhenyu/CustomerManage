@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using JIT.CPOS.BS.BLL.RedisOperationBLL.Contact;
 namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
 {
     public class SetEvaluationItemAH : BaseActionHandler<SetEvaluationItemRP, SetEvaluationRD>
@@ -80,7 +80,15 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Evaluation
 
                     #region 评论触点活动奖励 
                     var bllPrize = new LPrizesBLL(CurrentUserInfo);
-                    bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Comment");
+                    //bllPrize.CheckIsWinnerForShare(CurrentUserInfo.UserID, "", "Comment");
+
+                    RedisContactBLL redisContactBll = new RedisContactBLL();
+                    redisContactBll.SetRedisContact(new RedisOpenAPIClient.Models.CC.CC_Contact()
+                    {
+                        CustomerId = CurrentUserInfo.ClientID,
+                        ContactType = "Comment",
+                        VipId = CurrentUserInfo.UserID
+                    });
                     #endregion
                 }
                 catch (Exception ex)

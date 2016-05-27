@@ -12,6 +12,8 @@ using JIT.CPOS.BS.Entity;
 using JIT.CPOS.DTO.Base;
 using JIT.CPOS.DTO.Module.Event.ContactEvent.Request;
 using JIT.CPOS.DTO.Module.Event.ContactEvent.Response;
+
+using System.Data;
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
 {
     public class SetContactEventAH : BaseActionHandler<SetContactEventRP, SetContactEventRD>
@@ -41,31 +43,38 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         contactEvent.PrizeCount = (contactEvent.PrizeCount == null ? 0 : contactEvent.PrizeCount) + para.PrizeCount;
                         LPrizesBLL bllPrize = new LPrizesBLL(loggingSessionInfo);
                         var entityPrize = bllPrize.QueryByEntity(new LPrizesEntity() { EventId = para.ContactEventId, IsDelete = 0 }, null).FirstOrDefault();
-
-                        if (CouponTypeIdList.Count()>0)
+                        var CouponTypeTemp = bllContactEvent.QueryByEntity(new ContactEventEntity() { ContactEventId =new Guid(para.ContactEventId), IsDelete = 0 },null).SingleOrDefault().CouponTypeID;
+                        if (CouponTypeTemp != null)
                         {
+                            CouponTypeIdList = CouponTypeTemp.Split(',');
+                            if (CouponTypeIdList != null && CouponTypeIdList.Count() > 0)
+                            {
 
-                            var bllCoupon = new CouponBLL(loggingSessionInfo);
-                            
-                            foreach(var cou in CouponTypeIdList)
-                            {
-                                //优惠券未被使用了的数量
-                                int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(cou);
-                                int intHaveCout = (int)entityPrize.CountTotal;
-                                if (intUnUsedCouponCount < (para.PrizeCount + intHaveCout))
+                                var bllCoupon = new CouponBLL(loggingSessionInfo);
+
+                                foreach (var cou in CouponTypeIdList)
                                 {
-                                    strErrMsg += "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString()+"<br/>";
-                                   
+                                    //优惠券未被使用了的数量
+                                    int intHaveCout = (int)entityPrize.CountTotal;
+                                    DataSet ds = bllCoupon.GetCouponCountByCouponTypeID(cou);
+                                    if (ds != null & ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                    {
+                                        int intUnUsedCouponCount = Convert.ToInt32(ds.Tables[0].Rows[0]["RemainCount"].ToString());
+                                        if ((para.PrizeCount + intHaveCout) > intUnUsedCouponCount)
+                                        {
+                                            strErrMsg += ds.Tables[0].Rows[0]["CouponTypeName"].ToString() + "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString() + "<br/>";
+
+                                        }
+                                    }
+
                                 }
+                                if (!string.IsNullOrEmpty(strErrMsg) && strErrMsg.Length > 0)
+                                {
+                                    throw new APIException(strErrMsg) { ErrorCode = 342 };
+                                }
+
+
                             }
-                            if (string.IsNullOrEmpty(strErrMsg) && strErrMsg.Length > 0)
-                            {
-                                rd.Success = false;
-                                rd.ErrMsg = strErrMsg;
-                                return rd;
-                            }
-                            
-                          
                         }
 
                         entityPrize.CountTotal = para.PrizeCount;
@@ -80,37 +89,29 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         {
                             contactEvent.CouponTypeID = string.Join(",", para.CouponTypeID);
                             var bllCoupon = new CouponBLL(loggingSessionInfo);
-
-                            foreach (var cou in CouponTypeIdList)
+                            if (CouponTypeIdList != null && CouponTypeIdList.Count() > 0)
                             {
-                                //优惠券未被使用了的数量
-                                int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(cou);
-                                
-                                if (intUnUsedCouponCount < (para.PrizeCount ))
+                                foreach (var cou in CouponTypeIdList)
                                 {
-                                    strErrMsg += "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString() + "<br/>";
+                                    //优惠券未被使用了的数量
+                                    DataSet ds = bllCoupon.GetCouponCountByCouponTypeID(cou);
+                                    if (ds != null & ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                    {
+                                        int intUnUsedCouponCount = Convert.ToInt32(ds.Tables[0].Rows[0]["RemainCount"].ToString());
+                                        if (para.PrizeCount > intUnUsedCouponCount)
+                                        {
+                                            strErrMsg += ds.Tables[0].Rows[0]["CouponTypeName"].ToString() + "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString() + "<br/>";
+
+                                        }
+                                    }
 
                                 }
                             }
-                            if (string.IsNullOrEmpty(strErrMsg) && strErrMsg.Length > 0)
+                            if (!string.IsNullOrEmpty(strErrMsg) && strErrMsg.Length > 0)
                             {
-                                rd.Success = false;
-                                rd.ErrMsg = strErrMsg;
-                                return rd;
+                                throw new APIException(strErrMsg) { ErrorCode = 342 };
+
                             }
-
-
-                            //string strCouponTypeID = para.CouponTypeID;
-                            ////优惠券未被使用了的数量
-                            //int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
-                            //if (intUnUsedCouponCount < para.PrizeCount)
-                            //{
-
-                            //    rd.Success = false;
-                            //    rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
-
-                            //    return rd;
-                            //}
                         }
                         if (para.PrizeType == "Chance")
                         {
@@ -150,39 +151,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                 {
                     ContactEventEntity entityContactEvent = new ContactEventEntity();
 
-      
-                   
-                                  
-                    if (bllContactEvent.ExistsContact(entityContactEvent) > 0)
-                    {
-                        if (para.ContactTypeCode == "Share" && para.ShareEventId != null && para.ShareEventId.Length > 0)
-                        {
 
-                            rd.ErrMsg = "该分享活动已存在";
-                        }
-                        else
-                        {
-                            rd.ErrMsg = "有效期与已存在的触点活动有冲突";
-                        }
-                        rd.Success = false;
-                        return rd;
-                    }
-
-                    if (para.ContactTypeCode == "Share" && para.ShareEventId != null && para.ShareEventId.Length > 0)
-                    {
-                        //判断触点中的分享设置的开始时间和结束时间是否在被分享的活动时间范围内
-                        var entityEvent = bllEvent.GetByID(para.ShareEventId);
-                        if (DateTime.Compare(Convert.ToDateTime(para.BeginDate), Convert.ToDateTime(entityEvent.BeginTime)) < 0 || DateTime.Compare(Convert.ToDateTime(para.EndDate), Convert.ToDateTime(entityEvent.EndTime)) > 0)
-                        {
-                            rd.Success = false;
-                            rd.ErrMsg = "活动的时间不在被分享的活动时间范围内";
-                            return rd;
-                        }
-                        entityContactEvent.ShareEventId = para.ShareEventId;
-                        entityEvent.IsShare = 1;
-                        bllEvent.Update(entityEvent, false);
-                    }
-                   
                     //RewardType:Point,Coupon,Chance
                     if (para.PrizeType == "Point")
                         entityContactEvent.Integral = para.Integral;
@@ -191,35 +160,30 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         entityContactEvent.CouponTypeID = string.Join(",", para.CouponTypeID); ;
 
                         var bllCoupon = new CouponBLL(loggingSessionInfo);
-                        foreach (var cou in CouponTypeIdList)
+                        if (CouponTypeIdList != null && CouponTypeIdList.Count() > 0)
                         {
-                            //优惠券未被使用了的数量
-                            int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(cou);
-
-                            if (intUnUsedCouponCount < (para.PrizeCount))
+                            foreach (var cou in CouponTypeIdList)
                             {
-                                strErrMsg += "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString() + "<br/>";
+                                //优惠券未被使用了的数量
 
+                                DataSet ds = bllCoupon.GetCouponCountByCouponTypeID(cou);
+                                if (ds != null & ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                                {
+                                    int intUnUsedCouponCount = Convert.ToInt32(ds.Tables[0].Rows[0]["RemainCount"].ToString());
+                                    if (para.PrizeCount > intUnUsedCouponCount)
+                                    {
+                                        strErrMsg += ds.Tables[0].Rows[0]["CouponTypeName"].ToString() + "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString() + "<br/>";
+
+                                    }
+                                }
+                       
                             }
                         }
-                        if (string.IsNullOrEmpty(strErrMsg) && strErrMsg.Length>0)
+                        if (!string.IsNullOrEmpty(strErrMsg) && strErrMsg.Length > 0)
                         {
-                            rd.Success = false;
-                            rd.ErrMsg = strErrMsg;
-                            return rd;
+                            throw new APIException(strErrMsg) { ErrorCode = 342 };
+
                         }
-
-                        //string strCouponTypeID = para.CouponTypeID;
-                        ////优惠券未被使用了的数量
-                        //int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
-                        //if (intUnUsedCouponCount < para.PrizeCount)
-                        //{
-
-                        //    rd.Success = false;
-                        //    rd.ErrMsg = "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString();
-
-                        //    return rd;
-                        //}
                     }
                     if (para.PrizeType == "Chance")
                     {
@@ -227,6 +191,37 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents.ContactEvent
                         entityContactEvent.ChanceCount = para.ChanceCount;
                     }
 
+                    if (bllContactEvent.ExistsContact(para.ContactTypeCode, string.IsNullOrEmpty(para.ShareEventId) == true ? "" : para.ShareEventId) > 0)
+                    {
+                        if (para.ContactTypeCode == "Share" && para.ShareEventId != null && para.ShareEventId.Length > 0)
+                        {
+
+                            rd.ErrMsg = "该分享活动已存在";
+                        }
+                        else
+                        {
+                            rd.ErrMsg = "该触点活动类型已存在";
+                        }
+                        rd.Success = false;
+                        return rd;
+                    }
+
+                    if (para.ShareEventId != null && para.ShareEventId.Length > 0)
+                    {
+                        //判断触点中的分享设置的开始时间和结束时间是否在被分享的活动时间范围内
+                        var entityEvent = bllEvent.GetByID(para.ShareEventId);
+                        if (DateTime.Compare(Convert.ToDateTime(para.BeginDate), Convert.ToDateTime(entityEvent.BeginTime)) < 0 || DateTime.Compare(Convert.ToDateTime(para.EndDate), Convert.ToDateTime(entityEvent.EndTime)) > 0)
+                        {
+                            rd.Success = false;
+
+                            rd.ErrMsg = "活动的时间不在被分享的活动时间范围内";
+                            return rd;
+                        }
+                        entityContactEvent.ShareEventId = para.ShareEventId;
+                        entityEvent.IsShare = 1;
+                        bllEvent.Update(entityEvent, false);
+                    }
+                   
 
                     entityContactEvent.PrizeCount = para.PrizeCount;
                     entityContactEvent.ContactTypeCode = para.ContactTypeCode;

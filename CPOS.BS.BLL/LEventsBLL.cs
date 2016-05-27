@@ -1640,6 +1640,16 @@ namespace JIT.CPOS.BS.BLL
         }
 
         #endregion
+        /// <summary>
+        /// 保存活动第三步把IsDelete置为0
+        /// </summary>
+        /// <param name="strEventId"></param>
+        public void UpdateEventIsDelete(string strEventId)
+        {
+            this._currentDAO.UpdateEventIsDelete(strEventId);
+
+        }
+        
         public JIT.CPOS.BS.BLL.MobileModuleBLL.Field[] GetFieldList(DataSet formDataSet)
         {
             return (from f in formDataSet.Tables[0].AsEnumerable()

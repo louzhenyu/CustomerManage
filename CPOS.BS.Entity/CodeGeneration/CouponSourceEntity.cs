@@ -46,7 +46,10 @@ namespace JIT.CPOS.BS.Entity
 		/// 
 		/// </summary>
 		public String CouponSource { get; set; }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        public String CouponSourceCode { get; set; }
 		/// <summary>
 		/// 
 		/// </summary>

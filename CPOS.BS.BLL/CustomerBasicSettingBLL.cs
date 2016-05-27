@@ -174,9 +174,31 @@ namespace JIT.CPOS.BS.BLL
 
         public DataSet GetCustomerBaiscSettingInfo(string customerId)
         {
+
+            
             return this._currentDAO.GetCustomerBaiscSettingInfo(customerId);
         }
+        public DataTable GetBaiscSettingInfoFromRedis(string strCustomerId)
+        {
+            DataTable dt = new DataTable();
+            RedisOperationBLL.BasicSetting.BasicSettingBLL bllBasicSetting = new RedisOperationBLL.BasicSetting.BasicSettingBLL();
+            var basicSettingList = bllBasicSetting.GetBasicSetting(strCustomerId);
+            if (basicSettingList != null)
+            {
+                var listKey = new List<string> { "CustomerShortName", "WebLogo", "CustomerPhone", "ForwardingMessageTitle", "ForwardingMessageLogo", "ForwardingMessageSummary", "GuideLinkUrl", "GuideQRCode", "CustomerGreeting" };
+                var query = from q in basicSettingList.AsEnumerable()
+                            from t in listKey
+                            where q.SettingCode.Contains(t)
+                            select q;
+                dt = DataTableToObject.ConvertToDataTableFromList(query.ToList());
+            }
+            else
+            {
+                dt = this._currentDAO.GetCustomerBaiscSettingInfoRedisBackUp(strCustomerId).Tables[0];
 
+            }
+            return dt;
+        }
         /// <summary>
         /// 根据SettingCode获取描述信息
         /// </summary>
@@ -205,8 +227,15 @@ namespace JIT.CPOS.BS.BLL
         public Hashtable GetSocialSetting()
         {
             //所有商户配置
-            var settingList =this._currentDAO.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = this.CurrentUserInfo.ClientID }, null);
+            //var settingList =this._currentDAO.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = this.CurrentUserInfo.ClientID }, null);
 
+            RedisOperationBLL.BasicSetting.BasicSettingBLL bllBasicSetting = new RedisOperationBLL.BasicSetting.BasicSettingBLL();
+            var settingList = bllBasicSetting.GetBasicSetting(this.CurrentUserInfo.ClientID);
+            if(settingList==null && settingList.Count==0)
+            {
+                settingList = this._currentDAO.QueryByEntity(new CustomerBasicSettingEntity() { CustomerID = this.CurrentUserInfo.ClientID }, null).ToList();
+                bllBasicSetting.SetBasicSetting(this.CurrentUserInfo.ClientID, settingList);
+            }
             #region 社会化销售配置
             //社会化销售设置类型 0=按订单；1=按商品
             int socialSalesType = 0;
@@ -338,5 +367,44 @@ namespace JIT.CPOS.BS.BLL
             htSetting["cashRedeemUpLimit"] = cashRedeemUpLimit;
             return htSetting;
         }
+
+        #region 获取商户基础配置信息
+        /// <summary>
+        /// 获取当前商户的基础配置信息
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public List<CustomerBasicSettingEntity> GetBusinessBasisConfigInfo(string customerID)
+        {
+            ///2016-05-17 wujx 缓存读取
+            RedisOperationBLL.BasicSetting.BasicSettingBLL bllBasicSetting = new RedisOperationBLL.BasicSetting.BasicSettingBLL();
+            var basicSettingList = bllBasicSetting.GetBasicSetting(customerID);
+            if (basicSettingList != null)
+            {
+                var listKey = new List<string> { "CustomerShortName", "WebLogo", "CustomerPhone", "ForwardingMessageTitle", "ForwardingMessageLogo", "ForwardingMessageSummary", "GuideLinkUrl", "GuideQRCode", "CustomerGreeting" };
+                var query = from q in basicSettingList.AsEnumerable()
+                            from t in listKey
+                            where q.SettingCode.Contains(t)
+                            select q;
+                return query.ToList();
+            }
+            else
+            {
+                List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+                complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = customerID });
+                StringBuilder WhereStr = new StringBuilder();
+                /*Modified by sun@2016-01-06*/
+                //WhereStr.Append(" (SettingCode='BusinessNickname' or SettingCode='BusinessLogo' or SettingCode='CustomerPhone' ");
+                WhereStr.Append(" (SettingCode='CustomerShortName' or SettingCode='WebLogo' or SettingCode='CustomerPhone' ");
+                /*Modified by sun@2016-01-06*/
+                //WhereStr.Append("or SettingCode='ShareTitle' or SettingCode='ShareImageUrl' or SettingCode='ShareContent' ");
+                WhereStr.Append("or SettingCode='ForwardingMessageTitle' or SettingCode='ForwardingMessageLogo' or SettingCode='ForwardingMessageSummary' ");
+                WhereStr.Append("or SettingCode='GuideLinkUrl' or SettingCode='GuideQRCode' or SettingCode='CustomerGreeting') ");
+                complexCondition.Add(new DirectCondition(WhereStr.ToString()));
+                return this._currentDAO.Query(complexCondition.ToArray(), null).ToList();
+            }
+
+        }
+        #endregion
     }
 }

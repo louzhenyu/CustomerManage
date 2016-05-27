@@ -19,6 +19,7 @@ using System.Web.Script.Serialization;
 using JIT.CPOS.BS.Web.ApplicationInterface.Vip;
 using JIT.CPOS.Common;
 using JIT.CPOS.BS.Web.Module.WEvents.Handler;
+using RedisOpenAPIClient.Models.CC;
 
 namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
 {
@@ -258,9 +259,14 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 var eventEntity = new LEventsEntity();
                 string strGuid = string.Empty;
                 if (reqObj.Parameters.EventId != null && reqObj.Parameters.EventId != "")
+                {
                     strGuid = reqObj.Parameters.EventId;
+                }
                 else
+                {
                     strGuid = Guid.NewGuid().ToString();
+                    eventEntity.IsDelete = 1;
+                }
                 eventEntity.EventID = strGuid;
                 eventEntity.Title = reqObj.Parameters.Title;
                 eventEntity.BeginTime = reqObj.Parameters.BeginTime;
@@ -395,14 +401,24 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 var bllCoupon = new CouponBLL(loggingSessionInfo);
                 var bllPrizes = new LPrizesBLL(loggingSessionInfo);
                 string strCouponTypeID = rp.Parameters.CouponTypeID;
-                //优惠券未被使用了的数量
-                int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
-                if (intUnUsedCouponCount < rp.Parameters.CountTotal)
+                DataSet ds = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                if(ds!=null & ds.Tables.Count>0 && ds.Tables[0].Rows.Count>0)
                 {
-
-                    var errRsp = new ErrorResponse(-1, "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
-                    return errRsp.ToJSON();
+                    int intUnUsedCouponCount = Convert.ToInt32(ds.Tables[0].Rows[0]["RemainCount"].ToString());
+                    if (rp.Parameters.CountTotal>intUnUsedCouponCount)
+                    {
+                        var errRsp = new ErrorResponse(-1, ds.Tables[0].Rows[0]["CouponTypeName"].ToString() + "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
+                        return errRsp.ToJSON();
+                    }
                 }
+                ////优惠券未被使用了的数量
+                //int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                //if (intUnUsedCouponCount < rp.Parameters.CountTotal)
+                //{
+
+                //    var errRsp = new ErrorResponse(-1, "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
+                //    return errRsp.ToJSON();
+                //}
             }
 
             entity.EventId = rp.Parameters.EventId;
@@ -417,7 +433,25 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             entity.CreateBy = loggingSessionInfo.UserID;
             entity.PrizesID = Guid.NewGuid().ToString();
             bll.SavePrize(entity);
+            //入奖品池队列
+            LPrizePoolsBLL bllPools = new LPrizePoolsBLL(loggingSessionInfo);
+            DataSet dsPools = bllPools.GetPrizePoolsByEvent(loggingSessionInfo.ClientID,rp.Parameters.EventId);
+            if (dsPools != null && dsPools.Tables.Count > 0 && dsPools.Tables[0].Rows.Count > 0)
+            {
+                var poolTemp = DataTableToObject.ConvertToList<CC_PrizePool>(dsPools.Tables[0]);
+                var poolsList = Utils.GetRandomList < CC_PrizePool>(poolTemp);//随机列表
+                if (poolsList != null && poolsList.Count > 0)
+                {
 
+                    var redisPrizePoolsBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.PrizePools.RedisPrizePoolsBLL();
+                    CC_PrizePool prizePool = new CC_PrizePool();
+                    prizePool.CustomerId = loggingSessionInfo.ClientID;
+                    prizePool.EventId = rp.Parameters.EventId;
+
+                    redisPrizePoolsBLL.DeletePrizePoolsList(prizePool);
+                    redisPrizePoolsBLL.SetPrizePoolsToRedis(poolsList);
+                }
+            }
             var rsp  = new SuccessResponse<IAPIResponseData>(rd);
             return rsp.ToJSON();
         }
@@ -436,14 +470,24 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
                 var bllCoupon = new CouponBLL(loggingSessionInfo);
                 string strCouponTypeID = rp.Parameters.CouponTypeID;
                 //优惠券未被使用了的数量
-                int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
-                int intHaveCout =(int)bllPrizes.GetByID(rp.Parameters.PrizesId).CountTotal;
-                if (intUnUsedCouponCount < (rp.Parameters.CountTotal + intHaveCout))
+                DataSet ds = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                if(ds!=null & ds.Tables.Count>0 && ds.Tables[0].Rows.Count>0)
                 {
-
-                    var errRsp = new ErrorResponse(-1, "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
-                    return errRsp.ToJSON();
+                    int intUnUsedCouponCount = Convert.ToInt32(ds.Tables[0].Rows[0]["RemainCount"].ToString());
+                    if (rp.Parameters.CountTotal>intUnUsedCouponCount)
+                    {
+                        var errRsp = new ErrorResponse(-1, ds.Tables[0].Rows[0]["CouponTypeName"].ToString() + "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
+                        return errRsp.ToJSON();
+                    }
                 }
+                //int intUnUsedCouponCount = bllCoupon.GetCouponCountByCouponTypeID(strCouponTypeID);
+                //int intHaveCout =(int)bllPrizes.GetByID(rp.Parameters.PrizesId).CountTotal;
+                //if (intUnUsedCouponCount < (rp.Parameters.CountTotal + intHaveCout))
+                //{
+
+                //    var errRsp = new ErrorResponse(-1, "奖品总数量超过未使用优惠券数量,未使用量：" + intUnUsedCouponCount.ToString());
+                //    return errRsp.ToJSON();
+                //}
             }
             
             var entity = new LPrizesEntity();
@@ -452,6 +496,26 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             entity.PrizesID = rp.Parameters.PrizesId;
             entity.LastUpdateBy = loggingSessionInfo.UserID;
             bllPrizes.AppendPrize(entity);
+
+            //入奖品池队列
+            LPrizePoolsBLL bllPools = new LPrizePoolsBLL(loggingSessionInfo);
+            DataSet dsPools = bllPools.GetPrizePoolsByEvent(loggingSessionInfo.ClientID, rp.Parameters.EventId);
+            if (dsPools != null && dsPools.Tables.Count > 0 && dsPools.Tables[0].Rows.Count > 0)
+            {
+                var poolTemp = DataTableToObject.ConvertToList<CC_PrizePool>(dsPools.Tables[0]);
+                var poolsList = Utils.GetRandomList<CC_PrizePool>(poolTemp);//随机列表
+                if (poolsList != null && poolsList.Count > 0)
+                {
+
+                    var redisPrizePoolsBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.PrizePools.RedisPrizePoolsBLL();
+                    CC_PrizePool prizePool = new CC_PrizePool();
+                    prizePool.CustomerId = loggingSessionInfo.ClientID;
+                    prizePool.EventId = rp.Parameters.EventId;
+
+                    redisPrizePoolsBLL.DeletePrizePoolsList(prizePool);
+                    redisPrizePoolsBLL.SetPrizePoolsToRedis(poolsList);
+                }
+            }
 
             var rd = new EmptyRD();
             var rsp = new SuccessResponse<IAPIResponseData>(rd);
@@ -482,6 +546,13 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
         {
             var rp = pRequest.DeserializeJSONTo<APIRequest<ImageObjectRP>>();
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
+            //保存活动第三步把IsDelete置为0
+            LEventsBLL bllEvent = new LEventsBLL(loggingSessionInfo);
+            bllEvent.UpdateEventIsDelete(rp.Parameters.EventId);
+            var bll = new LPrizesBLL(loggingSessionInfo);
+            ///生成奖品发奖时间
+            bll.CreatePrizePoolsReleaseTime(rp.Parameters.EventId, loggingSessionInfo.ClientID);
+
 
             if (rp.Parameters.DrawMethod == "5")
             {
@@ -646,6 +717,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             var rp = pRequest.DeserializeJSONTo<APIRequest<SaveEventStep3RP>>();
             var loggingSessionInfo = new SessionManager().CurrentUserLoginInfo;
 
+            var para = rp.Parameters;
+   
             //微信 公共平台
             var wapentity = new WApplicationInterfaceBLL(loggingSessionInfo).QueryByEntity(new WApplicationInterfaceEntity
             {
@@ -654,7 +727,6 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
             }, null).FirstOrDefault();//取默认的第一个微信
 
             #region 生成图文素材
-            var para = rp.Parameters;
 
             #region 获取Page信息
             var pageBll = new SysPageBLL(loggingSessionInfo);
@@ -923,6 +995,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.WEvents
 
 
             #endregion
+
 
 
             var rd = new EmptyRD();

@@ -283,6 +283,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.CreativityWarehouse.Market
                     eventEntity.PersonCount = para.GameEventInfo.PersonCount;
                     eventEntity.PointsLottery = para.GameEventInfo.PointsLottery;
                     eventEntity.LotteryNum = para.GameEventInfo.LotteryNum;
+                    eventEntity.IsDelete = 0;
 
                     if (DateTime.Compare(Convert.ToDateTime(para.GameEventInfo.BeginTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) <= 0 && DateTime.Compare(Convert.ToDateTime(para.GameEventInfo.EndTime), Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"))) >= 0)
                     {

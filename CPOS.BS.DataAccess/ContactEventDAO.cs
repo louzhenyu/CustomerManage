@@ -75,7 +75,9 @@ namespace JIT.CPOS.BS.DataAccess
             sql.AppendFormat(" SELECT  *");
             sql.AppendFormat(" FROM   #tmp");
             sql.AppendFormat(" WHERE   num >{0}  AND num<{1}", pPageSize * (pCurrentPageIndex - 1), (pPageSize * (pCurrentPageIndex))+1);
-            sql.AppendFormat("SELECT COUNT(1)TotalCount,(COUNT(1)/{0})+1 TotalPage FROM #tmp", pPageSize);
+            sql.AppendFormat(@"SELECT COUNT(1)TotalCount,CASE WHEN ( COUNT(1) % {0} ) >0 THEN ( COUNT(1) / {0} ) + 1
+                                                     WHEN ( COUNT(1) % {0} ) = 0 THEN ( COUNT(1) / {0} ) 
+                                                END TotalPage FROM #tmp", pPageSize);
 
             var ds = this.SQLHelper.ExecuteDataset(sql.ToString());
             return ds;
@@ -133,14 +135,13 @@ namespace JIT.CPOS.BS.DataAccess
         /// <param name="strContactType"></param>
         /// <param name="strShareEventId"></param>
         /// <returns></returns>
-        public int ExistsContact(ContactEventEntity entityContact)
+        public int ExistsContact(string strContactTypeCode, string strShareEventId)
         {
             string strSql = string.Empty;
-
-            if (entityContact.ShareEventId!=null &&entityContact.ShareEventId.Length > 0)
-                strSql = string.Format("SELECT COUNT(1) FROM ContactEvent With(nolock) WHERE IsDelete=0 and [Status]=2 and CustomerId='{0}' and [ContactTypeCode] ='{1}' and ShareEventId='{2}'", CurrentUserInfo.ClientID, entityContact.ContactTypeCode, entityContact.ShareEventId);
+            if (!string.IsNullOrEmpty(strShareEventId) && strShareEventId.Length > 0)
+                strSql = string.Format("SELECT COUNT(1) FROM ContactEvent With(nolock) WHERE IsDelete=0 and [Status]=2 and CustomerId='{0}' and [ContactTypeCode] ='{1}' and ShareEventId='{2}'", CurrentUserInfo.ClientID, strContactTypeCode,strShareEventId);
             else
-                strSql = string.Format("SELECT COUNT(1) FROM ContactEvent With(nolock) WHERE IsDelete=0 and [Status]=2  and CustomerId='{0}' and [ContactTypeCode] ='{1}' AND '{2}'>=BeginDate", CurrentUserInfo.ClientID, entityContact.ContactTypeCode, entityContact.BeginDate);
+                strSql = string.Format("SELECT COUNT(1) FROM ContactEvent With(nolock) WHERE IsDelete=0 and [Status]=2  and CustomerId='{0}' and [ContactTypeCode] ='{1}' AND IsCTW=0", CurrentUserInfo.ClientID, strContactTypeCode);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
         /// <summary>

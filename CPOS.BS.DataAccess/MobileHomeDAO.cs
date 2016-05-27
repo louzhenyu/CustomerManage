@@ -77,5 +77,20 @@ namespace JIT.CPOS.BS.DataAccess
 
 
         }
+        /// <summary>
+        /// 模版名称是否重复
+        /// </summary>
+        /// <param name="strCustomerId"></param>
+        /// <param name="strTitle"></param>
+        /// <returns></returns>
+        public int IsExistsTitle(string strCustomerId,string strHomeId, string strTitle)
+        {
+            string strSql = string.Format(@"SELECT COUNT(1) 
+                                            FROM dbo.MobileHome
+                                            WHERE IsDelete=0 
+                                                AND CustomerId='{0}' AND HomeId<>'{1}'  AND Title='{2}'", strCustomerId, strHomeId, strTitle);
+
+            return Convert.ToInt32(SQLHelper.ExecuteScalar(strSql));
+        }
     }
 }
