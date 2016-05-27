@@ -91,18 +91,18 @@
                        <div class="commonBtn icon icon_add w100 r" id="addUserBtn">新增员工</div>
                        <div class="exportBtn" style="display:none"></div>
                    </div>
-                   <div class="">
-                       <table class="dataTable" id="gridTable">
+
+                       <div class="dataTable" id="gridTable">
                            <div class="loading">
                               <span><img src="../static/images/loading.gif"></span>
                            </div>
-                       </table>
-                   </div>
+                       </div>
+
                    <div id="pageContianer">
                        <div class="dataMessage">没有符合条件的查询记录</div>
                        <div id="kkpager"></div>
                    </div>
-                </div>
+                 </div>
             </div>
         </div>
         <div style="display: none">
