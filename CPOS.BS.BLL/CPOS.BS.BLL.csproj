@@ -53,7 +53,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RedisOpenAPIClient">
+    <Reference Include="RedisOpenAPIClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferenceDll\RedisOpenAPIClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
