@@ -53,9 +53,9 @@
 
         </div>    
         <div class="tableWrap">
-            <table class="dataTable"  id="dataTable">
-                    <p class="loading" style="width:32px;height:32px;left:50%;margin-left:-16px;"><img src="../static/images/loading.gif"></p>
-            </table>
+            <div class="dataTable"  id="dataTable">
+
+            </div>
             <div id="pageContianer">
              <div class="dataMessage" >没有符合条件的查询记录</div>
                 <div id="kkpager" style="text-align:center;"></div>

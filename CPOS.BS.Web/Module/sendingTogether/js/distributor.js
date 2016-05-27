@@ -30,6 +30,7 @@
         },
         renderTable:function(){
             var that=this;
+            $.util.partialRefresh(that.elems.tabel);
             that.loadData.getRetailTraders(function(data){
                 debugger;
                 if(!data.Data.RetailTraderList){

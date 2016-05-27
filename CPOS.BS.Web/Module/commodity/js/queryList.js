@@ -259,7 +259,7 @@
             var that=this;
             if(!data.topics){
 
-                return;
+                data.topics=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({

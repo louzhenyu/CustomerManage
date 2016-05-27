@@ -18,11 +18,11 @@
                     </div>
                 <div class="tableWrap cursorDef" id="tableWrap">
 
-                    <table class="dataTable" id="gridTable">
+                    <div class="dataTable" id="gridTable">
                     	<div class="loading" style="padding-top:35px;">
                           <span><img src="../static/images/loading.gif"></span>
                         </div>
-                    </table>
+                    </div>
                     <div id="pageContianer">
                     <div class="dataMessage" >暂时没有数据！</div>
                         <div id="kkpager" >

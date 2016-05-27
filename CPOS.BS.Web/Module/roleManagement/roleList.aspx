@@ -65,13 +65,13 @@
                 <div class="optionBtn" id="opt">
                 	<div class="commonBtn icon icon_add w100 r" id="addRoleBtn">新增角色</div>
                 </div>
-                   <div class="">
-                        <table class="dataTable" id="gridTable">
+
+                        <div class="dataTable" id="gridTable">
                         	<div  class="loading">
                                <span><img src="../static/images/loading.gif"></span>
                             </div>
-                        </table>
-                   </div>
+                        </div>
+
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager" >

@@ -10,7 +10,6 @@
 
 </asp:Content>
 <asp:Content ID="Content2"  ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<body cache>
 <div class="allPage" id="section" data-js="js/withdrawWard.js?ver=0.1">
     <!-- 内容区域 -->
     <div class="contentArea_vipquery">
@@ -200,5 +199,4 @@
     </script>
 
 <script type="text/javascript" src="<%=StaticUrl+"/Module/static/js/lib/require.min.js"%>" defer async data-main="<%=StaticUrl+"/module/sendingTogether/js/main.js"%>" ></script>
-    </body>
 </asp:Content>

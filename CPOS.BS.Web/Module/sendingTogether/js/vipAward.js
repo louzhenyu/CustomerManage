@@ -31,6 +31,7 @@
         },
         renderTable:function(){
             var that=this;
+            $.util.partialRefresh(that.elems.tabel);
             that.loadData.GetSellerMonthRewardList(function(data){
                 debugger;
                 if(!data.Data.SellerMonthRewardList){

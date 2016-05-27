@@ -71,13 +71,13 @@
                 	<div class="commonBtn icon w100 icon_add r" id="addStoreBtn">新增门店</div>
                     <div class="exportBtn commonBtn w80">导出</div>
                 </div>
-                   <div>
-                   		<table class="dataTable" id="gridTable">
+
+                   		<div class="dataTable" id="gridTable">
                         	<div class="loading" style="margin-top:8px;">
                                <span><img src="../static/images/loading.gif"></span>
                             </div>
-                        </table>
-                   </div>
+                        </div>
+
                     <div id="pageContianer">
                     <div class="dataMessage" >没有符合条件的查询记录</div>
                         <div id="kkpager" >

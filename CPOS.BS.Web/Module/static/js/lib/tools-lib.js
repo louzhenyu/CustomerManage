@@ -204,6 +204,13 @@
     //最新的ajax封装
 	util.ajax=function(param){
 			var _param;
+          if($(".tableWrap").find(".loading").length>0){    //$(".tableWrap").find(".Refresh").length==0防止一个页面多个接口调用多吃
+             var dom=$(".tableWrap").find(".loading").parent();
+             // $(".tableWrap").find(".loading").remove();
+              $.util.partialRefresh(dom);
+
+          }
+
 
 			if(param.url.indexOf('Gateway.ashx')!=-1){
 
@@ -214,15 +221,17 @@
 			}
 			//_param.url =  _param.url;
         _param.success= function (data) {
+            $.util.isLoading(true);
+            $(".datagrid-mask,.datagrid-mask-msg").remove();
             if (!data.IsSuccess && data.ResultCode == 500) {
-                $.util.isLoading(true);
+
               /*  $.messager.alert("提示", data.Message,"error",function() {
                    // location.href = "/default.aspx?method=LogOut";
                 });*/
 
             } else {
                 param.success(data);
-                $.util.isLoading(true);
+
                 //$(".loading").hide();
             }
 
@@ -253,6 +262,7 @@
            success: null,
            error: function (XMLHttpRequest, textStatus, errorThrown){
                $.util.isLoading(true);
+               $(".datagrid-mask,.datagrid-mask-msg").remove();
                $(".loading").hide();
            }
        };
@@ -292,7 +302,12 @@
     util.oldAjax=function(param){
        debugger;
         var _param;
+        if($(".tableWrap").find(".loading").length>0&&$(".tableWrap").find(".Refresh").length==0){
+            var dom=$(".tableWrap").find(".loading").parent();
+            //$(".tableWrap").find(".loading").remove();
+            $.util.partialRefresh(dom);
 
+        }
         if(param.url.indexOf('Handler.ashx')!=-1||param.url.indexOf('Hander.ashx')!=-1){
 
             _param = util.oldBuildAjaxParams(param);
@@ -300,6 +315,7 @@
         //_param.url =  _param.url;
         _param.success = function (data) {
             $.util.isLoading(true);
+            $(".datagrid-mask,.datagrid-mask-msg").remove();
             if (!data.IsSuccess && data.ResultCode == 500) {
               /*  $.messager.alert("提示", data.Message,"error",function() {
                     location.href = "/default.aspx?method=LogOut";
@@ -319,8 +335,19 @@
     };
 
     util.partialRefresh=function(dom){    //局部刷新
-        debugger;
-        if(dom.parents(".panel-body").length>0) {
+        var domList=[];
+          if(dom.length>1){   //多个tab页面的处理
+              domList=dom;
+              dom=[];
+              domList.each(function (index,node) {
+                  debugger;
+                  if(!$(this).is("hidden")){
+                      dom=$(this);
+                      return false;
+                  }
+              })
+          }
+        if(dom.length>0&&dom.parents(".panel-body").length>0&&$(".datagrid-body").length>0&&$(".datagrid-body").find(".loading").length==0&&$(".datagrid-body").html().length>0) {
             var _701 = dom.datagrid("getPanel");
             if (!_701.children("div.datagrid-mask").length) {
                 $("<div class=\"datagrid-mask\" style=\"display:block\"></div>").appendTo(_701);
@@ -329,7 +356,7 @@
                 msg.css({marginLeft: (-msg.outerWidth() / 2), lineHeight: (msg.height() + "px")});
             }
         }else{
-              dom.html('<div class="loading" > <span><img src="../static/images/loading.gif"></span> </div>');
+              //dom.html('<div class="loading Refresh" > <span><img src="../static/images/loading.gif"></span> </div>');
         }
     };
     util.toNewUrlPath=function(urlPath){

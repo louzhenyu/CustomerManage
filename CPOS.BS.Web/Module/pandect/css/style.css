@@ -7,7 +7,7 @@
 .panelTitle p{height: 40px;background:url("../image/iconTitle.png") no-repeat left center;text-align: left; padding-left: 16px; line-height: 40px;color: #7a7a7a;}
 .borderAll{border: 1px solid #f0f0f2; border-radius: 6px 6px 0 0; }
 
-.one{height: 306px;}
+.onePanelDiv{height: 306px;}
 .oneLi{width: 315px; height: 220px;  float: left;}
 .oneLi p{ height:40px; line-height: 40px; color: #666666; padding-left: 18px; font-size: 14px;text-align: left}
 .onePanel{width: 314px; height:187px; border-right: 1px solid #f0f0f2;text-align: center; position: relative; }
@@ -45,14 +45,14 @@
     height: 26px;
 }
 
-.one .bottom{height: 35px; text-align: center; margin-top:20px; color: #999999; font-size: 12px;text-align: center}
-.one .bottom .l{width: 156px; height: 35px ;border-right: 1px solid #f0f0f2;}
-.one .bottom .r{width: 156px;}
-.one .centerDiv{ width: auto; display: inline-block;margin: 0 auto;}
-.one .bottom p{height: 13px;line-height: 13px;padding-left:0;width: auto;display: block;margin: 0 auto;}
-.one .bottom p em{width: 10px;height: 10px;border-radius: 5px;display: inline-block;margin-right: 8px;}
-.one .bottom p.red{color:#ff4d4d;font-size: 14px;line-height: 36px;padding-left: 18px;}
-.one .bottom p.red i{ font-size: 18px;}
+.onePanelDiv .bottom{height: 35px; text-align: center; margin-top:20px; color: #999999; font-size: 12px;text-align: center}
+.onePanelDiv .bottom .l{width: 156px; height: 35px ;border-right: 1px solid #f0f0f2;}
+.onePanelDiv .bottom .r{width: 156px;}
+.onePanelDiv .centerDiv{ width: auto; display: inline-block;margin: 0 auto;}
+.onePanelDiv .bottom p{height: 13px;line-height: 13px;padding-left:0;width: auto;display: block;margin: 0 auto;}
+.onePanelDiv .bottom p em{width: 10px;height: 10px;border-radius: 5px;display: inline-block;margin-right: 8px;}
+.onePanelDiv .bottom p.red{color:#ff4d4d;font-size: 14px;line-height: 36px;padding-left: 18px;}
+.onePanelDiv .bottom p.red i{ font-size: 18px;}
 
 .color0{ background-color: #ffd2d2}
 .color0Hover{background-color: #ff4d4d}
@@ -62,41 +62,41 @@
 .color2Hover{background-color: #ffb80d}
 .color3{background-color: #d0f3b4}
 
-.two{ height: 320px;margin-top:20px;}
-.two .leftDiv{ width: 1000px;height: 320px; float: left; }
-.two .percent{float:left; margin: 30px 0 0 30px;background: url(../image/percent.png) no-repeat; width: 284px; height: 221px; position: relative; text-align: center;}
-.two .percent .rice_1{ width: 96px; height: 96px; position: absolute; top:60px;}
-.two .percent .rice_2{ width: 74px; height: 74px; position: absolute; top:30px;left: 120px}
-.two .percent .rice_3{ width: 74px; height: 74px; position: absolute; top:120px;left: 120px}
-.two .percent p{ color: #ff4d4d; }
-.two .percent em{font-size: 12px;margin-top: 15px; display: block; margin-bottom: 10px;}
-.two .percent p i{ font-size: 16px;}
+.twoPanelDiv{ height: 320px;margin-top:20px;}
+.twoPanelDiv .leftDiv{ width: 1000px;height: 320px; float: left; }
+.twoPanelDiv .percent{float:left; margin: 30px 0 0 30px;background: url(../image/percent.png) no-repeat; width: 284px; height: 221px; position: relative; text-align: center;}
+.twoPanelDiv .percent .rice_1{ width: 96px; height: 96px; position: absolute; top:60px;}
+.twoPanelDiv .percent .rice_2{ width: 74px; height: 74px; position: absolute; top:30px;left: 120px}
+.twoPanelDiv .percent .rice_3{ width: 74px; height: 74px; position: absolute; top:120px;left: 120px}
+.twoPanelDiv .percent p{ color: #ff4d4d; }
+.twoPanelDiv .percent em{font-size: 12px;margin-top: 15px; display: block; margin-bottom: 10px;}
+.twoPanelDiv .percent p i{ font-size: 16px;}
 .rice_1 p{ font-size: 26px;}
 .two .percent .rice_1 em{font-size: 14px; margin-top: 20px; display: block; margin-bottom: 17px;}
 .rice_2 p, .rice_3 p{ font-size: 24px;}
-.two .panelData{width: 676px; float: right; margin-top: 30px; height: 221px }
-.two .panelData .line{height: 50px; display: block;margin-bottom: 36px;width: 100%}
-.two .panelData .line .data{width: 165px;float: left;padding-left: 3px;position: relative;height: 50px;display: block;}
-.two .panelData .line .data em{font-size: 14px;color: #999;margin-bottom: 10px;display: inline-block;}
-.two .panelData .line .data p{border-bottom: 0;font-size: 20px;height: 20px;color: #00a0e8;position: absolute;white-space: nowrap}
-.two .panelData .line .data p i {font-size: 14px;height:14px;color: #999;display: inline-block;width: 70px;padding-left: 30px;position: absolute;border-bottom: 0;}
-.two .panelData .line .data p i.up{ background: url("../image/up.png") no-repeat 12px bottom; }
-.two .panelData .line .data p i.down{ background: url("../image/down.png") no-repeat 12px bottom;}
-.two .panelData .line .data p b{ font-size: 14px}
-.two .rightDiv{  height: 320px;}
+.twoPanelDiv .panelData{width: 676px; float: right; margin-top: 30px; height: 221px }
+.twoPanelDiv .panelData .line{height: 50px; display: block;margin-bottom: 36px;width: 100%}
+.twoPanelDiv .panelData .line .data{width: 165px;float: left;padding-left: 3px;position: relative;height: 50px;display: block;}
+.twoPanelDiv .panelData .line .data em{font-size: 14px;color: #999;margin-bottom: 10px;display: inline-block;}
+.twoPanelDiv .panelData .line .data p{border-bottom: 0;font-size: 20px;height: 20px;color: #00a0e8;position: absolute;white-space: nowrap}
+.twoPanelDiv .panelData .line .data p i {font-size: 14px;height:14px;color: #999;display: inline-block;width: 70px;padding-left: 30px;position: absolute;border-bottom: 0;}
+.twoPanelDiv .panelData .line .data p i.up{ background: url("../image/up.png") no-repeat 12px bottom; }
+.twoPanelDiv .panelData .line .data p i.down{ background: url("../image/down.png") no-repeat 12px bottom;}
+.twoPanelDiv .panelData .line .data p b{ font-size: 14px}
+.twoPanelDiv .rightDiv{  height: 320px;}
 .rightDiv{ width: 240px; float: right; text-align: center;}
 .rightDiv .btnList{width: 158px;height: 180px;margin: 0 auto;padding-top: 56px;text-align: left;}
 .rightDiv .btnList p{border: 2px solid #038efe;width: 158px;display:block;height: 39px;margin-bottom:22px;border-radius: 19px;padding: 0 37px 0 34px;color: #01a1ff;font-size: 13px;line-height: 35px;}
 .rightDiv .btnList p{cursor: pointer; background: url("../image/target.png") no-repeat 121px center;}
-.three{ height: 380px; margin-top: 20px; }
-.three .rightDiv .btnList{padding-top: 115px;}
-.three .rightDiv{height: 380px;}
-.three .tableDiv{width: 243px; height: 380px; margin-right: 10px; float: left;}
-.three .panelTitle{ background: url("../image/jiantou.png") no-repeat 222px center;}
-.three .bg{ background: url("../image/jiantou1.png") no-repeat 222px center;}
-.three .datagrid-header{ border: none; background: #fff;}
-.three .datagrid{ border:none;}
-.three .datagrid-header td,.three .datagrid-body td,.three .datagrid-footer td{border: 1px solid transparent;}
+.threePanelDiv{ height: 380px; margin-top: 20px; }
+.threePanelDiv .rightDiv .btnList{padding-top: 115px;}
+.threePanelDiv .rightDiv{height: 380px;}
+.threePanelDiv .tableDiv{width: 243px; height: 380px; margin-right: 10px; float: left;}
+.threePanelDiv .panelTitle{ background: url("../image/jiantou.png") no-repeat 222px center;}
+.threePanelDiv .bg{ background: url("../image/jiantou1.png") no-repeat 222px center;}
+.threePanelDiv .datagrid-header{ border: none; background: #fff;}
+.threePanelDiv .datagrid{ border:none;}
+.threePanelDiv .datagrid-header td,.three .datagrid-body td,.three .datagrid-footer td{border: 1px solid transparent;}
 .rightDiv .panelTitle{ background: none; }
 
 .imgPanel{ padding-left:20px;}

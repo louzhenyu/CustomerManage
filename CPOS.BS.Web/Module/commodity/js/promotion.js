@@ -150,7 +150,7 @@
             var that=this;
             if(!data){
 
-                return;
+                data=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({

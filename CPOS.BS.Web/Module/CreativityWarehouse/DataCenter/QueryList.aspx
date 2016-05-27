@@ -222,7 +222,7 @@
                    <div class="dataTable gridTable2" >
                           
                    </div>
-                    <div id="pageContianer2">
+                    <div id="pageContianer2" style="padding-right: 30px;">
                     <div class="dataMessage2" >没有符合条件的查询记录</div>
                         <div id="kkpager2">
                         </div>

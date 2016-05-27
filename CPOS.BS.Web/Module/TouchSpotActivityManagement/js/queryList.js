@@ -102,9 +102,9 @@
 			//跳转详情页
 			that.elems.tabelWrap.delegate("tr","click",function(e){
                 var $this = $(this),
-					mid = JITMethod.getUrlParam("mid");
-                var row = that.elems.tabel.datagrid('getSelected');
-				location.href = "activiDetail.aspx?EventID=" + row.EventID + "&mid=" + mid;
+					//mid = JITMethod.getUrlParam("mid");
+                 row = that.elems.tabel.datagrid('getSelected');
+                $.util.toNewUrlPath("activiDetail.aspx?EventID=" + row.EventID);
 			})
             
         },

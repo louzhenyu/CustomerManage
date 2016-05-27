@@ -39,6 +39,7 @@
         },
         renderTable:function(){
             var that=this;
+            $.util.partialRefresh(that.elems.tabel);
             that.getTableInfo(function(data){
                 debugger;
                 if(!data.Data.WithdrawDepositList){
@@ -223,7 +224,7 @@
                    page.params[filed.name] = filed.value
                 });
 
-                $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+
                 that.renderTable();
 			});
 

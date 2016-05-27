@@ -39,6 +39,7 @@
         },
         renderTable:function(){
             var that=this;
+            $.util.partialRefresh(that.elems.tabel);
             that.getTableInfo(function(data){
                 debugger;
                 if(!data.Data.WithdrawDepositList){

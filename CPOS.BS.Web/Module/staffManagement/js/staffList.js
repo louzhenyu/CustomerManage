@@ -40,10 +40,28 @@
 
         },
         initEvent: function () {
+
             var that = this;
+			//获取所属层级数据
+			that.loadData.getClassify(function(data) {
+				data.push({id:'',text:"请选择"});
+				$('#type_id').combotree({
+					width:that.elems.width,
+					height:that.elems.height,
+					editable:true,
+					lines:true,
+					panelHeight:that.elems.panlH,
+					valueField: 'id',
+					textField: 'text',
+					data:data
+				});
+			});
+			//获取角色列表
+			that.getRoleList();
+			that.getUserStatus();
             //点击查询按钮进行数据查询
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
-           	 	$(".datagrid-body").html('<div class="loading" style="width:99%"><span><img src="../static/images/loading.gif"></span></div>');
+           	 	//$(".datagrid-body").html('<div class="loading" style="width:99%"><span><img src="../static/images/loading.gif"></span></div>');
 				debugger;
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
 				that.loadData.args.start = 0;
@@ -80,7 +98,9 @@
 					case 'reset':
 						$.messager.confirm('重置密码', '您确定要密码重置为888888吗？',function(r){
 						   if(r){
-							   that.resetPassWord(userId);
+							   that.resetPassWord(userId,function(){
+								   that.loadPageData(e);
+							   });
 						   }
 						});
 					break; 
@@ -92,21 +112,23 @@
 					
 					case 'pause':
 						that.setStatusEvent(userId,1,function(){
-							$this.attr('class','handle runningBtn opt').attr('title','停用').data('flag','running');
-							$('td[field="User_Status"]',$tr).find('div').text('正常');
+							/*$this.attr('class','handle runningBtn opt').attr('title','停用').data('flag','running');
+							$('td[field="User_Status"]',$tr).find('div').text('正常');*/
+							that.loadPageData(e);
 						});
 					break;
 					case 'running':
 						that.setStatusEvent(userId,-1,function(){
-							$this.attr('class','handle pauseBtn opt').attr('title','启用').data('flag','pause');
-							$('td[field="User_Status"]',$tr).find('div').text('停用');
+							/*$this.attr('class','handle pauseBtn opt').attr('title','启用').data('flag','pause');
+							$('td[field="User_Status"]',$tr).find('div').text('停用');*/
+							that.loadPageData(e);
 						});
 					break;
 					case 'delete':
 						$.messager.confirm('提示', '您确定要删除该员工吗？',function(r){
 						   if(r){
 							   that.setRemoveUser(userId,function(data){
-								   $tr.remove();
+								   that.loadPageData(e);
 							   });
 						   }
 						});
@@ -198,7 +220,7 @@
             $.each(fileds,function(i,filed){
                 //filed.value=filed.value==0?"":filed.value;
 				if(filed.name=='user_status' && filed.value==''){
-					filed.value = 1;
+					filed.value = 0;
 				}
                 that.loadData.seach[filed.name]=filed.value;
             });
@@ -213,23 +235,7 @@
             var that = this;
             $(that.elems.sectionPage.find(".queryBtn").get(0)).trigger("click");
 			
-			//获取所属层级数据
-            that.loadData.getClassify(function(data) {
-                data.push({id:'',text:"请选择"});
-                $('#type_id').combotree({
-                    width:that.elems.width,
-					height:that.elems.height,
-                    editable:true,
-                    lines:true,
-                    panelHeight:that.elems.panlH,
-                    valueField: 'id',
-                    textField: 'text',
-                    data:data
-                });
-            });
-			//获取角色列表
-			that.getRoleList();
-			that.getUserStatus();
+
         },
         downloadFile: function (fileName, content) {
 
@@ -247,7 +253,7 @@
             debugger;
             var that=this;
             if(!data.topics){
-                return;
+				data.topics=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({
@@ -400,7 +406,7 @@
                 that.renderTable(data);
             });
         },
-		resetPassWord: function(userId){
+		resetPassWord: function(userId,callback){
 			$.util.oldAjax({
 				url: "/module/basic/user/Handler/UserHandler.ashx",
 				data:{
@@ -411,6 +417,9 @@
 				success: function(data){
 					if(data.success){
 						alert('密码重置成功！');
+						  if(callback){
+							  callback(data);
+						  }
 					}
 					else{
 						alert(data.msg);
@@ -491,13 +500,14 @@
 		getUserStatus:function(){
 			var that = this,
 				result = [
-					{
+					/*{
 						user_status:"",
 						user_status_name:"请选择"
-					},
+					},*/
 					{
 						user_status:1,
-						user_status_name:"正常"
+						user_status_name:"正常",
+						selected:"true"
 					},
 					{
 						user_status:-1,

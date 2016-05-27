@@ -31,6 +31,7 @@
         },
         renderTable:function(){
             var that=this;
+            $.util.partialRefresh(that.elems.tabel);
             that.loadData.GetRetailMonthRewardList(function(data){
                 debugger;
                 if(!data.Data.RetailMonthRewardList){
@@ -158,7 +159,6 @@
             var that = this;
             this.loadData.args.PageIndex = currentPage;
 
-            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             that.renderTable();
 
         },
@@ -199,7 +199,7 @@
                 $.each(fileds,function(index,filed){
                   that.loadData.seach[filed.name] = filed.value;
                 });
-                $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+
                 that.renderTable();
 			});
 

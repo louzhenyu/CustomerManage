@@ -34,12 +34,13 @@
 		//加载页面的数据请求
         loadPageData: function () {
             var that = this;
-            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+
            that.renderTable();
 			
         },
         renderTable:function(){
             var that=this;
+            $.util.partialRefresh(that.elems.tabel);
             that.getTableInfo(function(data){
                 debugger;
                 if(!data.Data.WithdrawDepositList){
@@ -223,7 +224,7 @@
                     }
                     page.params[filed.name] = filed.value;
                 });
-                $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+
                 that.renderTable();
 			});
 

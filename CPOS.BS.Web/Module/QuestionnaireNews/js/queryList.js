@@ -213,7 +213,7 @@
             var that = this;
             $(that.elems.sectionPage.find(".queryBtn").get(0)).trigger("click");
 
-            $(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
+            //$(".datagrid-body").html('<div class="loading"><span><img src="../static/images/loading.gif"></span></div>');
             $.util.stopBubble(e)
         },
 
@@ -223,7 +223,7 @@
             var that=this;
             if (!data.Data.QuestionnaireList) {
 
-                return;
+                data.Data.QuestionnaireList=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({

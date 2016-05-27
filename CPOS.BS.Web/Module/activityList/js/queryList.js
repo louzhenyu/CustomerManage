@@ -331,13 +331,16 @@
 				  },
 				  success: function (data) {
 					  if(data.IsSuccess && data.ResultCode == 0) {
-						  	if(status==30){
+                          that.loadData.getCommodityList(function(data){
+                              that.renderTable(data);
+                          });
+						  /*	if(status==30){
 								$dom.attr('class','opt pause').data('oprtype','pause');
 								$('td[field="Status"] div',$dom.parents('tr')).text('暂停');
 							}else{
 								$dom.attr('class','opt running').data('oprtype','running');
 								$('td[field="Status"] div',$dom.parents('tr')).text('运行中');
-							}
+							}*/
 					  }else{
 						alert(data.Message);
 					  }

@@ -10,7 +10,6 @@
             thead:$("#thead"),                    //表格head部分
             showDetail: $('#showDetail'),         //弹出框查看详情部分
             operation:$('#opt,#Tooltip'),              //弹出框操作部分
-			dataMessage:$(".dataMessage"),
             vipSourceId:'',
             click:true,
             dataMessage:  $("#pageContianer").find(".dataMessage"),
@@ -38,6 +37,27 @@
         },
         initEvent: function () {
             var that = this;
+            //获取所属层级数据
+            that.loadData.getClassify(function(data) {
+                if(data[0].children){
+                    data[0].children.push({id:0,text:"请选择"});
+                }else{
+                    data[0].children = [{id:0,text:"请选择"}];
+                }
+                $('#type_id').combotree({
+                    width:that.elems.width,
+                    height:that.elems.height,
+                    editable:true,
+                    lines:true,
+                    panelHeight:that.elems.panlH,
+                    valueField: 'id',
+                    textField: 'text',
+                    data:data
+                });
+            });
+            //获取应用系统数据
+            that.getAppSys($('#app_sys_id'));
+
             //点击查询按钮进行数据查询
             that.elems.sectionPage.delegate(".queryBtn","click", function (e) {
                 //调用设置参数方法   将查询内容  放置在this.loadData.args对象中
@@ -182,27 +202,7 @@
             var that = this;
             $(that.elems.sectionPage.find(".queryBtn").get(0)).trigger("click");
 			
-			//获取所属层级数据
-            that.loadData.getClassify(function(data) {
-				if(data[0].children){
-					data[0].children.push({id:0,text:"请选择"});
-				}else{
-					data[0].children = [{id:0,text:"请选择"}];
-				}
-                $('#type_id').combotree({
-                    width:that.elems.width,
-					height:that.elems.height,
-                    editable:true,
-                    lines:true,
-                    panelHeight:that.elems.panlH,
-                    valueField: 'id',
-                    textField: 'text',
-                    data:data
-                });
-            });
-			//获取应用系统数据
-			that.getAppSys($('#app_sys_id'));
-            
+
 			
 			
         },
@@ -211,7 +211,7 @@
             debugger;
             var that=this;
             if(!data.topics){
-                return;
+                data.topics=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({
@@ -555,6 +555,7 @@
             opertionField:{},
 
             getCommodityList: function (callback) {
+              // $.util.partialRefresh($("#gridTable"));
                 $.util.oldAjax({
                     url: "/module/basic/role/Handler/RoleHandler.ashx",
                       data:{

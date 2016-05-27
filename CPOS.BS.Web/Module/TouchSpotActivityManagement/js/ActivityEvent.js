@@ -12,7 +12,6 @@
             thead:$("#thead"),                    //表格head部分
             showDetail: $('#showDetail'),         //弹出框查看详情部分
             operation:$('#opt,#Tooltip'),              //弹出框操作部分
-			dataMessage:$(".dataMessage"),
 			dataMessage2:$(".dataMessage2"),
             vipSourceId:'',
             click:true,
@@ -187,8 +186,9 @@
         //渲染tabel
         renderTable: function (data) {
             var that = this;
-            if (!data.IsSuccess) {
-                return;
+            debugger;
+            if (!(data.Data&&data.Data.ContactEventList)) {
+                data.Data.ContactEventList=[];
             }
             //jQuery easy datagrid  表格处理
             that.elems.tabel.datagrid({
@@ -205,23 +205,12 @@
                  remoteSort : true, // 服务器排序*/
                 idField: 'ContactEventId', //主键字段
                 /* pageNumber:1,*/
-                /*
-                frozenColumns:[[
-                    {
-                        field : 'ck',
-                        width:70,
-                        title:'全选',
-                        align:'center',
-                        checkbox : true
-                    }
-                ]],
-				*/
                 columns: [[
                     {
                         field: 'ContactEventName', title: '活动名称', width: 200, align: 'left', resizable: false,
                         formatter: function (value, row, index) {
                             var long = 17;
-                            var html = ""
+                            var html = "";
                             if (value && value.length > long) {
                                 html = '<div class="rowTextnew" title="' + value + '">' + value.substring(0, long) + '...</div>'
                             } else {
@@ -320,10 +309,9 @@
 					        return htmlStr;
 					    }
 					}
-
-
                 ]],
                 onLoadSuccess: function (data) {
+                    debugger;
                     that.elems.tabel.datagrid('clearSelections'); //一定要加上这一句，要不然datagrid会记住之前的选择状态，删除时会出问题
                     if (data.rows.length > 0) {
                         that.elems.dataMessage.hide();
@@ -340,19 +328,11 @@
                             $('#addShareForm').form('load', { ContactTypeCode: row.ContactTypeCode, ContactEventName: row.ContactEventName, BeginDate: row.BeginDate.split(" ")[0].replace("/", "-").replace("/", "-"), EndDate: row.EndDate.split(" ")[0].replace("/", "-").replace("/", "-"), PrizeType: row.PrizeType, Integral: row.Integral, CouponTypeID: row.CouponTypeName, EventId: row.EventName, ChanceCount: row.ChanceCount, ContactEventId: row.ContactEventId, PrizeCount: row.PrizeCount, ShareEventId: row.ShareEventName, RewardNumber: row.RewardNumber.replace(/\s+/g, "") });
                             that.hideEdit();
                         }
-                   
-                    /*
-                     if(that.elems.click){
-                     that.elems.click = true;
-                     var mid = JITMethod.getUrlParam("mid");
-                     location.href = "commodityExit.aspx?Item_Id=" + rowData.Item_Id +"&mid=" + mid;
-                     }
-					*/
                 }, onClickCell: function (rowIndex, field, rowData) {
                     if (field != "PrizesID" && field != "ContactEventId") {//在每一列有操作 而点击行有跳转页面的操作才使用该功能。此处不释与注释都可以。
-                       that.elems.click=true;
-                    }else{
-                       that.elems.click=false;
+                        that.elems.click = true;
+                    } else {
+                        that.elems.click = false;
                     }
                 }
 

@@ -70,7 +70,7 @@
 
                 </div>
                 <div class="tableWrap" id="tableWrap">
-                    <table class="dataTable" id="gridTable"></table>
+                    <div class="dataTable" id="gridTable"></div>
                     <div id="pageContianer">
                         <div id="kkpager" style="text-align: center;">
                         </div>

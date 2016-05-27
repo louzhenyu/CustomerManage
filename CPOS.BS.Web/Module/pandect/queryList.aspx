@@ -12,7 +12,7 @@
         <div class="allPage" id="section" data-js="js/queryList.js">
          <div class="mainPanel">
 
-            <div class="one borderAll">
+            <div class="onePanelDiv borderAll">
             <div class="panelTitle"><p>7天经营数据</p></div>
             <div class="oneLi">
             <p>访客</p>
@@ -130,7 +130,7 @@
             </div>  <!--oneLi-->
 </div>  <!--one-->
      <div class="zsy"></div>
-            <div class="two ">
+            <div class="twoPanelDiv">
              <div class="leftDiv borderAll">
              <div class="panelTitle"><p>云店转化（昨日同期对比）</p></div>
              <div class="percent">
@@ -205,7 +205,7 @@
 </div>   <!--btnList-->
 </div>  <!--rightDiv-->
 </div> <!--two-->
-<div class="three">
+<div class="threePanelDiv">
    <div class="tableDiv borderAll">
            <div class="panelTitle"><p>浏览次数最多的10种商品</p></div>
            <div data-filed="Top10Views"></div>
