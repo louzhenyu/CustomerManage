@@ -1440,7 +1440,7 @@ namespace JIT.CPOS.BS.BLL
             prizePool.EventId = strEventId;
 
             var resultPrizePool = redisPrizePoolsBLL.GetPrizePoolsFromRedis(prizePool);
-            if (resultPrizePool.Code == ResponseCode.Fail && resultPrizePool.Result.PrizePoolsID == null)
+            if (resultPrizePool.Code == ResponseCode.Success && resultPrizePool.Result.PrizePoolsID == null)
             {
                 DataSet dsPrizePools = bllPrizePools.GetRandomPrizeByEventId(strEventId);
                 if (dsPrizePools != null && dsPrizePools.Tables[0].Rows.Count > 0)
