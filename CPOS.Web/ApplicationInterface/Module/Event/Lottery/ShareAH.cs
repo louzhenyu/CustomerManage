@@ -32,7 +32,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Event.Lottery
                     }
                     else
                     {
-                        rd = bllPrize.CheckIsWinnerForShare(para.ShareUserId, para.EventId,para.Type);
+                        rd = bllPrize.CheckIsWinnerForShareForRedis(para.ShareUserId, para.EventId, para.Type, this.CurrentUserInfo);
                     }
 
 

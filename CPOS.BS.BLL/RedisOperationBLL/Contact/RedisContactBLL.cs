@@ -57,7 +57,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Contact
             {
 
 
-                var numCount = 1000;
+                var numCount = 50;
                 var customerIDs = CustomerBLL.Instance.GetCustomerList();
                 CC_Connection connection = new CC_Connection();
                 LoggingSessionInfo _loggingSessionInfo = new LoggingSessionInfo();
@@ -77,21 +77,8 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Contact
                     {
                         continue;
                     }
-                    connection = new RedisConnectionBLL().GetConnection(customer.Key);
-                    BaseService.WriteLog("触点:" + connection.Customer_Name + "_" + connection.ConnectionStr);
-                    if (connection.ConnectionStr == null)
-                    {
-                        BaseService.WriteLog("触点conn从数据库取数据" + connection.ConnectionStr);
-                        connection.ConnectionStr = GetCustomerConn(customer.Key);
-
-
-                    }
-                    if (connection.ConnectionStr == null)
-                    {
-                        BaseService.WriteLog("触点conn从数据库取数据失败");
-                        continue;
-
-                    }
+                    
+                    
                     _loggingSessionInfo.ClientID = customer.Key;
                     CurrentLoggingManager.Connection_String = customer.Value;
                     _loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
@@ -101,7 +88,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Contact
                     {
                         numCount = Convert.ToInt32(count.Result);
                     }
-
+                    BaseService.WriteLog("触点:" + customer.Key + "_" + customer.Value + ",数量" + numCount.ToString());
                     for (var i = 0; i < numCount; i++)
                     {
                         var response = RedisOpenAPI.Instance.CCContact().GetContact(new CC_Contact
@@ -114,6 +101,8 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Contact
                         }
 
                     }
+                    BaseService.WriteLog("触点结束");
+
                 }
             }
             catch (Exception ex)

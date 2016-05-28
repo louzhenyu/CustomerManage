@@ -296,7 +296,6 @@ namespace JIT.CPOS.BS.BLL
 
                     LLotteryLogBLL bllLottery = new LLotteryLogBLL(this.CurrentUserInfo);
                     LLotteryLogEntity lotteryEntity = null;
-                    bool boolHaveLog = false;
 
 
                     List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
@@ -529,8 +528,6 @@ namespace JIT.CPOS.BS.BLL
 
                     LLotteryLogBLL bllLottery = new LLotteryLogBLL(loggingSessionInfo);
                     LLotteryLogEntity lotteryEntity = null;
-                    bool boolHaveLog = false;
-
 
                     List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
                     complexCondition.Add(new EqualsCondition() { FieldName = " EventId", Value = contactEvent.ContactEventId });
@@ -542,7 +539,10 @@ namespace JIT.CPOS.BS.BLL
                     lotteryEntity = bllLottery.Query(complexCondition.ToArray(), lstOrder.ToArray()).FirstOrDefault();
                     if (lotteryEntity != null)
                     {
-                        boolHaveLog = true;
+
+                        lotteryEntity.LotteryCount = (lotteryEntity == null ? 0 + 1 : lotteryEntity.LotteryCount + 1);
+                        bllLottery.Update(lotteryEntity);
+                     
                         if (contactEvent.RewardNumber.ToString().TrimEnd() == "OnlyOne")
                         {
                             rd.PrizeName = "仅有一次奖励！";
@@ -553,6 +553,20 @@ namespace JIT.CPOS.BS.BLL
                             rd.PrizeName = "每天一次奖励！";
                             return rd;
                         }
+                    }
+                    else
+                    {
+                        lotteryEntity = new LLotteryLogEntity()
+                        {
+                            LogId = Guid.NewGuid().ToString(),
+                            VipId = strVipId,
+                            EventId = contactEvent.ContactEventId.ToString(),
+                            LotteryCount = 1,
+                            IsDelete = 0
+
+                        };
+                        bllLottery.Create(lotteryEntity);
+
                     }
                     if (entityPrize.PrizeTypeId == "Point")
                     {
@@ -642,25 +656,6 @@ namespace JIT.CPOS.BS.BLL
                         }
                     }
 
-                    if (boolHaveLog)
-                    {
-                        lotteryEntity.LotteryCount = (lotteryEntity == null ? 0 + 1 : lotteryEntity.LotteryCount + 1);
-                        bllLottery.Update(lotteryEntity);
-                    }
-                    else
-                    {
-                        lotteryEntity = new LLotteryLogEntity()
-                        {
-                            LogId = Guid.NewGuid().ToString(),
-                            VipId = strVipId,
-                            EventId = contactEvent.ContactEventId.ToString(),
-                            LotteryCount = 1,
-                            IsDelete = 0
-
-                        };
-                        bllLottery.Create(lotteryEntity);
-
-                    }
 
                     entityPrizeWinner = new LPrizeWinnerEntity()
                     {
