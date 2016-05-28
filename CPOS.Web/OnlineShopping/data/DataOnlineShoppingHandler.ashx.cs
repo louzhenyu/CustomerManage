@@ -2956,7 +2956,15 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     getDeliveryAmountRespContentData.DSId = customerDeliveryStrategyEntity.Id.ToString();//guid转string
                     getDeliveryAmountRespContentData.AmountBegin = ToStr(customerDeliveryStrategyEntity.AmountBegin);
                     getDeliveryAmountRespContentData.AmountEnd = ToStr(customerDeliveryStrategyEntity.AmountEnd);
-                    getDeliveryAmountRespContentData.DeliveryAmount = ToStr(customerDeliveryStrategyEntity.DeliveryAmount);
+                    //修改 判断 免运费最低订单金额
+                    if (!string.IsNullOrWhiteSpace(reqObj.special.totalAmount) && Convert.ToDecimal(reqObj.special.totalAmount) != 0)
+                    {
+                        if (customerDeliveryStrategyEntity.DeliveryAmount != null)
+                        {
+                            getDeliveryAmountRespContentData.DeliveryAmount = (Convert.ToDecimal(reqObj.special.totalAmount) > customerDeliveryStrategyEntity.AmountEnd ? 0 : customerDeliveryStrategyEntity.DeliveryAmount).ToString();
+                        }
+                    }
+                    //getDeliveryAmountRespContentData.DeliveryAmount =  TypeParse.ToStr(customerDeliveryStrategyEntity.DeliveryAmount);
                     getDeliveryAmountRespContentData.DeliveryStrategyDesc = basicSettingBll.GetSettingValueByCode("DeliveryStrategy");//获取配送费策略描述
                     respData.Data = getDeliveryAmountRespContentData;
                 }
