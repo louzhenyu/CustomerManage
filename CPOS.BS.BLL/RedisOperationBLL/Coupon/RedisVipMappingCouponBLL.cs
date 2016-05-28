@@ -43,9 +43,9 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                 {
                     LoggingSessionInfo _loggingSessionInfo = new LoggingSessionInfo();
                     LoggingManager CurrentLoggingManager = new LoggingManager();
-                    string strCon=string.Empty;
+                    string strCon = string.Empty;
                     var connection = new RedisConnectionBLL().GetConnection(coupon.CustomerId);
-                    if (connection.CustomerID==null)
+                    if (connection.CustomerID == null)
                     {
                         connection.ConnectionStr = GetCustomerConn(coupon.CustomerId);
                     }
@@ -53,21 +53,21 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     CurrentLoggingManager.Connection_String = connection.ConnectionStr;
                     _loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
                     var bllCouponType = new CouponTypeBLL(_loggingSessionInfo);
-                    var couponType = bllCouponType.QueryByEntity(new CouponTypeEntity() { CustomerId = coupon.CustomerId,CouponTypeID=new Guid(coupon.CouponTypeId),IsDelete = 0 }, null).SingleOrDefault();
+                    var couponType = bllCouponType.QueryByEntity(new CouponTypeEntity() { CustomerId = coupon.CustomerId, CouponTypeID = new Guid(coupon.CouponTypeId), IsDelete = 0 }, null).SingleOrDefault();
                     if (couponType != null)
                     {
                         int intCouponLenth = 10000;
                         RedisOpenAPI.Instance.CCCoupon().SetCouponList(new CC_Coupon()
-                                {
-                                    CustomerId = couponType.CustomerId,
-                                    CouponTypeId = couponType.CouponTypeID.ToString(),
-                                    CouponTypeDesc = couponType.CouponTypeDesc,
-                                    CouponTypeName = couponType.CouponTypeName,
-                                    BeginTime = couponType.BeginTime.ToString(),
-                                    EndTime = couponType.EndTime.ToString(),
-                                    ServiceLife = couponType.ServiceLife ?? 0,
-                                    CouponLenth = intCouponLenth
-                                });
+                        {
+                            CustomerId = couponType.CustomerId,
+                            CouponTypeId = couponType.CouponTypeID.ToString(),
+                            CouponTypeDesc = couponType.CouponTypeDesc,
+                            CouponTypeName = couponType.CouponTypeName,
+                            BeginTime = couponType.BeginTime.ToString(),
+                            EndTime = couponType.EndTime.ToString(),
+                            ServiceLife = couponType.ServiceLife ?? 0,
+                            CouponLenth = intCouponLenth
+                        });
                     }
 
                 }
@@ -112,7 +112,6 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
             {
                 var numCount = 50;
                 var customerIDs = CustomerBLL.Instance.GetCustomerList();
-                CC_Connection connection = new CC_Connection();
                 foreach (var customer in customerIDs)
                 {
 
@@ -149,7 +148,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     dtVipCoupon.Columns.Add("FromVipId", typeof(string));
                     dtVipCoupon.Columns.Add("ObjectId", typeof(string));
                     dtVipCoupon.Columns.Add("CouponSourceId", typeof(string));
-                    BaseService.WriteLog("获取VipMappingCoupon的长度");
+
                     var count = RedisOpenAPI.Instance.CCVipMappingCoupon().GetVipMappingCouponLength(new CC_VipMappingCoupon
                     {
                         CustomerId = customer.Key
@@ -163,21 +162,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     {
                         continue;
                     }
-                    connection = new RedisConnectionBLL().GetConnection(customer.Key);
-                    BaseService.WriteLog("优惠券redis取数据：" + customer.Key + " Code" + connection.Customer_Code + " Name" + connection.Customer_Name);
-
-                    if (connection.ConnectionStr == null)
-                    {
-                        BaseService.WriteLog("优惠券conn从数据库取数据" + connection.ConnectionStr);
-                        connection.ConnectionStr = GetCustomerConn(customer.Key);
-
-                    }
-                    if (connection.ConnectionStr == null)
-                    {
-                        BaseService.WriteLog("优惠券conn从数据库取数据失败");
-                        continue;
-
-                    }
+                    BaseService.WriteLog("优惠券redis取数据：" + customer.Key );
                     if (count.Result < numCount)
                     {
                         numCount = Convert.ToInt32(count.Result);
@@ -243,13 +228,13 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     }
                     if (dtCoupon != null && dtCoupon.Rows.Count > 0)
                     {
-                        SqlBulkCopy(connection.ConnectionStr, dtCoupon, "Coupon");
+                        SqlBulkCopy(customer.Value, dtCoupon, "Coupon");
 
                         LoggingSessionInfo _loggingSessionInfo = new LoggingSessionInfo();
                         LoggingManager CurrentLoggingManager = new LoggingManager();
 
                         _loggingSessionInfo.ClientID = customer.Key;
-                        CurrentLoggingManager.Connection_String = connection.ConnectionStr;
+                        CurrentLoggingManager.Connection_String = customer.Value;
                         _loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
                         var bllCouponType = new CouponTypeBLL(_loggingSessionInfo);
                         bllCouponType.UpdateCouponTypeIsVoucher(customer.Key);
@@ -260,7 +245,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     }
                     if (dtVipCoupon != null && dtVipCoupon.Rows.Count > 0)
                     {
-                        SqlBulkCopy(connection.ConnectionStr, dtVipCoupon, "VipCouponMapping");
+                        SqlBulkCopy(customer.Value, dtVipCoupon, "VipCouponMapping");
                         BaseService.WriteLog("批量插入VipCouponMapping:");
 
                     }
@@ -285,7 +270,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
         /// <param name="strCon"></param>
         /// <param name="dt"></param>
         /// <param name="strTableName"></param>
-        public void SqlBulkCopy(string strCon,DataTable dt,string strTableName)
+        public void SqlBulkCopy(string strCon, DataTable dt, string strTableName)
         {
             using (SqlConnection conn = new SqlConnection(strCon))
             {
@@ -430,10 +415,10 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     {
                         numCount = Convert.ToInt32(count.Result);
                     }
-                     BaseService.WriteLog("---------------------------vip绑定优惠券长度:" + count.Result.ToString());
+                    BaseService.WriteLog("---------------------------vip绑定优惠券长度:" + count.Result.ToString());
                     for (var i = 0; i < numCount; i++)
                     {
-                       
+
                         var response = RedisOpenAPI.Instance.CCVipMappingCoupon().GetVipMappingCoupon(new CC_VipMappingCoupon
                         {
                             CustomerId = customer.Key
