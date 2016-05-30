@@ -117,7 +117,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.VIP.Login
                         if (!string.IsNullOrEmpty(pRequest.UserID))
                         {
                             List<IWhereCondition> wheres = new List<IWhereCondition>();
-                            wheres.Add(new MoreThanCondition() { FieldName = "status", Value = 0, IncludeEquals = false });
+                            //wheres.Add(new MoreThanCondition() { FieldName = "status", Value = 0, IncludeEquals = false });
+                            wheres.Add(new MoreThanCondition() { FieldName = "status", Value = 0, IncludeEquals = true });
                             wheres.Add(new EqualsCondition() { FieldName = "vipid", Value = pRequest.UserID });
                             wheres.Add(new EqualsCondition() { FieldName = "clientid", Value = pRequest.CustomerID });
                             var result = bll.Query(wheres.ToArray(), null);
