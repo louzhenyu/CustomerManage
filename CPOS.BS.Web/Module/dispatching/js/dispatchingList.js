@@ -1,4 +1,4 @@
-﻿define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui','datetimePicker'], function () {
+define(['tools', 'template', 'kkpager', 'artDialog', 'json2', 'ajaxform','easyui','datetimePicker'], function () {
     var page =
         {
 			saveDataInfo: {},
@@ -322,7 +322,7 @@
 				//点击保存按钮
 				$('.jui-dialog').delegate('.saveBtn','click',function(){
 					var REG_INT = /^[0-9]\d*$/;
-					var floatMath = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+					var floatMath = /^(([0-9]+\.[0-9]*[0-9][0-9]*)|([0-9]*[0-9][0-9]*\.[0-9]+)|([0-9]*[0-9][0-9]*))$/;
 					var $this = $(this),
 						dateStr = '1970-01-01T',
 						status = that.saveDataInfo.Status,
@@ -344,24 +344,42 @@
 					}else{
 						obj.Parameters.Status = 1;
 						//判断配送方式[1送货上门\2店自提]
-						if(deliveryId=='1'){
-							if($("#dispatching_describe").val() == ''){
+							if(deliveryId=='1'){
+								$('.commonSelectWrap').find('input').click(function(){
+									$(this).css('border','1px solid #fafafa');
+								})
+								$('.commonSelectWrap').find('textarea').click(function(){
+									$(this).css('border','1px solid #fafafa');
+								})
+								if($("#dispatching_describe").val() ==''){	
+								$("#dispatching_describe").css('border','1px solid red');
 								that.alert('配送费描述不能为空！');
 								return ;
 							}
 							if($("#dispatching_cost").val() == ''){
 								that.alert('默认配送费不能为空！');
 								return ;
-							}else if(!REG_INT.test(parseInt($("#dispatching_cost").val()))){
-								that.alert('默认配送费为大于0的整数！');
-								return ;
 							}else if(parseInt($("#dispatching_cost").val())>1000){
 								that.alert('默认配送费为小于或等于1000的整数！');
 								return ;
 							}
 							else if(!floatMath.test($("#dispatching_cost").val())){
-								that.alert('格式不对,请输入正确的数字');
+								$("#dispatching_cost").css('border','1px solid red');
+								that.alert('默认配送费格式不对,请输入正确的数字');
 								return;
+							}else if(!REG_INT.test(parseInt($("#dispatching_cost").val()))){
+								$("#dispatching_cost").css('border','1px solid red');
+								that.alert('默认配送费为大于0的整数！');
+								return ;
+							}
+							else if(!floatMath.test($("#dispatching_mincost").val())){
+								$("#dispatching_mincost").css('border','1px solid red');
+								that.alert('免配送费最低订单金额格式不对,请输入正确的数字');
+								return;
+							}else if(!REG_INT.test(parseInt($("#dispatching_mincost").val()))){
+								$("#dispatching_mincost").css('border','1px solid red');
+								that.alert('免配送费最低订单金额为大于0的整数！');
+								return ;
 							}
 							/*
 							if(!REG_INT.test(parseInt($("#dispatching_mincost").val()))){
