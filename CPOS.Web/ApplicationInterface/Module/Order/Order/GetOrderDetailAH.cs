@@ -265,6 +265,28 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Order.Order
                     IfService = Convert.ToInt32(t["IfService"])
                 });
 
+                int tempCount = 0;
+                foreach(var i in tmp)
+                {
+                    if (i.IfService == 0)
+                    {
+                        tempCount++; 
+                    }
+                }
+                if (tempCount == 0)
+                {
+                    rd.OrderListInfo.IsAllService = 3; // 3-全部为虚拟商品
+                }
+                else if (tempCount == tmp.Count())
+                {
+                    rd.OrderListInfo.IsAllService = 1; // 1-全部为实物商品
+                }
+                else
+                {
+                    rd.OrderListInfo.IsAllService = 2; // 2-包含实物商品和虚拟商品
+                }
+                
+
                 rd.OrderListInfo.OrderDetailInfo = tmp.ToArray();
             }
 

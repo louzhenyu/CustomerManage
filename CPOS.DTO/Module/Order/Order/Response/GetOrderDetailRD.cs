@@ -92,6 +92,7 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         public string PaymentTime { get; set; }
         public string Mobile { get; set; }
         #endregion
+
         #region 配送信息
         /// <summary>
         /// 配送方式ID
@@ -194,6 +195,11 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// 提货时间
         /// </summary>
         public string ReserveTime { get; set; }
+
+        /// <summary>
+        /// 订单是否包含虚拟商品 1-全部为实物商品 2-包含实物商品和虚拟商品 3-全部为虚拟商品
+        /// </summary>
+        public int IsAllService { get; set; }
     }
     public class OrderDetailEntity
     {

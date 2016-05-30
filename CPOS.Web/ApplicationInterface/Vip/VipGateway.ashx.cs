@@ -950,10 +950,12 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
                     tran.Commit();
 
-                    //如果是送货到家，根据订单和用户ID来给总金额和实际支付金额加上运费
-                    TOrderCustomerDeliveryStrategyMappingBLL tOrderCustomerDeliveryStrategyMappingBLL = new TOrderCustomerDeliveryStrategyMappingBLL(loggingSessionInfo);
-                    tOrderCustomerDeliveryStrategyMappingBLL.UpdateOrderAddDeliveryAmount(orderId, rp.CustomerID);
-
+                    if (deliveryAmount != 0)
+                    {
+                        //如果是送货到家，根据订单和用户ID来给总金额和实际支付金额加上运费
+                        TOrderCustomerDeliveryStrategyMappingBLL tOrderCustomerDeliveryStrategyMappingBLL = new TOrderCustomerDeliveryStrategyMappingBLL(loggingSessionInfo);
+                        tOrderCustomerDeliveryStrategyMappingBLL.UpdateOrderAddDeliveryAmount(orderId, rp.CustomerID);
+                    }
                     #region 清空购物车 update by wzq
                     var shopchatbll = new ShoppingCartBLL(loggingSessionInfo);
                     shopchatbll.DeleteShoppingCart(orderId);

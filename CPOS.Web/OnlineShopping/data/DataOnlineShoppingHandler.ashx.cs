@@ -2961,7 +2961,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                     {
                         if (customerDeliveryStrategyEntity.DeliveryAmount != null)
                         {
-                            getDeliveryAmountRespContentData.DeliveryAmount = (Convert.ToDecimal(reqObj.special.totalAmount) > customerDeliveryStrategyEntity.AmountEnd ? 0 : customerDeliveryStrategyEntity.DeliveryAmount).ToString();
+                            if (reqObj.special.IsAllService != 3)//不为虚拟商品
+                                getDeliveryAmountRespContentData.DeliveryAmount = (Convert.ToDecimal(reqObj.special.totalAmount) > customerDeliveryStrategyEntity.AmountEnd ? 0 : customerDeliveryStrategyEntity.DeliveryAmount).ToString();
+                            else
+                                getDeliveryAmountRespContentData.DeliveryAmount ="0";
                         }
                     }
                     //getDeliveryAmountRespContentData.DeliveryAmount =  TypeParse.ToStr(customerDeliveryStrategyEntity.DeliveryAmount);
@@ -3018,6 +3021,10 @@ namespace JIT.CPOS.Web.OnlineShopping.data
         {
             public string totalAmount { get; set; }		    //订单金额 ，数据库里对应着total_amount
             public string DeliveryId { get; set; }		//配送方式
+            /// <summary>
+            /// 订单商品类型（1=全部是实物商品；2=包含实物和虚拟商品；3=全部是虚拟商品）
+            /// </summary>
+            public int IsAllService { get; set; }
         }
 
 
