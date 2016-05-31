@@ -1,10 +1,13 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 .contentArea{ margin: 0;}
 
 #leftMenu{display: none;}
 .mainPanel{ width: 1262px; display: block;  margin: 0 auto;padding-bottom: 30px; margin-top: 24px;}
 .panelTitle{ height: 40px; background-color: #f7f7fa; border-bottom: 1px solid #f0f0f2;padding-left: 12px;border-radius: 6px 6px 0 0; }
 .panelTitle p{height: 40px;background:url("../image/iconTitle.png") no-repeat left center;text-align: left; padding-left: 16px; line-height: 40px;color: #7a7a7a;}
+.panelTitle p.titleP{background-image:url("../image/titleBg.png"); padding-left: 25px; }
+.panelTitle p.titleP1{background-image: url("../image/titleBg1.png");padding-left: 25px}
+.panelTitle p.titleP2{background-image: url("../image/titleBg2.png");padding-left: 25px}
 .borderAll{border: 1px solid #f0f0f2; border-radius: 6px 6px 0 0; }
 
 .onePanelDiv{height: 306px;}
@@ -21,6 +24,8 @@
 .minRice{ width: 116px;height: 116px; border-radius:58px; position: absolute; top: 8px; left: 8px; background-color: #fff; z-index:5;}
 .minRice{ line-height: 116px; text-align: center; font-size: 40px;background-repeat: no-repeat;  background-position:center center; }
 
+.noData .rice{ background-color:#f7f7fa}
+.noData .minRice{ border:1px  solid #e8e8eb}
 .bg01{ background-image:url("../image/icon_01.png");   }
 .bg02{ background-image:url("../image/icon_02.png") }
 .bg03{ background-image:url("../image/icon_03.png") }
@@ -29,7 +34,7 @@
 .textPanel p{ width: 100%;height:35px; line-height: 35px; display: block; font-size: 14px;}
 .textPanel p .tit{width: 88px; text-align: right;float: left;}
 .textPanel span{float: left; margin: 3px;}
-
+.textPanel.panelBg{background: url("../image/noData.png") no-repeat 120px center;}
 .Rectangle_0 {
     background-image: -moz-linear-gradient(180deg, rgb(208, 243, 180) 0%, rgb(190, 237, 151) 100%);
     background-image: -webkit-linear-gradient(180deg, rgb(208, 243, 180) 0%, rgb(190, 237, 151) 100%);
@@ -45,7 +50,7 @@
     height: 26px;
 }
 
-.onePanelDiv .bottom{height: 35px; text-align: center; margin-top:20px; color: #999999; font-size: 12px;text-align: center}
+.onePanelDiv .bottom{height: 35px; text-align: center; margin-top:20px; color: #999999; font-size: 12px;}
 .onePanelDiv .bottom .l{width: 156px; height: 35px ;border-right: 1px solid #f0f0f2;}
 .onePanelDiv .bottom .r{width: 156px;}
 .onePanelDiv .centerDiv{ width: auto; display: inline-block;margin: 0 auto;}
@@ -64,8 +69,8 @@
 
 .twoPanelDiv{ height: 320px;margin-top:20px;}
 .twoPanelDiv .leftDiv{ width: 1000px;height: 320px; float: left; }
-.twoPanelDiv .percent{float:left; margin: 30px 0 0 30px;background: url(../image/percent.png) no-repeat; width: 284px; height: 221px; position: relative; text-align: center;}
-.twoPanelDiv .percent .rice_1{ width: 96px; height: 96px; position: absolute; top:60px;}
+.twoPanelDiv .percent{float:left;margin: 30px 0 0 20px;background: url(../image/percent.png) no-repeat;width: 273px;height: 221px;position: relative;text-align: center;}
+.twoPanelDiv .percent .rice_1{ width: 96px; height: 96px; position: absolute; top:70px;}
 .twoPanelDiv .percent .rice_2{ width: 74px; height: 74px; position: absolute; top:30px;left: 120px}
 .twoPanelDiv .percent .rice_3{ width: 74px; height: 74px; position: absolute; top:120px;left: 120px}
 .twoPanelDiv .percent p{ color: #ff4d4d; }
@@ -74,15 +79,16 @@
 .rice_1 p{ font-size: 26px;}
 .two .percent .rice_1 em{font-size: 14px; margin-top: 20px; display: block; margin-bottom: 17px;}
 .rice_2 p, .rice_3 p{ font-size: 24px;}
-.twoPanelDiv .panelData{width: 676px; float: right; margin-top: 30px; height: 221px }
+.twoPanelDiv .panelData{width: 700px;float: right;margin-top: 30px;height: 221px;}
 .twoPanelDiv .panelData .line{height: 50px; display: block;margin-bottom: 36px;width: 100%}
-.twoPanelDiv .panelData .line .data{width: 165px;float: left;padding-left: 3px;position: relative;height: 50px;display: block;}
+.twoPanelDiv .panelData .line .data{width: 170px;float: left;padding-left: 3px;position: relative;height: 50px;display: block;}
 .twoPanelDiv .panelData .line .data em{font-size: 14px;color: #999;margin-bottom: 10px;display: inline-block;}
 .twoPanelDiv .panelData .line .data p{border-bottom: 0;font-size: 20px;height: 20px;color: #00a0e8;position: absolute;white-space: nowrap}
-.twoPanelDiv .panelData .line .data p i {font-size: 14px;height:14px;color: #999;display: inline-block;width: 70px;padding-left: 30px;position: absolute;border-bottom: 0;}
+.twoPanelDiv .panelData .line .data p i {margin-left: -5px;font-size: 14px;height:14px;color: #999;display: inline-block;width: 70px;padding-left: 30px;position: absolute;border-bottom: 0;}
 .twoPanelDiv .panelData .line .data p i.up{ background: url("../image/up.png") no-repeat 12px bottom; }
 .twoPanelDiv .panelData .line .data p i.down{ background: url("../image/down.png") no-repeat 12px bottom;}
 .twoPanelDiv .panelData .line .data p b{ font-size: 14px}
+.twoPanelDiv .panelData .line .data p span{margin-left: -5px;}
 .twoPanelDiv .rightDiv{  height: 320px;}
 .rightDiv{ width: 240px; float: right; text-align: center;}
 .rightDiv .btnList{width: 158px;height: 180px;margin: 0 auto;padding-top: 56px;text-align: left;}
@@ -92,18 +98,22 @@
 .threePanelDiv .rightDiv .btnList{padding-top: 115px;}
 .threePanelDiv .rightDiv{height: 380px;}
 .threePanelDiv .tableDiv{width: 243px; height: 380px; margin-right: 10px; float: left;}
-.threePanelDiv .panelTitle{ background: url("../image/jiantou.png") no-repeat 222px center;}
-.threePanelDiv .bg{ background: url("../image/jiantou1.png") no-repeat 222px center;}
+.threePanelDiv .panelTitle{ background: url("../image/jiantou.png") no-repeat 222px center #f7f7fa;}
+.threePanelDiv .bg{ background-image: url("../image/jiantou1.png");}
 .threePanelDiv .datagrid-header{ border: none; background: #fff;}
 .threePanelDiv .datagrid{ border:none;}
-.threePanelDiv .datagrid-header td,.three .datagrid-body td,.three .datagrid-footer td{border: 1px solid transparent;}
+.threePanelDiv  .datagrid-header td,.threePanelDiv .datagrid-body td,.threePanelDiv .datagrid-footer td { cursor:default;border: 1px solid transparent;}
+.threePanelDiv .datagrid-row-over{background-color:#fff;} /*鼠标停靠*/
+.threePanelDiv .datagrid-row-selected{background-color: #fff; }
+.threePanelDiv .datagrid-row,.threePanelDiv .datagrid-header-row{height: 30px;}
+
 .rightDiv .panelTitle{ background: none; }
 
 .imgPanel{ padding-left:20px;}
+.twoPanelDiv .panelData .line .data.w180{ width: 186px;}
 
-
-
-
+.twoPanelDiv .panelData .line .data.w200{ width: 200px;}
+.twoPanelDiv .panelData .line .data.w130{ width: 130px;}
 
 
 

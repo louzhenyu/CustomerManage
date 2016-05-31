@@ -61,30 +61,36 @@
             var that=this;
             var fileds=[{name:"DateCode",value:new Date().format("yyyy-MM-dd")}];
             that.loadData.operation(fileds,"",function(data){
-                 if(data.Data&&data.Data.Last7DaysOperationData){
+              // 调试用
+              // var data= {"ResultCode":0,"Message":"OK","IsSuccess":true,"Data":{"GoodsRankList":{"Top10Views":[{"ItemId":"DDF042D3222F422384AAB5CE96D22857","ItemName":" Ronshen/容声 RS-D1自动上水壶电热水壶套装烧水壶泡茶壶煮茶器 ","ItemSoldCount":10,"Rate":"13.16%"},{"ItemId":"1F825A1B92B94253934783F221B5B5DD","ItemName":"vans","ItemSoldCount":15,"Rate":"24.59%"},{"ItemId":"9719519321D64B68939AA9DFF83406DC","ItemName":"ada","ItemSoldCount":5,"Rate":"12.20%"},{"ItemId":"4614DCD4F214424B8C8720677FCDA7E4","ItemName":"韩国正品the saem 得鲜按钮口红MO6姨妈色秀智同款","ItemSoldCount":24,"Rate":"61.54%"},{"ItemId":"A7F4395E6077492C970C46553ECA1915","ItemName":"车厘子","ItemSoldCount":5,"Rate":"15.62%"},{"ItemId":"6A889469F1F147CC8F6553F56F83C773","ItemName":"xiaojunzi","ItemSoldCount":4,"Rate":"13.33%"},{"ItemId":"5F6786B6FF8E4371A6F140A43C974A1A","ItemName":"不锈钢水壶一号","ItemSoldCount":1,"Rate":"5%"},{"ItemId":"435FC4E3873F43549CB1A73D4E4D5E11","ItemName":"Yoice/优益 YC105全自动上水壶抽水电热水壶茶具套装烧水壶煮茶器","ItemSoldCount":1,"Rate":"4.35%"},{"ItemId":"96C6C68B5E8144FA860135F70ECBAE1E","ItemName":"家用整套装组合功夫茶具粗陶瓷礼盒茶杯子茶壶台湾复古办公室创意 ","ItemSoldCount":7,"Rate":"36.84%"},{"ItemId":"C02F859A9614425C917756FE1527B104","ItemName":"Grelide/格来德 WWK-4201S大容量304不锈钢电热水壶电热烧开水壶 ","ItemSoldCount":4,"Rate":"13.79%"}],"Least10Views":[{"ItemId":"6E718B4CE2CF47E09E29CF599A76DB24","ItemName":"fdsaf","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"B13881DE2DC043978C4B3150DAAD1B25","ItemName":"nike","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"342EC9925AFB40A981DC5554C32FA0F3","ItemName":"www","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"38EB2FE9721F426EA4B8D8C13E4E01F5","ItemName":"vans","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"94ABD1E4F9314FE2B7DA9BF0389014B0","ItemName":"bbb","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"8D296418F67645E6922487446D0E5143","ItemName":"2016年新茶 谢裕大黄山毛峰明前绿茶30g*2听装 春茶","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"98E07407CF804D98867197AD1C42653C","ItemName":"1111","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"26AFB9B317A44BECBEB417EB08BA1DCD","ItemName":"2016年新茶 谢裕大黄山毛峰明前嫩芽50g单听装","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"611B0868445847F1A81250F20ADC8BDE","ItemName":"2016新茶上市 西湖牌雨前龙井茶100克听装 杭州一级绿茶 茶叶 ","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"DF2957F3B81B49CCAB32B0C98BDAEF65","ItemName":"test001","ItemSoldCount":0,"Rate":"0%"}],"Top10Sales":[{"ItemId":"4614DCD4F214424B8C8720677FCDA7E4","ItemName":"韩国正品the saem 得鲜按钮口红MO6姨妈色秀智同款","ItemSoldCount":24,"Rate":"61.54%"},{"ItemId":"1F825A1B92B94253934783F221B5B5DD","ItemName":"vans","ItemSoldCount":15,"Rate":"24.59%"},{"ItemId":"FEFEB5AF6368473C99057C60E0701A0D","ItemName":"藤椅子茶几三件套庭院简约户外家具休闲椅阳台桌椅组合藤椅五件套 ","ItemSoldCount":11,"Rate":"73.33%"},{"ItemId":"DDF042D3222F422384AAB5CE96D22857","ItemName":" Ronshen/容声 RS-D1自动上水壶电热水壶套装烧水壶泡茶壶煮茶器 ","ItemSoldCount":10,"Rate":"13.16%"},{"ItemId":"96C6C68B5E8144FA860135F70ECBAE1E","ItemName":"家用整套装组合功夫茶具粗陶瓷礼盒茶杯子茶壶台湾复古办公室创意 ","ItemSoldCount":7,"Rate":"36.84%"},{"ItemId":"9719519321D64B68939AA9DFF83406DC","ItemName":"ada","ItemSoldCount":5,"Rate":"12.20%"},{"ItemId":"7548983B80534244919B415A12886D23","ItemName":"骨瓷水具套装杯壶陶瓷凉水冷水杯子套装耐热家用茶具套装茶杯饮具 ","ItemSoldCount":5,"Rate":"62.5%"},{"ItemId":"A7F4395E6077492C970C46553ECA1915","ItemName":"车厘子","ItemSoldCount":5,"Rate":"15.62%"},{"ItemId":"C02F859A9614425C917756FE1527B104","ItemName":"Grelide/格来德 WWK-4201S大容量304不锈钢电热水壶电热烧开水壶 ","ItemSoldCount":4,"Rate":"13.79%"},{"ItemId":"6A889469F1F147CC8F6553F56F83C773","ItemName":"xiaojunzi","ItemSoldCount":4,"Rate":"13.33%"}],"Least10Sales":[{"ItemId":"98E07407CF804D98867197AD1C42653C","ItemName":"1111","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"DF2957F3B81B49CCAB32B0C98BDAEF65","ItemName":"test001","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"B13881DE2DC043978C4B3150DAAD1B25","ItemName":"nike","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"38EB2FE9721F426EA4B8D8C13E4E01F5","ItemName":"vans","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"26AFB9B317A44BECBEB417EB08BA1DCD","ItemName":"2016年新茶 谢裕大黄山毛峰明前嫩芽50g单听装","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"611B0868445847F1A81250F20ADC8BDE","ItemName":"2016新茶上市 西湖牌雨前龙井茶100克听装 杭州一级绿茶 茶叶 ","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"8D296418F67645E6922487446D0E5143","ItemName":"2016年新茶 谢裕大黄山毛峰明前绿茶30g*2听装 春茶","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"6E718B4CE2CF47E09E29CF599A76DB24","ItemName":"fdsaf","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"F5F5CF84ADD34ADDBC071015CA921766","ItemName":"232","ItemSoldCount":0,"Rate":"0%"},{"ItemId":"94ABD1E4F9314FE2B7DA9BF0389014B0","ItemName":"bbb","ItemSoldCount":0,"Rate":"0%"}]},"Last30DaysTransform":{"Rate_OrderVipPayCount_UV":"13.30","Rate_OrderVipCount_UV":"41.38","Rate_OrderVipPayCount_OrderVipCount":"32.14","WxUV":203,"WxOrderVipCount":84,"WxOrderVipPayCount":27,"Rate_UV_Last":"00.00","Rate_OrderVipCount_Last":"200.00","Rate_OrderVipPayCount_Last":"200.00","WxPV":12505,"WxOrderCount":376,"WxOrderPayCount":52,"Rate_PV_Last":"00.00","Rate_OrderCount_Last":"276.00","Rate_OrderPayCount_Last":"188.89","WxOrderMoney":146706.15,"WxOrderPayMoney":12719.40,"WxOrderAVG":244.60,"Rate_OrderMoney_Last":"213.73","Rate_OrderPayMoney_Last":"-36.42","Rate_OrderAVG_Last":"-77.99"},"Last7DaysOperationData":{"WxUV":70,"OfflineUV":11,"WxOrderPayCount":18,"OfflineOrderPayCount":11,"WxOrderPayMoney":2230.30,"OfflineOrderPayMoney":1100.00,"WxOrderAVG":123.91,"OfflineOrderAVG":100.00}}}
+              if(data.Data&&data.Data.Last7DaysOperationData){
 
                      var sevenInfo=data.Data.Last7DaysOperationData;
 
                      if(sevenInfo.OfflineUV+sevenInfo.WxUV) {
                          sevenInfo["UVPercent"] = sevenInfo.OfflineUV / (sevenInfo.OfflineUV + sevenInfo.WxUV) * 100;   //门店访客所占百分比比例
                      }else{
-                         sevenInfo["UVPercent"]=100
+                         sevenInfo["UVPercent"]=0;
+                         $(".ricePanel").eq(0).addClass("noData")
                      }
                    if(sevenInfo.OfflineOrderPayCount+sevenInfo.WxOrderPayCount) {
                        sevenInfo["PayCountPercent"] = sevenInfo.OfflineOrderPayCount / (sevenInfo.OfflineOrderPayCount + sevenInfo.WxOrderPayCount) * 100;   //门店成交单数比例
 
                    }else{
-                       sevenInfo["PayCountPercent"]=100
+                       sevenInfo["PayCountPercent"]=0;
+                       $(".ricePanel").eq(1).addClass("noData")
                    }
                     if(sevenInfo.OfflineOrderPayMoney+sevenInfo.WxOrderPayMoney) {
                         sevenInfo["PayMoneyPercent"] = sevenInfo.OfflineOrderPayMoney / (sevenInfo.OfflineOrderPayMoney + sevenInfo.WxOrderPayMoney) * 100;   //门店成交金额比例
                     }else{
-                        sevenInfo["PayMoneyPercent"]=100;
-                    }
+                        sevenInfo["PayMoneyPercent"]=0;
+                        $(".ricePanel").eq(2).addClass("noData")
+                 }
 
                      if(Number(sevenInfo["WxOrderAVG"])==0&&Number(sevenInfo["OfflineOrderAVG"])==0){
                          $(".Rectangle_1").css({"width":"0px"});
                          $(".Rectangle_0").css({"width":"0px"}) ;
+                         $(".Rectangle_0").parents(".textPanel").addClass("panelBg");
                      } else{
                          if( sevenInfo["WxOrderAVG"]<sevenInfo["OfflineOrderAVG"]){
                              $(".Rectangle_1").css({"width":"200px"});
@@ -98,7 +104,7 @@
 
                          }
                      }
-                     $(".one").find('[data-filed]').each(function(){
+                     $(".onePanelDiv").find('[data-filed]').each(function(){
                          var filed=$(this).data("filed");
                          if(sevenInfo[filed]){
                              $(this).data("value",sevenInfo[filed])
@@ -145,7 +151,7 @@
 
                  if(data.Data&&data.Data.Last30DaysTransform){
                      var monthInfo=data.Data.Last30DaysTransform;
-                     $(".two").find('[data-filed]').each(function(){
+                     $(".twoPanelDiv").find('[data-filed]').each(function(){
                          var me=$(this), filed=me.data("filed");
                          if(monthInfo[filed]){
                              me.data("value",monthInfo[filed])
@@ -155,9 +161,9 @@
                          if(me.is("i")){
                              me.removeClass("up");
                              me.removeClass("down");
-                             if(Number(me.data("value"))>=0){
+                             if(Number(me.data("value"))>0){
                                 me.addClass("up");
-                             }else{
+                             }else if(Number(me.data("value"))<0){
                                  me.addClass("down");
                              }
                              me.data("value",Math.abs(me.data("value"))+"%");
@@ -179,7 +185,7 @@
 
                 if(data.Data&&data.Data.GoodsRankList){
                     var goodsRankList=data.Data.GoodsRankList;
-                    $(".three").find('[data-filed]').each(function(){
+                    $(".threePanelDiv").find('[data-filed]').each(function(){
                         var me=$(this), filed=me.data("filed");
                         that.renderTable(me,goodsRankList[filed])
                     });
