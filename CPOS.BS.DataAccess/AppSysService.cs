@@ -195,7 +195,7 @@ namespace JIT.CPOS.BS.DataAccess
                   + " , b.user_name as add_user_name "
                   + " , c.user_name as modify_user_name "
                   + " , a.role_name as role_desc "
-                  +",e.type_name" //层级名称
+                  + ",e.type_name" //层级名称
                        + ",a.org_level" //层级名称
                   + " , case when ISNULL(is_sys,0) = 1 then '是' else '否' end default_flag_desc "
                   + " , d.row_no ,a.type_id"
@@ -229,7 +229,7 @@ namespace JIT.CPOS.BS.DataAccess
             PublicService pService = new PublicService();
             sql = pService.GetLinkSql(sql, "a.def_app_id", _ht["ApplicationId"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.Customer_Id", _ht["CustomerId"].ToString(), "=");
-            sql = pService.GetLinkSql(sql, "a.role_name", _ht["role_name"]==null?"": _ht["role_name"].ToString(), "%");
+            sql = pService.GetLinkSql(sql, "a.role_name", _ht["role_name"] == null ? "" : _ht["role_name"].ToString(), "%");
             sql = pService.GetLinkSql(sql, "a.type_id", _ht["type_id"] == null ? "" : _ht["type_id"].ToString(), "=");
             sql = pService.GetLinkSql(sql, "a.type_id", _ht["type_id"] == null ? "" : _ht["type_id"].ToString(), "=");
             sql += " and a.role_code!='Administrator'";//不显示超级管理员
@@ -239,7 +239,7 @@ namespace JIT.CPOS.BS.DataAccess
                                   on x.role_id=y.role_id
                                   inner join t_type z on y.type_id=z.type_id where type_code!='OnlineShopping'  
                                    and  x.user_id='" + _ht["UserID"].ToString() + "')";
-            }   
+            }
             sql = sql + " select @iCount = COUNT(*) From @TmpTable; ";
             return sql;
         }

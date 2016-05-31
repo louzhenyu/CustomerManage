@@ -317,6 +317,9 @@
     <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductWeekSalesTopEntity.cs" />
     <Compile Include="CodeGeneration\Report\StoreManagerReport\R_UnitProductYearSalesTopEntity.cs" />
     <Compile Include="CodeGeneration\RetailTraderItemMappingEntity.cs" />
+    <Compile Include="CodeGeneration\R_WxO2OPanel_30DaysEntity.cs" />
+    <Compile Include="CodeGeneration\R_WxO2OPanel_7DaysEntity.cs" />
+    <Compile Include="CodeGeneration\R_WxO2OPanel_ItemTopTenEntity.cs" />
     <Compile Include="CodeGeneration\SeatOrderEntity.cs" />
     <Compile Include="CodeGeneration\SpecialDateEntity.cs" />
     <Compile Include="CodeGeneration\StoreItemDailyStatusEntity.cs" />
@@ -1057,6 +1060,9 @@
     <Compile Include="ReservationWorkCalendarEntity.cs" />
     <Compile Include="RoleMenuModel.cs" />
     <Compile Include="RoleModel.cs" />
+    <Compile Include="R_WxO2OPanel_30DaysEntity.cs" />
+    <Compile Include="R_WxO2OPanel_7DaysEntity.cs" />
+    <Compile Include="R_WxO2OPanel_ItemTopTenEntity.cs" />
     <Compile Include="SAIFUserInfoEntity.cs" />
     <Compile Include="Order\SalesReturn\T_RefundOrderEntity.cs" />
     <Compile Include="Order\SalesReturn\T_SalesReturnEntity.cs" />

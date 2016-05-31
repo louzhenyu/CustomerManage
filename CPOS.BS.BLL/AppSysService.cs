@@ -42,6 +42,7 @@ namespace JIT.CPOS.BS.BLL
 
         #endregion
 
+
         #region 菜单
         /// <summary>
         /// 获取某个角色所能操作的菜单列表
@@ -271,12 +272,12 @@ namespace JIT.CPOS.BS.BLL
             Hashtable hashTable = new Hashtable();
             hashTable.Add("ApplicationId", appSysId);
             hashTable.Add("StartRow", startRowIndex);
-            hashTable.Add("EndRow", startRowIndex + maxRowCount-1);//结束页
+            hashTable.Add("EndRow", startRowIndex + maxRowCount - 1);//结束页
             hashTable.Add("MaxRowCount", maxRowCount);
             hashTable.Add("CustomerId", loggingSessionInfo.CurrentLoggingManager.Customer_Id);
             hashTable.Add("UserID", UserID);//用户标识
-            hashTable.Add("type_id", type_id??"");
-            hashTable.Add("role_name", role_name??"");
+            hashTable.Add("type_id", type_id ?? "");
+            hashTable.Add("role_name", role_name ?? "");
             int iCount = appSysService.SearchRoleByAppSysIdCount(hashTable);//cSqlMapper.Instance().QueryForObject<int>("Role.SelectByApplicationIdCount", hashTable);
             IList<RoleModel> roleInfoList = new List<RoleModel>();
             DataSet ds = new DataSet();

@@ -407,6 +407,9 @@
     <Compile Include="CodeGeneration\Order\SalesReturn\T_RefundOrderDAO.cs" />
     <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnDAO.cs" />
     <Compile Include="CodeGeneration\Order\SalesReturn\T_SalesReturnHistoryDAO.cs" />
+    <Compile Include="CodeGeneration\R_WxO2OPanel_30DaysDAO.cs" />
+    <Compile Include="CodeGeneration\R_WxO2OPanel_7DaysDAO.cs" />
+    <Compile Include="CodeGeneration\R_WxO2OPanel_ItemTopTenDAO.cs" />
     <Compile Include="CodeGeneration\SeatOrderDAO.cs" />
     <Compile Include="CodeGeneration\ShoppingCartDAO.cs" />
     <Compile Include="CodeGeneration\ShopProductDAO.cs" />
@@ -946,6 +949,9 @@
     <Compile Include="Report\StoreManagerReport\R_UnitProductWeekSalesTopDAO.cs" />
     <Compile Include="Report\StoreManagerReport\R_UnitProductYearSalesTopDAO.cs" />
     <Compile Include="RetailTraderItemMappingDAO.cs" />
+    <Compile Include="R_WxO2OPanel_30DaysDAO.cs" />
+    <Compile Include="R_WxO2OPanel_7DaysDAO.cs" />
+    <Compile Include="R_WxO2OPanel_ItemTopTenDAO.cs" />
     <Compile Include="Services\RechargeStrategyDAO.cs" />
     <Compile Include="Services\SysVocationDAO.cs" />
     <Compile Include="Services\UnitDAO.cs" />

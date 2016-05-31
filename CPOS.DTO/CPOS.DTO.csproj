@@ -265,6 +265,13 @@
     <Compile Include="Module\Report\DayReport\Request\DayVendingRP.cs" />
     <Compile Include="Module\Report\DayReport\Response\DayReconciliationRD.cs" />
     <Compile Include="Module\Report\DayReport\Response\DayVendingRD.cs" />
+    <Compile Include="Module\Report\MailReport\Request\GetGoodsRankListRP.cs" />
+    <Compile Include="Module\Report\MailReport\Request\GetLast30DaysTransformRP.cs" />
+    <Compile Include="Module\Report\MailReport\Request\GetLast7DaysOperationDataRP.cs" />
+    <Compile Include="Module\Report\MailReport\Response\GetAllRankRD.cs" />
+    <Compile Include="Module\Report\MailReport\Response\GetGoodsRankListRD.cs" />
+    <Compile Include="Module\Report\MailReport\Response\GetLast30DaysTransformRD.cs" />
+    <Compile Include="Module\Report\MailReport\Response\GetLast7DaysOperationDataRD.cs" />
     <Compile Include="Module\Report\StoreManagerReport\Request\UnitVipListRP.cs" />
     <Compile Include="Module\Report\StoreManagerReport\Request\UnitDayReportRP.cs" />
     <Compile Include="Module\Report\StoreManagerReport\Request\UnitMonthReportRP.cs" />

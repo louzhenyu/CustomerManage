@@ -6773,6 +6773,10 @@
     <Compile Include="ApplicationInterface\Module\Questionnaire\Questionnaire\SetQuestionnaireListAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\ScoreRecoveryInformation\DelScoreRecoveryAH.cs" />
     <Compile Include="ApplicationInterface\Module\Questionnaire\ScoreRecoveryInformation\SetScoreRecoveryAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\MailReport\GetAllRankAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\MailReport\GetGoodsRankListAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\MailReport\GetLast30DaysTransformAH.cs" />
+    <Compile Include="ApplicationInterface\Module\Report\MailReport\GetLast7DaysOperationDataAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\StoresReport\GetDayReconciliationAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\StoresReport\GetDayVendingCountAH.cs" />
     <Compile Include="ApplicationInterface\Module\Report\VipReport\GetVipBirthdayCountAH.cs" />
