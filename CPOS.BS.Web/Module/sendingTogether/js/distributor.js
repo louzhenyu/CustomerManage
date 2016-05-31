@@ -213,55 +213,34 @@
                 if (data.Data.SysRetailRewardRuleList && data.Data.SysRetailRewardRuleList.length > 0) {
                     var SysRetailRewardRuleList = data.Data.SysRetailRewardRuleList;
 
-                    for (var i = 0; i < SysRetailRewardRuleList.length; i++)
-                    {
-                        if (SysRetailRewardRuleList[i].CooperateType == "TwoWay")
-                        {
-                            addWay = "#addTwoWay";
-                            isoneway = false;
-                            break;
-                        }
-                        if (SysRetailRewardRuleList[i].CooperateType == "OneWay") {
-                            addWay = "#addOneWay";
-                            isoneway = true;
-                            break;
-                        }
-                    }
-                    var fields = $(addWay).serializeArray();
                     var loadData = {},
                         loadData2 = {};
-                    $.each(fields, function (index, field) {
-                        for (var i = 0; i < SysRetailRewardRuleList.length; i++) {
-                            var item = SysRetailRewardRuleList[i];
-                            if (field.name.indexOf(item.RewardTypeCode) != -1) {    //确定是那个类别的
-                                if (field.name.indexOf("SellUserReward") != -1) {         //不同类别的销售员奖励
-                                    loadData[field.name] = SysRetailRewardRuleList[i]["SellUserReward"];
-                                }
-                                if (field.name.indexOf("RetailTraderReward") != -1) {  //不同类别的分销商奖励
-                                    loadData[field.name] = SysRetailRewardRuleList[i]["RetailTraderReward"];
-                                }
-                                if (field.name.indexOf("RetailRewardRuleID") != -1) {  //不同类别的分销商奖励
-                                    loadData[field.name] = SysRetailRewardRuleList[i]["RetailRewardRuleID"];
-                                }
 
-                            }
-                            //是否选择引流 或者 销售模块
-                            if (item.CooperateType == 'Sales' && item.Status == 1) {
-                                loadData2 = item;
-                                $('#marketTag').addClass('on');
-                            }
-                            if (that.loadData.args.CooperateType != "") {
-                                if (item.CooperateType == 'TwoWay' || item.CooperateType == 'OneWay') {
-                                    $('#drainageTag').addClass('on');
-                                }
-                            }
-
+                    for (var i = 0; i < SysRetailRewardRuleList.length; i++)
+                    {
+                        var item = SysRetailRewardRuleList[i];
+                        loadData[item.RewardTypeCode + "_RetailRewardRuleID"] = item.RetailRewardRuleID;
+                        loadData[item.RewardTypeCode + "_SellUserReward"] = item.SellUserReward;
+                        loadData[item.RewardTypeCode + "_RetailTraderReward"] = item.RetailTraderReward;
+                        //互相集客
+                        if (item.CooperateType == "TwoWay")
+                        {
+                            $('#drainageTag').addClass('on');
+                            isoneway = false;
                         }
+                        //单向集客
+                        if (item.CooperateType == "OneWay") {
+                            $('#drainageTag').addClass('on');
+                            isoneway = true;
+                        }
+                        //是否选择引流 或者 销售模块
+                        if (item.CooperateType == 'Sales' && item.Status == "1") {
+                            loadData2 = item;
+                            $('#marketTag').addClass('on');
+                        }
+                    }
 
-
-                    })
-
-                    debugger;
+                   
                     if (isoneway) {
                         $("#addOneWay").form('load', loadData);
                     } else {

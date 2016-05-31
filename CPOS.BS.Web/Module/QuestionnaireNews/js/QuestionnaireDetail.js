@@ -32,8 +32,8 @@
         },
         init: function () {
             debugger;
-            this.elems.type = JITMethod.getUrlParam("type");
-            this.elems.QuestionnaireID = JITMethod.getUrlParam("QuestionnaireID");
+            this.elems.type = $.util.getUrlParam("type");
+            this.elems.QuestionnaireID = $.util.getUrlParam("QuestionnaireID");
 
             if (!this.elems.QuestionnaireID)
             {
@@ -476,10 +476,18 @@
                 //验证选项标题start
                 var tempvalidate = true;
 
-                question.find(".option,.editimgoption").not(".optiondelete").find(".optiontext").each(function () {
+                question.find(".option").not(".optiondelete").find(".optiontext").each(function () {
                     if (tempvalidate) {
                         if ($(this).val() == "") {
                             $.messager.alert("提示", "选项内容不能为空！");
+                            tempvalidate = false;
+                        }
+                    }
+                });
+                question.find(".editimgoption").not(".optiondelete").find(".optiontext").each(function () {
+                    if (tempvalidate) {
+                        if ($(this).val() == "") {
+                            $.messager.alert("提示", "答案选项内容不能为空！");
                             tempvalidate = false;
                         }
                     }
@@ -747,7 +755,7 @@
 
                 $("#describe").form("load", { ScoreRecoveryInformationID: "", MinScore:"", MaxScore: "", RecoveryType: "", RecoveryContent: "" });
 
-                $(".msimg img").attr("src", "/Module/QuestionnaireNews/images/zswj.png");
+                $(".msimg img").attr("src", "");
               
 
                 $('.jui-mask').show();
@@ -770,8 +778,8 @@
 
             //返回事件
             $(".startStepbtn").bind("click", function () {
-                if (!JITMethod.getUrlParam("QuestionnaireID") || JITMethod.getUrlParam("QuestionnaireID") == "") {
-                    $.util.toNewUrlPath("/Module/QuestionnaireNews/queryList.aspx?isshow=ture&mid=" + JITMethod.getUrlParam("mid"));
+                if (!$.util.getUrlParam("QuestionnaireID") || $.util.getUrlParam("QuestionnaireID") == "") {
+                    $.util.toNewUrlPath("/Module/QuestionnaireNews/queryList.aspx?isshow=ture&mid=" + $.util.getUrlParam("mid"));
                 } else {
                     $.util.toNewUrlPath("/Module/QuestionnaireNews/queryList.aspx");
                 }
@@ -978,7 +986,9 @@
                         for (var i = 0; i < data.QuestionnaireList.length; i++) {
                             var Questionnaire = data.QuestionnaireList[i];
                             Questionnaire.isedit = false;
+                            $.util.isLoading()
                             $(".questionlist").append(bd.template($(".addBtn[data-type=" + Questionnaire.QuestionidType + "]").data("createtype"), Questionnaire));
+                            $.util.isLoading(true)
 
                         }
 
@@ -1006,6 +1016,7 @@
 
                         $(".OptionScorelinePanel").html("");
                         var _index = 1;
+                        $.util.isLoading();
                         for (var i = 0; i < data.QuestionnaireList.length; i++) {
                             var Questionnaire = data.QuestionnaireList[i];
                              if (Questionnaire.QuestionidType == 3 || Questionnaire.QuestionidType == 9) {
@@ -1062,7 +1073,7 @@
                                 _index++;
                             }
                         }
-
+                        $.util.isLoading(true);
 
                         $(".OptionScorelinePanel").on("change", ".optionitem .allScorevalue ,.optionitem .Scorevalue ", function () {
                             that.getScorse();
@@ -1226,8 +1237,8 @@
                     $("#describe").form("load", { ScoreRecoveryInformationID: row.ScoreRecoveryInformationID, MinScore: row.MinScore, MaxScore: row.MaxScore, RecoveryType: row.RecoveryType, RecoveryContent: row.RecoveryContent });
 
                     if (row.RecoveryType == 1) {
-                        $(".msimg img").attr("src", "/Module/QuestionnaireNews/images/zswj.png");
-                        $("#RecoveryImgvalue").val("/Module/QuestionnaireNews/images/zswj.png")
+                        $(".msimg img").attr("src", "");
+                        $("#RecoveryImgvalue").val("")
                         $("#RecoveryContent").show();
                         $("#RecoveryImg").hide();
                     } else if (row.RecoveryType == 2) {
@@ -1644,6 +1655,9 @@
                     action: 'Questionnaire.Questionnaire.GetQuestionnaire',
                     QuestionnaireID: that.elems.QuestionnaireID
                 },
+                beforeSend: function () {
+                    $.util.isLoading()
+                },
                 success: function (data) {
                     if (data.IsSuccess && data.ResultCode == 0) {
                         var result = data.Data;
@@ -1723,6 +1737,9 @@
                         data: {
                             action: 'Questionnaire.Questionnaire.GetQuestionList',
                             QuestionnaireID: that.elems.QuestionnaireID
+                        },
+                        beforeSend: function () {
+                            $.util.isLoading()
                         },
                         success: function (data) {
                             if (data.IsSuccess && data.ResultCode == 0) {
@@ -1825,6 +1842,10 @@
                             QuestionnaireID: that.elems.QuestionnaireID,
                             PageSize: load.args.PageSize,
                             PageIndex: load.args.PageIndex
+                        },
+                        beforeSend: function () {
+                            $.util.isLoading()
+
                         },
                         success: function (data) {
                             if (data.IsSuccess && data.ResultCode == 0) {

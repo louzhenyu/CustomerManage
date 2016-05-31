@@ -46,6 +46,7 @@
             //点击查询按钮进行数据查询
 
 
+          
             that.elems.operation.delegate(".commonBtn", "click", function (e) {
                 var me=$(this);
                 that.elems.title=$(this).html()+"操作";

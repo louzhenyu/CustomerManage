@@ -245,7 +245,19 @@
                                             if (result.TitleData[i].NameID == "ID") {
                                                 break;
                                             }
-                                            columns += "{ field: '" + result.TitleData[i].NameID + "',width:80, title: '" + result.TitleData[i].Name + "',  resizable: true, align: 'left' },";
+                                            //标题过长截取
+                                            var title = result.TitleData[i].Name;
+                                            if (title && title.length > 20)
+                                            {
+                                                title = '<span title="' + title + '">' + title.substring(0, 20) + '...</span>';
+                                            }
+                                            //内容过长截取formatter
+                                            var formatter = "function (value, row, index) { ";
+                                            formatter += " var html = '';";
+                                            formatter += "if (value && value.length > 20) { html = '<span title='+value+'>' + value.substring(0, 20) + '...</span>'; } else { html =  value ; }";
+                                            formatter += "return html; }";
+
+                                            columns += "{ field: '" + result.TitleData[i].NameID + "', title: '" + title + "',  resizable: true, align: 'center',formatter:" + formatter + "  },";
                                         }
                                     }
                                 }

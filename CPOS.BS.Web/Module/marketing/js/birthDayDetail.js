@@ -274,7 +274,7 @@ define(['jquery','template', 'tools','langzh_CN','easyui', 'artDialog','kkpager'
                     that.loadData.operation("", "SetActivityMessage", function (data) {
                         debugger
                         var mid = $.util.getUrlParam("mid");
-                        location.href = "birthDayQueryList.aspx?mid=" + mid;
+                        $.util.toNewUrlPath("birthDayQueryList.aspx?mid=" + mid);
                     });
                 }
                 that.elems.optPanel.find("li").eq(index).trigger("click");

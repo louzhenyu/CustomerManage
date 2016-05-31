@@ -186,7 +186,7 @@ form.ke-upload-area.ke-form{opacity: 0; cursor: pointer;}
 .tableWrap .optionBtn .descbtn span{font-size: 22px;  padding-right: 4px;color: #fff;}
 
 .jui-dialog-describe {top: 20%;  left: 35%;width:493px;height:443px;}
-.jui-dialog-describe .msimg {display: inline-block;  float: left;}
+.jui-dialog-describe .msimg {display: inline-block;  float: left;background: url(../../../Module/QuestionnaireNews/images/uploadpic.png) no-repeat center center;}
 .jui-dialog-describe .msimg img{  border: 1px solid #d7d7d7;margin-right:10px;width: 149px; height: 114px;}
 .jui-dialog-describe .uploadItem{height: 95px;}
 

@@ -1647,7 +1647,7 @@
             </div>
                 <div class="infoBox">
                     <div style="display: inline-block;">
-                    <div class="msimg"><img  src="/Module/QuestionnaireNews/images/zswj.png" /></div>
+                    <div class="msimg"><img  src="" /></div>
                         <a href="javascript:void(0)" data-uploadimgwidth=100  class="commonHandleBtn uploadImgBtn"></a>
                         </div>
                     <div class="exp">(建议尺寸550*450 大小为50K)</div>

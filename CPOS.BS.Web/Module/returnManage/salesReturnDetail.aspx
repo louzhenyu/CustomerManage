@@ -187,13 +187,13 @@
                                       <div class="commonSelectWrap">
                                          <em class="tit">应退金额：</em>
                                          <div class="searchInput wh80" >
-                                          <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="RefundAmount"/>
+                                          <input type="text"  class="easyui-numberbox" data-options="disabled:true;min:0;"  readonly="readonly" name="RefundAmount"/>
                                          </div>
                                       </div>
                                        <div class="commonSelectWrap" data-type="gropupdate">
                                           <em class="tit w120">确认退款金额(元)：</em>
                                           <div class="searchInput wh80" >
-                                           <input type="text"  class="easyui-validatebox" data-options="disabled:true"  readonly="readonly" name="ConfirmAmount"/>
+                                           <input type="text"  class="easyui-numberbox" data-options="disabled:true;min:0;"  readonly="readonly" name="ConfirmAmount"/>
                                           </div>
                                        </div>
                                        <div id="ConfirmAmountPanl">

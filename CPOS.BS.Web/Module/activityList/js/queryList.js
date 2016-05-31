@@ -313,7 +313,7 @@
 				  },
 				  success: function (data) {
 					  if(data.IsSuccess && data.ResultCode == 0) {
-							$dom.reomve();
+					      $dom.remove();
 					  }else{
 						alert(data.Message);
 					}
