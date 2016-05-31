@@ -92,13 +92,13 @@
                         <div class="l">
                          <div class="centerDiv">
                             <p><em class="color2"></em>云店成交金额</p>
-                             <p class="red">￥<i data-filed="WxOrderPayMoney" data-separator=true data-value="30000">0</i></p>
+                             <p class="red">￥<i data-filed="WxOrderPayMoney" data-separator=true data-value="0">0</i></p>
                              </div>
                         </div>
                          <div class="r">
                           <div class="centerDiv">
                             <p><em class="color2Hover"></em>门店成交金额</p>
-                            <p class="red">￥<i data-filed="OfflineOrderPayMoney" data-separator=true data-value="3000">0</i></p>
+                            <p class="red">￥<i data-filed="OfflineOrderPayMoney" data-separator=true data-value="0">0</i></p>
                             </div>
                          </div>
                   </div>
@@ -117,13 +117,13 @@
                         <div class="l">
                          <div class="centerDiv">
                             <p><em class="color3"></em>云店客单价</p>
-                             <p class="red">￥<i data-filed="WxOrderAVG"  data-separator=true  data-value="30000">0</i></p>
+                             <p class="red">￥<i data-filed="WxOrderAVG"  data-separator=true  data-value="0">0</i></p>
                              </div>
                         </div>
                          <div class="r">
                           <div class="centerDiv">
                             <p><em class="color3Hover"></em>门店客单价</p>
-                            <p class="red">￥<i data-filed="OfflineOrderAVG" data-separator=true data-value="3000">0</i></p>
+                            <p class="red">￥<i data-filed="OfflineOrderAVG" data-separator=true data-value="0">0</i></p>
                             </div>
                          </div>
                   </div>
@@ -142,52 +142,52 @@
                <div class="panelData">
                 <div class="line">
                                  <div class="data w180"><em>访客人数</em><p>
-                                 <span data-filed="WxUV" data-value="99999">99999</span>
+                                 <span data-filed="WxUV" data-value="0">0</span>
                                  <i class="up" data-filed="Rate_UV_Last" data-value="100">0%</i>
                                  </p></div>
                                   <span class="data"><em>页面浏览</em><p>
-                                  <span data-filed="WxPV" data-value="99999">99999</span>
+                                  <span data-filed="WxPV" data-value="0">0</span>
                                   <i class="down" data-filed="Rate_PV_Last" data-value="100">0%</i>
                                   </p></span>
                </div><!--line-->
                 <div class="line">
                                  <div class="data w180"><em>下单人数</em>
                                  <p>
-                                 <span data-filed="WxOrderVipCount" data-value="99999">99999</span>
-                                 <i class="down" data-filed="Rate_OrderVipCount_Last" data-value="99999">0%</i>
+                                 <span data-filed="WxOrderVipCount" data-value="0">0</span>
+                                 <i class="down" data-filed="Rate_OrderVipCount_Last" data-value="0">0%</i>
 
                                  </p>
                                  </div>
                                     <div class="data"><em>下单笔数</em>  <p>
-                                       <span data-filed="WxOrderCount" data-value="99999">0</span>
-                                      <i class="down" data-filed="Rate_OrderCount_Last" data-value="99999">0%</i>
+                                       <span data-filed="WxOrderCount" data-value="0">0</span>
+                                      <i class="down" data-filed="Rate_OrderCount_Last" data-value="0">0%</i>
 
                                     </p></div>
                                        <div class="data w200"><em>下单金额</em><p><b>￥</b>
 
-                                          <span data-filed="WxOrderMoney" data-separator=true data-value="99999">0</span>
-                                          <i class="down" data-filed="Rate_OrderMoney_Last" data-value="99999">0%</i>
+                                          <span data-filed="WxOrderMoney" data-separator=true data-value="0">0</span>
+                                          <i class="down" data-filed="Rate_OrderMoney_Last" data-value="0">0%</i>
 
                                        </p></div>
                </div><!--line-->
                 <div class="line" style="margin-bottom: 0">
                                  <div class="data w180"><em>成交人数</em><p>
-                                  <span data-filed="WxOrderVipPayCount" data-value="99999">99999</span>
-                                  <i class="down" data-filed="Rate_OrderVipPayCount_Last" data-value="99999">0%</i>
+                                  <span data-filed="WxOrderVipPayCount" data-value="99999">0</span>
+                                  <i class="down" data-filed="Rate_OrderVipPayCount_Last" data-value="0">0%</i>
 
                                  </p></div>   <!--data-->
                                   <div class="data"><em>成交笔数</em><p>
-                                  <span data-filed="WxOrderPayCount" data-value="99999">99999</span>
-                                  <i class="down" data-filed="Rate_OrderPayCount_Last" data-value="99999">0%</i>
+                                  <span data-filed="WxOrderPayCount" data-value="0">0</span>
+                                  <i class="down" data-filed="Rate_OrderPayCount_Last" data-value="0">0%</i>
 
                                   </p></div>    <!--data-->
                                  <div class="data w200"><em>成交金额</em><p><b>￥</b>
-                                  <span data-filed="WxOrderPayMoney" data-separator=true data-value="99999">0</span>
-                                  <i class="down" data-filed="Rate_OrderPayMoney_Last" data-value="99999">0%</i>
+                                  <span data-filed="WxOrderPayMoney" data-separator=true data-value="0">0</span>
+                                  <i class="down" data-filed="Rate_OrderPayMoney_Last" data-value="0">0%</i>
                                  </div>    <!--data-->
                                     <div class="data w130"><em>客单价</em><p><b>￥</b>
-                                  <span data-filed="WxOrderAVG" data-separator=true data-value="99999">0</span>
-                                  <i class="down" data-filed="Rate_OrderAVG_Last" data-value="99999">0%</i>
+                                  <span data-filed="WxOrderAVG" data-separator=true data-value="0">0</span>
+                                  <i class="down" data-filed="Rate_OrderAVG_Last" data-value="0">0%</i>
 
 
                                     </p></div>   <!--data-->
@@ -254,9 +254,9 @@
        <!-- 取消订单-->
        <script id="tpl_tsfks" type="text/html">
         <div class="imgPanel">
-           <img src ="image/tsfks.png" alt="提升访客数" usemap ="#planetmap" />
+           <img src ="image/tsfks.png" alt="提升访客数" usemap ="#planetmap1" style="margin-top:23px" />
 
-           <map name="planetmap">
+           <map name="planetmap1">
                <area shape="rect" coords="106,308,216,345" href="/Module/SetOffManage/Action.aspx"  target="_blank" title="发布集客行动" />
                <area shape="rect" coords="458,308,568,345" href="/Module/WMaterialText/WMaterialText.aspx"  target="_blank" title="设置微信图文">
                <area shape="rect" coords="106,660,216,696" href="/module/couponManage/querylist.aspx"  target="_blank" title="新增优惠券"/>
