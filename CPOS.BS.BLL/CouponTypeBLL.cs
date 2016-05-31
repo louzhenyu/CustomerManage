@@ -101,9 +101,9 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetCouponCountByCouponTypeID(strCouponTypeID);
         }
-        public int ExistsCouponTypeName(string strConponTypeName)
+        public int ExistsCouponTypeName(string strConponTypeName, string strCustomerId)
         {
-            return this._currentDAO.ExistsCouponTypeName(strConponTypeName);
+            return this._currentDAO.ExistsCouponTypeName(strConponTypeName,strCustomerId);
 
         }
         /// <summary>

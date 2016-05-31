@@ -21,6 +21,7 @@ using ServiceStack.Redis.Support;
 using ServiceStack.Redis;
 using Newtonsoft.Json;
 using System.Configuration;
+using System.Threading;
 namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
 {
     public class RedisCouponBLL
@@ -29,7 +30,26 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
 
         public void RedisSetSingleCoupon(CC_Coupon coupon)
         {
-            RedisOpenAPI.Instance.CCCoupon().SetCouponList(coupon);
+            int intLimt = 10000;
+            int intTotal = coupon.CouponLenth;
+            if (coupon.CouponLenth != null && coupon.CouponLenth > 0)
+            {
+                while (intTotal >0)
+                {
+
+                    if (intTotal > intLimt)
+                    {
+                        coupon.CouponLenth = intLimt;
+                    }
+                    else
+                        coupon.CouponLenth = intTotal;
+
+                    RedisOpenAPI.Instance.SetTimeOut(60).SetRetryCount(1).CCCoupon().SetCouponList(coupon);
+                    intTotal = intTotal - intLimt;
+                    Thread.Sleep(1000);
+                }
+            }
+
         }
         /// <summary>
         /// 种植所有商户优惠券
@@ -44,29 +64,51 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
             var customerIDs = CustomerBLL.Instance.GetCustomerList();
             foreach (var customer in customerIDs)
             {
-
                 _loggingSessionInfo.ClientID = customer.Key;
                 CurrentLoggingManager.Connection_String = customer.Value;
                 _loggingSessionInfo.CurrentLoggingManager = CurrentLoggingManager;
                 var bllCouponType = new CouponTypeBLL(_loggingSessionInfo);
                 var bllCoupon = new CouponBLL(_loggingSessionInfo);
-                var couponTypeList=bllCouponType.QueryByEntity(new CouponTypeEntity() { CustomerId = customer.Key, IsDelete = 0 },null).ToList();
-                foreach(var couponType in couponTypeList)
+                var couponTypeList = bllCouponType.QueryByEntity(new CouponTypeEntity() { CustomerId = customer.Key, IsDelete = 0 }, null).ToList();
+                foreach (var couponType in couponTypeList)
                 {
-                    RedisOpenAPI.Instance.CCCoupon().DeleteCouponList(new CC_Coupon() { CustomerId = customer.Key, CouponTypeId = couponType.CouponTypeID.ToString() });
+                    var count = RedisOpenAPI.Instance.CCCoupon().GetCouponListLength(new CC_Coupon() { CustomerId = customer.Key, CouponTypeId = couponType.CouponTypeID.ToString() });
+                    if (count.Code == ResponseCode.Success && count.Result == 0)
+                    {
+                        //RedisOpenAPI.Instance.CCCoupon().DeleteCouponList(new CC_Coupon() { CustomerId = customer.Key, CouponTypeId = couponType.CouponTypeID.ToString() });
 
-                    int intUsed = bllCoupon.QueryByEntity(new CouponEntity() { CouponTypeID = couponType.CouponTypeID.ToString(), IsDelete = 0 }, null).ToList().Count();
-                    RedisSetSingleCoupon(new CC_Coupon()
+                        int intCouponLenth = (int)couponType.IssuedQty;
+
+                        int intUsed = bllCoupon.QueryByEntity(new CouponEntity() { CouponTypeID = couponType.CouponTypeID.ToString(), IsDelete = 0, CreateBy = "Redis" }, null).ToList().Count();
+
+                        List<IWhereCondition> complexCondition = new List<IWhereCondition> { };
+                        complexCondition.Add(new EqualsCondition() { FieldName = "CouponTypeID", Value = couponType.CouponTypeID });
+                        complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = customer.Key });
+                        complexCondition.Add(new EqualsCondition() { FieldName = "IsDelete", Value = "0" });
+                        complexCondition.Add(new DirectCondition("  Status=0 and CreateBy <>'Redis' "));
+                        int intOldUsed = bllCoupon.Query(complexCondition.ToArray(), null).ToList().Count();
+                        if (intOldUsed > 0)
                         {
-                            CustomerId = couponType.CustomerId,
-                            CouponTypeId = couponType.CouponTypeID.ToString(),
-                            CouponTypeDesc = couponType.CouponTypeDesc,
-                            CouponTypeName = couponType.CouponTypeName,
-                            BeginTime = couponType.BeginTime.ToString(),
-                            EndTime = couponType.EndTime.ToString(),
-                            ServiceLife = couponType.ServiceLife ?? 0,
-                            CouponLenth = Convert.ToInt32(couponType.IssuedQty) - intUsed
-                        });
+                            intCouponLenth = intOldUsed;
+                        }
+                        intCouponLenth = intCouponLenth - intUsed;
+                        if (intCouponLenth > 0)
+                        {
+                            RedisSetSingleCoupon(new CC_Coupon()
+                                {
+                                    CustomerId = couponType.CustomerId,
+                                    CouponTypeId = couponType.CouponTypeID.ToString(),
+                                    CouponTypeDesc = couponType.CouponTypeDesc,
+                                    CouponTypeName = couponType.CouponTypeName,
+                                    BeginTime = couponType.BeginTime.ToString(),
+                                    EndTime = couponType.EndTime.ToString(),
+                                    ServiceLife = couponType.ServiceLife ?? 0,
+                                    CouponLenth = intCouponLenth,
+                                    CouponCategory=couponType.CouponCategory
+                                });
+
+                        }
+                    }
                     //xuRedis
                     //List<string> couponList = new List<string>();
                     //for (int i = 0; i < (Convert.ToInt32(couponType.IssuedQty) - intUsed); i++)
@@ -86,7 +128,7 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     //    couponList.Add(ss);
                     //}
                     //SetRedisCouponNew(couponList, customer.Key, couponType.CouponTypeID.ToString());
-                    
+
                 }
             }
         }
@@ -135,11 +177,11 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
             DataTable dtCouponExport = new DataTable();
             dtCouponExport.Columns.Add("CouponCode", typeof(string));
             CC_Connection connection = new CC_Connection();
+            string strCon = string.Empty;
             if (count.Code == ResponseCode.Success)
             {
                 if (count.Result > 0)
                 {
-                    string strCon = string.Empty;
                     connection = new RedisConnectionBLL().GetConnection(strCustomerid);
                     if (connection.ConnectionStr == null)
                     {

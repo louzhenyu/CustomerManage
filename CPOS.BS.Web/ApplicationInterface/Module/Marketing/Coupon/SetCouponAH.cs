@@ -28,7 +28,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
             CouponTypeItemMappingEntity entityCouponTypeItemMapping = null;
             var redisCouponBLL = new JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon.RedisCouponBLL();
 
-            if(couponTypeBLL.ExistsCouponTypeName(para.CouponTypeName)>0)
+            if (couponTypeBLL.ExistsCouponTypeName(para.CouponTypeName, loggingSessionInfo.ClientID) > 0)
             {
                 throw new APIException(-1,"优惠券名称不可重复！");
             }
@@ -76,7 +76,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                             BeginTime = couponTypeEntity.BeginTime.ToString(),
                             EndTime = couponTypeEntity.EndTime.ToString(),
                             ServiceLife=couponTypeEntity.ServiceLife??0,
-                            CouponLenth = couponTypeEntity.IssuedQty??0
+                            CouponLenth = couponTypeEntity.IssuedQty??0,
+                            CouponCategory = couponTypeEntity.CouponCategory
                         });
                         //保存适用门店
                         if (para.SuitableForStore == 2)
@@ -123,7 +124,8 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Marketing.Coupon
                             BeginTime = couponTypeEntity.BeginTime.ToString(),
                             EndTime = couponTypeEntity.EndTime.ToString(),
                             ServiceLife = couponTypeEntity.ServiceLife ?? 0,
-                            CouponLenth = para.IssuedQty
+                            CouponLenth = para.IssuedQty,
+                            CouponCategory = couponTypeEntity.CouponCategory
                         });
                     }
          

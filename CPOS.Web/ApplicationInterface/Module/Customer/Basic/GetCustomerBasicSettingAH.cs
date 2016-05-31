@@ -20,23 +20,20 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.Customer.Basic
 
             if (!string.IsNullOrWhiteSpace(para.SettingCode))
             {
-                //查询参数
-                var complexCondition = new List<IWhereCondition> { };
-                complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = CurrentUserInfo.ClientID });
-                complexCondition.Add(new DirectCondition("SettingCode='" + para.SettingCode + "' "));
-
                 var Data =new  JIT.CPOS.BS.Entity.CustomerBasicSettingEntity();
                 JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting.BasicSettingBLL bllBasicSetting = new JIT.CPOS.BS.BLL.RedisOperationBLL.BasicSetting.BasicSettingBLL();
                 var basicSettingList = bllBasicSetting.GetBasicSetting(CurrentUserInfo.ClientID);
                 if (basicSettingList != null && basicSettingList.Count > 0)
                 {
-                    Data = basicSettingList.FirstOrDefault();
-                    
+                    Data = basicSettingList.Where(b => b.SettingCode == para.SettingCode).FirstOrDefault();
                 }
                 else
                 {
+                    //查询参数
+                    var complexCondition = new List<IWhereCondition> { };
+                    complexCondition.Add(new EqualsCondition() { FieldName = "CustomerID", Value = CurrentUserInfo.ClientID });
+                    complexCondition.Add(new DirectCondition("SettingCode='" + para.SettingCode + "' "));
                     Data = customerBasicSettingBLL.Query(complexCondition.ToArray(), null).FirstOrDefault();
-                    
                 }
                 if (Data != null)
                     rd.SettingValue = Data.SettingValue;

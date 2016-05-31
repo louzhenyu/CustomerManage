@@ -226,9 +226,9 @@ namespace JIT.CPOS.BS.DataAccess
         /// </summary>
         /// <param name="strConponTypeName"></param>
         /// <returns></returns>
-        public int ExistsCouponTypeName(string strConponTypeName)
+        public int ExistsCouponTypeName(string strConponTypeName,string strCustomerId)
         {
-            string strSql = string.Format("SELECT Count(1) FROM CouponType WHERE IsDelete=0 and CouponTypeName='{0}'", strConponTypeName);
+            string strSql = string.Format("SELECT Count(1) FROM CouponType WHERE IsDelete=0 and CouponTypeName='{0}' and CustomerId='{1}'", strConponTypeName, strCustomerId);
             return Convert.ToInt32(this.SQLHelper.ExecuteScalar(strSql));
         }
         /// <summary>
