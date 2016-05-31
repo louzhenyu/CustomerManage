@@ -250,5 +250,17 @@ namespace JIT.CPOS.BS.DataAccess
                                                     AND b.CustomerId='{0}' ", strCustomerId);
             this.SQLHelper.ExecuteScalar(strSql);
         }
+        /// <summary>
+        /// 更新优惠券总量
+        /// </summary>
+        /// <param name="strCustomerId"></param>
+        /// <param name="intIssuedQty"></param>
+        public void UpdateCouponTypeIssuedQty(string strCouponTypeId, int intIssuedQty)
+        {
+            string strSql = string.Format(@"UPDATE dbo.CouponType
+                                                SET IssuedQty=IssuedQty+{1}
+                                            WHERE  CAST(CouponTypeID AS NVARCHAR(50))='{0}' ", strCouponTypeId, intIssuedQty);
+            this.SQLHelper.ExecuteScalar(strSql);
+        }
     }
 }

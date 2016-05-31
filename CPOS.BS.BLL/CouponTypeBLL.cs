@@ -114,5 +114,15 @@ namespace JIT.CPOS.BS.BLL
         {
              this._currentDAO.UpdateCouponTypeIsVoucher(strCustomerId);
         }
+        /// <summary>
+        /// 更新优惠券总量
+        /// </summary>
+        /// <param name="strCouponTypeId"></param>
+        /// <param name="intIssuedQty"></param>
+        public void UpdateCouponTypeIssuedQty(string strCouponTypeId, int intIssuedQty)
+        {
+            this._currentDAO.UpdateCouponTypeIssuedQty(strCouponTypeId, intIssuedQty);
+
+        }
     }
 }

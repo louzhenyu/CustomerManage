@@ -60,8 +60,12 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                     {
 
                         int intCouponLenth = Convert.ToInt32(couponType.IssuedQty)- Convert.ToInt32(couponType.IsVoucher);
-                        if (intCouponLenth == 0)
+                        if (intCouponLenth <= 0)
+                        {
                             intCouponLenth = 1000;
+
+                            bllCouponType.UpdateCouponTypeIssuedQty(coupon.CouponTypeId, intCouponLenth);
+                        }
                         
                         RedisOpenAPI.Instance.CCCoupon().SetCouponList(new CC_Coupon()
                                     {
