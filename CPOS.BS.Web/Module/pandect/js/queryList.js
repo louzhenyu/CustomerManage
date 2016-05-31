@@ -42,7 +42,10 @@
                 minimizable:false,
                 maximizable:false,
                 closed:true,
-                closable:true
+                closable:true,
+                onClose:function(){
+                    $("body").eq(0).css("overflow-y","auto");
+                }
             });
             $('#panlconent').layout({
                   fit:true
@@ -275,14 +278,14 @@
             var that=this;
             that.elems.optionType="pay";
             var top=$(document).scrollTop()+60;
-            $("body").eq(0).css("overflow-y","hidden");
+           // $("body").eq(0).css("overflow-y","hidden");
 
             if(type=="tsfks") {
                 var left=$(window).width() - 800>0 ? ($(window).width() - 800)*0.5:80;
-                $('#win').window({title: "收款", width: 750, height: 800, top: top, left: left});
+                $('#win').window({title: "设置建议", width: 750, height: 800, top: top, left: left});
             }else{
                 var left=$(window).width() - 740>0 ? ($(window).width() - 740)*0.5:80;
-                $('#win').window({title: "收款", width: 610, height: 740, top: top, left: left});
+                $('#win').window({title: "设置建议", width: 610, height: 740, top: top, left: left});
             }
             //改变弹框内容，调用百度模板显示不同内容
             $('#panlconent').layout('remove','center');

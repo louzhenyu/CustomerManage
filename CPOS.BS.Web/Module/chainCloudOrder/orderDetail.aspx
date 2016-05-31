@@ -2,9 +2,7 @@
     AutoEventWireup="true" Inherits="JIT.CPOS.BS.Web.PageBase.JITPage" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <meta charset="UTF-8" />
     <title>订单详情</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link href="<%=StaticUrl+"/module/chainCloudOrder/css/style.css?v=0.6"%>" rel="stylesheet" type="text/css" />
 
