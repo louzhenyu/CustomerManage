@@ -188,7 +188,8 @@ namespace JIT.CPOS.BS.BLL.RedisOperationBLL.Coupon
                         strCon= GetCustomerConn(strCustomerid);
 
                     }
-                    strCon = connection.ConnectionStr;
+                    else
+                        strCon = connection.ConnectionStr;
 
                     long num = 0;
                     if (downLoadNum > count.Result)
