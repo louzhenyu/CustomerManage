@@ -53,6 +53,7 @@ namespace JIT.CPOS.BS.BLL
             var inoutDetailBLL = new Inout3Service(loggingSessionInfo);     //订单业务实例化
             var refundOrderBll = new T_RefundOrderBLL(loggingSessionInfo);  //退货业务实例化
             var inoutBll = new T_InoutBLL(loggingSessionInfo);              //订单业务实例化
+            PanicbuyingEventBLL panicbuyingEventBLL = new PanicbuyingEventBLL(loggingSessionInfo); //活动订单业务实例化
 
             //获取订单详情
             var inoutInfo = inoutBll.GetInoutInfo(orderId, loggingSessionInfo);
@@ -172,8 +173,20 @@ namespace JIT.CPOS.BS.BLL
             }
             #endregion
 
-            //处理销量库存业务
-            inoutBll.SetStock(orderId, inoutDetailList, 2, loggingSessionInfo);
+            //普通订单库存处理
+            if (inoutInfo.order_reason_id == "2F6891A2194A4BBAB6F17B4C99A6C6F5")
+            {
+                inoutBll.SetStock(orderId, inoutDetailList, 2, loggingSessionInfo);
+            }
+            //团购抢购订单库存处理
+            if (inoutInfo.order_reason_id == "CB43DD7DD1C94853BE98C4396738E00C" || inoutInfo.order_reason_id == "671E724C85B847BDA1E96E0E5A62055A")
+            {
+                panicbuyingEventBLL.SetEventStock(orderId, inoutDetailList.ToList());
+            }
+            if (inoutInfo.order_reason_id == "096419BFDF394F7FABFE0DFCA909537F")
+            {
+                panicbuyingEventBLL.SetKJEventStock(orderId, inoutDetailList.ToList());
+            }
         }
 
         /// <summary>

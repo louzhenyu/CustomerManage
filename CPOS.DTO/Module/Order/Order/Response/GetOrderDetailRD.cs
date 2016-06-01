@@ -91,6 +91,11 @@ namespace JIT.CPOS.DTO.Module.Order.Order.Response
         /// </summary>
         public string PaymentTime { get; set; }
         public string Mobile { get; set; }
+
+        /// <summary>
+        /// 订单来源
+        /// </summary>
+        public string OrderReasonTypeId { get; set; }
         #endregion
 
         #region 配送信息

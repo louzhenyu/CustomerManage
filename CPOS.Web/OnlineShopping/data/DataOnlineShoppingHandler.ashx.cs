@@ -487,6 +487,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                             }
                             else //商品人人销售价格
                                 item.salesPrice = item.EveryoneSalesPrice;
+                            item.salesPrice = Math.Round(item.salesPrice, 2); //精确两位小数
                         }
                     }
                     if (reqObj.common.channelId == "7")//一起发码
@@ -503,7 +504,7 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                                 //--如果渠道是一起发码，当前价格取一起发码价
                                 if (ds.ItemSalesPriceRate > 0)
                                 {
-                                    item.salesPrice =(item.salesPrice *(decimal)ds.ItemSalesPriceRate)/ 100;
+                                    item.salesPrice = Math.Round((item.salesPrice * (decimal)ds.ItemSalesPriceRate) / 100,2);
                                 }
                             }
                         }
@@ -534,9 +535,25 @@ namespace JIT.CPOS.Web.OnlineShopping.data
                 }
                 #region 获取商品属性集合
                 var dsProp1 = itemService.GetItemProp1List(itemId);
+                 List<getItemDetailRespContentDataProp1> tempList = null;
                 if (dsProp1 != null && dsProp1.Tables.Count > 0 && dsProp1.Tables[0].Rows.Count > 0)
                 {
-                    respData.content.prop1List = DataTableToObject.ConvertToList<getItemDetailRespContentDataProp1>(dsProp1.Tables[0]);
+                    tempList = DataTableToObject.ConvertToList<getItemDetailRespContentDataProp1>(dsProp1.Tables[0]);
+                }
+                //当Sku列表不为1，过滤属性为空
+                if(tempList.Count != 1)
+                {
+                    foreach (var item in tempList)
+                    {
+                        if (!string.IsNullOrEmpty(item.prop1DetailName))
+                        {
+                            respData.content.prop1List.Add(item);
+                        }
+                    }
+                }
+                else
+                {
+                    respData.content.prop1List = tempList;
                 }
 
                 //added by zhangwei 增加ItemStatus信息

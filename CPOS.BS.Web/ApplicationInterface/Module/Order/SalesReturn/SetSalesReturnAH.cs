@@ -313,7 +313,7 @@ namespace JIT.CPOS.BS.Web.ApplicationInterface.Module.Order.SalesReturn
                                 };
                                 historyBLL.Create(historyEntity, pTran);
                             }
-                            if (para.ConfirmAmount > 0)//处理实退金额
+                            if (para.ConfirmAmount >= 0)//处理实退金额
                             {
                                 salesReturnEntity.ConfirmAmount = para.ConfirmAmount;
 

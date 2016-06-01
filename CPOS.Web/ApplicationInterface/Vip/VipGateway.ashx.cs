@@ -527,8 +527,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
             var tInoutEntity = tInoutBll.GetByID(orderId);
             if (tInoutEntity == null)
                 throw new APIException("此订单Id无效") { ErrorCode = 103 };
-            //if (tInoutEntity.Field7 == "100")
-            //    throw new APIException("此订单已经提交") { ErrorCode = 122 };
+            if (tInoutEntity.Field7 == "100")
+                throw new APIException("此订单已经提交") { ErrorCode = 122 };
 
             #region 根据渠道判断订单来源
 
@@ -881,7 +881,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
                     tInoutEntity.Field19 = rp.Parameters.Invoice;  //发票信息
                     tInoutEntity.Field20 = rp.Parameters.RetailTraderId; //分销商Id
                     tInoutEntity.VipCardCode = vipInfo.VipCode;    //会员卡号
-                    tInoutEntity.Field7 = status;
+                    tInoutEntity.Field7 = status;  
                     tInoutEntity.OrderDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");  ///提交订单时间
                     tInoutBll.Update(tInoutEntity, tran);          //修改订单信息
 
@@ -945,8 +945,6 @@ namespace JIT.CPOS.Web.ApplicationInterface.Vip
 
                     }
                     #endregion
-
-                    
 
                     tran.Commit();
 

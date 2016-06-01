@@ -52,7 +52,7 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WEvent.Bargain
                             Qty = n.Qty - n.SoldQty,
                             PromotePersonCount = n.PromotePersonCount
                         }).ToList(),
-                    }).OrderBy(n => n.Status).ThenBy(n=>n.EndTime).ToList();
+                    }).ToList();
 
                     foreach (var item in rd.EventList)
                     {
@@ -63,6 +63,8 @@ namespace JIT.CPOS.Web.ApplicationInterface.Module.WEvent.Bargain
                         else
                             item.Seconds = Convert.ToInt64(EndTime.Subtract(DateTime.Now).TotalSeconds) >= 0 ? Convert.ToInt64(EndTime.Subtract(DateTime.Now).TotalSeconds) : 0;
                     }
+                    rd.EventList = rd.EventList.OrderBy(t => t.Status).ThenBy(t => t.Seconds).ToList();
+
                 }
                 else
                 {

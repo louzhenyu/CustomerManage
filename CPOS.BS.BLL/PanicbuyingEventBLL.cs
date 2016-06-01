@@ -165,5 +165,66 @@ namespace JIT.CPOS.BS.BLL
             panicbuyingKJEventJoinBll.Update(panicbuyingKJEventJoinEntity);
 
         }
+
+        /// <summary>
+        /// 处理砍价活动销量库存
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="inoutDetailList"></param>
+        public void SetKJEventStock(string orderId, List<InoutDetailInfo> inoutDetailList)
+        {
+            PanicbuyingEventOrderMappingBLL panicbuyingEventOrderMappingBll = new PanicbuyingEventOrderMappingBLL(CurrentUserInfo);
+            var panicbuyingEventOrderMappingEntity = panicbuyingEventOrderMappingBll.QueryByEntity(new PanicbuyingEventOrderMappingEntity() { OrderId = orderId }, null).FirstOrDefault();
+
+            PanicbuyingKJEventItemMappingBLL panicbuyingKJEventItemMappingBll = new PanicbuyingKJEventItemMappingBLL(CurrentUserInfo);
+            PanicbuyingKJEventSkuMappingBLL panicbuyingKJEventSkuMappingBll = new PanicbuyingKJEventSkuMappingBLL(CurrentUserInfo);
+            foreach (var i in inoutDetailList)
+            {
+                //Item表销量处理
+                var itemEntity = panicbuyingKJEventItemMappingBll.GetPanicbuyingEventEntity(panicbuyingEventOrderMappingEntity.EventId.ToString(), i.sku_id);
+                itemEntity.SoldQty -= Convert.ToInt32(i.enter_qty);
+                itemEntity.LastUpdateTime = DateTime.Now;
+                panicbuyingKJEventItemMappingBll.Update(itemEntity);
+
+                //Sku表销量处理
+                var skuEntity = panicbuyingKJEventSkuMappingBll.QueryByEntity(new PanicbuyingKJEventSkuMappingEntity() { SkuID = i.sku_id, EventItemMappingID = itemEntity.EventItemMappingID.ToString() }, null).FirstOrDefault();
+                skuEntity.SoldQty -= Convert.ToInt32(i.enter_qty);
+                skuEntity.LastUpdateTime = DateTime.Now;
+                panicbuyingKJEventSkuMappingBll.Update(skuEntity);
+            }
+            
+        }
+
+        /// <summary>
+        /// 处理团购抢购销量库存
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="inoutDetailList"></param>
+        public void SetEventStock(string orderId, List<InoutDetailInfo> inoutDetailList)
+        {
+            PanicbuyingEventOrderMappingBLL panicbuyingEventOrderMappingBll = new PanicbuyingEventOrderMappingBLL(CurrentUserInfo);
+            var panicbuyingEventOrderMappingEntity = panicbuyingEventOrderMappingBll.QueryByEntity(new PanicbuyingEventOrderMappingEntity() { OrderId = orderId }, null).FirstOrDefault();
+
+            PanicbuyingEventItemMappingBLL panicbuyingEventItemMappingBll = new PanicbuyingEventItemMappingBLL(CurrentUserInfo);
+            PanicbuyingEventSkuMappingBLL panicbuyingEventSkuMappingBll = new PanicbuyingEventSkuMappingBLL(CurrentUserInfo);
+            foreach (var i in inoutDetailList)
+            {
+                //Item表销量处理
+                var itemEntity = panicbuyingEventItemMappingBll.GetPanicbuyingEventEntity(panicbuyingEventOrderMappingEntity.EventId.ToString(), i.sku_id);
+                if (itemEntity != null)
+                {
+                    itemEntity.SoldQty -= Convert.ToInt32(i.enter_qty);
+                    itemEntity.LastUpdateTime = DateTime.Now;
+                    panicbuyingEventItemMappingBll.Update(itemEntity);
+
+                    //Sku表销量处理
+                    var skuEntity = panicbuyingEventSkuMappingBll.QueryByEntity(new PanicbuyingEventSkuMappingEntity() { SkuId = i.sku_id, EventItemMappingId = itemEntity.EventItemMappingId }, null).FirstOrDefault();
+                    skuEntity.SoldQty -= Convert.ToInt32(i.enter_qty);
+                    skuEntity.LastUpdateTime = DateTime.Now;
+                    panicbuyingEventSkuMappingBll.Update(skuEntity);
+                }
+            }
+
+        }
     }
 }

@@ -1971,15 +1971,15 @@ WHERE     1=1) as t";
                       + "  ,oi.ImageUrl "
                       + " ,a.sku_id "
                       + " ,a.unit_id "
-                      + " ,convert(decimal(18,4),a.order_qty) order_qty " //*c.red_flag
-                      + " ,convert(decimal(18,4),a.enter_qty) enter_qty " //*c.red_flag
-                      + " ,convert(decimal(18,4),a.enter_price) enter_price " //*c.red_flag
-                      + " ,convert(decimal(18,4),a.enter_amount) enter_amount " //*c.red_flag
-                      + " ,convert(decimal(18,4),a.std_price) std_price "
+                      + " ,convert(decimal(18,2),a.order_qty) order_qty " //*c.red_flag
+                      + " ,convert(decimal(18,2),a.enter_qty) enter_qty " //*c.red_flag
+                      + " ,convert(decimal(18,2),a.enter_price) enter_price " //*c.red_flag
+                      + " ,convert(decimal(18,2),a.enter_amount) enter_amount " //*c.red_flag
+                      + " ,convert(decimal(18,2),a.std_price) std_price "
                       + " ,a.discount_rate "
-                      + " ,convert(decimal(18,4),a.retail_price) retail_price " //*c.red_flag
-                      + " ,convert(decimal(18,4),a.retail_amount) retail_amount " //*c.red_flag
-                      + " ,convert(decimal(18,4),a.plan_price) plan_price "
+                      + " ,convert(decimal(18,2),a.retail_price) retail_price " //*c.red_flag
+                      + " ,convert(decimal(18,2),a.retail_amount) retail_amount " //*c.red_flag
+                      + " ,convert(decimal(18,2),a.plan_price) plan_price "
                       + " ,a.receive_points "
                       + " ,a.pay_points "
                       + " ,a.remark "

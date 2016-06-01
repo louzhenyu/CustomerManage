@@ -562,6 +562,19 @@ namespace JIT.CPOS.BS.DataAccess
             //组织SQL
             StringBuilder pagedSql = new StringBuilder();
             StringBuilder totalCountSql = new StringBuilder();
+
+            string sql = string.Format(@" DECLARE @AllUnit NVARCHAR(200)
+
+                CREATE TABLE #UnitSET  (UnitID NVARCHAR(100))   
+                 INSERT #UnitSET (UnitID)                  
+                   SELECT DISTINCT R.UnitID                   
+                   FROM T_User_Role  UR CROSS APPLY dbo.FnGetUnitList  ('{0}',UR.unit_id,205)  R                  
+                   WHERE user_id='{1}'       ---根据账户的角色去查角色对应的  所有门店unit_id 
+            ", CurrentUserInfo.CurrentLoggingManager.Customer_Id, CurrentUserInfo.UserID);
+
+            pagedSql.AppendFormat(sql);
+            totalCountSql.AppendFormat(sql);
+
             //分页SQL
             pagedSql.AppendFormat("select * from (select row_number()over( order by ");
             if (pOrderBys != null && pOrderBys.Length > 0)
@@ -579,13 +592,15 @@ namespace JIT.CPOS.BS.DataAccess
             {
                 pagedSql.AppendFormat(" [RefundID] desc"); //默认为主键值倒序
             }
-            pagedSql.AppendFormat(@") as ___rn,a.*,b.VipName,t.paymentcenter_id,p.Payment_Type_Name from [T_RefundOrder] as a  
+            pagedSql.AppendFormat(@") as ___rn,a.*,b.VipName,t.paymentcenter_id,p.Payment_Type_Name from [T_RefundOrder] as a
+                                    inner join  #UnitSET as u on u.UnitId  = a.UnitId 
                                     left join t_inout as t on a.OrderID=t.order_id  
                                     left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0  
                                     left join Vip as b on a.VipID=b.VIPID and b.IsDelete=0   
                                     where 1=1  and a.isdelete=0 ");
             //总记录数SQL
             totalCountSql.AppendFormat(@"select count(1) from [T_RefundOrder] as a 
+                                        inner join  #UnitSET as u on u.UnitId  = a.UnitId 
                                         left join t_inout as t on a.OrderID=t.order_id  
                                         left join T_Payment_Type as p on t.pay_id=p.Payment_Type_Id and p.IsDelete=0  
                                         left join Vip as b on a.VipID=b.VIPID and b.IsDelete=0   
@@ -605,6 +620,9 @@ namespace JIT.CPOS.BS.DataAccess
             pagedSql.AppendFormat(") as A ");
             //取指定页的数据
             pagedSql.AppendFormat(" where ___rn >{0} and ___rn <={1}", pPageSize * (pCurrentPageIndex-1), pPageSize * (pCurrentPageIndex));
+
+            pagedSql.AppendFormat(" DROP Table #UnitSET ");
+            totalCountSql.AppendFormat(" DROP Table #UnitSET ");
             //执行语句并返回结果
             PagedQueryResult<T_RefundOrderEntity> result = new PagedQueryResult<T_RefundOrderEntity>();
             List<T_RefundOrderEntity> list = new List<T_RefundOrderEntity>();

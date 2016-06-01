@@ -51,5 +51,18 @@ namespace JIT.CPOS.BS.BLL
         {
             return this._currentDAO.GetEventItemInfo(eventId, itemId);
         }
+
+        public PanicbuyingEventItemMappingEntity GetPanicbuyingEventEntity(string eventId,string sku_id)
+        {
+            var ds = this._currentDAO.GetPanicbuyingEventEntity(eventId, sku_id);
+            PanicbuyingEventItemMappingEntity panicbuyingEventItemMappingEntity = null;
+            if(ds.Tables.Count >= 0 && ds.Tables[0].Rows.Count >= 0)
+            {
+                panicbuyingEventItemMappingEntity = DataTableToObject.ConvertToObject<PanicbuyingEventItemMappingEntity>(ds.Tables[0].Rows[0]);
+            }
+
+            return panicbuyingEventItemMappingEntity;
+                
+        }
     }
 }

@@ -66,5 +66,13 @@ namespace JIT.CPOS.BS.DataAccess
                         where a.ItemId='"+itemId+"' and a.EventId='"+eventId+"'";
             return this.SQLHelper.ExecuteDataset(sql);
         }
+
+        public DataSet GetPanicbuyingEventEntity(string eventId, string Skuid)
+        {
+            string sql = @"select top 1 a.* from PanicbuyingKJEventItemMapping a 
+                           inner join PanicbuyingKJEventSkuMapping b on a.EventItemMappingID = b.EventItemMappingID
+                           where a.EventId = '" + eventId + "' and b.SkuId = '" + Skuid + "'";
+            return this.SQLHelper.ExecuteDataset(sql);
+        }
     }
 }

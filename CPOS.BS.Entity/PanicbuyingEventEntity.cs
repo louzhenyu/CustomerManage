@@ -84,10 +84,10 @@ namespace JIT.CPOS.BS.Entity
         public DateTime EventBeginTime { get; set; } //活动开始时间
 
         public decimal BargaingingInterval { get; set; } //可砍时间
+
         public string Prop1Name { get; set; }
 
         public string Prop2Name { get; set; }
-
 
         public string ItemIntroduce { get; set; }
 
